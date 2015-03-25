@@ -3,3487 +3,7 @@ require('./desktop/bundle');
 
 
 
-},{"./desktop/bundle":9}],"Modernizr":[function(require,module,exports){
-/*!
- * Modernizr v2.8.3
- * www.modernizr.com
- *
- * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
- * Available under the BSD and MIT licenses: www.modernizr.com/license/
- */
-
-/*
- * Modernizr tests which native CSS3 and HTML5 features are available in
- * the current UA and makes the results available to you in two ways:
- * as properties on a global Modernizr object, and as classes on the
- * <html> element. This information allows you to progressively enhance
- * your pages with a granular level of control over the experience.
- *
- * Modernizr has an optional (not included) conditional resource loader
- * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
- * To get a build that includes Modernizr.load(), as well as choosing
- * which tests to include, go to www.modernizr.com/download/
- *
- * Authors        Faruk Ates, Paul Irish, Alex Sexton
- * Contributors   Ryan Seddon, Ben Alman
- */
-
-Modernizr = (function( window, document, undefined ) {
-
-    var version = '2.8.3',
-
-    Modernizr = {},
-
-    /*>>cssclasses*/
-    // option for enabling the HTML classes to be added
-    enableClasses = true,
-    /*>>cssclasses*/
-
-    docElement = document.documentElement,
-
-    /**
-     * Create our "modernizr" element that we do most feature tests on.
-     */
-    mod = 'modernizr',
-    modElem = document.createElement(mod),
-    mStyle = modElem.style,
-
-    /**
-     * Create the input element for various Web Forms feature tests.
-     */
-    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
-
-    /*>>smile*/
-    smile = ':)',
-    /*>>smile*/
-
-    toString = {}.toString,
-
-    // TODO :: make the prefixes more granular
-    /*>>prefixes*/
-    // List of property values to set for css tests. See ticket #21
-    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
-    /*>>prefixes*/
-
-    /*>>domprefixes*/
-    // Following spec is to expose vendor-specific style properties as:
-    //   elem.style.WebkitBorderRadius
-    // and the following would be incorrect:
-    //   elem.style.webkitBorderRadius
-
-    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
-    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
-    //   erik.eae.net/archives/2008/03/10/21.48.10/
-
-    // More here: github.com/Modernizr/Modernizr/issues/issue/21
-    omPrefixes = 'Webkit Moz O ms',
-
-    cssomPrefixes = omPrefixes.split(' '),
-
-    domPrefixes = omPrefixes.toLowerCase().split(' '),
-    /*>>domprefixes*/
-
-    /*>>ns*/
-    ns = {'svg': 'http://www.w3.org/2000/svg'},
-    /*>>ns*/
-
-    tests = {},
-    inputs = {},
-    attrs = {},
-
-    classes = [],
-
-    slice = classes.slice,
-
-    featureName, // used in testing loop
-
-
-    /*>>teststyles*/
-    // Inject element with style element and some CSS rules
-    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
-
-      var style, ret, node, docOverflow,
-          div = document.createElement('div'),
-          // After page load injecting a fake body doesn't work so check if body exists
-          body = document.body,
-          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
-          fakeBody = body || document.createElement('body');
-
-      if ( parseInt(nodes, 10) ) {
-          // In order not to give false positives we create a node for each test
-          // This also allows the method to scale for unspecified uses
-          while ( nodes-- ) {
-              node = document.createElement('div');
-              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-              div.appendChild(node);
-          }
-      }
-
-      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
-      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
-      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
-      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
-      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
-      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
-      div.id = mod;
-      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
-      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
-      (body ? div : fakeBody).innerHTML += style;
-      fakeBody.appendChild(div);
-      if ( !body ) {
-          //avoid crashing IE8, if background image is used
-          fakeBody.style.background = '';
-          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-          fakeBody.style.overflow = 'hidden';
-          docOverflow = docElement.style.overflow;
-          docElement.style.overflow = 'hidden';
-          docElement.appendChild(fakeBody);
-      }
-
-      ret = callback(div, rule);
-      // If this is done after page load we don't want to remove the body so check if body exists
-      if ( !body ) {
-          fakeBody.parentNode.removeChild(fakeBody);
-          docElement.style.overflow = docOverflow;
-      } else {
-          div.parentNode.removeChild(div);
-      }
-
-      return !!ret;
-
-    },
-    /*>>teststyles*/
-
-    /*>>mq*/
-    // adapted from matchMedia polyfill
-    // by Scott Jehl and Paul Irish
-    // gist.github.com/786768
-    testMediaQuery = function( mq ) {
-
-      var matchMedia = window.matchMedia || window.msMatchMedia;
-      if ( matchMedia ) {
-        return matchMedia(mq) && matchMedia(mq).matches || false;
-      }
-
-      var bool;
-
-      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
-        bool = (window.getComputedStyle ?
-                  getComputedStyle(node, null) :
-                  node.currentStyle)['position'] == 'absolute';
-      });
-
-      return bool;
-
-     },
-     /*>>mq*/
-
-
-    /*>>hasevent*/
-    //
-    // isEventSupported determines if a given element supports the given event
-    // kangax.github.com/iseventsupported/
-    //
-    // The following results are known incorrects:
-    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
-    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
-    //   ...
-    isEventSupported = (function() {
-
-      var TAGNAMES = {
-        'select': 'input', 'change': 'input',
-        'submit': 'form', 'reset': 'form',
-        'error': 'img', 'load': 'img', 'abort': 'img'
-      };
-
-      function isEventSupported( eventName, element ) {
-
-        element = element || document.createElement(TAGNAMES[eventName] || 'div');
-        eventName = 'on' + eventName;
-
-        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-        var isSupported = eventName in element;
-
-        if ( !isSupported ) {
-          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
-          if ( !element.setAttribute ) {
-            element = document.createElement('div');
-          }
-          if ( element.setAttribute && element.removeAttribute ) {
-            element.setAttribute(eventName, '');
-            isSupported = is(element[eventName], 'function');
-
-            // If property was created, "remove it" (by setting value to `undefined`)
-            if ( !is(element[eventName], 'undefined') ) {
-              element[eventName] = undefined;
-            }
-            element.removeAttribute(eventName);
-          }
-        }
-
-        element = null;
-        return isSupported;
-      }
-      return isEventSupported;
-    })(),
-    /*>>hasevent*/
-
-    // TODO :: Add flag for hasownprop ? didn't last time
-
-    // hasOwnProperty shim by kangax needed for Safari 2.0 support
-    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
-
-    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
-      hasOwnProp = function (object, property) {
-        return _hasOwnProperty.call(object, property);
-      };
-    }
-    else {
-      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
-      };
-    }
-
-    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
-    // es5.github.com/#x15.3.4.5
-
-    if (!Function.prototype.bind) {
-      Function.prototype.bind = function bind(that) {
-
-        var target = this;
-
-        if (typeof target != "function") {
-            throw new TypeError();
-        }
-
-        var args = slice.call(arguments, 1),
-            bound = function () {
-
-            if (this instanceof bound) {
-
-              var F = function(){};
-              F.prototype = target.prototype;
-              var self = new F();
-
-              var result = target.apply(
-                  self,
-                  args.concat(slice.call(arguments))
-              );
-              if (Object(result) === result) {
-                  return result;
-              }
-              return self;
-
-            } else {
-
-              return target.apply(
-                  that,
-                  args.concat(slice.call(arguments))
-              );
-
-            }
-
-        };
-
-        return bound;
-      };
-    }
-
-    /**
-     * setCss applies given styles to the Modernizr DOM node.
-     */
-    function setCss( str ) {
-        mStyle.cssText = str;
-    }
-
-    /**
-     * setCssAll extrapolates all vendor-specific css strings.
-     */
-    function setCssAll( str1, str2 ) {
-        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
-    }
-
-    /**
-     * is returns a boolean for if typeof obj is exactly type.
-     */
-    function is( obj, type ) {
-        return typeof obj === type;
-    }
-
-    /**
-     * contains returns a boolean for if substr is found within str.
-     */
-    function contains( str, substr ) {
-        return !!~('' + str).indexOf(substr);
-    }
-
-    /*>>testprop*/
-
-    // testProps is a generic CSS / DOM property test.
-
-    // In testing support for a given CSS property, it's legit to test:
-    //    `elem.style[styleName] !== undefined`
-    // If the property is supported it will return an empty string,
-    // if unsupported it will return undefined.
-
-    // We'll take advantage of this quick test and skip setting a style
-    // on our modernizr element, but instead just testing undefined vs
-    // empty string.
-
-    // Because the testing of the CSS property names (with "-", as
-    // opposed to the camelCase DOM properties) is non-portable and
-    // non-standard but works in WebKit and IE (but not Gecko or Opera),
-    // we explicitly reject properties with dashes so that authors
-    // developing in WebKit or IE first don't end up with
-    // browser-specific content by accident.
-
-    function testProps( props, prefixed ) {
-        for ( var i in props ) {
-            var prop = props[i];
-            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
-                return prefixed == 'pfx' ? prop : true;
-            }
-        }
-        return false;
-    }
-    /*>>testprop*/
-
-    // TODO :: add testDOMProps
-    /**
-     * testDOMProps is a generic DOM property test; if a browser supports
-     *   a certain property, it won't return undefined for it.
-     */
-    function testDOMProps( props, obj, elem ) {
-        for ( var i in props ) {
-            var item = obj[props[i]];
-            if ( item !== undefined) {
-
-                // return the property name as a string
-                if (elem === false) return props[i];
-
-                // let's bind a function
-                if (is(item, 'function')){
-                  // default to autobind unless override
-                  return item.bind(elem || obj);
-                }
-
-                // return the unbound function or obj or value
-                return item;
-            }
-        }
-        return false;
-    }
-
-    /*>>testallprops*/
-    /**
-     * testPropsAll tests a list of DOM properties we want to check against.
-     *   We specify literally ALL possible (known and/or likely) properties on
-     *   the element including the non-vendor prefixed one, for forward-
-     *   compatibility.
-     */
-    function testPropsAll( prop, prefixed, elem ) {
-
-        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
-            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
-
-        // did they call .prefixed('boxSizing') or are we just testing a prop?
-        if(is(prefixed, "string") || is(prefixed, "undefined")) {
-          return testProps(props, prefixed);
-
-        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
-        } else {
-          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
-          return testDOMProps(props, prefixed, elem);
-        }
-    }
-    /*>>testallprops*/
-
-
-    /**
-     * Tests
-     * -----
-     */
-
-    // The *new* flexbox
-    // dev.w3.org/csswg/css3-flexbox
-
-    tests['flexbox'] = function() {
-      return testPropsAll('flexWrap');
-    };
-
-    // The *old* flexbox
-    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
-
-    tests['flexboxlegacy'] = function() {
-        return testPropsAll('boxDirection');
-    };
-
-    // On the S60 and BB Storm, getContext exists, but always returns undefined
-    // so we actually have to call getContext() to verify
-    // github.com/Modernizr/Modernizr/issues/issue/97/
-
-    tests['canvas'] = function() {
-        var elem = document.createElement('canvas');
-        return !!(elem.getContext && elem.getContext('2d'));
-    };
-
-    tests['canvastext'] = function() {
-        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
-    };
-
-    // webk.it/70117 is tracking a legit WebGL feature detect proposal
-
-    // We do a soft detect which may false positive in order to avoid
-    // an expensive context creation: bugzil.la/732441
-
-    tests['webgl'] = function() {
-        return !!window.WebGLRenderingContext;
-    };
-
-    /*
-     * The Modernizr.touch test only indicates if the browser supports
-     *    touch events, which does not necessarily reflect a touchscreen
-     *    device, as evidenced by tablets running Windows 7 or, alas,
-     *    the Palm Pre / WebOS (touch) phones.
-     *
-     * Additionally, Chrome (desktop) used to lie about its support on this,
-     *    but that has since been rectified: crbug.com/36415
-     *
-     * We also test for Firefox 4 Multitouch Support.
-     *
-     * For more info, see: modernizr.github.com/Modernizr/touch.html
-     */
-
-    tests['touch'] = function() {
-        var bool;
-
-        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-          bool = true;
-        } else {
-          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
-            bool = node.offsetTop === 9;
-          });
-        }
-
-        return bool;
-    };
-
-
-    // geolocation is often considered a trivial feature detect...
-    // Turns out, it's quite tricky to get right:
-    //
-    // Using !!navigator.geolocation does two things we don't want. It:
-    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
-    //   2. Disables page caching in WebKit: webk.it/43956
-    //
-    // Meanwhile, in Firefox < 8, an about:config setting could expose
-    // a false positive that would throw an exception: bugzil.la/688158
-
-    tests['geolocation'] = function() {
-        return 'geolocation' in navigator;
-    };
-
-
-    tests['postmessage'] = function() {
-      return !!window.postMessage;
-    };
-
-
-    // Chrome incognito mode used to throw an exception when using openDatabase
-    // It doesn't anymore.
-    tests['websqldatabase'] = function() {
-      return !!window.openDatabase;
-    };
-
-    // Vendors had inconsistent prefixing with the experimental Indexed DB:
-    // - Webkit's implementation is accessible through webkitIndexedDB
-    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
-    // For speed, we don't test the legacy (and beta-only) indexedDB
-    tests['indexedDB'] = function() {
-      return !!testPropsAll("indexedDB", window);
-    };
-
-    // documentMode logic from YUI to filter out IE8 Compat Mode
-    //   which false positives.
-    tests['hashchange'] = function() {
-      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
-    };
-
-    // Per 1.6:
-    // This used to be Modernizr.historymanagement but the longer
-    // name has been deprecated in favor of a shorter and property-matching one.
-    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
-    // and in the first release thereafter disappear entirely.
-    tests['history'] = function() {
-      return !!(window.history && history.pushState);
-    };
-
-    tests['draganddrop'] = function() {
-        var div = document.createElement('div');
-        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
-    };
-
-    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
-    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
-    // FF10 still uses prefixes, so check for it until then.
-    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
-    tests['websockets'] = function() {
-        return 'WebSocket' in window || 'MozWebSocket' in window;
-    };
-
-
-    // css-tricks.com/rgba-browser-support/
-    tests['rgba'] = function() {
-        // Set an rgba() color and check the returned value
-
-        setCss('background-color:rgba(150,255,150,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba');
-    };
-
-    tests['hsla'] = function() {
-        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
-        //   except IE9 who retains it as hsla
-
-        setCss('background-color:hsla(120,40%,100%,.5)');
-
-        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
-    };
-
-    tests['multiplebgs'] = function() {
-        // Setting multiple images AND a color on the background shorthand property
-        //  and then querying the style.background property value for the number of
-        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
-
-        setCss('background:url(https://),url(https://),red url(https://)');
-
-        // If the UA supports multiple backgrounds, there should be three occurrences
-        //   of the string "url(" in the return value for elemStyle.background
-
-        return (/(url\s*\(.*?){3}/).test(mStyle.background);
-    };
-
-
-
-    // this will false positive in Opera Mini
-    //   github.com/Modernizr/Modernizr/issues/396
-
-    tests['backgroundsize'] = function() {
-        return testPropsAll('backgroundSize');
-    };
-
-    tests['borderimage'] = function() {
-        return testPropsAll('borderImage');
-    };
-
-
-    // Super comprehensive table about all the unique implementations of
-    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
-
-    tests['borderradius'] = function() {
-        return testPropsAll('borderRadius');
-    };
-
-    // WebOS unfortunately false positives on this test.
-    tests['boxshadow'] = function() {
-        return testPropsAll('boxShadow');
-    };
-
-    // FF3.0 will false positive on this test
-    tests['textshadow'] = function() {
-        return document.createElement('div').style.textShadow === '';
-    };
-
-
-    tests['opacity'] = function() {
-        // Browsers that actually have CSS Opacity implemented have done so
-        //  according to spec, which means their return values are within the
-        //  range of [0.0,1.0] - including the leading zero.
-
-        setCssAll('opacity:.55');
-
-        // The non-literal . in this regex is intentional:
-        //   German Chrome returns this value as 0,55
-        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
-        return (/^0.55$/).test(mStyle.opacity);
-    };
-
-
-    // Note, Android < 4 will pass this test, but can only animate
-    //   a single property at a time
-    //   goo.gl/v3V4Gp
-    tests['cssanimations'] = function() {
-        return testPropsAll('animationName');
-    };
-
-
-    tests['csscolumns'] = function() {
-        return testPropsAll('columnCount');
-    };
-
-
-    tests['cssgradients'] = function() {
-        /**
-         * For CSS Gradients syntax, please see:
-         * webkit.org/blog/175/introducing-css-gradients/
-         * developer.mozilla.org/en/CSS/-moz-linear-gradient
-         * developer.mozilla.org/en/CSS/-moz-radial-gradient
-         * dev.w3.org/csswg/css3-images/#gradients-
-         */
-
-        var str1 = 'background-image:',
-            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
-            str3 = 'linear-gradient(left top,#9f9, white);';
-
-        setCss(
-             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
-              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
-             // standard syntax             // trailing 'background-image:'
-              prefixes.join(str3 + str1)).slice(0, -str1.length)
-        );
-
-        return contains(mStyle.backgroundImage, 'gradient');
-    };
-
-
-    tests['cssreflections'] = function() {
-        return testPropsAll('boxReflect');
-    };
-
-
-    tests['csstransforms'] = function() {
-        return !!testPropsAll('transform');
-    };
-
-
-    tests['csstransforms3d'] = function() {
-
-        var ret = !!testPropsAll('perspective');
-
-        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
-        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
-        //   some conditions. As a result, Webkit typically recognizes the syntax but
-        //   will sometimes throw a false positive, thus we must do a more thorough check:
-        if ( ret && 'webkitPerspective' in docElement.style ) {
-
-          // Webkit allows this media query to succeed only if the feature is enabled.
-          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
-          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
-            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
-          });
-        }
-        return ret;
-    };
-
-
-    tests['csstransitions'] = function() {
-        return testPropsAll('transition');
-    };
-
-
-    /*>>fontface*/
-    // @font-face detection routine by Diego Perini
-    // javascript.nwbox.com/CSSSupport/
-
-    // false positives:
-    //   WebOS github.com/Modernizr/Modernizr/issues/342
-    //   WP7   github.com/Modernizr/Modernizr/issues/538
-    tests['fontface'] = function() {
-        var bool;
-
-        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
-          var style = document.getElementById('smodernizr'),
-              sheet = style.sheet || style.styleSheet,
-              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
-
-          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
-        });
-
-        return bool;
-    };
-    /*>>fontface*/
-
-    // CSS generated content detection
-    tests['generatedcontent'] = function() {
-        var bool;
-
-        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
-          bool = node.offsetHeight >= 3;
-        });
-
-        return bool;
-    };
-
-
-
-    // These tests evaluate support of the video/audio elements, as well as
-    // testing what types of content they support.
-    //
-    // We're using the Boolean constructor here, so that we can extend the value
-    // e.g.  Modernizr.video     // true
-    //       Modernizr.video.ogg // 'probably'
-    //
-    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
-    //                     thx to NielsLeenheer and zcorpan
-
-    // Note: in some older browsers, "no" was a return value instead of empty string.
-    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
-    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
-
-    tests['video'] = function() {
-        var elem = document.createElement('video'),
-            bool = false;
-
-        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
-
-                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
-                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
-
-                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
-            }
-
-        } catch(e) { }
-
-        return bool;
-    };
-
-    tests['audio'] = function() {
-        var elem = document.createElement('audio'),
-            bool = false;
-
-        try {
-            if ( bool = !!elem.canPlayType ) {
-                bool      = new Boolean(bool);
-                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
-                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
-
-                // Mimetypes accepted:
-                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
-                //   bit.ly/iphoneoscodecs
-                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
-                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
-                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
-            }
-        } catch(e) { }
-
-        return bool;
-    };
-
-
-    // In FF4, if disabled, window.localStorage should === null.
-
-    // Normally, we could not test that directly and need to do a
-    //   `('localStorage' in window) && ` test first because otherwise Firefox will
-    //   throw bugzil.la/365772 if cookies are disabled
-
-    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
-    // will throw the exception:
-    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
-    // Peculiarly, getItem and removeItem calls do not throw.
-
-    // Because we are forced to try/catch this, we'll go aggressive.
-
-    // Just FWIW: IE8 Compat mode supports these features completely:
-    //   www.quirksmode.org/dom/html5.html
-    // But IE8 doesn't support either with local files
-
-    tests['localstorage'] = function() {
-        try {
-            localStorage.setItem(mod, mod);
-            localStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-    tests['sessionstorage'] = function() {
-        try {
-            sessionStorage.setItem(mod, mod);
-            sessionStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
-
-    tests['webworkers'] = function() {
-        return !!window.Worker;
-    };
-
-
-    tests['applicationcache'] = function() {
-        return !!window.applicationCache;
-    };
-
-
-    // Thanks to Erik Dahlstrom
-    tests['svg'] = function() {
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    };
-
-    // specifically for SVG inline in HTML, not within XHTML
-    // test page: paulirish.com/demo/inline-svg
-    tests['inlinesvg'] = function() {
-      var div = document.createElement('div');
-      div.innerHTML = '<svg/>';
-      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
-    };
-
-    // SVG SMIL animation
-    tests['smil'] = function() {
-        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
-    };
-
-    // This test is only for clip paths in SVG proper, not clip paths on HTML content
-    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
-
-    // However read the comments to dig into applying SVG clippaths to HTML content here:
-    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
-    tests['svgclippaths'] = function() {
-        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
-    };
-
-    /*>>webforms*/
-    // input features and input types go directly onto the ret object, bypassing the tests loop.
-    // Hold this guy to execute in a moment.
-    function webforms() {
-        /*>>input*/
-        // Run through HTML5's new input attributes to see if the UA understands any.
-        // We're using f which is the <input> element created early on
-        // Mike Taylr has created a comprehensive resource for testing these attributes
-        //   when applied to all input types:
-        //   miketaylr.com/code/input-type-attr.html
-        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
-
-        // Only input placeholder is tested while textarea's placeholder is not.
-        // Currently Safari 4 and Opera 11 have support only for the input placeholder
-        // Both tests are available in feature-detects/forms-placeholder.js
-        Modernizr['input'] = (function( props ) {
-            for ( var i = 0, len = props.length; i < len; i++ ) {
-                attrs[ props[i] ] = !!(props[i] in inputElem);
-            }
-            if (attrs.list){
-              // safari false positive's on datalist: webk.it/74252
-              // see also github.com/Modernizr/Modernizr/issues/146
-              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
-            }
-            return attrs;
-        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
-        /*>>input*/
-
-        /*>>inputtypes*/
-        // Run through HTML5's new input types to see if the UA understands any.
-        //   This is put behind the tests runloop because it doesn't return a
-        //   true/false like all the other tests; instead, it returns an object
-        //   containing each input type with its corresponding true/false value
-
-        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
-        Modernizr['inputtypes'] = (function(props) {
-
-            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
-
-                inputElem.setAttribute('type', inputElemType = props[i]);
-                bool = inputElem.type !== 'text';
-
-                // We first check to see if the type we give it sticks..
-                // If the type does, we feed it a textual value, which shouldn't be valid.
-                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
-                if ( bool ) {
-
-                    inputElem.value         = smile;
-                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
-
-                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
-
-                      docElement.appendChild(inputElem);
-                      defaultView = document.defaultView;
-
-                      // Safari 2-4 allows the smiley as a value, despite making a slider
-                      bool =  defaultView.getComputedStyle &&
-                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
-                              // Mobile android web browser has false positive, so must
-                              // check the height to see if the widget is actually there.
-                              (inputElem.offsetHeight !== 0);
-
-                      docElement.removeChild(inputElem);
-
-                    } else if ( /^(search|tel)$/.test(inputElemType) ){
-                      // Spec doesn't define any special parsing or detectable UI
-                      //   behaviors so we pass these through as true
-
-                      // Interestingly, opera fails the earlier test, so it doesn't
-                      //  even make it here.
-
-                    } else if ( /^(url|email)$/.test(inputElemType) ) {
-                      // Real url and email support comes with prebaked validation.
-                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
-
-                    } else {
-                      // If the upgraded input compontent rejects the :) text, we got a winner
-                      bool = inputElem.value != smile;
-                    }
-                }
-
-                inputs[ props[i] ] = !!bool;
-            }
-            return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
-        /*>>inputtypes*/
-    }
-    /*>>webforms*/
-
-
-    // End of test definitions
-    // -----------------------
-
-
-
-    // Run through all tests and detect their support in the current UA.
-    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
-    for ( var feature in tests ) {
-        if ( hasOwnProp(tests, feature) ) {
-            // run the test, throw the return value into the Modernizr,
-            //   then based on that boolean, define an appropriate className
-            //   and push it into an array of classes we'll join later.
-            featureName  = feature.toLowerCase();
-            Modernizr[featureName] = tests[feature]();
-
-            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
-        }
-    }
-
-    /*>>webforms*/
-    // input tests need to run.
-    Modernizr.input || webforms();
-    /*>>webforms*/
-
-
-    /**
-     * addTest allows the user to define their own feature tests
-     * the result will be added onto the Modernizr object,
-     * as well as an appropriate className set on the html element
-     *
-     * @param feature - String naming the feature
-     * @param test - Function returning true if feature is supported, false if not
-     */
-     Modernizr.addTest = function ( feature, test ) {
-       if ( typeof feature == 'object' ) {
-         for ( var key in feature ) {
-           if ( hasOwnProp( feature, key ) ) {
-             Modernizr.addTest( key, feature[ key ] );
-           }
-         }
-       } else {
-
-         feature = feature.toLowerCase();
-
-         if ( Modernizr[feature] !== undefined ) {
-           // we're going to quit if you're trying to overwrite an existing test
-           // if we were to allow it, we'd do this:
-           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
-           //   docElement.className = docElement.className.replace( re, '' );
-           // but, no rly, stuff 'em.
-           return Modernizr;
-         }
-
-         test = typeof test == 'function' ? test() : test;
-
-         if (typeof enableClasses !== "undefined" && enableClasses) {
-           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
-         }
-         Modernizr[feature] = test;
-
-       }
-
-       return Modernizr; // allow chaining.
-     };
-
-
-    // Reset modElem.cssText to nothing to reduce memory footprint.
-    setCss('');
-    modElem = inputElem = null;
-
-    /*>>shiv*/
-    /**
-     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
-     */
-    ;(function(window, document) {
-        /*jshint evil:true */
-        /** version */
-        var version = '3.7.0';
-
-        /** Preset options */
-        var options = window.html5 || {};
-
-        /** Used to skip problem elements */
-        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
-
-        /** Not all elements can be cloned in IE **/
-        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
-
-        /** Detect whether the browser supports default html5 styles */
-        var supportsHtml5Styles;
-
-        /** Name of the expando, to work with multiple documents or to re-shiv one document */
-        var expando = '_html5shiv';
-
-        /** The id for the the documents expando */
-        var expanID = 0;
-
-        /** Cached data for each document */
-        var expandoData = {};
-
-        /** Detect whether the browser supports unknown elements */
-        var supportsUnknownElements;
-
-        (function() {
-          try {
-            var a = document.createElement('a');
-            a.innerHTML = '<xyz></xyz>';
-            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
-            supportsHtml5Styles = ('hidden' in a);
-
-            supportsUnknownElements = a.childNodes.length == 1 || (function() {
-              // assign a false positive if unable to shiv
-              (document.createElement)('a');
-              var frag = document.createDocumentFragment();
-              return (
-                typeof frag.cloneNode == 'undefined' ||
-                typeof frag.createDocumentFragment == 'undefined' ||
-                typeof frag.createElement == 'undefined'
-              );
-            }());
-          } catch(e) {
-            // assign a false positive if detection fails => unable to shiv
-            supportsHtml5Styles = true;
-            supportsUnknownElements = true;
-          }
-
-        }());
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Creates a style sheet with the given CSS text and adds it to the document.
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @param {String} cssText The CSS text.
-         * @returns {StyleSheet} The style element.
-         */
-        function addStyleSheet(ownerDocument, cssText) {
-          var p = ownerDocument.createElement('p'),
-          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
-
-          p.innerHTML = 'x<style>' + cssText + '</style>';
-          return parent.insertBefore(p.lastChild, parent.firstChild);
-        }
-
-        /**
-         * Returns the value of `html5.elements` as an array.
-         * @private
-         * @returns {Array} An array of shived element node names.
-         */
-        function getElements() {
-          var elements = html5.elements;
-          return typeof elements == 'string' ? elements.split(' ') : elements;
-        }
-
-        /**
-         * Returns the data associated to the given document
-         * @private
-         * @param {Document} ownerDocument The document.
-         * @returns {Object} An object of data.
-         */
-        function getExpandoData(ownerDocument) {
-          var data = expandoData[ownerDocument[expando]];
-          if (!data) {
-            data = {};
-            expanID++;
-            ownerDocument[expando] = expanID;
-            expandoData[expanID] = data;
-          }
-          return data;
-        }
-
-        /**
-         * returns a shived element for the given nodeName and document
-         * @memberOf html5
-         * @param {String} nodeName name of the element
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived element.
-         */
-        function createElement(nodeName, ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createElement(nodeName);
-          }
-          if (!data) {
-            data = getExpandoData(ownerDocument);
-          }
-          var node;
-
-          if (data.cache[nodeName]) {
-            node = data.cache[nodeName].cloneNode();
-          } else if (saveClones.test(nodeName)) {
-            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
-          } else {
-            node = data.createElem(nodeName);
-          }
-
-          // Avoid adding some elements to fragments in IE < 9 because
-          // * Attributes like `name` or `type` cannot be set/changed once an element
-          //   is inserted into a document/fragment
-          // * Link elements with `src` attributes that are inaccessible, as with
-          //   a 403 response, will cause the tab/window to crash
-          // * Script elements appended to fragments will execute when their `src`
-          //   or `text` property is set
-          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
-        }
-
-        /**
-         * returns a shived DocumentFragment for the given document
-         * @memberOf html5
-         * @param {Document} ownerDocument The context document.
-         * @returns {Object} The shived DocumentFragment.
-         */
-        function createDocumentFragment(ownerDocument, data){
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          if(supportsUnknownElements){
-            return ownerDocument.createDocumentFragment();
-          }
-          data = data || getExpandoData(ownerDocument);
-          var clone = data.frag.cloneNode(),
-          i = 0,
-          elems = getElements(),
-          l = elems.length;
-          for(;i<l;i++){
-            clone.createElement(elems[i]);
-          }
-          return clone;
-        }
-
-        /**
-         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
-         * @private
-         * @param {Document|DocumentFragment} ownerDocument The document.
-         * @param {Object} data of the document.
-         */
-        function shivMethods(ownerDocument, data) {
-          if (!data.cache) {
-            data.cache = {};
-            data.createElem = ownerDocument.createElement;
-            data.createFrag = ownerDocument.createDocumentFragment;
-            data.frag = data.createFrag();
-          }
-
-
-          ownerDocument.createElement = function(nodeName) {
-            //abort shiv
-            if (!html5.shivMethods) {
-              return data.createElem(nodeName);
-            }
-            return createElement(nodeName, ownerDocument, data);
-          };
-
-          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
-                                                          'var n=f.cloneNode(),c=n.createElement;' +
-                                                          'h.shivMethods&&(' +
-                                                          // unroll the `createElement` calls
-                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
-            data.createElem(nodeName);
-            data.frag.createElement(nodeName);
-            return 'c("' + nodeName + '")';
-          }) +
-            ');return n}'
-                                                         )(html5, data.frag);
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * Shivs the given document.
-         * @memberOf html5
-         * @param {Document} ownerDocument The document to shiv.
-         * @returns {Document} The shived document.
-         */
-        function shivDocument(ownerDocument) {
-          if (!ownerDocument) {
-            ownerDocument = document;
-          }
-          var data = getExpandoData(ownerDocument);
-
-          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
-            data.hasCSS = !!addStyleSheet(ownerDocument,
-                                          // corrects block display not defined in IE6/7/8/9
-                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
-                                            // adds styling not present in IE6/7/8/9
-                                            'mark{background:#FF0;color:#000}' +
-                                            // hides non-rendered elements
-                                            'template{display:none}'
-                                         );
-          }
-          if (!supportsUnknownElements) {
-            shivMethods(ownerDocument, data);
-          }
-          return ownerDocument;
-        }
-
-        /*--------------------------------------------------------------------------*/
-
-        /**
-         * The `html5` object is exposed so that more elements can be shived and
-         * existing shiving can be detected on iframes.
-         * @type Object
-         * @example
-         *
-         * // options can be changed before the script is included
-         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
-         */
-        var html5 = {
-
-          /**
-           * An array or space separated string of node names of the elements to shiv.
-           * @memberOf html5
-           * @type Array|String
-           */
-          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
-
-          /**
-           * current version of html5shiv
-           */
-          'version': version,
-
-          /**
-           * A flag to indicate that the HTML5 style sheet should be inserted.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivCSS': (options.shivCSS !== false),
-
-          /**
-           * Is equal to true if a browser supports creating unknown/HTML5 elements
-           * @memberOf html5
-           * @type boolean
-           */
-          'supportsUnknownElements': supportsUnknownElements,
-
-          /**
-           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
-           * methods should be overwritten.
-           * @memberOf html5
-           * @type Boolean
-           */
-          'shivMethods': (options.shivMethods !== false),
-
-          /**
-           * A string to describe the type of `html5` object ("default" or "default print").
-           * @memberOf html5
-           * @type String
-           */
-          'type': 'default',
-
-          // shivs the document according to the specified `html5` object options
-          'shivDocument': shivDocument,
-
-          //creates a shived element
-          createElement: createElement,
-
-          //creates a shived documentFragment
-          createDocumentFragment: createDocumentFragment
-        };
-
-        /*--------------------------------------------------------------------------*/
-
-        // expose html5
-        window.html5 = html5;
-
-        // shiv the document
-        shivDocument(document);
-
-    }(this, document));
-    /*>>shiv*/
-
-    // Assign private properties to the return object with prefix
-    Modernizr._version      = version;
-
-    // expose these for the plugin API. Look in the source for how to join() them against your input
-    /*>>prefixes*/
-    Modernizr._prefixes     = prefixes;
-    /*>>prefixes*/
-    /*>>domprefixes*/
-    Modernizr._domPrefixes  = domPrefixes;
-    Modernizr._cssomPrefixes  = cssomPrefixes;
-    /*>>domprefixes*/
-
-    /*>>mq*/
-    // Modernizr.mq tests a given media query, live against the current state of the window
-    // A few important notes:
-    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
-    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
-    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
-    //       Modernizr.mq('(min-width:0)')
-    // usage:
-    // Modernizr.mq('only screen and (max-width:768)')
-    Modernizr.mq            = testMediaQuery;
-    /*>>mq*/
-
-    /*>>hasevent*/
-    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
-    // Modernizr.hasEvent('gesturestart', elem)
-    Modernizr.hasEvent      = isEventSupported;
-    /*>>hasevent*/
-
-    /*>>testprop*/
-    // Modernizr.testProp() investigates whether a given style property is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testProp('pointerEvents')
-    Modernizr.testProp      = function(prop){
-        return testProps([prop]);
-    };
-    /*>>testprop*/
-
-    /*>>testallprops*/
-    // Modernizr.testAllProps() investigates whether a given style property,
-    //   or any of its vendor-prefixed variants, is recognized
-    // Note that the property names must be provided in the camelCase variant.
-    // Modernizr.testAllProps('boxSizing')
-    Modernizr.testAllProps  = testPropsAll;
-    /*>>testallprops*/
-
-
-    /*>>teststyles*/
-    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
-    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
-    Modernizr.testStyles    = injectElementWithStyles;
-    /*>>teststyles*/
-
-
-    /*>>prefixed*/
-    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
-    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
-
-    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
-    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
-    //
-    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
-
-    // If you're trying to ascertain which transition end event to bind to, you might do something like...
-    //
-    //     var transEndEventNames = {
-    //       'WebkitTransition' : 'webkitTransitionEnd',
-    //       'MozTransition'    : 'transitionend',
-    //       'OTransition'      : 'oTransitionEnd',
-    //       'msTransition'     : 'MSTransitionEnd',
-    //       'transition'       : 'transitionend'
-    //     },
-    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
-
-    Modernizr.prefixed      = function(prop, obj, elem){
-      if(!obj) {
-        return testPropsAll(prop, 'pfx');
-      } else {
-        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
-        return testPropsAll(prop, obj, elem);
-      }
-    };
-    /*>>prefixed*/
-
-
-    /*>>cssclasses*/
-    // Remove "no-js" class from <html> element, if it exists:
-    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
-
-                            // Add the new classes to the <html> element.
-                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
-    /*>>cssclasses*/
-
-    return Modernizr;
-
-})(this, document);
-
-module.exports = Modernizr;
-},{}],"aviator":[function(require,module,exports){
-// Modules
-var Navigator = require('./navigator');
-
-
-/**
-Only expose a tiny API to keep internal routing safe
-
-@singleton Aviator
-**/
-window.Aviator = {
-
-  /**
-  @property pushStateEnabled
-  @type {Boolean}
-  @default true if the browser supports pushState
-  **/
-  pushStateEnabled: ('pushState' in window.history),
-
-  /**
-  @property linkSelector
-  @type {String}
-  @default 'a.navigate'
-  **/
-  linkSelector: 'a.navigate',
-
-  /**
-  the root of the uri from which routing will append to
-
-  @property root
-  @type {String}
-  @default ''
-  **/
-  root: '',
-
-  /**
-  @property _navigator
-  @type {Navigator}
-
-  @private
-  **/
-  _navigator: new Navigator(),
-
-  /**
-  @method setRoutes
-  @param {Object} routes
-  **/
-  setRoutes: function (routes) {
-    this._navigator.setRoutes(routes);
-  },
-
-  /**
-  dispatches routes to targets and sets up event handlers
-
-  @method dispatch
-  **/
-  dispatch: function () {
-    var navigator = this._navigator;
-
-    navigator.setup({
-      pushStateEnabled: this.pushStateEnabled,
-      linkSelector:     this.linkSelector,
-      root:             this.root
-    });
-
-    navigator.dispatch();
-  },
-
-  /**
-  @method navigate
-  @param {String} uri to navigate to
-  @param {Object} [options]
-  **/
-  navigate: function (uri, options) {
-    this._navigator.navigate(uri, options);
-  },
-
-
-  /**
-  @method serializeQueryParams
-  @param {Object} queryParams
-  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
-  **/
-  serializeQueryParams: function (queryParams) {
-    return this._navigator.serializeQueryParams(queryParams);
-  },
-
-  /**
-  @method getCurrentRequest
-  @return {String}
-  **/
-  getCurrentRequest: function () {
-    return this._navigator.getCurrentRequest();
-  },
-
-  /**
-  @method getCurrentURI
-  @return {String}
-  **/
-  getCurrentURI: function () {
-    return this._navigator.getCurrentURI();
-  },
-
-  /**
-  @method refresh
-  **/
-  refresh: function () {
-    this._navigator.refresh();
-  },
-
-  /**
-  @method rewriteRouteTo
-  @param {String} newRoute
-  @return {Object}
-  **/
-  rewriteRouteTo: function (newRoute) {
-    var target = {
-      rewrite: function (request) {
-        Aviator.navigate(newRoute, {
-          namedParams: request.namedParams,
-          replace: true
-        });
-      }
-    };
-
-    return {
-      target: target,
-      '/': 'rewrite'
-    };
-  }
-
-};
-
-},{"./navigator":3}],"baron":[function(require,module,exports){
-(function(window, $, undefined) {
-    'use strict';
-
-    if (!window) return; // Server side
-
-var
-    _baron = baron, // Stored baron value for noConflict usage
-    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
-    origin = {
-        v: { // Vertical
-            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
-            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
-            scroll: 'scrollTop', scrollSize: 'scrollHeight'
-        },
-        h: { // Horizontal
-            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
-            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
-            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
-        }
-    },
-
-    each = function(obj, iterator) {
-        var i = 0;
-
-        if (obj.length === undefined || obj === window) obj = [obj];
-
-        while (obj[i]) {
-            iterator.call(this, obj[i], i);
-            i++;
-        }
-    },
-
-    baron = function(params) {
-        var jQueryMode,
-            roots,
-            $;
-
-        params = params || {};
-        $ = params.$ || $ || window.jQuery;
-        jQueryMode = this instanceof $;  // this - window or jQuery instance
-
-        if (jQueryMode) {
-            params.root = roots = this;
-        } else {
-            roots = $(params.root || params.scroller);
-        }
-
-        var instance = new baron.fn.constructor(roots, params, $);
-
-        if (instance.autoUpdate) {
-            instance.autoUpdate();
-        }
-
-        return instance;
-    };
-
-    // shortcut for getTime
-    function getTime() {
-        return new Date().getTime();
-    }
-
-    baron.fn = {
-        constructor: function(roots, input, $) {
-            var params = validate(input);
-
-            params.$ = $;
-            each.call(this, roots, function(root, i) {
-                var localParams = clone(params);
-
-                if (params.root && params.scroller) {
-                    localParams.scroller = params.$(params.scroller, root);
-                    if (!localParams.scroller.length) {
-                        localParams.scroller = root;
-                    }
-                } else {
-                    localParams.scroller = root;
-                }
-
-                localParams.root = root;
-                this[i] = init(localParams);
-                this.length = i + 1;
-            });
-
-            this.params = params;
-        },
-
-        dispose: function() {
-            var params = this.params;
-
-            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
-                each(this, function(item) {
-                    item.dispose(params);
-                });
-            }
-            this.params = null;
-        },
-
-        update: function() {
-            var i = 0;
-
-            while (this[i]) {
-                this[i].update.apply(this[i], arguments);
-                i++;
-            }
-        },
-
-        baron: function(params) {
-            params.root = [];
-            params.scroller = this.params.scroller;
-
-            each.call(this, this, function(elem) {
-                params.root.push(elem.root);
-            });
-            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
-            params._chain = true;
-
-            return baron(params);
-        }
-    };
-
-    function manageEvents(item, eventManager, mode) {
-        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
-            {
-                // onScroll:
-                element: item.scroller,
-
-                handler: function(e) {
-                    item.scroll(e);
-                },
-
-                type: 'scroll'
-            }, {
-                // css transitions & animations
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'transitionend animationend'
-            }, {
-                // onKeyup (textarea):
-                element: item.scroller,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'keyup'
-            }, {
-                // onMouseDown:
-                element: item.bar,
-
-                handler: function(e) {
-                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
-                    item.selection(); // Disable text selection in ie8
-                    item.drag.now = 1; // Save private byte
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseUp:
-                element: document,
-
-                handler: function() {
-                    item.selection(1); // Enable text selection
-                    item.drag.now = 0;
-                },
-
-                type: 'mouseup blur touchend'
-            }, {
-                // onCoordinateReset:
-                element: document,
-
-                handler: function(e) {
-                    if (e.button != 2) { // Not RM
-                        item._pos0(e);
-                    }
-                },
-
-                type: 'touchstart mousedown'
-            }, {
-                // onMouseMove:
-                element: document,
-
-                handler: function(e) {
-                    if (item.drag.now) {
-                        item.drag(e);
-                    }
-                },
-
-                type: 'mousemove touchmove'
-            }, {
-                // onResize:
-                element: window,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'resize'
-            }, {
-                // sizeChange:
-                element: item.root,
-
-                handler: function() {
-                    item.update();
-                },
-
-                type: 'sizeChange'
-            }
-        ];
-
-        each(item._eventHandlers, function(event) {
-            if (event.element) {
-                eventManager(event.element, event.type, event.handler, mode);
-            }
-        });
-
-        // if (item.scroller) {
-        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
-        // }
-        // if (item.bar) {
-        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
-        // }
-        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
-        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
-        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
-        // event(window, 'resize', item._eventHandlers.onResize, mode);
-        // if (item.root) {
-        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
-        // }
-    }
-
-    function manageAttr(node, direction, mode) {
-        var attrName = 'data-baron-' + direction;
-
-        if (mode == 'on') {
-            node.setAttribute(attrName, 'inited');
-        } else if (mode == 'off') {
-            node.removeAttribute(attrName);
-        } else {
-            return node.getAttribute(attrName);
-        }
-    }
-
-    function init(params) {
-        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
-
-        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
-
-        manageEvents(out, params.event, 'on');
-
-        manageAttr(out.root, params.direction, 'on');
-
-        out.update();
-
-        return out;
-    }
-
-    function clone(input) {
-        var output = {};
-
-        input = input || {};
-
-        for (var key in input) {
-            if (input.hasOwnProperty(key)) {
-                output[key] = input[key];
-            }
-        }
-
-        return output;
-    }
-
-    function validate(input) {
-        var output = clone(input);
-
-        output.direction = output.direction || 'v';
-
-        var event = input.event || function(elem, event, func, mode) {
-            output.$(elem)[mode || 'on'](event, func);
-        };
-
-        output.event = function(elems, e, func, mode) {
-            each(elems, function(elem) {
-                event(elem, e, func, mode);
-            });
-        };
-
-        return output;
-    }
-
-    function fire(eventName) {
-        /* jshint validthis:true */
-        if (this.events && this.events[eventName]) {
-            for (var i = 0 ; i < this.events[eventName].length ; i++) {
-                var args = Array.prototype.slice.call( arguments, 1 );
-
-                this.events[eventName][i].apply(this, args);
-            }
-        }
-    }
-
-    var item = {};
-
-    item.prototype = {
-        // underscore.js realization
-        _debounce: function(func, wait) {
-            var self = this,
-                timeout,
-                // args, // right now there is no need for arguments
-                // context, // and for context
-                timestamp;
-                // result; // and for result
-
-            var later = function() {
-                if (self._disposed) {
-                    clearTimeout(timeout);
-                    timeout = self = null;
-                    return;
-                }
-
-                var last = getTime() - timestamp;
-
-                if (last < wait && last >= 0) {
-                    timeout = setTimeout(later, wait - last);
-                } else {
-                    timeout = null;
-                    // result = func.apply(context, args);
-                    func();
-                    // context = args = null;
-                }
-            };
-
-            return function() {
-                // context = this;
-                // args = arguments;
-                timestamp = getTime();
-
-                if (!timeout) {
-                    timeout = setTimeout(later, wait);
-                }
-
-                // return result;
-            };
-        },
-
-        constructor: function(params) {
-            var $,
-                barPos,
-                scrollerPos0,
-                track,
-                resizePauseTimer,
-                scrollPauseTimer,
-                scrollingTimer,
-                pause,
-                scrollLastFire,
-                resizeLastFire,
-                oldBarSize;
-
-            resizeLastFire = scrollLastFire = getTime();
-
-            $ = this.$ = params.$;
-            this.event = params.event;
-            this.events = {};
-
-            function getNode(sel, context) {
-                return $(sel, context)[0]; // Can be undefined
-            }
-
-            // DOM elements
-            this.root = params.root; // Always html node, not just selector
-            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
-            this.bar = getNode(params.bar, this.root);
-            track = this.track = getNode(params.track, this.root);
-            if (!this.track && this.bar) {
-                track = this.bar.parentNode;
-            }
-            this.clipper = this.scroller.parentNode;
-
-            // Parameters
-            this.direction = params.direction;
-            this.origin = origin[this.direction];
-            this.barOnCls = params.barOnCls || '_baron';
-            this.scrollingCls = params.scrollingCls;
-            this.barTopLimit = 0;
-            pause = params.pause * 1000 || 0;
-
-            // Updating height or width of bar
-            function setBarSize(size) {
-                /* jshint validthis:true */
-                var barMinSize = this.barMinSize || 20;
-
-                if (size > 0 && size < barMinSize) {
-                    size = barMinSize;
-                }
-
-                if (this.bar) {
-                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
-                }
-            }
-
-            // Updating top or left bar position
-            function posBar(pos) {
-                /* jshint validthis:true */
-                if (this.bar) {
-                    var was = $(this.bar).css(this.origin.pos),
-                        will = +pos + 'px';
-
-                    if (will && will != was) {
-                        $(this.bar).css(this.origin.pos, will);
-                    }
-                }
-            }
-
-            // Free path for bar
-            function k() {
-                /* jshint validthis:true */
-                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
-            }
-
-            // Relative content top position to bar top position
-            function relToPos(r) {
-                /* jshint validthis:true */
-                return r * k.call(this) + this.barTopLimit;
-            }
-
-            // Bar position to relative content position
-            function posToRel(t) {
-                /* jshint validthis:true */
-                return (t - this.barTopLimit) / k.call(this);
-            }
-
-            // Cursor position in main direction in px // Now with iOs support
-            this.cursor = function(e) {
-                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
-            };
-
-            // Text selection pos preventing
-            function dontPosSelect() {
-                return false;
-            }
-
-            this.pos = function(x) { // Absolute scroller position in px
-                var ie = 'page' + this.origin.x + 'Offset',
-                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
-
-                if (x !== undefined) this.scroller[key] = x;
-
-                return this.scroller[key];
-            };
-
-            this.rpos = function(r) { // Relative scroller position (0..1)
-                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
-                    x;
-
-                if (r) {
-                    x = this.pos(r * free);
-                } else {
-                    x = this.pos();
-                }
-
-                return x / (free || 1);
-            };
-
-            // Switch on the bar by adding user-defined CSS classname to scroller
-            this.barOn = function(dispose) {
-                if (this.barOnCls) {
-                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
-                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
-                    } else {
-                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
-                    }
-                }
-            };
-
-            this._pos0 = function(e) {
-                scrollerPos0 = this.cursor(e) - barPos;
-            };
-
-            this.drag = function(e) {
-                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
-            };
-
-            // Text selection preventing on drag
-            this.selection = function(enable) {
-                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
-            };
-
-            // onResize & DOM modified handler
-            this.resize = function() {
-                var self = this,
-                    delay = 0;
-
-                if (getTime() - resizeLastFire < pause) {
-                    clearTimeout(resizePauseTimer);
-                    delay = pause;
-                }
-
-                function upd() {
-                    var delta,
-                        client,
-                        offset,
-                        was,
-                        will;
-
-                    // Change a css inline rule only if it is really changing value
-                    // function tryCss(prop, value, ) {
-                    //     var was = $(self.clipper).css(self.origin.crossSize),
-                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
-                    // };
-
-                    self.barOn();
-
-                    client = self.scroller[self.origin.crossClient];
-                    offset = self.scroller[self.origin.crossOffset];
-                    delta = offset - client;
-
-                    if (offset) { // if there is no size, css should not be set
-                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
-                            was = $(self.clipper).css(self.origin.crossSize);
-                            will = self.clipper[self.origin.crossClient] - delta + 'px';
-
-                            if (was != will) {
-                                $(self.clipper).css(self.origin.crossSize, will);
-                            }
-                        }
-
-                        was = $(self.clipper).css(self.origin.crossSize);
-                        will = self.clipper[self.origin.crossClient] + delta + 'px';
-
-                        if (was != will) {
-                            $(self.scroller).css(self.origin.crossSize, will);
-                        }
-                    }
-
-                    Array.prototype.unshift.call(arguments, 'resize');
-                    fire.apply(self, arguments);
-
-                    resizeLastFire = getTime();
-                }
-
-                if (delay) {
-                    resizePauseTimer = setTimeout(upd, delay);
-                } else {
-                    upd();
-                }
-            };
-
-            this.updatePositions = function() {
-                var newBarSize,
-                    self = this;
-
-                if (self.bar) {
-                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
-
-                    // Positioning bar
-                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
-                        setBarSize.call(self, newBarSize);
-                        oldBarSize = newBarSize;
-                    }
-
-                    barPos = relToPos.call(self, self.rpos());
-
-                    posBar.call(self, barPos);
-                }
-
-                Array.prototype.unshift.call( arguments, 'scroll' );
-                fire.apply(self, arguments);
-
-                scrollLastFire = getTime();
-            };
-
-            // onScroll handler
-            this.scroll = function() {
-                var delay = 0,
-                    self = this;
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (getTime() - scrollLastFire < pause) {
-                    clearTimeout(scrollPauseTimer);
-                    delay = pause;
-                }
-
-                if (delay) {
-                    scrollPauseTimer = setTimeout(function() {
-                        self.updatePositions();
-                    }, delay);
-                } else {
-                    self.updatePositions();
-                }
-
-                if (self.scrollingCls) {
-                    if (!scrollingTimer) {
-                        this.$(this.scroller).addClass(this.scrollingCls);
-                    }
-                    clearTimeout(scrollingTimer);
-                    scrollingTimer = setTimeout(function() {
-                        self.$(self.scroller).removeClass(self.scrollingCls);
-                        scrollingTimer = undefined;
-                    }, 300);
-                }
-
-            };
-
-            return this;
-        },
-
-        update: function(params) {
-            fire.call(this, 'upd', params); // Update all plugins' params
-
-            this.resize(1);
-            this.updatePositions();
-
-            return this;
-        },
-
-        // One instance
-        dispose: function(params) {
-            manageEvents(this, this.event, 'off');
-            manageAttr(this.root, params.direction, 'off');
-            $(this.scroller).css(this.origin.crossSize, '');
-            this.barOn(true);
-            fire.call(this, 'dispose');
-            this._disposed = true;
-        },
-
-        on: function(eventName, func, arg) {
-            var names = eventName.split(' ');
-
-            for (var i = 0 ; i < names.length ; i++) {
-                if (names[i] == 'init') {
-                    func.call(this, arg);
-                } else {
-                    this.events[names[i]] = this.events[names[i]] || [];
-
-                    this.events[names[i]].push(function(userArg) {
-                        func.call(this, userArg || arg);
-                    });
-                }
-            }
-        }
-    };
-
-    baron.fn.constructor.prototype = baron.fn;
-    item.prototype.constructor.prototype = item.prototype;
-
-    // Use when you need "baron" global var for another purposes
-    baron.noConflict = function() {
-        window.baron = _baron; // Restoring original value of "baron" global var
-
-        return baron;
-    };
-
-    baron.version = '0.7.10';
-
-    if ($ && $.fn) { // Adding baron to jQuery as plugin
-        $.fn.baron = baron;
-    }
-
-    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
-    if (window['module'] && module.exports) {
-        module.exports = baron.noConflict();
-    }
-})(window, window.$);
-
-/* Fixable elements plugin for baron 0.6+ */
-(function(window, undefined) {
-    var fix = function(userParams) {
-        var elements, viewPortSize,
-            params = { // Default params
-                outside: '',
-                inside: '',
-                before: '',
-                after: '',
-                past: '',
-                future: '',
-                radius: 0,
-                minView: 0
-            },
-            topFixHeights = [], // inline style for element
-            topRealHeights = [], // ? something related to negative margins for fixable elements
-            headerTops = [], // offset positions when not fixed
-            scroller = this.scroller,
-            eventManager = this.event,
-            $ = this.$,
-            self = this;
-
-        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
-        // Invocation only in case when fix-state changed
-        function fixElement(i, pos, flag) {
-            var ori = flag == 1 ? 'pos' : 'oppos';
-
-            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
-                pos = undefined;
-            }
-
-            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
-            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
-
-            // Fixing if needed
-            if (pos !== undefined) {
-                pos += 'px';
-                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
-            }
-        }
-
-        function bubbleWheel(e) {
-            try {
-                i = document.createEvent('WheelEvent'); // i - for extra byte
-                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
-                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
-                scroller.dispatchEvent(i);
-                e.preventDefault();
-            } catch (e) {}
-        }
-
-        function init(_params) {
-            var pos;
-
-            for (var key in _params) {
-                params[key] = _params[key];
-            }
-
-            elements = this.$(params.elements, this.scroller);
-
-            if (elements) {
-                viewPortSize = this.scroller[this.origin.client];
-                for (var i = 0 ; i < elements.length ; i++) {
-                    // Variable header heights
-                    pos = {};
-                    pos[this.origin.size] = elements[i][this.origin.offset];
-                    if (elements[i].parentNode !== this.scroller) {
-                        this.$(elements[i].parentNode).css(pos);
-                    }
-                    pos = {};
-                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
-                    this.$(elements[i]).css(pos);
-
-                    // Between fixed headers
-                    viewPortSize -= elements[i][this.origin.offset];
-
-                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
-
-                    // Summary elements height above current
-                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
-                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
-
-                    if (elements[i - 1]) {
-                        topFixHeights[i] += elements[i - 1][this.origin.offset];
-                        topRealHeights[i] += elements[i - 1][this.origin.offset];
-                    }
-
-                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
-                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
-                        this.event(elements[i], 'mousewheel', bubbleWheel);
-                    }
-                }
-
-                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
-                    if (this.track && this.track != this.scroller) {
-                        pos = {};
-                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
-                        this.$(this.track).css(pos);
-                    } else {
-                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    }
-                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
-                    this.scroll();
-                }
-
-                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
-                    this.barTopLimit = 0;
-                }
-            }
-
-            var event = {
-                element: elements,
-
-                handler: function() {
-                    var parent = $(this)[0].parentNode,
-                        top = parent.offsetTop,
-                        num;
-
-                    // finding num -> elements[num] === this
-                    for (var i = 0 ; i < elements.length ; i++ ) {
-                        if (elements[i] === this) num = i;
-                    }
-
-                    var pos = top - topFixHeights[num];
-
-                    if (params.scroll) { // User defined callback
-                        params.scroll({
-                            x1: self.scroller.scrollTop,
-                            x2: pos
-                        });
-                    } else {
-                        self.scroller.scrollTop = pos;
-                    }
-                },
-
-                type: 'click'
-            };
-
-            if (params.clickable) {
-                this._eventHandlers.push(event); // For auto-dispose
-                // eventManager(event.element, event.type, event.handler, 'off');
-                eventManager(event.element, event.type, event.handler, 'on');
-            }
-        }
-
-        this.on('init', init, userParams);
-
-        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
-            gradFlag = [];
-        this.on('init scroll', function() {
-            var fixState, hTop, gradState;
-
-            if (elements) {
-                var change;
-
-                // fixFlag update
-                for (var i = 0 ; i < elements.length ; i++) {
-                    fixState = 0;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
-                        // Header trying to go up
-                        fixState = 1;
-                        hTop = topFixHeights[i];
-                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
-                        // Header trying to go down
-                        fixState = 2;
-                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
-                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
-                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
-                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
-                    } else {
-                        // Header in viewport
-                        fixState = 3;
-                        hTop = undefined;
-                    }
-
-                    gradState = false;
-                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
-                        gradState = true;
-                    }
-
-                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
-                        fixElement.call(this, i, hTop, fixState);
-                        fixFlag[i] = fixState;
-                        gradFlag[i] = gradState;
-                        change = true;
-                    }
-                }
-
-                // Adding positioning classes (on last top and first bottom header)
-                if (change) { // At leats one change in elements flag structure occured
-                    for (i = 0 ; i < elements.length ; i++) {
-                        if (fixFlag[i] == 1 && params.past) {
-                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
-                        }
-
-                        if (fixFlag[i] == 2 && params.future) {
-                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
-                        }
-
-                        if (fixFlag[i] == 3) {
-                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
-                            if (params.inside) this.$(elements[i]).addClass(params.inside);
-                        } else if (params.inside) {
-                            this.$(elements[i]).removeClass(params.inside);
-                        }
-
-                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
-                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
-                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
-                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
-                        } else {
-                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
-                        }
-
-                        if (params.grad) {
-                            if (gradFlag[i]) {
-                                this.$(elements[i]).addClass(params.grad);
-                            } else {
-                                this.$(elements[i]).removeClass(params.grad);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        this.on('resize upd', function(updParams) {
-            init.call(this, updParams && updParams.fix);
-        });
-    };
-
-    baron.fn.fix = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            fix.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Controls plugin for baron 0.6+ */
-(function(window, undefined) {
-    var controls = function(params) {
-        var forward, backward, track, screen,
-            self = this, // AAAAAA!!!!!11
-            event;
-
-        screen = params.screen || 0.9;
-
-        if (params.forward) {
-            forward = this.$(params.forward, this.clipper);
-
-            event = {
-                element: forward,
-
-                handler: function() {
-                    var y = self.pos() - params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.backward) {
-            backward = this.$(params.backward, this.clipper);
-
-            event = {
-                element: backward,
-
-                handler: function() {
-                    var y = self.pos() + params.delta || 30;
-
-                    self.pos(y);
-                },
-
-                type: 'click'
-            };
-
-            this._eventHandlers.push(event); // For auto-dispose
-            this.event(event.element, event.type, event.handler, 'on');
-        }
-
-        if (params.track) {
-            if (params.track === true) {
-                track = this.track;
-            } else {
-                track = this.$(params.track, this.clipper)[0];
-            }
-
-            if (track) {
-                event = {
-                    element: track,
-
-                    handler: function(e) {
-                        var x = e['offset' + self.origin.x],
-                            xBar = self.bar[self.origin.offsetPos],
-                            sign = 0;
-
-                        if (x < xBar) {
-                            sign = -1;
-                        } else if (x > xBar + self.bar[self.origin.offset]) {
-                            sign = 1;
-                        }
-
-                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
-                        self.pos(y);
-                    },
-
-                    type: 'mousedown'
-                };
-
-                this._eventHandlers.push(event); // For auto-dispose
-                this.event(event.element, event.type, event.handler, 'on');
-            }
-        }
-    };
-
-    baron.fn.controls = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            controls.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Pull to load plugin for baron 0.6+ */
-(function(window, undefined) {
-    var pull = function(params) {
-        var block = this.$(params.block),
-            size = params.size || this.origin.size,
-            limit = params.limit || 80,
-            onExpand = params.onExpand,
-            elements = params.elements || [],
-            inProgress = params.inProgress || '',
-            self = this,
-            _insistence = 0,
-            _zeroXCount = 0,
-            _interval,
-            _timer,
-            _x = 0,
-            _onExpandCalled,
-            _waiting = params.waiting || 500,
-            _on;
-
-        function getSize() {
-            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
-        }
-
-        // Scroller content height
-        function getContentSize() {
-            return self.scroller[self.origin.scrollSize];
-        }
-
-        // Scroller height
-        function getScrollerSize() {
-            return self.scroller[self.origin.client];
-        }
-
-        function step(x, force) {
-            var k = x * 0.0005;
-
-            return Math.floor(force - k * (x + 550));
-        }
-
-        function toggle(on) {
-            _on = on;
-
-            if (on) {
-                update(); // First time with no delay
-                _interval = setInterval(update, 200);
-            } else {
-                clearInterval(_interval);
-            }
-        }
-
-        function update() {
-            var pos = {},
-                height = getSize(),
-                scrollHeight = getContentSize(),
-                dx,
-                op4,
-                scrollInProgress = _insistence == 1;
-
-            op4 = 0; // Возвращающая сила
-            if (_insistence > 0) {
-                op4 = 40;
-            }
-            //if (_insistence > -1) {
-                dx = step(_x, op4);
-                if (height >= scrollHeight - _x && _insistence > -1) {
-                    if (scrollInProgress) {
-                        _x += dx;
-                    }
-                } else {
-                    _x = 0;
-                }
-
-                if (_x < 0) _x = 0;
-
-                pos[size] = _x + 'px';
-                if (getScrollerSize() <= getContentSize()) {
-                    self.$(block).css(pos);
-                    for (var i = 0 ; i < elements.length ; i++) {
-                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
-                    }
-                }
-
-                if (inProgress && _x) {
-                    self.$(self.root).addClass(inProgress);
-                }
-
-                if (_x == 0) {
-                    if (params.onCollapse) {
-                        params.onCollapse();
-                    }
-                }
-
-                _insistence = 0;
-                _timer = setTimeout(function() {
-                    _insistence = -1;
-                }, _waiting);
-            //}
-
-            if (onExpand && _x > limit && !_onExpandCalled) {
-                onExpand();
-                _onExpandCalled = true;
-            }
-
-            if (_x == 0) {
-                _zeroXCount++;
-            } else {
-                _zeroXCount = 0;
-            }
-            if (_zeroXCount > 1) {
-                toggle(false);
-                _onExpandCalled = false;
-                if (inProgress) {
-                    self.$(self.root).removeClass(inProgress);
-                }
-            }
-        }
-
-        this.on('init', function() {
-            toggle(true);
-        });
-
-        this.on('dispose', function() {
-            toggle(false);
-        });
-
-        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
-            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
-
-            if (down) {
-                _insistence = 1;
-                clearTimeout(_timer);
-                if (!_on && getSize() >= getContentSize()) {
-                    toggle(true);
-                }
-            }
-            //  else {
-            //     toggle(false);
-            // }
-        });
-    };
-
-    baron.fn.pull = function(params) {
-        var i = 0;
-
-        while (this[i]) {
-            pull.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-/* Autoupdate plugin for baron 0.6+ */
-(function(window) {
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
-
-    var autoUpdate = function() {
-        var self = this;
-        var watcher;
-
-        function actualizeWatcher() {
-            if (!self.root[self.origin.offset]) {
-                startWatch();
-            } else {
-                stopWatch();
-            }
-        }
-
-        // Set interval timeout for watching when root node will be visible
-        function startWatch() {
-            if (watcher) return;
-
-            watcher = setInterval(function() {
-                if (self.root[self.origin.offset]) {
-                    stopWatch();
-                    self.update();
-                }
-            }, 300); // is it good enought for you?)
-        }
-
-        function stopWatch() {
-            clearInterval(watcher);
-            watcher = null;
-        }
-
-        var debouncedUpdater = self._debounce(function() {
-            self.update();
-        }, 300);
-
-        this._observer = new MutationObserver(function() {
-            actualizeWatcher();
-            self.update();
-            debouncedUpdater();
-        });
-
-        this.on('init', function() {
-            self._observer.observe(self.root, {
-                childList: true,
-                subtree: true,
-                characterData: true
-                // attributes: true
-                // No reasons to set attributes to true
-                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
-                // and the size of parent was changed during that hidden state, is very rare
-                // Other cases are covered by watcher, and you still can do .update by yourself
-            });
-
-            actualizeWatcher();
-        });
-
-        this.on('dispose', function() {
-            self._observer.disconnect();
-            stopWatch();
-            delete self._observer;
-        });
-    };
-
-    baron.fn.autoUpdate = function(params) {
-        if (!MutationObserver) return this;
-
-        var i = 0;
-
-        while (this[i]) {
-            autoUpdate.call(this[i], params);
-            i++;
-        }
-
-        return this;
-    };
-})(window);
-
-},{}],"bootstrap.tooltip":[function(require,module,exports){
-/* ========================================================================
- * Bootstrap: tooltip.js v3.2.0
- * http://getbootstrap.com/javascript/#tooltip
- * Inspired by the original jQuery.tipsy by Jason Frame
- * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-+function ($) {
-  'use strict';
-
-  // TOOLTIP PUBLIC CLASS DEFINITION
-  // ===============================
-
-  var Tooltip = function (element, options) {
-    this.type       =
-    this.options    =
-    this.enabled    =
-    this.timeout    =
-    this.hoverState =
-    this.$element   = null
-
-    this.init('tooltip', element, options)
-  }
-
-  Tooltip.VERSION  = '3.2.0'
-
-  Tooltip.DEFAULTS = {
-    animation: true,
-    placement: 'top',
-    selector: false,
-    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-    trigger: 'hover focus',
-    title: '',
-    delay: 0,
-    html: false,
-    container: false,
-    viewport: {
-      selector: 'body',
-      padding: 0
-    }
-  }
-
-  Tooltip.prototype.init = function (type, element, options) {
-    this.enabled   = true
-    this.type      = type
-    this.$element  = $(element)
-    this.options   = this.getOptions(options)
-    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
-
-    var triggers = this.options.trigger.split(' ')
-
-    for (var i = triggers.length; i--;) {
-      var trigger = triggers[i]
-
-      if (trigger == 'click') {
-        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
-      } else if (trigger != 'manual') {
-        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
-
-        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
-      }
-    }
-
-    this.options.selector ?
-      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
-      this.fixTitle()
-  }
-
-  Tooltip.prototype.getDefaults = function () {
-    return Tooltip.DEFAULTS
-  }
-
-  Tooltip.prototype.getOptions = function (options) {
-    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
-
-    if (options.delay && typeof options.delay == 'number') {
-      options.delay = {
-        show: options.delay,
-        hide: options.delay
-      }
-    }
-
-    return options
-  }
-
-  Tooltip.prototype.getDelegateOptions = function () {
-    var options  = {}
-    var defaults = this.getDefaults()
-
-    this._options && $.each(this._options, function (key, value) {
-      if (defaults[key] != value) options[key] = value
-    })
-
-    return options
-  }
-
-  Tooltip.prototype.enter = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'in'
-
-    if (!self.options.delay || !self.options.delay.show) return self.show()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'in') self.show()
-    }, self.options.delay.show)
-  }
-
-  Tooltip.prototype.leave = function (obj) {
-    var self = obj instanceof this.constructor ?
-      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-    if (!self) {
-      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-      $(obj.currentTarget).data('bs.' + this.type, self)
-    }
-
-    clearTimeout(self.timeout)
-
-    self.hoverState = 'out'
-
-    if (!self.options.delay || !self.options.delay.hide) return self.hide()
-
-    self.timeout = setTimeout(function () {
-      if (self.hoverState == 'out') self.hide()
-    }, self.options.delay.hide)
-  }
-
-  Tooltip.prototype.show = function () {
-    var e = $.Event('show.bs.' + this.type)
-
-    if (this.hasContent() && this.enabled) {
-      this.$element.trigger(e)
-
-      var inDom = $.contains(document.documentElement, this.$element[0])
-      if (e.isDefaultPrevented() || !inDom) return
-      var that = this
-
-      var $tip = this.tip()
-
-      var tipId = this.getUID(this.type)
-
-      this.setContent()
-      $tip.attr('id', tipId)
-      this.$element.attr('aria-describedby', tipId)
-
-      if (this.options.animation) $tip.addClass('fade')
-
-      var placement = typeof this.options.placement == 'function' ?
-        this.options.placement.call(this, $tip[0], this.$element[0]) :
-        this.options.placement
-
-      var autoToken = /\s?auto?\s?/i
-      var autoPlace = autoToken.test(placement)
-      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
-
-      $tip
-        .detach()
-        .css({ top: 0, left: 0, display: 'block' })
-        .addClass(placement)
-        .data('bs.' + this.type, this)
-
-      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
-
-      var pos          = this.getPosition()
-      var actualWidth  = $tip[0].offsetWidth
-      var actualHeight = $tip[0].offsetHeight
-
-      if (autoPlace) {
-        var orgPlacement = placement
-        var $parent      = this.$element.parent()
-        var parentDim    = this.getPosition($parent)
-
-        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
-                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
-                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
-                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
-                    placement
-
-        $tip
-          .removeClass(orgPlacement)
-          .addClass(placement)
-      }
-
-      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
-
-      this.applyPlacement(calculatedOffset, placement)
-
-      var complete = function () {
-        that.$element.trigger('shown.bs.' + that.type)
-        that.hoverState = null
-      }
-
-      $.support.transition && this.$tip.hasClass('fade') ?
-        $tip
-          .one('bsTransitionEnd', complete)
-          .emulateTransitionEnd(150) :
-        complete()
-    }
-  }
-
-  Tooltip.prototype.applyPlacement = function (offset, placement) {
-    var $tip   = this.tip()
-    var width  = $tip[0].offsetWidth
-    var height = $tip[0].offsetHeight
-
-    // manually read margins because getBoundingClientRect includes difference
-    var marginTop = parseInt($tip.css('margin-top'), 10)
-    var marginLeft = parseInt($tip.css('margin-left'), 10)
-
-    // we must check for NaN for ie 8/9
-    if (isNaN(marginTop))  marginTop  = 0
-    if (isNaN(marginLeft)) marginLeft = 0
-
-    offset.top  = offset.top  + marginTop
-    offset.left = offset.left + marginLeft
-
-    // $.fn.offset doesn't round pixel values
-    // so we use setOffset directly with our own function B-0
-    $.offset.setOffset($tip[0], $.extend({
-      using: function (props) {
-        $tip.css({
-          top: Math.round(props.top),
-          left: Math.round(props.left)
-        })
-      }
-    }, offset), 0)
-
-    $tip.addClass('in')
-
-    // check to see if placing tip in new offset caused the tip to resize itself
-    var actualWidth  = $tip[0].offsetWidth
-    var actualHeight = $tip[0].offsetHeight
-
-    if (placement == 'top' && actualHeight != height) {
-      offset.top = offset.top + height - actualHeight
-    }
-
-    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
-
-    if (delta.left) offset.left += delta.left
-    else offset.top += delta.top
-
-    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
-    var arrowPosition       = delta.left ? 'left'        : 'top'
-    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
-
-    $tip.offset(offset)
-    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
-  }
-
-  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
-    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
-  }
-
-  Tooltip.prototype.setContent = function () {
-    var $tip  = this.tip()
-    var title = this.getTitle()
-
-    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
-    $tip.removeClass('fade in top bottom left right')
-  }
-
-  Tooltip.prototype.hide = function () {
-    var that = this
-    var $tip = this.tip()
-    var e    = $.Event('hide.bs.' + this.type)
-
-    this.$element.removeAttr('aria-describedby')
-
-    function complete() {
-      if (that.hoverState != 'in') $tip.detach()
-      that.$element.trigger('hidden.bs.' + that.type)
-    }
-
-    this.$element.trigger(e)
-
-    if (e.isDefaultPrevented()) return
-
-    $tip.removeClass('in')
-
-    $.support.transition && this.$tip.hasClass('fade') ?
-      $tip
-        .one('bsTransitionEnd', complete)
-        .emulateTransitionEnd(150) :
-      complete()
-
-    this.hoverState = null
-
-    return this
-  }
-
-  Tooltip.prototype.fixTitle = function () {
-    var $e = this.$element
-    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
-      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
-    }
-  }
-
-  Tooltip.prototype.hasContent = function () {
-    return this.getTitle()
-  }
-
-  Tooltip.prototype.getPosition = function ($element) {
-    $element   = $element || this.$element
-    var el     = $element[0]
-    var isBody = el.tagName == 'BODY'
-    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
-      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
-      width:  isBody ? $(window).width()  : $element.outerWidth(),
-      height: isBody ? $(window).height() : $element.outerHeight()
-    }, isBody ? { top: 0, left: 0 } : $element.offset())
-  }
-
-  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
-
-  }
-
-  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
-    var delta = { top: 0, left: 0 }
-    if (!this.$viewport) return delta
-
-    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
-    var viewportDimensions = this.getPosition(this.$viewport)
-
-    if (/right|left/.test(placement)) {
-      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
-      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
-      if (topEdgeOffset < viewportDimensions.top) { // top overflow
-        delta.top = viewportDimensions.top - topEdgeOffset
-      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
-      }
-    } else {
-      var leftEdgeOffset  = pos.left - viewportPadding
-      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
-      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-        delta.left = viewportDimensions.left - leftEdgeOffset
-      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
-      }
-    }
-
-    return delta
-  }
-
-  Tooltip.prototype.getTitle = function () {
-    var title
-    var $e = this.$element
-    var o  = this.options
-
-    title = $e.attr('data-original-title')
-      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
-
-    return title
-  }
-
-  Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000)
-    while (document.getElementById(prefix))
-    return prefix
-  }
-
-  Tooltip.prototype.tip = function () {
-    return (this.$tip = this.$tip || $(this.options.template))
-  }
-
-  Tooltip.prototype.arrow = function () {
-    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
-  }
-
-  Tooltip.prototype.validate = function () {
-    if (!this.$element[0].parentNode) {
-      this.hide()
-      this.$element = null
-      this.options  = null
-    }
-  }
-
-  Tooltip.prototype.enable = function () {
-    this.enabled = true
-  }
-
-  Tooltip.prototype.disable = function () {
-    this.enabled = false
-  }
-
-  Tooltip.prototype.toggleEnabled = function () {
-    this.enabled = !this.enabled
-  }
-
-  Tooltip.prototype.toggle = function (e) {
-    var self = this
-    if (e) {
-      self = $(e.currentTarget).data('bs.' + this.type)
-      if (!self) {
-        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-        $(e.currentTarget).data('bs.' + this.type, self)
-      }
-    }
-
-    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
-  }
-
-  Tooltip.prototype.destroy = function () {
-    clearTimeout(this.timeout)
-    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
-  }
-
-
-  // TOOLTIP PLUGIN DEFINITION
-  // =========================
-
-  function Plugin(option) {
-    return this.each(function () {
-      var $this   = $(this)
-      var data    = $this.data('bs.tooltip')
-      var options = typeof option == 'object' && option
-
-      if (!data && option == 'destroy') return
-      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
-
-  var old = $.fn.tooltip
-
-  $.fn.tooltip             = Plugin
-  $.fn.tooltip.Constructor = Tooltip
-
-
-  // TOOLTIP NO CONFLICT
-  // ===================
-
-  $.fn.tooltip.noConflict = function () {
-    $.fn.tooltip = old
-    return this
-  }
-
-}(jQuery);
-
-},{}],"bowser":[function(require,module,exports){
-/*!
-  * Bowser - a browser detector
-  * https://github.com/ded/bowser
-  * MIT License | (c) Dustin Diaz 2014
-  */
-
-!function (name, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
-  else if (typeof define == 'function' && define.amd) define(definition)
-  else this[name] = definition()
-}('bowser', function () {
-  /**
-    * See useragents.js for examples of navigator.userAgent
-    */
-
-  var t = true
-
-  function detect(ua) {
-
-    function getFirstMatch(regex) {
-      var match = ua.match(regex);
-      return (match && match.length > 1 && match[1]) || '';
-    }
-
-    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
-      , likeAndroid = /like android/i.test(ua)
-      , android = !likeAndroid && /android/i.test(ua)
-      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
-      , tablet = /tablet/i.test(ua)
-      , mobile = !tablet && /[^-]mobi/i.test(ua)
-      , result
-
-    if (/opera|opr/i.test(ua)) {
-      result = {
-        name: 'Opera'
-      , opera: t
-      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/windows phone/i.test(ua)) {
-      result = {
-        name: 'Windows Phone'
-      , windowsphone: t
-      , msie: t
-      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/msie|trident/i.test(ua)) {
-      result = {
-        name: 'Internet Explorer'
-      , msie: t
-      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/chrome|crios|crmo/i.test(ua)) {
-      result = {
-        name: 'Chrome'
-      , chrome: t
-      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (iosdevice) {
-      result = {
-        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
-      }
-      // WTF: version is not part of user agent in web apps
-      if (versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    }
-    else if (/sailfish/i.test(ua)) {
-      result = {
-        name: 'Sailfish'
-      , sailfish: t
-      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/seamonkey\//i.test(ua)) {
-      result = {
-        name: 'SeaMonkey'
-      , seamonkey: t
-      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/firefox|iceweasel/i.test(ua)) {
-      result = {
-        name: 'Firefox'
-      , firefox: t
-      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
-      }
-      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
-        result.firefoxos = t
-      }
-    }
-    else if (/silk/i.test(ua)) {
-      result =  {
-        name: 'Amazon Silk'
-      , silk: t
-      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (android) {
-      result = {
-        name: 'Android'
-      , version: versionIdentifier
-      }
-    }
-    else if (/phantom/i.test(ua)) {
-      result = {
-        name: 'PhantomJS'
-      , phantom: t
-      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
-      result = {
-        name: 'BlackBerry'
-      , blackberry: t
-      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/(web|hpw)os/i.test(ua)) {
-      result = {
-        name: 'WebOS'
-      , webos: t
-      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
-      };
-      /touchpad\//i.test(ua) && (result.touchpad = t)
-    }
-    else if (/bada/i.test(ua)) {
-      result = {
-        name: 'Bada'
-      , bada: t
-      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
-      };
-    }
-    else if (/tizen/i.test(ua)) {
-      result = {
-        name: 'Tizen'
-      , tizen: t
-      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
-      };
-    }
-    else if (/safari/i.test(ua)) {
-      result = {
-        name: 'Safari'
-      , safari: t
-      , version: versionIdentifier
-      }
-    }
-    else result = {}
-
-    // set webkit or gecko flag for browsers based on these engines
-    if (/(apple)?webkit/i.test(ua)) {
-      result.name = result.name || "Webkit"
-      result.webkit = t
-      if (!result.version && versionIdentifier) {
-        result.version = versionIdentifier
-      }
-    } else if (!result.opera && /gecko\//i.test(ua)) {
-      result.name = result.name || "Gecko"
-      result.gecko = t
-      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
-    }
-
-    // set OS flags for platforms that have multiple browsers
-    if (android || result.silk) {
-      result.android = t
-    } else if (iosdevice) {
-      result[iosdevice] = t
-      result.ios = t
-    }
-
-    // OS version extraction
-    var osVersion = '';
-    if (iosdevice) {
-      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
-      osVersion = osVersion.replace(/[_\s]/g, '.');
-    } else if (android) {
-      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
-    } else if (result.windowsphone) {
-      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
-    } else if (result.webos) {
-      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
-    } else if (result.blackberry) {
-      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
-    } else if (result.bada) {
-      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
-    } else if (result.tizen) {
-      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
-    }
-    if (osVersion) {
-      result.osversion = osVersion;
-    }
-
-    // device type extraction
-    var osMajorVersion = osVersion.split('.')[0];
-    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
-      result.tablet = t
-    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
-      result.mobile = t
-    }
-
-    // Graded Browser Support
-    // http://developer.yahoo.com/yui/articles/gbs
-    if ((result.msie && result.version >= 10) ||
-        (result.chrome && result.version >= 20) ||
-        (result.firefox && result.version >= 20.0) ||
-        (result.safari && result.version >= 6) ||
-        (result.opera && result.version >= 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
-        (result.blackberry && result.version >= 10.1)
-        ) {
-      result.a = t;
-    }
-    else if ((result.msie && result.version < 10) ||
-        (result.chrome && result.version < 20) ||
-        (result.firefox && result.version < 20.0) ||
-        (result.safari && result.version < 6) ||
-        (result.opera && result.version < 10.0) ||
-        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
-        ) {
-      result.c = t
-    } else result.x = t
-
-    return result
-  }
-
-  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
-
-
-  /*
-   * Set our detect method to the main bowser object so we can
-   * reuse it to test other user agents.
-   * This is needed to implement future tests.
-   */
-  bowser._detect = detect;
-
-  return bowser
-});
-
-},{}],2:[function(require,module,exports){
+},{"./desktop/bundle":9}],2:[function(require,module,exports){
 /**
 binds a function to a context
 
@@ -16680,13 +13200,7 @@ window.Routes = require('../shared/routes/routes');
 
 window.ApiRoutes = require('../shared/routes/api');
 
-require('./react/entities/normalized_entry');
-
 require('./react/services/positions');
-
-require('./react/services/entry_store');
-
-require('./react/services/entry_normalizer');
 
 global.DesignSettingsService = require('./react/services/designSettings');
 
@@ -16727,6 +13241,8 @@ require('./react/dispatchers/current_user');
 require('./react/dispatchers/relationships');
 
 global.CurrentUserStore = require('./react/stores/current_user');
+
+require('./react/stores/editor');
 
 require('./react/stores/relationships');
 
@@ -16972,42 +13488,6 @@ require('./react/components/persons_popup/panels/socialNetwork/facebook');
 
 require('./react/components/people/item');
 
-require('./react/components/post_editor/mixins/dragging');
-
-require('./react/components/post_editor/mixins/persistence');
-
-require('./react/components/post_editor/mixins/images_form');
-
-require('./react/components/post_editor/mixins/layout');
-
-require('./react/components/post_editor/mixins/video');
-
-require('./react/components/post_editor/welcome_messages/instagram');
-
-require('./react/components/post_editor/welcome_messages/image');
-
-require('./react/components/post_editor/welcome_messages/music');
-
-require('./react/components/post_editor/welcome_messages/video');
-
-require('./react/components/post_editor/video_mediabox/video_mediabox');
-
-require('./react/components/post_editor/video_mediabox/loading');
-
-require('./react/components/post_editor/video_mediabox/url_insert');
-
-require('./react/components/post_editor/video_mediabox/embeded');
-
-require('./react/components/post_editor/images_mediabox/loaded');
-
-require('./react/components/post_editor/images_mediabox/url_insert');
-
-require('./react/components/post_editor/mediabox/actions');
-
-require('./react/components/post_editor/mediabox/layout');
-
-require('./react/components/post_editor/mediabox/loading_progress');
-
 require('./react/components/entry_metabar/entry_metabar');
 
 require('./react/components/entry_metabar/author');
@@ -17068,44 +13548,6 @@ require('./react/components/entry_comment_box/comment_form/buttons/submit');
 
 require('./react/components/entry_comment_box/load_more');
 
-require('./react/components/post_editor/actions/actions');
-
-require('./react/components/post_editor/actions/buttons/vote');
-
-require('./react/components/post_editor/actions/buttons/privacy');
-
-require('./react/components/post_editor/editors/mixins/autosave');
-
-require('./react/components/post_editor/editors/_tasty');
-
-require('./react/components/post_editor/editors/anonymous');
-
-require('./react/components/post_editor/editors/text');
-
-require('./react/components/post_editor/editors/image');
-
-require('./react/components/post_editor/editors/instagram');
-
-require('./react/components/post_editor/editors/music');
-
-require('./react/components/post_editor/editors/video');
-
-require('./react/components/post_editor/editors/quote');
-
-require('./react/components/post_editor/choicer');
-
-require('./react/components/post_editor/layout');
-
-require('./react/components/post_editor/new_post');
-
-require('./react/components/post_editor/new_anonymous_post');
-
-require('./react/components/post_editor/edit_post');
-
-require('./react/components/post_editor/editor_container');
-
-require('./react/components/post_editor/demo');
-
 require('./react/components/hero/profile/profile');
 
 require('./react/components/hero/profile/profile_avatar');
@@ -17135,6 +13577,10 @@ require('./react/components/hero/profile/popup/items/follower_item');
 require('./react/components/hero/profile/popup/items/following_item');
 
 require('./react/components/hero/profile/popup/items/tag_item');
+
+global.EditorNew = require('./react/components/Editor/EditorNew');
+
+global.EditorEdit = require('./react/components/Editor/EditorEdit');
 
 require('./react/components/images_collage');
 
@@ -17173,7 +13619,115 @@ require('./react/application');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":331,"../shared/routes/api":332,"../shared/routes/routes":333,"./react/application":16,"./react/components/auth/auth":17,"./react/components/auth/authorization/authorization":18,"./react/components/auth/authorization/facebook":19,"./react/components/auth/authorization/vk":20,"./react/components/auth/buttons/facebook_auth_button":21,"./react/components/auth/buttons/vk_auth_button":22,"./react/components/auth/email/email":26,"./react/components/auth/recovery":31,"./react/components/avatars/avatar":33,"./react/components/avatars/user_avatar":34,"./react/components/buttons/load_more":35,"./react/components/calendar/calendar":36,"./react/components/calendar/calendar_header":37,"./react/components/calendar/calendar_marker":38,"./react/components/calendar/calendar_period":39,"./react/components/calendar/calendar_timeline":40,"./react/components/common/adaptive_input":41,"./react/components/design_settings_popup/color_picker":44,"./react/components/design_settings_popup/color_picker_popup":45,"./react/components/design_settings_popup/controls":46,"./react/components/design_settings_popup/controls_items/_progressbar":47,"./react/components/design_settings_popup/controls_items/_radiobutton":48,"./react/components/design_settings_popup/controls_items/align_item":49,"./react/components/design_settings_popup/controls_items/background_item":50,"./react/components/design_settings_popup/controls_items/feed_color_item":51,"./react/components/design_settings_popup/controls_items/font_type_item":52,"./react/components/design_settings_popup/controls_items/header_color_item":53,"./react/components/design_settings_popup/controls_items/opacity_item":54,"./react/components/design_settings_popup/design_settings_popup":55,"./react/components/editable_field":56,"./react/components/embed":57,"./react/components/entry_comment_box/comment_form/buttons/submit":58,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":59,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":60,"./react/components/entry_comment_box/comment_form/comment_form":61,"./react/components/entry_comment_box/comment_list/comment":62,"./react/components/entry_comment_box/comment_list/comment_list":63,"./react/components/entry_comment_box/comment_list/comment_manager":64,"./react/components/entry_comment_box/comment_metabar/comment_metabar":65,"./react/components/entry_comment_box/comment_metabar/date":66,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":67,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":68,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":69,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":70,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":71,"./react/components/entry_comment_box/comment_metabar/reply":72,"./react/components/entry_comment_box/entry_comment_box":73,"./react/components/entry_comment_box/load_more":74,"./react/components/entry_comment_box/mixins/comments":75,"./react/components/entry_metabar/author":76,"./react/components/entry_metabar/comment":77,"./react/components/entry_metabar/date":78,"./react/components/entry_metabar/dropdown_menu":79,"./react/components/entry_metabar/dropdown_menu_items/delete_item":80,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":81,"./react/components/entry_metabar/dropdown_menu_items/item":82,"./react/components/entry_metabar/dropdown_menu_items/report_item":83,"./react/components/entry_metabar/dropdown_menu_items/watch_item":84,"./react/components/entry_metabar/entry_metabar":85,"./react/components/entry_metabar/tag":86,"./react/components/entry_metabar/tags":87,"./react/components/feed/bricks":88,"./react/components/feed/feed":89,"./react/components/feed/mixins/base":90,"./react/components/feed/tlog":91,"./react/components/follow_status":92,"./react/components/hero/profile/dropdown_menu":94,"./react/components/hero/profile/dropdown_menu_items/ignore":95,"./react/components/hero/profile/dropdown_menu_items/report":96,"./react/components/hero/profile/popup/followers_popup":97,"./react/components/hero/profile/popup/followings_popup":98,"./react/components/hero/profile/popup/items/follower_item":99,"./react/components/hero/profile/popup/items/following_item":100,"./react/components/hero/profile/popup/items/tag_item":101,"./react/components/hero/profile/popup/popup":102,"./react/components/hero/profile/popup/tags_popup":103,"./react/components/hero/profile/profile":104,"./react/components/hero/profile/profile_avatar":105,"./react/components/hero/profile/profile_head":106,"./react/components/hero/profile/profile_stats":107,"./react/components/hero/profile/profile_stats_item":108,"./react/components/images_collage":109,"./react/components/notifications/tasty_alert":110,"./react/components/notifications/tasty_confirm":111,"./react/components/notifications/tasty_locking_alert":112,"./react/components/notifications/tasty_notify":113,"./react/components/people/item":114,"./react/components/persons_popup/items/follower_relationship":115,"./react/components/persons_popup/items/following_relationship":116,"./react/components/persons_popup/items/guess_relationship":117,"./react/components/persons_popup/items/ignored_relationship":118,"./react/components/persons_popup/items/item":119,"./react/components/persons_popup/items/requested_relationship":120,"./react/components/persons_popup/menu":121,"./react/components/persons_popup/menu_item":122,"./react/components/persons_popup/mixins/panel_mixin":123,"./react/components/persons_popup/panels/followers_panel":124,"./react/components/persons_popup/panels/followings_panel":125,"./react/components/persons_popup/panels/guessed_panel":126,"./react/components/persons_popup/panels/ignored_panel":127,"./react/components/persons_popup/panels/requested_panel":128,"./react/components/persons_popup/panels/socialNetwork/facebook":129,"./react/components/persons_popup/panels/socialNetwork/vkontakte":139,"./react/components/persons_popup/persons_popup":146,"./react/components/popup/header":147,"./react/components/popup/layout":148,"./react/components/popup/popup":149,"./react/components/popup/spinner":150,"./react/components/popup_box":151,"./react/components/post_editor/actions/actions":152,"./react/components/post_editor/actions/buttons/privacy":153,"./react/components/post_editor/actions/buttons/vote":154,"./react/components/post_editor/choicer":155,"./react/components/post_editor/demo":156,"./react/components/post_editor/edit_post":157,"./react/components/post_editor/editor_container":158,"./react/components/post_editor/editors/_tasty":159,"./react/components/post_editor/editors/anonymous":160,"./react/components/post_editor/editors/image":161,"./react/components/post_editor/editors/instagram":162,"./react/components/post_editor/editors/mixins/autosave":163,"./react/components/post_editor/editors/music":164,"./react/components/post_editor/editors/quote":165,"./react/components/post_editor/editors/text":166,"./react/components/post_editor/editors/video":167,"./react/components/post_editor/images_mediabox/loaded":168,"./react/components/post_editor/images_mediabox/url_insert":169,"./react/components/post_editor/layout":170,"./react/components/post_editor/mediabox/actions":171,"./react/components/post_editor/mediabox/layout":172,"./react/components/post_editor/mediabox/loading_progress":173,"./react/components/post_editor/mixins/dragging":174,"./react/components/post_editor/mixins/images_form":175,"./react/components/post_editor/mixins/layout":176,"./react/components/post_editor/mixins/persistence":177,"./react/components/post_editor/mixins/video":178,"./react/components/post_editor/new_anonymous_post":179,"./react/components/post_editor/new_post":180,"./react/components/post_editor/video_mediabox/embeded":181,"./react/components/post_editor/video_mediabox/loading":182,"./react/components/post_editor/video_mediabox/url_insert":183,"./react/components/post_editor/video_mediabox/video_mediabox":184,"./react/components/post_editor/welcome_messages/image":185,"./react/components/post_editor/welcome_messages/instagram":186,"./react/components/post_editor/welcome_messages/music":187,"./react/components/post_editor/welcome_messages/video":188,"./react/components/relationship_buttons/follow_button":189,"./react/components/relationship_buttons/follower_button":190,"./react/components/relationship_buttons/guess_button":191,"./react/components/relationship_buttons/ignore_button":192,"./react/components/relationship_buttons/mixins/relationship":193,"./react/components/relationship_buttons/request_button":194,"./react/components/screen_viewer/screen_viewer":195,"./react/components/search/button":199,"./react/components/search/field":200,"./react/components/search/search":201,"./react/components/searchResults/index":197,"./react/components/settings/settings":218,"./react/components/shellbox_layer":221,"./react/components/shellboxes/confirm_registration":222,"./react/components/smart_follow_status":223,"./react/components/spinner":224,"./react/components/tlog_alert":225,"./react/components/toolbars/avatar":226,"./react/components/toolbars/close/close":227,"./react/components/toolbars/user":228,"./react/components/transition/timeout_transition_group":236,"./react/components/voting":237,"./react/controllers/popup":243,"./react/controllers/shellbox":245,"./react/controllers/tasty_alert":246,"./react/controllers/tasty_confirm":247,"./react/controllers/tasty_events":248,"./react/controllers/tasty_locking_alert":249,"./react/controllers/tasty_notify":250,"./react/controllers/tasty_sound":251,"./react/dispatchers/current_user":253,"./react/dispatchers/relationships":255,"./react/entities/normalized_entry":256,"./react/helpers/app":257,"./react/mediators/comments":258,"./react/messaging/actions/conversation":259,"./react/messaging/actions/message":260,"./react/messaging/actions/notification":261,"./react/messaging/actions/popup":262,"./react/messaging/components/buttons/write_message":263,"./react/messaging/components/messages_popup/conversations/conversations":264,"./react/messaging/components/messages_popup/conversations/list/empty":265,"./react/messaging/components/messages_popup/conversations/list/list":266,"./react/messaging/components/messages_popup/conversations/list/list_item":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":268,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":269,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":270,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":271,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":272,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":273,"./react/messaging/components/messages_popup/loading_message":274,"./react/messaging/components/messages_popup/messages_popup":275,"./react/messaging/components/messages_popup/thread/message_form/message_form":276,"./react/messaging/components/messages_popup/thread/message_list/empty":277,"./react/messaging/components/messages_popup/thread/message_list/message_list":278,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":279,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":280,"./react/messaging/components/messages_popup/thread/thread":281,"./react/messaging/components/messages_popup/ui/back_button":282,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":283,"./react/messaging/components/notifications_popup/notifications/empty":284,"./react/messaging/components/notifications_popup/notifications/notification":285,"./react/messaging/components/notifications_popup/notifications/notifications":286,"./react/messaging/components/notifications_popup/notifications_popup":287,"./react/messaging/components/toolbars/indicators/indicators":288,"./react/messaging/components/toolbars/indicators/messages":289,"./react/messaging/components/toolbars/indicators/notifications":290,"./react/messaging/dispatchers/messaging":291,"./react/messaging/messaging_requester":292,"./react/messaging/messaging_service":293,"./react/messaging/messaging_testing":294,"./react/messaging/stores/connection_state":296,"./react/messaging/stores/conversations":297,"./react/messaging/stores/messages":298,"./react/messaging/stores/messages_popup_state":299,"./react/messaging/stores/messaging_status":300,"./react/messaging/stores/notifications":301,"./react/mixins/activities":302,"./react/mixins/component_manipulations":303,"./react/mixins/dom_manipulations":304,"./react/mixins/error_timer":305,"./react/mixins/grammar":306,"./react/mixins/positions":307,"./react/mixins/requester":308,"./react/mixins/scroller":309,"./react/mixins/shake":310,"./react/mixins/touch":311,"./react/mixins/unmount":312,"./react/services/designPresenter":314,"./react/services/designSettings":315,"./react/services/designStates":316,"./react/services/entry_normalizer":317,"./react/services/entry_store":318,"./react/services/positions":319,"./react/services/uuid":320,"./react/stores/current_user":322,"./react/stores/relationships":323,"./resources/fileReceiver":324,"./resources/is_mobile":325,"./resources/libs":326,"./resources/locales":327,"./resources/tasty":328,"./resources/tasty_utils":329}],10:[function(require,module,exports){
+},{"../shared/react/services/thumbor":329,"../shared/routes/api":330,"../shared/routes/routes":331,"./react/application":17,"./react/components/Editor/EditorEdit":21,"./react/components/Editor/EditorNew":22,"./react/components/auth/auth":49,"./react/components/auth/authorization/authorization":50,"./react/components/auth/authorization/facebook":51,"./react/components/auth/authorization/vk":52,"./react/components/auth/buttons/facebook_auth_button":53,"./react/components/auth/buttons/vk_auth_button":54,"./react/components/auth/email/email":58,"./react/components/auth/recovery":63,"./react/components/avatars/avatar":65,"./react/components/avatars/user_avatar":66,"./react/components/buttons/load_more":67,"./react/components/calendar/calendar":68,"./react/components/calendar/calendar_header":69,"./react/components/calendar/calendar_marker":70,"./react/components/calendar/calendar_period":71,"./react/components/calendar/calendar_timeline":72,"./react/components/common/adaptive_input":74,"./react/components/design_settings_popup/color_picker":77,"./react/components/design_settings_popup/color_picker_popup":78,"./react/components/design_settings_popup/controls":79,"./react/components/design_settings_popup/controls_items/_progressbar":80,"./react/components/design_settings_popup/controls_items/_radiobutton":81,"./react/components/design_settings_popup/controls_items/align_item":82,"./react/components/design_settings_popup/controls_items/background_item":83,"./react/components/design_settings_popup/controls_items/feed_color_item":84,"./react/components/design_settings_popup/controls_items/font_type_item":85,"./react/components/design_settings_popup/controls_items/header_color_item":86,"./react/components/design_settings_popup/controls_items/opacity_item":87,"./react/components/design_settings_popup/design_settings_popup":88,"./react/components/editable_field":89,"./react/components/embed":90,"./react/components/entry_comment_box/comment_form/buttons/submit":91,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":92,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":93,"./react/components/entry_comment_box/comment_form/comment_form":94,"./react/components/entry_comment_box/comment_list/comment":95,"./react/components/entry_comment_box/comment_list/comment_list":96,"./react/components/entry_comment_box/comment_list/comment_manager":97,"./react/components/entry_comment_box/comment_metabar/comment_metabar":98,"./react/components/entry_comment_box/comment_metabar/date":99,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":100,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":101,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":102,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":103,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":104,"./react/components/entry_comment_box/comment_metabar/reply":105,"./react/components/entry_comment_box/entry_comment_box":106,"./react/components/entry_comment_box/load_more":107,"./react/components/entry_comment_box/mixins/comments":108,"./react/components/entry_metabar/author":109,"./react/components/entry_metabar/comment":110,"./react/components/entry_metabar/date":111,"./react/components/entry_metabar/dropdown_menu":112,"./react/components/entry_metabar/dropdown_menu_items/delete_item":113,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":114,"./react/components/entry_metabar/dropdown_menu_items/item":115,"./react/components/entry_metabar/dropdown_menu_items/report_item":116,"./react/components/entry_metabar/dropdown_menu_items/watch_item":117,"./react/components/entry_metabar/entry_metabar":118,"./react/components/entry_metabar/tag":119,"./react/components/entry_metabar/tags":120,"./react/components/feed/bricks":121,"./react/components/feed/feed":122,"./react/components/feed/mixins/base":123,"./react/components/feed/tlog":124,"./react/components/follow_status":125,"./react/components/hero/profile/dropdown_menu":127,"./react/components/hero/profile/dropdown_menu_items/ignore":128,"./react/components/hero/profile/dropdown_menu_items/report":129,"./react/components/hero/profile/popup/followers_popup":130,"./react/components/hero/profile/popup/followings_popup":131,"./react/components/hero/profile/popup/items/follower_item":132,"./react/components/hero/profile/popup/items/following_item":133,"./react/components/hero/profile/popup/items/tag_item":134,"./react/components/hero/profile/popup/popup":135,"./react/components/hero/profile/popup/tags_popup":136,"./react/components/hero/profile/profile":137,"./react/components/hero/profile/profile_avatar":138,"./react/components/hero/profile/profile_head":139,"./react/components/hero/profile/profile_stats":140,"./react/components/hero/profile/profile_stats_item":141,"./react/components/images_collage":142,"./react/components/notifications/tasty_alert":143,"./react/components/notifications/tasty_confirm":144,"./react/components/notifications/tasty_locking_alert":145,"./react/components/notifications/tasty_notify":146,"./react/components/people/item":147,"./react/components/persons_popup/items/follower_relationship":148,"./react/components/persons_popup/items/following_relationship":149,"./react/components/persons_popup/items/guess_relationship":150,"./react/components/persons_popup/items/ignored_relationship":151,"./react/components/persons_popup/items/item":152,"./react/components/persons_popup/items/requested_relationship":153,"./react/components/persons_popup/menu":154,"./react/components/persons_popup/menu_item":155,"./react/components/persons_popup/mixins/panel_mixin":156,"./react/components/persons_popup/panels/followers_panel":157,"./react/components/persons_popup/panels/followings_panel":158,"./react/components/persons_popup/panels/guessed_panel":159,"./react/components/persons_popup/panels/ignored_panel":160,"./react/components/persons_popup/panels/requested_panel":161,"./react/components/persons_popup/panels/socialNetwork/facebook":162,"./react/components/persons_popup/panels/socialNetwork/vkontakte":172,"./react/components/persons_popup/persons_popup":179,"./react/components/popup/header":180,"./react/components/popup/layout":181,"./react/components/popup/popup":182,"./react/components/popup/spinner":183,"./react/components/popup_box":184,"./react/components/relationship_buttons/follow_button":185,"./react/components/relationship_buttons/follower_button":186,"./react/components/relationship_buttons/guess_button":187,"./react/components/relationship_buttons/ignore_button":188,"./react/components/relationship_buttons/mixins/relationship":189,"./react/components/relationship_buttons/request_button":190,"./react/components/screen_viewer/screen_viewer":191,"./react/components/search/button":192,"./react/components/search/field":193,"./react/components/search/search":194,"./react/components/searchResults/index":196,"./react/components/settings/settings":214,"./react/components/shellbox_layer":217,"./react/components/shellboxes/confirm_registration":218,"./react/components/smart_follow_status":219,"./react/components/spinner":220,"./react/components/tlog_alert":221,"./react/components/toolbars/avatar":222,"./react/components/toolbars/close/close":223,"./react/components/toolbars/user":224,"./react/components/transition/timeout_transition_group":232,"./react/components/voting":233,"./react/controllers/popup":240,"./react/controllers/shellbox":242,"./react/controllers/tasty_alert":243,"./react/controllers/tasty_confirm":244,"./react/controllers/tasty_events":245,"./react/controllers/tasty_locking_alert":246,"./react/controllers/tasty_notify":247,"./react/controllers/tasty_sound":248,"./react/dispatchers/current_user":250,"./react/dispatchers/relationships":252,"./react/helpers/app":254,"./react/mediators/comments":255,"./react/messaging/actions/conversation":256,"./react/messaging/actions/message":257,"./react/messaging/actions/notification":258,"./react/messaging/actions/popup":259,"./react/messaging/components/buttons/write_message":260,"./react/messaging/components/messages_popup/conversations/conversations":261,"./react/messaging/components/messages_popup/conversations/list/empty":262,"./react/messaging/components/messages_popup/conversations/list/list":263,"./react/messaging/components/messages_popup/conversations/list/list_item":264,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":265,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":266,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":267,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":268,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":269,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":270,"./react/messaging/components/messages_popup/loading_message":271,"./react/messaging/components/messages_popup/messages_popup":272,"./react/messaging/components/messages_popup/thread/message_form/message_form":273,"./react/messaging/components/messages_popup/thread/message_list/empty":274,"./react/messaging/components/messages_popup/thread/message_list/message_list":275,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":276,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":277,"./react/messaging/components/messages_popup/thread/thread":278,"./react/messaging/components/messages_popup/ui/back_button":279,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":280,"./react/messaging/components/notifications_popup/notifications/empty":281,"./react/messaging/components/notifications_popup/notifications/notification":282,"./react/messaging/components/notifications_popup/notifications/notifications":283,"./react/messaging/components/notifications_popup/notifications_popup":284,"./react/messaging/components/toolbars/indicators/indicators":285,"./react/messaging/components/toolbars/indicators/messages":286,"./react/messaging/components/toolbars/indicators/notifications":287,"./react/messaging/dispatchers/messaging":288,"./react/messaging/messaging_requester":289,"./react/messaging/messaging_service":290,"./react/messaging/messaging_testing":291,"./react/messaging/stores/connection_state":293,"./react/messaging/stores/conversations":294,"./react/messaging/stores/messages":295,"./react/messaging/stores/messages_popup_state":296,"./react/messaging/stores/messaging_status":297,"./react/messaging/stores/notifications":298,"./react/mixins/activities":299,"./react/mixins/component_manipulations":300,"./react/mixins/dom_manipulations":301,"./react/mixins/error_timer":302,"./react/mixins/grammar":303,"./react/mixins/positions":304,"./react/mixins/requester":305,"./react/mixins/scroller":306,"./react/mixins/shake":307,"./react/mixins/touch":308,"./react/mixins/unmount":309,"./react/services/designPresenter":311,"./react/services/designSettings":312,"./react/services/designStates":313,"./react/services/positions":316,"./react/services/uuid":317,"./react/stores/current_user":319,"./react/stores/editor":320,"./react/stores/relationships":321,"./resources/fileReceiver":322,"./resources/is_mobile":323,"./resources/libs":324,"./resources/locales":325,"./resources/tasty":326,"./resources/tasty_utils":327}],10:[function(require,module,exports){
+var Api, AppDispatcher, EditorActionCreators, EditorConstants, EditorStore;
+
+Api = require('../api/api');
+
+EditorConstants = require('../constants/constants').editor;
+
+EditorStore = require('../stores/editor');
+
+AppDispatcher = require('../dispatchers/dispatcher');
+
+EditorActionCreators = {
+  init: function(_arg) {
+    var entry, tlogType;
+    entry = _arg.entry, tlogType = _arg.tlogType;
+    return AppDispatcher.handleViewAction({
+      type: EditorConstants.INIT,
+      entry: entry,
+      tlogType: tlogType
+    });
+  },
+  updateField: function(_arg) {
+    var key, value;
+    key = _arg.key, value = _arg.value;
+    return AppDispatcher.handleViewAction({
+      type: EditorConstants.UPDATE_FIELD,
+      key: key,
+      value: value
+    });
+  },
+  changeEntryType: function(entryType) {
+    return AppDispatcher.handleViewAction({
+      type: EditorConstants.CHANGE_TYPE,
+      entryType: entryType
+    });
+  },
+  changeEntryPrivacy: function(entryPrivacy) {
+    return AppDispatcher.handleViewAction({
+      type: EditorConstants.CHANGE_PRIVACY,
+      entryPrivacy: entryPrivacy
+    });
+  },
+  createImageAttachments: function(formData) {
+    return Api.editor.createImageAttachments(formData);
+  },
+  createEmbed: function(embedUrl) {
+    return Api.editor.createEmbed(embedUrl);
+  },
+  saveEntry: function() {
+    var data, entryID, entryType, onSuccess, url;
+    data = {};
+    entryID = EditorStore.getEntryID();
+    entryType = EditorStore.getEntryType();
+    if (entryType === 'music' || entryType === 'instagram') {
+      entryType = 'video';
+    }
+    onSuccess = function(entry) {
+      if (TastySettings.env === 'static-development') {
+        alert("Статья " + entry.id + " успешно сохранена");
+      } else {
+        TastyNotifyController.notifySuccess(i18n.t('editor_create_success'));
+        window.location.href = entry.entry_url;
+      }
+      return AppDispatcher.handleServerAction({
+        type: EditorConstants.ENTRY_SAVED
+      });
+    };
+    switch (entryType) {
+      case 'text':
+        data.title = EditorStore.getEntryValue('title');
+        data.text = EditorStore.getEntryValue('text');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'anonymous':
+        data.title = EditorStore.getEntryValue('title');
+        data.text = EditorStore.getEntryValue('text');
+        break;
+      case 'image':
+        data.title = EditorStore.getEntryValue('title');
+        data.image_url = EditorStore.getEntryValue('imageUrl');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'instagram':
+      case 'music':
+      case 'video':
+        data.title = EditorStore.getEntryValue('title');
+        data.video_url = EditorStore.getEntryValue('embedUrl');
+        data.privacy = EditorStore.getEntryPrivacy();
+        break;
+      case 'quote':
+        data.text = EditorStore.getEntryValue('text');
+        data.source = EditorStore.getEntryValue('source');
+        data.privacy = EditorStore.getEntryPrivacy();
+    }
+    if (entryID) {
+      url = ApiRoutes.update_entry_url(entryID, entryType);
+      return Api.editor.updateEntry(url, data).then(onSuccess);
+    } else {
+      url = ApiRoutes.create_entry_url(entryType);
+      return Api.editor.createEntry(url, data).then(onSuccess);
+    }
+  }
+};
+
+module.exports = EditorActionCreators;
+
+
+
+},{"../api/api":16,"../constants/constants":235,"../dispatchers/dispatcher":251,"../stores/editor":320}],11:[function(require,module,exports){
 var CurrentUserStore, PopupActions, Searchbox;
 
 CurrentUserStore = require('../stores/current_user');
@@ -17237,7 +13791,7 @@ module.exports = PopupActions;
 
 
 
-},{"../components/searchbox/index":202,"../stores/current_user":322}],11:[function(require,module,exports){
+},{"../components/searchbox/index":198,"../stores/current_user":319}],12:[function(require,module,exports){
 var Api, SearchActions;
 
 Api = require('../api/api');
@@ -17259,7 +13813,7 @@ module.exports = SearchActions;
 
 
 
-},{"../api/api":15}],12:[function(require,module,exports){
+},{"../api/api":16}],13:[function(require,module,exports){
 var CurrentUserServerActions;
 
 CurrentUserServerActions = {
@@ -17286,7 +13840,7 @@ module.exports = CurrentUserServerActions;
 
 
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var AppDispatcher, Constants, UserToolbarActions;
 
 Constants = require('../constants/constants');
@@ -17312,7 +13866,7 @@ module.exports = UserToolbarActions;
 
 
 
-},{"../constants/constants":239,"../dispatchers/dispatcher":254}],14:[function(require,module,exports){
+},{"../constants/constants":235,"../dispatchers/dispatcher":251}],15:[function(require,module,exports){
 var CurrentUserResource, CurrentUserServerActions, CurrentUserViewActions;
 
 CurrentUserResource = require('../../resources/current_user');
@@ -17454,7 +14008,7 @@ module.exports = CurrentUserViewActions;
 
 
 
-},{"../../resources/current_user":313,"../server/current_user":12}],15:[function(require,module,exports){
+},{"../../resources/current_user":310,"../server/current_user":13}],16:[function(require,module,exports){
 var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
 
 _ = require('lodash');
@@ -17479,7 +14033,7 @@ userToken = function() {
 };
 
 request = function(_method, url, data) {
-  var dataType, headers, method, processData;
+  var contentType, headers, method, processData;
   if (data == null) {
     data = {};
   }
@@ -17504,10 +14058,10 @@ request = function(_method, url, data) {
     }
   })();
   if (data instanceof FormData) {
-    dataType = 'multipart/form-data';
+    contentType = false;
     processData = false;
   } else {
-    dataType = 'json';
+    contentType = 'application/x-www-form-urlencoded';
     processData = true;
     _.extend(data, {
       _method: _method
@@ -17517,6 +14071,8 @@ request = function(_method, url, data) {
     url: url,
     method: method,
     data: data,
+    contentType: contentType,
+    processData: processData,
     headers: headers,
     timeout: TIMEOUT,
     xhrFields: {
@@ -17556,6 +14112,37 @@ Api = {
       abortPendingRequests(key);
       return _pendingRequests[key] = getRequest(url, data);
     }
+  },
+  editor: {
+    createImageAttachments: function(formData) {
+      var key, url;
+      url = ApiRoutes.imageAttachments();
+      key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENTS;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, formData);
+    },
+    createEmbed: function(embedUrl) {
+      var data, key, url;
+      url = ApiRoutes.iframely_url();
+      key = Constants.api.EDITOR_CREATE_EMBED;
+      data = {
+        url: embedUrl
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    createEntry: function(url, data) {
+      var key;
+      key = Constants.api.EDITOR_CREATE_ENTRY;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    updateEntry: function(url, data) {
+      var key;
+      key = Constants.api.EDITOR_UPDATE_ENTRY;
+      abortPendingRequests(key);
+      return _pendingRequests[key] = putRequest(url, data);
+    }
   }
 };
 
@@ -17563,7 +14150,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":239,"../stores/current_user":322,"lodash":487}],16:[function(require,module,exports){
+},{"../constants/constants":235,"../stores/current_user":319,"lodash":485}],17:[function(require,module,exports){
 var AppDispatcher, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs;
 
 window.i18n = require('i18next');
@@ -17657,7 +14244,1875 @@ window.ReactApp = {
 
 
 
-},{"./actions/popup":10,"./controllers/guide":241,"./controllers/layoutStates":242,"./controllers/popuup":244,"./dispatchers/dispatcher":254,"i18next":undefined,"reactUjs":undefined}],17:[function(require,module,exports){
+},{"./actions/popup":11,"./controllers/guide":238,"./controllers/layoutStates":239,"./controllers/popuup":241,"./dispatchers/dispatcher":251,"i18next":undefined,"reactUjs":undefined}],18:[function(require,module,exports){
+var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, EditorActionCreators, EditorActions, EditorPreviewButton, EditorPrivacyButton, EditorSaveButton, EditorVoteButton, PropTypes, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, classSet;
+
+classSet = require('react/lib/cx');
+
+EditorActionCreators = require('../../../actions/editor');
+
+EditorVoteButton = require('../buttons/Vote');
+
+EditorPrivacyButton = require('../buttons/Privacy');
+
+EditorPreviewButton = require('../buttons/Preview');
+
+EditorSaveButton = require('../buttons/Save');
+
+PropTypes = React.PropTypes;
+
+ENTRY_PRIVACY_PRIVATE = TLOG_TYPE_PRIVATE = 'private';
+
+ENTRY_PRIVACY_PUBLIC = TLOG_TYPE_PUBLIC = 'public';
+
+ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous';
+
+ENTRY_PRIVACY_LIVE = 'live';
+
+EditorActions = React.createClass({
+  displayName: 'EditorActions',
+  propTypes: {
+    entryPrivacy: PropTypes.string.isRequired,
+    tlogType: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return {
+      preview: false
+    };
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    if (this.state.preview !== nextState.preview) {
+      if (nextState.preview) {
+        return $("body").removeClass('tlog-mode-minimal').addClass('tlog-mode-full');
+      } else {
+        return $("body").removeClass('tlog-mode-full').addClass('tlog-mode-minimal');
+      }
+    }
+  },
+  render: function() {
+    var actionsClasses;
+    actionsClasses = classSet({
+      'post-actions': true,
+      'state--loading': this.props.loading
+    });
+    return React.createElement("div", {
+      "className": actionsClasses
+    }, this.renderSpinner(), this.renderVoteButton(), this.renderPrivacyButton(), React.createElement("div", {
+      "className": "post-action post-action--button"
+    }, React.createElement(EditorPreviewButton, {
+      "onClick": this.togglePreview
+    })), React.createElement("div", {
+      "className": "post-action post-action--button"
+    }, React.createElement("div", {
+      "className": "button-group"
+    }, React.createElement(EditorSaveButton, {
+      "private": this.isEntryPrivate(),
+      "onClick": this.saveEntry
+    }))));
+  },
+  renderVoteButton: function() {
+    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate())) {
+      return React.createElement("div", {
+        "className": "post-action post-action--button"
+      }, React.createElement(EditorVoteButton, {
+        "enabled": this.isEntryLive(),
+        "onClick": this.handleVoteButtonClick
+      }));
+    }
+  },
+  renderPrivacyButton: function() {
+    if (!this.isTlogAnonymous()) {
+      return React.createElement("div", {
+        "className": "post-action post-action--button"
+      }, React.createElement(EditorPrivacyButton, {
+        "live": this.isEntryLive(),
+        "private": this.isEntryPrivate(),
+        "onClick": this.handlePrivacyButtonClick
+      }));
+    }
+  },
+  renderSpinner: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "post-action post-action--loader"
+      }, React.createElement(Spinner, {
+        "size": 8.
+      }));
+    }
+  },
+  isEntryLive: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_LIVE;
+  },
+  isEntryPublic: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_PUBLIC;
+  },
+  isEntryPrivate: function() {
+    return this.props.entryPrivacy === ENTRY_PRIVACY_PRIVATE;
+  },
+  isTlogPublic: function() {
+    return this.props.tlogType === TLOG_TYPE_PUBLIC;
+  },
+  isTlogPrivate: function() {
+    return this.props.tlogType === TLOG_TYPE_PRIVATE;
+  },
+  isTlogAnonymous: function() {
+    return this.props.tlogType === TLOG_TYPE_ANONYMOUS;
+  },
+  togglePreview: function() {
+    return this.setState({
+      preview: !this.state.preview
+    });
+  },
+  changePrivacy: function(privacy) {
+    return EditorActionCreators.changeEntryPrivacy(privacy);
+  },
+  saveEntry: function() {
+    return EditorActionCreators.saveEntry();
+  },
+  handleVoteButtonClick: function() {
+    var newEntryPrivacy;
+    newEntryPrivacy = this.isEntryLive() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_LIVE;
+    return this.changePrivacy(newEntryPrivacy);
+  },
+  handlePrivacyButtonClick: function() {
+    var newEntryPrivacy;
+    newEntryPrivacy = this.isEntryPrivate() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_PRIVATE;
+    return this.changePrivacy(newEntryPrivacy);
+  }
+});
+
+module.exports = EditorActions;
+
+
+
+},{"../../../actions/editor":10,"../buttons/Preview":32,"../buttons/Privacy":33,"../buttons/Save":34,"../buttons/Vote":35,"react/lib/cx":597}],19:[function(require,module,exports){
+var EditorActionCreators, EditorContainer, EditorTypeImage, EditorTypeInstagram, EditorTypeMusic, EditorTypeQuote, EditorTypeText, EditorTypeVideo, PropTypes;
+
+EditorActionCreators = require('../../../actions/editor');
+
+EditorTypeText = require('../types/Text');
+
+EditorTypeImage = require('../types/Image');
+
+EditorTypeInstagram = require('../types/Instagram');
+
+EditorTypeMusic = require('../types/Music');
+
+EditorTypeVideo = require('../types/Video');
+
+EditorTypeQuote = require('../types/Quote');
+
+PropTypes = React.PropTypes;
+
+EditorContainer = React.createClass({
+  displayName: 'EditorContainer',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    entryPrivacy: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("section", {
+      "className": "posts posts--edit"
+    }, this.renderEditor());
+  },
+  renderEditor: function() {
+    var Component, props;
+    props = {
+      entry: this.props.entry,
+      entryType: this.props.entryType,
+      onFieldChange: this.updateField
+    };
+    Component = (function() {
+      switch (this.props.entryType) {
+        case 'text':
+        case 'anonymous':
+          return EditorTypeText;
+        case 'image':
+          return EditorTypeImage;
+        case 'instagram':
+          return EditorTypeInstagram;
+        case 'music':
+          return EditorTypeMusic;
+        case 'video':
+          return EditorTypeVideo;
+        case 'quote':
+          return EditorTypeQuote;
+        default:
+          return typeof console.warn === "function" ? console.warn('Unknown type of normalized entry', this.props.entryType) : void 0;
+      }
+    }).call(this);
+    return React.createElement(Component, React.__spread({}, props));
+  },
+  updateField: function(key, value) {
+    return EditorActionCreators.updateField({
+      key: key,
+      value: value
+    });
+  }
+});
+
+module.exports = EditorContainer;
+
+
+
+},{"../../../actions/editor":10,"../types/Image":37,"../types/Instagram":41,"../types/Music":43,"../types/Quote":45,"../types/Text":46,"../types/Video":47}],20:[function(require,module,exports){
+var Editor, EditorActions, EditorContainer, EditorLayout, EditorTypeSwitcher, NormalizedEntry, PropTypes;
+
+NormalizedEntry = require('../../entities/normalizedEntry');
+
+EditorLayout = require('./Layout/Layout');
+
+EditorActions = require('./Actions/Actions');
+
+EditorTypeSwitcher = require('./TypeSwitcher/TypeSwitcher');
+
+EditorContainer = require('./Container/Container');
+
+PropTypes = React.PropTypes;
+
+Editor = React.createClass({
+  displayName: 'Editor',
+  propTypes: {
+    entry: PropTypes.instanceOf(NormalizedEntry).isRequired,
+    entryType: PropTypes.string.isRequired,
+    entryPrivacy: PropTypes.string.isRequired,
+    tlogType: PropTypes.string.isRequired,
+    backUrl: PropTypes.string,
+    canChangeType: PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return {
+      loading: false
+    };
+  },
+  render: function() {
+    return React.createElement(EditorLayout, {
+      "backUrl": this.props.backUrl,
+      "loading": this.state.loading
+    }, React.createElement(EditorActions, {
+      "entryPrivacy": this.props.entryPrivacy,
+      "tlogType": this.props.tlogType,
+      "loading": this.state.loading
+    }), React.createElement(EditorContainer, {
+      "entry": this.props.entry,
+      "entryType": this.props.entryType,
+      "entryPrivacy": this.props.entryType
+    }), this.renderTypeSwitcher());
+  },
+  renderTypeSwitcher: function() {
+    if (this.props.tlogType !== 'anonymous') {
+      return React.createElement(EditorTypeSwitcher, {
+        "entryType": this.props.entryType,
+        "canChangeType": this.props.canChangeType,
+        "loading": this.state.loading
+      });
+    }
+  }
+});
+
+module.exports = Editor;
+
+
+
+},{"../../entities/normalizedEntry":253,"./Actions/Actions":18,"./Container/Container":19,"./Layout/Layout":27,"./TypeSwitcher/TypeSwitcher":30}],21:[function(require,module,exports){
+var ConnectStoreMixin, Editor, EditorActionCreators, EditorEdit, EditorStore, PropTypes;
+
+EditorStore = require('../../stores/editor');
+
+EditorActionCreators = require('../../actions/editor');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+Editor = require('./Editor');
+
+PropTypes = React.PropTypes;
+
+EditorEdit = React.createClass({
+  displayName: 'EditorEdit',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+    backUrl: PropTypes.string
+  },
+  componentWillMount: function() {
+    var entry, tlogType, _ref;
+    _ref = this.props, entry = _ref.entry, tlogType = _ref.tlogType;
+    return EditorActionCreators.init({
+      entry: entry,
+      tlogType: tlogType
+    });
+  },
+  render: function() {
+    return React.createElement(Editor, React.__spread({}, this.state, {
+      "tlogType": this.props.tlogType,
+      "backUrl": this.props.backUrl,
+      "canChangeType": false
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      entry: EditorStore.getEntry(),
+      entryType: EditorStore.getEntryType(),
+      entryPrivacy: EditorStore.getEntryPrivacy()
+    };
+  }
+});
+
+module.exports = EditorEdit;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":328,"../../actions/editor":10,"../../stores/editor":320,"./Editor":20}],22:[function(require,module,exports){
+var ConnectStoreMixin, Editor, EditorActionCreators, EditorNew, EditorStore, PropTypes;
+
+EditorStore = require('../../stores/editor');
+
+EditorActionCreators = require('../../actions/editor');
+
+ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
+
+Editor = require('./Editor');
+
+PropTypes = React.PropTypes;
+
+EditorNew = React.createClass({
+  displayName: 'EditorNew',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+    backUrl: PropTypes.string
+  },
+  componentWillMount: function() {
+    return EditorActionCreators.init({
+      entry: null,
+      tlogType: this.props.tlogType
+    });
+  },
+  render: function() {
+    return React.createElement(Editor, React.__spread({}, this.state, {
+      "tlogType": this.props.tlogType,
+      "backUrl": this.props.backUrl,
+      "canChangeType": true
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      entry: EditorStore.getEntry(),
+      entryType: EditorStore.getEntryType(),
+      entryPrivacy: EditorStore.getEntryPrivacy()
+    };
+  }
+});
+
+module.exports = EditorNew;
+
+
+
+},{"../../../../shared/react/mixins/connectStore":328,"../../actions/editor":10,"../../stores/editor":320,"./Editor":20}],23:[function(require,module,exports){
+var EditorActionCreators, EditorEmbed, EditorEmbedLoaded, EditorEmbedLoading, EditorEmbedUrlInsert, INSERT_STATE, LOADED_STATE, LOADING_STATE, PropTypes, WELCOME_STATE, cloneWithProps;
+
+cloneWithProps = require('react/lib/cloneWithProps');
+
+EditorActionCreators = require('../../../actions/editor');
+
+EditorEmbedUrlInsert = require('./EmbedUrlInsert');
+
+EditorEmbedLoading = require('./EmbedLoading');
+
+EditorEmbedLoaded = require('./EmbedLoaded');
+
+PropTypes = React.PropTypes;
+
+INSERT_STATE = 'insert';
+
+LOADED_STATE = 'loaded';
+
+WELCOME_STATE = 'welcome';
+
+LOADING_STATE = 'loading';
+
+EditorEmbed = React.createClass({
+  displayName: 'EditorEmbed',
+  propTypes: {
+    embedUrl: PropTypes.string,
+    embedHtml: PropTypes.string,
+    onCreate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.getInitialCurrentState()
+    };
+  },
+  render: function() {
+    var children;
+    switch (this.state.currentState) {
+      case WELCOME_STATE:
+        children = React.Children.map(this.props.children, (function(_this) {
+          return function(child) {
+            return cloneWithProps(child, {
+              onClickInsertState: _this.activateInsertState
+            });
+          };
+        })(this));
+        return React.createElement("div", null, children);
+      case LOADED_STATE:
+        return React.createElement(EditorEmbedLoaded, {
+          "embedHtml": this.props.embedHtml,
+          "onDelete": this.handleDeleteEmbed
+        });
+      case INSERT_STATE:
+        return React.createElement(EditorEmbedUrlInsert, {
+          "onInsert": this.handleChangeEmbedUrl,
+          "onCancel": this.activateWelcomeState
+        });
+      case LOADING_STATE:
+        return React.createElement(EditorEmbedLoading, {
+          "embedUrl": this.props.embedUrl
+        });
+      default:
+        return null;
+    }
+  },
+  activateLoadedState: function() {
+    return this.setState({
+      currentState: LOADED_STATE
+    });
+  },
+  activateInsertState: function() {
+    return this.setState({
+      currentState: INSERT_STATE
+    });
+  },
+  activateWelcomeState: function() {
+    return this.setState({
+      currentState: WELCOME_STATE
+    });
+  },
+  activateLoadingState: function() {
+    return this.setState({
+      currentState: LOADING_STATE
+    });
+  },
+  getInitialCurrentState: function() {
+    if (this.props.embedHtml) {
+      return LOADED_STATE;
+    } else {
+      return WELCOME_STATE;
+    }
+  },
+  handleChangeEmbedUrl: function(embedUrl) {
+    this.props.onCreate({
+      embedUrl: embedUrl,
+      embedHtml: null
+    });
+    this.activateLoadingState();
+    return EditorActionCreators.createEmbed(embedUrl).then((function(_this) {
+      return function(iframely) {
+        _this.props.onCreate({
+          embedUrl: iframely.url,
+          embedHtml: iframely.html
+        });
+        return _this.activateLoadedState();
+      };
+    })(this)).fail(this.activateInsertState);
+  },
+  handleDeleteEmbed: function() {
+    this.activateWelcomeState();
+    return this.props.onDelete();
+  }
+});
+
+module.exports = EditorEmbed;
+
+
+
+},{"../../../actions/editor":10,"./EmbedLoaded":24,"./EmbedLoading":25,"./EmbedUrlInsert":26,"react/lib/cloneWithProps":592}],24:[function(require,module,exports){
+var EditorEmbedLoaded, MediaBox, MediaBoxActions, PropTypes;
+
+MediaBox = require('../MediaBox/MediaBox');
+
+MediaBoxActions = require('../MediaBox/MediaBoxActions');
+
+PropTypes = React.PropTypes;
+
+EditorEmbedLoaded = React.createClass({
+  displayName: 'EditorEmbedLoaded',
+  propTypes: {
+    embedHtml: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video",
+      "state": "loaded"
+    }, React.createElement("div", {
+      "className": "media-box__display",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.embedHtml
+      }
+    }), React.createElement(MediaBoxActions, {
+      "onDelete": this.props.onDelete
+    }));
+  }
+});
+
+module.exports = EditorEmbedLoaded;
+
+
+
+},{"../MediaBox/MediaBox":28,"../MediaBox/MediaBoxActions":29}],25:[function(require,module,exports){
+var EditorEmbedLoading, MediaBox, PropTypes;
+
+MediaBox = require('../MediaBox/MediaBox');
+
+PropTypes = React.PropTypes;
+
+EditorEmbedLoading = React.createClass({
+  displayName: 'EditorEmbedLoading',
+  propTypes: {
+    embedUrl: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video"
+    }, React.createElement("div", {
+      "className": "media-box__info"
+    }, React.createElement("div", {
+      "className": "media-box__text"
+    }, React.createElement("span", null, this.props.embedUrl), React.createElement("br", null), React.createElement("span", null, i18n.t('editor_video_mediabox_loading')))));
+  }
+});
+
+module.exports = EditorEmbedLoading;
+
+
+
+},{"../MediaBox/MediaBox":28}],26:[function(require,module,exports){
+var EditorEmbedUrlInsert, MediaBox, MediaBoxActions, PropTypes;
+
+MediaBox = require('../MediaBox/MediaBox');
+
+MediaBoxActions = require('../MediaBox/MediaBoxActions');
+
+PropTypes = React.PropTypes;
+
+EditorEmbedUrlInsert = React.createClass({
+  displayName: 'EditorEmbedUrlInsert',
+  propTypes: {
+    onInsert: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video",
+      "state": "insert"
+    }, React.createElement("label", {
+      "htmlFor": "media-box-video-url",
+      "className": "media-box__form"
+    }, React.createElement("input", {
+      "type": "url",
+      "autoFocus": true,
+      "id": "media-box-video-url",
+      "className": "media-box__form-input",
+      "onPaste": this.handlePaste,
+      "onBlur": this.handleBlur
+    })), React.createElement(MediaBoxActions, {
+      "onDelete": this.props.onCancel
+    }));
+  },
+  handlePaste: function(e) {
+    return this.props.onInsert(e.clipboardData.getData('text/plain'));
+  },
+  handleBlur: function() {
+    return this.props.onCancel();
+  }
+});
+
+module.exports = EditorEmbedUrlInsert;
+
+
+
+},{"../MediaBox/MediaBox":28,"../MediaBox/MediaBoxActions":29}],27:[function(require,module,exports){
+var EditorLayout, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorLayout = React.createClass({
+  displayName: 'EditorLayout',
+  propTypes: {
+    backUrl: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired
+  },
+  render: function() {
+    return React.createElement("div", null, this.renderBackButton(), this.props.children);
+  },
+  renderBackButton: function() {
+    if (!this.props.loading) {
+      return React.createElement("a", {
+        "className": "back-button",
+        "onClick": this.handleClick
+      });
+    }
+  },
+  handleClick: function() {
+    if (this.props.backUrl) {
+      return window.location.href = this.props.backUrl;
+    } else {
+      return window.history.back();
+    }
+  }
+});
+
+module.exports = EditorLayout;
+
+
+
+},{}],28:[function(require,module,exports){
+var EditorMediaBox, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorMediaBox = React.createClass({
+  displayName: 'EditorMediaBox',
+  propTypes: {
+    state: PropTypes.string,
+    entryType: PropTypes.string.isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      state: null
+    };
+  },
+  render: function() {
+    var mediaBoxClasses;
+    mediaBoxClasses = ['media-box'];
+    if (this.props.state != null) {
+      mediaBoxClasses.push('state--' + this.props.state);
+    }
+    return React.createElement("figure", {
+      "className": this.props.entryType
+    }, React.createElement("div", {
+      "className": mediaBoxClasses.join(' ')
+    }, this.props.children));
+  }
+});
+
+module.exports = EditorMediaBox;
+
+
+
+},{}],29:[function(require,module,exports){
+var EditorMediaBoxActions, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorMediaBoxActions = React.createClass({
+  displayName: 'EditorMediaBoxActions',
+  propTypes: {
+    onDelete: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "media-box__actions"
+    }, React.createElement("div", {
+      "title": i18n.t('editor_mediabox_delete'),
+      "className": "media-box__action media-box__action--delete",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": "icon icon--cross"
+    })));
+  },
+  handleClick: function() {
+    return this.props.onDelete();
+  }
+});
+
+module.exports = EditorMediaBoxActions;
+
+
+
+},{}],30:[function(require,module,exports){
+var AVAILABLE_TYPES, ENTRY_TYPES, EditorActionCreators, EditorTypeSwitcher, EditorTypeSwitcherItem, PropTypes, classSet, _;
+
+_ = require('lodash');
+
+classSet = require('react/lib/cx');
+
+EditorActionCreators = require('../../../actions/editor');
+
+EditorTypeSwitcherItem = require('./TypeSwitcherItem');
+
+PropTypes = React.PropTypes;
+
+AVAILABLE_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
+
+ENTRY_TYPES = {
+  text: {
+    title: function() {
+      return i18n.t('editor_text_type');
+    },
+    icon: 'icon--text-circle'
+  },
+  image: {
+    title: function() {
+      return i18n.t('editor_image_type');
+    },
+    icon: 'icon--image-circle'
+  },
+  instagram: {
+    title: function() {
+      return i18n.t('editor_instagram_type');
+    },
+    icon: 'icon--instagram-circle'
+  },
+  music: {
+    title: function() {
+      return i18n.t('editor_music_type');
+    },
+    icon: 'icon--music-circle'
+  },
+  video: {
+    title: function() {
+      return i18n.t('editor_video_type');
+    },
+    icon: 'icon--video-circle'
+  },
+  quote: {
+    title: function() {
+      return i18n.t('editor_quote_type');
+    },
+    icon: 'icon--quote-circle'
+  },
+  anonymous: {
+    title: function() {
+      return i18n.t('editor_anonymous_type');
+    },
+    icon: 'icon--text-circle'
+  }
+};
+
+EditorTypeSwitcher = React.createClass({
+  displayName: 'EditorTypeSwitcher',
+  propTypes: {
+    entryType: PropTypes.string.isRequired,
+    canChangeType: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
+  },
+  render: function() {
+    var switcherClasses;
+    switcherClasses = classSet({
+      'nav-types': true,
+      'state--loading': this.props.loading
+    });
+    return React.createElement("nav", {
+      "className": switcherClasses
+    }, this.renderListItems());
+  },
+  renderListItems: function() {
+    var listItems;
+    if (this.props.canChangeType) {
+      return listItems = _.map(AVAILABLE_TYPES, (function(_this) {
+        return function(type) {
+          return React.createElement(EditorTypeSwitcherItem, {
+            "title": ENTRY_TYPES[type].title(),
+            "icon": ENTRY_TYPES[type].icon,
+            "active": _this.props.entryType === type,
+            "loading": _this.props.loading,
+            "onClick": _this.changeType.bind(null, type),
+            "key": type
+          });
+        };
+      })(this));
+    } else {
+      return React.createElement(EditorTypeSwitcherItem, {
+        "title": ENTRY_TYPES[this.props.entryType].title(),
+        "icon": ENTRY_TYPES[this.props.entryType].icon,
+        "active": true,
+        "loading": this.props.loading
+      });
+    }
+  },
+  changeType: function(type) {
+    return EditorActionCreators.changeEntryType(type);
+  }
+});
+
+module.exports = EditorTypeSwitcher;
+
+
+
+},{"../../../actions/editor":10,"./TypeSwitcherItem":31,"lodash":485,"react/lib/cx":597}],31:[function(require,module,exports){
+var EditorTypeSwitcherItem, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorTypeSwitcherItem = React.createClass({
+  displayName: 'EditorTypeSwitcherItem',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onClick: PropTypes.func
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip();
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var itemClasses;
+    itemClasses = classSet({
+      'button': true,
+      'button--circle': true,
+      'state--disable': this.props.loading,
+      'state--active': this.props.active
+    });
+    return React.createElement("button", {
+      "title": this.props.title,
+      "className": itemClasses,
+      "onClick": this.handleClick
+    }, React.createElement("i", {
+      "className": 'icon ' + this.props.icon
+    }));
+  },
+  handleClick: function() {
+    var _base;
+    if (!(this.props.loading && this.props.active)) {
+      return typeof (_base = this.props).onClick === "function" ? _base.onClick() : void 0;
+    }
+  }
+});
+
+module.exports = EditorTypeSwitcherItem;
+
+
+
+},{"react/lib/cx":597}],32:[function(require,module,exports){
+var EditorPreviewButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorPreviewButton = React.createClass({
+  displayName: 'EditorPreviewButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "button button--grey",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, i18n.t('editor_preview_button')));
+  },
+  handleClick: function() {
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorPreviewButton;
+
+
+
+},{}],33:[function(require,module,exports){
+var EditorPrivacyButton, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorPrivacyButton = React.createClass({
+  displayName: 'EditorPrivacyButton',
+  propTypes: {
+    live: PropTypes.bool.isRequired,
+    "private": PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip({
+      placement: 'bottom'
+    });
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var iconClasses;
+    iconClasses = classSet({
+      'icon': true,
+      'icon--unlock': !this.props["private"],
+      'icon--lock': this.props["private"]
+    });
+    return React.createElement("button", {
+      "title": this.getTitle(),
+      "className": "button button--outline-grey post-settings-button",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": iconClasses
+    }));
+  },
+  getTitle: function() {
+    var title;
+    title = this.props["private"] ? i18n.t('editor_private_entry') : i18n.t('editor_public_entry');
+    if (this.props.live) {
+      title = i18n.t('editor_public_with_voting_entry');
+    }
+    return title;
+  },
+  handleClick: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    $button.tooltip('hide');
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorPrivacyButton;
+
+
+
+},{"react/lib/cx":597}],34:[function(require,module,exports){
+var EditorSaveButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+EditorSaveButton = React.createClass({
+  displayName: 'EditorSaveButton',
+  propTypes: {
+    "private": PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "button button--green",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": "button__text"
+    }, this.getTitle()));
+  },
+  getTitle: function() {
+    if (this.props["private"]) {
+      return i18n.t('editor_save_button');
+    } else {
+      return i18n.t('editor_publish_button');
+    }
+  },
+  handleClick: function() {
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorSaveButton;
+
+
+
+},{}],35:[function(require,module,exports){
+var EditorVoteButton, PropTypes, classSet;
+
+classSet = require('react/lib/cx');
+
+PropTypes = React.PropTypes;
+
+EditorVoteButton = React.createClass({
+  displayName: 'EditorVoteButton',
+  propTypes: {
+    enabled: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip({
+      placement: 'bottom'
+    });
+  },
+  componentWillUnmount: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    return $button.tooltip('destroy');
+  },
+  render: function() {
+    var iconClasses;
+    iconClasses = classSet({
+      'icon': true,
+      'post-settings-voting': true,
+      'post-settings-voted': this.props.enabled
+    });
+    return React.createElement("button", {
+      "title": this.getTitle(),
+      "className": "button button--outline-grey post-settings-button",
+      "onClick": this.handleClick
+    }, React.createElement("span", {
+      "className": iconClasses
+    }));
+  },
+  getTitle: function() {
+    if (this.props.enabled) {
+      return i18n.t('editor_disable_voting');
+    } else {
+      return i18n.t('editor_enable_voting');
+    }
+  },
+  handleClick: function() {
+    var $button;
+    $button = $(this.getDOMNode());
+    $button.tooltip('hide');
+    return this.props.onClick();
+  }
+});
+
+module.exports = EditorVoteButton;
+
+
+
+},{"react/lib/cx":597}],36:[function(require,module,exports){
+var EditorTextField, FIELD_MODES, FIELD_MODE_OPTIONS, PropTypes, _;
+
+_ = require('lodash');
+
+PropTypes = React.PropTypes;
+
+FIELD_MODES = ['inline', 'partial', 'rich'];
+
+FIELD_MODE_OPTIONS = {
+  inline: {
+    disableToolbar: true,
+    disableReturn: true,
+    disableDoubleReturn: true,
+    cleanPastedHTML: true
+  },
+  partial: {
+    disableToolbar: true,
+    disableReturn: false,
+    disableDoubleReturn: true,
+    cleanPastedHTML: true
+  },
+  rich: {
+    buttons: ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'],
+    disableToolbar: false,
+    disableReturn: false,
+    disableDoubleReturn: false,
+    cleanPastedHTML: true,
+    targetBlank: true
+  }
+};
+
+EditorTextField = React.createClass({
+  displayName: 'EditorTextField',
+  propTypes: {
+    mode: PropTypes.string,
+    text: PropTypes.string,
+    placeholder: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    autoFocus: PropTypes.bool,
+    onChange: PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      mode: 'inline'
+    };
+  },
+  shouldComponentUpdate: function() {
+    return false;
+  },
+  componentDidMount: function() {
+    var fieldContent, options;
+    fieldContent = this.refs.fieldContent.getDOMNode();
+    options = _.extend({}, FIELD_MODE_OPTIONS[this.props.mode], {
+      placeholder: this.props.placeholder.replace('<br>', '\r\n')
+    });
+    return this.mediumEditor = new MediumEditor(fieldContent, options);
+  },
+  componentWillUnmount: function() {
+    this.mediumEditor.deactivate();
+    return this.mediumEditor = null;
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "tasty-editor " + this.props.className
+    }, React.createElement("div", {
+      "ref": "fieldContent",
+      "className": "tasty-editor-content",
+      "onInput": this.handleInput,
+      "dangerouslySetInnerHTML": {
+        __html: this.props.text
+      }
+    }));
+  },
+  handleInput: function(e) {
+    var value;
+    value = e.target.innerHTML;
+    return this.props.onChange(value);
+  }
+});
+
+module.exports = EditorTextField;
+
+
+
+},{"lodash":485}],37:[function(require,module,exports){
+var ConnectStoreMixin, EditorActionCreators, EditorMediaBox, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, PropTypes, WELCOME_STATE, classSet, _;
+
+_ = require('lodash');
+
+classSet = require('react/lib/cx');
+
+EditorStore = require('../../../stores/editor');
+
+EditorActionCreators = require('../../../actions/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+EditorMediaBox = require('../MediaBox/MediaBox');
+
+EditorTypeImageWelcome = require('./Image/Welcome');
+
+EditorTypeImageUrlInsert = require('./Image/UrlInsert');
+
+EditorTypeImageLoaded = require('./Image/Loaded');
+
+PropTypes = React.PropTypes;
+
+WELCOME_STATE = 'welcome';
+
+INSERT_STATE = 'insert';
+
+LOADED_STATE = 'loaded';
+
+EditorTypeImage = React.createClass({
+  displayName: 'EditorTypeImage',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.getInitialCurrentState(),
+      dragging: false
+    };
+  },
+  render: function() {
+    var editorClasses;
+    editorClasses = classSet({
+      'post': true,
+      'post--image': true,
+      'post--edit': true,
+      'state--insert': this.isInsertState()
+    });
+    return React.createElement("article", {
+      "className": editorClasses
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement(EditorMediaBox, {
+      "entryType": this.props.entryType,
+      "state": this.getMediaBoxState()
+    }, this.renderEditorScreen()), React.createElement(EditorTextField, {
+      "mode": "rich",
+      "text": this.state.title,
+      "placeholder": i18n.t('editor_description_placeholder'),
+      "className": "post__content",
+      "onChange": this.props.onFieldChange.bind(null, 'title')
+    })));
+  },
+  renderEditorScreen: function() {
+    switch (this.state.currentState) {
+      case WELCOME_STATE:
+        return React.createElement(EditorTypeImageWelcome, {
+          "onClickInsertState": this.activateInsertState,
+          "onSelectFiles": this.handleSelectFiles,
+          "onDragOver": this.draggingOn,
+          "onDragLeave": this.draggingOff,
+          "onDrop": this.draggingOff
+        });
+      case INSERT_STATE:
+        return React.createElement(EditorTypeImageUrlInsert, {
+          "onInsertImageUrl": this.handleChangeImageUrl,
+          "onCancel": this.activateWelcomeState
+        });
+      case LOADED_STATE:
+        return React.createElement(EditorTypeImageLoaded, {
+          "imageUrl": this.state.imageUrl,
+          "imageAttachments": this.state.imageAttachments,
+          "onDelete": this.handleDeleteLoadedImages
+        });
+      default:
+        return null;
+    }
+  },
+  isInsertState: function() {
+    return this.state.currentState === INSERT_STATE;
+  },
+  activateInsertState: function() {
+    return this.setState({
+      currentState: INSERT_STATE
+    });
+  },
+  activateLoadedState: function() {
+    return this.setState({
+      currentState: LOADED_STATE
+    });
+  },
+  activateWelcomeState: function() {
+    return this.setState({
+      currentState: WELCOME_STATE
+    });
+  },
+  draggingOn: function() {
+    return this.setState({
+      dragging: true
+    });
+  },
+  draggingOff: function() {
+    return this.setState({
+      dragging: false
+    });
+  },
+  getMediaBoxState: function() {
+    switch (false) {
+      case !this.state.dragging:
+        return 'drag-hover';
+      case !this.isInsertState():
+        return 'insert';
+      case !(this.state.imageAttachments.length || this.state.imageUrl):
+        return 'loaded';
+      default:
+        return null;
+    }
+  },
+  getInitialCurrentState: function() {
+    var _ref;
+    if (EditorStore.getEntryValue('imageUrl') || ((_ref = EditorStore.getEntryValue('imageAttachments')) != null ? _ref.length : void 0)) {
+      return LOADED_STATE;
+    } else {
+      return WELCOME_STATE;
+    }
+  },
+  handleDeleteLoadedImages: function() {
+    this.props.onFieldChange('imageUrl', null);
+    this.props.onFieldChange('imageAttachments', []);
+    return this.activateWelcomeState();
+  },
+  handleChangeImageUrl: function(imageUrl) {
+    var image;
+    image = new Image();
+    image.onload = (function(_this) {
+      return function() {
+        _this.props.onFieldChange('imageUrl', imageUrl);
+        return _this.activateLoadedState();
+      };
+    })(this);
+    image.onerror = (function(_this) {
+      return function() {
+        return TastyNotifyController.notifyError(i18n.t('editor_image_doesnt_exist', {
+          imageUrl: imageUrl
+        }));
+      };
+    })(this);
+    return image.src = imageUrl;
+  },
+  handleSelectFiles: function(files) {
+    var formData, imageFiles;
+    imageFiles = _.filter(files, function(file) {
+      return file.type.match(/(\.|\/)(gif|jpe?g|png)$/i);
+    });
+    if (!imageFiles.length) {
+      return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
+    }
+    formData = new FormData();
+    _.forEach(imageFiles, function(file) {
+      return formData.append('images[]', file);
+    });
+    return EditorActionCreators.createImageAttachments(formData).then((function(_this) {
+      return function(imageAttachments) {
+        return _this.props.onFieldChange('imageAttachments', imageAttachments);
+      };
+    })(this));
+  },
+  getStateFromStore: function() {
+    return {
+      title: EditorStore.getEntryValue('title'),
+      imageUrl: EditorStore.getEntryValue('imageUrl'),
+      imageAttachments: EditorStore.getEntryValue('imageAttachments') || []
+    };
+  }
+});
+
+module.exports = EditorTypeImage;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../actions/editor":10,"../../../stores/editor":320,"../MediaBox/MediaBox":28,"../fields/Text":36,"./Image/Loaded":38,"./Image/UrlInsert":39,"./Image/Welcome":40,"lodash":485,"react/lib/cx":597}],38:[function(require,module,exports){
+var EditorMediaBoxActions, EditorTypeImageLoaded, PropTypes, _;
+
+_ = require('lodash');
+
+EditorMediaBoxActions = require('../../MediaBox/MediaBoxActions');
+
+PropTypes = React.PropTypes;
+
+EditorTypeImageLoaded = React.createClass({
+  displayName: 'EditorTypeImageLoaded',
+  propTypes: {
+    imageUrl: PropTypes.string,
+    imageAttachments: PropTypes.array.isRequired,
+    onDelete: PropTypes.func.isRequired
+  },
+  shouldComponentUpdate: function(nextProps) {
+    if (!_.isEqual(this.props.imageAttachments, nextProps.imageAttachments || !this.props.imageUrl === nextProps.imageUrl)) {
+      return true;
+    }
+    return false;
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "media-box__display"
+    }, React.createElement(ImagesCollage, {
+      "images": this.getCollageImages()
+    }), React.createElement(EditorMediaBoxActions, {
+      "onDelete": this.props.onDelete
+    }));
+  },
+  getCollageImages: function() {
+    var image;
+    if (this.props.imageUrl) {
+      image = new Image();
+      image.src = this.props.imageUrl;
+      return [image];
+    } else {
+      return _.map(this.props.imageAttachments, function(attachment) {
+        image = new Image();
+        image.src = attachment.image.url;
+        return image;
+      });
+    }
+  }
+});
+
+module.exports = EditorTypeImageLoaded;
+
+
+
+},{"../../MediaBox/MediaBoxActions":29,"lodash":485}],39:[function(require,module,exports){
+var EditorMediaBoxActions, EditorTypeImageUrlInsert, PropTypes;
+
+EditorMediaBoxActions = require('../../MediaBox/MediaBoxActions');
+
+PropTypes = React.PropTypes;
+
+EditorTypeImageUrlInsert = React.createClass({
+  displayName: 'EditorTypeImageUrlInsert',
+  propTypes: {
+    onInsertImageUrl: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("label", {
+      "htmlFor": "media-box-image-url",
+      "className": "media-box__form"
+    }, React.createElement("input", {
+      "type": "url",
+      "autoFocus": true,
+      "id": "media-box-image-url",
+      "className": "media-box__form-input",
+      "onPaste": this.handlePaste,
+      "onBlur": this.handleBlur
+    }), React.createElement(EditorMediaBoxActions, {
+      "onDelete": this.props.onCancel
+    }));
+  },
+  handlePaste: function(e) {
+    return this.props.onInsertImageUrl(e.clipboardData.getData('text/plain'));
+  },
+  handleBlur: function() {
+    return this.props.onCancel();
+  }
+});
+
+module.exports = EditorTypeImageUrlInsert;
+
+
+
+},{"../../MediaBox/MediaBoxActions":29}],40:[function(require,module,exports){
+var DropZone, EditorTypeImageWelcome, PropTypes;
+
+DropZone = require('../../../common/DropZone/DropZone');
+
+PropTypes = React.PropTypes;
+
+EditorTypeImageWelcome = React.createClass({
+  displayName: 'EditorTypeImageWelcome',
+  propTypes: {
+    onClickInsertState: PropTypes.func.isRequired,
+    onSelectFiles: PropTypes.func.isRequired,
+    onDragOver: PropTypes.func.isRequired,
+    onDragLeave: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(DropZone, {
+      "global": true,
+      "onDragOver": this.props.onDragOver,
+      "onDragLeave": this.props.onDragLeave,
+      "onDrop": this.handleDrop
+    }, React.createElement("div", {
+      "className": "media-box__info"
+    }, React.createElement("div", {
+      "className": "media-box__text"
+    }, React.createElement("span", null, i18n.t('editor_welcome_move_or'), " "), React.createElement("span", {
+      "className": "form-upload form-upload--image"
+    }, React.createElement("span", {
+      "className": "form-upload__text"
+    }, i18n.t('editor_welcome_choose')), React.createElement("input", {
+      "type": "file",
+      "id": "image",
+      "className": "form-upload__input",
+      "accept": "image/*",
+      "multiple": true,
+      "onChange": this.handleChange
+    })), React.createElement("span", null, " ", i18n.t('editor_welcome_picture_or')), React.createElement("br", null), React.createElement("a", {
+      "title": i18n.t('editor_welcome_insert'),
+      "onClick": this.handleClickInsert
+    }, i18n.t('editor_welcome_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_link_to_it')))));
+  },
+  handleChange: function(e) {
+    var files;
+    files = e.target.files;
+    if (files.length) {
+      return this.props.onSelectFiles(files);
+    }
+  },
+  handleDrop: function(files) {
+    this.props.onDrop();
+    if (files.length) {
+      return this.props.onSelectFiles(files);
+    }
+  },
+  handleClickInsert: function(e) {
+    e.preventDefault();
+    return this.props.onClickInsertState();
+  }
+});
+
+module.exports = EditorTypeImageWelcome;
+
+
+
+},{"../../../common/DropZone/DropZone":73}],41:[function(require,module,exports){
+var ConnectStoreMixin, EditorEmbed, EditorStore, EditorTextField, EditorTypeInstagram, EditorTypeInstagramWelcome, PropTypes;
+
+EditorStore = require('../../../stores/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+EditorEmbed = require('../Embed/Embed');
+
+EditorTypeInstagramWelcome = require('./Instagram/Welcome');
+
+PropTypes = React.PropTypes;
+
+EditorTypeInstagram = React.createClass({
+  displayName: 'EditorTypeInstagram',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "post post--video post--edit"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement(EditorEmbed, {
+      "embedUrl": this.state.embedUrl,
+      "embedHtml": this.state.embedHtml,
+      "onCreate": this.handleCreateEmbed,
+      "onDelete": this.handleDeleteEmbed
+    }, React.createElement(EditorTypeInstagramWelcome, null)), React.createElement(EditorTextField, {
+      "mode": "partial",
+      "text": this.state.title,
+      "placeholder": i18n.t('editor_description_placeholder'),
+      "onChange": this.props.onFieldChange.bind(null, 'title')
+    })));
+  },
+  handleCreateEmbed: function(_arg) {
+    var embedHtml, embedUrl;
+    embedUrl = _arg.embedUrl, embedHtml = _arg.embedHtml;
+    this.props.onFieldChange('embedUrl', embedUrl);
+    return this.props.onFieldChange('embedHtml', embedHtml);
+  },
+  handleDeleteEmbed: function() {
+    this.props.onFieldChange('embedUrl', null);
+    return this.props.onFieldChange('embedHtml', null);
+  },
+  getStateFromStore: function() {
+    return {
+      title: EditorStore.getEntryValue('title'),
+      embedUrl: EditorStore.getEntryValue('embedUrl'),
+      embedHtml: EditorStore.getEntryValue('embedHtml')
+    };
+  }
+});
+
+module.exports = EditorTypeInstagram;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../stores/editor":320,"../Embed/Embed":23,"../fields/Text":36,"./Instagram/Welcome":42}],42:[function(require,module,exports){
+var EditorTypeInstagramWelcome, MediaBox, PropTypes;
+
+MediaBox = require('../../MediaBox/MediaBox');
+
+PropTypes = React.PropTypes;
+
+EditorTypeInstagramWelcome = React.createClass({
+  displayName: 'EditorTypeInstagramWelcome',
+  propTypes: {
+    onClickInsertState: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video"
+    }, React.createElement("div", {
+      "className": "media-box__info"
+    }, React.createElement("div", {
+      "className": "media-box__text"
+    }, React.createElement("a", {
+      "title": i18n.t('editor_welcome_instagram_insert'),
+      "onClick": this.handleClickInsert
+    }, i18n.t('editor_welcome_instagram_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_instagram_link')))));
+  },
+  handleClickInsert: function(e) {
+    e.preventDefault();
+    return this.props.onClickInsertState();
+  }
+});
+
+module.exports = EditorTypeInstagramWelcome;
+
+
+
+},{"../../MediaBox/MediaBox":28}],43:[function(require,module,exports){
+var ConnectStoreMixin, EditorEmbed, EditorStore, EditorTextField, EditorTypeMusic, EditorTypeMusicWelcome, PropTypes;
+
+EditorStore = require('../../../stores/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+EditorEmbed = require('../Embed/Embed');
+
+EditorTypeMusicWelcome = require('./Music/Welcome');
+
+PropTypes = React.PropTypes;
+
+EditorTypeMusic = React.createClass({
+  displayName: 'EditorTypeMusic',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "post post--video post--edit"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement(EditorEmbed, {
+      "embedUrl": this.state.embedUrl,
+      "embedHtml": this.state.embedHtml,
+      "onCreate": this.handleCreateEmbed,
+      "onDelete": this.handleDeleteEmbed
+    }, React.createElement(EditorTypeMusicWelcome, null)), React.createElement(EditorTextField, {
+      "mode": "partial",
+      "text": this.state.title,
+      "placeholder": i18n.t('editor_description_placeholder'),
+      "onChange": this.props.onFieldChange.bind(null, 'title')
+    })));
+  },
+  handleCreateEmbed: function(_arg) {
+    var embedHtml, embedUrl;
+    embedUrl = _arg.embedUrl, embedHtml = _arg.embedHtml;
+    this.props.onFieldChange('embedUrl', embedUrl);
+    return this.props.onFieldChange('embedHtml', embedHtml);
+  },
+  handleDeleteEmbed: function() {
+    this.props.onFieldChange('embedUrl', null);
+    return this.props.onFieldChange('embedHtml', null);
+  },
+  getStateFromStore: function() {
+    return {
+      title: EditorStore.getEntryValue('title'),
+      embedUrl: EditorStore.getEntryValue('embedUrl'),
+      embedHtml: EditorStore.getEntryValue('embedHtml')
+    };
+  }
+});
+
+module.exports = EditorTypeMusic;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../stores/editor":320,"../Embed/Embed":23,"../fields/Text":36,"./Music/Welcome":44}],44:[function(require,module,exports){
+var EditorTypeMusicWelcome, MediaBox, PropTypes;
+
+MediaBox = require('../../MediaBox/MediaBox');
+
+PropTypes = React.PropTypes;
+
+EditorTypeMusicWelcome = React.createClass({
+  displayName: 'EditorTypeMusicWelcome',
+  propTypes: {
+    onClickInsertState: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video"
+    }, React.createElement("div", {
+      "className": "media-box__info"
+    }, React.createElement("div", {
+      "className": "media-box__text"
+    }, React.createElement("a", {
+      "title": i18n.t('editor_welcome_music_insert'),
+      "onClick": this.handleClickInsert
+    }, i18n.t('editor_welcome_music_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_music_supported_services')))));
+  },
+  handleClickInsert: function(e) {
+    e.preventDefault();
+    return this.props.onClickInsertState();
+  }
+});
+
+module.exports = EditorTypeMusicWelcome;
+
+
+
+},{"../../MediaBox/MediaBox":28}],45:[function(require,module,exports){
+var ConnectStoreMixin, EditorStore, EditorTextField, EditorTypeQuote, PropTypes;
+
+EditorStore = require('../../../stores/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+PropTypes = React.PropTypes;
+
+EditorTypeQuote = React.createClass({
+  displayName: 'EditorTypeQuote',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "post post--quote post--edit"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("blockquote", {
+      "className": "blockquote"
+    }, React.createElement(EditorTextField, {
+      "text": this.state.text,
+      "placeholder": i18n.t('editor_quote_text_placeholder'),
+      "onChange": this.props.onFieldChange.bind(null, 'text')
+    }), React.createElement("div", {
+      "className": "blockquote__caption"
+    }, React.createElement("span", {
+      "className": "blockquote__dash"
+    }, "\u2014"), React.createElement(EditorTextField, {
+      "text": this.state.source,
+      "placeholder": i18n.t('editor_quote_source_placeholder'),
+      "onChange": this.props.onFieldChange.bind(null, 'source')
+    })))));
+  },
+  getStateFromStore: function() {
+    return {
+      text: EditorStore.getEntryValue('text'),
+      source: EditorStore.getEntryValue('source')
+    };
+  }
+});
+
+module.exports = EditorTypeQuote;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../stores/editor":320,"../fields/Text":36}],46:[function(require,module,exports){
+var ConnectStoreMixin, EditorStore, EditorTextField, EditorTypeText, PropTypes;
+
+EditorStore = require('../../../stores/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+PropTypes = React.PropTypes;
+
+EditorTypeText = React.createClass({
+  displayName: 'EditorTypeText',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "post post--text post--edit"
+    }, React.createElement("header", {
+      "className": "post__header"
+    }, React.createElement(EditorTextField, {
+      "text": this.state.title,
+      "placeholder": i18n.t('editor_title_placeholder'),
+      "className": "post__title",
+      "onChange": this.props.onFieldChange.bind(null, 'title')
+    })), React.createElement(EditorTextField, {
+      "mode": "rich",
+      "text": this.state.text,
+      "placeholder": i18n.t('editor_text_placeholder'),
+      "className": "post__content",
+      "onChange": this.props.onFieldChange.bind(null, 'text')
+    }));
+  },
+  getStateFromStore: function() {
+    return {
+      title: EditorStore.getEntryValue('title'),
+      text: EditorStore.getEntryValue('text')
+    };
+  }
+});
+
+module.exports = EditorTypeText;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../stores/editor":320,"../fields/Text":36}],47:[function(require,module,exports){
+var ConnectStoreMixin, EditorEmbed, EditorStore, EditorTextField, EditorTypeVideo, EditorTypeVideoWelcome, PropTypes;
+
+EditorStore = require('../../../stores/editor');
+
+ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
+
+EditorTextField = require('../fields/Text');
+
+EditorEmbed = require('../Embed/Embed');
+
+EditorTypeVideoWelcome = require('./Video/Welcome');
+
+PropTypes = React.PropTypes;
+
+EditorTypeVideo = React.createClass({
+  displayName: 'EditorTypeVideo',
+  mixins: [ConnectStoreMixin(EditorStore)],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    entryType: PropTypes.string.isRequired,
+    onFieldChange: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("article", {
+      "className": "post post--video post--edit"
+    }, React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement(EditorEmbed, {
+      "embedUrl": this.state.embedUrl,
+      "embedHtml": this.state.embedHtml,
+      "onCreate": this.handleCreateEmbed,
+      "onDelete": this.handleDeleteEmbed
+    }, React.createElement(EditorTypeVideoWelcome, null)), React.createElement(EditorTextField, {
+      "mode": "partial",
+      "text": this.state.title,
+      "placeholder": i18n.t('editor_description_placeholder'),
+      "onChange": this.props.onFieldChange.bind(null, 'title')
+    })));
+  },
+  handleCreateEmbed: function(_arg) {
+    var embedHtml, embedUrl;
+    embedUrl = _arg.embedUrl, embedHtml = _arg.embedHtml;
+    this.props.onFieldChange('embedUrl', embedUrl);
+    return this.props.onFieldChange('embedHtml', embedHtml);
+  },
+  handleDeleteEmbed: function() {
+    this.props.onFieldChange('embedUrl', null);
+    return this.props.onFieldChange('embedHtml', null);
+  },
+  getStateFromStore: function() {
+    return {
+      title: EditorStore.getEntryValue('title'),
+      embedUrl: EditorStore.getEntryValue('embedUrl'),
+      embedHtml: EditorStore.getEntryValue('embedHtml')
+    };
+  }
+});
+
+module.exports = EditorTypeVideo;
+
+
+
+},{"../../../../../shared/react/mixins/connectStore":328,"../../../stores/editor":320,"../Embed/Embed":23,"../fields/Text":36,"./Video/Welcome":48}],48:[function(require,module,exports){
+var EditorTypeVideoWelcome, MediaBox, PropTypes;
+
+MediaBox = require('../../MediaBox/MediaBox');
+
+PropTypes = React.PropTypes;
+
+EditorTypeVideoWelcome = React.createClass({
+  displayName: 'EditorTypeVideoWelcome',
+  propTypes: {
+    onClickInsertState: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(MediaBox, {
+      "entryType": "video"
+    }, React.createElement("div", {
+      "className": "media-box__info"
+    }, React.createElement("div", {
+      "className": "media-box__text"
+    }, React.createElement("a", {
+      "title": i18n.t('editor_welcome_video_insert'),
+      "onClick": this.handleClickInsert
+    }, i18n.t('editor_welcome_video_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_video_link')), React.createElement("br", null), React.createElement("span", null, " ", i18n.t('editor_welcome_video_supported_services')))));
+  },
+  handleClickInsert: function(e) {
+    e.preventDefault();
+    return this.props.onClickInsertState();
+  }
+});
+
+module.exports = EditorTypeVideoWelcome;
+
+
+
+},{"../../MediaBox/MediaBox":28}],49:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -17756,7 +16211,7 @@ window.Auth = React.createClass({
 
 
 
-},{"react/lib/cx":599}],18:[function(require,module,exports){
+},{"react/lib/cx":597}],50:[function(require,module,exports){
 window.AuthorizationShellbox = React.createClass({
   render: function() {
     var boxStyle, entriesCount, usersCount;
@@ -17828,7 +16283,7 @@ window.AuthorizationShellbox = React.createClass({
 
 
 
-},{}],19:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 var AUTH_TIMEOUT;
 
 AUTH_TIMEOUT = 30000;
@@ -17869,7 +16324,7 @@ window.FacebookAuthorizationShellbox = React.createClass({
 
 
 
-},{}],20:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 var AUTH_TIMEOUT;
 
 AUTH_TIMEOUT = 30000;
@@ -17910,7 +16365,7 @@ window.VkAuthorizationShellbox = React.createClass({
 
 
 
-},{}],21:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 window.Shellbox_FacebookAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -17959,7 +16414,7 @@ window.Shellbox_FacebookAuthButton = React.createClass({
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 window.Shellbox_VkAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -18008,7 +16463,7 @@ window.Shellbox_VkAuthButton = React.createClass({
 
 
 
-},{}],23:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var EmailFooter;
 
 EmailFooter = React.createClass({
@@ -18041,7 +16496,7 @@ module.exports = EmailFooter;
 
 
 
-},{}],24:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var EmailSubmitButton;
 
 EmailSubmitButton = React.createClass({
@@ -18078,7 +16533,7 @@ module.exports = EmailSubmitButton;
 
 
 
-},{}],25:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var ConfirmRegistrationMixin, EmailConfirmRegistration;
 
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
@@ -18132,7 +16587,7 @@ module.exports = EmailConfirmRegistration;
 
 
 
-},{"../mixins/confirm_registration":30}],26:[function(require,module,exports){
+},{"../mixins/confirm_registration":62}],58:[function(require,module,exports){
 var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
 
 EmailFooter = require('./_partials/footer');
@@ -18203,7 +16658,7 @@ window.Email = React.createClass({
 
 
 
-},{"./_partials/footer":23,"./buttons/submit":24,"./fields/login":27,"./fields/password":28,"./mixins/email":29}],27:[function(require,module,exports){
+},{"./_partials/footer":55,"./buttons/submit":56,"./fields/login":59,"./fields/password":60,"./mixins/email":61}],59:[function(require,module,exports){
 var EmailLoginField, cx;
 
 cx = require('react/lib/cx');
@@ -18248,7 +16703,7 @@ module.exports = EmailLoginField;
 
 
 
-},{"react/lib/cx":599}],28:[function(require,module,exports){
+},{"react/lib/cx":597}],60:[function(require,module,exports){
 var EmailPasswordField, cx;
 
 cx = require('react/lib/cx');
@@ -18293,7 +16748,7 @@ module.exports = EmailPasswordField;
 
 
 
-},{"react/lib/cx":599}],29:[function(require,module,exports){
+},{"react/lib/cx":597}],61:[function(require,module,exports){
 var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
 
 EmailConfirmRegistration = require('../confirm_registration');
@@ -18426,7 +16881,7 @@ module.exports = EmailMixin;
 
 
 
-},{"../confirm_registration":25}],30:[function(require,module,exports){
+},{"../confirm_registration":57}],62:[function(require,module,exports){
 var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
 
 USER_EXISTS_MESSAGE = 'user_creator/user_exists';
@@ -18496,7 +16951,7 @@ module.exports = ConfirmRegistrationMixin;
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 window.RecoveryShellbox = React.createClass({
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin],
   getInitialState: function() {
@@ -18605,7 +17060,7 @@ window.RecoveryShellbox = React.createClass({
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
 
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
@@ -18652,7 +17107,7 @@ module.exports = SocialNetworksConfirmRegistration;
 
 
 
-},{"../mixins/confirm_registration":30}],33:[function(require,module,exports){
+},{"../mixins/confirm_registration":62}],65:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -18717,7 +17172,7 @@ window.Avatar = React.createClass({
 
 
 
-},{"react/lib/cx":599}],34:[function(require,module,exports){
+},{"react/lib/cx":597}],66:[function(require,module,exports){
 window.UserAvatar = React.createClass({
   displayName: 'UserAvatar',
   propTypes: {
@@ -18754,7 +17209,7 @@ window.UserAvatar = React.createClass({
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 window.LoadMoreButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -18771,7 +17226,7 @@ window.LoadMoreButton = React.createClass({
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS, cx;
 
 cx = require('react/lib/cx');
@@ -18989,7 +17444,7 @@ window.Calendar = React.createClass({
 
 
 
-},{"react/lib/cx":599}],37:[function(require,module,exports){
+},{"react/lib/cx":597}],69:[function(require,module,exports){
 window.CalendarHeader = React.createClass({
   propTypes: {
     date: React.PropTypes.object.isRequired
@@ -19016,7 +17471,7 @@ window.CalendarHeader = React.createClass({
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -19069,7 +17524,7 @@ window.CalendarMarker = React.createClass({
 
 
 
-},{"react/lib/cx":599}],39:[function(require,module,exports){
+},{"react/lib/cx":597}],71:[function(require,module,exports){
 window.CalendarPeriod = React.createClass({
   propTypes: {
     period: React.PropTypes.object.isRequired,
@@ -19102,7 +17557,7 @@ window.CalendarPeriod = React.createClass({
 
 
 
-},{}],40:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 window.CalendarTimeline = React.createClass({
   propTypes: {
     periods: React.PropTypes.array.isRequired,
@@ -19135,7 +17590,63 @@ window.CalendarTimeline = React.createClass({
 
 
 
-},{}],41:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
+var DropZone, PropTypes;
+
+PropTypes = React.PropTypes;
+
+DropZone = React.createClass({
+  displayName: 'DropZone',
+  propTypes: {
+    global: PropTypes.bool,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired,
+    onDragOver: PropTypes.func.isRequired,
+    onDragLeave: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      global: false
+    };
+  },
+  componentDidMount: function() {
+    if (this.props.global) {
+      $(document).on('dragover', this.handleDragOver);
+      $(document).on('dragleave', this.handleDragLeave);
+      return $(document).on('drop', this.handleDrop);
+    }
+  },
+  componentWillUnmount: function() {
+    if (this.props.global) {
+      $(document).off('dragover', this.handleDragOver);
+      $(document).off('dragleave', this.handleDragLeave);
+      return $(document).off('drop', this.handleDrop);
+    }
+  },
+  handleDragOver: function(e) {
+    e.preventDefault();
+    return this.props.onDragOver();
+  },
+  handleDragLeave: function(e) {
+    e.preventDefault();
+    return this.props.onDragLeave();
+  },
+  handleDrop: function(e) {
+    var files;
+    e.preventDefault();
+    files = e.originalEvent.dataTransfer.files;
+    return this.props.onDrop(files);
+  },
+  render: function() {
+    return React.createElement("div", null, this.props.children);
+  }
+});
+
+module.exports = DropZone;
+
+
+
+},{}],74:[function(require,module,exports){
 window.AdaptiveInput = React.createClass({
   propTypes: {
     type: React.PropTypes.string,
@@ -19178,7 +17689,7 @@ window.AdaptiveInput = React.createClass({
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
 
 PropTypes = React.PropTypes;
@@ -19247,7 +17758,7 @@ module.exports = InfiniteScroll;
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var PropTypes, Scroller;
 
 PropTypes = React.PropTypes;
@@ -19289,7 +17800,7 @@ module.exports = Scroller;
 
 
 
-},{}],44:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var ColorPicker, POPUP_WIDTH, STATE_CHOICE, STATE_VIEW;
 
 POPUP_WIDTH = 176;
@@ -19397,7 +17908,7 @@ module.exports = ColorPicker;
 
 
 
-},{}],45:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 var ColorPicker_Popup;
 
 ColorPicker_Popup = React.createClass({
@@ -19440,7 +17951,7 @@ module.exports = ColorPicker_Popup;
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 window.DesignSettingsPopup_Controls = React.createClass({
   propTypes: {
     design: React.PropTypes.object.isRequired,
@@ -19485,7 +17996,7 @@ window.DesignSettingsPopup_Controls = React.createClass({
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
   propTypes: {
     progress: React.PropTypes.number.isRequired
@@ -19511,7 +18022,7 @@ window.DesignSettingsPopup_ControlsProgressbar = React.createClass({
 
 
 
-},{}],48:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -19581,7 +18092,7 @@ window.DesignSettingsPopup_ControlsRadioButton = React.createClass({
 
 
 
-},{"react/lib/cx":599}],49:[function(require,module,exports){
+},{"react/lib/cx":597}],82:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
   propTypes: {
     coverAlign: React.PropTypes.string.isRequired,
@@ -19633,7 +18144,7 @@ window.DesignSettingsPopup_ControlsAlignItem = React.createClass({
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
   mixins: ['ReactActivitiesUser', ComponentManipulationsMixin],
   propTypes: {
@@ -19761,7 +18272,7 @@ window.DesignSettingsPopup_ControlsBackgroundItem = React.createClass({
 
 
 
-},{}],51:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
   propTypes: {
     feedColor: React.PropTypes.string.isRequired,
@@ -19814,7 +18325,7 @@ window.DesignSettingsPopup_ControlsFeedColorItem = React.createClass({
 
 
 
-},{}],52:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
   propTypes: {
     fontType: React.PropTypes.string.isRequired,
@@ -19868,7 +18379,7 @@ window.DesignSettingsPopup_ControlsFontTypeItem = React.createClass({
 
 
 
-},{}],53:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
   propTypes: {
     headerColor: React.PropTypes.string.isRequired,
@@ -19935,7 +18446,7 @@ window.DesignSettingsPopup_ControlsHeaderColorItem = React.createClass({
 
 
 
-},{}],54:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 var MAXIMUM_OPACITY, MINIMUM_OPACITY, STEP_OPACITY, TIMEOUT_BEFORE_SAVE;
 
 MINIMUM_OPACITY = 0;
@@ -20039,7 +18550,7 @@ window.DesignSettingsPopup_ControlsOpacityItem = React.createClass({
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 var CurrentUserServerActions, cx;
 
 cx = require('react/lib/cx');
@@ -20179,7 +18690,7 @@ window.DesignSettingsPopup = React.createClass({
 
 
 
-},{"../../actions/server/current_user":12,"react/lib/cx":599}],56:[function(require,module,exports){
+},{"../../actions/server/current_user":13,"react/lib/cx":597}],89:[function(require,module,exports){
 var KEYCODE_ENTER, LinkedStateMixin, cx;
 
 cx = require('react/lib/cx');
@@ -20298,7 +18809,7 @@ window.EditableField = React.createClass({
 
 
 
-},{"react/lib/LinkedStateMixin":510,"react/lib/cx":599}],57:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":508,"react/lib/cx":597}],90:[function(require,module,exports){
 window.EmbedComponent = React.createClass({
   propTypes: {
     autoplay: React.PropTypes.bool.isRequired,
@@ -20396,7 +18907,7 @@ window.EmbedComponentWithCover = React.createClass({
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
@@ -20417,7 +18928,7 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
 
 HIDDEN_STATE = 'hidden';
@@ -20577,7 +19088,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 window.EntryCommentBox_CommentEditFormManager = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -20640,7 +19151,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
 
 
 
-},{}],61:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var REPLIES_LIMIT;
 
 REPLIES_LIMIT = 5;
@@ -20793,7 +19304,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -20867,7 +19378,7 @@ window.EntryCommentBox_Comment = React.createClass({
 
 
 
-},{"react/lib/cx":599}],63:[function(require,module,exports){
+},{"react/lib/cx":597}],96:[function(require,module,exports){
 window.EntryCommentBox_CommentList = React.createClass({
   propTypes: {
     comments: React.PropTypes.array.isRequired,
@@ -20920,7 +19431,7 @@ window.EntryCommentBox_CommentList = React.createClass({
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -20994,7 +19505,7 @@ window.EntryCommentBox_CommentManager = React.createClass({
 
 
 
-},{"react/lib/cx":599}],65:[function(require,module,exports){
+},{"react/lib/cx":597}],98:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBar = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -21035,7 +19546,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -21073,7 +19584,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({
 
 
 
-},{}],67:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -21197,7 +19708,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({
 
 
 
-},{"react/lib/cx":599}],68:[function(require,module,exports){
+},{"react/lib/cx":597}],101:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -21246,7 +19757,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -21268,7 +19779,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
   propTypes: {
     commentId: React.PropTypes.number.isRequired
@@ -21289,7 +19800,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -21331,7 +19842,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -21350,7 +19861,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 var MORE_COMMENTS_LIMIT;
 
 MORE_COMMENTS_LIMIT = 50;
@@ -21426,7 +19937,7 @@ window.EntryCommentBox = React.createClass({
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 window.EntryCommentBox_LoadMore = React.createClass({
   propTypes: {
     totalCount: React.PropTypes.number.isRequired,
@@ -21461,7 +19972,7 @@ window.EntryCommentBox_LoadMore = React.createClass({
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -21637,7 +20148,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],76:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 window.EntryMetabarAuthor = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -21662,7 +20173,7 @@ window.EntryMetabarAuthor = React.createClass({
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 window.EntryMetabarComment = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -21706,7 +20217,7 @@ window.EntryMetabarComment = React.createClass({
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 window.EntryMetabarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -21739,7 +20250,7 @@ window.EntryMetabarDate = React.createClass({
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -21925,7 +20436,7 @@ window.EntryMetabarDropdownMenu = React.createClass({
 
 
 
-},{"react/lib/cx":599}],80:[function(require,module,exports){
+},{"react/lib/cx":597}],113:[function(require,module,exports){
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
   propTypes: {
@@ -22000,7 +20511,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -22113,7 +20624,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],82:[function(require,module,exports){
+},{"react/lib/cx":597}],115:[function(require,module,exports){
 window.EntryMetabarDropdownMenuItem = React.createClass({
   propTypes: {
     href: React.PropTypes.string.isRequired,
@@ -22132,7 +20643,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
 
 
 
-},{}],83:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 window.EntryMetabarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -22173,7 +20684,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -22271,7 +20782,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
 
 
 
-},{}],85:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 window.EntryMetabar = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -22340,7 +20851,7 @@ window.EntryMetabar = React.createClass({
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 window.EntryMetabarTag = React.createClass({
   propTypes: {
     tag: React.PropTypes.string.isRequired
@@ -22357,7 +20868,7 @@ window.EntryMetabarTag = React.createClass({
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 window.EntryMetabarTags = React.createClass({
   propTypes: {
     tags: React.PropTypes.array.isRequired
@@ -22397,7 +20908,7 @@ window.EntryMetabarTags = React.createClass({
 
 
 
-},{}],88:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 window.FeedBricks = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -22454,7 +20965,7 @@ window.FeedBricks = React.createClass({
 
 
 
-},{}],89:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 var APPEND_LOADING_STATE, LOADED_STATE, PREPEND_LOADING_STATE;
 
 APPEND_LOADING_STATE = 'appendLoading';
@@ -22551,7 +21062,7 @@ window.Feed = React.createClass({
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 var THRESHOLD;
 
 THRESHOLD = 400;
@@ -22588,7 +21099,7 @@ window.FeedBaseMixin = {
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 window.FeedTlog = React.createClass({
   mixins: [FeedBaseMixin],
   propTypes: {
@@ -22630,7 +21141,7 @@ window.FeedTlog = React.createClass({
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 
 CLASS_PREFIX_STATE = 'state--';
@@ -22713,7 +21224,7 @@ window.FollowStatus = React.createClass({
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 var HeroProfile_SettingsButton;
 
 HeroProfile_SettingsButton = React.createClass({
@@ -22734,7 +21245,7 @@ module.exports = HeroProfile_SettingsButton;
 
 
 
-},{}],94:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -22839,7 +21350,7 @@ window.HeroProfile_DropdownMenu = React.createClass({
 
 
 
-},{"react/lib/cx":599}],95:[function(require,module,exports){
+},{"react/lib/cx":597}],128:[function(require,module,exports){
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -22875,7 +21386,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
 
 
 
-},{}],96:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -22909,7 +21420,7 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 window.HeroProfileStats_FollowersPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -23014,7 +21525,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 window.HeroProfileStats_FollowingsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -23119,7 +21630,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 window.HeroProfileStats_FollowerItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -23146,7 +21657,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -23173,7 +21684,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 window.HeroProfileStats_TagItem = React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired
@@ -23195,7 +21706,7 @@ window.HeroProfileStats_TagItem = React.createClass({
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 var FADE_DURATION, MARGIN;
 
 MARGIN = 10;
@@ -23278,7 +21789,7 @@ window.HeroProfileStats_Popup = React.createClass({
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -23383,7 +21894,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
 
 
 
-},{}],104:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
 
 HeroProfile_SettingsButton = require('./buttons/settings');
@@ -23496,7 +22007,7 @@ window.HeroProfile = React.createClass({
       Mousetrap.unbind('esc', this.close);
       $(window).off('scroll.hero');
       this.restoreInitialHeroHeight();
-      this.unsetHeroHeight();
+      setTimeout(this.unsetHeroHeight, 1500);
       $('body').removeClass(HERO_OPENED_CLASS);
       return TastyEvents.trigger(TastyEvents.keys.hero_closed());
     }
@@ -23558,7 +22069,7 @@ window.HeroProfile = React.createClass({
 
 
 
-},{"./buttons/settings":93}],105:[function(require,module,exports){
+},{"./buttons/settings":126}],138:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
 
 HERO_AVATAR_SIZE = 220;
@@ -23583,7 +22094,7 @@ window.HeroProfileAvatar = React.createClass({
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 window.HeroProfileHead = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -23649,7 +22160,7 @@ window.HeroProfileHeadStatic = React.createClass({
 
 
 
-},{}],107:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 window.HeroProfileStats = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -23788,7 +22299,7 @@ window.HeroProfileStats = React.createClass({
 
 
 
-},{}],108:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -23830,7 +22341,7 @@ window.HeroProfileStatsItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],109:[function(require,module,exports){
+},{"react/lib/cx":597}],142:[function(require,module,exports){
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 
 update = require('react/lib/update');
@@ -23989,7 +22500,7 @@ window.ImagesCollage_Legacy = React.createClass({
 
 
 
-},{"react/lib/update":640}],110:[function(require,module,exports){
+},{"react/lib/update":638}],143:[function(require,module,exports){
 var FADE_DURATION;
 
 FADE_DURATION = 300;
@@ -24057,7 +22568,7 @@ window.TastyAlert = React.createClass({
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 var FADE_DURATION;
 
 FADE_DURATION = 300;
@@ -24127,7 +22638,7 @@ window.TastyConfirm = React.createClass({
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 var FADE_DURATION, START_TIMEOUT;
 
 FADE_DURATION = 300;
@@ -24183,7 +22694,7 @@ window.TastyLockingAlert = React.createClass({
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 var DEFAULT_TIMEOUT, DEFAULT_TYPE;
 
 DEFAULT_TYPE = 'success';
@@ -24233,7 +22744,7 @@ window.TastyNotify = React.createClass({
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 window.PeopleItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
@@ -24277,7 +22788,7 @@ window.PeopleItem = React.createClass({
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 window.PersonsPopup_FollowerRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -24299,7 +22810,7 @@ window.PersonsPopup_FollowerRelationship = React.createClass({
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 window.PersonsPopup_FollowingRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -24321,7 +22832,7 @@ window.PersonsPopup_FollowingRelationship = React.createClass({
 
 
 
-},{}],117:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 window.PersonsPopup_GuessRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -24345,7 +22856,7 @@ window.PersonsPopup_GuessRelationship = React.createClass({
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 window.PersonsPopup_IgnoredRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -24367,7 +22878,7 @@ window.PersonsPopup_IgnoredRelationship = React.createClass({
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 window.PersonsPopup_PersonItem = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired,
@@ -24408,7 +22919,7 @@ window.PersonsPopup_PersonItem = React.createClass({
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 window.PersonsPopup_RequestedRelationship = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -24431,7 +22942,7 @@ window.PersonsPopup_RequestedRelationship = React.createClass({
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 window.PersonsPopup_Menu = React.createClass({
   displayName: 'PersonsPopup_Menu',
   mixins: [RequesterMixin],
@@ -24529,7 +23040,7 @@ window.PersonsPopup_Menu = React.createClass({
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -24561,7 +23072,7 @@ window.PersonsPopup_MenuItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],123:[function(require,module,exports){
+},{"react/lib/cx":597}],156:[function(require,module,exports){
 var ERROR_STATE, LOADED_STATE, LOADING_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -24740,7 +23251,7 @@ React.mixins.add('PersonsPopup_PanelMixin', [PersonsPopup_PanelMixin, window.Req
 
 
 
-},{"react/lib/cx":599}],124:[function(require,module,exports){
+},{"react/lib/cx":597}],157:[function(require,module,exports){
 window.PersonsPopup_FollowersPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followers',
@@ -24760,7 +23271,7 @@ window.PersonsPopup_FollowersPanel = React.createClass({
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 window.PersonsPopup_FollowingsPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'followings',
@@ -24780,7 +23291,7 @@ window.PersonsPopup_FollowingsPanel = React.createClass({
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 window.PersonsPopup_GuessedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'guessed',
@@ -24800,7 +23311,7 @@ window.PersonsPopup_GuessedPanel = React.createClass({
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 window.PersonsPopup_IgnoredPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'ignored',
@@ -24820,7 +23331,7 @@ window.PersonsPopup_IgnoredPanel = React.createClass({
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 window.PersonsPopup_RequestedPanel = React.createClass({
   mixins: ['PersonsPopup_PanelMixin'],
   relationshipType: 'requested',
@@ -24840,7 +23351,7 @@ window.PersonsPopup_RequestedPanel = React.createClass({
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 var FacebookSignIn, FacebookSuggestions, SocialNetworkPanelMixin;
 
 SocialNetworkPanelMixin = require('./mixins/socialNetwork');
@@ -24901,7 +23412,7 @@ window.PersonsPopup_FacebookPanel = React.createClass({
 
 
 
-},{"./facebook/signIn":130,"./facebook/suggestions":131,"./mixins/socialNetwork":136}],130:[function(require,module,exports){
+},{"./facebook/signIn":163,"./facebook/suggestions":164,"./mixins/socialNetwork":169}],163:[function(require,module,exports){
 var VkontakteSignIn;
 
 VkontakteSignIn = React.createClass({
@@ -24926,7 +23437,7 @@ module.exports = VkontakteSignIn;
 
 
 
-},{}],131:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 var FacebookSuggestions, FacebookSuggestionsEmpty, FacebookSuggestionsList, PropTypes, SuggestionsMixin;
 
 SuggestionsMixin = require('../mixins/suggestions');
@@ -24952,7 +23463,7 @@ module.exports = FacebookSuggestions;
 
 
 
-},{"../mixins/suggestions":138,"./suggestions/empty":133,"./suggestions/list":134}],132:[function(require,module,exports){
+},{"../mixins/suggestions":171,"./suggestions/empty":166,"./suggestions/list":167}],165:[function(require,module,exports){
 var FacebookSubscribeAllButton;
 
 FacebookSubscribeAllButton = React.createClass({
@@ -24987,7 +23498,7 @@ module.exports = FacebookSubscribeAllButton;
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 var FacebookSuggestionsEmpty, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -25009,7 +23520,7 @@ module.exports = FacebookSuggestionsEmpty;
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 var FacebookSubscribeAllButton, FacebookSuggestionsItem, FacebookSuggestionsList, SuggestionListMixin;
 
 SuggestionListMixin = require('../../mixins/suggestionList');
@@ -25033,7 +23544,7 @@ module.exports = FacebookSuggestionsList;
 
 
 
-},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":132,"./listItem":135}],135:[function(require,module,exports){
+},{"../../mixins/suggestionList":170,"./buttons/subscribeAll":165,"./listItem":168}],168:[function(require,module,exports){
 var FacebookSuggestionsItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -25055,7 +23566,7 @@ module.exports = FacebookSuggestionsItem;
 
 
 
-},{}],136:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var ConnectStoreMixin, ERROR_STATE, LOADED_STATE, LOADING_STATE, SocialNetworkPanelMixin;
 
 ConnectStoreMixin = require('../../../../../../../shared/react/mixins/connectStore');
@@ -25126,7 +23637,7 @@ module.exports = SocialNetworkPanelMixin;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":330}],137:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":328}],170:[function(require,module,exports){
 var PropTypes, SuggestionListMixin;
 
 PropTypes = React.PropTypes;
@@ -25187,7 +23698,7 @@ module.exports = SuggestionListMixin;
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 var PropTypes, SuggestionsMixin;
 
 PropTypes = React.PropTypes;
@@ -25219,7 +23730,7 @@ module.exports = SuggestionsMixin;
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 var SocialNetworkPanelMixin, VkontakteSignIn, VkontakteSuggestions;
 
 SocialNetworkPanelMixin = require('./mixins/socialNetwork');
@@ -25280,7 +23791,7 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
 
 
 
-},{"./mixins/socialNetwork":136,"./vkontakte/signIn":140,"./vkontakte/suggestions":141}],140:[function(require,module,exports){
+},{"./mixins/socialNetwork":169,"./vkontakte/signIn":173,"./vkontakte/suggestions":174}],173:[function(require,module,exports){
 var VkontakteSignIn;
 
 VkontakteSignIn = React.createClass({
@@ -25305,7 +23816,7 @@ module.exports = VkontakteSignIn;
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 var PropTypes, SuggestionsMixin, VkontakteSuggestions, VkontakteSuggestionsEmpty, VkontakteSuggestionsList;
 
 SuggestionsMixin = require('../mixins/suggestions');
@@ -25331,7 +23842,7 @@ module.exports = VkontakteSuggestions;
 
 
 
-},{"../mixins/suggestions":138,"./suggestions/empty":143,"./suggestions/list":144}],142:[function(require,module,exports){
+},{"../mixins/suggestions":171,"./suggestions/empty":176,"./suggestions/list":177}],175:[function(require,module,exports){
 var VkontakteSubscribeAllButton;
 
 VkontakteSubscribeAllButton = React.createClass({
@@ -25366,7 +23877,7 @@ module.exports = VkontakteSubscribeAllButton;
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 var PropTypes, VkontakteSuggestionsEmpty;
 
 PropTypes = React.PropTypes;
@@ -25388,7 +23899,7 @@ module.exports = VkontakteSuggestionsEmpty;
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 var SuggestionListMixin, VkontakteSubscribeAllButton, VkontakteSuggestionsItem, VkontakteSuggestionsList;
 
 SuggestionListMixin = require('../../mixins/suggestionList');
@@ -25412,7 +23923,7 @@ module.exports = VkontakteSuggestionsList;
 
 
 
-},{"../../mixins/suggestionList":137,"./buttons/subscribeAll":142,"./listItem":145}],145:[function(require,module,exports){
+},{"../../mixins/suggestionList":170,"./buttons/subscribeAll":175,"./listItem":178}],178:[function(require,module,exports){
 var PropTypes, VkontakteSuggestionsItem;
 
 PropTypes = React.PropTypes;
@@ -25434,7 +23945,7 @@ module.exports = VkontakteSuggestionsItem;
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 var DEFAULT_PANEL;
 
 DEFAULT_PANEL = 'followings';
@@ -25521,7 +24032,7 @@ window.PersonsPopup = React.createClass({
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -25564,7 +24075,7 @@ window.PopupHeader = React.createClass({
 
 
 
-},{"react/lib/cx":599}],148:[function(require,module,exports){
+},{"react/lib/cx":597}],181:[function(require,module,exports){
 window.PopupLayout = React.createClass({
   mixins: [ReactUnmountMixin],
   propTypes: {
@@ -25597,7 +24108,7 @@ window.PopupLayout = React.createClass({
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 var NO_TRANSITION_CLASS, cx;
 
 cx = require('react/lib/cx');
@@ -25687,7 +24198,7 @@ window.Popup = React.createClass({
 
 
 
-},{"react/lib/cx":599}],150:[function(require,module,exports){
+},{"react/lib/cx":597}],183:[function(require,module,exports){
 window.PopupSpinner = React.createClass({
   propTypes: {
     hasActivities: React.PropTypes.bool.isRequired
@@ -25709,7 +24220,7 @@ window.PopupSpinner = React.createClass({
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 var LinkedStateMixin;
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
@@ -25765,2267 +24276,7 @@ window.PopupBox = React.createClass({
 
 
 
-},{"react/lib/LinkedStateMixin":510}],152:[function(require,module,exports){
-var ENTRY_PRIVACY_ANONYMOUS, ENTRY_PRIVACY_LIVE, ENTRY_PRIVACY_PRIVATE, ENTRY_PRIVACY_PUBLIC, PREVIEW_BODY_CLASSES, TLOG_TYPE_ANONYMOUS, TLOG_TYPE_PRIVATE, TLOG_TYPE_PUBLIC, cx;
-
-cx = require('react/lib/cx');
-
-ENTRY_PRIVACY_PRIVATE = TLOG_TYPE_PRIVATE = 'private';
-
-ENTRY_PRIVACY_PUBLIC = TLOG_TYPE_PUBLIC = 'public';
-
-ENTRY_PRIVACY_ANONYMOUS = TLOG_TYPE_ANONYMOUS = 'anonymous';
-
-ENTRY_PRIVACY_LIVE = 'live';
-
-PREVIEW_BODY_CLASSES = {
-  "true": 'tlog-mode-full',
-  "false": 'tlog-mode-minimal'
-};
-
-window.PostActions = React.createClass({
-  propTypes: {
-    entryPrivacy: React.PropTypes.string.isRequired,
-    tlogType: React.PropTypes.oneOf(TLOG_TYPES).isRequired,
-    previewMode: React.PropTypes.bool.isRequired,
-    isLoading: React.PropTypes.bool.isRequired,
-    onChangePrivacy: React.PropTypes.func,
-    onPreview: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired
-  },
-  componentWillUpdate: function(nextProps) {
-    return $("body").removeClass(PREVIEW_BODY_CLASSES[this.props.previewMode]).addClass(PREVIEW_BODY_CLASSES[nextProps.previewMode]);
-  },
-  render: function() {
-    var loader, postActionsClasses, previewButtonClasses, privacyButton, voteButton;
-    previewButtonClasses = cx({
-      'button': true,
-      'button--grey': true,
-      'state--active': this.props.previewMode
-    });
-    postActionsClasses = cx({
-      'post-actions': true,
-      'state--loading': this.props.isLoading
-    });
-    privacyButton = React.createElement("div", {
-      "className": "post-action post-action--button"
-    }, React.createElement(PostActions_PrivacyButton, {
-      "isVoteEnabled": this.isPostPublicWithVoting(),
-      "private": this.isPostPrivate(),
-      "onChange": this.onPrivacyChanged
-    }));
-    if (this.props.isLoading) {
-      loader = React.createElement("div", {
-        "className": "post-action post-action--loader"
-      }, React.createElement(Spinner, {
-        "size": 8.
-      }));
-    }
-    if (!(this.isPostPrivate() || this.isTlogPrivate())) {
-      voteButton = React.createElement("div", {
-        "className": "post-action post-action--button"
-      }, React.createElement(PostActions_VoteButton, {
-        "enabled": this.isPostPublicWithVoting(),
-        "onChange": this.onVoteChanged
-      }));
-    }
-    if (this.isTlogAnonymous()) {
-      voteButton = privacyButton = null;
-    }
-    return React.createElement("div", {
-      "className": postActionsClasses
-    }, loader, voteButton, privacyButton, React.createElement("div", {
-      "className": "post-action post-action--button"
-    }, React.createElement("button", {
-      "className": previewButtonClasses,
-      "onClick": this.props.onPreview
-    }, React.createElement("span", {
-      "className": "button__text"
-    }, i18n.t('editor_preview_button')))), React.createElement("div", {
-      "className": "post-action post-action--button"
-    }, React.createElement("div", {
-      "ref": "dropdown",
-      "className": "button-group"
-    }, React.createElement("button", {
-      "className": "button button--green",
-      "onClick": this.props.onSave
-    }, React.createElement("span", {
-      "className": "button__text"
-    }, this._getSaveButtonText())))));
-  },
-  isPostPublic: function() {
-    return this.props.entryPrivacy === ENTRY_PRIVACY_PUBLIC;
-  },
-  isPostPrivate: function() {
-    return this.props.entryPrivacy === ENTRY_PRIVACY_PRIVATE;
-  },
-  isPostPublicWithVoting: function() {
-    return this.props.entryPrivacy === ENTRY_PRIVACY_LIVE;
-  },
-  isPostAnonymous: function() {
-    return this.props.entryPrivacy === ENTRY_PRIVACY_ANONYMOUS;
-  },
-  isTlogAnonymous: function() {
-    return this.props.tlogType === TLOG_TYPE_ANONYMOUS;
-  },
-  isTlogPublic: function() {
-    return this.props.tlogType === TLOG_TYPE_PUBLIC;
-  },
-  isTlogPrivate: function() {
-    return this.props.tlogType === TLOG_TYPE_PRIVATE;
-  },
-  _getSaveButtonText: function() {
-    if (this.isPostPrivate()) {
-      return i18n.t('editor_save_button');
-    } else {
-      return i18n.t('editor_publish_button');
-    }
-  },
-  onVoteChanged: function(value) {
-    var newEntryPrivacy;
-    newEntryPrivacy = value ? ENTRY_PRIVACY_LIVE : ENTRY_PRIVACY_PUBLIC;
-    return this.props.onChangePrivacy(newEntryPrivacy);
-  },
-  onPrivacyChanged: function(value) {
-    var newEntryPrivacy;
-    newEntryPrivacy = value ? ENTRY_PRIVACY_PRIVATE : ENTRY_PRIVACY_PUBLIC;
-    return this.props.onChangePrivacy(newEntryPrivacy);
-  }
-});
-
-
-
-},{"react/lib/cx":599}],153:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostActions_PrivacyButton = React.createClass({
-  propTypes: {
-    "private": React.PropTypes.bool,
-    isVoteEnabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.$button = $(this.getDOMNode());
-    return this.$button.tooltip({
-      placement: 'bottom'
-    });
-  },
-  componentWillUnmount: function() {
-    return this.$button.tooltip('destroy');
-  },
-  render: function() {
-    var iconClasses;
-    iconClasses = cx({
-      'icon': true,
-      'icon--unlock': !this.props["private"],
-      'icon--lock': this.props["private"]
-    });
-    return React.createElement("button", {
-      "className": "button button--outline-grey post-settings-button",
-      "data-original-title": this._getTooltipTitle(),
-      "onClick": this.onClick
-    }, React.createElement("span", {
-      "className": iconClasses
-    }));
-  },
-  _getTooltipTitle: function() {
-    var title;
-    title = this.props["private"] ? i18n.t('editor_private_entry') : i18n.t('editor_public_entry');
-    if (this.props.isVoteEnabled) {
-      title = i18n.t('editor_public_with_voting_entry');
-    }
-    return title;
-  },
-  onClick: function() {
-    this.props.onChange(!this.props["private"]);
-    return this.$button.tooltip('hide');
-  }
-});
-
-
-
-},{"react/lib/cx":599}],154:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostActions_VoteButton = React.createClass({
-  propTypes: {
-    enabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.$button = $(this.getDOMNode());
-    return this.$button.tooltip({
-      placement: 'bottom'
-    });
-  },
-  componentWillUnmount: function() {
-    return this.$button.tooltip('destroy');
-  },
-  render: function() {
-    var iconClasses;
-    iconClasses = cx({
-      'icon': true,
-      'post-settings-voting': true,
-      'post-settings-voted': this.props.enabled
-    });
-    return React.createElement("button", {
-      "className": "button button--outline-grey post-settings-button",
-      "data-original-title": this._getTooltipTitle(),
-      "onClick": this.onClick
-    }, React.createElement("span", {
-      "className": iconClasses
-    }));
-  },
-  _getTooltipTitle: function() {
-    if (this.props.enabled) {
-      return i18n.t('editor_disable_voting');
-    } else {
-      return i18n.t('editor_enable_voting');
-    }
-  },
-  onClick: function() {
-    this.props.onChange(!this.props.enabled);
-    return this.$button.tooltip('hide');
-  }
-});
-
-
-
-},{"react/lib/cx":599}],155:[function(require,module,exports){
-var CHOICER_ITEMS, CHOICER_TYPES, cx;
-
-cx = require('react/lib/cx');
-
-CHOICER_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
-
-CHOICER_ITEMS = {
-  text: {
-    title: function() {
-      return i18n.t('editor_text_type');
-    },
-    icon: 'icon--text-circle'
-  },
-  image: {
-    title: function() {
-      return i18n.t('editor_image_type');
-    },
-    icon: 'icon--image-circle'
-  },
-  instagram: {
-    title: function() {
-      return i18n.t('editor_instagram_type');
-    },
-    icon: 'icon--instagram-circle'
-  },
-  music: {
-    title: function() {
-      return i18n.t('editor_music_type');
-    },
-    icon: 'icon--music-circle'
-  },
-  video: {
-    title: function() {
-      return i18n.t('editor_video_type');
-    },
-    icon: 'icon--video-circle'
-  },
-  quote: {
-    title: function() {
-      return i18n.t('editor_quote_type');
-    },
-    icon: 'icon--quote-circle'
-  },
-  anonymous: {
-    title: function() {
-      return i18n.t('editor_anonymous_type');
-    },
-    icon: 'icon--text-circle'
-  }
-};
-
-window.PostEditor_Choicer = React.createClass({
-  propTypes: {
-    currentType: React.PropTypes.string.isRequired,
-    isLoading: React.PropTypes.bool.isRequired,
-    onChangeType: React.PropTypes.func
-  },
-  render: function() {
-    var choicerClasses, choicesItems;
-    choicerClasses = cx({
-      'nav-types': true,
-      'state--loading': this.props.isLoading
-    });
-    if (this.props.onChangeType != null) {
-      choicesItems = CHOICER_TYPES.map((function(_this) {
-        return function(type) {
-          return _this.getItemForType(type);
-        };
-      })(this));
-    } else {
-      choicesItems = this.getItemForType(this.props.currentType);
-    }
-    return React.createElement("nav", {
-      "className": choicerClasses
-    }, choicesItems);
-  },
-  getItemForType: function(type) {
-    var choicerItemData, onSelect;
-    onSelect = (function(_this) {
-      return function(type) {
-        var _base;
-        TastyEvents.trigger(TastyEvents.keys.command_current_notification_hide());
-        return typeof (_base = _this.props).onChangeType === "function" ? _base.onChangeType(type) : void 0;
-      };
-    })(this);
-    choicerItemData = CHOICER_ITEMS[type];
-    return React.createElement(PostEditor_ChoicerItem, {
-      "title": choicerItemData.title(),
-      "icon": choicerItemData.icon,
-      "isActive": this.props.currentType === type,
-      "isLoading": this.props.isLoading,
-      "onClick": onSelect.bind(this, type),
-      "key": type
-    });
-  }
-});
-
-window.PostEditor_ChoicerItem = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    isActive: React.PropTypes.bool,
-    isLoading: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.$button = $(this.getDOMNode());
-    return this.$button.tooltip();
-  },
-  componentWillUnmount: function() {
-    return this.$button.tooltip('destroy');
-  },
-  render: function() {
-    var choicerItemClasses;
-    choicerItemClasses = cx({
-      'button': true,
-      'button--circle': true,
-      'state--disable': this.props.isLoading,
-      'state--active': this.props.isActive
-    });
-    return React.createElement("button", {
-      "data-original-title": this.props.title,
-      "className": choicerItemClasses,
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon " + this.props.icon
-    }));
-  },
-  handleClick: function() {
-    if (!this.props.isLoading) {
-      return this.props.onClick();
-    }
-  }
-});
-
-
-
-},{"react/lib/cx":599}],156:[function(require,module,exports){
-var DEMO_IDS;
-
-window.PostEditor_NewDemo = window.PostEditor_NewPost;
-
-DEMO_IDS = {
-  image: 19615711
-};
-
-window.PostEditor_Demo = React.createClass({
-  mixins: ['ReactActivitiesMixin', RequesterMixin, ComponentManipulationsMixin],
-  getInitialState: function() {
-    return {
-      entryPrivacy: 'public',
-      entryType: 'image',
-      entry: null
-    };
-  },
-  componentDidMount: function() {
-    return this.loadEntry(DEMO_IDS[this.state.entryType]);
-  },
-  loadEntry: function(entryId) {
-    this.incrementActivities();
-    this.setState({
-      entry: null
-    });
-    return this.createRequest({
-      url: ApiRoutes.entry_url(entryId),
-      success: (function(_this) {
-        return function(data) {
-          return _this.safeUpdateState({
-            entry: data,
-            entryType: data.type,
-            entryPrivacy: data.privacy
-          });
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  changeType: function(type) {
-    console.log('change type', type);
-    this.setState({
-      entryType: type
-    });
-    return this.loadEntry(DEMO_IDS[type]);
-  },
-  fallback: function() {
-    return console.log('fallback');
-  },
-  render: function() {
-    console.log('demo', this.state.entry);
-    if (this.state.entry != null) {
-      return React.createElement(PostEditor_EditPost, {
-        "entry": this.state.entry,
-        "backUrl": this.props.backUrl
-      });
-    } else {
-      return React.createElement(PostEditor_Layout, {
-        "backUrl": this.props.backUrl
-      }, React.createElement(PostActions, {
-        "entryPrivacy": 'public',
-        "onChangePrivacy": this.fallback,
-        "tlogType": 'public',
-        "previewMode": false,
-        "onPreview": this.fallback,
-        "isLoading": false,
-        "onSave": this.fallback
-      }), React.createElement("div", null, "Loading demo posts.."), React.createElement(PostEditor_Choicer, {
-        "currentType": this.state.entryType
-      }));
-    }
-  }
-});
-
-
-
-},{}],157:[function(require,module,exports){
-window.PostEditor_EditPost = React.createClass({
-  mixins: ['ReactActivitiesMixin', PostEditor_LayoutMixin],
-  propTypes: {
-    entry: React.PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    return this.stateFromProps(this.props);
-  },
-  componentWillReceiveProps: function(nextProps) {
-    return this.setState(this.stateFromProps(nextProps));
-  },
-  stateFromProps: function(props) {
-    var _ref, _ref1;
-    return {
-      normalizedEntry: EntryStore.restoreExistenEntry(this.props.entry.id, this.props.entry.updated_at) || EntryNormalizer.normalize(this.props.entry),
-      entryType: ((_ref = this.props.entry) != null ? _ref.type : void 0) || 'text',
-      entryPrivacy: ((_ref1 = this.props.entry) != null ? _ref1.privacy : void 0) || 'public'
-    };
-  },
-  changePrivacy: function(privacy) {
-    return this.setState({
-      entryPrivacy: privacy
-    });
-  }
-});
-
-
-
-},{}],158:[function(require,module,exports){
-window.PostEditor_EditorContainer = React.createClass({
-  mixins: ['ReactActivitiesUser'],
-  propTypes: {
-    normalizedEntry: React.PropTypes.object.isRequired,
-    entryType: React.PropTypes.string.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    var editorContainer;
-    if (this.props.normalizedEntry != null) {
-      editorContainer = React.createElement("section", {
-        "className": "posts posts--edit"
-      }, this._getEditorComponent());
-    } else {
-      editorContainer = React.createElement("div", null, "No entry to edit");
-    }
-    return editorContainer;
-  },
-  saveEntry: function(_arg) {
-    var entryPrivacy;
-    entryPrivacy = _arg.entryPrivacy;
-    return this.refs.editor.saveEntry({
-      entryPrivacy: entryPrivacy
-    });
-  },
-  storeCallback: function(normalizedEntry) {
-    return EntryStore.storeEntry(normalizedEntry);
-  },
-  redirectToEntryPage: function(entry) {
-    if (TastySettings.env === 'static-development') {
-      alert("Статья " + entry.id + " успешно сохранена");
-      return window.location.reload();
-    } else {
-      return _.defer((function(_this) {
-        return function() {
-          TastyNotifyController.notifySuccess(i18n.t('editor_create_success'));
-          console.log('goto', entry.entry_url);
-          return window.location.href = entry.entry_url;
-        };
-      })(this));
-    }
-  },
-  _getEditorComponent: function() {
-    var editor;
-    switch (this.props.entryType) {
-      case 'anonymous':
-        editor = this._getAnonymousEditor();
-        break;
-      case 'text':
-        editor = this._getTextEditor();
-        break;
-      case 'image':
-        editor = this._getImageEditor();
-        break;
-      case 'instagram':
-        editor = this._getInstagramEditor();
-        break;
-      case 'music':
-        editor = this._getMusicEditor();
-        break;
-      case 'video':
-        editor = this._getVideoEditor();
-        break;
-      case 'quote':
-        editor = this._getQuoteEditor();
-        break;
-      default:
-        console.error("Unknown entry type: " + this.props.entryType);
-    }
-    return editor;
-  },
-  _getAnonymousEditor: function() {
-    return React.createElement(PostEditor_AnonymousEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getTextEditor: function() {
-    return React.createElement(PostEditor_TextEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getImageEditor: function() {
-    return React.createElement(PostEditor_ImageEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "entryPrivacy": this.props.entryPrivacy,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getInstagramEditor: function() {
-    return React.createElement(PostEditor_InstagramEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getMusicEditor: function() {
-    return React.createElement(PostEditor_MusicEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getVideoEditor: function() {
-    return React.createElement(PostEditor_VideoEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  },
-  _getQuoteEditor: function() {
-    return React.createElement(PostEditor_QuoteEditor, {
-      "ref": "editor",
-      "normalizedEntry": this.props.normalizedEntry,
-      "activitiesHandler": this.activitiesHandler,
-      "storeCallback": this.storeCallback,
-      "doneCallback": this.redirectToEntryPage
-    });
-  }
-});
-
-
-
-},{}],159:[function(require,module,exports){
-var EDITOR_MODES, EDITOR_OPTIONS;
-
-EDITOR_MODES = ['inline', 'partial', 'rich'];
-
-EDITOR_OPTIONS = {
-  inline: {
-    disableToolbar: true,
-    disableReturn: true,
-    disableDoubleReturn: true,
-    cleanPastedHTML: true
-  },
-  partial: {
-    disableToolbar: true,
-    disableReturn: false,
-    disableDoubleReturn: true,
-    cleanPastedHTML: true
-  },
-  rich: {
-    buttons: ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'],
-    disableToolbar: false,
-    disableReturn: false,
-    disableDoubleReturn: false,
-    cleanPastedHTML: true,
-    targetBlank: true
-  }
-};
-
-window.TastyEditor = React.createClass({
-  propTypes: {
-    content: React.PropTypes.string,
-    mode: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    isLoading: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    autofocus: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      mode: 'inline',
-      autofocus: false,
-      className: 'tasty-editor-default'
-    };
-  },
-  getInitialState: function() {
-    return {
-      isEditing: false
-    };
-  },
-  componentDidMount: function() {
-    var options;
-    options = {
-      placeholder: this.placeholder()
-    };
-    this.$editor = $(this.refs.content.getDOMNode());
-    this.mediumEditor = new MediumEditor(this.$editor.get(0), _.extend(options, EDITOR_OPTIONS[this.props.mode]));
-    if (this.props.autofocus) {
-      return this.focus();
-    }
-  },
-  componentDidUpdate: function() {
-    var _base, _base1;
-    if (this.props.isLoading) {
-      if (typeof (_base = this.mediumEditor).deactivate === "function") {
-        _base.deactivate();
-      }
-    } else {
-      if (typeof (_base1 = this.mediumEditor).activate === "function") {
-        _base1.activate();
-      }
-    }
-    return this._managePlaceholder();
-  },
-  componentWillUnmount: function() {
-    var _base;
-    return typeof (_base = this.mediumEditor).deactivate === "function" ? _base.deactivate() : void 0;
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "tasty-editor " + this.props.className
-    }, React.createElement("div", {
-      "ref": "content",
-      "className": "tasty-editor-content",
-      "onInput": this.props.onChange,
-      "dangerouslySetInnerHTML": {
-        __html: this.props.content
-      }
-    }));
-  },
-  placeholder: function() {
-    return this.props.placeholder.replace('<br>', "\r\n");
-  },
-  _managePlaceholder: function() {
-    if (this.$editor.html() !== '') {
-      return this.$editor.removeClass('medium-editor-placeholder');
-    } else {
-      return this.$editor.addClass('medium-editor-placeholder');
-    }
-  },
-  content: function() {
-    return this.refs.content.getDOMNode().innerHTML;
-  },
-  focus: function() {
-    var el, range, sel, textRange;
-    el = this.$editor.get(0);
-    el.focus();
-    if (typeof window.getSelection !== 'undefined' && typeof document.createRange !== 'undefined') {
-      range = document.createRange();
-      range.selectNodeContents(el);
-      range.collapse(false);
-      sel = window.getSelection();
-      sel.removeAllRanges();
-      return sel.addRange(range);
-    } else if (typeof document.body.createTextRange !== 'undefined') {
-      textRange = document.body.createTextRange();
-      textRange.moveToElementText(el);
-      textRange.collapse(false);
-      return textRange.select();
-    }
-  }
-});
-
-
-
-},{}],160:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostEditor_AnonymousEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
-  propTypes: {
-    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
-  },
-  render: function() {
-    var anonymousEditorClasses;
-    anonymousEditorClasses = cx({
-      'post': true,
-      'post--text': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities()
-    });
-    return React.createElement("article", {
-      "className": anonymousEditorClasses
-    }, React.createElement("header", {
-      "className": "post__header"
-    }, React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "content": this.entryTitle(),
-      "placeholder": i18n.t('editor_title_placeholder'),
-      "isLoading": this.hasActivities(),
-      "className": "post__title",
-      "onChange": this.startAutosave
-    })), React.createElement(TastyEditor, {
-      "ref": "textEditor",
-      "mode": "rich",
-      "content": this.entryText(),
-      "placeholder": i18n.t('editor_text_placeholder'),
-      "isLoading": this.hasActivities(),
-      "className": "post__content",
-      "onChange": this.startAutosave
-    }));
-  },
-  entryTitle: function() {
-    return this.props.normalizedEntry.data1;
-  },
-  entryText: function() {
-    return this.props.normalizedEntry.data2;
-  },
-  entryType: function() {
-    return 'anonymous';
-  },
-  _getNormalizedData: function() {
-    return {
-      data1: this.refs.titleEditor.content(),
-      data2: this.refs.textEditor.content()
-    };
-  },
-  _getEditorData: function() {
-    return {
-      title: this.refs.titleEditor.content(),
-      text: this.refs.textEditor.content()
-    };
-  }
-});
-
-
-
-},{"react/lib/cx":599}],161:[function(require,module,exports){
-var INSERT_MODE, LOADED_MODE, PureRenderMixin, WELCOME_MODE, cx;
-
-cx = require('react/lib/cx');
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-WELCOME_MODE = 'welcome';
-
-LOADED_MODE = 'loaded';
-
-INSERT_MODE = 'insert';
-
-window.PostEditor_ImageEditor = React.createClass({
-  mixins: ['ReactActivitiesUser', PostEditor_ImagesForm, PostEditor_Dragging, PostEditor_AutosaveMixin, RequesterMixin, PureRenderMixin, ComponentManipulationsMixin],
-  propTypes: {
-    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: this._getInitialCurrentState(),
-      images: this._getInitialImages(),
-      imageUrl: this.entryImageUrl()
-    };
-  },
-  render: function() {
-    var imageEditor, imageEditorClasses;
-    imageEditorClasses = cx({
-      'post': true,
-      'post--image': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities(),
-      'state--insert': this.isInsertMode()
-    });
-    switch (this.state.currentState) {
-      case WELCOME_MODE:
-        imageEditor = React.createElement(MediaBox_ImageWelcome, {
-          "ref": "welcome",
-          "onClick": this.activateInsertMode
-        });
-        break;
-      case INSERT_MODE:
-        imageEditor = React.createElement(ImagesMediaBox_UrlInsert, {
-          "ref": "insert",
-          "imageUrl": this.state.imageUrl,
-          "onExit": this.activateWelcomeMode,
-          "onChange": this.handleChangeImageUrl
-        });
-        break;
-      case LOADED_MODE:
-        imageEditor = React.createElement(ImagesMediaBox_Loaded, {
-          "images": this.state.images,
-          "onDelete": this.handleDeleteLoadedImages
-        });
-        break;
-      default:
-        console.error('Неизвестный тип currentState', this.state.currentState);
-    }
-    return React.createElement("article", {
-      "className": imageEditorClasses
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("form", {
-      "ref": "form",
-      "encType": "multipart/form-data"
-    }, React.createElement(MediaBox_Layout, {
-      "ref": "layout",
-      "state": this._getMediaBoxState(),
-      "type": "image"
-    }, imageEditor, React.createElement(MediaBox_LoadingProgress, {
-      "progress": this.state.uploadingProgress
-    })), React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "mode": "rich",
-      "placeholder": i18n.t('editor_description_placeholder'),
-      "content": this._getTitle(),
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    }))));
-  },
-  imageAttachments: function() {
-    return this.props.normalizedEntry.imageAttachments || [];
-  },
-  entryImageUrl: function() {
-    return this.props.normalizedEntry.embedUrl;
-  },
-  activateWelcomeMode: function() {
-    return this.setState({
-      currentState: WELCOME_MODE
-    });
-  },
-  activateLoadedMode: function() {
-    return this.setState({
-      currentState: LOADED_MODE
-    });
-  },
-  activateInsertMode: function() {
-    return this.setState({
-      currentState: INSERT_MODE
-    });
-  },
-  isWelcomeMode: function() {
-    return this.state.currentState === WELCOME_MODE;
-  },
-  isLoadedMode: function() {
-    return this.state.currentState === LOADED_MODE;
-  },
-  isInsertMode: function() {
-    return this.state.currentState === INSERT_MODE;
-  },
-  _getInitialCurrentState: function() {
-    if (this.entryImageUrl() || this.imageAttachments().length > 0) {
-      return LOADED_MODE;
-    } else {
-      return WELCOME_MODE;
-    }
-  },
-  _getInitialImages: function() {
-    var image;
-    if (this.entryImageUrl() != null) {
-      image = new Image();
-      image.src = this.entryImageUrl();
-      return [image];
-    } else if (this.imageAttachments()[0] instanceof HTMLImageElement) {
-      return this.imageAttachments();
-    } else {
-      return this.imageAttachments().map(function(imageAttachment) {
-        image = new Image();
-        image.src = imageAttachment.image.url;
-        return image;
-      });
-    }
-  },
-  _getMediaBoxState: function() {
-    if (this.state.isDragging) {
-      return 'drag-hover';
-    }
-    if (this.isInsertMode()) {
-      return 'insert';
-    }
-    if (this.state.images.length > 0) {
-      return 'loaded';
-    }
-  },
-  _getTitle: function() {
-    return this.props.normalizedEntry.data2;
-  },
-  _getNormalizedData: function() {
-    return {
-      data2: this.refs.titleEditor.content(),
-      embedUrl: this.state.imageUrl
-    };
-  },
-  _getEditorData: function() {
-    return {
-      title: this.refs.titleEditor.content(),
-      image_url: this.state.imageUrl,
-      privacy: this.props.entryPrivacy
-    };
-  },
-  handleDeleteLoadedImages: function() {
-    this.setState({
-      images: [],
-      imageUrl: null
-    });
-    return this.activateWelcomeMode();
-  },
-  handleChangeImageUrl: function(imageUrl) {
-    var image, images;
-    image = new Image();
-    images = [image];
-    image.onload = (function(_this) {
-      return function() {
-        _this.activateLoadedMode();
-        return _this.setState({
-          imageUrl: imageUrl,
-          images: images
-        });
-      };
-    })(this);
-    image.onerror = (function(_this) {
-      return function() {
-        return TastyNotifyController.notifyError(i18n.t('editor_image_doesnt_exist', {
-          imageUrl: imageUrl
-        }));
-      };
-    })(this);
-    return image.src = imageUrl;
-  }
-});
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],162:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostEditor_InstagramEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin],
-  render: function() {
-    var instagramEditorClasses;
-    instagramEditorClasses = cx({
-      'post': true,
-      'post--video': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities()
-    });
-    return React.createElement("article", {
-      "className": instagramEditorClasses
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement(VideoMediaBox, {
-      "embedUrl": this.state.embedUrl,
-      "embedHtml": this.state.embedHtml,
-      "activitiesHandler": this.activitiesHandler,
-      "onDeleteEmbeded": this.handleDeleteEmbeded,
-      "onSuccessLoad": this.successLoaded
-    }, React.createElement(MediaBox_InstagramWelcome, null)), React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "placeholder": i18n.t('editor_description_placeholder'),
-      "mode": "partial",
-      "content": this.state.title,
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    })));
-  }
-});
-
-
-
-},{"react/lib/cx":599}],163:[function(require,module,exports){
-var AUTOSAVE_TIME;
-
-AUTOSAVE_TIME = 10000;
-
-window.PostEditor_AutosaveMixin = {
-  propTypes: {
-    storeCallback: React.PropTypes.func.isRequired
-  },
-  componentWillUnmount: function() {
-    return this.stopAutosave();
-  },
-  startAutosave: function() {
-    if (this.autoSaveTimer != null) {
-      this.stopAutosave();
-    }
-    return this.autoSaveTimer = setTimeout(this.storeEntry, AUTOSAVE_TIME);
-  },
-  _getNormalizedEntry: function() {
-    return _.extend(this.props.normalizedEntry, this._getNormalizedData());
-  },
-  storeEntry: function() {
-    return this.props.storeCallback(this._getNormalizedEntry());
-  },
-  stopAutosave: function() {
-    if (this.autoSaveTimer != null) {
-      return clearTimeout(this.autoSaveTimer);
-    }
-  }
-};
-
-
-
-},{}],164:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostEditor_MusicEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin],
-  render: function() {
-    var musicEditorClasses;
-    musicEditorClasses = cx({
-      'post': true,
-      'post--video': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities()
-    });
-    return React.createElement("article", {
-      "className": musicEditorClasses
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement(VideoMediaBox, {
-      "embedUrl": this.state.embedUrl,
-      "embedHtml": this.state.embedHtml,
-      "activitiesHandler": this.activitiesHandler,
-      "onDeleteEmbeded": this.handleDeleteEmbeded,
-      "onSuccessLoad": this.successLoaded
-    }, React.createElement(MediaBox_MusicWelcome, null)), React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "placeholder": i18n.t('editor_description_placeholder'),
-      "mode": "partial",
-      "content": this.state.title,
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    })));
-  }
-});
-
-
-
-},{"react/lib/cx":599}],165:[function(require,module,exports){
-window.PostEditor_QuoteEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
-  render: function() {
-    return React.createElement("article", {
-      "className": "post post--quote post--edit"
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("blockquote", {
-      "className": "blockquote"
-    }, React.createElement(TastyEditor, {
-      "ref": "textEditor",
-      "placeholder": i18n.t('editor_quote_text_placeholder'),
-      "mode": "partial",
-      "content": this.entryText(),
-      "autofocus": true,
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    }), React.createElement("div", {
-      "className": "blockquote__caption"
-    }, React.createElement("span", {
-      "className": "blockquote__dash"
-    }, "\u2014"), React.createElement(TastyEditor, {
-      "ref": "sourceEditor",
-      "placeholder": i18n.t('editor_quote_source_placeholder'),
-      "content": this.entrySource(),
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    })))));
-  },
-  entryText: function() {
-    return this.props.normalizedEntry.data2;
-  },
-  entrySource: function() {
-    return this.props.normalizedEntry.data1;
-  },
-  entryType: function() {
-    return 'quote';
-  },
-  _getNormalizedData: function() {
-    return {
-      data2: this.refs.textEditor.content(),
-      data1: this.refs.sourceEditor.content()
-    };
-  },
-  _getEditorData: function() {
-    return {
-      text: this.refs.textEditor.content(),
-      source: this.refs.sourceEditor.content()
-    };
-  }
-});
-
-
-
-},{}],166:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostEditor_TextEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin],
-  propTypes: {
-    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
-  },
-  render: function() {
-    var textEditorClasses;
-    textEditorClasses = cx({
-      'post': true,
-      'post--text': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities()
-    });
-    return React.createElement("article", {
-      "className": textEditorClasses
-    }, React.createElement("header", {
-      "className": "post__header"
-    }, React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "content": this.entryTitle(),
-      "placeholder": i18n.t('editor_title_placeholder'),
-      "isLoading": this.hasActivities(),
-      "className": "post__title",
-      "autofocus": true,
-      "onChange": this.startAutosave
-    })), React.createElement(TastyEditor, {
-      "ref": "textEditor",
-      "mode": "rich",
-      "content": this.entryText(),
-      "placeholder": i18n.t('editor_text_placeholder'),
-      "isLoading": this.hasActivities(),
-      "className": "post__content",
-      "onChange": this.startAutosave
-    }));
-  },
-  entryTitle: function() {
-    return this.props.normalizedEntry.data1;
-  },
-  entryText: function() {
-    return this.props.normalizedEntry.data2;
-  },
-  entryType: function() {
-    return 'text';
-  },
-  _getNormalizedData: function() {
-    return {
-      data1: this.refs.titleEditor.content(),
-      data2: this.refs.textEditor.content()
-    };
-  },
-  _getEditorData: function() {
-    return {
-      title: this.refs.titleEditor.content(),
-      text: this.refs.textEditor.content()
-    };
-  }
-});
-
-
-
-},{"react/lib/cx":599}],167:[function(require,module,exports){
-var cx;
-
-cx = require('react/lib/cx');
-
-window.PostEditor_VideoEditor = React.createClass({
-  mixins: ['PostEditor_PersistenceMixin', 'ReactActivitiesUser', PostEditor_AutosaveMixin, PostEditor_VideoMixin],
-  render: function() {
-    var videoEditorClasses;
-    videoEditorClasses = cx({
-      'post': true,
-      'post--video': true,
-      'post--edit': true,
-      'state--loading': this.hasActivities()
-    });
-    return React.createElement("article", {
-      "className": videoEditorClasses
-    }, React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement(VideoMediaBox, {
-      "embedUrl": this.state.embedUrl,
-      "embedHtml": this.state.embedHtml,
-      "activitiesHandler": this.activitiesHandler,
-      "onDeleteEmbeded": this.handleDeleteEmbeded,
-      "onSuccessLoad": this.successLoaded
-    }, React.createElement(MediaBox_VideoWelcome, null)), React.createElement(TastyEditor, {
-      "ref": "titleEditor",
-      "placeholder": i18n.t('editor_description_placeholder'),
-      "mode": "partial",
-      "content": this.state.title,
-      "isLoading": this.hasActivities(),
-      "onChange": this.startAutosave
-    })));
-  }
-});
-
-
-
-},{"react/lib/cx":599}],168:[function(require,module,exports){
-window.ImagesMediaBox_Loaded = React.createClass({
-  propTypes: {
-    images: React.PropTypes.array.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    activitiesHandler: React.PropTypes.object
-  },
-  shouldComponentUpdate: function(nextProps) {
-    if (nextProps.onDelete !== this.props.onDelete) {
-      return true;
-    }
-    return !TastyUtils.isImagesEqual(nextProps.images, this.props.images);
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "media-box__display"
-    }, React.createElement(ImagesCollage, {
-      "images": this.props.images,
-      "activitiesHandler": this.props.activitiesHandler
-    }), React.createElement(MediaBox_Actions, {
-      "onDelete": this.props.onDelete
-    }));
-  }
-});
-
-
-
-},{}],169:[function(require,module,exports){
-var PureRenderMixin;
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.ImagesMediaBox_UrlInsert = React.createClass({
-  mixins: [PureRenderMixin],
-  propTypes: {
-    imageUrl: React.PropTypes.string,
-    onExit: React.PropTypes.func.isRequired,
-    onChange: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("label", {
-      "htmlFor": "media-box-image-url",
-      "className": "media-box__form"
-    }, React.createElement("input", {
-      "ref": "imageUrl",
-      "type": "url",
-      "autoFocus": true,
-      "id": "media-box-image-url",
-      "className": "media-box__form-input",
-      "onPaste": this.onPaste,
-      "onBlur": this.props.onExit
-    }), React.createElement(MediaBox_Actions, {
-      "onDelete": this.props.onExit
-    }));
-  },
-  onPaste: function(e) {
-    return this.props.onChange(e.clipboardData.getData('text/plain'));
-  }
-});
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],170:[function(require,module,exports){
-window.PostEditor_Layout = React.createClass({
-  propTypes: {
-    backUrl: React.PropTypes.string,
-    isLoading: React.PropTypes.bool.isRequired
-  },
-  render: function() {
-    var backButton;
-    if (!this.props.isLoading) {
-      backButton = React.createElement("a", {
-        "className": "back-button",
-        "onClick": this.clickBack
-      });
-    }
-    return React.createElement("div", {
-      "className": "postEditorLayout"
-    }, backButton, this.props.children);
-  },
-  clickBack: function() {
-    if (this.props.backUrl) {
-      return window.location.href = this.props.backUrl;
-    } else {
-      return window.history.back();
-    }
-  }
-});
-
-
-
-},{}],171:[function(require,module,exports){
-var PureRenderMixin;
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.MediaBox_Actions = React.createClass({
-  mixins: [PureRenderMixin],
-  propTypes: {
-    onRotate: React.PropTypes.func,
-    onDelete: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    var actions;
-    actions = [];
-    if (this.props.onDelete != null) {
-      actions.push(React.createElement("div", {
-        "title": i18n.t('editor_mediabox_delete'),
-        "className": "media-box__action media-box__action--delete",
-        "onClick": this.props.onDelete,
-        "key": "delete"
-      }, React.createElement("span", {
-        "className": "icon icon--cross"
-      })));
-    }
-    if (this.props.onRotate != null) {
-      actions.push(React.createElement("div", {
-        "title": i18n.t('editor_mediabox_rotate'),
-        "className": "media-box__action media-box__action--rotate",
-        "onClick": this.props.onRotate,
-        "key": "rotate"
-      }, React.createElement("span", {
-        "className": "icon icon--rotate"
-      })));
-    }
-    return React.createElement("div", {
-      "className": "media-box__actions"
-    }, actions);
-  }
-});
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],172:[function(require,module,exports){
-var PureRenderMixin, cx;
-
-cx = require('react/lib/cx');
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.MediaBox_Layout = React.createClass({
-  mixins: [PureRenderMixin],
-  propTypes: {
-    children: React.PropTypes.renderable.isRequired,
-    state: React.PropTypes.string,
-    type: React.PropTypes.string.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      state: null
-    };
-  },
-  render: function() {
-    var classes, mediaBoxClasses;
-    classes = {
-      'media-box': true
-    };
-    if (this.props.state != null) {
-      classes["state--" + this.props.state] = true;
-    }
-    mediaBoxClasses = cx(classes);
-    return React.createElement("figure", {
-      "className": this.props.type
-    }, React.createElement("div", {
-      "className": mediaBoxClasses,
-      "ref": "dropZone"
-    }, this.props.children));
-  }
-});
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],173:[function(require,module,exports){
-window.MediaBox_LoadingProgress = React.createClass({
-  propTypes: {
-    progress: React.PropTypes.number.isRequired
-  },
-  render: function() {
-    this.props.progress = Math.min(this.props.progress, 100);
-    this.props.progress = Math.max(this.props.progress, 0);
-    return React.createElement("div", {
-      "className": "media-box__loader"
-    }, React.createElement("div", {
-      "className": "media-box__loader-fill",
-      "style": {
-        width: this.props.progress + '%'
-      }
-    }));
-  }
-});
-
-
-
-},{}],174:[function(require,module,exports){
-var DRAGOFF_TIMEOUT, DRAG_HOVER_CLASS;
-
-DRAG_HOVER_CLASS = 'state--drag-hover';
-
-DRAGOFF_TIMEOUT = 500;
-
-window.PostEditor_Dragging = {
-  getInitialState: function() {
-    return {
-      isDragging: false
-    };
-  },
-  componentDidMount: function() {
-    return this.bindDragging();
-  },
-  componentWillUnmount: function() {
-    return this.unbindDragging();
-  },
-  componentDidUpdate: function() {
-    return this.updateDropZoneClass(this.state.isDragging);
-  },
-  dragOver: function() {
-    if (this._dragLeaveTimer != null) {
-      clearTimeout(this._dragLeaveTimer);
-    }
-    return this.draggingOn();
-  },
-  dragLeave: function() {
-    if (this._dragLeaveTimer != null) {
-      clearTimeout(this._dragLeaveTimer);
-    }
-    return this._dragLeaveTimer = setTimeout(this.draggingOff, DRAGOFF_TIMEOUT);
-  },
-  draggingOn: function() {
-    return this.setState({
-      isDragging: true,
-      isInserting: false
-    });
-  },
-  draggingOff: function() {
-    return this.setState({
-      isDragging: false,
-      isInserting: false
-    });
-  },
-  updateDropZoneClass: function(active) {
-    var $dropZone;
-    $dropZone = $(this.dropZoneNode());
-    return $dropZone.toggleClass(DRAG_HOVER_CLASS, active);
-  },
-  bindDragging: function() {
-    $(document).on('dragover', this.dragOver);
-    $(document).on('dragleave', this.dragLeave);
-    return $(document).on('drop', this.draggingOff);
-  },
-  unbindDragging: function() {
-    $(document).off('dragover', this.dragOver);
-    $(document).off('dragleave', this.dragLeave);
-    return $(document).off('drop', this.draggingOff);
-  },
-  dropZoneNode: function() {
-    return this.refs.layout.refs.dropZone.getDOMNode();
-  }
-};
-
-
-
-},{}],175:[function(require,module,exports){
-var ACCEPT_FILE_TYPES, MAX_FILE_SIZE, MAX_NUMBER_OF_FILES, assign;
-
-assign = require('react/lib/Object.assign');
-
-ACCEPT_FILE_TYPES = /(\.|\/)(gif|jpe?g|png)$/i;
-
-MAX_FILE_SIZE = 10 * 1000 * 1000;
-
-MAX_NUMBER_OF_FILES = 6;
-
-window.PostEditor_ImagesForm = {
-  getInitialState: function() {
-    return {
-      uploadingProgress: 0
-    };
-  },
-  componentDidMount: function() {
-    return this._bindImageUpload();
-  },
-  componentDidUpdate: function() {
-    return this._rebindImageUpload();
-  },
-  componentWillUnmount: function() {
-    return this._unbindImageUpload();
-  },
-  entryId: function() {
-    return this.props.normalizedEntry.id;
-  },
-  entryType: function() {
-    return 'image';
-  },
-  entryUpdatedAt: function() {
-    return this.props.normalizedEntry.updatedAt;
-  },
-  saveEntry: function() {
-    if (this.fileUploader != null) {
-      return this.fileUploader.submit();
-    } else {
-      return this.saveAsAjax();
-    }
-  },
-  saveAsAjax: function() {
-    var data;
-    data = assign(this._getEditorData(), {
-      _method: this._getSaveMethod()
-    });
-    this.incrementActivities();
-    return this.createRequest({
-      url: this._getSaveUrl(),
-      method: 'POST',
-      data: data,
-      success: (function(_this) {
-        return function(newEntry) {
-          _this.safeUpdateState({
-            entry: newEntry,
-            type: newEntry.type
-          });
-          EntryStore.removeNormalizedEntry(_this.props.normalizedEntry);
-          return _this.props.doneCallback(newEntry);
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  addFilesToForm: function(e, data) {
-    var imageFiles, images;
-    imageFiles = data.files.filter((function(_this) {
-      return function(file) {
-        return file.type.match(ACCEPT_FILE_TYPES);
-      };
-    })(this));
-    if (imageFiles.length === 0) {
-      return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
-    }
-    this.fileUploader = data;
-    images = imageFiles.map((function(_this) {
-      return function(file) {
-        var image;
-        image = new Image();
-        image.src = window.URL.createObjectURL(file);
-        return image;
-      };
-    })(this));
-    this.setState({
-      images: images,
-      imageUrl: null
-    });
-    return this.activateLoadedMode();
-  },
-  serializeArray: function(data) {
-    return _.keys(data).map(function(key) {
-      return {
-        name: key,
-        value: data[key]
-      };
-    });
-  },
-  _rebindImageUpload: function() {
-    this._unbindImageUpload();
-    return this._bindImageUpload();
-  },
-  _bindImageUpload: function() {
-    this.$uploadForm = $(this.refs.form.getDOMNode());
-    return this.$uploadForm.fileupload({
-      url: this._getSaveUrl(),
-      dataType: 'json',
-      acceptFileTypes: ACCEPT_FILE_TYPES,
-      maxFileSize: MAX_FILE_SIZE,
-      maxNumberOfFiles: MAX_NUMBER_OF_FILES,
-      multipart: true,
-      singleFileUploads: false,
-      autoUpload: false,
-      replaceFileInput: false,
-      pasteZone: null,
-      add: this.addFilesToForm,
-      formData: (function(_this) {
-        return function(form) {
-          return _this.serializeArray(_this._getEditorData());
-        };
-      })(this),
-      start: (function(_this) {
-        return function() {
-          return _this.incrementActivities();
-        };
-      })(this),
-      progressall: (function(_this) {
-        return function(e, data) {
-          var progress;
-          progress = parseInt(data.loaded / data.total * 100, 10);
-          return _this.setState({
-            uploadingProgress: progress
-          });
-        };
-      })(this),
-      always: (function(_this) {
-        return function() {
-          _this.setState({
-            uploadingProgress: 0
-          });
-          return _this.decrementActivities();
-        };
-      })(this),
-      fail: (function(_this) {
-        return function(e, data) {
-          return TastyNotifyController.errorResponse(data.jqXHR);
-        };
-      })(this),
-      done: (function(_this) {
-        return function(e, data) {
-          EntryStore.removeNormalizedEntry(_this.props.normalizedEntry);
-          return _this.props.doneCallback(data.jqXHR.responseJSON);
-        };
-      })(this)
-    });
-  },
-  _unbindImageUpload: function() {
-    return this.$uploadForm.fileupload('destroy');
-  },
-  _getSaveUrl: function() {
-    if (this.entryId() != null) {
-      return ApiRoutes.update_entry_url(this.entryId(), this.entryType());
-    } else {
-      return ApiRoutes.create_entry_url(this.entryType());
-    }
-  },
-  _getSaveMethod: function() {
-    if (this.entryId() != null) {
-      return 'PUT';
-    } else {
-      return 'POST';
-    }
-  }
-};
-
-
-
-},{"react/lib/Object.assign":514}],176:[function(require,module,exports){
-window.TLOG_TYPES = ['public', 'private', 'anonymous'];
-
-window.PostEditor_LayoutMixin = {
-  propTypes: {
-    tlogType: React.PropTypes.oneOf(TLOG_TYPES).isRequired,
-    backUrl: React.PropTypes.string
-  },
-  getInitialState: function() {
-    return {
-      previewMode: false
-    };
-  },
-  render: function() {
-    var choicer;
-    if (this.props.tlogType !== 'anonymous') {
-      choicer = React.createElement(PostEditor_Choicer, {
-        "currentType": this.state.entryType,
-        "isLoading": this.hasActivities(),
-        "onChangeType": this.changeType
-      });
-    }
-    return React.createElement(PostEditor_Layout, {
-      "backUrl": this.props.backUrl,
-      "isLoading": this.hasActivities()
-    }, React.createElement(PostActions, {
-      "entryPrivacy": this.state.entryPrivacy,
-      "tlogType": this.props.tlogType,
-      "previewMode": this.state.previewMode,
-      "isLoading": this.hasActivities(),
-      "onSave": this.saveEntry,
-      "onChangePrivacy": this.changePrivacy,
-      "onPreview": this.togglePreviewMode
-    }), React.createElement(PostEditor_EditorContainer, {
-      "ref": "editorContainer",
-      "normalizedEntry": this.state.normalizedEntry,
-      "entryType": this.state.entryType,
-      "entryPrivacy": this.state.entryPrivacy,
-      "activitiesHandler": this.activitiesHandler
-    }), choicer);
-  },
-  saveEntry: function() {
-    return this.refs.editorContainer.saveEntry({
-      entryPrivacy: this.state.entryPrivacy
-    });
-  },
-  togglePreviewMode: function() {
-    return this.setState({
-      previewMode: !this.state.previewMode
-    });
-  }
-};
-
-
-
-},{}],177:[function(require,module,exports){
-window.PostEditor_PersistenceMixin = {
-  propTypes: {
-    activitiesHandler: React.PropTypes.object.isRequired,
-    doneCallback: React.PropTypes.func.isRequired
-  },
-  entryId: function() {
-    return this.props.normalizedEntry.id;
-  },
-  savingUrl: function() {
-    if (this.entryId() != null) {
-      return ApiRoutes.update_entry_url(this.entryId(), this.entryType());
-    } else {
-      return ApiRoutes.create_entry_url(this.entryType());
-    }
-  },
-  savingMethod: function() {
-    if (this.entryId() != null) {
-      return 'PUT';
-    } else {
-      return 'POST';
-    }
-  },
-  saveEntry: function(_arg) {
-    var editorData, entryPrivacy;
-    entryPrivacy = _arg.entryPrivacy;
-    this.incrementActivities();
-    editorData = this._getEditorData();
-    if (entryPrivacy !== 'anonymous') {
-      editorData.privacy = entryPrivacy;
-    }
-    editorData._method = this.savingMethod();
-    return this.createRequest({
-      url: this.savingUrl(),
-      data: editorData,
-      method: 'POST',
-      success: (function(_this) {
-        return function(newEntry) {
-          _this.safeUpdateState({
-            entry: newEntry,
-            type: newEntry.type
-          });
-          EntryStore.removeNormalizedEntry(_this.props.normalizedEntry);
-          return _this.props.doneCallback(newEntry);
-        };
-      })(this),
-      error: (function(_this) {
-        return function(data) {
-          return TastyNotifyController.errorResponse(data);
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  }
-};
-
-React.mixins.add('PostEditor_PersistenceMixin', [window.PostEditor_PersistenceMixin, window.RequesterMixin, ComponentManipulationsMixin]);
-
-
-
-},{}],178:[function(require,module,exports){
-window.PostEditor_VideoMixin = {
-  propTypes: {
-    normalizedEntry: React.PropTypes.instanceOf(NormalizedEntry).isRequired
-  },
-  getInitialState: function() {
-    return {
-      embedUrl: this.props.normalizedEntry.embedUrl,
-      embedHtml: this.props.normalizedEntry.embedHtml,
-      title: this.props.normalizedEntry.data2
-    };
-  },
-  entryType: function() {
-    return 'video';
-  },
-  successLoaded: function(iframely) {
-    return this.setState({
-      embedUrl: iframely.url,
-      embedHtml: iframely.html,
-      title: iframely.meta.description || iframely.meta.title
-    });
-  },
-  _getNormalizedData: function() {
-    return {
-      data2: this.refs.titleEditor.content(),
-      embedHtml: this.state.embedHtml,
-      embedUrl: this.state.embedUrl
-    };
-  },
-  _getEditorData: function() {
-    return {
-      title: this.refs.titleEditor.content(),
-      video_url: this.state.embedUrl
-    };
-  },
-  handleDeleteEmbeded: function() {
-    return this.setState({
-      embedUrl: null,
-      embedHtml: null,
-      title: ''
-    });
-  }
-};
-
-
-
-},{}],179:[function(require,module,exports){
-window.PostEditor_NewAnonymousPost = React.createClass({
-  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin'],
-  getDefaultProps: function() {
-    return {
-      tlogType: 'anonymous'
-    };
-  },
-  getInitialState: function() {
-    return {
-      normalizedEntry: EntryStore.restoreAnonymousEntry() || new NormalizedEntry({
-        tlogType: 'anonymous'
-      }),
-      entryType: 'anonymous',
-      entryPrivacy: 'anonymous'
-    };
-  }
-});
-
-
-
-},{}],180:[function(require,module,exports){
-var DEFAULT_POST_TYPE;
-
-DEFAULT_POST_TYPE = 'text';
-
-window.PostEditor_NewPost = React.createClass({
-  mixins: [PostEditor_LayoutMixin, 'ReactActivitiesMixin'],
-  getInitialState: function() {
-    return {
-      normalizedEntry: EntryStore.restoreNewEntry() || new NormalizedEntry(),
-      entryType: DEFAULT_POST_TYPE,
-      entryPrivacy: this.props.tlogType === 'public' ? 'live' : 'public'
-    };
-  },
-  changeType: function(type) {
-    this.refs.editorContainer.refs.editor.storeEntry();
-    return this.setState({
-      entryType: type
-    });
-  },
-  changePrivacy: function(privacy) {
-    return this.setState({
-      entryPrivacy: privacy
-    });
-  }
-});
-
-
-
-},{}],181:[function(require,module,exports){
-window.VideoMediaBox_Embeded = React.createClass({
-  propTypes: {
-    embedHtml: React.PropTypes.string.isRequired,
-    onDelete: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video",
-      "state": "loaded"
-    }, React.createElement("div", {
-      "className": "media-box__display",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.embedHtml
-      }
-    }), React.createElement(MediaBox_Actions, {
-      "onDelete": this.props.onDelete
-    }));
-  }
-});
-
-
-
-},{}],182:[function(require,module,exports){
-window.VideoMediaBox_Loading = React.createClass({
-  propTypes: {
-    embedUrl: React.PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video"
-    }, React.createElement("div", {
-      "className": "media-box__info"
-    }, React.createElement("div", {
-      "className": "media-box__text"
-    }, React.createElement("span", null, this.props.embedUrl), React.createElement("br", null), React.createElement("span", null, i18n.t('editor_video_mediabox_loading')))));
-  }
-});
-
-
-
-},{}],183:[function(require,module,exports){
-window.VideoMediaBox_UrlInsert = React.createClass({
-  propTypes: {
-    embedUrl: React.PropTypes.string,
-    onExit: React.PropTypes.func.isRequired,
-    onChange: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video",
-      "state": "insert"
-    }, React.createElement("label", {
-      "htmlFor": "media-box-video-url",
-      "className": "media-box__form"
-    }, React.createElement("input", {
-      "ref": "input",
-      "type": "url",
-      "autoFocus": true,
-      "defaultValue": this.props.embedUrl,
-      "id": "media-box-video-url",
-      "className": "media-box__form-input",
-      "onPaste": this.handlePaste,
-      "onBlur": this.props.onExit
-    })), React.createElement(MediaBox_Actions, {
-      "onDelete": this.props.onExit
-    }));
-  },
-  handlePaste: function(e) {
-    return this.props.onChange(e.clipboardData.getData('text/plain'));
-  }
-});
-
-
-
-},{}],184:[function(require,module,exports){
-var EMBEDED_MODE, INSERT_MODE, LOADING_MODE, WELCOME_MODE, cloneWithProps;
-
-cloneWithProps = require('react/lib/cloneWithProps');
-
-WELCOME_MODE = 'welcome';
-
-EMBEDED_MODE = 'embeded';
-
-INSERT_MODE = 'insert';
-
-LOADING_MODE = 'loading';
-
-window.VideoMediaBox = React.createClass({
-  mixins: ['ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin],
-  propTypes: {
-    embedUrl: React.PropTypes.string,
-    embedHtml: React.PropTypes.string,
-    onDeleteEmbeded: React.PropTypes.func.isRequired,
-    onSuccessLoad: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: this._getInitialCurrentState(),
-      embedUrl: this.props.embedUrl,
-      embedHtml: this.props.embedHtml
-    };
-  },
-  render: function() {
-    var children, mediaBox;
-    switch (this.state.currentState) {
-      case WELCOME_MODE:
-        children = React.Children.map(this.props.children, (function(_this) {
-          return function(child) {
-            return cloneWithProps(child, {
-              onClick: _this.activateInsertMode
-            });
-          };
-        })(this));
-        mediaBox = React.createElement("div", null, children);
-        break;
-      case EMBEDED_MODE:
-        mediaBox = React.createElement(VideoMediaBox_Embeded, {
-          "embedHtml": this.state.embedHtml,
-          "onDelete": this.handleDelete
-        });
-        break;
-      case INSERT_MODE:
-        mediaBox = React.createElement(VideoMediaBox_UrlInsert, {
-          "ref": "insert",
-          "embedUrl": this.state.embedUrl,
-          "onExit": this.activateWelcomeMode,
-          "onChange": this.loadEmbed
-        });
-        break;
-      case LOADING_MODE:
-        mediaBox = React.createElement(VideoMediaBox_Loading, {
-          "embedUrl": this.state.embedUrl
-        });
-        break;
-      default:
-        console.error('Неизвестный тип currentState', this.state.currentState);
-    }
-    return mediaBox;
-  },
-  loadEmbed: function(embedUrl) {
-    this.setState({
-      embedUrl: embedUrl,
-      embedHtml: null
-    });
-    this.activateLoadingMode();
-    this.incrementActivities();
-    return this.createRequest({
-      url: ApiRoutes.iframely_url(),
-      method: 'POST',
-      data: {
-        url: embedUrl
-      },
-      success: (function(_this) {
-        return function(iframely) {
-          _this.safeUpdateState({
-            embedUrl: iframely.url,
-            embedHtml: iframely.html
-          });
-          _this.activateEmbededMode();
-          return _this.props.onSuccessLoad(iframely);
-        };
-      })(this),
-      error: (function(_this) {
-        return function(response) {
-          TastyNotifyController.errorResponse(response);
-          return _this.safeUpdateState(_this.getInitialState());
-        };
-      })(this),
-      complete: (function(_this) {
-        return function() {
-          return _this.decrementActivities();
-        };
-      })(this)
-    });
-  },
-  activateWelcomeMode: function() {
-    return this.setState({
-      currentState: WELCOME_MODE
-    });
-  },
-  activateEmbededMode: function() {
-    return this.setState({
-      currentState: EMBEDED_MODE
-    });
-  },
-  activateLoadingMode: function() {
-    return this.setState({
-      currentState: LOADING_MODE
-    });
-  },
-  activateInsertMode: function() {
-    return this.setState({
-      currentState: INSERT_MODE
-    });
-  },
-  isWelcomeMode: function() {
-    return this.state.currentState === WELCOME_MODE;
-  },
-  isEmbededMode: function() {
-    return this.state.currentState === EMBEDED_MODE;
-  },
-  isLoadingMode: function() {
-    return this.state.currentState === LOADING_MODE;
-  },
-  isInsertMode: function() {
-    return this.state.currentState === INSERT_MODE;
-  },
-  _getInitialCurrentState: function() {
-    if (this.props.embedHtml != null) {
-      return EMBEDED_MODE;
-    } else {
-      return WELCOME_MODE;
-    }
-  },
-  handleDelete: function() {
-    this.activateWelcomeMode();
-    this.setState({
-      embedUrl: null,
-      embedHtml: null
-    });
-    return this.props.onDeleteEmbeded();
-  }
-});
-
-
-
-},{"react/lib/cloneWithProps":594}],185:[function(require,module,exports){
-var PureRenderMixin;
-
-PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-
-window.MediaBox_ImageWelcome = React.createClass({
-  mixins: [PureRenderMixin],
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "media-box__info"
-    }, React.createElement("div", {
-      "className": "media-box__text"
-    }, React.createElement("span", null, i18n.t('editor_welcome_move_or'), " "), React.createElement("span", {
-      "className": "form-upload form-upload--image"
-    }, React.createElement("span", {
-      "className": "form-upload__text"
-    }, i18n.t('editor_welcome_choose')), React.createElement("input", {
-      "ref": "input",
-      "type": "file",
-      "id": "image",
-      "className": "form-upload__input",
-      "accept": "image/*",
-      "multiple": true
-    })), React.createElement("span", null, " ", i18n.t('editor_welcome_picture_or')), React.createElement("br", null), React.createElement("a", {
-      "title": i18n.t('editor_welcome_insert'),
-      "onClick": this.props.onClick
-    }, i18n.t('editor_welcome_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_link_to_it'))));
-  }
-});
-
-
-
-},{"react/lib/ReactComponentWithPureRenderMixin":522}],186:[function(require,module,exports){
-window.MediaBox_InstagramWelcome = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video"
-    }, React.createElement("div", {
-      "className": "media-box__info"
-    }, React.createElement("div", {
-      "className": "media-box__text"
-    }, React.createElement("a", {
-      "title": i18n.t('editor_welcome_instagram_insert'),
-      "onClick": this.props.onClick
-    }, i18n.t('editor_welcome_instagram_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_instagram_link')))));
-  }
-});
-
-
-
-},{}],187:[function(require,module,exports){
-window.MediaBox_MusicWelcome = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video"
-    }, React.createElement("div", {
-      "className": "media-box__info"
-    }, React.createElement("div", {
-      "className": "media-box__text"
-    }, React.createElement("a", {
-      "title": i18n.t('editor_welcome_music_insert'),
-      "onClick": this.props.onClick
-    }, i18n.t('editor_welcome_music_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_music_link')), React.createElement("br", null), React.createElement("span", null, " ", i18n.t('editor_welcome_music_supported_services')))));
-  }
-});
-
-
-
-},{}],188:[function(require,module,exports){
-window.MediaBox_VideoWelcome = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(MediaBox_Layout, {
-      "type": "video"
-    }, React.createElement("div", {
-      "className": "media-box__info"
-    }, React.createElement("div", {
-      "className": "media-box__text"
-    }, React.createElement("a", {
-      "title": i18n.t('editor_welcome_video_insert'),
-      "onClick": this.props.onClick
-    }, i18n.t('editor_welcome_video_insert')), React.createElement("span", null, " ", i18n.t('editor_welcome_video_link')), React.createElement("br", null), React.createElement("span", null, " ", i18n.t('editor_welcome_video_supported_services')))));
-  }
-});
-
-
-
-},{}],189:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":508}],185:[function(require,module,exports){
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
 
 STATE_FRIEND = 'friend';
@@ -28172,7 +24423,7 @@ window.FollowButton = React.createClass({
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 window.RelationshipFollowerButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -28228,7 +24479,7 @@ window.RelationshipFollowerButton = React.createClass({
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 window.RelationshipGuessButton = React.createClass({
   mixins: ['RelationshipMixin'],
   propTypes: {
@@ -28264,7 +24515,7 @@ window.RelationshipGuessButton = React.createClass({
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var STATE_IGNORED;
 
 STATE_IGNORED = 'ignored';
@@ -28334,7 +24585,7 @@ window.RelationshipIgnoreButton = React.createClass({
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 window.RelationshipMixin = {
   componentWillUnmount: function() {
     return this.clearErrorTimer();
@@ -28559,7 +24810,7 @@ React.mixins.add('RelationshipMixin', [RelationshipMixin, ErrorTimerMixin, Reque
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, WAITING_STATE;
 
 ERROR_STATE = 'error';
@@ -28641,7 +24892,7 @@ window.RelationshipRequestButton = React.createClass({
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var CLASSNAME_ACTIVE, CLASSNAME_READY, DELAY_SLIDESHOW, STATE_LOADING, STATE_READY, ScreenViewer_Item, ScreenViewer_Loader, ScreenViewer_Slideshow, ScreenViewer_Title;
 
 STATE_LOADING = 'loading';
@@ -28827,7 +25078,148 @@ ScreenViewer_Title = React.createClass({
 
 
 
-},{}],196:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
+window.SearchButton = React.createClass({
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "search__button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--magnifier"
+    }));
+  }
+});
+
+
+
+},{}],193:[function(require,module,exports){
+window.SearchField = React.createClass({
+  propTypes: {
+    query: React.PropTypes.string,
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    return this.selectAllText();
+  },
+  render: function() {
+    return React.createElement("form", {
+      "className": "search__form"
+    }, React.createElement("input", {
+      "ref": "searchInput",
+      "type": "text",
+      "placeholder": i18n.t('search_placeholder'),
+      "defaultValue": this.props.query,
+      "className": "search__input",
+      "onBlur": this.props.onCancel,
+      "onFocus": this.putCursorAtEnd,
+      "onKeyDown": this.handleKeyDown
+    }));
+  },
+  selectAllText: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.setSelectionRange(0, searchInput.value.length);
+  },
+  putCursorAtEnd: function() {
+    var searchInput;
+    searchInput = this.refs.searchInput.getDOMNode();
+    return searchInput.value = searchInput.value;
+  },
+  handleKeyDown: function(e) {
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        return this.props.onCancel();
+      case 'Enter':
+        e.preventDefault();
+        return this.props.onSubmit();
+    }
+  }
+});
+
+
+
+},{}],194:[function(require,module,exports){
+var CLOSED, OPENED, cx;
+
+cx = require('react/lib/cx');
+
+CLOSED = 'closed';
+
+OPENED = 'opened';
+
+window.Search = React.createClass({
+  propTypes: {
+    searchUrl: React.PropTypes.string,
+    query: React.PropTypes.string
+  },
+  getInitialState: function() {
+    return {
+      currentState: this.props.query ? OPENED : CLOSED
+    };
+  },
+  render: function() {
+    var searchClasses;
+    searchClasses = cx({
+      'search': true,
+      'state--active': this.isOpen()
+    });
+    return React.createElement("div", {
+      "className": searchClasses
+    }, React.createElement(SearchField, {
+      "ref": "searchField",
+      "query": this.props.query,
+      "onCancel": this.closeSearch,
+      "onSubmit": this.submit
+    }), React.createElement(SearchButton, {
+      "onClick": this.handleButtonClick
+    }));
+  },
+  openSearch: function() {
+    this.setState({
+      currentState: OPENED
+    });
+    return this.refs.searchField.refs.searchInput.getDOMNode().focus();
+  },
+  closeSearch: function() {
+    return this.setState({
+      currentState: CLOSED
+    });
+  },
+  submit: function() {
+    var query, url;
+    query = this.refs.searchField.refs.searchInput.getDOMNode().value;
+    if (query.length === 0) {
+      return;
+    }
+    url = this._prepareSearchUrl(query);
+    return window.location = url;
+  },
+  isOpen: function() {
+    return this.state.currentState !== CLOSED;
+  },
+  _prepareSearchUrl: function(query) {
+    var url;
+    url = this.props.searchUrl || window.location.origin + window.location.pathname;
+    return url + '?q=' + query;
+  },
+  handleButtonClick: function(e) {
+    e.stopPropagation();
+    if (this.isOpen()) {
+      return this.submit();
+    } else {
+      return this.openSearch();
+    }
+  }
+});
+
+
+
+},{"react/lib/cx":597}],195:[function(require,module,exports){
 var InfiniteScroll, PropTypes, SearchResultsFeed;
 
 InfiniteScroll = require('../common/infiniteScroll/index');
@@ -28878,7 +25270,7 @@ module.exports = SearchResultsFeed;
 
 
 
-},{"../common/infiniteScroll/index":42}],197:[function(require,module,exports){
+},{"../common/infiniteScroll/index":75}],196:[function(require,module,exports){
 var PropTypes, SearchActions, SearchResults, SearchResultsFeed, SearchResultsTlog;
 
 SearchActions = require('../../actions/search');
@@ -28981,7 +25373,7 @@ module.exports = SearchResults;
 
 
 
-},{"../../actions/search":11,"./feed":196,"./tlog":198}],198:[function(require,module,exports){
+},{"../../actions/search":12,"./feed":195,"./tlog":197}],197:[function(require,module,exports){
 var InfiniteScroll, PropTypes, SearchResultsTlog;
 
 InfiniteScroll = require('../common/infiniteScroll/index');
@@ -29020,148 +25412,7 @@ module.exports = SearchResultsTlog;
 
 
 
-},{"../common/infiniteScroll/index":42}],199:[function(require,module,exports){
-window.SearchButton = React.createClass({
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "search__button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--magnifier"
-    }));
-  }
-});
-
-
-
-},{}],200:[function(require,module,exports){
-window.SearchField = React.createClass({
-  propTypes: {
-    query: React.PropTypes.string,
-    onCancel: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    return this.selectAllText();
-  },
-  render: function() {
-    return React.createElement("form", {
-      "className": "search__form"
-    }, React.createElement("input", {
-      "ref": "searchInput",
-      "type": "text",
-      "placeholder": i18n.t('search_placeholder'),
-      "defaultValue": this.props.query,
-      "className": "search__input",
-      "onBlur": this.props.onCancel,
-      "onFocus": this.putCursorAtEnd,
-      "onKeyDown": this.handleKeyDown
-    }));
-  },
-  selectAllText: function() {
-    var searchInput;
-    searchInput = this.refs.searchInput.getDOMNode();
-    return searchInput.setSelectionRange(0, searchInput.value.length);
-  },
-  putCursorAtEnd: function() {
-    var searchInput;
-    searchInput = this.refs.searchInput.getDOMNode();
-    return searchInput.value = searchInput.value;
-  },
-  handleKeyDown: function(e) {
-    switch (e.key) {
-      case 'Escape':
-        e.preventDefault();
-        return this.props.onCancel();
-      case 'Enter':
-        e.preventDefault();
-        return this.props.onSubmit();
-    }
-  }
-});
-
-
-
-},{}],201:[function(require,module,exports){
-var CLOSED, OPENED, cx;
-
-cx = require('react/lib/cx');
-
-CLOSED = 'closed';
-
-OPENED = 'opened';
-
-window.Search = React.createClass({
-  propTypes: {
-    searchUrl: React.PropTypes.string,
-    query: React.PropTypes.string
-  },
-  getInitialState: function() {
-    return {
-      currentState: this.props.query ? OPENED : CLOSED
-    };
-  },
-  render: function() {
-    var searchClasses;
-    searchClasses = cx({
-      'search': true,
-      'state--active': this.isOpen()
-    });
-    return React.createElement("div", {
-      "className": searchClasses
-    }, React.createElement(SearchField, {
-      "ref": "searchField",
-      "query": this.props.query,
-      "onCancel": this.closeSearch,
-      "onSubmit": this.submit
-    }), React.createElement(SearchButton, {
-      "onClick": this.handleButtonClick
-    }));
-  },
-  openSearch: function() {
-    this.setState({
-      currentState: OPENED
-    });
-    return this.refs.searchField.refs.searchInput.getDOMNode().focus();
-  },
-  closeSearch: function() {
-    return this.setState({
-      currentState: CLOSED
-    });
-  },
-  submit: function() {
-    var query, url;
-    query = this.refs.searchField.refs.searchInput.getDOMNode().value;
-    if (query.length === 0) {
-      return;
-    }
-    url = this._prepareSearchUrl(query);
-    return window.location = url;
-  },
-  isOpen: function() {
-    return this.state.currentState !== CLOSED;
-  },
-  _prepareSearchUrl: function(query) {
-    var url;
-    url = this.props.searchUrl || window.location.origin + window.location.pathname;
-    return url + '?q=' + query;
-  },
-  handleButtonClick: function(e) {
-    e.stopPropagation();
-    if (this.isOpen()) {
-      return this.submit();
-    } else {
-      return this.openSearch();
-    }
-  }
-});
-
-
-
-},{"react/lib/cx":599}],202:[function(require,module,exports){
+},{"../common/infiniteScroll/index":75}],198:[function(require,module,exports){
 var PropTypes, Searchbox;
 
 PropTypes = React.PropTypes;
@@ -29221,7 +25472,7 @@ module.exports = Searchbox;
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 var SettingsAccounts;
 
 SettingsAccounts = React.createClass({
@@ -29268,7 +25519,7 @@ module.exports = SettingsAccounts;
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
 CurrentUserServerActions = require('../../actions/server/current_user');
@@ -29340,7 +25591,7 @@ module.exports = SettingsAvatar;
 
 
 
-},{"../../actions/server/current_user":12}],205:[function(require,module,exports){
+},{"../../actions/server/current_user":13}],201:[function(require,module,exports){
 var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
 
 SHOW_STATE = 'show';
@@ -29426,7 +25677,7 @@ module.exports = SettingsEmailConfirmation;
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 var SettingsEmailEdit, cx;
 
 cx = require('react/lib/cx');
@@ -29534,7 +25785,7 @@ module.exports = SettingsEmailEdit;
 
 
 
-},{"react/lib/cx":599}],207:[function(require,module,exports){
+},{"react/lib/cx":597}],203:[function(require,module,exports){
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
 
 SettingsEmailShow = require('./show');
@@ -29625,7 +25876,7 @@ module.exports = SettingsEmail;
 
 
 
-},{"./edit":206,"./establish/establish":209,"./show":211}],208:[function(require,module,exports){
+},{"./edit":202,"./establish/establish":205,"./show":207}],204:[function(require,module,exports){
 var SettingsEmailEstablishEdit, cx;
 
 cx = require('react/lib/cx');
@@ -29725,7 +25976,7 @@ module.exports = SettingsEmailEstablishEdit;
 
 
 
-},{"react/lib/cx":599}],209:[function(require,module,exports){
+},{"react/lib/cx":597}],205:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = require('./show');
@@ -29776,7 +26027,7 @@ module.exports = SettingsEmailEstablish;
 
 
 
-},{"./edit":208,"./show":210}],210:[function(require,module,exports){
+},{"./edit":204,"./show":206}],206:[function(require,module,exports){
 var SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = React.createClass({
@@ -29807,7 +26058,7 @@ module.exports = SettingsEmailEstablishShow;
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 var SettingsEmailConfirmation, SettingsEmailShow;
 
 SettingsEmailConfirmation = require('./confirmation');
@@ -29874,7 +26125,7 @@ module.exports = SettingsEmailShow;
 
 
 
-},{"./confirmation":205}],212:[function(require,module,exports){
+},{"./confirmation":201}],208:[function(require,module,exports){
 var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
 
 SettingsAvatar = require('./avatar');
@@ -29930,7 +26181,7 @@ module.exports = SettingsHeader;
 
 
 
-},{"./avatar":204,"./slug":219,"./title":220}],213:[function(require,module,exports){
+},{"./avatar":200,"./slug":215,"./title":216}],209:[function(require,module,exports){
 var CurrentUserViewActions, SettingsMixin;
 
 CurrentUserViewActions = require('../../../actions/view/current_user');
@@ -30157,7 +26408,7 @@ module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/current_user":14}],214:[function(require,module,exports){
+},{"../../../actions/view/current_user":15}],210:[function(require,module,exports){
 var CANCEL_TIMEOUT, SettingsPasswordEdit, cx;
 
 cx = require('react/lib/cx');
@@ -30304,7 +26555,7 @@ module.exports = SettingsPasswordEdit;
 
 
 
-},{"react/lib/cx":599}],215:[function(require,module,exports){
+},{"react/lib/cx":597}],211:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
 
 SettingsPasswordShow = require('./show');
@@ -30361,7 +26612,7 @@ module.exports = SettingsPassword;
 
 
 
-},{"./edit":214,"./show":216}],216:[function(require,module,exports){
+},{"./edit":210,"./show":212}],212:[function(require,module,exports){
 var SettingsPasswordShow;
 
 SettingsPasswordShow = React.createClass({
@@ -30396,7 +26647,7 @@ module.exports = SettingsPasswordShow;
 
 
 
-},{}],217:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 var SettingsRadioItem;
 
 SettingsRadioItem = React.createClass({
@@ -30450,7 +26701,7 @@ module.exports = SettingsRadioItem;
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsMixin, SettingsPassword, SettingsRadioItem;
 
 SettingsHeader = require('./header');
@@ -30537,7 +26788,7 @@ window.Settings = React.createClass({
 
 
 
-},{"./accounts":203,"./email/email":207,"./header":212,"./mixins/settings":213,"./password/password":215,"./radio_item":217,"react/lib/LinkedStateMixin":510}],219:[function(require,module,exports){
+},{"./accounts":199,"./email/email":203,"./header":208,"./mixins/settings":209,"./password/password":211,"./radio_item":213,"react/lib/LinkedStateMixin":508}],215:[function(require,module,exports){
 var PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
@@ -30579,7 +26830,7 @@ module.exports = SettingsSlug;
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 var SettingsTitle;
 
 SettingsTitle = React.createClass({
@@ -30618,7 +26869,7 @@ module.exports = SettingsTitle;
 
 
 
-},{}],221:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 window.ShellBox = React.createClass({
   mixins: [ReactUnmountMixin],
   getDefaultProps: function() {
@@ -30689,7 +26940,7 @@ window.ShellBox = React.createClass({
 
 
 
-},{}],222:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
 
 EmailConfirmRegistration = require('../auth/email/confirm_registration');
@@ -30732,7 +26983,7 @@ window.ConfirmRegistrationShellbox = React.createClass({
 
 
 
-},{"../auth/email/confirm_registration":25,"../auth/social_networks/confirm_registration":32}],223:[function(require,module,exports){
+},{"../auth/email/confirm_registration":57,"../auth/social_networks/confirm_registration":64}],219:[function(require,module,exports){
 var STATE_GUESSED, STATE_NONE;
 
 STATE_NONE = 'none';
@@ -30787,7 +27038,7 @@ window.SmartFollowStatus = React.createClass({
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 window.Spinner = React.createClass({
   propTypes: {
     size: React.PropTypes.number
@@ -30811,7 +27062,7 @@ window.Spinner = React.createClass({
 
 
 
-},{}],225:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 var FADE_SPEED;
 
 FADE_SPEED = 300;
@@ -30858,7 +27109,7 @@ module.experts = window.TlogAlert = React.createClass({
 
 
 
-},{}],226:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 var AvatarToolbar, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/current_user');
@@ -30910,7 +27161,7 @@ module.exports = AvatarToolbar;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":330,"../../stores/current_user":322}],227:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":328,"../../stores/current_user":319}],223:[function(require,module,exports){
 window.CloseToolbar = React.createClass({
   mixins: [TouchMixin],
   render: function() {
@@ -30927,7 +27178,7 @@ window.CloseToolbar = React.createClass({
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, PopupActions, PropTypes, SEARCH_TITLE_I18N_KEYS, Scroller, UserToolbar, UserToolbarActions, UserToolbarAdditionalList, UserToolbarGuestList, UserToolbarList, UserToolbarToggle, cx, _;
 
 _ = require('lodash');
@@ -31078,7 +27329,7 @@ module.exports = UserToolbar;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":330,"../../actions/popup":10,"../../actions/userToolbar":13,"../../messaging/stores/messaging_status":300,"../../stores/current_user":322,"../common/scroller/scroller":43,"./user/additionalList":229,"./user/guestList":230,"./user/list":231,"./user/toggle":235,"lodash":487,"react/lib/cx":599}],229:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":328,"../../actions/popup":11,"../../actions/userToolbar":14,"../../messaging/stores/messaging_status":297,"../../stores/current_user":319,"../common/scroller/scroller":76,"./user/additionalList":225,"./user/guestList":226,"./user/list":227,"./user/toggle":231,"lodash":485,"react/lib/cx":597}],225:[function(require,module,exports){
 var PropTypes, UserToolbarAdditionalList, UserToolbarListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -31117,7 +27368,7 @@ module.exports = UserToolbarAdditionalList;
 
 
 
-},{"./list/item":232}],230:[function(require,module,exports){
+},{"./list/item":228}],226:[function(require,module,exports){
 var UserToolbarGuestList, UserToolbarListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -31147,7 +27398,7 @@ module.exports = UserToolbarGuestList;
 
 
 
-},{"./list/item":232}],231:[function(require,module,exports){
+},{"./list/item":228}],227:[function(require,module,exports){
 var PropTypes, UserToolbarList, UserToolbarListItem, UserToolbarListSubList, UserToolbarListSubListItem;
 
 UserToolbarListItem = require('./list/item');
@@ -31230,7 +27481,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"./list/item":232,"./list/subList":233,"./list/subList/item":234}],232:[function(require,module,exports){
+},{"./list/item":228,"./list/subList":229,"./list/subList/item":230}],228:[function(require,module,exports){
 var PropTypes, UserToolbarListItem, cloneWithProps;
 
 cloneWithProps = require('react/lib/cloneWithProps');
@@ -31336,7 +27587,7 @@ module.exports = UserToolbarListItem;
 
 
 
-},{"react/lib/cloneWithProps":594}],233:[function(require,module,exports){
+},{"react/lib/cloneWithProps":592}],229:[function(require,module,exports){
 var PropTypes, UserToolbarListSubList;
 
 PropTypes = React.PropTypes;
@@ -31368,7 +27619,7 @@ module.exports = UserToolbarListSubList;
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var PropTypes, UserToolbarListSubListItem;
 
 PropTypes = React.PropTypes;
@@ -31414,7 +27665,7 @@ module.exports = UserToolbarListSubListItem;
 
 
 
-},{}],235:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -31462,7 +27713,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],236:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, detectEvents, endEvents;
 
 ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
@@ -31629,7 +27880,7 @@ window.TimeoutTransitionGroup = React.createClass({
 
 
 
-},{"react/lib/ReactTransitionGroup":571}],237:[function(require,module,exports){
+},{"react/lib/ReactTransitionGroup":569}],233:[function(require,module,exports){
 var PureRenderMixin, cx;
 
 cx = require('react/lib/cx');
@@ -31728,34 +27979,57 @@ window.Voting = React.createClass({
 
 
 
-},{"react/lib/ReactComponentWithPureRenderMixin":522,"react/lib/cx":599}],238:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":520,"react/lib/cx":597}],234:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
 
 ApiConstants = keyMirror({
-  SEARCH_LOAD_NEXT_PAGE: null
+  SEARCH_LOAD_NEXT_PAGE: null,
+  EDITOR_CREATE_IMAGE_ATTACHMENTS: null,
+  EDITOR_CREATE_EMBED: null,
+  EDITOR_CREATE_ENTRY: null,
+  EDITOR_UPDATE_ENTRY: null
 });
 
 module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":627}],239:[function(require,module,exports){
-var ApiConstants, UserToolbarConstants;
+},{"react/lib/keyMirror":625}],235:[function(require,module,exports){
+var ApiConstants, EditorConstants, UserToolbarConstants;
 
 ApiConstants = require('./api');
 
 UserToolbarConstants = require('./userToolbar');
 
+EditorConstants = require('./editor');
+
 module.exports = {
   api: ApiConstants,
-  userToolbar: UserToolbarConstants
+  userToolbar: UserToolbarConstants,
+  editor: EditorConstants
 };
 
 
 
-},{"./api":238,"./userToolbar":240}],240:[function(require,module,exports){
+},{"./api":234,"./editor":236,"./userToolbar":237}],236:[function(require,module,exports){
+var EditorConstants, keyMirror;
+
+keyMirror = require('react/lib/keyMirror');
+
+EditorConstants = keyMirror({
+  INIT: null,
+  UPDATE_FIELD: null,
+  CHANGE_TYPE: null,
+  CHANGE_PRIVACY: null
+});
+
+module.exports = EditorConstants;
+
+
+
+},{"react/lib/keyMirror":625}],237:[function(require,module,exports){
 var UserToolbarConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -31769,7 +28043,7 @@ module.exports = UserToolbarConstants;
 
 
 
-},{"react/lib/keyMirror":627}],241:[function(require,module,exports){
+},{"react/lib/keyMirror":625}],238:[function(require,module,exports){
 var GuideController;
 
 GuideController = {
@@ -31837,7 +28111,7 @@ module.exports = GuideController;
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var Constants, LayoutStatesController;
 
 Constants = require('../constants/constants');
@@ -31885,7 +28159,7 @@ module.exports = LayoutStatesController;
 
 
 
-},{"../constants/constants":239}],243:[function(require,module,exports){
+},{"../constants/constants":235}],240:[function(require,module,exports){
 window.ReactPopup = (function() {
   function ReactPopup() {
     this.popupContainer = $('<\div>').appendTo('body').get(0);
@@ -31909,7 +28183,7 @@ window.ReactPopup = (function() {
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 var PopupController, _;
 
 _ = require('lodash');
@@ -31979,7 +28253,7 @@ module.exports = PopupController;
 
 
 
-},{"lodash":487}],245:[function(require,module,exports){
+},{"lodash":485}],242:[function(require,module,exports){
 window.ReactShellBox = (function() {
   function ReactShellBox() {
     var container;
@@ -32010,7 +28284,7 @@ window.ReactShellBox = (function() {
 
 
 
-},{}],246:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 window.TastyAlertController = {
   show: function(_arg) {
     var buttonColor, buttonText, container, message, onAccept, regex, title;
@@ -32042,7 +28316,7 @@ window.TastyAlertController = {
 
 
 
-},{}],247:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 window.TastyConfirmController = {
   show: function(_arg) {
     var acceptButtonColor, acceptButtonText, container, message, messageWithoutBR, onAccept, regex, rejectButtonText;
@@ -32075,7 +28349,7 @@ window.TastyConfirmController = {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 window.TastyEvents = new EventEmitter();
 
 TastyEvents.keys = {
@@ -32131,7 +28405,7 @@ TastyEvents.keys = {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 window.TastyLockingAlertController = {
   show: function(_arg) {
     var action, container, message, regex, title;
@@ -32161,7 +28435,7 @@ window.TastyLockingAlertController = {
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 window.TastyNotifyController = {
   _notificationList: [],
   notify: function(type, text, timeout) {
@@ -32240,7 +28514,7 @@ TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() 
 
 
 
-},{}],251:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -32267,7 +28541,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],252:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var BaseDispatcher,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -32301,7 +28575,7 @@ module.exports = BaseDispatcher;
 
 
 
-},{}],253:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 var BaseDispatcher;
 
 BaseDispatcher = require('./_base');
@@ -32317,7 +28591,7 @@ window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
 
 
 
-},{"./_base":252}],254:[function(require,module,exports){
+},{"./_base":249}],251:[function(require,module,exports){
 var AppDispatcher, Dispatcher, _;
 
 _ = require('lodash');
@@ -32343,7 +28617,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":481,"lodash":487}],255:[function(require,module,exports){
+},{"flux":479,"lodash":485}],252:[function(require,module,exports){
 window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     var payload;
@@ -32365,8 +28639,12 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],256:[function(require,module,exports){
-window.NormalizedEntry = (function() {
+},{}],253:[function(require,module,exports){
+var NormalizedEntry, _;
+
+_ = require('lodash');
+
+NormalizedEntry = (function() {
   function NormalizedEntry(data) {
     _.extend(this, data);
   }
@@ -32375,9 +28653,11 @@ window.NormalizedEntry = (function() {
 
 })();
 
+module.exports = NormalizedEntry;
 
 
-},{}],257:[function(require,module,exports){
+
+},{"lodash":485}],254:[function(require,module,exports){
 window.AppHelpers = {
   reselectAndFocus: function(node) {
     node.focus();
@@ -32397,7 +28677,7 @@ window.AppHelpers = {
 
 
 
-},{}],258:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 var CLOSED_STATE, COMMENT_CREATE_STATE, COMMENT_EDIT_STATE;
 
 CLOSED_STATE = 'closed';
@@ -32533,7 +28813,7 @@ window.commentsMediator = new CommentsMediator();
 
 
 
-},{}],259:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 window.ConversationActions = {
   clickConversation: function(conversationId) {
     return MessagingDispatcher.handleViewAction({
@@ -32569,7 +28849,7 @@ window.ConversationActions = {
 
 
 
-},{}],260:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 window.MessageActions = {
   newMessage: function(_arg) {
     var content, conversationId, uuid;
@@ -32607,7 +28887,7 @@ window.MessageActions = {
 
 
 
-},{}],261:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 window.NotificationActions = {
   readNotification: function(notificationId) {
     console.log('читаем уведомление', notificationId);
@@ -32617,7 +28897,7 @@ window.NotificationActions = {
 
 
 
-},{}],262:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 window.PopupActions = {
   closeMessagesPopup: function() {
     messagingService.closeMessagesPopup();
@@ -32644,7 +28924,7 @@ window.PopupActions = {
 
 
 
-},{}],263:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 window.WriteMessageButton = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -32664,7 +28944,7 @@ window.WriteMessageButton = React.createClass({
 
 
 
-},{}],264:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 window.MessagesPopup_Conversations = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -32684,7 +28964,7 @@ window.MessagesPopup_Conversations = React.createClass({
 
 
 
-},{}],265:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 window.MessagesPopup_ConversationsListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -32699,7 +28979,7 @@ window.MessagesPopup_ConversationsListEmpty = React.createClass({
 
 
 
-},{}],266:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 window.MessagesPopup_ConversationsList = React.createClass({
   mixins: [ScrollerMixin],
   getInitialState: function() {
@@ -32753,7 +29033,7 @@ window.MessagesPopup_ConversationsList = React.createClass({
 
 
 
-},{}],267:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -32840,7 +29120,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],268:[function(require,module,exports){
+},{"react/lib/cx":597}],265:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -32912,7 +29192,7 @@ window.MessagesPopup_Chooser = React.createClass({
 
 
 
-},{"react/lib/cx":599}],269:[function(require,module,exports){
+},{"react/lib/cx":597}],266:[function(require,module,exports){
 window.MessagesPopup_ChooserButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -32929,7 +29209,7 @@ window.MessagesPopup_ChooserButton = React.createClass({
 
 
 
-},{}],270:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 var LinkedStateMixin;
 
 LinkedStateMixin = require('react/lib/LinkedStateMixin');
@@ -32995,7 +29275,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
 
 
 
-},{"react/lib/LinkedStateMixin":510}],271:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":508}],268:[function(require,module,exports){
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
 
 LOADING_STATE = 'loadingState';
@@ -33110,7 +29390,7 @@ window.MessagesPopup_ChooserResults = React.createClass({
 
 
 
-},{}],272:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -33150,7 +29430,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],273:[function(require,module,exports){
+},{"react/lib/cx":597}],270:[function(require,module,exports){
 var CHOOSER_STATE, PROCESS_STATE;
 
 PROCESS_STATE = 'process';
@@ -33203,7 +29483,7 @@ window.MessagesPopup_CreateNewConversation = React.createClass({
 
 
 
-},{}],274:[function(require,module,exports){
+},{}],271:[function(require,module,exports){
 window.MessagesPopup_LoadingMessage = React.createClass({
   propTypes: {
     content: React.PropTypes.string.isRequired
@@ -33227,7 +29507,7 @@ window.MessagesPopup_LoadingMessage = React.createClass({
 
 
 
-},{}],275:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 var CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, ENTER_TIMEOUT, LEAVE_TIMEOUT, THREAD_STATE;
 
 CONVERSATIONS_STATE = 'conversations';
@@ -33335,7 +29615,7 @@ window.MessagesPopup = React.createClass({
 
 
 
-},{}],276:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 window.MessagesPopup_ThreadMessageForm = React.createClass({
   propTypes: {
     conversationId: React.PropTypes.number.isRequired
@@ -33399,7 +29679,7 @@ window.MessagesPopup_ThreadMessageForm = React.createClass({
 
 
 
-},{}],277:[function(require,module,exports){
+},{}],274:[function(require,module,exports){
 window.MessagesPopup_MessageListEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -33412,7 +29692,7 @@ window.MessagesPopup_MessageListEmpty = React.createClass({
 
 
 
-},{}],278:[function(require,module,exports){
+},{}],275:[function(require,module,exports){
 var savedScrollHeight;
 
 savedScrollHeight = null;
@@ -33524,7 +29804,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass({
 
 
 
-},{}],279:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -33627,7 +29907,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({
 
 
 
-},{"react/lib/cx":599}],280:[function(require,module,exports){
+},{"react/lib/cx":597}],277:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
 
 ERROR_STATE = 'error';
@@ -33751,7 +30031,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass({
 
 
 
-},{}],281:[function(require,module,exports){
+},{}],278:[function(require,module,exports){
 window.MessagesPopup_Thread = React.createClass({
   displayName: 'MessagesPopup_Thread',
   propTypes: {
@@ -33787,7 +30067,7 @@ window.MessagesPopup_Thread = React.createClass({
 
 
 
-},{}],282:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 window.MessagesPopup_UIBackButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -33804,7 +30084,7 @@ window.MessagesPopup_UIBackButton = React.createClass({
 
 
 
-},{}],283:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 window.MessagesPopup_UICreateNewConversationButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -33823,7 +30103,7 @@ window.MessagesPopup_UICreateNewConversationButton = React.createClass({
 
 
 
-},{}],284:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 window.NotificationsPopup_NotificationsEmpty = React.createClass({
   render: function() {
     return React.createElement("div", {
@@ -33834,7 +30114,7 @@ window.NotificationsPopup_NotificationsEmpty = React.createClass({
 
 
 
-},{}],285:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 var IMAGE_SIZE, cx;
 
 cx = require('react/lib/cx');
@@ -33929,7 +30209,7 @@ window.NotificationsPopup_Notification = React.createClass({
 
 
 
-},{"react/lib/cx":599}],286:[function(require,module,exports){
+},{"react/lib/cx":597}],283:[function(require,module,exports){
 window.NotificationsPopup_Notifications = React.createClass({
   getInitialState: function() {
     return this.getStateFromStore();
@@ -33972,7 +30252,7 @@ window.NotificationsPopup_Notifications = React.createClass({
 
 
 
-},{}],287:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 window.NotificationsPopup = React.createClass({
   mixins: [ScrollerMixin],
   render: function() {
@@ -34002,7 +30282,7 @@ window.NotificationsPopup = React.createClass({
 
 
 
-},{}],288:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 var ADVANCED_STATE, BASIC_STATE, MOUSE_LEAVE_TIMEOUT, cx;
 
 cx = require('react/lib/cx');
@@ -34140,7 +30420,7 @@ window.IndicatorsToolbar = React.createClass({
 
 
 
-},{"react/lib/cx":599}],289:[function(require,module,exports){
+},{"react/lib/cx":597}],286:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -34194,7 +30474,7 @@ window.IndicatorsToolbar_Messages = React.createClass({
 
 
 
-},{"react/lib/cx":599}],290:[function(require,module,exports){
+},{"react/lib/cx":597}],287:[function(require,module,exports){
 var cx;
 
 cx = require('react/lib/cx');
@@ -34252,7 +30532,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({
 
 
 
-},{"react/lib/cx":599}],291:[function(require,module,exports){
+},{"react/lib/cx":597}],288:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -34347,7 +30627,7 @@ window.MessagingDispatcher = _.extend(new Dispatcher(), {
 
 
 
-},{}],292:[function(require,module,exports){
+},{}],289:[function(require,module,exports){
 window.MessagingRequester = (function() {
   function MessagingRequester(_arg) {
     this.access_token = _arg.access_token, this.socket_id = _arg.socket_id;
@@ -34440,7 +30720,7 @@ window.MessagingRequester = (function() {
 
 
 
-},{}],293:[function(require,module,exports){
+},{}],290:[function(require,module,exports){
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 window.MessagingService = (function() {
@@ -34708,7 +30988,7 @@ window.MessagingService = (function() {
 
 
 
-},{}],294:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 window.MessagingMock = {
   message: function() {
     var conversation, recipient, sender;
@@ -34748,7 +31028,7 @@ window.MessagingMock = {
 
 
 
-},{}],295:[function(require,module,exports){
+},{}],292:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -34782,7 +31062,7 @@ module.exports = BaseStore;
 
 
 
-},{}],296:[function(require,module,exports){
+},{}],293:[function(require,module,exports){
 var CONNECTION_EVENT, _connectionState;
 
 CONNECTION_EVENT = 'connectionStateUpdated';
@@ -34826,7 +31106,7 @@ ConnectionStateStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{}],297:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 var CHANGE_EVENT, _conversations;
 
 CHANGE_EVENT = 'change';
@@ -34944,7 +31224,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],298:[function(require,module,exports){
+},{}],295:[function(require,module,exports){
 var CHANGE_EVENT, _allMessagesLoaded, _messages;
 
 CHANGE_EVENT = 'change';
@@ -35098,7 +31378,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(function(payload) {
 
 
 
-},{}],299:[function(require,module,exports){
+},{}],296:[function(require,module,exports){
 var CHANGE_EVENT, CONVERSATIONS_STATE, CREATE_NEW_CONVERSATION_STATE, THREAD_STATE, conversationId, currentState;
 
 CHANGE_EVENT = 'change';
@@ -35175,7 +31455,7 @@ MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register(function(pa
 
 
 
-},{}],300:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 var BaseStore, MessagingStatusStore, _, _messagingStatus;
 
 _ = require('lodash');
@@ -35217,7 +31497,7 @@ MessagingStatusStore.dispatchToken = MessagingDispatcher.register(function(paylo
 
 
 
-},{"./_base":295,"lodash":487}],301:[function(require,module,exports){
+},{"./_base":292,"lodash":485}],298:[function(require,module,exports){
 var CHANGE_EVENT, _notifications;
 
 CHANGE_EVENT = 'change';
@@ -35321,7 +31601,7 @@ NotificationsStore.dispatchToken = MessagingDispatcher.register(function(payload
 
 
 
-},{}],302:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 var BaseMixin, ERROR_TIMEOUT, ram, rau;
 
 ERROR_TIMEOUT = 1000;
@@ -35403,7 +31683,7 @@ React.mixins.add('ReactActivitiesUser', [rau, BaseMixin]);
 
 
 
-},{}],303:[function(require,module,exports){
+},{}],300:[function(require,module,exports){
 window.ComponentManipulationsMixin = {
   safeUpdate: function(func) {
     if (!this._isUnmounted()) {
@@ -35422,7 +31702,7 @@ window.ComponentManipulationsMixin = {
 
 
 
-},{}],304:[function(require,module,exports){
+},{}],301:[function(require,module,exports){
 var ENTRY_DELETE_ANIMATION_SPEED;
 
 ENTRY_DELETE_ANIMATION_SPEED = 300;
@@ -35447,7 +31727,7 @@ window.DOMManipulationsMixin = {
 
 
 
-},{}],305:[function(require,module,exports){
+},{}],302:[function(require,module,exports){
 var ERROR_TIMEOUT;
 
 ERROR_TIMEOUT = 1000;
@@ -35478,7 +31758,7 @@ window.ErrorTimerMixin = {
 
 
 
-},{}],306:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 window.ReactGrammarMixin = {
   declension: function(number, titles) {
     var cases;
@@ -35513,7 +31793,7 @@ window.ReactGrammarMixin = {
 
 
 
-},{}],307:[function(require,module,exports){
+},{}],304:[function(require,module,exports){
 var COMPONENT_WIDTH, REPOSITION_TIMEOUT;
 
 REPOSITION_TIMEOUT = 500;
@@ -35580,7 +31860,7 @@ window.ReactPositionsMixin = {
 
 
 
-},{}],308:[function(require,module,exports){
+},{}],305:[function(require,module,exports){
 var Nanobar, nanobar, oldXHR;
 
 Nanobar = require('nanobar');
@@ -35660,7 +31940,7 @@ window.RequesterMixin = {
 
 
 
-},{"nanobar":undefined}],309:[function(require,module,exports){
+},{"nanobar":undefined}],306:[function(require,module,exports){
 window.ScrollerMixin = {
   componentDidMount: function() {
     $(document).on('DOMMouseScroll mousewheel', '.js-scroller-pane', this.handleMouseWheel);
@@ -35710,7 +31990,7 @@ window.ScrollerMixin = {
 
 
 
-},{}],310:[function(require,module,exports){
+},{}],307:[function(require,module,exports){
 window.ReactShakeMixin = {
   shake: function() {
     var animationEnd, form;
@@ -35724,7 +32004,7 @@ window.ReactShakeMixin = {
 
 
 
-},{}],311:[function(require,module,exports){
+},{}],308:[function(require,module,exports){
 window.TouchMixin = {
   componentWillMount: function() {
     if (isMobile()) {
@@ -35736,7 +32016,7 @@ window.TouchMixin = {
 
 
 
-},{}],312:[function(require,module,exports){
+},{}],309:[function(require,module,exports){
 window.ReactUnmountMixin = {
   unmount: function() {
     return _.defer((function(_this) {
@@ -35749,7 +32029,7 @@ window.ReactUnmountMixin = {
 
 
 
-},{}],313:[function(require,module,exports){
+},{}],310:[function(require,module,exports){
 var CurrentUserResource;
 
 CurrentUserResource = {
@@ -35800,7 +32080,7 @@ module.exports = CurrentUserResource;
 
 
 
-},{}],314:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 var DesignPresenterService;
 
 DesignPresenterService = {
@@ -36065,7 +32345,7 @@ module.exports = DesignPresenterService;
 
 
 
-},{}],315:[function(require,module,exports){
+},{}],312:[function(require,module,exports){
 var DesignSettingsService;
 
 DesignSettingsService = {
@@ -36108,7 +32388,7 @@ module.exports = DesignSettingsService;
 
 
 
-},{}],316:[function(require,module,exports){
+},{}],313:[function(require,module,exports){
 var DesignStatesService, _;
 
 _ = require('lodash');
@@ -36406,115 +32686,180 @@ module.exports = DesignStatesService;
 
 
 
-},{"lodash":487}],317:[function(require,module,exports){
-window.EntryNormalizer = {
-  normalize: function(entryData) {
-    var attr;
-    attr = (function() {
-      switch (entryData.type) {
-        case 'text':
-          return {
-            data1: entryData.title,
-            data2: entryData.text
-          };
-        case 'image':
-          return {
-            data2: entryData.title,
-            embedUrl: entryData.image_url,
-            imageAttachments: entryData.image_attachments
-          };
-        case 'instagram':
-        case 'music':
-        case 'video':
-          return {
-            data2: entryData.title,
-            embedHtml: entryData.iframely.html,
-            embedUrl: entryData.iframely.url
-          };
-        case 'quote':
-          return {
-            data1: entryData.source,
-            data2: entryData.text
-          };
-        default:
-          return typeof console.error === "function" ? console.error("Unknown entry type " + entryData.type) : void 0;
-      }
-    })();
-    attr.id = entryData.id;
-    attr.updatedAt = new Date(entryData.updated_at).getTime();
-    return new NormalizedEntry(attr);
-  }
-};
+},{"lodash":485}],314:[function(require,module,exports){
+var EntryKeeper, NormalizedEntry, STORAGE_PREFIX, key, keyAnonymous, keyExisting, keyNew, storage;
 
-
-
-},{}],318:[function(require,module,exports){
-var STORAGE_PREFIX;
+NormalizedEntry = require('../entities/normalizedEntry');
 
 STORAGE_PREFIX = 'entries';
 
-window.EntryStore = {
-  storage: window.localStorage,
-  restoreExistenEntry: function(entryId, entryUpdatedAt) {
-    return this.restore(this.keyExisten(entryId, entryUpdatedAt));
-  },
-  restoreNewEntry: function() {
-    return this.restore(this.keyNew());
-  },
-  restoreAnonymousEntry: function() {
-    return this.restore(this.keyAnonymous());
-  },
-  storeEntry: function(normalizedEntry) {
-    return this.store(this.key(normalizedEntry), normalizedEntry);
-  },
-  removeNormalizedEntry: function(normalizedEntry) {
-    var key;
-    if (normalizedEntry.id != null) {
-      key = this.keyExisten(normalizedEntry.id, normalizedEntry.updatedAt);
-    } else if ((normalizedEntry.tlogType != null) && normalizedEntry.tlogType === 'anonymous') {
-      key = this.keyAnonymous();
-    } else {
-      key = this.keyNew();
-    }
-    return this.storage.removeItem(key);
-  },
-  store: function(key, data) {
-    data.storeAt = new Date().getTime();
-    return this.storage.setItem(key, JSON.stringify(data));
-  },
-  restore: function(key) {
-    var data;
-    data = JSON.parse(this.storage.getItem(key));
-    if (data != null) {
-      return new NormalizedEntry(data);
+storage = localStorage;
+
+key = function(normalizedEntry) {
+  switch (false) {
+    case normalizedEntry.type !== 'anonymous':
+      return keyAnonymous();
+    case !normalizedEntry.id:
+      return keyExisting(normalizedEntry.id, normalizedEntry.updatedAt);
+    default:
+      return keyNew();
+  }
+};
+
+keyNew = function() {
+  return STORAGE_PREFIX + ':new';
+};
+
+keyAnonymous = function() {
+  return STORAGE_PREFIX + ':anonymous';
+};
+
+keyExisting = function(entryID, entryUpdatedAt) {
+  var time;
+  time = new Date(entryUpdatedAt).getTime();
+  return STORAGE_PREFIX + ':' + entryID + ':' + time;
+};
+
+EntryKeeper = {
+  restore: function(storageKey) {
+    var entryData;
+    entryData = JSON.parse(storage.getItem(storageKey));
+    if (entryData != null) {
+      return new NormalizedEntry(entryData);
     } else {
       return null;
     }
   },
-  key: function(entry) {
-    if (entry.id != null) {
-      return this.keyExisten(entry.id, entry.updatedAt);
-    } else if ((entry.tlogType != null) && entry.tlogType === 'anonymous') {
-      return this.keyAnonymous();
-    } else {
-      return this.keyNew();
-    }
+  restoreExistingEntry: function(entryID, entryUpdatedAt) {
+    return this.restore(keyExisting(entryID, entryUpdatedAt));
   },
-  keyExisten: function(entryId, entryUpdatedAt) {
-    entryUpdatedAt = new Date(entryUpdatedAt).getTime();
-    return STORAGE_PREFIX + ':' + entryId + ':' + entryUpdatedAt;
+  restoreExistingNewEntry: function() {
+    return this.restore(keyNew());
   },
-  keyNew: function() {
-    return STORAGE_PREFIX + ':' + 'new';
+  restoreExistingAnonymousEntry: function() {
+    return this.restore(keyAnonymous());
   },
-  keyAnonymous: function() {
-    return STORAGE_PREFIX + ':' + 'anonymous';
+  store: function(normalizedEntry) {
+    var storageKey;
+    storageKey = key(normalizedEntry);
+    return storage.setItem(storageKey, JSON.stringify(normalizedEntry));
+  },
+  remove: function(normalizedEntry) {
+    var storageKey;
+    storageKey = key(normalizedEntry);
+    return storage.removeItem(storageKey);
   }
 };
 
+module.exports = EntryKeeper;
 
 
-},{}],319:[function(require,module,exports){
+
+},{"../entities/normalizedEntry":253}],315:[function(require,module,exports){
+var CORRESPONDENCE_NORMALIZED_TABLE, EntryNormalizationService, NormalizedEntry, _;
+
+_ = require('lodash');
+
+NormalizedEntry = require('../entities/normalizedEntry');
+
+CORRESPONDENCE_NORMALIZED_TABLE = {
+  text: {
+    title: 'data1',
+    text: 'data2'
+  },
+  anonymous: {
+    title: 'data1',
+    text: 'data2'
+  },
+  image: {
+    title: 'data2',
+    imageUrl: 'imageUrl',
+    imageAttachments: 'imageAttachments'
+  },
+  instagram: {
+    title: 'data2',
+    embedUrl: 'embedUrl',
+    embedHtml: 'embedHtml'
+  },
+  music: {
+    title: 'data2',
+    embedUrl: 'embedUrl',
+    embedHtml: 'embedHtml'
+  },
+  video: {
+    title: 'data2',
+    embedUrl: 'embedUrl',
+    embedHtml: 'embedHtml'
+  },
+  quote: {
+    source: 'data1',
+    text: 'data2'
+  }
+};
+
+EntryNormalizationService = {
+  normalize: function(entry) {
+    var attrs;
+    attrs = {
+      id: entry.id,
+      type: entry.type,
+      privacy: entry.privacy,
+      updatedAt: new Date(entry.updated_at).getTime()
+    };
+    switch (entry.type) {
+      case 'text':
+      case 'anonymous':
+        _.extend(attrs, {
+          data1: entry.title,
+          data2: entry.text
+        });
+        break;
+      case 'image':
+        _.extend(attrs, {
+          data2: entry.title,
+          imageUrl: entry.image_url,
+          imageAttachments: entry.image_attachments
+        });
+        break;
+      case 'instagram':
+      case 'music':
+      case 'video':
+        _.extend(attrs, {
+          data2: entry.title,
+          embedUrl: entry.iframely.url,
+          embedHtml: entry.iframely.html
+        });
+        break;
+      case 'quote':
+        _.extend(attrs, {
+          data1: entry.source,
+          data2: entry.text
+        });
+        break;
+      default:
+        if (typeof console.error === "function") {
+          console.error("Unknown entry type " + entry.type);
+        }
+    }
+    return new NormalizedEntry(attrs);
+  },
+  getNormalizedEntryValue: function(normalizedEntry, key) {
+    var correspondingValues;
+    correspondingValues = CORRESPONDENCE_NORMALIZED_TABLE[normalizedEntry.type];
+    return normalizedEntry[correspondingValues[key]] || null;
+  },
+  getNormalizedKey: function(normalizedEntry, key) {
+    var correspondingValues;
+    correspondingValues = CORRESPONDENCE_NORMALIZED_TABLE[normalizedEntry.type];
+    return correspondingValues[key] || null;
+  }
+};
+
+module.exports = EntryNormalizationService;
+
+
+
+},{"../entities/normalizedEntry":253,"lodash":485}],316:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -36560,7 +32905,7 @@ window.PositionsService = {
 
 
 
-},{}],320:[function(require,module,exports){
+},{}],317:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -36573,7 +32918,7 @@ window.UuidService = {
 
 
 
-},{}],321:[function(require,module,exports){
+},{}],318:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -36607,7 +32952,7 @@ module.exports = BaseStore;
 
 
 
-},{}],322:[function(require,module,exports){
+},{}],319:[function(require,module,exports){
 var BaseStore, CurrentUserStore, currentUser;
 
 BaseStore = require('./_base');
@@ -36689,7 +33034,101 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{"./_base":321}],323:[function(require,module,exports){
+},{"./_base":318}],320:[function(require,module,exports){
+(function (global){
+var AppDispatcher, BaseStore, Constants, EntryKeeperService, EntryNormalizationService, NormalizedEntry, _, _entry;
+
+_ = require('lodash');
+
+Constants = require('../constants/constants');
+
+BaseStore = require('./_base');
+
+EntryNormalizationService = require('../services/entryNormalization');
+
+EntryKeeperService = require('../services/entryKeeper');
+
+NormalizedEntry = require('../entities/normalizedEntry');
+
+AppDispatcher = require('../dispatchers/dispatcher');
+
+_entry = new NormalizedEntry({
+  type: 'text',
+  privacy: 'public'
+});
+
+global.EditorStore = _.extend(new BaseStore(), {
+  getEntry: function() {
+    return _entry;
+  },
+  getEntryID: function() {
+    return _entry.id;
+  },
+  getEntryType: function() {
+    return _entry.type;
+  },
+  getEntryPrivacy: function() {
+    return _entry.privacy;
+  },
+  getEntryValue: function(key) {
+    return EntryNormalizationService.getNormalizedEntryValue(_entry, key);
+  }
+});
+
+module.exports = EditorStore;
+
+EditorStore.dispatchToken = AppDispatcher.register(function(payload) {
+  var action, entry, id, key, normalizedKey, tlogType, updated_at, value;
+  action = payload.action;
+  switch (action.type) {
+    case Constants.editor.INIT:
+      entry = action.entry, tlogType = action.tlogType;
+      if (entry != null) {
+        id = entry.id, updated_at = entry.updated_at;
+        if (tlogType === 'anonymous') {
+          _entry = EntryKeeperService.restoreExistingAnonymousEntry() || EntryNormalizationService.normalize(entry);
+        } else {
+          _entry = EntryKeeperService.restoreExistingEntry(id, updated_at) || EntryNormalizationService.normalize(entry);
+        }
+      } else {
+        if (tlogType === 'anonymous') {
+          _entry = EntryKeeperService.restoreExistingAnonymousEntry() || new NormalizedEntry({
+            type: 'anonymous',
+            privacy: 'public'
+          });
+        } else {
+          _entry = EntryKeeperService.restoreExistingNewEntry() || new NormalizedEntry({
+            type: 'text',
+            privacy: tlogType === 'public' ? 'live' : 'public'
+          });
+        }
+      }
+      return EditorStore.emitChange();
+    case Constants.editor.UPDATE_FIELD:
+      key = action.key, value = action.value;
+      normalizedKey = EntryNormalizationService.getNormalizedKey(_entry, key);
+      if (normalizedKey != null) {
+        _entry[normalizedKey] = value;
+        EntryKeeperService.store(_entry);
+      }
+      return EditorStore.emitChange();
+    case Constants.editor.CHANGE_TYPE:
+      _entry.type = action.entryType;
+      return EditorStore.emitChange();
+    case Constants.editor.CHANGE_PRIVACY:
+      _entry.privacy = action.entryPrivacy;
+      EntryKeeperService.store(_entry);
+      return EditorStore.emitChange();
+    case Constants.editor.ENTRY_SAVED:
+      EntryKeeperService.remove(_entry);
+      return EditorStore.emitChange();
+  }
+});
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../constants/constants":235,"../dispatchers/dispatcher":251,"../entities/normalizedEntry":253,"../services/entryKeeper":314,"../services/entryNormalization":315,"./_base":318,"lodash":485}],321:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
 
 CHANGE_EVENT = 'changed';
@@ -36947,7 +33386,7 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 
 
 
-},{}],324:[function(require,module,exports){
+},{}],322:[function(require,module,exports){
 var defaults,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -37086,7 +33525,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],325:[function(require,module,exports){
+},{}],323:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -37095,7 +33534,7 @@ window.isMobile = function() {
 
 
 
-},{}],326:[function(require,module,exports){
+},{}],324:[function(require,module,exports){
 (function (global){
 global._ = require('lodash');
 
@@ -37170,7 +33609,7 @@ require('jquery.shapeshift');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":481,"imagesloaded":484,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":487,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],327:[function(require,module,exports){
+},{"../../../bower_components/momentjs/moment":8,"Modernizr":undefined,"aviator":undefined,"baron":undefined,"bootstrap.tooltip":undefined,"bowser":undefined,"es5-shim":undefined,"eventEmitter":undefined,"flux":479,"imagesloaded":482,"introJs":undefined,"jquery":6,"jquery.autosize":undefined,"jquery.autosize.input":undefined,"jquery.collage":undefined,"jquery.fileupload":undefined,"jquery.mousewheel":undefined,"jquery.scrollto":undefined,"jquery.shapeshift":undefined,"jquery.ui.core":undefined,"jquery.ui.draggable":undefined,"jquery.ui.mouse":undefined,"jquery.ui.slider":undefined,"jquery.ui.widget":undefined,"jquery.waypoints":undefined,"lodash":485,"medium-editor":undefined,"mousetrap":undefined,"pusher":undefined,"react":undefined,"react-color-picker":undefined,"react-mixin-manager":undefined,"screenviewer":undefined,"swfobject":undefined,"undo":undefined}],325:[function(require,module,exports){
 var momentLocales;
 
 momentLocales = {
@@ -37181,7 +33620,7 @@ window.moment.locale('ru', momentLocales.ru);
 
 
 
-},{"../../../bower_components/momentjs/locale/ru":7}],328:[function(require,module,exports){
+},{"../../../bower_components/momentjs/locale/ru":7}],326:[function(require,module,exports){
 window.Tasty = {
   start: function(options) {
     var flashes, headers, locale, user;
@@ -37218,7 +33657,7 @@ window.Tasty = {
 
 
 
-},{}],329:[function(require,module,exports){
+},{}],327:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -37284,7 +33723,7 @@ window.TastyUtils = {
 
 
 
-},{}],330:[function(require,module,exports){
+},{}],328:[function(require,module,exports){
 var ConnectStoreMixin, _;
 
 _ = require('lodash');
@@ -37326,7 +33765,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{"lodash":487}],331:[function(require,module,exports){
+},{"lodash":485}],329:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -37347,7 +33786,7 @@ module.exports = ThumborService;
 
 
 
-},{}],332:[function(require,module,exports){
+},{}],330:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -37503,6 +33942,9 @@ ApiRoutes = {
   },
   feedFriends: function() {
     return TastySettings.api_host + '/v1/my_feeds/friends';
+  },
+  imageAttachments: function() {
+    return TastySettings.api_host + '/v1/backgrounds';
   }
 };
 
@@ -37510,7 +33952,7 @@ module.exports = ApiRoutes;
 
 
 
-},{}],333:[function(require,module,exports){
+},{}],331:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -37583,7 +34025,7 @@ module.exports = Routes;
 
 
 
-},{}],334:[function(require,module,exports){
+},{}],332:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37610,7 +34052,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":444}],335:[function(require,module,exports){
+},{"./focusNode":442}],333:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -37832,7 +34274,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./SyntheticInputEvent":422,"./keyOf":466}],336:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPropagators":351,"./ExecutionEnvironment":352,"./SyntheticInputEvent":420,"./keyOf":464}],334:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -37951,7 +34393,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],337:[function(require,module,exports){
+},{}],335:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38086,7 +34528,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":336,"./ExecutionEnvironment":354,"./camelizeStyleName":433,"./dangerousStyleValue":438,"./hyphenateStyleName":457,"./memoizeStringOnly":468,"./warning":478,"_process":480}],338:[function(require,module,exports){
+},{"./CSSProperty":334,"./ExecutionEnvironment":352,"./camelizeStyleName":431,"./dangerousStyleValue":436,"./hyphenateStyleName":455,"./memoizeStringOnly":466,"./warning":476,"_process":478}],336:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -38186,7 +34628,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./PooledClass":360,"./invariant":459,"_process":480}],339:[function(require,module,exports){
+},{"./Object.assign":357,"./PooledClass":358,"./invariant":457,"_process":478}],337:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38568,7 +35010,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":348,"./EventPluginHub":350,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactUpdates":412,"./SyntheticEvent":420,"./isEventSupported":460,"./isTextInputElement":462,"./keyOf":466}],340:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPluginHub":348,"./EventPropagators":351,"./ExecutionEnvironment":352,"./ReactUpdates":410,"./SyntheticEvent":418,"./isEventSupported":458,"./isTextInputElement":460,"./keyOf":464}],338:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38593,7 +35035,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],341:[function(require,module,exports){
+},{}],339:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -38852,7 +35294,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-},{"./EventConstants":348,"./EventPropagators":353,"./ExecutionEnvironment":354,"./ReactInputSelection":392,"./SyntheticCompositionEvent":418,"./getTextContentAccessor":454,"./keyOf":466}],342:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPropagators":351,"./ExecutionEnvironment":352,"./ReactInputSelection":390,"./SyntheticCompositionEvent":416,"./getTextContentAccessor":452,"./keyOf":464}],340:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39027,7 +35469,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":345,"./ReactMultiChildUpdateTypes":398,"./getTextContentAccessor":454,"./invariant":459,"_process":480}],343:[function(require,module,exports){
+},{"./Danger":343,"./ReactMultiChildUpdateTypes":396,"./getTextContentAccessor":452,"./invariant":457,"_process":478}],341:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39326,7 +35768,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],344:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],342:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39523,7 +35965,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":343,"./escapeTextForBrowser":442,"./memoizeStringOnly":468,"./warning":478,"_process":480}],345:[function(require,module,exports){
+},{"./DOMProperty":341,"./escapeTextForBrowser":440,"./memoizeStringOnly":466,"./warning":476,"_process":478}],343:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -39709,7 +36151,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":354,"./createNodesFromMarkup":437,"./emptyFunction":440,"./getMarkupWrap":451,"./invariant":459,"_process":480}],346:[function(require,module,exports){
+},{"./ExecutionEnvironment":352,"./createNodesFromMarkup":435,"./emptyFunction":438,"./getMarkupWrap":449,"./invariant":457,"_process":478}],344:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -39749,7 +36191,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":466}],347:[function(require,module,exports){
+},{"./keyOf":464}],345:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -39889,7 +36331,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":348,"./EventPropagators":353,"./ReactMount":396,"./SyntheticMouseEvent":424,"./keyOf":466}],348:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPropagators":351,"./ReactMount":394,"./SyntheticMouseEvent":422,"./keyOf":464}],346:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -39961,7 +36403,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":465}],349:[function(require,module,exports){
+},{"./keyMirror":463}],347:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -40051,7 +36493,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":440,"_process":480}],350:[function(require,module,exports){
+},{"./emptyFunction":438,"_process":478}],348:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40327,7 +36769,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":351,"./EventPluginUtils":352,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],351:[function(require,module,exports){
+},{"./EventPluginRegistry":349,"./EventPluginUtils":350,"./accumulateInto":428,"./forEachAccumulated":443,"./invariant":457,"_process":478}],349:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40607,7 +37049,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],352:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],350:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40828,7 +37270,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":348,"./invariant":459,"_process":480}],353:[function(require,module,exports){
+},{"./EventConstants":346,"./invariant":457,"_process":478}],351:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -40970,7 +37412,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":348,"./EventPluginHub":350,"./accumulateInto":430,"./forEachAccumulated":445,"_process":480}],354:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPluginHub":348,"./accumulateInto":428,"./forEachAccumulated":443,"_process":478}],352:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41015,7 +37457,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],355:[function(require,module,exports){
+},{}],353:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41207,7 +37649,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":343,"./ExecutionEnvironment":354}],356:[function(require,module,exports){
+},{"./DOMProperty":341,"./ExecutionEnvironment":352}],354:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41363,7 +37805,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":405,"./invariant":459,"_process":480}],357:[function(require,module,exports){
+},{"./ReactPropTypes":403,"./invariant":457,"_process":478}],355:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -41413,7 +37855,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":363,"./accumulateInto":430,"./forEachAccumulated":445,"./invariant":459,"_process":480}],358:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":361,"./accumulateInto":428,"./forEachAccumulated":443,"./invariant":457,"_process":478}],356:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -41471,7 +37913,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":348,"./emptyFunction":440}],359:[function(require,module,exports){
+},{"./EventConstants":346,"./emptyFunction":438}],357:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -41518,7 +37960,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],360:[function(require,module,exports){
+},{}],358:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41634,7 +38076,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],361:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],359:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41822,7 +38264,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":344,"./EventPluginUtils":352,"./ExecutionEnvironment":354,"./Object.assign":359,"./ReactChildren":364,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactDOM":370,"./ReactDOMComponent":372,"./ReactDefaultInjection":382,"./ReactElement":385,"./ReactElementValidator":386,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./ReactPropTypes":405,"./ReactServerRendering":409,"./ReactTextComponent":411,"./deprecated":439,"./onlyChild":470,"_process":480}],362:[function(require,module,exports){
+},{"./DOMPropertyOperations":342,"./EventPluginUtils":350,"./ExecutionEnvironment":352,"./Object.assign":357,"./ReactChildren":362,"./ReactComponent":363,"./ReactCompositeComponent":365,"./ReactContext":366,"./ReactCurrentOwner":367,"./ReactDOM":368,"./ReactDOMComponent":370,"./ReactDefaultInjection":380,"./ReactElement":383,"./ReactElementValidator":384,"./ReactInstanceHandles":391,"./ReactLegacyElement":392,"./ReactMount":394,"./ReactMultiChild":395,"./ReactPerf":399,"./ReactPropTypes":403,"./ReactServerRendering":407,"./ReactTextComponent":409,"./deprecated":437,"./onlyChild":468,"_process":478}],360:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -41865,7 +38307,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":387,"./ReactMount":396,"./invariant":459,"_process":480}],363:[function(require,module,exports){
+},{"./ReactEmptyComponent":385,"./ReactMount":394,"./invariant":457,"_process":478}],361:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -42220,7 +38662,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":348,"./EventPluginHub":350,"./EventPluginRegistry":351,"./Object.assign":359,"./ReactEventEmitterMixin":389,"./ViewportMetrics":429,"./isEventSupported":460}],364:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPluginHub":348,"./EventPluginRegistry":349,"./Object.assign":357,"./ReactEventEmitterMixin":387,"./ViewportMetrics":427,"./isEventSupported":458}],362:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -42370,7 +38812,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":360,"./traverseAllChildren":477,"./warning":478,"_process":480}],365:[function(require,module,exports){
+},{"./PooledClass":358,"./traverseAllChildren":475,"./warning":476,"_process":478}],363:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -42813,7 +39255,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./ReactElement":385,"./ReactOwner":400,"./ReactUpdates":412,"./invariant":459,"./keyMirror":465,"_process":480}],366:[function(require,module,exports){
+},{"./Object.assign":357,"./ReactElement":383,"./ReactOwner":398,"./ReactUpdates":410,"./invariant":457,"./keyMirror":463,"_process":478}],364:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -42935,7 +39377,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":374,"./ReactMarkupChecksum":395,"./ReactMount":396,"./ReactPerf":401,"./ReactReconcileTransaction":407,"./getReactRootElementInContainer":453,"./invariant":459,"./setInnerHTML":473,"_process":480}],367:[function(require,module,exports){
+},{"./ReactDOMIDOperations":372,"./ReactMarkupChecksum":393,"./ReactMount":394,"./ReactPerf":399,"./ReactReconcileTransaction":405,"./getReactRootElementInContainer":451,"./invariant":457,"./setInnerHTML":471,"_process":478}],365:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44375,7 +40817,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./ReactComponent":365,"./ReactContext":368,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactElementValidator":386,"./ReactEmptyComponent":387,"./ReactErrorUtils":388,"./ReactLegacyElement":394,"./ReactOwner":400,"./ReactPerf":401,"./ReactPropTransferer":402,"./ReactPropTypeLocationNames":403,"./ReactPropTypeLocations":404,"./ReactUpdates":412,"./instantiateReactComponent":458,"./invariant":459,"./keyMirror":465,"./keyOf":466,"./mapObject":467,"./monitorCodeUse":469,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],368:[function(require,module,exports){
+},{"./Object.assign":357,"./ReactComponent":363,"./ReactContext":366,"./ReactCurrentOwner":367,"./ReactElement":383,"./ReactElementValidator":384,"./ReactEmptyComponent":385,"./ReactErrorUtils":386,"./ReactLegacyElement":392,"./ReactOwner":398,"./ReactPerf":399,"./ReactPropTransferer":400,"./ReactPropTypeLocationNames":401,"./ReactPropTypeLocations":402,"./ReactUpdates":410,"./instantiateReactComponent":456,"./invariant":457,"./keyMirror":463,"./keyOf":464,"./mapObject":465,"./monitorCodeUse":467,"./shouldUpdateReactComponent":473,"./warning":476,"_process":478}],366:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44437,7 +40879,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":359}],369:[function(require,module,exports){
+},{"./Object.assign":357}],367:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44471,7 +40913,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],370:[function(require,module,exports){
+},{}],368:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -44654,7 +41096,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactElementValidator":386,"./ReactLegacyElement":394,"./mapObject":467,"_process":480}],371:[function(require,module,exports){
+},{"./ReactElement":383,"./ReactElementValidator":384,"./ReactLegacyElement":392,"./mapObject":465,"_process":478}],369:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -44719,7 +41161,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":334,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./keyMirror":465}],372:[function(require,module,exports){
+},{"./AutoFocusMixin":332,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383,"./keyMirror":463}],370:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45206,7 +41648,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":337,"./DOMProperty":343,"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactMount":396,"./ReactMultiChild":397,"./ReactPerf":401,"./escapeTextForBrowser":442,"./invariant":459,"./isEventSupported":460,"./keyOf":466,"./monitorCodeUse":469,"_process":480}],373:[function(require,module,exports){
+},{"./CSSPropertyOperations":335,"./DOMProperty":341,"./DOMPropertyOperations":342,"./Object.assign":357,"./ReactBrowserComponentMixin":360,"./ReactBrowserEventEmitter":361,"./ReactComponent":363,"./ReactMount":394,"./ReactMultiChild":395,"./ReactPerf":399,"./escapeTextForBrowser":440,"./invariant":457,"./isEventSupported":458,"./keyOf":464,"./monitorCodeUse":467,"_process":478}],371:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45256,7 +41698,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],374:[function(require,module,exports){
+},{"./EventConstants":346,"./LocalEventTrapMixin":355,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383}],372:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45442,7 +41884,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":337,"./DOMChildrenOperations":342,"./DOMPropertyOperations":344,"./ReactMount":396,"./ReactPerf":401,"./invariant":459,"./setInnerHTML":473,"_process":480}],375:[function(require,module,exports){
+},{"./CSSPropertyOperations":335,"./DOMChildrenOperations":340,"./DOMPropertyOperations":342,"./ReactMount":394,"./ReactPerf":399,"./invariant":457,"./setInnerHTML":471,"_process":478}],373:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45490,7 +41932,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":348,"./LocalEventTrapMixin":357,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385}],376:[function(require,module,exports){
+},{"./EventConstants":346,"./LocalEventTrapMixin":355,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383}],374:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45668,7 +42110,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactMount":396,"./ReactUpdates":412,"./invariant":459,"_process":480}],377:[function(require,module,exports){
+},{"./AutoFocusMixin":332,"./DOMPropertyOperations":342,"./LinkedValueUtils":354,"./Object.assign":357,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383,"./ReactMount":394,"./ReactUpdates":410,"./invariant":457,"_process":478}],375:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -45721,7 +42163,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./warning":478,"_process":480}],378:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383,"./warning":476,"_process":478}],376:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -45905,7 +42347,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":334,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412}],379:[function(require,module,exports){
+},{"./AutoFocusMixin":332,"./LinkedValueUtils":354,"./Object.assign":357,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383,"./ReactUpdates":410}],377:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46114,7 +42556,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":354,"./getNodeForCharacterOffset":452,"./getTextContentAccessor":454}],380:[function(require,module,exports){
+},{"./ExecutionEnvironment":352,"./getNodeForCharacterOffset":450,"./getTextContentAccessor":452}],378:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -46255,7 +42697,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":334,"./DOMPropertyOperations":344,"./LinkedValueUtils":356,"./Object.assign":359,"./ReactBrowserComponentMixin":362,"./ReactCompositeComponent":367,"./ReactDOM":370,"./ReactElement":385,"./ReactUpdates":412,"./invariant":459,"./warning":478,"_process":480}],381:[function(require,module,exports){
+},{"./AutoFocusMixin":332,"./DOMPropertyOperations":342,"./LinkedValueUtils":354,"./Object.assign":357,"./ReactBrowserComponentMixin":360,"./ReactCompositeComponent":365,"./ReactDOM":368,"./ReactElement":383,"./ReactUpdates":410,"./invariant":457,"./warning":476,"_process":478}],379:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46328,7 +42770,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":359,"./ReactUpdates":412,"./Transaction":428,"./emptyFunction":440}],382:[function(require,module,exports){
+},{"./Object.assign":357,"./ReactUpdates":410,"./Transaction":426,"./emptyFunction":438}],380:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -46457,7 +42899,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":335,"./ChangeEventPlugin":339,"./ClientReactRootIndex":340,"./CompositionEventPlugin":341,"./DefaultEventPluginOrder":346,"./EnterLeaveEventPlugin":347,"./ExecutionEnvironment":354,"./HTMLDOMPropertyConfig":355,"./MobileSafariClickEventPlugin":358,"./ReactBrowserComponentMixin":362,"./ReactComponentBrowserEnvironment":366,"./ReactDOMButton":371,"./ReactDOMComponent":372,"./ReactDOMForm":373,"./ReactDOMImg":375,"./ReactDOMInput":376,"./ReactDOMOption":377,"./ReactDOMSelect":378,"./ReactDOMTextarea":380,"./ReactDefaultBatchingStrategy":381,"./ReactDefaultPerf":383,"./ReactEventListener":390,"./ReactInjection":391,"./ReactInstanceHandles":393,"./ReactMount":396,"./SVGDOMPropertyConfig":413,"./SelectEventPlugin":414,"./ServerReactRootIndex":415,"./SimpleEventPlugin":416,"./createFullPageComponent":436,"_process":480}],383:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":333,"./ChangeEventPlugin":337,"./ClientReactRootIndex":338,"./CompositionEventPlugin":339,"./DefaultEventPluginOrder":344,"./EnterLeaveEventPlugin":345,"./ExecutionEnvironment":352,"./HTMLDOMPropertyConfig":353,"./MobileSafariClickEventPlugin":356,"./ReactBrowserComponentMixin":360,"./ReactComponentBrowserEnvironment":364,"./ReactDOMButton":369,"./ReactDOMComponent":370,"./ReactDOMForm":371,"./ReactDOMImg":373,"./ReactDOMInput":374,"./ReactDOMOption":375,"./ReactDOMSelect":376,"./ReactDOMTextarea":378,"./ReactDefaultBatchingStrategy":379,"./ReactDefaultPerf":381,"./ReactEventListener":388,"./ReactInjection":389,"./ReactInstanceHandles":391,"./ReactMount":394,"./SVGDOMPropertyConfig":411,"./SelectEventPlugin":412,"./ServerReactRootIndex":413,"./SimpleEventPlugin":414,"./createFullPageComponent":434,"_process":478}],381:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46717,7 +43159,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":343,"./ReactDefaultPerfAnalysis":384,"./ReactMount":396,"./ReactPerf":401,"./performanceNow":472}],384:[function(require,module,exports){
+},{"./DOMProperty":341,"./ReactDefaultPerfAnalysis":382,"./ReactMount":394,"./ReactPerf":399,"./performanceNow":470}],382:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -46923,7 +43365,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":359}],385:[function(require,module,exports){
+},{"./Object.assign":357}],383:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47169,7 +43611,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":368,"./ReactCurrentOwner":369,"./warning":478,"_process":480}],386:[function(require,module,exports){
+},{"./ReactContext":366,"./ReactCurrentOwner":367,"./warning":476,"_process":478}],384:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47451,7 +43893,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactPropTypeLocations":404,"./monitorCodeUse":469,"./warning":478,"_process":480}],387:[function(require,module,exports){
+},{"./ReactCurrentOwner":367,"./ReactElement":383,"./ReactPropTypeLocations":402,"./monitorCodeUse":467,"./warning":476,"_process":478}],385:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -47528,7 +43970,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./invariant":459,"_process":480}],388:[function(require,module,exports){
+},{"./ReactElement":383,"./invariant":457,"_process":478}],386:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47560,7 +44002,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],389:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47610,7 +44052,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":350}],390:[function(require,module,exports){
+},{"./EventPluginHub":348}],388:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47794,7 +44236,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":349,"./ExecutionEnvironment":354,"./Object.assign":359,"./PooledClass":360,"./ReactInstanceHandles":393,"./ReactMount":396,"./ReactUpdates":412,"./getEventTarget":450,"./getUnboundedScrollPosition":455}],391:[function(require,module,exports){
+},{"./EventListener":347,"./ExecutionEnvironment":352,"./Object.assign":357,"./PooledClass":358,"./ReactInstanceHandles":391,"./ReactMount":394,"./ReactUpdates":410,"./getEventTarget":448,"./getUnboundedScrollPosition":453}],389:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47834,7 +44276,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":343,"./EventPluginHub":350,"./ReactBrowserEventEmitter":363,"./ReactComponent":365,"./ReactCompositeComponent":367,"./ReactEmptyComponent":387,"./ReactNativeComponent":399,"./ReactPerf":401,"./ReactRootIndex":408,"./ReactUpdates":412}],392:[function(require,module,exports){
+},{"./DOMProperty":341,"./EventPluginHub":348,"./ReactBrowserEventEmitter":361,"./ReactComponent":363,"./ReactCompositeComponent":365,"./ReactEmptyComponent":385,"./ReactNativeComponent":397,"./ReactPerf":399,"./ReactRootIndex":406,"./ReactUpdates":410}],390:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -47970,7 +44412,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":379,"./containsNode":434,"./focusNode":444,"./getActiveElement":446}],393:[function(require,module,exports){
+},{"./ReactDOMSelection":377,"./containsNode":432,"./focusNode":442,"./getActiveElement":444}],391:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -48305,7 +44747,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":408,"./invariant":459,"_process":480}],394:[function(require,module,exports){
+},{"./ReactRootIndex":406,"./invariant":457,"_process":478}],392:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -48552,7 +44994,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":369,"./invariant":459,"./monitorCodeUse":469,"./warning":478,"_process":480}],395:[function(require,module,exports){
+},{"./ReactCurrentOwner":367,"./invariant":457,"./monitorCodeUse":467,"./warning":476,"_process":478}],393:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -48600,7 +45042,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":431}],396:[function(require,module,exports){
+},{"./adler32":429}],394:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49298,7 +45740,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":343,"./ReactBrowserEventEmitter":363,"./ReactCurrentOwner":369,"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactLegacyElement":394,"./ReactPerf":401,"./containsNode":434,"./deprecated":439,"./getReactRootElementInContainer":453,"./instantiateReactComponent":458,"./invariant":459,"./shouldUpdateReactComponent":475,"./warning":478,"_process":480}],397:[function(require,module,exports){
+},{"./DOMProperty":341,"./ReactBrowserEventEmitter":361,"./ReactCurrentOwner":367,"./ReactElement":383,"./ReactInstanceHandles":391,"./ReactLegacyElement":392,"./ReactPerf":399,"./containsNode":432,"./deprecated":437,"./getReactRootElementInContainer":451,"./instantiateReactComponent":456,"./invariant":457,"./shouldUpdateReactComponent":473,"./warning":476,"_process":478}],395:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49726,7 +46168,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactComponent":365,"./ReactMultiChildUpdateTypes":398,"./flattenChildren":443,"./instantiateReactComponent":458,"./shouldUpdateReactComponent":475}],398:[function(require,module,exports){
+},{"./ReactComponent":363,"./ReactMultiChildUpdateTypes":396,"./flattenChildren":441,"./instantiateReactComponent":456,"./shouldUpdateReactComponent":473}],396:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -49759,7 +46201,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":465}],399:[function(require,module,exports){
+},{"./keyMirror":463}],397:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -49832,7 +46274,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./invariant":459,"_process":480}],400:[function(require,module,exports){
+},{"./Object.assign":357,"./invariant":457,"_process":478}],398:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -49988,7 +46430,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":441,"./invariant":459,"_process":480}],401:[function(require,module,exports){
+},{"./emptyObject":439,"./invariant":457,"_process":478}],399:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50072,7 +46514,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":480}],402:[function(require,module,exports){
+},{"_process":478}],400:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50239,7 +46681,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./emptyFunction":440,"./invariant":459,"./joinClasses":464,"./warning":478,"_process":480}],403:[function(require,module,exports){
+},{"./Object.assign":357,"./emptyFunction":438,"./invariant":457,"./joinClasses":462,"./warning":476,"_process":478}],401:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50267,7 +46709,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":480}],404:[function(require,module,exports){
+},{"_process":478}],402:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50291,7 +46733,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":465}],405:[function(require,module,exports){
+},{"./keyMirror":463}],403:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50645,7 +47087,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":385,"./ReactPropTypeLocationNames":403,"./deprecated":439,"./emptyFunction":440}],406:[function(require,module,exports){
+},{"./ReactElement":383,"./ReactPropTypeLocationNames":401,"./deprecated":437,"./emptyFunction":438}],404:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50701,7 +47143,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363}],407:[function(require,module,exports){
+},{"./Object.assign":357,"./PooledClass":358,"./ReactBrowserEventEmitter":361}],405:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50877,7 +47319,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactBrowserEventEmitter":363,"./ReactInputSelection":392,"./ReactPutListenerQueue":406,"./Transaction":428}],408:[function(require,module,exports){
+},{"./CallbackQueue":336,"./Object.assign":357,"./PooledClass":358,"./ReactBrowserEventEmitter":361,"./ReactInputSelection":390,"./ReactPutListenerQueue":404,"./Transaction":426}],406:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -50908,7 +47350,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],409:[function(require,module,exports){
+},{}],407:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -50988,7 +47430,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactInstanceHandles":393,"./ReactMarkupChecksum":395,"./ReactServerRenderingTransaction":410,"./instantiateReactComponent":458,"./invariant":459,"_process":480}],410:[function(require,module,exports){
+},{"./ReactElement":383,"./ReactInstanceHandles":391,"./ReactMarkupChecksum":393,"./ReactServerRenderingTransaction":408,"./instantiateReactComponent":456,"./invariant":457,"_process":478}],408:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -51101,7 +47543,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactPutListenerQueue":406,"./Transaction":428,"./emptyFunction":440}],411:[function(require,module,exports){
+},{"./CallbackQueue":336,"./Object.assign":357,"./PooledClass":358,"./ReactPutListenerQueue":404,"./Transaction":426,"./emptyFunction":438}],409:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51207,7 +47649,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":344,"./Object.assign":359,"./ReactComponent":365,"./ReactElement":385,"./escapeTextForBrowser":442}],412:[function(require,module,exports){
+},{"./DOMPropertyOperations":342,"./Object.assign":357,"./ReactComponent":363,"./ReactElement":383,"./escapeTextForBrowser":440}],410:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -51497,7 +47939,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":338,"./Object.assign":359,"./PooledClass":360,"./ReactCurrentOwner":369,"./ReactPerf":401,"./Transaction":428,"./invariant":459,"./warning":478,"_process":480}],413:[function(require,module,exports){
+},{"./CallbackQueue":336,"./Object.assign":357,"./PooledClass":358,"./ReactCurrentOwner":367,"./ReactPerf":399,"./Transaction":426,"./invariant":457,"./warning":476,"_process":478}],411:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51589,7 +48031,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":343}],414:[function(require,module,exports){
+},{"./DOMProperty":341}],412:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51784,7 +48226,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":348,"./EventPropagators":353,"./ReactInputSelection":392,"./SyntheticEvent":420,"./getActiveElement":446,"./isTextInputElement":462,"./keyOf":466,"./shallowEqual":474}],415:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPropagators":351,"./ReactInputSelection":390,"./SyntheticEvent":418,"./getActiveElement":444,"./isTextInputElement":460,"./keyOf":464,"./shallowEqual":472}],413:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -51815,7 +48257,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],416:[function(require,module,exports){
+},{}],414:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -52243,7 +48685,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":348,"./EventPluginUtils":352,"./EventPropagators":353,"./SyntheticClipboardEvent":417,"./SyntheticDragEvent":419,"./SyntheticEvent":420,"./SyntheticFocusEvent":421,"./SyntheticKeyboardEvent":423,"./SyntheticMouseEvent":424,"./SyntheticTouchEvent":425,"./SyntheticUIEvent":426,"./SyntheticWheelEvent":427,"./getEventCharCode":447,"./invariant":459,"./keyOf":466,"./warning":478,"_process":480}],417:[function(require,module,exports){
+},{"./EventConstants":346,"./EventPluginUtils":350,"./EventPropagators":351,"./SyntheticClipboardEvent":415,"./SyntheticDragEvent":417,"./SyntheticEvent":418,"./SyntheticFocusEvent":419,"./SyntheticKeyboardEvent":421,"./SyntheticMouseEvent":422,"./SyntheticTouchEvent":423,"./SyntheticUIEvent":424,"./SyntheticWheelEvent":425,"./getEventCharCode":445,"./invariant":457,"./keyOf":464,"./warning":476,"_process":478}],415:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52289,7 +48731,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":420}],418:[function(require,module,exports){
+},{"./SyntheticEvent":418}],416:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52335,7 +48777,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":420}],419:[function(require,module,exports){
+},{"./SyntheticEvent":418}],417:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52374,7 +48816,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":424}],420:[function(require,module,exports){
+},{"./SyntheticMouseEvent":422}],418:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52532,7 +48974,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":359,"./PooledClass":360,"./emptyFunction":440,"./getEventTarget":450}],421:[function(require,module,exports){
+},{"./Object.assign":357,"./PooledClass":358,"./emptyFunction":438,"./getEventTarget":448}],419:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52571,7 +49013,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":426}],422:[function(require,module,exports){
+},{"./SyntheticUIEvent":424}],420:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -52618,7 +49060,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":420}],423:[function(require,module,exports){
+},{"./SyntheticEvent":418}],421:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52705,7 +49147,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":426,"./getEventCharCode":447,"./getEventKey":448,"./getEventModifierState":449}],424:[function(require,module,exports){
+},{"./SyntheticUIEvent":424,"./getEventCharCode":445,"./getEventKey":446,"./getEventModifierState":447}],422:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52788,7 +49230,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":426,"./ViewportMetrics":429,"./getEventModifierState":449}],425:[function(require,module,exports){
+},{"./SyntheticUIEvent":424,"./ViewportMetrics":427,"./getEventModifierState":447}],423:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52836,7 +49278,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":426,"./getEventModifierState":449}],426:[function(require,module,exports){
+},{"./SyntheticUIEvent":424,"./getEventModifierState":447}],424:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52898,7 +49340,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":420,"./getEventTarget":450}],427:[function(require,module,exports){
+},{"./SyntheticEvent":418,"./getEventTarget":448}],425:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -52959,7 +49401,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":424}],428:[function(require,module,exports){
+},{"./SyntheticMouseEvent":422}],426:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53200,7 +49642,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],429:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],427:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53232,7 +49674,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":455}],430:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":453}],428:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -53298,7 +49740,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],431:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],429:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53332,7 +49774,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],432:[function(require,module,exports){
+},{}],430:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53364,7 +49806,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],433:[function(require,module,exports){
+},{}],431:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -53406,7 +49848,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":432}],434:[function(require,module,exports){
+},{"./camelize":430}],432:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53450,7 +49892,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":463}],435:[function(require,module,exports){
+},{"./isTextNode":461}],433:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53536,7 +49978,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":476}],436:[function(require,module,exports){
+},{"./toArray":474}],434:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53597,7 +50039,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":367,"./ReactElement":385,"./invariant":459,"_process":480}],437:[function(require,module,exports){
+},{"./ReactCompositeComponent":365,"./ReactElement":383,"./invariant":457,"_process":478}],435:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53687,7 +50129,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":354,"./createArrayFrom":435,"./getMarkupWrap":451,"./invariant":459,"_process":480}],438:[function(require,module,exports){
+},{"./ExecutionEnvironment":352,"./createArrayFrom":433,"./getMarkupWrap":449,"./invariant":457,"_process":478}],436:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53745,7 +50187,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":336}],439:[function(require,module,exports){
+},{"./CSSProperty":334}],437:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53796,7 +50238,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":359,"./warning":478,"_process":480}],440:[function(require,module,exports){
+},{"./Object.assign":357,"./warning":476,"_process":478}],438:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53830,7 +50272,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],441:[function(require,module,exports){
+},{}],439:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53854,7 +50296,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":480}],442:[function(require,module,exports){
+},{"_process":478}],440:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -53895,7 +50337,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],443:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -53964,7 +50406,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":411,"./traverseAllChildren":477,"./warning":478,"_process":480}],444:[function(require,module,exports){
+},{"./ReactTextComponent":409,"./traverseAllChildren":475,"./warning":476,"_process":478}],442:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -53993,7 +50435,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],445:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54024,7 +50466,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],446:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54053,7 +50495,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],447:[function(require,module,exports){
+},{}],445:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54105,7 +50547,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],448:[function(require,module,exports){
+},{}],446:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54210,7 +50652,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":447}],449:[function(require,module,exports){
+},{"./getEventCharCode":445}],447:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -54257,7 +50699,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],450:[function(require,module,exports){
+},{}],448:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54288,7 +50730,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],451:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54405,7 +50847,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":354,"./invariant":459,"_process":480}],452:[function(require,module,exports){
+},{"./ExecutionEnvironment":352,"./invariant":457,"_process":478}],450:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54480,7 +50922,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],453:[function(require,module,exports){
+},{}],451:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54515,7 +50957,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],454:[function(require,module,exports){
+},{}],452:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54552,7 +50994,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":354}],455:[function(require,module,exports){
+},{"./ExecutionEnvironment":352}],453:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54592,7 +51034,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],456:[function(require,module,exports){
+},{}],454:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54625,7 +51067,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],457:[function(require,module,exports){
+},{}],455:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54666,7 +51108,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":456}],458:[function(require,module,exports){
+},{"./hyphenate":454}],456:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54780,7 +51222,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactEmptyComponent":387,"./ReactLegacyElement":394,"./ReactNativeComponent":399,"./warning":478,"_process":480}],459:[function(require,module,exports){
+},{"./ReactElement":383,"./ReactEmptyComponent":385,"./ReactLegacyElement":392,"./ReactNativeComponent":397,"./warning":476,"_process":478}],457:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -54837,7 +51279,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":480}],460:[function(require,module,exports){
+},{"_process":478}],458:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54902,7 +51344,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":354}],461:[function(require,module,exports){
+},{"./ExecutionEnvironment":352}],459:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54930,7 +51372,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],462:[function(require,module,exports){
+},{}],460:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54974,7 +51416,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],463:[function(require,module,exports){
+},{}],461:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -54999,7 +51441,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":461}],464:[function(require,module,exports){
+},{"./isNode":459}],462:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55040,7 +51482,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],465:[function(require,module,exports){
+},{}],463:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -55095,7 +51537,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],466:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],464:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55131,7 +51573,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],467:[function(require,module,exports){
+},{}],465:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55184,7 +51626,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],468:[function(require,module,exports){
+},{}],466:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55218,7 +51660,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],469:[function(require,module,exports){
+},{}],467:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -55252,7 +51694,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],470:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],468:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -55292,7 +51734,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./invariant":459,"_process":480}],471:[function(require,module,exports){
+},{"./ReactElement":383,"./invariant":457,"_process":478}],469:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55320,7 +51762,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":354}],472:[function(require,module,exports){
+},{"./ExecutionEnvironment":352}],470:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55348,7 +51790,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":471}],473:[function(require,module,exports){
+},{"./performance":469}],471:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55426,7 +51868,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":354}],474:[function(require,module,exports){
+},{"./ExecutionEnvironment":352}],472:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55470,7 +51912,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],475:[function(require,module,exports){
+},{}],473:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -55508,7 +51950,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],476:[function(require,module,exports){
+},{}],474:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -55580,7 +52022,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":459,"_process":480}],477:[function(require,module,exports){
+},{"./invariant":457,"_process":478}],475:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -55763,7 +52205,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":385,"./ReactInstanceHandles":393,"./invariant":459,"_process":480}],478:[function(require,module,exports){
+},{"./ReactElement":383,"./ReactInstanceHandles":391,"./invariant":457,"_process":478}],476:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -55808,10 +52250,10 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":440,"_process":480}],479:[function(require,module,exports){
+},{"./emptyFunction":438,"_process":478}],477:[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":361}],480:[function(require,module,exports){
+},{"./lib/React":359}],478:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -55899,7 +52341,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],481:[function(require,module,exports){
+},{}],479:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -55911,7 +52353,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":482}],482:[function(require,module,exports){
+},{"./lib/Dispatcher":480}],480:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -56163,7 +52605,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":483}],483:[function(require,module,exports){
+},{"./invariant":481}],481:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -56218,7 +52660,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],484:[function(require,module,exports){
+},{}],482:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -56555,7 +52997,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":485,"wolfy87-eventemitter":486}],485:[function(require,module,exports){
+},{"eventie":483,"wolfy87-eventemitter":484}],483:[function(require,module,exports){
 /*!
  * eventie v1.0.6
  * event binding helper
@@ -56639,7 +53081,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{}],486:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -57113,14 +53555,14 @@ if ( typeof define === 'function' && define.amd ) {
     }
 }.call(this));
 
-},{}],487:[function(require,module,exports){
+},{}],485:[function(require,module,exports){
 (function (global){
 /**
  * @license
- * lodash 3.3.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.3.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
@@ -57130,7 +53572,7 @@ if ( typeof define === 'function' && define.amd ) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.3.0';
+  var VERSION = '3.3.1';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -58921,7 +55363,7 @@ if ( typeof define === 'function' && define.amd ) {
       var index = -1,
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
-          cache = isCommon && values.length >= 200 && createCache(values),
+          cache = (isCommon && values.length >= 200) ? createCache(values) : null,
           valuesLength = values.length;
 
       if (cache) {
@@ -59741,7 +56183,7 @@ if ( typeof define === 'function' && define.amd ) {
           length = array.length,
           isCommon = indexOf == baseIndexOf,
           isLarge = isCommon && length >= 200,
-          seen = isLarge && createCache(),
+          seen = isLarge ? createCache() : null,
           result = [];
 
       if (seen) {
@@ -60793,8 +57235,11 @@ if ( typeof define === 'function' && define.amd ) {
       } else {
         prereq = type == 'string' && index in object;
       }
-      var other = object[index];
-      return prereq && (value === value ? value === other : other !== other);
+      if (prereq) {
+        var other = object[index];
+        return value === value ? value === other : other !== other;
+      }
+      return false;
     }
 
     /**
@@ -61520,7 +57965,7 @@ if ( typeof define === 'function' && define.amd ) {
      * // => 2
      *
      * // using the `_.matches` callback shorthand
-     * _.findLastIndex(users, { user': 'barney', 'active': true });
+     * _.findLastIndex(users, { 'user': 'barney', 'active': true });
      * // => 0
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -61631,7 +58076,7 @@ if ( typeof define === 'function' && define.amd ) {
      * @example
      *
      * _.indexOf([1, 2, 1, 2], 2);
-     * // => 2
+     * // => 1
      *
      * // using `fromIndex`
      * _.indexOf([1, 2, 1, 2], 2, 2);
@@ -61704,7 +58149,7 @@ if ( typeof define === 'function' && define.amd ) {
         var value = arguments[argsIndex];
         if (isArray(value) || isArguments(value)) {
           args.push(value);
-          caches.push(isCommon && value.length >= 120 && createCache(argsIndex && value));
+          caches.push((isCommon && value.length >= 120) ? createCache(argsIndex && value) : null);
         }
       }
       argsLength = args.length;
@@ -63772,7 +60217,7 @@ if ( typeof define === 'function' && define.amd ) {
      * ];
      *
      * // using the `_.matches` callback shorthand
-     * _.some(users, { user': 'barney', 'active': false });
+     * _.some(users, { 'user': 'barney', 'active': false });
      * // => false
      *
      * // using the `_.matchesProperty` callback shorthand
@@ -64308,7 +60753,7 @@ if ( typeof define === 'function' && define.amd ) {
      * @memberOf _
      * @category Function
      * @param {Function} func The function to debounce.
-     * @param {number} wait The number of milliseconds to delay.
+     * @param {number} [wait=0] The number of milliseconds to delay.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=false] Specify invoking on the leading
      *  edge of the timeout.
@@ -64366,7 +60811,7 @@ if ( typeof define === 'function' && define.amd ) {
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      wait = wait < 0 ? 0 : wait;
+      wait = wait < 0 ? 0 : (+wait || 0);
       if (options === true) {
         var leading = true;
         trailing = false;
@@ -64887,7 +61332,7 @@ if ( typeof define === 'function' && define.amd ) {
      * @memberOf _
      * @category Function
      * @param {Function} func The function to throttle.
-     * @param {number} wait The number of milliseconds to throttle invocations to.
+     * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
      * @param {Object} [options] The options object.
      * @param {boolean} [options.leading=true] Specify invoking on the leading
      *  edge of the timeout.
@@ -67204,10 +63649,10 @@ if ( typeof define === 'function' && define.amd ) {
      * var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
      * compiled.source;
      * // => function(data) {
-     *   var __t, __p = '';
-     *   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
-     *   return __p;
-     * }
+     * //   var __t, __p = '';
+     * //   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
+     * //   return __p;
+     * // }
      *
      * // using the `source` property to inline compiled templates for meaningful
      * // line numbers in error messages and a stack trace
@@ -68321,15 +64766,13 @@ if ( typeof define === 'function' && define.amd ) {
 
     // Add `LazyWrapper` methods that accept an `iteratee` value.
     arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
-      var isFilter = index == LAZY_FILTER_FLAG,
-          isWhile = index == LAZY_WHILE_FLAG;
+      var isFilter = index == LAZY_FILTER_FLAG || index == LAZY_WHILE_FLAG;
 
       LazyWrapper.prototype[methodName] = function(iteratee, thisArg) {
         var result = this.clone(),
-            filtered = result.__filtered__,
             iteratees = result.__iteratees__ || (result.__iteratees__ = []);
 
-        result.__filtered__ = filtered || isFilter || (isWhile && result.__dir__ < 0);
+        result.__filtered__ = result.__filtered__ || isFilter;
         iteratees.push({ 'iteratee': getCallback(iteratee, thisArg, 3), 'type': index });
         return result;
       };
@@ -68396,9 +64839,14 @@ if ( typeof define === 'function' && define.amd ) {
     };
 
     LazyWrapper.prototype.dropWhile = function(predicate, thisArg) {
-      var done;
+      var done,
+          lastIndex,
+          isRight = this.__dir__ < 0;
+
       predicate = getCallback(predicate, thisArg, 3);
       return this.filter(function(value, index, array) {
+        done = done && (isRight ? index < lastIndex : index > lastIndex);
+        lastIndex = index;
         return done || (done = !predicate(value, index, array));
       });
     };
@@ -68538,51 +64986,51 @@ if ( typeof define === 'function' && define.amd ) {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],488:[function(require,module,exports){
+},{}],486:[function(require,module,exports){
+module.exports=require(332)
+},{"./focusNode":604,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/AutoFocusMixin.js":332}],487:[function(require,module,exports){
+module.exports=require(333)
+},{"./EventConstants":500,"./EventPropagators":505,"./ExecutionEnvironment":506,"./SyntheticInputEvent":580,"./keyOf":626,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/BeforeInputEventPlugin.js":333}],488:[function(require,module,exports){
 module.exports=require(334)
-},{"./focusNode":606,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\AutoFocusMixin.js":334}],489:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSProperty.js":334}],489:[function(require,module,exports){
 module.exports=require(335)
-},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./SyntheticInputEvent":582,"./keyOf":628,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\BeforeInputEventPlugin.js":335}],490:[function(require,module,exports){
+},{"./CSSProperty":488,"./ExecutionEnvironment":506,"./camelizeStyleName":591,"./dangerousStyleValue":598,"./hyphenateStyleName":617,"./memoizeStringOnly":628,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CSSPropertyOperations.js":335,"_process":478}],490:[function(require,module,exports){
 module.exports=require(336)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CSSProperty.js":336}],491:[function(require,module,exports){
+},{"./Object.assign":512,"./PooledClass":513,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CallbackQueue.js":336,"_process":478}],491:[function(require,module,exports){
 module.exports=require(337)
-},{"./CSSProperty":490,"./ExecutionEnvironment":508,"./camelizeStyleName":593,"./dangerousStyleValue":600,"./hyphenateStyleName":619,"./memoizeStringOnly":630,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CSSPropertyOperations.js":337}],492:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPluginHub":502,"./EventPropagators":505,"./ExecutionEnvironment":506,"./ReactUpdates":570,"./SyntheticEvent":578,"./isEventSupported":620,"./isTextInputElement":622,"./keyOf":626,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ChangeEventPlugin.js":337}],492:[function(require,module,exports){
 module.exports=require(338)
-},{"./Object.assign":514,"./PooledClass":515,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CallbackQueue.js":338}],493:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ClientReactRootIndex.js":338}],493:[function(require,module,exports){
 module.exports=require(339)
-},{"./EventConstants":502,"./EventPluginHub":504,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactUpdates":572,"./SyntheticEvent":580,"./isEventSupported":622,"./isTextInputElement":624,"./keyOf":628,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ChangeEventPlugin.js":339}],494:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPropagators":505,"./ExecutionEnvironment":506,"./ReactInputSelection":546,"./SyntheticCompositionEvent":576,"./getTextContentAccessor":614,"./keyOf":626,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/CompositionEventPlugin.js":339}],494:[function(require,module,exports){
 module.exports=require(340)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ClientReactRootIndex.js":340}],495:[function(require,module,exports){
+},{"./Danger":497,"./ReactMultiChildUpdateTypes":553,"./getTextContentAccessor":614,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMChildrenOperations.js":340,"_process":478}],495:[function(require,module,exports){
 module.exports=require(341)
-},{"./EventConstants":502,"./EventPropagators":507,"./ExecutionEnvironment":508,"./ReactInputSelection":548,"./SyntheticCompositionEvent":578,"./getTextContentAccessor":616,"./keyOf":628,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\CompositionEventPlugin.js":341}],496:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMProperty.js":341,"_process":478}],496:[function(require,module,exports){
 module.exports=require(342)
-},{"./Danger":499,"./ReactMultiChildUpdateTypes":555,"./getTextContentAccessor":616,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMChildrenOperations.js":342}],497:[function(require,module,exports){
+},{"./DOMProperty":495,"./escapeTextForBrowser":602,"./memoizeStringOnly":628,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DOMPropertyOperations.js":342,"_process":478}],497:[function(require,module,exports){
 module.exports=require(343)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMProperty.js":343}],498:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"./createNodesFromMarkup":596,"./emptyFunction":600,"./getMarkupWrap":611,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Danger.js":343,"_process":478}],498:[function(require,module,exports){
 module.exports=require(344)
-},{"./DOMProperty":497,"./escapeTextForBrowser":604,"./memoizeStringOnly":630,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DOMPropertyOperations.js":344}],499:[function(require,module,exports){
+},{"./keyOf":626,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/DefaultEventPluginOrder.js":344}],499:[function(require,module,exports){
 module.exports=require(345)
-},{"./ExecutionEnvironment":508,"./createNodesFromMarkup":598,"./emptyFunction":602,"./getMarkupWrap":613,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Danger.js":345}],500:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPropagators":505,"./ReactMount":551,"./SyntheticMouseEvent":582,"./keyOf":626,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EnterLeaveEventPlugin.js":345}],500:[function(require,module,exports){
 module.exports=require(346)
-},{"./keyOf":628,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\DefaultEventPluginOrder.js":346}],501:[function(require,module,exports){
+},{"./keyMirror":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventConstants.js":346}],501:[function(require,module,exports){
 module.exports=require(347)
-},{"./EventConstants":502,"./EventPropagators":507,"./ReactMount":553,"./SyntheticMouseEvent":584,"./keyOf":628,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EnterLeaveEventPlugin.js":347}],502:[function(require,module,exports){
+},{"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventListener.js":347,"_process":478}],502:[function(require,module,exports){
 module.exports=require(348)
-},{"./keyMirror":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventConstants.js":348}],503:[function(require,module,exports){
+},{"./EventPluginRegistry":503,"./EventPluginUtils":504,"./accumulateInto":588,"./forEachAccumulated":605,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginHub.js":348,"_process":478}],503:[function(require,module,exports){
 module.exports=require(349)
-},{"./emptyFunction":602,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventListener.js":349}],504:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginRegistry.js":349,"_process":478}],504:[function(require,module,exports){
 module.exports=require(350)
-},{"./EventPluginRegistry":505,"./EventPluginUtils":506,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginHub.js":350}],505:[function(require,module,exports){
+},{"./EventConstants":500,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPluginUtils.js":350,"_process":478}],505:[function(require,module,exports){
 module.exports=require(351)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginRegistry.js":351}],506:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPluginHub":502,"./accumulateInto":588,"./forEachAccumulated":605,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/EventPropagators.js":351,"_process":478}],506:[function(require,module,exports){
 module.exports=require(352)
-},{"./EventConstants":502,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPluginUtils.js":352}],507:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ExecutionEnvironment.js":352}],507:[function(require,module,exports){
 module.exports=require(353)
-},{"./EventConstants":502,"./EventPluginHub":504,"./accumulateInto":590,"./forEachAccumulated":607,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\EventPropagators.js":353}],508:[function(require,module,exports){
-module.exports=require(354)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ExecutionEnvironment.js":354}],509:[function(require,module,exports){
-module.exports=require(355)
-},{"./DOMProperty":497,"./ExecutionEnvironment":508,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\HTMLDOMPropertyConfig.js":355}],510:[function(require,module,exports){
+},{"./DOMProperty":495,"./ExecutionEnvironment":506,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/HTMLDOMPropertyConfig.js":353}],508:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -68623,29 +65071,29 @@ var LinkedStateMixin = {
 
 module.exports = LinkedStateMixin;
 
-},{"./ReactLink":551,"./ReactStateSetters":568}],511:[function(require,module,exports){
+},{"./ReactLink":549,"./ReactStateSetters":566}],509:[function(require,module,exports){
+module.exports=require(354)
+},{"./ReactPropTypes":560,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LinkedValueUtils.js":354,"_process":478}],510:[function(require,module,exports){
+module.exports=require(355)
+},{"./ReactBrowserEventEmitter":516,"./accumulateInto":588,"./forEachAccumulated":605,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/LocalEventTrapMixin.js":355,"_process":478}],511:[function(require,module,exports){
 module.exports=require(356)
-},{"./ReactPropTypes":562,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\LinkedValueUtils.js":356}],512:[function(require,module,exports){
+},{"./EventConstants":500,"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/MobileSafariClickEventPlugin.js":356}],512:[function(require,module,exports){
 module.exports=require(357)
-},{"./ReactBrowserEventEmitter":518,"./accumulateInto":590,"./forEachAccumulated":607,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\LocalEventTrapMixin.js":357}],513:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Object.assign.js":357}],513:[function(require,module,exports){
 module.exports=require(358)
-},{"./EventConstants":502,"./emptyFunction":602,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\MobileSafariClickEventPlugin.js":358}],514:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/PooledClass.js":358,"_process":478}],514:[function(require,module,exports){
 module.exports=require(359)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Object.assign.js":359}],515:[function(require,module,exports){
+},{"./DOMPropertyOperations":496,"./EventPluginUtils":504,"./ExecutionEnvironment":506,"./Object.assign":512,"./ReactChildren":517,"./ReactComponent":518,"./ReactCompositeComponent":521,"./ReactContext":522,"./ReactCurrentOwner":523,"./ReactDOM":524,"./ReactDOMComponent":526,"./ReactDefaultInjection":536,"./ReactElement":539,"./ReactElementValidator":540,"./ReactInstanceHandles":547,"./ReactLegacyElement":548,"./ReactMount":551,"./ReactMultiChild":552,"./ReactPerf":556,"./ReactPropTypes":560,"./ReactServerRendering":564,"./ReactTextComponent":567,"./deprecated":599,"./onlyChild":630,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/React.js":359,"_process":478}],515:[function(require,module,exports){
 module.exports=require(360)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\PooledClass.js":360}],516:[function(require,module,exports){
+},{"./ReactEmptyComponent":541,"./ReactMount":551,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserComponentMixin.js":360,"_process":478}],516:[function(require,module,exports){
 module.exports=require(361)
-},{"./DOMPropertyOperations":498,"./EventPluginUtils":506,"./ExecutionEnvironment":508,"./Object.assign":514,"./ReactChildren":519,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactDOM":526,"./ReactDOMComponent":528,"./ReactDefaultInjection":538,"./ReactElement":541,"./ReactElementValidator":542,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./ReactPropTypes":562,"./ReactServerRendering":566,"./ReactTextComponent":569,"./deprecated":601,"./onlyChild":632,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\React.js":361}],517:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPluginHub":502,"./EventPluginRegistry":503,"./Object.assign":512,"./ReactEventEmitterMixin":543,"./ViewportMetrics":587,"./isEventSupported":620,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactBrowserEventEmitter.js":361}],517:[function(require,module,exports){
 module.exports=require(362)
-},{"./ReactEmptyComponent":543,"./ReactMount":553,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactBrowserComponentMixin.js":362}],518:[function(require,module,exports){
+},{"./PooledClass":513,"./traverseAllChildren":637,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactChildren.js":362,"_process":478}],518:[function(require,module,exports){
 module.exports=require(363)
-},{"./EventConstants":502,"./EventPluginHub":504,"./EventPluginRegistry":505,"./Object.assign":514,"./ReactEventEmitterMixin":545,"./ViewportMetrics":589,"./isEventSupported":622,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactBrowserEventEmitter.js":363}],519:[function(require,module,exports){
+},{"./Object.assign":512,"./ReactElement":539,"./ReactOwner":555,"./ReactUpdates":570,"./invariant":619,"./keyMirror":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponent.js":363,"_process":478}],519:[function(require,module,exports){
 module.exports=require(364)
-},{"./PooledClass":515,"./traverseAllChildren":639,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactChildren.js":364}],520:[function(require,module,exports){
-module.exports=require(365)
-},{"./Object.assign":514,"./ReactElement":541,"./ReactOwner":557,"./ReactUpdates":572,"./invariant":621,"./keyMirror":627,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactComponent.js":365}],521:[function(require,module,exports){
-module.exports=require(366)
-},{"./ReactDOMIDOperations":530,"./ReactMarkupChecksum":552,"./ReactMount":553,"./ReactPerf":558,"./ReactReconcileTransaction":564,"./getReactRootElementInContainer":615,"./invariant":621,"./setInnerHTML":635,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactComponentBrowserEnvironment.js":366}],522:[function(require,module,exports){
+},{"./ReactDOMIDOperations":528,"./ReactMarkupChecksum":550,"./ReactMount":551,"./ReactPerf":556,"./ReactReconcileTransaction":562,"./getReactRootElementInContainer":613,"./invariant":619,"./setInnerHTML":633,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactComponentBrowserEnvironment.js":364,"_process":478}],520:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -68694,63 +65142,63 @@ var ReactComponentWithPureRenderMixin = {
 
 module.exports = ReactComponentWithPureRenderMixin;
 
-},{"./shallowEqual":636}],523:[function(require,module,exports){
+},{"./shallowEqual":634}],521:[function(require,module,exports){
+module.exports=require(365)
+},{"./Object.assign":512,"./ReactComponent":518,"./ReactContext":522,"./ReactCurrentOwner":523,"./ReactElement":539,"./ReactElementValidator":540,"./ReactEmptyComponent":541,"./ReactErrorUtils":542,"./ReactLegacyElement":548,"./ReactOwner":555,"./ReactPerf":556,"./ReactPropTransferer":557,"./ReactPropTypeLocationNames":558,"./ReactPropTypeLocations":559,"./ReactUpdates":570,"./instantiateReactComponent":618,"./invariant":619,"./keyMirror":625,"./keyOf":626,"./mapObject":627,"./monitorCodeUse":629,"./shouldUpdateReactComponent":635,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCompositeComponent.js":365,"_process":478}],522:[function(require,module,exports){
+module.exports=require(366)
+},{"./Object.assign":512,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactContext.js":366}],523:[function(require,module,exports){
 module.exports=require(367)
-},{"./Object.assign":514,"./ReactComponent":520,"./ReactContext":524,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactElementValidator":542,"./ReactEmptyComponent":543,"./ReactErrorUtils":544,"./ReactLegacyElement":550,"./ReactOwner":557,"./ReactPerf":558,"./ReactPropTransferer":559,"./ReactPropTypeLocationNames":560,"./ReactPropTypeLocations":561,"./ReactUpdates":572,"./instantiateReactComponent":620,"./invariant":621,"./keyMirror":627,"./keyOf":628,"./mapObject":629,"./monitorCodeUse":631,"./shouldUpdateReactComponent":637,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactCompositeComponent.js":367}],524:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactCurrentOwner.js":367}],524:[function(require,module,exports){
 module.exports=require(368)
-},{"./Object.assign":514,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactContext.js":368}],525:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactElementValidator":540,"./ReactLegacyElement":548,"./mapObject":627,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOM.js":368,"_process":478}],525:[function(require,module,exports){
 module.exports=require(369)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactCurrentOwner.js":369}],526:[function(require,module,exports){
+},{"./AutoFocusMixin":486,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"./keyMirror":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMButton.js":369}],526:[function(require,module,exports){
 module.exports=require(370)
-},{"./ReactElement":541,"./ReactElementValidator":542,"./ReactLegacyElement":550,"./mapObject":629,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOM.js":370}],527:[function(require,module,exports){
+},{"./CSSPropertyOperations":489,"./DOMProperty":495,"./DOMPropertyOperations":496,"./Object.assign":512,"./ReactBrowserComponentMixin":515,"./ReactBrowserEventEmitter":516,"./ReactComponent":518,"./ReactMount":551,"./ReactMultiChild":552,"./ReactPerf":556,"./escapeTextForBrowser":602,"./invariant":619,"./isEventSupported":620,"./keyOf":626,"./monitorCodeUse":629,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMComponent.js":370,"_process":478}],527:[function(require,module,exports){
 module.exports=require(371)
-},{"./AutoFocusMixin":488,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./keyMirror":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMButton.js":371}],528:[function(require,module,exports){
+},{"./EventConstants":500,"./LocalEventTrapMixin":510,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMForm.js":371}],528:[function(require,module,exports){
 module.exports=require(372)
-},{"./CSSPropertyOperations":491,"./DOMProperty":497,"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactMount":553,"./ReactMultiChild":554,"./ReactPerf":558,"./escapeTextForBrowser":604,"./invariant":621,"./isEventSupported":622,"./keyOf":628,"./monitorCodeUse":631,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMComponent.js":372}],529:[function(require,module,exports){
+},{"./CSSPropertyOperations":489,"./DOMChildrenOperations":494,"./DOMPropertyOperations":496,"./ReactMount":551,"./ReactPerf":556,"./invariant":619,"./setInnerHTML":633,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMIDOperations.js":372,"_process":478}],529:[function(require,module,exports){
 module.exports=require(373)
-},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMForm.js":373}],530:[function(require,module,exports){
+},{"./EventConstants":500,"./LocalEventTrapMixin":510,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMImg.js":373}],530:[function(require,module,exports){
 module.exports=require(374)
-},{"./CSSPropertyOperations":491,"./DOMChildrenOperations":496,"./DOMPropertyOperations":498,"./ReactMount":553,"./ReactPerf":558,"./invariant":621,"./setInnerHTML":635,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMIDOperations.js":374}],531:[function(require,module,exports){
+},{"./AutoFocusMixin":486,"./DOMPropertyOperations":496,"./LinkedValueUtils":509,"./Object.assign":512,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"./ReactMount":551,"./ReactUpdates":570,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMInput.js":374,"_process":478}],531:[function(require,module,exports){
 module.exports=require(375)
-},{"./EventConstants":502,"./LocalEventTrapMixin":512,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMImg.js":375}],532:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMOption.js":375,"_process":478}],532:[function(require,module,exports){
 module.exports=require(376)
-},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactMount":553,"./ReactUpdates":572,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMInput.js":376}],533:[function(require,module,exports){
+},{"./AutoFocusMixin":486,"./LinkedValueUtils":509,"./Object.assign":512,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"./ReactUpdates":570,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelect.js":376}],533:[function(require,module,exports){
 module.exports=require(377)
-},{"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMOption.js":377}],534:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"./getNodeForCharacterOffset":612,"./getTextContentAccessor":614,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMSelection.js":377}],534:[function(require,module,exports){
 module.exports=require(378)
-},{"./AutoFocusMixin":488,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMSelect.js":378}],535:[function(require,module,exports){
+},{"./AutoFocusMixin":486,"./DOMPropertyOperations":496,"./LinkedValueUtils":509,"./Object.assign":512,"./ReactBrowserComponentMixin":515,"./ReactCompositeComponent":521,"./ReactDOM":524,"./ReactElement":539,"./ReactUpdates":570,"./invariant":619,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDOMTextarea.js":378,"_process":478}],535:[function(require,module,exports){
 module.exports=require(379)
-},{"./ExecutionEnvironment":508,"./getNodeForCharacterOffset":614,"./getTextContentAccessor":616,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMSelection.js":379}],536:[function(require,module,exports){
+},{"./Object.assign":512,"./ReactUpdates":570,"./Transaction":586,"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultBatchingStrategy.js":379}],536:[function(require,module,exports){
 module.exports=require(380)
-},{"./AutoFocusMixin":488,"./DOMPropertyOperations":498,"./LinkedValueUtils":511,"./Object.assign":514,"./ReactBrowserComponentMixin":517,"./ReactCompositeComponent":523,"./ReactDOM":526,"./ReactElement":541,"./ReactUpdates":572,"./invariant":621,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDOMTextarea.js":380}],537:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":487,"./ChangeEventPlugin":491,"./ClientReactRootIndex":492,"./CompositionEventPlugin":493,"./DefaultEventPluginOrder":498,"./EnterLeaveEventPlugin":499,"./ExecutionEnvironment":506,"./HTMLDOMPropertyConfig":507,"./MobileSafariClickEventPlugin":511,"./ReactBrowserComponentMixin":515,"./ReactComponentBrowserEnvironment":519,"./ReactDOMButton":525,"./ReactDOMComponent":526,"./ReactDOMForm":527,"./ReactDOMImg":529,"./ReactDOMInput":530,"./ReactDOMOption":531,"./ReactDOMSelect":532,"./ReactDOMTextarea":534,"./ReactDefaultBatchingStrategy":535,"./ReactDefaultPerf":537,"./ReactEventListener":544,"./ReactInjection":545,"./ReactInstanceHandles":547,"./ReactMount":551,"./SVGDOMPropertyConfig":571,"./SelectEventPlugin":572,"./ServerReactRootIndex":573,"./SimpleEventPlugin":574,"./createFullPageComponent":595,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultInjection.js":380,"_process":478}],537:[function(require,module,exports){
 module.exports=require(381)
-},{"./Object.assign":514,"./ReactUpdates":572,"./Transaction":588,"./emptyFunction":602,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultBatchingStrategy.js":381}],538:[function(require,module,exports){
+},{"./DOMProperty":495,"./ReactDefaultPerfAnalysis":538,"./ReactMount":551,"./ReactPerf":556,"./performanceNow":632,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerf.js":381}],538:[function(require,module,exports){
 module.exports=require(382)
-},{"./BeforeInputEventPlugin":489,"./ChangeEventPlugin":493,"./ClientReactRootIndex":494,"./CompositionEventPlugin":495,"./DefaultEventPluginOrder":500,"./EnterLeaveEventPlugin":501,"./ExecutionEnvironment":508,"./HTMLDOMPropertyConfig":509,"./MobileSafariClickEventPlugin":513,"./ReactBrowserComponentMixin":517,"./ReactComponentBrowserEnvironment":521,"./ReactDOMButton":527,"./ReactDOMComponent":528,"./ReactDOMForm":529,"./ReactDOMImg":531,"./ReactDOMInput":532,"./ReactDOMOption":533,"./ReactDOMSelect":534,"./ReactDOMTextarea":536,"./ReactDefaultBatchingStrategy":537,"./ReactDefaultPerf":539,"./ReactEventListener":546,"./ReactInjection":547,"./ReactInstanceHandles":549,"./ReactMount":553,"./SVGDOMPropertyConfig":573,"./SelectEventPlugin":574,"./ServerReactRootIndex":575,"./SimpleEventPlugin":576,"./createFullPageComponent":597,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultInjection.js":382}],539:[function(require,module,exports){
+},{"./Object.assign":512,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactDefaultPerfAnalysis.js":382}],539:[function(require,module,exports){
 module.exports=require(383)
-},{"./DOMProperty":497,"./ReactDefaultPerfAnalysis":540,"./ReactMount":553,"./ReactPerf":558,"./performanceNow":634,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultPerf.js":383}],540:[function(require,module,exports){
+},{"./ReactContext":522,"./ReactCurrentOwner":523,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElement.js":383,"_process":478}],540:[function(require,module,exports){
 module.exports=require(384)
-},{"./Object.assign":514,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactDefaultPerfAnalysis.js":384}],541:[function(require,module,exports){
+},{"./ReactCurrentOwner":523,"./ReactElement":539,"./ReactPropTypeLocations":559,"./monitorCodeUse":629,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactElementValidator.js":384,"_process":478}],541:[function(require,module,exports){
 module.exports=require(385)
-},{"./ReactContext":524,"./ReactCurrentOwner":525,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactElement.js":385}],542:[function(require,module,exports){
+},{"./ReactElement":539,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEmptyComponent.js":385,"_process":478}],542:[function(require,module,exports){
 module.exports=require(386)
-},{"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactPropTypeLocations":561,"./monitorCodeUse":631,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactElementValidator.js":386}],543:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactErrorUtils.js":386}],543:[function(require,module,exports){
 module.exports=require(387)
-},{"./ReactElement":541,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEmptyComponent.js":387}],544:[function(require,module,exports){
+},{"./EventPluginHub":502,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventEmitterMixin.js":387}],544:[function(require,module,exports){
 module.exports=require(388)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactErrorUtils.js":388}],545:[function(require,module,exports){
+},{"./EventListener":501,"./ExecutionEnvironment":506,"./Object.assign":512,"./PooledClass":513,"./ReactInstanceHandles":547,"./ReactMount":551,"./ReactUpdates":570,"./getEventTarget":610,"./getUnboundedScrollPosition":615,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactEventListener.js":388}],545:[function(require,module,exports){
 module.exports=require(389)
-},{"./EventPluginHub":504,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEventEmitterMixin.js":389}],546:[function(require,module,exports){
+},{"./DOMProperty":495,"./EventPluginHub":502,"./ReactBrowserEventEmitter":516,"./ReactComponent":518,"./ReactCompositeComponent":521,"./ReactEmptyComponent":541,"./ReactNativeComponent":554,"./ReactPerf":556,"./ReactRootIndex":563,"./ReactUpdates":570,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInjection.js":389}],546:[function(require,module,exports){
 module.exports=require(390)
-},{"./EventListener":503,"./ExecutionEnvironment":508,"./Object.assign":514,"./PooledClass":515,"./ReactInstanceHandles":549,"./ReactMount":553,"./ReactUpdates":572,"./getEventTarget":612,"./getUnboundedScrollPosition":617,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactEventListener.js":390}],547:[function(require,module,exports){
+},{"./ReactDOMSelection":533,"./containsNode":593,"./focusNode":604,"./getActiveElement":606,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInputSelection.js":390}],547:[function(require,module,exports){
 module.exports=require(391)
-},{"./DOMProperty":497,"./EventPluginHub":504,"./ReactBrowserEventEmitter":518,"./ReactComponent":520,"./ReactCompositeComponent":523,"./ReactEmptyComponent":543,"./ReactNativeComponent":556,"./ReactPerf":558,"./ReactRootIndex":565,"./ReactUpdates":572,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInjection.js":391}],548:[function(require,module,exports){
+},{"./ReactRootIndex":563,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactInstanceHandles.js":391,"_process":478}],548:[function(require,module,exports){
 module.exports=require(392)
-},{"./ReactDOMSelection":535,"./containsNode":595,"./focusNode":606,"./getActiveElement":608,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInputSelection.js":392}],549:[function(require,module,exports){
-module.exports=require(393)
-},{"./ReactRootIndex":565,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactInstanceHandles.js":393}],550:[function(require,module,exports){
-module.exports=require(394)
-},{"./ReactCurrentOwner":525,"./invariant":621,"./monitorCodeUse":631,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactLegacyElement.js":394}],551:[function(require,module,exports){
+},{"./ReactCurrentOwner":523,"./invariant":619,"./monitorCodeUse":629,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactLegacyElement.js":392,"_process":478}],549:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -68823,39 +65271,39 @@ ReactLink.PropTypes = {
 
 module.exports = ReactLink;
 
-},{"./React":516}],552:[function(require,module,exports){
+},{"./React":514}],550:[function(require,module,exports){
+module.exports=require(393)
+},{"./adler32":589,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMarkupChecksum.js":393}],551:[function(require,module,exports){
+module.exports=require(394)
+},{"./DOMProperty":495,"./ReactBrowserEventEmitter":516,"./ReactCurrentOwner":523,"./ReactElement":539,"./ReactInstanceHandles":547,"./ReactLegacyElement":548,"./ReactPerf":556,"./containsNode":593,"./deprecated":599,"./getReactRootElementInContainer":613,"./instantiateReactComponent":618,"./invariant":619,"./shouldUpdateReactComponent":635,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMount.js":394,"_process":478}],552:[function(require,module,exports){
 module.exports=require(395)
-},{"./adler32":591,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMarkupChecksum.js":395}],553:[function(require,module,exports){
+},{"./ReactComponent":518,"./ReactMultiChildUpdateTypes":553,"./flattenChildren":603,"./instantiateReactComponent":618,"./shouldUpdateReactComponent":635,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChild.js":395}],553:[function(require,module,exports){
 module.exports=require(396)
-},{"./DOMProperty":497,"./ReactBrowserEventEmitter":518,"./ReactCurrentOwner":525,"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactLegacyElement":550,"./ReactPerf":558,"./containsNode":595,"./deprecated":601,"./getReactRootElementInContainer":615,"./instantiateReactComponent":620,"./invariant":621,"./shouldUpdateReactComponent":637,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMount.js":396}],554:[function(require,module,exports){
+},{"./keyMirror":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactMultiChildUpdateTypes.js":396}],554:[function(require,module,exports){
 module.exports=require(397)
-},{"./ReactComponent":520,"./ReactMultiChildUpdateTypes":555,"./flattenChildren":605,"./instantiateReactComponent":620,"./shouldUpdateReactComponent":637,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMultiChild.js":397}],555:[function(require,module,exports){
+},{"./Object.assign":512,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactNativeComponent.js":397,"_process":478}],555:[function(require,module,exports){
 module.exports=require(398)
-},{"./keyMirror":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactMultiChildUpdateTypes.js":398}],556:[function(require,module,exports){
+},{"./emptyObject":601,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactOwner.js":398,"_process":478}],556:[function(require,module,exports){
 module.exports=require(399)
-},{"./Object.assign":514,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactNativeComponent.js":399}],557:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPerf.js":399,"_process":478}],557:[function(require,module,exports){
 module.exports=require(400)
-},{"./emptyObject":603,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactOwner.js":400}],558:[function(require,module,exports){
+},{"./Object.assign":512,"./emptyFunction":600,"./invariant":619,"./joinClasses":624,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTransferer.js":400,"_process":478}],558:[function(require,module,exports){
 module.exports=require(401)
-},{"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPerf.js":401}],559:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocationNames.js":401,"_process":478}],559:[function(require,module,exports){
 module.exports=require(402)
-},{"./Object.assign":514,"./emptyFunction":602,"./invariant":621,"./joinClasses":626,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTransferer.js":402}],560:[function(require,module,exports){
+},{"./keyMirror":625,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypeLocations.js":402}],560:[function(require,module,exports){
 module.exports=require(403)
-},{"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypeLocationNames.js":403}],561:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactPropTypeLocationNames":558,"./deprecated":599,"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPropTypes.js":403}],561:[function(require,module,exports){
 module.exports=require(404)
-},{"./keyMirror":627,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypeLocations.js":404}],562:[function(require,module,exports){
+},{"./Object.assign":512,"./PooledClass":513,"./ReactBrowserEventEmitter":516,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactPutListenerQueue.js":404}],562:[function(require,module,exports){
 module.exports=require(405)
-},{"./ReactElement":541,"./ReactPropTypeLocationNames":560,"./deprecated":601,"./emptyFunction":602,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPropTypes.js":405}],563:[function(require,module,exports){
+},{"./CallbackQueue":490,"./Object.assign":512,"./PooledClass":513,"./ReactBrowserEventEmitter":516,"./ReactInputSelection":546,"./ReactPutListenerQueue":561,"./Transaction":586,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactReconcileTransaction.js":405}],563:[function(require,module,exports){
 module.exports=require(406)
-},{"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactPutListenerQueue.js":406}],564:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactRootIndex.js":406}],564:[function(require,module,exports){
 module.exports=require(407)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactBrowserEventEmitter":518,"./ReactInputSelection":548,"./ReactPutListenerQueue":563,"./Transaction":588,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactReconcileTransaction.js":407}],565:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactInstanceHandles":547,"./ReactMarkupChecksum":550,"./ReactServerRenderingTransaction":565,"./instantiateReactComponent":618,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRendering.js":407,"_process":478}],565:[function(require,module,exports){
 module.exports=require(408)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactRootIndex.js":408}],566:[function(require,module,exports){
-module.exports=require(409)
-},{"./ReactElement":541,"./ReactInstanceHandles":549,"./ReactMarkupChecksum":552,"./ReactServerRenderingTransaction":567,"./instantiateReactComponent":620,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactServerRendering.js":409}],567:[function(require,module,exports){
-module.exports=require(410)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactPutListenerQueue":563,"./Transaction":588,"./emptyFunction":602,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactServerRenderingTransaction.js":410}],568:[function(require,module,exports){
+},{"./CallbackQueue":490,"./Object.assign":512,"./PooledClass":513,"./ReactPutListenerQueue":561,"./Transaction":586,"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactServerRenderingTransaction.js":408}],566:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -68961,9 +65409,9 @@ ReactStateSetters.Mixin = {
 
 module.exports = ReactStateSetters;
 
-},{}],569:[function(require,module,exports){
-module.exports=require(411)
-},{"./DOMPropertyOperations":498,"./Object.assign":514,"./ReactComponent":520,"./ReactElement":541,"./escapeTextForBrowser":604,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactTextComponent.js":411}],570:[function(require,module,exports){
+},{}],567:[function(require,module,exports){
+module.exports=require(409)
+},{"./DOMPropertyOperations":496,"./Object.assign":512,"./ReactComponent":518,"./ReactElement":539,"./escapeTextForBrowser":602,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactTextComponent.js":409}],568:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -69064,7 +65512,7 @@ var ReactTransitionChildMapping = {
 
 module.exports = ReactTransitionChildMapping;
 
-},{"./ReactChildren":519}],571:[function(require,module,exports){
+},{"./ReactChildren":517}],569:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -69253,51 +65701,51 @@ var ReactTransitionGroup = React.createClass({
 
 module.exports = ReactTransitionGroup;
 
-},{"./Object.assign":514,"./React":516,"./ReactTransitionChildMapping":570,"./cloneWithProps":594,"./emptyFunction":602}],572:[function(require,module,exports){
+},{"./Object.assign":512,"./React":514,"./ReactTransitionChildMapping":568,"./cloneWithProps":592,"./emptyFunction":600}],570:[function(require,module,exports){
+module.exports=require(410)
+},{"./CallbackQueue":490,"./Object.assign":512,"./PooledClass":513,"./ReactCurrentOwner":523,"./ReactPerf":556,"./Transaction":586,"./invariant":619,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ReactUpdates.js":410,"_process":478}],571:[function(require,module,exports){
+module.exports=require(411)
+},{"./DOMProperty":495,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SVGDOMPropertyConfig.js":411}],572:[function(require,module,exports){
 module.exports=require(412)
-},{"./CallbackQueue":492,"./Object.assign":514,"./PooledClass":515,"./ReactCurrentOwner":525,"./ReactPerf":558,"./Transaction":588,"./invariant":621,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ReactUpdates.js":412}],573:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPropagators":505,"./ReactInputSelection":546,"./SyntheticEvent":578,"./getActiveElement":606,"./isTextInputElement":622,"./keyOf":626,"./shallowEqual":634,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SelectEventPlugin.js":412}],573:[function(require,module,exports){
 module.exports=require(413)
-},{"./DOMProperty":497,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SVGDOMPropertyConfig.js":413}],574:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ServerReactRootIndex.js":413}],574:[function(require,module,exports){
 module.exports=require(414)
-},{"./EventConstants":502,"./EventPropagators":507,"./ReactInputSelection":548,"./SyntheticEvent":580,"./getActiveElement":608,"./isTextInputElement":624,"./keyOf":628,"./shallowEqual":636,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SelectEventPlugin.js":414}],575:[function(require,module,exports){
+},{"./EventConstants":500,"./EventPluginUtils":504,"./EventPropagators":505,"./SyntheticClipboardEvent":575,"./SyntheticDragEvent":577,"./SyntheticEvent":578,"./SyntheticFocusEvent":579,"./SyntheticKeyboardEvent":581,"./SyntheticMouseEvent":582,"./SyntheticTouchEvent":583,"./SyntheticUIEvent":584,"./SyntheticWheelEvent":585,"./getEventCharCode":607,"./invariant":619,"./keyOf":626,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SimpleEventPlugin.js":414,"_process":478}],575:[function(require,module,exports){
 module.exports=require(415)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ServerReactRootIndex.js":415}],576:[function(require,module,exports){
+},{"./SyntheticEvent":578,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticClipboardEvent.js":415}],576:[function(require,module,exports){
 module.exports=require(416)
-},{"./EventConstants":502,"./EventPluginUtils":506,"./EventPropagators":507,"./SyntheticClipboardEvent":577,"./SyntheticDragEvent":579,"./SyntheticEvent":580,"./SyntheticFocusEvent":581,"./SyntheticKeyboardEvent":583,"./SyntheticMouseEvent":584,"./SyntheticTouchEvent":585,"./SyntheticUIEvent":586,"./SyntheticWheelEvent":587,"./getEventCharCode":609,"./invariant":621,"./keyOf":628,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SimpleEventPlugin.js":416}],577:[function(require,module,exports){
+},{"./SyntheticEvent":578,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticCompositionEvent.js":416}],577:[function(require,module,exports){
 module.exports=require(417)
-},{"./SyntheticEvent":580,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticClipboardEvent.js":417}],578:[function(require,module,exports){
+},{"./SyntheticMouseEvent":582,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticDragEvent.js":417}],578:[function(require,module,exports){
 module.exports=require(418)
-},{"./SyntheticEvent":580,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticCompositionEvent.js":418}],579:[function(require,module,exports){
+},{"./Object.assign":512,"./PooledClass":513,"./emptyFunction":600,"./getEventTarget":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticEvent.js":418}],579:[function(require,module,exports){
 module.exports=require(419)
-},{"./SyntheticMouseEvent":584,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticDragEvent.js":419}],580:[function(require,module,exports){
+},{"./SyntheticUIEvent":584,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticFocusEvent.js":419}],580:[function(require,module,exports){
 module.exports=require(420)
-},{"./Object.assign":514,"./PooledClass":515,"./emptyFunction":602,"./getEventTarget":612,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticEvent.js":420}],581:[function(require,module,exports){
+},{"./SyntheticEvent":578,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticInputEvent.js":420}],581:[function(require,module,exports){
 module.exports=require(421)
-},{"./SyntheticUIEvent":586,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticFocusEvent.js":421}],582:[function(require,module,exports){
+},{"./SyntheticUIEvent":584,"./getEventCharCode":607,"./getEventKey":608,"./getEventModifierState":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticKeyboardEvent.js":421}],582:[function(require,module,exports){
 module.exports=require(422)
-},{"./SyntheticEvent":580,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticInputEvent.js":422}],583:[function(require,module,exports){
+},{"./SyntheticUIEvent":584,"./ViewportMetrics":587,"./getEventModifierState":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticMouseEvent.js":422}],583:[function(require,module,exports){
 module.exports=require(423)
-},{"./SyntheticUIEvent":586,"./getEventCharCode":609,"./getEventKey":610,"./getEventModifierState":611,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticKeyboardEvent.js":423}],584:[function(require,module,exports){
+},{"./SyntheticUIEvent":584,"./getEventModifierState":609,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticTouchEvent.js":423}],584:[function(require,module,exports){
 module.exports=require(424)
-},{"./SyntheticUIEvent":586,"./ViewportMetrics":589,"./getEventModifierState":611,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticMouseEvent.js":424}],585:[function(require,module,exports){
+},{"./SyntheticEvent":578,"./getEventTarget":610,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticUIEvent.js":424}],585:[function(require,module,exports){
 module.exports=require(425)
-},{"./SyntheticUIEvent":586,"./getEventModifierState":611,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticTouchEvent.js":425}],586:[function(require,module,exports){
+},{"./SyntheticMouseEvent":582,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/SyntheticWheelEvent.js":425}],586:[function(require,module,exports){
 module.exports=require(426)
-},{"./SyntheticEvent":580,"./getEventTarget":612,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticUIEvent.js":426}],587:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/Transaction.js":426,"_process":478}],587:[function(require,module,exports){
 module.exports=require(427)
-},{"./SyntheticMouseEvent":584,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\SyntheticWheelEvent.js":427}],588:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":615,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/ViewportMetrics.js":427}],588:[function(require,module,exports){
 module.exports=require(428)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\Transaction.js":428}],589:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/accumulateInto.js":428,"_process":478}],589:[function(require,module,exports){
 module.exports=require(429)
-},{"./getUnboundedScrollPosition":617,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\ViewportMetrics.js":429}],590:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/adler32.js":429}],590:[function(require,module,exports){
 module.exports=require(430)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\accumulateInto.js":430}],591:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelize.js":430}],591:[function(require,module,exports){
 module.exports=require(431)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\adler32.js":431}],592:[function(require,module,exports){
-module.exports=require(432)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\camelize.js":432}],593:[function(require,module,exports){
-module.exports=require(433)
-},{"./camelize":592,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\camelizeStyleName.js":433}],594:[function(require,module,exports){
+},{"./camelize":590,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/camelizeStyleName.js":431}],592:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -69356,15 +65804,15 @@ function cloneWithProps(child, props) {
 module.exports = cloneWithProps;
 
 }).call(this,require('_process'))
-},{"./ReactElement":541,"./ReactPropTransferer":559,"./keyOf":628,"./warning":641,"_process":480}],595:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactPropTransferer":557,"./keyOf":626,"./warning":639,"_process":478}],593:[function(require,module,exports){
+module.exports=require(432)
+},{"./isTextNode":623,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/containsNode.js":432}],594:[function(require,module,exports){
+module.exports=require(433)
+},{"./toArray":636,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createArrayFrom.js":433}],595:[function(require,module,exports){
 module.exports=require(434)
-},{"./isTextNode":625,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\containsNode.js":434}],596:[function(require,module,exports){
+},{"./ReactCompositeComponent":521,"./ReactElement":539,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createFullPageComponent.js":434,"_process":478}],596:[function(require,module,exports){
 module.exports=require(435)
-},{"./toArray":638,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createArrayFrom.js":435}],597:[function(require,module,exports){
-module.exports=require(436)
-},{"./ReactCompositeComponent":523,"./ReactElement":541,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createFullPageComponent.js":436}],598:[function(require,module,exports){
-module.exports=require(437)
-},{"./ExecutionEnvironment":508,"./createArrayFrom":596,"./getMarkupWrap":613,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\createNodesFromMarkup.js":437}],599:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"./createArrayFrom":594,"./getMarkupWrap":611,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/createNodesFromMarkup.js":435,"_process":478}],597:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -69403,87 +65851,87 @@ function cx(classNames) {
 
 module.exports = cx;
 
-},{}],600:[function(require,module,exports){
+},{}],598:[function(require,module,exports){
+module.exports=require(436)
+},{"./CSSProperty":488,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/dangerousStyleValue.js":436}],599:[function(require,module,exports){
+module.exports=require(437)
+},{"./Object.assign":512,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/deprecated.js":437,"_process":478}],600:[function(require,module,exports){
 module.exports=require(438)
-},{"./CSSProperty":490,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\dangerousStyleValue.js":438}],601:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyFunction.js":438}],601:[function(require,module,exports){
 module.exports=require(439)
-},{"./Object.assign":514,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\deprecated.js":439}],602:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/emptyObject.js":439,"_process":478}],602:[function(require,module,exports){
 module.exports=require(440)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\emptyFunction.js":440}],603:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/escapeTextForBrowser.js":440}],603:[function(require,module,exports){
 module.exports=require(441)
-},{"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\emptyObject.js":441}],604:[function(require,module,exports){
+},{"./ReactTextComponent":567,"./traverseAllChildren":637,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/flattenChildren.js":441,"_process":478}],604:[function(require,module,exports){
 module.exports=require(442)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\escapeTextForBrowser.js":442}],605:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/focusNode.js":442}],605:[function(require,module,exports){
 module.exports=require(443)
-},{"./ReactTextComponent":569,"./traverseAllChildren":639,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\flattenChildren.js":443}],606:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/forEachAccumulated.js":443}],606:[function(require,module,exports){
 module.exports=require(444)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\focusNode.js":444}],607:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getActiveElement.js":444}],607:[function(require,module,exports){
 module.exports=require(445)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\forEachAccumulated.js":445}],608:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventCharCode.js":445}],608:[function(require,module,exports){
 module.exports=require(446)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getActiveElement.js":446}],609:[function(require,module,exports){
+},{"./getEventCharCode":607,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventKey.js":446}],609:[function(require,module,exports){
 module.exports=require(447)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventCharCode.js":447}],610:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventModifierState.js":447}],610:[function(require,module,exports){
 module.exports=require(448)
-},{"./getEventCharCode":609,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventKey.js":448}],611:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getEventTarget.js":448}],611:[function(require,module,exports){
 module.exports=require(449)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventModifierState.js":449}],612:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getMarkupWrap.js":449,"_process":478}],612:[function(require,module,exports){
 module.exports=require(450)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getEventTarget.js":450}],613:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getNodeForCharacterOffset.js":450}],613:[function(require,module,exports){
 module.exports=require(451)
-},{"./ExecutionEnvironment":508,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getMarkupWrap.js":451}],614:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getReactRootElementInContainer.js":451}],614:[function(require,module,exports){
 module.exports=require(452)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getNodeForCharacterOffset.js":452}],615:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getTextContentAccessor.js":452}],615:[function(require,module,exports){
 module.exports=require(453)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getReactRootElementInContainer.js":453}],616:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/getUnboundedScrollPosition.js":453}],616:[function(require,module,exports){
 module.exports=require(454)
-},{"./ExecutionEnvironment":508,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getTextContentAccessor.js":454}],617:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenate.js":454}],617:[function(require,module,exports){
 module.exports=require(455)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\getUnboundedScrollPosition.js":455}],618:[function(require,module,exports){
+},{"./hyphenate":616,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/hyphenateStyleName.js":455}],618:[function(require,module,exports){
 module.exports=require(456)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\hyphenate.js":456}],619:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactEmptyComponent":541,"./ReactLegacyElement":548,"./ReactNativeComponent":554,"./warning":639,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/instantiateReactComponent.js":456,"_process":478}],619:[function(require,module,exports){
 module.exports=require(457)
-},{"./hyphenate":618,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\hyphenateStyleName.js":457}],620:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/invariant.js":457,"_process":478}],620:[function(require,module,exports){
 module.exports=require(458)
-},{"./ReactElement":541,"./ReactEmptyComponent":543,"./ReactLegacyElement":550,"./ReactNativeComponent":556,"./warning":641,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\instantiateReactComponent.js":458}],621:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isEventSupported.js":458}],621:[function(require,module,exports){
 module.exports=require(459)
-},{"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\invariant.js":459}],622:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isNode.js":459}],622:[function(require,module,exports){
 module.exports=require(460)
-},{"./ExecutionEnvironment":508,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isEventSupported.js":460}],623:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextInputElement.js":460}],623:[function(require,module,exports){
 module.exports=require(461)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isNode.js":461}],624:[function(require,module,exports){
+},{"./isNode":621,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/isTextNode.js":461}],624:[function(require,module,exports){
 module.exports=require(462)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isTextInputElement.js":462}],625:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/joinClasses.js":462}],625:[function(require,module,exports){
 module.exports=require(463)
-},{"./isNode":623,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\isTextNode.js":463}],626:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyMirror.js":463,"_process":478}],626:[function(require,module,exports){
 module.exports=require(464)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\joinClasses.js":464}],627:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/keyOf.js":464}],627:[function(require,module,exports){
 module.exports=require(465)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\keyMirror.js":465}],628:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/mapObject.js":465}],628:[function(require,module,exports){
 module.exports=require(466)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\keyOf.js":466}],629:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/memoizeStringOnly.js":466}],629:[function(require,module,exports){
 module.exports=require(467)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\mapObject.js":467}],630:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/monitorCodeUse.js":467,"_process":478}],630:[function(require,module,exports){
 module.exports=require(468)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\memoizeStringOnly.js":468}],631:[function(require,module,exports){
+},{"./ReactElement":539,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/onlyChild.js":468,"_process":478}],631:[function(require,module,exports){
 module.exports=require(469)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\monitorCodeUse.js":469}],632:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performance.js":469}],632:[function(require,module,exports){
 module.exports=require(470)
-},{"./ReactElement":541,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\onlyChild.js":470}],633:[function(require,module,exports){
+},{"./performance":631,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/performanceNow.js":470}],633:[function(require,module,exports){
 module.exports=require(471)
-},{"./ExecutionEnvironment":508,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\performance.js":471}],634:[function(require,module,exports){
+},{"./ExecutionEnvironment":506,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/setInnerHTML.js":471}],634:[function(require,module,exports){
 module.exports=require(472)
-},{"./performance":633,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\performanceNow.js":472}],635:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shallowEqual.js":472}],635:[function(require,module,exports){
 module.exports=require(473)
-},{"./ExecutionEnvironment":508,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\setInnerHTML.js":473}],636:[function(require,module,exports){
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/shouldUpdateReactComponent.js":473}],636:[function(require,module,exports){
 module.exports=require(474)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\shallowEqual.js":474}],637:[function(require,module,exports){
+},{"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/toArray.js":474,"_process":478}],637:[function(require,module,exports){
 module.exports=require(475)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\shouldUpdateReactComponent.js":475}],638:[function(require,module,exports){
-module.exports=require(476)
-},{"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\toArray.js":476}],639:[function(require,module,exports){
-module.exports=require(477)
-},{"./ReactElement":541,"./ReactInstanceHandles":549,"./invariant":621,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\traverseAllChildren.js":477}],640:[function(require,module,exports){
+},{"./ReactElement":539,"./ReactInstanceHandles":547,"./invariant":619,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/traverseAllChildren.js":475,"_process":478}],638:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -69651,9 +66099,3489 @@ function update(value, spec) {
 module.exports = update;
 
 }).call(this,require('_process'))
-},{"./Object.assign":514,"./invariant":621,"./keyOf":628,"_process":480}],641:[function(require,module,exports){
-module.exports=require(478)
-},{"./emptyFunction":602,"_process":480,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\lib\\warning.js":478}],"es5-shim":[function(require,module,exports){
+},{"./Object.assign":512,"./invariant":619,"./keyOf":626,"_process":478}],639:[function(require,module,exports){
+module.exports=require(476)
+},{"./emptyFunction":600,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/lib/warning.js":476,"_process":478}],"Modernizr":[function(require,module,exports){
+/*!
+ * Modernizr v2.8.3
+ * www.modernizr.com
+ *
+ * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
+ * Available under the BSD and MIT licenses: www.modernizr.com/license/
+ */
+
+/*
+ * Modernizr tests which native CSS3 and HTML5 features are available in
+ * the current UA and makes the results available to you in two ways:
+ * as properties on a global Modernizr object, and as classes on the
+ * <html> element. This information allows you to progressively enhance
+ * your pages with a granular level of control over the experience.
+ *
+ * Modernizr has an optional (not included) conditional resource loader
+ * called Modernizr.load(), based on Yepnope.js (yepnopejs.com).
+ * To get a build that includes Modernizr.load(), as well as choosing
+ * which tests to include, go to www.modernizr.com/download/
+ *
+ * Authors        Faruk Ates, Paul Irish, Alex Sexton
+ * Contributors   Ryan Seddon, Ben Alman
+ */
+
+Modernizr = (function( window, document, undefined ) {
+
+    var version = '2.8.3',
+
+    Modernizr = {},
+
+    /*>>cssclasses*/
+    // option for enabling the HTML classes to be added
+    enableClasses = true,
+    /*>>cssclasses*/
+
+    docElement = document.documentElement,
+
+    /**
+     * Create our "modernizr" element that we do most feature tests on.
+     */
+    mod = 'modernizr',
+    modElem = document.createElement(mod),
+    mStyle = modElem.style,
+
+    /**
+     * Create the input element for various Web Forms feature tests.
+     */
+    inputElem /*>>inputelem*/ = document.createElement('input') /*>>inputelem*/ ,
+
+    /*>>smile*/
+    smile = ':)',
+    /*>>smile*/
+
+    toString = {}.toString,
+
+    // TODO :: make the prefixes more granular
+    /*>>prefixes*/
+    // List of property values to set for css tests. See ticket #21
+    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+    /*>>prefixes*/
+
+    /*>>domprefixes*/
+    // Following spec is to expose vendor-specific style properties as:
+    //   elem.style.WebkitBorderRadius
+    // and the following would be incorrect:
+    //   elem.style.webkitBorderRadius
+
+    // Webkit ghosts their properties in lowercase but Opera & Moz do not.
+    // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
+    //   erik.eae.net/archives/2008/03/10/21.48.10/
+
+    // More here: github.com/Modernizr/Modernizr/issues/issue/21
+    omPrefixes = 'Webkit Moz O ms',
+
+    cssomPrefixes = omPrefixes.split(' '),
+
+    domPrefixes = omPrefixes.toLowerCase().split(' '),
+    /*>>domprefixes*/
+
+    /*>>ns*/
+    ns = {'svg': 'http://www.w3.org/2000/svg'},
+    /*>>ns*/
+
+    tests = {},
+    inputs = {},
+    attrs = {},
+
+    classes = [],
+
+    slice = classes.slice,
+
+    featureName, // used in testing loop
+
+
+    /*>>teststyles*/
+    // Inject element with style element and some CSS rules
+    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
+
+      var style, ret, node, docOverflow,
+          div = document.createElement('div'),
+          // After page load injecting a fake body doesn't work so check if body exists
+          body = document.body,
+          // IE6 and 7 won't return offsetWidth or offsetHeight unless it's in the body element, so we fake it.
+          fakeBody = body || document.createElement('body');
+
+      if ( parseInt(nodes, 10) ) {
+          // In order not to give false positives we create a node for each test
+          // This also allows the method to scale for unspecified uses
+          while ( nodes-- ) {
+              node = document.createElement('div');
+              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
+              div.appendChild(node);
+          }
+      }
+
+      // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
+      // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
+      // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
+      // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
+      // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
+      style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
+      div.id = mod;
+      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
+      // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
+      (body ? div : fakeBody).innerHTML += style;
+      fakeBody.appendChild(div);
+      if ( !body ) {
+          //avoid crashing IE8, if background image is used
+          fakeBody.style.background = '';
+          //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
+          fakeBody.style.overflow = 'hidden';
+          docOverflow = docElement.style.overflow;
+          docElement.style.overflow = 'hidden';
+          docElement.appendChild(fakeBody);
+      }
+
+      ret = callback(div, rule);
+      // If this is done after page load we don't want to remove the body so check if body exists
+      if ( !body ) {
+          fakeBody.parentNode.removeChild(fakeBody);
+          docElement.style.overflow = docOverflow;
+      } else {
+          div.parentNode.removeChild(div);
+      }
+
+      return !!ret;
+
+    },
+    /*>>teststyles*/
+
+    /*>>mq*/
+    // adapted from matchMedia polyfill
+    // by Scott Jehl and Paul Irish
+    // gist.github.com/786768
+    testMediaQuery = function( mq ) {
+
+      var matchMedia = window.matchMedia || window.msMatchMedia;
+      if ( matchMedia ) {
+        return matchMedia(mq) && matchMedia(mq).matches || false;
+      }
+
+      var bool;
+
+      injectElementWithStyles('@media ' + mq + ' { #' + mod + ' { position: absolute; } }', function( node ) {
+        bool = (window.getComputedStyle ?
+                  getComputedStyle(node, null) :
+                  node.currentStyle)['position'] == 'absolute';
+      });
+
+      return bool;
+
+     },
+     /*>>mq*/
+
+
+    /*>>hasevent*/
+    //
+    // isEventSupported determines if a given element supports the given event
+    // kangax.github.com/iseventsupported/
+    //
+    // The following results are known incorrects:
+    //   Modernizr.hasEvent("webkitTransitionEnd", elem) // false negative
+    //   Modernizr.hasEvent("textInput") // in Webkit. github.com/Modernizr/Modernizr/issues/333
+    //   ...
+    isEventSupported = (function() {
+
+      var TAGNAMES = {
+        'select': 'input', 'change': 'input',
+        'submit': 'form', 'reset': 'form',
+        'error': 'img', 'load': 'img', 'abort': 'img'
+      };
+
+      function isEventSupported( eventName, element ) {
+
+        element = element || document.createElement(TAGNAMES[eventName] || 'div');
+        eventName = 'on' + eventName;
+
+        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
+        var isSupported = eventName in element;
+
+        if ( !isSupported ) {
+          // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
+          if ( !element.setAttribute ) {
+            element = document.createElement('div');
+          }
+          if ( element.setAttribute && element.removeAttribute ) {
+            element.setAttribute(eventName, '');
+            isSupported = is(element[eventName], 'function');
+
+            // If property was created, "remove it" (by setting value to `undefined`)
+            if ( !is(element[eventName], 'undefined') ) {
+              element[eventName] = undefined;
+            }
+            element.removeAttribute(eventName);
+          }
+        }
+
+        element = null;
+        return isSupported;
+      }
+      return isEventSupported;
+    })(),
+    /*>>hasevent*/
+
+    // TODO :: Add flag for hasownprop ? didn't last time
+
+    // hasOwnProperty shim by kangax needed for Safari 2.0 support
+    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+
+    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
+      hasOwnProp = function (object, property) {
+        return _hasOwnProperty.call(object, property);
+      };
+    }
+    else {
+      hasOwnProp = function (object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+      };
+    }
+
+    // Adapted from ES5-shim https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js
+    // es5.github.com/#x15.3.4.5
+
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function bind(that) {
+
+        var target = this;
+
+        if (typeof target != "function") {
+            throw new TypeError();
+        }
+
+        var args = slice.call(arguments, 1),
+            bound = function () {
+
+            if (this instanceof bound) {
+
+              var F = function(){};
+              F.prototype = target.prototype;
+              var self = new F();
+
+              var result = target.apply(
+                  self,
+                  args.concat(slice.call(arguments))
+              );
+              if (Object(result) === result) {
+                  return result;
+              }
+              return self;
+
+            } else {
+
+              return target.apply(
+                  that,
+                  args.concat(slice.call(arguments))
+              );
+
+            }
+
+        };
+
+        return bound;
+      };
+    }
+
+    /**
+     * setCss applies given styles to the Modernizr DOM node.
+     */
+    function setCss( str ) {
+        mStyle.cssText = str;
+    }
+
+    /**
+     * setCssAll extrapolates all vendor-specific css strings.
+     */
+    function setCssAll( str1, str2 ) {
+        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
+    }
+
+    /**
+     * is returns a boolean for if typeof obj is exactly type.
+     */
+    function is( obj, type ) {
+        return typeof obj === type;
+    }
+
+    /**
+     * contains returns a boolean for if substr is found within str.
+     */
+    function contains( str, substr ) {
+        return !!~('' + str).indexOf(substr);
+    }
+
+    /*>>testprop*/
+
+    // testProps is a generic CSS / DOM property test.
+
+    // In testing support for a given CSS property, it's legit to test:
+    //    `elem.style[styleName] !== undefined`
+    // If the property is supported it will return an empty string,
+    // if unsupported it will return undefined.
+
+    // We'll take advantage of this quick test and skip setting a style
+    // on our modernizr element, but instead just testing undefined vs
+    // empty string.
+
+    // Because the testing of the CSS property names (with "-", as
+    // opposed to the camelCase DOM properties) is non-portable and
+    // non-standard but works in WebKit and IE (but not Gecko or Opera),
+    // we explicitly reject properties with dashes so that authors
+    // developing in WebKit or IE first don't end up with
+    // browser-specific content by accident.
+
+    function testProps( props, prefixed ) {
+        for ( var i in props ) {
+            var prop = props[i];
+            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
+                return prefixed == 'pfx' ? prop : true;
+            }
+        }
+        return false;
+    }
+    /*>>testprop*/
+
+    // TODO :: add testDOMProps
+    /**
+     * testDOMProps is a generic DOM property test; if a browser supports
+     *   a certain property, it won't return undefined for it.
+     */
+    function testDOMProps( props, obj, elem ) {
+        for ( var i in props ) {
+            var item = obj[props[i]];
+            if ( item !== undefined) {
+
+                // return the property name as a string
+                if (elem === false) return props[i];
+
+                // let's bind a function
+                if (is(item, 'function')){
+                  // default to autobind unless override
+                  return item.bind(elem || obj);
+                }
+
+                // return the unbound function or obj or value
+                return item;
+            }
+        }
+        return false;
+    }
+
+    /*>>testallprops*/
+    /**
+     * testPropsAll tests a list of DOM properties we want to check against.
+     *   We specify literally ALL possible (known and/or likely) properties on
+     *   the element including the non-vendor prefixed one, for forward-
+     *   compatibility.
+     */
+    function testPropsAll( prop, prefixed, elem ) {
+
+        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
+            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+
+        // did they call .prefixed('boxSizing') or are we just testing a prop?
+        if(is(prefixed, "string") || is(prefixed, "undefined")) {
+          return testProps(props, prefixed);
+
+        // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
+        } else {
+          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+          return testDOMProps(props, prefixed, elem);
+        }
+    }
+    /*>>testallprops*/
+
+
+    /**
+     * Tests
+     * -----
+     */
+
+    // The *new* flexbox
+    // dev.w3.org/csswg/css3-flexbox
+
+    tests['flexbox'] = function() {
+      return testPropsAll('flexWrap');
+    };
+
+    // The *old* flexbox
+    // www.w3.org/TR/2009/WD-css3-flexbox-20090723/
+
+    tests['flexboxlegacy'] = function() {
+        return testPropsAll('boxDirection');
+    };
+
+    // On the S60 and BB Storm, getContext exists, but always returns undefined
+    // so we actually have to call getContext() to verify
+    // github.com/Modernizr/Modernizr/issues/issue/97/
+
+    tests['canvas'] = function() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    };
+
+    tests['canvastext'] = function() {
+        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
+    };
+
+    // webk.it/70117 is tracking a legit WebGL feature detect proposal
+
+    // We do a soft detect which may false positive in order to avoid
+    // an expensive context creation: bugzil.la/732441
+
+    tests['webgl'] = function() {
+        return !!window.WebGLRenderingContext;
+    };
+
+    /*
+     * The Modernizr.touch test only indicates if the browser supports
+     *    touch events, which does not necessarily reflect a touchscreen
+     *    device, as evidenced by tablets running Windows 7 or, alas,
+     *    the Palm Pre / WebOS (touch) phones.
+     *
+     * Additionally, Chrome (desktop) used to lie about its support on this,
+     *    but that has since been rectified: crbug.com/36415
+     *
+     * We also test for Firefox 4 Multitouch Support.
+     *
+     * For more info, see: modernizr.github.com/Modernizr/touch.html
+     */
+
+    tests['touch'] = function() {
+        var bool;
+
+        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+          bool = true;
+        } else {
+          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
+            bool = node.offsetTop === 9;
+          });
+        }
+
+        return bool;
+    };
+
+
+    // geolocation is often considered a trivial feature detect...
+    // Turns out, it's quite tricky to get right:
+    //
+    // Using !!navigator.geolocation does two things we don't want. It:
+    //   1. Leaks memory in IE9: github.com/Modernizr/Modernizr/issues/513
+    //   2. Disables page caching in WebKit: webk.it/43956
+    //
+    // Meanwhile, in Firefox < 8, an about:config setting could expose
+    // a false positive that would throw an exception: bugzil.la/688158
+
+    tests['geolocation'] = function() {
+        return 'geolocation' in navigator;
+    };
+
+
+    tests['postmessage'] = function() {
+      return !!window.postMessage;
+    };
+
+
+    // Chrome incognito mode used to throw an exception when using openDatabase
+    // It doesn't anymore.
+    tests['websqldatabase'] = function() {
+      return !!window.openDatabase;
+    };
+
+    // Vendors had inconsistent prefixing with the experimental Indexed DB:
+    // - Webkit's implementation is accessible through webkitIndexedDB
+    // - Firefox shipped moz_indexedDB before FF4b9, but since then has been mozIndexedDB
+    // For speed, we don't test the legacy (and beta-only) indexedDB
+    tests['indexedDB'] = function() {
+      return !!testPropsAll("indexedDB", window);
+    };
+
+    // documentMode logic from YUI to filter out IE8 Compat Mode
+    //   which false positives.
+    tests['hashchange'] = function() {
+      return isEventSupported('hashchange', window) && (document.documentMode === undefined || document.documentMode > 7);
+    };
+
+    // Per 1.6:
+    // This used to be Modernizr.historymanagement but the longer
+    // name has been deprecated in favor of a shorter and property-matching one.
+    // The old API is still available in 1.6, but as of 2.0 will throw a warning,
+    // and in the first release thereafter disappear entirely.
+    tests['history'] = function() {
+      return !!(window.history && history.pushState);
+    };
+
+    tests['draganddrop'] = function() {
+        var div = document.createElement('div');
+        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+    };
+
+    // FF3.6 was EOL'ed on 4/24/12, but the ESR version of FF10
+    // will be supported until FF19 (2/12/13), at which time, ESR becomes FF17.
+    // FF10 still uses prefixes, so check for it until then.
+    // for more ESR info, see: mozilla.org/en-US/firefox/organizations/faq/
+    tests['websockets'] = function() {
+        return 'WebSocket' in window || 'MozWebSocket' in window;
+    };
+
+
+    // css-tricks.com/rgba-browser-support/
+    tests['rgba'] = function() {
+        // Set an rgba() color and check the returned value
+
+        setCss('background-color:rgba(150,255,150,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba');
+    };
+
+    tests['hsla'] = function() {
+        // Same as rgba(), in fact, browsers re-map hsla() to rgba() internally,
+        //   except IE9 who retains it as hsla
+
+        setCss('background-color:hsla(120,40%,100%,.5)');
+
+        return contains(mStyle.backgroundColor, 'rgba') || contains(mStyle.backgroundColor, 'hsla');
+    };
+
+    tests['multiplebgs'] = function() {
+        // Setting multiple images AND a color on the background shorthand property
+        //  and then querying the style.background property value for the number of
+        //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
+
+        setCss('background:url(https://),url(https://),red url(https://)');
+
+        // If the UA supports multiple backgrounds, there should be three occurrences
+        //   of the string "url(" in the return value for elemStyle.background
+
+        return (/(url\s*\(.*?){3}/).test(mStyle.background);
+    };
+
+
+
+    // this will false positive in Opera Mini
+    //   github.com/Modernizr/Modernizr/issues/396
+
+    tests['backgroundsize'] = function() {
+        return testPropsAll('backgroundSize');
+    };
+
+    tests['borderimage'] = function() {
+        return testPropsAll('borderImage');
+    };
+
+
+    // Super comprehensive table about all the unique implementations of
+    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
+
+    tests['borderradius'] = function() {
+        return testPropsAll('borderRadius');
+    };
+
+    // WebOS unfortunately false positives on this test.
+    tests['boxshadow'] = function() {
+        return testPropsAll('boxShadow');
+    };
+
+    // FF3.0 will false positive on this test
+    tests['textshadow'] = function() {
+        return document.createElement('div').style.textShadow === '';
+    };
+
+
+    tests['opacity'] = function() {
+        // Browsers that actually have CSS Opacity implemented have done so
+        //  according to spec, which means their return values are within the
+        //  range of [0.0,1.0] - including the leading zero.
+
+        setCssAll('opacity:.55');
+
+        // The non-literal . in this regex is intentional:
+        //   German Chrome returns this value as 0,55
+        // github.com/Modernizr/Modernizr/issues/#issue/59/comment/516632
+        return (/^0.55$/).test(mStyle.opacity);
+    };
+
+
+    // Note, Android < 4 will pass this test, but can only animate
+    //   a single property at a time
+    //   goo.gl/v3V4Gp
+    tests['cssanimations'] = function() {
+        return testPropsAll('animationName');
+    };
+
+
+    tests['csscolumns'] = function() {
+        return testPropsAll('columnCount');
+    };
+
+
+    tests['cssgradients'] = function() {
+        /**
+         * For CSS Gradients syntax, please see:
+         * webkit.org/blog/175/introducing-css-gradients/
+         * developer.mozilla.org/en/CSS/-moz-linear-gradient
+         * developer.mozilla.org/en/CSS/-moz-radial-gradient
+         * dev.w3.org/csswg/css3-images/#gradients-
+         */
+
+        var str1 = 'background-image:',
+            str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
+            str3 = 'linear-gradient(left top,#9f9, white);';
+
+        setCss(
+             // legacy webkit syntax (FIXME: remove when syntax not in use anymore)
+              (str1 + '-webkit- '.split(' ').join(str2 + str1) +
+             // standard syntax             // trailing 'background-image:'
+              prefixes.join(str3 + str1)).slice(0, -str1.length)
+        );
+
+        return contains(mStyle.backgroundImage, 'gradient');
+    };
+
+
+    tests['cssreflections'] = function() {
+        return testPropsAll('boxReflect');
+    };
+
+
+    tests['csstransforms'] = function() {
+        return !!testPropsAll('transform');
+    };
+
+
+    tests['csstransforms3d'] = function() {
+
+        var ret = !!testPropsAll('perspective');
+
+        // Webkit's 3D transforms are passed off to the browser's own graphics renderer.
+        //   It works fine in Safari on Leopard and Snow Leopard, but not in Chrome in
+        //   some conditions. As a result, Webkit typically recognizes the syntax but
+        //   will sometimes throw a false positive, thus we must do a more thorough check:
+        if ( ret && 'webkitPerspective' in docElement.style ) {
+
+          // Webkit allows this media query to succeed only if the feature is enabled.
+          // `@media (transform-3d),(-webkit-transform-3d){ ... }`
+          injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
+            ret = node.offsetLeft === 9 && node.offsetHeight === 3;
+          });
+        }
+        return ret;
+    };
+
+
+    tests['csstransitions'] = function() {
+        return testPropsAll('transition');
+    };
+
+
+    /*>>fontface*/
+    // @font-face detection routine by Diego Perini
+    // javascript.nwbox.com/CSSSupport/
+
+    // false positives:
+    //   WebOS github.com/Modernizr/Modernizr/issues/342
+    //   WP7   github.com/Modernizr/Modernizr/issues/538
+    tests['fontface'] = function() {
+        var bool;
+
+        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
+          var style = document.getElementById('smodernizr'),
+              sheet = style.sheet || style.styleSheet,
+              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
+
+          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
+        });
+
+        return bool;
+    };
+    /*>>fontface*/
+
+    // CSS generated content detection
+    tests['generatedcontent'] = function() {
+        var bool;
+
+        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
+          bool = node.offsetHeight >= 3;
+        });
+
+        return bool;
+    };
+
+
+
+    // These tests evaluate support of the video/audio elements, as well as
+    // testing what types of content they support.
+    //
+    // We're using the Boolean constructor here, so that we can extend the value
+    // e.g.  Modernizr.video     // true
+    //       Modernizr.video.ogg // 'probably'
+    //
+    // Codec values from : github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
+    //                     thx to NielsLeenheer and zcorpan
+
+    // Note: in some older browsers, "no" was a return value instead of empty string.
+    //   It was live in FF3.5.0 and 3.5.1, but fixed in 3.5.2
+    //   It was also live in Safari 4.0.0 - 4.0.4, but fixed in 4.0.5
+
+    tests['video'] = function() {
+        var elem = document.createElement('video'),
+            bool = false;
+
+        // IE9 Running on Windows Server SKU can cause an exception to be thrown, bug #224
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('video/ogg; codecs="theora"')      .replace(/^no$/,'');
+
+                // Without QuickTime, this value will be `undefined`. github.com/Modernizr/Modernizr/issues/546
+                bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
+
+                bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
+            }
+
+        } catch(e) { }
+
+        return bool;
+    };
+
+    tests['audio'] = function() {
+        var elem = document.createElement('audio'),
+            bool = false;
+
+        try {
+            if ( bool = !!elem.canPlayType ) {
+                bool      = new Boolean(bool);
+                bool.ogg  = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,'');
+                bool.mp3  = elem.canPlayType('audio/mpeg;')               .replace(/^no$/,'');
+
+                // Mimetypes accepted:
+                //   developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
+                //   bit.ly/iphoneoscodecs
+                bool.wav  = elem.canPlayType('audio/wav; codecs="1"')     .replace(/^no$/,'');
+                bool.m4a  = ( elem.canPlayType('audio/x-m4a;')            ||
+                              elem.canPlayType('audio/aac;'))             .replace(/^no$/,'');
+            }
+        } catch(e) { }
+
+        return bool;
+    };
+
+
+    // In FF4, if disabled, window.localStorage should === null.
+
+    // Normally, we could not test that directly and need to do a
+    //   `('localStorage' in window) && ` test first because otherwise Firefox will
+    //   throw bugzil.la/365772 if cookies are disabled
+
+    // Also in iOS5 Private Browsing mode, attempting to use localStorage.setItem
+    // will throw the exception:
+    //   QUOTA_EXCEEDED_ERRROR DOM Exception 22.
+    // Peculiarly, getItem and removeItem calls do not throw.
+
+    // Because we are forced to try/catch this, we'll go aggressive.
+
+    // Just FWIW: IE8 Compat mode supports these features completely:
+    //   www.quirksmode.org/dom/html5.html
+    // But IE8 doesn't support either with local files
+
+    tests['localstorage'] = function() {
+        try {
+            localStorage.setItem(mod, mod);
+            localStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+    tests['sessionstorage'] = function() {
+        try {
+            sessionStorage.setItem(mod, mod);
+            sessionStorage.removeItem(mod);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    };
+
+
+    tests['webworkers'] = function() {
+        return !!window.Worker;
+    };
+
+
+    tests['applicationcache'] = function() {
+        return !!window.applicationCache;
+    };
+
+
+    // Thanks to Erik Dahlstrom
+    tests['svg'] = function() {
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+    };
+
+    // specifically for SVG inline in HTML, not within XHTML
+    // test page: paulirish.com/demo/inline-svg
+    tests['inlinesvg'] = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<svg/>';
+      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
+    };
+
+    // SVG SMIL animation
+    tests['smil'] = function() {
+        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
+    };
+
+    // This test is only for clip paths in SVG proper, not clip paths on HTML content
+    // demo: srufaculty.sru.edu/david.dailey/svg/newstuff/clipPath4.svg
+
+    // However read the comments to dig into applying SVG clippaths to HTML content here:
+    //   github.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
+    tests['svgclippaths'] = function() {
+        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
+    };
+
+    /*>>webforms*/
+    // input features and input types go directly onto the ret object, bypassing the tests loop.
+    // Hold this guy to execute in a moment.
+    function webforms() {
+        /*>>input*/
+        // Run through HTML5's new input attributes to see if the UA understands any.
+        // We're using f which is the <input> element created early on
+        // Mike Taylr has created a comprehensive resource for testing these attributes
+        //   when applied to all input types:
+        //   miketaylr.com/code/input-type-attr.html
+        // spec: www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
+
+        // Only input placeholder is tested while textarea's placeholder is not.
+        // Currently Safari 4 and Opera 11 have support only for the input placeholder
+        // Both tests are available in feature-detects/forms-placeholder.js
+        Modernizr['input'] = (function( props ) {
+            for ( var i = 0, len = props.length; i < len; i++ ) {
+                attrs[ props[i] ] = !!(props[i] in inputElem);
+            }
+            if (attrs.list){
+              // safari false positive's on datalist: webk.it/74252
+              // see also github.com/Modernizr/Modernizr/issues/146
+              attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
+            }
+            return attrs;
+        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
+        /*>>input*/
+
+        /*>>inputtypes*/
+        // Run through HTML5's new input types to see if the UA understands any.
+        //   This is put behind the tests runloop because it doesn't return a
+        //   true/false like all the other tests; instead, it returns an object
+        //   containing each input type with its corresponding true/false value
+
+        // Big thanks to @miketaylr for the html5 forms expertise. miketaylr.com/
+        Modernizr['inputtypes'] = (function(props) {
+
+            for ( var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++ ) {
+
+                inputElem.setAttribute('type', inputElemType = props[i]);
+                bool = inputElem.type !== 'text';
+
+                // We first check to see if the type we give it sticks..
+                // If the type does, we feed it a textual value, which shouldn't be valid.
+                // If the value doesn't stick, we know there's input sanitization which infers a custom UI
+                if ( bool ) {
+
+                    inputElem.value         = smile;
+                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
+
+                    if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
+
+                      docElement.appendChild(inputElem);
+                      defaultView = document.defaultView;
+
+                      // Safari 2-4 allows the smiley as a value, despite making a slider
+                      bool =  defaultView.getComputedStyle &&
+                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
+                              // Mobile android web browser has false positive, so must
+                              // check the height to see if the widget is actually there.
+                              (inputElem.offsetHeight !== 0);
+
+                      docElement.removeChild(inputElem);
+
+                    } else if ( /^(search|tel)$/.test(inputElemType) ){
+                      // Spec doesn't define any special parsing or detectable UI
+                      //   behaviors so we pass these through as true
+
+                      // Interestingly, opera fails the earlier test, so it doesn't
+                      //  even make it here.
+
+                    } else if ( /^(url|email)$/.test(inputElemType) ) {
+                      // Real url and email support comes with prebaked validation.
+                      bool = inputElem.checkValidity && inputElem.checkValidity() === false;
+
+                    } else {
+                      // If the upgraded input compontent rejects the :) text, we got a winner
+                      bool = inputElem.value != smile;
+                    }
+                }
+
+                inputs[ props[i] ] = !!bool;
+            }
+            return inputs;
+        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        /*>>inputtypes*/
+    }
+    /*>>webforms*/
+
+
+    // End of test definitions
+    // -----------------------
+
+
+
+    // Run through all tests and detect their support in the current UA.
+    // todo: hypothetically we could be doing an array of tests and use a basic loop here.
+    for ( var feature in tests ) {
+        if ( hasOwnProp(tests, feature) ) {
+            // run the test, throw the return value into the Modernizr,
+            //   then based on that boolean, define an appropriate className
+            //   and push it into an array of classes we'll join later.
+            featureName  = feature.toLowerCase();
+            Modernizr[featureName] = tests[feature]();
+
+            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
+        }
+    }
+
+    /*>>webforms*/
+    // input tests need to run.
+    Modernizr.input || webforms();
+    /*>>webforms*/
+
+
+    /**
+     * addTest allows the user to define their own feature tests
+     * the result will be added onto the Modernizr object,
+     * as well as an appropriate className set on the html element
+     *
+     * @param feature - String naming the feature
+     * @param test - Function returning true if feature is supported, false if not
+     */
+     Modernizr.addTest = function ( feature, test ) {
+       if ( typeof feature == 'object' ) {
+         for ( var key in feature ) {
+           if ( hasOwnProp( feature, key ) ) {
+             Modernizr.addTest( key, feature[ key ] );
+           }
+         }
+       } else {
+
+         feature = feature.toLowerCase();
+
+         if ( Modernizr[feature] !== undefined ) {
+           // we're going to quit if you're trying to overwrite an existing test
+           // if we were to allow it, we'd do this:
+           //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
+           //   docElement.className = docElement.className.replace( re, '' );
+           // but, no rly, stuff 'em.
+           return Modernizr;
+         }
+
+         test = typeof test == 'function' ? test() : test;
+
+         if (typeof enableClasses !== "undefined" && enableClasses) {
+           docElement.className += " mod-" + (test ? '' : 'no-') + feature;
+         }
+         Modernizr[feature] = test;
+
+       }
+
+       return Modernizr; // allow chaining.
+     };
+
+
+    // Reset modElem.cssText to nothing to reduce memory footprint.
+    setCss('');
+    modElem = inputElem = null;
+
+    /*>>shiv*/
+    /**
+     * @preserve HTML5 Shiv prev3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+     */
+    ;(function(window, document) {
+        /*jshint evil:true */
+        /** version */
+        var version = '3.7.0';
+
+        /** Preset options */
+        var options = window.html5 || {};
+
+        /** Used to skip problem elements */
+        var reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i;
+
+        /** Not all elements can be cloned in IE **/
+        var saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i;
+
+        /** Detect whether the browser supports default html5 styles */
+        var supportsHtml5Styles;
+
+        /** Name of the expando, to work with multiple documents or to re-shiv one document */
+        var expando = '_html5shiv';
+
+        /** The id for the the documents expando */
+        var expanID = 0;
+
+        /** Cached data for each document */
+        var expandoData = {};
+
+        /** Detect whether the browser supports unknown elements */
+        var supportsUnknownElements;
+
+        (function() {
+          try {
+            var a = document.createElement('a');
+            a.innerHTML = '<xyz></xyz>';
+            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
+            supportsHtml5Styles = ('hidden' in a);
+
+            supportsUnknownElements = a.childNodes.length == 1 || (function() {
+              // assign a false positive if unable to shiv
+              (document.createElement)('a');
+              var frag = document.createDocumentFragment();
+              return (
+                typeof frag.cloneNode == 'undefined' ||
+                typeof frag.createDocumentFragment == 'undefined' ||
+                typeof frag.createElement == 'undefined'
+              );
+            }());
+          } catch(e) {
+            // assign a false positive if detection fails => unable to shiv
+            supportsHtml5Styles = true;
+            supportsUnknownElements = true;
+          }
+
+        }());
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Creates a style sheet with the given CSS text and adds it to the document.
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @param {String} cssText The CSS text.
+         * @returns {StyleSheet} The style element.
+         */
+        function addStyleSheet(ownerDocument, cssText) {
+          var p = ownerDocument.createElement('p'),
+          parent = ownerDocument.getElementsByTagName('head')[0] || ownerDocument.documentElement;
+
+          p.innerHTML = 'x<style>' + cssText + '</style>';
+          return parent.insertBefore(p.lastChild, parent.firstChild);
+        }
+
+        /**
+         * Returns the value of `html5.elements` as an array.
+         * @private
+         * @returns {Array} An array of shived element node names.
+         */
+        function getElements() {
+          var elements = html5.elements;
+          return typeof elements == 'string' ? elements.split(' ') : elements;
+        }
+
+        /**
+         * Returns the data associated to the given document
+         * @private
+         * @param {Document} ownerDocument The document.
+         * @returns {Object} An object of data.
+         */
+        function getExpandoData(ownerDocument) {
+          var data = expandoData[ownerDocument[expando]];
+          if (!data) {
+            data = {};
+            expanID++;
+            ownerDocument[expando] = expanID;
+            expandoData[expanID] = data;
+          }
+          return data;
+        }
+
+        /**
+         * returns a shived element for the given nodeName and document
+         * @memberOf html5
+         * @param {String} nodeName name of the element
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived element.
+         */
+        function createElement(nodeName, ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createElement(nodeName);
+          }
+          if (!data) {
+            data = getExpandoData(ownerDocument);
+          }
+          var node;
+
+          if (data.cache[nodeName]) {
+            node = data.cache[nodeName].cloneNode();
+          } else if (saveClones.test(nodeName)) {
+            node = (data.cache[nodeName] = data.createElem(nodeName)).cloneNode();
+          } else {
+            node = data.createElem(nodeName);
+          }
+
+          // Avoid adding some elements to fragments in IE < 9 because
+          // * Attributes like `name` or `type` cannot be set/changed once an element
+          //   is inserted into a document/fragment
+          // * Link elements with `src` attributes that are inaccessible, as with
+          //   a 403 response, will cause the tab/window to crash
+          // * Script elements appended to fragments will execute when their `src`
+          //   or `text` property is set
+          return node.canHaveChildren && !reSkip.test(nodeName) && !node.tagUrn ? data.frag.appendChild(node) : node;
+        }
+
+        /**
+         * returns a shived DocumentFragment for the given document
+         * @memberOf html5
+         * @param {Document} ownerDocument The context document.
+         * @returns {Object} The shived DocumentFragment.
+         */
+        function createDocumentFragment(ownerDocument, data){
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          if(supportsUnknownElements){
+            return ownerDocument.createDocumentFragment();
+          }
+          data = data || getExpandoData(ownerDocument);
+          var clone = data.frag.cloneNode(),
+          i = 0,
+          elems = getElements(),
+          l = elems.length;
+          for(;i<l;i++){
+            clone.createElement(elems[i]);
+          }
+          return clone;
+        }
+
+        /**
+         * Shivs the `createElement` and `createDocumentFragment` methods of the document.
+         * @private
+         * @param {Document|DocumentFragment} ownerDocument The document.
+         * @param {Object} data of the document.
+         */
+        function shivMethods(ownerDocument, data) {
+          if (!data.cache) {
+            data.cache = {};
+            data.createElem = ownerDocument.createElement;
+            data.createFrag = ownerDocument.createDocumentFragment;
+            data.frag = data.createFrag();
+          }
+
+
+          ownerDocument.createElement = function(nodeName) {
+            //abort shiv
+            if (!html5.shivMethods) {
+              return data.createElem(nodeName);
+            }
+            return createElement(nodeName, ownerDocument, data);
+          };
+
+          ownerDocument.createDocumentFragment = Function('h,f', 'return function(){' +
+                                                          'var n=f.cloneNode(),c=n.createElement;' +
+                                                          'h.shivMethods&&(' +
+                                                          // unroll the `createElement` calls
+                                                          getElements().join().replace(/[\w\-]+/g, function(nodeName) {
+            data.createElem(nodeName);
+            data.frag.createElement(nodeName);
+            return 'c("' + nodeName + '")';
+          }) +
+            ');return n}'
+                                                         )(html5, data.frag);
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * Shivs the given document.
+         * @memberOf html5
+         * @param {Document} ownerDocument The document to shiv.
+         * @returns {Document} The shived document.
+         */
+        function shivDocument(ownerDocument) {
+          if (!ownerDocument) {
+            ownerDocument = document;
+          }
+          var data = getExpandoData(ownerDocument);
+
+          if (html5.shivCSS && !supportsHtml5Styles && !data.hasCSS) {
+            data.hasCSS = !!addStyleSheet(ownerDocument,
+                                          // corrects block display not defined in IE6/7/8/9
+                                          'article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}' +
+                                            // adds styling not present in IE6/7/8/9
+                                            'mark{background:#FF0;color:#000}' +
+                                            // hides non-rendered elements
+                                            'template{display:none}'
+                                         );
+          }
+          if (!supportsUnknownElements) {
+            shivMethods(ownerDocument, data);
+          }
+          return ownerDocument;
+        }
+
+        /*--------------------------------------------------------------------------*/
+
+        /**
+         * The `html5` object is exposed so that more elements can be shived and
+         * existing shiving can be detected on iframes.
+         * @type Object
+         * @example
+         *
+         * // options can be changed before the script is included
+         * html5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };
+         */
+        var html5 = {
+
+          /**
+           * An array or space separated string of node names of the elements to shiv.
+           * @memberOf html5
+           * @type Array|String
+           */
+          'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video',
+
+          /**
+           * current version of html5shiv
+           */
+          'version': version,
+
+          /**
+           * A flag to indicate that the HTML5 style sheet should be inserted.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivCSS': (options.shivCSS !== false),
+
+          /**
+           * Is equal to true if a browser supports creating unknown/HTML5 elements
+           * @memberOf html5
+           * @type boolean
+           */
+          'supportsUnknownElements': supportsUnknownElements,
+
+          /**
+           * A flag to indicate that the document's `createElement` and `createDocumentFragment`
+           * methods should be overwritten.
+           * @memberOf html5
+           * @type Boolean
+           */
+          'shivMethods': (options.shivMethods !== false),
+
+          /**
+           * A string to describe the type of `html5` object ("default" or "default print").
+           * @memberOf html5
+           * @type String
+           */
+          'type': 'default',
+
+          // shivs the document according to the specified `html5` object options
+          'shivDocument': shivDocument,
+
+          //creates a shived element
+          createElement: createElement,
+
+          //creates a shived documentFragment
+          createDocumentFragment: createDocumentFragment
+        };
+
+        /*--------------------------------------------------------------------------*/
+
+        // expose html5
+        window.html5 = html5;
+
+        // shiv the document
+        shivDocument(document);
+
+    }(this, document));
+    /*>>shiv*/
+
+    // Assign private properties to the return object with prefix
+    Modernizr._version      = version;
+
+    // expose these for the plugin API. Look in the source for how to join() them against your input
+    /*>>prefixes*/
+    Modernizr._prefixes     = prefixes;
+    /*>>prefixes*/
+    /*>>domprefixes*/
+    Modernizr._domPrefixes  = domPrefixes;
+    Modernizr._cssomPrefixes  = cssomPrefixes;
+    /*>>domprefixes*/
+
+    /*>>mq*/
+    // Modernizr.mq tests a given media query, live against the current state of the window
+    // A few important notes:
+    //   * If a browser does not support media queries at all (eg. oldIE) the mq() will always return false
+    //   * A max-width or orientation query will be evaluated against the current state, which may change later.
+    //   * You must specify values. Eg. If you are testing support for the min-width media query use:
+    //       Modernizr.mq('(min-width:0)')
+    // usage:
+    // Modernizr.mq('only screen and (max-width:768)')
+    Modernizr.mq            = testMediaQuery;
+    /*>>mq*/
+
+    /*>>hasevent*/
+    // Modernizr.hasEvent() detects support for a given event, with an optional element to test on
+    // Modernizr.hasEvent('gesturestart', elem)
+    Modernizr.hasEvent      = isEventSupported;
+    /*>>hasevent*/
+
+    /*>>testprop*/
+    // Modernizr.testProp() investigates whether a given style property is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testProp('pointerEvents')
+    Modernizr.testProp      = function(prop){
+        return testProps([prop]);
+    };
+    /*>>testprop*/
+
+    /*>>testallprops*/
+    // Modernizr.testAllProps() investigates whether a given style property,
+    //   or any of its vendor-prefixed variants, is recognized
+    // Note that the property names must be provided in the camelCase variant.
+    // Modernizr.testAllProps('boxSizing')
+    Modernizr.testAllProps  = testPropsAll;
+    /*>>testallprops*/
+
+
+    /*>>teststyles*/
+    // Modernizr.testStyles() allows you to add custom styles to the document and test an element afterwards
+    // Modernizr.testStyles('#modernizr { position:absolute }', function(elem, rule){ ... })
+    Modernizr.testStyles    = injectElementWithStyles;
+    /*>>teststyles*/
+
+
+    /*>>prefixed*/
+    // Modernizr.prefixed() returns the prefixed or nonprefixed property name variant of your input
+    // Modernizr.prefixed('boxSizing') // 'MozBoxSizing'
+
+    // Properties must be passed as dom-style camelcase, rather than `box-sizing` hypentated style.
+    // Return values will also be the camelCase variant, if you need to translate that to hypenated style use:
+    //
+    //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
+
+    // If you're trying to ascertain which transition end event to bind to, you might do something like...
+    //
+    //     var transEndEventNames = {
+    //       'WebkitTransition' : 'webkitTransitionEnd',
+    //       'MozTransition'    : 'transitionend',
+    //       'OTransition'      : 'oTransitionEnd',
+    //       'msTransition'     : 'MSTransitionEnd',
+    //       'transition'       : 'transitionend'
+    //     },
+    //     transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ];
+
+    Modernizr.prefixed      = function(prop, obj, elem){
+      if(!obj) {
+        return testPropsAll(prop, 'pfx');
+      } else {
+        // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
+        return testPropsAll(prop, obj, elem);
+      }
+    };
+    /*>>prefixed*/
+
+
+    /*>>cssclasses*/
+    // Remove "no-js" class from <html> element, if it exists:
+    docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2') +
+
+                            // Add the new classes to the <html> element.
+                            (enableClasses ? " mod-js mod-"+classes.join(" mod-") : '');
+    /*>>cssclasses*/
+
+    return Modernizr;
+
+})(this, document);
+
+module.exports = Modernizr;
+},{}],"aviator":[function(require,module,exports){
+// Modules
+var Navigator = require('./navigator');
+
+
+/**
+Only expose a tiny API to keep internal routing safe
+
+@singleton Aviator
+**/
+window.Aviator = {
+
+  /**
+  @property pushStateEnabled
+  @type {Boolean}
+  @default true if the browser supports pushState
+  **/
+  pushStateEnabled: ('pushState' in window.history),
+
+  /**
+  @property linkSelector
+  @type {String}
+  @default 'a.navigate'
+  **/
+  linkSelector: 'a.navigate',
+
+  /**
+  the root of the uri from which routing will append to
+
+  @property root
+  @type {String}
+  @default ''
+  **/
+  root: '',
+
+  /**
+  @property _navigator
+  @type {Navigator}
+
+  @private
+  **/
+  _navigator: new Navigator(),
+
+  /**
+  @method setRoutes
+  @param {Object} routes
+  **/
+  setRoutes: function (routes) {
+    this._navigator.setRoutes(routes);
+  },
+
+  /**
+  dispatches routes to targets and sets up event handlers
+
+  @method dispatch
+  **/
+  dispatch: function () {
+    var navigator = this._navigator;
+
+    navigator.setup({
+      pushStateEnabled: this.pushStateEnabled,
+      linkSelector:     this.linkSelector,
+      root:             this.root
+    });
+
+    navigator.dispatch();
+  },
+
+  /**
+  @method navigate
+  @param {String} uri to navigate to
+  @param {Object} [options]
+  **/
+  navigate: function (uri, options) {
+    this._navigator.navigate(uri, options);
+  },
+
+
+  /**
+  @method serializeQueryParams
+  @param {Object} queryParams
+  @return {String} queryString "?foo=bar&baz[]=boo&baz=[]oob"
+  **/
+  serializeQueryParams: function (queryParams) {
+    return this._navigator.serializeQueryParams(queryParams);
+  },
+
+  /**
+  @method getCurrentRequest
+  @return {String}
+  **/
+  getCurrentRequest: function () {
+    return this._navigator.getCurrentRequest();
+  },
+
+  /**
+  @method getCurrentURI
+  @return {String}
+  **/
+  getCurrentURI: function () {
+    return this._navigator.getCurrentURI();
+  },
+
+  /**
+  @method refresh
+  **/
+  refresh: function () {
+    this._navigator.refresh();
+  },
+
+  /**
+  @method rewriteRouteTo
+  @param {String} newRoute
+  @return {Object}
+  **/
+  rewriteRouteTo: function (newRoute) {
+    var target = {
+      rewrite: function (request) {
+        Aviator.navigate(newRoute, {
+          namedParams: request.namedParams,
+          replace: true
+        });
+      }
+    };
+
+    return {
+      target: target,
+      '/': 'rewrite'
+    };
+  }
+
+};
+
+},{"./navigator":3}],"baron":[function(require,module,exports){
+(function(window, $, undefined) {
+    'use strict';
+
+    if (!window) return; // Server side
+
+var
+    _baron = baron, // Stored baron value for noConflict usage
+    pos = ['left', 'top', 'right', 'bottom', 'width', 'height'],
+    origin = {
+        v: { // Vertical
+            x: 'Y', pos: pos[1], oppos: pos[3], crossPos: pos[0], crossOpPos: pos[2], size: pos[5], crossSize: pos[4],
+            client: 'clientHeight', crossClient: 'clientWidth', crossScroll: 'scrollWidth', offset: 'offsetHeight', crossOffset: 'offsetWidth', offsetPos: 'offsetTop',
+            scroll: 'scrollTop', scrollSize: 'scrollHeight'
+        },
+        h: { // Horizontal
+            x: 'X', pos: pos[0], oppos: pos[2], crossPos: pos[1], crossOpPos: pos[3], size: pos[4], crossSize: pos[5],
+            client: 'clientWidth', crossClient: 'clientHeight', crossScroll: 'scrollHeight', offset: 'offsetWidth', crossOffset: 'offsetHeight', offsetPos: 'offsetLeft',
+            scroll: 'scrollLeft', scrollSize: 'scrollWidth'
+        }
+    },
+
+    each = function(obj, iterator) {
+        var i = 0;
+
+        if (obj.length === undefined || obj === window) obj = [obj];
+
+        while (obj[i]) {
+            iterator.call(this, obj[i], i);
+            i++;
+        }
+    },
+
+    baron = function(params) {
+        var jQueryMode,
+            roots,
+            $;
+
+        params = params || {};
+        $ = params.$ || $ || window.jQuery;
+        jQueryMode = this instanceof $;  // this - window or jQuery instance
+
+        if (jQueryMode) {
+            params.root = roots = this;
+        } else {
+            roots = $(params.root || params.scroller);
+        }
+
+        var instance = new baron.fn.constructor(roots, params, $);
+
+        if (instance.autoUpdate) {
+            instance.autoUpdate();
+        }
+
+        return instance;
+    };
+
+    // shortcut for getTime
+    function getTime() {
+        return new Date().getTime();
+    }
+
+    baron.fn = {
+        constructor: function(roots, input, $) {
+            var params = validate(input);
+
+            params.$ = $;
+            each.call(this, roots, function(root, i) {
+                var localParams = clone(params);
+
+                if (params.root && params.scroller) {
+                    localParams.scroller = params.$(params.scroller, root);
+                    if (!localParams.scroller.length) {
+                        localParams.scroller = root;
+                    }
+                } else {
+                    localParams.scroller = root;
+                }
+
+                localParams.root = root;
+                this[i] = init(localParams);
+                this.length = i + 1;
+            });
+
+            this.params = params;
+        },
+
+        dispose: function() {
+            var params = this.params;
+
+            if (this[0]) { /* Если есть хотя бы 1 рабочий инстанс */
+                each(this, function(item) {
+                    item.dispose(params);
+                });
+            }
+            this.params = null;
+        },
+
+        update: function() {
+            var i = 0;
+
+            while (this[i]) {
+                this[i].update.apply(this[i], arguments);
+                i++;
+            }
+        },
+
+        baron: function(params) {
+            params.root = [];
+            params.scroller = this.params.scroller;
+
+            each.call(this, this, function(elem) {
+                params.root.push(elem.root);
+            });
+            params.direction = (this.params.direction == 'v') ? 'h' : 'v';
+            params._chain = true;
+
+            return baron(params);
+        }
+    };
+
+    function manageEvents(item, eventManager, mode) {
+        item._eventHandlers = item._eventHandlers || [ // Creating new functions for one baron item only one time
+            {
+                // onScroll:
+                element: item.scroller,
+
+                handler: function(e) {
+                    item.scroll(e);
+                },
+
+                type: 'scroll'
+            }, {
+                // css transitions & animations
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'transitionend animationend'
+            }, {
+                // onKeyup (textarea):
+                element: item.scroller,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'keyup'
+            }, {
+                // onMouseDown:
+                element: item.bar,
+
+                handler: function(e) {
+                    e.preventDefault(); // Text selection disabling in Opera... and all other browsers?
+                    item.selection(); // Disable text selection in ie8
+                    item.drag.now = 1; // Save private byte
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseUp:
+                element: document,
+
+                handler: function() {
+                    item.selection(1); // Enable text selection
+                    item.drag.now = 0;
+                },
+
+                type: 'mouseup blur touchend'
+            }, {
+                // onCoordinateReset:
+                element: document,
+
+                handler: function(e) {
+                    if (e.button != 2) { // Not RM
+                        item._pos0(e);
+                    }
+                },
+
+                type: 'touchstart mousedown'
+            }, {
+                // onMouseMove:
+                element: document,
+
+                handler: function(e) {
+                    if (item.drag.now) {
+                        item.drag(e);
+                    }
+                },
+
+                type: 'mousemove touchmove'
+            }, {
+                // onResize:
+                element: window,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'resize'
+            }, {
+                // sizeChange:
+                element: item.root,
+
+                handler: function() {
+                    item.update();
+                },
+
+                type: 'sizeChange'
+            }
+        ];
+
+        each(item._eventHandlers, function(event) {
+            if (event.element) {
+                eventManager(event.element, event.type, event.handler, mode);
+            }
+        });
+
+        // if (item.scroller) {
+        //     event(item.scroller, 'scroll', item._eventHandlers.onScroll, mode);
+        // }
+        // if (item.bar) {
+        //     event(item.bar, 'touchstart mousedown', item._eventHandlers.onMouseDown, mode);
+        // }
+        // event(document, 'mouseup blur touchend', item._eventHandlers.onMouseUp, mode);
+        // event(document, 'touchstart mousedown', item._eventHandlers.onCoordinateReset, mode);
+        // event(document, 'mousemove touchmove', item._eventHandlers.onMouseMove, mode);
+        // event(window, 'resize', item._eventHandlers.onResize, mode);
+        // if (item.root) {
+        //     event(item.root, 'sizeChange', item._eventHandlers.onResize, mode); // Custon event for alternate baron update mechanism
+        // }
+    }
+
+    function manageAttr(node, direction, mode) {
+        var attrName = 'data-baron-' + direction;
+
+        if (mode == 'on') {
+            node.setAttribute(attrName, 'inited');
+        } else if (mode == 'off') {
+            node.removeAttribute(attrName);
+        } else {
+            return node.getAttribute(attrName);
+        }
+    }
+
+    function init(params) {
+        if (manageAttr(params.root, params.direction)) throw new Error('Second baron initialization');
+
+        var out = new item.prototype.constructor(params); // __proto__ of returning object is baron.prototype
+
+        manageEvents(out, params.event, 'on');
+
+        manageAttr(out.root, params.direction, 'on');
+
+        out.update();
+
+        return out;
+    }
+
+    function clone(input) {
+        var output = {};
+
+        input = input || {};
+
+        for (var key in input) {
+            if (input.hasOwnProperty(key)) {
+                output[key] = input[key];
+            }
+        }
+
+        return output;
+    }
+
+    function validate(input) {
+        var output = clone(input);
+
+        output.direction = output.direction || 'v';
+
+        var event = input.event || function(elem, event, func, mode) {
+            output.$(elem)[mode || 'on'](event, func);
+        };
+
+        output.event = function(elems, e, func, mode) {
+            each(elems, function(elem) {
+                event(elem, e, func, mode);
+            });
+        };
+
+        return output;
+    }
+
+    function fire(eventName) {
+        /* jshint validthis:true */
+        if (this.events && this.events[eventName]) {
+            for (var i = 0 ; i < this.events[eventName].length ; i++) {
+                var args = Array.prototype.slice.call( arguments, 1 );
+
+                this.events[eventName][i].apply(this, args);
+            }
+        }
+    }
+
+    var item = {};
+
+    item.prototype = {
+        // underscore.js realization
+        _debounce: function(func, wait) {
+            var self = this,
+                timeout,
+                // args, // right now there is no need for arguments
+                // context, // and for context
+                timestamp;
+                // result; // and for result
+
+            var later = function() {
+                if (self._disposed) {
+                    clearTimeout(timeout);
+                    timeout = self = null;
+                    return;
+                }
+
+                var last = getTime() - timestamp;
+
+                if (last < wait && last >= 0) {
+                    timeout = setTimeout(later, wait - last);
+                } else {
+                    timeout = null;
+                    // result = func.apply(context, args);
+                    func();
+                    // context = args = null;
+                }
+            };
+
+            return function() {
+                // context = this;
+                // args = arguments;
+                timestamp = getTime();
+
+                if (!timeout) {
+                    timeout = setTimeout(later, wait);
+                }
+
+                // return result;
+            };
+        },
+
+        constructor: function(params) {
+            var $,
+                barPos,
+                scrollerPos0,
+                track,
+                resizePauseTimer,
+                scrollPauseTimer,
+                scrollingTimer,
+                pause,
+                scrollLastFire,
+                resizeLastFire,
+                oldBarSize;
+
+            resizeLastFire = scrollLastFire = getTime();
+
+            $ = this.$ = params.$;
+            this.event = params.event;
+            this.events = {};
+
+            function getNode(sel, context) {
+                return $(sel, context)[0]; // Can be undefined
+            }
+
+            // DOM elements
+            this.root = params.root; // Always html node, not just selector
+            this.scroller = getNode(params.scroller); // (params.scroller) ? getNode(params.scroller, this.root) : this.root;
+            this.bar = getNode(params.bar, this.root);
+            track = this.track = getNode(params.track, this.root);
+            if (!this.track && this.bar) {
+                track = this.bar.parentNode;
+            }
+            this.clipper = this.scroller.parentNode;
+
+            // Parameters
+            this.direction = params.direction;
+            this.origin = origin[this.direction];
+            this.barOnCls = params.barOnCls || '_baron';
+            this.scrollingCls = params.scrollingCls;
+            this.barTopLimit = 0;
+            pause = params.pause * 1000 || 0;
+
+            // Updating height or width of bar
+            function setBarSize(size) {
+                /* jshint validthis:true */
+                var barMinSize = this.barMinSize || 20;
+
+                if (size > 0 && size < barMinSize) {
+                    size = barMinSize;
+                }
+
+                if (this.bar) {
+                    $(this.bar).css(this.origin.size, parseInt(size, 10) + 'px');
+                }
+            }
+
+            // Updating top or left bar position
+            function posBar(pos) {
+                /* jshint validthis:true */
+                if (this.bar) {
+                    var was = $(this.bar).css(this.origin.pos),
+                        will = +pos + 'px';
+
+                    if (will && will != was) {
+                        $(this.bar).css(this.origin.pos, will);
+                    }
+                }
+            }
+
+            // Free path for bar
+            function k() {
+                /* jshint validthis:true */
+                return track[this.origin.client] - this.barTopLimit - this.bar[this.origin.offset];
+            }
+
+            // Relative content top position to bar top position
+            function relToPos(r) {
+                /* jshint validthis:true */
+                return r * k.call(this) + this.barTopLimit;
+            }
+
+            // Bar position to relative content position
+            function posToRel(t) {
+                /* jshint validthis:true */
+                return (t - this.barTopLimit) / k.call(this);
+            }
+
+            // Cursor position in main direction in px // Now with iOs support
+            this.cursor = function(e) {
+                return e['client' + this.origin.x] || (((e.originalEvent || e).touches || {})[0] || {})['page' + this.origin.x];
+            };
+
+            // Text selection pos preventing
+            function dontPosSelect() {
+                return false;
+            }
+
+            this.pos = function(x) { // Absolute scroller position in px
+                var ie = 'page' + this.origin.x + 'Offset',
+                    key = (this.scroller[ie]) ? ie : this.origin.scroll;
+
+                if (x !== undefined) this.scroller[key] = x;
+
+                return this.scroller[key];
+            };
+
+            this.rpos = function(r) { // Relative scroller position (0..1)
+                var free = this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client],
+                    x;
+
+                if (r) {
+                    x = this.pos(r * free);
+                } else {
+                    x = this.pos();
+                }
+
+                return x / (free || 1);
+            };
+
+            // Switch on the bar by adding user-defined CSS classname to scroller
+            this.barOn = function(dispose) {
+                if (this.barOnCls) {
+                    if (dispose || this.scroller[this.origin.client] >= this.scroller[this.origin.scrollSize]) {
+                        if ($(this.root).hasClass(this.barOnCls)) $(this.root).removeClass(this.barOnCls);
+                    } else {
+                        if (!$(this.root).hasClass(this.barOnCls)) $(this.root).addClass(this.barOnCls);
+                    }
+                }
+            };
+
+            this._pos0 = function(e) {
+                scrollerPos0 = this.cursor(e) - barPos;
+            };
+
+            this.drag = function(e) {
+                this.scroller[this.origin.scroll] = posToRel.call(this, this.cursor(e) - scrollerPos0) * (this.scroller[this.origin.scrollSize] - this.scroller[this.origin.client]);
+            };
+
+            // Text selection preventing on drag
+            this.selection = function(enable) {
+                this.event(document, 'selectpos selectstart', dontPosSelect, enable ? 'off' : 'on');
+            };
+
+            // onResize & DOM modified handler
+            this.resize = function() {
+                var self = this,
+                    delay = 0;
+
+                if (getTime() - resizeLastFire < pause) {
+                    clearTimeout(resizePauseTimer);
+                    delay = pause;
+                }
+
+                function upd() {
+                    var delta,
+                        client,
+                        offset,
+                        was,
+                        will;
+
+                    // Change a css inline rule only if it is really changing value
+                    // function tryCss(prop, value, ) {
+                    //     var was = $(self.clipper).css(self.origin.crossSize),
+                    //         will = self.clipper[self.origin.crossClient] - delta + 'px';
+                    // };
+
+                    self.barOn();
+
+                    client = self.scroller[self.origin.crossClient];
+                    offset = self.scroller[self.origin.crossOffset];
+                    delta = offset - client;
+
+                    if (offset) { // if there is no size, css should not be set
+                        if (params.freeze && !self.clipper.style[self.origin.crossSize]) { // Sould fire only once
+                            was = $(self.clipper).css(self.origin.crossSize);
+                            will = self.clipper[self.origin.crossClient] - delta + 'px';
+
+                            if (was != will) {
+                                $(self.clipper).css(self.origin.crossSize, will);
+                            }
+                        }
+
+                        was = $(self.clipper).css(self.origin.crossSize);
+                        will = self.clipper[self.origin.crossClient] + delta + 'px';
+
+                        if (was != will) {
+                            $(self.scroller).css(self.origin.crossSize, will);
+                        }
+                    }
+
+                    Array.prototype.unshift.call(arguments, 'resize');
+                    fire.apply(self, arguments);
+
+                    resizeLastFire = getTime();
+                }
+
+                if (delay) {
+                    resizePauseTimer = setTimeout(upd, delay);
+                } else {
+                    upd();
+                }
+            };
+
+            this.updatePositions = function() {
+                var newBarSize,
+                    self = this;
+
+                if (self.bar) {
+                    newBarSize = (track[self.origin.client] - self.barTopLimit) * self.scroller[self.origin.client] / self.scroller[self.origin.scrollSize];
+
+                    // Positioning bar
+                    if (parseInt(oldBarSize, 10) != parseInt(newBarSize, 10)) {
+                        setBarSize.call(self, newBarSize);
+                        oldBarSize = newBarSize;
+                    }
+
+                    barPos = relToPos.call(self, self.rpos());
+
+                    posBar.call(self, barPos);
+                }
+
+                Array.prototype.unshift.call( arguments, 'scroll' );
+                fire.apply(self, arguments);
+
+                scrollLastFire = getTime();
+            };
+
+            // onScroll handler
+            this.scroll = function() {
+                var delay = 0,
+                    self = this;
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (getTime() - scrollLastFire < pause) {
+                    clearTimeout(scrollPauseTimer);
+                    delay = pause;
+                }
+
+                if (delay) {
+                    scrollPauseTimer = setTimeout(function() {
+                        self.updatePositions();
+                    }, delay);
+                } else {
+                    self.updatePositions();
+                }
+
+                if (self.scrollingCls) {
+                    if (!scrollingTimer) {
+                        this.$(this.scroller).addClass(this.scrollingCls);
+                    }
+                    clearTimeout(scrollingTimer);
+                    scrollingTimer = setTimeout(function() {
+                        self.$(self.scroller).removeClass(self.scrollingCls);
+                        scrollingTimer = undefined;
+                    }, 300);
+                }
+
+            };
+
+            return this;
+        },
+
+        update: function(params) {
+            fire.call(this, 'upd', params); // Update all plugins' params
+
+            this.resize(1);
+            this.updatePositions();
+
+            return this;
+        },
+
+        // One instance
+        dispose: function(params) {
+            manageEvents(this, this.event, 'off');
+            manageAttr(this.root, params.direction, 'off');
+            $(this.scroller).css(this.origin.crossSize, '');
+            this.barOn(true);
+            fire.call(this, 'dispose');
+            this._disposed = true;
+        },
+
+        on: function(eventName, func, arg) {
+            var names = eventName.split(' ');
+
+            for (var i = 0 ; i < names.length ; i++) {
+                if (names[i] == 'init') {
+                    func.call(this, arg);
+                } else {
+                    this.events[names[i]] = this.events[names[i]] || [];
+
+                    this.events[names[i]].push(function(userArg) {
+                        func.call(this, userArg || arg);
+                    });
+                }
+            }
+        }
+    };
+
+    baron.fn.constructor.prototype = baron.fn;
+    item.prototype.constructor.prototype = item.prototype;
+
+    // Use when you need "baron" global var for another purposes
+    baron.noConflict = function() {
+        window.baron = _baron; // Restoring original value of "baron" global var
+
+        return baron;
+    };
+
+    baron.version = '0.7.10';
+
+    if ($ && $.fn) { // Adding baron to jQuery as plugin
+        $.fn.baron = baron;
+    }
+
+    window.baron = baron; // Use noConflict method if you need window.baron var for another purposes
+    if (window['module'] && module.exports) {
+        module.exports = baron.noConflict();
+    }
+})(window, window.$);
+
+/* Fixable elements plugin for baron 0.6+ */
+(function(window, undefined) {
+    var fix = function(userParams) {
+        var elements, viewPortSize,
+            params = { // Default params
+                outside: '',
+                inside: '',
+                before: '',
+                after: '',
+                past: '',
+                future: '',
+                radius: 0,
+                minView: 0
+            },
+            topFixHeights = [], // inline style for element
+            topRealHeights = [], // ? something related to negative margins for fixable elements
+            headerTops = [], // offset positions when not fixed
+            scroller = this.scroller,
+            eventManager = this.event,
+            $ = this.$,
+            self = this;
+
+        // i - number of fixing element, pos - fix-position in px, flag - 1: top, 2: bottom
+        // Invocation only in case when fix-state changed
+        function fixElement(i, pos, flag) {
+            var ori = flag == 1 ? 'pos' : 'oppos';
+
+            if (viewPortSize < (params.minView || 0)) { // No headers fixing when no enought space for viewport
+                pos = undefined;
+            }
+
+            // Removing all fixing stuff - we can do this because fixElement triggers only when fixState really changed
+            this.$(elements[i]).css(this.origin.pos, '').css(this.origin.oppos, '').removeClass(params.outside);
+
+            // Fixing if needed
+            if (pos !== undefined) {
+                pos += 'px';
+                this.$(elements[i]).css(this.origin[ori], pos).addClass(params.outside);
+            }
+        }
+
+        function bubbleWheel(e) {
+            try {
+                i = document.createEvent('WheelEvent'); // i - for extra byte
+                // evt.initWebKitWheelEvent(deltaX, deltaY, window, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey);
+                i.initWebKitWheelEvent(e.originalEvent.wheelDeltaX, e.originalEvent.wheelDeltaY);
+                scroller.dispatchEvent(i);
+                e.preventDefault();
+            } catch (e) {}
+        }
+
+        function init(_params) {
+            var pos;
+
+            for (var key in _params) {
+                params[key] = _params[key];
+            }
+
+            elements = this.$(params.elements, this.scroller);
+
+            if (elements) {
+                viewPortSize = this.scroller[this.origin.client];
+                for (var i = 0 ; i < elements.length ; i++) {
+                    // Variable header heights
+                    pos = {};
+                    pos[this.origin.size] = elements[i][this.origin.offset];
+                    if (elements[i].parentNode !== this.scroller) {
+                        this.$(elements[i].parentNode).css(pos);
+                    }
+                    pos = {};
+                    pos[this.origin.crossSize] = elements[i].parentNode[this.origin.crossClient];
+                    this.$(elements[i]).css(pos);
+
+                    // Between fixed headers
+                    viewPortSize -= elements[i][this.origin.offset];
+
+                    headerTops[i] = elements[i].parentNode[this.origin.offsetPos]; // No paddings for parentNode
+
+                    // Summary elements height above current
+                    topFixHeights[i] = (topFixHeights[i - 1] || 0); // Not zero because of negative margins
+                    topRealHeights[i] = (topRealHeights[i - 1] || Math.min(headerTops[i], 0));
+
+                    if (elements[i - 1]) {
+                        topFixHeights[i] += elements[i - 1][this.origin.offset];
+                        topRealHeights[i] += elements[i - 1][this.origin.offset];
+                    }
+
+                    if ( !(i == 0 && headerTops[i] == 0)/* && force */) {
+                        this.event(elements[i], 'mousewheel', bubbleWheel, 'off');
+                        this.event(elements[i], 'mousewheel', bubbleWheel);
+                    }
+                }
+
+                if (params.limiter && elements[0]) { // Bottom edge of first header as top limit for track
+                    if (this.track && this.track != this.scroller) {
+                        pos = {};
+                        pos[this.origin.pos] = elements[0].parentNode[this.origin.offset];
+                        this.$(this.track).css(pos);
+                    } else {
+                        this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    }
+                    // this.barTopLimit = elements[0].parentNode[this.origin.offset];
+                    this.scroll();
+                }
+
+                if (params.limiter === false) { // undefined (in second fix instance) should have no influence on bar limit
+                    this.barTopLimit = 0;
+                }
+            }
+
+            var event = {
+                element: elements,
+
+                handler: function() {
+                    var parent = $(this)[0].parentNode,
+                        top = parent.offsetTop,
+                        num;
+
+                    // finding num -> elements[num] === this
+                    for (var i = 0 ; i < elements.length ; i++ ) {
+                        if (elements[i] === this) num = i;
+                    }
+
+                    var pos = top - topFixHeights[num];
+
+                    if (params.scroll) { // User defined callback
+                        params.scroll({
+                            x1: self.scroller.scrollTop,
+                            x2: pos
+                        });
+                    } else {
+                        self.scroller.scrollTop = pos;
+                    }
+                },
+
+                type: 'click'
+            };
+
+            if (params.clickable) {
+                this._eventHandlers.push(event); // For auto-dispose
+                // eventManager(event.element, event.type, event.handler, 'off');
+                eventManager(event.element, event.type, event.handler, 'on');
+            }
+        }
+
+        this.on('init', init, userParams);
+
+        var fixFlag = [], // 1 - past, 2 - future, 3 - current (not fixed)
+            gradFlag = [];
+        this.on('init scroll', function() {
+            var fixState, hTop, gradState;
+
+            if (elements) {
+                var change;
+
+                // fixFlag update
+                for (var i = 0 ; i < elements.length ; i++) {
+                    fixState = 0;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] + params.radius) {
+                        // Header trying to go up
+                        fixState = 1;
+                        hTop = topFixHeights[i];
+                    } else if (headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize - params.radius) {
+                        // Header trying to go down
+                        fixState = 2;
+                        // console.log('topFixHeights[i] + viewPortSize + topRealHeights[i]', topFixHeights[i], this.scroller[this.origin.client], topRealHeights[i]);
+                        hTop = this.scroller[this.origin.client] - elements[i][this.origin.offset] - topFixHeights[i] - viewPortSize;
+                        // console.log('hTop', hTop, viewPortSize, elements[this.origin.offset], topFixHeights[i]);
+                        //(topFixHeights[i] + viewPortSize + elements[this.origin.offset]) - this.scroller[this.origin.client];
+                    } else {
+                        // Header in viewport
+                        fixState = 3;
+                        hTop = undefined;
+                    }
+
+                    gradState = false;
+                    if (headerTops[i] - this.pos() < topRealHeights[i] || headerTops[i] - this.pos() > topRealHeights[i] + viewPortSize) {
+                        gradState = true;
+                    }
+
+                    if (fixState != fixFlag[i] || gradState != gradFlag[i]) {
+                        fixElement.call(this, i, hTop, fixState);
+                        fixFlag[i] = fixState;
+                        gradFlag[i] = gradState;
+                        change = true;
+                    }
+                }
+
+                // Adding positioning classes (on last top and first bottom header)
+                if (change) { // At leats one change in elements flag structure occured
+                    for (i = 0 ; i < elements.length ; i++) {
+                        if (fixFlag[i] == 1 && params.past) {
+                            this.$(elements[i]).addClass(params.past).removeClass(params.future);
+                        }
+
+                        if (fixFlag[i] == 2 && params.future) {
+                            this.$(elements[i]).addClass(params.future).removeClass(params.past);
+                        }
+
+                        if (fixFlag[i] == 3) {
+                            if (params.future || params.past) this.$(elements[i]).removeClass(params.past).removeClass(params.future);
+                            if (params.inside) this.$(elements[i]).addClass(params.inside);
+                        } else if (params.inside) {
+                            this.$(elements[i]).removeClass(params.inside);
+                        }
+
+                        if (fixFlag[i] != fixFlag[i + 1] && fixFlag[i] == 1 && params.before) {
+                            this.$(elements[i]).addClass(params.before).removeClass(params.after); // Last top fixed header
+                        } else if (fixFlag[i] != fixFlag[i - 1] && fixFlag[i] == 2 && params.after) {
+                            this.$(elements[i]).addClass(params.after).removeClass(params.before); // First bottom fixed header
+                        } else {
+                            this.$(elements[i]).removeClass(params.before).removeClass(params.after);
+                        }
+
+                        if (params.grad) {
+                            if (gradFlag[i]) {
+                                this.$(elements[i]).addClass(params.grad);
+                            } else {
+                                this.$(elements[i]).removeClass(params.grad);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        this.on('resize upd', function(updParams) {
+            init.call(this, updParams && updParams.fix);
+        });
+    };
+
+    baron.fn.fix = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            fix.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Controls plugin for baron 0.6+ */
+(function(window, undefined) {
+    var controls = function(params) {
+        var forward, backward, track, screen,
+            self = this, // AAAAAA!!!!!11
+            event;
+
+        screen = params.screen || 0.9;
+
+        if (params.forward) {
+            forward = this.$(params.forward, this.clipper);
+
+            event = {
+                element: forward,
+
+                handler: function() {
+                    var y = self.pos() - params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.backward) {
+            backward = this.$(params.backward, this.clipper);
+
+            event = {
+                element: backward,
+
+                handler: function() {
+                    var y = self.pos() + params.delta || 30;
+
+                    self.pos(y);
+                },
+
+                type: 'click'
+            };
+
+            this._eventHandlers.push(event); // For auto-dispose
+            this.event(event.element, event.type, event.handler, 'on');
+        }
+
+        if (params.track) {
+            if (params.track === true) {
+                track = this.track;
+            } else {
+                track = this.$(params.track, this.clipper)[0];
+            }
+
+            if (track) {
+                event = {
+                    element: track,
+
+                    handler: function(e) {
+                        var x = e['offset' + self.origin.x],
+                            xBar = self.bar[self.origin.offsetPos],
+                            sign = 0;
+
+                        if (x < xBar) {
+                            sign = -1;
+                        } else if (x > xBar + self.bar[self.origin.offset]) {
+                            sign = 1;
+                        }
+
+                        var y = self.pos() + sign * screen * self.scroller[self.origin.client];
+                        self.pos(y);
+                    },
+
+                    type: 'mousedown'
+                };
+
+                this._eventHandlers.push(event); // For auto-dispose
+                this.event(event.element, event.type, event.handler, 'on');
+            }
+        }
+    };
+
+    baron.fn.controls = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            controls.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Pull to load plugin for baron 0.6+ */
+(function(window, undefined) {
+    var pull = function(params) {
+        var block = this.$(params.block),
+            size = params.size || this.origin.size,
+            limit = params.limit || 80,
+            onExpand = params.onExpand,
+            elements = params.elements || [],
+            inProgress = params.inProgress || '',
+            self = this,
+            _insistence = 0,
+            _zeroXCount = 0,
+            _interval,
+            _timer,
+            _x = 0,
+            _onExpandCalled,
+            _waiting = params.waiting || 500,
+            _on;
+
+        function getSize() {
+            return self.scroller[self.origin.scroll] + self.scroller[self.origin.offset];
+        }
+
+        // Scroller content height
+        function getContentSize() {
+            return self.scroller[self.origin.scrollSize];
+        }
+
+        // Scroller height
+        function getScrollerSize() {
+            return self.scroller[self.origin.client];
+        }
+
+        function step(x, force) {
+            var k = x * 0.0005;
+
+            return Math.floor(force - k * (x + 550));
+        }
+
+        function toggle(on) {
+            _on = on;
+
+            if (on) {
+                update(); // First time with no delay
+                _interval = setInterval(update, 200);
+            } else {
+                clearInterval(_interval);
+            }
+        }
+
+        function update() {
+            var pos = {},
+                height = getSize(),
+                scrollHeight = getContentSize(),
+                dx,
+                op4,
+                scrollInProgress = _insistence == 1;
+
+            op4 = 0; // Возвращающая сила
+            if (_insistence > 0) {
+                op4 = 40;
+            }
+            //if (_insistence > -1) {
+                dx = step(_x, op4);
+                if (height >= scrollHeight - _x && _insistence > -1) {
+                    if (scrollInProgress) {
+                        _x += dx;
+                    }
+                } else {
+                    _x = 0;
+                }
+
+                if (_x < 0) _x = 0;
+
+                pos[size] = _x + 'px';
+                if (getScrollerSize() <= getContentSize()) {
+                    self.$(block).css(pos);
+                    for (var i = 0 ; i < elements.length ; i++) {
+                        self.$(elements[i].self).css(elements[i].property, Math.min(_x / limit * 100, 100) + '%');
+                    }
+                }
+
+                if (inProgress && _x) {
+                    self.$(self.root).addClass(inProgress);
+                }
+
+                if (_x == 0) {
+                    if (params.onCollapse) {
+                        params.onCollapse();
+                    }
+                }
+
+                _insistence = 0;
+                _timer = setTimeout(function() {
+                    _insistence = -1;
+                }, _waiting);
+            //}
+
+            if (onExpand && _x > limit && !_onExpandCalled) {
+                onExpand();
+                _onExpandCalled = true;
+            }
+
+            if (_x == 0) {
+                _zeroXCount++;
+            } else {
+                _zeroXCount = 0;
+            }
+            if (_zeroXCount > 1) {
+                toggle(false);
+                _onExpandCalled = false;
+                if (inProgress) {
+                    self.$(self.root).removeClass(inProgress);
+                }
+            }
+        }
+
+        this.on('init', function() {
+            toggle(true);
+        });
+
+        this.on('dispose', function() {
+            toggle(false);
+        });
+
+        this.event(this.scroller, 'mousewheel DOMMouseScroll', function(e) {
+            var down = e.wheelDelta < 0 || (e.originalEvent && e.originalEvent.wheelDelta < 0) || e.detail > 0;
+
+            if (down) {
+                _insistence = 1;
+                clearTimeout(_timer);
+                if (!_on && getSize() >= getContentSize()) {
+                    toggle(true);
+                }
+            }
+            //  else {
+            //     toggle(false);
+            // }
+        });
+    };
+
+    baron.fn.pull = function(params) {
+        var i = 0;
+
+        while (this[i]) {
+            pull.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+/* Autoupdate plugin for baron 0.6+ */
+(function(window) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || null;
+
+    var autoUpdate = function() {
+        var self = this;
+        var watcher;
+
+        function actualizeWatcher() {
+            if (!self.root[self.origin.offset]) {
+                startWatch();
+            } else {
+                stopWatch();
+            }
+        }
+
+        // Set interval timeout for watching when root node will be visible
+        function startWatch() {
+            if (watcher) return;
+
+            watcher = setInterval(function() {
+                if (self.root[self.origin.offset]) {
+                    stopWatch();
+                    self.update();
+                }
+            }, 300); // is it good enought for you?)
+        }
+
+        function stopWatch() {
+            clearInterval(watcher);
+            watcher = null;
+        }
+
+        var debouncedUpdater = self._debounce(function() {
+            self.update();
+        }, 300);
+
+        this._observer = new MutationObserver(function() {
+            actualizeWatcher();
+            self.update();
+            debouncedUpdater();
+        });
+
+        this.on('init', function() {
+            self._observer.observe(self.root, {
+                childList: true,
+                subtree: true,
+                characterData: true
+                // attributes: true
+                // No reasons to set attributes to true
+                // The case when root/child node with already properly inited baron toggled to hidden and then back to visible,
+                // and the size of parent was changed during that hidden state, is very rare
+                // Other cases are covered by watcher, and you still can do .update by yourself
+            });
+
+            actualizeWatcher();
+        });
+
+        this.on('dispose', function() {
+            self._observer.disconnect();
+            stopWatch();
+            delete self._observer;
+        });
+    };
+
+    baron.fn.autoUpdate = function(params) {
+        if (!MutationObserver) return this;
+
+        var i = 0;
+
+        while (this[i]) {
+            autoUpdate.call(this[i], params);
+            i++;
+        }
+
+        return this;
+    };
+})(window);
+
+},{}],"bootstrap.tooltip":[function(require,module,exports){
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.2.0
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
+    this.$element   = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.VERSION  = '3.2.0'
+
+  Tooltip.DEFAULTS = {
+    animation: true,
+    placement: 'top',
+    selector: false,
+    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    container: false,
+    viewport: {
+      selector: 'body',
+      padding: 0
+    }
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled   = true
+    this.type      = type
+    this.$element  = $(element)
+    this.options   = this.getOptions(options)
+    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+    if (options.delay && typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay,
+        hide: options.delay
+      }
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options && $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.' + this.type)
+
+    if (this.hasContent() && this.enabled) {
+      this.$element.trigger(e)
+
+      var inDom = $.contains(document.documentElement, this.$element[0])
+      if (e.isDefaultPrevented() || !inDom) return
+      var that = this
+
+      var $tip = this.tip()
+
+      var tipId = this.getUID(this.type)
+
+      this.setContent()
+      $tip.attr('id', tipId)
+      this.$element.attr('aria-describedby', tipId)
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+        .data('bs.' + this.type, this)
+
+      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var orgPlacement = placement
+        var $parent      = this.$element.parent()
+        var parentDim    = this.getPosition($parent)
+
+        placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
+                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
+                    placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
+                    placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+
+      var complete = function () {
+        that.$element.trigger('shown.bs.' + that.type)
+        that.hoverState = null
+      }
+
+      $.support.transition && this.$tip.hasClass('fade') ?
+        $tip
+          .one('bsTransitionEnd', complete)
+          .emulateTransitionEnd(150) :
+        complete()
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function (offset, placement) {
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  = offset.top  + marginTop
+    offset.left = offset.left + marginLeft
+
+    // $.fn.offset doesn't round pixel values
+    // so we use setOffset directly with our own function B-0
+    $.offset.setOffset($tip[0], $.extend({
+      using: function (props) {
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
+      }
+    }, offset), 0)
+
+    $tip.addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' && actualHeight != height) {
+      offset.top = offset.top + height - actualHeight
+    }
+
+    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+    if (delta.left) offset.left += delta.left
+    else offset.top += delta.top
+
+    var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+    var arrowPosition       = delta.left ? 'left'        : 'top'
+    var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
+
+    $tip.offset(offset)
+    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
+  }
+
+  Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
+    this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function () {
+    var that = this
+    var $tip = this.tip()
+    var e    = $.Event('hide.bs.' + this.type)
+
+    this.$element.removeAttr('aria-describedby')
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+      that.$element.trigger('hidden.bs.' + that.type)
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    $.support.transition && this.$tip.hasClass('fade') ?
+      $tip
+        .one('bsTransitionEnd', complete)
+        .emulateTransitionEnd(150) :
+      complete()
+
+    this.hoverState = null
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function ($element) {
+    $element   = $element || this.$element
+    var el     = $element[0]
+    var isBody = el.tagName == 'BODY'
+    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
+      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
+      width:  isBody ? $(window).width()  : $element.outerWidth(),
+      height: isBody ? $(window).height() : $element.outerHeight()
+    }, isBody ? { top: 0, left: 0 } : $element.offset())
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+
+  }
+
+  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+    var delta = { top: 0, left: 0 }
+    if (!this.$viewport) return delta
+
+    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+    var viewportDimensions = this.getPosition(this.$viewport)
+
+    if (/right|left/.test(placement)) {
+      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+      if (topEdgeOffset < viewportDimensions.top) { // top overflow
+        delta.top = viewportDimensions.top - topEdgeOffset
+      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+      }
+    } else {
+      var leftEdgeOffset  = pos.left - viewportPadding
+      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+        delta.left = viewportDimensions.left - leftEdgeOffset
+      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
+        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+      }
+    }
+
+    return delta
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.getUID = function (prefix) {
+    do prefix += ~~(Math.random() * 1000000)
+    while (document.getElementById(prefix))
+    return prefix
+  }
+
+  Tooltip.prototype.tip = function () {
+    return (this.$tip = this.$tip || $(this.options.template))
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+  }
+
+  Tooltip.prototype.validate = function () {
+    if (!this.$element[0].parentNode) {
+      this.hide()
+      this.$element = null
+      this.options  = null
+    }
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = this
+    if (e) {
+      self = $(e.currentTarget).data('bs.' + this.type)
+      if (!self) {
+        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+        $(e.currentTarget).data('bs.' + this.type, self)
+      }
+    }
+
+    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+  }
+
+  Tooltip.prototype.destroy = function () {
+    clearTimeout(this.timeout)
+    this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+  }
+
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
+
+      if (!data && option == 'destroy') return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip             = Plugin
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);
+
+},{}],"bowser":[function(require,module,exports){
+/*!
+  * Bowser - a browser detector
+  * https://github.com/ded/bowser
+  * MIT License | (c) Dustin Diaz 2014
+  */
+
+!function (name, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else this[name] = definition()
+}('bowser', function () {
+  /**
+    * See useragents.js for examples of navigator.userAgent
+    */
+
+  var t = true
+
+  function detect(ua) {
+
+    function getFirstMatch(regex) {
+      var match = ua.match(regex);
+      return (match && match.length > 1 && match[1]) || '';
+    }
+
+    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
+      , likeAndroid = /like android/i.test(ua)
+      , android = !likeAndroid && /android/i.test(ua)
+      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
+      , tablet = /tablet/i.test(ua)
+      , mobile = !tablet && /[^-]mobi/i.test(ua)
+      , result
+
+    if (/opera|opr/i.test(ua)) {
+      result = {
+        name: 'Opera'
+      , opera: t
+      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/windows phone/i.test(ua)) {
+      result = {
+        name: 'Windows Phone'
+      , windowsphone: t
+      , msie: t
+      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/msie|trident/i.test(ua)) {
+      result = {
+        name: 'Internet Explorer'
+      , msie: t
+      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/chrome|crios|crmo/i.test(ua)) {
+      result = {
+        name: 'Chrome'
+      , chrome: t
+      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (iosdevice) {
+      result = {
+        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
+      }
+      // WTF: version is not part of user agent in web apps
+      if (versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    }
+    else if (/sailfish/i.test(ua)) {
+      result = {
+        name: 'Sailfish'
+      , sailfish: t
+      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/seamonkey\//i.test(ua)) {
+      result = {
+        name: 'SeaMonkey'
+      , seamonkey: t
+      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/firefox|iceweasel/i.test(ua)) {
+      result = {
+        name: 'Firefox'
+      , firefox: t
+      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
+      }
+      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
+        result.firefoxos = t
+      }
+    }
+    else if (/silk/i.test(ua)) {
+      result =  {
+        name: 'Amazon Silk'
+      , silk: t
+      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (android) {
+      result = {
+        name: 'Android'
+      , version: versionIdentifier
+      }
+    }
+    else if (/phantom/i.test(ua)) {
+      result = {
+        name: 'PhantomJS'
+      , phantom: t
+      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
+      result = {
+        name: 'BlackBerry'
+      , blackberry: t
+      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
+      }
+    }
+    else if (/(web|hpw)os/i.test(ua)) {
+      result = {
+        name: 'WebOS'
+      , webos: t
+      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
+      };
+      /touchpad\//i.test(ua) && (result.touchpad = t)
+    }
+    else if (/bada/i.test(ua)) {
+      result = {
+        name: 'Bada'
+      , bada: t
+      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
+      };
+    }
+    else if (/tizen/i.test(ua)) {
+      result = {
+        name: 'Tizen'
+      , tizen: t
+      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
+      };
+    }
+    else if (/safari/i.test(ua)) {
+      result = {
+        name: 'Safari'
+      , safari: t
+      , version: versionIdentifier
+      }
+    }
+    else result = {}
+
+    // set webkit or gecko flag for browsers based on these engines
+    if (/(apple)?webkit/i.test(ua)) {
+      result.name = result.name || "Webkit"
+      result.webkit = t
+      if (!result.version && versionIdentifier) {
+        result.version = versionIdentifier
+      }
+    } else if (!result.opera && /gecko\//i.test(ua)) {
+      result.name = result.name || "Gecko"
+      result.gecko = t
+      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
+    }
+
+    // set OS flags for platforms that have multiple browsers
+    if (android || result.silk) {
+      result.android = t
+    } else if (iosdevice) {
+      result[iosdevice] = t
+      result.ios = t
+    }
+
+    // OS version extraction
+    var osVersion = '';
+    if (iosdevice) {
+      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
+      osVersion = osVersion.replace(/[_\s]/g, '.');
+    } else if (android) {
+      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
+    } else if (result.windowsphone) {
+      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
+    } else if (result.webos) {
+      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
+    } else if (result.blackberry) {
+      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
+    } else if (result.bada) {
+      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
+    } else if (result.tizen) {
+      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
+    }
+    if (osVersion) {
+      result.osversion = osVersion;
+    }
+
+    // device type extraction
+    var osMajorVersion = osVersion.split('.')[0];
+    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
+      result.tablet = t
+    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
+      result.mobile = t
+    }
+
+    // Graded Browser Support
+    // http://developer.yahoo.com/yui/articles/gbs
+    if ((result.msie && result.version >= 10) ||
+        (result.chrome && result.version >= 20) ||
+        (result.firefox && result.version >= 20.0) ||
+        (result.safari && result.version >= 6) ||
+        (result.opera && result.version >= 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
+        (result.blackberry && result.version >= 10.1)
+        ) {
+      result.a = t;
+    }
+    else if ((result.msie && result.version < 10) ||
+        (result.chrome && result.version < 20) ||
+        (result.firefox && result.version < 20.0) ||
+        (result.safari && result.version < 6) ||
+        (result.opera && result.version < 10.0) ||
+        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
+        ) {
+      result.c = t
+    } else result.x = t
+
+    return result
+  }
+
+  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
+
+
+  /*
+   * Set our detect method to the main bowser object so we can
+   * reuse it to test other user agents.
+   * This is needed to implement future tests.
+   */
+  bowser._detect = detect;
+
+  return bowser
+});
+
+},{}],"es5-shim":[function(require,module,exports){
 /*!
  * https://github.com/es-shims/es5-shim
  * @license es5-shim Copyright 2009-2014 by contributors, MIT License
@@ -71091,8 +71019,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-module.exports=require(486)
-},{"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\imagesloaded\\node_modules\\wolfy87-eventemitter\\EventEmitter.js":486}],"i18next":[function(require,module,exports){
+module.exports=require(484)
+},{"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/imagesloaded/node_modules/wolfy87-eventemitter/EventEmitter.js":484}],"i18next":[function(require,module,exports){
 // i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -77742,7 +77670,7 @@ var Plugins;
 
 },{}],"jquery.ui.core":[function(require,module,exports){
 /*!
- * jQuery UI Core 1.11.3
+ * jQuery UI Core 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -77767,7 +77695,7 @@ var Plugins;
 $.ui = $.ui || {};
 
 $.extend( $.ui, {
-	version: "1.11.3",
+	version: "1.11.4",
 
 	keyCode: {
 		BACKSPACE: 8,
@@ -78048,7 +77976,7 @@ $.ui.plugin = {
 
 },{}],"jquery.ui.draggable":[function(require,module,exports){
 /*!
- * jQuery UI Draggable 1.11.3
+ * jQuery UI Draggable 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -78075,7 +78003,7 @@ $.ui.plugin = {
 }(function( $ ) {
 
 $.widget("ui.draggable", $.ui.mouse, {
-	version: "1.11.3",
+	version: "1.11.4",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -78849,6 +78777,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 				if ( !sortable.isOver ) {
 					sortable.isOver = 1;
 
+					// Store draggable's parent in case we need to reappend to it later.
+					draggable._parent = ui.helper.parent();
+
 					sortable.currentItem = ui.helper
 						.appendTo( sortable.element )
 						.data( "ui-sortable-item", true );
@@ -78925,8 +78856,9 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 						sortable.placeholder.remove();
 					}
 
-					// Recalculate the draggable's offset considering the sortable
-					// may have modified them in unexpected ways (#8809)
+					// Restore and recalculate the draggable's offset considering the sortable
+					// may have modified them in unexpected ways. (#8809, #10669)
+					ui.helper.appendTo( draggable._parent );
 					draggable._refreshOffsets( event );
 					ui.position = draggable._generatePosition( event, true );
 
@@ -79178,7 +79110,7 @@ return $.ui.draggable;
 
 },{}],"jquery.ui.mouse":[function(require,module,exports){
 /*!
- * jQuery UI Mouse 1.11.3
+ * jQuery UI Mouse 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -79208,7 +79140,7 @@ $( document ).mouseup( function() {
 });
 
 return $.widget("ui.mouse", {
-	version: "1.11.3",
+	version: "1.11.4",
 	options: {
 		cancel: "input,textarea,button,select,option",
 		distance: 1,
@@ -79379,7 +79311,7 @@ return $.widget("ui.mouse", {
 
 },{}],"jquery.ui.slider":[function(require,module,exports){
 /*!
- * jQuery UI Slider 1.11.3
+ * jQuery UI Slider 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -79406,7 +79338,7 @@ return $.widget("ui.mouse", {
 }(function( $ ) {
 
 return $.widget( "ui.slider", $.ui.mouse, {
-	version: "1.11.3",
+	version: "1.11.4",
 	widgetEventPrefix: "slide",
 
 	options: {
@@ -79930,7 +79862,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 		var max = this.options.max,
 			min = this._valueMin(),
 			step = this.options.step,
-			aboveMin = Math.floor( ( max - min ) / step ) * step;
+			aboveMin = Math.floor( ( +( max - min ).toFixed( this._precision() ) ) / step ) * step;
 		max = aboveMin + min;
 		this.max = parseFloat( max.toFixed( this._precision() ) );
 	},
@@ -80098,7 +80030,7 @@ return $.widget( "ui.slider", $.ui.mouse, {
 
 },{}],"jquery.ui.widget":[function(require,module,exports){
 /*!
- * jQuery UI Widget 1.11.3
+ * jQuery UI Widget 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -90383,96 +90315,702 @@ return jQuery;
 }));
 
 },{}],"medium-editor":[function(require,module,exports){
-function MediumEditor(elements, options) {
-    'use strict';
-    return this.init(elements, options);
+/*global self, document, DOMException */
+
+/*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js */
+
+// Full polyfill for browsers with no classList support
+if (!("classList" in document.createElement("_"))) {
+  (function (view) {
+
+  "use strict";
+
+  if (!('Element' in view)) return;
+
+  var
+      classListProp = "classList"
+    , protoProp = "prototype"
+    , elemCtrProto = view.Element[protoProp]
+    , objCtr = Object
+    , strTrim = String[protoProp].trim || function () {
+      return this.replace(/^\s+|\s+$/g, "");
+    }
+    , arrIndexOf = Array[protoProp].indexOf || function (item) {
+      var
+          i = 0
+        , len = this.length
+      ;
+      for (; i < len; i++) {
+        if (i in this && this[i] === item) {
+          return i;
+        }
+      }
+      return -1;
+    }
+    // Vendors: please allow content code to instantiate DOMExceptions
+    , DOMEx = function (type, message) {
+      this.name = type;
+      this.code = DOMException[type];
+      this.message = message;
+    }
+    , checkTokenAndGetIndex = function (classList, token) {
+      if (token === "") {
+        throw new DOMEx(
+            "SYNTAX_ERR"
+          , "An invalid or illegal string was specified"
+        );
+      }
+      if (/\s/.test(token)) {
+        throw new DOMEx(
+            "INVALID_CHARACTER_ERR"
+          , "String contains an invalid character"
+        );
+      }
+      return arrIndexOf.call(classList, token);
+    }
+    , ClassList = function (elem) {
+      var
+          trimmedClasses = strTrim.call(elem.getAttribute("class") || "")
+        , classes = trimmedClasses ? trimmedClasses.split(/\s+/) : []
+        , i = 0
+        , len = classes.length
+      ;
+      for (; i < len; i++) {
+        this.push(classes[i]);
+      }
+      this._updateClassName = function () {
+        elem.setAttribute("class", this.toString());
+      };
+    }
+    , classListProto = ClassList[protoProp] = []
+    , classListGetter = function () {
+      return new ClassList(this);
+    }
+  ;
+  // Most DOMException implementations don't allow calling DOMException's toString()
+  // on non-DOMExceptions. Error's toString() is sufficient here.
+  DOMEx[protoProp] = Error[protoProp];
+  classListProto.item = function (i) {
+    return this[i] || null;
+  };
+  classListProto.contains = function (token) {
+    token += "";
+    return checkTokenAndGetIndex(this, token) !== -1;
+  };
+  classListProto.add = function () {
+    var
+        tokens = arguments
+      , i = 0
+      , l = tokens.length
+      , token
+      , updated = false
+    ;
+    do {
+      token = tokens[i] + "";
+      if (checkTokenAndGetIndex(this, token) === -1) {
+        this.push(token);
+        updated = true;
+      }
+    }
+    while (++i < l);
+
+    if (updated) {
+      this._updateClassName();
+    }
+  };
+  classListProto.remove = function () {
+    var
+        tokens = arguments
+      , i = 0
+      , l = tokens.length
+      , token
+      , updated = false
+      , index
+    ;
+    do {
+      token = tokens[i] + "";
+      index = checkTokenAndGetIndex(this, token);
+      while (index !== -1) {
+        this.splice(index, 1);
+        updated = true;
+        index = checkTokenAndGetIndex(this, token);
+      }
+    }
+    while (++i < l);
+
+    if (updated) {
+      this._updateClassName();
+    }
+  };
+  classListProto.toggle = function (token, force) {
+    token += "";
+
+    var
+        result = this.contains(token)
+      , method = result ?
+        force !== true && "remove"
+      :
+        force !== false && "add"
+    ;
+
+    if (method) {
+      this[method](token);
+    }
+
+    if (force === true || force === false) {
+      return force;
+    } else {
+      return !result;
+    }
+  };
+  classListProto.toString = function () {
+    return this.join(" ");
+  };
+
+  if (objCtr.defineProperty) {
+    var classListPropDesc = {
+        get: classListGetter
+      , enumerable: true
+      , configurable: true
+    };
+    try {
+      objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+    } catch (ex) { // IE 8 doesn't support enumerable:true
+      if (ex.number === -0x7FF5EC54) {
+        classListPropDesc.enumerable = false;
+        objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+      }
+    }
+  } else if (objCtr[protoProp].__defineGetter__) {
+    elemCtrProto.__defineGetter__(classListProp, classListGetter);
+  }
+
+  }(self));
 }
 
-if (typeof module === 'object') {
-    module.exports = MediumEditor;
-}
-// AMD support
-else if (typeof define === 'function' && define.amd) {
-    define(function () {
-        'use strict';
-        return MediumEditor;
-    });
-}
+/* Blob.js
+ * A Blob implementation.
+ * 2014-07-24
+ *
+ * By Eli Grey, http://eligrey.com
+ * By Devin Samarin, https://github.com/dsamarin
+ * License: X11/MIT
+ *   See https://github.com/eligrey/Blob.js/blob/master/LICENSE.md
+ */
+
+/*global self, unescape */
+/*jslint bitwise: true, regexp: true, confusion: true, es5: true, vars: true, white: true,
+  plusplus: true */
+
+/*! @source http://purl.eligrey.com/github/Blob.js/blob/master/Blob.js */
+
+(function (view) {
+  "use strict";
+
+  view.URL = view.URL || view.webkitURL;
+
+  if (view.Blob && view.URL) {
+    try {
+      new Blob;
+      return;
+    } catch (e) {}
+  }
+
+  // Internally we use a BlobBuilder implementation to base Blob off of
+  // in order to support older browsers that only have BlobBuilder
+  var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || (function(view) {
+    var
+        get_class = function(object) {
+        return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
+      }
+      , FakeBlobBuilder = function BlobBuilder() {
+        this.data = [];
+      }
+      , FakeBlob = function Blob(data, type, encoding) {
+        this.data = data;
+        this.size = data.length;
+        this.type = type;
+        this.encoding = encoding;
+      }
+      , FBB_proto = FakeBlobBuilder.prototype
+      , FB_proto = FakeBlob.prototype
+      , FileReaderSync = view.FileReaderSync
+      , FileException = function(type) {
+        this.code = this[this.name = type];
+      }
+      , file_ex_codes = (
+          "NOT_FOUND_ERR SECURITY_ERR ABORT_ERR NOT_READABLE_ERR ENCODING_ERR "
+        + "NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR"
+      ).split(" ")
+      , file_ex_code = file_ex_codes.length
+      , real_URL = view.URL || view.webkitURL || view
+      , real_create_object_URL = real_URL.createObjectURL
+      , real_revoke_object_URL = real_URL.revokeObjectURL
+      , URL = real_URL
+      , btoa = view.btoa
+      , atob = view.atob
+
+      , ArrayBuffer = view.ArrayBuffer
+      , Uint8Array = view.Uint8Array
+
+      , origin = /^[\w-]+:\/*\[?[\w\.:-]+\]?(?::[0-9]+)?/
+    ;
+    FakeBlob.fake = FB_proto.fake = true;
+    while (file_ex_code--) {
+      FileException.prototype[file_ex_codes[file_ex_code]] = file_ex_code + 1;
+    }
+    // Polyfill URL
+    if (!real_URL.createObjectURL) {
+      URL = view.URL = function(uri) {
+        var
+            uri_info = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+          , uri_origin
+        ;
+        uri_info.href = uri;
+        if (!("origin" in uri_info)) {
+          if (uri_info.protocol.toLowerCase() === "data:") {
+            uri_info.origin = null;
+          } else {
+            uri_origin = uri.match(origin);
+            uri_info.origin = uri_origin && uri_origin[1];
+          }
+        }
+        return uri_info;
+      };
+    }
+    URL.createObjectURL = function(blob) {
+      var
+          type = blob.type
+        , data_URI_header
+      ;
+      if (type === null) {
+        type = "application/octet-stream";
+      }
+      if (blob instanceof FakeBlob) {
+        data_URI_header = "data:" + type;
+        if (blob.encoding === "base64") {
+          return data_URI_header + ";base64," + blob.data;
+        } else if (blob.encoding === "URI") {
+          return data_URI_header + "," + decodeURIComponent(blob.data);
+        } if (btoa) {
+          return data_URI_header + ";base64," + btoa(blob.data);
+        } else {
+          return data_URI_header + "," + encodeURIComponent(blob.data);
+        }
+      } else if (real_create_object_URL) {
+        return real_create_object_URL.call(real_URL, blob);
+      }
+    };
+    URL.revokeObjectURL = function(object_URL) {
+      if (object_URL.substring(0, 5) !== "data:" && real_revoke_object_URL) {
+        real_revoke_object_URL.call(real_URL, object_URL);
+      }
+    };
+    FBB_proto.append = function(data/*, endings*/) {
+      var bb = this.data;
+      // decode data to a binary string
+      if (Uint8Array && (data instanceof ArrayBuffer || data instanceof Uint8Array)) {
+        var
+            str = ""
+          , buf = new Uint8Array(data)
+          , i = 0
+          , buf_len = buf.length
+        ;
+        for (; i < buf_len; i++) {
+          str += String.fromCharCode(buf[i]);
+        }
+        bb.push(str);
+      } else if (get_class(data) === "Blob" || get_class(data) === "File") {
+        if (FileReaderSync) {
+          var fr = new FileReaderSync;
+          bb.push(fr.readAsBinaryString(data));
+        } else {
+          // async FileReader won't work as BlobBuilder is sync
+          throw new FileException("NOT_READABLE_ERR");
+        }
+      } else if (data instanceof FakeBlob) {
+        if (data.encoding === "base64" && atob) {
+          bb.push(atob(data.data));
+        } else if (data.encoding === "URI") {
+          bb.push(decodeURIComponent(data.data));
+        } else if (data.encoding === "raw") {
+          bb.push(data.data);
+        }
+      } else {
+        if (typeof data !== "string") {
+          data += ""; // convert unsupported types to strings
+        }
+        // decode UTF-16 to binary string
+        bb.push(unescape(encodeURIComponent(data)));
+      }
+    };
+    FBB_proto.getBlob = function(type) {
+      if (!arguments.length) {
+        type = null;
+      }
+      return new FakeBlob(this.data.join(""), type, "raw");
+    };
+    FBB_proto.toString = function() {
+      return "[object BlobBuilder]";
+    };
+    FB_proto.slice = function(start, end, type) {
+      var args = arguments.length;
+      if (args < 3) {
+        type = null;
+      }
+      return new FakeBlob(
+          this.data.slice(start, args > 1 ? end : this.data.length)
+        , type
+        , this.encoding
+      );
+    };
+    FB_proto.toString = function() {
+      return "[object Blob]";
+    };
+    FB_proto.close = function() {
+      this.size = 0;
+      delete this.data;
+    };
+    return FakeBlobBuilder;
+  }(view));
+
+  view.Blob = function(blobParts, options) {
+    var type = options ? (options.type || "") : "";
+    var builder = new BlobBuilder();
+    if (blobParts) {
+      for (var i = 0, len = blobParts.length; i < len; i++) {
+        if (Uint8Array && blobParts[i] instanceof Uint8Array) {
+          builder.append(blobParts[i].buffer);
+        }
+        else {
+          builder.append(blobParts[i]);
+        }
+      }
+    }
+    var blob = builder.getBlob(type);
+    if (!blob.slice && blob.webkitSlice) {
+      blob.slice = blob.webkitSlice;
+    }
+    return blob;
+  };
+
+  var getPrototypeOf = Object.getPrototypeOf || function(object) {
+    return object.__proto__;
+  };
+  view.Blob.prototype = getPrototypeOf(new view.Blob());
+}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content || this));
+
+(function (root, factory) {
+    'use strict';
+    if (typeof module === 'object') {
+        module.exports = factory;
+    } else if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return factory;
+        });
+    } else {
+        root.MediumEditor = factory;
+    }
+}(this, function () {
+
+    'use strict';
+
+var Util;
 
 (function (window, document) {
     'use strict';
 
-    function extend(b, a) {
+    function copyInto(dest, source, overwrite) {
         var prop;
-        if (b === undefined) {
-            return a;
-        }
-        for (prop in a) {
-            if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop) === false) {
-                b[prop] = a[prop];
+        dest = dest || {};
+        for (prop in source) {
+            if (source.hasOwnProperty(prop) && (overwrite || dest.hasOwnProperty(prop) === false)) {
+                dest[prop] = source[prop];
             }
         }
-        return b;
+        return dest;
     }
 
-    function isDescendant(parent, child) {
-         var node = child.parentNode;
-         while (node !== null) {
-             if (node === parent) {
-                 return true;
-             }
-             node = node.parentNode;
-         }
-         return false;
-    }
+    Util = {
 
-    // http://stackoverflow.com/questions/5605401/insert-link-in-contenteditable-element
-    // by Tim Down
-    function saveSelection() {
-        var i,
-            len,
-            ranges,
-            sel = this.options.contentWindow.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            ranges = [];
-            for (i = 0, len = sel.rangeCount; i < len; i += 1) {
-                ranges.push(sel.getRangeAt(i));
+        // http://stackoverflow.com/questions/17907445/how-to-detect-ie11#comment30165888_17907562
+        // by rg89
+        isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
+
+        // https://github.com/jashkenas/underscore
+        keyCode: {
+            BACKSPACE: 8,
+            TAB: 9,
+            ENTER: 13,
+            ESCAPE: 27,
+            SPACE: 32,
+            DELETE: 46
+        },
+
+        parentElements: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'],
+
+        defaults: function defaults(dest, source) {
+            return copyInto(dest, source);
+        },
+
+        derives: function derives(base, derived) {
+            var origPrototype = derived.prototype;
+            function Proto() { }
+            Proto.prototype = base.prototype;
+            derived.prototype = new Proto();
+            derived.prototype.constructor = base;
+            derived.prototype = copyInto(derived.prototype, origPrototype);
+            return derived;
+        },
+
+        // Find the next node in the DOM tree that represents any text that is being
+        // displayed directly next to the targetNode (passed as an argument)
+        // Text that appears directly next to the current node can be:
+        //  - A sibling text node
+        //  - A descendant of a sibling element
+        //  - A sibling text node of an ancestor
+        //  - A descendant of a sibling element of an ancestor
+        findAdjacentTextNodeWithContent: function findAdjacentTextNodeWithContent(rootNode, targetNode, ownerDocument) {
+            var pastTarget = false,
+                nextNode,
+                nodeIterator = ownerDocument.createNodeIterator(rootNode, NodeFilter.SHOW_TEXT, null, false);
+
+            // Use a native NodeIterator to iterate over all the text nodes that are descendants
+            // of the rootNode.  Once past the targetNode, choose the first non-empty text node
+            nextNode = nodeIterator.nextNode();
+            while (nextNode) {
+                if (nextNode === targetNode) {
+                    pastTarget = true;
+                } else if (pastTarget) {
+                    if (nextNode.nodeType === 3 && nextNode.nodeValue && nextNode.nodeValue.trim().length > 0) {
+                        break;
+                    }
+                }
+                nextNode = nodeIterator.nextNode();
             }
-            return ranges;
-        }
-        return null;
-    }
 
-    function restoreSelection(savedSel) {
-        var i,
-            len,
-            sel = this.options.contentWindow.getSelection();
-        if (savedSel) {
-            sel.removeAllRanges();
-            for (i = 0, len = savedSel.length; i < len; i += 1) {
-                sel.addRange(savedSel[i]);
+            return nextNode;
+        },
+
+        isDescendant: function isDescendant(parent, child) {
+            if (!parent || !child) {
+                return false;
             }
+            var node = child.parentNode;
+            while (node !== null) {
+                if (node === parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        },
+
+        // https://github.com/jashkenas/underscore
+        isElement: function isElement(obj) {
+            return !!(obj && obj.nodeType === 1);
+        },
+
+        now: function now() {
+            return Date.now || new Date().getTime();
+        },
+
+        // https://github.com/jashkenas/underscore
+        throttle: function throttle(func, wait) {
+            var THROTTLE_INTERVAL = 50,
+                context,
+                args,
+                result,
+                timeout = null,
+                previous = 0,
+                later;
+
+            if (!wait && wait !== 0) {
+                wait = THROTTLE_INTERVAL;
+            }
+
+            later = function () {
+                previous = Util.now();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) {
+                    context = args = null;
+                }
+            };
+
+            return function () {
+                var currNow = Util.now(),
+                    remaining = wait - (currNow - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                    previous = currNow;
+                    result = func.apply(context, args);
+                    if (!timeout) {
+                        context = args = null;
+                    }
+                } else if (!timeout) {
+                    timeout = setTimeout(later, remaining);
+                }
+                return result;
+            };
+        },
+
+        traverseUp: function (current, testElementFunction) {
+
+            do {
+                if (current.nodeType === 1) {
+                    if (testElementFunction(current)) {
+                        return current;
+                    }
+                    // do not traverse upwards past the nearest containing editor
+                    if (current.getAttribute('data-medium-element')) {
+                        return false;
+                    }
+                }
+
+                current = current.parentNode;
+            } while (current);
+
+            return false;
+
+        },
+
+        htmlEntities: function (str) {
+            // converts special characters (like <) into their escaped/encoded values (like &lt;).
+            // This allows you to show to display the string without the browser reading it as HTML.
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
+        // http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
+        insertHTMLCommand: function (doc, html) {
+            var selection, range, el, fragment, node, lastNode, toReplace;
+
+            if (doc.queryCommandSupported('insertHTML')) {
+                try {
+                    return doc.execCommand('insertHTML', false, html);
+                } catch (ignore) {}
+            }
+
+            selection = doc.defaultView.getSelection();
+            if (selection.getRangeAt && selection.rangeCount) {
+                range = selection.getRangeAt(0);
+                toReplace = range.commonAncestorContainer;
+                // Ensure range covers maximum amount of nodes as possible
+                // By moving up the DOM and selecting ancestors whose only child is the range
+                if ((toReplace.nodeType === 3 && toReplace.nodeValue === range.toString()) ||
+                        (toReplace.nodeType !== 3 && toReplace.innerHTML === range.toString())) {
+                    while (toReplace.parentNode &&
+                            toReplace.parentNode.childNodes.length === 1 &&
+                            !toReplace.parentNode.getAttribute('data-medium-element')) {
+                        toReplace = toReplace.parentNode;
+                    }
+                    range.selectNode(toReplace);
+                }
+                range.deleteContents();
+
+                el = doc.createElement("div");
+                el.innerHTML = html;
+                fragment = doc.createDocumentFragment();
+                while (el.firstChild) {
+                    node = el.firstChild;
+                    lastNode = fragment.appendChild(node);
+                }
+                range.insertNode(fragment);
+
+                // Preserve the selection:
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    range.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            }
+        },
+
+        // TODO: not sure if this should be here
+        setTargetBlank: function (el) {
+            var i;
+            if (el.tagName.toLowerCase() === 'a') {
+                el.target = '_blank';
+            } else {
+                el = el.getElementsByTagName('a');
+
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].target = '_blank';
+                }
+            }
+        },
+
+        isListItemChild: function (node) {
+            var parentNode = node.parentNode,
+                tagName = parentNode.tagName.toLowerCase();
+            while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
+                if (tagName === 'li') {
+                    return true;
+                }
+                parentNode = parentNode.parentNode;
+                if (parentNode && parentNode.tagName) {
+                    tagName = parentNode.tagName.toLowerCase();
+                } else {
+                    return false;
+                }
+            }
+            return false;
         }
-    }
+    };
+}(window, document));
 
-    // http://stackoverflow.com/questions/1197401/how-can-i-get-the-element-the-caret-is-in-with-javascript-when-using-contentedi
-    // by You
-    function getSelectionStart() {
-        var node = this.options.ownerDocument.getSelection().anchorNode,
-            startNode = (node && node.nodeType === 3 ? node.parentNode : node);
-        return startNode;
-    }
+var Selection;
 
-    // http://stackoverflow.com/questions/4176923/html-of-selected-text
-    // by Tim Down
-    function getSelectionHtml() {
-        var i,
-            html = '',
-            sel,
-            len,
-            container;
-        if (this.options.contentWindow.getSelection !== undefined) {
-            sel = this.options.contentWindow.getSelection();
+(function (window, document) {
+    'use strict';
+
+    Selection = {
+        // http://stackoverflow.com/questions/1197401/how-can-i-get-the-element-the-caret-is-in-with-javascript-when-using-contentedi
+        // by You
+        getSelectionStart: function (ownerDocument) {
+            var node = ownerDocument.getSelection().anchorNode,
+                startNode = (node && node.nodeType === 3 ? node.parentNode : node);
+            return startNode;
+        },
+
+        findMatchingSelectionParent: function (testElementFunction, contentWindow) {
+            var selection = contentWindow.getSelection(), range, current;
+
+            if (selection.rangeCount === 0) {
+                return false;
+            }
+
+            range = selection.getRangeAt(0);
+            current = range.commonAncestorContainer;
+
+            return Util.traverseUp(current, testElementFunction);
+        },
+
+        getSelectionElement: function (contentWindow) {
+            return this.findMatchingSelectionParent(function (el) {
+                return el.getAttribute('data-medium-element');
+            }, contentWindow);
+        },
+
+        selectionInContentEditableFalse: function (contentWindow) {
+            return this.findMatchingSelectionParent(function (el) {
+                return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
+            }, contentWindow);
+        },
+
+        // http://stackoverflow.com/questions/4176923/html-of-selected-text
+        // by Tim Down
+        getSelectionHtml: function getSelectionHtml() {
+            var i,
+                html = '',
+                sel = this.options.contentWindow.getSelection(),
+                len,
+                container;
             if (sel.rangeCount) {
                 container = this.options.ownerDocument.createElement('div');
                 for (i = 0, len = sel.rangeCount; i < len; i += 1) {
@@ -90480,23 +91018,1691 @@ else if (typeof define === 'function' && define.amd) {
                 }
                 html = container.innerHTML;
             }
-        } else if (this.options.ownerDocument.selection !== undefined) {
-            if (this.options.ownerDocument.selection.type === 'Text') {
-                html = this.options.ownerDocument.selection.createRange().htmlText;
+            return html;
+        },
+
+        /**
+         *  Find the caret position within an element irrespective of any inline tags it may contain.
+         *
+         *  @param {DOMElement} An element containing the cursor to find offsets relative to.
+         *  @param {Range} A Range representing cursor position. Will window.getSelection if none is passed.
+         *  @return {Object} 'left' and 'right' attributes contain offsets from begining and end of Element
+         */
+        getCaretOffsets: function getCaretOffsets(element, range) {
+            var preCaretRange, postCaretRange;
+
+            if (!range) {
+                range = window.getSelection().getRangeAt(0);
+            }
+
+            preCaretRange = range.cloneRange();
+            postCaretRange = range.cloneRange();
+
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+            postCaretRange.selectNodeContents(element);
+            postCaretRange.setStart(range.endContainer, range.endOffset);
+
+            return {
+                left: preCaretRange.toString().length,
+                right: postCaretRange.toString().length
+            };
+        },
+
+        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
+        rangeSelectsSingleNode: function (range) {
+            var startNode = range.startContainer;
+            return startNode === range.endContainer &&
+                startNode.hasChildNodes() &&
+                range.endOffset === range.startOffset + 1;
+        },
+
+        getSelectedParentElement: function (range) {
+            var selectedParentElement = null;
+            if (this.rangeSelectsSingleNode(range) && range.startContainer.childNodes[range.startOffset].nodeType !== 3) {
+                selectedParentElement = range.startContainer.childNodes[range.startOffset];
+            } else if (range.startContainer.nodeType === 3) {
+                selectedParentElement = range.startContainer.parentNode;
+            } else {
+                selectedParentElement = range.startContainer;
+            }
+            return selectedParentElement;
+        },
+
+        getSelectionData: function (el) {
+            var tagName;
+
+            if (el && el.tagName) {
+                tagName = el.tagName.toLowerCase();
+            }
+
+            while (el && Util.parentElements.indexOf(tagName) === -1) {
+                el = el.parentNode;
+                if (el && el.tagName) {
+                    tagName = el.tagName.toLowerCase();
+                }
+            }
+
+            return {
+                el: el,
+                tagName: tagName
+            };
+        }
+    };
+}(document, window));
+
+var DefaultButton,
+    ButtonsData;
+
+(function (window, document) {
+    'use strict';
+
+    ButtonsData = {
+        'bold': {
+            name: 'bold',
+            action: 'bold',
+            aria: 'bold',
+            tagNames: ['b', 'strong'],
+            style: {
+                prop: 'font-weight',
+                value: '700|bold'
+            },
+            useQueryState: true,
+            contentDefault: '<b>B</b>',
+            contentFA: '<i class="fa fa-bold"></i>',
+            key: 'b'
+        },
+        'italic': {
+            name: 'italic',
+            action: 'italic',
+            aria: 'italic',
+            tagNames: ['i', 'em'],
+            style: {
+                prop: 'font-style',
+                value: 'italic'
+            },
+            useQueryState: true,
+            contentDefault: '<b><i>I</i></b>',
+            contentFA: '<i class="fa fa-italic"></i>',
+            key: 'i'
+        },
+        'underline': {
+            name: 'underline',
+            action: 'underline',
+            aria: 'underline',
+            tagNames: ['u'],
+            style: {
+                prop: 'text-decoration',
+                value: 'underline'
+            },
+            useQueryState: true,
+            contentDefault: '<b><u>U</u></b>',
+            contentFA: '<i class="fa fa-underline"></i>',
+            key: 'u'
+        },
+        'strikethrough': {
+            name: 'strikethrough',
+            action: 'strikethrough',
+            aria: 'strike through',
+            tagNames: ['strike'],
+            style: {
+                prop: 'text-decoration',
+                value: 'line-through'
+            },
+            useQueryState: true,
+            contentDefault: '<s>A</s>',
+            contentFA: '<i class="fa fa-strikethrough"></i>'
+        },
+        'superscript': {
+            name: 'superscript',
+            action: 'superscript',
+            aria: 'superscript',
+            tagNames: ['sup'],
+            /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for superscript
+               https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
+            // useQueryState: true
+            contentDefault: '<b>x<sup>1</sup></b>',
+            contentFA: '<i class="fa fa-superscript"></i>'
+        },
+        'subscript': {
+            name: 'subscript',
+            action: 'subscript',
+            aria: 'subscript',
+            tagNames: ['sub'],
+            /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for subscript
+               https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
+            // useQueryState: true
+            contentDefault: '<b>x<sub>1</sub></b>',
+            contentFA: '<i class="fa fa-subscript"></i>'
+        },
+        'image': {
+            name: 'image',
+            action: 'image',
+            aria: 'image',
+            tagNames: ['img'],
+            contentDefault: '<b>image</b>',
+            contentFA: '<i class="fa fa-picture-o"></i>'
+        },
+        'quote': {
+            name: 'quote',
+            action: 'append-blockquote',
+            aria: 'blockquote',
+            tagNames: ['blockquote'],
+            contentDefault: '<b>&ldquo;</b>',
+            contentFA: '<i class="fa fa-quote-right"></i>'
+        },
+        'orderedlist': {
+            name: 'orderedlist',
+            action: 'insertorderedlist',
+            aria: 'ordered list',
+            tagNames: ['ol'],
+            useQueryState: true,
+            contentDefault: '<b>1.</b>',
+            contentFA: '<i class="fa fa-list-ol"></i>'
+        },
+        'unorderedlist': {
+            name: 'unorderedlist',
+            action: 'insertunorderedlist',
+            aria: 'unordered list',
+            tagNames: ['ul'],
+            useQueryState: true,
+            contentDefault: '<b>&bull;</b>',
+            contentFA: '<i class="fa fa-list-ul"></i>'
+        },
+        'pre': {
+            name: 'pre',
+            action: 'append-pre',
+            aria: 'preformatted text',
+            tagNames: ['pre'],
+            contentDefault: '<b>0101</b>',
+            contentFA: '<i class="fa fa-code fa-lg"></i>'
+        },
+        'indent': {
+            name: 'indent',
+            action: 'indent',
+            aria: 'indent',
+            tagNames: [],
+            contentDefault: '<b>&rarr;</b>',
+            contentFA: '<i class="fa fa-indent"></i>'
+        },
+        'outdent': {
+            name: 'outdent',
+            action: 'outdent',
+            aria: 'outdent',
+            tagNames: [],
+            contentDefault: '<b>&larr;</b>',
+            contentFA: '<i class="fa fa-outdent"></i>'
+        },
+        'justifyCenter': {
+            name: 'justifyCenter',
+            action: 'justifyCenter',
+            aria: 'center justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'center'
+            },
+            useQueryState: true,
+            contentDefault: '<b>C</b>',
+            contentFA: '<i class="fa fa-align-center"></i>'
+        },
+        'justifyFull': {
+            name: 'justifyFull',
+            action: 'justifyFull',
+            aria: 'full justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'justify'
+            },
+            useQueryState: true,
+            contentDefault: '<b>J</b>',
+            contentFA: '<i class="fa fa-align-justify"></i>'
+        },
+        'justifyLeft': {
+            name: 'justifyLeft',
+            action: 'justifyLeft',
+            aria: 'left justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'left'
+            },
+            useQueryState: true,
+            contentDefault: '<b>L</b>',
+            contentFA: '<i class="fa fa-align-left"></i>'
+        },
+        'justifyRight': {
+            name: 'justifyRight',
+            action: 'justifyRight',
+            aria: 'right justify',
+            tagNames: [],
+            style: {
+                prop: 'text-align',
+                value: 'right'
+            },
+            useQueryState: true,
+            contentDefault: '<b>R</b>',
+            contentFA: '<i class="fa fa-align-right"></i>'
+        },
+        'header1': {
+            name: 'header1',
+            action: function (options) {
+                return 'append-' + options.firstHeader;
+            },
+            aria: function (options) {
+                return options.firstHeader;
+            },
+            tagNames: function (options) {
+                return [options.firstHeader];
+            },
+            contentDefault: '<b>H1</b>'
+        },
+        'header2': {
+            name: 'header2',
+            action: function (options) {
+                return 'append-' + options.secondHeader;
+            },
+            aria: function (options) {
+                return options.secondHeader;
+            },
+            tagNames: function (options) {
+                return [options.secondHeader];
+            },
+            contentDefault: '<b>H2</b>'
+        }
+    };
+
+    DefaultButton = function (options, instance) {
+        this.options = options;
+        this.name = options.name;
+        this.init(instance);
+    };
+
+    DefaultButton.prototype = {
+        init: function (instance) {
+            this.base = instance;
+
+            this.button = this.createButton();
+            this.base.on(this.button, 'click', this.handleClick.bind(this));
+        },
+        getButton: function () {
+            return this.button;
+        },
+        getAction: function () {
+            return (typeof this.options.action === 'function') ? this.options.action(this.base.options) : this.options.action;
+        },
+        getAria: function () {
+            return (typeof this.options.aria === 'function') ? this.options.aria(this.base.options) : this.options.aria;
+        },
+        getTagNames: function () {
+            return (typeof this.options.tagNames === 'function') ? this.options.tagNames(this.base.options) : this.options.tagNames;
+        },
+        createButton: function () {
+            var button = this.base.options.ownerDocument.createElement('button'),
+                content = this.options.contentDefault;
+            button.classList.add('medium-editor-action');
+            button.classList.add('medium-editor-action-' + this.name);
+            button.setAttribute('data-action', this.getAction());
+            button.setAttribute('aria-label', this.getAria());
+            if (this.base.options.buttonLabels) {
+                if (this.base.options.buttonLabels === 'fontawesome' && this.options.contentFA) {
+                    content = this.options.contentFA;
+                } else if (typeof this.base.options.buttonLabels === 'object' && this.base.options.buttonLabels[this.name]) {
+                    content = this.base.options.buttonLabels[this.options.name];
+                }
+            }
+            button.innerHTML = content;
+            return button;
+        },
+        handleClick: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            var action = this.getAction();
+
+            if (action) {
+                this.base.execAction(action);
+            }
+        },
+        isActive: function () {
+            return this.button.classList.contains(this.base.options.activeButtonClass);
+        },
+        setInactive: function () {
+            this.button.classList.remove(this.base.options.activeButtonClass);
+            delete this.knownState;
+        },
+        setActive: function () {
+            this.button.classList.add(this.base.options.activeButtonClass);
+            delete this.knownState;
+        },
+        queryCommandState: function () {
+            var queryState = null;
+            if (this.options.useQueryState) {
+                queryState = this.base.queryCommandState(this.getAction());
+            }
+            return queryState;
+        },
+        isAlreadyApplied: function (node) {
+            var isMatch = false,
+                tagNames = this.getTagNames(),
+                styleVals,
+                computedStyle;
+
+            if (this.knownState === false || this.knownState === true) {
+                return this.knownState;
+            }
+
+            if (tagNames && tagNames.length > 0 && node.tagName) {
+                isMatch = tagNames.indexOf(node.tagName.toLowerCase()) !== -1;
+            }
+
+            if (!isMatch && this.options.style) {
+                styleVals = this.options.style.value.split('|');
+                computedStyle = this.base.options.contentWindow.getComputedStyle(node, null).getPropertyValue(this.options.style.prop);
+                styleVals.forEach(function (val) {
+                    if (!this.knownState) {
+                        isMatch = (computedStyle.indexOf(val) !== -1);
+                        // text-decoration is not inherited by default
+                        // so if the computed style for text-decoration doesn't match
+                        // don't write to knownState so we can fallback to other checks
+                        if (isMatch || this.options.style.prop !== 'text-decoration') {
+                            this.knownState = isMatch;
+                        }
+                    }
+                }.bind(this));
+            }
+
+            return isMatch;
+        }
+    };
+}(window, document));
+
+var pasteHandler;
+
+(function (window, document) {
+    'use strict';
+    /*jslint regexp: true*/
+    /*
+        jslint does not allow character negation, because the negation
+        will not match any unicode characters. In the regexes in this
+        block, negation is used specifically to match the end of an html
+        tag, and in fact unicode characters *should* be allowed.
+    */
+    function createReplacements() {
+        return [
+
+            // replace two bogus tags that begin pastes from google docs
+            [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
+            [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
+
+             // un-html spaces and newlines inserted by OS X
+            [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
+            [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
+
+            // replace google docs italics+bold with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*(font-style:italic;font-weight:bold|font-weight:bold;font-style:italic)[^>]*>/gi), '<span class="replace-with italic bold">'],
+
+            // replace google docs italics with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*font-style:italic[^>]*>/gi), '<span class="replace-with italic">'],
+
+            //[replace google docs bolds with a span to be replaced once the html is inserted
+            [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
+
+             // replace manually entered b/i/a tags with real ones
+            [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
+
+             // replace manually a tags with real ones, converting smart-quotes from google docs
+            [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
+
+        ];
+    }
+    /*jslint regexp: false*/
+
+    pasteHandler = {
+        handlePaste: function (element, evt, options) {
+            var paragraphs,
+                html = '',
+                p,
+                dataFormatHTML = 'text/html',
+                dataFormatPlain = 'text/plain';
+
+            element.classList.remove('medium-editor-placeholder');
+            if (!options.forcePlainText && !options.cleanPastedHTML) {
+                return element;
+            }
+
+            if (options.contentWindow.clipboardData && evt.clipboardData === undefined) {
+                evt.clipboardData = options.contentWindow.clipboardData;
+                // If window.clipboardData exists, but e.clipboardData doesn't exist,
+                // we're probably in IE. IE only has two possibilities for clipboard
+                // data format: 'Text' and 'URL'.
+                //
+                // Of the two, we want 'Text':
+                dataFormatHTML = 'Text';
+                dataFormatPlain = 'Text';
+            }
+
+            if (evt.clipboardData && evt.clipboardData.getData && !evt.defaultPrevented) {
+                evt.preventDefault();
+
+                if (options.cleanPastedHTML && evt.clipboardData.getData(dataFormatHTML)) {
+                    return this.cleanPaste(evt.clipboardData.getData(dataFormatHTML), options);
+                }
+                if (!(options.disableReturn || element.getAttribute('data-disable-return'))) {
+                    paragraphs = evt.clipboardData.getData(dataFormatPlain).split(/[\r\n]/g);
+                    for (p = 0; p < paragraphs.length; p += 1) {
+                        if (paragraphs[p] !== '') {
+                            html += '<p>' + Util.htmlEntities(paragraphs[p]) + '</p>';
+                        }
+                    }
+                    Util.insertHTMLCommand(options.ownerDocument, html);
+                } else {
+                    html = Util.htmlEntities(evt.clipboardData.getData(dataFormatPlain));
+                    Util.insertHTMLCommand(options.ownerDocument, html);
+                }
+            }
+        },
+
+        cleanPaste: function (text, options) {
+            var i, elList, workEl,
+                el = Selection.getSelectionElement(options.contentWindow),
+                multiline = /<p|<br|<div/.test(text),
+                replacements = createReplacements();
+
+            for (i = 0; i < replacements.length; i += 1) {
+                text = text.replace(replacements[i][0], replacements[i][1]);
+            }
+
+            if (multiline) {
+                // double br's aren't converted to p tags, but we want paragraphs.
+                elList = text.split('<br><br>');
+
+                this.pasteHTML('<p>' + elList.join('</p><p>') + '</p>', options.ownerDocument);
+
+                try {
+                    options.ownerDocument.execCommand('insertText', false, "\n");
+                } catch (ignore) { }
+
+                // block element cleanup
+                elList = el.querySelectorAll('a,p,div,br');
+                for (i = 0; i < elList.length; i += 1) {
+                    workEl = elList[i];
+
+                    switch (workEl.tagName.toLowerCase()) {
+                    case 'a':
+                        if (options.targetBlank) {
+                            Util.setTargetBlank(workEl);
+                        }
+                        break;
+                    case 'p':
+                    case 'div':
+                        this.filterCommonBlocks(workEl);
+                        break;
+                    case 'br':
+                        this.filterLineBreak(workEl);
+                        break;
+                    }
+                }
+            } else {
+                this.pasteHTML(text, options.ownerDocument);
+            }
+        },
+
+        pasteHTML: function (html, ownerDocument) {
+            var elList, workEl, i, fragmentBody, pasteBlock = ownerDocument.createDocumentFragment();
+
+            pasteBlock.appendChild(ownerDocument.createElement('body'));
+
+            fragmentBody = pasteBlock.querySelector('body');
+            fragmentBody.innerHTML = html;
+
+            this.cleanupSpans(fragmentBody, ownerDocument);
+
+            elList = fragmentBody.querySelectorAll('*');
+            for (i = 0; i < elList.length; i += 1) {
+                workEl = elList[i];
+
+                // delete ugly attributes
+                workEl.removeAttribute('class');
+                workEl.removeAttribute('style');
+                workEl.removeAttribute('dir');
+
+                if (workEl.tagName.toLowerCase() === 'meta') {
+                    workEl.parentNode.removeChild(workEl);
+                }
+            }
+            Util.insertHTMLCommand(ownerDocument, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
+        },
+        isCommonBlock: function (el) {
+            return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
+        },
+        filterCommonBlocks: function (el) {
+            if (/^\s*$/.test(el.textContent)) {
+                el.parentNode.removeChild(el);
+            }
+        },
+        filterLineBreak: function (el) {
+            if (this.isCommonBlock(el.previousElementSibling)) {
+                // remove stray br's following common block elements
+                this.removeWithParent(el);
+            } else if (this.isCommonBlock(el.parentNode) && (el.parentNode.firstChild === el || el.parentNode.lastChild === el)) {
+                // remove br's just inside open or close tags of a div/p
+                this.removeWithParent(el);
+            } else if (el.parentNode.childElementCount === 1 && el.parentNode.textContent === '') {
+                // and br's that are the only child of elements other than div/p
+                this.removeWithParent(el);
+            }
+        },
+
+        // remove an element, including its parent, if it is the only element within its parent
+        removeWithParent: function (el) {
+            if (el && el.parentNode) {
+                if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
+                    el.parentNode.parentNode.removeChild(el.parentNode);
+                } else {
+                    el.parentNode.removeChild(el);
+                }
+            }
+        },
+
+        cleanupSpans: function (container_el, ownerDocument) {
+            var i,
+                el,
+                new_el,
+                spans = container_el.querySelectorAll('.replace-with'),
+                isCEF = function (el) {
+                    return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
+                };
+
+            for (i = 0; i < spans.length; i += 1) {
+                el = spans[i];
+                new_el = ownerDocument.createElement(el.classList.contains('bold') ? 'b' : 'i');
+
+                if (el.classList.contains('bold') && el.classList.contains('italic')) {
+                    // add an i tag as well if this has both italics and bold
+                    new_el.innerHTML = '<i>' + el.innerHTML + '</i>';
+                } else {
+                    new_el.innerHTML = el.innerHTML;
+                }
+                el.parentNode.replaceChild(new_el, el);
+            }
+
+            spans = container_el.querySelectorAll('span');
+            for (i = 0; i < spans.length; i += 1) {
+                el = spans[i];
+
+                // bail if span is in contenteditable = false
+                if (Util.traverseUp(el, isCEF)) {
+                    return false;
+                }
+
+                // remove empty spans, replace others with their contents
+                if (/^\s*$/.test()) {
+                    el.parentNode.removeChild(el);
+                } else {
+                    el.parentNode.replaceChild(ownerDocument.createTextNode(el.textContent), el);
+                }
             }
         }
-        return html;
+    };
+}(window, document));
+
+var AnchorExtension;
+
+(function (window, document) {
+    'use strict';
+
+    function AnchorDerived() {
+        this.parent = true;
+        this.options = {
+            name: 'anchor',
+            action: 'createLink',
+            aria: 'link',
+            tagNames: ['a'],
+            contentDefault: '<b>#</b>',
+            contentFA: '<i class="fa fa-link"></i>'
+        };
+        this.name = 'anchor';
+        this.hasForm = true;
     }
 
-    // https://github.com/jashkenas/underscore
-    function isElement(obj) {
-        return !!(obj && obj.nodeType === 1);
-    }
+    AnchorDerived.prototype = {
+
+        // Button and Extension handling
+
+        // Called when the button the toolbar is clicked
+        // Overrides DefaultButton.handleClick
+        handleClick: function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            if (!this.base.selection) {
+                this.base.checkSelection();
+            }
+
+            var selectedParentElement = Selection.getSelectedParentElement(this.base.selectionRange);
+            if (selectedParentElement.tagName &&
+                    selectedParentElement.tagName.toLowerCase() === 'a') {
+                return this.base.execAction('unlink');
+            }
+
+            if (!this.isDisplayed()) {
+                this.showForm();
+            }
+
+            return false;
+        },
+
+        // Called by medium-editor to append form to the toolbar
+        getForm: function () {
+            if (!this.form) {
+                this.form = this.createForm();
+            }
+            return this.form;
+        },
+
+        // Used by medium-editor when the default toolbar is to be displayed
+        isDisplayed: function () {
+            return this.getForm().style.display === 'block';
+        },
+
+        hideForm: function () {
+            this.getForm().style.display = 'none';
+            this.getInput().value = '';
+        },
+
+        showForm: function (link_value) {
+            var input = this.getInput();
+
+            this.base.saveSelection();
+            this.base.hideToolbarDefaultActions();
+            this.getForm().style.display = 'block';
+            this.base.setToolbarPosition();
+
+            input.value = link_value || '';
+            input.focus();
+        },
+
+        // Called by core when tearing down medium-editor (deactivate)
+        deactivate: function () {
+            if (!this.form) {
+                return false;
+            }
+
+            if (this.form.parentNode) {
+                this.form.parentNode.removeChild(this.form);
+            }
+
+            delete this.form;
+        },
+
+        // core methods
+
+        doFormSave: function () {
+            var targetCheckbox = this.getForm().querySelector('.medium-editor-toolbar-anchor-target'),
+                buttonCheckbox = this.getForm().querySelector('.medium-editor-toolbar-anchor-button'),
+                opts = {
+                    url: this.getInput().value
+                };
+
+            this.base.restoreSelection();
+
+            if (this.base.options.checkLinkFormat) {
+                opts.url = this.checkLinkFormat(opts.url);
+            }
+
+            if (targetCheckbox && targetCheckbox.checked) {
+                opts.target = "_blank";
+            } else {
+                opts.target = "_self";
+            }
+
+            if (buttonCheckbox && buttonCheckbox.checked) {
+                opts.buttonClass = this.base.options.anchorButtonClass;
+            }
+
+            this.base.createLink(opts);
+            this.base.checkSelection();
+        },
+
+        checkLinkFormat: function (value) {
+            var re = /^(https?|ftps?|rtmpt?):\/\/|mailto:/;
+            return (re.test(value) ? '' : 'http://') + value;
+        },
+
+        doFormCancel: function () {
+            this.base.restoreSelection();
+            this.base.checkSelection();
+        },
+
+        // form creation and event handling
+
+        createForm: function () {
+            var doc = this.base.options.ownerDocument,
+                form = doc.createElement('div'),
+                input = doc.createElement('input'),
+                close = doc.createElement('a'),
+                save = doc.createElement('a'),
+                target,
+                target_label,
+                button,
+                button_label;
+
+            // Anchor Form (div)
+            form.className = 'medium-editor-toolbar-form';
+            form.id = 'medium-editor-toolbar-form-anchor-' + this.base.id;
+
+            // Handle clicks on the form itself
+            this.base.on(form, 'click', this.handleFormClick.bind(this));
+
+            // Add url textbox
+            input.setAttribute('type', 'text');
+            input.className = 'medium-editor-toolbar-input';
+            input.setAttribute('placeholder', this.base.options.anchorInputPlaceholder);
+            form.appendChild(input);
+
+            // Handle typing in the textbox
+            this.base.on(input, 'keyup', this.handleTextboxKeyup.bind(this));
+
+            // Add save buton
+            save.setAttribute('href', '#');
+            save.className = 'medium-editor-toobar-save';
+            save.innerHTML = this.base.options.buttonLabels === 'fontawesome' ?
+                             '<i class="fa fa-check"></i>' :
+                             '&#10003;';
+            form.appendChild(save);
+
+            // Handle save button clicks (capture)
+            this.base.on(save, 'click', this.handleSaveClick.bind(this), true);
+
+            // Add close button
+            close.setAttribute('href', '#');
+            close.className = 'medium-editor-toobar-close';
+            close.innerHTML = this.base.options.buttonLabels === 'fontawesome' ?
+                              '<i class="fa fa-times"></i>' :
+                              '&times;';
+            form.appendChild(close);
+
+            // Handle close button clicks
+            this.base.on(close, 'click', this.handleCloseClick.bind(this));
+
+            // (Optional) Add 'open in new window' checkbox
+            if (this.base.options.anchorTarget) {
+                target = doc.createElement('input');
+                target.setAttribute('type', 'checkbox');
+                target.className = 'medium-editor-toolbar-anchor-target';
+
+                target_label = doc.createElement('label');
+                target_label.innerHTML = this.base.options.anchorInputCheckboxLabel;
+                target_label.insertBefore(target, target_label.firstChild);
+
+                form.appendChild(target_label);
+            }
+
+            // (Optional) Add 'add button class to anchor' checkbox
+            if (this.base.options.anchorButton) {
+                button = doc.createElement('input');
+                button.setAttribute('type', 'checkbox');
+                button.className = 'medium-editor-toolbar-anchor-button';
+
+                button_label = doc.createElement('label');
+                button_label.innerHTML = "Button";
+                button_label.insertBefore(button, button_label.firstChild);
+
+                form.appendChild(button_label);
+            }
+
+            return form;
+        },
+
+        getInput: function () {
+            return this.getForm().querySelector('input.medium-editor-toolbar-input');
+        },
+
+        handleTextboxKeyup: function (event) {
+            // For ENTER -> create the anchor
+            if (event.keyCode === Util.keyCode.ENTER) {
+                event.preventDefault();
+                this.doFormSave();
+                return;
+            }
+
+            // For ESCAPE -> close the form
+            if (event.keyCode === Util.keyCode.ESCAPE) {
+                event.preventDefault();
+                this.doFormCancel();
+            }
+        },
+
+        handleFormClick: function (event) {
+            // make sure not to hide form when clicking inside the form
+            event.stopPropagation();
+        },
+
+        handleSaveClick: function (event) {
+            // Clicking Save -> create the anchor
+            event.preventDefault();
+            this.doFormSave();
+        },
+
+        handleCloseClick: function (event) {
+            // Click Close -> close the form
+            event.preventDefault();
+            this.doFormCancel();
+        }
+    };
+
+    AnchorExtension = Util.derives(DefaultButton, AnchorDerived);
+}(window, document));
+
+var AnchorPreview;
+
+(function (window, document) {
+    'use strict';
+
+    AnchorPreview = function () {
+        this.parent = true;
+        this.name = 'anchor-preview';
+    };
+
+    AnchorPreview.prototype = {
+
+        init: function (instance) {
+            this.base = instance;
+            this.anchorPreview = this.createPreview();
+            this.base.options.elementsContainer.appendChild(this.anchorPreview);
+
+            this.attachToEditables();
+        },
+
+        getPreviewElement: function () {
+            return this.anchorPreview;
+        },
+
+        createPreview: function () {
+            var el = this.base.options.ownerDocument.createElement('div');
+
+            el.id = 'medium-editor-anchor-preview-' + this.base.id;
+            el.className = 'medium-editor-anchor-preview';
+            el.innerHTML = this.getTemplate();
+
+            this.base.on(el, 'click', this.handleClick.bind(this));
+
+            return el;
+        },
+
+        getTemplate: function () {
+            return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
+                '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
+                '</div>';
+        },
+
+        deactivate: function () {
+            if (this.anchorPreview) {
+                if (this.anchorPreview.parentNode) {
+                    this.anchorPreview.parentNode.removeChild(this.anchorPreview);
+                }
+                delete this.anchorPreview;
+            }
+        },
+
+        hidePreview: function () {
+            this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
+            this.activeAnchor = null;
+        },
+
+        showPreview: function (anchorEl) {
+            if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')
+                    || anchorEl.getAttribute('data-disable-preview')) {
+                return true;
+            }
+
+            this.anchorPreview.querySelector('i').textContent = anchorEl.attributes.href.value;
+
+            this.anchorPreview.classList.add('medium-toolbar-arrow-over');
+            this.anchorPreview.classList.remove('medium-toolbar-arrow-under');
+
+            if (!this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
+                this.anchorPreview.classList.add('medium-editor-anchor-preview-active');
+            }
+
+            this.activeAnchor = anchorEl;
+
+            this.positionPreview();
+            this.attachPreviewHandlers();
+
+            return this;
+        },
+
+        positionPreview: function () {
+            var buttonHeight = 40,
+                boundary = this.activeAnchor.getBoundingClientRect(),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                halfOffsetWidth,
+                defaultLeft;
+
+            halfOffsetWidth = this.anchorPreview.offsetWidth / 2;
+            defaultLeft = this.base.options.diffLeft - halfOffsetWidth;
+
+            this.anchorPreview.style.top = Math.round(buttonHeight + boundary.bottom - this.base.options.diffTop + this.base.options.contentWindow.pageYOffset - this.anchorPreview.offsetHeight) + 'px';
+            if (middleBoundary < halfOffsetWidth) {
+                this.anchorPreview.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((this.base.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
+                this.anchorPreview.style.left = this.base.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                this.anchorPreview.style.left = defaultLeft + middleBoundary + 'px';
+            }
+        },
+
+        attachToEditables: function () {
+            this.base.elements.forEach(function (element) {
+                this.base.on(element, 'mouseover', this.handleEditableMouseover.bind(this));
+            }.bind(this));
+        },
+
+        handleClick: function (event) {
+            var range,
+                sel,
+                anchorExtension = this.base.getExtensionByName('anchor'),
+                activeAnchor = this.activeAnchor;
+
+            if (anchorExtension && activeAnchor) {
+                range = this.base.options.ownerDocument.createRange();
+                range.selectNodeContents(this.activeAnchor);
+
+                sel = this.base.options.contentWindow.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                // Using setTimeout + options.delay because:
+                // We may actually be displaying the anchor form, which should be controlled by options.delay
+                this.base.delay(function () {
+                    if (activeAnchor) {
+                        anchorExtension.showForm(activeAnchor.attributes.href.value);
+                        activeAnchor = null;
+                    }
+                }.bind(this));
+            }
+
+            this.hidePreview();
+        },
+
+        handleAnchorMouseout: function (event) {
+            this.anchorToPreview = null;
+            this.base.off(this.activeAnchor, 'mouseout', this.instance_handleAnchorMouseout);
+            this.instance_handleAnchorMouseout = null;
+        },
+
+        handleEditableMouseover: function (event) {
+            /*var overAnchor = true,
+                leaveAnchor = function () {
+                    // mark the anchor as no longer hovered, and stop listening
+                    overAnchor = false;
+                    this.base.off(this.activeAnchor, 'mouseout', leaveAnchor);
+                }.bind(this);*/
+
+            if (event.target && event.target.tagName.toLowerCase() === 'a') {
+
+                // Detect empty href attributes
+                // The browser will make href="" or href="#top"
+                // into absolute urls when accessed as event.targed.href, so check the html
+                if (!/href=["']\S+["']/.test(event.target.outerHTML) || /href=["']#\S+["']/.test(event.target.outerHTML)) {
+                    return true;
+                }
+
+                // only show when hovering on anchors
+                if (this.base.toolbar && this.base.toolbar.isDisplayed()) {
+                    // only show when toolbar is not present
+                    return true;
+                }
+
+                // detach handler for other anchor in case we hovered multiple anchors quickly
+                if (this.activeAnchor && this.activeAnchor !== event.target) {
+                    this.detachPreviewHandlers();
+                }
+
+                this.anchorToPreview = event.target;
+
+                this.instance_handleAnchorMouseout = this.handleAnchorMouseout.bind(this);
+                this.base.on(this.anchorToPreview, 'mouseout', this.instance_handleAnchorMouseout);
+                // Using setTimeout + options.delay because:
+                // - We're going to show the anchor preview according to the configured delay
+                //   if the mouse has not left the anchor tag in that time
+                this.base.delay(function () {
+                    if (this.anchorToPreview) {
+                        //this.activeAnchor = this.anchorToPreview;
+                        this.showPreview(this.anchorToPreview);
+                    }
+                }.bind(this));
+            }
+        },
+
+        handlePreviewMouseover: function (event) {
+            this.lastOver = (new Date()).getTime();
+            this.hovering = true;
+        },
+
+        handlePreviewMouseout: function (event) {
+            if (!event.relatedTarget || !/anchor-preview/.test(event.relatedTarget.className)) {
+                this.hovering = false;
+            }
+        },
+
+        updatePreview: function () {
+            if (this.hovering) {
+                return true;
+            }
+            var durr = (new Date()).getTime() - this.lastOver;
+            if (durr > this.base.options.anchorPreviewHideDelay) {
+                // hide the preview 1/2 second after mouse leaves the link
+                this.detachPreviewHandlers();
+            }
+        },
+
+        detachPreviewHandlers: function () {
+            // cleanup
+            clearInterval(this.interval_timer);
+            if (this.instance_handlePreviewMouseover) {
+                this.base.off(this.anchorPreview, 'mouseover', this.instance_handlePreviewMouseover);
+                this.base.off(this.anchorPreview, 'mouseout', this.instance_handlePreviewMouseout);
+                if (this.activeAnchor) {
+                    this.base.off(this.activeAnchor, 'mouseover', this.instance_handlePreviewMouseover);
+                    this.base.off(this.activeAnchor, 'mouseout', this.instance_handlePreviewMouseout);
+                }
+            }
+
+            this.hidePreview();
+
+            this.hovering = this.instance_handlePreviewMouseover = this.instance_handlePreviewMouseout = null;
+        },
+
+        // TODO: break up method and extract out handlers
+        attachPreviewHandlers: function () {
+            this.lastOver = (new Date()).getTime();
+            this.hovering = true;
+
+            this.instance_handlePreviewMouseover = this.handlePreviewMouseover.bind(this);
+            this.instance_handlePreviewMouseout = this.handlePreviewMouseout.bind(this);
+
+            this.interval_timer = setInterval(this.updatePreview.bind(this), 200);
+
+            this.base.on(this.anchorPreview, 'mouseover', this.instance_handlePreviewMouseover);
+            this.base.on(this.anchorPreview, 'mouseout', this.instance_handlePreviewMouseout);
+            this.base.on(this.activeAnchor, 'mouseover', this.instance_handlePreviewMouseover);
+            this.base.on(this.activeAnchor, 'mouseout', this.instance_handlePreviewMouseout);
+        }
+    };
+}(window, document));
+
+var Toolbar;
+
+(function (window, document) {
+    'use strict';
+
+    Toolbar = function Toolbar(instance) {
+        this.base = instance;
+        this.options = instance.options;
+        this.initThrottledMethods();
+    };
+
+    Toolbar.prototype = {
+
+        // Toolbar creation/deletion
+
+        createToolbar: function () {
+            var toolbar = this.base.options.ownerDocument.createElement('div');
+
+            toolbar.id = 'medium-editor-toolbar-' + this.base.id;
+            toolbar.className = 'medium-editor-toolbar';
+
+            if (this.options.staticToolbar) {
+                toolbar.className += " static-toolbar";
+            } else {
+                toolbar.className += " stalker-toolbar";
+            }
+
+            toolbar.appendChild(this.createToolbarButtons());
+
+            // Add any forms that extensions may have
+            this.base.commands.forEach(function (extension) {
+                if (extension.hasForm) {
+                    toolbar.appendChild(extension.getForm());
+                }
+            });
+
+            this.attachEventHandlers();
+
+            return toolbar;
+        },
+
+        createToolbarButtons: function () {
+            var ul = this.base.options.ownerDocument.createElement('ul'),
+                li,
+                btn,
+                buttons;
+
+            ul.id = 'medium-editor-toolbar-actions' + this.base.id;
+            ul.className = 'medium-editor-toolbar-actions clearfix';
+            ul.style.display = 'block';
+
+            this.base.commands.forEach(function (extension) {
+                if (typeof extension.getButton === 'function') {
+                    btn = extension.getButton(this.base);
+                    li = this.base.options.ownerDocument.createElement('li');
+                    if (Util.isElement(btn)) {
+                        li.appendChild(btn);
+                    } else {
+                        li.innerHTML = btn;
+                    }
+                    ul.appendChild(li);
+                }
+            }.bind(this));
+
+            buttons = ul.querySelectorAll('button');
+            if (buttons.length > 0) {
+                buttons[0].classList.add(this.options.firstButtonClass);
+                buttons[buttons.length - 1].classList.add(this.options.lastButtonClass);
+            }
+
+            return ul;
+        },
+
+        deactivate: function () {
+            if (this.toolbar) {
+                if (this.toolbar.parentNode) {
+                    this.toolbar.parentNode.removeChild(this.toolbar);
+                }
+                delete this.toolbar;
+            }
+        },
+
+        // Toolbar accessors
+
+        getToolbarElement: function () {
+            if (!this.toolbar) {
+                this.toolbar = this.createToolbar();
+            }
+
+            return this.toolbar;
+        },
+
+        getToolbarActionsElement: function () {
+            return this.getToolbarElement().querySelector('.medium-editor-toolbar-actions');
+        },
+
+        // Toolbar event handlers
+
+        initThrottledMethods: function () {
+            // throttledPositionToolbar is throttled because:
+            // - It will be called when the browser is resizing, which can fire many times very quickly
+            // - For some event (like resize) a slight lag in UI responsiveness is OK and provides performance benefits
+            this.throttledPositionToolbar = Util.throttle(function (event) {
+                if (this.base.isActive) {
+                    this.positionToolbarIfShown();
+                }
+            }.bind(this));
+
+            // throttledHideToolbarActions is throttled because:
+            // - This method could be called many times due to the type of event handlers that are calling it
+            // - We want a slight delay so that other events in the stack can run, some of which may
+            //   prevent the toolbar from being hidden
+            this.throttledHideToolbarActions = Util.throttle(function (event) {
+                if (this.base.isActive) {
+                    this.hideToolbarActions();
+                }
+            }.bind(this));
+        },
+
+        attachEventHandlers: function () {
+            // Handle mouseup on document for updating the selection in the toolbar
+            this.base.on(this.options.ownerDocument.documentElement, 'mouseup', this.handleDocumentMouseup.bind(this));
+
+            // Add a scroll event for sticky toolbar
+            if (this.options.staticToolbar && this.options.stickyToolbar) {
+                // On scroll (capture), re-position the toolbar
+                this.base.on(this.options.contentWindow, 'scroll', this.handleWindowScroll.bind(this), true);
+            }
+
+            // On resize, re-position the toolbar
+            this.base.on(this.options.contentWindow, 'resize', this.handleWindowResize.bind(this));
+
+            // Handlers for each contentedtiable element
+            this.base.elements.forEach(function (element) {
+                // Attach click handler to each contenteditable element
+                this.base.on(element, 'click', this.handleEditableClick.bind(this));
+
+                // Attach keyup handler to each contenteditable element
+                this.base.on(element, 'keyup', this.handleEditableKeyup.bind(this));
+
+                // Attach blur handler to each contenteditable element
+                this.base.on(element, 'blur', this.handleEditableBlur.bind(this));
+            }.bind(this));
+        },
+
+        handleWindowScroll: function (event) {
+            this.positionToolbarIfShown();
+        },
+
+        handleWindowResize: function (event) {
+            this.throttledPositionToolbar();
+        },
+
+        handleDocumentMouseup: function (event) {
+            // Do not trigger checkState when mouseup fires over the toolbar
+            if (event &&
+                    event.target &&
+                    Util.isDescendant(this.getToolbarElement(), event.target)) {
+                return false;
+            }
+            this.checkState();
+        },
+
+        handleEditableClick: function (event) {
+            // Delay the call to checkState to handle bug where selection is empty
+            // immediately after clicking inside a pre-existing selection
+            setTimeout(function () {
+                this.checkState();
+            }.bind(this), 0);
+        },
+
+        handleEditableKeyup: function (event) {
+            this.checkState();
+        },
+
+        handleEditableBlur: function (event) {
+            // Do not trigger checkState when bluring the editable area and clicking into the toolbar
+            if (event &&
+                    event.relatedTarget &&
+                    Util.isDescendant(this.getToolbarElement(), event.relatedTarget)) {
+                return false;
+            }
+            this.checkState();
+        },
+
+        handleBlur: function (event) {
+            // Hide the toolbar after a small delay so we can prevent this on toolbar click
+            this.throttledHideToolbarActions();
+        },
+
+        // Hiding/showing toolbar
+
+        isDisplayed: function () {
+            return this.getToolbarElement().classList.contains('medium-editor-toolbar-active');
+        },
+
+        showToolbar: function () {
+            if (!this.isDisplayed()) {
+                this.getToolbarElement().classList.add('medium-editor-toolbar-active');
+                if (typeof this.options.onShowToolbar === 'function') {
+                    this.options.onShowToolbar();
+                }
+            }
+        },
+
+        hideToolbar: function () {
+            if (this.isDisplayed()) {
+                this.getToolbarElement().classList.remove('medium-editor-toolbar-active');
+                if (typeof this.options.onHideToolbar === 'function') {
+                    this.options.onHideToolbar();
+                }
+            }
+        },
+
+        hideToolbarActions: function () {
+            this.base.commands.forEach(function (extension) {
+                if (extension.onHide && typeof extension.onHide === 'function') {
+                    extension.onHide();
+                }
+            });
+            this.hideToolbar();
+        },
+
+        isToolbarDefaultActionsDisplayed: function () {
+            return this.getToolbarActionsElement().style.display === 'block';
+        },
+
+        hideToolbarDefaultActions: function () {
+            if (this.isToolbarDefaultActionsDisplayed()) {
+                this.getToolbarActionsElement().style.display = 'none';
+            }
+        },
+
+        showToolbarDefaultActions: function () {
+            this.hideExtensionForms();
+
+            if (!this.isToolbarDefaultActionsDisplayed()) {
+                this.getToolbarActionsElement().style.display = 'block';
+            }
+
+            // Using setTimeout + options.delay because:
+            // We will actually be displaying the toolbar, which should be controlled by options.delay
+            this.base.delay(function () {
+                this.showToolbar();
+            }.bind(this));
+        },
+
+        hideExtensionForms: function () {
+            // Hide all extension forms
+            this.base.commands.forEach(function (extension) {
+                if (extension.hasForm && extension.isDisplayed()) {
+                    extension.hideForm();
+                }
+            });
+        },
+
+        // Responding to changes in user selection
+
+        // Checks for existance of multiple block elements in the current selection
+        multipleBlockElementsSelected: function () {
+            /*jslint regexp: true*/
+            var selectionHtml = Selection.getSelectionHtml.call(this).replace(/<[\S]+><\/[\S]+>/gim, ''),
+                hasMultiParagraphs = selectionHtml.match(/<(p|h[1-6]|blockquote)[^>]*>/g);
+            /*jslint regexp: false*/
+
+            return !!hasMultiParagraphs && hasMultiParagraphs.length > 1;
+        },
+
+        // TODO: selection and selectionRange should be properties of the
+        //       Selection object
+        checkSelectionElement: function (newSelection, selectionElement) {
+            var i,
+                adjacentNode,
+                offset = 0,
+                newRange;
+            this.base.selection = newSelection;
+            this.base.selectionRange = this.base.selection.getRangeAt(0);
+
+            /*
+            * In firefox, there are cases (ie doubleclick of a word) where the selectionRange start
+            * will be at the very end of an element.  In other browsers, the selectionRange start
+            * would instead be at the very beginning of an element that actually has content.
+            * example:
+            *   <span>foo</span><span>bar</span>
+            *
+            * If the text 'bar' is selected, most browsers will have the selectionRange start at the beginning
+            * of the 'bar' span.  However, there are cases where firefox will have the selectionRange start
+            * at the end of the 'foo' span.  The contenteditable behavior will be ok, but if there are any
+            * properties on the 'bar' span, they won't be reflected accurately in the toolbar
+            * (ie 'Bold' button wouldn't be active)
+            *
+            * So, for cases where the selectionRange start is at the end of an element/node, find the next
+            * adjacent text node that actually has content in it, and move the selectionRange start there.
+            */
+            if (this.options.standardizeSelectionStart &&
+                    this.base.selectionRange.startContainer.nodeValue &&
+                    (this.base.selectionRange.startOffset === this.base.selectionRange.startContainer.nodeValue.length)) {
+                adjacentNode = Util.findAdjacentTextNodeWithContent(Selection.getSelectionElement(this.options.contentWindow), this.base.selectionRange.startContainer, this.options.ownerDocument);
+                if (adjacentNode) {
+                    offset = 0;
+                    while (adjacentNode.nodeValue.substr(offset, 1).trim().length === 0) {
+                        offset = offset + 1;
+                    }
+                    newRange = this.options.ownerDocument.createRange();
+                    newRange.setStart(adjacentNode, offset);
+                    newRange.setEnd(this.base.selectionRange.endContainer, this.base.selectionRange.endOffset);
+                    this.base.selection.removeAllRanges();
+                    this.base.selection.addRange(newRange);
+                    this.base.selectionRange = newRange;
+                }
+            }
+
+            for (i = 0; i < this.base.elements.length; i += 1) {
+                if (this.base.elements[i] === selectionElement) {
+                    this.showAndUpdateToolbar();
+                    return;
+                }
+            }
+
+            if (!this.options.staticToolbar) {
+                this.hideToolbarActions();
+            }
+        },
+
+        checkState: function () {
+            var newSelection,
+                selectionElement;
+
+            if (!this.base.preventSelectionUpdates) {
+                newSelection = this.options.contentWindow.getSelection();
+                if ((!this.options.updateOnEmptySelection && newSelection.toString().trim() === '') ||
+                        (this.options.allowMultiParagraphSelection === false && this.multipleBlockElementsSelected()) ||
+                        Selection.selectionInContentEditableFalse(this.options.contentWindow)) {
+                    if (!this.options.staticToolbar) {
+                        this.hideToolbarActions();
+                    } else {
+                        this.showAndUpdateToolbar();
+                    }
+
+                } else {
+                    selectionElement = Selection.getSelectionElement(this.options.contentWindow);
+                    if (!selectionElement || selectionElement.getAttribute('data-disable-toolbar')) {
+                        if (!this.options.staticToolbar) {
+                            this.hideToolbarActions();
+                        }
+                    } else {
+                        this.checkSelectionElement(newSelection, selectionElement);
+                    }
+                }
+            }
+        },
+
+        // Updating the toolbar
+
+        showAndUpdateToolbar: function () {
+            this.setToolbarButtonStates();
+            this.showToolbarDefaultActions();
+            this.setToolbarPosition();
+        },
+
+        setToolbarButtonStates: function () {
+            this.base.commands.forEach(function (extension) {
+                if (typeof extension.isActive === 'function') {
+                    extension.setInactive();
+                }
+            }.bind(this));
+            this.checkActiveButtons();
+        },
+
+        checkActiveButtons: function () {
+            var manualStateChecks = [],
+                queryState = null,
+                parentNode,
+                updateExtensionState = function (extension) {
+                    if (typeof extension.checkState === 'function') {
+                        extension.checkState(parentNode);
+                    } else if (typeof extension.isActive === 'function' &&
+                               typeof extension.isAlreadyApplied === 'function') {
+                        if (!extension.isActive() && extension.isAlreadyApplied(parentNode)) {
+                            extension.setActive();
+                        }
+                    }
+                };
+
+            if (!this.base.selectionRange) {
+                return;
+            }
+
+            parentNode = Selection.getSelectedParentElement(this.base.selectionRange);
+
+            // Loop through all commands
+            this.base.commands.forEach(function (command) {
+                // For those commands where we can use document.queryCommandState(), do so
+                if (typeof command.queryCommandState === 'function') {
+                    queryState = command.queryCommandState();
+                    // If queryCommandState returns a valid value, we can trust the browser
+                    // and don't need to do our manual checks
+                    if (queryState !== null) {
+                        if (queryState) {
+                            command.setActive();
+                        }
+                        return;
+                    }
+                }
+                // We can't use queryCommandState for this command, so add to manualStateChecks
+                manualStateChecks.push(command);
+            });
+
+            // Climb up the DOM and do manual checks for whether a certain command is currently enabled for this node
+            while (parentNode.tagName !== undefined && Util.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+                manualStateChecks.forEach(updateExtensionState);
+
+                // we can abort the search upwards if we leave the contentEditable element
+                if (this.base.elements.indexOf(parentNode) !== -1) {
+                    break;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        },
+
+        // Positioning toolbar
+
+        positionToolbarIfShown: function () {
+            if (this.isDisplayed()) {
+                this.setToolbarPosition();
+            }
+        },
+
+        setToolbarPosition: function () {
+            var container = Selection.getSelectionElement(this.options.contentWindow),
+                selection = this.options.contentWindow.getSelection(),
+                anchorPreview;
+
+            // If there isn't a valid selection, bail
+            if (!container || !this.options.contentWindow.getSelection().focusNode) {
+                return this;
+            }
+
+            // If the container isn't part of this medium-editor instance, bail
+            if (this.base.elements.indexOf(container) === -1) {
+                return this;
+            }
+
+            if (this.options.staticToolbar) {
+                this.showToolbar();
+                this.positionStaticToolbar(container);
+
+            } else if (!selection.isCollapsed) {
+                this.showToolbar();
+                this.positionToolbar(selection);
+            }
+
+            anchorPreview = this.base.getExtensionByName('anchor-preview');
+
+            if (anchorPreview && typeof anchorPreview.hidePreview === 'function') {
+                anchorPreview.hidePreview();
+            }
+        },
+
+        positionStaticToolbar: function (container) {
+            // position the toolbar at left 0, so we can get the real width of the toolbar
+            this.getToolbarElement().style.left = '0';
+
+            // document.documentElement for IE 9
+            var scrollTop = (this.options.ownerDocument.documentElement && this.options.ownerDocument.documentElement.scrollTop) || this.options.ownerDocument.body.scrollTop,
+                windowWidth = this.options.contentWindow.innerWidth,
+                toolbarElement = this.getToolbarElement(),
+                containerRect = container.getBoundingClientRect(),
+                containerTop = containerRect.top + scrollTop,
+                containerCenter = (containerRect.left + (containerRect.width / 2)),
+                toolbarHeight = toolbarElement.offsetHeight,
+                toolbarWidth = toolbarElement.offsetWidth,
+                halfOffsetWidth = toolbarWidth / 2,
+                targetLeft;
+
+            if (this.options.stickyToolbar) {
+                // If it's beyond the height of the editor, position it at the bottom of the editor
+                if (scrollTop > (containerTop + container.offsetHeight - toolbarHeight)) {
+                    toolbarElement.style.top = (containerTop + container.offsetHeight - toolbarHeight) + 'px';
+                    toolbarElement.classList.remove('sticky-toolbar');
+
+                // Stick the toolbar to the top of the window
+                } else if (scrollTop > (containerTop - toolbarHeight)) {
+                    toolbarElement.classList.add('sticky-toolbar');
+                    toolbarElement.style.top = "0px";
+
+                // Normal static toolbar position
+                } else {
+                    toolbarElement.classList.remove('sticky-toolbar');
+                    toolbarElement.style.top = containerTop - toolbarHeight + "px";
+                }
+            } else {
+                toolbarElement.style.top = containerTop - toolbarHeight + "px";
+            }
+
+            if (this.options.toolbarAlign === 'left') {
+                targetLeft = containerRect.left;
+            } else if (this.options.toolbarAlign === 'center') {
+                targetLeft = containerCenter - halfOffsetWidth;
+            } else if (this.options.toolbarAlign === 'right') {
+                targetLeft = containerRect.right - toolbarWidth;
+            }
+
+            if (targetLeft < 0) {
+                targetLeft = 0;
+            } else if ((targetLeft + toolbarWidth) > windowWidth) {
+                targetLeft = windowWidth - toolbarWidth;
+            }
+
+            toolbarElement.style.left = targetLeft + 'px';
+        },
+
+        positionToolbar: function (selection) {
+            // position the toolbar at left 0, so we can get the real width of the toolbar
+            this.getToolbarElement().style.left = '0';
+
+            var windowWidth = this.options.contentWindow.innerWidth,
+                range = selection.getRangeAt(0),
+                boundary = range.getBoundingClientRect(),
+                middleBoundary = (boundary.left + boundary.right) / 2,
+                toolbarElement = this.getToolbarElement(),
+                toolbarHeight = toolbarElement.offsetHeight,
+                toolbarWidth = toolbarElement.offsetWidth,
+                halfOffsetWidth = toolbarWidth / 2,
+                buttonHeight = 50,
+                defaultLeft = this.options.diffLeft - halfOffsetWidth;
+
+            if (boundary.top < buttonHeight) {
+                toolbarElement.classList.add('medium-toolbar-arrow-over');
+                toolbarElement.classList.remove('medium-toolbar-arrow-under');
+                toolbarElement.style.top = buttonHeight + boundary.bottom - this.options.diffTop + this.options.contentWindow.pageYOffset - toolbarHeight + 'px';
+            } else {
+                toolbarElement.classList.add('medium-toolbar-arrow-under');
+                toolbarElement.classList.remove('medium-toolbar-arrow-over');
+                toolbarElement.style.top = boundary.top + this.options.diffTop + this.options.contentWindow.pageYOffset - toolbarHeight + 'px';
+            }
+            if (middleBoundary < halfOffsetWidth) {
+                toolbarElement.style.left = defaultLeft + halfOffsetWidth + 'px';
+            } else if ((windowWidth - middleBoundary) < halfOffsetWidth) {
+                toolbarElement.style.left = windowWidth + defaultLeft - halfOffsetWidth + 'px';
+            } else {
+                toolbarElement.style.left = defaultLeft + middleBoundary + 'px';
+            }
+        }
+    };
+}(window, document));
+
+function MediumEditor(elements, options) {
+    'use strict';
+    return this.init(elements, options);
+}
+
+(function () {
+    'use strict';
+
+    MediumEditor.statics = {
+        ButtonsData: ButtonsData,
+        DefaultButton: DefaultButton,
+        AnchorExtension: AnchorExtension,
+        Toolbar: Toolbar,
+        AnchorPreview: AnchorPreview
+    };
 
     MediumEditor.prototype = {
         defaults: {
             allowMultiParagraphSelection: true,
             anchorInputPlaceholder: 'Paste or type a link',
+            anchorInputCheckboxLabel: 'Open in new window',
             anchorPreviewHideDelay: 500,
             buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote'],
             buttonLabels: false,
@@ -90508,8 +92714,13 @@ else if (typeof define === 'function' && define.amd) {
             disableReturn: false,
             disableDoubleReturn: false,
             disableToolbar: false,
+            disableAnchorPreview: false,
             disableEditing: false,
+            disablePlaceholders: false,
+            toolbarAlign: 'center',
             elementsContainer: false,
+            imageDragging: true,
+            standardizeSelectionStart: false,
             contentWindow: window,
             ownerDocument: document,
             firstHeader: 'h3',
@@ -90526,59 +92737,83 @@ else if (typeof define === 'function' && define.amd) {
             lastButtonClass: 'medium-editor-button-last'
         },
 
-        // http://stackoverflow.com/questions/17907445/how-to-detect-ie11#comment30165888_17907562
-        // by rg89
-        isIE: ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null))),
-
         init: function (elements, options) {
-            this.options = extend(options, this.defaults);
+            var uniqueId = 1;
+
+            this.options = Util.defaults(options, this.defaults);
             this.setElementSelection(elements);
             if (this.elements.length === 0) {
                 return;
             }
-            this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
+
             if (!this.options.elementsContainer) {
-                this.options.elementsContainer = document.body;
+                this.options.elementsContainer = this.options.ownerDocument.body;
             }
-            this.id = this.options.elementsContainer.querySelectorAll('.medium-editor-toolbar').length + 1;
+
+            while (this.options.elementsContainer.querySelector('#medium-editor-toolbar-' + uniqueId)) {
+                uniqueId = uniqueId + 1;
+            }
+
+            this.id = uniqueId;
+
             return this.setup();
         },
 
         setup: function () {
             this.events = [];
             this.isActive = true;
-            this.initElements()
-                .bindSelect()
+            this.initCommands()
+                .initElements()
+                .bindDragDrop()
                 .bindPaste()
                 .setPlaceholders()
-                .bindWindowActions()
-                .passInstance();
+                .bindElementActions()
+                .bindBlur();
         },
 
-        on: function(target, event, listener, useCapture) {
+        on: function (target, event, listener, useCapture) {
             target.addEventListener(event, listener, useCapture);
             this.events.push([target, event, listener, useCapture]);
         },
 
-        off: function(target, event, listener, useCapture) {
-            var index = this.events.indexOf([target, event, listener, useCapture]),
+        off: function (target, event, listener, useCapture) {
+            var index = this.indexOfListener(target, event, listener, useCapture),
                 e;
-            if(index !== -1) {
-                e = this.events.splice(index, 1);
+            if (index !== -1) {
+                e = this.events.splice(index, 1)[0];
                 e[0].removeEventListener(e[1], e[2], e[3]);
             }
         },
 
-        removeAllEvents: function() {
+        indexOfListener: function (target, event, listener, useCapture) {
+            var i, n, item;
+            for (i = 0, n = this.events.length; i < n; i = i + 1) {
+                item = this.events[i];
+                if (item[0] === target && item[1] === event && item[2] === listener && item[3] === useCapture) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        delay: function (fn) {
+            var self = this;
+            setTimeout(function () {
+                if (self.isActive) {
+                    fn();
+                }
+            }, this.options.delay);
+        },
+
+        removeAllEvents: function () {
             var e = this.events.pop();
-            while(e) {
+            while (e) {
                 e[0].removeEventListener(e[1], e[2], e[3]);
                 e = this.events.pop();
             }
         },
 
         initElements: function () {
-            this.updateElementList();
             var i,
                 addToolbar = false;
             for (i = 0; i < this.elements.length; i += 1) {
@@ -90589,30 +92824,132 @@ else if (typeof define === 'function' && define.amd) {
                     this.elements[i].setAttribute('data-placeholder', this.options.placeholder);
                 }
                 this.elements[i].setAttribute('data-medium-element', true);
-                this.bindParagraphCreation(i).bindReturn(i).bindTab(i);
+                this.elements[i].setAttribute('role', 'textbox');
+                this.elements[i].setAttribute('aria-multiline', true);
+                this.bindParagraphCreation(i);
                 if (!this.options.disableToolbar && !this.elements[i].getAttribute('data-disable-toolbar')) {
                     addToolbar = true;
                 }
             }
             // Init toolbar
             if (addToolbar) {
-                this.initToolbar()
-                    .bindButtons()
-                    .bindAnchorForm()
-                    .bindAnchorPreview();
+                this.initToolbar();
             }
             return this;
         },
 
         setElementSelection: function (selector) {
-            this.elementSelection = selector;
-            this.updateElementList();
+            if (!selector) {
+                selector = [];
+            }
+            // If string, use as query selector
+            if (typeof selector === 'string') {
+                selector = this.options.ownerDocument.querySelectorAll(selector);
+            }
+            // If element, put into array
+            if (Util.isElement(selector)) {
+                selector = [selector];
+            }
+            // Convert NodeList (or other array like object) into an array
+            this.elements = Array.prototype.slice.apply(selector);
         },
 
-        updateElementList: function () {
-            this.elements = typeof this.elementSelection === 'string' ? this.options.ownerDocument.querySelectorAll(this.elementSelection) : this.elementSelection;
-            if (this.elements.nodeType === 1) {
-                this.elements = [this.elements];
+        bindBlur: function () {
+            var self = this,
+                blurFunction = function (e) {
+                    var isDescendantOfEditorElements = false,
+                        selection = self.options.contentWindow.getSelection(),
+                        toolbarEl = (self.toolbar) ? self.toolbar.getToolbarElement() : null,
+                        anchorPreview = self.getExtensionByName('anchor-preview'),
+                        previewEl = (anchorPreview && anchorPreview.getPreviewElement) ? anchorPreview.getPreviewElement() : null,
+                        selRange = selection.isCollapsed ?
+                                   null :
+                                   Selection.getSelectedParentElement(selection.getRangeAt(0)),
+                        i;
+
+                    // This control was introduced also to avoid the toolbar
+                    // to disapper when selecting from right to left and
+                    // the selection ends at the beginning of the text.
+                    for (i = 0; i < self.elements.length; i += 1) {
+                        if (self.elements[i] === e.target
+                                || Util.isDescendant(self.elements[i], e.target)
+                                || Util.isDescendant(self.elements[i], selRange)) {
+                            isDescendantOfEditorElements = true;
+                            break;
+                        }
+                    }
+                    // If it's not part of the editor, toolbar, or anchor preview
+                    if (!isDescendantOfEditorElements
+                            && (!toolbarEl || (toolbarEl !== e.target && !Util.isDescendant(toolbarEl, e.target)))
+                            && (!previewEl || (previewEl !== e.target && !Util.isDescendant(previewEl, e.target)))) {
+
+                        // Activate the placeholder
+                        if (!self.options.disablePlaceholders) {
+                            self.placeholderWrapper(e, self.elements[0]);
+                        }
+
+                        // Let the toolbar know that we've detected a blur
+                        if (self.toolbar) {
+                            self.toolbar.handleBlur(e);
+                        }
+                    }
+                };
+
+            // Hide the toolbar when focusing outside of the editor.
+            this.on(this.options.ownerDocument.body, 'click', blurFunction, true);
+            this.on(this.options.ownerDocument.body, 'focus', blurFunction, true);
+
+            return this;
+        },
+
+        bindClick: function (i) {
+            if (!this.options.disablePlaceholders) {
+                this.on(this.elements[i], 'click', function () {
+                    // Remove placeholder
+                    this.classList.remove('medium-editor-placeholder');
+                });
+            }
+
+            return this;
+        },
+
+        /**
+         * This handles blur and keypress events on elements
+         * Including Placeholders, and tooldbar hiding on blur
+         */
+        bindElementActions: function () {
+            var i;
+
+            for (i = 0; i < this.elements.length; i += 1) {
+
+                if (!this.options.disablePlaceholders) {
+                    // Active all of the placeholders
+                    this.activatePlaceholder(this.elements[i]);
+                }
+
+                // Bind the return and tab keypress events
+                this.bindReturn(i)
+                    .bindKeydown(i)
+                    .bindClick(i);
+            }
+
+            return this;
+        },
+
+        // Two functions to handle placeholders
+        activatePlaceholder:  function (el) {
+            if (!(el.querySelector('img')) &&
+                    !(el.querySelector('blockquote')) &&
+                    el.textContent.replace(/^\s+|\s+$/g, '') === '') {
+
+                el.classList.add('medium-editor-placeholder');
+            }
+        },
+        placeholderWrapper: function (evt, el) {
+            el = el || evt.target;
+            el.classList.remove('medium-editor-placeholder');
+            if (evt.type !== 'keypress') {
+                this.activatePlaceholder(el);
             }
         },
 
@@ -90627,6 +92964,91 @@ else if (typeof define === 'function' && define.amd) {
                 };
             }
             return content;
+        },
+
+        initExtension: function (extension, name) {
+            if (extension.parent) {
+                extension.base = this;
+            }
+            if (typeof extension.init === 'function') {
+                extension.init(this);
+            }
+            if (!extension.name) {
+                extension.name = name;
+            }
+            return extension;
+        },
+
+        shouldAddDefaultAnchorPreview: function () {
+            var i,
+                shouldAdd = false;
+
+            // If anchor-preview is disabled, don't add
+            if (this.options.disableAnchorPreview) {
+                return false;
+            }
+            // If anchor-preview extension has been overriden, don't add
+            if (this.options.extensions['anchor-preview']) {
+                return false;
+            }
+            // If toolbar is disabled, don't add
+            if (this.options.disableToolbar) {
+                return false;
+            }
+            // If all elements have 'data-disable-toolbar' attribute, don't add
+            for (i = 0; i < this.elements.length; i += 1) {
+                if (!this.elements[i].getAttribute('data-disable-toolbar')) {
+                    shouldAdd = true;
+                }
+            }
+
+            return shouldAdd;
+        },
+
+        initCommands: function () {
+            var buttons = this.options.buttons,
+                extensions = this.options.extensions,
+                ext,
+                name;
+            this.commands = [];
+
+            buttons.forEach(function (buttonName) {
+                if (extensions[buttonName]) {
+                    ext = this.initExtension(extensions[buttonName], buttonName);
+                    this.commands.push(ext);
+                } else if (buttonName === 'anchor') {
+                    ext = this.initExtension(new AnchorExtension(), buttonName);
+                    this.commands.push(ext);
+                } else if (ButtonsData.hasOwnProperty(buttonName)) {
+                    ext = new DefaultButton(ButtonsData[buttonName], this);
+                    this.commands.push(ext);
+                }
+            }.bind(this));
+
+            for (name in extensions) {
+                if (extensions.hasOwnProperty(name) && buttons.indexOf(name) === -1) {
+                    ext = this.initExtension(extensions[name], name);
+                }
+            }
+
+            // Add AnchorPreview as extension if needed
+            if (this.shouldAddDefaultAnchorPreview()) {
+                this.commands.push(this.initExtension(new AnchorPreview(), 'anchor-preview'));
+            }
+
+            return this;
+        },
+
+        getExtensionByName: function (name) {
+            var extension;
+            if (this.commands && this.commands.length) {
+                this.commands.forEach(function (ext) {
+                    if (ext.name === name) {
+                        extension = ext;
+                    }
+                });
+            }
+            return extension;
         },
 
         /**
@@ -90653,64 +93075,49 @@ else if (typeof define === 'function' && define.amd) {
                     }
                 }
             }
-        },
-
-        /**
-         * Pass current Medium Editor instance to all extensions
-         * if extension constructor has 'parent' attribute set to 'true'
-         *
-         */
-        passInstance: function () {
-            var self = this,
-                ext,
-                name;
-
-            for (name in self.options.extensions) {
-                if (self.options.extensions.hasOwnProperty(name)) {
-                    ext = self.options.extensions[name];
-
-                    if (ext.parent) {
-                        ext.base = self;
-                    }
-                }
-            }
-
-            return self;
+            return this;
         },
 
         bindParagraphCreation: function (index) {
             var self = this;
             this.on(this.elements[index], 'keypress', function (e) {
-                var node = getSelectionStart.call(self),
+                var node,
                     tagName;
-                if (e.which === 32) {
+                if (e.which === Util.keyCode.SPACE) {
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
                     tagName = node.tagName.toLowerCase();
                     if (tagName === 'a') {
-                        document.execCommand('unlink', false, null);
+                        self.options.ownerDocument.execCommand('unlink', false, null);
                     }
                 }
             });
 
             this.on(this.elements[index], 'keyup', function (e) {
-                var node = getSelectionStart.call(self),
+                var node = Selection.getSelectionStart(self.options.ownerDocument),
                     tagName,
                     editorElement;
 
-                if (node && node.getAttribute('data-medium-element') && node.children.length === 0 && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
-                    document.execCommand('formatBlock', false, 'p');
+                if (node
+                        && node.getAttribute('data-medium-element')
+                        && node.children.length === 0
+                        && !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
+                    self.options.ownerDocument.execCommand('formatBlock', false, 'p');
                 }
-                if (e.which === 13) {
-                    node = getSelectionStart.call(self);
+                if (e.which === Util.keyCode.ENTER) {
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
                     tagName = node.tagName.toLowerCase();
-                    editorElement = self.getSelectionElement();
+                    editorElement = Selection.getSelectionElement(self.options.contentWindow);
 
                     if (!(self.options.disableReturn || editorElement.getAttribute('data-disable-return')) &&
-                        tagName !== 'li' && !self.isListItemChild(node)) {
-                        if (!e.shiftKey) {
-                            document.execCommand('formatBlock', false, 'p');
-                        }
+                            tagName !== 'li' && !Util.isListItemChild(node)) {
+                        // For anchor tags, unlink
                         if (tagName === 'a') {
-                            document.execCommand('unlink', false, null);
+                            self.options.ownerDocument.execCommand('unlink', false, null);
+                        } else if (!e.shiftKey) {
+                            // only format block if this is not a header tag
+                            if (!/h\d/.test(tagName)) {
+                                self.options.ownerDocument.execCommand('formatBlock', false, 'p');
+                            }
                         }
                     }
                 }
@@ -90718,32 +93125,15 @@ else if (typeof define === 'function' && define.amd) {
             return this;
         },
 
-        isListItemChild: function (node) {
-            var parentNode = node.parentNode,
-                tagName = parentNode.tagName.toLowerCase();
-            while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
-                if (tagName === 'li') {
-                    return true;
-                }
-                parentNode = parentNode.parentNode;
-                if (parentNode && parentNode.tagName) {
-                    tagName = parentNode.tagName.toLowerCase();
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        },
-
         bindReturn: function (index) {
             var self = this;
             this.on(this.elements[index], 'keypress', function (e) {
-                if (e.which === 13) {
+                if (e.which === Util.keyCode.ENTER) {
                     if (self.options.disableReturn || this.getAttribute('data-disable-return')) {
                         e.preventDefault();
                     } else if (self.options.disableDoubleReturn || this.getAttribute('data-disable-double-return')) {
-                        var node = getSelectionStart.call(self);
-                        if (node && node.innerText === '\n') {
+                        var node = Selection.getSelectionStart(self.options.contentWindow);
+                        if (node && node.textContent.trim() === '') {
                             e.preventDefault();
                         }
                     }
@@ -90752,508 +93142,277 @@ else if (typeof define === 'function' && define.amd) {
             return this;
         },
 
-        bindTab: function (index) {
+        bindKeydown: function (index) {
             var self = this;
             this.on(this.elements[index], 'keydown', function (e) {
-                if (e.which === 9) {
+                var node, tag, key;
+
+                if (e.which === Util.keyCode.TAB) {
                     // Override tab only for pre nodes
-                    var tag = getSelectionStart.call(self).tagName.toLowerCase();
+                    node = Selection.getSelectionStart(self.options.ownerDocument);
+                    tag = node && node.tagName.toLowerCase();
+
                     if (tag === 'pre') {
                         e.preventDefault();
-                        document.execCommand('insertHtml', null, '    ');
+                        Util.insertHTMLCommand(self.options.ownerDocument, '    ');
                     }
 
                     // Tab to indent list structures!
-                    if (tag === 'li') {
+                    if (tag === 'li' || Util.isListItemChild(node)) {
                         e.preventDefault();
 
                         // If Shift is down, outdent, otherwise indent
                         if (e.shiftKey) {
-                            document.execCommand('outdent', e);
+                            self.options.ownerDocument.execCommand('outdent', false, null);
                         } else {
-                            document.execCommand('indent', e);
+                            self.options.ownerDocument.execCommand('indent', false, null);
                         }
                     }
+                } else if (e.which === Util.keyCode.BACKSPACE || e.which === Util.keyCode.DELETE || e.which === Util.keyCode.ENTER) {
+
+                    // Bind keys which can create or destroy a block element: backspace, delete, return
+                    self.onBlockModifier(e);
+
+                } else if (e.ctrlKey || e.metaKey) {
+                    key = String.fromCharCode(e.which || e.keyCode).toLowerCase();
+                    self.commands.forEach(function (extension) {
+                        if (extension.options && extension.options.key && extension.options.key === key) {
+                            extension.handleClick(e);
+                        }
+                    });
                 }
             });
             return this;
         },
 
-        buttonTemplate: function (btnType) {
-            var buttonLabels = this.getButtonLabels(this.options.buttonLabels),
-                buttonTemplates = {
-                    'bold': '<button class="medium-editor-action medium-editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-                    'italic': '<button class="medium-editor-action medium-editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-                    'underline': '<button class="medium-editor-action medium-editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-                    'strikethrough': '<button class="medium-editor-action medium-editor-action-strikethrough" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough +'</button>',
-                    'superscript': '<button class="medium-editor-action medium-editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-                    'subscript': '<button class="medium-editor-action medium-editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
-                    'anchor': '<button class="medium-editor-action medium-editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
-                    'image': '<button class="medium-editor-action medium-editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
-                    'header1': '<button class="medium-editor-action medium-editor-action-header1" data-action="append-' + this.options.firstHeader + '" data-element="' + this.options.firstHeader + '">' + buttonLabels.header1 + '</button>',
-                    'header2': '<button class="medium-editor-action medium-editor-action-header2" data-action="append-' + this.options.secondHeader + '" data-element="' + this.options.secondHeader + '">' + buttonLabels.header2 + '</button>',
-                    'quote': '<button class="medium-editor-action medium-editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-                    'orderedlist': '<button class="medium-editor-action medium-editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-                    'unorderedlist': '<button class="medium-editor-action medium-editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-                    'pre': '<button class="medium-editor-action medium-editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
-                    'indent': '<button class="medium-editor-action medium-editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-                    'outdent': '<button class="medium-editor-action medium-editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-                    'justifyCenter': '<button class="medium-editor-action medium-editor-action-justifyCenter" data-action="justifyCenter" data-element="">' + buttonLabels.justifyCenter + '</button>',
-                    'justifyFull': '<button class="medium-editor-action medium-editor-action-justifyFull" data-action="justifyFull" data-element="">' + buttonLabels.justifyFull + '</button>',
-                    'justifyLeft': '<button class="medium-editor-action medium-editor-action-justifyLeft" data-action="justifyLeft" data-element="">' + buttonLabels.justifyLeft + '</button>',
-                    'justifyRight': '<button class="medium-editor-action medium-editor-action-justifyRight" data-action="justifyRight" data-element="">' + buttonLabels.justifyRight + '</button>'
-                };
-            return buttonTemplates[btnType] || false;
-        },
+        onBlockModifier: function (e) {
+            var range, sel, p, node = Selection.getSelectionStart(this.options.ownerDocument),
+                tagName = node.tagName.toLowerCase(),
+                isEmpty = /^(\s+|<br\/?>)?$/i,
+                isHeader = /h\d/i;
 
-        // TODO: break method
-        getButtonLabels: function (buttonLabelType) {
-            var customButtonLabels,
-                attrname,
-                buttonLabels = {
-                    'bold': '<b>B</b>',
-                    'italic': '<b><i>I</i></b>',
-                    'underline': '<b><u>U</u></b>',
-                    'strikethrough': '<s>A</s>',
-                    'superscript': '<b>x<sup>1</sup></b>',
-                    'subscript': '<b>x<sub>1</sub></b>',
-                    'anchor': '<b>#</b>',
-                    'image': '<b>image</b>',
-                    'header1': '<b>H1</b>',
-                    'header2': '<b>H2</b>',
-                    'quote': '<b>&ldquo;</b>',
-                    'orderedlist': '<b>1.</b>',
-                    'unorderedlist': '<b>&bull;</b>',
-                    'pre': '<b>0101</b>',
-                    'indent': '<b>&rarr;</b>',
-                    'outdent': '<b>&larr;</b>',
-                    'justifyCenter': '<b>C</b>',
-                    'justifyFull': '<b>J</b>',
-                    'justifyLeft': '<b>L</b>',
-                    'justifyRight': '<b>R</b>'
-                };
-            if (buttonLabelType === 'fontawesome') {
-                customButtonLabels = {
-                    'bold': '<i class="fa fa-bold"></i>',
-                    'italic': '<i class="fa fa-italic"></i>',
-                    'underline': '<i class="fa fa-underline"></i>',
-                    'strikethrough': '<i class="fa fa-strikethrough"></i>',
-                    'superscript': '<i class="fa fa-superscript"></i>',
-                    'subscript': '<i class="fa fa-subscript"></i>',
-                    'anchor': '<i class="fa fa-link"></i>',
-                    'image': '<i class="fa fa-picture-o"></i>',
-                    'quote': '<i class="fa fa-quote-right"></i>',
-                    'orderedlist': '<i class="fa fa-list-ol"></i>',
-                    'unorderedlist': '<i class="fa fa-list-ul"></i>',
-                    'pre': '<i class="fa fa-code fa-lg"></i>',
-                    'indent': '<i class="fa fa-indent"></i>',
-                    'outdent': '<i class="fa fa-outdent"></i>',
-                    'justifyCenter': '<i class="fa fa-align-center"></i>',
-                    'justifyFull': '<i class="fa fa-align-justify"></i>',
-                    'justifyLeft': '<i class="fa fa-align-left"></i>',
-                    'justifyRight': '<i class="fa fa-align-right"></i>'
-                };
-            } else if (typeof buttonLabelType === 'object') {
-                customButtonLabels = buttonLabelType;
-            }
-            if (typeof customButtonLabels === 'object') {
-                for (attrname in customButtonLabels) {
-                    if (customButtonLabels.hasOwnProperty(attrname)) {
-                        buttonLabels[attrname] = customButtonLabels[attrname];
-                    }
+            if ((e.which === Util.keyCode.BACKSPACE || e.which === Util.keyCode.ENTER)
+                    && node.previousElementSibling
+                    // in a header
+                    && isHeader.test(tagName)
+                    // at the very end of the block
+                    && Selection.getCaretOffsets(node).left === 0) {
+                if (e.which === Util.keyCode.BACKSPACE && isEmpty.test(node.previousElementSibling.innerHTML)) {
+                    // backspacing the begining of a header into an empty previous element will
+                    // change the tagName of the current node to prevent one
+                    // instead delete previous node and cancel the event.
+                    node.previousElementSibling.parentNode.removeChild(node.previousElementSibling);
+                    e.preventDefault();
+                } else if (e.which === Util.keyCode.ENTER) {
+                    // hitting return in the begining of a header will create empty header elements before the current one
+                    // instead, make "<p><br></p>" element, which are what happens if you hit return in an empty paragraph
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.previousElementSibling.parentNode.insertBefore(p, node);
+                    e.preventDefault();
                 }
+            } else if (e.which === Util.keyCode.DELETE
+                        && node.nextElementSibling
+                        && node.previousElementSibling
+                        // not in a header
+                        && !isHeader.test(tagName)
+                        // in an empty tag
+                        && isEmpty.test(node.innerHTML)
+                        // when the next tag *is* a header
+                        && isHeader.test(node.nextElementSibling.tagName)) {
+                // hitting delete in an empty element preceding a header, ex:
+                //  <p>[CURSOR]</p><h1>Header</h1>
+                // Will cause the h1 to become a paragraph.
+                // Instead, delete the paragraph node and move the cursor to the begining of the h1
+
+                // remove node and move cursor to start of header
+                range = document.createRange();
+                sel = this.options.contentWindow.getSelection();
+
+                range.setStart(node.nextElementSibling, 0);
+                range.collapse(true);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                node.previousElementSibling.parentNode.removeChild(node);
+
+                e.preventDefault();
             }
-            return buttonLabels;
         },
 
         initToolbar: function () {
             if (this.toolbar) {
                 return this;
             }
-            this.toolbar = this.createToolbar();
-            this.keepToolbarAlive = false;
-            this.anchorForm = this.toolbar.querySelector('.medium-editor-toolbar-form-anchor');
-            this.anchorInput = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-input');
-            this.anchorTarget = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-target');
-            this.anchorButton = this.anchorForm.querySelector('input.medium-editor-toolbar-anchor-button');
-            this.toolbarActions = this.toolbar.querySelector('.medium-editor-toolbar-actions');
-            this.anchorPreview = this.createAnchorPreview();
+            this.toolbar = new Toolbar(this);
+            this.options.elementsContainer.appendChild(this.toolbar.getToolbarElement());
 
             return this;
         },
 
-        createToolbar: function () {
-            var toolbar = document.createElement('div');
-            toolbar.id = 'medium-editor-toolbar-' + this.id;
-            toolbar.className = 'medium-editor-toolbar';
-            toolbar.appendChild(this.toolbarButtons());
-            toolbar.appendChild(this.toolbarFormAnchor());
-            this.options.elementsContainer.appendChild(toolbar);
-            return toolbar;
-        },
+        bindDragDrop: function () {
+            var self = this, i, className, onDrag, onDrop, element;
 
-        //TODO: actionTemplate
-        toolbarButtons: function () {
-            var btns = this.options.buttons,
-                ul = document.createElement('ul'),
-                li,
-                i,
-                btn,
-                ext;
+            if (!self.options.imageDragging) {
+                return this;
+            }
 
-            ul.id = 'medium-editor-toolbar-actions';
-            ul.className = 'medium-editor-toolbar-actions clearfix';
+            className = 'medium-editor-dragover';
 
-            for (i = 0; i < btns.length; i += 1) {
-                if (this.options.extensions.hasOwnProperty(btns[i])) {
-                    ext = this.options.extensions[btns[i]];
-                    btn = ext.getButton !== undefined ? ext.getButton() : null;
+            onDrag = function (e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "copy";
+
+                if (e.type === "dragover") {
+                    this.classList.add(className);
                 } else {
-                    btn = this.buttonTemplate(btns[i]);
+                    this.classList.remove(className);
                 }
-
-                if (btn) {
-                    li = document.createElement('li');
-                    if (isElement(btn)) {
-                        li.appendChild(btn);
-                    } else {
-                        li.innerHTML = btn;
-                    }
-                    ul.appendChild(li);
-                }
-            }
-
-            return ul;
-        },
-
-        toolbarFormAnchor: function () {
-            var anchor = document.createElement('div'),
-                input = document.createElement('input'),
-                target_label = document.createElement('label'),
-                target = document.createElement('input'),
-                button_label = document.createElement('label'),
-                button = document.createElement('input'),
-                close = document.createElement('a'),
-                save = document.createElement('a');
-
-            close.setAttribute('href', '#');
-            close.className = 'medium-editor-toobar-anchor-close';
-            close.innerHTML = '&times;';
-
-            save.setAttribute('href', '#');
-            save.className = 'medium-editor-toobar-anchor-save';
-            save.innerHTML = '&#10003;';
-
-            input.setAttribute('type', 'text');
-            input.className = 'medium-editor-toolbar-anchor-input';
-            input.setAttribute('placeholder', this.options.anchorInputPlaceholder);
-
-
-            target.setAttribute('type', 'checkbox');
-            target.className = 'medium-editor-toolbar-anchor-target';
-            target_label.innerHTML = "Open in New Window?";
-            target_label.insertBefore(target, target_label.firstChild);
-
-            button.setAttribute('type', 'checkbox');
-            button.className = 'medium-editor-toolbar-anchor-button';
-            button_label.innerHTML = "Button";
-            button_label.insertBefore(button, button_label.firstChild);
-
-
-            anchor.className = 'medium-editor-toolbar-form-anchor';
-            anchor.id = 'medium-editor-toolbar-form-anchor';
-            anchor.appendChild(input);
-
-            anchor.appendChild(save);
-            anchor.appendChild(close);
-
-            if (this.options.anchorTarget) {
-                anchor.appendChild(target_label);
-            }
-
-            if (this.options.anchorButton) {
-                anchor.appendChild(button_label);
-            }
-
-            return anchor;
-        },
-
-        bindSelect: function () {
-            var self = this,
-                timer = '',
-                i;
-
-            this.checkSelectionWrapper = function (e) {
-
-                // Do not close the toolbar when bluring the editable area and clicking into the anchor form
-                if (e && self.clickingIntoArchorForm(e)) {
-                    return false;
-                }
-
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    self.checkSelection();
-                }, self.options.delay);
             };
 
-            this.on(document.documentElement, 'mouseup', this.checkSelectionWrapper);
+            onDrop = function (e) {
+                var files;
+                e.preventDefault();
+                e.stopPropagation();
+                // IE9 does not support the File API, so prevent file from opening in a new window
+                // but also don't try to actually get the file
+                if (e.dataTransfer.files) {
+                    files = Array.prototype.slice.call(e.dataTransfer.files, 0);
+                    files.some(function (file) {
+                        if (file.type.match("image")) {
+                            var fileReader, id;
+                            fileReader = new FileReader();
+                            fileReader.readAsDataURL(file);
+
+                            id = 'medium-img-' + (+new Date());
+                            Util.insertHTMLCommand(self.options.ownerDocument, '<img class="medium-image-loading" id="' + id + '" />');
+
+                            fileReader.onload = function () {
+                                var img = document.getElementById(id);
+                                if (img) {
+                                    img.removeAttribute('id');
+                                    img.removeAttribute('class');
+                                    img.src = fileReader.result;
+                                }
+                            };
+                        }
+                    });
+                }
+                this.classList.remove(className);
+            };
 
             for (i = 0; i < this.elements.length; i += 1) {
-                this.on(this.elements[i], 'keyup', this.checkSelectionWrapper);
-                this.on(this.elements[i], 'blur', this.checkSelectionWrapper);
+                element = this.elements[i];
+
+                this.on(element, 'dragover', onDrag);
+                this.on(element, 'dragleave', onDrag);
+                this.on(element, 'drop', onDrop);
             }
             return this;
+        },
+
+        stopSelectionUpdates: function () {
+            this.preventSelectionUpdates = true;
+        },
+
+        startSelectionUpdates: function () {
+            this.preventSelectionUpdates = false;
         },
 
         checkSelection: function () {
-            var newSelection,
-                selectionElement;
-
-            if (this.keepToolbarAlive !== true && !this.options.disableToolbar) {
-
-                newSelection = this.options.contentWindow.getSelection();
-                if (newSelection.toString().trim() === '' ||
-                    (this.options.allowMultiParagraphSelection === false && this.hasMultiParagraphs()) ||
-                    this.selectionInContentEditableFalse()) {
-                    this.hideToolbarActions();
-                } else {
-                    selectionElement = this.getSelectionElement();
-                    if (!selectionElement || selectionElement.getAttribute('data-disable-toolbar')) {
-                        this.hideToolbarActions();
-                    } else {
-                        this.checkSelectionElement(newSelection, selectionElement);
-                    }
-                }
+            if (this.toolbar) {
+                this.toolbar.checkState();
             }
             return this;
         },
 
-        clickingIntoArchorForm: function (e) {
-            var self = this;
+        // Wrapper around document.queryCommandState for checking whether an action has already
+        // been applied to the current selection
+        queryCommandState: function (action) {
+            var fullAction = /^full-(.+)$/gi,
+                match,
+                queryState = null;
 
-            if (e.type && e.type.toLowerCase() === 'blur' && e.relatedTarget && e.relatedTarget === self.anchorInput) {
-                return true;
+            // Actions starting with 'full-' need to be modified since this is a medium-editor concept
+            match = fullAction.exec(action);
+            if (match) {
+                action = match[1];
             }
 
-            return false;
-        },
-
-        hasMultiParagraphs: function () {
-            var selectionHtml = getSelectionHtml.call(this).replace(/<[\S]+><\/[\S]+>/gim, ''),
-                hasMultiParagraphs = selectionHtml.match(/<(p|h[0-6]|blockquote)>([\s\S]*?)<\/(p|h[0-6]|blockquote)>/g);
-
-            return (hasMultiParagraphs ? hasMultiParagraphs.length : 0);
-        },
-
-        checkSelectionElement: function (newSelection, selectionElement) {
-            var i;
-            this.selection = newSelection;
-            this.selectionRange = this.selection.getRangeAt(0);
-            for (i = 0; i < this.elements.length; i += 1) {
-                if (this.elements[i] === selectionElement) {
-                    this.setToolbarButtonStates()
-                        .setToolbarPosition()
-                        .showToolbarActions();
-                    return;
-                }
-            }
-            this.hideToolbarActions();
-        },
-
-        findMatchingSelectionParent: function(testElementFunction) {
-            var selection = this.options.contentWindow.getSelection(), range, current;
-
-            if (selection.rangeCount === 0) {
-                return false;
+            try {
+                queryState = this.options.ownerDocument.queryCommandState(action);
+            } catch (exc) {
+                queryState = null;
             }
 
-            range = selection.getRangeAt(0);
-            current = range.commonAncestorContainer;
-
-            do {
-              if (current.nodeType === 1){
-                if ( testElementFunction(current) )
-                {
-                    return current;
-                }
-                // do not traverse upwards past the nearest containing editor
-                if (current.getAttribute('data-medium-element')) {
-                    return false;
-                }
-              }
-
-              current = current.parentNode;
-            } while (current);
-
-            return false;
+            return queryState;
         },
 
-        getSelectionElement: function () {
-            return this.findMatchingSelectionParent(function(el) {
-                return el.getAttribute('data-medium-element');
-            });
-        },
+        execAction: function (action, opts) {
+            /*jslint regexp: true*/
+            var fullAction = /^full-(.+)$/gi,
+                match,
+                result;
+            /*jslint regexp: false*/
 
-        selectionInContentEditableFalse: function () {
-            return this.findMatchingSelectionParent(function(el) {
-                return (el && el.nodeName !== '#text' && el.getAttribute('contenteditable') === 'false');
-            });
-        },
-
-        setToolbarPosition: function () {
-            var buttonHeight = 50,
-                selection = this.options.contentWindow.getSelection(),
-                range = selection.getRangeAt(0),
-                boundary = range.getBoundingClientRect(),
-                defaultLeft = (this.options.diffLeft) - (this.toolbar.offsetWidth / 2),
-                middleBoundary = (boundary.left + boundary.right) / 2,
-                halfOffsetWidth = this.toolbar.offsetWidth / 2;
-            if (boundary.top < buttonHeight) {
-                this.toolbar.classList.add('medium-toolbar-arrow-over');
-                this.toolbar.classList.remove('medium-toolbar-arrow-under');
-                this.toolbar.style.top = buttonHeight + boundary.bottom - this.options.diffTop + this.options.contentWindow.pageYOffset - this.toolbar.offsetHeight + 'px';
+            // Actions starting with 'full-' should be applied to to the entire contents of the editable element
+            // (ie full-bold, full-append-pre, etc.)
+            match = fullAction.exec(action);
+            if (match) {
+                // Store the current selection to be restored after applying the action
+                this.saveSelection();
+                // Select all of the contents before calling the action
+                this.selectAllContents();
+                result = this.execActionInternal(match[1], opts);
+                // Restore the previous selection
+                this.restoreSelection();
             } else {
-                this.toolbar.classList.add('medium-toolbar-arrow-under');
-                this.toolbar.classList.remove('medium-toolbar-arrow-over');
-                this.toolbar.style.top = boundary.top + this.options.diffTop + this.options.contentWindow.pageYOffset - this.toolbar.offsetHeight + 'px';
-            }
-            if (middleBoundary < halfOffsetWidth) {
-                this.toolbar.style.left = defaultLeft + halfOffsetWidth + 'px';
-            } else if ((this.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
-                this.toolbar.style.left = this.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
-            } else {
-                this.toolbar.style.left = defaultLeft + middleBoundary + 'px';
+                result = this.execActionInternal(action, opts);
             }
 
-            this.hideAnchorPreview();
-
-            return this;
+            this.checkSelection();
+            return result;
         },
 
-        setToolbarButtonStates: function () {
-            var buttons = this.toolbarActions.querySelectorAll('button'),
-                i;
-            for (i = 0; i < buttons.length; i += 1) {
-                buttons[i].classList.remove(this.options.activeButtonClass);
+        execActionInternal: function (action, opts) {
+            /*jslint regexp: true*/
+            var appendAction = /^append-(.+)$/gi,
+                match;
+            /*jslint regexp: false*/
+
+            // Actions starting with 'append-' should attempt to format a block of text ('formatBlock') using a specific
+            // type of block element (ie append-blockquote, append-h1, append-pre, etc.)
+            match = appendAction.exec(action);
+            if (match) {
+                return this.execFormatBlock(match[1]);
             }
-            this.checkActiveButtons();
-            return this;
+
+            if (action === 'createLink') {
+                return this.createLink(opts);
+            }
+
+            if (action === 'image') {
+                return this.options.ownerDocument.execCommand('insertImage', false, this.options.contentWindow.getSelection());
+            }
+
+            return this.options.ownerDocument.execCommand(action, false, null);
         },
 
-        checkActiveButtons: function () {
-            var elements = Array.prototype.slice.call(this.elements),
-                parentNode = this.getSelectedParentElement();
-            while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
-                this.activateButton(parentNode.tagName.toLowerCase());
-                this.callExtensions('checkState', parentNode);
-
-                // we can abort the search upwards if we leave the contentEditable element
-                if (elements.indexOf(parentNode) !== -1) {
-                    break;
-                }
-                parentNode = parentNode.parentNode;
+        getSelectedParentElement: function (range) {
+            if (range === undefined) {
+                range = this.options.contentWindow.getSelection().getRangeAt(0);
             }
-        },
-
-        activateButton: function (tag) {
-            var el = this.toolbar.querySelector('[data-element="' + tag + '"]');
-            if (el !== null && el.className.indexOf(this.options.activeButtonClass) === -1) {
-                el.className += ' ' + this.options.activeButtonClass;
-            }
-        },
-
-        bindButtons: function () {
-            var buttons = this.toolbar.querySelectorAll('button'),
-                i,
-                self = this,
-                triggerAction = function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (self.selection === undefined) {
-                        self.checkSelection();
-                    }
-                    if (this.className.indexOf(self.options.activeButtonClass) > -1) {
-                        this.classList.remove(self.options.activeButtonClass);
-                    } else {
-                        this.className += ' ' + self.options.activeButtonClass;
-                    }
-                    if (this.hasAttribute('data-action')) {
-                        self.execAction(this.getAttribute('data-action'), e);
-                    }
-                };
-            for (i = 0; i < buttons.length; i += 1) {
-                this.on(buttons[i], 'click', triggerAction);
-            }
-            this.setFirstAndLastItems(buttons);
-            return this;
-        },
-
-        setFirstAndLastItems: function (buttons) {
-            if (buttons.length > 0) {
-                buttons[0].className += ' ' + this.options.firstButtonClass;
-                buttons[buttons.length - 1].className += ' ' + this.options.lastButtonClass;
-            }
-            return this;
-        },
-
-        execAction: function (action, e) {
-            if (action.indexOf('append-') > -1) {
-                this.execFormatBlock(action.replace('append-', ''));
-                this.setToolbarPosition();
-                this.setToolbarButtonStates();
-            } else if (action === 'anchor') {
-                this.triggerAnchorAction(e);
-            } else if (action === 'image') {
-                this.options.ownerDocument.execCommand('insertImage', false, this.options.contentWindow.getSelection());
-            } else {
-                this.options.ownerDocument.execCommand(action, false, null);
-                this.setToolbarPosition();
-            }
-        },
-
-        // http://stackoverflow.com/questions/15867542/range-object-get-selection-parent-node-chrome-vs-firefox
-        rangeSelectsSingleNode: function (range) {
-            var startNode = range.startContainer;
-            return startNode === range.endContainer &&
-                startNode.hasChildNodes() &&
-                range.endOffset === range.startOffset + 1;
-        },
-
-        getSelectedParentElement: function () {
-            var selectedParentElement = null,
-                range = this.selectionRange;
-            if (this.rangeSelectsSingleNode(range)) {
-                selectedParentElement = range.startContainer.childNodes[range.startOffset];
-            } else if (range.startContainer.nodeType === 3) {
-                selectedParentElement = range.startContainer.parentNode;
-            } else {
-                selectedParentElement = range.startContainer;
-            }
-            return selectedParentElement;
-        },
-
-        triggerAnchorAction: function () {
-            var selectedParentElement = this.getSelectedParentElement();
-            if (selectedParentElement.tagName &&
-                    selectedParentElement.tagName.toLowerCase() === 'a') {
-                this.options.ownerDocument.execCommand('unlink', false, null);
-            } else {
-                if (this.anchorForm.style.display === 'block') {
-                    this.showToolbarActions();
-                } else {
-                    this.showAnchorForm();
-                }
-            }
-            return this;
+            return Selection.getSelectedParentElement(range);
         },
 
         execFormatBlock: function (el) {
-            var selectionData = this.getSelectionData(this.selection.anchorNode);
+            var selectionData = Selection.getSelectionData(this.selection.anchorNode);
             // FF handles blockquote differently on formatBlock
             // allowing nesting, we need to use outdent
             // https://developer.mozilla.org/en-US/docs/Rich-Text_Editing_in_Mozilla
             if (el === 'blockquote' && selectionData.el &&
-                selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
+                    selectionData.el.parentNode.tagName.toLowerCase() === 'blockquote') {
                 return this.options.ownerDocument.execCommand('outdent', false, null);
             }
             if (selectionData.tagName === el) {
@@ -91263,7 +93422,7 @@ else if (typeof define === 'function' && define.amd) {
             //  blockquote needs to be called as indent
             // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
             // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-            if (this.isIE) {
+            if (Util.isIE) {
                 if (el === 'blockquote') {
                     return this.options.ownerDocument.execCommand('indent', false, el);
                 }
@@ -91272,351 +93431,156 @@ else if (typeof define === 'function' && define.amd) {
             return this.options.ownerDocument.execCommand('formatBlock', false, el);
         },
 
-        getSelectionData: function (el) {
-            var tagName;
-
-            if (el && el.tagName) {
-                tagName = el.tagName.toLowerCase();
+        hideToolbarDefaultActions: function () {
+            if (this.toolbar) {
+                this.toolbar.hideToolbarDefaultActions();
             }
-
-            while (el && this.parentElements.indexOf(tagName) === -1) {
-                el = el.parentNode;
-                if (el && el.tagName) {
-                    tagName = el.tagName.toLowerCase();
-                }
-            }
-
-            return {
-                el: el,
-                tagName: tagName
-            };
-        },
-
-        getFirstChild: function (el) {
-            var firstChild = el.firstChild;
-            while (firstChild !== null && firstChild.nodeType !== 1) {
-                firstChild = firstChild.nextSibling;
-            }
-            return firstChild;
-        },
-
-        hideToolbarActions: function () {
-            this.keepToolbarAlive = false;
-            if (this.toolbar !== undefined) {
-                this.toolbar.classList.remove('medium-editor-toolbar-active');
-            }
-        },
-
-        showToolbarActions: function () {
-            var self = this,
-                timer;
-            this.anchorForm.style.display = 'none';
-            this.toolbarActions.style.display = 'block';
-            this.keepToolbarAlive = false;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                    self.toolbar.classList.add('medium-editor-toolbar-active');
-                }
-            }, 100);
-        },
-
-        saveSelection: function() {
-            this.savedSelection = saveSelection.call(this);
-        },
-
-        restoreSelection: function() {
-            restoreSelection.call(this, this.savedSelection);
-        },
-
-        showAnchorForm: function (link_value) {
-            this.toolbarActions.style.display = 'none';
-            this.saveSelection();
-            this.anchorForm.style.display = 'block';
-            this.setToolbarPosition();
-            this.keepToolbarAlive = true;
-            this.anchorInput.focus();
-            this.anchorInput.value = link_value || '';
-        },
-
-        bindAnchorForm: function () {
-            var linkCancel = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-close'),
-                linkSave = this.anchorForm.querySelector('a.medium-editor-toobar-anchor-save'),
-                self = this;
-
-            this.on(this.anchorForm, 'click', function (e) {
-                e.stopPropagation();
-                self.keepToolbarAlive = true;
-            });
-
-            this.on(this.anchorInput, 'keyup', function (e) {
-                var button = null,
-                    target;
-
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                    if (self.options.anchorTarget && self.anchorTarget.checked) {
-                        target = "_blank";
-                    }
-                    else {
-                        target = "_self";
-                    }
-
-                    if (self.options.anchorButton && self.anchorButton.checked) {
-                        button = self.options.anchorButtonClass;
-                    }
-
-                    self.createLink(this, target, button);
-                }
-            });
-
-            this.on(linkSave, 'click', function(e) {
-                var button = null,
-                    target;
-                e.preventDefault();
-                if ( self.options.anchorTarget && self.anchorTarget.checked) {
-                    target = "_blank";
-                }
-                else {
-                    target = "_self";
-                }
-
-                if (self.options.anchorButton && self.anchorButton.checked) {
-                    button = self.options.anchorButtonClass;
-                }
-
-                self.createLink(self.anchorInput, target, button);
-            }, true);
-
-            this.on(this.anchorInput, 'click', function (e) {
-                // make sure not to hide form when cliking into the input
-                e.stopPropagation();
-                self.keepToolbarAlive = true;
-            });
-
-            // Hide the anchor form when focusing outside of it.
-            this.on(this.options.ownerDocument.body, 'click', function (e) {
-                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
-                    self.keepToolbarAlive = false;
-                    self.checkSelection();
-                }
-            }, true);
-            this.on(this.options.ownerDocument.body, 'focus', function (e) {
-                if (e.target !== self.anchorForm && !isDescendant(self.anchorForm, e.target) && !isDescendant(self.toolbarActions, e.target)) {
-                    self.keepToolbarAlive = false;
-                    self.checkSelection();
-                }
-            }, true);
-
-            this.on(linkCancel, 'click', function (e) {
-                e.preventDefault();
-                self.showToolbarActions();
-                restoreSelection.call(self, self.savedSelection);
-            });
             return this;
         },
 
-
-        hideAnchorPreview: function () {
-            this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
+        setToolbarPosition: function () {
+            if (this.toolbar) {
+                this.toolbar.setToolbarPosition();
+            }
         },
 
-        // TODO: break method
-        showAnchorPreview: function (anchorEl) {
-            if (this.anchorPreview.classList.contains('medium-editor-anchor-preview-active')
-                || anchorEl.getAttribute('data-disable-preview')) {
-                return true;
-            }
+        selectAllContents: function () {
+            var range = this.options.ownerDocument.createRange(),
+                sel = this.options.contentWindow.getSelection(),
+                currNode = Selection.getSelectionElement(this.options.contentWindow);
 
-            var self = this,
-                buttonHeight = 40,
-                boundary = anchorEl.getBoundingClientRect(),
-                middleBoundary = (boundary.left + boundary.right) / 2,
-                halfOffsetWidth,
-                defaultLeft,
-                timer;
-
-            self.anchorPreview.querySelector('i').textContent = anchorEl.href;
-            halfOffsetWidth = self.anchorPreview.offsetWidth / 2;
-            defaultLeft = self.options.diffLeft - halfOffsetWidth;
-
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                if (self.anchorPreview && !self.anchorPreview.classList.contains('medium-editor-anchor-preview-active')) {
-                    self.anchorPreview.classList.add('medium-editor-anchor-preview-active');
+            if (currNode) {
+                // Move to the lowest descendant node that still selects all of the contents
+                while (currNode.children.length === 1) {
+                    currNode = currNode.children[0];
                 }
-            }, 100);
 
-            self.observeAnchorPreview(anchorEl);
-
-            self.anchorPreview.classList.add('medium-toolbar-arrow-over');
-            self.anchorPreview.classList.remove('medium-toolbar-arrow-under');
-            self.anchorPreview.style.top = Math.round(buttonHeight + boundary.bottom - self.options.diffTop + this.options.contentWindow.pageYOffset - self.anchorPreview.offsetHeight) + 'px';
-            if (middleBoundary < halfOffsetWidth) {
-                self.anchorPreview.style.left = defaultLeft + halfOffsetWidth + 'px';
-            } else if ((this.options.contentWindow.innerWidth - middleBoundary) < halfOffsetWidth) {
-                self.anchorPreview.style.left = this.options.contentWindow.innerWidth + defaultLeft - halfOffsetWidth + 'px';
-            } else {
-                self.anchorPreview.style.left = defaultLeft + middleBoundary + 'px';
-            }
-
-            return this;
-        },
-
-        // TODO: break method
-        observeAnchorPreview: function (anchorEl) {
-            var self = this,
-                lastOver = (new Date()).getTime(),
-                over = true,
-                stamp = function () {
-                    lastOver = (new Date()).getTime();
-                    over = true;
-                },
-                unstamp = function (e) {
-                    if (!e.relatedTarget || !/anchor-preview/.test(e.relatedTarget.className)) {
-                        over = false;
-                    }
-                },
-                interval_timer = setInterval(function () {
-                    if (over) {
-                        return true;
-                    }
-                    var durr = (new Date()).getTime() - lastOver;
-                    if (durr > self.options.anchorPreviewHideDelay) {
-                        // hide the preview 1/2 second after mouse leaves the link
-                        self.hideAnchorPreview();
-
-                        // cleanup
-                        clearInterval(interval_timer);
-                        self.off(self.anchorPreview, 'mouseover', stamp);
-                        self.off(self.anchorPreview, 'mouseout', unstamp);
-                        self.off(anchorEl, 'mouseover', stamp);
-                        self.off(anchorEl, 'mouseout', unstamp);
-
-                    }
-                }, 200);
-
-            this.on(self.anchorPreview, 'mouseover', stamp);
-            this.on(self.anchorPreview, 'mouseout', unstamp);
-            this.on(anchorEl, 'mouseover', stamp);
-            this.on(anchorEl, 'mouseout', unstamp);
-        },
-
-        createAnchorPreview: function () {
-            var self = this,
-                anchorPreview = this.options.ownerDocument.createElement('div');
-
-            anchorPreview.id = 'medium-editor-anchor-preview-' + this.id;
-            anchorPreview.className = 'medium-editor-anchor-preview';
-            anchorPreview.innerHTML = this.anchorPreviewTemplate();
-            this.options.elementsContainer.appendChild(anchorPreview);
-
-            this.on(anchorPreview, 'click', function () {
-                self.anchorPreviewClickHandler();
-            });
-
-            return anchorPreview;
-        },
-
-        anchorPreviewTemplate: function () {
-            return '<div class="medium-editor-toolbar-anchor-preview" id="medium-editor-toolbar-anchor-preview">' +
-                '    <i class="medium-editor-toolbar-anchor-preview-inner"></i>' +
-                '</div>';
-        },
-
-        anchorPreviewClickHandler: function (e) {
-            if (this.activeAnchor) {
-
-                var self = this,
-                    range = this.options.ownerDocument.createRange(),
-                    sel = this.options.contentWindow.getSelection();
-
-                range.selectNodeContents(self.activeAnchor);
+                range.selectNodeContents(currNode);
                 sel.removeAllRanges();
                 sel.addRange(range);
-                setTimeout(function () {
-                    if (self.activeAnchor) {
-                        self.showAnchorForm(self.activeAnchor.href);
-                    }
-                    self.keepToolbarAlive = false;
-                }, 100 + self.options.delay);
-
             }
-
-            this.hideAnchorPreview();
         },
 
-        editorAnchorObserver: function (e) {
-            var self = this,
-                overAnchor = true,
-                leaveAnchor = function () {
-                    // mark the anchor as no longer hovered, and stop listening
-                    overAnchor = false;
-                    self.off(self.activeAnchor, 'mouseout', leaveAnchor);
-                };
+        // http://stackoverflow.com/questions/17678843/cant-restore-selection-after-html-modify-even-if-its-the-same-html
+        // Tim Down
+        // TODO: move to selection.js and clean up old methods there
+        saveSelection: function () {
+            this.selectionState = null;
 
-            if (e.target && e.target.tagName.toLowerCase() === 'a') {
+            var selection = this.options.contentWindow.getSelection(),
+                range,
+                preSelectionRange,
+                start,
+                editableElementIndex = -1;
 
-                // Detect empty href attributes
-                // The browser will make href="" or href="#top"
-                // into absolute urls when accessed as e.targed.href, so check the html
-                if (!/href=["']\S+["']/.test(e.target.outerHTML) || /href=["']#\S+["']/.test(e.target.outerHTML)) {
-                    return true;
+            if (selection.rangeCount > 0) {
+                range = selection.getRangeAt(0);
+                preSelectionRange = range.cloneRange();
+
+                // Find element current selection is inside
+                this.elements.forEach(function (el, index) {
+                    if (el === range.startContainer || Util.isDescendant(el, range.startContainer)) {
+                        editableElementIndex = index;
+                        return false;
+                    }
+                });
+
+                if (editableElementIndex > -1) {
+                    preSelectionRange.selectNodeContents(this.elements[editableElementIndex]);
+                    preSelectionRange.setEnd(range.startContainer, range.startOffset);
+                    start = preSelectionRange.toString().length;
+
+                    this.selectionState = {
+                        start: start,
+                        end: start + range.toString().length,
+                        editableElementIndex: editableElementIndex
+                    };
+                }
+            }
+        },
+
+        // http://stackoverflow.com/questions/17678843/cant-restore-selection-after-html-modify-even-if-its-the-same-html
+        // Tim Down
+        // TODO: move to selection.js and clean up old methods there
+        restoreSelection: function () {
+            if (!this.selectionState) {
+                return;
+            }
+
+            var editableElement = this.elements[this.selectionState.editableElementIndex],
+                charIndex = 0,
+                range = this.options.ownerDocument.createRange(),
+                nodeStack = [editableElement],
+                node,
+                foundStart = false,
+                stop = false,
+                i,
+                sel,
+                nextCharIndex;
+
+            range.setStart(editableElement, 0);
+            range.collapse(true);
+
+            node = nodeStack.pop();
+            while (!stop && node) {
+                if (node.nodeType === 3) {
+                    nextCharIndex = charIndex + node.length;
+                    if (!foundStart && this.selectionState.start >= charIndex && this.selectionState.start <= nextCharIndex) {
+                        range.setStart(node, this.selectionState.start - charIndex);
+                        foundStart = true;
+                    }
+                    if (foundStart && this.selectionState.end >= charIndex && this.selectionState.end <= nextCharIndex) {
+                        range.setEnd(node, this.selectionState.end - charIndex);
+                        stop = true;
+                    }
+                    charIndex = nextCharIndex;
+                } else {
+                    i = node.childNodes.length - 1;
+                    while (i >= 0) {
+                        nodeStack.push(node.childNodes[i]);
+                        i -= 1;
+                    }
+                }
+                if (!stop) {
+                    node = nodeStack.pop();
+                }
+            }
+
+            sel = this.options.contentWindow.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        },
+
+        createLink: function (opts) {
+            var customEvent,
+                i;
+
+            if (opts.url && opts.url.trim().length > 0) {
+                this.options.ownerDocument.execCommand('createLink', false, opts.url);
+
+                if (this.options.targetBlank || opts.target === '_blank') {
+                    Util.setTargetBlank(Selection.getSelectionStart(this.options.ownerDocument));
                 }
 
-                // only show when hovering on anchors
-                if (this.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                    // only show when toolbar is not present
-                    return true;
+                if (opts.buttonClass) {
+                    this.setButtonClass(opts.buttonClass);
                 }
-                this.activeAnchor = e.target;
-                this.on(this.activeAnchor, 'mouseout', leaveAnchor);
-                // show the anchor preview according to the configured delay
-                // if the mouse has not left the anchor tag in that time
-                setTimeout(function () {
-                    if (overAnchor) {
-                        self.showAnchorPreview(e.target);
-                    }
-                }, self.options.delay);
-
-
             }
-        },
 
-        bindAnchorPreview: function (index) {
-            var i, self = this;
-            this.editorAnchorObserverWrapper = function (e) {
-                self.editorAnchorObserver(e);
-            };
-            for (i = 0; i < this.elements.length; i += 1) {
-                this.on(this.elements[i], 'mouseover', this.editorAnchorObserverWrapper);
-            }
-            return this;
-        },
-
-        checkLinkFormat: function (value) {
-            var re = /^(https?|ftps?|rtmpt?):\/\/|mailto:/;
-            return (re.test(value) ? '' : 'http://') + value;
-        },
-
-        setTargetBlank: function (el) {
-            var i;
-            el = el || getSelectionStart.call(this);
-            if (el.tagName.toLowerCase() === 'a') {
-                el.target = '_blank';
-            } else {
-                el = el.getElementsByTagName('a');
-
-                for (i = 0; i < el.length; i += 1) {
-                    el[i].target = '_blank';
+            if (this.options.targetBlank || opts.target === "_blank" || opts.buttonClass) {
+                customEvent = this.options.ownerDocument.createEvent("HTMLEvents");
+                customEvent.initEvent("input", true, true, this.options.contentWindow);
+                for (i = 0; i < this.elements.length; i += 1) {
+                    this.elements[i].dispatchEvent(customEvent);
                 }
             }
         },
 
         setButtonClass: function (buttonClass) {
-            var el = getSelectionStart.call(this),
+            var el = Selection.getSelectionStart(this.options.ownerDocument),
                 classes = buttonClass.split(' '),
-                i, j;
+                i,
+                j;
             if (el.tagName.toLowerCase() === 'a') {
                 for (j = 0; j < classes.length; j += 1) {
                     el.classList.add(classes[j]);
@@ -91629,58 +93593,6 @@ else if (typeof define === 'function' && define.amd) {
                     }
                 }
             }
-        },
-
-        createLink: function (input, target, buttonClass) {
-            var i, event;
-
-            if (input.value.trim().length === 0) {
-                this.hideToolbarActions();
-                return;
-            }
-
-            restoreSelection.call(this, this.savedSelection);
-
-            if (this.options.checkLinkFormat) {
-                input.value = this.checkLinkFormat(input.value);
-            }
-
-            this.options.ownerDocument.execCommand('createLink', false, input.value);
-
-            if (this.options.targetBlank || target === "_blank") {
-                this.setTargetBlank();
-            }
-
-            if (buttonClass) {
-                this.setButtonClass(buttonClass);
-            }
-
-            if (this.options.targetBlank || target === "_blank" || buttonClass) {
-                event = this.options.ownerDocument.createEvent("HTMLEvents");
-                event.initEvent("input", true, true, this.options.contentWindow);
-                for (i = 0; i < this.elements.length; i += 1) {
-                    this.elements[i].dispatchEvent(event);
-                }
-            }
-
-            this.checkSelection();
-            this.showToolbarActions();
-            input.value = '';
-        },
-
-        bindWindowActions: function () {
-            var timerResize,
-                self = this;
-            this.windowResizeHandler = function () {
-                clearTimeout(timerResize);
-                timerResize = setTimeout(function () {
-                    if (self.toolbar && self.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                        self.setToolbarPosition();
-                    }
-                }, 100);
-            };
-            this.on(this.options.contentWindow, 'resize', this.windowResizeHandler);
-            return this;
         },
 
         activate: function () {
@@ -91700,10 +93612,8 @@ else if (typeof define === 'function' && define.amd) {
             this.isActive = false;
 
             if (this.toolbar !== undefined) {
-                this.options.elementsContainer.removeChild(this.anchorPreview);
-                this.options.elementsContainer.removeChild(this.toolbar);
+                this.toolbar.deactivate();
                 delete this.toolbar;
-                delete this.anchorPreview;
             }
 
             for (i = 0; i < this.elements.length; i += 1) {
@@ -91711,50 +93621,19 @@ else if (typeof define === 'function' && define.amd) {
                 this.elements[i].removeAttribute('data-medium-element');
             }
 
-            this.removeAllEvents();
-        },
+            this.commands.forEach(function (extension) {
+                if (typeof extension.deactivate === 'function') {
+                    extension.deactivate();
+                }
+            }.bind(this));
 
-        htmlEntities: function (str) {
-            // converts special characters (like <) into their escaped/encoded values (like &lt;).
-            // This allows you to show to display the string without the browser reading it as HTML.
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            this.removeAllEvents();
         },
 
         bindPaste: function () {
             var i, self = this;
             this.pasteWrapper = function (e) {
-                var paragraphs,
-                    html = '',
-                    p;
-
-                this.classList.remove('medium-editor-placeholder');
-                if (!self.options.forcePlainText && !self.options.cleanPastedHTML) {
-                    return this;
-                }
-
-                if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
-                    e.preventDefault();
-
-                    if (self.options.cleanPastedHTML && e.clipboardData.getData('text/html')) {
-                        return self.cleanPaste(e.clipboardData.getData('text/html'));
-                    }
-                    if (!(self.options.disableReturn || this.getAttribute('data-disable-return'))) {
-                        paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
-                        for (p = 0; p < paragraphs.length; p += 1) {
-                            if (paragraphs[p] !== '') {
-                                if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                                    html += self.htmlEntities(paragraphs[p]);
-                                } else {
-                                    html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
-                                }
-                            }
-                        }
-                        self.options.ownerDocument.execCommand('insertHTML', false, html);
-                    } else {
-                        html = self.htmlEntities(e.clipboardData.getData('text/plain'));
-                        self.options.ownerDocument.execCommand('insertHTML', false, html);
-                    }
-                }
+                pasteHandler.handlePaste(this, e, self.options);
             };
             for (i = 0; i < this.elements.length; i += 1) {
                 this.on(this.elements[i], 'paste', this.pasteWrapper);
@@ -91763,223 +93642,30 @@ else if (typeof define === 'function' && define.amd) {
         },
 
         setPlaceholders: function () {
-            var i,
-                activatePlaceholder = function (el) {
-                    if (!(el.querySelector('img')) &&
-                            !(el.querySelector('blockquote')) &&
-                            el.textContent.replace(/^\s+|\s+$/g, '') === '') {
-                        el.classList.add('medium-editor-placeholder');
-                    }
-                },
-                placeholderWrapper = function (e) {
-                    this.classList.remove('medium-editor-placeholder');
-                    if (e.type !== 'keypress') {
-                        activatePlaceholder(this);
-                    }
-                };
-            for (i = 0; i < this.elements.length; i += 1) {
-                activatePlaceholder(this.elements[i]);
-                this.on(this.elements[i], 'blur', placeholderWrapper);
-                this.on(this.elements[i], 'keypress', placeholderWrapper);
+            if (!this.options.disablePlaceholders && this.elements && this.elements.length) {
+                this.elements.forEach(function (el) {
+                    this.activatePlaceholder(el);
+                    this.on(el, 'blur', this.placeholderWrapper.bind(this));
+                    this.on(el, 'keypress', this.placeholderWrapper.bind(this));
+                }.bind(this));
             }
+
             return this;
         },
 
         cleanPaste: function (text) {
-
-            /*jslint regexp: true*/
-            /*
-                jslint does not allow character negation, because the negation
-                will not match any unicode characters. In the regexes in this
-                block, negation is used specifically to match the end of an html
-                tag, and in fact unicode characters *should* be allowed.
-            */
-            var i, elList, workEl,
-                el = this.getSelectionElement(),
-                multiline = /<p|<br|<div/.test(text),
-                replacements = [
-
-                    // replace two bogus tags that begin pastes from google docs
-                    [new RegExp(/<[^>]*docs-internal-guid[^>]*>/gi), ""],
-                    [new RegExp(/<\/b>(<br[^>]*>)?$/gi), ""],
-
-                     // un-html spaces and newlines inserted by OS X
-                    [new RegExp(/<span class="Apple-converted-space">\s+<\/span>/g), ' '],
-                    [new RegExp(/<br class="Apple-interchange-newline">/g), '<br>'],
-
-                    // replace google docs italics+bold with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*(font-style:italic;font-weight:bold|font-weight:bold;font-style:italic)[^>]*>/gi), '<span class="replace-with italic bold">'],
-
-                    // replace google docs italics with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*font-style:italic[^>]*>/gi), '<span class="replace-with italic">'],
-
-                    //[replace google docs bolds with a span to be replaced once the html is inserted
-                    [new RegExp(/<span[^>]*font-weight:bold[^>]*>/gi), '<span class="replace-with bold">'],
-
-                     // replace manually entered b/i/a tags with real ones
-                    [new RegExp(/&lt;(\/?)(i|b|a)&gt;/gi), '<$1$2>'],
-
-                     // replace manually a tags with real ones, converting smart-quotes from google docs
-                    [new RegExp(/&lt;a\s+href=(&quot;|&rdquo;|&ldquo;|“|”)([^&]+)(&quot;|&rdquo;|&ldquo;|“|”)&gt;/gi), '<a href="$2">']
-
-                ];
-            /*jslint regexp: false*/
-
-            for (i = 0; i < replacements.length; i += 1) {
-                text = text.replace(replacements[i][0], replacements[i][1]);
-            }
-
-            if (multiline) {
-
-                // double br's aren't converted to p tags, but we want paragraphs.
-                elList = text.split('<br><br>');
-
-                this.pasteHTML('<p>' + elList.join('</p><p>') + '</p>');
-                this.options.ownerDocument.execCommand('insertText', false, "\n");
-
-                // block element cleanup
-                elList = el.querySelectorAll('a,p,div,br');
-                for (i = 0; i < elList.length; i += 1) {
-
-                    workEl = elList[i];
-
-                    switch (workEl.tagName.toLowerCase()) {
-                    case 'a':
-                        if (this.options.targetBlank){
-                          this.setTargetBlank(workEl);
-                        }
-                        break;
-                    case 'p':
-                    case 'div':
-                        this.filterCommonBlocks(workEl);
-                        break;
-                    case 'br':
-                        this.filterLineBreak(workEl);
-                        break;
-                    }
-
-                }
-
-
-            } else {
-
-                this.pasteHTML(text);
-
-            }
-
+            pasteHandler.cleanPaste(text, this.options);
         },
 
         pasteHTML: function (html) {
-            var elList, workEl, i, fragmentBody, pasteBlock = this.options.ownerDocument.createDocumentFragment();
-
-            pasteBlock.appendChild(this.options.ownerDocument.createElement('body'));
-
-            fragmentBody = pasteBlock.querySelector('body');
-            fragmentBody.innerHTML = html;
-
-            this.cleanupSpans(fragmentBody);
-
-            elList = fragmentBody.querySelectorAll('*');
-            for (i = 0; i < elList.length; i += 1) {
-
-                workEl = elList[i];
-
-                // delete ugly attributes
-                workEl.removeAttribute('class');
-                workEl.removeAttribute('style');
-                workEl.removeAttribute('dir');
-
-                if (workEl.tagName.toLowerCase() === 'meta') {
-                    workEl.parentNode.removeChild(workEl);
-                }
-
-            }
-            this.options.ownerDocument.execCommand('insertHTML', false, fragmentBody.innerHTML.replace(/&nbsp;/g, ' '));
-        },
-        isCommonBlock: function (el) {
-            return (el && (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div'));
-        },
-        filterCommonBlocks: function (el) {
-            if (/^\s*$/.test(el.innerText)) {
-                el.parentNode.removeChild(el);
-            }
-        },
-        filterLineBreak: function (el) {
-            if (this.isCommonBlock(el.previousElementSibling)) {
-
-                // remove stray br's following common block elements
-                el.parentNode.removeChild(el);
-
-            } else if (this.isCommonBlock(el.parentNode) && (el.parentNode.firstChild === el || el.parentNode.lastChild === el)) {
-
-                // remove br's just inside open or close tags of a div/p
-                el.parentNode.removeChild(el);
-
-            } else if (el.parentNode.childElementCount === 1) {
-
-                // and br's that are the only child of a div/p
-                this.removeWithParent(el);
-
-            }
-
-        },
-
-        // remove an element, including its parent, if it is the only element within its parent
-        removeWithParent: function (el) {
-            if (el && el.parentNode) {
-                if (el.parentNode.parentNode && el.parentNode.childElementCount === 1) {
-                    el.parentNode.parentNode.removeChild(el.parentNode);
-                } else {
-                    el.parentNode.removeChild(el.parentNode);
-                }
-            }
-        },
-
-        cleanupSpans: function (container_el) {
-
-            var i,
-                el,
-                new_el,
-                spans = container_el.querySelectorAll('.replace-with');
-
-            for (i = 0; i < spans.length; i += 1) {
-
-                el = spans[i];
-                new_el = this.options.ownerDocument.createElement(el.classList.contains('bold') ? 'b' : 'i');
-
-                if (el.classList.contains('bold') && el.classList.contains('italic')) {
-
-                    // add an i tag as well if this has both italics and bold
-                    new_el.innerHTML = '<i>' + el.innerHTML + '</i>';
-
-                } else {
-
-                    new_el.innerHTML = el.innerHTML;
-
-                }
-                el.parentNode.replaceChild(new_el, el);
-
-            }
-
-            spans = container_el.querySelectorAll('span');
-            for (i = 0; i < spans.length; i += 1) {
-
-                el = spans[i];
-
-                // remove empty spans, replace others with their contents
-                if (/^\s*$/.test()) {
-                    el.parentNode.removeChild(el);
-                } else {
-                    el.parentNode.replaceChild(this.options.ownerDocument.createTextNode(el.innerText), el);
-                }
-
-            }
-
+            pasteHandler.pasteHTML(html, this.options.ownerDocument);
         }
-
     };
 
-}(window, document));
+}());
+
+    return MediumEditor;
+}()));
 
 },{}],"mousetrap":[function(require,module,exports){
 /*global define:false */
@@ -103565,7 +105251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 
-},{"React":479}],"react-mixin-manager":[function(require,module,exports){
+},{"React":477}],"react-mixin-manager":[function(require,module,exports){
 /*!
  * react-mixin-manager v0.7.0
  * https://github.com/jhudson8/react-mixin-manager
@@ -103899,8 +105585,8 @@ module.exports = {
 
 
 },{}],"react":[function(require,module,exports){
-module.exports=require(479)
-},{"./lib/React":516,"d:\\work\\projects\\taaasty\\git\\web-static\\node_modules\\React\\react.js":479}],"screenviewer":[function(require,module,exports){
+module.exports=require(477)
+},{"./lib/React":514,"/Users/sergeylaptev/Documents/brandymint/web-static/node_modules/React/react.js":477}],"screenviewer":[function(require,module,exports){
 (function($){
   ScreenViewer = function(container, options){
     this.$viewer = $(container);
