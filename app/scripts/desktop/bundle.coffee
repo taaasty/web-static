@@ -138,6 +138,7 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
+global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbar   = require './react/components/toolbars/user'
 global.AvatarToolbar = require './react/components/toolbars/avatar'
 require './react/components/toolbars/close/close'

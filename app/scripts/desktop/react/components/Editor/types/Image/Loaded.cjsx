@@ -1,5 +1,4 @@
 _ = require 'lodash'
-CollageManager = require '../../../../../../shared/react/components/common/collage/collageManager'
 EditorMediaBoxActions = require '../../MediaBox/MediaBoxActions'
 { PropTypes } = React
 
@@ -13,22 +12,14 @@ EditorTypeImageLoaded = React.createClass
 
   render: ->
     <div className="media-box__display">
-      <CollageManager images={ @getCollageImages() } />
+      { @renderImage() }
       <EditorMediaBoxActions onDelete={ @props.onDelete } />
     </div>
 
-  getCollageImages: ->
-    @props.imageAttachments.map (imageAttachment) ->
-      image    = imageAttachment.image
-      newImage =
-        width:  image.geometry.width
-        height: image.geometry.height
-        payload:
-          id:    imageAttachment.id
-          url:   image.url
-          path:  image.path
-          title: image.title
-
-      newImage
+  renderImage: ->
+    switch
+      when @props.imageAttachments then <ImageAttachmentsCollage imageAttachments={ @props.imageAttachments } />
+      when @props.imageUrl then <img src={ @props.imageUrl } />
+      else null
 
 module.exports = EditorTypeImageLoaded
