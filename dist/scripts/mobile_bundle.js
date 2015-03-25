@@ -27590,7 +27590,9 @@ CollageManager = React.createClass({
     };
   },
   componentDidMount: function() {
-    this.updateWidthState();
+    if (!this.props.width) {
+      this.updateWidthState();
+    }
     return window.addEventListener('resize', this.updateWidthState);
   },
   componentWillUnmount: function() {

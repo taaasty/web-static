@@ -21,7 +21,7 @@ CollageManager = React.createClass
     width: @props.width || null
 
   componentDidMount: ->
-    @updateWidthState()
+    @updateWidthState() unless @props.width
 
     window.addEventListener 'resize', @updateWidthState
 
