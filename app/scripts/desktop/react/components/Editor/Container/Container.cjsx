@@ -38,6 +38,6 @@ EditorContainer = React.createClass
     return <Component {...props} />
 
   updateField: (key, value) ->
-    EditorActionCreators.updateField {key, value}
+    EditorActionCreators.updateField key, value
 
 module.exports = EditorContainer

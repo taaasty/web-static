@@ -17,6 +17,7 @@ EditorEmbed = React.createClass
     embedUrl: PropTypes.string
     embedHtml: PropTypes.string
     onCreate: PropTypes.func.isRequired
+    onChaneEmbedUrl: PropTypes.func.isRequired
     onDelete: PropTypes.func.isRequired
     children: PropTypes.oneOfType([
       PropTypes.element, PropTypes.array
@@ -53,17 +54,16 @@ EditorEmbed = React.createClass
     if @props.embedHtml then LOADED_STATE else WELCOME_STATE
 
   handleChangeEmbedUrl: (embedUrl) ->
-    @props.onCreate
-      embedUrl: embedUrl
-      embedHtml: null
+    @props.onChaneEmbedUrl embedUrl
 
     @activateLoadingState()
 
     EditorActionCreators.createEmbed embedUrl
       .then (iframely) =>
         @props.onCreate
-          embedUrl: iframely.url
+          title: iframely.meta.description || iframely.meta.title
           embedHtml: iframely.html
+
         @activateLoadedState()
       .fail @activateInsertState
 

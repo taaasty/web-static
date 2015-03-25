@@ -1,5 +1,6 @@
 EditorStore = require '../../../stores/editor'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
+StringHelpers = require '../../../../../shared/helpers/string'
 EditorTextField = require '../fields/Text'
 EditorEmbed = require '../Embed/Embed'
 EditorTypeInstagramWelcome = require './Instagram/Welcome'
@@ -21,6 +22,7 @@ EditorTypeInstagram = React.createClass
             embedUrl={ @state.embedUrl }
             embedHtml={ @state.embedHtml }
             onCreate={ @handleCreateEmbed }
+            onChaneEmbedUrl={ @handleChangeEmbedUrl }
             onDelete={ @handleDeleteEmbed }>
           <EditorTypeInstagramWelcome />
         </EditorEmbed>
@@ -32,9 +34,14 @@ EditorTypeInstagram = React.createClass
       </div>
     </article>
 
-  handleCreateEmbed: ({embedUrl, embedHtml}) ->
+  handleChangeEmbedUrl: (embedUrl) ->
     @props.onFieldChange 'embedUrl', embedUrl
+
+  handleCreateEmbed: ({embedHtml, title}) ->
     @props.onFieldChange 'embedHtml', embedHtml
+    # Перезаписываем title описание с iframely, только если он пустой либо с тегами без контента
+    unless StringHelpers.removeTags @state.title
+      @props.onFieldChange 'title', title
 
   handleDeleteEmbed: ->
     @props.onFieldChange 'embedUrl', null

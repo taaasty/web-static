@@ -94,8 +94,8 @@ EditorTypeImage = React.createClass
       WELCOME_STATE
 
   handleDeleteLoadedImages: ->
+    EditorActionCreators.deleteImageAttachments()
     @props.onFieldChange 'imageUrl', null
-    @props.onFieldChange 'imageAttachments', []
     @activateWelcomeState()
 
   handleChangeImageUrl: (imageUrl) ->
@@ -116,14 +116,9 @@ EditorTypeImage = React.createClass
     unless imageFiles.length
       return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
 
-    formData = new FormData()
-
-    _.forEach imageFiles, (file) ->
-      formData.append 'images[]', file
-
-    EditorActionCreators.createImageAttachments formData
-      .then (imageAttachments) =>
-        @props.onFieldChange 'imageAttachments', imageAttachments
+    EditorActionCreators.createImageAttachments files
+      .then @activateLoadedState
+      .fail @activateWelcomeState
 
   getStateFromStore: ->
     title: EditorStore.getEntryValue 'title'

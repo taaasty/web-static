@@ -61,12 +61,17 @@ Api =
       _pendingRequests[key] = getRequest url, data
 
   editor:
-    createImageAttachments: (formData) ->
+    createImageAttachment: (formData) ->
       url = ApiRoutes.imageAttachments()
-      key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENTS
+      key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENT
 
-      abortPendingRequests key
       _pendingRequests[key] = postRequest url, formData
+
+    deleteImageAttachment: (attachmentID) ->
+      url = ApiRoutes.imageAttachmentsWithID attachmentID
+      key = Constants.api.EDITOR_DELETE_IMAGE_ATTACHMENT
+
+      _pendingRequests[key] = deleteRequest url
 
     createEmbed: (embedUrl) ->
       url  = ApiRoutes.iframely_url()

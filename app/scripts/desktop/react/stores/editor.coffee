@@ -24,6 +24,15 @@ global.EditorStore = _.extend new BaseStore(),
   getEntryPrivacy: ->
     _entry.privacy
 
+  getEntryImageAttachmentsIDs: ->
+    IDs = []
+    imageAttachments = @getEntryValue 'imageAttachments'
+
+    _.forEach imageAttachments, (attachment) ->
+      IDs.push attachment.id
+
+    IDs
+
   getEntryValue: (key) ->
     EntryNormalizationService.getNormalizedEntryValue _entry, key
 
