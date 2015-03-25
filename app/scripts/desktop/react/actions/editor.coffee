@@ -1,3 +1,4 @@
+_ = require 'lodash'
 Api = require '../api/api'
 EditorConstants = require('../constants/constants').editor
 EditorStore = require '../stores/editor'
@@ -11,7 +12,7 @@ EditorActionCreators =
       entry: entry
       tlogType: tlogType
 
-  updateField: ({key, value}) ->
+  updateField: (key, value) ->
     AppDispatcher.handleViewAction
       type: EditorConstants.UPDATE_FIELD
       key: key
@@ -27,8 +28,36 @@ EditorActionCreators =
       type: EditorConstants.CHANGE_PRIVACY
       entryPrivacy: entryPrivacy
 
-  createImageAttachments: (formData) ->
-    Api.editor.createImageAttachments formData
+  createImageAttachments: (files) ->
+    attachments = EditorStore.getEntryValue('imageAttachments') || []
+    newAttachments = attachments[..]
+    resolved = false
+    dfd = new $.Deferred()
+
+    _.forEach files, (file) =>
+      formData = new FormData()
+      formData.append 'image', file
+
+      Api.editor.createImageAttachment formData
+        .then (imageAttachment) =>
+          newAttachments.push imageAttachment
+          @updateField 'imageAttachments', newAttachments
+          # Ресолвим при успешной загрузке первого аттачмента. Чтобы можно было
+          # перейти в режим loaded
+          unless resolved
+            dfd.resolve()
+            resolved = true
+        .fail dfd.reject
+
+    dfd.promise()
+
+  deleteImageAttachments: ->
+    attachmentsIDs = EditorStore.getEntryImageAttachmentsIDs()
+
+    _.forEach attachmentsIDs, (attachmentID) =>
+      Api.editor.deleteImageAttachment attachmentID
+
+    @updateField 'imageAttachments', []
 
   createEmbed: (embedUrl) ->
     Api.editor.createEmbed embedUrl
@@ -62,7 +91,7 @@ EditorActionCreators =
         data.title = EditorStore.getEntryValue 'title'
         data.image_url = EditorStore.getEntryValue 'imageUrl'
         data.privacy = EditorStore.getEntryPrivacy()
-        #TODO: data.image_attachments = [1,5,8...]
+        data.image_attachments_ids = EditorStore.getEntryImageAttachmentsIDs()
       when 'instagram', 'music', 'video'
         data.title = EditorStore.getEntryValue 'title'
         data.video_url = EditorStore.getEntryValue 'embedUrl'

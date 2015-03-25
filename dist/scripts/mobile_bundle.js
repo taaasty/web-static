@@ -16421,7 +16421,7 @@ require('./react/stores/relationships');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":246,"../shared/routes/api":248,"../shared/routes/routes":249,"./react/application":21,"./react/components/auth/auth":23,"./react/components/auth/authEmailSignIn":25,"./react/components/auth/authEmailSignUp":26,"./react/pages/auth":220,"./react/pages/entry":221,"./react/pages/feedBest":222,"./react/pages/feedFriends":223,"./react/pages/feedLive":224,"./react/pages/messenger":225,"./react/pages/messengerThread":226,"./react/pages/notifications":228,"./react/pages/settings":229,"./react/pages/tlogDaylog":230,"./react/pages/tlogRegular":231,"./react/stores/conversation":234,"./react/stores/currentUser":235,"./react/stores/feed":236,"./react/stores/message":237,"./react/stores/messagingStatus":238,"./react/stores/notification":239,"./react/stores/relationships":240,"./resources/libs":241,"./resources/locales":242}],7:[function(require,module,exports){
+},{"../shared/react/services/thumbor":246,"../shared/routes/api":248,"../shared/routes/routes":249,"./react/application":21,"./react/components/auth/auth":23,"./react/components/auth/authEmailSignIn":25,"./react/components/auth/authEmailSignUp":26,"./react/pages/auth":215,"./react/pages/entry":216,"./react/pages/feedBest":217,"./react/pages/feedFriends":218,"./react/pages/feedLive":219,"./react/pages/messenger":220,"./react/pages/messengerThread":221,"./react/pages/notifications":223,"./react/pages/settings":224,"./react/pages/tlogDaylog":225,"./react/pages/tlogRegular":226,"./react/stores/conversation":229,"./react/stores/currentUser":230,"./react/stores/feed":231,"./react/stores/message":232,"./react/stores/messagingStatus":233,"./react/stores/notification":234,"./react/stores/relationships":235,"./resources/libs":236,"./resources/locales":237}],7:[function(require,module,exports){
 var AppDispatcher, Constants, CurrentUserServerActions;
 
 Constants = require('../../constants/constants');
@@ -16452,7 +16452,7 @@ module.exports = CurrentUserServerActions;
 
 
 
-},{"../../constants/constants":206,"../../dispatcher/dispatcher":216}],8:[function(require,module,exports){
+},{"../../constants/constants":201,"../../dispatcher/dispatcher":211}],8:[function(require,module,exports){
 var AppDispatcher, Constants, FeedServerActions;
 
 Constants = require('../../constants/constants');
@@ -16478,7 +16478,7 @@ module.exports = FeedServerActions;
 
 
 
-},{"../../constants/constants":206,"../../dispatcher/dispatcher":216}],9:[function(require,module,exports){
+},{"../../constants/constants":201,"../../dispatcher/dispatcher":211}],9:[function(require,module,exports){
 var AppDispatcher, Constants, MessengerServerActions;
 
 Constants = require('../../constants/constants');
@@ -16522,7 +16522,7 @@ module.exports = MessengerServerActions;
 
 
 
-},{"../../constants/constants":206,"../../dispatcher/dispatcher":216}],10:[function(require,module,exports){
+},{"../../constants/constants":201,"../../dispatcher/dispatcher":211}],10:[function(require,module,exports){
 var AppDispatcher, Constants, NotificationsServerActions;
 
 Constants = require('../../constants/constants');
@@ -16555,7 +16555,7 @@ module.exports = NotificationsServerActions;
 
 
 
-},{"../../constants/constants":206,"../../dispatcher/dispatcher":216}],11:[function(require,module,exports){
+},{"../../constants/constants":201,"../../dispatcher/dispatcher":211}],11:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
 
 Constants = require('../../constants/constants');
@@ -16578,7 +16578,7 @@ module.exports = RelationshipServerActions;
 
 
 
-},{"../../constants/constants":206,"../../dispatcher/dispatcher":216}],12:[function(require,module,exports){
+},{"../../constants/constants":201,"../../dispatcher/dispatcher":211}],12:[function(require,module,exports){
 var Api, CurrentUserServerActions, CurrentUserViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -16623,7 +16623,7 @@ module.exports = CurrentUserViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214,"../server/currentUser":7}],13:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209,"../server/currentUser":7}],13:[function(require,module,exports){
 var Api, EntryViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -16708,7 +16708,7 @@ module.exports = EntryViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214}],14:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209}],14:[function(require,module,exports){
 var Api, FeedServerActions, FeedViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -16754,7 +16754,7 @@ module.exports = FeedViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214,"../server/feed":8}],15:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209,"../server/feed":8}],15:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessengerServerActions, MessengerViewActions, NotifyController, UuidService;
 
 Api = require('../../api/api');
@@ -16828,7 +16828,7 @@ module.exports = MessengerViewActions;
 
 
 
-},{"../../../../shared/react/services/uuid":247,"../../api/api":20,"../../constants/constants":206,"../../controllers/notify":214,"../../dispatcher/dispatcher":216,"../server/messenger":9}],16:[function(require,module,exports){
+},{"../../../../shared/react/services/uuid":247,"../../api/api":20,"../../constants/constants":201,"../../controllers/notify":209,"../../dispatcher/dispatcher":211,"../server/messenger":9}],16:[function(require,module,exports){
 var Api, NotificationsServerActions, NotificationsViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -16872,7 +16872,7 @@ module.exports = NotificationsViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214,"../server/notifications":10}],17:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209,"../server/notifications":10}],17:[function(require,module,exports){
 var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
 
 Api = require('../../api/api');
@@ -16945,7 +16945,7 @@ module.exports = RelationshipViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214,"../server/relationship":11}],18:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209,"../server/relationship":11}],18:[function(require,module,exports){
 var Api, NotifyController, SessionsViewActions;
 
 Api = require('../../api/api');
@@ -16986,7 +16986,7 @@ module.exports = SessionsViewActions;
 
 
 
-},{"../../api/api":20,"../../controllers/notify":214}],19:[function(require,module,exports){
+},{"../../api/api":20,"../../controllers/notify":209}],19:[function(require,module,exports){
 var Api, UsersViewActions;
 
 Api = require('../../api/api');
@@ -17437,7 +17437,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":206,"../stores/currentUser":235,"react/lib/Object.assign":280}],21:[function(require,module,exports){
+},{"../constants/constants":201,"../stores/currentUser":230,"react/lib/Object.assign":280}],21:[function(require,module,exports){
 (function (global){
 var MessagingService, ReactUjs;
 
@@ -17470,7 +17470,7 @@ window.ReactApp = {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./services/messaging":232,"i18next":undefined,"reactUjs":undefined}],22:[function(require,module,exports){
+},{"./services/messaging":227,"i18next":undefined,"reactUjs":undefined}],22:[function(require,module,exports){
 var Notify, PropTypes, TIMEOUT, TYPE;
 
 PropTypes = React.PropTypes;
@@ -17693,7 +17693,7 @@ module.exports = AuthEmailRecovery;
 
 
 
-},{"../../actions/view/sessions":18,"../../controllers/notify":214,"../../controllers/screen":215,"../../mixins/component":218,"./buttons/emailReset":28,"./fields/emailLogin":35,"./links/rememberedPassword":41,"react/lib/cx":359}],25:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":209,"../../controllers/screen":210,"../../mixins/component":213,"./buttons/emailReset":28,"./fields/emailLogin":35,"./links/rememberedPassword":41,"react/lib/cx":359}],25:[function(require,module,exports){
 (function (global){
 var AuthEmailLoginField, AuthEmailPasswordField, AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, NotifyController, PropTypes, SessionsViewActions, cx;
 
@@ -17826,7 +17826,7 @@ module.exports = AuthEmailSignIn;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":18,"../../controllers/notify":214,"../../mixins/component":218,"./buttons/emailSubmit":31,"./fields/emailLogin":35,"./fields/emailPassword":37,"./links/forgotPassword":39,"./links/notRegisteredYet":40,"react/lib/cx":359}],26:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":209,"../../mixins/component":213,"./buttons/emailSubmit":31,"./fields/emailLogin":35,"./fields/emailPassword":37,"./links/forgotPassword":39,"./links/notRegisteredYet":40,"react/lib/cx":359}],26:[function(require,module,exports){
 (function (global){
 var AuthAlreadyRegisteredLink, AuthEmailEmailField, AuthEmailNicknameField, AuthEmailPasswordField, AuthEmailSubmitButton, ComponentMixin, NotifyController, PropTypes, SessionsViewActions, cx;
 
@@ -17960,7 +17960,7 @@ module.exports = AuthEmailSignUp;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":18,"../../controllers/notify":214,"../../mixins/component":218,"./buttons/emailSubmit":31,"./fields/emailEmail":34,"./fields/emailNickname":36,"./fields/emailPassword":37,"./links/alreadyRegistered":38,"react/lib/cx":359}],27:[function(require,module,exports){
+},{"../../actions/view/sessions":18,"../../controllers/notify":209,"../../mixins/component":213,"./buttons/emailSubmit":31,"./fields/emailEmail":34,"./fields/emailNickname":36,"./fields/emailPassword":37,"./links/alreadyRegistered":38,"react/lib/cx":359}],27:[function(require,module,exports){
 var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -17990,7 +17990,7 @@ module.exports = AuthManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":235,"./auth":23}],28:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"./auth":23}],28:[function(require,module,exports){
 var AuthEmailResetButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -18020,7 +18020,7 @@ module.exports = AuthEmailResetButton;
 
 
 
-},{"../../common/spinner/spinner":55}],29:[function(require,module,exports){
+},{"../../common/spinner/spinner":50}],29:[function(require,module,exports){
 var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18044,7 +18044,7 @@ module.exports = AuthEmailSignInButton;
 
 
 
-},{"../../../controllers/screen":215,"../authEmailSignIn":25}],30:[function(require,module,exports){
+},{"../../../controllers/screen":210,"../authEmailSignIn":25}],30:[function(require,module,exports){
 var AuthEmailSignUpButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18066,7 +18066,7 @@ module.exports = AuthEmailSignUpButton;
 
 
 
-},{"../../../controllers/screen":215}],31:[function(require,module,exports){
+},{"../../../controllers/screen":210}],31:[function(require,module,exports){
 var AuthEmailSubmitButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -18096,7 +18096,7 @@ module.exports = AuthEmailSubmitButton;
 
 
 
-},{"../../common/spinner/spinner":55}],32:[function(require,module,exports){
+},{"../../common/spinner/spinner":50}],32:[function(require,module,exports){
 var AuthFacebookButton;
 
 AuthFacebookButton = React.createClass({
@@ -18278,7 +18278,7 @@ module.exports = AuthNotRegisteredYetLink;
 
 
 
-},{"../../../controllers/screen":215}],39:[function(require,module,exports){
+},{"../../../controllers/screen":210}],39:[function(require,module,exports){
 var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18302,7 +18302,7 @@ module.exports = AuthForgotPasswordLink;
 
 
 
-},{"../../../controllers/screen":215,"../authEmailRecovery":24}],40:[function(require,module,exports){
+},{"../../../controllers/screen":210,"../authEmailRecovery":24}],40:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18324,7 +18324,7 @@ module.exports = AuthNotRegisteredYetLink;
 
 
 
-},{"../../../controllers/screen":215}],41:[function(require,module,exports){
+},{"../../../controllers/screen":210}],41:[function(require,module,exports){
 var AuthRememberedPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18346,7 +18346,7 @@ module.exports = AuthRememberedPasswordLink;
 
 
 
-},{"../../../controllers/screen":215}],42:[function(require,module,exports){
+},{"../../../controllers/screen":210}],42:[function(require,module,exports){
 var AuthButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18368,7 +18368,7 @@ module.exports = AuthButton;
 
 
 
-},{"../../../controllers/screen":215}],43:[function(require,module,exports){
+},{"../../../controllers/screen":210}],43:[function(require,module,exports){
 var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -18403,7 +18403,7 @@ module.exports = AuthButtonManager;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":245,"../../../controllers/screen":215,"../../../stores/currentUser":235,"./auth":42}],44:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":245,"../../../controllers/screen":210,"../../../stores/currentUser":230,"./auth":42}],44:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -18548,7 +18548,7 @@ module.exports = FollowButton;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":245,"../../../mixins/component":218,"../../../stores/relationships":240,"./mixins/relationship":45,"react/lib/cx":359}],45:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":245,"../../../mixins/component":213,"../../../stores/relationships":235,"./mixins/relationship":45,"react/lib/cx":359}],45:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -18683,285 +18683,6 @@ module.exports = UserAvatar;
 
 
 },{"./avatar":46}],48:[function(require,module,exports){
-var Collage, CollageMixin, CollageRow, PropTypes;
-
-CollageMixin = require('./mixins/collage');
-
-CollageRow = require('./row');
-
-PropTypes = React.PropTypes;
-
-Collage = React.createClass({
-  displayName: 'Collage',
-  mixins: [CollageMixin],
-  propTypes: {
-    images: PropTypes.array.isRequired,
-    width: PropTypes.number.isRequired,
-    margin: PropTypes.number.isRequired,
-    minRowHeight: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "collage"
-    }, this.renderItems());
-  },
-  renderItems: function() {
-    var images, rows;
-    images = this.props.images;
-    switch (false) {
-      case images.length !== 0:
-        return [];
-      case images.length !== 1:
-        rows = this.makeRows(images);
-        return React.createElement(CollageRow, {
-          "row": rows[0]
-        });
-      case !(images.length >= 2):
-        rows = this.makeRows(images);
-        return rows.map(function(row, i) {
-          return React.createElement(CollageRow, {
-            "row": row,
-            "key": i
-          });
-        });
-      default:
-        return [];
-    }
-  }
-});
-
-module.exports = Collage;
-
-
-
-},{"./mixins/collage":50,"./row":51}],49:[function(require,module,exports){
-var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
-
-Collage = require('./collage');
-
-PropTypes = React.PropTypes;
-
-MARGIN = 0;
-
-MIN_ROW_HEIGHT = 150;
-
-CollageManager = React.createClass({
-  displayName: 'CollageManager',
-  propTypes: {
-    images: PropTypes.array.isRequired,
-    width: PropTypes.number,
-    margin: PropTypes.number,
-    minRowHeight: PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      margin: MARGIN,
-      minRowHeight: MIN_ROW_HEIGHT
-    };
-  },
-  getInitialState: function() {
-    return {
-      width: this.props.width || null
-    };
-  },
-  componentDidMount: function() {
-    this.updateWidthState();
-    return window.addEventListener('resize', this.updateWidthState);
-  },
-  componentWillUnmount: function() {
-    return window.removeEventListener('resize', this.updateWidthState);
-  },
-  render: function() {
-    if (this.hasWidth()) {
-      return React.createElement(Collage, React.__spread({}, this.props, {
-        "width": this.state.width
-      }));
-    } else {
-      return React.createElement("span", null);
-    }
-  },
-  hasWidth: function() {
-    return this.state.width != null;
-  },
-  updateWidthState: function() {
-    var parentWidth;
-    parentWidth = this.getDOMNode().parentNode.offsetWidth;
-    return this.setState({
-      width: parentWidth + this.props.margin * 2
-    });
-  }
-});
-
-module.exports = CollageManager;
-
-
-
-},{"./collage":48}],50:[function(require,module,exports){
-var CollageMixin, assign;
-
-assign = require('react/lib/Object.assign');
-
-CollageMixin = {
-  makeRows: function(images) {
-    var newImages, rowIndex, rowWidth, rows;
-    rows = [];
-    rowIndex = 0;
-    rowWidth = 0;
-    newImages = JSON.parse(JSON.stringify(images));
-    this.calculateImagesRatio(newImages);
-    newImages.forEach((function(_this) {
-      return function(image, i) {
-        assign(image, {
-          width: _this.getItemNewWidth(image, _this.props.minRowHeight),
-          height: _this.props.minRowHeight,
-          margin: _this.props.margin
-        });
-        if (i === 0 || rowWidth + image.width < _this.props.width) {
-          if (rows[rowIndex] == null) {
-            rows[rowIndex] = [];
-          }
-          rows[rowIndex].push(image);
-          rowWidth += image.width + image.margin * 2;
-        } else {
-          _this.stretchRow(rows[rowIndex], rowWidth);
-          rows[rowIndex + 1] = [image];
-          rowWidth = image.width + image.margin * 2;
-          rowIndex++;
-        }
-        if (i === newImages.length - 1) {
-          return _this.stretchRow(rows[rowIndex], rowWidth);
-        }
-      };
-    })(this));
-    return rows;
-  },
-  stretchRow: function(row, rowWidth) {
-    var lastElement, requiredHeight, resultWidth, rowHeight;
-    rowHeight = row[0].height + row[0].margin * 2;
-    requiredHeight = Math.round(rowHeight / rowWidth * this.props.width);
-    resultWidth = 0;
-    lastElement = row[row.length - 1];
-    row.forEach((function(_this) {
-      return function(image, i) {
-        assign(image, {
-          width: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
-          height: requiredHeight - _this.props.margin * 2
-        });
-        return resultWidth += image.width + image.margin * 2;
-      };
-    })(this));
-    return lastElement.width = lastElement.width + lastElement.margin * 2 + (this.props.width - resultWidth) - this.props.margin * 2;
-  },
-  getItemNewWidth: function(item, newHeight) {
-    return Math.round(newHeight * item.ratio);
-  },
-  calculateImagesRatio: function(images) {
-    return images.forEach(function(image) {
-      return image.ratio = image.width / image.height;
-    });
-  }
-};
-
-module.exports = CollageMixin;
-
-
-
-},{"react/lib/Object.assign":280}],51:[function(require,module,exports){
-var CollageRow, CollageRowItem, PropTypes;
-
-CollageRowItem = require('./row/item');
-
-PropTypes = React.PropTypes;
-
-CollageRow = React.createClass({
-  displayName: 'CollageRow',
-  propTypes: {
-    row: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "collage__row"
-    }, this.renderRowItems());
-  },
-  renderRowItems: function() {
-    return this.props.row.map(function(image) {
-      return React.createElement(CollageRowItem, {
-        "width": image.width,
-        "height": image.height,
-        "imagePath": image.payload.path,
-        "imageUrl": image.payload.url,
-        "key": image.payload.id
-      });
-    });
-  }
-});
-
-module.exports = CollageRow;
-
-
-
-},{"./row/item":52}],52:[function(require,module,exports){
-var CollageItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CollageItem = React.createClass({
-  displayName: 'CollageItem',
-  propTypes: {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    margin: PropTypes.number,
-    imageUrl: PropTypes.string.isRequired,
-    imagePath: PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {
-      width: this.props.width,
-      height: this.props.height
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "style": this.getContainerStyles(),
-      "className": "collage__item"
-    }, React.createElement("img", {
-      "style": this.getImageStyles(),
-      "src": this.getImageUrl()
-    }));
-  },
-  getContainerStyles: function() {
-    var height, margin, width, _ref;
-    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
-    return {
-      width: width,
-      height: height,
-      margin: margin
-    };
-  },
-  getImageStyles: function() {
-    var height, width, _ref;
-    _ref = this.props, width = _ref.width, height = _ref.height;
-    return {
-      width: width,
-      height: height
-    };
-  },
-  getImageUrl: function() {
-    var height, width, _ref;
-    _ref = this.state, width = _ref.width, height = _ref.height;
-    return ThumborService.imageUrl({
-      url: this.props.imageUrl,
-      path: this.props.imagePath,
-      size: width + 'x' + height
-    });
-  }
-});
-
-module.exports = CollageItem;
-
-
-
-},{}],53:[function(require,module,exports){
 var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
@@ -18999,7 +18720,7 @@ module.exports = FollowStatus;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":245,"../../../stores/relationships":240}],54:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":245,"../../../stores/relationships":235}],49:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19066,7 +18787,7 @@ module.exports = Image;
 
 
 
-},{}],55:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -19096,7 +18817,7 @@ module.exports = Spinner;
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 var Daylog, DaylogEmptyPageMessage, EntryTlog, PropTypes;
 
 DaylogEmptyPageMessage = require('./emptyPageMessage');
@@ -19133,7 +18854,7 @@ module.exports = Daylog;
 
 
 
-},{"../entry/tlog":102,"./emptyPageMessage":57}],57:[function(require,module,exports){
+},{"../entry/tlog":97,"./emptyPageMessage":52}],52:[function(require,module,exports){
 var DaylogEmptyPageMessage;
 
 DaylogEmptyPageMessage = React.createClass({
@@ -19155,7 +18876,7 @@ module.exports = DaylogEmptyPageMessage;
 
 
 
-},{}],58:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19178,7 +18899,7 @@ module.exports = CommentsLoadMoreButton;
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 var CommentForm, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19245,7 +18966,7 @@ module.exports = CommentForm;
 
 
 
-},{}],60:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -19289,7 +19010,7 @@ module.exports = CommentCreateForm;
 
 
 
-},{"../../../../mixins/component":218,"../commentForm":59}],61:[function(require,module,exports){
+},{"../../../../mixins/component":213,"../commentForm":54}],56:[function(require,module,exports){
 var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -19335,7 +19056,7 @@ module.exports = CommentEditForm;
 
 
 
-},{"../../../../mixins/component":218,"../commentForm":59}],62:[function(require,module,exports){
+},{"../../../../mixins/component":213,"../commentForm":54}],57:[function(require,module,exports){
 var CommentList, CommentManager, PropTypes;
 
 CommentManager = require('./commentList/commentManager');
@@ -19375,7 +19096,7 @@ module.exports = CommentList;
 
 
 
-},{"./commentList/commentManager":74}],63:[function(require,module,exports){
+},{"./commentList/commentManager":69}],58:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -19418,7 +19139,7 @@ module.exports = Comment;
 
 
 
-},{"./comment/actions":64,"./comment/date":71,"./comment/text":72,"./comment/user":73}],64:[function(require,module,exports){
+},{"./comment/actions":59,"./comment/date":66,"./comment/text":67,"./comment/user":68}],59:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -19492,7 +19213,7 @@ module.exports = CommentActions;
 
 
 
-},{"../../../../../mixins/clickOutside":217,"../../../../common/avatar/user":47,"./actions/buttons/button":65,"./actions/dropdownMenu":66,"react/lib/cx":359}],65:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":212,"../../../../common/avatar/user":47,"./actions/buttons/button":60,"./actions/dropdownMenu":61,"react/lib/cx":359}],60:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19516,7 +19237,7 @@ module.exports = CommentActionsButton;
 
 
 
-},{}],66:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
 
 DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
@@ -19583,7 +19304,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":219,"./dropdownMenu/items/delete":67,"./dropdownMenu/items/edit":68,"./dropdownMenu/items/link":69,"./dropdownMenu/items/report":70}],67:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":62,"./dropdownMenu/items/edit":63,"./dropdownMenu/items/link":64,"./dropdownMenu/items/report":65}],62:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19618,7 +19339,7 @@ module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19644,7 +19365,7 @@ module.exports = CommentActionsDropdownMenuEditItem;
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19674,7 +19395,7 @@ module.exports = CommentActionsDropdownMenuLinkItem;
 
 
 
-},{}],70:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19709,7 +19430,7 @@ module.exports = CommentActionsDropdownMenuReportItem;
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19755,7 +19476,7 @@ module.exports = CommentDate;
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -19779,7 +19500,7 @@ module.exports = CommentText;
 
 
 
-},{}],73:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -19812,7 +19533,7 @@ module.exports = CommentUser;
 
 
 
-},{"../../../../common/avatar/user":47}],74:[function(require,module,exports){
+},{"../../../../common/avatar/user":47}],69:[function(require,module,exports){
 var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
 
 Comment = require('./comment');
@@ -19881,7 +19602,7 @@ module.exports = CommentManager;
 
 
 
-},{"../../../../mixins/component":218,"../commentForm/edit":61,"./comment":63}],75:[function(require,module,exports){
+},{"../../../../mixins/component":213,"../commentForm/edit":56,"./comment":58}],70:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -19952,7 +19673,7 @@ module.exports = EntryComments;
 
 
 
-},{"./commentForm/create":60,"./commentList":62,"./commentsLoadMore":76}],76:[function(require,module,exports){
+},{"./commentForm/create":55,"./commentList":57,"./commentsLoadMore":71}],71:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -20009,7 +19730,7 @@ module.exports = CommentsLoadMore;
 
 
 
-},{"../../common/spinner/spinner":55,"./buttons/loadMore":58}],77:[function(require,module,exports){
+},{"../../common/spinner/spinner":50,"./buttons/loadMore":53}],72:[function(require,module,exports){
 var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
 
 TextEntryContent = require('./text/text');
@@ -20071,10 +19792,10 @@ module.exports = EntryContent;
 
 
 
-},{"./image/image":79,"./quote/quote":80,"./text/text":82,"./unknown/unknown":84,"./video/video":85}],78:[function(require,module,exports){
+},{"./image/image":74,"./quote/quote":75,"./text/text":77,"./unknown/unknown":79,"./video/video":80}],73:[function(require,module,exports){
 var CollageManager, ImageEntryAttachments, PropTypes;
 
-CollageManager = require('../../../common/collage/collageManager');
+CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
 
 PropTypes = React.PropTypes;
 
@@ -20111,7 +19832,7 @@ module.exports = ImageEntryAttachments;
 
 
 
-},{"../../../common/collage/collageManager":49}],79:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/collage/collageManager":241}],74:[function(require,module,exports){
 var ImageEntryAttachments, ImageEntryContent, PropTypes;
 
 ImageEntryAttachments = require('./attachments');
@@ -20156,7 +19877,7 @@ module.exports = ImageEntryContent;
 
 
 
-},{"./attachments":78}],80:[function(require,module,exports){
+},{"./attachments":73}],75:[function(require,module,exports){
 var PropTypes, QuoteEntryContent;
 
 PropTypes = React.PropTypes;
@@ -20191,7 +19912,7 @@ module.exports = QuoteEntryContent;
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var PropTypes, TextEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -20214,7 +19935,7 @@ module.exports = TextEntryHeader;
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var PropTypes, TextEntryContent, TextEntryHeader;
 
 TextEntryHeader = require('./header');
@@ -20243,7 +19964,7 @@ module.exports = TextEntryContent;
 
 
 
-},{"./header":81}],83:[function(require,module,exports){
+},{"./header":76}],78:[function(require,module,exports){
 var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -20266,7 +19987,7 @@ module.exports = UnknownEntryHeader;
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var PropTypes, UnknownEntryContent, UnknownEntryHeader;
 
 UnknownEntryHeader = require('./header');
@@ -20291,7 +20012,7 @@ module.exports = UnknownEntryContent;
 
 
 
-},{"./header":83}],85:[function(require,module,exports){
+},{"./header":78}],80:[function(require,module,exports){
 var PropTypes, VideoEntryContent;
 
 PropTypes = React.PropTypes;
@@ -20329,7 +20050,7 @@ module.exports = VideoEntryContent;
 
 
 
-},{}],86:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryFeed, EntryFeedMeta, EntryMixin, PropTypes;
 
 EntryFeedMeta = require('./feed/meta');
@@ -20406,7 +20127,7 @@ module.exports = EntryFeed;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":218,"../../stores/currentUser":235,"./comments/comments":75,"./content/content":77,"./feed/meta":87,"./mixins/entry":101}],87:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./comments/comments":70,"./content/content":72,"./feed/meta":82,"./mixins/entry":96}],82:[function(require,module,exports){
 var EntryFeedMeta, EntryMetaActions, EntryMetaAuthor, EntryMetaComments, EntryMetaDate, EntryMetaVoting, PropTypes;
 
 EntryMetaVoting = require('../meta/voting');
@@ -20457,7 +20178,7 @@ module.exports = EntryFeedMeta;
 
 
 
-},{"../meta/actions":88,"../meta/author":97,"../meta/comments":98,"../meta/date":99,"../meta/voting":100}],88:[function(require,module,exports){
+},{"../meta/actions":83,"../meta/author":92,"../meta/comments":93,"../meta/date":94,"../meta/voting":95}],83:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, EntryMetaActions, EntryMetaActions_Button, EntryMetaActions_DropdownMenu, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -20526,7 +20247,7 @@ module.exports = EntryMetaActions;
 
 
 
-},{"../../../mixins/clickOutside":217,"./actions/buttons/button":89,"./actions/dropdownMenu":90,"react/lib/cx":359}],89:[function(require,module,exports){
+},{"../../../mixins/clickOutside":212,"./actions/buttons/button":84,"./actions/dropdownMenu":85,"react/lib/cx":359}],84:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20550,7 +20271,7 @@ module.exports = EntryMetaActions_Button;
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
 
 DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
@@ -20629,7 +20350,7 @@ module.exports = EntryMetaActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/dropdownMenu":219,"./dropdownMenu/items/delete":91,"./dropdownMenu/items/edit":92,"./dropdownMenu/items/favorite":93,"./dropdownMenu/items/link":94,"./dropdownMenu/items/report":95,"./dropdownMenu/items/watch":96}],91:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":86,"./dropdownMenu/items/edit":87,"./dropdownMenu/items/favorite":88,"./dropdownMenu/items/link":89,"./dropdownMenu/items/report":90,"./dropdownMenu/items/watch":91}],86:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -20665,7 +20386,7 @@ module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
 
-},{"../../../../../../actions/view/entry":13}],92:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],87:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20691,7 +20412,7 @@ module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -20768,7 +20489,7 @@ module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
 
-},{"../../../../../../actions/view/entry":13,"react/lib/cx":359}],94:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13,"react/lib/cx":359}],89:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20794,7 +20515,7 @@ module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -20830,7 +20551,7 @@ module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
 
-},{"../../../../../../actions/view/entry":13}],96:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],91:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -20899,7 +20620,7 @@ module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
 
-},{"../../../../../../actions/view/entry":13}],97:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":13}],92:[function(require,module,exports){
 var EntryMetaAuthor, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -20933,7 +20654,7 @@ module.exports = EntryMetaAuthor;
 
 
 
-},{"../../common/avatar/user":47}],98:[function(require,module,exports){
+},{"../../common/avatar/user":47}],93:[function(require,module,exports){
 var EntryMetaComments, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20959,7 +20680,7 @@ module.exports = EntryMetaComments;
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var EntryMetaDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -20997,7 +20718,7 @@ module.exports = EntryMetaDate;
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -21064,7 +20785,7 @@ module.exports = EntryMetaVoting;
 
 
 
-},{"../../../actions/view/entry":13,"../../../mixins/component":218,"react/lib/cx":359}],101:[function(require,module,exports){
+},{"../../../actions/view/entry":13,"../../../mixins/component":213,"react/lib/cx":359}],96:[function(require,module,exports){
 var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
 
 assign = require('react/lib/Object.assign');
@@ -21204,7 +20925,7 @@ module.exports = EntryMixin;
 
 
 
-},{"../../../actions/view/entry":13,"react/lib/Object.assign":280}],102:[function(require,module,exports){
+},{"../../../actions/view/entry":13,"react/lib/Object.assign":280}],97:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryMixin, EntryTlog, EntryTlogMeta, PropTypes;
 
 EntryTlogMeta = require('./tlog/meta');
@@ -21281,7 +21002,7 @@ module.exports = EntryTlog;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":218,"../../stores/currentUser":235,"./comments/comments":75,"./content/content":77,"./mixins/entry":101,"./tlog/meta":103}],103:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./comments/comments":70,"./content/content":72,"./mixins/entry":96,"./tlog/meta":98}],98:[function(require,module,exports){
 var EntryMetaActions, EntryMetaComments, EntryMetaDate, EntryMetaVoting, EntryTlogMeta, PropTypes;
 
 EntryMetaVoting = require('../meta/voting');
@@ -21328,7 +21049,7 @@ module.exports = EntryTlogMeta;
 
 
 
-},{"../meta/actions":88,"../meta/comments":98,"../meta/date":99,"../meta/voting":100}],104:[function(require,module,exports){
+},{"../meta/actions":83,"../meta/comments":93,"../meta/date":94,"../meta/voting":95}],99:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -21350,7 +21071,7 @@ module.exports = FeedLoadMoreButton;
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 var FeedEmptyPageMessage, MESSAGE;
 
 MESSAGE = 'В ленте нет записей';
@@ -21374,7 +21095,7 @@ module.exports = FeedEmptyPageMessage;
 
 
 
-},{}],106:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
 FeedEmptyPageMessage = require('./emptyPageMessage');
@@ -21424,7 +21145,7 @@ module.exports = Feed;
 
 
 
-},{"../entry/feed":86,"./emptyPageMessage":105,"./loadMore":110}],107:[function(require,module,exports){
+},{"../entry/feed":81,"./emptyPageMessage":100,"./loadMore":105}],102:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -21468,7 +21189,7 @@ module.exports = FeedBest;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":218,"../../stores/feed":236,"./feed":106,"./mixins/feed":111}],108:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":213,"../../stores/feed":231,"./feed":101,"./mixins/feed":106}],103:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -21512,7 +21233,7 @@ module.exports = FeedFriends;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":218,"../../stores/feed":236,"./feed":106,"./mixins/feed":111}],109:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":213,"../../stores/feed":231,"./feed":101,"./mixins/feed":106}],104:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -21556,7 +21277,7 @@ module.exports = FeedLive;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":218,"../../stores/feed":236,"./feed":106,"./mixins/feed":111}],110:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../actions/view/feed":14,"../../mixins/component":213,"../../stores/feed":231,"./feed":101,"./mixins/feed":106}],105:[function(require,module,exports){
 var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -21595,7 +21316,7 @@ module.exports = FeedLoadMore;
 
 
 
-},{"../common/spinner/spinner":55,"./buttons/loadMore":104}],111:[function(require,module,exports){
+},{"../common/spinner/spinner":50,"./buttons/loadMore":99}],106:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedStore, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedStore = require('../../../stores/feed');
@@ -21649,7 +21370,7 @@ module.exports = FeedMixin;
 
 
 
-},{"../../../stores/feed":236}],112:[function(require,module,exports){
+},{"../../../stores/feed":231}],107:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -21690,7 +21411,7 @@ module.exports = HeroFeed;
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 var HeroFeed, HeroFeedBest, PropTypes;
 
 HeroFeed = require('./feed');
@@ -21714,7 +21435,7 @@ module.exports = HeroFeedBest;
 
 
 
-},{"./feed":112}],114:[function(require,module,exports){
+},{"./feed":107}],109:[function(require,module,exports){
 var HeroFeed, HeroFeedFriends, PropTypes;
 
 HeroFeed = require('./feed');
@@ -21738,7 +21459,7 @@ module.exports = HeroFeedFriends;
 
 
 
-},{"./feed":112}],115:[function(require,module,exports){
+},{"./feed":107}],110:[function(require,module,exports){
 var HeroFeed, HeroFeedLive, PropTypes;
 
 HeroFeed = require('./feed');
@@ -21762,7 +21483,7 @@ module.exports = HeroFeedLive;
 
 
 
-},{"./feed":112}],116:[function(require,module,exports){
+},{"./feed":107}],111:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -21905,7 +21626,7 @@ module.exports = HeroTlog;
 
 
 
-},{"../../../../shared/helpers/browser":243,"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":235,"./tlog/actions":117,"./tlog/avatar":127,"./tlog/buttons/close":128,"./tlog/head":129,"./tlog/stats":130}],117:[function(require,module,exports){
+},{"../../../../shared/helpers/browser":238,"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"./tlog/actions":112,"./tlog/avatar":122,"./tlog/buttons/close":123,"./tlog/head":124,"./tlog/stats":125}],112:[function(require,module,exports){
 var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
 HeroTlogActions_User = require('./actions/user');
@@ -21949,7 +21670,7 @@ module.exports = HeroTlogActions;
 
 
 
-},{"./actions/currentUser":120,"./actions/user":126}],118:[function(require,module,exports){
+},{"./actions/currentUser":115,"./actions/user":121}],113:[function(require,module,exports){
 var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -21976,7 +21697,7 @@ module.exports = HeroTlogActions_SettingsButton;
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var HeroTlogActions_WriteMessageButton;
 
 HeroTlogActions_WriteMessageButton = React.createClass({
@@ -21998,7 +21719,7 @@ module.exports = HeroTlogActions_WriteMessageButton;
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
 HeroTlogActions_SettingsButton = require('./buttons/settings');
@@ -22025,7 +21746,7 @@ module.exports = HeroTlogActions_CurrentUser;
 
 
 
-},{"./buttons/settings":118}],121:[function(require,module,exports){
+},{"./buttons/settings":113}],116:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -22098,7 +21819,7 @@ module.exports = HeroTlogActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/clickOutside":217,"./dropdownMenu/buttons/button":122,"./dropdownMenu/popup":125,"react/lib/cx":359}],122:[function(require,module,exports){
+},{"../../../../mixins/clickOutside":212,"./dropdownMenu/buttons/button":117,"./dropdownMenu/popup":120,"react/lib/cx":359}],117:[function(require,module,exports){
 var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -22122,7 +21843,7 @@ module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -22154,7 +21875,7 @@ module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
 
-},{"../../../../../../actions/view/relationship":17}],124:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":17}],119:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -22186,7 +21907,7 @@ module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
 
-},{"../../../../../../actions/view/relationship":17}],125:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":17}],120:[function(require,module,exports){
 var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../../../stores/relationships');
@@ -22249,7 +21970,7 @@ module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":245,"../../../../../mixins/dropdownMenu":219,"../../../../../stores/relationships":240,"./items/ignore":123,"./items/report":124}],126:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":245,"../../../../../mixins/dropdownMenu":214,"../../../../../stores/relationships":235,"./items/ignore":118,"./items/report":119}],121:[function(require,module,exports){
 var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
@@ -22285,7 +22006,7 @@ module.exports = HeroTlogActions_User;
 
 
 
-},{"../../../buttons/relationship/follow":44,"./buttons/writeMessage":119,"./dropdownMenu":121}],127:[function(require,module,exports){
+},{"../../../buttons/relationship/follow":44,"./buttons/writeMessage":114,"./dropdownMenu":116}],122:[function(require,module,exports){
 var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -22334,7 +22055,7 @@ module.exports = HeroTlogAvatar;
 
 
 
-},{"../../common/avatar/user":47,"../../common/followStatus/followStatus":53}],128:[function(require,module,exports){
+},{"../../common/avatar/user":47,"../../common/followStatus/followStatus":48}],123:[function(require,module,exports){
 var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -22358,7 +22079,7 @@ module.exports = HeroTlogCloseButton;
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -22389,7 +22110,7 @@ module.exports = HeroTlogHead;
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 var HeroTlogStats, HeroTlogStatsItem, PropTypes;
 
 HeroTlogStatsItem = require('./stats/item');
@@ -22476,7 +22197,7 @@ module.exports = HeroTlogStats;
 
 
 
-},{"./stats/item":131}],131:[function(require,module,exports){
+},{"./stats/item":126}],126:[function(require,module,exports){
 var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -22533,7 +22254,7 @@ module.exports = HeroTlogStatsItem;
 
 
 
-},{"../../../../../../shared/helpers/number":244,"react/lib/cx":359}],132:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":239,"react/lib/cx":359}],127:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -22559,7 +22280,7 @@ module.exports = CreateConversationButton;
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 var MessengerHeader, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -22582,7 +22303,7 @@ module.exports = MessengerHeader;
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -22633,7 +22354,7 @@ module.exports = MessengerConversation;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/conversation":234,"./conversation/header":135,"./conversation/messageForm":136,"./conversation/messages":138}],135:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/conversation":229,"./conversation/header":130,"./conversation/messageForm":131,"./conversation/messages":133}],130:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../common/header');
@@ -22658,7 +22379,7 @@ module.exports = ConversationHeader;
 
 
 
-},{"../common/header":133}],136:[function(require,module,exports){
+},{"../common/header":128}],131:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -22722,7 +22443,7 @@ module.exports = ConversationMessageForm;
 
 
 
-},{"../../../actions/view/messenger":15,"../../../controllers/notify":214,"./messageForm/field":137}],137:[function(require,module,exports){
+},{"../../../actions/view/messenger":15,"../../../controllers/notify":209,"./messageForm/field":132}],132:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -22780,7 +22501,7 @@ module.exports = ConversationMessageFormField;
 
 
 
-},{"lodash":254}],138:[function(require,module,exports){
+},{"lodash":254}],133:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -22905,7 +22626,7 @@ module.exports = ConversationMessages;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":245,"../../../actions/view/messenger":15,"../../../mixins/component":218,"../../../stores/conversation":234,"../../../stores/message":237,"../../common/spinner/spinner":55,"./messages/list":139}],139:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":245,"../../../actions/view/messenger":15,"../../../mixins/component":213,"../../../stores/conversation":229,"../../../stores/message":232,"../../common/spinner/spinner":50,"./messages/list":134}],134:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -23001,7 +22722,7 @@ module.exports = MessageList;
 
 
 
-},{"./list/empty":140,"./list/itemManager":142,"lodash":254}],140:[function(require,module,exports){
+},{"./list/empty":135,"./list/itemManager":137,"lodash":254}],135:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -23019,7 +22740,7 @@ module.exports = MessageListEmpty;
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -23136,7 +22857,7 @@ module.exports = MessageListItem;
 
 
 
-},{"../../../../common/avatar/user":47,"react/lib/cx":359}],142:[function(require,module,exports){
+},{"../../../../common/avatar/user":47,"react/lib/cx":359}],137:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -23205,7 +22926,7 @@ module.exports = MessageListItemManager;
 
 
 
-},{"../../../../../actions/view/messenger":15,"../../../../../stores/message":237,"./item":141}],143:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":15,"../../../../../stores/message":232,"./item":136}],138:[function(require,module,exports){
 var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -23252,7 +22973,7 @@ module.exports = MessengerConversations;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/conversation":234,"./buttons/createConversation":132,"./conversations/header":144,"./conversations/list":145}],144:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/conversation":229,"./buttons/createConversation":127,"./conversations/header":139,"./conversations/list":140}],139:[function(require,module,exports){
 var ConversationsHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -23270,7 +22991,7 @@ module.exports = ConversationsHeader;
 
 
 
-},{"../common/header":133}],145:[function(require,module,exports){
+},{"../common/header":128}],140:[function(require,module,exports){
 var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -23320,7 +23041,7 @@ module.exports = ConversationList;
 
 
 
-},{"./list/empty":146,"./list/item":147,"lodash":254}],146:[function(require,module,exports){
+},{"./list/empty":141,"./list/item":142,"lodash":254}],141:[function(require,module,exports){
 var ConversationListEmpty;
 
 ConversationListEmpty = React.createClass({
@@ -23338,7 +23059,7 @@ module.exports = ConversationListEmpty;
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 var ConversationListItem, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -23424,7 +23145,7 @@ module.exports = ConversationListItem;
 
 
 
-},{"../../../common/avatar/user":47,"react/lib/cx":359}],148:[function(require,module,exports){
+},{"../../../common/avatar/user":47,"react/lib/cx":359}],143:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -23453,7 +23174,7 @@ module.exports = MessengerCreateConversation;
 
 
 
-},{"./createConversation/chooser":149,"./createConversation/header":154}],149:[function(require,module,exports){
+},{"./createConversation/chooser":144,"./createConversation/header":149}],144:[function(require,module,exports){
 var ComponentMixin, LOADED_STATE, LOADING_STATE, MessengerChooser, MessengerChooserField, MessengerChooserList, PropTypes, Spinner, UsersViewActions, cx;
 
 cx = require('react/lib/cx');
@@ -23561,7 +23282,7 @@ module.exports = MessengerChooser;
 
 
 
-},{"../../../actions/view/users":19,"../../../mixins/component":218,"../../common/spinner/spinner":55,"./chooser/field":150,"./chooser/list":151,"react/lib/cx":359}],150:[function(require,module,exports){
+},{"../../../actions/view/users":19,"../../../mixins/component":213,"../../common/spinner/spinner":50,"./chooser/field":145,"./chooser/list":146,"react/lib/cx":359}],145:[function(require,module,exports){
 var MessengerChooserField, PropTypes, _;
 
 _ = require('lodash');
@@ -23598,7 +23319,7 @@ module.exports = MessengerChooserField;
 
 
 
-},{"lodash":254}],151:[function(require,module,exports){
+},{"lodash":254}],146:[function(require,module,exports){
 var MessengerChooserList, MessengerChooserListEmpty, MessengerChooserListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -23649,7 +23370,7 @@ module.exports = MessengerChooserList;
 
 
 
-},{"./list/empty":152,"./list/item":153,"lodash":254}],152:[function(require,module,exports){
+},{"./list/empty":147,"./list/item":148,"lodash":254}],147:[function(require,module,exports){
 var MessengerChooserListEmpty;
 
 MessengerChooserListEmpty = React.createClass({
@@ -23667,7 +23388,7 @@ module.exports = MessengerChooserListEmpty;
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 var MessengerChooserListItem, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -23703,7 +23424,7 @@ module.exports = MessengerChooserListItem;
 
 
 
-},{"../../../../common/avatar/user":47}],154:[function(require,module,exports){
+},{"../../../../common/avatar/user":47}],149:[function(require,module,exports){
 var CreateConversationHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -23721,7 +23442,7 @@ module.exports = CreateConversationHeader;
 
 
 
-},{"../common/header":133}],155:[function(require,module,exports){
+},{"../common/header":128}],150:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -23806,7 +23527,7 @@ module.exports = Messenger;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":218,"../../stores/conversation":234,"./conversation":134,"./conversations":143,"./createConversation":148,"./mixins/messenger":156}],156:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/conversation":229,"./conversation":129,"./conversations":138,"./createConversation":143,"./mixins/messenger":151}],151:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -23825,7 +23546,7 @@ module.exports = MessengerMixin;
 
 
 
-},{"../../../actions/view/messenger":15}],157:[function(require,module,exports){
+},{"../../../actions/view/messenger":15}],152:[function(require,module,exports){
 var NotificationsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -23851,7 +23572,7 @@ module.exports = NotificationsLoadMoreButton;
 
 
 
-},{}],158:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 var NotificationsMarkButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -23876,7 +23597,7 @@ module.exports = NotificationsMarkButton;
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 var NotificationsHeader;
 
 NotificationsHeader = React.createClass({
@@ -23894,7 +23615,7 @@ module.exports = NotificationsHeader;
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 var NotificationList, NotificationListEmpty, NotificationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -23942,7 +23663,7 @@ module.exports = NotificationList;
 
 
 
-},{"./list/empty":161,"./list/item":162,"lodash":254}],161:[function(require,module,exports){
+},{"./list/empty":156,"./list/item":157,"lodash":254}],156:[function(require,module,exports){
 var NotificationsListEmpty;
 
 NotificationsListEmpty = React.createClass({
@@ -23957,7 +23678,7 @@ module.exports = NotificationsListEmpty;
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 var Image, NotificationListItem, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -24033,7 +23754,7 @@ module.exports = NotificationListItem;
 
 
 
-},{"../../common/avatar/user":47,"../../common/image/image":54,"react/lib/cx":359}],163:[function(require,module,exports){
+},{"../../common/avatar/user":47,"../../common/image/image":49,"react/lib/cx":359}],158:[function(require,module,exports){
 var NotificationsLoadMore, NotificationsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -24067,7 +23788,7 @@ module.exports = NotificationsLoadMore;
 
 
 
-},{"../common/spinner/spinner":55,"./buttons/loadMore":157}],164:[function(require,module,exports){
+},{"../common/spinner/spinner":50,"./buttons/loadMore":152}],159:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, LOAD_MORE_LIMIT, NotificationsMixin, NotificationsViewActions, SHOW_STATE, _;
 
 _ = require('lodash');
@@ -24132,7 +23853,7 @@ module.exports = NotificationsMixin;
 
 
 
-},{"../../../actions/view/notifications":16,"lodash":254}],165:[function(require,module,exports){
+},{"../../../actions/view/notifications":16,"lodash":254}],160:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
@@ -24195,7 +23916,7 @@ module.exports = Notifications;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":218,"../../stores/notification":239,"./buttons/mark":158,"./header":159,"./list":160,"./loadMore":163,"./mixins/notifications":164}],166:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/notification":234,"./buttons/mark":153,"./header":154,"./list":155,"./loadMore":158,"./mixins/notifications":159}],161:[function(require,module,exports){
 var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
 
 PaginationPrev = require('./items/prev');
@@ -24242,7 +23963,7 @@ module.exports = DaylogPagination;
 
 
 
-},{"./items/next":168,"./items/prev":169}],167:[function(require,module,exports){
+},{"./items/next":163,"./items/prev":164}],162:[function(require,module,exports){
 var EntryPagination, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -24266,7 +23987,7 @@ module.exports = EntryPagination;
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 var PaginationNext, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -24301,7 +24022,7 @@ module.exports = PaginationNext;
 
 
 
-},{"react/lib/cx":359}],169:[function(require,module,exports){
+},{"react/lib/cx":359}],164:[function(require,module,exports){
 var PaginationPrev, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -24336,7 +24057,7 @@ module.exports = PaginationPrev;
 
 
 
-},{"react/lib/cx":359}],170:[function(require,module,exports){
+},{"react/lib/cx":359}],165:[function(require,module,exports){
 var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
 
 PaginationPrev = require('./items/prev');
@@ -24401,7 +24122,7 @@ module.exports = TlogPagination;
 
 
 
-},{"./items/next":168,"./items/prev":169}],171:[function(require,module,exports){
+},{"./items/next":163,"./items/prev":164}],166:[function(require,module,exports){
 var PropTypes, SettingsAccounts, UserAvatar;
 
 UserAvatar = require('../common/avatar/user');
@@ -24446,7 +24167,7 @@ module.exports = SettingsAccounts;
 
 
 
-},{"../common/avatar/user":47}],172:[function(require,module,exports){
+},{"../common/avatar/user":47}],167:[function(require,module,exports){
 var PropTypes, SettingsSaveButton;
 
 PropTypes = React.PropTypes;
@@ -24474,7 +24195,7 @@ module.exports = SettingsSaveButton;
 
 
 
-},{}],173:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 var PropTypes, Settings_Radio, UuidService;
 
 UuidService = require('../../../../../shared/react/services/uuid');
@@ -24530,7 +24251,7 @@ module.exports = Settings_Radio;
 
 
 
-},{"../../../../../shared/react/services/uuid":247}],174:[function(require,module,exports){
+},{"../../../../../shared/react/services/uuid":247}],169:[function(require,module,exports){
 var DECLARE_STATE, PropTypes, SHOW_STATE, SettingsEmail, SettingsEmailDeclare, SettingsEmailMixin, SettingsEmailShow, SettingsEmailUnconfirmed, UNCONFIRMED_STATE;
 
 SettingsEmailMixin = require('./mixins/email');
@@ -24607,7 +24328,7 @@ module.exports = SettingsEmail;
 
 
 
-},{"./email/declare":178,"./email/show":180,"./email/unconfirmed":181,"./mixins/email":186}],175:[function(require,module,exports){
+},{"./email/declare":173,"./email/show":175,"./email/unconfirmed":176,"./mixins/email":181}],170:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton;
 
 PropTypes = React.PropTypes;
@@ -24633,7 +24354,7 @@ module.exports = SettingsEmailCancelButton;
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 var PropTypes, SettingsEmailChangeButton;
 
 PropTypes = React.PropTypes;
@@ -24659,7 +24380,7 @@ module.exports = SettingsEmailChangeButton;
 
 
 
-},{}],177:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 var PropTypes, SettingsEmailDeclareButton;
 
 PropTypes = React.PropTypes;
@@ -24685,7 +24406,7 @@ module.exports = SettingsEmailDeclareButton;
 
 
 
-},{}],178:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailDeclare, SettingsEmailDeclareButton, SettingsEmailField;
 
 NotifyController = require('../../../controllers/notify');
@@ -24739,7 +24460,7 @@ module.exports = SettingsEmailDeclare;
 
 
 
-},{"../../../controllers/notify":214,"./buttons/declare":177,"./fields/email":179}],179:[function(require,module,exports){
+},{"../../../controllers/notify":209,"./buttons/declare":172,"./fields/email":174}],174:[function(require,module,exports){
 var PropTypes, SettingsEmailField, _;
 
 _ = require('lodash');
@@ -24779,7 +24500,7 @@ module.exports = SettingsEmailField;
 
 
 
-},{"lodash":254}],180:[function(require,module,exports){
+},{"lodash":254}],175:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailChangeButton, SettingsEmailField, SettingsEmailShow;
 
 NotifyController = require('../../../controllers/notify');
@@ -24839,7 +24560,7 @@ module.exports = SettingsEmailShow;
 
 
 
-},{"../../../controllers/notify":214,"./buttons/change":176,"./fields/email":179}],181:[function(require,module,exports){
+},{"../../../controllers/notify":209,"./buttons/change":171,"./fields/email":174}],176:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton, SettingsEmailField, SettingsEmailUnconfirmed;
 
 SettingsEmailField = require('./fields/email');
@@ -24879,7 +24600,7 @@ module.exports = SettingsEmailUnconfirmed;
 
 
 
-},{"./buttons/cancel":175,"./fields/email":179}],182:[function(require,module,exports){
+},{"./buttons/cancel":170,"./fields/email":174}],177:[function(require,module,exports){
 var PropTypes, SettingsHero, SettingsHeroAvatar, SettingsHeroSlug, SettingsHeroTitle;
 
 SettingsHeroAvatar = require('./hero/avatar');
@@ -24928,7 +24649,7 @@ module.exports = SettingsHero;
 
 
 
-},{"./hero/avatar":183,"./hero/slug":184,"./hero/title":185}],183:[function(require,module,exports){
+},{"./hero/avatar":178,"./hero/slug":179,"./hero/title":180}],178:[function(require,module,exports){
 var CurrentUserViewAcitons, LOADING_STATE, PropTypes, SHOW_STATE, SettingsHeroAvatar, Spinner, UserAvatar;
 
 CurrentUserViewAcitons = require('../../../actions/view/currentUser');
@@ -25049,7 +24770,7 @@ module.exports = SettingsHeroAvatar;
 
 
 
-},{"../../../actions/view/currentUser":12,"../../common/avatar/user":47,"../../common/spinner/spinner":55}],184:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12,"../../common/avatar/user":47,"../../common/spinner/spinner":50}],179:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsHeroSlug, _;
 
 _ = require('lodash');
@@ -25090,7 +24811,7 @@ module.exports = SettingsHeroSlug;
 
 
 
-},{"../../../controllers/notify":214,"lodash":254}],185:[function(require,module,exports){
+},{"../../../controllers/notify":209,"lodash":254}],180:[function(require,module,exports){
 var PropTypes, SettingsHeroTitle, _;
 
 _ = require('lodash');
@@ -25123,7 +24844,7 @@ module.exports = SettingsHeroTitle;
 
 
 
-},{"lodash":254}],186:[function(require,module,exports){
+},{"lodash":254}],181:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');
@@ -25141,7 +24862,7 @@ module.exports = SettingsEmailMixin;
 
 
 
-},{"../../../actions/view/currentUser":12}],187:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12}],182:[function(require,module,exports){
 var CurrentUserViewActions, NotifyController, SettingsMixin, _;
 
 _ = require('lodash');
@@ -25164,7 +24885,7 @@ module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/currentUser":12,"../../../controllers/notify":214,"lodash":254}],188:[function(require,module,exports){
+},{"../../../actions/view/currentUser":12,"../../../controllers/notify":209,"lodash":254}],183:[function(require,module,exports){
 var PropTypes, SettingsPassword, SettingsPasswordConfirmField, SettingsPasswordField;
 
 SettingsPasswordField = require('./password/fields/password');
@@ -25233,7 +24954,7 @@ module.exports = SettingsPassword;
 
 
 
-},{"./password/fields/password":189,"./password/fields/passwordConfirm":190}],189:[function(require,module,exports){
+},{"./password/fields/password":184,"./password/fields/passwordConfirm":185}],184:[function(require,module,exports){
 var PropTypes, SettingsPasswordField;
 
 PropTypes = React.PropTypes;
@@ -25264,7 +24985,7 @@ module.exports = SettingsPasswordField;
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var PropTypes, SettingsPasswordConfirmField;
 
 PropTypes = React.PropTypes;
@@ -25295,7 +25016,7 @@ module.exports = SettingsPasswordConfirmField;
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, Settings, SettingsAccounts, SettingsEmail, SettingsHero, SettingsMixin, SettingsPassword, SettingsSaveButton, Settings_Radio, _;
 
 _ = require('lodash');
@@ -25402,7 +25123,7 @@ module.exports = Settings;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":235,"./accounts":171,"./buttons/save":172,"./common/radio":173,"./email":174,"./hero":182,"./mixins/settings":187,"./password":188,"lodash":254}],192:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"./accounts":166,"./buttons/save":167,"./common/radio":168,"./email":169,"./hero":177,"./mixins/settings":182,"./password":183,"lodash":254}],187:[function(require,module,exports){
 var TlogEmptyPageMessage;
 
 TlogEmptyPageMessage = React.createClass({
@@ -25424,7 +25145,7 @@ module.exports = TlogEmptyPageMessage;
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var EntryTlog, PropTypes, Tlog, TlogEmptyPageMessage;
 
 TlogEmptyPageMessage = require('./emptyPageMessage');
@@ -25461,7 +25182,7 @@ module.exports = Tlog;
 
 
 
-},{"../entry/tlog":102,"./emptyPageMessage":192}],194:[function(require,module,exports){
+},{"../entry/tlog":97,"./emptyPageMessage":187}],189:[function(require,module,exports){
 var PropTypes, ToolbarItem, cx;
 
 cx = require('react/lib/cx');
@@ -25522,7 +25243,7 @@ module.exports = ToolbarItem;
 
 
 
-},{"react/lib/cx":359}],195:[function(require,module,exports){
+},{"react/lib/cx":359}],190:[function(require,module,exports){
 var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, cx;
 
 cx = require('react/lib/cx');
@@ -25577,7 +25298,7 @@ module.exports = FeedToolbar;
 
 
 
-},{"./feed/list":196,"./mixins/toolbar":198,"react/lib/cx":359}],196:[function(require,module,exports){
+},{"./feed/list":191,"./mixins/toolbar":193,"react/lib/cx":359}],191:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -25629,7 +25350,7 @@ module.exports = FeedToolbarList;
 
 
 
-},{"../_item":194}],197:[function(require,module,exports){
+},{"../_item":189}],192:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -25657,7 +25378,7 @@ module.exports = FeedToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":235,"./feed":195}],198:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"./feed":190}],193:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -25689,7 +25410,7 @@ module.exports = ToolbarMixin;
 
 
 
-},{}],199:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, UserToolbarListAdditional, UserToolbarToggle, cx;
 
 cx = require('react/lib/cx');
@@ -25752,7 +25473,7 @@ module.exports = UserToolbar;
 
 
 
-},{"./mixins/toolbar":198,"./user/list":200,"./user/listAdditional":201,"./user/toggle":203,"react/lib/cx":359}],200:[function(require,module,exports){
+},{"./mixins/toolbar":193,"./user/list":195,"./user/listAdditional":196,"./user/toggle":198,"react/lib/cx":359}],195:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -25832,7 +25553,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"../_item":194,"./mixins/list":202}],201:[function(require,module,exports){
+},{"../_item":189,"./mixins/list":197}],196:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -25852,7 +25573,7 @@ module.exports = UserToolbarListAdditional;
 
 
 
-},{}],202:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -25868,7 +25589,7 @@ module.exports = UserToolbarListMixin;
 
 
 
-},{}],203:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -25916,7 +25637,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],204:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -25955,7 +25676,7 @@ module.exports = UserToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":235,"../../stores/messagingStatus":238,"./user":199}],205:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"../../stores/messagingStatus":233,"./user":194}],200:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -25998,7 +25719,7 @@ module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":387}],206:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],201:[function(require,module,exports){
 var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessagingConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
 
 ApiConstants = require('./api');
@@ -26030,7 +25751,7 @@ module.exports = {
 
 
 
-},{"./api":205,"./currentUser":207,"./entry":208,"./feed":209,"./messaging":210,"./messenger":211,"./notifications":212,"./relationship":213}],207:[function(require,module,exports){
+},{"./api":200,"./currentUser":202,"./entry":203,"./feed":204,"./messaging":205,"./messenger":206,"./notifications":207,"./relationship":208}],202:[function(require,module,exports){
 var CurrentUserConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26045,7 +25766,7 @@ module.exports = CurrentUserConstants;
 
 
 
-},{"react/lib/keyMirror":387}],208:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],203:[function(require,module,exports){
 var EntryConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26062,7 +25783,7 @@ module.exports = EntryConstants;
 
 
 
-},{"react/lib/keyMirror":387}],209:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],204:[function(require,module,exports){
 var FeedConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26076,7 +25797,7 @@ module.exports = FeedConstants;
 
 
 
-},{"react/lib/keyMirror":387}],210:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],205:[function(require,module,exports){
 var MessagingConstants;
 
 MessagingConstants = {
@@ -26095,7 +25816,7 @@ module.exports = MessagingConstants;
 
 
 
-},{}],211:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 var MessengerConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26114,7 +25835,7 @@ module.exports = MessengerConstants;
 
 
 
-},{"react/lib/keyMirror":387}],212:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],207:[function(require,module,exports){
 var NotificationsConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26128,7 +25849,7 @@ module.exports = NotificationsConstants;
 
 
 
-},{"react/lib/keyMirror":387}],213:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],208:[function(require,module,exports){
 var RelationshipConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -26141,7 +25862,7 @@ module.exports = RelationshipConstants;
 
 
 
-},{"react/lib/keyMirror":387}],214:[function(require,module,exports){
+},{"react/lib/keyMirror":387}],209:[function(require,module,exports){
 var Notify, NotifyController, closeNotification, getContainer, isPageLoadingCanceled, _pendingNotification;
 
 Notify = require('../components/alerts/notify');
@@ -26231,7 +25952,7 @@ module.exports = NotifyController;
 
 
 
-},{"../components/alerts/notify":22}],215:[function(require,module,exports){
+},{"../components/alerts/notify":22}],210:[function(require,module,exports){
 var ScreenController, getContainer, restorePageName, switchPageName, _oldPageName;
 
 _oldPageName = null;
@@ -26290,7 +26011,7 @@ module.exports = ScreenController;
 
 
 
-},{}],216:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 var AppDispatcher, Dispatcher, assign;
 
 assign = require('react/lib/Object.assign');
@@ -26316,7 +26037,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":251,"react/lib/Object.assign":280}],217:[function(require,module,exports){
+},{"flux":251,"react/lib/Object.assign":280}],212:[function(require,module,exports){
 var ClickOutsideMixin, closest;
 
 closest = function(el, target) {
@@ -26352,7 +26073,7 @@ module.exports = ClickOutsideMixin;
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 var ComponentMixin;
 
 ComponentMixin = {
@@ -26375,7 +26096,7 @@ module.exports = ComponentMixin;
 
 
 
-},{}],219:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -26446,7 +26167,7 @@ module.exports = DropdownMenuMixin;
 
 
 
-},{}],220:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 var Auth, AuthPage, PageMixin, PropTypes;
 
 PageMixin = require('./mixins/page');
@@ -26473,7 +26194,7 @@ module.exports = AuthPage;
 
 
 
-},{"../components/auth/auth":23,"./mixins/page":227}],221:[function(require,module,exports){
+},{"../components/auth/auth":23,"./mixins/page":222}],216:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26529,7 +26250,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/entry/tlog":102,"../components/hero/tlog":116,"../components/pagination/entry":167,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"./mixins/page":227}],222:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/entry/tlog":97,"../components/hero/tlog":111,"../components/pagination/entry":162,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],217:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26584,7 +26305,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedBest":107,"../components/hero/feedBest":113,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"../stores/feed":236,"./mixins/page":227}],223:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedBest":102,"../components/hero/feedBest":108,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"../stores/feed":231,"./mixins/page":222}],218:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedStore, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26639,7 +26360,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedFriends":108,"../components/hero/feedFriends":114,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"../stores/feed":236,"./mixins/page":227}],224:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedFriends":103,"../components/hero/feedFriends":109,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"../stores/feed":231,"./mixins/page":222}],219:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedStore, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26692,7 +26413,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedLive":109,"../components/hero/feedLive":115,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"../stores/feed":236,"./mixins/page":227}],225:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/feed/feedLive":104,"../components/hero/feedLive":110,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"../stores/feed":231,"./mixins/page":222}],220:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26736,7 +26457,7 @@ module.exports = MessengerPage;
 
 
 
-},{"../components/messenger/messenger":155,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/conversation":234,"../stores/currentUser":235,"./mixins/page":227}],226:[function(require,module,exports){
+},{"../components/messenger/messenger":150,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/conversation":229,"../stores/currentUser":230,"./mixins/page":222}],221:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26786,7 +26507,7 @@ module.exports = MessengerThreadPage;
 
 
 
-},{"../components/messenger/messenger":155,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/conversation":234,"../stores/currentUser":235,"../stores/message":237,"./mixins/page":227}],227:[function(require,module,exports){
+},{"../components/messenger/messenger":150,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/conversation":229,"../stores/currentUser":230,"../stores/message":232,"./mixins/page":222}],222:[function(require,module,exports){
 var PageMixin, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -26806,7 +26527,7 @@ module.exports = PageMixin;
 
 
 
-},{}],228:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, NotificationStore, Notifications, NotificationsPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26847,7 +26568,7 @@ module.exports = NotificationsPage;
 
 
 
-},{"../components/notifications/notifications":165,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"../stores/notification":239,"./mixins/page":227}],229:[function(require,module,exports){
+},{"../components/notifications/notifications":160,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"../stores/notification":234,"./mixins/page":222}],224:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, PageMixin, PropTypes, Settings, SettingsPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26884,7 +26605,7 @@ module.exports = SettingsPage;
 
 
 
-},{"../components/settings/settings":191,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"./mixins/page":227}],230:[function(require,module,exports){
+},{"../components/settings/settings":186,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],225:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -26942,7 +26663,7 @@ module.exports = TlogDaylogPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/daylog/daylog":56,"../components/hero/tlog":116,"../components/pagination/daylog":166,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"./mixins/page":227}],231:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/daylog/daylog":51,"../components/hero/tlog":111,"../components/pagination/daylog":161,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],226:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -27000,7 +26721,7 @@ module.exports = TlogRegularPage;
 
 
 
-},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/hero/tlog":116,"../components/pagination/tlog":170,"../components/tlog/tlog":193,"../components/toolbars/feedManager":197,"../components/toolbars/userManager":204,"../stores/currentUser":235,"./mixins/page":227}],232:[function(require,module,exports){
+},{"../components/auth/authManager":27,"../components/buttons/auth/authManager":43,"../components/hero/tlog":111,"../components/pagination/tlog":165,"../components/tlog/tlog":188,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],227:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessagingService, NotifyController,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
@@ -27116,7 +26837,7 @@ module.exports = MessagingService;
 
 
 
-},{"../api/api":20,"../constants/constants":206,"../controllers/notify":214,"../dispatcher/dispatcher":216}],233:[function(require,module,exports){
+},{"../api/api":20,"../constants/constants":201,"../controllers/notify":209,"../dispatcher/dispatcher":211}],228:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -27150,7 +26871,7 @@ module.exports = BaseStore;
 
 
 
-},{}],234:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, assign, _, _conversations, _currentID;
 
 _ = require('lodash');
@@ -27232,7 +26953,7 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"lodash":254,"react/lib/Object.assign":280}],235:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"lodash":254,"react/lib/Object.assign":280}],230:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, CurrentUserStore, assign, extendByMockData, _currentUser;
 
 assign = require('react/lib/Object.assign');
@@ -27306,7 +27027,7 @@ CurrentUserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"react/lib/Object.assign":280}],236:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"react/lib/Object.assign":280}],231:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, FeedStore, assign, pushEntries, _entries, _everythingLoaded;
 
 assign = require('react/lib/Object.assign');
@@ -27356,7 +27077,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"react/lib/Object.assign":280}],237:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"react/lib/Object.assign":280}],232:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, CurrentUserStore, MessageStore, addLocalMessage, addRemoteMessage, assign, _, _localMessages, _messages;
 
 _ = require('lodash');
@@ -27512,7 +27233,7 @@ MessageStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"./conversation":234,"./currentUser":235,"lodash":254,"react/lib/Object.assign":280}],238:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"./conversation":229,"./currentUser":230,"lodash":254,"react/lib/Object.assign":280}],233:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, MessagingStatusStore, assign, _, _messagingStatus;
 
 _ = require('lodash');
@@ -27557,7 +27278,7 @@ MessagingStatusStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"lodash":254,"react/lib/Object.assign":280}],239:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"lodash":254,"react/lib/Object.assign":280}],234:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, NotificationStore, assign, _, _everythingLoaded, _notifications;
 
 _ = require('lodash');
@@ -27636,7 +27357,7 @@ NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"lodash":254,"react/lib/Object.assign":280}],240:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"lodash":254,"react/lib/Object.assign":280}],235:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
 
 assign = require('react/lib/Object.assign');
@@ -27679,7 +27400,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":206,"../dispatcher/dispatcher":216,"./_base":233,"react/lib/Object.assign":280}],241:[function(require,module,exports){
+},{"../constants/constants":201,"../dispatcher/dispatcher":211,"./_base":228,"react/lib/Object.assign":280}],236:[function(require,module,exports){
 (function (global){
 global.React = require('react');
 
@@ -27694,7 +27415,7 @@ global.moment = require('../../../bower_components/momentjs/moment');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../../bower_components/momentjs/moment":4,"eventEmitter":undefined,"pusher":5,"react":undefined,"reqwest":undefined}],242:[function(require,module,exports){
+},{"../../../bower_components/momentjs/moment":4,"eventEmitter":undefined,"pusher":5,"react":undefined,"reqwest":undefined}],237:[function(require,module,exports){
 var momentLocales;
 
 momentLocales = {
@@ -27705,7 +27426,7 @@ window.moment.locale('ru', momentLocales.ru);
 
 
 
-},{"../../../bower_components/momentjs/locale/ru":3}],243:[function(require,module,exports){
+},{"../../../bower_components/momentjs/locale/ru":3}],238:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -27754,7 +27475,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],244:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var NumberHelpers;
 
 NumberHelpers = {
@@ -27783,6 +27504,285 @@ NumberHelpers = {
 };
 
 module.exports = NumberHelpers;
+
+
+
+},{}],240:[function(require,module,exports){
+var Collage, CollageMixin, CollageRow, PropTypes;
+
+CollageMixin = require('./mixins/collage');
+
+CollageRow = require('./row');
+
+PropTypes = React.PropTypes;
+
+Collage = React.createClass({
+  displayName: 'Collage',
+  mixins: [CollageMixin],
+  propTypes: {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.number.isRequired,
+    margin: PropTypes.number.isRequired,
+    minRowHeight: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "collage"
+    }, this.renderItems());
+  },
+  renderItems: function() {
+    var images, rows;
+    images = this.props.images;
+    switch (false) {
+      case images.length !== 0:
+        return [];
+      case images.length !== 1:
+        rows = this.makeRows(images);
+        return React.createElement(CollageRow, {
+          "row": rows[0]
+        });
+      case !(images.length >= 2):
+        rows = this.makeRows(images);
+        return rows.map(function(row, i) {
+          return React.createElement(CollageRow, {
+            "row": row,
+            "key": i
+          });
+        });
+      default:
+        return [];
+    }
+  }
+});
+
+module.exports = Collage;
+
+
+
+},{"./mixins/collage":242,"./row":243}],241:[function(require,module,exports){
+var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
+
+Collage = require('./collage');
+
+PropTypes = React.PropTypes;
+
+MARGIN = 0;
+
+MIN_ROW_HEIGHT = 150;
+
+CollageManager = React.createClass({
+  displayName: 'CollageManager',
+  propTypes: {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.number,
+    margin: PropTypes.number,
+    minRowHeight: PropTypes.number
+  },
+  getDefaultProps: function() {
+    return {
+      margin: MARGIN,
+      minRowHeight: MIN_ROW_HEIGHT
+    };
+  },
+  getInitialState: function() {
+    return {
+      width: this.props.width || null
+    };
+  },
+  componentDidMount: function() {
+    this.updateWidthState();
+    return window.addEventListener('resize', this.updateWidthState);
+  },
+  componentWillUnmount: function() {
+    return window.removeEventListener('resize', this.updateWidthState);
+  },
+  render: function() {
+    if (this.hasWidth()) {
+      return React.createElement(Collage, React.__spread({}, this.props, {
+        "width": this.state.width
+      }));
+    } else {
+      return React.createElement("span", null);
+    }
+  },
+  hasWidth: function() {
+    return this.state.width != null;
+  },
+  updateWidthState: function() {
+    var parentWidth;
+    parentWidth = this.getDOMNode().parentNode.offsetWidth;
+    return this.setState({
+      width: parentWidth + this.props.margin * 2
+    });
+  }
+});
+
+module.exports = CollageManager;
+
+
+
+},{"./collage":240}],242:[function(require,module,exports){
+var CollageMixin, assign;
+
+assign = require('react/lib/Object.assign');
+
+CollageMixin = {
+  makeRows: function(images) {
+    var newImages, rowIndex, rowWidth, rows;
+    rows = [];
+    rowIndex = 0;
+    rowWidth = 0;
+    newImages = JSON.parse(JSON.stringify(images));
+    this.calculateImagesRatio(newImages);
+    newImages.forEach((function(_this) {
+      return function(image, i) {
+        assign(image, {
+          width: _this.getItemNewWidth(image, _this.props.minRowHeight),
+          height: _this.props.minRowHeight,
+          margin: _this.props.margin
+        });
+        if (i === 0 || rowWidth + image.width < _this.props.width) {
+          if (rows[rowIndex] == null) {
+            rows[rowIndex] = [];
+          }
+          rows[rowIndex].push(image);
+          rowWidth += image.width + image.margin * 2;
+        } else {
+          _this.stretchRow(rows[rowIndex], rowWidth);
+          rows[rowIndex + 1] = [image];
+          rowWidth = image.width + image.margin * 2;
+          rowIndex++;
+        }
+        if (i === newImages.length - 1) {
+          return _this.stretchRow(rows[rowIndex], rowWidth);
+        }
+      };
+    })(this));
+    return rows;
+  },
+  stretchRow: function(row, rowWidth) {
+    var lastElement, requiredHeight, resultWidth, rowHeight;
+    rowHeight = row[0].height + row[0].margin * 2;
+    requiredHeight = Math.round(rowHeight / rowWidth * this.props.width);
+    resultWidth = 0;
+    lastElement = row[row.length - 1];
+    row.forEach((function(_this) {
+      return function(image, i) {
+        assign(image, {
+          width: _this.getItemNewWidth(image, requiredHeight - _this.props.margin * 2),
+          height: requiredHeight - _this.props.margin * 2
+        });
+        return resultWidth += image.width + image.margin * 2;
+      };
+    })(this));
+    return lastElement.width = lastElement.width + lastElement.margin * 2 + (this.props.width - resultWidth) - this.props.margin * 2;
+  },
+  getItemNewWidth: function(item, newHeight) {
+    return Math.round(newHeight * item.ratio);
+  },
+  calculateImagesRatio: function(images) {
+    return images.forEach(function(image) {
+      return image.ratio = image.width / image.height;
+    });
+  }
+};
+
+module.exports = CollageMixin;
+
+
+
+},{"react/lib/Object.assign":280}],243:[function(require,module,exports){
+var CollageRow, CollageRowItem, PropTypes;
+
+CollageRowItem = require('./row/item');
+
+PropTypes = React.PropTypes;
+
+CollageRow = React.createClass({
+  displayName: 'CollageRow',
+  propTypes: {
+    row: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "collage__row"
+    }, this.renderRowItems());
+  },
+  renderRowItems: function() {
+    return this.props.row.map(function(image) {
+      return React.createElement(CollageRowItem, {
+        "width": image.width,
+        "height": image.height,
+        "imagePath": image.payload.path,
+        "imageUrl": image.payload.url,
+        "key": image.payload.id
+      });
+    });
+  }
+});
+
+module.exports = CollageRow;
+
+
+
+},{"./row/item":244}],244:[function(require,module,exports){
+var CollageItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CollageItem = React.createClass({
+  displayName: 'CollageItem',
+  propTypes: {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    margin: PropTypes.number,
+    imageUrl: PropTypes.string.isRequired,
+    imagePath: PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      width: this.props.width,
+      height: this.props.height
+    };
+  },
+  render: function() {
+    return React.createElement("div", {
+      "style": this.getContainerStyles(),
+      "className": "collage__item"
+    }, React.createElement("img", {
+      "style": this.getImageStyles(),
+      "src": this.getImageUrl()
+    }));
+  },
+  getContainerStyles: function() {
+    var height, margin, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height, margin = _ref.margin;
+    return {
+      width: width,
+      height: height,
+      margin: margin
+    };
+  },
+  getImageStyles: function() {
+    var height, width, _ref;
+    _ref = this.props, width = _ref.width, height = _ref.height;
+    return {
+      width: width,
+      height: height
+    };
+  },
+  getImageUrl: function() {
+    var height, width, _ref;
+    _ref = this.state, width = _ref.width, height = _ref.height;
+    return ThumborService.imageUrl({
+      url: this.props.imageUrl,
+      path: this.props.imagePath,
+      size: width + 'x' + height
+    });
+  }
+});
+
+module.exports = CollageItem;
 
 
 
@@ -27837,6 +27837,7 @@ ThumborService = {
     var path, size, url;
     url = _arg.url, path = _arg.path, size = _arg.size;
     switch (TastySettings.env) {
+      case 'static-development':
       case 'development':
         return url;
       default:
@@ -28024,7 +28025,10 @@ ApiRoutes = {
     return TastySettings.api_host + '/v1/my_feeds/friends';
   },
   imageAttachments: function() {
-    return TastySettings.api_host + '/v1/backgrounds';
+    return TastySettings.api_host + '/v1/image_attachments';
+  },
+  imageAttachmentsWithID: function(attachmentID) {
+    return TastySettings.api_host + '/v1/image_attachments/' + attachmentID;
   }
 };
 

@@ -71,6 +71,7 @@ ApiRoutes =
   feedBest:    -> TastySettings.api_host + '/v1/feeds/best'
   feedFriends: -> TastySettings.api_host + '/v1/my_feeds/friends'
 
-  imageAttachments: -> TastySettings.api_host + '/v1/backgrounds'
+  imageAttachments: -> TastySettings.api_host + '/v1/image_attachments'
+  imageAttachmentsWithID: (attachmentID) -> TastySettings.api_host + '/v1/image_attachments/' + attachmentID
 
 module.exports = ApiRoutes

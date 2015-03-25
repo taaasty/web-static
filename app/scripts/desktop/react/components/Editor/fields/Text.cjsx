@@ -32,16 +32,14 @@ EditorTextField = React.createClass
     text: PropTypes.string
     placeholder: PropTypes.string.isRequired
     className: PropTypes.string
-    autoFocus: PropTypes.bool
     onChange: PropTypes.func.isRequired
 
   getDefaultProps: ->
     mode: 'inline'
 
-  shouldComponentUpdate: ->
-    # Не обновляем поле, данные берём только при рендере с пропсов.
-    # Medium-editor сбрасывает каретку на начало строки при обновлении компонента
-    false
+  shouldComponentUpdate: (nextProps) ->
+    fieldContent = @refs.fieldContent.getDOMNode()
+    fieldContent.innerHTML isnt nextProps.text
 
   componentDidMount: ->
     fieldContent = @refs.fieldContent.getDOMNode()
@@ -49,12 +47,6 @@ EditorTextField = React.createClass
       placeholder: @props.placeholder.replace '<br>', '\r\n'
 
     @mediumEditor = new MediumEditor fieldContent, options
-    # @placeCaretAtEnd fieldContent if @props.autoFocus
-
-  # componentDidUpdate: ->
-  #   if @props.isLoading then @mediumEditor.deactivate?() else @mediumEditor.activate?()
-
-  #   @_managePlaceholder()
 
   componentWillUnmount: ->
     @mediumEditor.deactivate()
@@ -67,22 +59,6 @@ EditorTextField = React.createClass
            onInput={ @handleInput }
            dangerouslySetInnerHTML={{ __html: @props.text }} />
     </div>
-
-  # placeCaretAtEnd: (el) ->
-  #   el.focus()
-  #   if typeof window.getSelection? && document.createRange?
-  #     range = document.createRange()
-  #     el.innerHTML = '&#8203'
-  #     range.selectNodeContents(el)
-  #     range.collapse(false)
-  #     sel = window.getSelection()
-  #     sel.removeAllRanges()
-  #     sel.addRange(range)
-  #   else if typeof document.body.createTextRange?
-  #     textRange = document.body.createTextRange()
-  #     textRange.moveToElementText(el)
-  #     textRange.collapse(false)
-  #     textRange.select()
 
   handleInput: (e) ->
     value = e.target.innerHTML
