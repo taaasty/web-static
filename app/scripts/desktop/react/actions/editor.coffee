@@ -49,8 +49,6 @@ EditorActionCreators =
     @updateField 'source', source
 
   createImageAttachments: (files) ->
-    dfd = new $.Deferred()
-
     _.forEach files, (file) =>
       # Общий uuid для imageAttachment-like blob и imageAttachment
       uuid = UuidService.generate()
@@ -71,7 +69,6 @@ EditorActionCreators =
 
         newAttachments.push blobAttachment
         @updateField 'imageAttachments', newAttachments
-        dfd.resolve()
       image.src = BrowserHelpers.createObjectURL file
 
       # Делаем запрос на создание картинки, на успешный ответ заменяем blob с uuid
@@ -87,20 +84,24 @@ EditorActionCreators =
           blobIndex = _.findIndex newAttachments, (attachment) ->
             attachment.uuid == uuid
 
-          newAttachments[blobIndex].image.progress = percentUploaded
-          @updateField 'imageAttachments', newAttachments
-      ).then (imageAttachment) =>
+          unless blobIndex == -1
+            newAttachments[blobIndex].image.progress = percentUploaded
+            @updateField 'imageAttachments', newAttachments
+      )
+        .then (imageAttachment) =>
           attachments = EditorStore.getEntryValue('imageAttachments') || []
           newAttachments = attachments[..]
 
           blobIndex = _.findIndex newAttachments, (attachment) ->
             attachment.uuid == uuid
 
-          newAttachments[blobIndex] = imageAttachment
-          @updateField 'imageAttachments', newAttachments
-        .fail dfd.reject
+          if blobIndex == -1
+            newAttachments.push imageAttachment
+          else
+            newAttachments[blobIndex] = imageAttachment
 
-    dfd.promise()
+          @updateField 'imageAttachments', newAttachments
+        .fail
 
   deleteEmbedUrl: ->
     @changeEmbedUrl null
@@ -115,7 +116,7 @@ EditorActionCreators =
     attachments = EditorStore.getEntryValue 'imageAttachments'
 
     _.forEach attachments, (attachment) =>
-      unless attachment.entry_id
+      if not attachment.entry_id and attachment.id
         Api.editor.deleteImageAttachment attachment.id
 
     @updateField 'imageAttachments', []
@@ -131,14 +132,14 @@ EditorActionCreators =
     entryType = 'video' if entryType is 'music' or entryType is 'instagram'
 
     onSuccess = (entry) ->
+      AppDispatcher.handleServerAction
+        type: EditorConstants.ENTRY_SAVED
+      
       if TastySettings.env is 'static-development'
         alert "Статья #{ entry.id } успешно сохранена"
       else
         TastyNotifyController.notifySuccess i18n.t 'editor_create_success'
         window.location.href = entry.entry_url
-
-      AppDispatcher.handleServerAction
-        type: EditorConstants.ENTRY_SAVED
 
     switch entryType
       when 'text'

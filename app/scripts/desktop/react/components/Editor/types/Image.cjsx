@@ -116,8 +116,7 @@ EditorTypeImage = React.createClass
       return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
 
     EditorActionCreators.createImageAttachments files
-      .then @activateLoadedState
-      .fail @activateWelcomeState
+    @activateLoadedState()
 
   handleChangeTitle: (title) ->
     EditorActionCreators.changeTitle title

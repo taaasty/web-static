@@ -13686,9 +13686,7 @@ EditorActionCreators = {
     return this.updateField('source', source);
   },
   createImageAttachments: function(files) {
-    var dfd;
-    dfd = new $.Deferred();
-    _.forEach(files, (function(_this) {
+    return _.forEach(files, (function(_this) {
       return function(file) {
         var formData, image, uuid;
         uuid = UuidService.generate();
@@ -13709,8 +13707,7 @@ EditorActionCreators = {
             }
           };
           newAttachments.push(blobAttachment);
-          _this.updateField('imageAttachments', newAttachments);
-          return dfd.resolve();
+          return _this.updateField('imageAttachments', newAttachments);
         };
         image.src = BrowserHelpers.createObjectURL(file);
         formData = new FormData();
@@ -13723,8 +13720,10 @@ EditorActionCreators = {
             blobIndex = _.findIndex(newAttachments, function(attachment) {
               return attachment.uuid === uuid;
             });
-            newAttachments[blobIndex].image.progress = percentUploaded;
-            return _this.updateField('imageAttachments', newAttachments);
+            if (blobIndex !== -1) {
+              newAttachments[blobIndex].image.progress = percentUploaded;
+              return _this.updateField('imageAttachments', newAttachments);
+            }
           }
         }).then(function(imageAttachment) {
           var attachments, blobIndex, newAttachments;
@@ -13733,12 +13732,15 @@ EditorActionCreators = {
           blobIndex = _.findIndex(newAttachments, function(attachment) {
             return attachment.uuid === uuid;
           });
-          newAttachments[blobIndex] = imageAttachment;
+          if (blobIndex === -1) {
+            newAttachments.push(imageAttachment);
+          } else {
+            newAttachments[blobIndex] = imageAttachment;
+          }
           return _this.updateField('imageAttachments', newAttachments);
-        }).fail(dfd.reject);
+        }).fail;
       };
     })(this));
-    return dfd.promise();
   },
   deleteEmbedUrl: function() {
     return this.changeEmbedUrl(null);
@@ -13754,7 +13756,7 @@ EditorActionCreators = {
     attachments = EditorStore.getEntryValue('imageAttachments');
     _.forEach(attachments, (function(_this) {
       return function(attachment) {
-        if (!attachment.entry_id) {
+        if (!attachment.entry_id && attachment.id) {
           return Api.editor.deleteImageAttachment(attachment.id);
         }
       };
@@ -13773,15 +13775,15 @@ EditorActionCreators = {
       entryType = 'video';
     }
     onSuccess = function(entry) {
-      if (TastySettings.env === 'static-development') {
-        alert("Статья " + entry.id + " успешно сохранена");
-      } else {
-        TastyNotifyController.notifySuccess(i18n.t('editor_create_success'));
-        window.location.href = entry.entry_url;
-      }
-      return AppDispatcher.handleServerAction({
+      AppDispatcher.handleServerAction({
         type: EditorConstants.ENTRY_SAVED
       });
+      if (TastySettings.env === 'static-development') {
+        return alert("Статья " + entry.id + " успешно сохранена");
+      } else {
+        TastyNotifyController.notifySuccess(i18n.t('editor_create_success'));
+        return window.location.href = entry.entry_url;
+      }
     };
     switch (entryType) {
       case 'text':
@@ -15652,7 +15654,8 @@ EditorTypeImage = React.createClass({
     if (!imageFiles.length) {
       return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
     }
-    return EditorActionCreators.createImageAttachments(files).then(this.activateLoadedState).fail(this.activateWelcomeState);
+    EditorActionCreators.createImageAttachments(files);
+    return this.activateLoadedState();
   },
   handleChangeTitle: function(title) {
     return EditorActionCreators.changeTitle(title);
@@ -34224,7 +34227,7 @@ CollageRowItem = React.createClass({
     }), this.renderProgress());
   },
   renderProgress: function() {
-    if (this.props.progress && this.props.progress < 100) {
+    if (this.props.progress) {
       return React.createElement(CollageRowItemProgress, {
         "progress": this.props.progress
       });

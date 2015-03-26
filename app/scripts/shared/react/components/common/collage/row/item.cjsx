@@ -25,7 +25,7 @@ CollageRowItem = React.createClass
     </div>
 
   renderProgress: ->
-    if @props.progress and @props.progress < 100
+    if @props.progress
       <CollageRowItemProgress progress={ @props.progress } />
 
   getContainerStyles: ->

@@ -12,7 +12,7 @@ CollageRowItemProgress = React.createClass
 
     <div className="media-box__loader">
       <div className="media-box__loader-fill"
-           style={{ width: progress+'%' }} />
+           style={{ width: progress + '%' }} />
     </div>
 
 module.exports = CollageRowItemProgress

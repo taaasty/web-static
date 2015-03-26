@@ -27775,7 +27775,7 @@ CollageRowItem = React.createClass({
     }), this.renderProgress());
   },
   renderProgress: function() {
-    if (this.props.progress && this.props.progress < 100) {
+    if (this.props.progress) {
       return React.createElement(CollageRowItemProgress, {
         "progress": this.props.progress
       });
