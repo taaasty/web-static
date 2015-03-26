@@ -11,19 +11,21 @@ ImageAttachmentsCollage = React.createClass
   render: ->
     <CollageManager
         width={ @props.width }
-        images={ @getCollageImages() } />
+        images={ @getCollageImages() }
+        recalculation={ false } />
 
   getCollageImages: ->
     @props.imageAttachments.map (imageAttachment) ->
-      image    = imageAttachment.image
+      image = imageAttachment.image
       newImage =
-        width:  image.geometry.width
+        width: image.geometry.width
         height: image.geometry.height
         payload:
-          id:    imageAttachment.id
-          url:   image.url
-          path:  image.path
+          id: imageAttachment.id || imageAttachment.uuid
+          url: image.url
+          path: image.path
           title: image.title
+          progress: image.progress || 0
 
       newImage
 

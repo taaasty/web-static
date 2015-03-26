@@ -1,14 +1,16 @@
+CollageRowItemProgress = require './itemProgress'
 { PropTypes } = React
 
-CollageItem = React.createClass
-  displayName: 'CollageItem'
+CollageRowItem = React.createClass
+  displayName: 'CollageRowItem'
 
   propTypes:
-    width:     PropTypes.number.isRequired
-    height:    PropTypes.number.isRequired
-    margin:    PropTypes.number
-    imageUrl:  PropTypes.string.isRequired
-    imagePath: PropTypes.string.isRequired
+    width: PropTypes.number.isRequired
+    height: PropTypes.number.isRequired
+    margin: PropTypes.number
+    imageUrl: PropTypes.string.isRequired
+    imagePath: PropTypes.string
+    progress: PropTypes.number
 
   getInitialState: ->
     width:  @props.width
@@ -19,7 +21,12 @@ CollageItem = React.createClass
          className="collage__item">
       <img style={ @getImageStyles() }
            src={ @getImageUrl() } />
+      { @renderProgress() }
     </div>
+
+  renderProgress: ->
+    if @props.progress and @props.progress < 100
+      <CollageRowItemProgress progress={ @props.progress } />
 
   getContainerStyles: ->
     { width, height, margin } = @props
@@ -34,9 +41,14 @@ CollageItem = React.createClass
   getImageUrl: ->
     { width, height } = @state
 
-    ThumborService.imageUrl
-      url:  @props.imageUrl
-      path: @props.imagePath
-      size: width + 'x' + height
+    if @props.imageUrl and @props.imagePath
+      # Картинка есть на сервере
+      ThumborService.imageUrl
+        url:  @props.imageUrl
+        path: @props.imagePath
+        size: width + 'x' + height
+    else
+      # Картинка выводится из blob
+      @props.imageUrl
 
-module.exports = CollageItem
+module.exports = CollageRowItem

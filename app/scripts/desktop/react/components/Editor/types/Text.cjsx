@@ -1,4 +1,5 @@
 EditorStore = require '../../../stores/editor'
+EditorActionCreators = require '../../../actions/editor'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 { PropTypes } = React
@@ -10,7 +11,6 @@ EditorTypeText = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
-    onFieldChange: PropTypes.func.isRequired
 
   render: ->
     <article className="post post--text post--edit">
@@ -19,15 +19,21 @@ EditorTypeText = React.createClass
             text={ @state.title }
             placeholder={ i18n.t('editor_title_placeholder') }
             className="post__title"
-            onChange={ @props.onFieldChange.bind(null, 'title') } />
+            onChange={ @handleTitleChange } />
       </header>
       <EditorTextField
           mode="rich"
           text={ @state.text }
           placeholder={ i18n.t('editor_text_placeholder') }
           className="post__content"
-          onChange={ @props.onFieldChange.bind(null, 'text') } />
+          onChange={ @handleTextChange } />
     </article>
+
+  handleTitleChange: (title) ->
+    EditorActionCreators.changeTitle title
+
+  handleTextChange: (text) ->
+    EditorActionCreators.changeText text
 
   getStateFromStore: ->
     title: EditorStore.getEntryValue 'title'

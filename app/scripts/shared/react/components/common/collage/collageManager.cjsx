@@ -8,10 +8,11 @@ CollageManager = React.createClass
   displayName: 'CollageManager'
 
   propTypes:
-    images:       PropTypes.array.isRequired
-    width:        PropTypes.number
-    margin:       PropTypes.number
+    images: PropTypes.array.isRequired
+    width: PropTypes.number
+    margin: PropTypes.number
     minRowHeight: PropTypes.number
+    recalculation: PropTypes.bool
 
   getDefaultProps: ->
     margin:       MARGIN
@@ -23,10 +24,12 @@ CollageManager = React.createClass
   componentDidMount: ->
     @updateWidthState() unless @props.width
 
-    window.addEventListener 'resize', @updateWidthState
+    if @props.recalculation
+      window.addEventListener 'resize', @updateWidthState
 
   componentWillUnmount: ->
-    window.removeEventListener 'resize', @updateWidthState
+    if @props.recalculation
+      window.removeEventListener 'resize', @updateWidthState
 
   render: ->
     #We can get access to parentNode when returning span instead of null
