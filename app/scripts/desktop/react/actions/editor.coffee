@@ -3,6 +3,8 @@ Api = require '../api/api'
 EditorConstants = require('../constants/constants').editor
 EditorStore = require '../stores/editor'
 AppDispatcher = require '../dispatchers/dispatcher'
+UuidService = require '../../../shared/react/services/uuid'
+BrowserHelpers = require '../../../shared/helpers/browser'
 
 EditorActionCreators =
 
@@ -28,34 +30,93 @@ EditorActionCreators =
       type: EditorConstants.CHANGE_PRIVACY
       entryPrivacy: entryPrivacy
 
+  changeTitle: (title) ->
+    @updateField 'title', title
+
+  changeText: (text) ->
+    @updateField 'text', text
+
+  changeImageUrl: (imageUrl) ->
+    @updateField 'imageUrl', imageUrl
+
+  changeEmbedUrl: (embedUrl) ->
+    @updateField 'embedUrl', imageUrl
+
+  changeEmbedHtml: (embedHtml) ->
+    @updateField 'embedHtml', embedHtml
+
+  changeSource: (source) ->
+    @updateField 'source', source
+
   createImageAttachments: (files) ->
-    attachments = EditorStore.getEntryValue('imageAttachments') || []
-    newAttachments = attachments[..]
-    resolved = false
     dfd = new $.Deferred()
 
     _.forEach files, (file) =>
+      # Общий uuid для imageAttachment-like blob и imageAttachment
+      uuid = UuidService.generate()
+
+      # Добавляем imageAttachment-like blob объект, назначаем ему uuid
+      image = new Image()
+      image.onload = =>
+        attachments = EditorStore.getEntryValue('imageAttachments') || []
+        newAttachments = attachments[..]
+        blobAttachment =
+          uuid: uuid
+          image:
+            geometry:
+              width: image.width
+              height: image.height
+            url: image.src
+            progress: 0
+
+        newAttachments.push blobAttachment
+        @updateField 'imageAttachments', newAttachments
+        dfd.resolve()
+      image.src = BrowserHelpers.createObjectURL file
+
+      # Делаем запрос на создание картинки, на успешный ответ заменяем blob с uuid
       formData = new FormData()
       formData.append 'image', file
 
-      Api.editor.createImageAttachment formData
-        .then (imageAttachment) =>
-          newAttachments.push imageAttachment
+      Api.editor.createImageAttachment(
+        formData,
+        onProgress: (percentUploaded) =>
+          attachments = EditorStore.getEntryValue('imageAttachments') || []
+          newAttachments = attachments[..]
+
+          blobIndex = _.findIndex newAttachments, (attachment) ->
+            attachment.uuid == uuid
+
+          newAttachments[blobIndex].image.progress = percentUploaded
           @updateField 'imageAttachments', newAttachments
-          # Ресолвим при успешной загрузке первого аттачмента. Чтобы можно было
-          # перейти в режим loaded
-          unless resolved
-            dfd.resolve()
-            resolved = true
+      ).then (imageAttachment) =>
+          attachments = EditorStore.getEntryValue('imageAttachments') || []
+          newAttachments = attachments[..]
+
+          blobIndex = _.findIndex newAttachments, (attachment) ->
+            attachment.uuid == uuid
+
+          newAttachments[blobIndex] = imageAttachment
+          @updateField 'imageAttachments', newAttachments
         .fail dfd.reject
 
     dfd.promise()
 
-  deleteImageAttachments: ->
-    attachmentsIDs = EditorStore.getEntryImageAttachmentsIDs()
+  deleteEmbedUrl: ->
+    @changeEmbedUrl null
 
-    _.forEach attachmentsIDs, (attachmentID) =>
-      Api.editor.deleteImageAttachment attachmentID
+  deleteEmbedHtml: ->
+    @changeEmbedHtml null
+
+  deleteImageUrl: ->
+    @changeImageUrl null
+
+  deleteImageAttachments: ->
+    attachments = EditorStore.getEntryValue 'imageAttachments'
+
+    _.forEach attachments, (attachment) =>
+      unless attachment.entry_id
+        Api.editor.deleteImageAttachment attachment.id
 
     @updateField 'imageAttachments', []
 

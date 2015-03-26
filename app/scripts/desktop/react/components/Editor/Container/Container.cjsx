@@ -24,7 +24,6 @@ EditorContainer = React.createClass
     props =
       entry: @props.entry
       entryType: @props.entryType
-      onFieldChange: @updateField
 
     Component = switch @props.entryType
       when 'text', 'anonymous' then EditorTypeText
@@ -36,8 +35,5 @@ EditorContainer = React.createClass
       else console.warn? 'Unknown type of normalized entry', @props.entryType
 
     return <Component {...props} />
-
-  updateField: (key, value) ->
-    EditorActionCreators.updateField key, value
 
 module.exports = EditorContainer

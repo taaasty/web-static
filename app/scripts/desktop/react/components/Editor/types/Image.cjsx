@@ -21,7 +21,6 @@ EditorTypeImage = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
-    onFieldChange: PropTypes.func.isRequired
 
   getInitialState: ->
     currentState: @getInitialCurrentState()
@@ -46,7 +45,7 @@ EditorTypeImage = React.createClass
                    text={ @state.title }
                    placeholder={ i18n.t('editor_description_placeholder') }
                    className="post__content"
-                   onChange={ @props.onFieldChange.bind(null, 'title') } />
+                   onChange={ @handleChangeTitle } />
              </div>
            </article>
 
@@ -95,14 +94,14 @@ EditorTypeImage = React.createClass
 
   handleDeleteLoadedImages: ->
     EditorActionCreators.deleteImageAttachments()
-    @props.onFieldChange 'imageUrl', null
+    EditorActionCreators.deleteImageUrl()
     @activateWelcomeState()
 
   handleChangeImageUrl: (imageUrl) ->
     image = new Image()
 
     image.onload = =>
-      @props.onFieldChange 'imageUrl', imageUrl
+      EditorActionCreators.changeImageUrl imageUrl
       @activateLoadedState()
     image.onerror = =>
       TastyNotifyController.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
@@ -119,6 +118,9 @@ EditorTypeImage = React.createClass
     EditorActionCreators.createImageAttachments files
       .then @activateLoadedState
       .fail @activateWelcomeState
+
+  handleChangeTitle: (title) ->
+    EditorActionCreators.changeTitle title
 
   getStateFromStore: ->
     title: EditorStore.getEntryValue 'title'

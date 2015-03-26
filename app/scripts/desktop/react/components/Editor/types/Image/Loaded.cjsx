@@ -18,8 +18,10 @@ EditorTypeImageLoaded = React.createClass
 
   renderImage: ->
     switch
-      when @props.imageAttachments then <ImageAttachmentsCollage imageAttachments={ @props.imageAttachments } />
-      when @props.imageUrl then <img src={ @props.imageUrl } />
+      when @props.imageAttachments.length
+        <ImageAttachmentsCollage imageAttachments={ @props.imageAttachments } />
+      when @props.imageUrl
+        <img src={ @props.imageUrl } />
       else null
 
 module.exports = EditorTypeImageLoaded

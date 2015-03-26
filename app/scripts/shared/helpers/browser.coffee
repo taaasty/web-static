@@ -28,4 +28,12 @@ BrowserHelpers =
         when (/portrait/).test orientation  then 'Portrait'
         when (/landscape/).test orientation then 'Landscape'
 
+  createObjectURL: (file) ->
+    if window.URL && window.URL.createObjectURL
+      window.URL.createObjectURL file
+    else if window.webkitURL
+      window.webkitURL.createObjectURL file
+    else
+      null
+
 module.exports = BrowserHelpers
