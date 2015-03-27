@@ -13687,7 +13687,7 @@ EditorActionCreators = {
   changeSource: function(source) {
     return this.updateField('source', source);
   },
-  createImageAttachments: function(files, onProgress) {
+  createImageAttachments: function(files) {
     var promises;
     promises = [];
     _.forEach(files, (function(_this) {
@@ -32905,10 +32905,10 @@ EntryKeeper = {
   restore: function(storageKey) {
     var entryData;
     entryData = JSON.parse(storage.getItem(storageKey));
-    if (entryData.type == null) {
-      entryData.type = 'text';
-    }
     if (entryData != null) {
+      if (entryData.type == null) {
+        entryData.type = 'text';
+      }
       return new NormalizedEntry(entryData);
     } else {
       return null;
