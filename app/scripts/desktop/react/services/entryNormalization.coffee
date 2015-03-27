@@ -46,7 +46,6 @@ EntryNormalizationService =
           data2: entry.title
           imageUrl: entry.image_url
           imageAttachments: entry.image_attachments
-        # image_attachments: @_decodeImageAttachments(entryData.image_attachments || [])
       when 'instagram', 'music', 'video'
         _.extend attrs,
           data2: entry.title

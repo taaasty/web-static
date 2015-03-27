@@ -5182,6 +5182,7 @@ a.toolbar__subnav-link:active {
 .media-box .collage {
   margin-right: 0;
   margin-left: 0;
+  margin-bottom: 0;
   text-align: center;
 }
 .media-box .collage__item {

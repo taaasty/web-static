@@ -1,4 +1,3 @@
-CollageRowItemProgress = require './itemProgress'
 { PropTypes } = React
 
 CollageRowItem = React.createClass
@@ -10,7 +9,6 @@ CollageRowItem = React.createClass
     margin: PropTypes.number
     imageUrl: PropTypes.string.isRequired
     imagePath: PropTypes.string
-    progress: PropTypes.number
 
   getInitialState: ->
     width:  @props.width
@@ -21,12 +19,7 @@ CollageRowItem = React.createClass
          className="collage__item">
       <img style={ @getImageStyles() }
            src={ @getImageUrl() } />
-      { @renderProgress() }
     </div>
-
-  renderProgress: ->
-    if @props.progress
-      <CollageRowItemProgress progress={ @props.progress } />
 
   getContainerStyles: ->
     { width, height, margin } = @props

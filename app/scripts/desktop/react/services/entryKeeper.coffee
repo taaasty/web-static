@@ -22,6 +22,9 @@ keyExisting = (entryID, entryUpdatedAt) ->
 EntryKeeper =
   restore: (storageKey) ->
     entryData = JSON.parse storage.getItem(storageKey)
+    # В старой версии редактора мы не хранили тип поста, устанавливаем 'text'
+    # если не определено.
+    entryData.type ?= 'text'
     if entryData? then new NormalizedEntry(entryData) else null
 
   restoreExistingEntry: (entryID, entryUpdatedAt) ->

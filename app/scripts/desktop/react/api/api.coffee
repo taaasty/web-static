@@ -13,7 +13,7 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
-request = (_method, url, data = {}, callbacks = {}) ->
+request = (_method, url, data = {}) ->
   headers =
     'X-Requested-With': 'XMLHttpRequest'
     'X-Tasty-Client-Name': 'web_desktop'
@@ -45,22 +45,11 @@ request = (_method, url, data = {}, callbacks = {}) ->
     xhrFields:
       withCredentials: true
       crossDomain:     true
-    xhr: ->
-      myXhr = $.ajaxSettings.xhr()
 
-      if myXhr.upload and callbacks.onProgress?
-        myXhr.upload.addEventListener 'progress', (e) ->
-          if e.lengthComputable
-            percentUploaded = Math.floor e.loaded * 100 / e.total
-            callbacks.onProgress percentUploaded
-        , false
-
-      myXhr
-
-getRequest = (url, data, callbacks) -> request 'GET', url, data, callbacks
-postRequest = (url, data, callbacks) -> request 'POST', url, data, callbacks
-putRequest = (url, data, callbacks) -> request 'PUT', url, data, callbacks
-deleteRequest = (url, data, callbacks) -> request 'DELETE', url, data, callbacks
+getRequest = (url, data) -> request 'GET', url, data
+postRequest = (url, data) -> request 'POST', url, data
+putRequest = (url, data) -> request 'PUT', url, data
+deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
   search:
@@ -72,11 +61,11 @@ Api =
       _pendingRequests[key] = getRequest url, data
 
   editor:
-    createImageAttachment: (formData, callbacks) ->
+    createImageAttachment: (formData) ->
       url = ApiRoutes.imageAttachments()
       key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENT
 
-      _pendingRequests[key] = postRequest url, formData, callbacks
+      _pendingRequests[key] = postRequest url, formData
 
     deleteImageAttachment: (attachmentID) ->
       url = ApiRoutes.imageAttachmentsWithID attachmentID
