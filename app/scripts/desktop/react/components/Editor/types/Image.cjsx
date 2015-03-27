@@ -5,6 +5,7 @@ EditorActionCreators = require '../../../actions/editor'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 EditorMediaBox = require '../MediaBox/MediaBox'
+EditorMediaBoxProgress = require '../MediaBox/MediaBoxProgress'
 EditorTypeImageWelcome = require './Image/Welcome'
 EditorTypeImageUrlInsert = require './Image/UrlInsert'
 EditorTypeImageLoaded = require './Image/Loaded'
@@ -25,6 +26,7 @@ EditorTypeImage = React.createClass
   getInitialState: ->
     currentState: @getInitialCurrentState()
     dragging: false
+    uploadingProgress: null
 
   render: ->
     editorClasses = classSet
@@ -39,6 +41,7 @@ EditorTypeImage = React.createClass
                    entryType={ @props.entryType }
                    state={ @getMediaBoxState() }>
                  { @renderEditorScreen() }
+                 { @renderProgress() }
                </EditorMediaBox>
                <EditorTextField
                    mode="rich"
@@ -68,6 +71,10 @@ EditorTypeImage = React.createClass
             imageAttachments={ @state.imageAttachments }
             onDelete={ @handleDeleteLoadedImages } />
       else null
+
+  renderProgress: ->
+    if @state.uploadingProgress?
+      <EditorMediaBoxProgress progress={ @state.uploadingProgress } />
 
   isInsertState: -> @state.currentState is INSERT_STATE
 
@@ -116,6 +123,13 @@ EditorTypeImage = React.createClass
       return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
 
     EditorActionCreators.createImageAttachments files
+      .progress (soFar) =>
+        @setState uploadingProgress: soFar * 100
+      .always =>
+        _.delay (=>
+          # Даём отобразить прогресс в 100%, и через полсекунды скрываем прогрессбар
+          @setState uploadingProgress: null if @isMounted()
+        ), 500
     @activateLoadedState()
 
   handleChangeTitle: (title) ->

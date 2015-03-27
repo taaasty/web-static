@@ -4,6 +4,7 @@ EditorConstants = require('../constants/constants').editor
 EditorStore = require '../stores/editor'
 AppDispatcher = require '../dispatchers/dispatcher'
 UuidService = require '../../../shared/react/services/uuid'
+ApiHelpers = require '../../../shared/helpers/api'
 BrowserHelpers = require '../../../shared/helpers/browser'
 
 EditorActionCreators =
@@ -49,6 +50,8 @@ EditorActionCreators =
     @updateField 'source', source
 
   createImageAttachments: (files) ->
+    promises = []
+
     _.forEach files, (file) =>
       # Общий uuid для imageAttachment-like blob и imageAttachment
       uuid = UuidService.generate()
@@ -65,7 +68,6 @@ EditorActionCreators =
               width: image.width
               height: image.height
             url: image.src
-            progress: 0
 
         newAttachments.push blobAttachment
         @updateField 'imageAttachments', newAttachments
@@ -75,19 +77,7 @@ EditorActionCreators =
       formData = new FormData()
       formData.append 'image', file
 
-      Api.editor.createImageAttachment(
-        formData,
-        onProgress: (percentUploaded) =>
-          attachments = EditorStore.getEntryValue('imageAttachments') || []
-          newAttachments = attachments[..]
-
-          blobIndex = _.findIndex newAttachments, (attachment) ->
-            attachment.uuid == uuid
-
-          unless blobIndex == -1
-            newAttachments[blobIndex].image.progress = percentUploaded
-            @updateField 'imageAttachments', newAttachments
-      )
+      promise = Api.editor.createImageAttachment(formData)
         .then (imageAttachment) =>
           attachments = EditorStore.getEntryValue('imageAttachments') || []
           newAttachments = attachments[..]
@@ -101,7 +91,10 @@ EditorActionCreators =
             newAttachments[blobIndex] = imageAttachment
 
           @updateField 'imageAttachments', newAttachments
-        .fail
+
+      promises.push promise
+
+    ApiHelpers.settle promises
 
   deleteEmbedUrl: ->
     @changeEmbedUrl null

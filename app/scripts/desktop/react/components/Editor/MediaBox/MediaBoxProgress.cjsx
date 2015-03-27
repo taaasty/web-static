@@ -1,7 +1,7 @@
 { PropTypes } = React
 
-CollageRowItemProgress = React.createClass
-  displayName: 'CollageRowItemProgress'
+EditorMediaBoxProgess = React.createClass
+  displayName: 'EditorMediaBoxProgess'
 
   propTypes:
     progress: PropTypes.number.isRequired
@@ -15,4 +15,4 @@ CollageRowItemProgress = React.createClass
            style={{ width: progress + '%' }} />
     </div>
 
-module.exports = CollageRowItemProgress
+module.exports = EditorMediaBoxProgess

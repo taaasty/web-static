@@ -25,7 +25,6 @@ ImageAttachmentsCollage = React.createClass
           url: image.url
           path: image.path
           title: image.title
-          progress: image.progress || 0
 
       newImage
 

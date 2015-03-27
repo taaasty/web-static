@@ -19,7 +19,6 @@ CollageRow = React.createClass
           height={ image.height }
           imagePath={ image.payload.path }
           imageUrl={ image.payload.url }
-          progress={ image.payload.progress }
           key={ image.payload.id } />  
 
 module.exports = CollageRow
