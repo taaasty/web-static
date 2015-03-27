@@ -41,7 +41,7 @@ EditorActionCreators =
     @updateField 'imageUrl', imageUrl
 
   changeEmbedUrl: (embedUrl) ->
-    @updateField 'embedUrl', imageUrl
+    @updateField 'embedUrl', embedUrl
 
   changeEmbedHtml: (embedHtml) ->
     @updateField 'embedHtml', embedHtml

@@ -61,7 +61,7 @@ EditorEmbed = React.createClass
     EditorActionCreators.createEmbed embedUrl
       .then (iframely) =>
         @props.onCreate
-          title: iframely.meta.description || iframely.meta.title
+          title: iframely.meta?.description || iframely.meta?.title
           embedHtml: iframely.html
 
         @activateLoadedState()

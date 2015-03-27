@@ -13679,7 +13679,7 @@ EditorActionCreators = {
     return this.updateField('imageUrl', imageUrl);
   },
   changeEmbedUrl: function(embedUrl) {
-    return this.updateField('embedUrl', imageUrl);
+    return this.updateField('embedUrl', embedUrl);
   },
   changeEmbedHtml: function(embedHtml) {
     return this.updateField('embedHtml', embedHtml);
@@ -14801,8 +14801,9 @@ EditorEmbed = React.createClass({
     this.activateLoadingState();
     return EditorActionCreators.createEmbed(embedUrl).then((function(_this) {
       return function(iframely) {
+        var _ref, _ref1;
         _this.props.onCreate({
-          title: iframely.meta.description || iframely.meta.title,
+          title: ((_ref = iframely.meta) != null ? _ref.description : void 0) || ((_ref1 = iframely.meta) != null ? _ref1.title : void 0),
           embedHtml: iframely.html
         });
         return _this.activateLoadedState();
@@ -25217,7 +25218,7 @@ ScreenViewer_Item = React.createClass({
     var activeClass, style;
     activeClass = this.props.active ? CLASSNAME_ACTIVE : '';
     style = {
-      backgroundImage: "url(" + this.props.imgSrc + ")"
+      backgroundImage: "url('" + this.props.imgSrc + "')"
     };
     return React.createElement("div", {
       "className": 'screen-viewer__item ' + activeClass
