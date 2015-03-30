@@ -53,12 +53,11 @@ deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
   search:
-    loadNextPage: ({q, url, page, style}) ->
-      key  = Constants.api.SEARCH_LOAD_NEXT_PAGE
-      data = {q, page, style}
+    loadNextPage: (searchUrl) ->
+      key = Constants.api.SEARCH_LOAD_NEXT_PAGE
 
       abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
+      _pendingRequests[key] = getRequest searchUrl
 
   editor:
     createImageAttachment: (formData) ->

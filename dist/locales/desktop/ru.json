@@ -163,6 +163,7 @@
   "follow_button_ignored": "Заблокирован",
   "follow_button_block": "Заблокировать",
   "follow_button_approve": "Одобрить",
+  "search_results_empty": "Мы ничего не нашли по данному запросу",
   "searchbox_titles": {
     "live": "Поиск по Прямому эфиру",
     "best": "Поиск по Лучшему",
