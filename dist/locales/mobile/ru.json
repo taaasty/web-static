@@ -177,10 +177,7 @@
     "messenger_create_message_error": "При отправке сообщения произошла ошибка",
     "messenger_recreate_message_error": "При повторной отправке сообщения произошла ошибка",
     "messenger_empty_message_error": "Сообщение не может быть пустым",
-<<<<<<< HEAD
     "messenger_cant_talk_error": "Вы не можете отправить сообщение этому пользователю, так как он вас заблокировал",
-=======
->>>>>>> Mobile scripts testing suite
     "messenger_connection_error": "Соединение не установлено"
   },
   "placeholders": {
@@ -195,11 +192,7 @@
     "settings_title": "Небольшое описание тлога",
     "settings_password": "Новый пароль",
     "settings_password_confirm": "Новый пароль еще раз",
-<<<<<<< HEAD
     "messenger_create_message": "Ваше сообщение…",
     "messenger_cant_talk": "Пользователь вас заблокировал"
-=======
-    "messenger_create_message": "Ваше сообщение…"
->>>>>>> Mobile scripts testing suite
   }
 }

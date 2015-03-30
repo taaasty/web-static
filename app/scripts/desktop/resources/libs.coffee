@@ -19,7 +19,6 @@ require 'swfobject'
 require 'es5-shim'
 require('jquery.mousewheel')(global.jQuery)
 require 'jquery.scrollto'
-require 'screenviewer'
 
 require 'baron'
 require('react-mixin-manager')(global.React)

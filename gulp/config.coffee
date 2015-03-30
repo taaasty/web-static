@@ -23,7 +23,7 @@ module.exports =
           entries: src + '/scripts/desktop.local.coffee'
           dest: build + '/scripts'
           outputName: 'client.js'
-          extensions: ['.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee']
       styles:
         src: src + '/stylesheets/desktop.local.less'
         dest: build + '/stylesheets'
@@ -40,9 +40,8 @@ module.exports =
     production:
       scripts:
         bundle:
-          baseDir: src
-          entries: './scripts/desktop.production.coffee'
-          extensions: ['.cjsx', '.coffee']
+          entries: src + '/scripts/desktop.production.coffee'
+          extensions: ['.jsx', '.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'bundle.js'
         min:
@@ -70,7 +69,7 @@ module.exports =
           entries: src + '/scripts/mobile.local.coffee'
           dest: build + '/mobile/scripts'
           outputName: 'client.js'
-          extensions: ['.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee']
       styles:
         src: src + '/stylesheets/mobile.local.less'
         dest: build + '/mobile/stylesheets'
@@ -85,7 +84,7 @@ module.exports =
       scripts:
         bundle:
           entries: src + '/scripts/mobile.production.coffee'
-          extensions: ['.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_bundle.js'
         min:
@@ -94,7 +93,7 @@ module.exports =
           outputName: 'mobile_bundle.min.js'
         components:
           entries: src + '/scripts/mobile/components.js'
-          extensions: ['.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee']
           dest: dist + '/scripts/'
           outputName: 'mobile_components.js'
       styles:

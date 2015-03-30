@@ -15,11 +15,7 @@
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
-<<<<<<< HEAD
     opacity: .7;
-=======
-    opacity: 0.7;
->>>>>>> Mobile scripts testing suite
   }
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -46,11 +42,7 @@
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
-<<<<<<< HEAD
     opacity: .7;
-=======
-    opacity: 0.7;
->>>>>>> Mobile scripts testing suite
   }
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -119,13 +111,10 @@
   text-decoration: none;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar li button:focus,
 .medium-editor-anchor-preview li button:focus {
   outline: none;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .medium-editor-toolbar li .medium-editor-action-underline,
 .medium-editor-anchor-preview li .medium-editor-action-underline {
   text-decoration: underline;
@@ -147,7 +136,6 @@
 .medium-editor-toolbar-active,
 .medium-editor-anchor-preview-active {
   visibility: visible;
-<<<<<<< HEAD
 }
 .sticky-toolbar {
   position: fixed;
@@ -156,12 +144,6 @@
 .medium-editor-toolbar-active.stalker-toolbar {
   -webkit-animation: pop-upwards 160ms forwards linear;
   animation: pop-upwards 160ms forwards linear;
-=======
-  -webkit-animation: pop-upwards 160ms forwards linear;
-  -ms-animation: pop-upwards 160ms forwards linear;
-  animation: pop-upwards 160ms forwards linear;
-  transition: top 0.075s ease-out, left 0.075s ease-out;
->>>>>>> Mobile scripts testing suite
 }
 .medium-editor-action-bold {
   font-weight: bolder;
@@ -169,7 +151,6 @@
 .medium-editor-action-italic {
   font-style: italic;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form {
   display: none;
 }
@@ -179,17 +160,6 @@
 }
 .medium-editor-toolbar-form .medium-editor-toolbar-input,
 .medium-editor-toolbar-form label {
-=======
-.medium-editor-toolbar-form-anchor {
-  display: none;
-}
-.medium-editor-toolbar-form-anchor input,
-.medium-editor-toolbar-form-anchor a {
-  font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
-}
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input,
-.medium-editor-toolbar-form-anchor label {
->>>>>>> Mobile scripts testing suite
   margin: 0;
   padding: 6px;
   width: 316px;
@@ -197,7 +167,6 @@
   font-size: 14px;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form .medium-editor-toolbar-input:focus,
 .medium-editor-toolbar-form label:focus {
   outline: 0;
@@ -209,20 +178,6 @@
   display: block;
 }
 .medium-editor-toolbar-form a {
-=======
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input:focus,
-.medium-editor-toolbar-form-anchor label:focus {
-  outline: 0;
-  border: none;
-  box-shadow: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-.medium-editor-toolbar-form-anchor label {
-  display: block;
-}
-.medium-editor-toolbar-form-anchor a {
->>>>>>> Mobile scripts testing suite
   display: inline-block;
   margin: 0 10px;
   text-decoration: none;
@@ -238,7 +193,6 @@
   left: 0;
   content: attr(data-placeholder) !important;
   font-style: italic;
-<<<<<<< HEAD
   white-space: pre;
 }
 .medium-editor-dragover {
@@ -274,8 +228,6 @@
     transform: scale(1);
     opacity: 0;
   }
-=======
->>>>>>> Mobile scripts testing suite
 }
 .medium-toolbar-arrow-under:after {
   top: 50px;
@@ -288,16 +240,9 @@
 .medium-editor-toolbar {
   border: 1px solid #000;
   background-color: #242424;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(36, 36, 36, 0.75));
   border-radius: 5px;
   box-shadow: 0 0 3px #000;
-=======
-  background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
-  border-radius: 5px;
-  box-shadow: 0 0 3px #000;
-  transition: top 0.075s ease-out, left 0.075s ease-out;
->>>>>>> Mobile scripts testing suite
 }
 .medium-editor-toolbar li button {
   min-width: 50px;
@@ -308,11 +253,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #242424;
   color: #fff;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(36, 36, 36, 0.89));
-=======
-  background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
->>>>>>> Mobile scripts testing suite
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   transition: background-color 0.2s ease-in;
 }
@@ -331,34 +272,20 @@
 .medium-editor-toolbar li .medium-editor-button-active {
   background-color: #000;
   color: #fff;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(0, 0, 0, 0.89));
 }
 .medium-editor-toolbar-form {
-=======
-  background: linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
-}
-.medium-editor-toolbar-form-anchor {
->>>>>>> Mobile scripts testing suite
   background: #242424;
   color: #999;
   border-radius: 5px;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form .medium-editor-toolbar-input {
-=======
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input {
->>>>>>> Mobile scripts testing suite
   height: 50px;
   background: #242424;
   color: #ccc;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form a {
-=======
-.medium-editor-toolbar-form-anchor a {
->>>>>>> Mobile scripts testing suite
   color: #fff;
 }
 .medium-editor-toolbar-anchor-preview {
@@ -1211,12 +1138,8 @@ a:hover {
 }
 .layout-constrain,
 .hero__box,
-<<<<<<< HEAD
 .content-area,
 .searchbox__form {
-=======
-.content-area {
->>>>>>> Mobile scripts testing suite
   width: 712px;
   margin: 0 auto;
 }
@@ -1249,11 +1172,7 @@ a:hover {
   transition: opacity .3s ease, visibility 0s ease;
 }
 .page-header {
-<<<<<<< HEAD
   min-height: 226px;
-=======
-  min-height: 247px;
->>>>>>> Mobile scripts testing suite
   position: relative;
   transition: height .6s ease;
 }
@@ -1398,35 +1317,23 @@ body {
           user-select: none;
 }
 .layout--landing .layout-constrain,
-<<<<<<< HEAD
 .layout--landing .hero__box,
 .layout--landing .searchbox__form {
-=======
-.layout--landing .hero__box {
->>>>>>> Mobile scripts testing suite
   width: auto;
   padding: 50px 5%;
 }
 .layout--landing .layout-constrain:before,
 .layout--landing .layout-constrain:after,
 .layout--landing .hero__box:before,
-<<<<<<< HEAD
 .layout--landing .hero__box:after,
 .layout--landing .searchbox__form:before,
 .layout--landing .searchbox__form:after {
-=======
-.layout--landing .hero__box:after {
->>>>>>> Mobile scripts testing suite
   content: "";
   display: table;
 }
 .layout--landing .layout-constrain:after,
-<<<<<<< HEAD
 .layout--landing .hero__box:after,
 .layout--landing .searchbox__form:after {
-=======
-.layout--landing .hero__box:after {
->>>>>>> Mobile scripts testing suite
   clear: both;
 }
 .layout--landing .logo {
@@ -1807,12 +1714,9 @@ body {
 .popup-enabled {
   overflow: hidden;
 }
-<<<<<<< HEAD
 .searchbox-enabled {
   overflow: hidden;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .guide-popup-enabled {
   overflow: hidden;
 }
@@ -1854,15 +1758,6 @@ body {
   background-color: #ffffff !important;
   opacity: 1 !important;
 }
-<<<<<<< HEAD
-=======
-.tlog-mode-minimal .social-share-facebook-button,
-.designtlog-mode-minimal .social-share-facebook-button,
-.tlog-mode-minimal .social-share-vkontakte-button,
-.designtlog-mode-minimal .social-share-vkontakte-button {
-  box-shadow: inset 0 0 0 1px #b7b7b7;
-}
->>>>>>> Mobile scripts testing suite
 .designtlog-headerfont-proximanova .design-settings__option--headerfont .design-settings__state,
 .designtlog-headerfont-proximanova .hero__title {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -2441,10 +2336,7 @@ body {
 .menu .add-post-button,
 .menu .social-share-facebook-button,
 .menu .social-share-vkontakte-button,
-<<<<<<< HEAD
 .menu .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .menu .action-menu-button,
 .menu .profile-settings-button,
 .menu .manage-persons-button,
@@ -2502,10 +2394,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
-<<<<<<< HEAD
   .menu .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -2532,10 +2421,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
-<<<<<<< HEAD
   .menu .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -2561,10 +2447,7 @@ body {
   .menu .add-post-button,
   .menu .social-share-facebook-button,
   .menu .social-share-vkontakte-button,
-<<<<<<< HEAD
   .menu .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
   .menu .action-menu-button,
   .menu .profile-settings-button,
   .menu .manage-persons-button,
@@ -3523,11 +3406,7 @@ a.toolbar__subnav-link:active {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .toolbar--main .toolbar__navbar--complex {
-<<<<<<< HEAD
   padding-bottom: 150px;
-=======
-  padding-bottom: 100px;
->>>>>>> Mobile scripts testing suite
 }
 .toolbar--avatar {
   left: auto;
@@ -3805,12 +3684,9 @@ a.toolbar__subnav-link:active {
 .hero__title[class*="js"] {
   cursor: pointer;
 }
-<<<<<<< HEAD
 .hero__title a {
   transition: none;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .hero__text {
   font-size: 16px;
   line-height: 21px;
@@ -3819,12 +3695,9 @@ a.toolbar__subnav-link:active {
   -ms-animation: hero-animate-close .6s 1 ease;
   animation: hero-animate-close .6s 1 ease;
 }
-<<<<<<< HEAD
 .hero__text a {
   transition: none;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .hero__mask {
   width: 40px;
   height: 40px;
@@ -4325,10 +4198,7 @@ a.toolbar__subnav-link:active {
 .confirmation .add-post-button,
 .confirmation .social-share-facebook-button,
 .confirmation .social-share-vkontakte-button,
-<<<<<<< HEAD
 .confirmation .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .confirmation .action-menu-button,
 .confirmation .profile-settings-button,
 .confirmation .manage-persons-button,
@@ -4447,24 +4317,18 @@ a.toolbar__subnav-link:active {
 .post__content a:hover {
   border-bottom-color: transparent;
 }
-<<<<<<< HEAD
 .post__content a.fancybox {
   border-bottom: none;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .post__content p {
   margin-bottom: 15px;
 }
 .post__content p img {
   width: 100%;
 }
-<<<<<<< HEAD
 .post__content img {
   max-width: 100%;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .post__content figure,
 .post__content .image,
 .post__content .video {
@@ -5318,10 +5182,7 @@ a.toolbar__subnav-link:active {
 .media-box .collage {
   margin-right: 0;
   margin-left: 0;
-<<<<<<< HEAD
   margin-bottom: 0;
-=======
->>>>>>> Mobile scripts testing suite
   text-align: center;
 }
 .media-box .collage__item {
@@ -5413,10 +5274,7 @@ a.toolbar__subnav-link:active {
 .add-post-button,
 .social-share-facebook-button,
 .social-share-vkontakte-button,
-<<<<<<< HEAD
 .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .action-menu-button,
 .profile-settings-button,
 .manage-persons-button,
@@ -5465,10 +5323,7 @@ a.more-button,
 a.add-post-button,
 a.social-share-facebook-button,
 a.social-share-vkontakte-button,
-<<<<<<< HEAD
 a.social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 a.action-menu-button,
 a.profile-settings-button,
 a.manage-persons-button,
@@ -5492,10 +5347,7 @@ a.write-message-button {
 .add-post-button:before,
 .social-share-facebook-button:before,
 .social-share-vkontakte-button:before,
-<<<<<<< HEAD
 .social-share-twitter-button:before,
-=======
->>>>>>> Mobile scripts testing suite
 .action-menu-button:before,
 .profile-settings-button:before,
 .manage-persons-button:before,
@@ -5527,10 +5379,7 @@ a.write-message-button {
 .add-post-button .icon,
 .social-share-facebook-button .icon,
 .social-share-vkontakte-button .icon,
-<<<<<<< HEAD
 .social-share-twitter-button .icon,
-=======
->>>>>>> Mobile scripts testing suite
 .action-menu-button .icon,
 .profile-settings-button .icon,
 .manage-persons-button .icon,
@@ -5558,10 +5407,7 @@ a.write-message-button {
 .add-post-button .icon--cross,
 .social-share-facebook-button .icon--cross,
 .social-share-vkontakte-button .icon--cross,
-<<<<<<< HEAD
 .social-share-twitter-button .icon--cross,
-=======
->>>>>>> Mobile scripts testing suite
 .action-menu-button .icon--cross,
 .profile-settings-button .icon--cross,
 .manage-persons-button .icon--cross,
@@ -5585,10 +5431,7 @@ a.write-message-button {
 .add-post-button .spinner,
 .social-share-facebook-button .spinner,
 .social-share-vkontakte-button .spinner,
-<<<<<<< HEAD
 .social-share-twitter-button .spinner,
-=======
->>>>>>> Mobile scripts testing suite
 .action-menu-button .spinner,
 .profile-settings-button .spinner,
 .manage-persons-button .spinner,
@@ -5617,10 +5460,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:first-of-type),
 .button-group > .social-share-facebook-button:not(:first-of-type),
 .button-group > .social-share-vkontakte-button:not(:first-of-type),
-<<<<<<< HEAD
 .button-group > .social-share-twitter-button:not(:first-of-type),
-=======
->>>>>>> Mobile scripts testing suite
 .button-group > .action-menu-button:not(:first-of-type),
 .button-group > .profile-settings-button:not(:first-of-type),
 .button-group > .manage-persons-button:not(:first-of-type),
@@ -5646,10 +5486,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:last-of-type),
 .button-group > .social-share-facebook-button:not(:last-of-type),
 .button-group > .social-share-vkontakte-button:not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .social-share-twitter-button:not(:last-of-type),
-=======
->>>>>>> Mobile scripts testing suite
 .button-group > .action-menu-button:not(:last-of-type),
 .button-group > .profile-settings-button:not(:last-of-type),
 .button-group > .manage-persons-button:not(:last-of-type),
@@ -5674,10 +5511,7 @@ a.write-message-button {
 .button-group > .add-post-button:not(:first-of-type):not(:last-of-type),
 .button-group > .social-share-facebook-button:not(:first-of-type):not(:last-of-type),
 .button-group > .social-share-vkontakte-button:not(:first-of-type):not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .social-share-twitter-button:not(:first-of-type):not(:last-of-type),
-=======
->>>>>>> Mobile scripts testing suite
 .button-group > .action-menu-button:not(:first-of-type):not(:last-of-type),
 .button-group > .profile-settings-button:not(:first-of-type):not(:last-of-type),
 .button-group > .manage-persons-button:not(:first-of-type):not(:last-of-type),
@@ -5701,10 +5535,7 @@ a.write-message-button {
 .button-group.state--expanded > .add-post-button,
 .button-group.state--expanded > .social-share-facebook-button,
 .button-group.state--expanded > .social-share-vkontakte-button,
-<<<<<<< HEAD
 .button-group.state--expanded > .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .button-group.state--expanded > .action-menu-button,
 .button-group.state--expanded > .profile-settings-button,
 .button-group.state--expanded > .manage-persons-button,
@@ -5738,10 +5569,7 @@ a.write-message-button {
 .button-group-dropdown:not(:first-child) .add-post-button,
 .button-group-dropdown:not(:first-child) .social-share-facebook-button,
 .button-group-dropdown:not(:first-child) .social-share-vkontakte-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child) .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .button-group-dropdown:not(:first-child) .action-menu-button,
 .button-group-dropdown:not(:first-child) .profile-settings-button,
 .button-group-dropdown:not(:first-child) .manage-persons-button,
@@ -5766,10 +5594,7 @@ a.write-message-button {
 .button-group-dropdown:not(:last-child) .add-post-button,
 .button-group-dropdown:not(:last-child) .social-share-facebook-button,
 .button-group-dropdown:not(:last-child) .social-share-vkontakte-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:last-child) .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .button-group-dropdown:not(:last-child) .action-menu-button,
 .button-group-dropdown:not(:last-child) .profile-settings-button,
 .button-group-dropdown:not(:last-child) .manage-persons-button,
@@ -5794,10 +5619,7 @@ a.write-message-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .add-post-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .social-share-facebook-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .social-share-vkontakte-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child):not(:last-child) .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .button-group-dropdown:not(:first-child):not(:last-child) .action-menu-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .profile-settings-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-persons-button,
@@ -6078,10 +5900,7 @@ a.write-message-button {
 .post-settings-button.add-post-button,
 .post-settings-button.social-share-facebook-button,
 .post-settings-button.social-share-vkontakte-button,
-<<<<<<< HEAD
 .post-settings-button.social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .post-settings-button.action-menu-button,
 .post-settings-button.profile-settings-button,
 .post-settings-button.manage-persons-button,
@@ -6136,7 +5955,6 @@ a.write-message-button {
   width: 56px;
   height: 56px;
   padding: 0;
-<<<<<<< HEAD
   background-color: #44619d;
   font-size: 18px;
   line-height: 56px;
@@ -6148,39 +5966,11 @@ a.write-message-button {
 }
 .social-share-facebook-button:hover {
   background: #4c6caf;
-=======
-  background-color: #ffffff;
-  font-size: 20px;
-  line-height: 56px;
-  color: #c2c2c2;
-  letter-spacing: 0;
-  border-radius: 50%;
-  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  /*.icon {
-    margin: 2px;
-    font-size: 38px;
-  }*/
-}
-.social-share-facebook-button:hover,
-.social-share-facebook-button:active,
-.social-share-facebook-button.state--active {
-  box-shadow: inset 0 0 0 1px transparent !important;
-  color: #ffffff;
-}
-.social-share-facebook-button:hover {
-  background: #44619d;
-}
-.social-share-facebook-button:active,
-.social-share-facebook-button.state--active {
-  background: #44619d;
->>>>>>> Mobile scripts testing suite
 }
 .social-share-vkontakte-button {
   width: 56px;
   height: 56px;
   padding: 0;
-<<<<<<< HEAD
   background-color: #5c82ab;
   font-size: 18px;
   line-height: 56px;
@@ -6208,33 +5998,6 @@ a.write-message-button {
 }
 .social-share-twitter-button:hover {
   background: #6cb7f0;
-=======
-  background-color: #ffffff;
-  font-size: 20px;
-  line-height: 56px;
-  color: #c2c2c2;
-  letter-spacing: 0;
-  border-radius: 50%;
-  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  /*.icon {
-    margin: 2px;
-    font-size: 38px;
-  }*/
-}
-.social-share-vkontakte-button:hover,
-.social-share-vkontakte-button:active,
-.social-share-vkontakte-button.state--active {
-  box-shadow: inset 0 0 0 1px transparent !important;
-  color: #ffffff;
-}
-.social-share-vkontakte-button:hover {
-  background: #5c82ab;
-}
-.social-share-vkontakte-button:active,
-.social-share-vkontakte-button.state--active {
-  background: #5c82ab;
->>>>>>> Mobile scripts testing suite
 }
 .action-menu-button,
 .write-message-button {
@@ -7029,13 +6792,8 @@ a.write-message-button {
   line-height: 1;
   color: #ffffff;
 }
-<<<<<<< HEAD
 .form-radiogroup--font .form-radiobtn + .form-radiobtn {
   margin-left: 20px;
-=======
-.form-radiogroup--font .form-radiobtn {
-  margin-right: 20px;
->>>>>>> Mobile scripts testing suite
 }
 .form-radiogroup--font .form-radiobtn .free {
   right: -1.4em;
@@ -7148,43 +6906,6 @@ a.write-message-button {
 .form-radiogroup--font .form-radiobtn--museocyr {
   font-family: 'Museo Sans Cyr';
 }
-<<<<<<< HEAD
-=======
-.form-radiogroup--presets {
-  font-size: 26px;
-  line-height: 1;
-  color: #ffffff;
-}
-.form-radiogroup--presets .form-radiobtn {
-  text-align: center;
-}
-.form-radiogroup--presets .form-radiobtn__input:checked + .form-radiobtn__label {
-  color: #fff;
-  box-shadow: inset 0 0 0 4px #f8c700;
-}
-.form-radiogroup--presets .form-radiobtn__label {
-  width: 105px;
-  height: 105px;
-  margin-right: 15px;
-  line-height: 105px;
-}
-.form-radiogroup--presets .form-radiobtn--preset1 .form-radiobtn__label {
-  background-color: #2ac67e;
-}
-.form-radiogroup--presets .form-radiobtn--preset2 .form-radiobtn__label {
-  background-color: #e74c3c;
-}
-.form-radiogroup--presets .form-radiobtn--preset3 .form-radiobtn__label {
-  background-color: #c6c9cc;
-  color: #000000 !important;
-}
-.form-radiogroup--presets .form-radiobtn--preset4 .form-radiobtn__label {
-  background-color: #6c7a89;
-}
-.form-radiogroup--presets .form-radiobtn--preset5 .form-radiobtn__label {
-  background-color: #000;
-}
->>>>>>> Mobile scripts testing suite
 .form-range {
   position: relative;
   display: inline-block;
@@ -8094,17 +7815,12 @@ a.write-message-button {
   background-color: #2a2a2a;
 }
 .design-settings__presets .slider {
-<<<<<<< HEAD
   padding-right: 0 !important;
   padding-left: 0 !important;
 }
 .design-settings__presets .slider__main:before,
 .design-settings__presets .slider__main:after {
   width: 100px;
-=======
-  padding-right: 15px;
-  padding-left: 15px;
->>>>>>> Mobile scripts testing suite
 }
 .design-settings__presets .slider__main:before {
   background: linear-gradient(to right, #2a2a2a 0%, rgba(42, 42, 42, 0) 100%);
@@ -8112,7 +7828,6 @@ a.write-message-button {
 .design-settings__presets .slider__main:after {
   background: linear-gradient(to right, rgba(42, 42, 42, 0) 0%, #2a2a2a 100%);
 }
-<<<<<<< HEAD
 .design-settings__presets .slider__btn {
   width: 30px;
   z-index: 3;
@@ -8128,13 +7843,6 @@ a.write-message-button {
 }
 .design-settings__presets .slider__btn--right:before {
   right: 12px;
-=======
-.design-settings__presets .slider__btn--left {
-  left: 4px;
-}
-.design-settings__presets .slider__btn--right {
-  right: 4px;
->>>>>>> Mobile scripts testing suite
 }
 .design-settings__alert {
   height: 135px !important;
@@ -9134,10 +8842,7 @@ a.types-posts__item:hover .types-posts__text {
 }
 .brick__text p img {
   max-width: 100%;
-<<<<<<< HEAD
   height: auto;
-=======
->>>>>>> Mobile scripts testing suite
 }
 .brick__text li ul,
 .brick__text li ol {
@@ -9563,10 +9268,7 @@ a.types-posts__item:hover .types-posts__text {
 .messages__footer .add-post-button,
 .messages__footer .social-share-facebook-button,
 .messages__footer .social-share-vkontakte-button,
-<<<<<<< HEAD
 .messages__footer .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .messages__footer .action-menu-button,
 .messages__footer .profile-settings-button,
 .messages__footer .manage-persons-button,
@@ -10128,10 +9830,7 @@ a.types-posts__item:hover .types-posts__text {
 .inviter .design-settings__dragzone-table,
 .inviter .design-settings__alert,
 .inviter .payment__table,
-<<<<<<< HEAD
 .inviter .shellbox__main,
-=======
->>>>>>> Mobile scripts testing suite
 .inviter .slider__table {
   position: relative;
 }
@@ -10262,18 +9961,6 @@ a.types-posts__item:hover .types-posts__text {
   opacity: 0;
   transition: visibility 0s ease .4s, opacity .4s ease 0s;
 }
-<<<<<<< HEAD
-=======
-.shellbox__main {
-  width: 100%;
-  height: 100%;
-  display: table;
-}
-.shellbox__cell {
-  display: table-cell;
-  vertical-align: middle;
-}
->>>>>>> Mobile scripts testing suite
 .shellbox--auth .inviter,
 .shellbox--auth .form-popup {
   position: absolute;
@@ -10620,10 +10307,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .add-post-button,
 .nav-types.state--loading .social-share-facebook-button,
 .nav-types.state--loading .social-share-vkontakte-button,
-<<<<<<< HEAD
 .nav-types.state--loading .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .nav-types.state--loading .action-menu-button,
 .nav-types.state--loading .profile-settings-button,
 .nav-types.state--loading .manage-persons-button,
@@ -10648,10 +10332,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types.state--loading .add-post-button.state--active,
 .nav-types.state--loading .social-share-facebook-button.state--active,
 .nav-types.state--loading .social-share-vkontakte-button.state--active,
-<<<<<<< HEAD
 .nav-types.state--loading .social-share-twitter-button.state--active,
-=======
->>>>>>> Mobile scripts testing suite
 .nav-types.state--loading .action-menu-button.state--active,
 .nav-types.state--loading .profile-settings-button.state--active,
 .nav-types.state--loading .manage-persons-button.state--active,
@@ -10675,10 +10356,7 @@ a.types-posts__item:hover .types-posts__text {
 .nav-types .add-post-button,
 .nav-types .social-share-facebook-button,
 .nav-types .social-share-vkontakte-button,
-<<<<<<< HEAD
 .nav-types .social-share-twitter-button,
-=======
->>>>>>> Mobile scripts testing suite
 .nav-types .action-menu-button,
 .nav-types .profile-settings-button,
 .nav-types .manage-persons-button,
@@ -10976,10 +10654,7 @@ a.types-posts__item:hover .types-posts__text {
 .design-settings__dragzone-table,
 .design-settings__alert,
 .payment__table,
-<<<<<<< HEAD
 .shellbox__main,
-=======
->>>>>>> Mobile scripts testing suite
 .slider__table {
   width: 100%;
   height: 100%;
@@ -10991,10 +10666,7 @@ a.types-posts__item:hover .types-posts__text {
 .design-settings__dragzone-cell,
 .design-settings__alert-in,
 .payment__table-cell,
-<<<<<<< HEAD
 .shellbox__cell,
-=======
->>>>>>> Mobile scripts testing suite
 .slider__table-cell {
   display: table-cell;
   vertical-align: middle;
@@ -11476,20 +11148,13 @@ a.types-posts__item:hover .types-posts__text {
   transition: padding-top 0.2s ease 0.2s;
 }
 .social-share {
-<<<<<<< HEAD
-=======
-  margin-top: -68px;
->>>>>>> Mobile scripts testing suite
   position: fixed;
   top: 50%;
   right: 20px;
   z-index: 150;
-<<<<<<< HEAD
   -webkit-transform: translate(0, -50%);
       -ms-transform: translate(0, -50%);
           transform: translate(0, -50%);
-=======
->>>>>>> Mobile scripts testing suite
 }
 .social-share button {
   margin: 8px 0;
@@ -11732,13 +11397,6 @@ a.types-posts__item:hover .types-posts__text {
   line-height: 0;
   font-family: a;
 }
-<<<<<<< HEAD
-=======
-.slider.__inited {
-  padding-right: 15px;
-  padding-left: 15px;
-}
->>>>>>> Mobile scripts testing suite
 .slider.__inited .slider__btn,
 .slider.__inited .slider__main:before,
 .slider.__inited .slider__main:after {
@@ -11749,10 +11407,7 @@ a.types-posts__item:hover .types-posts__text {
 .slider.__leftlimit .slider__btn--left,
 .slider.__leftlimit .slider__main:before {
   opacity: 0;
-<<<<<<< HEAD
   pointer-events: none;
-=======
->>>>>>> Mobile scripts testing suite
 }
 .slider.__leftlimit .slider__btn--left {
   cursor: default;
@@ -11760,10 +11415,7 @@ a.types-posts__item:hover .types-posts__text {
 .slider.__rightlimit .slider__btn--right,
 .slider.__rightlimit .slider__main:after {
   opacity: 0;
-<<<<<<< HEAD
   pointer-events: none;
-=======
->>>>>>> Mobile scripts testing suite
 }
 .slider.__rightlimit .slider__btn--right {
   cursor: default;
@@ -11776,11 +11428,7 @@ a.types-posts__item:hover .types-posts__text {
 .slider__main:before,
 .slider__main:after {
   content: "";
-<<<<<<< HEAD
   width: 50px;
-=======
-  width: 20px;
->>>>>>> Mobile scripts testing suite
   height: 100%;
   position: absolute;
   display: none;
@@ -11811,10 +11459,7 @@ a.types-posts__item:hover .types-posts__text {
   top: 0;
   display: none;
   cursor: pointer;
-<<<<<<< HEAD
   z-index: 3;
-=======
->>>>>>> Mobile scripts testing suite
 }
 .slider__btn:before {
   content: "";
@@ -11846,7 +11491,6 @@ a.types-posts__item:hover .types-posts__text {
       -ms-transform: rotate(45deg);
           transform: rotate(45deg);
 }
-<<<<<<< HEAD
 .presets {
   position: relative;
 }
@@ -12068,8 +11712,6 @@ a.types-posts__item:hover .types-posts__text {
 .searchbox__input::-webkit-input-placeholder {
   color: #333;
 }
-=======
->>>>>>> Mobile scripts testing suite
 .follow-button {
   color: #ffffff;
   color: #ffffff !important;

@@ -6,11 +6,6 @@
     "type": "git",
     "url": "git@github.com:taaasty/web-static.git"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
   "browser": {
     "pusher": "./app/bower_components/pusher/dist/pusher.js",
     "jquery": "./app/bower_components/jquery/dist/jquery.js"
@@ -27,6 +22,7 @@
   },
   "devDependencies": {
     "app-root-path": "^1.0.0",
+    "babelify": "^5.0.4",
     "bower": "^1.3.12",
     "browser-sync": "^1.5.8",
     "browserify": "6.1.0",

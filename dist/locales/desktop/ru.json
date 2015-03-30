@@ -134,11 +134,7 @@
   "editor_welcome_choose": "выберите",
   "editor_welcome_picture_or": "картинку или",
   "editor_welcome_insert": "вставьте",
-<<<<<<< HEAD
   "editor_welcome_link_to_it": "ссылку на неё",
-=======
-  "editor_welcome_link_to_it": "ссылку на нее",
->>>>>>> Mobile scripts testing suite
   "editor_welcome_instagram_insert": "Вставьте",
   "editor_welcome_instagram_link": "ссылку на пост в инстаграме.",
   "editor_welcome_music_insert": "Вставьте",
@@ -167,7 +163,6 @@
   "follow_button_ignored": "Заблокирован",
   "follow_button_block": "Заблокировать",
   "follow_button_approve": "Одобрить",
-<<<<<<< HEAD
   "searchbox_titles": {
     "live": "Поиск по Прямому эфиру",
     "best": "Поиск по Лучшему",
@@ -180,9 +175,6 @@
     "people": "Поиск людей"
   },
   "searchbox_placeholder": "Введите Ваш запрос",
-=======
-  "search_placeholder": "Поиск",
->>>>>>> Mobile scripts testing suite
   "settings_email_establish_approve": "установить",
   "settings_email_establish_disapprove": "отмена",
   "settings_email_establish": "Установить",
