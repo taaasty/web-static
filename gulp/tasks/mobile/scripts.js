@@ -14,7 +14,6 @@ var gulp = require('gulp'),
 // but include in our dist bundle
 var dependencies = {
   react: './node_modules/react',
-  React: './node_modules/react',
   lodash: './node_modules/lodash',
   reactUjs: './app/scripts/shared/libs/react_ujs',
   eventEmitter: './app/bower_components/eventEmitter/EventEmitter',

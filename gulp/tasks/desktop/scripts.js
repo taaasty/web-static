@@ -27,6 +27,7 @@ var dependencies = {
   'jquery.shapeshift': './app/bower_components/jquery.shapeshift/core/jquery.shapeshift',
   'lodash': './node_modules/lodash',
   'react': './node_modules/react',
+  'React': './node_modules/react', // Некоторые библиотеки делают require('React')
   'react-mixin-manager': './app/bower_components/react-mixin-manager/react-mixin-manager',
   'reactUjs': './app/scripts/shared/libs/react_ujs',
   'react-color-picker': './app/bower_components/react-color-picker/dist/react-color-picker',
