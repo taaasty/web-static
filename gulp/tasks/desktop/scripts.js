@@ -127,7 +127,7 @@ gulp.task('[D][P] Scripts', function() {
   bundleLogger.start(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
 
   appBundler
-    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/, extensions: ['.js', '.jsx']})
+    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
