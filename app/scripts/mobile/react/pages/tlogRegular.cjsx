@@ -3,7 +3,7 @@ PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
-Tlog               = require '../components/tlog/tlog'
+Tlog               = require '../components/Tlog/Tlog'
 TlogPagination     = require '../components/pagination/tlog'
 AuthManager        = require '../components/auth/authManager'
 AuthButtonManager  = require '../components/buttons/auth/authManager'
@@ -36,7 +36,7 @@ TlogRegularPage = React.createClass
           <HeroTlog tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <Tlog entries={ @props.entries } />
+          <Tlog tlog={ @props.tlog } entries={ @props.entries } />
           <TlogPagination
               slug={ @props.tlog.author.slug }
               currentPage={ @props.pagination.currentPage }
