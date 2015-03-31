@@ -3,7 +3,7 @@ PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
-Daylog             = require '../components/daylog/daylog'
+Daylog             = require '../components/Daylog/Daylog'
 DaylogPagination   = require '../components/pagination/daylog'
 AuthManager        = require '../components/auth/authManager'
 AuthButtonManager  = require '../components/buttons/auth/authManager'
@@ -36,7 +36,7 @@ TlogDaylogPage = React.createClass
           <HeroTlog tlog={ @props.tlog } />
         </div>
         <div className="layout__body">
-          <Daylog entries={ @props.entries } />
+          <Daylog tlog={ @props.tlog } entries={ @props.entries } />
           <DaylogPagination
               slug={ @props.tlog.author.slug }
               prevDay={ @props.pagination.prevDay }

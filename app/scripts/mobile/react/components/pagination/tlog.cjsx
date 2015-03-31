@@ -21,6 +21,8 @@ TlogPagination = React.createClass
     paginationItems = []
 
     switch
+      when currentPage == 0 and totalPagesCount == 0
+        null
       when currentPage == 1 and totalPagesCount > 1
         paginationItems.push <PaginationPrev
                                  href={ Routes.tlogPagination(@props.slug, currentPage + 1) }
