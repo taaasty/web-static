@@ -124,15 +124,24 @@ EditorActionCreators =
     # Сохраняем Video, Instagram и Music в video точке
     entryType = 'video' if entryType is 'music' or entryType is 'instagram'
 
+    AppDispatcher.handleServerAction
+      type: EditorConstants.ENTRY_SAVE
+
     onSuccess = (entry) ->
       AppDispatcher.handleServerAction
-        type: EditorConstants.ENTRY_SAVED
-      
+        type: EditorConstants.ENTRY_SAVE_SUCCESS
+
       if TastySettings.env is 'static-development'
         alert "Статья #{ entry.id } успешно сохранена"
       else
         TastyNotifyController.notifySuccess i18n.t 'editor_create_success'
         window.location.href = entry.entry_url
+
+    onFail = (xhr) ->
+      AppDispatcher.handleServerAction
+        type: EditorConstants.ENTRY_SAVE_ERROR
+
+      TastyNotifyController.errorResponse xhr
 
     switch entryType
       when 'text'
@@ -160,9 +169,11 @@ EditorActionCreators =
       url = ApiRoutes.update_entry_url entryID, entryType
       Api.editor.updateEntry url, data
         .then onSuccess
+        .fail onFail
     else
       url = ApiRoutes.create_entry_url entryType
       Api.editor.createEntry url, data
         .then onSuccess
+        .fail onFail
 
 module.exports = EditorActionCreators

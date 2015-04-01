@@ -6,6 +6,7 @@ EntryKeeperService = require '../services/entryKeeper'
 NormalizedEntry = require '../entities/normalizedEntry'
 AppDispatcher = require '../dispatchers/dispatcher'
 
+_loading = false
 _entry = new NormalizedEntry
   type: 'text'
   privacy: 'public'
@@ -35,6 +36,8 @@ global.EditorStore = _.extend new BaseStore(),
 
   getEntryValue: (key) ->
     EntryNormalizationService.getNormalizedEntryValue _entry, key
+
+  isLoading: -> _loading
 
 module.exports = EditorStore
 
@@ -98,6 +101,14 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
 
       EditorStore.emitChange()
 
-    when Constants.editor.ENTRY_SAVED
+    when Constants.editor.ENTRY_SAVE_SUCCESS
       EntryKeeperService.remove _entry
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_SAVE
+      _loading = true
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_SAVE_ERROR
+      _loading = false
       EditorStore.emitChange()

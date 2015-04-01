@@ -1,13 +1,11 @@
 import classSet from 'react/lib/cx';
-var { PropTypes } = React;
 
 let EditorTypeSwitcherItem = React.createClass({
   propTypes: {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-    onClick: PropTypes.func
+    title: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string.isRequired,
+    active: React.PropTypes.bool.isRequired,
+    onClick: React.PropTypes.func
   },
 
   componentDidMount() {
@@ -19,7 +17,7 @@ let EditorTypeSwitcherItem = React.createClass({
   },
 
   render() {
-    var itemClasses = classSet({
+    let itemClasses = classSet({
       'button': true,
       'button--circle': true,
       'state--disable': this.props.loading,
@@ -27,19 +25,19 @@ let EditorTypeSwitcherItem = React.createClass({
     });
 
     return (
-      <button title={this.props.title}
-              className={itemClasses}
-              onClick={this.handleClick}>
+      <button
+          title={this.props.title}
+          className={itemClasses}
+          onClick={this.handleClick}>
         <i className={`icon ${this.props.icon}`} />
       </button>
-    )
+    );
   },
 
   handleClick() {
-    if (!(this.props.loading && this.props.active)) {
-      if (this.props.onClick && typeof this.props.onClick === 'function') {
-        this.props.onClick();
-      }      
+    if (this.props.active) { return; }
+    if (this.props.onClick && typeof this.props.onClick === 'function') {
+      this.props.onClick();
     }
   }
 });
