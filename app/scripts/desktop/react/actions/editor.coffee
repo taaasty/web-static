@@ -55,6 +55,7 @@ EditorActionCreators =
     _.forEach files, (file) =>
       # Общий uuid для imageAttachment-like blob и imageAttachment
       uuid = UuidService.generate()
+      uploadFailed = false
 
       # Добавляем imageAttachment-like blob объект, назначаем ему uuid
       image = new Image()
@@ -70,7 +71,8 @@ EditorActionCreators =
             url: image.src
 
         newAttachments.push blobAttachment
-        @updateField 'imageAttachments', newAttachments
+        unless uploadFailed
+          @updateField 'imageAttachments', newAttachments
       image.src = BrowserHelpers.createObjectURL file
 
       # Делаем запрос на создание картинки, на успешный ответ заменяем blob с uuid
@@ -91,10 +93,27 @@ EditorActionCreators =
             newAttachments[blobIndex] = imageAttachment
 
           @updateField 'imageAttachments', newAttachments
+        .fail (xhr) =>
+          attachments = EditorStore.getEntryValue('imageAttachments') || []
+          newAttachments = attachments[..]
+          uploadFailed = true
+
+          blobIndex = _.findIndex newAttachments, (attachment) ->
+            attachment.uuid == uuid
+
+          TastyNotifyController.notifyError i18n.t('editor_attachment_error', fileName: file.name)
+          newAttachments.splice blobIndex, 1 unless blobIndex == -1
+          @updateField 'imageAttachments', newAttachments
 
       promises.push promise
 
+    AppDispatcher.handleServerAction
+      type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_START
+
     ApiHelpers.settle promises
+      .always ->
+        AppDispatcher.handleServerAction
+          type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_END
 
   deleteEmbedUrl: ->
     @changeEmbedUrl null
@@ -124,15 +143,32 @@ EditorActionCreators =
     # Сохраняем Video, Instagram и Music в video точке
     entryType = 'video' if entryType is 'music' or entryType is 'instagram'
 
-    onSuccess = (entry) ->
+    AppDispatcher.handleServerAction
+      type: EditorConstants.ENTRY_SAVE
+
+    onSuccessCreate = (entry) ->
       AppDispatcher.handleServerAction
-        type: EditorConstants.ENTRY_SAVED
-      
-      if TastySettings.env is 'static-development'
-        alert "Статья #{ entry.id } успешно сохранена"
-      else
-        TastyNotifyController.notifySuccess i18n.t 'editor_create_success'
-        window.location.href = entry.entry_url
+        type: EditorConstants.ENTRY_SAVE_SUCCESS
+
+      TastyLockingAlertController.show
+        title: i18n.t 'editor_alert_header'
+        message: i18n.t 'editor_create_success'
+        action: -> window.location = entry.entry_url
+
+    onSuccessEdit = (entry) ->
+      AppDispatcher.handleServerAction
+        type: EditorConstants.ENTRY_SAVE_SUCCESS
+
+      TastyLockingAlertController.show
+        title: i18n.t 'editor_alert_header'
+        message: i18n.t 'editor_edit_success'
+        action: -> window.location = entry.entry_url
+
+    onFail = (xhr) ->
+      AppDispatcher.handleServerAction
+        type: EditorConstants.ENTRY_SAVE_ERROR
+
+      TastyNotifyController.errorResponse xhr
 
     switch entryType
       when 'text'
@@ -146,7 +182,8 @@ EditorActionCreators =
         data.title = EditorStore.getEntryValue 'title'
         data.image_url = EditorStore.getEntryValue 'imageUrl'
         data.privacy = EditorStore.getEntryPrivacy()
-        data.image_attachments_ids = EditorStore.getEntryImageAttachmentsIDs()
+        imageAttachmentsIDs = EditorStore.getEntryImageAttachmentsIDs()
+        data.image_attachments_ids = if imageAttachmentsIDs.length then imageAttachmentsIDs else ['']
       when 'instagram', 'music', 'video'
         data.title = EditorStore.getEntryValue 'title'
         data.video_url = EditorStore.getEntryValue 'embedUrl'
@@ -159,10 +196,12 @@ EditorActionCreators =
     if entryID
       url = ApiRoutes.update_entry_url entryID, entryType
       Api.editor.updateEntry url, data
-        .then onSuccess
+        .then onSuccessEdit
+        .fail onFail
     else
       url = ApiRoutes.create_entry_url entryType
       Api.editor.createEntry url, data
-        .then onSuccess
+        .then onSuccessCreate
+        .fail onFail
 
 module.exports = EditorActionCreators

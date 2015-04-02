@@ -9,10 +9,12 @@ EditorMediaBoxProgress = require '../MediaBox/MediaBoxProgress'
 EditorTypeImageWelcome = require './Image/Welcome'
 EditorTypeImageUrlInsert = require './Image/UrlInsert'
 EditorTypeImageLoaded = require './Image/Loaded'
+EditorTypeImageLoadingUrl = require './Image/LoadingUrl'
 { PropTypes } = React
 
 WELCOME_STATE = 'welcome'
 INSERT_STATE = 'insert'
+LOADING_URL_STATE = 'loading'
 LOADED_STATE = 'loaded'
 
 EditorTypeImage = React.createClass
@@ -70,15 +72,20 @@ EditorTypeImage = React.createClass
             imageUrl={ @state.imageUrl }
             imageAttachments={ @state.imageAttachments }
             onDelete={ @handleDeleteLoadedImages } />
+      when LOADING_URL_STATE
+        <EditorTypeImageLoadingUrl imageUrl={@state.imageUrl} />
       else null
 
   renderProgress: ->
     if @state.uploadingProgress?
       <EditorMediaBoxProgress progress={ @state.uploadingProgress } />
 
+  isWelcomeState: -> @state.currentState is WELCOME_STATE
   isInsertState: -> @state.currentState is INSERT_STATE
+  isLoadingUrlState: -> @state.currentState is LOADING_URL_STATE
 
   activateInsertState: -> @setState(currentState: INSERT_STATE)
+  activateLoadingUrlState: -> @setState(currentState: LOADING_URL_STATE)
   activateLoadedState: -> @setState(currentState: LOADED_STATE)
   activateWelcomeState: -> @setState(currentState: WELCOME_STATE)
 
@@ -87,8 +94,10 @@ EditorTypeImage = React.createClass
 
   getMediaBoxState: ->
     switch
+      when @isWelcomeState() then null
       when @state.dragging then 'drag-hover'
       when @isInsertState() then 'insert'
+      when @isLoadingUrlState() then 'loading'
       when @state.imageAttachments.length || @state.imageUrl then 'loaded'
       else null
 
@@ -106,12 +115,16 @@ EditorTypeImage = React.createClass
 
   handleChangeImageUrl: (imageUrl) ->
     image = new Image()
+    @activateLoadingUrlState()
+
+    @setState(imageUrl:imageUrl)
 
     image.onload = =>
-      EditorActionCreators.changeImageUrl imageUrl
       @activateLoadedState()
+      EditorActionCreators.changeImageUrl imageUrl
     image.onerror = =>
       TastyNotifyController.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
+      @activateWelcomeState()
 
     image.src = imageUrl
 
@@ -126,10 +139,9 @@ EditorTypeImage = React.createClass
       .progress (soFar) =>
         @setState uploadingProgress: soFar * 100
       .always =>
-        _.delay (=>
-          # Даём отобразить прогресс в 100%, и через полсекунды скрываем прогрессбар
-          @setState uploadingProgress: null if @isMounted()
-        ), 500
+        if @isMounted()
+          if @state.imageAttachments.length then @activateLoadedState() else @activateWelcomeState()
+          _.delay (=> @setState uploadingProgress: null), 500
     @activateLoadedState()
 
   handleChangeTitle: (title) ->
