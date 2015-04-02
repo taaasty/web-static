@@ -17,6 +17,7 @@ let EditorActions = React.createClass({
     entryPrivacy: React.PropTypes.string.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired,
+    creatingAttachments: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired
   },
@@ -115,6 +116,10 @@ let EditorActions = React.createClass({
 
   saveEntry() {
     if (this.props.loading) { return; }
+    if (this.props.creatingAttachments) {
+      TastyNotifyController.notifyError(i18n.t('editor_images_not_loaded_yet_error'));
+      return;
+    }
     this.props.onSaveEntry();
   },
 

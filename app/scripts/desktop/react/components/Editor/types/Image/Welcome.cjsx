@@ -27,6 +27,7 @@ EditorTypeImageWelcome = React.createClass
                    className="form-upload__input"
                    accept="image/*"
                    multiple={ true }
+                   onClick={@handleClick}
                    onChange={ @handleChange } />
           </span>
           <span> { i18n.t('editor_welcome_picture_or') }</span><br />
@@ -38,6 +39,9 @@ EditorTypeImageWelcome = React.createClass
         </div>
       </div>
     </DropZone>
+
+  handleClick: (e) ->
+    e.target.value = null
 
   handleChange: (e) ->
     files = e.target.files

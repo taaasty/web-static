@@ -44,7 +44,8 @@ let EditorContainer = React.createClass({
       entry: EditorStore.getEntry(),
       entryType: EditorStore.getEntryType(),
       entryPrivacy: EditorStore.getEntryPrivacy(),
-      loading: EditorStore.isLoading()
+      loading: EditorStore.isLoading(),
+      creatingAttachments: EditorStore.isCreatingAttachments()
     }
   }
 });

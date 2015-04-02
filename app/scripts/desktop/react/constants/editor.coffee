@@ -8,5 +8,7 @@ EditorConstants = keyMirror
   ENTRY_SAVE: null
   ENTRY_SAVE_SUCCESS: null
   ENTRY_SAVE_ERROR: null
+  ENTRY_CREATING_ATTACHMENTS_START: null
+  ENTRY_CREATING_ATTACHMENTS_END: null
 
 module.exports = EditorConstants

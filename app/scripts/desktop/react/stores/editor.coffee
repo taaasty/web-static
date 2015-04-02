@@ -7,6 +7,7 @@ NormalizedEntry = require '../entities/normalizedEntry'
 AppDispatcher = require '../dispatchers/dispatcher'
 
 _loading = false
+_creatingAttachments = false
 _entry = new NormalizedEntry
   type: 'text'
   privacy: 'public'
@@ -38,6 +39,8 @@ global.EditorStore = _.extend new BaseStore(),
     EntryNormalizationService.getNormalizedEntryValue _entry, key
 
   isLoading: -> _loading
+
+  isCreatingAttachments: -> _creatingAttachments
 
 module.exports = EditorStore
 
@@ -111,4 +114,12 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
 
     when Constants.editor.ENTRY_SAVE_ERROR
       _loading = false
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_CREATING_ATTACHMENTS_START
+      _creatingAttachments = true
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_CREATING_ATTACHMENTS_END
+      _creatingAttachments = false
       EditorStore.emitChange()

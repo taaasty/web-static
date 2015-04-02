@@ -41,10 +41,10 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass
       data:
         _method: 'DELETE'
       success: =>
-        # if @props.successDeleteUrl?
-        #   window.location = @props.successDeleteUrl
-        # else
-        @removeEntryFromDOM @props.entryId
+        if @props.successDeleteUrl?
+          window.location = @props.successDeleteUrl
+        else
+          @removeEntryFromDOM @props.entryId
       error: (data) => TastyNotifyController.errorResponse data
       complete: =>
         @setState isProcess: false
