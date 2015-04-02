@@ -8,9 +8,6 @@ window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 
 require './react/services/positions'
-global.DesignSettingsService = require './react/services/designSettings'
-global.DesignStatesService = require './react/services/designStates'
-global.DesignPresenterService = require './react/services/designPresenter'
 window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 

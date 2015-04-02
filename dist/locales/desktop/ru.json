@@ -130,19 +130,12 @@
   "editor_mediabox_rotate": "Повернуть",
   "editor_files_without_images": "Среди указанных вами файлов нет ни одного изображения",
   "editor_video_mediabox_loading": "Загружаю..",
-<<<<<<< HEAD
   "editor_image_mediabox_loading": "Загружаю изображение по адресу..",
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
   "editor_welcome_move_or": "Перетащите или",
   "editor_welcome_choose": "выберите",
   "editor_welcome_picture_or": "картинку или",
   "editor_welcome_insert": "вставьте",
-<<<<<<< HEAD
   "editor_welcome_link_to_it": "ссылку на неё",
-=======
-  "editor_welcome_link_to_it": "ссылку на нее",
->>>>>>> Custom design options preview + diff of save button [#89384690]
   "editor_welcome_instagram_insert": "Вставьте",
   "editor_welcome_instagram_link": "ссылку на пост в инстаграме.",
   "editor_welcome_music_insert": "Вставьте",
@@ -158,15 +151,11 @@
   "editor_video_type": "Видео",
   "editor_quote_type": "Цитата",
   "editor_anonymous_type": "Анонимка",
-<<<<<<< HEAD
   "editor_alert_header": "Внимание!",
   "editor_create_success": "Запись создана! Переходим на страницу записи..",
   "editor_edit_success": "Запись отредактирована! Переходим на страницу записи..",
   "editor_attachment_error": "Произошла ошибка при загрузке изображения \"__fileName__\"",
   "editor_images_not_loaded_yet_error": "Дождитесь пока все изображения загрузятся",
-=======
-  "editor_create_success": "Опубликовано! Переходим на страницу поста..",
->>>>>>> Custom design options preview + diff of save button [#89384690]
   "follow_button_error": "Ошибка",
   "follow_button_process": "В процессе..",
   "follow_button_subscribe": "Подписаться",
@@ -179,7 +168,6 @@
   "follow_button_ignored": "Заблокирован",
   "follow_button_block": "Заблокировать",
   "follow_button_approve": "Одобрить",
-<<<<<<< HEAD
   "search_results_empty": "Мы ничего не нашли по данному запросу",
   "searchbox_titles": {
     "live": "Поиск по Прямому эфиру",
@@ -193,9 +181,6 @@
     "people": "Поиск людей"
   },
   "searchbox_placeholder": "Введите Ваш запрос",
-=======
-  "search_placeholder": "Поиск",
->>>>>>> Custom design options preview + diff of save button [#89384690]
   "settings_email_establish_approve": "установить",
   "settings_email_establish_disapprove": "отмена",
   "settings_email_establish": "Установить",

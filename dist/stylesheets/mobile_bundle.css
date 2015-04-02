@@ -1080,11 +1080,7 @@ body {
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
-<<<<<<< HEAD
     opacity: .7;
-=======
-    opacity: 0.7;
->>>>>>> Custom design options preview + diff of save button [#89384690]
   }
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -1111,11 +1107,7 @@ body {
   20% {
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
-<<<<<<< HEAD
     opacity: .7;
-=======
-    opacity: 0.7;
->>>>>>> Custom design options preview + diff of save button [#89384690]
   }
   40% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
@@ -1184,13 +1176,10 @@ body {
   text-decoration: none;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar li button:focus,
 .medium-editor-anchor-preview li button:focus {
   outline: none;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .medium-editor-toolbar li .medium-editor-action-underline,
 .medium-editor-anchor-preview li .medium-editor-action-underline {
   text-decoration: underline;
@@ -1212,7 +1201,6 @@ body {
 .medium-editor-toolbar-active,
 .medium-editor-anchor-preview-active {
   visibility: visible;
-<<<<<<< HEAD
 }
 .sticky-toolbar {
   position: fixed;
@@ -1221,12 +1209,6 @@ body {
 .medium-editor-toolbar-active.stalker-toolbar {
   -webkit-animation: pop-upwards 160ms forwards linear;
   animation: pop-upwards 160ms forwards linear;
-=======
-  -webkit-animation: pop-upwards 160ms forwards linear;
-  -ms-animation: pop-upwards 160ms forwards linear;
-  animation: pop-upwards 160ms forwards linear;
-  transition: top 0.075s ease-out, left 0.075s ease-out;
->>>>>>> Custom design options preview + diff of save button [#89384690]
 }
 .medium-editor-action-bold {
   font-weight: bolder;
@@ -1234,7 +1216,6 @@ body {
 .medium-editor-action-italic {
   font-style: italic;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form {
   display: none;
 }
@@ -1244,17 +1225,6 @@ body {
 }
 .medium-editor-toolbar-form .medium-editor-toolbar-input,
 .medium-editor-toolbar-form label {
-=======
-.medium-editor-toolbar-form-anchor {
-  display: none;
-}
-.medium-editor-toolbar-form-anchor input,
-.medium-editor-toolbar-form-anchor a {
-  font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
-}
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input,
-.medium-editor-toolbar-form-anchor label {
->>>>>>> Custom design options preview + diff of save button [#89384690]
   margin: 0;
   padding: 6px;
   width: 316px;
@@ -1262,7 +1232,6 @@ body {
   font-size: 14px;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form .medium-editor-toolbar-input:focus,
 .medium-editor-toolbar-form label:focus {
   outline: 0;
@@ -1274,20 +1243,6 @@ body {
   display: block;
 }
 .medium-editor-toolbar-form a {
-=======
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input:focus,
-.medium-editor-toolbar-form-anchor label:focus {
-  outline: 0;
-  border: none;
-  box-shadow: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-.medium-editor-toolbar-form-anchor label {
-  display: block;
-}
-.medium-editor-toolbar-form-anchor a {
->>>>>>> Custom design options preview + diff of save button [#89384690]
   display: inline-block;
   margin: 0 10px;
   text-decoration: none;
@@ -1303,7 +1258,6 @@ body {
   left: 0;
   content: attr(data-placeholder) !important;
   font-style: italic;
-<<<<<<< HEAD
   white-space: pre;
 }
 .medium-editor-dragover {
@@ -1339,8 +1293,6 @@ body {
     transform: scale(1);
     opacity: 0;
   }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 }
 .medium-toolbar-arrow-under:after {
   top: 50px;
@@ -1353,16 +1305,9 @@ body {
 .medium-editor-toolbar {
   border: 1px solid #000;
   background-color: #242424;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(36, 36, 36, 0.75));
   border-radius: 5px;
   box-shadow: 0 0 3px #000;
-=======
-  background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.75));
-  border-radius: 5px;
-  box-shadow: 0 0 3px #000;
-  transition: top 0.075s ease-out, left 0.075s ease-out;
->>>>>>> Custom design options preview + diff of save button [#89384690]
 }
 .medium-editor-toolbar li button {
   min-width: 50px;
@@ -1373,11 +1318,7 @@ body {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #242424;
   color: #fff;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(36, 36, 36, 0.89));
-=======
-  background: linear-gradient(bottom, #242424, rgba(36, 36, 36, 0.89));
->>>>>>> Custom design options preview + diff of save button [#89384690]
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   transition: background-color 0.2s ease-in;
 }
@@ -1396,34 +1337,20 @@ body {
 .medium-editor-toolbar li .medium-editor-button-active {
   background-color: #000;
   color: #fff;
-<<<<<<< HEAD
   background: linear-gradient(to bottom, #242424, rgba(0, 0, 0, 0.89));
 }
 .medium-editor-toolbar-form {
-=======
-  background: linear-gradient(bottom, #242424, rgba(0, 0, 0, 0.89));
-}
-.medium-editor-toolbar-form-anchor {
->>>>>>> Custom design options preview + diff of save button [#89384690]
   background: #242424;
   color: #999;
   border-radius: 5px;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form .medium-editor-toolbar-input {
-=======
-.medium-editor-toolbar-form-anchor .medium-editor-toolbar-anchor-input {
->>>>>>> Custom design options preview + diff of save button [#89384690]
   height: 50px;
   background: #242424;
   color: #ccc;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
 .medium-editor-toolbar-form a {
-=======
-.medium-editor-toolbar-form-anchor a {
->>>>>>> Custom design options preview + diff of save button [#89384690]
   color: #fff;
 }
 .medium-editor-toolbar-anchor-preview {
@@ -1477,12 +1404,9 @@ button {
 .manage-subscriptions-button,
 .auth-button,
 .load-more-button,
-<<<<<<< HEAD
 .share-facebook-button,
 .share-vkontakte-button,
 .share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .follow-button,
 .account__logout,
 .settings__submit-button,
@@ -1531,12 +1455,9 @@ a.reg-auth-button,
 a.manage-subscriptions-button,
 a.auth-button,
 a.load-more-button,
-<<<<<<< HEAD
 a.share-facebook-button,
 a.share-vkontakte-button,
 a.share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 a.follow-button,
 a.account__logout,
 a.settings__submit-button,
@@ -1561,12 +1482,9 @@ a.outline-auth-button {
 .manage-subscriptions-button:after,
 .auth-button:after,
 .load-more-button:after,
-<<<<<<< HEAD
 .share-facebook-button:after,
 .share-vkontakte-button:after,
 .share-twitter-button:after,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .follow-button:after,
 .account__logout:after,
 .settings__submit-button:after,
@@ -1598,12 +1516,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon,
 .auth-button .icon,
 .load-more-button .icon,
-<<<<<<< HEAD
 .share-facebook-button .icon,
 .share-vkontakte-button .icon,
 .share-twitter-button .icon,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .follow-button .icon,
 .account__logout .icon,
 .settings__submit-button .icon,
@@ -1632,12 +1547,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .icon--cross,
 .auth-button .icon--cross,
 .load-more-button .icon--cross,
-<<<<<<< HEAD
 .share-facebook-button .icon--cross,
 .share-vkontakte-button .icon--cross,
 .share-twitter-button .icon--cross,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .follow-button .icon--cross,
 .account__logout .icon--cross,
 .settings__submit-button .icon--cross,
@@ -1662,12 +1574,9 @@ a.outline-auth-button {
 .manage-subscriptions-button .spinner,
 .auth-button .spinner,
 .load-more-button .spinner,
-<<<<<<< HEAD
 .share-facebook-button .spinner,
 .share-vkontakte-button .spinner,
 .share-twitter-button .spinner,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .follow-button .spinner,
 .account__logout .spinner,
 .settings__submit-button .spinner,
@@ -1697,12 +1606,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type),
 .button-group > .auth-button:not(:first-of-type),
 .button-group > .load-more-button:not(:first-of-type),
-<<<<<<< HEAD
 .button-group > .share-facebook-button:not(:first-of-type),
 .button-group > .share-vkontakte-button:not(:first-of-type),
 .button-group > .share-twitter-button:not(:first-of-type),
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group > .follow-button:not(:first-of-type),
 .button-group > .account__logout:not(:first-of-type),
 .button-group > .settings__submit-button:not(:first-of-type),
@@ -1729,12 +1635,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:last-of-type),
 .button-group > .auth-button:not(:last-of-type),
 .button-group > .load-more-button:not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .share-facebook-button:not(:last-of-type),
 .button-group > .share-vkontakte-button:not(:last-of-type),
 .button-group > .share-twitter-button:not(:last-of-type),
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group > .follow-button:not(:last-of-type),
 .button-group > .account__logout:not(:last-of-type),
 .button-group > .settings__submit-button:not(:last-of-type),
@@ -1760,12 +1663,9 @@ a.outline-auth-button {
 .button-group > .manage-subscriptions-button:not(:first-of-type):not(:last-of-type),
 .button-group > .auth-button:not(:first-of-type):not(:last-of-type),
 .button-group > .load-more-button:not(:first-of-type):not(:last-of-type),
-<<<<<<< HEAD
 .button-group > .share-facebook-button:not(:first-of-type):not(:last-of-type),
 .button-group > .share-vkontakte-button:not(:first-of-type):not(:last-of-type),
 .button-group > .share-twitter-button:not(:first-of-type):not(:last-of-type),
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group > .follow-button:not(:first-of-type):not(:last-of-type),
 .button-group > .account__logout:not(:first-of-type):not(:last-of-type),
 .button-group > .settings__submit-button:not(:first-of-type):not(:last-of-type),
@@ -1790,12 +1690,9 @@ a.outline-auth-button {
 .button-group.__expanded > .manage-subscriptions-button,
 .button-group.__expanded > .auth-button,
 .button-group.__expanded > .load-more-button,
-<<<<<<< HEAD
 .button-group.__expanded > .share-facebook-button,
 .button-group.__expanded > .share-vkontakte-button,
 .button-group.__expanded > .share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group.__expanded > .follow-button,
 .button-group.__expanded > .account__logout,
 .button-group.__expanded > .settings__submit-button,
@@ -1833,12 +1730,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child) .auth-button,
 .button-group-dropdown:not(:first-child) .load-more-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child) .share-facebook-button,
 .button-group-dropdown:not(:first-child) .share-vkontakte-button,
 .button-group-dropdown:not(:first-child) .share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group-dropdown:not(:first-child) .follow-button,
 .button-group-dropdown:not(:first-child) .account__logout,
 .button-group-dropdown:not(:first-child) .settings__submit-button,
@@ -1864,12 +1758,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:last-child) .auth-button,
 .button-group-dropdown:not(:last-child) .load-more-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:last-child) .share-facebook-button,
 .button-group-dropdown:not(:last-child) .share-vkontakte-button,
 .button-group-dropdown:not(:last-child) .share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group-dropdown:not(:last-child) .follow-button,
 .button-group-dropdown:not(:last-child) .account__logout,
 .button-group-dropdown:not(:last-child) .settings__submit-button,
@@ -1895,12 +1786,9 @@ a.outline-auth-button {
 .button-group-dropdown:not(:first-child):not(:last-child) .manage-subscriptions-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .auth-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .load-more-button,
-<<<<<<< HEAD
 .button-group-dropdown:not(:first-child):not(:last-child) .share-facebook-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .share-vkontakte-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .share-twitter-button,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .button-group-dropdown:not(:first-child):not(:last-child) .follow-button,
 .button-group-dropdown:not(:first-child):not(:last-child) .account__logout,
 .button-group-dropdown:not(:first-child):not(:last-child) .settings__submit-button,
@@ -2174,7 +2062,6 @@ a.outline-auth-button {
 .load-more-button:active {
   background-color: #363636;
 }
-<<<<<<< HEAD
 .share-facebook-button {
   width: 42px;
   height: 42px;
@@ -2223,8 +2110,6 @@ a.outline-auth-button {
 .share-twitter-button:active {
   background: #6cb7f0;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .spinner {
   position: relative;
   display: inline-block;
@@ -3279,15 +3164,12 @@ a.toolbar__popup-link:active {
 .post__content .media-object > a {
   border-bottom: none;
 }
-<<<<<<< HEAD
 .text-content--main {
   padding: 12px;
 }
 .text-content--main a {
   color: inherit;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .meta-item-icon,
 .meta-voting:before,
 .meta-comments:before,
@@ -3351,10 +3233,7 @@ a.toolbar__popup-link:active {
 .meta-item,
 .meta-voting,
 .meta-comments,
-<<<<<<< HEAD
 .meta-date,
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .meta-author,
 .meta-actions {
   display: inline-block;
@@ -3396,10 +3275,6 @@ a.toolbar__popup-link:active {
 }
 .meta-comments {
   cursor: pointer;
-<<<<<<< HEAD
-=======
-  margin-right: 12px;
->>>>>>> Custom design options preview + diff of save button [#89384690]
 }
 .meta-comments:before {
   content: "\e62a";
@@ -3407,7 +3282,6 @@ a.toolbar__popup-link:active {
 .meta-comments:before {
   margin-right: 4px;
 }
-<<<<<<< HEAD
 .meta-date {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -3419,8 +3293,6 @@ a.toolbar__popup-link:active {
 .meta-date:active {
   opacity: .7;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .meta-author {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -3674,12 +3546,9 @@ a.toolbar__popup-link:active {
 .post__content .collage:after {
   clear: both;
 }
-<<<<<<< HEAD
 .post__content a.fancybox {
   border-bottom: none;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .post__meta {
   margin-top: -8px;
 }
@@ -3687,7 +3556,6 @@ a.toolbar__popup-link:active {
   margin-right: 0;
   float: right;
 }
-<<<<<<< HEAD
 .post__share {
   margin-top: 8px;
 }
@@ -3695,8 +3563,6 @@ a.toolbar__popup-link:active {
 .post__share a {
   margin: 8px 8px 0 0;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .post__comments {
   margin-top: 16px;
 }
@@ -4934,12 +4800,9 @@ a.pagination__item:active {
   margin-top: 0;
   top: auto;
 }
-<<<<<<< HEAD
 .message .message__text {
   word-break: break-all;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .message .message__text a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -5145,7 +5008,6 @@ a.pagination__item:active {
   transition: 0.3s ease;
 }
 /*-----  End of Animations  ------*/
-<<<<<<< HEAD
 .content-info {
   padding: 60px 12px;
   background-color: #fff;
@@ -5162,8 +5024,6 @@ a.pagination__item:active {
   font-family: 'Proxima Nova', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   color: #000;
 }
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
 .inviter {
   position: relative;
   background-color: #383838;

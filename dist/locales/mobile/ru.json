@@ -65,7 +65,6 @@
   },
   "tlog": {
     "daylog_empty_page": "Нет публикаций за эту дату",
-<<<<<<< HEAD
     "tlog_empty_page": "На этой странице нет записей",
     "welcome": "Здравствуйте, __userSlug__!",
     "welcome_tasty": "Добро пожаловать на тейсти!",
@@ -79,9 +78,6 @@
     "read_live_feed": "Почитать и настроить свой",
     "live_feed": "прямой эфир",
     "ask_question": "Если у Вас есть какие-то вопросы, кликните на знак вопроса в правом нижнем углу."
-=======
-    "tlog_empty_page": "На этой странице нет записей"
->>>>>>> Custom design options preview + diff of save button [#89384690]
   },
   "auth": {
     "header": "Это&nbsp;<strong>дневник</strong>, в&nbsp;который хочется писать каждый день",
@@ -193,10 +189,7 @@
     "messenger_create_message_error": "При отправке сообщения произошла ошибка",
     "messenger_recreate_message_error": "При повторной отправке сообщения произошла ошибка",
     "messenger_empty_message_error": "Сообщение не может быть пустым",
-<<<<<<< HEAD
     "messenger_cant_talk_error": "Вы не можете отправить сообщение этому пользователю, так как он вас заблокировал",
-=======
->>>>>>> Custom design options preview + diff of save button [#89384690]
     "messenger_connection_error": "Соединение не установлено"
   },
   "placeholders": {
@@ -211,11 +204,7 @@
     "settings_title": "Небольшое описание тлога",
     "settings_password": "Новый пароль",
     "settings_password_confirm": "Новый пароль еще раз",
-<<<<<<< HEAD
     "messenger_create_message": "Ваше сообщение…",
     "messenger_cant_talk": "Пользователь вас заблокировал"
-=======
-    "messenger_create_message": "Ваше сообщение…"
->>>>>>> Custom design options preview + diff of save button [#89384690]
   }
 }

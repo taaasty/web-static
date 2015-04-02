@@ -1,7 +1,5 @@
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/searchbox/index'
-DesignSettingsManager = require '../components/designSettings/manager'
-DesignSettingsColorPickerPopup = require '../components/designSettings/common/colorPicker/popup'
 
 PopupActions =
 
