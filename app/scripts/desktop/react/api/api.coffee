@@ -66,6 +66,15 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest feedUrl
 
+  design:
+    saveDesign: (design, userID) ->
+      url  = ApiRoutes.design_settings_url userID
+      key  = Constants.api.DESIGN_SAVE
+      data = design
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data
+
   editor:
     createImageAttachment: (formData) ->
       url = ApiRoutes.imageAttachments()

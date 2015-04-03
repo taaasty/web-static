@@ -3,6 +3,7 @@ CurrentUserStore = require '../../stores/current_user'
 DesignOptionsModel = require '../../models/designOptions'
 DesignPreviewService = require '../../services/designPreview'
 DesignOptionsService = require '../../services/designOptions'
+DesignActionCreators = require '../../actions/design'
 PopupActions = require '../../actions/popup'
 DesignSettings = require './index'
 
@@ -19,6 +20,11 @@ DesignSettingsManager = React.createClass
       hasPaidValues: DesignOptionsService.hasPaidValues design
     }
 
+  componentWillUnmount: ->
+    # Если вдруг закрыли попап, то возвращаем последнее сохранённое значение
+    currentDesign = PersonalDesignSetRepo.get('current').current
+    DesignPreviewService.apply currentDesign
+
   render: ->
     <DesignSettings {...@state}
         onOptionChange={ @handleOptionChange }
@@ -34,9 +40,12 @@ DesignSettingsManager = React.createClass
       hasPaidValues: DesignOptionsService.hasPaidValues newDesign
 
   handleSave: ->
-    if @state.hasPaidValues
+    if @state.hasPaidValues && !@state.hasDesignBundle
       PopupActions.showDesignSettingsPayment()
     else
-      console.log 'save settings', @state.design
+      DesignActionCreators.saveDesign(@state.design, CurrentUserStore.getUser().id)
+        .then (design) =>
+          PersonalDesignSetRepo.set 'current', design
+          @setState({design})
 
 module.exports = DesignSettingsManager

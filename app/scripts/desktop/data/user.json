@@ -34,17 +34,17 @@
   },
   "has_design_bundle": false,
   "design": {
-    "headerFont": "serif",
+    "headerFont": "proximanova",
     "headerSize": "middle",
-    "headerColor": "#ffffff",
+    "headerColor": "#2c61c1",
     "backgroundColor": "#ffffff",
-    "backgroundImageUrl": "http://taaasty.ru/assets/backgrounds/8d/4b/1881243_4k_wallpaper_231.jpg",
+    "backgroundImageUrl": "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg",
     "backgroundImageEnabled": true,
     "backgroundAlignment": "justify",
     "feedBackgroundColor": "#000000",
     "feedFont": "ptsans",
     "feedFontColor": "#000000",
-    "feedTransparency": 0.5
+    "feedTransparency": 0.7
   },
   "userpic": {
     "original_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_original.jpeg",

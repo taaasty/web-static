@@ -4,6 +4,7 @@ PopupArea = require '../components/PopupComponent/PopupArea'
 
 class PopupController
   containerAttribute: 'popup-container'
+  popupBGContainerAttribute: 'popup-bg-container'
 
   addContainer: (containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"
@@ -28,7 +29,7 @@ class PopupController
                  </Popup>, container
 
   openWithBackground: ({component, props, popupProps, containerAttribute}) ->
-    containerAttribute ?= @containerAttribute
+    containerAttribute ?= @popupBGContainerAttribute
     container = @addContainer containerAttribute
 
     $('body').addClass 'popup-enabled'

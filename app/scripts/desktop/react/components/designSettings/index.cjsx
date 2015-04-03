@@ -27,7 +27,7 @@ DesignSettings = React.createClass
                 onDragEnter={ @startDrag }>
              <DesignSettingsDropZone
                  onDragLeave={ @stopDrag }
-                 onDrop={ @handleDrop } />
+                 onDrop={ @stopDrag } />
              <div className="design-settings__options">
                <DesignSettingsGroups
                    design={ @props.design }

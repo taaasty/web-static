@@ -30,14 +30,12 @@ PopupActions =
         className: 'popup--design-settings'
       containerAttribute: 'design-settings-container'
 
-  showDesignSettingsPayment: ->    
-    ReactApp.popupController.open
+  showDesignSettingsPayment: ->
+    ReactApp.popupController.openWithBackground
       component: DesignSettingsPaymentManager
       popupProps:
         title: 'Что вы получаете?'
-        fullScreen: true
         className: 'popup--payment'
-      containerAttribute: 'design-settings-payment-container'
 
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'

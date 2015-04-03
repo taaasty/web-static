@@ -5,6 +5,7 @@ AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
+PersonalDesignSetRepo = require './repositories/personalDesignSet'
 
 window.ReactApp =
 
@@ -15,6 +16,9 @@ window.ReactApp =
       CurrentUserDispatcher.setupUser user
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
+
+    # Пока здесь устанавливаем текущий набор дизайна
+    PersonalDesignSetRepo.save 'current', CurrentUserStore.getUser().design
 
     i18n.init
       lng: locale

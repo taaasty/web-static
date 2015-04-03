@@ -46,9 +46,9 @@ DesignSettingsDropZone = React.createClass
     reader = new FileReader()
     
     reader.onload = (e) ->
-      console.log(e.target)
+      # console.log(e.target)
     
-    console.log(file)
+    # console.log(file)
     reader.readAsDataURL(file)
 
 module.exports = DesignSettingsDropZone
