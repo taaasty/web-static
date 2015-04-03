@@ -8711,12 +8711,12 @@ a.types-posts__item:hover .types-posts__text {
   text-align: center;
 }
 .brick {
-  position: absolute;
   width: 302px;
   display: inline-block;
   background-color: #ffffff;
   vertical-align: top;
   overflow: hidden;
+  margin-bottom: 20px;
   border-radius: 4px;
   /** Video **/
   /** Blockquote **/

@@ -1,12 +1,18 @@
 import Masonry from 'masonry-layout';
 import InfiniteScroll from '../common/infiniteScroll/index';
 
-let SearchResultsFeed = React.createClass({
+let FeedBricks = React.createClass({
   propTypes: {
     html: React.PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired,
     canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextPage: React.PropTypes.func.isRequired
+    onLoadNextEntries: React.PropTypes.func.isRequired
+  },
+
+  componentDidUpdate(prevProps) {
+    if (this.props.feedHtml !== prevProps.feedHtml) {
+      this.initGridManager()
+    }
   },
 
   render() {
@@ -15,7 +21,7 @@ let SearchResultsFeed = React.createClass({
         <InfiniteScroll
             loading={this.props.loading}
             canLoad={this.props.canLoad}
-            onLoad={this.props.onLoadNextPage}
+            onLoad={this.handleScrollLoad}
             onAfterLoad={this.initGridManager}>
           <section
               ref="container"
@@ -42,7 +48,14 @@ let SearchResultsFeed = React.createClass({
         transform: 'opacity(1)'
       }
     });
+  },
+
+  handleScrollLoad() {
+    let $container = $(this.refs.container.getDOMNode());
+    let lastEntryID = $container.children().last().data('id');
+
+    this.props.onLoadNextEntries(lastEntryID);
   }
 });
 
-export default SearchResultsFeed;
+export default FeedBricks;

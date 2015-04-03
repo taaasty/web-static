@@ -25,6 +25,7 @@ var dependencies = {
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
   'jquery.shapeshift': './app/bower_components/jquery.shapeshift/core/jquery.shapeshift',
+  'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
   'react': './node_modules/react',
   'React': './node_modules/react', // Некоторые библиотеки делают require('React')

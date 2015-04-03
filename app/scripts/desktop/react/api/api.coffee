@@ -59,6 +59,13 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest searchUrl
 
+  feed:
+    loadEntries: (feedUrl) ->
+      key = Constants.api.FEED_LOAD_ENTRIES
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest feedUrl
+
   editor:
     createImageAttachment: (formData) ->
       url = ApiRoutes.imageAttachments()
