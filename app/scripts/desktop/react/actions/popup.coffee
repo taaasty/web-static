@@ -4,7 +4,12 @@ Searchbox = require '../components/searchbox/index'
 PopupActions =
 
   showSettings: ->
-    ReactApp.popup.show Settings, title: i18n.t('settings_header')
+    ReactApp.popupController.openWithBackground({
+      component: Settings
+      popupProps:
+        title: i18n.t('settings_header')
+        className: 'popup--settings popup--dark'
+    })
 
   showDesignSettings: ->
     url = location.href
