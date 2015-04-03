@@ -1,5 +1,6 @@
 _ = require 'lodash'
-# Popup = require '../components/popupComponent/index'
+Popup = require '../components/PopupComponent/Popup'
+PopupArea = require '../components/PopupComponent/PopupArea'
 
 class PopupController
   containerAttribute: 'popup-container'
@@ -24,6 +25,22 @@ class PopupController
                    <Component {...props} />
                  </Popup>, container
 
+  openWithBackground: ({component, props, popupProps, containerAttribute}) ->
+    containerAttribute ?= @containerAttribute
+    container = @addContainer containerAttribute
+
+    $('body').addClass 'popup-enabled'
+
+    onClose = =>
+      _.defer =>
+        @handleCloseWithBackground(containerAttribute)
+
+    React.render <PopupArea onClose={onClose}>
+                   <Popup {...popupProps} onClose={onClose}>
+                     <component {...props} />
+                   </Popup>
+                 </PopupArea>, container
+
   openPopup: (PopupComponent, props, containerAttribute = @containerAttribute) ->
     container = @addContainer containerAttribute
 
@@ -37,6 +54,10 @@ class PopupController
     @removeContainer container
 
   handleClose: (containerAttribute) ->
+    @close containerAttribute
+
+  handleCloseWithBackground: (containerAttribute) ->
+    $('body').removeClass 'popup-enabled'
     @close containerAttribute
 
 module.exports = PopupController
