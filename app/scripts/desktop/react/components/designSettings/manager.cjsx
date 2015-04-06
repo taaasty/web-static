@@ -45,7 +45,7 @@ DesignSettingsManager = React.createClass
     else
       DesignActionCreators.saveDesign(@state.design, CurrentUserStore.getUser().id)
         .then (design) =>
-          PersonalDesignSetRepo.set 'current', design
+          PersonalDesignSetRepo.save 'current', design
           @setState({design})
 
 module.exports = DesignSettingsManager
