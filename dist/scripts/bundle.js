@@ -34156,7 +34156,7 @@ DesignOptionsModel = {
   backgroundAlignment: ['justify', 'center'],
   feedBackgroundColor: ['#ffffff', '#000000', '#e74c3c', '#c6c9cc', '#6c7a89', ':ANY:'],
   feedFont: ['ptsans', 'ptserif', 'roboto', 'lora', 'philosopher', 'ptmono', 'berenisadfpro', 'djserif', 'heuristica', 'permian', 'robotoslab', 'clearsans'],
-  feedFontColor: ['#ffffff', '#000000', '#c6c9cc', '#6c7a89', '#38434e']
+  feedFontColor: ['#ffffff', '#000000', '#c6c9cc', '#6c7a89', '#38434e', ':ANY:']
 };
 
 module.exports = DesignOptionsModel;
@@ -34583,6 +34583,10 @@ DesignPresenterService = {
         value: '#38434e',
         name: 'madison',
         title: 'Мэдисон'
+      }, {
+        value: ':ANY:',
+        name: 'custom',
+        title: 'Любой'
       }
     ]
   },
@@ -34854,6 +34858,9 @@ DesignPreviewService = {
       }, {
         value: '#38434e',
         className: 'madison'
+      }, {
+        value: ':ANY:',
+        className: 'custom'
       }
     ]
   },
@@ -34888,6 +34895,17 @@ DesignPreviewService = {
         },
         '.content-area__bg': {
           'background-color': value
+        }
+      };
+    },
+    feedFontColor: function(value) {
+      return {
+        '.design-settings__option--feedcolor .design-settings__state-i': {
+          'border-color': value,
+          'background-color': value
+        },
+        '.page-body': {
+          'color': value
         }
       };
     }

@@ -262,6 +262,10 @@ DesignPreviewService =
         value: '#38434e'
         className: 'madison'
       }
+      {
+        value: ':ANY:'
+        className: 'custom'
+      }
     ]
 
   rules:
@@ -286,6 +290,14 @@ DesignPreviewService =
 
       '.content-area__bg':
         'background-color': value
+
+    feedFontColor: (value) ->
+      '.design-settings__option--feedcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+
+      '.page-body':
+        'color': value
 
   apply: (design) ->
     states = {}

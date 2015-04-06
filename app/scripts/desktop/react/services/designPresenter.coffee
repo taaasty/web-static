@@ -323,6 +323,11 @@ DesignPresenterService =
         name: 'madison'
         title: 'Мэдисон'
       }
+      {
+        value: ':ANY:'
+        name: 'custom'
+        title: 'Любой'
+      }
     ]
 
   getTitle: (option, value) ->

@@ -24,7 +24,7 @@ DesignOptionsModel =
     'djserif', 'heuristica', 'permian', 'robotoslab', 'clearsans'
   ]
   feedFontColor: [
-    '#ffffff', '#000000', '#c6c9cc', '#6c7a89', '#38434e'
+    '#ffffff', '#000000', '#c6c9cc', '#6c7a89', '#38434e', ':ANY:'
   ]
 
 module.exports = DesignOptionsModel
