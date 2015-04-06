@@ -14353,8 +14353,8 @@ window.ReactApp = {
       window.messagingService = new MessagingService({
         user: CurrentUserStore.getUser()
       });
+      PersonalDesignSetRepo.save('current', CurrentUserStore.getUser().design);
     }
-    PersonalDesignSetRepo.save('current', CurrentUserStore.getUser().design);
     i18n.init({
       lng: locale,
       fallbackLng: 'ru',

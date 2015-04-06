@@ -17,8 +17,8 @@ window.ReactApp =
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
 
-    # Пока здесь устанавливаем текущий набор дизайна
-    PersonalDesignSetRepo.save 'current', CurrentUserStore.getUser().design
+      # Пока здесь устанавливаем текущий набор дизайна
+      PersonalDesignSetRepo.save 'current', CurrentUserStore.getUser().design
 
     i18n.init
       lng: locale
