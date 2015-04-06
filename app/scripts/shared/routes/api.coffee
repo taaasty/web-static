@@ -74,4 +74,6 @@ ApiRoutes =
   imageAttachments: -> TastySettings.api_host + '/v1/image_attachments'
   imageAttachmentsWithID: (attachmentID) -> TastySettings.api_host + '/v1/image_attachments/' + attachmentID
 
+  backgrounds: -> TastySettings.api_host + '/v1/backgrounds'
+
 module.exports = ApiRoutes

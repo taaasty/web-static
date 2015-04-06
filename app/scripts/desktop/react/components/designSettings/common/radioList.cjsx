@@ -1,5 +1,4 @@
 _ = require 'lodash'
-DesignPresenterService = require '../../../services/designPresenter'
 DesignSettingsRadio = require './radio'
 { PropTypes } = React
 

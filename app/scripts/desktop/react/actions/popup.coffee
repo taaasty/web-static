@@ -24,7 +24,7 @@ PopupActions =
     #       location.href = Routes.userDesignSettings user.slug
     # else
     ReactApp.popupController.open
-      component: DesignSettingsManager
+      component: DesignSettingsContainer
       popupProps:
         title: 'Управление дизайном'
         className: 'popup--design-settings'

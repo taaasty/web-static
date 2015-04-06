@@ -36,7 +36,7 @@
   "design": {
     "headerFont": "proximanova",
     "headerSize": "middle",
-    "headerColor": "#2c61c1",
+    "headerColor": "#ffffff",
     "backgroundColor": "#ffffff",
     "backgroundImageUrl": "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg",
     "backgroundImageEnabled": true,

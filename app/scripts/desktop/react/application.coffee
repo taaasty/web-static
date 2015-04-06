@@ -1,11 +1,11 @@
 window.i18n = require 'i18next'
 ReactUjs = require 'reactUjs'
 PopupActions = require './actions/popup'
+DesignActionCreators = require './actions/design'
 AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
-PersonalDesignSetRepo = require './repositories/personalDesignSet'
 
 window.ReactApp =
 
@@ -17,8 +17,7 @@ window.ReactApp =
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
 
-      # Пока здесь устанавливаем текущий набор дизайна
-      PersonalDesignSetRepo.save 'current', CurrentUserStore.getUser().design
+      DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
     i18n.init
       lng: locale
