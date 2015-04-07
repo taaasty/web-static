@@ -40,7 +40,7 @@ require './react/mixins/touch'
 require './react/dispatchers/current_user'
 require './react/dispatchers/relationships'
 global.CurrentUserStore = require './react/stores/current_user'
-global.DesignStore = require './react/stores/design'
+DesignStore = require './react/stores/design'
 require './react/stores/editor'
 require './react/stores/relationships'
 

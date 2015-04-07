@@ -15,7 +15,6 @@
     "jquery": "jQuery"
   },
   "dependencies": {
-    "dropzone": "^4.0.1",
     "flux": "^2.0.1",
     "imagesloaded": "^3.1.8",
     "lodash": "^3.1.0",

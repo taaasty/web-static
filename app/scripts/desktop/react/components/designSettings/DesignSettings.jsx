@@ -16,18 +16,21 @@ let DesignSettings = React.createClass({
 
   getInitialState: function() {
     return {
-      dragging: false
+      dragActive: false
     };
   },
 
   render() {
     let settingsClasses = classSet({
       'design-settings': true,
-      '__draghover': this.state.dragging
+      '__draghover': this.state.dragActive
     });
 
     return (
-      <div className={settingsClasses}>
+      <div className={settingsClasses}
+           onDragOver={this.handleDragOver}
+           onDragLeave={this.handleDragLeave}
+           onDrop={this.handleDrop}>
         <DesignSettingsDropZone />
         <div className="design-settings__options">
           <DesignSettingsGroups
@@ -43,6 +46,37 @@ let DesignSettings = React.createClass({
       </div>
     );
   },
+
+  handleDragLeave(e) {
+    var rect = this.getDOMNode().getBoundingClientRect();
+
+    if (e.clientX > rect.left + rect.width || e.clientX < rect.left ||
+        e.clientY > rect.top + rect.height || e.clientY < rect.top) {
+      this.setState({dragActive: false});
+    }
+  },
+
+  handleDragOver(e) {
+    e.preventDefault();
+
+    if (!this.state.dragActive) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+
+      this.setState({dragActive: true});
+    }
+  },
+
+  handleDrop(e) {
+    e.preventDefault();
+    let file = e.dataTransfer.files[0];
+
+    if (file) {
+      this.props.onBgImageChange(file);
+    }
+
+    this.setState({dragActive: false});
+  }
 });
 
 export default DesignSettings;
