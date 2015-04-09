@@ -26,7 +26,8 @@
     "es5-shim": "~4.0.3",
     "aviator": "~0.4.2",
     "intro.js": "1.0.0",
-    "i18next": "~1.7.7"
+    "i18next": "~1.7.7",
+    "select2": "~4.0.0"
   },
   "devDependencies": {
     "reqwest": "~1.1.5"

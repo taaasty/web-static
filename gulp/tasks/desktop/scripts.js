@@ -48,7 +48,8 @@ var dependencies = {
   'medium-editor': './app/bower_components/medium-editor/dist/js/medium-editor',
   'aviator': './app/bower_components/aviator/src/main',
   'nanobar': './app/bower_components/nanobar/index',
-  'URIjs': './node_modules/URIjs/src/URI'
+  'URIjs': './node_modules/URIjs/src/URI',
+  'jquery.select2': './app/bower_components/select2/dist/js/select2'
 }
 
 gulp.task('[D][L] Scripts', function(cb) {
