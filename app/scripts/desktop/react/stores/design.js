@@ -3,12 +3,14 @@ import BaseStore from './_base';
 import AppDispatcher from '../dispatchers/dispatcher';
 import DesignConstants from '../constants/design';
 import DesignOptions from '../models/designOptions';
+import DesignPaymentOptions from '../models/designPaymentOptions';
 import DesignSet from '../entities/designSet';
 import DesignOptionsService from '../services/designOptions';
 
 let _designSet = {};
 let _unsavedFields = {};
-const _designOptions = DesignOptions;
+const _designOptions = DesignOptions,
+      _designPaymentOptions = DesignPaymentOptions;
 
 function initDesignSet(design) {
   _designSet = new DesignSet(design);
@@ -48,6 +50,10 @@ let DesignStore = assign(new BaseStore(), {
 
   getOptions() {
     return _designOptions;
+  },
+
+  getPaymentOptions() {
+    return _designPaymentOptions;
   },
 
   getUnsavedFields() {

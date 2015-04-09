@@ -3,7 +3,7 @@ import DesignActionCreators from '../../actions/design';
 import PopupActionCreators from '../../actions/popup';
 import CurrentUserStore from '../../stores/current_user';
 import DesignStore from '../../stores/design';
-import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores'
+import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import DesignSettings from './DesignSettings';
 
 let DesignSettingsContainer = React.createClass({

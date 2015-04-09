@@ -1,4 +1,5 @@
 import Api from '../api/api';
+import Submitter from '../api/submitter';
 import CurrentUserStore from '../stores/current_user';
 import DesignStore from '../stores/design';
 import AppDispatcher from '../dispatchers/dispatcher';
@@ -55,7 +56,7 @@ let DesignActionCreators = {
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
-      delete fields.backgroundImageUrl
+      delete fields.backgroundImageUrl;
       Api.design.saveCurrent(fields, userID)
         .then((design) => {
           AppDispatcher.handleServerAction({
@@ -68,6 +69,16 @@ let DesignActionCreators = {
           TastyNotifyController.notifyError('Во время сохранения настроек дизайна произошла ошибка');
         });
     }
+  },
+
+  proceedPayment(design, slug) {
+    let url = Routes.designSettinsBuy(slug),
+        data = { design };
+
+    // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
+    // картинку, то у нас будет backgroundId его и будем передавать.
+    delete data.design.backgroundImageUrl;
+    Submitter.postRequest(url, data);
   }
 };
 

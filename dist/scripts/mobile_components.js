@@ -14943,6 +14943,9 @@ Routes = {
   },
   daylogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/' + page;
+  },
+  designSettinsBuy: function(userSlug) {
+    return '/~' + userSlug + '/design_settings_buy';
   }
 };
 

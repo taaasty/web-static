@@ -179,7 +179,7 @@ require './react/components/search/button'
 require './react/components/search/field'
 
 global.DesignSettingsContainer = require './react/components/DesignSettings/DesignSettingsContainer'
-global.DesignSettingsPaymentManager = require './react/components/designSettingsPayment/manager'
+global.DesignPaymentContainer = require './react/components/DesignPayment/DesignPaymentContainer'
 global.DesignSettingsColorPickerPopup = require './react/components/DesignSettings/common/colorPicker/popup'
 
 require './react/components/persons_popup/mixins/panel_mixin'

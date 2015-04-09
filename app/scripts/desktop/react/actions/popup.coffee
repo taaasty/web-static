@@ -15,7 +15,7 @@ PopupActions =
     url = location.href
     user = CurrentUserStore.getUser()
 
-    if url.indexOf(user.tlog_url) == -1
+    if url.indexOf(user.tlog_url.toLowerCase()) == -1
       TastyConfirmController.show
         message: i18n.t 'design_settings_page_confirm'
         acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
@@ -28,13 +28,13 @@ PopupActions =
         popupProps:
           title: 'Управление дизайном'
           className: 'popup--design-settings'
-          draggable: true
           clue: 'designSettings'
+          draggable: true
         containerAttribute: 'design-settings-container'
 
   showDesignSettingsPayment: ->
     ReactApp.popupController.openWithBackground
-      component: DesignSettingsPaymentManager
+      component: DesignPaymentContainer
       popupProps:
         title: 'Что вы получаете?'
         className: 'popup--payment'
