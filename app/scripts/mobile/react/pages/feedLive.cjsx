@@ -1,6 +1,7 @@
 CurrentUserStore = require '../stores/currentUser'
 FeedStore = require '../stores/feed'
 PageMixin = require './mixins/page'
+# FeedLivePageMixin = require './mixins/feedLive'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroFeedLive = require '../components/hero/feedLive'

@@ -2,7 +2,7 @@ import CurrentUserStore from '../../stores/currentUser';
 import ConnectStoreMixin from '../../../../shared/react/mixins/connectStore';
 import DaylogEmptyPage from './DaylogEmptyPage';
 import DaylogOwnEmptyPage from './DaylogOwnEmptyPage';
-import EntryTlog from '../entry/tlog';
+import EntryTlog from '../entry/Tlog';
 
 let Daylog = React.createClass({
   mixins: [ConnectStoreMixin(CurrentUserStore)],

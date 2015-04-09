@@ -1,7 +1,7 @@
 import DesignSettingsGroup from './Group';
-import DesignSettingsOption from '../option/index';
-import DesignSettingsOptionState from '../option/State';
-import DesignSettingsOptionUpload from '../option/Upload';
+import DesignSettingsOption from '../Option/Option';
+import DesignSettingsOptionState from '../Option/State';
+import DesignSettingsOptionUpload from '../Option/Upload';
 import DesignSettingsRadioList from '../common/radioList';
 
 let DesignSettingsBackgroundGroup = React.createClass({

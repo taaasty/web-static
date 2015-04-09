@@ -3552,6 +3552,11 @@ a.toolbar__popup-link:active {
 .post__meta {
   margin-top: -8px;
 }
+.post__meta:first-child {
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .post__meta .meta-actions {
   margin-right: 0;
   float: right;

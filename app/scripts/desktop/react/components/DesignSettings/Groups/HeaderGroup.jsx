@@ -1,6 +1,6 @@
 import DesignSettingsGroup from './Group';
-import DesignSettingsOption from '../option/index';
-import DesignSettingsOptionState from '../option/State';
+import DesignSettingsOption from '../Option/Option';
+import DesignSettingsOptionState from '../Option/State';
 import DesignSettingsSlider from '../common/slider';
 import DesignSettingsRadioList from '../common/radioList';
 
