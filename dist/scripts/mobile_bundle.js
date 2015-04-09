@@ -4244,7 +4244,7 @@ var DaylogEmptyPage = _interopRequire(require("./DaylogEmptyPage"));
 
 var DaylogOwnEmptyPage = _interopRequire(require("./DaylogOwnEmptyPage"));
 
-var EntryTlog = _interopRequire(require("../entry/tlog"));
+var EntryTlog = _interopRequire(require("../entry/Tlog"));
 
 var Daylog = React.createClass({
   displayName: "Daylog",
@@ -4302,7 +4302,7 @@ var Daylog = React.createClass({
 
 module.exports = Daylog;
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"../entry/tlog":99,"./DaylogEmptyPage":21,"./DaylogOwnEmptyPage":22}],21:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"../entry/Tlog":71,"./DaylogEmptyPage":21,"./DaylogOwnEmptyPage":22}],21:[function(require,module,exports){
 "use strict";
 
 var DaylogEmptyPage = React.createClass({
@@ -4432,7 +4432,7 @@ var TlogEmptyPage = _interopRequire(require("./TlogEmptyPage"));
 
 var TlogOwnEmptyPage = _interopRequire(require("./TlogOwnEmptyPage"));
 
-var EntryTlog = _interopRequire(require("../entry/tlog"));
+var EntryTlog = _interopRequire(require("../entry/Tlog"));
 
 var Tlog = React.createClass({
   displayName: "Tlog",
@@ -4490,7 +4490,7 @@ var Tlog = React.createClass({
 
 module.exports = Tlog;
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"../entry/tlog":99,"./TlogEmptyPage":24,"./TlogOwnEmptyPage":25}],24:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":245,"../../stores/currentUser":230,"../entry/Tlog":71,"./TlogEmptyPage":24,"./TlogOwnEmptyPage":25}],24:[function(require,module,exports){
 "use strict";
 
 var TlogEmptyPage = React.createClass({
@@ -5961,1246 +5961,80 @@ module.exports = Spinner;
 
 
 },{}],55:[function(require,module,exports){
-var CommentsLoadMoreButton, PropTypes;
+"use strict";
 
-PropTypes = React.PropTypes;
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-CommentsLoadMoreButton = React.createClass({
-  displayName: 'CommentsLoadMoreButton',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comments__more-link",
-      "onClick": this.props.onClick
-    }, this.props.title);
-  }
-});
+var EntryMeta = _interopRequire(require("./Meta/Meta"));
 
-module.exports = CommentsLoadMoreButton;
+var EntryFeedMeta = _interopRequire(require("./Feed/Meta"));
 
+var EntryComments = _interopRequire(require("./comments/comments"));
 
+var EntryContent = _interopRequire(require("./content/content"));
 
-},{}],56:[function(require,module,exports){
-var CommentForm, PropTypes;
+var CurrentUserStore = _interopRequire(require("../../stores/currentUser"));
 
-PropTypes = React.PropTypes;
+var ConnectStoreMixin = _interopRequire(require("../../../../shared/react/mixins/connectStore"));
 
-CommentForm = React.createClass({
-  displayName: 'CommentForm',
-  propTypes: {
-    text: PropTypes.string,
-    buttonTitle: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    onSubmit: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      disabled: false
-    };
-  },
-  render: function() {
-    return React.createElement("form", {
-      "className": "comment-form"
-    }, this.renderCancelButton(), React.createElement("button", {
-      "className": "comment-form__submit",
-      "onClick": this.handleSubmit
-    }, this.props.buttonTitle), React.createElement("div", {
-      "className": "comment-form__field"
-    }, React.createElement("textarea", {
-      "ref": "textField",
-      "autoFocus": true,
-      "defaultValue": this.props.text,
-      "placeholder": this.props.placeholder,
-      "disabled": this.props.disabled,
-      "className": "comment-form__field-textarea",
-      "onKeyDown": this.handleTextareaKeydown
-    })));
-  },
-  renderCancelButton: function() {
-    if (this.props.onCancel != null) {
-      return React.createElement("button", {
-        "className": "comment-form__cancel",
-        "onClick": this.handleCancel
-      }, i18n.t('buttons.comment_edit_cancel'));
-    }
-  },
-  clearForm: function() {
-    return this.refs.textField.getDOMNode().value = '';
-  },
-  handleSubmit: function(e) {
-    var value;
-    e.preventDefault();
-    value = this.refs.textField.getDOMNode().value.trim();
-    if (!this.props.disabled) {
-      return this.props.onSubmit(value);
-    }
-  },
-  handleCancel: function(e) {
-    e.preventDefault();
-    return this.props.onCancel();
-  }
-});
+var ComponentMixin = _interopRequire(require("../../mixins/component"));
 
-module.exports = CommentForm;
+var EntryMixin = _interopRequire(require("./mixins/entry"));
 
+var EntryFeed = React.createClass({
+  displayName: "EntryFeed",
 
-
-},{}],57:[function(require,module,exports){
-var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
-
-CommentForm = require('../commentForm');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-CommentCreateForm = React.createClass({
-  displayName: 'CommentCreateForm',
-  propTypes: {
-    entryId: PropTypes.number.isRequired,
-    loading: PropTypes.bool.isRequired,
-    onCommentCreate: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(CommentForm, {
-      "ref": "commentForm",
-      "buttonTitle": i18n.t('buttons.comment_create'),
-      "placeholder": i18n.t('placeholders.comment_create'),
-      "disabled": this.props.loading,
-      "onSubmit": this.createComment
-    });
-  },
-  isValid: function(text) {
-    return !!text.match(/./);
-  },
-  clearForm: function() {
-    return this.refs.commentForm.clearForm();
-  },
-  createComment: function(text) {
-    if (!this.isValid(text)) {
-      return;
-    }
-    this.props.onCommentCreate(text);
-    return this.clearForm();
-  }
-});
-
-module.exports = CommentCreateForm;
-
-
-
-},{"../../../../mixins/component":213,"../commentForm":56}],58:[function(require,module,exports){
-var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
-
-CommentForm = require('../commentForm');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-CommentEditForm = React.createClass({
-  displayName: 'CommentEditForm',
-  propTypes: {
-    entryId: PropTypes.number.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditFinish: PropTypes.func.isRequired,
-    onEditCancel: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement(CommentForm, {
-      "ref": "commentForm",
-      "text": this.props.comment.comment_html,
-      "buttonTitle": i18n.t('buttons.comment_edit'),
-      "placeholder": i18n.t('placeholders.comment_edit'),
-      "onSubmit": this.editComment,
-      "onCancel": this.props.onEditCancel
-    });
-  },
-  isValid: function(text) {
-    return !!text.match(/./) && this.props.comment.comment_html !== text;
-  },
-  clearForm: function() {
-    return this.refs.commentForm.clearForm();
-  },
-  editComment: function(text) {
-    if (!this.isValid(text)) {
-      return this.props.onEditCancel();
-    }
-    this.props.onEditFinish(text);
-    return this.clearForm();
-  }
-});
-
-module.exports = CommentEditForm;
-
-
-
-},{"../../../../mixins/component":213,"../commentForm":56}],59:[function(require,module,exports){
-var CommentList, CommentManager, PropTypes;
-
-CommentManager = require('./commentList/commentManager');
-
-PropTypes = React.PropTypes;
-
-CommentList = React.createClass({
-  displayName: 'CommentList',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comments: PropTypes.array.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    var commentList;
-    commentList = this.props.comments.map((function(_this) {
-      return function(comment) {
-        return React.createElement(CommentManager, {
-          "entry": _this.props.entry,
-          "comment": comment,
-          "onCommentEdit": _this.props.onCommentEdit,
-          "onCommentDelete": _this.props.onCommentDelete,
-          "onCommentReport": _this.props.onCommentReport,
-          "key": comment.id
-        });
-      };
-    })(this));
-    return React.createElement("div", {
-      "className": "comments__list"
-    }, commentList);
-  }
-});
-
-module.exports = CommentList;
-
-
-
-},{"./commentList/commentManager":71}],60:[function(require,module,exports){
-var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
-
-CommentUser = require('./comment/user');
-
-CommentText = require('./comment/text');
-
-CommentDate = require('./comment/date');
-
-CommentActions = require('./comment/actions');
-
-PropTypes = React.PropTypes;
-
-Comment = React.createClass({
-  displayName: 'Comment',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "comment"
-    }, React.createElement("div", {
-      "className": "comment__content"
-    }, React.createElement(CommentUser, {
-      "user": this.props.comment.user
-    }), React.createElement(CommentText, {
-      "text": this.props.comment.comment_html
-    }), React.createElement(CommentDate, {
-      "date": this.props.comment.created_at,
-      "commentId": this.props.comment.id,
-      "entryUrl": this.props.entry.entry_url
-    }), React.createElement(CommentActions, React.__spread({}, this.props))));
-  }
-});
-
-module.exports = Comment;
-
-
-
-},{"./comment/actions":61,"./comment/date":68,"./comment/text":69,"./comment/user":70}],61:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
-
-cx = require('react/lib/cx');
-
-ClickOutsideMixin = require('../../../../../mixins/clickOutside');
-
-CommentActionsButton = require('./actions/buttons/button');
-
-CommentActionsDropdownMenu = require('./actions/dropdownMenu');
-
-UserAvatar = require('../../../../common/avatar/user');
-
-PropTypes = React.PropTypes;
-
-OPEN_STATE = 'open';
-
-CLOSE_STATE = 'close';
-
-CommentActions = React.createClass({
-  displayName: 'CommentActions',
-  mixins: [ClickOutsideMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: CLOSE_STATE
-    };
-  },
-  render: function() {
-    var actionsClasses;
-    actionsClasses = cx({
-      'comment__actions': true,
-      '__open': this.isOpenState()
-    });
-    return React.createElement("div", {
-      "className": actionsClasses
-    }, React.createElement(CommentActionsButton, {
-      "onClick": this.toggleOpenState
-    }), React.createElement(CommentActionsDropdownMenu, React.__spread({}, this.props, {
-      "visible": this.isOpenState()
-    })));
-  },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
-  },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
-  },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
-  },
-  toggleOpenState: function() {
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
-  }
-});
-
-module.exports = CommentActions;
-
-
-
-},{"../../../../../mixins/clickOutside":212,"../../../../common/avatar/user":51,"./actions/buttons/button":62,"./actions/dropdownMenu":63,"react/lib/cx":358}],62:[function(require,module,exports){
-var CommentActionsButton, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsButton = React.createClass({
-  displayName: 'CommentActionsButton',
-  propTypes: {
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("button", {
-      "className": "comment__actions-button",
-      "onClick": this.props.onClick
-    }, React.createElement("i", {
-      "className": "icon icon--dots"
-    }));
-  }
-});
-
-module.exports = CommentActionsButton;
-
-
-
-},{}],63:[function(require,module,exports){
-var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
-
-DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
-
-CommentActionsDropdownMenuLinkItem = require('./dropdownMenu/items/link');
-
-CommentActionsDropdownMenuEditItem = require('./dropdownMenu/items/edit');
-
-CommentActionsDropdownMenuDeleteItem = require('./dropdownMenu/items/delete');
-
-CommentActionsDropdownMenuReportItem = require('./dropdownMenu/items/report');
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenu = React.createClass({
-  displayName: 'CommentActionsDropdownMenu',
-  mixins: [DropdownMenuMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getPopupClasses('comment__dropdown-popup')
-    }, this.renderPopupList());
-  },
-  renderPopupList: function() {
-    var deleteItem, editItem, linkItem, reportItem;
-    linkItem = React.createElement(CommentActionsDropdownMenuLinkItem, {
-      "commentId": this.props.comment.id,
-      "entryUrl": this.props.entry.entry_url,
-      "key": "link"
-    });
-    if (this.props.comment.can_report) {
-      reportItem = React.createElement(CommentActionsDropdownMenuReportItem, {
-        "commentId": this.props.comment.id,
-        "onCommentReport": this.props.onCommentReport,
-        "key": "report"
-      });
-    }
-    if (this.props.comment.can_edit) {
-      editItem = React.createElement(CommentActionsDropdownMenuEditItem, {
-        "onEditStart": this.props.onEditStart,
-        "key": "edit"
-      });
-    }
-    if (this.props.comment.can_delete) {
-      deleteItem = React.createElement(CommentActionsDropdownMenuDeleteItem, {
-        "commentId": this.props.comment.id,
-        "onCommentDelete": this.props.onCommentDelete,
-        "key": "delete"
-      });
-    }
-    return React.createElement("ul", {
-      "className": "comment__dropdown-popup-list"
-    }, [editItem, linkItem, reportItem, deleteItem]);
-  }
-});
-
-module.exports = CommentActionsDropdownMenu;
-
-
-
-},{"../../../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":64,"./dropdownMenu/items/edit":65,"./dropdownMenu/items/link":66,"./dropdownMenu/items/report":67}],64:[function(require,module,exports){
-var CommentActionsDropdownMenuDeleteItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuDeleteItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuDeleteItem',
-  propTypes: {
-    commentId: PropTypes.number.isRequired,
-    onCommentDelete: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.handleClick
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--basket"
-    }), React.createElement("span", null, i18n.t('comment.delete_item'))));
-  },
-  "delete": function() {
-    return this.props.onCommentDelete(this.props.commentId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('comment.delete_confirm'))) {
-      return this["delete"]();
-    }
-  }
-});
-
-module.exports = CommentActionsDropdownMenuDeleteItem;
-
-
-
-},{}],65:[function(require,module,exports){
-var CommentActionsDropdownMenuEditItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuEditItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuEditItem',
-  propTypes: {
-    onEditStart: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.props.onEditStart
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--pencil"
-    }), React.createElement("span", null, i18n.t('comment.edit_item'))));
-  }
-});
-
-module.exports = CommentActionsDropdownMenuEditItem;
-
-
-
-},{}],66:[function(require,module,exports){
-var CommentActionsDropdownMenuLinkItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuLinkItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuLinkItem',
-  propTypes: {
-    entryUrl: PropTypes.string.isRequired,
-    commentId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item"
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link",
-      "href": this.getCommentUrl()
-    }, React.createElement("i", {
-      "className": "icon icon--hyperlink"
-    }), React.createElement("span", null, i18n.t('comment.link_item'))));
-  },
-  getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  }
-});
-
-module.exports = CommentActionsDropdownMenuLinkItem;
-
-
-
-},{}],67:[function(require,module,exports){
-var CommentActionsDropdownMenuReportItem, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentActionsDropdownMenuReportItem = React.createClass({
-  displayName: 'CommentActionsDropdownMenuReportItem',
-  propTypes: {
-    commentId: PropTypes.number.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("li", {
-      "className": "comment__dropdown-popup-item",
-      "onClick": this.handleClick
-    }, React.createElement("a", {
-      "className": "comment__dropdown-popup-link"
-    }, React.createElement("i", {
-      "className": "icon icon--exclamation-mark"
-    }), React.createElement("span", null, i18n.t('comment.report_item'))));
-  },
-  report: function() {
-    return this.props.onCommentReport(this.props.commentId);
-  },
-  handleClick: function() {
-    if (confirm(i18n.t('comment.report_confirm'))) {
-      return this.report();
-    }
-  }
-});
-
-module.exports = CommentActionsDropdownMenuReportItem;
-
-
-
-},{}],68:[function(require,module,exports){
-var CommentDate, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentDate = React.createClass({
-  displayName: 'CommentDate',
-  propTypes: {
-    date: PropTypes.string.isRequired,
-    entryUrl: PropTypes.string.isRequired,
-    commentId: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this.getCommentUrl(),
-      "className": "comment__date"
-    }, this.getFormattedDate());
-  },
-  getCommentUrl: function() {
-    return this.props.entryUrl + '#comment-' + this.props.commentId;
-  },
-  getFormattedDate: function() {
-    var createdAt, now;
-    now = moment();
-    createdAt = moment(this.props.date);
-    switch (false) {
-      case !(now.diff(createdAt, 'seconds') < 5):
-        return createdAt.subtract(5, 's').fromNow();
-      case !(now.diff(createdAt, 'minutes') < 180):
-        return createdAt.fromNow();
-      case !(now.diff(createdAt, 'days') < 1):
-        return createdAt.calendar();
-      default:
-        if (now.year() !== createdAt.year()) {
-          return createdAt.format('D MMMM YYYY');
-        } else {
-          return createdAt.format('D MMMM');
-        }
-    }
-  }
-});
-
-module.exports = CommentDate;
-
-
-
-},{}],69:[function(require,module,exports){
-var CommentText, PropTypes;
-
-PropTypes = React.PropTypes;
-
-CommentText = React.createClass({
-  displayName: 'CommentText',
-  propTypes: {
-    text: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("span", {
-      "className": "comment__text",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.text
-      }
-    });
-  }
-});
-
-module.exports = CommentText;
-
-
-
-},{}],70:[function(require,module,exports){
-var CommentUser, PropTypes, UserAvatar;
-
-UserAvatar = require('../../../../common/avatar/user');
-
-PropTypes = React.PropTypes;
-
-CommentUser = React.createClass({
-  displayName: 'CommentUser',
-  propTypes: {
-    user: PropTypes.object.isRequired
-  },
-  render: function() {
-    return React.createElement("a", {
-      "href": this.props.user.tlog_url,
-      "className": "comment__user",
-      "target": "_blank",
-      "title": this.props.user.slug
-    }, React.createElement("span", {
-      "className": "comment__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.user,
-      "size": 42.
-    })), React.createElement("span", {
-      "className": "comment__username"
-    }, this.props.user.slug));
-  }
-});
-
-module.exports = CommentUser;
-
-
-
-},{"../../../../common/avatar/user":51}],71:[function(require,module,exports){
-var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
-
-Comment = require('./comment');
-
-CommentEditForm = require('../commentForm/edit');
-
-ComponentMixin = require('../../../../mixins/component');
-
-PropTypes = React.PropTypes;
-
-SHOW_STATE = 'show';
-
-EDIT_STATE = 'edit';
-
-CommentManager = React.createClass({
-  displayName: 'CommentManager',
-  mixins: [ComponentMixin],
-  propTypes: {
-    comment: PropTypes.object.isRequired,
-    entry: PropTypes.object.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      currentState: SHOW_STATE
-    };
-  },
-  render: function() {
-    switch (this.state.currentState) {
-      case SHOW_STATE:
-        return React.createElement(Comment, React.__spread({}, this.props, {
-          "onEditStart": this.activateEditState
-        }));
-      case EDIT_STATE:
-        return React.createElement(CommentEditForm, {
-          "comment": this.props.comment,
-          "entryId": this.props.entry.id,
-          "onEditFinish": this.handleEditFinish,
-          "onEditCancel": this.activateShowState
-        });
-      default:
-        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
-    }
-  },
-  activateEditState: function() {
-    return this.safeUpdateState({
-      currentState: EDIT_STATE
-    });
-  },
-  activateShowState: function() {
-    return this.safeUpdateState({
-      currentState: SHOW_STATE
-    });
-  },
-  handleEditFinish: function(text) {
-    var commentId;
-    commentId = this.props.comment.id;
-    this.props.onCommentEdit(commentId, text);
-    return this.activateShowState();
-  }
-});
-
-module.exports = CommentManager;
-
-
-
-},{"../../../../mixins/component":213,"../commentForm/edit":58,"./comment":60}],72:[function(require,module,exports){
-var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
-
-CommentList = require('./commentList');
-
-CommentCreateForm = require('./commentForm/create');
-
-CommentsLoadMore = require('./commentsLoadMore');
-
-PropTypes = React.PropTypes;
-
-EntryComments = React.createClass({
-  displayName: 'EntryComments',
-  propTypes: {
-    user: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    comments: PropTypes.array.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    loading: PropTypes.bool.isRequired,
-    loadPerTime: PropTypes.number,
-    formVisible: PropTypes.bool.isRequired,
-    onCommentsLoadMore: PropTypes.func.isRequired,
-    onCommentCreate: PropTypes.func.isRequired,
-    onCommentEdit: PropTypes.func.isRequired,
-    onCommentDelete: PropTypes.func.isRequired,
-    onCommentReport: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__comments"
-    }, React.createElement("div", {
-      "className": "comments"
-    }, this.renderLoadMore(), this.renderCommentList(), this.renderCommentForm()));
-  },
-  renderLoadMore: function() {
-    if (this.props.commentsCount > this.props.comments.length) {
-      return React.createElement(CommentsLoadMore, {
-        "totalCount": this.props.commentsCount,
-        "loadedCount": this.props.comments.length,
-        "loading": this.props.loading,
-        "loadPerTime": this.props.loadPerTime,
-        "onCommentsLoadMore": this.props.onCommentsLoadMore
-      });
-    }
-  },
-  renderCommentList: function() {
-    if (this.props.comments.length) {
-      return React.createElement(CommentList, {
-        "comments": this.props.comments,
-        "entry": this.props.entry,
-        "onCommentEdit": this.props.onCommentEdit,
-        "onCommentDelete": this.props.onCommentDelete,
-        "onCommentReport": this.props.onCommentReport
-      });
-    }
-  },
-  renderCommentForm: function() {
-    if ((this.props.user != null) && this.props.formVisible) {
-      return React.createElement(CommentCreateForm, {
-        "entryId": this.props.entry.id,
-        "loading": this.props.loading,
-        "onCommentCreate": this.props.onCommentCreate
-      });
-    }
-  }
-});
-
-module.exports = EntryComments;
-
-
-
-},{"./commentForm/create":57,"./commentList":59,"./commentsLoadMore":73}],73:[function(require,module,exports){
-var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
-
-Spinner = require('../../common/spinner/spinner');
-
-CommentsLoadMoreButton = require('./buttons/loadMore');
-
-PropTypes = React.PropTypes;
-
-CommentsLoadMore = React.createClass({
-  displayName: 'CommentsLoadMore',
-  propTypes: {
-    totalCount: PropTypes.number.isRequired,
-    loadedCount: PropTypes.number,
-    loadPerTime: PropTypes.number,
-    loading: PropTypes.bool.isRequired,
-    onCommentsLoadMore: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "comments__more"
-    }, this.renderContent());
-  },
-  renderContent: function() {
-    if (this.props.loading) {
-      return React.createElement("div", {
-        "className": "comments__loader"
-      }, React.createElement(Spinner, {
-        "size": 14.
-      }));
-    } else {
-      return React.createElement(CommentsLoadMoreButton, {
-        "title": this.getTitle(),
-        "onClick": this.props.onCommentsLoadMore
-      });
-    }
-  },
-  getTitle: function() {
-    var possibleCount, remainingCount;
-    remainingCount = this.props.totalCount - this.props.loadedCount;
-    possibleCount = this.props.loadedCount + this.props.loadPerTime;
-    if (possibleCount < this.props.totalCount) {
-      return i18n.t('buttons.comments_load_more', {
-        count: this.props.loadPerTime
-      });
-    } else {
-      return i18n.t('buttons.comments_load_more_remaining', {
-        count: remainingCount
-      });
-    }
-  }
-});
-
-module.exports = CommentsLoadMore;
-
-
-
-},{"../../common/spinner/spinner":54,"./buttons/loadMore":55}],74:[function(require,module,exports){
-var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
-
-TextEntryContent = require('./text/text');
-
-ImageEntryContent = require('./image/image');
-
-VideoEntryContent = require('./video/video');
-
-QuoteEntryContent = require('./quote/quote');
-
-UnknownEntryContent = require('./unknown/unknown');
-
-PropTypes = React.PropTypes;
-
-TEXT_TYPE = 'text';
-
-IMAGE_TYPE = 'image';
-
-VIDEO_TYPE = 'video';
-
-QUOTE_TYPE = 'quote';
-
-EntryContent = React.createClass({
-  displayName: 'EntryContent',
-  propTypes: {
-    entry: PropTypes.object.isRequired
-  },
-  render: function() {
-    switch (this.props.entry.type) {
-      case TEXT_TYPE:
-        return React.createElement(TextEntryContent, {
-          "title": this.props.entry.title,
-          "text": this.props.entry.text
-        });
-      case IMAGE_TYPE:
-        return React.createElement(ImageEntryContent, {
-          "title": this.props.entry.title,
-          "imageUrl": this.props.entry.image_url,
-          "imageAttachments": this.props.entry.image_attachments
-        });
-      case VIDEO_TYPE:
-        return React.createElement(VideoEntryContent, {
-          "iframely": this.props.entry.iframely
-        });
-      case QUOTE_TYPE:
-        return React.createElement(QuoteEntryContent, {
-          "text": this.props.entry.text,
-          "source": this.props.entry.source
-        });
-      default:
-        return React.createElement(UnknownEntryContent, {
-          "title": this.props.entry.title
-        });
-    }
-  }
-});
-
-module.exports = EntryContent;
-
-
-
-},{"./image/image":76,"./quote/quote":77,"./text/text":79,"./unknown/unknown":81,"./video/video":82}],75:[function(require,module,exports){
-var CollageManager, ImageEntryAttachments, PropTypes;
-
-CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
-
-PropTypes = React.PropTypes;
-
-ImageEntryAttachments = React.createClass({
-  displayName: 'ImageEntryAttachments',
-  propTypes: {
-    imageAttachments: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement(CollageManager, {
-      "images": this.getImages()
-    });
-  },
-  getImages: function() {
-    return this.props.imageAttachments.map(function(imageAttachment) {
-      var image, newImage;
-      image = imageAttachment.image;
-      newImage = {
-        width: image.geometry.width,
-        height: image.geometry.height,
-        payload: {
-          id: imageAttachment.id,
-          url: image.url,
-          path: image.path,
-          title: image.title
-        }
-      };
-      return newImage;
-    });
-  }
-});
-
-module.exports = ImageEntryAttachments;
-
-
-
-},{"../../../../../../shared/react/components/common/collage/collageManager":241}],76:[function(require,module,exports){
-var ImageEntryAttachments, ImageEntryContent, PropTypes;
-
-ImageEntryAttachments = require('./attachments');
-
-PropTypes = React.PropTypes;
-
-ImageEntryContent = React.createClass({
-  displayName: 'ImageEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    imageAttachments: PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, this.renderEntryImage(), React.createElement("p", null, this.props.title));
-  },
-  renderEntryImage: function() {
-    var content;
-    content = (function() {
-      switch (false) {
-        case !this.props.imageAttachments:
-          return React.createElement(ImageEntryAttachments, {
-            "imageAttachments": this.props.imageAttachments
-          });
-        case !this.props.imageUrl:
-          return React.createElement("img", {
-            "src": this.props.imageUrl
-          });
-        default:
-          return i18n.t('entry.empty_image');
-      }
-    }).call(this);
-    return React.createElement("div", {
-      "className": "media-image"
-    }, content);
-  }
-});
-
-module.exports = ImageEntryContent;
-
-
-
-},{"./attachments":75}],77:[function(require,module,exports){
-var PropTypes, QuoteEntryContent;
-
-PropTypes = React.PropTypes;
-
-QuoteEntryContent = React.createClass({
-  displayName: 'QuoteEntryContent',
-  propTypes: {
-    text: PropTypes.string.isRequired,
-    source: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("blockquote", {
-      "className": "blockquote"
-    }, React.createElement("span", {
-      "className": "laquo"
-    }, "\u00ab"), React.createElement("span", null, this.props.text), React.createElement("span", {
-      "className": "raquo"
-    }, "\u00bb"), this.renderCaption()));
-  },
-  renderCaption: function() {
-    if (this.props.source) {
-      return React.createElement("div", {
-        "className": "blockquote__caption"
-      }, this.props.source);
-    }
-  }
-});
-
-module.exports = QuoteEntryContent;
-
-
-
-},{}],78:[function(require,module,exports){
-var PropTypes, TextEntryHeader;
-
-PropTypes = React.PropTypes;
-
-TextEntryHeader = React.createClass({
-  displayName: 'TextEntryHeader',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, this.props.title));
-  }
-});
-
-module.exports = TextEntryHeader;
-
-
-
-},{}],79:[function(require,module,exports){
-var PropTypes, TextEntryContent, TextEntryHeader;
-
-TextEntryHeader = require('./header');
-
-PropTypes = React.PropTypes;
-
-TextEntryContent = React.createClass({
-  displayName: 'TextEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(TextEntryHeader, {
-      "title": this.props.title
-    }), React.createElement("div", {
-      "className": "post__content",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.text
-      }
-    }));
-  }
-});
-
-module.exports = TextEntryContent;
-
-
-
-},{"./header":78}],80:[function(require,module,exports){
-var PropTypes, UnknownEntryHeader;
-
-PropTypes = React.PropTypes;
-
-UnknownEntryHeader = React.createClass({
-  displayName: 'UnknownEntryHeader',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__header"
-    }, React.createElement("h1", {
-      "className": "post__title"
-    }, this.props.title));
-  }
-});
-
-module.exports = UnknownEntryHeader;
-
-
-
-},{}],81:[function(require,module,exports){
-var PropTypes, UnknownEntryContent, UnknownEntryHeader;
-
-UnknownEntryHeader = require('./header');
-
-PropTypes = React.PropTypes;
-
-UnknownEntryContent = React.createClass({
-  displayName: 'UnknownEntryContent',
-  propTypes: {
-    title: PropTypes.string.isRequired
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(UnknownEntryHeader, {
-      "title": this.props.title
-    }), React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("p", null, i18n.t('entry.unknown_type'))));
-  }
-});
-
-module.exports = UnknownEntryContent;
-
-
-
-},{"./header":80}],82:[function(require,module,exports){
-var PropTypes, VideoEntryContent;
-
-PropTypes = React.PropTypes;
-
-VideoEntryContent = React.createClass({
-  displayName: 'VideoEntryContent',
-  propTypes: {
-    iframely: PropTypes.object
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__content"
-    }, React.createElement("div", {
-      "className": "media-video"
-    }, this.renderEmbedHtml()));
-  },
-  renderEmbedHtml: function() {
-    var _ref;
-    if ((_ref = this.props.iframely) != null ? _ref.html : void 0) {
-      return React.createElement("div", {
-        "className": "media-video__embed",
-        "dangerouslySetInnerHTML": {
-          __html: this.props.iframely.html
-        }
-      });
-    } else {
-      return React.createElement("div", {
-        "className": "media-video__embed"
-      }, i18n.t('entry.empty_video'));
-    }
-  }
-});
-
-module.exports = VideoEntryContent;
-
-
-
-},{}],83:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryFeed, EntryFeedMeta, EntryMixin, PropTypes;
-
-EntryFeedMeta = require('./feed/meta');
-
-EntryComments = require('./comments/comments');
-
-EntryContent = require('./content/content');
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-ComponentMixin = require('../../mixins/component');
-
-EntryMixin = require('./mixins/entry');
-
-PropTypes = React.PropTypes;
-
-EntryFeed = React.createClass({
-  displayName: 'EntryFeed',
   mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
+
   propTypes: {
-    entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number,
-    commentFormVisible: PropTypes.bool
+    entry: React.PropTypes.object.isRequired,
+    loadPerTime: React.PropTypes.number,
+    commentFormVisible: React.PropTypes.bool
   },
-  getDefaultProps: function() {
+
+  getDefaultProps: function getDefaultProps() {
     return {
       commentFormVisible: false
     };
   },
-  getInitialState: function() {
+
+  getInitialState: function getInitialState() {
     return {
       commentFormVisible: this.props.commentFormVisible
     };
   },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getEntryClasses()
-    }, React.createElement(EntryContent, {
-      "entry": this.props.entry
-    }), React.createElement(EntryFeedMeta, {
-      "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount,
-      "onMetaCommentsClick": this.toggleCommentForm
-    }), React.createElement(EntryComments, {
-      "user": this.state.user,
-      "entry": this.props.entry,
-      "comments": this.state.comments,
-      "commentsCount": this.state.commentsCount,
-      "loading": this.isLoadingState(),
-      "loadPerTime": this.props.loadPerTime,
-      "formVisible": this.state.commentFormVisible,
-      "onCommentsLoadMore": this.loadMoreComments,
-      "onCommentCreate": this.createComment,
-      "onCommentEdit": this.editComment,
-      "onCommentDelete": this.deleteComment,
-      "onCommentReport": this.reportComment
-    }));
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: this.getEntryClasses() },
+      React.createElement(EntryFeedMeta, { author: this.props.entry.author }),
+      React.createElement(EntryContent, { entry: this.props.entry }),
+      React.createElement(EntryMeta, {
+        entry: this.props.entry,
+        commentsCount: this.state.commentsCount,
+        onMetaCommentsClick: this.toggleCommentForm }),
+      React.createElement(EntryComments, {
+        user: this.state.user,
+        entry: this.props.entry,
+        comments: this.state.comments,
+        commentsCount: this.state.commentsCount,
+        loading: this.isLoadingState(),
+        loadPerTime: this.props.loadPerTime,
+        formVisible: this.state.commentFormVisible,
+        onCommentsLoadMore: this.loadMoreComments,
+        onCommentCreate: this.createComment,
+        onCommentEdit: this.editComment,
+        onCommentDelete: this.deleteComment,
+        onCommentReport: this.reportComment })
+    );
   },
-  toggleCommentForm: function() {
-    return this.setState({
-      commentFormVisible: !this.state.commentFormVisible
-    });
+
+  toggleCommentForm: function toggleCommentForm() {
+    this.setState({ commentFormVisible: !this.state.commentFormVisible });
   },
-  getStateFromStore: function() {
+
+  getStateFromStore: function getStateFromStore() {
     return {
       user: CurrentUserStore.getUser()
     };
@@ -7209,129 +6043,319 @@ EntryFeed = React.createClass({
 
 module.exports = EntryFeed;
 
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./Feed/Meta":56,"./Meta/Meta":57,"./comments/comments":89,"./content/content":91,"./mixins/entry":100}],56:[function(require,module,exports){
+"use strict";
 
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./comments/comments":72,"./content/content":74,"./feed/meta":84,"./mixins/entry":98}],84:[function(require,module,exports){
-var EntryFeedMeta, EntryMetaActions, EntryMetaAuthor, EntryMetaComments, EntryMetaDate, EntryMetaVoting, PropTypes;
+var EntryMetaAuthor = _interopRequire(require("../Meta/MetaAuthor"));
 
-EntryMetaVoting = require('../meta/voting');
+var EntryFeedMeta = React.createClass({
+  displayName: "EntryFeedMeta",
 
-EntryMetaActions = require('../meta/actions');
-
-EntryMetaComments = require('../meta/comments');
-
-EntryMetaDate = require('../meta/date');
-
-EntryMetaAuthor = require('../meta/author');
-
-PropTypes = React.PropTypes;
-
-EntryFeedMeta = React.createClass({
-  displayName: 'EntryFeedMeta',
   propTypes: {
-    entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    onMetaCommentsClick: PropTypes.func.isRequired
+    author: React.PropTypes.object.isRequired
   },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__meta"
-    }, React.createElement(EntryMetaActions, {
-      "entry": this.props.entry
-    }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount,
-      "onClick": this.props.onMetaCommentsClick
-    }), React.createElement(EntryMetaDate, {
-      "date": this.props.entry.created_at,
-      "entryUrl": this.props.entry.entry_url
-    }), React.createElement(EntryMetaAuthor, {
-      "author": this.props.entry.author
-    }));
-  },
-  renderVoting: function() {
-    if (this.props.entry.is_voteable) {
-      return React.createElement(EntryMetaVoting, {
-        "rating": this.props.entry.rating,
-        "entryId": this.props.entry.id
-      });
-    }
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: "post__meta" },
+      React.createElement(EntryMetaAuthor, { author: this.props.author })
+    );
   }
 });
 
 module.exports = EntryFeedMeta;
 
+},{"../Meta/MetaAuthor":59}],57:[function(require,module,exports){
+"use strict";
 
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-},{"../meta/actions":85,"../meta/author":94,"../meta/comments":95,"../meta/date":96,"../meta/voting":97}],85:[function(require,module,exports){
-var CLOSE_STATE, ClickOutsideMixin, EntryMetaActions, EntryMetaActions_Button, EntryMetaActions_DropdownMenu, OPEN_STATE, PropTypes, cx;
+var EntryMetaVoting = _interopRequire(require("./MetaVoting"));
 
-cx = require('react/lib/cx');
+var EntryMetaActions = _interopRequire(require("./MetaActions"));
 
-ClickOutsideMixin = require('../../../mixins/clickOutside');
+var EntryMetaComments = _interopRequire(require("./MetaComments"));
 
-EntryMetaActions_Button = require('./actions/buttons/button');
+var EntryMetaDate = _interopRequire(require("./MetaDate"));
 
-EntryMetaActions_DropdownMenu = require('./actions/dropdownMenu');
+var EntryMeta = React.createClass({
+  displayName: "EntryMeta",
 
-PropTypes = React.PropTypes;
-
-OPEN_STATE = 'open';
-
-CLOSE_STATE = 'close';
-
-EntryMetaActions = React.createClass({
-  displayName: 'EntryMetaActions',
-  mixins: [ClickOutsideMixin],
   propTypes: {
-    entry: PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    commentsCount: React.PropTypes.number.isRequired,
+    onMetaCommentsClick: React.PropTypes.func.isRequired
   },
-  getInitialState: function() {
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: "post__meta" },
+      React.createElement(EntryMetaActions, { entry: this.props.entry }),
+      this.renderVoting(),
+      React.createElement(EntryMetaComments, {
+        commentsCount: this.props.commentsCount,
+        onClick: this.props.onMetaCommentsClick }),
+      React.createElement(EntryMetaDate, {
+        date: this.props.entry.created_at,
+        entryUrl: this.props.entry.entry_url })
+    );
+  },
+
+  renderVoting: function renderVoting() {
+    if (this.props.entry.is_voteable) {
+      return React.createElement(EntryMetaVoting, {
+        rating: this.props.entry.rating,
+        entryId: this.props.entry.id });
+    }
+  }
+});
+
+module.exports = EntryMeta;
+
+},{"./MetaActions":58,"./MetaComments":60,"./MetaDate":61,"./MetaVoting":62}],58:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var classSet = _interopRequire(require("react/lib/cx"));
+
+var ClickOutsideMixin = _interopRequire(require("../../../mixins/clickOutside"));
+
+var EntryMetaActions_Button = _interopRequire(require("./actions/buttons/button"));
+
+var EntryMetaActions_DropdownMenu = _interopRequire(require("./actions/dropdownMenu"));
+
+var OPEN_STATE = "open",
+    CLOSE_STATE = "close";
+
+var EntryMetaActions = React.createClass({
+  displayName: "EntryMetaActions",
+
+  mixins: [ClickOutsideMixin],
+
+  propTypes: {
+    entry: React.PropTypes.object.isRequired
+  },
+
+  getInitialState: function getInitialState() {
     return {
       currentState: CLOSE_STATE
     };
   },
-  render: function() {
-    var actionsClasses;
-    actionsClasses = cx({
-      'meta-actions': true,
-      '__open': this.isOpenState()
+
+  render: function render() {
+    var actionsClasses = classSet({
+      "meta-actions": true,
+      __open: this.isOpenState()
     });
-    return React.createElement("div", {
-      "className": actionsClasses
-    }, React.createElement(EntryMetaActions_Button, {
-      "onClick": this.toggleOpenState
-    }), React.createElement(EntryMetaActions_DropdownMenu, {
-      "entry": this.props.entry,
-      "visible": this.isOpenState()
-    }));
+
+    return React.createElement(
+      "div",
+      { className: actionsClasses },
+      React.createElement(EntryMetaActions_Button, { onClick: this.toggleOpenState }),
+      React.createElement(EntryMetaActions_DropdownMenu, { entry: this.props.entry, visible: this.isOpenState() })
+    );
   },
-  isOpenState: function() {
-    return this.state.currentState === OPEN_STATE;
+
+  isOpenState: function isOpenState() {
+    return this.state.currentState == OPEN_STATE;
   },
-  activateCloseState: function() {
-    return this.setState({
-      currentState: CLOSE_STATE
-    });
+
+  activateCloseState: function activateCloseState() {
+    this.setState({ currentState: CLOSE_STATE });
   },
-  activateOpenState: function() {
-    return this.setState({
-      currentState: OPEN_STATE
-    });
+
+  activateOpenState: function activateOpenState() {
+    this.setState({ currentState: OPEN_STATE });
   },
-  toggleOpenState: function() {
-    if (this.isOpenState()) {
-      return this.activateCloseState();
-    } else {
-      return this.activateOpenState();
-    }
+
+  toggleOpenState: function toggleOpenState() {
+    this.isOpenState() ? this.activateCloseState() : this.activateOpenState();
   }
 });
 
 module.exports = EntryMetaActions;
 
+},{"../../../mixins/clickOutside":212,"./actions/buttons/button":63,"./actions/dropdownMenu":64,"react/lib/cx":358}],59:[function(require,module,exports){
+"use strict";
 
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-},{"../../../mixins/clickOutside":212,"./actions/buttons/button":86,"./actions/dropdownMenu":87,"react/lib/cx":358}],86:[function(require,module,exports){
+var UserAvatar = _interopRequire(require("../../common/avatar/user"));
+
+var EntryMetaAuthor = React.createClass({
+  displayName: "EntryMetaAuthor",
+
+  propTypes: {
+    author: React.PropTypes.object.isRequired
+  },
+
+  render: function render() {
+    return React.createElement(
+      "a",
+      { href: this.props.author.tlog_url, className: "meta-author" },
+      React.createElement(
+        "span",
+        { className: "meta-author__avatar" },
+        React.createElement(UserAvatar, { user: this.props.author, size: 28 })
+      ),
+      React.createElement(
+        "span",
+        { className: "meta-author__name" },
+        "@",
+        this.props.author.slug
+      )
+    );
+  }
+});
+
+module.exports = EntryMetaAuthor;
+
+},{"../../common/avatar/user":51}],60:[function(require,module,exports){
+"use strict";
+
+var EntryMetaComments = React.createClass({
+  displayName: "EntryMetaComments",
+
+  propTypes: {
+    commentsCount: React.PropTypes.number.isRequired,
+    onClick: React.PropTypes.func.isRequired
+  },
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: "meta-comments", onClick: this.handleClick },
+      this.props.commentsCount
+    );
+  },
+
+  handleClick: function handleClick() {
+    this.props.onClick();
+  }
+});
+
+module.exports = EntryMetaComments;
+
+},{}],61:[function(require,module,exports){
+"use strict";
+
+var EntryMetaDate = React.createClass({
+  displayName: "EntryMetaDate",
+
+  propTypes: {
+    date: React.PropTypes.string.isRequired,
+    entryUrl: React.PropTypes.string.isRequired
+  },
+
+  render: function render() {
+    return React.createElement(
+      "a",
+      { href: this.props.entryUrl, className: "meta-date" },
+      this.getFormattedDate()
+    );
+  },
+
+  getFormattedDate: function getFormattedDate() {
+    var now = moment(),
+        entryDate = moment(this.props.date),
+        date = undefined;
+
+    if (now.diff(entryDate, "days") < 1) {
+      date = entryDate.calendar();
+    } else {
+      if (now.year() != entryDate.year()) {
+        date = entryDate.format("D MMMM YYYY");
+      } else {
+        date = entryDate.format("D MMMM");
+      }
+    }
+
+    return date;
+  }
+});
+
+module.exports = EntryMetaDate;
+
+},{}],62:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var classSet = _interopRequire(require("react/lib/cx"));
+
+var EntryViewActions = _interopRequire(require("../../../actions/view/entry"));
+
+var ComponentMixin = _interopRequire(require("../../../mixins/component"));
+
+var EntryMetaVoting = React.createClass({
+  displayName: "EntryMetaVoting",
+
+  mixins: [ComponentMixin],
+
+  propTypes: {
+    rating: React.PropTypes.object.isRequired,
+    entryId: React.PropTypes.number.isRequired
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      canVote: this.props.rating.is_voteable,
+      voted: this.props.rating.is_voted,
+      votes: this.props.rating.votes
+    };
+  },
+
+  render: function render() {
+    var votingClasses = classSet({
+      "meta-voting": true,
+      voted: this.isVoted(),
+      votable: this.isVoteable(),
+      unvotable: !this.isVoteable()
+    });
+
+    return React.createElement(
+      "div",
+      { className: votingClasses, onClick: this.handleClick },
+      this.state.votes
+    );
+  },
+
+  isVoted: function isVoted() {
+    return this.state.voted;
+  },
+
+  isVoteable: function isVoteable() {
+    return this.state.canVote;
+  },
+
+  vote: function vote() {
+    var _this = this;
+
+    EntryViewActions.vote(this.props.entryId).then(function (rating) {
+      return _this.safeUpdateState({
+        canVote: rating.is_voteable,
+        voted: rating.is_voted,
+        votes: rating.votes
+      });
+    });
+  },
+
+  handleClick: function handleClick() {
+    if (this.isVoted() || !this.isVoteable()) {
+      return;
+    }
+    this.vote();
+  }
+});
+
+module.exports = EntryMetaVoting;
+
+},{"../../../actions/view/entry":11,"../../../mixins/component":213,"react/lib/cx":358}],63:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7355,7 +6379,7 @@ module.exports = EntryMetaActions_Button;
 
 
 
-},{}],87:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
 
 DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
@@ -7434,7 +6458,7 @@ module.exports = EntryMetaActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":88,"./dropdownMenu/items/edit":89,"./dropdownMenu/items/favorite":90,"./dropdownMenu/items/link":91,"./dropdownMenu/items/report":92,"./dropdownMenu/items/watch":93}],88:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":65,"./dropdownMenu/items/edit":66,"./dropdownMenu/items/favorite":67,"./dropdownMenu/items/link":68,"./dropdownMenu/items/report":69,"./dropdownMenu/items/watch":70}],65:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -7470,7 +6494,7 @@ module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],89:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11}],66:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7496,7 +6520,7 @@ module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -7573,7 +6597,7 @@ module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
 
-},{"../../../../../../actions/view/entry":11,"react/lib/cx":358}],91:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11,"react/lib/cx":358}],68:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7599,7 +6623,7 @@ module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
 
-},{}],92:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -7635,7 +6659,7 @@ module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],93:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11}],70:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -7704,172 +6728,1261 @@ module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],94:[function(require,module,exports){
-var EntryMetaAuthor, PropTypes, UserAvatar;
+},{"../../../../../../actions/view/entry":11}],71:[function(require,module,exports){
+"use strict";
 
-UserAvatar = require('../../common/avatar/user');
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-PropTypes = React.PropTypes;
+var EntryMeta = _interopRequire(require("./Meta/Meta"));
 
-EntryMetaAuthor = React.createClass({
-  displayName: 'EntryMetaAuthor',
+var EntryComments = _interopRequire(require("./comments/comments"));
+
+var EntryContent = _interopRequire(require("./content/content"));
+
+var CurrentUserStore = _interopRequire(require("../../stores/currentUser"));
+
+var ConnectStoreMixin = _interopRequire(require("../../../../shared/react/mixins/connectStore"));
+
+var ComponentMixin = _interopRequire(require("../../mixins/component"));
+
+var EntryMixin = _interopRequire(require("./mixins/entry"));
+
+var EntryTlog = React.createClass({
+  displayName: "EntryTlog",
+
+  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
+
   propTypes: {
-    author: PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    loadPerTime: React.PropTypes.number,
+    commentFormVisible: React.PropTypes.bool
   },
-  render: function() {
-    return React.createElement("a", {
-      "className": "meta-author",
-      "href": this.props.author.tlog_url
-    }, React.createElement("span", {
-      "className": "meta-author__avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.author,
-      "size": 28.
-    })), React.createElement("span", {
-      "className": "meta-author__name"
-    }, this.getUserSlug()));
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      commentFormVisible: false
+    };
   },
-  getUserSlug: function() {
-    return "@" + this.props.author.slug;
+
+  getInitialState: function getInitialState() {
+    return {
+      commentFormVisible: this.props.commentFormVisible
+    };
+  },
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: this.getEntryClasses() },
+      React.createElement(EntryContent, { entry: this.props.entry }),
+      React.createElement(EntryMeta, {
+        entry: this.props.entry,
+        commentsCount: this.state.commentsCount,
+        onMetaCommentsClick: this.toggleCommentForm }),
+      React.createElement(EntryComments, {
+        user: this.state.user,
+        entry: this.props.entry,
+        comments: this.state.comments,
+        commentsCount: this.state.commentsCount,
+        loading: this.isLoadingState(),
+        loadPerTime: this.props.loadPerTime,
+        formVisible: this.state.commentFormVisible,
+        onCommentsLoadMore: this.loadMoreComments,
+        onCommentCreate: this.createComment,
+        onCommentEdit: this.editComment,
+        onCommentDelete: this.deleteComment,
+        onCommentReport: this.reportComment })
+    );
+  },
+
+  toggleCommentForm: function toggleCommentForm() {
+    this.setState({ commentFormVisible: !this.state.commentFormVisible });
+  },
+
+  getStateFromStore: function getStateFromStore() {
+    return {
+      user: CurrentUserStore.getUser()
+    };
   }
 });
 
-module.exports = EntryMetaAuthor;
+module.exports = EntryTlog;
 
-
-
-},{"../../common/avatar/user":51}],95:[function(require,module,exports){
-var EntryMetaComments, PropTypes;
+},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./Meta/Meta":57,"./comments/comments":89,"./content/content":91,"./mixins/entry":100}],72:[function(require,module,exports){
+var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
 
-EntryMetaComments = React.createClass({
-  displayName: 'EntryMetaComments',
+CommentsLoadMoreButton = React.createClass({
+  displayName: 'CommentsLoadMoreButton',
   propTypes: {
-    commentsCount: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired
   },
   render: function() {
-    return React.createElement("div", {
-      "className": "meta-comments",
-      "onClick": this.handleClick
-    }, this.props.commentsCount);
-  },
-  handleClick: function() {
-    return this.props.onClick();
+    return React.createElement("span", {
+      "className": "comments__more-link",
+      "onClick": this.props.onClick
+    }, this.props.title);
   }
 });
 
-module.exports = EntryMetaComments;
+module.exports = CommentsLoadMoreButton;
+
+
+
+},{}],73:[function(require,module,exports){
+var CommentForm, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentForm = React.createClass({
+  displayName: 'CommentForm',
+  propTypes: {
+    text: PropTypes.string,
+    buttonTitle: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
+    onSubmit: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
+  render: function() {
+    return React.createElement("form", {
+      "className": "comment-form"
+    }, this.renderCancelButton(), React.createElement("button", {
+      "className": "comment-form__submit",
+      "onClick": this.handleSubmit
+    }, this.props.buttonTitle), React.createElement("div", {
+      "className": "comment-form__field"
+    }, React.createElement("textarea", {
+      "ref": "textField",
+      "autoFocus": true,
+      "defaultValue": this.props.text,
+      "placeholder": this.props.placeholder,
+      "disabled": this.props.disabled,
+      "className": "comment-form__field-textarea",
+      "onKeyDown": this.handleTextareaKeydown
+    })));
+  },
+  renderCancelButton: function() {
+    if (this.props.onCancel != null) {
+      return React.createElement("button", {
+        "className": "comment-form__cancel",
+        "onClick": this.handleCancel
+      }, i18n.t('buttons.comment_edit_cancel'));
+    }
+  },
+  clearForm: function() {
+    return this.refs.textField.getDOMNode().value = '';
+  },
+  handleSubmit: function(e) {
+    var value;
+    e.preventDefault();
+    value = this.refs.textField.getDOMNode().value.trim();
+    if (!this.props.disabled) {
+      return this.props.onSubmit(value);
+    }
+  },
+  handleCancel: function(e) {
+    e.preventDefault();
+    return this.props.onCancel();
+  }
+});
+
+module.exports = CommentForm;
+
+
+
+},{}],74:[function(require,module,exports){
+var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
+
+CommentForm = require('../commentForm');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+CommentCreateForm = React.createClass({
+  displayName: 'CommentCreateForm',
+  propTypes: {
+    entryId: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onCommentCreate: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(CommentForm, {
+      "ref": "commentForm",
+      "buttonTitle": i18n.t('buttons.comment_create'),
+      "placeholder": i18n.t('placeholders.comment_create'),
+      "disabled": this.props.loading,
+      "onSubmit": this.createComment
+    });
+  },
+  isValid: function(text) {
+    return !!text.match(/./);
+  },
+  clearForm: function() {
+    return this.refs.commentForm.clearForm();
+  },
+  createComment: function(text) {
+    if (!this.isValid(text)) {
+      return;
+    }
+    this.props.onCommentCreate(text);
+    return this.clearForm();
+  }
+});
+
+module.exports = CommentCreateForm;
+
+
+
+},{"../../../../mixins/component":213,"../commentForm":73}],75:[function(require,module,exports){
+var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
+
+CommentForm = require('../commentForm');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+CommentEditForm = React.createClass({
+  displayName: 'CommentEditForm',
+  propTypes: {
+    entryId: PropTypes.number.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditFinish: PropTypes.func.isRequired,
+    onEditCancel: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement(CommentForm, {
+      "ref": "commentForm",
+      "text": this.props.comment.comment_html,
+      "buttonTitle": i18n.t('buttons.comment_edit'),
+      "placeholder": i18n.t('placeholders.comment_edit'),
+      "onSubmit": this.editComment,
+      "onCancel": this.props.onEditCancel
+    });
+  },
+  isValid: function(text) {
+    return !!text.match(/./) && this.props.comment.comment_html !== text;
+  },
+  clearForm: function() {
+    return this.refs.commentForm.clearForm();
+  },
+  editComment: function(text) {
+    if (!this.isValid(text)) {
+      return this.props.onEditCancel();
+    }
+    this.props.onEditFinish(text);
+    return this.clearForm();
+  }
+});
+
+module.exports = CommentEditForm;
+
+
+
+},{"../../../../mixins/component":213,"../commentForm":73}],76:[function(require,module,exports){
+var CommentList, CommentManager, PropTypes;
+
+CommentManager = require('./commentList/commentManager');
+
+PropTypes = React.PropTypes;
+
+CommentList = React.createClass({
+  displayName: 'CommentList',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comments: PropTypes.array.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    var commentList;
+    commentList = this.props.comments.map((function(_this) {
+      return function(comment) {
+        return React.createElement(CommentManager, {
+          "entry": _this.props.entry,
+          "comment": comment,
+          "onCommentEdit": _this.props.onCommentEdit,
+          "onCommentDelete": _this.props.onCommentDelete,
+          "onCommentReport": _this.props.onCommentReport,
+          "key": comment.id
+        });
+      };
+    })(this));
+    return React.createElement("div", {
+      "className": "comments__list"
+    }, commentList);
+  }
+});
+
+module.exports = CommentList;
+
+
+
+},{"./commentList/commentManager":88}],77:[function(require,module,exports){
+var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
+
+CommentUser = require('./comment/user');
+
+CommentText = require('./comment/text');
+
+CommentDate = require('./comment/date');
+
+CommentActions = require('./comment/actions');
+
+PropTypes = React.PropTypes;
+
+Comment = React.createClass({
+  displayName: 'Comment',
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "comment"
+    }, React.createElement("div", {
+      "className": "comment__content"
+    }, React.createElement(CommentUser, {
+      "user": this.props.comment.user
+    }), React.createElement(CommentText, {
+      "text": this.props.comment.comment_html
+    }), React.createElement(CommentDate, {
+      "date": this.props.comment.created_at,
+      "commentId": this.props.comment.id,
+      "entryUrl": this.props.entry.entry_url
+    }), React.createElement(CommentActions, React.__spread({}, this.props))));
+  }
+});
+
+module.exports = Comment;
+
+
+
+},{"./comment/actions":78,"./comment/date":85,"./comment/text":86,"./comment/user":87}],78:[function(require,module,exports){
+var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
+
+cx = require('react/lib/cx');
+
+ClickOutsideMixin = require('../../../../../mixins/clickOutside');
+
+CommentActionsButton = require('./actions/buttons/button');
+
+CommentActionsDropdownMenu = require('./actions/dropdownMenu');
+
+UserAvatar = require('../../../../common/avatar/user');
+
+PropTypes = React.PropTypes;
+
+OPEN_STATE = 'open';
+
+CLOSE_STATE = 'close';
+
+CommentActions = React.createClass({
+  displayName: 'CommentActions',
+  mixins: [ClickOutsideMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: CLOSE_STATE
+    };
+  },
+  render: function() {
+    var actionsClasses;
+    actionsClasses = cx({
+      'comment__actions': true,
+      '__open': this.isOpenState()
+    });
+    return React.createElement("div", {
+      "className": actionsClasses
+    }, React.createElement(CommentActionsButton, {
+      "onClick": this.toggleOpenState
+    }), React.createElement(CommentActionsDropdownMenu, React.__spread({}, this.props, {
+      "visible": this.isOpenState()
+    })));
+  },
+  isOpenState: function() {
+    return this.state.currentState === OPEN_STATE;
+  },
+  activateCloseState: function() {
+    return this.setState({
+      currentState: CLOSE_STATE
+    });
+  },
+  activateOpenState: function() {
+    return this.setState({
+      currentState: OPEN_STATE
+    });
+  },
+  toggleOpenState: function() {
+    if (this.isOpenState()) {
+      return this.activateCloseState();
+    } else {
+      return this.activateOpenState();
+    }
+  }
+});
+
+module.exports = CommentActions;
+
+
+
+},{"../../../../../mixins/clickOutside":212,"../../../../common/avatar/user":51,"./actions/buttons/button":79,"./actions/dropdownMenu":80,"react/lib/cx":358}],79:[function(require,module,exports){
+var CommentActionsButton, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsButton = React.createClass({
+  displayName: 'CommentActionsButton',
+  propTypes: {
+    onClick: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("button", {
+      "className": "comment__actions-button",
+      "onClick": this.props.onClick
+    }, React.createElement("i", {
+      "className": "icon icon--dots"
+    }));
+  }
+});
+
+module.exports = CommentActionsButton;
+
+
+
+},{}],80:[function(require,module,exports){
+var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
+
+DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
+
+CommentActionsDropdownMenuLinkItem = require('./dropdownMenu/items/link');
+
+CommentActionsDropdownMenuEditItem = require('./dropdownMenu/items/edit');
+
+CommentActionsDropdownMenuDeleteItem = require('./dropdownMenu/items/delete');
+
+CommentActionsDropdownMenuReportItem = require('./dropdownMenu/items/report');
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenu = React.createClass({
+  displayName: 'CommentActionsDropdownMenu',
+  mixins: [DropdownMenuMixin],
+  propTypes: {
+    entry: PropTypes.object.isRequired,
+    comment: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": this.getPopupClasses('comment__dropdown-popup')
+    }, this.renderPopupList());
+  },
+  renderPopupList: function() {
+    var deleteItem, editItem, linkItem, reportItem;
+    linkItem = React.createElement(CommentActionsDropdownMenuLinkItem, {
+      "commentId": this.props.comment.id,
+      "entryUrl": this.props.entry.entry_url,
+      "key": "link"
+    });
+    if (this.props.comment.can_report) {
+      reportItem = React.createElement(CommentActionsDropdownMenuReportItem, {
+        "commentId": this.props.comment.id,
+        "onCommentReport": this.props.onCommentReport,
+        "key": "report"
+      });
+    }
+    if (this.props.comment.can_edit) {
+      editItem = React.createElement(CommentActionsDropdownMenuEditItem, {
+        "onEditStart": this.props.onEditStart,
+        "key": "edit"
+      });
+    }
+    if (this.props.comment.can_delete) {
+      deleteItem = React.createElement(CommentActionsDropdownMenuDeleteItem, {
+        "commentId": this.props.comment.id,
+        "onCommentDelete": this.props.onCommentDelete,
+        "key": "delete"
+      });
+    }
+    return React.createElement("ul", {
+      "className": "comment__dropdown-popup-list"
+    }, [editItem, linkItem, reportItem, deleteItem]);
+  }
+});
+
+module.exports = CommentActionsDropdownMenu;
+
+
+
+},{"../../../../../../mixins/dropdownMenu":214,"./dropdownMenu/items/delete":81,"./dropdownMenu/items/edit":82,"./dropdownMenu/items/link":83,"./dropdownMenu/items/report":84}],81:[function(require,module,exports){
+var CommentActionsDropdownMenuDeleteItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuDeleteItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuDeleteItem',
+  propTypes: {
+    commentId: PropTypes.number.isRequired,
+    onCommentDelete: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.handleClick
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--basket"
+    }), React.createElement("span", null, i18n.t('comment.delete_item'))));
+  },
+  "delete": function() {
+    return this.props.onCommentDelete(this.props.commentId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('comment.delete_confirm'))) {
+      return this["delete"]();
+    }
+  }
+});
+
+module.exports = CommentActionsDropdownMenuDeleteItem;
+
+
+
+},{}],82:[function(require,module,exports){
+var CommentActionsDropdownMenuEditItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuEditItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuEditItem',
+  propTypes: {
+    onEditStart: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.props.onEditStart
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--pencil"
+    }), React.createElement("span", null, i18n.t('comment.edit_item'))));
+  }
+});
+
+module.exports = CommentActionsDropdownMenuEditItem;
+
+
+
+},{}],83:[function(require,module,exports){
+var CommentActionsDropdownMenuLinkItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuLinkItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuLinkItem',
+  propTypes: {
+    entryUrl: PropTypes.string.isRequired,
+    commentId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item"
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link",
+      "href": this.getCommentUrl()
+    }, React.createElement("i", {
+      "className": "icon icon--hyperlink"
+    }), React.createElement("span", null, i18n.t('comment.link_item'))));
+  },
+  getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  }
+});
+
+module.exports = CommentActionsDropdownMenuLinkItem;
+
+
+
+},{}],84:[function(require,module,exports){
+var CommentActionsDropdownMenuReportItem, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentActionsDropdownMenuReportItem = React.createClass({
+  displayName: 'CommentActionsDropdownMenuReportItem',
+  propTypes: {
+    commentId: PropTypes.number.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("li", {
+      "className": "comment__dropdown-popup-item",
+      "onClick": this.handleClick
+    }, React.createElement("a", {
+      "className": "comment__dropdown-popup-link"
+    }, React.createElement("i", {
+      "className": "icon icon--exclamation-mark"
+    }), React.createElement("span", null, i18n.t('comment.report_item'))));
+  },
+  report: function() {
+    return this.props.onCommentReport(this.props.commentId);
+  },
+  handleClick: function() {
+    if (confirm(i18n.t('comment.report_confirm'))) {
+      return this.report();
+    }
+  }
+});
+
+module.exports = CommentActionsDropdownMenuReportItem;
+
+
+
+},{}],85:[function(require,module,exports){
+var CommentDate, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentDate = React.createClass({
+  displayName: 'CommentDate',
+  propTypes: {
+    date: PropTypes.string.isRequired,
+    entryUrl: PropTypes.string.isRequired,
+    commentId: PropTypes.number.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this.getCommentUrl(),
+      "className": "comment__date"
+    }, this.getFormattedDate());
+  },
+  getCommentUrl: function() {
+    return this.props.entryUrl + '#comment-' + this.props.commentId;
+  },
+  getFormattedDate: function() {
+    var createdAt, now;
+    now = moment();
+    createdAt = moment(this.props.date);
+    switch (false) {
+      case !(now.diff(createdAt, 'seconds') < 5):
+        return createdAt.subtract(5, 's').fromNow();
+      case !(now.diff(createdAt, 'minutes') < 180):
+        return createdAt.fromNow();
+      case !(now.diff(createdAt, 'days') < 1):
+        return createdAt.calendar();
+      default:
+        if (now.year() !== createdAt.year()) {
+          return createdAt.format('D MMMM YYYY');
+        } else {
+          return createdAt.format('D MMMM');
+        }
+    }
+  }
+});
+
+module.exports = CommentDate;
+
+
+
+},{}],86:[function(require,module,exports){
+var CommentText, PropTypes;
+
+PropTypes = React.PropTypes;
+
+CommentText = React.createClass({
+  displayName: 'CommentText',
+  propTypes: {
+    text: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("span", {
+      "className": "comment__text",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.text
+      }
+    });
+  }
+});
+
+module.exports = CommentText;
+
+
+
+},{}],87:[function(require,module,exports){
+var CommentUser, PropTypes, UserAvatar;
+
+UserAvatar = require('../../../../common/avatar/user');
+
+PropTypes = React.PropTypes;
+
+CommentUser = React.createClass({
+  displayName: 'CommentUser',
+  propTypes: {
+    user: PropTypes.object.isRequired
+  },
+  render: function() {
+    return React.createElement("a", {
+      "href": this.props.user.tlog_url,
+      "className": "comment__user",
+      "target": "_blank",
+      "title": this.props.user.slug
+    }, React.createElement("span", {
+      "className": "comment__avatar"
+    }, React.createElement(UserAvatar, {
+      "user": this.props.user,
+      "size": 42.
+    })), React.createElement("span", {
+      "className": "comment__username"
+    }, this.props.user.slug));
+  }
+});
+
+module.exports = CommentUser;
+
+
+
+},{"../../../../common/avatar/user":51}],88:[function(require,module,exports){
+var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
+
+Comment = require('./comment');
+
+CommentEditForm = require('../commentForm/edit');
+
+ComponentMixin = require('../../../../mixins/component');
+
+PropTypes = React.PropTypes;
+
+SHOW_STATE = 'show';
+
+EDIT_STATE = 'edit';
+
+CommentManager = React.createClass({
+  displayName: 'CommentManager',
+  mixins: [ComponentMixin],
+  propTypes: {
+    comment: PropTypes.object.isRequired,
+    entry: PropTypes.object.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      currentState: SHOW_STATE
+    };
+  },
+  render: function() {
+    switch (this.state.currentState) {
+      case SHOW_STATE:
+        return React.createElement(Comment, React.__spread({}, this.props, {
+          "onEditStart": this.activateEditState
+        }));
+      case EDIT_STATE:
+        return React.createElement(CommentEditForm, {
+          "comment": this.props.comment,
+          "entryId": this.props.entry.id,
+          "onEditFinish": this.handleEditFinish,
+          "onEditCancel": this.activateShowState
+        });
+      default:
+        return typeof console.warn === "function" ? console.warn('Unknown currentState of CommentManager component', this.state.currentState) : void 0;
+    }
+  },
+  activateEditState: function() {
+    return this.safeUpdateState({
+      currentState: EDIT_STATE
+    });
+  },
+  activateShowState: function() {
+    return this.safeUpdateState({
+      currentState: SHOW_STATE
+    });
+  },
+  handleEditFinish: function(text) {
+    var commentId;
+    commentId = this.props.comment.id;
+    this.props.onCommentEdit(commentId, text);
+    return this.activateShowState();
+  }
+});
+
+module.exports = CommentManager;
+
+
+
+},{"../../../../mixins/component":213,"../commentForm/edit":75,"./comment":77}],89:[function(require,module,exports){
+var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
+
+CommentList = require('./commentList');
+
+CommentCreateForm = require('./commentForm/create');
+
+CommentsLoadMore = require('./commentsLoadMore');
+
+PropTypes = React.PropTypes;
+
+EntryComments = React.createClass({
+  displayName: 'EntryComments',
+  propTypes: {
+    user: PropTypes.object,
+    entry: PropTypes.object.isRequired,
+    comments: PropTypes.array.isRequired,
+    commentsCount: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    loadPerTime: PropTypes.number,
+    formVisible: PropTypes.bool.isRequired,
+    onCommentsLoadMore: PropTypes.func.isRequired,
+    onCommentCreate: PropTypes.func.isRequired,
+    onCommentEdit: PropTypes.func.isRequired,
+    onCommentDelete: PropTypes.func.isRequired,
+    onCommentReport: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__comments"
+    }, React.createElement("div", {
+      "className": "comments"
+    }, this.renderLoadMore(), this.renderCommentList(), this.renderCommentForm()));
+  },
+  renderLoadMore: function() {
+    if (this.props.commentsCount > this.props.comments.length) {
+      return React.createElement(CommentsLoadMore, {
+        "totalCount": this.props.commentsCount,
+        "loadedCount": this.props.comments.length,
+        "loading": this.props.loading,
+        "loadPerTime": this.props.loadPerTime,
+        "onCommentsLoadMore": this.props.onCommentsLoadMore
+      });
+    }
+  },
+  renderCommentList: function() {
+    if (this.props.comments.length) {
+      return React.createElement(CommentList, {
+        "comments": this.props.comments,
+        "entry": this.props.entry,
+        "onCommentEdit": this.props.onCommentEdit,
+        "onCommentDelete": this.props.onCommentDelete,
+        "onCommentReport": this.props.onCommentReport
+      });
+    }
+  },
+  renderCommentForm: function() {
+    if ((this.props.user != null) && this.props.formVisible) {
+      return React.createElement(CommentCreateForm, {
+        "entryId": this.props.entry.id,
+        "loading": this.props.loading,
+        "onCommentCreate": this.props.onCommentCreate
+      });
+    }
+  }
+});
+
+module.exports = EntryComments;
+
+
+
+},{"./commentForm/create":74,"./commentList":76,"./commentsLoadMore":90}],90:[function(require,module,exports){
+var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
+
+Spinner = require('../../common/spinner/spinner');
+
+CommentsLoadMoreButton = require('./buttons/loadMore');
+
+PropTypes = React.PropTypes;
+
+CommentsLoadMore = React.createClass({
+  displayName: 'CommentsLoadMore',
+  propTypes: {
+    totalCount: PropTypes.number.isRequired,
+    loadedCount: PropTypes.number,
+    loadPerTime: PropTypes.number,
+    loading: PropTypes.bool.isRequired,
+    onCommentsLoadMore: PropTypes.func.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "comments__more"
+    }, this.renderContent());
+  },
+  renderContent: function() {
+    if (this.props.loading) {
+      return React.createElement("div", {
+        "className": "comments__loader"
+      }, React.createElement(Spinner, {
+        "size": 14.
+      }));
+    } else {
+      return React.createElement(CommentsLoadMoreButton, {
+        "title": this.getTitle(),
+        "onClick": this.props.onCommentsLoadMore
+      });
+    }
+  },
+  getTitle: function() {
+    var possibleCount, remainingCount;
+    remainingCount = this.props.totalCount - this.props.loadedCount;
+    possibleCount = this.props.loadedCount + this.props.loadPerTime;
+    if (possibleCount < this.props.totalCount) {
+      return i18n.t('buttons.comments_load_more', {
+        count: this.props.loadPerTime
+      });
+    } else {
+      return i18n.t('buttons.comments_load_more_remaining', {
+        count: remainingCount
+      });
+    }
+  }
+});
+
+module.exports = CommentsLoadMore;
+
+
+
+},{"../../common/spinner/spinner":54,"./buttons/loadMore":72}],91:[function(require,module,exports){
+var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
+
+TextEntryContent = require('./text/text');
+
+ImageEntryContent = require('./image/image');
+
+VideoEntryContent = require('./video/video');
+
+QuoteEntryContent = require('./quote/quote');
+
+UnknownEntryContent = require('./unknown/unknown');
+
+PropTypes = React.PropTypes;
+
+TEXT_TYPE = 'text';
+
+IMAGE_TYPE = 'image';
+
+VIDEO_TYPE = 'video';
+
+QUOTE_TYPE = 'quote';
+
+EntryContent = React.createClass({
+  displayName: 'EntryContent',
+  propTypes: {
+    entry: PropTypes.object.isRequired
+  },
+  render: function() {
+    switch (this.props.entry.type) {
+      case TEXT_TYPE:
+        return React.createElement(TextEntryContent, {
+          "title": this.props.entry.title,
+          "text": this.props.entry.text
+        });
+      case IMAGE_TYPE:
+        return React.createElement(ImageEntryContent, {
+          "title": this.props.entry.title,
+          "imageUrl": this.props.entry.image_url,
+          "imageAttachments": this.props.entry.image_attachments
+        });
+      case VIDEO_TYPE:
+        return React.createElement(VideoEntryContent, {
+          "iframely": this.props.entry.iframely
+        });
+      case QUOTE_TYPE:
+        return React.createElement(QuoteEntryContent, {
+          "text": this.props.entry.text,
+          "source": this.props.entry.source
+        });
+      default:
+        return React.createElement(UnknownEntryContent, {
+          "title": this.props.entry.title
+        });
+    }
+  }
+});
+
+module.exports = EntryContent;
+
+
+
+},{"./image/image":93,"./quote/quote":94,"./text/text":96,"./unknown/unknown":98,"./video/video":99}],92:[function(require,module,exports){
+var CollageManager, ImageEntryAttachments, PropTypes;
+
+CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
+
+PropTypes = React.PropTypes;
+
+ImageEntryAttachments = React.createClass({
+  displayName: 'ImageEntryAttachments',
+  propTypes: {
+    imageAttachments: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement(CollageManager, {
+      "images": this.getImages()
+    });
+  },
+  getImages: function() {
+    return this.props.imageAttachments.map(function(imageAttachment) {
+      var image, newImage;
+      image = imageAttachment.image;
+      newImage = {
+        width: image.geometry.width,
+        height: image.geometry.height,
+        payload: {
+          id: imageAttachment.id,
+          url: image.url,
+          path: image.path,
+          title: image.title
+        }
+      };
+      return newImage;
+    });
+  }
+});
+
+module.exports = ImageEntryAttachments;
+
+
+
+},{"../../../../../../shared/react/components/common/collage/collageManager":241}],93:[function(require,module,exports){
+var ImageEntryAttachments, ImageEntryContent, PropTypes;
+
+ImageEntryAttachments = require('./attachments');
+
+PropTypes = React.PropTypes;
+
+ImageEntryContent = React.createClass({
+  displayName: 'ImageEntryContent',
+  propTypes: {
+    title: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string,
+    imageAttachments: PropTypes.array.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, this.renderEntryImage(), React.createElement("p", null, this.props.title));
+  },
+  renderEntryImage: function() {
+    var content;
+    content = (function() {
+      switch (false) {
+        case !this.props.imageAttachments:
+          return React.createElement(ImageEntryAttachments, {
+            "imageAttachments": this.props.imageAttachments
+          });
+        case !this.props.imageUrl:
+          return React.createElement("img", {
+            "src": this.props.imageUrl
+          });
+        default:
+          return i18n.t('entry.empty_image');
+      }
+    }).call(this);
+    return React.createElement("div", {
+      "className": "media-image"
+    }, content);
+  }
+});
+
+module.exports = ImageEntryContent;
+
+
+
+},{"./attachments":92}],94:[function(require,module,exports){
+var PropTypes, QuoteEntryContent;
+
+PropTypes = React.PropTypes;
+
+QuoteEntryContent = React.createClass({
+  displayName: 'QuoteEntryContent',
+  propTypes: {
+    text: PropTypes.string.isRequired,
+    source: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("blockquote", {
+      "className": "blockquote"
+    }, React.createElement("span", {
+      "className": "laquo"
+    }, "\u00ab"), React.createElement("span", null, this.props.text), React.createElement("span", {
+      "className": "raquo"
+    }, "\u00bb"), this.renderCaption()));
+  },
+  renderCaption: function() {
+    if (this.props.source) {
+      return React.createElement("div", {
+        "className": "blockquote__caption"
+      }, this.props.source);
+    }
+  }
+});
+
+module.exports = QuoteEntryContent;
+
+
+
+},{}],95:[function(require,module,exports){
+var PropTypes, TextEntryHeader;
+
+PropTypes = React.PropTypes;
+
+TextEntryHeader = React.createClass({
+  displayName: 'TextEntryHeader',
+  propTypes: {
+    title: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, this.props.title));
+  }
+});
+
+module.exports = TextEntryHeader;
 
 
 
 },{}],96:[function(require,module,exports){
-var EntryMetaDate, PropTypes;
+var PropTypes, TextEntryContent, TextEntryHeader;
+
+TextEntryHeader = require('./header');
 
 PropTypes = React.PropTypes;
 
-EntryMetaDate = React.createClass({
-  displayName: 'EntryMetaDate',
+TextEntryContent = React.createClass({
+  displayName: 'TextEntryContent',
   propTypes: {
-    date: PropTypes.string.isRequired,
-    entryUrl: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
   },
   render: function() {
-    return React.createElement("a", {
-      "href": this.props.entryUrl,
-      "className": "meta-date"
-    }, this.getFormattedDate());
-  },
-  getFormattedDate: function() {
-    var date, entryDate, now;
-    now = moment();
-    entryDate = moment(this.props.date);
-    if (now.diff(entryDate, 'days') < 1) {
-      date = entryDate.calendar();
-    } else {
-      if (now.year() !== entryDate.year()) {
-        date = entryDate.format('D MMMM YYYY');
-      } else {
-        date = entryDate.format('D MMMM');
+    return React.createElement("div", null, React.createElement(TextEntryHeader, {
+      "title": this.props.title
+    }), React.createElement("div", {
+      "className": "post__content",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.text
       }
-    }
-    return date;
+    }));
   }
 });
 
-module.exports = EntryMetaDate;
+module.exports = TextEntryContent;
 
 
 
-},{}],97:[function(require,module,exports){
-var ComponentMixin, EntryMetaVoting, EntryViewActions, PropTypes, cx;
-
-cx = require('react/lib/cx');
-
-EntryViewActions = require('../../../actions/view/entry');
-
-ComponentMixin = require('../../../mixins/component');
+},{"./header":95}],97:[function(require,module,exports){
+var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
 
-EntryMetaVoting = React.createClass({
-  displayName: 'EntryMetaVoting',
-  mixins: [ComponentMixin],
+UnknownEntryHeader = React.createClass({
+  displayName: 'UnknownEntryHeader',
   propTypes: {
-    rating: PropTypes.object.isRequired,
-    entryId: PropTypes.number.isRequired
-  },
-  getInitialState: function() {
-    return {
-      canVote: this.props.rating.is_voteable,
-      voted: this.props.rating.is_voted,
-      votes: this.props.rating.votes
-    };
+    title: PropTypes.string.isRequired
   },
   render: function() {
-    var votingClasses;
-    votingClasses = cx({
-      'meta-voting': true,
-      'voted': this.isVoted(),
-      'votable': this.isVoteable(),
-      'unvotable': !this.isVoteable()
-    });
     return React.createElement("div", {
-      "className": votingClasses,
-      "onClick": this.handleClick
-    }, this.state.votes);
-  },
-  isVoted: function() {
-    return this.state.voted;
-  },
-  isVoteable: function() {
-    return this.state.canVote;
-  },
-  vote: function() {
-    return EntryViewActions.vote(this.props.entryId).then((function(_this) {
-      return function(rating) {
-        return _this.safeUpdateState({
-          canVote: rating.is_voteable,
-          voted: rating.is_voted,
-          votes: rating.votes
-        });
-      };
-    })(this));
-  },
-  handleClick: function() {
-    if (this.isVoted() || !this.isVoteable()) {
-      return;
-    }
-    return this.vote();
+      "className": "post__header"
+    }, React.createElement("h1", {
+      "className": "post__title"
+    }, this.props.title));
   }
 });
 
-module.exports = EntryMetaVoting;
+module.exports = UnknownEntryHeader;
 
 
 
-},{"../../../actions/view/entry":11,"../../../mixins/component":213,"react/lib/cx":358}],98:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
+var PropTypes, UnknownEntryContent, UnknownEntryHeader;
+
+UnknownEntryHeader = require('./header');
+
+PropTypes = React.PropTypes;
+
+UnknownEntryContent = React.createClass({
+  displayName: 'UnknownEntryContent',
+  propTypes: {
+    title: PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement("div", null, React.createElement(UnknownEntryHeader, {
+      "title": this.props.title
+    }), React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("p", null, i18n.t('entry.unknown_type'))));
+  }
+});
+
+module.exports = UnknownEntryContent;
+
+
+
+},{"./header":97}],99:[function(require,module,exports){
+var PropTypes, VideoEntryContent;
+
+PropTypes = React.PropTypes;
+
+VideoEntryContent = React.createClass({
+  displayName: 'VideoEntryContent',
+  propTypes: {
+    iframely: PropTypes.object
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "post__content"
+    }, React.createElement("div", {
+      "className": "media-video"
+    }, this.renderEmbedHtml()));
+  },
+  renderEmbedHtml: function() {
+    var _ref;
+    if ((_ref = this.props.iframely) != null ? _ref.html : void 0) {
+      return React.createElement("div", {
+        "className": "media-video__embed",
+        "dangerouslySetInnerHTML": {
+          __html: this.props.iframely.html
+        }
+      });
+    } else {
+      return React.createElement("div", {
+        "className": "media-video__embed"
+      }, i18n.t('entry.empty_video'));
+    }
+  }
+});
+
+module.exports = VideoEntryContent;
+
+
+
+},{}],100:[function(require,module,exports){
 var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
 
 assign = require('react/lib/Object.assign');
@@ -8009,131 +8122,7 @@ module.exports = EntryMixin;
 
 
 
-},{"../../../actions/view/entry":11,"react/lib/Object.assign":279}],99:[function(require,module,exports){
-var ComponentMixin, ConnectStoreMixin, CurrentUserStore, EntryComments, EntryContent, EntryMixin, EntryTlog, EntryTlogMeta, PropTypes;
-
-EntryTlogMeta = require('./tlog/meta');
-
-EntryComments = require('./comments/comments');
-
-EntryContent = require('./content/content');
-
-CurrentUserStore = require('../../stores/currentUser');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-ComponentMixin = require('../../mixins/component');
-
-EntryMixin = require('./mixins/entry');
-
-PropTypes = React.PropTypes;
-
-EntryTlog = React.createClass({
-  displayName: 'EntryTlog',
-  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    loadPerTime: PropTypes.number,
-    commentFormVisible: PropTypes.bool
-  },
-  getDefaultProps: function() {
-    return {
-      commentFormVisible: false
-    };
-  },
-  getInitialState: function() {
-    return {
-      commentFormVisible: this.props.commentFormVisible
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": this.getEntryClasses()
-    }, React.createElement(EntryContent, {
-      "entry": this.props.entry
-    }), React.createElement(EntryTlogMeta, {
-      "entry": this.props.entry,
-      "commentsCount": this.state.commentsCount,
-      "onMetaCommentsClick": this.toggleCommentForm
-    }), React.createElement(EntryComments, {
-      "user": this.state.user,
-      "entry": this.props.entry,
-      "comments": this.state.comments,
-      "commentsCount": this.state.commentsCount,
-      "loading": this.isLoadingState(),
-      "loadPerTime": this.props.loadPerTime,
-      "formVisible": this.state.commentFormVisible,
-      "onCommentsLoadMore": this.loadMoreComments,
-      "onCommentCreate": this.createComment,
-      "onCommentEdit": this.editComment,
-      "onCommentDelete": this.deleteComment,
-      "onCommentReport": this.reportComment
-    }));
-  },
-  toggleCommentForm: function() {
-    return this.setState({
-      commentFormVisible: !this.state.commentFormVisible
-    });
-  },
-  getStateFromStore: function() {
-    return {
-      user: CurrentUserStore.getUser()
-    };
-  }
-});
-
-module.exports = EntryTlog;
-
-
-
-},{"../../../../shared/react/mixins/connectStore":245,"../../mixins/component":213,"../../stores/currentUser":230,"./comments/comments":72,"./content/content":74,"./mixins/entry":98,"./tlog/meta":100}],100:[function(require,module,exports){
-var EntryMetaActions, EntryMetaComments, EntryMetaDate, EntryMetaVoting, EntryTlogMeta, PropTypes;
-
-EntryMetaVoting = require('../meta/voting');
-
-EntryMetaActions = require('../meta/actions');
-
-EntryMetaComments = require('../meta/comments');
-
-EntryMetaDate = require('../meta/date');
-
-PropTypes = React.PropTypes;
-
-EntryTlogMeta = React.createClass({
-  displayName: 'EntryTlogMeta',
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    onMetaCommentsClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "post__meta"
-    }, React.createElement(EntryMetaActions, {
-      "entry": this.props.entry
-    }), this.renderVoting(), React.createElement(EntryMetaComments, {
-      "commentsCount": this.props.commentsCount,
-      "onClick": this.props.onMetaCommentsClick
-    }), React.createElement(EntryMetaDate, {
-      "date": this.props.entry.created_at,
-      "entryUrl": this.props.entry.entry_url
-    }));
-  },
-  renderVoting: function() {
-    if (this.props.entry.is_voteable) {
-      return React.createElement(EntryMetaVoting, {
-        "rating": this.props.entry.rating,
-        "entryId": this.props.entry.id
-      });
-    }
-  }
-});
-
-module.exports = EntryTlogMeta;
-
-
-
-},{"../meta/actions":85,"../meta/comments":95,"../meta/date":96,"../meta/voting":97}],101:[function(require,module,exports){
+},{"../../../actions/view/entry":11,"react/lib/Object.assign":279}],101:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8186,7 +8175,7 @@ FeedEmptyPageMessage = require('./emptyPageMessage');
 
 FeedLoadMore = require('./loadMore');
 
-EntryFeed = require('../entry/feed');
+EntryFeed = require('../entry/Feed');
 
 PropTypes = React.PropTypes;
 
@@ -8229,7 +8218,7 @@ module.exports = Feed;
 
 
 
-},{"../entry/feed":83,"./emptyPageMessage":102,"./loadMore":107}],104:[function(require,module,exports){
+},{"../entry/Feed":55,"./emptyPageMessage":102,"./loadMore":107}],104:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -13235,7 +13224,7 @@ UserToolbarManager = require('../components/toolbars/userManager');
 
 HeroTlog = require('../components/hero/tlog');
 
-EntryTlog = require('../components/entry/tlog');
+EntryTlog = require('../components/entry/Tlog');
 
 EntryPagination = require('../components/pagination/entry');
 
@@ -13278,7 +13267,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/auth/authManager":31,"../components/buttons/auth/authManager":47,"../components/entry/tlog":99,"../components/hero/tlog":113,"../components/pagination/entry":164,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],217:[function(require,module,exports){
+},{"../components/auth/authManager":31,"../components/buttons/auth/authManager":47,"../components/entry/Tlog":71,"../components/hero/tlog":113,"../components/pagination/entry":164,"../components/toolbars/feedManager":192,"../components/toolbars/userManager":199,"../stores/currentUser":230,"./mixins/page":222}],217:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');

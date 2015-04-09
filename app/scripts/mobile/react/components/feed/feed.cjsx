@@ -1,6 +1,6 @@
 FeedEmptyPageMessage = require './emptyPageMessage'
 FeedLoadMore         = require './loadMore'
-EntryFeed            = require '../entry/feed'
+EntryFeed            = require '../entry/Feed'
 { PropTypes } = React
 
 Feed = React.createClass

@@ -2,7 +2,7 @@ import CurrentUserStore from '../../stores/currentUser';
 import ConnectStoreMixin from '../../../../shared/react/mixins/connectStore';
 import TlogEmptyPage from './TlogEmptyPage';
 import TlogOwnEmptyPage from './TlogOwnEmptyPage';
-import EntryTlog from '../entry/tlog';
+import EntryTlog from '../entry/Tlog';
 
 let Tlog = React.createClass({
   mixins: [ConnectStoreMixin(CurrentUserStore)],
