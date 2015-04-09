@@ -24,9 +24,11 @@ class PopupController
     container = @addContainer containerAttribute
     popupProps.onClose = @handleClose.bind(@, containerAttribute)
 
-    React.render <Popup {...popupProps}>
-                   <component {...props} />
-                 </Popup>, container
+    React.render (
+      <Popup {...popupProps}>
+        <component {...props} />
+      </Popup>
+    ), container
 
   openWithBackground: ({component, props, popupProps, containerAttribute}) ->
     containerAttribute ?= @popupBGContainerAttribute
@@ -38,11 +40,13 @@ class PopupController
       _.defer =>
         @handleCloseWithBackground(containerAttribute)
 
-    React.render <PopupArea onClose={onClose}>
-                   <Popup {...popupProps} onClose={onClose}>
-                     <component {...props} />
-                   </Popup>
-                 </PopupArea>, container
+    React.render (
+      <PopupArea onClose={onClose}>
+        <Popup {...popupProps} withBackground={true} onClose={onClose}>
+          <component {...props} />
+        </Popup>
+      </PopupArea>
+    ), container
 
   openPopup: (PopupComponent, props, containerAttribute = @containerAttribute) ->
     container = @addContainer containerAttribute

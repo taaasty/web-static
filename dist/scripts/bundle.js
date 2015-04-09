@@ -22919,25 +22919,29 @@ window.FollowStatus = React.createClass({
 
 
 },{}],152:[function(require,module,exports){
-var HeroProfile_SettingsButton;
+"use strict";
 
-HeroProfile_SettingsButton = React.createClass({
-  render: function() {
-    return React.createElement("button", {
-      "className": "profile-settings-button",
-      "onClick": this.handleClick
-    }, React.createElement("i", {
-      "className": "icon icon--cogwheel"
-    }));
+var HeroProfile_SettingsButton = React.createClass({
+  displayName: "HeroProfile_SettingsButton",
+
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
   },
-  handleClick: function() {
-    return TastyEvents.trigger(TastyEvents.keys.command_settings_open());
+
+  render: function render() {
+    return React.createElement(
+      "button",
+      { className: "profile-settings-button", onClick: this.handleClick },
+      React.createElement("i", { className: "icon icon--cogwheel" })
+    );
+  },
+
+  handleClick: function handleClick() {
+    this.props.onClick();
   }
 });
 
 module.exports = HeroProfile_SettingsButton;
-
-
 
 },{}],153:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, cx;
@@ -23589,7 +23593,9 @@ window.HeroProfileStats_TagsPopup = React.createClass({
 
 
 },{}],163:[function(require,module,exports){
-var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton;
+var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton, PopupActions;
+
+PopupActions = require('../../../actions/popup');
 
 HeroProfile_SettingsButton = require('./buttons/settings');
 
@@ -23634,7 +23640,9 @@ window.HeroProfile = React.createClass({
         "className": "hero__actions"
       }, React.createElement("button", {
         "className": "button button--small button--outline"
-      }, "\u042d\u0442\u043e \u0432\u044b"), React.createElement(HeroProfile_SettingsButton, null));
+      }, "\u042d\u0442\u043e \u0432\u044b"), React.createElement(HeroProfile_SettingsButton, {
+        "onClick": this.showSettings
+      }));
     } else if (this.props.relationship != null) {
       actions = React.createElement("div", {
         "className": "hero__actions"
@@ -23752,6 +23760,9 @@ window.HeroProfile = React.createClass({
   isOpen: function() {
     return this.state.currentState !== HERO_CLOSED;
   },
+  showSettings: function() {
+    return PopupActions.showSettings();
+  },
   handleAvatarClick: function(e) {
     if (!this.isOpen()) {
       this.setInitialHeroHeight();
@@ -23763,7 +23774,7 @@ window.HeroProfile = React.createClass({
 
 
 
-},{"./buttons/settings":152}],164:[function(require,module,exports){
+},{"../../../actions/popup":13,"./buttons/settings":152}],164:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
 
 HERO_AVATAR_SIZE = 220;
@@ -29769,6 +29780,7 @@ PopupController = (function() {
     return React.render(React.createElement(PopupArea, {
       "onClose": onClose
     }, React.createElement(Popup, React.__spread({}, popupProps, {
+      "withBackground": true,
       "onClose": onClose
     }), React.createElement(component, React.__spread({}, props)))), container);
   };
@@ -36295,6 +36307,11 @@ function managePositions(Component) {
 
     getInitialState: function getInitialState() {
       var position = PositionsService.restorePosition(this.props.clue) || this.props.position;
+
+      // Для попапов с фоном не ставим отступы
+      if (this.props.withBackground) {
+        position = { left: 0, top: 0 };
+      }
 
       return {
         position: PositionsService.smartPosition(position)
