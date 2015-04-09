@@ -1,3 +1,4 @@
+PopupActions = require '../../../actions/popup'
 HeroProfile_SettingsButton = require './buttons/settings'
 
 HERO_CLOSED = 'closed'
@@ -38,7 +39,7 @@ window.HeroProfile = React.createClass
     if @isCurrentUser()
       actions = <div className="hero__actions">
                   <button className="button button--small button--outline">Это вы</button>
-                  <HeroProfile_SettingsButton />
+                  <HeroProfile_SettingsButton onClick={this.showSettings} />
                 </div>
     else if @props.relationship?
       actions = <div className="hero__actions">
@@ -131,6 +132,9 @@ window.HeroProfile = React.createClass
   onResize: -> @setHeroWindowHeight() if @isOpen()
 
   isOpen: -> @state.currentState != HERO_CLOSED
+
+  showSettings: ->
+    PopupActions.showSettings()
 
   handleAvatarClick: (e) ->
     unless @isOpen()

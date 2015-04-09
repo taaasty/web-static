@@ -18,6 +18,11 @@ function managePositions(Component) {
     getInitialState() {
       let position = PositionsService.restorePosition(this.props.clue) || this.props.position;
 
+      // Для попапов с фоном не ставим отступы
+      if (this.props.withBackground) {
+        position = {left: 0, top: 0};
+      }
+
       return {
         position: PositionsService.smartPosition(position)
       }
