@@ -15079,6 +15079,9 @@ ApiRoutes = {
   },
   imageAttachmentsWithID: function(attachmentID) {
     return TastySettings.api_host + '/v1/image_attachments/' + attachmentID;
+  },
+  backgrounds: function() {
+    return TastySettings.api_host + '/v1/backgrounds';
   }
 };
 
@@ -15152,6 +15155,9 @@ Routes = {
   },
   daylogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/' + page;
+  },
+  designSettinsBuy: function(userSlug) {
+    return '/~' + userSlug + '/design_settings_buy';
   }
 };
 

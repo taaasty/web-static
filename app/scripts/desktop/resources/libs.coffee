@@ -12,7 +12,6 @@ global.imagesLoaded      = require 'imagesloaded'
 global.MediumEditor      = require 'medium-editor'
 global.Undo              = require 'undo'
 global.introJs           = require 'introJs'
-global.VendorColorPicker = require 'react-color-picker'
 require 'aviator'
 
 require 'swfobject'

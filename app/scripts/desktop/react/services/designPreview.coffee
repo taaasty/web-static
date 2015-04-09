@@ -1,6 +1,10 @@
 _ = require 'lodash'
+jss = require 'jss'
 
-DesignStatesService =
+sheet = jss.createStyleSheet({}, named: false).attach()
+sheet.element.setAttribute 'design-settings-sheet', ''
+
+DesignPreviewService =
   page: document.body
   pageCover: document.querySelector '.page-cover'
   feed: document.querySelector '.content-area__bg'
@@ -258,17 +262,54 @@ DesignStatesService =
         value: '#38434e'
         className: 'madison'
       }
+      {
+        value: ':ANY:'
+        className: 'custom'
+      }
     ]
+
+  rules:
+    headerColor: (value) ->
+      '.design-settings__option--headercolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+      '.hero':
+        'color': value
+
+    backgroundColor: (value) ->
+      '.design-settings__option--bgcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+      '.page-cover':
+        'background-color': value
+
+    feedBackgroundColor: (value) ->
+      '.design-settings__option--feedbgcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+
+      '.content-area__bg':
+        'background-color': value
+
+    feedFontColor: (value) ->
+      '.design-settings__option--feedcolor .design-settings__state-i':
+        'border-color': value
+        'background-color': value
+
+      '.page-body':
+        'color': value
 
   apply: (design) ->
     states = {}
     switchableStates = {}
 
-    _.forEach design, (val, state) =>
-      switch
-        when @states[state] then states[state] = val
-        when @switchableStates[state] then switchableStates[state] = val
+    # Распределяем полученные значения по типам
+    for state, value of design
+      if @states[state] then states[state] = value
+      if @switchableStates[state] then switchableStates[state] = value
 
+    # Получаем список классов страницы отфильтровывая те классы, значения которых
+    # изменились
     classes = @page.className.split(' ').filter (className) =>
       for k of states
         return false if className.indexOf(@states[k]) == 0
@@ -277,21 +318,37 @@ DesignStatesService =
         return false if @switchableStates[m] is className
       true
 
-    _.forEach states, (value, state) =>
+    # Добавляем классы с новыми значениями в массив классов
+    for state, value of states
       propertyClassName = @getPropertyClassName state, value
       newClass = @states[state] + '-' + propertyClassName
       classes.push newClass
 
-    _.forEach switchableStates, (value, state) =>
-      unless value
-        newClass = @switchableStates[state]
-        classes.push newClass
+    # Добавляем "переключаемые" классы, если они удовлетворяют условию
+    for state, value of switchableStates
+      switch state
+        when 'backgroundImageEnabled' # Здесь перечисляются все переключаемые классы
+          # Классы будут устанавливаться только если значение false
+          unless value
+            newClass = @switchableStates[state]
+            classes.push newClass
+
+    # Устанавливаем кастомные значения через <style>
+    for state, value of states
+      propertyClassName = @getPropertyClassName state, value
+      @setStyles state, value if propertyClassName is 'custom'
 
     if design.backgroundImageUrl
       @pageCover.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")'
 
+    # У пользователей свойство называется прозрачность, чем выше значение, тем
+    # прозрачнее должен быть фон ленты. Но в стилях есть только НЕпрозрачность.
+    # Конвертируем значение прозрачности в НЕпрозрачность.
+    # Например:
+    # .16 прозрачности == .84 НЕпрозрачности.
     if _.isNumber design.feedTransparency
-      @feed.style.opacity = design.feedTransparency
+      opacity = 1 - design.feedTransparency
+      @feed.style.opacity = opacity
 
     @page.className = _.trim classes.join ' '
 
@@ -307,4 +364,11 @@ DesignStatesService =
     return propertyAny.className if propertyAny?.className
     null
 
-module.exports = DesignStatesService
+  setStyles: (option, value) ->
+    rule = @rules[option]
+
+    return throw new Error("Неизвестная опция #{option}") unless rule
+
+    sheet.addRules rule(value)
+
+module.exports = DesignPreviewService

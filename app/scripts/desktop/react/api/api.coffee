@@ -32,7 +32,7 @@ request = (_method, url, data = {}) ->
   else
     contentType = 'application/x-www-form-urlencoded'
     processData = true
-    _.extend data, {_method}
+    data = _.extend {}, data, {_method}
 
   $.ajax
     url: url
@@ -65,6 +65,22 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest feedUrl
+
+  design:
+    saveCurrent: (fields, userID) ->
+      url  = ApiRoutes.design_settings_url userID
+      key  = Constants.api.DESIGN_SAVE
+      data = fields
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data
+
+    createBgImage: (formData) ->
+      url = ApiRoutes.backgrounds()
+      key = Constants.api.CREATE_BG_IMAGE
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, formData
 
   editor:
     createImageAttachment: (formData) ->

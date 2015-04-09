@@ -1,6 +1,7 @@
 window.i18n = require 'i18next'
 ReactUjs = require 'reactUjs'
 PopupActions = require './actions/popup'
+DesignActionCreators = require './actions/design'
 AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
@@ -15,6 +16,8 @@ window.ReactApp =
       CurrentUserDispatcher.setupUser user
       window.messagingService = new MessagingService
         user: CurrentUserStore.getUser()
+
+      DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
     i18n.init
       lng: locale

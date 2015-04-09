@@ -1,4 +1,5 @@
 import cloneWithProps from 'react/lib/cloneWithProps';
+import managePositions from '../../../../shared/react/components/higherOrder/managePositions'
 import PopupHeader from './PopupHeader';
 
 let Popup = React.createClass({
@@ -6,9 +7,24 @@ let Popup = React.createClass({
 
   propTypes: {
     title: React.PropTypes.string.isRequired,
+    position: React.PropTypes.object.isRequired,
     className: React.PropTypes.string,
+    draggable: React.PropTypes.bool,
     onClose: React.PropTypes.func.isRequired,
+    onPositionChange: React.PropTypes.func.isRequired,
     children: React.PropTypes.element.isRequired
+  },
+
+  componentDidMount() {
+    if (this.props.draggable) {
+      this.makeDraggable();
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    // FIXME: Почему-то стили которые указаны в style не применяются при перерендере
+    // Устанавливаем их принудительно при обновлении
+    $(this.getDOMNode()).css(nextProps.position);
   },
 
   render() {
@@ -18,17 +34,35 @@ let Popup = React.createClass({
     ));
 
     return (
-      <div className={popupClasses}>
+      <div className={popupClasses} style={this.props.position}>
         <PopupHeader
+            ref="header"
             title={this.props.title}
             hasActivities={this.hasActivities()}
+            draggable={this.props.draggable}
             onClose={this.props.onClose} />
         <div className="popup__body">
           {children}
         </div>
       </div>
     );
+  },
+
+  makeDraggable() {
+    let $popup = $(this.getDOMNode()),
+        $header = $(this.refs.header.getDOMNode());
+
+    $popup.draggable({
+      handle: $header,
+      drag: () => $popup.addClass('no--transition'),
+      stop: (event, ui) => {
+        this.props.onPositionChange(ui.position);
+        $popup.removeClass('no--transition');
+      }
+    });
   }
 });
+
+Popup = managePositions(Popup);
 
 export default Popup;

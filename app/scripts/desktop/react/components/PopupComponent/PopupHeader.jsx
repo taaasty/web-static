@@ -1,21 +1,25 @@
-import PopupSpinner from './PopupSpinner';
+import classSet from 'react/lib/cx'
 
 let PopupHeader = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
-    hasActivities: React.PropTypes.bool.isRequired,
+    draggable: React.PropTypes.bool,
     onClose: React.PropTypes.func.isRequired
   },
 
   render() {
+    let headerClasses = classSet({
+      'popup__header': true,
+      'cursor--move': this.props.draggable
+    });
+
     return (
-      <div className="popup__header">
+      <div className={headerClasses}>
         <div className="popup__headbox">
           <h3 className="popup__title">
             {this.props.title}
           </h3>
         </div>
-        {this.renderSpinner()}
         <div className="popup__close" onClick={this.handleClick}>
           <i className="icon icon--cross" />
         </div>
@@ -23,15 +27,9 @@ let PopupHeader = React.createClass({
     );
   },
 
-  renderSpinner() {
-    if (this.props.hasActivities) {
-      return <PopupSpinner />;
-    }
-  },
-
   handleClick() {
-    this.props.onClose()
+    this.props.onClose();
   }
 });
 
-module.exports = PopupHeader
+export default PopupHeader;

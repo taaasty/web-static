@@ -32,14 +32,19 @@
     "user_id": 232992,
     "expires_at": "2015-01-04T18:07:07.000+03:00"
   },
+  "has_design_bundle": false,
   "design": {
-    "feedColor": "black",
-    "headerColor": "black",
-    "fontType": "sans",
-    "coverAlign": "center",
-    "feedOpacity": 0.67,
-    "background_url": "http://taaasty.ru/assets/backgrounds/8d/4b/1881243_4k_wallpaper_231.jpg",
-    "backgroundBrightness": 75
+    "headerFont": "proximanova",
+    "headerSize": "middle",
+    "headerColor": "#ffffff",
+    "backgroundColor": "#ffffff",
+    "backgroundImageUrl": "http://taaasty.com/assets/backgrounds/fb/e2/1881243_20140806230841_91475.jpg",
+    "backgroundImageEnabled": true,
+    "backgroundAlignment": "justify",
+    "feedBackgroundColor": "#000000",
+    "feedFont": "ptsans",
+    "feedFontColor": "#000000",
+    "feedTransparency": 0.7
   },
   "userpic": {
     "original_url": "http://taaasty.ru/assets/userpic/ee/0b/232992_original.jpeg",

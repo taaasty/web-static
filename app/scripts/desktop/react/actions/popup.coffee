@@ -13,26 +13,40 @@ PopupActions =
 
   showDesignSettings: ->
     url = location.href
-    container = document.querySelector '[popup-design-settings-container]'
     user = CurrentUserStore.getUser()
 
-    unless container?
-      container = document.createElement 'div'
-      container.setAttribute 'popup-design-settings-container', ''
-      document.body.appendChild container
-
-    if url.indexOf(user.tlog_url) == -1
+    if url.indexOf(user.tlog_url.toLowerCase()) == -1
       TastyConfirmController.show
         message: i18n.t 'design_settings_page_confirm'
         acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
         acceptButtonColor: 'green'
         onAccept: ->
-          location.href = Routes.userDesignSettings user.slug
+          window.location.href = Routes.userDesignSettings user.slug
     else
-      React.render <DesignSettingsPopup />, container
+      ReactApp.popupController.open
+        component: DesignSettingsContainer
+        popupProps:
+          title: i18n.t('design_settings_header')
+          className: 'popup--design-settings'
+          clue: 'designSettings'
+          draggable: true
+        containerAttribute: 'design-settings-container'
+
+  showDesignSettingsPayment: ->
+    ReactApp.popupController.openWithBackground
+      component: DesignPaymentContainer
+      popupProps:
+        title: i18n.t('design_payment_header')
+        className: 'popup--payment'
 
   showSearch: (props) ->
     ReactApp.popupController.openPopup Searchbox, props, 'searchbox-container'
+
+  showColorPicker: (props) ->
+    ReactApp.popupController.openPopup DesignSettingsColorPickerPopup, props, 'color-picker-container'
+
+  closeColorPicker: ->
+    ReactApp.popupController.close 'color-picker-container'
 
   showFriends: (panelName, userId) ->
     container = document.querySelector '[popup-persons-container]'

@@ -8,9 +8,9 @@ DropZone = React.createClass
     children: PropTypes.oneOfType([
       PropTypes.element, PropTypes.array
     ]).isRequired
-    onDragOver: PropTypes.func.isRequired
-    onDragLeave: PropTypes.func.isRequired
-    onDrop: PropTypes.func.isRequired
+    onDragOver: PropTypes.func
+    onDragLeave: PropTypes.func
+    onDrop: PropTypes.func
 
   getDefaultProps: ->
     global: false
@@ -29,16 +29,16 @@ DropZone = React.createClass
 
   handleDragOver: (e) ->
     e.preventDefault()
-    @props.onDragOver()
+    @props.onDragOver?()
 
   handleDragLeave: (e) ->
     e.preventDefault()
-    @props.onDragLeave()
+    @props.onDragLeave?()
 
   handleDrop: (e) ->
     e.preventDefault()
     files = e.originalEvent.dataTransfer.files
-    @props.onDrop files
+    @props.onDrop? files
 
   render: ->
     <div>{ @props.children }</div>
