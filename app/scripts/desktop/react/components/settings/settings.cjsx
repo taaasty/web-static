@@ -12,7 +12,7 @@ window.Settings = React.createClass
     ComponentManipulationsMixin, LinkedStateMixin
   ]
 
-  getInitialState: -> 
+  getInitialState: ->
     @getStateFromStore()
 
   componentDidMount: ->
@@ -80,3 +80,17 @@ window.Settings = React.createClass
 
   _onStoreChange: ->
     @setState @getStateFromStore()
+
+# Переключалка языка (select2)
+# <div className="settings__item">
+#   <div className="settings__right">
+#     <select rel="select2">
+#       <option value="ru">Русский</option>
+#       <option value="en">English</option>
+#       <option value="ua">Українська</option>
+#     </select>
+#   </div>
+#   <div className="settings__left">
+#     <h3 className="settings__title">Язык</h3>
+#   </div>
+# </div>
