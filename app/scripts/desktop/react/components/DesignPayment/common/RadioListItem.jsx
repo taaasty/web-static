@@ -2,8 +2,8 @@ import DesignSettingsColorPicker from '../../designSettings/common/colorPicker';
 
 let DesignPaymentRadioListItem = React.createClass({
   propTypes: {
-    value: PropTypes.string.isRequired,
-    custom: PropTypes.bool.isRequired
+    value: React.PropTypes.string.isRequired,
+    custom: React.PropTypes.bool.isRequired
   },
 
   render() {

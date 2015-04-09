@@ -17,9 +17,9 @@ let DesignSettingsSaveButton = React.createClass({
     let title;
 
     if (this.props.hasDesignBundle || !this.props.hasPaidValues) {
-      title = 'Сохранить';
+      title = i18n.t('design_settings_save_button');
     } else {
-      title = 'Оплатить и сохранить';
+      title = i18n.t('design_settings_save_with_payment_button');
     }
 
     return title

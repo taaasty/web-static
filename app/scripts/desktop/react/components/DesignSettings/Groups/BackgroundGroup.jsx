@@ -1,6 +1,6 @@
 import DesignSettingsGroup from './Group';
 import DesignSettingsOption from '../option/index';
-import DesignSettingsOptionState from '../option/state';
+import DesignSettingsOptionState from '../option/State';
 import DesignSettingsOptionUpload from '../option/Upload';
 import DesignSettingsRadioList from '../common/radioList';
 
@@ -18,8 +18,8 @@ let DesignSettingsBackgroundGroup = React.createClass({
 
   render() {
     return (
-      <DesignSettingsGroup title="Фон">
-        <DesignSettingsOption title="Цвет" name="bgcolor">
+      <DesignSettingsGroup title={i18n.t('design_settings_background_title')}>
+        <DesignSettingsOption title={i18n.t('design_settings_background_color_title')} name="bgcolor">
           <DesignSettingsOptionState style="circlebtn" />
           <DesignSettingsRadioList
               style="circlebtns"
@@ -30,7 +30,7 @@ let DesignSettingsBackgroundGroup = React.createClass({
               onChange={this.props.onOptionChange.bind(null, 'backgroundColor')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Картинка" name="bgimage">
+        <DesignSettingsOption title={i18n.t('design_settings_background_image_title')} name="bgimage">
           <DesignSettingsOptionUpload
               optionName="backgroundImage"
               backgroundImageUrl={this.props.backgroundImageUrl}
@@ -39,7 +39,7 @@ let DesignSettingsBackgroundGroup = React.createClass({
               onImageVisibilityChange={this.props.onOptionChange.bind(null, 'backgroundImageEnabled')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Выравнивание" name="bgalignment">
+        <DesignSettingsOption title={i18n.t('design_settings_background_alignment_title')} name="bgalignment">
           <DesignSettingsRadioList
               style="dotted"
               optionName="backgroundAlignment"

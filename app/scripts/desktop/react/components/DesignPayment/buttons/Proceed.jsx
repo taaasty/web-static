@@ -6,7 +6,7 @@ let DesignPaymentProceedButton = React.createClass({
   render() {
     return (
       <button className="payment__button" onClick={this.handleClick}>
-        Перейти к оплате
+        {i18n.t('design_payment_proceed_button')}
       </button>
     );
   },

@@ -9,7 +9,7 @@ let DesignPaymentRadioList = React.createClass({
   render() {
     let listClasses = ['form-radiogroup', 'form-radiogroup--' + this.props.style].join(' ');
     let listItems = this.props.items.map(item => {
-      <DesignPaymentRadioListItem value={item} custom={item === ':ANY:'} key={item} />
+      return <DesignPaymentRadioListItem value={item} custom={item === ':ANY:'} key={item} />;
     });
 
     return (

@@ -26,7 +26,7 @@ PopupActions =
       ReactApp.popupController.open
         component: DesignSettingsContainer
         popupProps:
-          title: 'Управление дизайном'
+          title: i18n.t('design_settings_header')
           className: 'popup--design-settings'
           clue: 'designSettings'
           draggable: true
@@ -36,7 +36,7 @@ PopupActions =
     ReactApp.popupController.openWithBackground
       component: DesignPaymentContainer
       popupProps:
-        title: 'Что вы получаете?'
+        title: i18n.t('design_payment_header')
         className: 'popup--payment'
 
   showSearch: (props) ->

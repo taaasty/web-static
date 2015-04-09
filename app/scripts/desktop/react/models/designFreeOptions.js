@@ -1,4 +1,4 @@
-const FreeDesignOptions = {
+const DesignFreeOptions = {
   headerFont: ['proximanova'],
   headerSize: ['middle'],
   headerColor: ['#ffffff', '#000000'],
@@ -12,4 +12,4 @@ const FreeDesignOptions = {
   feedTransparency: ':ANY:'
 };
 
-export default FreeDesignOptions;
+export default DesignFreeOptions;

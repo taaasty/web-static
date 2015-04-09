@@ -1,6 +1,6 @@
 import DesignSettingsGroup from './Group';
 import DesignSettingsOption from '../option/index';
-import DesignSettingsOptionState from '../option/state';
+import DesignSettingsOptionState from '../option/State';
 import DesignSettingsSlider from '../common/slider';
 import DesignSettingsRadioList from '../common/radioList';
 
@@ -17,8 +17,8 @@ let DesignSettingsHeaderGroup = React.createClass({
 
   render() {
     return (
-      <DesignSettingsGroup title="Заголовок">
-        <DesignSettingsOption title="Шрифт" name="headerfont">
+      <DesignSettingsGroup title={i18n.t('design_settings_header_title')}>
+        <DesignSettingsOption title={i18n.t('design_settings_header_font_title')} name="headerfont">
           <DesignSettingsOptionState style="font" text="Aa" />
           <DesignSettingsSlider className="ds-fadein-down">
             <DesignSettingsRadioList
@@ -30,7 +30,7 @@ let DesignSettingsHeaderGroup = React.createClass({
           </DesignSettingsSlider>
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Размер" name="headersize">
+        <DesignSettingsOption title={i18n.t('design_settings_header_size_title')} name="headersize">
           <DesignSettingsRadioList
               style="dotted"
               optionName="headerSize"
@@ -40,7 +40,7 @@ let DesignSettingsHeaderGroup = React.createClass({
               onChange={this.props.onOptionChange.bind(null, 'headerSize')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Цвет" name="headercolor">
+        <DesignSettingsOption title={i18n.t('design_settings_header_color_title')} name="headercolor">
           <DesignSettingsOptionState style="circlebtn" />
           <DesignSettingsRadioList
               style="circlebtns"

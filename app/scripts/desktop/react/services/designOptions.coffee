@@ -1,18 +1,18 @@
 CurrentUserStore = require '../stores/current_user'
-FreeDesignOptionsModel = require '../models/freeDesignOptions'
+DesignFreeOptions = require '../models/designFreeOptions'
 
 DesignOptionsService =
   hasPaidValues: (design) ->
     for key, val of design
-      continue unless FreeDesignOptionsModel[key]
-      continue if FreeDesignOptionsModel[key] is ':ANY:'
-      return true if FreeDesignOptionsModel[key].indexOf(val) == -1
+      continue unless DesignFreeOptions[key]
+      continue if DesignFreeOptions[key] is ':ANY:'
+      return true if DesignFreeOptions[key].indexOf(val) == -1
     false
 
   isPaidValue: (option, value) ->
-    return throw new Error("Неизвестная опция #{option}") unless FreeDesignOptionsModel[option]
-    return false if FreeDesignOptionsModel[option] is ':ANY:'
-    return false for val in FreeDesignOptionsModel[option] when val is value
+    return throw new Error("Неизвестная опция #{option}") unless DesignFreeOptions[option]
+    return false if DesignFreeOptions[option] is ':ANY:'
+    return false for val in DesignFreeOptions[option] when val is value
     true
 
   isBoughtValue: (option, value) ->

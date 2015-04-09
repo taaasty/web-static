@@ -1,3 +1,5 @@
+_ = require 'lodash'
+
 DesignPresenterService =
 
   options:
@@ -97,130 +99,130 @@ DesignPresenterService =
       {
         value: 'small'
         name: 'small'
-        text: 'маленький'
+        text: -> i18n.t('design_header_size_small')
       }
       {
         value: 'middle'
         name: 'middle'
-        text: 'средний'
+        text: -> i18n.t('design_header_size_medium')
       }
       {
         value: 'large'
         name: 'large'
-        text: 'большой'
+        text: -> i18n.t('design_header_size_large')
       }
     ]
     headerColor: [
       {
         value: '#ffffff'
         name: 'white'
-        title: 'Белый'
+        title: -> i18n.t('design_colors_white')
       }
       {
         value: '#000000'
         name: 'black'
-        title: 'Чёрный'
+        title: -> i18n.t('design_colors_black')
       }
       {
         value: ':ANY:'
         name: 'custom'
-        title: 'Любой'
+        title: -> i18n.t('design_colors_custom')
       }
       {
         value: '#2ac67e'
         name: 'shamrock'
-        title: 'Трилистник'
+        title: -> i18n.t('design_colors_shamrock')
       }
       {
         value: '#e74c3c'
         name: 'cinnabar'
-        title: 'Синнобар'
+        title: -> i18n.t('design_colors_cinnabar')
       }
       {
         value: '#6c7a89'
         name: 'bluegray'
-        title: 'Серо-голубой'
+        title: -> i18n.t('design_colors_bluegray')
       }
       {
         value: '#38434e'
         name: 'madison'
-        title: 'Мэдисон'
+        title: -> i18n.t('design_colors_madison')
       }
     ]
     backgroundColor: [
       {
         value: '#ffffff'
         name: 'white'
-        title: 'Белый'
+        title: -> i18n.t('design_colors_white')
       }
       {
         value: '#000000'
         name: 'black'
-        title: 'Чёрный'
+        title: -> i18n.t('design_colors_black')
       }
       {
         value: ':ANY:'
         name: 'custom'
-        title: 'Любой'
+        title: -> i18n.t('design_colors_custom')
       }
       {
         value: '#e74c3c'
         name: 'cinnabar'
-        title: 'Синнобар'
+        title: -> i18n.t('design_colors_cinnabar')
       }
       {
         value: '#c6c9cc'
         name: 'silversand'
-        title: 'Серебряный песок'
+        title: -> i18n.t('design_colors_silversand')
       }
       {
         value: '#6c7a89'
         name: 'bluegray'
-        title: 'Серо-голубой'
+        title: -> i18n.t('design_colors_bluegray')
       }
     ]
     backgroundAlignment: [
       {
         value: 'justify'
         name: 'justify'
-        text: 'по ширине'
+        text: -> i18n.t('design_background_alignment_justify')
       }
       {
         value: 'center'
         name: 'center'
-        text: 'по центру'
+        text: -> i18n.t('design_background_alignment_center')
       }
     ]
     feedBackgroundColor: [
       {
         value: '#ffffff'
         name: 'white'
-        title: 'Белый'
+        title: -> i18n.t('design_colors_white')
       }
       {
         value: '#000000'
         name: 'black'
-        title: 'Чёрный'
+        title: -> i18n.t('design_colors_black')
       }
       {
         value: ':ANY:'
         name: 'custom'
-        title: 'Любой'
+        title: -> i18n.t('design_colors_custom')
       }
       {
         value: '#e74c3c'
         name: 'cinnabar'
-        title: 'Синнобар'
+        title: -> i18n.t('design_colors_cinnabar')
       }
       {
         value: '#c6c9cc'
         name: 'silversand'
-        title: 'Серебряный песок'
+        title: -> i18n.t('design_colors_silversand')
       }
       {
         value: '#6c7a89'
         name: 'bluegray'
-        title: 'Серо-голубой'
+        title: -> i18n.t('design_colors_bluegray')
       }
     ]
     feedFont: [
@@ -301,43 +303,48 @@ DesignPresenterService =
       {
         value: '#ffffff'
         name: 'white'
-        title: 'Белый'
+        title: -> i18n.t('design_colors_white')
       }
       {
         value: '#000000'
         name: 'black'
-        title: 'Чёрный'
+        title: -> i18n.t('design_colors_black')
       }
       {
         value: '#c6c9cc'
         name: 'silversand'
-        title: 'Серебряный песок'
+        title: -> i18n.t('design_colors_silversand')
       }
       {
         value: '#6c7a89'
         name: 'bluegray'
-        title: 'Серо-голубой'
+        title: -> i18n.t('design_colors_bluegray')
       }
       {
         value: '#38434e'
         name: 'madison'
-        title: 'Мэдисон'
+        title: -> i18n.t('design_colors_madison')
       }
       {
         value: ':ANY:'
         name: 'custom'
-        title: 'Любой'
+        title: -> i18n.t('design_colors_custom')
       }
     ]
 
   getTitle: (option, value) ->
     property = @getProperty option, value
-    return property.title if property?.title
+
+    if property?.title
+      if _.isFunction property.title then property.title() else property.title
 
   getText: (option, value) ->
     property = @getProperty option, value
-    text = property?.text || property?.title
-    text
+
+    if property?.text
+      if _.isFunction property.text then property.text() else property.text
+    else
+      @getTitle(option, value)
 
   getName: (option, value) ->
     property = @getProperty option, value

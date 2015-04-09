@@ -10,7 +10,7 @@ let DesignPaymentList = React.createClass({
   render() {
     return (
       <ul className="payment__list">
-        <DesignPaymentListItem title="14 новых шрифтов заголовков">
+        <DesignPaymentListItem title={i18n.t('design_payment_header_font_title')}>
           <DesignSettingsSlider>
             <DesignPaymentRadioList
                 style="font"
@@ -18,7 +18,7 @@ let DesignPaymentList = React.createClass({
           </DesignSettingsSlider>
         </DesignPaymentListItem>
 
-        <DesignPaymentListItem title="12 новых шрифтов тлога">
+        <DesignPaymentListItem title={i18n.t('design_payment_feed_font_title')}>
           <DesignSettingsSlider>
             <DesignPaymentRadioList
                 style="font"
@@ -26,22 +26,22 @@ let DesignPaymentList = React.createClass({
           </DesignSettingsSlider>
         </DesignPaymentListItem>
 
-        <DesignPaymentListItem title="Любые цвета ленты, шрифта, заголовка">
+        <DesignPaymentListItem title={i18n.t('design_payment_feed_and_header_colors_title')}>
           <DesignPaymentRadioList
               style="circlebtns"
               items={this.props.options.feedAndHeaderColors} />
         </DesignPaymentListItem>
 
-        <DesignPaymentListItem title="Условия">
-          Вы платите всего один раз и возможности настройки дизайна остаются с Вами навсегда
+        <DesignPaymentListItem title={i18n.t('design_payment_terms_title')}>
+          {i18n.t('design_payment_terms_description')}
         </DesignPaymentListItem>
 
-        <DesignPaymentListItem title="Стоимость">
-          299 рублей
+        <DesignPaymentListItem title={i18n.t('design_payment_cost_title')}>
+          {i18n.t('design_payment_cost_description')}
         </DesignPaymentListItem>
 
-        <DesignPaymentListItem title="Способы оплаты<br /> (без комиссии)">
-          Со счета мобильного телефона, банковской картой, через терминалы, салоны связи, яндекс.деньги, веб-мани
+        <DesignPaymentListItem title={i18n.t('design_payment_payment_methods_title')}>
+          {i18n.t('design_payment_payment_methods_description')}
         </DesignPaymentListItem>
       </ul>
     );

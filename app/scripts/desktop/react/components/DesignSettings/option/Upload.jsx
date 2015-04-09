@@ -11,10 +11,10 @@ let DesignSettingsOptionUpload = React.createClass({
     return (
       <span>
         <span className="design-settings__text ds-absolute-left ds-fadein-down">
-          Перетащите или
+          {i18n.t('design_settings_upload_drag_or')}
           <span className="form-upload form-upload--cover">
             <span className="form-upload__text">
-              загрузите
+              {i18n.t('design_settings_upload_upload')}
             </span>
             <input type="file"
                    accept="image/*"
@@ -35,7 +35,8 @@ let DesignSettingsOptionUpload = React.createClass({
                    className="form-checkbox__label">
               <span className="form-checkbox__box">
                 <i className="form-checkbox__icon" />
-              </span>Вкл
+              </span>
+              {i18n.t('design_settings_background_enabled')}
             </label>
           </span>
         </span>

@@ -19,8 +19,8 @@ let DesignSettingsFeedGroup = React.createClass({
 
   render() {
     return (
-      <DesignSettingsGroup title="Лента">
-        <DesignSettingsOption title="Цвет фона" name="feedbgcolor">
+      <DesignSettingsGroup title={i18n.t('design_settings_feed_title')}>
+        <DesignSettingsOption title={i18n.t('design_settings_feed_color_title')} name="feedbgcolor">
           <DesignSettingsOptionState style="circlebtn" />
           <DesignSettingsRadioList
               style="circlebtns"
@@ -31,7 +31,7 @@ let DesignSettingsFeedGroup = React.createClass({
               onChange={this.props.onOptionChange.bind(null, 'feedBackgroundColor')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Шрифт текста" name="feedfont">
+        <DesignSettingsOption title={i18n.t('design_settings_feed_font_title')} name="feedfont">
           <DesignSettingsOptionState style="font" text="Aa" />
           <DesignSettingsSlider className="ds-fadein-down">
             <DesignSettingsRadioList
@@ -43,7 +43,7 @@ let DesignSettingsFeedGroup = React.createClass({
           </DesignSettingsSlider>
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Цвет текста" name="feedcolor">
+        <DesignSettingsOption title={i18n.t('design_settings_feed_font_color_title')} name="feedcolor">
           <DesignSettingsOptionState style="circlebtn" />
           <DesignSettingsRadioList
               style="circlebtns"
@@ -54,7 +54,7 @@ let DesignSettingsFeedGroup = React.createClass({
               onChange={this.props.onOptionChange.bind(null, 'feedFontColor')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title="Прозрачность" name="opacity">
+        <DesignSettingsOption title={i18n.t('design_settings_feed_transparency_title')} name="transparency">
           <DesignSettingsRange
               value={this.props.feedTransparency}
               onChange={this.props.onOptionChange.bind(null, 'feedTransparency')} />

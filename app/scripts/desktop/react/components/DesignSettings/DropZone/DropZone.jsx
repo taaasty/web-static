@@ -5,7 +5,7 @@ let DesignSettingsDropZone = React.createClass({
         <div className="design-settings__dragzone-table">
           <div className="design-settings__dragzone-cell">
             <div className="design-settings__dragzone-text">
-              Отпустите картинку и она начнет загружаться
+              {i18n.t('design_settings_dropzone')}
             </div>
           </div>
         </div>

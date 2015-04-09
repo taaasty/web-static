@@ -52,7 +52,7 @@ let DesignActionCreators = {
         userID = CurrentUserStore.getUser().id;
 
     if (Object.keys(fields).length === 0) {
-      TastyNotifyController.notifyError('Вы не изменили ни одного поля с момента последнего сохранения');
+      TastyNotifyController.notifyError(i18n.t('design_settings_no_unsaved_fields_error'));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
@@ -63,10 +63,10 @@ let DesignActionCreators = {
             type: DesignConstants.SAVE_CURRENT_SUCCESS,
             design
           });
-          TastyNotifyController.notifySuccess('Настройки дизайна успешно сохранены');
+          TastyNotifyController.notifySuccess(i18n.t('design_settings_save_success'));
         })
         .fail(() => {
-          TastyNotifyController.notifyError('Во время сохранения настроек дизайна произошла ошибка');
+          TastyNotifyController.notifyError(i18n.t('design_settings_save_error'));
         });
     }
   },
