@@ -9,7 +9,7 @@ _ = require 'lodash'
 # feedBackgroundColor (RGB hex) - Цвет фона ленты.
 # feedFont (enum) - Шрифт текста ленты.
 # feedFontColor (RGB hex) - Цвет текста ленты.
-# feedTransparency (range) - Прозрачность ленты. (0-1)
+# feedOpacity (range) - Непрозрачность ленты. (0-1)
 
 class Design
 
@@ -26,6 +26,6 @@ class Design
   feedBackgroundColor: null
   feedFont: null
   feedFontColor: null
-  feedTransparency: null
+  feedOpacity: null
 
 module.exports = Design
