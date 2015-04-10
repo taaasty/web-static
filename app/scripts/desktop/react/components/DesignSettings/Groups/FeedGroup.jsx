@@ -10,7 +10,7 @@ let DesignSettingsFeedGroup = React.createClass({
     feedBackgroundColor: React.PropTypes.string.isRequired,
     feedFont: React.PropTypes.string.isRequired,
     feedFontColor: React.PropTypes.string.isRequired,
-    feedTransparency: React.PropTypes.number.isRequired,
+    feedOpacity: React.PropTypes.number.isRequired,
     feedBackgroundColorItems: React.PropTypes.array.isRequired,
     feedFontItems: React.PropTypes.array.isRequired,
     feedFontColorItems: React.PropTypes.array.isRequired,
@@ -54,10 +54,10 @@ let DesignSettingsFeedGroup = React.createClass({
               onChange={this.props.onOptionChange.bind(null, 'feedFontColor')} />
         </DesignSettingsOption>
 
-        <DesignSettingsOption title={i18n.t('design_settings_feed_transparency_title')} name="transparency">
+        <DesignSettingsOption title={i18n.t('design_settings_feed_opacity_title')} name="opacity">
           <DesignSettingsRange
-              value={this.props.feedTransparency}
-              onChange={this.props.onOptionChange.bind(null, 'feedTransparency')} />
+              value={this.props.feedOpacity}
+              onChange={this.props.onOptionChange.bind(null, 'feedOpacity')} />
         </DesignSettingsOption>
       </DesignSettingsGroup>
     );

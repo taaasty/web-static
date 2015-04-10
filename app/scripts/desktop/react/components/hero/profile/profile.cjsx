@@ -1,5 +1,5 @@
 PopupActions = require '../../../actions/popup'
-HeroProfile_SettingsButton = require './buttons/settings'
+HeroProfile_SettingsButton = require './buttons/Settings'
 
 HERO_CLOSED = 'closed'
 HERO_OPENED = 'opened'

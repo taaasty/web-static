@@ -341,14 +341,8 @@ DesignPreviewService =
     if design.backgroundImageUrl
       @pageCover.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")'
 
-    # У пользователей свойство называется прозрачность, чем выше значение, тем
-    # прозрачнее должен быть фон ленты. Но в стилях есть только НЕпрозрачность.
-    # Конвертируем значение прозрачности в НЕпрозрачность.
-    # Например:
-    # .16 прозрачности == .84 НЕпрозрачности.
-    if _.isNumber design.feedTransparency
-      opacity = 1 - design.feedTransparency
-      @feed.style.opacity = opacity
+    if _.isNumber design.feedOpacity
+      @feed.style.opacity = design.feedOpacity
 
     @page.className = _.trim classes.join ' '
 
