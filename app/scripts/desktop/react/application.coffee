@@ -20,7 +20,8 @@ window.ReactApp =
 
       DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
-    numeral.language(locale)
+    numeral.language locale
+    moment.locale locale
     i18n.init
       lng: locale
       fallbackLng: 'ru'

@@ -1,5 +1,4 @@
 require './resources/libs'
-require './resources/locales'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
@@ -9,6 +8,7 @@ window.ApiRoutes = require '../shared/routes/api'
 
 # /*==========  Locales  ==========*/
 require './locales/numeral/ru'
+require './locales/moment/ru'
 
 require './react/services/positions'
 window.ThumborService = require '../shared/react/services/thumbor'

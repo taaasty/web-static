@@ -1,8 +1,10 @@
 require './resources/libs'
-require './resources/locales'
 global.Routes    = require '../shared/routes/routes'
 global.ApiRoutes = require '../shared/routes/api'
 require './react/application'
+
+# /*==========  Locales  ==========*/
+require './locales/moment/ru'
 
 # /*==========  Services  ==========*/
 

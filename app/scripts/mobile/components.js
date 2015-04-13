@@ -1,10 +1,11 @@
 window       = undefined; // React-rails set window to this, it's unexpected behavior
 React        = require('react');
-moment       = require('../../bower_components/momentjs/moment');
+moment       = require('../../../node_modules/moment');
 EventEmitter = require('eventEmitter');
 i18n         = require('i18next');
 
-moment.locale('ru', require('../../bower_components/momentjs/locale/ru'));
+/*==========  Locales  ==========*/
+require('./locales/moment/ru');
 
 Phrases = {
   ru: { translation: require('./locales/ru') }

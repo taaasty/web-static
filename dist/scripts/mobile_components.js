@@ -1,11 +1,12 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 window       = undefined; // React-rails set window to this, it's unexpected behavior
 React        = require('react');
-moment       = require('../../bower_components/momentjs/moment');
+moment       = require('../../../node_modules/moment');
 EventEmitter = require('eventEmitter');
 i18n         = require('i18next');
 
-moment.locale('ru', require('../../bower_components/momentjs/locale/ru'));
+/*==========  Locales  ==========*/
+require('./locales/moment/ru');
 
 Phrases = {
   ru: { translation: require('./locales/ru') }
@@ -30,3127 +31,59 @@ NotificationsPage   = require('./react/pages/notifications');
 MessengerPage       = require('./react/pages/messenger');
 MessengerThreadPage = require('./react/pages/messengerThread');
 AuthPage            = require('./react/pages/auth');
-},{"../../bower_components/momentjs/locale/ru":2,"../../bower_components/momentjs/moment":3,"../shared/react/services/thumbor":238,"../shared/routes/api":240,"../shared/routes/routes":241,"./locales/ru":4,"./react/pages/auth":210,"./react/pages/entry":211,"./react/pages/feedBest":212,"./react/pages/feedFriends":213,"./react/pages/feedLive":214,"./react/pages/messenger":215,"./react/pages/messengerThread":216,"./react/pages/notifications":218,"./react/pages/settings":219,"./react/pages/tlogDaylog":220,"./react/pages/tlogRegular":221,"eventEmitter":undefined,"i18next":undefined,"react":undefined}],2:[function(require,module,exports){
-(function (global){
-// moment.js locale configuration
-// locale : russian (ru)
-// author : Viktorminator : https://github.com/Viktorminator
-// Author : Menelion Elensúle : https://github.com/Oire
-
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['moment'], factory); // AMD
-    } else if (typeof exports === 'object') {
-        module.exports = factory(require('../moment')); // Node
-    } else {
-        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
-    }
-}(function (moment) {
-    function plural(word, num) {
-        var forms = word.split('_');
-        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
-    }
-
-    function relativeTimeWithPlural(number, withoutSuffix, key) {
-        var format = {
-            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
-            'hh': 'час_часа_часов',
-            'dd': 'день_дня_дней',
-            'MM': 'месяц_месяца_месяцев',
-            'yy': 'год_года_лет'
-        };
-        if (key === 'm') {
-            return withoutSuffix ? 'минута' : 'минуту';
-        }
-        else {
-            return number + ' ' + plural(format[key], +number);
-        }
-    }
-
-    function monthsCaseReplace(m, format) {
-        var months = {
-            'nominative': 'январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь'.split('_'),
-            'accusative': 'января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря'.split('_')
-        },
-
-        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return months[nounCase][m.month()];
-    }
-
-    function monthsShortCaseReplace(m, format) {
-        var monthsShort = {
-            'nominative': 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
-            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
-        },
-
-        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return monthsShort[nounCase][m.month()];
-    }
-
-    function weekdaysCaseReplace(m, format) {
-        var weekdays = {
-            'nominative': 'воскресенье_понедельник_вторник_среда_четверг_пятница_суббота'.split('_'),
-            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
-        },
-
-        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/).test(format) ?
-            'accusative' :
-            'nominative';
-
-        return weekdays[nounCase][m.day()];
-    }
-
-    return moment.defineLocale('ru', {
-        months : monthsCaseReplace,
-        monthsShort : monthsShortCaseReplace,
-        weekdays : weekdaysCaseReplace,
-        weekdaysShort : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
-        weekdaysMin : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
-        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
-        longDateFormat : {
-            LT : 'HH:mm',
-            LTS : 'LT:ss',
-            L : 'DD.MM.YYYY',
-            LL : 'D MMMM YYYY г.',
-            LLL : 'D MMMM YYYY г., LT',
-            LLLL : 'dddd, D MMMM YYYY г., LT'
-        },
-        calendar : {
-            sameDay: '[Сегодня в] LT',
-            nextDay: '[Завтра в] LT',
-            lastDay: '[Вчера в] LT',
-            nextWeek: function () {
-                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
-            },
-            lastWeek: function (now) {
-                if (now.week() !== this.week()) {
-                    switch (this.day()) {
-                    case 0:
-                        return '[В прошлое] dddd [в] LT';
-                    case 1:
-                    case 2:
-                    case 4:
-                        return '[В прошлый] dddd [в] LT';
-                    case 3:
-                    case 5:
-                    case 6:
-                        return '[В прошлую] dddd [в] LT';
-                    }
-                } else {
-                    if (this.day() === 2) {
-                        return '[Во] dddd [в] LT';
-                    } else {
-                        return '[В] dddd [в] LT';
-                    }
-                }
-            },
-            sameElse: 'L'
-        },
-        relativeTime : {
-            future : 'через %s',
-            past : '%s назад',
-            s : 'несколько секунд',
-            m : relativeTimeWithPlural,
-            mm : relativeTimeWithPlural,
-            h : 'час',
-            hh : relativeTimeWithPlural,
-            d : 'день',
-            dd : relativeTimeWithPlural,
-            M : 'месяц',
-            MM : relativeTimeWithPlural,
-            y : 'год',
-            yy : relativeTimeWithPlural
-        },
-
-        meridiemParse: /ночи|утра|дня|вечера/i,
-        isPM : function (input) {
-            return /^(дня|вечера)$/.test(input);
-        },
-
-        meridiem : function (hour, minute, isLower) {
-            if (hour < 4) {
-                return 'ночи';
-            } else if (hour < 12) {
-                return 'утра';
-            } else if (hour < 17) {
-                return 'дня';
-            } else {
-                return 'вечера';
-            }
-        },
-
-        ordinalParse: /\d{1,2}-(й|го|я)/,
-        ordinal: function (number, period) {
-            switch (period) {
-            case 'M':
-            case 'd':
-            case 'DDD':
-                return number + '-й';
-            case 'D':
-                return number + '-го';
-            case 'w':
-            case 'W':
-                return number + '-я';
-            default:
-                return number;
-            }
-        },
-
-        week : {
-            dow : 1, // Monday is the first day of the week.
-            doy : 7  // The week that contains Jan 1st is the first week of the year.
-        }
-    });
-}));
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../moment":3}],3:[function(require,module,exports){
-(function (global){
-//! moment.js
-//! version : 2.8.4
-//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
-//! license : MIT
-//! momentjs.com
-
-(function (undefined) {
-    /************************************
-        Constants
-    ************************************/
-
-    var moment,
-        VERSION = '2.8.4',
-        // the global-scope this is NOT the global object in Node.js
-        globalScope = typeof global !== 'undefined' ? global : this,
-        oldGlobalMoment,
-        round = Math.round,
-        hasOwnProperty = Object.prototype.hasOwnProperty,
-        i,
-
-        YEAR = 0,
-        MONTH = 1,
-        DATE = 2,
-        HOUR = 3,
-        MINUTE = 4,
-        SECOND = 5,
-        MILLISECOND = 6,
-
-        // internal storage for locale config files
-        locales = {},
-
-        // extra moment internal properties (plugins register props here)
-        momentProperties = [],
-
-        // check for nodeJS
-        hasModule = (typeof module !== 'undefined' && module && module.exports),
-
-        // ASP.NET json date format regex
-        aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
-        aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
-
-        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
-        isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
-
-        // format tokens
-        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
-        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
-
-        // parsing token regexes
-        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
-        parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
-        parseTokenOneToFourDigits = /\d{1,4}/, // 0 - 9999
-        parseTokenOneToSixDigits = /[+\-]?\d{1,6}/, // -999,999 - 999,999
-        parseTokenDigits = /\d+/, // nonzero number of digits
-        parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, // any word (or two) characters or numbers including two/three word month in arabic.
-        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/gi, // +00:00 -00:00 +0000 -0000 or Z
-        parseTokenT = /T/i, // T (ISO separator)
-        parseTokenOffsetMs = /[\+\-]?\d+/, // 1234567890123
-        parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
-
-        //strict parsing regexes
-        parseTokenOneDigit = /\d/, // 0 - 9
-        parseTokenTwoDigits = /\d\d/, // 00 - 99
-        parseTokenThreeDigits = /\d{3}/, // 000 - 999
-        parseTokenFourDigits = /\d{4}/, // 0000 - 9999
-        parseTokenSixDigits = /[+-]?\d{6}/, // -999,999 - 999,999
-        parseTokenSignedNumber = /[+-]?\d+/, // -inf - inf
-
-        // iso 8601 regex
-        // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
-        isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
-
-        isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
-
-        isoDates = [
-            ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
-            ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
-            ['GGGG-[W]WW-E', /\d{4}-W\d{2}-\d/],
-            ['GGGG-[W]WW', /\d{4}-W\d{2}/],
-            ['YYYY-DDD', /\d{4}-\d{3}/]
-        ],
-
-        // iso time formats and regexes
-        isoTimes = [
-            ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d+/],
-            ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
-            ['HH:mm', /(T| )\d\d:\d\d/],
-            ['HH', /(T| )\d\d/]
-        ],
-
-        // timezone chunker '+10:00' > ['10', '00'] or '-1530' > ['-15', '30']
-        parseTimezoneChunker = /([\+\-]|\d\d)/gi,
-
-        // getter and setter names
-        proxyGettersAndSetters = 'Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
-        unitMillisecondFactors = {
-            'Milliseconds' : 1,
-            'Seconds' : 1e3,
-            'Minutes' : 6e4,
-            'Hours' : 36e5,
-            'Days' : 864e5,
-            'Months' : 2592e6,
-            'Years' : 31536e6
-        },
-
-        unitAliases = {
-            ms : 'millisecond',
-            s : 'second',
-            m : 'minute',
-            h : 'hour',
-            d : 'day',
-            D : 'date',
-            w : 'week',
-            W : 'isoWeek',
-            M : 'month',
-            Q : 'quarter',
-            y : 'year',
-            DDD : 'dayOfYear',
-            e : 'weekday',
-            E : 'isoWeekday',
-            gg: 'weekYear',
-            GG: 'isoWeekYear'
-        },
-
-        camelFunctions = {
-            dayofyear : 'dayOfYear',
-            isoweekday : 'isoWeekday',
-            isoweek : 'isoWeek',
-            weekyear : 'weekYear',
-            isoweekyear : 'isoWeekYear'
-        },
-
-        // format function strings
-        formatFunctions = {},
-
-        // default relative time thresholds
-        relativeTimeThresholds = {
-            s: 45,  // seconds to minute
-            m: 45,  // minutes to hour
-            h: 22,  // hours to day
-            d: 26,  // days to month
-            M: 11   // months to year
-        },
-
-        // tokens to ordinalize and pad
-        ordinalizeTokens = 'DDD w W M D d'.split(' '),
-        paddedTokens = 'M D H h m s w W'.split(' '),
-
-        formatTokenFunctions = {
-            M    : function () {
-                return this.month() + 1;
-            },
-            MMM  : function (format) {
-                return this.localeData().monthsShort(this, format);
-            },
-            MMMM : function (format) {
-                return this.localeData().months(this, format);
-            },
-            D    : function () {
-                return this.date();
-            },
-            DDD  : function () {
-                return this.dayOfYear();
-            },
-            d    : function () {
-                return this.day();
-            },
-            dd   : function (format) {
-                return this.localeData().weekdaysMin(this, format);
-            },
-            ddd  : function (format) {
-                return this.localeData().weekdaysShort(this, format);
-            },
-            dddd : function (format) {
-                return this.localeData().weekdays(this, format);
-            },
-            w    : function () {
-                return this.week();
-            },
-            W    : function () {
-                return this.isoWeek();
-            },
-            YY   : function () {
-                return leftZeroFill(this.year() % 100, 2);
-            },
-            YYYY : function () {
-                return leftZeroFill(this.year(), 4);
-            },
-            YYYYY : function () {
-                return leftZeroFill(this.year(), 5);
-            },
-            YYYYYY : function () {
-                var y = this.year(), sign = y >= 0 ? '+' : '-';
-                return sign + leftZeroFill(Math.abs(y), 6);
-            },
-            gg   : function () {
-                return leftZeroFill(this.weekYear() % 100, 2);
-            },
-            gggg : function () {
-                return leftZeroFill(this.weekYear(), 4);
-            },
-            ggggg : function () {
-                return leftZeroFill(this.weekYear(), 5);
-            },
-            GG   : function () {
-                return leftZeroFill(this.isoWeekYear() % 100, 2);
-            },
-            GGGG : function () {
-                return leftZeroFill(this.isoWeekYear(), 4);
-            },
-            GGGGG : function () {
-                return leftZeroFill(this.isoWeekYear(), 5);
-            },
-            e : function () {
-                return this.weekday();
-            },
-            E : function () {
-                return this.isoWeekday();
-            },
-            a    : function () {
-                return this.localeData().meridiem(this.hours(), this.minutes(), true);
-            },
-            A    : function () {
-                return this.localeData().meridiem(this.hours(), this.minutes(), false);
-            },
-            H    : function () {
-                return this.hours();
-            },
-            h    : function () {
-                return this.hours() % 12 || 12;
-            },
-            m    : function () {
-                return this.minutes();
-            },
-            s    : function () {
-                return this.seconds();
-            },
-            S    : function () {
-                return toInt(this.milliseconds() / 100);
-            },
-            SS   : function () {
-                return leftZeroFill(toInt(this.milliseconds() / 10), 2);
-            },
-            SSS  : function () {
-                return leftZeroFill(this.milliseconds(), 3);
-            },
-            SSSS : function () {
-                return leftZeroFill(this.milliseconds(), 3);
-            },
-            Z    : function () {
-                var a = -this.zone(),
-                    b = '+';
-                if (a < 0) {
-                    a = -a;
-                    b = '-';
-                }
-                return b + leftZeroFill(toInt(a / 60), 2) + ':' + leftZeroFill(toInt(a) % 60, 2);
-            },
-            ZZ   : function () {
-                var a = -this.zone(),
-                    b = '+';
-                if (a < 0) {
-                    a = -a;
-                    b = '-';
-                }
-                return b + leftZeroFill(toInt(a / 60), 2) + leftZeroFill(toInt(a) % 60, 2);
-            },
-            z : function () {
-                return this.zoneAbbr();
-            },
-            zz : function () {
-                return this.zoneName();
-            },
-            x    : function () {
-                return this.valueOf();
-            },
-            X    : function () {
-                return this.unix();
-            },
-            Q : function () {
-                return this.quarter();
-            }
-        },
-
-        deprecations = {},
-
-        lists = ['months', 'monthsShort', 'weekdays', 'weekdaysShort', 'weekdaysMin'];
-
-    // Pick the first defined of two or three arguments. dfl comes from
-    // default.
-    function dfl(a, b, c) {
-        switch (arguments.length) {
-            case 2: return a != null ? a : b;
-            case 3: return a != null ? a : b != null ? b : c;
-            default: throw new Error('Implement me');
-        }
-    }
-
-    function hasOwnProp(a, b) {
-        return hasOwnProperty.call(a, b);
-    }
-
-    function defaultParsingFlags() {
-        // We need to deep clone this object, and es5 standard is not very
-        // helpful.
-        return {
-            empty : false,
-            unusedTokens : [],
-            unusedInput : [],
-            overflow : -2,
-            charsLeftOver : 0,
-            nullInput : false,
-            invalidMonth : null,
-            invalidFormat : false,
-            userInvalidated : false,
-            iso: false
-        };
-    }
-
-    function printMsg(msg) {
-        if (moment.suppressDeprecationWarnings === false &&
-                typeof console !== 'undefined' && console.warn) {
-            console.warn('Deprecation warning: ' + msg);
-        }
-    }
-
-    function deprecate(msg, fn) {
-        var firstTime = true;
-        return extend(function () {
-            if (firstTime) {
-                printMsg(msg);
-                firstTime = false;
-            }
-            return fn.apply(this, arguments);
-        }, fn);
-    }
-
-    function deprecateSimple(name, msg) {
-        if (!deprecations[name]) {
-            printMsg(msg);
-            deprecations[name] = true;
-        }
-    }
-
-    function padToken(func, count) {
-        return function (a) {
-            return leftZeroFill(func.call(this, a), count);
-        };
-    }
-    function ordinalizeToken(func, period) {
-        return function (a) {
-            return this.localeData().ordinal(func.call(this, a), period);
-        };
-    }
-
-    while (ordinalizeTokens.length) {
-        i = ordinalizeTokens.pop();
-        formatTokenFunctions[i + 'o'] = ordinalizeToken(formatTokenFunctions[i], i);
-    }
-    while (paddedTokens.length) {
-        i = paddedTokens.pop();
-        formatTokenFunctions[i + i] = padToken(formatTokenFunctions[i], 2);
-    }
-    formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
-
-
-    /************************************
-        Constructors
-    ************************************/
-
-    function Locale() {
-    }
-
-    // Moment prototype object
-    function Moment(config, skipOverflow) {
-        if (skipOverflow !== false) {
-            checkOverflow(config);
-        }
-        copyConfig(this, config);
-        this._d = new Date(+config._d);
-    }
-
-    // Duration Constructor
-    function Duration(duration) {
-        var normalizedInput = normalizeObjectUnits(duration),
-            years = normalizedInput.year || 0,
-            quarters = normalizedInput.quarter || 0,
-            months = normalizedInput.month || 0,
-            weeks = normalizedInput.week || 0,
-            days = normalizedInput.day || 0,
-            hours = normalizedInput.hour || 0,
-            minutes = normalizedInput.minute || 0,
-            seconds = normalizedInput.second || 0,
-            milliseconds = normalizedInput.millisecond || 0;
-
-        // representation for dateAddRemove
-        this._milliseconds = +milliseconds +
-            seconds * 1e3 + // 1000
-            minutes * 6e4 + // 1000 * 60
-            hours * 36e5; // 1000 * 60 * 60
-        // Because of dateAddRemove treats 24 hours as different from a
-        // day when working around DST, we need to store them separately
-        this._days = +days +
-            weeks * 7;
-        // It is impossible translate months into days without knowing
-        // which months you are are talking about, so we have to store
-        // it separately.
-        this._months = +months +
-            quarters * 3 +
-            years * 12;
-
-        this._data = {};
-
-        this._locale = moment.localeData();
-
-        this._bubble();
-    }
-
-    /************************************
-        Helpers
-    ************************************/
-
-
-    function extend(a, b) {
-        for (var i in b) {
-            if (hasOwnProp(b, i)) {
-                a[i] = b[i];
-            }
-        }
-
-        if (hasOwnProp(b, 'toString')) {
-            a.toString = b.toString;
-        }
-
-        if (hasOwnProp(b, 'valueOf')) {
-            a.valueOf = b.valueOf;
-        }
-
-        return a;
-    }
-
-    function copyConfig(to, from) {
-        var i, prop, val;
-
-        if (typeof from._isAMomentObject !== 'undefined') {
-            to._isAMomentObject = from._isAMomentObject;
-        }
-        if (typeof from._i !== 'undefined') {
-            to._i = from._i;
-        }
-        if (typeof from._f !== 'undefined') {
-            to._f = from._f;
-        }
-        if (typeof from._l !== 'undefined') {
-            to._l = from._l;
-        }
-        if (typeof from._strict !== 'undefined') {
-            to._strict = from._strict;
-        }
-        if (typeof from._tzm !== 'undefined') {
-            to._tzm = from._tzm;
-        }
-        if (typeof from._isUTC !== 'undefined') {
-            to._isUTC = from._isUTC;
-        }
-        if (typeof from._offset !== 'undefined') {
-            to._offset = from._offset;
-        }
-        if (typeof from._pf !== 'undefined') {
-            to._pf = from._pf;
-        }
-        if (typeof from._locale !== 'undefined') {
-            to._locale = from._locale;
-        }
-
-        if (momentProperties.length > 0) {
-            for (i in momentProperties) {
-                prop = momentProperties[i];
-                val = from[prop];
-                if (typeof val !== 'undefined') {
-                    to[prop] = val;
-                }
-            }
-        }
-
-        return to;
-    }
-
-    function absRound(number) {
-        if (number < 0) {
-            return Math.ceil(number);
-        } else {
-            return Math.floor(number);
-        }
-    }
-
-    // left zero fill a number
-    // see http://jsperf.com/left-zero-filling for performance comparison
-    function leftZeroFill(number, targetLength, forceSign) {
-        var output = '' + Math.abs(number),
-            sign = number >= 0;
-
-        while (output.length < targetLength) {
-            output = '0' + output;
-        }
-        return (sign ? (forceSign ? '+' : '') : '-') + output;
-    }
-
-    function positiveMomentsDifference(base, other) {
-        var res = {milliseconds: 0, months: 0};
-
-        res.months = other.month() - base.month() +
-            (other.year() - base.year()) * 12;
-        if (base.clone().add(res.months, 'M').isAfter(other)) {
-            --res.months;
-        }
-
-        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
-
-        return res;
-    }
-
-    function momentsDifference(base, other) {
-        var res;
-        other = makeAs(other, base);
-        if (base.isBefore(other)) {
-            res = positiveMomentsDifference(base, other);
-        } else {
-            res = positiveMomentsDifference(other, base);
-            res.milliseconds = -res.milliseconds;
-            res.months = -res.months;
-        }
-
-        return res;
-    }
-
-    // TODO: remove 'name' arg after deprecation is removed
-    function createAdder(direction, name) {
-        return function (val, period) {
-            var dur, tmp;
-            //invert the arguments, but complain about it
-            if (period !== null && !isNaN(+period)) {
-                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
-                tmp = val; val = period; period = tmp;
-            }
-
-            val = typeof val === 'string' ? +val : val;
-            dur = moment.duration(val, period);
-            addOrSubtractDurationFromMoment(this, dur, direction);
-            return this;
-        };
-    }
-
-    function addOrSubtractDurationFromMoment(mom, duration, isAdding, updateOffset) {
-        var milliseconds = duration._milliseconds,
-            days = duration._days,
-            months = duration._months;
-        updateOffset = updateOffset == null ? true : updateOffset;
-
-        if (milliseconds) {
-            mom._d.setTime(+mom._d + milliseconds * isAdding);
-        }
-        if (days) {
-            rawSetter(mom, 'Date', rawGetter(mom, 'Date') + days * isAdding);
-        }
-        if (months) {
-            rawMonthSetter(mom, rawGetter(mom, 'Month') + months * isAdding);
-        }
-        if (updateOffset) {
-            moment.updateOffset(mom, days || months);
-        }
-    }
-
-    // check if is an array
-    function isArray(input) {
-        return Object.prototype.toString.call(input) === '[object Array]';
-    }
-
-    function isDate(input) {
-        return Object.prototype.toString.call(input) === '[object Date]' ||
-            input instanceof Date;
-    }
-
-    // compare two arrays, return the number of differences
-    function compareArrays(array1, array2, dontConvert) {
-        var len = Math.min(array1.length, array2.length),
-            lengthDiff = Math.abs(array1.length - array2.length),
-            diffs = 0,
-            i;
-        for (i = 0; i < len; i++) {
-            if ((dontConvert && array1[i] !== array2[i]) ||
-                (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
-                diffs++;
-            }
-        }
-        return diffs + lengthDiff;
-    }
-
-    function normalizeUnits(units) {
-        if (units) {
-            var lowered = units.toLowerCase().replace(/(.)s$/, '$1');
-            units = unitAliases[units] || camelFunctions[lowered] || lowered;
-        }
-        return units;
-    }
-
-    function normalizeObjectUnits(inputObject) {
-        var normalizedInput = {},
-            normalizedProp,
-            prop;
-
-        for (prop in inputObject) {
-            if (hasOwnProp(inputObject, prop)) {
-                normalizedProp = normalizeUnits(prop);
-                if (normalizedProp) {
-                    normalizedInput[normalizedProp] = inputObject[prop];
-                }
-            }
-        }
-
-        return normalizedInput;
-    }
-
-    function makeList(field) {
-        var count, setter;
-
-        if (field.indexOf('week') === 0) {
-            count = 7;
-            setter = 'day';
-        }
-        else if (field.indexOf('month') === 0) {
-            count = 12;
-            setter = 'month';
-        }
-        else {
-            return;
-        }
-
-        moment[field] = function (format, index) {
-            var i, getter,
-                method = moment._locale[field],
-                results = [];
-
-            if (typeof format === 'number') {
-                index = format;
-                format = undefined;
-            }
-
-            getter = function (i) {
-                var m = moment().utc().set(setter, i);
-                return method.call(moment._locale, m, format || '');
-            };
-
-            if (index != null) {
-                return getter(index);
-            }
-            else {
-                for (i = 0; i < count; i++) {
-                    results.push(getter(i));
-                }
-                return results;
-            }
-        };
-    }
-
-    function toInt(argumentForCoercion) {
-        var coercedNumber = +argumentForCoercion,
-            value = 0;
-
-        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
-            if (coercedNumber >= 0) {
-                value = Math.floor(coercedNumber);
-            } else {
-                value = Math.ceil(coercedNumber);
-            }
-        }
-
-        return value;
-    }
-
-    function daysInMonth(year, month) {
-        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
-    }
-
-    function weeksInYear(year, dow, doy) {
-        return weekOfYear(moment([year, 11, 31 + dow - doy]), dow, doy).week;
-    }
-
-    function daysInYear(year) {
-        return isLeapYear(year) ? 366 : 365;
-    }
-
-    function isLeapYear(year) {
-        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-    }
-
-    function checkOverflow(m) {
-        var overflow;
-        if (m._a && m._pf.overflow === -2) {
-            overflow =
-                m._a[MONTH] < 0 || m._a[MONTH] > 11 ? MONTH :
-                m._a[DATE] < 1 || m._a[DATE] > daysInMonth(m._a[YEAR], m._a[MONTH]) ? DATE :
-                m._a[HOUR] < 0 || m._a[HOUR] > 24 ||
-                    (m._a[HOUR] === 24 && (m._a[MINUTE] !== 0 ||
-                                           m._a[SECOND] !== 0 ||
-                                           m._a[MILLISECOND] !== 0)) ? HOUR :
-                m._a[MINUTE] < 0 || m._a[MINUTE] > 59 ? MINUTE :
-                m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
-                m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
-                -1;
-
-            if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
-                overflow = DATE;
-            }
-
-            m._pf.overflow = overflow;
-        }
-    }
-
-    function isValid(m) {
-        if (m._isValid == null) {
-            m._isValid = !isNaN(m._d.getTime()) &&
-                m._pf.overflow < 0 &&
-                !m._pf.empty &&
-                !m._pf.invalidMonth &&
-                !m._pf.nullInput &&
-                !m._pf.invalidFormat &&
-                !m._pf.userInvalidated;
-
-            if (m._strict) {
-                m._isValid = m._isValid &&
-                    m._pf.charsLeftOver === 0 &&
-                    m._pf.unusedTokens.length === 0 &&
-                    m._pf.bigHour === undefined;
-            }
-        }
-        return m._isValid;
-    }
-
-    function normalizeLocale(key) {
-        return key ? key.toLowerCase().replace('_', '-') : key;
-    }
-
-    // pick the locale from the array
-    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
-    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
-    function chooseLocale(names) {
-        var i = 0, j, next, locale, split;
-
-        while (i < names.length) {
-            split = normalizeLocale(names[i]).split('-');
-            j = split.length;
-            next = normalizeLocale(names[i + 1]);
-            next = next ? next.split('-') : null;
-            while (j > 0) {
-                locale = loadLocale(split.slice(0, j).join('-'));
-                if (locale) {
-                    return locale;
-                }
-                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
-                    //the next array item is better than a shallower substring of this one
-                    break;
-                }
-                j--;
-            }
-            i++;
-        }
-        return null;
-    }
-
-    function loadLocale(name) {
-        var oldLocale = null;
-        if (!locales[name] && hasModule) {
-            try {
-                oldLocale = moment.locale();
-                require('./locale/' + name);
-                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
-                moment.locale(oldLocale);
-            } catch (e) { }
-        }
-        return locales[name];
-    }
-
-    // Return a moment from input, that is local/utc/zone equivalent to model.
-    function makeAs(input, model) {
-        var res, diff;
-        if (model._isUTC) {
-            res = model.clone();
-            diff = (moment.isMoment(input) || isDate(input) ?
-                    +input : +moment(input)) - (+res);
-            // Use low-level api, because this fn is low-level api.
-            res._d.setTime(+res._d + diff);
-            moment.updateOffset(res, false);
-            return res;
-        } else {
-            return moment(input).local();
-        }
-    }
-
-    /************************************
-        Locale
-    ************************************/
-
-
-    extend(Locale.prototype, {
-
-        set : function (config) {
-            var prop, i;
-            for (i in config) {
-                prop = config[i];
-                if (typeof prop === 'function') {
-                    this[i] = prop;
-                } else {
-                    this['_' + i] = prop;
-                }
-            }
-            // Lenient ordinal parsing accepts just a number in addition to
-            // number + (possibly) stuff coming from _ordinalParseLenient.
-            this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + /\d{1,2}/.source);
-        },
-
-        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-        months : function (m) {
-            return this._months[m.month()];
-        },
-
-        _monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
-        monthsShort : function (m) {
-            return this._monthsShort[m.month()];
-        },
-
-        monthsParse : function (monthName, format, strict) {
-            var i, mom, regex;
-
-            if (!this._monthsParse) {
-                this._monthsParse = [];
-                this._longMonthsParse = [];
-                this._shortMonthsParse = [];
-            }
-
-            for (i = 0; i < 12; i++) {
-                // make the regex if we don't have it already
-                mom = moment.utc([2000, i]);
-                if (strict && !this._longMonthsParse[i]) {
-                    this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
-                    this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
-                }
-                if (!strict && !this._monthsParse[i]) {
-                    regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
-                    this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
-                }
-                // test the regex
-                if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
-                    return i;
-                } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
-                    return i;
-                } else if (!strict && this._monthsParse[i].test(monthName)) {
-                    return i;
-                }
-            }
-        },
-
-        _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
-        weekdays : function (m) {
-            return this._weekdays[m.day()];
-        },
-
-        _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-        weekdaysShort : function (m) {
-            return this._weekdaysShort[m.day()];
-        },
-
-        _weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-        weekdaysMin : function (m) {
-            return this._weekdaysMin[m.day()];
-        },
-
-        weekdaysParse : function (weekdayName) {
-            var i, mom, regex;
-
-            if (!this._weekdaysParse) {
-                this._weekdaysParse = [];
-            }
-
-            for (i = 0; i < 7; i++) {
-                // make the regex if we don't have it already
-                if (!this._weekdaysParse[i]) {
-                    mom = moment([2000, 1]).day(i);
-                    regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
-                    this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
-                }
-                // test the regex
-                if (this._weekdaysParse[i].test(weekdayName)) {
-                    return i;
-                }
-            }
-        },
-
-        _longDateFormat : {
-            LTS : 'h:mm:ss A',
-            LT : 'h:mm A',
-            L : 'MM/DD/YYYY',
-            LL : 'MMMM D, YYYY',
-            LLL : 'MMMM D, YYYY LT',
-            LLLL : 'dddd, MMMM D, YYYY LT'
-        },
-        longDateFormat : function (key) {
-            var output = this._longDateFormat[key];
-            if (!output && this._longDateFormat[key.toUpperCase()]) {
-                output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
-                    return val.slice(1);
-                });
-                this._longDateFormat[key] = output;
-            }
-            return output;
-        },
-
-        isPM : function (input) {
-            // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
-            // Using charAt should be more compatible.
-            return ((input + '').toLowerCase().charAt(0) === 'p');
-        },
-
-        _meridiemParse : /[ap]\.?m?\.?/i,
-        meridiem : function (hours, minutes, isLower) {
-            if (hours > 11) {
-                return isLower ? 'pm' : 'PM';
-            } else {
-                return isLower ? 'am' : 'AM';
-            }
-        },
-
-        _calendar : {
-            sameDay : '[Today at] LT',
-            nextDay : '[Tomorrow at] LT',
-            nextWeek : 'dddd [at] LT',
-            lastDay : '[Yesterday at] LT',
-            lastWeek : '[Last] dddd [at] LT',
-            sameElse : 'L'
-        },
-        calendar : function (key, mom, now) {
-            var output = this._calendar[key];
-            return typeof output === 'function' ? output.apply(mom, [now]) : output;
-        },
-
-        _relativeTime : {
-            future : 'in %s',
-            past : '%s ago',
-            s : 'a few seconds',
-            m : 'a minute',
-            mm : '%d minutes',
-            h : 'an hour',
-            hh : '%d hours',
-            d : 'a day',
-            dd : '%d days',
-            M : 'a month',
-            MM : '%d months',
-            y : 'a year',
-            yy : '%d years'
-        },
-
-        relativeTime : function (number, withoutSuffix, string, isFuture) {
-            var output = this._relativeTime[string];
-            return (typeof output === 'function') ?
-                output(number, withoutSuffix, string, isFuture) :
-                output.replace(/%d/i, number);
-        },
-
-        pastFuture : function (diff, output) {
-            var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
-            return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
-        },
-
-        ordinal : function (number) {
-            return this._ordinal.replace('%d', number);
-        },
-        _ordinal : '%d',
-        _ordinalParse : /\d{1,2}/,
-
-        preparse : function (string) {
-            return string;
-        },
-
-        postformat : function (string) {
-            return string;
-        },
-
-        week : function (mom) {
-            return weekOfYear(mom, this._week.dow, this._week.doy).week;
-        },
-
-        _week : {
-            dow : 0, // Sunday is the first day of the week.
-            doy : 6  // The week that contains Jan 1st is the first week of the year.
-        },
-
-        _invalidDate: 'Invalid date',
-        invalidDate: function () {
-            return this._invalidDate;
-        }
-    });
-
-    /************************************
-        Formatting
-    ************************************/
-
-
-    function removeFormattingTokens(input) {
-        if (input.match(/\[[\s\S]/)) {
-            return input.replace(/^\[|\]$/g, '');
-        }
-        return input.replace(/\\/g, '');
-    }
-
-    function makeFormatFunction(format) {
-        var array = format.match(formattingTokens), i, length;
-
-        for (i = 0, length = array.length; i < length; i++) {
-            if (formatTokenFunctions[array[i]]) {
-                array[i] = formatTokenFunctions[array[i]];
-            } else {
-                array[i] = removeFormattingTokens(array[i]);
-            }
-        }
-
-        return function (mom) {
-            var output = '';
-            for (i = 0; i < length; i++) {
-                output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
-            }
-            return output;
-        };
-    }
-
-    // format date using native date object
-    function formatMoment(m, format) {
-        if (!m.isValid()) {
-            return m.localeData().invalidDate();
-        }
-
-        format = expandFormat(format, m.localeData());
-
-        if (!formatFunctions[format]) {
-            formatFunctions[format] = makeFormatFunction(format);
-        }
-
-        return formatFunctions[format](m);
-    }
-
-    function expandFormat(format, locale) {
-        var i = 5;
-
-        function replaceLongDateFormatTokens(input) {
-            return locale.longDateFormat(input) || input;
-        }
-
-        localFormattingTokens.lastIndex = 0;
-        while (i >= 0 && localFormattingTokens.test(format)) {
-            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
-            localFormattingTokens.lastIndex = 0;
-            i -= 1;
-        }
-
-        return format;
-    }
-
-
-    /************************************
-        Parsing
-    ************************************/
-
-
-    // get the regex to find the next token
-    function getParseRegexForToken(token, config) {
-        var a, strict = config._strict;
-        switch (token) {
-        case 'Q':
-            return parseTokenOneDigit;
-        case 'DDDD':
-            return parseTokenThreeDigits;
-        case 'YYYY':
-        case 'GGGG':
-        case 'gggg':
-            return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
-        case 'Y':
-        case 'G':
-        case 'g':
-            return parseTokenSignedNumber;
-        case 'YYYYYY':
-        case 'YYYYY':
-        case 'GGGGG':
-        case 'ggggg':
-            return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
-        case 'S':
-            if (strict) {
-                return parseTokenOneDigit;
-            }
-            /* falls through */
-        case 'SS':
-            if (strict) {
-                return parseTokenTwoDigits;
-            }
-            /* falls through */
-        case 'SSS':
-            if (strict) {
-                return parseTokenThreeDigits;
-            }
-            /* falls through */
-        case 'DDD':
-            return parseTokenOneToThreeDigits;
-        case 'MMM':
-        case 'MMMM':
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            return parseTokenWord;
-        case 'a':
-        case 'A':
-            return config._locale._meridiemParse;
-        case 'x':
-            return parseTokenOffsetMs;
-        case 'X':
-            return parseTokenTimestampMs;
-        case 'Z':
-        case 'ZZ':
-            return parseTokenTimezone;
-        case 'T':
-            return parseTokenT;
-        case 'SSSS':
-            return parseTokenDigits;
-        case 'MM':
-        case 'DD':
-        case 'YY':
-        case 'GG':
-        case 'gg':
-        case 'HH':
-        case 'hh':
-        case 'mm':
-        case 'ss':
-        case 'ww':
-        case 'WW':
-            return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
-        case 'M':
-        case 'D':
-        case 'd':
-        case 'H':
-        case 'h':
-        case 'm':
-        case 's':
-        case 'w':
-        case 'W':
-        case 'e':
-        case 'E':
-            return parseTokenOneOrTwoDigits;
-        case 'Do':
-            return strict ? config._locale._ordinalParse : config._locale._ordinalParseLenient;
-        default :
-            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
-            return a;
-        }
-    }
-
-    function timezoneMinutesFromString(string) {
-        string = string || '';
-        var possibleTzMatches = (string.match(parseTokenTimezone) || []),
-            tzChunk = possibleTzMatches[possibleTzMatches.length - 1] || [],
-            parts = (tzChunk + '').match(parseTimezoneChunker) || ['-', 0, 0],
-            minutes = +(parts[1] * 60) + toInt(parts[2]);
-
-        return parts[0] === '+' ? -minutes : minutes;
-    }
-
-    // function to convert string input to date
-    function addTimeToArrayFromToken(token, input, config) {
-        var a, datePartArray = config._a;
-
-        switch (token) {
-        // QUARTER
-        case 'Q':
-            if (input != null) {
-                datePartArray[MONTH] = (toInt(input) - 1) * 3;
-            }
-            break;
-        // MONTH
-        case 'M' : // fall through to MM
-        case 'MM' :
-            if (input != null) {
-                datePartArray[MONTH] = toInt(input) - 1;
-            }
-            break;
-        case 'MMM' : // fall through to MMMM
-        case 'MMMM' :
-            a = config._locale.monthsParse(input, token, config._strict);
-            // if we didn't find a month name, mark the date as invalid.
-            if (a != null) {
-                datePartArray[MONTH] = a;
-            } else {
-                config._pf.invalidMonth = input;
-            }
-            break;
-        // DAY OF MONTH
-        case 'D' : // fall through to DD
-        case 'DD' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(input);
-            }
-            break;
-        case 'Do' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(parseInt(
-                            input.match(/\d{1,2}/)[0], 10));
-            }
-            break;
-        // DAY OF YEAR
-        case 'DDD' : // fall through to DDDD
-        case 'DDDD' :
-            if (input != null) {
-                config._dayOfYear = toInt(input);
-            }
-
-            break;
-        // YEAR
-        case 'YY' :
-            datePartArray[YEAR] = moment.parseTwoDigitYear(input);
-            break;
-        case 'YYYY' :
-        case 'YYYYY' :
-        case 'YYYYYY' :
-            datePartArray[YEAR] = toInt(input);
-            break;
-        // AM / PM
-        case 'a' : // fall through to A
-        case 'A' :
-            config._isPm = config._locale.isPM(input);
-            break;
-        // HOUR
-        case 'h' : // fall through to hh
-        case 'hh' :
-            config._pf.bigHour = true;
-            /* falls through */
-        case 'H' : // fall through to HH
-        case 'HH' :
-            datePartArray[HOUR] = toInt(input);
-            break;
-        // MINUTE
-        case 'm' : // fall through to mm
-        case 'mm' :
-            datePartArray[MINUTE] = toInt(input);
-            break;
-        // SECOND
-        case 's' : // fall through to ss
-        case 'ss' :
-            datePartArray[SECOND] = toInt(input);
-            break;
-        // MILLISECOND
-        case 'S' :
-        case 'SS' :
-        case 'SSS' :
-        case 'SSSS' :
-            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
-            break;
-        // UNIX OFFSET (MILLISECONDS)
-        case 'x':
-            config._d = new Date(toInt(input));
-            break;
-        // UNIX TIMESTAMP WITH MS
-        case 'X':
-            config._d = new Date(parseFloat(input) * 1000);
-            break;
-        // TIMEZONE
-        case 'Z' : // fall through to ZZ
-        case 'ZZ' :
-            config._useUTC = true;
-            config._tzm = timezoneMinutesFromString(input);
-            break;
-        // WEEKDAY - human
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            a = config._locale.weekdaysParse(input);
-            // if we didn't get a weekday name, mark the date as invalid
-            if (a != null) {
-                config._w = config._w || {};
-                config._w['d'] = a;
-            } else {
-                config._pf.invalidWeekday = input;
-            }
-            break;
-        // WEEK, WEEK DAY - numeric
-        case 'w':
-        case 'ww':
-        case 'W':
-        case 'WW':
-        case 'd':
-        case 'e':
-        case 'E':
-            token = token.substr(0, 1);
-            /* falls through */
-        case 'gggg':
-        case 'GGGG':
-        case 'GGGGG':
-            token = token.substr(0, 2);
-            if (input) {
-                config._w = config._w || {};
-                config._w[token] = toInt(input);
-            }
-            break;
-        case 'gg':
-        case 'GG':
-            config._w = config._w || {};
-            config._w[token] = moment.parseTwoDigitYear(input);
-        }
-    }
-
-    function dayOfYearFromWeekInfo(config) {
-        var w, weekYear, week, weekday, dow, doy, temp;
-
-        w = config._w;
-        if (w.GG != null || w.W != null || w.E != null) {
-            dow = 1;
-            doy = 4;
-
-            // TODO: We need to take the current isoWeekYear, but that depends on
-            // how we interpret now (local, utc, fixed offset). So create
-            // a now version of current config (take local/utc/offset flags, and
-            // create now).
-            weekYear = dfl(w.GG, config._a[YEAR], weekOfYear(moment(), 1, 4).year);
-            week = dfl(w.W, 1);
-            weekday = dfl(w.E, 1);
-        } else {
-            dow = config._locale._week.dow;
-            doy = config._locale._week.doy;
-
-            weekYear = dfl(w.gg, config._a[YEAR], weekOfYear(moment(), dow, doy).year);
-            week = dfl(w.w, 1);
-
-            if (w.d != null) {
-                // weekday -- low day numbers are considered next week
-                weekday = w.d;
-                if (weekday < dow) {
-                    ++week;
-                }
-            } else if (w.e != null) {
-                // local weekday -- counting starts from begining of week
-                weekday = w.e + dow;
-            } else {
-                // default to begining of week
-                weekday = dow;
-            }
-        }
-        temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
-
-        config._a[YEAR] = temp.year;
-        config._dayOfYear = temp.dayOfYear;
-    }
-
-    // convert an array to a date.
-    // the array should mirror the parameters below
-    // note: all values past the year are optional and will default to the lowest possible value.
-    // [year, month, day , hour, minute, second, millisecond]
-    function dateFromConfig(config) {
-        var i, date, input = [], currentDate, yearToUse;
-
-        if (config._d) {
-            return;
-        }
-
-        currentDate = currentDateArray(config);
-
-        //compute day of the year from weeks and weekdays
-        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
-            dayOfYearFromWeekInfo(config);
-        }
-
-        //if the day of the year is set, figure out what it is
-        if (config._dayOfYear) {
-            yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
-
-            if (config._dayOfYear > daysInYear(yearToUse)) {
-                config._pf._overflowDayOfYear = true;
-            }
-
-            date = makeUTCDate(yearToUse, 0, config._dayOfYear);
-            config._a[MONTH] = date.getUTCMonth();
-            config._a[DATE] = date.getUTCDate();
-        }
-
-        // Default to current date.
-        // * if no year, month, day of month are given, default to today
-        // * if day of month is given, default month and year
-        // * if month is given, default only year
-        // * if year is given, don't default anything
-        for (i = 0; i < 3 && config._a[i] == null; ++i) {
-            config._a[i] = input[i] = currentDate[i];
-        }
-
-        // Zero out whatever was not defaulted, including time
-        for (; i < 7; i++) {
-            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
-        }
-
-        // Check for 24:00:00.000
-        if (config._a[HOUR] === 24 &&
-                config._a[MINUTE] === 0 &&
-                config._a[SECOND] === 0 &&
-                config._a[MILLISECOND] === 0) {
-            config._nextDay = true;
-            config._a[HOUR] = 0;
-        }
-
-        config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
-        // Apply timezone offset from input. The actual zone can be changed
-        // with parseZone.
-        if (config._tzm != null) {
-            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
-        }
-
-        if (config._nextDay) {
-            config._a[HOUR] = 24;
-        }
-    }
-
-    function dateFromObject(config) {
-        var normalizedInput;
-
-        if (config._d) {
-            return;
-        }
-
-        normalizedInput = normalizeObjectUnits(config._i);
-        config._a = [
-            normalizedInput.year,
-            normalizedInput.month,
-            normalizedInput.day || normalizedInput.date,
-            normalizedInput.hour,
-            normalizedInput.minute,
-            normalizedInput.second,
-            normalizedInput.millisecond
-        ];
-
-        dateFromConfig(config);
-    }
-
-    function currentDateArray(config) {
-        var now = new Date();
-        if (config._useUTC) {
-            return [
-                now.getUTCFullYear(),
-                now.getUTCMonth(),
-                now.getUTCDate()
-            ];
-        } else {
-            return [now.getFullYear(), now.getMonth(), now.getDate()];
-        }
-    }
-
-    // date from string and format string
-    function makeDateFromStringAndFormat(config) {
-        if (config._f === moment.ISO_8601) {
-            parseISO(config);
-            return;
-        }
-
-        config._a = [];
-        config._pf.empty = true;
-
-        // This array is used to make a Date, either with `new Date` or `Date.UTC`
-        var string = '' + config._i,
-            i, parsedInput, tokens, token, skipped,
-            stringLength = string.length,
-            totalParsedInputLength = 0;
-
-        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
-
-        for (i = 0; i < tokens.length; i++) {
-            token = tokens[i];
-            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
-            if (parsedInput) {
-                skipped = string.substr(0, string.indexOf(parsedInput));
-                if (skipped.length > 0) {
-                    config._pf.unusedInput.push(skipped);
-                }
-                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
-                totalParsedInputLength += parsedInput.length;
-            }
-            // don't parse if it's not a known token
-            if (formatTokenFunctions[token]) {
-                if (parsedInput) {
-                    config._pf.empty = false;
-                }
-                else {
-                    config._pf.unusedTokens.push(token);
-                }
-                addTimeToArrayFromToken(token, parsedInput, config);
-            }
-            else if (config._strict && !parsedInput) {
-                config._pf.unusedTokens.push(token);
-            }
-        }
-
-        // add remaining unparsed input length to the string
-        config._pf.charsLeftOver = stringLength - totalParsedInputLength;
-        if (string.length > 0) {
-            config._pf.unusedInput.push(string);
-        }
-
-        // clear _12h flag if hour is <= 12
-        if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
-            config._pf.bigHour = undefined;
-        }
-        // handle am pm
-        if (config._isPm && config._a[HOUR] < 12) {
-            config._a[HOUR] += 12;
-        }
-        // if is 12 am, change hours to 0
-        if (config._isPm === false && config._a[HOUR] === 12) {
-            config._a[HOUR] = 0;
-        }
-        dateFromConfig(config);
-        checkOverflow(config);
-    }
-
-    function unescapeFormat(s) {
-        return s.replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
-            return p1 || p2 || p3 || p4;
-        });
-    }
-
-    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
-    function regexpEscape(s) {
-        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    }
-
-    // date from string and array of format strings
-    function makeDateFromStringAndArray(config) {
-        var tempConfig,
-            bestMoment,
-
-            scoreToBeat,
-            i,
-            currentScore;
-
-        if (config._f.length === 0) {
-            config._pf.invalidFormat = true;
-            config._d = new Date(NaN);
-            return;
-        }
-
-        for (i = 0; i < config._f.length; i++) {
-            currentScore = 0;
-            tempConfig = copyConfig({}, config);
-            if (config._useUTC != null) {
-                tempConfig._useUTC = config._useUTC;
-            }
-            tempConfig._pf = defaultParsingFlags();
-            tempConfig._f = config._f[i];
-            makeDateFromStringAndFormat(tempConfig);
-
-            if (!isValid(tempConfig)) {
-                continue;
-            }
-
-            // if there is any input that was not parsed add a penalty for that format
-            currentScore += tempConfig._pf.charsLeftOver;
-
-            //or tokens
-            currentScore += tempConfig._pf.unusedTokens.length * 10;
-
-            tempConfig._pf.score = currentScore;
-
-            if (scoreToBeat == null || currentScore < scoreToBeat) {
-                scoreToBeat = currentScore;
-                bestMoment = tempConfig;
-            }
-        }
-
-        extend(config, bestMoment || tempConfig);
-    }
-
-    // date from iso format
-    function parseISO(config) {
-        var i, l,
-            string = config._i,
-            match = isoRegex.exec(string);
-
-        if (match) {
-            config._pf.iso = true;
-            for (i = 0, l = isoDates.length; i < l; i++) {
-                if (isoDates[i][1].exec(string)) {
-                    // match[5] should be 'T' or undefined
-                    config._f = isoDates[i][0] + (match[6] || ' ');
-                    break;
-                }
-            }
-            for (i = 0, l = isoTimes.length; i < l; i++) {
-                if (isoTimes[i][1].exec(string)) {
-                    config._f += isoTimes[i][0];
-                    break;
-                }
-            }
-            if (string.match(parseTokenTimezone)) {
-                config._f += 'Z';
-            }
-            makeDateFromStringAndFormat(config);
-        } else {
-            config._isValid = false;
-        }
-    }
-
-    // date from iso format or fallback
-    function makeDateFromString(config) {
-        parseISO(config);
-        if (config._isValid === false) {
-            delete config._isValid;
-            moment.createFromInputFallback(config);
-        }
-    }
-
-    function map(arr, fn) {
-        var res = [], i;
-        for (i = 0; i < arr.length; ++i) {
-            res.push(fn(arr[i], i));
-        }
-        return res;
-    }
-
-    function makeDateFromInput(config) {
-        var input = config._i, matched;
-        if (input === undefined) {
-            config._d = new Date();
-        } else if (isDate(input)) {
-            config._d = new Date(+input);
-        } else if ((matched = aspNetJsonRegex.exec(input)) !== null) {
-            config._d = new Date(+matched[1]);
-        } else if (typeof input === 'string') {
-            makeDateFromString(config);
-        } else if (isArray(input)) {
-            config._a = map(input.slice(0), function (obj) {
-                return parseInt(obj, 10);
-            });
-            dateFromConfig(config);
-        } else if (typeof(input) === 'object') {
-            dateFromObject(config);
-        } else if (typeof(input) === 'number') {
-            // from milliseconds
-            config._d = new Date(input);
-        } else {
-            moment.createFromInputFallback(config);
-        }
-    }
-
-    function makeDate(y, m, d, h, M, s, ms) {
-        //can't just apply() to create a date:
-        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
-        var date = new Date(y, m, d, h, M, s, ms);
-
-        //the date constructor doesn't accept years < 1970
-        if (y < 1970) {
-            date.setFullYear(y);
-        }
-        return date;
-    }
-
-    function makeUTCDate(y) {
-        var date = new Date(Date.UTC.apply(null, arguments));
-        if (y < 1970) {
-            date.setUTCFullYear(y);
-        }
-        return date;
-    }
-
-    function parseWeekday(input, locale) {
-        if (typeof input === 'string') {
-            if (!isNaN(input)) {
-                input = parseInt(input, 10);
-            }
-            else {
-                input = locale.weekdaysParse(input);
-                if (typeof input !== 'number') {
-                    return null;
-                }
-            }
-        }
-        return input;
-    }
-
-    /************************************
-        Relative Time
-    ************************************/
-
-
-    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
-    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
-        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
-    }
-
-    function relativeTime(posNegDuration, withoutSuffix, locale) {
-        var duration = moment.duration(posNegDuration).abs(),
-            seconds = round(duration.as('s')),
-            minutes = round(duration.as('m')),
-            hours = round(duration.as('h')),
-            days = round(duration.as('d')),
-            months = round(duration.as('M')),
-            years = round(duration.as('y')),
-
-            args = seconds < relativeTimeThresholds.s && ['s', seconds] ||
-                minutes === 1 && ['m'] ||
-                minutes < relativeTimeThresholds.m && ['mm', minutes] ||
-                hours === 1 && ['h'] ||
-                hours < relativeTimeThresholds.h && ['hh', hours] ||
-                days === 1 && ['d'] ||
-                days < relativeTimeThresholds.d && ['dd', days] ||
-                months === 1 && ['M'] ||
-                months < relativeTimeThresholds.M && ['MM', months] ||
-                years === 1 && ['y'] || ['yy', years];
-
-        args[2] = withoutSuffix;
-        args[3] = +posNegDuration > 0;
-        args[4] = locale;
-        return substituteTimeAgo.apply({}, args);
-    }
-
-
-    /************************************
-        Week of Year
-    ************************************/
-
-
-    // firstDayOfWeek       0 = sun, 6 = sat
-    //                      the day of the week that starts the week
-    //                      (usually sunday or monday)
-    // firstDayOfWeekOfYear 0 = sun, 6 = sat
-    //                      the first week is the week that contains the first
-    //                      of this day of the week
-    //                      (eg. ISO weeks use thursday (4))
-    function weekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
-        var end = firstDayOfWeekOfYear - firstDayOfWeek,
-            daysToDayOfWeek = firstDayOfWeekOfYear - mom.day(),
-            adjustedMoment;
-
-
-        if (daysToDayOfWeek > end) {
-            daysToDayOfWeek -= 7;
-        }
-
-        if (daysToDayOfWeek < end - 7) {
-            daysToDayOfWeek += 7;
-        }
-
-        adjustedMoment = moment(mom).add(daysToDayOfWeek, 'd');
-        return {
-            week: Math.ceil(adjustedMoment.dayOfYear() / 7),
-            year: adjustedMoment.year()
-        };
-    }
-
-    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
-    function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
-        var d = makeUTCDate(year, 0, 1).getUTCDay(), daysToAdd, dayOfYear;
-
-        d = d === 0 ? 7 : d;
-        weekday = weekday != null ? weekday : firstDayOfWeek;
-        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
-        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
-
-        return {
-            year: dayOfYear > 0 ? year : year - 1,
-            dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
-        };
-    }
-
-    /************************************
-        Top Level Functions
-    ************************************/
-
-    function makeMoment(config) {
-        var input = config._i,
-            format = config._f,
-            res;
-
-        config._locale = config._locale || moment.localeData(config._l);
-
-        if (input === null || (format === undefined && input === '')) {
-            return moment.invalid({nullInput: true});
-        }
-
-        if (typeof input === 'string') {
-            config._i = input = config._locale.preparse(input);
-        }
-
-        if (moment.isMoment(input)) {
-            return new Moment(input, true);
-        } else if (format) {
-            if (isArray(format)) {
-                makeDateFromStringAndArray(config);
-            } else {
-                makeDateFromStringAndFormat(config);
-            }
-        } else {
-            makeDateFromInput(config);
-        }
-
-        res = new Moment(config);
-        if (res._nextDay) {
-            // Adding is smart enough around DST
-            res.add(1, 'd');
-            res._nextDay = undefined;
-        }
-
-        return res;
-    }
-
-    moment = function (input, format, locale, strict) {
-        var c;
-
-        if (typeof(locale) === 'boolean') {
-            strict = locale;
-            locale = undefined;
-        }
-        // object construction must be done this way.
-        // https://github.com/moment/moment/issues/1423
-        c = {};
-        c._isAMomentObject = true;
-        c._i = input;
-        c._f = format;
-        c._l = locale;
-        c._strict = strict;
-        c._isUTC = false;
-        c._pf = defaultParsingFlags();
-
-        return makeMoment(c);
-    };
-
-    moment.suppressDeprecationWarnings = false;
-
-    moment.createFromInputFallback = deprecate(
-        'moment construction falls back to js Date. This is ' +
-        'discouraged and will be removed in upcoming major ' +
-        'release. Please refer to ' +
-        'https://github.com/moment/moment/issues/1407 for more info.',
-        function (config) {
-            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
-        }
-    );
-
-    // Pick a moment m from moments so that m[fn](other) is true for all
-    // other. This relies on the function fn to be transitive.
-    //
-    // moments should either be an array of moment objects or an array, whose
-    // first element is an array of moment objects.
-    function pickBy(fn, moments) {
-        var res, i;
-        if (moments.length === 1 && isArray(moments[0])) {
-            moments = moments[0];
-        }
-        if (!moments.length) {
-            return moment();
-        }
-        res = moments[0];
-        for (i = 1; i < moments.length; ++i) {
-            if (moments[i][fn](res)) {
-                res = moments[i];
-            }
-        }
-        return res;
-    }
-
-    moment.min = function () {
-        var args = [].slice.call(arguments, 0);
-
-        return pickBy('isBefore', args);
-    };
-
-    moment.max = function () {
-        var args = [].slice.call(arguments, 0);
-
-        return pickBy('isAfter', args);
-    };
-
-    // creating with utc
-    moment.utc = function (input, format, locale, strict) {
-        var c;
-
-        if (typeof(locale) === 'boolean') {
-            strict = locale;
-            locale = undefined;
-        }
-        // object construction must be done this way.
-        // https://github.com/moment/moment/issues/1423
-        c = {};
-        c._isAMomentObject = true;
-        c._useUTC = true;
-        c._isUTC = true;
-        c._l = locale;
-        c._i = input;
-        c._f = format;
-        c._strict = strict;
-        c._pf = defaultParsingFlags();
-
-        return makeMoment(c).utc();
-    };
-
-    // creating with unix timestamp (in seconds)
-    moment.unix = function (input) {
-        return moment(input * 1000);
-    };
-
-    // duration
-    moment.duration = function (input, key) {
-        var duration = input,
-            // matching against regexp is expensive, do it on demand
-            match = null,
-            sign,
-            ret,
-            parseIso,
-            diffRes;
-
-        if (moment.isDuration(input)) {
-            duration = {
-                ms: input._milliseconds,
-                d: input._days,
-                M: input._months
-            };
-        } else if (typeof input === 'number') {
-            duration = {};
-            if (key) {
-                duration[key] = input;
-            } else {
-                duration.milliseconds = input;
-            }
-        } else if (!!(match = aspNetTimeSpanJsonRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : 1;
-            duration = {
-                y: 0,
-                d: toInt(match[DATE]) * sign,
-                h: toInt(match[HOUR]) * sign,
-                m: toInt(match[MINUTE]) * sign,
-                s: toInt(match[SECOND]) * sign,
-                ms: toInt(match[MILLISECOND]) * sign
-            };
-        } else if (!!(match = isoDurationRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : 1;
-            parseIso = function (inp) {
-                // We'd normally use ~~inp for this, but unfortunately it also
-                // converts floats to ints.
-                // inp may be undefined, so careful calling replace on it.
-                var res = inp && parseFloat(inp.replace(',', '.'));
-                // apply sign while we're at it
-                return (isNaN(res) ? 0 : res) * sign;
-            };
-            duration = {
-                y: parseIso(match[2]),
-                M: parseIso(match[3]),
-                d: parseIso(match[4]),
-                h: parseIso(match[5]),
-                m: parseIso(match[6]),
-                s: parseIso(match[7]),
-                w: parseIso(match[8])
-            };
-        } else if (typeof duration === 'object' &&
-                ('from' in duration || 'to' in duration)) {
-            diffRes = momentsDifference(moment(duration.from), moment(duration.to));
-
-            duration = {};
-            duration.ms = diffRes.milliseconds;
-            duration.M = diffRes.months;
-        }
-
-        ret = new Duration(duration);
-
-        if (moment.isDuration(input) && hasOwnProp(input, '_locale')) {
-            ret._locale = input._locale;
-        }
-
-        return ret;
-    };
-
-    // version number
-    moment.version = VERSION;
-
-    // default format
-    moment.defaultFormat = isoFormat;
-
-    // constant that refers to the ISO standard
-    moment.ISO_8601 = function () {};
-
-    // Plugins that add properties should also add the key here (null value),
-    // so we can properly clone ourselves.
-    moment.momentProperties = momentProperties;
-
-    // This function will be called whenever a moment is mutated.
-    // It is intended to keep the offset in sync with the timezone.
-    moment.updateOffset = function () {};
-
-    // This function allows you to set a threshold for relative time strings
-    moment.relativeTimeThreshold = function (threshold, limit) {
-        if (relativeTimeThresholds[threshold] === undefined) {
-            return false;
-        }
-        if (limit === undefined) {
-            return relativeTimeThresholds[threshold];
-        }
-        relativeTimeThresholds[threshold] = limit;
-        return true;
-    };
-
-    moment.lang = deprecate(
-        'moment.lang is deprecated. Use moment.locale instead.',
-        function (key, value) {
-            return moment.locale(key, value);
-        }
-    );
-
-    // This function will load locale and then set the global locale.  If
-    // no arguments are passed in, it will simply return the current global
-    // locale key.
-    moment.locale = function (key, values) {
-        var data;
-        if (key) {
-            if (typeof(values) !== 'undefined') {
-                data = moment.defineLocale(key, values);
-            }
-            else {
-                data = moment.localeData(key);
-            }
-
-            if (data) {
-                moment.duration._locale = moment._locale = data;
-            }
-        }
-
-        return moment._locale._abbr;
-    };
-
-    moment.defineLocale = function (name, values) {
-        if (values !== null) {
-            values.abbr = name;
-            if (!locales[name]) {
-                locales[name] = new Locale();
-            }
-            locales[name].set(values);
-
-            // backwards compat for now: also set the locale
-            moment.locale(name);
-
-            return locales[name];
-        } else {
-            // useful for testing
-            delete locales[name];
-            return null;
-        }
-    };
-
-    moment.langData = deprecate(
-        'moment.langData is deprecated. Use moment.localeData instead.',
-        function (key) {
-            return moment.localeData(key);
-        }
-    );
-
-    // returns locale data
-    moment.localeData = function (key) {
-        var locale;
-
-        if (key && key._locale && key._locale._abbr) {
-            key = key._locale._abbr;
-        }
-
-        if (!key) {
-            return moment._locale;
-        }
-
-        if (!isArray(key)) {
-            //short-circuit everything else
-            locale = loadLocale(key);
-            if (locale) {
-                return locale;
-            }
-            key = [key];
-        }
-
-        return chooseLocale(key);
-    };
-
-    // compare moment object
-    moment.isMoment = function (obj) {
-        return obj instanceof Moment ||
-            (obj != null && hasOwnProp(obj, '_isAMomentObject'));
-    };
-
-    // for typechecking Duration objects
-    moment.isDuration = function (obj) {
-        return obj instanceof Duration;
-    };
-
-    for (i = lists.length - 1; i >= 0; --i) {
-        makeList(lists[i]);
-    }
-
-    moment.normalizeUnits = function (units) {
-        return normalizeUnits(units);
-    };
-
-    moment.invalid = function (flags) {
-        var m = moment.utc(NaN);
-        if (flags != null) {
-            extend(m._pf, flags);
-        }
-        else {
-            m._pf.userInvalidated = true;
-        }
-
-        return m;
-    };
-
-    moment.parseZone = function () {
-        return moment.apply(null, arguments).parseZone();
-    };
-
-    moment.parseTwoDigitYear = function (input) {
-        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
-    };
-
-    /************************************
-        Moment Prototype
-    ************************************/
-
-
-    extend(moment.fn = Moment.prototype, {
-
-        clone : function () {
-            return moment(this);
-        },
-
-        valueOf : function () {
-            return +this._d + ((this._offset || 0) * 60000);
-        },
-
-        unix : function () {
-            return Math.floor(+this / 1000);
-        },
-
-        toString : function () {
-            return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
-        },
-
-        toDate : function () {
-            return this._offset ? new Date(+this) : this._d;
-        },
-
-        toISOString : function () {
-            var m = moment(this).utc();
-            if (0 < m.year() && m.year() <= 9999) {
-                if ('function' === typeof Date.prototype.toISOString) {
-                    // native implementation is ~50x faster, use it when we can
-                    return this.toDate().toISOString();
-                } else {
-                    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
-                }
-            } else {
-                return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
-            }
-        },
-
-        toArray : function () {
-            var m = this;
-            return [
-                m.year(),
-                m.month(),
-                m.date(),
-                m.hours(),
-                m.minutes(),
-                m.seconds(),
-                m.milliseconds()
-            ];
-        },
-
-        isValid : function () {
-            return isValid(this);
-        },
-
-        isDSTShifted : function () {
-            if (this._a) {
-                return this.isValid() && compareArrays(this._a, (this._isUTC ? moment.utc(this._a) : moment(this._a)).toArray()) > 0;
-            }
-
-            return false;
-        },
-
-        parsingFlags : function () {
-            return extend({}, this._pf);
-        },
-
-        invalidAt: function () {
-            return this._pf.overflow;
-        },
-
-        utc : function (keepLocalTime) {
-            return this.zone(0, keepLocalTime);
-        },
-
-        local : function (keepLocalTime) {
-            if (this._isUTC) {
-                this.zone(0, keepLocalTime);
-                this._isUTC = false;
-
-                if (keepLocalTime) {
-                    this.add(this._dateTzOffset(), 'm');
-                }
-            }
-            return this;
-        },
-
-        format : function (inputString) {
-            var output = formatMoment(this, inputString || moment.defaultFormat);
-            return this.localeData().postformat(output);
-        },
-
-        add : createAdder(1, 'add'),
-
-        subtract : createAdder(-1, 'subtract'),
-
-        diff : function (input, units, asFloat) {
-            var that = makeAs(input, this),
-                zoneDiff = (this.zone() - that.zone()) * 6e4,
-                diff, output, daysAdjust;
-
-            units = normalizeUnits(units);
-
-            if (units === 'year' || units === 'month') {
-                // average number of days in the months in the given dates
-                diff = (this.daysInMonth() + that.daysInMonth()) * 432e5; // 24 * 60 * 60 * 1000 / 2
-                // difference in months
-                output = ((this.year() - that.year()) * 12) + (this.month() - that.month());
-                // adjust by taking difference in days, average number of days
-                // and dst in the given months.
-                daysAdjust = (this - moment(this).startOf('month')) -
-                    (that - moment(that).startOf('month'));
-                // same as above but with zones, to negate all dst
-                daysAdjust -= ((this.zone() - moment(this).startOf('month').zone()) -
-                        (that.zone() - moment(that).startOf('month').zone())) * 6e4;
-                output += daysAdjust / diff;
-                if (units === 'year') {
-                    output = output / 12;
-                }
-            } else {
-                diff = (this - that);
-                output = units === 'second' ? diff / 1e3 : // 1000
-                    units === 'minute' ? diff / 6e4 : // 1000 * 60
-                    units === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
-                    units === 'day' ? (diff - zoneDiff) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
-                    units === 'week' ? (diff - zoneDiff) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
-                    diff;
-            }
-            return asFloat ? output : absRound(output);
-        },
-
-        from : function (time, withoutSuffix) {
-            return moment.duration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
-        },
-
-        fromNow : function (withoutSuffix) {
-            return this.from(moment(), withoutSuffix);
-        },
-
-        calendar : function (time) {
-            // We want to compare the start of today, vs this.
-            // Getting start-of-today depends on whether we're zone'd or not.
-            var now = time || moment(),
-                sod = makeAs(now, this).startOf('day'),
-                diff = this.diff(sod, 'days', true),
-                format = diff < -6 ? 'sameElse' :
-                    diff < -1 ? 'lastWeek' :
-                    diff < 0 ? 'lastDay' :
-                    diff < 1 ? 'sameDay' :
-                    diff < 2 ? 'nextDay' :
-                    diff < 7 ? 'nextWeek' : 'sameElse';
-            return this.format(this.localeData().calendar(format, this, moment(now)));
-        },
-
-        isLeapYear : function () {
-            return isLeapYear(this.year());
-        },
-
-        isDST : function () {
-            return (this.zone() < this.clone().month(0).zone() ||
-                this.zone() < this.clone().month(5).zone());
-        },
-
-        day : function (input) {
-            var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
-            if (input != null) {
-                input = parseWeekday(input, this.localeData());
-                return this.add(input - day, 'd');
-            } else {
-                return day;
-            }
-        },
-
-        month : makeAccessor('Month', true),
-
-        startOf : function (units) {
-            units = normalizeUnits(units);
-            // the following switch intentionally omits break keywords
-            // to utilize falling through the cases.
-            switch (units) {
-            case 'year':
-                this.month(0);
-                /* falls through */
-            case 'quarter':
-            case 'month':
-                this.date(1);
-                /* falls through */
-            case 'week':
-            case 'isoWeek':
-            case 'day':
-                this.hours(0);
-                /* falls through */
-            case 'hour':
-                this.minutes(0);
-                /* falls through */
-            case 'minute':
-                this.seconds(0);
-                /* falls through */
-            case 'second':
-                this.milliseconds(0);
-                /* falls through */
-            }
-
-            // weeks are a special case
-            if (units === 'week') {
-                this.weekday(0);
-            } else if (units === 'isoWeek') {
-                this.isoWeekday(1);
-            }
-
-            // quarters are also special
-            if (units === 'quarter') {
-                this.month(Math.floor(this.month() / 3) * 3);
-            }
-
-            return this;
-        },
-
-        endOf: function (units) {
-            units = normalizeUnits(units);
-            if (units === undefined || units === 'millisecond') {
-                return this;
-            }
-            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
-        },
-
-        isAfter: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this > +input;
-            } else {
-                inputMs = moment.isMoment(input) ? +input : +moment(input);
-                return inputMs < +this.clone().startOf(units);
-            }
-        },
-
-        isBefore: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this < +input;
-            } else {
-                inputMs = moment.isMoment(input) ? +input : +moment(input);
-                return +this.clone().endOf(units) < inputMs;
-            }
-        },
-
-        isSame: function (input, units) {
-            var inputMs;
-            units = normalizeUnits(units || 'millisecond');
-            if (units === 'millisecond') {
-                input = moment.isMoment(input) ? input : moment(input);
-                return +this === +input;
-            } else {
-                inputMs = +moment(input);
-                return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
-            }
-        },
-
-        min: deprecate(
-                 'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
-                 function (other) {
-                     other = moment.apply(null, arguments);
-                     return other < this ? this : other;
-                 }
-         ),
-
-        max: deprecate(
-                'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
-                function (other) {
-                    other = moment.apply(null, arguments);
-                    return other > this ? this : other;
-                }
-        ),
-
-        // keepLocalTime = true means only change the timezone, without
-        // affecting the local hour. So 5:31:26 +0300 --[zone(2, true)]-->
-        // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist int zone
-        // +0200, so we adjust the time as needed, to be valid.
-        //
-        // Keeping the time actually adds/subtracts (one hour)
-        // from the actual represented time. That is why we call updateOffset
-        // a second time. In case it wants us to change the offset again
-        // _changeInProgress == true case, then we have to adjust, because
-        // there is no such time in the given timezone.
-        zone : function (input, keepLocalTime) {
-            var offset = this._offset || 0,
-                localAdjust;
-            if (input != null) {
-                if (typeof input === 'string') {
-                    input = timezoneMinutesFromString(input);
-                }
-                if (Math.abs(input) < 16) {
-                    input = input * 60;
-                }
-                if (!this._isUTC && keepLocalTime) {
-                    localAdjust = this._dateTzOffset();
-                }
-                this._offset = input;
-                this._isUTC = true;
-                if (localAdjust != null) {
-                    this.subtract(localAdjust, 'm');
-                }
-                if (offset !== input) {
-                    if (!keepLocalTime || this._changeInProgress) {
-                        addOrSubtractDurationFromMoment(this,
-                                moment.duration(offset - input, 'm'), 1, false);
-                    } else if (!this._changeInProgress) {
-                        this._changeInProgress = true;
-                        moment.updateOffset(this, true);
-                        this._changeInProgress = null;
-                    }
-                }
-            } else {
-                return this._isUTC ? offset : this._dateTzOffset();
-            }
-            return this;
-        },
-
-        zoneAbbr : function () {
-            return this._isUTC ? 'UTC' : '';
-        },
-
-        zoneName : function () {
-            return this._isUTC ? 'Coordinated Universal Time' : '';
-        },
-
-        parseZone : function () {
-            if (this._tzm) {
-                this.zone(this._tzm);
-            } else if (typeof this._i === 'string') {
-                this.zone(this._i);
-            }
-            return this;
-        },
-
-        hasAlignedHourOffset : function (input) {
-            if (!input) {
-                input = 0;
-            }
-            else {
-                input = moment(input).zone();
-            }
-
-            return (this.zone() - input) % 60 === 0;
-        },
-
-        daysInMonth : function () {
-            return daysInMonth(this.year(), this.month());
-        },
-
-        dayOfYear : function (input) {
-            var dayOfYear = round((moment(this).startOf('day') - moment(this).startOf('year')) / 864e5) + 1;
-            return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
-        },
-
-        quarter : function (input) {
-            return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
-        },
-
-        weekYear : function (input) {
-            var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
-            return input == null ? year : this.add((input - year), 'y');
-        },
-
-        isoWeekYear : function (input) {
-            var year = weekOfYear(this, 1, 4).year;
-            return input == null ? year : this.add((input - year), 'y');
-        },
-
-        week : function (input) {
-            var week = this.localeData().week(this);
-            return input == null ? week : this.add((input - week) * 7, 'd');
-        },
-
-        isoWeek : function (input) {
-            var week = weekOfYear(this, 1, 4).week;
-            return input == null ? week : this.add((input - week) * 7, 'd');
-        },
-
-        weekday : function (input) {
-            var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
-            return input == null ? weekday : this.add(input - weekday, 'd');
-        },
-
-        isoWeekday : function (input) {
-            // behaves the same as moment#day except
-            // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
-            // as a setter, sunday should belong to the previous week.
-            return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
-        },
-
-        isoWeeksInYear : function () {
-            return weeksInYear(this.year(), 1, 4);
-        },
-
-        weeksInYear : function () {
-            var weekInfo = this.localeData()._week;
-            return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
-        },
-
-        get : function (units) {
-            units = normalizeUnits(units);
-            return this[units]();
-        },
-
-        set : function (units, value) {
-            units = normalizeUnits(units);
-            if (typeof this[units] === 'function') {
-                this[units](value);
-            }
-            return this;
-        },
-
-        // If passed a locale key, it will set the locale for this
-        // instance.  Otherwise, it will return the locale configuration
-        // variables for this instance.
-        locale : function (key) {
-            var newLocaleData;
-
-            if (key === undefined) {
-                return this._locale._abbr;
-            } else {
-                newLocaleData = moment.localeData(key);
-                if (newLocaleData != null) {
-                    this._locale = newLocaleData;
-                }
-                return this;
-            }
-        },
-
-        lang : deprecate(
-            'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
-            function (key) {
-                if (key === undefined) {
-                    return this.localeData();
-                } else {
-                    return this.locale(key);
-                }
-            }
-        ),
-
-        localeData : function () {
-            return this._locale;
-        },
-
-        _dateTzOffset : function () {
-            // On Firefox.24 Date#getTimezoneOffset returns a floating point.
-            // https://github.com/moment/moment/pull/1871
-            return Math.round(this._d.getTimezoneOffset() / 15) * 15;
-        }
-    });
-
-    function rawMonthSetter(mom, value) {
-        var dayOfMonth;
-
-        // TODO: Move this out of here!
-        if (typeof value === 'string') {
-            value = mom.localeData().monthsParse(value);
-            // TODO: Another silent failure?
-            if (typeof value !== 'number') {
-                return mom;
-            }
-        }
-
-        dayOfMonth = Math.min(mom.date(),
-                daysInMonth(mom.year(), value));
-        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
-        return mom;
-    }
-
-    function rawGetter(mom, unit) {
-        return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
-    }
-
-    function rawSetter(mom, unit, value) {
-        if (unit === 'Month') {
-            return rawMonthSetter(mom, value);
-        } else {
-            return mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
-        }
-    }
-
-    function makeAccessor(unit, keepTime) {
-        return function (value) {
-            if (value != null) {
-                rawSetter(this, unit, value);
-                moment.updateOffset(this, keepTime);
-                return this;
-            } else {
-                return rawGetter(this, unit);
-            }
-        };
-    }
-
-    moment.fn.millisecond = moment.fn.milliseconds = makeAccessor('Milliseconds', false);
-    moment.fn.second = moment.fn.seconds = makeAccessor('Seconds', false);
-    moment.fn.minute = moment.fn.minutes = makeAccessor('Minutes', false);
-    // Setting the hour should keep the time, because the user explicitly
-    // specified which hour he wants. So trying to maintain the same hour (in
-    // a new timezone) makes sense. Adding/subtracting hours does not follow
-    // this rule.
-    moment.fn.hour = moment.fn.hours = makeAccessor('Hours', true);
-    // moment.fn.month is defined separately
-    moment.fn.date = makeAccessor('Date', true);
-    moment.fn.dates = deprecate('dates accessor is deprecated. Use date instead.', makeAccessor('Date', true));
-    moment.fn.year = makeAccessor('FullYear', true);
-    moment.fn.years = deprecate('years accessor is deprecated. Use year instead.', makeAccessor('FullYear', true));
-
-    // add plural methods
-    moment.fn.days = moment.fn.day;
-    moment.fn.months = moment.fn.month;
-    moment.fn.weeks = moment.fn.week;
-    moment.fn.isoWeeks = moment.fn.isoWeek;
-    moment.fn.quarters = moment.fn.quarter;
-
-    // add aliased format methods
-    moment.fn.toJSON = moment.fn.toISOString;
-
-    /************************************
-        Duration Prototype
-    ************************************/
-
-
-    function daysToYears (days) {
-        // 400 years have 146097 days (taking into account leap year rules)
-        return days * 400 / 146097;
-    }
-
-    function yearsToDays (years) {
-        // years * 365 + absRound(years / 4) -
-        //     absRound(years / 100) + absRound(years / 400);
-        return years * 146097 / 400;
-    }
-
-    extend(moment.duration.fn = Duration.prototype, {
-
-        _bubble : function () {
-            var milliseconds = this._milliseconds,
-                days = this._days,
-                months = this._months,
-                data = this._data,
-                seconds, minutes, hours, years = 0;
-
-            // The following code bubbles up values, see the tests for
-            // examples of what that means.
-            data.milliseconds = milliseconds % 1000;
-
-            seconds = absRound(milliseconds / 1000);
-            data.seconds = seconds % 60;
-
-            minutes = absRound(seconds / 60);
-            data.minutes = minutes % 60;
-
-            hours = absRound(minutes / 60);
-            data.hours = hours % 24;
-
-            days += absRound(hours / 24);
-
-            // Accurately convert days to years, assume start from year 0.
-            years = absRound(daysToYears(days));
-            days -= absRound(yearsToDays(years));
-
-            // 30 days to a month
-            // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
-            months += absRound(days / 30);
-            days %= 30;
-
-            // 12 months -> 1 year
-            years += absRound(months / 12);
-            months %= 12;
-
-            data.days = days;
-            data.months = months;
-            data.years = years;
-        },
-
-        abs : function () {
-            this._milliseconds = Math.abs(this._milliseconds);
-            this._days = Math.abs(this._days);
-            this._months = Math.abs(this._months);
-
-            this._data.milliseconds = Math.abs(this._data.milliseconds);
-            this._data.seconds = Math.abs(this._data.seconds);
-            this._data.minutes = Math.abs(this._data.minutes);
-            this._data.hours = Math.abs(this._data.hours);
-            this._data.months = Math.abs(this._data.months);
-            this._data.years = Math.abs(this._data.years);
-
-            return this;
-        },
-
-        weeks : function () {
-            return absRound(this.days() / 7);
-        },
-
-        valueOf : function () {
-            return this._milliseconds +
-              this._days * 864e5 +
-              (this._months % 12) * 2592e6 +
-              toInt(this._months / 12) * 31536e6;
-        },
-
-        humanize : function (withSuffix) {
-            var output = relativeTime(this, !withSuffix, this.localeData());
-
-            if (withSuffix) {
-                output = this.localeData().pastFuture(+this, output);
-            }
-
-            return this.localeData().postformat(output);
-        },
-
-        add : function (input, val) {
-            // supports only 2.0-style add(1, 's') or add(moment)
-            var dur = moment.duration(input, val);
-
-            this._milliseconds += dur._milliseconds;
-            this._days += dur._days;
-            this._months += dur._months;
-
-            this._bubble();
-
-            return this;
-        },
-
-        subtract : function (input, val) {
-            var dur = moment.duration(input, val);
-
-            this._milliseconds -= dur._milliseconds;
-            this._days -= dur._days;
-            this._months -= dur._months;
-
-            this._bubble();
-
-            return this;
-        },
-
-        get : function (units) {
-            units = normalizeUnits(units);
-            return this[units.toLowerCase() + 's']();
-        },
-
-        as : function (units) {
-            var days, months;
-            units = normalizeUnits(units);
-
-            if (units === 'month' || units === 'year') {
-                days = this._days + this._milliseconds / 864e5;
-                months = this._months + daysToYears(days) * 12;
-                return units === 'month' ? months : months / 12;
-            } else {
-                // handle milliseconds separately because of floating point math errors (issue #1867)
-                days = this._days + Math.round(yearsToDays(this._months / 12));
-                switch (units) {
-                    case 'week': return days / 7 + this._milliseconds / 6048e5;
-                    case 'day': return days + this._milliseconds / 864e5;
-                    case 'hour': return days * 24 + this._milliseconds / 36e5;
-                    case 'minute': return days * 24 * 60 + this._milliseconds / 6e4;
-                    case 'second': return days * 24 * 60 * 60 + this._milliseconds / 1000;
-                    // Math.floor prevents floating point math errors here
-                    case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + this._milliseconds;
-                    default: throw new Error('Unknown unit ' + units);
-                }
-            }
-        },
-
-        lang : moment.fn.lang,
-        locale : moment.fn.locale,
-
-        toIsoString : deprecate(
-            'toIsoString() is deprecated. Please use toISOString() instead ' +
-            '(notice the capitals)',
-            function () {
-                return this.toISOString();
-            }
-        ),
-
-        toISOString : function () {
-            // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
-            var years = Math.abs(this.years()),
-                months = Math.abs(this.months()),
-                days = Math.abs(this.days()),
-                hours = Math.abs(this.hours()),
-                minutes = Math.abs(this.minutes()),
-                seconds = Math.abs(this.seconds() + this.milliseconds() / 1000);
-
-            if (!this.asSeconds()) {
-                // this is the same as C#'s (Noda) and python (isodate)...
-                // but not other JS (goog.date)
-                return 'P0D';
-            }
-
-            return (this.asSeconds() < 0 ? '-' : '') +
-                'P' +
-                (years ? years + 'Y' : '') +
-                (months ? months + 'M' : '') +
-                (days ? days + 'D' : '') +
-                ((hours || minutes || seconds) ? 'T' : '') +
-                (hours ? hours + 'H' : '') +
-                (minutes ? minutes + 'M' : '') +
-                (seconds ? seconds + 'S' : '');
-        },
-
-        localeData : function () {
-            return this._locale;
-        }
-    });
-
-    moment.duration.fn.toString = moment.duration.fn.toISOString;
-
-    function makeDurationGetter(name) {
-        moment.duration.fn[name] = function () {
-            return this._data[name];
-        };
-    }
-
-    for (i in unitMillisecondFactors) {
-        if (hasOwnProp(unitMillisecondFactors, i)) {
-            makeDurationGetter(i.toLowerCase());
-        }
-    }
-
-    moment.duration.fn.asMilliseconds = function () {
-        return this.as('ms');
-    };
-    moment.duration.fn.asSeconds = function () {
-        return this.as('s');
-    };
-    moment.duration.fn.asMinutes = function () {
-        return this.as('m');
-    };
-    moment.duration.fn.asHours = function () {
-        return this.as('h');
-    };
-    moment.duration.fn.asDays = function () {
-        return this.as('d');
-    };
-    moment.duration.fn.asWeeks = function () {
-        return this.as('weeks');
-    };
-    moment.duration.fn.asMonths = function () {
-        return this.as('M');
-    };
-    moment.duration.fn.asYears = function () {
-        return this.as('y');
-    };
-
-    /************************************
-        Default Locale
-    ************************************/
-
-
-    // Set default locale, other locale will inherit from English.
-    moment.locale('en', {
-        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
-        ordinal : function (number) {
-            var b = number % 10,
-                output = (toInt(number % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
-            return number + output;
-        }
-    });
-
-    /* EMBED_LOCALES */
-
-    /************************************
-        Exposing Moment
-    ************************************/
-
-    function makeGlobal(shouldDeprecate) {
-        /*global ender:false */
-        if (typeof ender !== 'undefined') {
-            return;
-        }
-        oldGlobalMoment = globalScope.moment;
-        if (shouldDeprecate) {
-            globalScope.moment = deprecate(
-                    'Accessing Moment through the global scope is ' +
-                    'deprecated, and will be removed in an upcoming ' +
-                    'release.',
-                    moment);
-        } else {
-            globalScope.moment = moment;
-        }
-    }
-
-    // CommonJS module is defined
-    if (hasModule) {
-        module.exports = moment;
-    } else if (typeof define === 'function' && define.amd) {
-        define('moment', function (require, exports, module) {
-            if (module.config && module.config() && module.config().noGlobal === true) {
-                // release the global variable
-                globalScope.moment = oldGlobalMoment;
-            }
-
-            return moment;
-        });
-        makeGlobal(true);
-    } else {
-        makeGlobal();
-    }
-}).call(this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
+},{"../../../node_modules/moment":246,"../shared/react/services/thumbor":237,"../shared/routes/api":239,"../shared/routes/routes":240,"./locales/moment/ru":2,"./locales/ru":3,"./react/pages/auth":209,"./react/pages/entry":210,"./react/pages/feedBest":211,"./react/pages/feedFriends":212,"./react/pages/feedLive":213,"./react/pages/messenger":214,"./react/pages/messengerThread":215,"./react/pages/notifications":217,"./react/pages/settings":218,"./react/pages/tlogDaylog":219,"./react/pages/tlogRegular":220,"eventEmitter":undefined,"i18next":undefined,"react":undefined}],2:[function(require,module,exports){
+// Подключаем оригинальный файл с локализацией. В нём производится определение перевода
+// вида moment.defineLocale(...)
+"use strict";
+
+require("../../../../../node_modules/moment/locale/ru");
+
+// Перезаписываем необходимые правила вендорной локализации.
+
+function plural(word, num) {
+  var forms = word.split("_");
+  return num % 10 === 1 && num % 100 !== 11 ? forms[0] : num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2];
+}
+
+function pastTime(output) {
+  return output != "только что" ? "%s назад".replace(/%s/i, output) : output;
+}
+
+function relativeTimeWithPlural(number, withoutSuffix, key) {
+  var format = {
+    mm: withoutSuffix ? "минута_минуты_минут" : "минуту_минуты_минут",
+    hh: "час_часа_часов",
+    dd: "день_дня_дней",
+    MM: "месяц_месяца_месяцев",
+    yy: "год_года_лет"
+  };
+
+  if (key === "m") {
+    return withoutSuffix ? "минута" : "минуту";
+  } else {
+    return number + " " + plural(format[key], +number);
+  }
+}
+
+moment.locale("ru", {
+  relativeTime: {
+    future: "через %s",
+    past: pastTime,
+    s: "только что",
+    m: relativeTimeWithPlural,
+    mm: relativeTimeWithPlural,
+    h: "час",
+    hh: relativeTimeWithPlural,
+    d: "день",
+    dd: relativeTimeWithPlural,
+    M: "месяц",
+    MM: relativeTimeWithPlural,
+    y: "год",
+    yy: relativeTimeWithPlural
+  }
+});
+
+},{"../../../../../node_modules/moment/locale/ru":245}],3:[function(require,module,exports){
 module.exports={
   "feed": {
     "best": "Лучшее",
@@ -3361,7 +294,7 @@ module.exports={
     "messenger_cant_talk": "Пользователь вас заблокировал"
   }
 }
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var AppDispatcher, Constants, CurrentUserServerActions;
 
 Constants = require('../../constants/constants');
@@ -3392,7 +325,7 @@ module.exports = CurrentUserServerActions;
 
 
 
-},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],6:[function(require,module,exports){
+},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],5:[function(require,module,exports){
 var AppDispatcher, Constants, FeedServerActions;
 
 Constants = require('../../constants/constants');
@@ -3418,7 +351,7 @@ module.exports = FeedServerActions;
 
 
 
-},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],7:[function(require,module,exports){
+},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],6:[function(require,module,exports){
 var AppDispatcher, Constants, MessengerServerActions;
 
 Constants = require('../../constants/constants');
@@ -3462,7 +395,7 @@ module.exports = MessengerServerActions;
 
 
 
-},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],8:[function(require,module,exports){
+},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],7:[function(require,module,exports){
 var AppDispatcher, Constants, NotificationsServerActions;
 
 Constants = require('../../constants/constants');
@@ -3495,7 +428,7 @@ module.exports = NotificationsServerActions;
 
 
 
-},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],9:[function(require,module,exports){
+},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],8:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
 
 Constants = require('../../constants/constants');
@@ -3518,7 +451,7 @@ module.exports = RelationshipServerActions;
 
 
 
-},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],10:[function(require,module,exports){
+},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],9:[function(require,module,exports){
 var Api, CurrentUserServerActions, CurrentUserViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -3563,7 +496,7 @@ module.exports = CurrentUserViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204,"../server/currentUser":5}],11:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203,"../server/currentUser":4}],10:[function(require,module,exports){
 var Api, EntryViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -3648,7 +581,7 @@ module.exports = EntryViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204}],12:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203}],11:[function(require,module,exports){
 var Api, FeedServerActions, FeedViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -3694,7 +627,7 @@ module.exports = FeedViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204,"../server/feed":6}],13:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203,"../server/feed":5}],12:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessengerServerActions, MessengerViewActions, NotifyController, UuidService;
 
 Api = require('../../api/api');
@@ -3768,7 +701,7 @@ module.exports = MessengerViewActions;
 
 
 
-},{"../../../../shared/react/services/uuid":239,"../../api/api":18,"../../constants/constants":196,"../../controllers/notify":204,"../../dispatcher/dispatcher":206,"../server/messenger":7}],14:[function(require,module,exports){
+},{"../../../../shared/react/services/uuid":238,"../../api/api":17,"../../constants/constants":195,"../../controllers/notify":203,"../../dispatcher/dispatcher":205,"../server/messenger":6}],13:[function(require,module,exports){
 var Api, NotificationsServerActions, NotificationsViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -3812,7 +745,7 @@ module.exports = NotificationsViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204,"../server/notifications":8}],15:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203,"../server/notifications":7}],14:[function(require,module,exports){
 var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
 
 Api = require('../../api/api');
@@ -3885,7 +818,7 @@ module.exports = RelationshipViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204,"../server/relationship":9}],16:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203,"../server/relationship":8}],15:[function(require,module,exports){
 var Api, NotifyController, SessionsViewActions;
 
 Api = require('../../api/api');
@@ -3926,7 +859,7 @@ module.exports = SessionsViewActions;
 
 
 
-},{"../../api/api":18,"../../controllers/notify":204}],17:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":203}],16:[function(require,module,exports){
 var Api, UsersViewActions;
 
 Api = require('../../api/api');
@@ -3941,7 +874,7 @@ module.exports = UsersViewActions;
 
 
 
-},{"../../api/api":18}],18:[function(require,module,exports){
+},{"../../api/api":17}],17:[function(require,module,exports){
 var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
 
 assign = require('react/lib/Object.assign');
@@ -4390,7 +1323,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":196,"../stores/currentUser":224,"react/lib/Object.assign":271}],19:[function(require,module,exports){
+},{"../constants/constants":195,"../stores/currentUser":223,"react/lib/Object.assign":272}],18:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -4461,7 +1394,7 @@ var Daylog = React.createClass({
 
 module.exports = Daylog;
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"../entry/Tlog":66,"./DaylogEmptyPage":20,"./DaylogOwnEmptyPage":21}],20:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"../entry/Tlog":65,"./DaylogEmptyPage":19,"./DaylogOwnEmptyPage":20}],19:[function(require,module,exports){
 "use strict";
 
 var DaylogEmptyPage = React.createClass({
@@ -4487,7 +1420,7 @@ var DaylogEmptyPage = React.createClass({
 
 module.exports = DaylogEmptyPage;
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 var DaylogOwnEmptyPage = React.createClass({
@@ -4578,7 +1511,7 @@ var DaylogOwnEmptyPage = React.createClass({
 
 module.exports = DaylogOwnEmptyPage;
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -4649,7 +1582,7 @@ var Tlog = React.createClass({
 
 module.exports = Tlog;
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"../entry/Tlog":66,"./TlogEmptyPage":23,"./TlogOwnEmptyPage":24}],23:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"../entry/Tlog":65,"./TlogEmptyPage":22,"./TlogOwnEmptyPage":23}],22:[function(require,module,exports){
 "use strict";
 
 var TlogEmptyPage = React.createClass({
@@ -4676,7 +1609,7 @@ var TlogEmptyPage = React.createClass({
 
 module.exports = TlogEmptyPage;
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 
 var TlogOwnEmptyPage = React.createClass({
@@ -4767,7 +1700,7 @@ var TlogOwnEmptyPage = React.createClass({
 
 module.exports = TlogOwnEmptyPage;
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var Notify, PropTypes, TIMEOUT, TYPE;
 
 PropTypes = React.PropTypes;
@@ -4809,7 +1742,7 @@ module.exports = Notify;
 
 
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (global){
 var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton, PropTypes, cx;
 
@@ -4877,7 +1810,7 @@ module.exports = Auth;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./buttons/emailSignIn":31,"./buttons/emailSignUp":32,"./buttons/facebook":34,"./buttons/vkontakte":35,"react/lib/cx":350}],27:[function(require,module,exports){
+},{"./buttons/emailSignIn":30,"./buttons/emailSignUp":31,"./buttons/facebook":33,"./buttons/vkontakte":34,"react/lib/cx":351}],26:[function(require,module,exports){
 var AuthEmailLoginField, AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, NotifyController, PropTypes, ScreenController, SessionsViewActions, cx;
 
 cx = require('react/lib/cx');
@@ -4990,7 +1923,7 @@ module.exports = AuthEmailRecovery;
 
 
 
-},{"../../actions/view/sessions":16,"../../controllers/notify":204,"../../controllers/screen":205,"../../mixins/component":208,"./buttons/emailReset":30,"./fields/emailLogin":36,"./links/rememberedPassword":40,"react/lib/cx":350}],28:[function(require,module,exports){
+},{"../../actions/view/sessions":15,"../../controllers/notify":203,"../../controllers/screen":204,"../../mixins/component":207,"./buttons/emailReset":29,"./fields/emailLogin":35,"./links/rememberedPassword":39,"react/lib/cx":351}],27:[function(require,module,exports){
 (function (global){
 var AuthEmailLoginField, AuthEmailPasswordField, AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, NotifyController, PropTypes, SessionsViewActions, cx;
 
@@ -5123,7 +2056,7 @@ module.exports = AuthEmailSignIn;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":16,"../../controllers/notify":204,"../../mixins/component":208,"./buttons/emailSubmit":33,"./fields/emailLogin":36,"./fields/emailPassword":37,"./links/forgotPassword":38,"./links/notRegisteredYet":39,"react/lib/cx":350}],29:[function(require,module,exports){
+},{"../../actions/view/sessions":15,"../../controllers/notify":203,"../../mixins/component":207,"./buttons/emailSubmit":32,"./fields/emailLogin":35,"./fields/emailPassword":36,"./links/forgotPassword":37,"./links/notRegisteredYet":38,"react/lib/cx":351}],28:[function(require,module,exports){
 var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -5153,7 +2086,7 @@ module.exports = AuthManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"./auth":26}],30:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"./auth":25}],29:[function(require,module,exports){
 var AuthEmailResetButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -5183,7 +2116,7 @@ module.exports = AuthEmailResetButton;
 
 
 
-},{"../../common/spinner/spinner":49}],31:[function(require,module,exports){
+},{"../../common/spinner/spinner":48}],30:[function(require,module,exports){
 var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5207,7 +2140,7 @@ module.exports = AuthEmailSignInButton;
 
 
 
-},{"../../../controllers/screen":205,"../authEmailSignIn":28}],32:[function(require,module,exports){
+},{"../../../controllers/screen":204,"../authEmailSignIn":27}],31:[function(require,module,exports){
 var AuthEmailSignUpButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5229,7 +2162,7 @@ module.exports = AuthEmailSignUpButton;
 
 
 
-},{"../../../controllers/screen":205}],33:[function(require,module,exports){
+},{"../../../controllers/screen":204}],32:[function(require,module,exports){
 var AuthEmailSubmitButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -5259,7 +2192,7 @@ module.exports = AuthEmailSubmitButton;
 
 
 
-},{"../../common/spinner/spinner":49}],34:[function(require,module,exports){
+},{"../../common/spinner/spinner":48}],33:[function(require,module,exports){
 var AuthFacebookButton;
 
 AuthFacebookButton = React.createClass({
@@ -5279,7 +2212,7 @@ module.exports = AuthFacebookButton;
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 var AuthVkontakteButton;
 
 AuthVkontakteButton = React.createClass({
@@ -5299,7 +2232,7 @@ module.exports = AuthVkontakteButton;
 
 
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var AuthEmailLoginField;
 
 AuthEmailLoginField = React.createClass({
@@ -5329,7 +2262,7 @@ module.exports = AuthEmailLoginField;
 
 
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 var AuthEmailPasswordField;
 
 AuthEmailPasswordField = React.createClass({
@@ -5359,7 +2292,7 @@ module.exports = AuthEmailPasswordField;
 
 
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5383,7 +2316,7 @@ module.exports = AuthForgotPasswordLink;
 
 
 
-},{"../../../controllers/screen":205,"../authEmailRecovery":27}],39:[function(require,module,exports){
+},{"../../../controllers/screen":204,"../authEmailRecovery":26}],38:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5405,7 +2338,7 @@ module.exports = AuthNotRegisteredYetLink;
 
 
 
-},{"../../../controllers/screen":205}],40:[function(require,module,exports){
+},{"../../../controllers/screen":204}],39:[function(require,module,exports){
 var AuthRememberedPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5427,7 +2360,7 @@ module.exports = AuthRememberedPasswordLink;
 
 
 
-},{"../../../controllers/screen":205}],41:[function(require,module,exports){
+},{"../../../controllers/screen":204}],40:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -5454,7 +2387,7 @@ var AuthButton = React.createClass({
 
 module.exports = AuthButton;
 
-},{"../../../controllers/screen":205}],42:[function(require,module,exports){
+},{"../../../controllers/screen":204}],41:[function(require,module,exports){
 var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -5489,7 +2422,7 @@ module.exports = AuthButtonManager;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":237,"../../../controllers/screen":205,"../../../stores/currentUser":224,"./auth":41}],43:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":236,"../../../controllers/screen":204,"../../../stores/currentUser":223,"./auth":40}],42:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, cx;
 
 cx = require('react/lib/cx');
@@ -5634,7 +2567,7 @@ module.exports = FollowButton;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":237,"../../../mixins/component":208,"../../../stores/relationships":229,"./mixins/relationship":44,"react/lib/cx":350}],44:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":236,"../../../mixins/component":207,"../../../stores/relationships":228,"./mixins/relationship":43,"react/lib/cx":351}],43:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -5672,7 +2605,7 @@ module.exports = RelationshipButtonMixin;
 
 
 
-},{"../../../../actions/view/relationship":15}],45:[function(require,module,exports){
+},{"../../../../actions/view/relationship":14}],44:[function(require,module,exports){
 var Avatar, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -5742,7 +2675,7 @@ module.exports = Avatar;
 
 
 
-},{"react/lib/cx":350}],46:[function(require,module,exports){
+},{"react/lib/cx":351}],45:[function(require,module,exports){
 var Avatar, PropTypes, UserAvatar;
 
 Avatar = require('./avatar');
@@ -5768,7 +2701,7 @@ module.exports = UserAvatar;
 
 
 
-},{"./avatar":45}],47:[function(require,module,exports){
+},{"./avatar":44}],46:[function(require,module,exports){
 var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
@@ -5806,7 +2739,7 @@ module.exports = FollowStatus;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":237,"../../../stores/relationships":229}],48:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":236,"../../../stores/relationships":228}],47:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5873,7 +2806,7 @@ module.exports = Image;
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -5903,7 +2836,7 @@ module.exports = Spinner;
 
 
 
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -5986,7 +2919,7 @@ var EntryFeed = React.createClass({
 
 module.exports = EntryFeed;
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../mixins/component":208,"../../stores/currentUser":224,"./Feed/Meta":51,"./Meta/Meta":52,"./comments/comments":84,"./content/content":86,"./mixins/entry":95}],51:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../mixins/component":207,"../../stores/currentUser":223,"./Feed/Meta":50,"./Meta/Meta":51,"./comments/comments":83,"./content/content":85,"./mixins/entry":94}],50:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6011,7 +2944,7 @@ var EntryFeedMeta = React.createClass({
 
 module.exports = EntryFeedMeta;
 
-},{"../Meta/MetaAuthor":54}],52:[function(require,module,exports){
+},{"../Meta/MetaAuthor":53}],51:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6059,7 +2992,7 @@ var EntryMeta = React.createClass({
 
 module.exports = EntryMeta;
 
-},{"./MetaActions":53,"./MetaComments":55,"./MetaDate":56,"./MetaVoting":57}],53:[function(require,module,exports){
+},{"./MetaActions":52,"./MetaComments":54,"./MetaDate":55,"./MetaVoting":56}],52:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6123,7 +3056,7 @@ var EntryMetaActions = React.createClass({
 
 module.exports = EntryMetaActions;
 
-},{"../../../mixins/clickOutside":207,"./actions/buttons/button":58,"./actions/dropdownMenu":59,"react/lib/cx":350}],54:[function(require,module,exports){
+},{"../../../mixins/clickOutside":206,"./actions/buttons/button":57,"./actions/dropdownMenu":58,"react/lib/cx":351}],53:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6158,7 +3091,7 @@ var EntryMetaAuthor = React.createClass({
 
 module.exports = EntryMetaAuthor;
 
-},{"../../common/avatar/user":46}],55:[function(require,module,exports){
+},{"../../common/avatar/user":45}],54:[function(require,module,exports){
 "use strict";
 
 var EntryMetaComments = React.createClass({
@@ -6184,7 +3117,7 @@ var EntryMetaComments = React.createClass({
 
 module.exports = EntryMetaComments;
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 var EntryMetaDate = React.createClass({
@@ -6224,7 +3157,7 @@ var EntryMetaDate = React.createClass({
 
 module.exports = EntryMetaDate;
 
-},{}],57:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6298,7 +3231,7 @@ var EntryMetaVoting = React.createClass({
 
 module.exports = EntryMetaVoting;
 
-},{"../../../actions/view/entry":11,"../../../mixins/component":208,"react/lib/cx":350}],58:[function(require,module,exports){
+},{"../../../actions/view/entry":10,"../../../mixins/component":207,"react/lib/cx":351}],57:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6322,7 +3255,7 @@ module.exports = EntryMetaActions_Button;
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes;
 
 DropdownMenuMixin = require('../../../../mixins/dropdownMenu');
@@ -6401,7 +3334,7 @@ module.exports = EntryMetaActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/dropdownMenu":209,"./dropdownMenu/items/delete":60,"./dropdownMenu/items/edit":61,"./dropdownMenu/items/favorite":62,"./dropdownMenu/items/link":63,"./dropdownMenu/items/report":64,"./dropdownMenu/items/watch":65}],60:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":208,"./dropdownMenu/items/delete":59,"./dropdownMenu/items/edit":60,"./dropdownMenu/items/favorite":61,"./dropdownMenu/items/link":62,"./dropdownMenu/items/report":63,"./dropdownMenu/items/watch":64}],59:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -6437,7 +3370,7 @@ module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],61:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],60:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6463,7 +3396,7 @@ module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
 
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -6540,7 +3473,7 @@ module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
 
-},{"../../../../../../actions/view/entry":11,"react/lib/cx":350}],63:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10,"react/lib/cx":351}],62:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6566,7 +3499,7 @@ module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -6602,7 +3535,7 @@ module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],65:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],64:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -6671,7 +3604,7 @@ module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
 
-},{"../../../../../../actions/view/entry":11}],66:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],65:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -6751,7 +3684,7 @@ var EntryTlog = React.createClass({
 
 module.exports = EntryTlog;
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../mixins/component":208,"../../stores/currentUser":224,"./Meta/Meta":52,"./comments/comments":84,"./content/content":86,"./mixins/entry":95}],67:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../mixins/component":207,"../../stores/currentUser":223,"./Meta/Meta":51,"./comments/comments":83,"./content/content":85,"./mixins/entry":94}],66:[function(require,module,exports){
 var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6774,7 +3707,7 @@ module.exports = CommentsLoadMoreButton;
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var CommentForm, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6841,7 +3774,7 @@ module.exports = CommentForm;
 
 
 
-},{}],69:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -6885,7 +3818,7 @@ module.exports = CommentCreateForm;
 
 
 
-},{"../../../../mixins/component":208,"../commentForm":68}],70:[function(require,module,exports){
+},{"../../../../mixins/component":207,"../commentForm":67}],69:[function(require,module,exports){
 var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -6931,7 +3864,7 @@ module.exports = CommentEditForm;
 
 
 
-},{"../../../../mixins/component":208,"../commentForm":68}],71:[function(require,module,exports){
+},{"../../../../mixins/component":207,"../commentForm":67}],70:[function(require,module,exports){
 var CommentList, CommentManager, PropTypes;
 
 CommentManager = require('./commentList/commentManager');
@@ -6971,7 +3904,7 @@ module.exports = CommentList;
 
 
 
-},{"./commentList/commentManager":83}],72:[function(require,module,exports){
+},{"./commentList/commentManager":82}],71:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -7014,7 +3947,7 @@ module.exports = Comment;
 
 
 
-},{"./comment/actions":73,"./comment/date":80,"./comment/text":81,"./comment/user":82}],73:[function(require,module,exports){
+},{"./comment/actions":72,"./comment/date":79,"./comment/text":80,"./comment/user":81}],72:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -7088,7 +4021,7 @@ module.exports = CommentActions;
 
 
 
-},{"../../../../../mixins/clickOutside":207,"../../../../common/avatar/user":46,"./actions/buttons/button":74,"./actions/dropdownMenu":75,"react/lib/cx":350}],74:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":206,"../../../../common/avatar/user":45,"./actions/buttons/button":73,"./actions/dropdownMenu":74,"react/lib/cx":351}],73:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7112,7 +4045,7 @@ module.exports = CommentActionsButton;
 
 
 
-},{}],75:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes;
 
 DropdownMenuMixin = require('../../../../../../mixins/dropdownMenu');
@@ -7179,7 +4112,7 @@ module.exports = CommentActionsDropdownMenu;
 
 
 
-},{"../../../../../../mixins/dropdownMenu":209,"./dropdownMenu/items/delete":76,"./dropdownMenu/items/edit":77,"./dropdownMenu/items/link":78,"./dropdownMenu/items/report":79}],76:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":208,"./dropdownMenu/items/delete":75,"./dropdownMenu/items/edit":76,"./dropdownMenu/items/link":77,"./dropdownMenu/items/report":78}],75:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7214,7 +4147,7 @@ module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
 
-},{}],77:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7240,7 +4173,7 @@ module.exports = CommentActionsDropdownMenuEditItem;
 
 
 
-},{}],78:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7270,7 +4203,7 @@ module.exports = CommentActionsDropdownMenuLinkItem;
 
 
 
-},{}],79:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7305,7 +4238,7 @@ module.exports = CommentActionsDropdownMenuReportItem;
 
 
 
-},{}],80:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7351,7 +4284,7 @@ module.exports = CommentDate;
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7375,7 +4308,7 @@ module.exports = CommentText;
 
 
 
-},{}],82:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -7408,7 +4341,7 @@ module.exports = CommentUser;
 
 
 
-},{"../../../../common/avatar/user":46}],83:[function(require,module,exports){
+},{"../../../../common/avatar/user":45}],82:[function(require,module,exports){
 var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
 
 Comment = require('./comment');
@@ -7477,7 +4410,7 @@ module.exports = CommentManager;
 
 
 
-},{"../../../../mixins/component":208,"../commentForm/edit":70,"./comment":72}],84:[function(require,module,exports){
+},{"../../../../mixins/component":207,"../commentForm/edit":69,"./comment":71}],83:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -7548,7 +4481,7 @@ module.exports = EntryComments;
 
 
 
-},{"./commentForm/create":69,"./commentList":71,"./commentsLoadMore":85}],85:[function(require,module,exports){
+},{"./commentForm/create":68,"./commentList":70,"./commentsLoadMore":84}],84:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -7605,7 +4538,7 @@ module.exports = CommentsLoadMore;
 
 
 
-},{"../../common/spinner/spinner":49,"./buttons/loadMore":67}],86:[function(require,module,exports){
+},{"../../common/spinner/spinner":48,"./buttons/loadMore":66}],85:[function(require,module,exports){
 var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
 
 TextEntryContent = require('./text/text');
@@ -7667,7 +4600,7 @@ module.exports = EntryContent;
 
 
 
-},{"./image/image":88,"./quote/quote":89,"./text/text":91,"./unknown/unknown":93,"./video/video":94}],87:[function(require,module,exports){
+},{"./image/image":87,"./quote/quote":88,"./text/text":90,"./unknown/unknown":92,"./video/video":93}],86:[function(require,module,exports){
 var CollageManager, ImageEntryAttachments, PropTypes;
 
 CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
@@ -7707,7 +4640,7 @@ module.exports = ImageEntryAttachments;
 
 
 
-},{"../../../../../../shared/react/components/common/collage/collageManager":233}],88:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/collage/collageManager":232}],87:[function(require,module,exports){
 var ImageEntryAttachments, ImageEntryContent, PropTypes;
 
 ImageEntryAttachments = require('./attachments');
@@ -7752,7 +4685,7 @@ module.exports = ImageEntryContent;
 
 
 
-},{"./attachments":87}],89:[function(require,module,exports){
+},{"./attachments":86}],88:[function(require,module,exports){
 var PropTypes, QuoteEntryContent;
 
 PropTypes = React.PropTypes;
@@ -7787,7 +4720,7 @@ module.exports = QuoteEntryContent;
 
 
 
-},{}],90:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 var PropTypes, TextEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -7810,7 +4743,7 @@ module.exports = TextEntryHeader;
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var PropTypes, TextEntryContent, TextEntryHeader;
 
 TextEntryHeader = require('./header');
@@ -7839,7 +4772,7 @@ module.exports = TextEntryContent;
 
 
 
-},{"./header":90}],92:[function(require,module,exports){
+},{"./header":89}],91:[function(require,module,exports){
 var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -7862,7 +4795,7 @@ module.exports = UnknownEntryHeader;
 
 
 
-},{}],93:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 var PropTypes, UnknownEntryContent, UnknownEntryHeader;
 
 UnknownEntryHeader = require('./header');
@@ -7887,7 +4820,7 @@ module.exports = UnknownEntryContent;
 
 
 
-},{"./header":92}],94:[function(require,module,exports){
+},{"./header":91}],93:[function(require,module,exports){
 var PropTypes, VideoEntryContent;
 
 PropTypes = React.PropTypes;
@@ -7925,7 +4858,7 @@ module.exports = VideoEntryContent;
 
 
 
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
 
 assign = require('react/lib/Object.assign');
@@ -8065,7 +4998,7 @@ module.exports = EntryMixin;
 
 
 
-},{"../../../actions/view/entry":11,"react/lib/Object.assign":271}],96:[function(require,module,exports){
+},{"../../../actions/view/entry":10,"react/lib/Object.assign":272}],95:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8087,7 +5020,7 @@ module.exports = FeedLoadMoreButton;
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 var FeedEmptyPageMessage, MESSAGE;
 
 MESSAGE = 'В ленте нет записей';
@@ -8111,7 +5044,7 @@ module.exports = FeedEmptyPageMessage;
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
 FeedEmptyPageMessage = require('./emptyPageMessage');
@@ -8161,7 +5094,7 @@ module.exports = Feed;
 
 
 
-},{"../entry/Feed":50,"./emptyPageMessage":97,"./loadMore":102}],99:[function(require,module,exports){
+},{"../entry/Feed":49,"./emptyPageMessage":96,"./loadMore":101}],98:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -8205,7 +5138,7 @@ module.exports = FeedBest;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],100:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],99:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -8249,7 +5182,7 @@ module.exports = FeedFriends;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],101:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],100:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -8293,7 +5226,7 @@ module.exports = FeedLive;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],102:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],101:[function(require,module,exports){
 var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -8332,7 +5265,7 @@ module.exports = FeedLoadMore;
 
 
 
-},{"../common/spinner/spinner":49,"./buttons/loadMore":96}],103:[function(require,module,exports){
+},{"../common/spinner/spinner":48,"./buttons/loadMore":95}],102:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedStore, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedStore = require('../../../stores/feed');
@@ -8386,7 +5319,7 @@ module.exports = FeedMixin;
 
 
 
-},{"../../../stores/feed":225}],104:[function(require,module,exports){
+},{"../../../stores/feed":224}],103:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8427,7 +5360,7 @@ module.exports = HeroFeed;
 
 
 
-},{}],105:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 var HeroFeed, HeroFeedBest, PropTypes;
 
 HeroFeed = require('./feed');
@@ -8451,7 +5384,7 @@ module.exports = HeroFeedBest;
 
 
 
-},{"./feed":104}],106:[function(require,module,exports){
+},{"./feed":103}],105:[function(require,module,exports){
 var HeroFeed, HeroFeedFriends, PropTypes;
 
 HeroFeed = require('./feed');
@@ -8475,7 +5408,7 @@ module.exports = HeroFeedFriends;
 
 
 
-},{"./feed":104}],107:[function(require,module,exports){
+},{"./feed":103}],106:[function(require,module,exports){
 var HeroFeed, HeroFeedLive, PropTypes;
 
 HeroFeed = require('./feed');
@@ -8499,7 +5432,7 @@ module.exports = HeroFeedLive;
 
 
 
-},{"./feed":104}],108:[function(require,module,exports){
+},{"./feed":103}],107:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -8642,7 +5575,7 @@ module.exports = HeroTlog;
 
 
 
-},{"../../../../shared/helpers/browser":230,"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"./tlog/actions":109,"./tlog/avatar":119,"./tlog/buttons/close":120,"./tlog/head":121,"./tlog/stats":122}],109:[function(require,module,exports){
+},{"../../../../shared/helpers/browser":229,"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"./tlog/actions":108,"./tlog/avatar":118,"./tlog/buttons/close":119,"./tlog/head":120,"./tlog/stats":121}],108:[function(require,module,exports){
 var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
 HeroTlogActions_User = require('./actions/user');
@@ -8686,7 +5619,7 @@ module.exports = HeroTlogActions;
 
 
 
-},{"./actions/currentUser":112,"./actions/user":118}],110:[function(require,module,exports){
+},{"./actions/currentUser":111,"./actions/user":117}],109:[function(require,module,exports){
 var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8713,7 +5646,7 @@ module.exports = HeroTlogActions_SettingsButton;
 
 
 
-},{}],111:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 var HeroTlogActions_WriteMessageButton;
 
 HeroTlogActions_WriteMessageButton = React.createClass({
@@ -8735,7 +5668,7 @@ module.exports = HeroTlogActions_WriteMessageButton;
 
 
 
-},{}],112:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
 HeroTlogActions_SettingsButton = require('./buttons/settings');
@@ -8762,7 +5695,7 @@ module.exports = HeroTlogActions_CurrentUser;
 
 
 
-},{"./buttons/settings":110}],113:[function(require,module,exports){
+},{"./buttons/settings":109}],112:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -8835,7 +5768,7 @@ module.exports = HeroTlogActions_DropdownMenu;
 
 
 
-},{"../../../../mixins/clickOutside":207,"./dropdownMenu/buttons/button":114,"./dropdownMenu/popup":117,"react/lib/cx":350}],114:[function(require,module,exports){
+},{"../../../../mixins/clickOutside":206,"./dropdownMenu/buttons/button":113,"./dropdownMenu/popup":116,"react/lib/cx":351}],113:[function(require,module,exports){
 var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8859,7 +5792,7 @@ module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
 
-},{}],115:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -8891,7 +5824,7 @@ module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
 
-},{"../../../../../../actions/view/relationship":15}],116:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":14}],115:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -8923,7 +5856,7 @@ module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
 
-},{"../../../../../../actions/view/relationship":15}],117:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":14}],116:[function(require,module,exports){
 var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../../../stores/relationships');
@@ -8986,7 +5919,7 @@ module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":237,"../../../../../mixins/dropdownMenu":209,"../../../../../stores/relationships":229,"./items/ignore":115,"./items/report":116}],118:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":236,"../../../../../mixins/dropdownMenu":208,"../../../../../stores/relationships":228,"./items/ignore":114,"./items/report":115}],117:[function(require,module,exports){
 var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
@@ -9022,7 +5955,7 @@ module.exports = HeroTlogActions_User;
 
 
 
-},{"../../../buttons/relationship/follow":43,"./buttons/writeMessage":111,"./dropdownMenu":113}],119:[function(require,module,exports){
+},{"../../../buttons/relationship/follow":42,"./buttons/writeMessage":110,"./dropdownMenu":112}],118:[function(require,module,exports){
 var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -9071,7 +6004,7 @@ module.exports = HeroTlogAvatar;
 
 
 
-},{"../../common/avatar/user":46,"../../common/followStatus/followStatus":47}],120:[function(require,module,exports){
+},{"../../common/avatar/user":45,"../../common/followStatus/followStatus":46}],119:[function(require,module,exports){
 var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9095,7 +6028,7 @@ module.exports = HeroTlogCloseButton;
 
 
 
-},{}],121:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9126,7 +6059,7 @@ module.exports = HeroTlogHead;
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var HeroTlogStats, HeroTlogStatsItem, PropTypes;
 
 HeroTlogStatsItem = require('./stats/item');
@@ -9213,7 +6146,7 @@ module.exports = HeroTlogStats;
 
 
 
-},{"./stats/item":123}],123:[function(require,module,exports){
+},{"./stats/item":122}],122:[function(require,module,exports){
 var HeroTlogStatsItem, NumberHelpers, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -9270,7 +6203,7 @@ module.exports = HeroTlogStatsItem;
 
 
 
-},{"../../../../../../shared/helpers/number":231,"react/lib/cx":350}],124:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":230,"react/lib/cx":351}],123:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9296,7 +6229,7 @@ module.exports = CreateConversationButton;
 
 
 
-},{}],125:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 var MessengerHeader, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9319,7 +6252,7 @@ module.exports = MessengerHeader;
 
 
 
-},{}],126:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -9370,7 +6303,7 @@ module.exports = MessengerConversation;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/conversation":223,"./conversation/header":127,"./conversation/messageForm":128,"./conversation/messages":130}],127:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/conversation":222,"./conversation/header":126,"./conversation/messageForm":127,"./conversation/messages":129}],126:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../common/header');
@@ -9395,7 +6328,7 @@ module.exports = ConversationHeader;
 
 
 
-},{"../common/header":125}],128:[function(require,module,exports){
+},{"../common/header":124}],127:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -9459,7 +6392,7 @@ module.exports = ConversationMessageForm;
 
 
 
-},{"../../../actions/view/messenger":13,"../../../controllers/notify":204,"./messageForm/field":129}],129:[function(require,module,exports){
+},{"../../../actions/view/messenger":12,"../../../controllers/notify":203,"./messageForm/field":128}],128:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -9517,7 +6450,7 @@ module.exports = ConversationMessageFormField;
 
 
 
-},{"lodash":undefined}],130:[function(require,module,exports){
+},{"lodash":undefined}],129:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -9642,7 +6575,7 @@ module.exports = ConversationMessages;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":237,"../../../actions/view/messenger":13,"../../../mixins/component":208,"../../../stores/conversation":223,"../../../stores/message":226,"../../common/spinner/spinner":49,"./messages/list":131}],131:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":236,"../../../actions/view/messenger":12,"../../../mixins/component":207,"../../../stores/conversation":222,"../../../stores/message":225,"../../common/spinner/spinner":48,"./messages/list":130}],130:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -9738,7 +6671,7 @@ module.exports = MessageList;
 
 
 
-},{"./list/empty":132,"./list/itemManager":134,"lodash":undefined}],132:[function(require,module,exports){
+},{"./list/empty":131,"./list/itemManager":133,"lodash":undefined}],131:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -9756,7 +6689,7 @@ module.exports = MessageListEmpty;
 
 
 
-},{}],133:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -9873,7 +6806,7 @@ module.exports = MessageListItem;
 
 
 
-},{"../../../../common/avatar/user":46,"react/lib/cx":350}],134:[function(require,module,exports){
+},{"../../../../common/avatar/user":45,"react/lib/cx":351}],133:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -9942,7 +6875,7 @@ module.exports = MessageListItemManager;
 
 
 
-},{"../../../../../actions/view/messenger":13,"../../../../../stores/message":226,"./item":133}],135:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":12,"../../../../../stores/message":225,"./item":132}],134:[function(require,module,exports){
 var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -9989,7 +6922,7 @@ module.exports = MessengerConversations;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/conversation":223,"./buttons/createConversation":124,"./conversations/header":136,"./conversations/list":137}],136:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/conversation":222,"./buttons/createConversation":123,"./conversations/header":135,"./conversations/list":136}],135:[function(require,module,exports){
 var ConversationsHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -10007,7 +6940,7 @@ module.exports = ConversationsHeader;
 
 
 
-},{"../common/header":125}],137:[function(require,module,exports){
+},{"../common/header":124}],136:[function(require,module,exports){
 var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -10057,7 +6990,7 @@ module.exports = ConversationList;
 
 
 
-},{"./list/empty":138,"./list/item":139,"lodash":undefined}],138:[function(require,module,exports){
+},{"./list/empty":137,"./list/item":138,"lodash":undefined}],137:[function(require,module,exports){
 var ConversationListEmpty;
 
 ConversationListEmpty = React.createClass({
@@ -10075,7 +7008,7 @@ module.exports = ConversationListEmpty;
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 var ConversationListItem, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -10161,7 +7094,7 @@ module.exports = ConversationListItem;
 
 
 
-},{"../../../common/avatar/user":46,"react/lib/cx":350}],140:[function(require,module,exports){
+},{"../../../common/avatar/user":45,"react/lib/cx":351}],139:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -10190,7 +7123,7 @@ module.exports = MessengerCreateConversation;
 
 
 
-},{"./createConversation/chooser":141,"./createConversation/header":146}],141:[function(require,module,exports){
+},{"./createConversation/chooser":140,"./createConversation/header":145}],140:[function(require,module,exports){
 var ComponentMixin, LOADED_STATE, LOADING_STATE, MessengerChooser, MessengerChooserField, MessengerChooserList, PropTypes, Spinner, UsersViewActions, cx;
 
 cx = require('react/lib/cx');
@@ -10298,7 +7231,7 @@ module.exports = MessengerChooser;
 
 
 
-},{"../../../actions/view/users":17,"../../../mixins/component":208,"../../common/spinner/spinner":49,"./chooser/field":142,"./chooser/list":143,"react/lib/cx":350}],142:[function(require,module,exports){
+},{"../../../actions/view/users":16,"../../../mixins/component":207,"../../common/spinner/spinner":48,"./chooser/field":141,"./chooser/list":142,"react/lib/cx":351}],141:[function(require,module,exports){
 var MessengerChooserField, PropTypes, _;
 
 _ = require('lodash');
@@ -10335,7 +7268,7 @@ module.exports = MessengerChooserField;
 
 
 
-},{"lodash":undefined}],143:[function(require,module,exports){
+},{"lodash":undefined}],142:[function(require,module,exports){
 var MessengerChooserList, MessengerChooserListEmpty, MessengerChooserListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -10386,7 +7319,7 @@ module.exports = MessengerChooserList;
 
 
 
-},{"./list/empty":144,"./list/item":145,"lodash":undefined}],144:[function(require,module,exports){
+},{"./list/empty":143,"./list/item":144,"lodash":undefined}],143:[function(require,module,exports){
 var MessengerChooserListEmpty;
 
 MessengerChooserListEmpty = React.createClass({
@@ -10404,7 +7337,7 @@ module.exports = MessengerChooserListEmpty;
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 var MessengerChooserListItem, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -10440,7 +7373,7 @@ module.exports = MessengerChooserListItem;
 
 
 
-},{"../../../../common/avatar/user":46}],146:[function(require,module,exports){
+},{"../../../../common/avatar/user":45}],145:[function(require,module,exports){
 var CreateConversationHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -10458,7 +7391,7 @@ module.exports = CreateConversationHeader;
 
 
 
-},{"../common/header":125}],147:[function(require,module,exports){
+},{"../common/header":124}],146:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -10543,7 +7476,7 @@ module.exports = Messenger;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../mixins/component":208,"../../stores/conversation":223,"./conversation":126,"./conversations":135,"./createConversation":140,"./mixins/messenger":148}],148:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../mixins/component":207,"../../stores/conversation":222,"./conversation":125,"./conversations":134,"./createConversation":139,"./mixins/messenger":147}],147:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -10562,7 +7495,7 @@ module.exports = MessengerMixin;
 
 
 
-},{"../../../actions/view/messenger":13}],149:[function(require,module,exports){
+},{"../../../actions/view/messenger":12}],148:[function(require,module,exports){
 var NotificationsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -10588,7 +7521,7 @@ module.exports = NotificationsLoadMoreButton;
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 var NotificationsMarkButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -10613,7 +7546,7 @@ module.exports = NotificationsMarkButton;
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 var NotificationsHeader;
 
 NotificationsHeader = React.createClass({
@@ -10631,7 +7564,7 @@ module.exports = NotificationsHeader;
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var NotificationList, NotificationListEmpty, NotificationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -10679,7 +7612,7 @@ module.exports = NotificationList;
 
 
 
-},{"./list/empty":153,"./list/item":154,"lodash":undefined}],153:[function(require,module,exports){
+},{"./list/empty":152,"./list/item":153,"lodash":undefined}],152:[function(require,module,exports){
 var NotificationsListEmpty;
 
 NotificationsListEmpty = React.createClass({
@@ -10694,7 +7627,7 @@ module.exports = NotificationsListEmpty;
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 var Image, NotificationListItem, PropTypes, UserAvatar, cx;
 
 cx = require('react/lib/cx');
@@ -10770,7 +7703,7 @@ module.exports = NotificationListItem;
 
 
 
-},{"../../common/avatar/user":46,"../../common/image/image":48,"react/lib/cx":350}],155:[function(require,module,exports){
+},{"../../common/avatar/user":45,"../../common/image/image":47,"react/lib/cx":351}],154:[function(require,module,exports){
 var NotificationsLoadMore, NotificationsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -10804,7 +7737,7 @@ module.exports = NotificationsLoadMore;
 
 
 
-},{"../common/spinner/spinner":49,"./buttons/loadMore":149}],156:[function(require,module,exports){
+},{"../common/spinner/spinner":48,"./buttons/loadMore":148}],155:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, LOAD_MORE_LIMIT, NotificationsMixin, NotificationsViewActions, SHOW_STATE, _;
 
 _ = require('lodash');
@@ -10869,7 +7802,7 @@ module.exports = NotificationsMixin;
 
 
 
-},{"../../../actions/view/notifications":14,"lodash":undefined}],157:[function(require,module,exports){
+},{"../../../actions/view/notifications":13,"lodash":undefined}],156:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
@@ -10932,7 +7865,7 @@ module.exports = Notifications;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../mixins/component":208,"../../stores/notification":228,"./buttons/mark":150,"./header":151,"./list":152,"./loadMore":155,"./mixins/notifications":156}],158:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../mixins/component":207,"../../stores/notification":227,"./buttons/mark":149,"./header":150,"./list":151,"./loadMore":154,"./mixins/notifications":155}],157:[function(require,module,exports){
 var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
 
 PaginationPrev = require('./items/prev');
@@ -10979,7 +7912,7 @@ module.exports = DaylogPagination;
 
 
 
-},{"./items/next":160,"./items/prev":161}],159:[function(require,module,exports){
+},{"./items/next":159,"./items/prev":160}],158:[function(require,module,exports){
 var EntryPagination, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -11003,7 +7936,7 @@ module.exports = EntryPagination;
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 var PaginationNext, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -11038,7 +7971,7 @@ module.exports = PaginationNext;
 
 
 
-},{"react/lib/cx":350}],161:[function(require,module,exports){
+},{"react/lib/cx":351}],160:[function(require,module,exports){
 var PaginationPrev, PropTypes, cx;
 
 cx = require('react/lib/cx');
@@ -11073,7 +8006,7 @@ module.exports = PaginationPrev;
 
 
 
-},{"react/lib/cx":350}],162:[function(require,module,exports){
+},{"react/lib/cx":351}],161:[function(require,module,exports){
 var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
 
 PaginationPrev = require('./items/prev');
@@ -11141,7 +8074,7 @@ module.exports = TlogPagination;
 
 
 
-},{"./items/next":160,"./items/prev":161}],163:[function(require,module,exports){
+},{"./items/next":159,"./items/prev":160}],162:[function(require,module,exports){
 var PropTypes, SettingsAccounts, UserAvatar;
 
 UserAvatar = require('../common/avatar/user');
@@ -11186,7 +8119,7 @@ module.exports = SettingsAccounts;
 
 
 
-},{"../common/avatar/user":46}],164:[function(require,module,exports){
+},{"../common/avatar/user":45}],163:[function(require,module,exports){
 var PropTypes, SettingsSaveButton;
 
 PropTypes = React.PropTypes;
@@ -11214,7 +8147,7 @@ module.exports = SettingsSaveButton;
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 var PropTypes, Settings_Radio, UuidService;
 
 UuidService = require('../../../../../shared/react/services/uuid');
@@ -11270,7 +8203,7 @@ module.exports = Settings_Radio;
 
 
 
-},{"../../../../../shared/react/services/uuid":239}],166:[function(require,module,exports){
+},{"../../../../../shared/react/services/uuid":238}],165:[function(require,module,exports){
 var DECLARE_STATE, PropTypes, SHOW_STATE, SettingsEmail, SettingsEmailDeclare, SettingsEmailMixin, SettingsEmailShow, SettingsEmailUnconfirmed, UNCONFIRMED_STATE;
 
 SettingsEmailMixin = require('./mixins/email');
@@ -11347,7 +8280,7 @@ module.exports = SettingsEmail;
 
 
 
-},{"./email/declare":170,"./email/show":172,"./email/unconfirmed":173,"./mixins/email":178}],167:[function(require,module,exports){
+},{"./email/declare":169,"./email/show":171,"./email/unconfirmed":172,"./mixins/email":177}],166:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton;
 
 PropTypes = React.PropTypes;
@@ -11373,7 +8306,7 @@ module.exports = SettingsEmailCancelButton;
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 var PropTypes, SettingsEmailChangeButton;
 
 PropTypes = React.PropTypes;
@@ -11399,7 +8332,7 @@ module.exports = SettingsEmailChangeButton;
 
 
 
-},{}],169:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 var PropTypes, SettingsEmailDeclareButton;
 
 PropTypes = React.PropTypes;
@@ -11425,7 +8358,7 @@ module.exports = SettingsEmailDeclareButton;
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailDeclare, SettingsEmailDeclareButton, SettingsEmailField;
 
 NotifyController = require('../../../controllers/notify');
@@ -11479,7 +8412,7 @@ module.exports = SettingsEmailDeclare;
 
 
 
-},{"../../../controllers/notify":204,"./buttons/declare":169,"./fields/email":171}],171:[function(require,module,exports){
+},{"../../../controllers/notify":203,"./buttons/declare":168,"./fields/email":170}],170:[function(require,module,exports){
 var PropTypes, SettingsEmailField, _;
 
 _ = require('lodash');
@@ -11519,7 +8452,7 @@ module.exports = SettingsEmailField;
 
 
 
-},{"lodash":undefined}],172:[function(require,module,exports){
+},{"lodash":undefined}],171:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailChangeButton, SettingsEmailField, SettingsEmailShow;
 
 NotifyController = require('../../../controllers/notify');
@@ -11579,7 +8512,7 @@ module.exports = SettingsEmailShow;
 
 
 
-},{"../../../controllers/notify":204,"./buttons/change":168,"./fields/email":171}],173:[function(require,module,exports){
+},{"../../../controllers/notify":203,"./buttons/change":167,"./fields/email":170}],172:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton, SettingsEmailField, SettingsEmailUnconfirmed;
 
 SettingsEmailField = require('./fields/email');
@@ -11619,7 +8552,7 @@ module.exports = SettingsEmailUnconfirmed;
 
 
 
-},{"./buttons/cancel":167,"./fields/email":171}],174:[function(require,module,exports){
+},{"./buttons/cancel":166,"./fields/email":170}],173:[function(require,module,exports){
 var PropTypes, SettingsHero, SettingsHeroAvatar, SettingsHeroSlug, SettingsHeroTitle;
 
 SettingsHeroAvatar = require('./hero/avatar');
@@ -11668,7 +8601,7 @@ module.exports = SettingsHero;
 
 
 
-},{"./hero/avatar":175,"./hero/slug":176,"./hero/title":177}],175:[function(require,module,exports){
+},{"./hero/avatar":174,"./hero/slug":175,"./hero/title":176}],174:[function(require,module,exports){
 var CurrentUserViewAcitons, LOADING_STATE, PropTypes, SHOW_STATE, SettingsHeroAvatar, Spinner, UserAvatar;
 
 CurrentUserViewAcitons = require('../../../actions/view/currentUser');
@@ -11789,7 +8722,7 @@ module.exports = SettingsHeroAvatar;
 
 
 
-},{"../../../actions/view/currentUser":10,"../../common/avatar/user":46,"../../common/spinner/spinner":49}],176:[function(require,module,exports){
+},{"../../../actions/view/currentUser":9,"../../common/avatar/user":45,"../../common/spinner/spinner":48}],175:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsHeroSlug, _;
 
 _ = require('lodash');
@@ -11830,7 +8763,7 @@ module.exports = SettingsHeroSlug;
 
 
 
-},{"../../../controllers/notify":204,"lodash":undefined}],177:[function(require,module,exports){
+},{"../../../controllers/notify":203,"lodash":undefined}],176:[function(require,module,exports){
 var PropTypes, SettingsHeroTitle, _;
 
 _ = require('lodash');
@@ -11863,7 +8796,7 @@ module.exports = SettingsHeroTitle;
 
 
 
-},{"lodash":undefined}],178:[function(require,module,exports){
+},{"lodash":undefined}],177:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');
@@ -11881,7 +8814,7 @@ module.exports = SettingsEmailMixin;
 
 
 
-},{"../../../actions/view/currentUser":10}],179:[function(require,module,exports){
+},{"../../../actions/view/currentUser":9}],178:[function(require,module,exports){
 var CurrentUserViewActions, NotifyController, SettingsMixin, _;
 
 _ = require('lodash');
@@ -11904,7 +8837,7 @@ module.exports = SettingsMixin;
 
 
 
-},{"../../../actions/view/currentUser":10,"../../../controllers/notify":204,"lodash":undefined}],180:[function(require,module,exports){
+},{"../../../actions/view/currentUser":9,"../../../controllers/notify":203,"lodash":undefined}],179:[function(require,module,exports){
 var PropTypes, SettingsPassword, SettingsPasswordConfirmField, SettingsPasswordField;
 
 SettingsPasswordField = require('./password/fields/password');
@@ -11973,7 +8906,7 @@ module.exports = SettingsPassword;
 
 
 
-},{"./password/fields/password":181,"./password/fields/passwordConfirm":182}],181:[function(require,module,exports){
+},{"./password/fields/password":180,"./password/fields/passwordConfirm":181}],180:[function(require,module,exports){
 var PropTypes, SettingsPasswordField;
 
 PropTypes = React.PropTypes;
@@ -12004,7 +8937,7 @@ module.exports = SettingsPasswordField;
 
 
 
-},{}],182:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 var PropTypes, SettingsPasswordConfirmField;
 
 PropTypes = React.PropTypes;
@@ -12035,7 +8968,7 @@ module.exports = SettingsPasswordConfirmField;
 
 
 
-},{}],183:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, Settings, SettingsAccounts, SettingsEmail, SettingsHero, SettingsMixin, SettingsPassword, SettingsSaveButton, Settings_Radio, _;
 
 _ = require('lodash');
@@ -12142,7 +9075,7 @@ module.exports = Settings;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"./accounts":163,"./buttons/save":164,"./common/radio":165,"./email":166,"./hero":174,"./mixins/settings":179,"./password":180,"lodash":undefined}],184:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"./accounts":162,"./buttons/save":163,"./common/radio":164,"./email":165,"./hero":173,"./mixins/settings":178,"./password":179,"lodash":undefined}],183:[function(require,module,exports){
 var PropTypes, ToolbarItem, cx;
 
 cx = require('react/lib/cx');
@@ -12203,7 +9136,7 @@ module.exports = ToolbarItem;
 
 
 
-},{"react/lib/cx":350}],185:[function(require,module,exports){
+},{"react/lib/cx":351}],184:[function(require,module,exports){
 var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, cx;
 
 cx = require('react/lib/cx');
@@ -12258,7 +9191,7 @@ module.exports = FeedToolbar;
 
 
 
-},{"./feed/list":186,"./mixins/toolbar":188,"react/lib/cx":350}],186:[function(require,module,exports){
+},{"./feed/list":185,"./mixins/toolbar":187,"react/lib/cx":351}],185:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -12310,7 +9243,7 @@ module.exports = FeedToolbarList;
 
 
 
-},{"../_item":184}],187:[function(require,module,exports){
+},{"../_item":183}],186:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -12338,7 +9271,7 @@ module.exports = FeedToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"./feed":185}],188:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"./feed":184}],187:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -12370,7 +9303,7 @@ module.exports = ToolbarMixin;
 
 
 
-},{}],189:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, UserToolbarListAdditional, UserToolbarToggle, cx;
 
 cx = require('react/lib/cx');
@@ -12433,7 +9366,7 @@ module.exports = UserToolbar;
 
 
 
-},{"./mixins/toolbar":188,"./user/list":190,"./user/listAdditional":191,"./user/toggle":193,"react/lib/cx":350}],190:[function(require,module,exports){
+},{"./mixins/toolbar":187,"./user/list":189,"./user/listAdditional":190,"./user/toggle":192,"react/lib/cx":351}],189:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -12513,7 +9446,7 @@ module.exports = UserToolbarList;
 
 
 
-},{"../_item":184,"./mixins/list":192}],191:[function(require,module,exports){
+},{"../_item":183,"./mixins/list":191}],190:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -12533,7 +9466,7 @@ module.exports = UserToolbarListAdditional;
 
 
 
-},{}],192:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -12549,7 +9482,7 @@ module.exports = UserToolbarListMixin;
 
 
 
-},{}],193:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -12597,7 +9530,7 @@ module.exports = UserToolbarToggle;
 
 
 
-},{}],194:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -12636,7 +9569,7 @@ module.exports = UserToolbarManager;
 
 
 
-},{"../../../../shared/react/mixins/connectStore":237,"../../stores/currentUser":224,"../../stores/messagingStatus":227,"./user":189}],195:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":236,"../../stores/currentUser":223,"../../stores/messagingStatus":226,"./user":188}],194:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12679,7 +9612,7 @@ module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":378}],196:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],195:[function(require,module,exports){
 var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessagingConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
 
 ApiConstants = require('./api');
@@ -12711,7 +9644,7 @@ module.exports = {
 
 
 
-},{"./api":195,"./currentUser":197,"./entry":198,"./feed":199,"./messaging":200,"./messenger":201,"./notifications":202,"./relationship":203}],197:[function(require,module,exports){
+},{"./api":194,"./currentUser":196,"./entry":197,"./feed":198,"./messaging":199,"./messenger":200,"./notifications":201,"./relationship":202}],196:[function(require,module,exports){
 var CurrentUserConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12726,7 +9659,7 @@ module.exports = CurrentUserConstants;
 
 
 
-},{"react/lib/keyMirror":378}],198:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],197:[function(require,module,exports){
 var EntryConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12743,7 +9676,7 @@ module.exports = EntryConstants;
 
 
 
-},{"react/lib/keyMirror":378}],199:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],198:[function(require,module,exports){
 var FeedConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12757,7 +9690,7 @@ module.exports = FeedConstants;
 
 
 
-},{"react/lib/keyMirror":378}],200:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],199:[function(require,module,exports){
 var MessagingConstants;
 
 MessagingConstants = {
@@ -12776,7 +9709,7 @@ module.exports = MessagingConstants;
 
 
 
-},{}],201:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 var MessengerConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12795,7 +9728,7 @@ module.exports = MessengerConstants;
 
 
 
-},{"react/lib/keyMirror":378}],202:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],201:[function(require,module,exports){
 var NotificationsConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12809,7 +9742,7 @@ module.exports = NotificationsConstants;
 
 
 
-},{"react/lib/keyMirror":378}],203:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],202:[function(require,module,exports){
 var RelationshipConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -12822,7 +9755,7 @@ module.exports = RelationshipConstants;
 
 
 
-},{"react/lib/keyMirror":378}],204:[function(require,module,exports){
+},{"react/lib/keyMirror":379}],203:[function(require,module,exports){
 var Notify, NotifyController, closeNotification, getContainer, isPageLoadingCanceled, _pendingNotification;
 
 Notify = require('../components/alerts/notify');
@@ -12912,7 +9845,7 @@ module.exports = NotifyController;
 
 
 
-},{"../components/alerts/notify":25}],205:[function(require,module,exports){
+},{"../components/alerts/notify":24}],204:[function(require,module,exports){
 var ScreenController, getContainer, restorePageName, switchPageName, _oldPageName;
 
 _oldPageName = null;
@@ -12971,7 +9904,7 @@ module.exports = ScreenController;
 
 
 
-},{}],206:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 var AppDispatcher, Dispatcher, assign;
 
 assign = require('react/lib/Object.assign');
@@ -12997,7 +9930,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":243,"react/lib/Object.assign":271}],207:[function(require,module,exports){
+},{"flux":242,"react/lib/Object.assign":272}],206:[function(require,module,exports){
 var ClickOutsideMixin, closest;
 
 closest = function(el, target) {
@@ -13033,7 +9966,7 @@ module.exports = ClickOutsideMixin;
 
 
 
-},{}],208:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 var ComponentMixin;
 
 ComponentMixin = {
@@ -13056,7 +9989,7 @@ module.exports = ComponentMixin;
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -13127,7 +10060,7 @@ module.exports = DropdownMenuMixin;
 
 
 
-},{}],210:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 var Auth, AuthPage, PageMixin, PropTypes;
 
 PageMixin = require('./mixins/page');
@@ -13154,7 +10087,7 @@ module.exports = AuthPage;
 
 
 
-},{"../components/auth/auth":26,"./mixins/page":217}],211:[function(require,module,exports){
+},{"../components/auth/auth":25,"./mixins/page":216}],210:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13210,7 +10143,7 @@ module.exports = EntryPage;
 
 
 
-},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/entry/Tlog":66,"../components/hero/tlog":108,"../components/pagination/entry":159,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],212:[function(require,module,exports){
+},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/entry/Tlog":65,"../components/hero/tlog":107,"../components/pagination/entry":158,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],211:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13265,7 +10198,7 @@ module.exports = FeedBestPage;
 
 
 
-},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedBest":99,"../components/hero/feedBest":105,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],213:[function(require,module,exports){
+},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedBest":98,"../components/hero/feedBest":104,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],212:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedStore, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13320,7 +10253,7 @@ module.exports = FeedFriendsPage;
 
 
 
-},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedFriends":100,"../components/hero/feedFriends":106,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],214:[function(require,module,exports){
+},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedFriends":99,"../components/hero/feedFriends":105,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],213:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedStore, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13373,7 +10306,7 @@ module.exports = FeedLivePage;
 
 
 
-},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedLive":101,"../components/hero/feedLive":107,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],215:[function(require,module,exports){
+},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedLive":100,"../components/hero/feedLive":106,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],214:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13417,7 +10350,7 @@ module.exports = MessengerPage;
 
 
 
-},{"../components/messenger/messenger":147,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/conversation":223,"../stores/currentUser":224,"./mixins/page":217}],216:[function(require,module,exports){
+},{"../components/messenger/messenger":146,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/conversation":222,"../stores/currentUser":223,"./mixins/page":216}],215:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13467,7 +10400,7 @@ module.exports = MessengerThreadPage;
 
 
 
-},{"../components/messenger/messenger":147,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/conversation":223,"../stores/currentUser":224,"../stores/message":226,"./mixins/page":217}],217:[function(require,module,exports){
+},{"../components/messenger/messenger":146,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/conversation":222,"../stores/currentUser":223,"../stores/message":225,"./mixins/page":216}],216:[function(require,module,exports){
 var PageMixin, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -13478,8 +10411,9 @@ PageMixin = {
   },
   componentWillMount: function() {
     if (this.props.locale !== i18n.lng()) {
-      return i18n.setLng(this.props.locale);
+      i18n.setLng(this.props.locale);
     }
+    return moment.locale(this.props.locale);
   }
 };
 
@@ -13487,7 +10421,7 @@ module.exports = PageMixin;
 
 
 
-},{}],218:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, NotificationStore, Notifications, NotificationsPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13528,7 +10462,7 @@ module.exports = NotificationsPage;
 
 
 
-},{"../components/notifications/notifications":157,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/notification":228,"./mixins/page":217}],219:[function(require,module,exports){
+},{"../components/notifications/notifications":156,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/notification":227,"./mixins/page":216}],218:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, PageMixin, PropTypes, Settings, SettingsPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13565,7 +10499,7 @@ module.exports = SettingsPage;
 
 
 
-},{"../components/settings/settings":183,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],220:[function(require,module,exports){
+},{"../components/settings/settings":182,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],219:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13624,7 +10558,7 @@ module.exports = TlogDaylogPage;
 
 
 
-},{"../components/Daylog/Daylog":19,"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/hero/tlog":108,"../components/pagination/daylog":158,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],221:[function(require,module,exports){
+},{"../components/Daylog/Daylog":18,"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/hero/tlog":107,"../components/pagination/daylog":157,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],220:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -13683,7 +10617,7 @@ module.exports = TlogRegularPage;
 
 
 
-},{"../components/Tlog/Tlog":22,"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/hero/tlog":108,"../components/pagination/tlog":162,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],222:[function(require,module,exports){
+},{"../components/Tlog/Tlog":21,"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/hero/tlog":107,"../components/pagination/tlog":161,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],221:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -13717,7 +10651,7 @@ module.exports = BaseStore;
 
 
 
-},{}],223:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, assign, _, _conversations, _currentID;
 
 _ = require('lodash');
@@ -13799,7 +10733,7 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":undefined,"react/lib/Object.assign":271}],224:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":undefined,"react/lib/Object.assign":272}],223:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, CurrentUserStore, assign, extendByMockData, _currentUser;
 
 assign = require('react/lib/Object.assign');
@@ -13873,7 +10807,7 @@ CurrentUserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":271}],225:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":272}],224:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, FeedStore, assign, pushEntries, _entries, _everythingLoaded;
 
 assign = require('react/lib/Object.assign');
@@ -13923,7 +10857,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":271}],226:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":272}],225:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, CurrentUserStore, MessageStore, addLocalMessage, addRemoteMessage, assign, _, _localMessages, _messages;
 
 _ = require('lodash');
@@ -14079,7 +11013,7 @@ MessageStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"./conversation":223,"./currentUser":224,"lodash":undefined,"react/lib/Object.assign":271}],227:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"./conversation":222,"./currentUser":223,"lodash":undefined,"react/lib/Object.assign":272}],226:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, MessagingStatusStore, assign, _, _messagingStatus;
 
 _ = require('lodash');
@@ -14124,7 +11058,7 @@ MessagingStatusStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":undefined,"react/lib/Object.assign":271}],228:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":undefined,"react/lib/Object.assign":272}],227:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, NotificationStore, assign, _, _everythingLoaded, _notifications;
 
 _ = require('lodash');
@@ -14203,7 +11137,7 @@ NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":undefined,"react/lib/Object.assign":271}],229:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":undefined,"react/lib/Object.assign":272}],228:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, assign, updateStatus, _relationships;
 
 assign = require('react/lib/Object.assign');
@@ -14246,7 +11180,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
 
-},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":271}],230:[function(require,module,exports){
+},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":272}],229:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -14304,7 +11238,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],231:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 var NumberHelpers;
 
 NumberHelpers = {
@@ -14336,7 +11270,7 @@ module.exports = NumberHelpers;
 
 
 
-},{}],232:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;
 
 CollageMixin = require('./mixins/collage');
@@ -14388,7 +11322,7 @@ module.exports = Collage;
 
 
 
-},{"./mixins/collage":234,"./row":235}],233:[function(require,module,exports){
+},{"./mixins/collage":233,"./row":234}],232:[function(require,module,exports){
 var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
 
 Collage = require('./collage');
@@ -14457,7 +11391,7 @@ module.exports = CollageManager;
 
 
 
-},{"./collage":232}],234:[function(require,module,exports){
+},{"./collage":231}],233:[function(require,module,exports){
 var CollageMixin, assign;
 
 assign = require('react/lib/Object.assign');
@@ -14527,7 +11461,7 @@ module.exports = CollageMixin;
 
 
 
-},{"react/lib/Object.assign":271}],235:[function(require,module,exports){
+},{"react/lib/Object.assign":272}],234:[function(require,module,exports){
 var CollageRow, CollageRowItem, PropTypes;
 
 CollageRowItem = require('./row/item');
@@ -14561,7 +11495,7 @@ module.exports = CollageRow;
 
 
 
-},{"./row/item":236}],236:[function(require,module,exports){
+},{"./row/item":235}],235:[function(require,module,exports){
 var CollageRowItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -14626,7 +11560,7 @@ module.exports = CollageRowItem;
 
 
 
-},{}],237:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 var ConnectStoreMixin, _;
 
 _ = require('lodash');
@@ -14668,7 +11602,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{"lodash":undefined}],238:[function(require,module,exports){
+},{"lodash":undefined}],237:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -14690,7 +11624,7 @@ module.exports = ThumborService;
 
 
 
-},{}],239:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 var UuidService;
 
 UuidService = {
@@ -14707,7 +11641,7 @@ module.exports = UuidService;
 
 
 
-},{}],240:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -14879,7 +11813,7 @@ module.exports = ApiRoutes;
 
 
 
-},{}],241:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -14955,7 +11889,7 @@ module.exports = Routes;
 
 
 
-},{}],242:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -15043,7 +11977,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],243:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -15055,7 +11989,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":244}],244:[function(require,module,exports){
+},{"./lib/Dispatcher":243}],243:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -15307,7 +12241,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":245}],245:[function(require,module,exports){
+},{"./invariant":244}],244:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -15362,7 +12296,3255 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],246:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
+//! moment.js locale configuration
+//! locale : russian (ru)
+//! author : Viktorminator : https://github.com/Viktorminator
+//! Author : Menelion Elensúle : https://github.com/Oire
+
+(function (global, factory) {
+   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :
+   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+   factory(global.moment)
+}(this, function (moment) { 'use strict';
+
+
+    function plural(word, num) {
+        var forms = word.split('_');
+        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
+    }
+    function relativeTimeWithPlural(number, withoutSuffix, key) {
+        var format = {
+            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
+            'hh': 'час_часа_часов',
+            'dd': 'день_дня_дней',
+            'MM': 'месяц_месяца_месяцев',
+            'yy': 'год_года_лет'
+        };
+        if (key === 'm') {
+            return withoutSuffix ? 'минута' : 'минуту';
+        }
+        else {
+            return number + ' ' + plural(format[key], +number);
+        }
+    }
+    function monthsCaseReplace(m, format) {
+        var months = {
+            'nominative': 'январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь'.split('_'),
+            'accusative': 'января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря'.split('_')
+        },
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+        return months[nounCase][m.month()];
+    }
+    function monthsShortCaseReplace(m, format) {
+        var monthsShort = {
+            'nominative': 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
+            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
+        },
+        nounCase = (/D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/).test(format) ?
+            'accusative' :
+            'nominative';
+        return monthsShort[nounCase][m.month()];
+    }
+    function weekdaysCaseReplace(m, format) {
+        var weekdays = {
+            'nominative': 'воскресенье_понедельник_вторник_среда_четверг_пятница_суббота'.split('_'),
+            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
+        },
+        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/).test(format) ?
+            'accusative' :
+            'nominative';
+        return weekdays[nounCase][m.day()];
+    }
+
+    var ru = moment.defineLocale('ru', {
+        months : monthsCaseReplace,
+        monthsShort : monthsShortCaseReplace,
+        weekdays : weekdaysCaseReplace,
+        weekdaysShort : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        weekdaysMin : 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
+        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
+        longDateFormat : {
+            LT : 'HH:mm',
+            LTS : 'LT:ss',
+            L : 'DD.MM.YYYY',
+            LL : 'D MMMM YYYY г.',
+            LLL : 'D MMMM YYYY г., LT',
+            LLLL : 'dddd, D MMMM YYYY г., LT'
+        },
+        calendar : {
+            sameDay: '[Сегодня в] LT',
+            nextDay: '[Завтра в] LT',
+            lastDay: '[Вчера в] LT',
+            nextWeek: function () {
+                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
+            },
+            lastWeek: function (now) {
+                if (now.week() !== this.week()) {
+                    switch (this.day()) {
+                    case 0:
+                        return '[В прошлое] dddd [в] LT';
+                    case 1:
+                    case 2:
+                    case 4:
+                        return '[В прошлый] dddd [в] LT';
+                    case 3:
+                    case 5:
+                    case 6:
+                        return '[В прошлую] dddd [в] LT';
+                    }
+                } else {
+                    if (this.day() === 2) {
+                        return '[Во] dddd [в] LT';
+                    } else {
+                        return '[В] dddd [в] LT';
+                    }
+                }
+            },
+            sameElse: 'L'
+        },
+        relativeTime : {
+            future : 'через %s',
+            past : '%s назад',
+            s : 'несколько секунд',
+            m : relativeTimeWithPlural,
+            mm : relativeTimeWithPlural,
+            h : 'час',
+            hh : relativeTimeWithPlural,
+            d : 'день',
+            dd : relativeTimeWithPlural,
+            M : 'месяц',
+            MM : relativeTimeWithPlural,
+            y : 'год',
+            yy : relativeTimeWithPlural
+        },
+        meridiemParse: /ночи|утра|дня|вечера/i,
+        isPM : function (input) {
+            return /^(дня|вечера)$/.test(input);
+        },
+        meridiem : function (hour, minute, isLower) {
+            if (hour < 4) {
+                return 'ночи';
+            } else if (hour < 12) {
+                return 'утра';
+            } else if (hour < 17) {
+                return 'дня';
+            } else {
+                return 'вечера';
+            }
+        },
+        ordinalParse: /\d{1,2}-(й|го|я)/,
+        ordinal: function (number, period) {
+            switch (period) {
+            case 'M':
+            case 'd':
+            case 'DDD':
+                return number + '-й';
+            case 'D':
+                return number + '-го';
+            case 'w':
+            case 'W':
+                return number + '-я';
+            default:
+                return number;
+            }
+        },
+        week : {
+            dow : 1, // Monday is the first day of the week.
+            doy : 7  // The week that contains Jan 1st is the first week of the year.
+        }
+    });
+
+    return ru;
+
+}));
+},{"../moment":246}],246:[function(require,module,exports){
+//! moment.js
+//! version : 2.10.2
+//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
+//! license : MIT
+//! momentjs.com
+
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    global.moment = factory()
+}(this, function () { 'use strict';
+
+    var hookCallback;
+
+    function utils_hooks__hooks () {
+        return hookCallback.apply(null, arguments);
+    }
+
+    // This is done to register the method called with moment()
+    // without creating circular dependencies.
+    function setHookCallback (callback) {
+        hookCallback = callback;
+    }
+
+    function defaultParsingFlags() {
+        // We need to deep clone this object.
+        return {
+            empty           : false,
+            unusedTokens    : [],
+            unusedInput     : [],
+            overflow        : -2,
+            charsLeftOver   : 0,
+            nullInput       : false,
+            invalidMonth    : null,
+            invalidFormat   : false,
+            userInvalidated : false,
+            iso             : false
+        };
+    }
+
+    function isArray(input) {
+        return Object.prototype.toString.call(input) === '[object Array]';
+    }
+
+    function isDate(input) {
+        return Object.prototype.toString.call(input) === '[object Date]' || input instanceof Date;
+    }
+
+    function map(arr, fn) {
+        var res = [], i;
+        for (i = 0; i < arr.length; ++i) {
+            res.push(fn(arr[i], i));
+        }
+        return res;
+    }
+
+    function hasOwnProp(a, b) {
+        return Object.prototype.hasOwnProperty.call(a, b);
+    }
+
+    function extend(a, b) {
+        for (var i in b) {
+            if (hasOwnProp(b, i)) {
+                a[i] = b[i];
+            }
+        }
+
+        if (hasOwnProp(b, 'toString')) {
+            a.toString = b.toString;
+        }
+
+        if (hasOwnProp(b, 'valueOf')) {
+            a.valueOf = b.valueOf;
+        }
+
+        return a;
+    }
+
+    function create_utc__createUTC (input, format, locale, strict) {
+        return createLocalOrUTC(input, format, locale, strict, true).utc();
+    }
+
+    function valid__isValid(m) {
+        if (m._isValid == null) {
+            m._isValid = !isNaN(m._d.getTime()) &&
+                m._pf.overflow < 0 &&
+                !m._pf.empty &&
+                !m._pf.invalidMonth &&
+                !m._pf.nullInput &&
+                !m._pf.invalidFormat &&
+                !m._pf.userInvalidated;
+
+            if (m._strict) {
+                m._isValid = m._isValid &&
+                    m._pf.charsLeftOver === 0 &&
+                    m._pf.unusedTokens.length === 0 &&
+                    m._pf.bigHour === undefined;
+            }
+        }
+        return m._isValid;
+    }
+
+    function valid__createInvalid (flags) {
+        var m = create_utc__createUTC(NaN);
+        if (flags != null) {
+            extend(m._pf, flags);
+        }
+        else {
+            m._pf.userInvalidated = true;
+        }
+
+        return m;
+    }
+
+    var momentProperties = utils_hooks__hooks.momentProperties = [];
+
+    function copyConfig(to, from) {
+        var i, prop, val;
+
+        if (typeof from._isAMomentObject !== 'undefined') {
+            to._isAMomentObject = from._isAMomentObject;
+        }
+        if (typeof from._i !== 'undefined') {
+            to._i = from._i;
+        }
+        if (typeof from._f !== 'undefined') {
+            to._f = from._f;
+        }
+        if (typeof from._l !== 'undefined') {
+            to._l = from._l;
+        }
+        if (typeof from._strict !== 'undefined') {
+            to._strict = from._strict;
+        }
+        if (typeof from._tzm !== 'undefined') {
+            to._tzm = from._tzm;
+        }
+        if (typeof from._isUTC !== 'undefined') {
+            to._isUTC = from._isUTC;
+        }
+        if (typeof from._offset !== 'undefined') {
+            to._offset = from._offset;
+        }
+        if (typeof from._pf !== 'undefined') {
+            to._pf = from._pf;
+        }
+        if (typeof from._locale !== 'undefined') {
+            to._locale = from._locale;
+        }
+
+        if (momentProperties.length > 0) {
+            for (i in momentProperties) {
+                prop = momentProperties[i];
+                val = from[prop];
+                if (typeof val !== 'undefined') {
+                    to[prop] = val;
+                }
+            }
+        }
+
+        return to;
+    }
+
+    var updateInProgress = false;
+
+    // Moment prototype object
+    function Moment(config) {
+        copyConfig(this, config);
+        this._d = new Date(+config._d);
+        // Prevent infinite loop in case updateOffset creates new moment
+        // objects.
+        if (updateInProgress === false) {
+            updateInProgress = true;
+            utils_hooks__hooks.updateOffset(this);
+            updateInProgress = false;
+        }
+    }
+
+    function isMoment (obj) {
+        return obj instanceof Moment || (obj != null && hasOwnProp(obj, '_isAMomentObject'));
+    }
+
+    function toInt(argumentForCoercion) {
+        var coercedNumber = +argumentForCoercion,
+            value = 0;
+
+        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
+            if (coercedNumber >= 0) {
+                value = Math.floor(coercedNumber);
+            } else {
+                value = Math.ceil(coercedNumber);
+            }
+        }
+
+        return value;
+    }
+
+    function compareArrays(array1, array2, dontConvert) {
+        var len = Math.min(array1.length, array2.length),
+            lengthDiff = Math.abs(array1.length - array2.length),
+            diffs = 0,
+            i;
+        for (i = 0; i < len; i++) {
+            if ((dontConvert && array1[i] !== array2[i]) ||
+                (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
+                diffs++;
+            }
+        }
+        return diffs + lengthDiff;
+    }
+
+    function Locale() {
+    }
+
+    var locales = {};
+    var globalLocale;
+
+    function normalizeLocale(key) {
+        return key ? key.toLowerCase().replace('_', '-') : key;
+    }
+
+    // pick the locale from the array
+    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
+    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
+    function chooseLocale(names) {
+        var i = 0, j, next, locale, split;
+
+        while (i < names.length) {
+            split = normalizeLocale(names[i]).split('-');
+            j = split.length;
+            next = normalizeLocale(names[i + 1]);
+            next = next ? next.split('-') : null;
+            while (j > 0) {
+                locale = loadLocale(split.slice(0, j).join('-'));
+                if (locale) {
+                    return locale;
+                }
+                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
+                    //the next array item is better than a shallower substring of this one
+                    break;
+                }
+                j--;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    function loadLocale(name) {
+        var oldLocale = null;
+        // TODO: Find a better way to register and load all the locales in Node
+        if (!locales[name] && typeof module !== 'undefined' &&
+                module && module.exports) {
+            try {
+                oldLocale = globalLocale._abbr;
+                require('./locale/' + name);
+                // because defineLocale currently also sets the global locale, we
+                // want to undo that for lazy loaded locales
+                locale_locales__getSetGlobalLocale(oldLocale);
+            } catch (e) { }
+        }
+        return locales[name];
+    }
+
+    // This function will load locale and then set the global locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    function locale_locales__getSetGlobalLocale (key, values) {
+        var data;
+        if (key) {
+            if (typeof values === 'undefined') {
+                data = locale_locales__getLocale(key);
+            }
+            else {
+                data = defineLocale(key, values);
+            }
+
+            if (data) {
+                // moment.duration._locale = moment._locale = data;
+                globalLocale = data;
+            }
+        }
+
+        return globalLocale._abbr;
+    }
+
+    function defineLocale (name, values) {
+        if (values !== null) {
+            values.abbr = name;
+            if (!locales[name]) {
+                locales[name] = new Locale();
+            }
+            locales[name].set(values);
+
+            // backwards compat for now: also set the locale
+            locale_locales__getSetGlobalLocale(name);
+
+            return locales[name];
+        } else {
+            // useful for testing
+            delete locales[name];
+            return null;
+        }
+    }
+
+    // returns locale data
+    function locale_locales__getLocale (key) {
+        var locale;
+
+        if (key && key._locale && key._locale._abbr) {
+            key = key._locale._abbr;
+        }
+
+        if (!key) {
+            return globalLocale;
+        }
+
+        if (!isArray(key)) {
+            //short-circuit everything else
+            locale = loadLocale(key);
+            if (locale) {
+                return locale;
+            }
+            key = [key];
+        }
+
+        return chooseLocale(key);
+    }
+
+    var aliases = {};
+
+    function addUnitAlias (unit, shorthand) {
+        var lowerCase = unit.toLowerCase();
+        aliases[lowerCase] = aliases[lowerCase + 's'] = aliases[shorthand] = unit;
+    }
+
+    function normalizeUnits(units) {
+        return typeof units === 'string' ? aliases[units] || aliases[units.toLowerCase()] : undefined;
+    }
+
+    function normalizeObjectUnits(inputObject) {
+        var normalizedInput = {},
+            normalizedProp,
+            prop;
+
+        for (prop in inputObject) {
+            if (hasOwnProp(inputObject, prop)) {
+                normalizedProp = normalizeUnits(prop);
+                if (normalizedProp) {
+                    normalizedInput[normalizedProp] = inputObject[prop];
+                }
+            }
+        }
+
+        return normalizedInput;
+    }
+
+    function makeGetSet (unit, keepTime) {
+        return function (value) {
+            if (value != null) {
+                get_set__set(this, unit, value);
+                utils_hooks__hooks.updateOffset(this, keepTime);
+                return this;
+            } else {
+                return get_set__get(this, unit);
+            }
+        };
+    }
+
+    function get_set__get (mom, unit) {
+        return mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]();
+    }
+
+    function get_set__set (mom, unit, value) {
+        return mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
+    }
+
+    // MOMENTS
+
+    function getSet (units, value) {
+        var unit;
+        if (typeof units === 'object') {
+            for (unit in units) {
+                this.set(unit, units[unit]);
+            }
+        } else {
+            units = normalizeUnits(units);
+            if (typeof this[units] === 'function') {
+                return this[units](value);
+            }
+        }
+        return this;
+    }
+
+    function zeroFill(number, targetLength, forceSign) {
+        var output = '' + Math.abs(number),
+            sign = number >= 0;
+
+        while (output.length < targetLength) {
+            output = '0' + output;
+        }
+        return (sign ? (forceSign ? '+' : '') : '-') + output;
+    }
+
+    var formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g;
+
+    var localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g;
+
+    var formatFunctions = {};
+
+    var formatTokenFunctions = {};
+
+    // token:    'M'
+    // padded:   ['MM', 2]
+    // ordinal:  'Mo'
+    // callback: function () { this.month() + 1 }
+    function addFormatToken (token, padded, ordinal, callback) {
+        var func = callback;
+        if (typeof callback === 'string') {
+            func = function () {
+                return this[callback]();
+            };
+        }
+        if (token) {
+            formatTokenFunctions[token] = func;
+        }
+        if (padded) {
+            formatTokenFunctions[padded[0]] = function () {
+                return zeroFill(func.apply(this, arguments), padded[1], padded[2]);
+            };
+        }
+        if (ordinal) {
+            formatTokenFunctions[ordinal] = function () {
+                return this.localeData().ordinal(func.apply(this, arguments), token);
+            };
+        }
+    }
+
+    function removeFormattingTokens(input) {
+        if (input.match(/\[[\s\S]/)) {
+            return input.replace(/^\[|\]$/g, '');
+        }
+        return input.replace(/\\/g, '');
+    }
+
+    function makeFormatFunction(format) {
+        var array = format.match(formattingTokens), i, length;
+
+        for (i = 0, length = array.length; i < length; i++) {
+            if (formatTokenFunctions[array[i]]) {
+                array[i] = formatTokenFunctions[array[i]];
+            } else {
+                array[i] = removeFormattingTokens(array[i]);
+            }
+        }
+
+        return function (mom) {
+            var output = '';
+            for (i = 0; i < length; i++) {
+                output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
+            }
+            return output;
+        };
+    }
+
+    // format date using native date object
+    function formatMoment(m, format) {
+        if (!m.isValid()) {
+            return m.localeData().invalidDate();
+        }
+
+        format = expandFormat(format, m.localeData());
+
+        if (!formatFunctions[format]) {
+            formatFunctions[format] = makeFormatFunction(format);
+        }
+
+        return formatFunctions[format](m);
+    }
+
+    function expandFormat(format, locale) {
+        var i = 5;
+
+        function replaceLongDateFormatTokens(input) {
+            return locale.longDateFormat(input) || input;
+        }
+
+        localFormattingTokens.lastIndex = 0;
+        while (i >= 0 && localFormattingTokens.test(format)) {
+            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
+            localFormattingTokens.lastIndex = 0;
+            i -= 1;
+        }
+
+        return format;
+    }
+
+    var match1         = /\d/;            //       0 - 9
+    var match2         = /\d\d/;          //      00 - 99
+    var match3         = /\d{3}/;         //     000 - 999
+    var match4         = /\d{4}/;         //    0000 - 9999
+    var match6         = /[+-]?\d{6}/;    // -999999 - 999999
+    var match1to2      = /\d\d?/;         //       0 - 99
+    var match1to3      = /\d{1,3}/;       //       0 - 999
+    var match1to4      = /\d{1,4}/;       //       0 - 9999
+    var match1to6      = /[+-]?\d{1,6}/;  // -999999 - 999999
+
+    var matchUnsigned  = /\d+/;           //       0 - inf
+    var matchSigned    = /[+-]?\d+/;      //    -inf - inf
+
+    var matchOffset    = /Z|[+-]\d\d:?\d\d/gi; // +00:00 -00:00 +0000 -0000 or Z
+
+    var matchTimestamp = /[+-]?\d+(\.\d{1,3})?/; // 123456789 123456789.123
+
+    // any word (or two) characters or numbers including two/three word month in arabic.
+    var matchWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+
+    var regexes = {};
+
+    function addRegexToken (token, regex, strictRegex) {
+        regexes[token] = typeof regex === 'function' ? regex : function (isStrict) {
+            return (isStrict && strictRegex) ? strictRegex : regex;
+        };
+    }
+
+    function getParseRegexForToken (token, config) {
+        if (!hasOwnProp(regexes, token)) {
+            return new RegExp(unescapeFormat(token));
+        }
+
+        return regexes[token](config._strict, config._locale);
+    }
+
+    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    function unescapeFormat(s) {
+        return s.replace('\\', '').replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
+            return p1 || p2 || p3 || p4;
+        }).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
+    var tokens = {};
+
+    function addParseToken (token, callback) {
+        var i, func = callback;
+        if (typeof token === 'string') {
+            token = [token];
+        }
+        if (typeof callback === 'number') {
+            func = function (input, array) {
+                array[callback] = toInt(input);
+            };
+        }
+        for (i = 0; i < token.length; i++) {
+            tokens[token[i]] = func;
+        }
+    }
+
+    function addWeekParseToken (token, callback) {
+        addParseToken(token, function (input, array, config, token) {
+            config._w = config._w || {};
+            callback(input, config._w, config, token);
+        });
+    }
+
+    function addTimeToArrayFromToken(token, input, config) {
+        if (input != null && hasOwnProp(tokens, token)) {
+            tokens[token](input, config._a, config, token);
+        }
+    }
+
+    var YEAR = 0;
+    var MONTH = 1;
+    var DATE = 2;
+    var HOUR = 3;
+    var MINUTE = 4;
+    var SECOND = 5;
+    var MILLISECOND = 6;
+
+    function daysInMonth(year, month) {
+        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    }
+
+    // FORMATTING
+
+    addFormatToken('M', ['MM', 2], 'Mo', function () {
+        return this.month() + 1;
+    });
+
+    addFormatToken('MMM', 0, 0, function (format) {
+        return this.localeData().monthsShort(this, format);
+    });
+
+    addFormatToken('MMMM', 0, 0, function (format) {
+        return this.localeData().months(this, format);
+    });
+
+    // ALIASES
+
+    addUnitAlias('month', 'M');
+
+    // PARSING
+
+    addRegexToken('M',    match1to2);
+    addRegexToken('MM',   match1to2, match2);
+    addRegexToken('MMM',  matchWord);
+    addRegexToken('MMMM', matchWord);
+
+    addParseToken(['M', 'MM'], function (input, array) {
+        array[MONTH] = toInt(input) - 1;
+    });
+
+    addParseToken(['MMM', 'MMMM'], function (input, array, config, token) {
+        var month = config._locale.monthsParse(input, token, config._strict);
+        // if we didn't find a month name, mark the date as invalid.
+        if (month != null) {
+            array[MONTH] = month;
+        } else {
+            config._pf.invalidMonth = input;
+        }
+    });
+
+    // LOCALES
+
+    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
+    function localeMonths (m) {
+        return this._months[m.month()];
+    }
+
+    var defaultLocaleMonthsShort = 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_');
+    function localeMonthsShort (m) {
+        return this._monthsShort[m.month()];
+    }
+
+    function localeMonthsParse (monthName, format, strict) {
+        var i, mom, regex;
+
+        if (!this._monthsParse) {
+            this._monthsParse = [];
+            this._longMonthsParse = [];
+            this._shortMonthsParse = [];
+        }
+
+        for (i = 0; i < 12; i++) {
+            // make the regex if we don't have it already
+            mom = create_utc__createUTC([2000, i]);
+            if (strict && !this._longMonthsParse[i]) {
+                this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
+                this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
+            }
+            if (!strict && !this._monthsParse[i]) {
+                regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
+                this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
+            }
+            // test the regex
+            if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
+                return i;
+            } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
+                return i;
+            } else if (!strict && this._monthsParse[i].test(monthName)) {
+                return i;
+            }
+        }
+    }
+
+    // MOMENTS
+
+    function setMonth (mom, value) {
+        var dayOfMonth;
+
+        // TODO: Move this out of here!
+        if (typeof value === 'string') {
+            value = mom.localeData().monthsParse(value);
+            // TODO: Another silent failure?
+            if (typeof value !== 'number') {
+                return mom;
+            }
+        }
+
+        dayOfMonth = Math.min(mom.date(), daysInMonth(mom.year(), value));
+        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
+        return mom;
+    }
+
+    function getSetMonth (value) {
+        if (value != null) {
+            setMonth(this, value);
+            utils_hooks__hooks.updateOffset(this, true);
+            return this;
+        } else {
+            return get_set__get(this, 'Month');
+        }
+    }
+
+    function getDaysInMonth () {
+        return daysInMonth(this.year(), this.month());
+    }
+
+    function checkOverflow (m) {
+        var overflow;
+        var a = m._a;
+
+        if (a && m._pf.overflow === -2) {
+            overflow =
+                a[MONTH]       < 0 || a[MONTH]       > 11  ? MONTH :
+                a[DATE]        < 1 || a[DATE]        > daysInMonth(a[YEAR], a[MONTH]) ? DATE :
+                a[HOUR]        < 0 || a[HOUR]        > 24 || (a[HOUR] === 24 && (a[MINUTE] !== 0 || a[SECOND] !== 0 || a[MILLISECOND] !== 0)) ? HOUR :
+                a[MINUTE]      < 0 || a[MINUTE]      > 59  ? MINUTE :
+                a[SECOND]      < 0 || a[SECOND]      > 59  ? SECOND :
+                a[MILLISECOND] < 0 || a[MILLISECOND] > 999 ? MILLISECOND :
+                -1;
+
+            if (m._pf._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
+                overflow = DATE;
+            }
+
+            m._pf.overflow = overflow;
+        }
+
+        return m;
+    }
+
+    function warn(msg) {
+        if (utils_hooks__hooks.suppressDeprecationWarnings === false && typeof console !== 'undefined' && console.warn) {
+            console.warn('Deprecation warning: ' + msg);
+        }
+    }
+
+    function deprecate(msg, fn) {
+        var firstTime = true;
+        return extend(function () {
+            if (firstTime) {
+                warn(msg);
+                firstTime = false;
+            }
+            return fn.apply(this, arguments);
+        }, fn);
+    }
+
+    var deprecations = {};
+
+    function deprecateSimple(name, msg) {
+        if (!deprecations[name]) {
+            warn(msg);
+            deprecations[name] = true;
+        }
+    }
+
+    utils_hooks__hooks.suppressDeprecationWarnings = false;
+
+    var from_string__isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/;
+
+    var isoDates = [
+        ['YYYYYY-MM-DD', /[+-]\d{6}-\d{2}-\d{2}/],
+        ['YYYY-MM-DD', /\d{4}-\d{2}-\d{2}/],
+        ['GGGG-[W]WW-E', /\d{4}-W\d{2}-\d/],
+        ['GGGG-[W]WW', /\d{4}-W\d{2}/],
+        ['YYYY-DDD', /\d{4}-\d{3}/]
+    ];
+
+    // iso time formats and regexes
+    var isoTimes = [
+        ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d+/],
+        ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
+        ['HH:mm', /(T| )\d\d:\d\d/],
+        ['HH', /(T| )\d\d/]
+    ];
+
+    var aspNetJsonRegex = /^\/?Date\((\-?\d+)/i;
+
+    // date from iso format
+    function configFromISO(config) {
+        var i, l,
+            string = config._i,
+            match = from_string__isoRegex.exec(string);
+
+        if (match) {
+            config._pf.iso = true;
+            for (i = 0, l = isoDates.length; i < l; i++) {
+                if (isoDates[i][1].exec(string)) {
+                    // match[5] should be 'T' or undefined
+                    config._f = isoDates[i][0] + (match[6] || ' ');
+                    break;
+                }
+            }
+            for (i = 0, l = isoTimes.length; i < l; i++) {
+                if (isoTimes[i][1].exec(string)) {
+                    config._f += isoTimes[i][0];
+                    break;
+                }
+            }
+            if (string.match(matchOffset)) {
+                config._f += 'Z';
+            }
+            configFromStringAndFormat(config);
+        } else {
+            config._isValid = false;
+        }
+    }
+
+    // date from iso format or fallback
+    function configFromString(config) {
+        var matched = aspNetJsonRegex.exec(config._i);
+
+        if (matched !== null) {
+            config._d = new Date(+matched[1]);
+            return;
+        }
+
+        configFromISO(config);
+        if (config._isValid === false) {
+            delete config._isValid;
+            utils_hooks__hooks.createFromInputFallback(config);
+        }
+    }
+
+    utils_hooks__hooks.createFromInputFallback = deprecate(
+        'moment construction falls back to js Date. This is ' +
+        'discouraged and will be removed in upcoming major ' +
+        'release. Please refer to ' +
+        'https://github.com/moment/moment/issues/1407 for more info.',
+        function (config) {
+            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
+        }
+    );
+
+    function createDate (y, m, d, h, M, s, ms) {
+        //can't just apply() to create a date:
+        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
+        var date = new Date(y, m, d, h, M, s, ms);
+
+        //the date constructor doesn't accept years < 1970
+        if (y < 1970) {
+            date.setFullYear(y);
+        }
+        return date;
+    }
+
+    function createUTCDate (y) {
+        var date = new Date(Date.UTC.apply(null, arguments));
+        if (y < 1970) {
+            date.setUTCFullYear(y);
+        }
+        return date;
+    }
+
+    addFormatToken(0, ['YY', 2], 0, function () {
+        return this.year() % 100;
+    });
+
+    addFormatToken(0, ['YYYY',   4],       0, 'year');
+    addFormatToken(0, ['YYYYY',  5],       0, 'year');
+    addFormatToken(0, ['YYYYYY', 6, true], 0, 'year');
+
+    // ALIASES
+
+    addUnitAlias('year', 'y');
+
+    // PARSING
+
+    addRegexToken('Y',      matchSigned);
+    addRegexToken('YY',     match1to2, match2);
+    addRegexToken('YYYY',   match1to4, match4);
+    addRegexToken('YYYYY',  match1to6, match6);
+    addRegexToken('YYYYYY', match1to6, match6);
+
+    addParseToken(['YYYY', 'YYYYY', 'YYYYYY'], YEAR);
+    addParseToken('YY', function (input, array) {
+        array[YEAR] = utils_hooks__hooks.parseTwoDigitYear(input);
+    });
+
+    // HELPERS
+
+    function daysInYear(year) {
+        return isLeapYear(year) ? 366 : 365;
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    }
+
+    // HOOKS
+
+    utils_hooks__hooks.parseTwoDigitYear = function (input) {
+        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
+    };
+
+    // MOMENTS
+
+    var getSetYear = makeGetSet('FullYear', false);
+
+    function getIsLeapYear () {
+        return isLeapYear(this.year());
+    }
+
+    addFormatToken('w', ['ww', 2], 'wo', 'week');
+    addFormatToken('W', ['WW', 2], 'Wo', 'isoWeek');
+
+    // ALIASES
+
+    addUnitAlias('week', 'w');
+    addUnitAlias('isoWeek', 'W');
+
+    // PARSING
+
+    addRegexToken('w',  match1to2);
+    addRegexToken('ww', match1to2, match2);
+    addRegexToken('W',  match1to2);
+    addRegexToken('WW', match1to2, match2);
+
+    addWeekParseToken(['w', 'ww', 'W', 'WW'], function (input, week, config, token) {
+        week[token.substr(0, 1)] = toInt(input);
+    });
+
+    // HELPERS
+
+    // firstDayOfWeek       0 = sun, 6 = sat
+    //                      the day of the week that starts the week
+    //                      (usually sunday or monday)
+    // firstDayOfWeekOfYear 0 = sun, 6 = sat
+    //                      the first week is the week that contains the first
+    //                      of this day of the week
+    //                      (eg. ISO weeks use thursday (4))
+    function weekOfYear(mom, firstDayOfWeek, firstDayOfWeekOfYear) {
+        var end = firstDayOfWeekOfYear - firstDayOfWeek,
+            daysToDayOfWeek = firstDayOfWeekOfYear - mom.day(),
+            adjustedMoment;
+
+
+        if (daysToDayOfWeek > end) {
+            daysToDayOfWeek -= 7;
+        }
+
+        if (daysToDayOfWeek < end - 7) {
+            daysToDayOfWeek += 7;
+        }
+
+        adjustedMoment = local__createLocal(mom).add(daysToDayOfWeek, 'd');
+        return {
+            week: Math.ceil(adjustedMoment.dayOfYear() / 7),
+            year: adjustedMoment.year()
+        };
+    }
+
+    // LOCALES
+
+    function localeWeek (mom) {
+        return weekOfYear(mom, this._week.dow, this._week.doy).week;
+    }
+
+    var defaultLocaleWeek = {
+        dow : 0, // Sunday is the first day of the week.
+        doy : 6  // The week that contains Jan 1st is the first week of the year.
+    };
+
+    function localeFirstDayOfWeek () {
+        return this._week.dow;
+    }
+
+    function localeFirstDayOfYear () {
+        return this._week.doy;
+    }
+
+    // MOMENTS
+
+    function getSetWeek (input) {
+        var week = this.localeData().week(this);
+        return input == null ? week : this.add((input - week) * 7, 'd');
+    }
+
+    function getSetISOWeek (input) {
+        var week = weekOfYear(this, 1, 4).week;
+        return input == null ? week : this.add((input - week) * 7, 'd');
+    }
+
+    addFormatToken('DDD', ['DDDD', 3], 'DDDo', 'dayOfYear');
+
+    // ALIASES
+
+    addUnitAlias('dayOfYear', 'DDD');
+
+    // PARSING
+
+    addRegexToken('DDD',  match1to3);
+    addRegexToken('DDDD', match3);
+    addParseToken(['DDD', 'DDDD'], function (input, array, config) {
+        config._dayOfYear = toInt(input);
+    });
+
+    // HELPERS
+
+    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+    function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
+        var d = createUTCDate(year, 0, 1).getUTCDay();
+        var daysToAdd;
+        var dayOfYear;
+
+        d = d === 0 ? 7 : d;
+        weekday = weekday != null ? weekday : firstDayOfWeek;
+        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
+        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
+
+        return {
+            year      : dayOfYear > 0 ? year      : year - 1,
+            dayOfYear : dayOfYear > 0 ? dayOfYear : daysInYear(year - 1) + dayOfYear
+        };
+    }
+
+    // MOMENTS
+
+    function getSetDayOfYear (input) {
+        var dayOfYear = Math.round((this.clone().startOf('day') - this.clone().startOf('year')) / 864e5) + 1;
+        return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
+    }
+
+    // Pick the first defined of two or three arguments.
+    function defaults(a, b, c) {
+        if (a != null) {
+            return a;
+        }
+        if (b != null) {
+            return b;
+        }
+        return c;
+    }
+
+    function currentDateArray(config) {
+        var now = new Date();
+        if (config._useUTC) {
+            return [now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()];
+        }
+        return [now.getFullYear(), now.getMonth(), now.getDate()];
+    }
+
+    // convert an array to a date.
+    // the array should mirror the parameters below
+    // note: all values past the year are optional and will default to the lowest possible value.
+    // [year, month, day , hour, minute, second, millisecond]
+    function configFromArray (config) {
+        var i, date, input = [], currentDate, yearToUse;
+
+        if (config._d) {
+            return;
+        }
+
+        currentDate = currentDateArray(config);
+
+        //compute day of the year from weeks and weekdays
+        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
+            dayOfYearFromWeekInfo(config);
+        }
+
+        //if the day of the year is set, figure out what it is
+        if (config._dayOfYear) {
+            yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
+
+            if (config._dayOfYear > daysInYear(yearToUse)) {
+                config._pf._overflowDayOfYear = true;
+            }
+
+            date = createUTCDate(yearToUse, 0, config._dayOfYear);
+            config._a[MONTH] = date.getUTCMonth();
+            config._a[DATE] = date.getUTCDate();
+        }
+
+        // Default to current date.
+        // * if no year, month, day of month are given, default to today
+        // * if day of month is given, default month and year
+        // * if month is given, default only year
+        // * if year is given, don't default anything
+        for (i = 0; i < 3 && config._a[i] == null; ++i) {
+            config._a[i] = input[i] = currentDate[i];
+        }
+
+        // Zero out whatever was not defaulted, including time
+        for (; i < 7; i++) {
+            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
+        }
+
+        // Check for 24:00:00.000
+        if (config._a[HOUR] === 24 &&
+                config._a[MINUTE] === 0 &&
+                config._a[SECOND] === 0 &&
+                config._a[MILLISECOND] === 0) {
+            config._nextDay = true;
+            config._a[HOUR] = 0;
+        }
+
+        config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+        // Apply timezone offset from input. The actual utcOffset can be changed
+        // with parseZone.
+        if (config._tzm != null) {
+            config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+        }
+
+        if (config._nextDay) {
+            config._a[HOUR] = 24;
+        }
+    }
+
+    function dayOfYearFromWeekInfo(config) {
+        var w, weekYear, week, weekday, dow, doy, temp;
+
+        w = config._w;
+        if (w.GG != null || w.W != null || w.E != null) {
+            dow = 1;
+            doy = 4;
+
+            // TODO: We need to take the current isoWeekYear, but that depends on
+            // how we interpret now (local, utc, fixed offset). So create
+            // a now version of current config (take local/utc/offset flags, and
+            // create now).
+            weekYear = defaults(w.GG, config._a[YEAR], weekOfYear(local__createLocal(), 1, 4).year);
+            week = defaults(w.W, 1);
+            weekday = defaults(w.E, 1);
+        } else {
+            dow = config._locale._week.dow;
+            doy = config._locale._week.doy;
+
+            weekYear = defaults(w.gg, config._a[YEAR], weekOfYear(local__createLocal(), dow, doy).year);
+            week = defaults(w.w, 1);
+
+            if (w.d != null) {
+                // weekday -- low day numbers are considered next week
+                weekday = w.d;
+                if (weekday < dow) {
+                    ++week;
+                }
+            } else if (w.e != null) {
+                // local weekday -- counting starts from begining of week
+                weekday = w.e + dow;
+            } else {
+                // default to begining of week
+                weekday = dow;
+            }
+        }
+        temp = dayOfYearFromWeeks(weekYear, week, weekday, doy, dow);
+
+        config._a[YEAR] = temp.year;
+        config._dayOfYear = temp.dayOfYear;
+    }
+
+    utils_hooks__hooks.ISO_8601 = function () {};
+
+    // date from string and format string
+    function configFromStringAndFormat(config) {
+        // TODO: Move this to another part of the creation flow to prevent circular deps
+        if (config._f === utils_hooks__hooks.ISO_8601) {
+            configFromISO(config);
+            return;
+        }
+
+        config._a = [];
+        config._pf.empty = true;
+
+        // This array is used to make a Date, either with `new Date` or `Date.UTC`
+        var string = '' + config._i,
+            i, parsedInput, tokens, token, skipped,
+            stringLength = string.length,
+            totalParsedInputLength = 0;
+
+        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
+
+        for (i = 0; i < tokens.length; i++) {
+            token = tokens[i];
+            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
+            if (parsedInput) {
+                skipped = string.substr(0, string.indexOf(parsedInput));
+                if (skipped.length > 0) {
+                    config._pf.unusedInput.push(skipped);
+                }
+                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
+                totalParsedInputLength += parsedInput.length;
+            }
+            // don't parse if it's not a known token
+            if (formatTokenFunctions[token]) {
+                if (parsedInput) {
+                    config._pf.empty = false;
+                }
+                else {
+                    config._pf.unusedTokens.push(token);
+                }
+                addTimeToArrayFromToken(token, parsedInput, config);
+            }
+            else if (config._strict && !parsedInput) {
+                config._pf.unusedTokens.push(token);
+            }
+        }
+
+        // add remaining unparsed input length to the string
+        config._pf.charsLeftOver = stringLength - totalParsedInputLength;
+        if (string.length > 0) {
+            config._pf.unusedInput.push(string);
+        }
+
+        // clear _12h flag if hour is <= 12
+        if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
+            config._pf.bigHour = undefined;
+        }
+        // handle meridiem
+        config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR], config._meridiem);
+
+        configFromArray(config);
+        checkOverflow(config);
+    }
+
+
+    function meridiemFixWrap (locale, hour, meridiem) {
+        var isPm;
+
+        if (meridiem == null) {
+            // nothing to do
+            return hour;
+        }
+        if (locale.meridiemHour != null) {
+            return locale.meridiemHour(hour, meridiem);
+        } else if (locale.isPM != null) {
+            // Fallback
+            isPm = locale.isPM(meridiem);
+            if (isPm && hour < 12) {
+                hour += 12;
+            }
+            if (!isPm && hour === 12) {
+                hour = 0;
+            }
+            return hour;
+        } else {
+            // this is not supposed to happen
+            return hour;
+        }
+    }
+
+    function configFromStringAndArray(config) {
+        var tempConfig,
+            bestMoment,
+
+            scoreToBeat,
+            i,
+            currentScore;
+
+        if (config._f.length === 0) {
+            config._pf.invalidFormat = true;
+            config._d = new Date(NaN);
+            return;
+        }
+
+        for (i = 0; i < config._f.length; i++) {
+            currentScore = 0;
+            tempConfig = copyConfig({}, config);
+            if (config._useUTC != null) {
+                tempConfig._useUTC = config._useUTC;
+            }
+            tempConfig._pf = defaultParsingFlags();
+            tempConfig._f = config._f[i];
+            configFromStringAndFormat(tempConfig);
+
+            if (!valid__isValid(tempConfig)) {
+                continue;
+            }
+
+            // if there is any input that was not parsed add a penalty for that format
+            currentScore += tempConfig._pf.charsLeftOver;
+
+            //or tokens
+            currentScore += tempConfig._pf.unusedTokens.length * 10;
+
+            tempConfig._pf.score = currentScore;
+
+            if (scoreToBeat == null || currentScore < scoreToBeat) {
+                scoreToBeat = currentScore;
+                bestMoment = tempConfig;
+            }
+        }
+
+        extend(config, bestMoment || tempConfig);
+    }
+
+    function configFromObject(config) {
+        if (config._d) {
+            return;
+        }
+
+        var i = normalizeObjectUnits(config._i);
+        config._a = [i.year, i.month, i.day || i.date, i.hour, i.minute, i.second, i.millisecond];
+
+        configFromArray(config);
+    }
+
+    function createFromConfig (config) {
+        var input = config._i,
+            format = config._f,
+            res;
+
+        config._locale = config._locale || locale_locales__getLocale(config._l);
+
+        if (input === null || (format === undefined && input === '')) {
+            return valid__createInvalid({nullInput: true});
+        }
+
+        if (typeof input === 'string') {
+            config._i = input = config._locale.preparse(input);
+        }
+
+        if (isMoment(input)) {
+            return new Moment(checkOverflow(input));
+        } else if (isArray(format)) {
+            configFromStringAndArray(config);
+        } else if (format) {
+            configFromStringAndFormat(config);
+        } else {
+            configFromInput(config);
+        }
+
+        res = new Moment(checkOverflow(config));
+        if (res._nextDay) {
+            // Adding is smart enough around DST
+            res.add(1, 'd');
+            res._nextDay = undefined;
+        }
+
+        return res;
+    }
+
+    function configFromInput(config) {
+        var input = config._i;
+        if (input === undefined) {
+            config._d = new Date();
+        } else if (isDate(input)) {
+            config._d = new Date(+input);
+        } else if (typeof input === 'string') {
+            configFromString(config);
+        } else if (isArray(input)) {
+            config._a = map(input.slice(0), function (obj) {
+                return parseInt(obj, 10);
+            });
+            configFromArray(config);
+        } else if (typeof(input) === 'object') {
+            configFromObject(config);
+        } else if (typeof(input) === 'number') {
+            // from milliseconds
+            config._d = new Date(input);
+        } else {
+            utils_hooks__hooks.createFromInputFallback(config);
+        }
+    }
+
+    function createLocalOrUTC (input, format, locale, strict, isUTC) {
+        var c = {};
+
+        if (typeof(locale) === 'boolean') {
+            strict = locale;
+            locale = undefined;
+        }
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c._isAMomentObject = true;
+        c._useUTC = c._isUTC = isUTC;
+        c._l = locale;
+        c._i = input;
+        c._f = format;
+        c._strict = strict;
+        c._pf = defaultParsingFlags();
+
+        return createFromConfig(c);
+    }
+
+    function local__createLocal (input, format, locale, strict) {
+        return createLocalOrUTC(input, format, locale, strict, false);
+    }
+
+    var prototypeMin = deprecate(
+         'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
+         function () {
+             var other = local__createLocal.apply(null, arguments);
+             return other < this ? this : other;
+         }
+     );
+
+    var prototypeMax = deprecate(
+        'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
+        function () {
+            var other = local__createLocal.apply(null, arguments);
+            return other > this ? this : other;
+        }
+    );
+
+    // Pick a moment m from moments so that m[fn](other) is true for all
+    // other. This relies on the function fn to be transitive.
+    //
+    // moments should either be an array of moment objects or an array, whose
+    // first element is an array of moment objects.
+    function pickBy(fn, moments) {
+        var res, i;
+        if (moments.length === 1 && isArray(moments[0])) {
+            moments = moments[0];
+        }
+        if (!moments.length) {
+            return local__createLocal();
+        }
+        res = moments[0];
+        for (i = 1; i < moments.length; ++i) {
+            if (moments[i][fn](res)) {
+                res = moments[i];
+            }
+        }
+        return res;
+    }
+
+    // TODO: Use [].sort instead?
+    function min () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isBefore', args);
+    }
+
+    function max () {
+        var args = [].slice.call(arguments, 0);
+
+        return pickBy('isAfter', args);
+    }
+
+    function Duration (duration) {
+        var normalizedInput = normalizeObjectUnits(duration),
+            years = normalizedInput.year || 0,
+            quarters = normalizedInput.quarter || 0,
+            months = normalizedInput.month || 0,
+            weeks = normalizedInput.week || 0,
+            days = normalizedInput.day || 0,
+            hours = normalizedInput.hour || 0,
+            minutes = normalizedInput.minute || 0,
+            seconds = normalizedInput.second || 0,
+            milliseconds = normalizedInput.millisecond || 0;
+
+        // representation for dateAddRemove
+        this._milliseconds = +milliseconds +
+            seconds * 1e3 + // 1000
+            minutes * 6e4 + // 1000 * 60
+            hours * 36e5; // 1000 * 60 * 60
+        // Because of dateAddRemove treats 24 hours as different from a
+        // day when working around DST, we need to store them separately
+        this._days = +days +
+            weeks * 7;
+        // It is impossible translate months into days without knowing
+        // which months you are are talking about, so we have to store
+        // it separately.
+        this._months = +months +
+            quarters * 3 +
+            years * 12;
+
+        this._data = {};
+
+        this._locale = locale_locales__getLocale();
+
+        this._bubble();
+    }
+
+    function isDuration (obj) {
+        return obj instanceof Duration;
+    }
+
+    function offset (token, separator) {
+        addFormatToken(token, 0, 0, function () {
+            var offset = this.utcOffset();
+            var sign = '+';
+            if (offset < 0) {
+                offset = -offset;
+                sign = '-';
+            }
+            return sign + zeroFill(~~(offset / 60), 2) + separator + zeroFill(~~(offset) % 60, 2);
+        });
+    }
+
+    offset('Z', ':');
+    offset('ZZ', '');
+
+    // PARSING
+
+    addRegexToken('Z',  matchOffset);
+    addRegexToken('ZZ', matchOffset);
+    addParseToken(['Z', 'ZZ'], function (input, array, config) {
+        config._useUTC = true;
+        config._tzm = offsetFromString(input);
+    });
+
+    // HELPERS
+
+    // timezone chunker
+    // '+10:00' > ['10',  '00']
+    // '-1530'  > ['-15', '30']
+    var chunkOffset = /([\+\-]|\d\d)/gi;
+
+    function offsetFromString(string) {
+        var matches = ((string || '').match(matchOffset) || []);
+        var chunk   = matches[matches.length - 1] || [];
+        var parts   = (chunk + '').match(chunkOffset) || ['-', 0, 0];
+        var minutes = +(parts[1] * 60) + toInt(parts[2]);
+
+        return parts[0] === '+' ? minutes : -minutes;
+    }
+
+    // Return a moment from input, that is local/utc/zone equivalent to model.
+    function cloneWithOffset(input, model) {
+        var res, diff;
+        if (model._isUTC) {
+            res = model.clone();
+            diff = (isMoment(input) || isDate(input) ? +input : +local__createLocal(input)) - (+res);
+            // Use low-level api, because this fn is low-level api.
+            res._d.setTime(+res._d + diff);
+            utils_hooks__hooks.updateOffset(res, false);
+            return res;
+        } else {
+            return local__createLocal(input).local();
+        }
+        return model._isUTC ? local__createLocal(input).zone(model._offset || 0) : local__createLocal(input).local();
+    }
+
+    function getDateOffset (m) {
+        // On Firefox.24 Date#getTimezoneOffset returns a floating point.
+        // https://github.com/moment/moment/pull/1871
+        return -Math.round(m._d.getTimezoneOffset() / 15) * 15;
+    }
+
+    // HOOKS
+
+    // This function will be called whenever a moment is mutated.
+    // It is intended to keep the offset in sync with the timezone.
+    utils_hooks__hooks.updateOffset = function () {};
+
+    // MOMENTS
+
+    // keepLocalTime = true means only change the timezone, without
+    // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
+    // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
+    // +0200, so we adjust the time as needed, to be valid.
+    //
+    // Keeping the time actually adds/subtracts (one hour)
+    // from the actual represented time. That is why we call updateOffset
+    // a second time. In case it wants us to change the offset again
+    // _changeInProgress == true case, then we have to adjust, because
+    // there is no such time in the given timezone.
+    function getSetOffset (input, keepLocalTime) {
+        var offset = this._offset || 0,
+            localAdjust;
+        if (input != null) {
+            if (typeof input === 'string') {
+                input = offsetFromString(input);
+            }
+            if (Math.abs(input) < 16) {
+                input = input * 60;
+            }
+            if (!this._isUTC && keepLocalTime) {
+                localAdjust = getDateOffset(this);
+            }
+            this._offset = input;
+            this._isUTC = true;
+            if (localAdjust != null) {
+                this.add(localAdjust, 'm');
+            }
+            if (offset !== input) {
+                if (!keepLocalTime || this._changeInProgress) {
+                    add_subtract__addSubtract(this, create__createDuration(input - offset, 'm'), 1, false);
+                } else if (!this._changeInProgress) {
+                    this._changeInProgress = true;
+                    utils_hooks__hooks.updateOffset(this, true);
+                    this._changeInProgress = null;
+                }
+            }
+            return this;
+        } else {
+            return this._isUTC ? offset : getDateOffset(this);
+        }
+    }
+
+    function getSetZone (input, keepLocalTime) {
+        if (input != null) {
+            if (typeof input !== 'string') {
+                input = -input;
+            }
+
+            this.utcOffset(input, keepLocalTime);
+
+            return this;
+        } else {
+            return -this.utcOffset();
+        }
+    }
+
+    function setOffsetToUTC (keepLocalTime) {
+        return this.utcOffset(0, keepLocalTime);
+    }
+
+    function setOffsetToLocal (keepLocalTime) {
+        if (this._isUTC) {
+            this.utcOffset(0, keepLocalTime);
+            this._isUTC = false;
+
+            if (keepLocalTime) {
+                this.subtract(getDateOffset(this), 'm');
+            }
+        }
+        return this;
+    }
+
+    function setOffsetToParsedOffset () {
+        if (this._tzm) {
+            this.utcOffset(this._tzm);
+        } else if (typeof this._i === 'string') {
+            this.utcOffset(offsetFromString(this._i));
+        }
+        return this;
+    }
+
+    function hasAlignedHourOffset (input) {
+        if (!input) {
+            input = 0;
+        }
+        else {
+            input = local__createLocal(input).utcOffset();
+        }
+
+        return (this.utcOffset() - input) % 60 === 0;
+    }
+
+    function isDaylightSavingTime () {
+        return (
+            this.utcOffset() > this.clone().month(0).utcOffset() ||
+            this.utcOffset() > this.clone().month(5).utcOffset()
+        );
+    }
+
+    function isDaylightSavingTimeShifted () {
+        if (this._a) {
+            var other = this._isUTC ? create_utc__createUTC(this._a) : local__createLocal(this._a);
+            return this.isValid() && compareArrays(this._a, other.toArray()) > 0;
+        }
+
+        return false;
+    }
+
+    function isLocal () {
+        return !this._isUTC;
+    }
+
+    function isUtcOffset () {
+        return this._isUTC;
+    }
+
+    function isUtc () {
+        return this._isUTC && this._offset === 0;
+    }
+
+    var aspNetRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/;
+
+    // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+    var create__isoRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/;
+
+    function create__createDuration (input, key) {
+        var duration = input,
+            // matching against regexp is expensive, do it on demand
+            match = null,
+            sign,
+            ret,
+            diffRes;
+
+        if (isDuration(input)) {
+            duration = {
+                ms : input._milliseconds,
+                d  : input._days,
+                M  : input._months
+            };
+        } else if (typeof input === 'number') {
+            duration = {};
+            if (key) {
+                duration[key] = input;
+            } else {
+                duration.milliseconds = input;
+            }
+        } else if (!!(match = aspNetRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            duration = {
+                y  : 0,
+                d  : toInt(match[DATE])        * sign,
+                h  : toInt(match[HOUR])        * sign,
+                m  : toInt(match[MINUTE])      * sign,
+                s  : toInt(match[SECOND])      * sign,
+                ms : toInt(match[MILLISECOND]) * sign
+            };
+        } else if (!!(match = create__isoRegex.exec(input))) {
+            sign = (match[1] === '-') ? -1 : 1;
+            duration = {
+                y : parseIso(match[2], sign),
+                M : parseIso(match[3], sign),
+                d : parseIso(match[4], sign),
+                h : parseIso(match[5], sign),
+                m : parseIso(match[6], sign),
+                s : parseIso(match[7], sign),
+                w : parseIso(match[8], sign)
+            };
+        } else if (duration == null) {// checks for null or undefined
+            duration = {};
+        } else if (typeof duration === 'object' && ('from' in duration || 'to' in duration)) {
+            diffRes = momentsDifference(local__createLocal(duration.from), local__createLocal(duration.to));
+
+            duration = {};
+            duration.ms = diffRes.milliseconds;
+            duration.M = diffRes.months;
+        }
+
+        ret = new Duration(duration);
+
+        if (isDuration(input) && hasOwnProp(input, '_locale')) {
+            ret._locale = input._locale;
+        }
+
+        return ret;
+    }
+
+    create__createDuration.fn = Duration.prototype;
+
+    function parseIso (inp, sign) {
+        // We'd normally use ~~inp for this, but unfortunately it also
+        // converts floats to ints.
+        // inp may be undefined, so careful calling replace on it.
+        var res = inp && parseFloat(inp.replace(',', '.'));
+        // apply sign while we're at it
+        return (isNaN(res) ? 0 : res) * sign;
+    }
+
+    function positiveMomentsDifference(base, other) {
+        var res = {milliseconds: 0, months: 0};
+
+        res.months = other.month() - base.month() +
+            (other.year() - base.year()) * 12;
+        if (base.clone().add(res.months, 'M').isAfter(other)) {
+            --res.months;
+        }
+
+        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
+
+        return res;
+    }
+
+    function momentsDifference(base, other) {
+        var res;
+        other = cloneWithOffset(other, base);
+        if (base.isBefore(other)) {
+            res = positiveMomentsDifference(base, other);
+        } else {
+            res = positiveMomentsDifference(other, base);
+            res.milliseconds = -res.milliseconds;
+            res.months = -res.months;
+        }
+
+        return res;
+    }
+
+    function createAdder(direction, name) {
+        return function (val, period) {
+            var dur, tmp;
+            //invert the arguments, but complain about it
+            if (period !== null && !isNaN(+period)) {
+                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
+                tmp = val; val = period; period = tmp;
+            }
+
+            val = typeof val === 'string' ? +val : val;
+            dur = create__createDuration(val, period);
+            add_subtract__addSubtract(this, dur, direction);
+            return this;
+        };
+    }
+
+    function add_subtract__addSubtract (mom, duration, isAdding, updateOffset) {
+        var milliseconds = duration._milliseconds,
+            days = duration._days,
+            months = duration._months;
+        updateOffset = updateOffset == null ? true : updateOffset;
+
+        if (milliseconds) {
+            mom._d.setTime(+mom._d + milliseconds * isAdding);
+        }
+        if (days) {
+            get_set__set(mom, 'Date', get_set__get(mom, 'Date') + days * isAdding);
+        }
+        if (months) {
+            setMonth(mom, get_set__get(mom, 'Month') + months * isAdding);
+        }
+        if (updateOffset) {
+            utils_hooks__hooks.updateOffset(mom, days || months);
+        }
+    }
+
+    var add_subtract__add      = createAdder(1, 'add');
+    var add_subtract__subtract = createAdder(-1, 'subtract');
+
+    function moment_calendar__calendar (time) {
+        // We want to compare the start of today, vs this.
+        // Getting start-of-today depends on whether we're local/utc/offset or not.
+        var now = time || local__createLocal(),
+            sod = cloneWithOffset(now, this).startOf('day'),
+            diff = this.diff(sod, 'days', true),
+            format = diff < -6 ? 'sameElse' :
+                diff < -1 ? 'lastWeek' :
+                diff < 0 ? 'lastDay' :
+                diff < 1 ? 'sameDay' :
+                diff < 2 ? 'nextDay' :
+                diff < 7 ? 'nextWeek' : 'sameElse';
+        return this.format(this.localeData().calendar(format, this, local__createLocal(now)));
+    }
+
+    function clone () {
+        return new Moment(this);
+    }
+
+    function isAfter (input, units) {
+        var inputMs;
+        units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+        if (units === 'millisecond') {
+            input = isMoment(input) ? input : local__createLocal(input);
+            return +this > +input;
+        } else {
+            inputMs = isMoment(input) ? +input : +local__createLocal(input);
+            return inputMs < +this.clone().startOf(units);
+        }
+    }
+
+    function isBefore (input, units) {
+        var inputMs;
+        units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
+        if (units === 'millisecond') {
+            input = isMoment(input) ? input : local__createLocal(input);
+            return +this < +input;
+        } else {
+            inputMs = isMoment(input) ? +input : +local__createLocal(input);
+            return +this.clone().endOf(units) < inputMs;
+        }
+    }
+
+    function isBetween (from, to, units) {
+        return this.isAfter(from, units) && this.isBefore(to, units);
+    }
+
+    function isSame (input, units) {
+        var inputMs;
+        units = normalizeUnits(units || 'millisecond');
+        if (units === 'millisecond') {
+            input = isMoment(input) ? input : local__createLocal(input);
+            return +this === +input;
+        } else {
+            inputMs = +local__createLocal(input);
+            return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
+        }
+    }
+
+    function absFloor (number) {
+        if (number < 0) {
+            return Math.ceil(number);
+        } else {
+            return Math.floor(number);
+        }
+    }
+
+    function diff (input, units, asFloat) {
+        var that = cloneWithOffset(input, this),
+            zoneDelta = (that.utcOffset() - this.utcOffset()) * 6e4,
+            delta, output;
+
+        units = normalizeUnits(units);
+
+        if (units === 'year' || units === 'month' || units === 'quarter') {
+            output = monthDiff(this, that);
+            if (units === 'quarter') {
+                output = output / 3;
+            } else if (units === 'year') {
+                output = output / 12;
+            }
+        } else {
+            delta = this - that;
+            output = units === 'second' ? delta / 1e3 : // 1000
+                units === 'minute' ? delta / 6e4 : // 1000 * 60
+                units === 'hour' ? delta / 36e5 : // 1000 * 60 * 60
+                units === 'day' ? (delta - zoneDelta) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
+                units === 'week' ? (delta - zoneDelta) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
+                delta;
+        }
+        return asFloat ? output : absFloor(output);
+    }
+
+    function monthDiff (a, b) {
+        // difference in months
+        var wholeMonthDiff = ((b.year() - a.year()) * 12) + (b.month() - a.month()),
+            // b is in (anchor - 1 month, anchor + 1 month)
+            anchor = a.clone().add(wholeMonthDiff, 'months'),
+            anchor2, adjust;
+
+        if (b - anchor < 0) {
+            anchor2 = a.clone().add(wholeMonthDiff - 1, 'months');
+            // linear across the month
+            adjust = (b - anchor) / (anchor - anchor2);
+        } else {
+            anchor2 = a.clone().add(wholeMonthDiff + 1, 'months');
+            // linear across the month
+            adjust = (b - anchor) / (anchor2 - anchor);
+        }
+
+        return -(wholeMonthDiff + adjust);
+    }
+
+    utils_hooks__hooks.defaultFormat = 'YYYY-MM-DDTHH:mm:ssZ';
+
+    function toString () {
+        return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
+    }
+
+    function moment_format__toISOString () {
+        var m = this.clone().utc();
+        if (0 < m.year() && m.year() <= 9999) {
+            if ('function' === typeof Date.prototype.toISOString) {
+                // native implementation is ~50x faster, use it when we can
+                return this.toDate().toISOString();
+            } else {
+                return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+            }
+        } else {
+            return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+        }
+    }
+
+    function format (inputString) {
+        var output = formatMoment(this, inputString || utils_hooks__hooks.defaultFormat);
+        return this.localeData().postformat(output);
+    }
+
+    function from (time, withoutSuffix) {
+        return create__createDuration({to: this, from: time}).locale(this.locale()).humanize(!withoutSuffix);
+    }
+
+    function fromNow (withoutSuffix) {
+        return this.from(local__createLocal(), withoutSuffix);
+    }
+
+    function locale (key) {
+        var newLocaleData;
+
+        if (key === undefined) {
+            return this._locale._abbr;
+        } else {
+            newLocaleData = locale_locales__getLocale(key);
+            if (newLocaleData != null) {
+                this._locale = newLocaleData;
+            }
+            return this;
+        }
+    }
+
+    var lang = deprecate(
+        'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
+        function (key) {
+            if (key === undefined) {
+                return this.localeData();
+            } else {
+                return this.locale(key);
+            }
+        }
+    );
+
+    function localeData () {
+        return this._locale;
+    }
+
+    function startOf (units) {
+        units = normalizeUnits(units);
+        // the following switch intentionally omits break keywords
+        // to utilize falling through the cases.
+        switch (units) {
+        case 'year':
+            this.month(0);
+            /* falls through */
+        case 'quarter':
+        case 'month':
+            this.date(1);
+            /* falls through */
+        case 'week':
+        case 'isoWeek':
+        case 'day':
+            this.hours(0);
+            /* falls through */
+        case 'hour':
+            this.minutes(0);
+            /* falls through */
+        case 'minute':
+            this.seconds(0);
+            /* falls through */
+        case 'second':
+            this.milliseconds(0);
+        }
+
+        // weeks are a special case
+        if (units === 'week') {
+            this.weekday(0);
+        }
+        if (units === 'isoWeek') {
+            this.isoWeekday(1);
+        }
+
+        // quarters are also special
+        if (units === 'quarter') {
+            this.month(Math.floor(this.month() / 3) * 3);
+        }
+
+        return this;
+    }
+
+    function endOf (units) {
+        units = normalizeUnits(units);
+        if (units === undefined || units === 'millisecond') {
+            return this;
+        }
+        return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
+    }
+
+    function to_type__valueOf () {
+        return +this._d - ((this._offset || 0) * 60000);
+    }
+
+    function unix () {
+        return Math.floor(+this / 1000);
+    }
+
+    function toDate () {
+        return this._offset ? new Date(+this) : this._d;
+    }
+
+    function toArray () {
+        var m = this;
+        return [m.year(), m.month(), m.date(), m.hour(), m.minute(), m.second(), m.millisecond()];
+    }
+
+    function moment_valid__isValid () {
+        return valid__isValid(this);
+    }
+
+    function parsingFlags () {
+        return extend({}, this._pf);
+    }
+
+    function invalidAt () {
+        return this._pf.overflow;
+    }
+
+    addFormatToken(0, ['gg', 2], 0, function () {
+        return this.weekYear() % 100;
+    });
+
+    addFormatToken(0, ['GG', 2], 0, function () {
+        return this.isoWeekYear() % 100;
+    });
+
+    function addWeekYearFormatToken (token, getter) {
+        addFormatToken(0, [token, token.length], 0, getter);
+    }
+
+    addWeekYearFormatToken('gggg',     'weekYear');
+    addWeekYearFormatToken('ggggg',    'weekYear');
+    addWeekYearFormatToken('GGGG',  'isoWeekYear');
+    addWeekYearFormatToken('GGGGG', 'isoWeekYear');
+
+    // ALIASES
+
+    addUnitAlias('weekYear', 'gg');
+    addUnitAlias('isoWeekYear', 'GG');
+
+    // PARSING
+
+    addRegexToken('G',      matchSigned);
+    addRegexToken('g',      matchSigned);
+    addRegexToken('GG',     match1to2, match2);
+    addRegexToken('gg',     match1to2, match2);
+    addRegexToken('GGGG',   match1to4, match4);
+    addRegexToken('gggg',   match1to4, match4);
+    addRegexToken('GGGGG',  match1to6, match6);
+    addRegexToken('ggggg',  match1to6, match6);
+
+    addWeekParseToken(['gggg', 'ggggg', 'GGGG', 'GGGGG'], function (input, week, config, token) {
+        week[token.substr(0, 2)] = toInt(input);
+    });
+
+    addWeekParseToken(['gg', 'GG'], function (input, week, config, token) {
+        week[token] = utils_hooks__hooks.parseTwoDigitYear(input);
+    });
+
+    // HELPERS
+
+    function weeksInYear(year, dow, doy) {
+        return weekOfYear(local__createLocal([year, 11, 31 + dow - doy]), dow, doy).week;
+    }
+
+    // MOMENTS
+
+    function getSetWeekYear (input) {
+        var year = weekOfYear(this, this.localeData()._week.dow, this.localeData()._week.doy).year;
+        return input == null ? year : this.add((input - year), 'y');
+    }
+
+    function getSetISOWeekYear (input) {
+        var year = weekOfYear(this, 1, 4).year;
+        return input == null ? year : this.add((input - year), 'y');
+    }
+
+    function getISOWeeksInYear () {
+        return weeksInYear(this.year(), 1, 4);
+    }
+
+    function getWeeksInYear () {
+        var weekInfo = this.localeData()._week;
+        return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
+    }
+
+    addFormatToken('Q', 0, 0, 'quarter');
+
+    // ALIASES
+
+    addUnitAlias('quarter', 'Q');
+
+    // PARSING
+
+    addRegexToken('Q', match1);
+    addParseToken('Q', function (input, array) {
+        array[MONTH] = (toInt(input) - 1) * 3;
+    });
+
+    // MOMENTS
+
+    function getSetQuarter (input) {
+        return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
+    }
+
+    addFormatToken('D', ['DD', 2], 'Do', 'date');
+
+    // ALIASES
+
+    addUnitAlias('date', 'D');
+
+    // PARSING
+
+    addRegexToken('D',  match1to2);
+    addRegexToken('DD', match1to2, match2);
+    addRegexToken('Do', function (isStrict, locale) {
+        return isStrict ? locale._ordinalParse : locale._ordinalParseLenient;
+    });
+
+    addParseToken(['D', 'DD'], DATE);
+    addParseToken('Do', function (input, array) {
+        array[DATE] = toInt(input.match(match1to2)[0], 10);
+    });
+
+    // MOMENTS
+
+    var getSetDayOfMonth = makeGetSet('Date', true);
+
+    addFormatToken('d', 0, 'do', 'day');
+
+    addFormatToken('dd', 0, 0, function (format) {
+        return this.localeData().weekdaysMin(this, format);
+    });
+
+    addFormatToken('ddd', 0, 0, function (format) {
+        return this.localeData().weekdaysShort(this, format);
+    });
+
+    addFormatToken('dddd', 0, 0, function (format) {
+        return this.localeData().weekdays(this, format);
+    });
+
+    addFormatToken('e', 0, 0, 'weekday');
+    addFormatToken('E', 0, 0, 'isoWeekday');
+
+    // ALIASES
+
+    addUnitAlias('day', 'd');
+    addUnitAlias('weekday', 'e');
+    addUnitAlias('isoWeekday', 'E');
+
+    // PARSING
+
+    addRegexToken('d',    match1to2);
+    addRegexToken('e',    match1to2);
+    addRegexToken('E',    match1to2);
+    addRegexToken('dd',   matchWord);
+    addRegexToken('ddd',  matchWord);
+    addRegexToken('dddd', matchWord);
+
+    addWeekParseToken(['dd', 'ddd', 'dddd'], function (input, week, config) {
+        var weekday = config._locale.weekdaysParse(input);
+        // if we didn't get a weekday name, mark the date as invalid
+        if (weekday != null) {
+            week.d = weekday;
+        } else {
+            config._pf.invalidWeekday = input;
+        }
+    });
+
+    addWeekParseToken(['d', 'e', 'E'], function (input, week, config, token) {
+        week[token] = toInt(input);
+    });
+
+    // HELPERS
+
+    function parseWeekday(input, locale) {
+        if (typeof input === 'string') {
+            if (!isNaN(input)) {
+                input = parseInt(input, 10);
+            }
+            else {
+                input = locale.weekdaysParse(input);
+                if (typeof input !== 'number') {
+                    return null;
+                }
+            }
+        }
+        return input;
+    }
+
+    // LOCALES
+
+    var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
+    function localeWeekdays (m) {
+        return this._weekdays[m.day()];
+    }
+
+    var defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
+    function localeWeekdaysShort (m) {
+        return this._weekdaysShort[m.day()];
+    }
+
+    var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
+    function localeWeekdaysMin (m) {
+        return this._weekdaysMin[m.day()];
+    }
+
+    function localeWeekdaysParse (weekdayName) {
+        var i, mom, regex;
+
+        if (!this._weekdaysParse) {
+            this._weekdaysParse = [];
+        }
+
+        for (i = 0; i < 7; i++) {
+            // make the regex if we don't have it already
+            if (!this._weekdaysParse[i]) {
+                mom = local__createLocal([2000, 1]).day(i);
+                regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
+                this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
+            }
+            // test the regex
+            if (this._weekdaysParse[i].test(weekdayName)) {
+                return i;
+            }
+        }
+    }
+
+    // MOMENTS
+
+    function getSetDayOfWeek (input) {
+        var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
+        if (input != null) {
+            input = parseWeekday(input, this.localeData());
+            return this.add(input - day, 'd');
+        } else {
+            return day;
+        }
+    }
+
+    function getSetLocaleDayOfWeek (input) {
+        var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
+        return input == null ? weekday : this.add(input - weekday, 'd');
+    }
+
+    function getSetISODayOfWeek (input) {
+        // behaves the same as moment#day except
+        // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
+        // as a setter, sunday should belong to the previous week.
+        return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
+    }
+
+    addFormatToken('H', ['HH', 2], 0, 'hour');
+    addFormatToken('h', ['hh', 2], 0, function () {
+        return this.hours() % 12 || 12;
+    });
+
+    function meridiem (token, lowercase) {
+        addFormatToken(token, 0, 0, function () {
+            return this.localeData().meridiem(this.hours(), this.minutes(), lowercase);
+        });
+    }
+
+    meridiem('a', true);
+    meridiem('A', false);
+
+    // ALIASES
+
+    addUnitAlias('hour', 'h');
+
+    // PARSING
+
+    function matchMeridiem (isStrict, locale) {
+        return locale._meridiemParse;
+    }
+
+    addRegexToken('a',  matchMeridiem);
+    addRegexToken('A',  matchMeridiem);
+    addRegexToken('H',  match1to2);
+    addRegexToken('h',  match1to2);
+    addRegexToken('HH', match1to2, match2);
+    addRegexToken('hh', match1to2, match2);
+
+    addParseToken(['H', 'HH'], HOUR);
+    addParseToken(['a', 'A'], function (input, array, config) {
+        config._isPm = config._locale.isPM(input);
+        config._meridiem = input;
+    });
+    addParseToken(['h', 'hh'], function (input, array, config) {
+        array[HOUR] = toInt(input);
+        config._pf.bigHour = true;
+    });
+
+    // LOCALES
+
+    function localeIsPM (input) {
+        // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
+        // Using charAt should be more compatible.
+        return ((input + '').toLowerCase().charAt(0) === 'p');
+    }
+
+    var defaultLocaleMeridiemParse = /[ap]\.?m?\.?/i;
+    function localeMeridiem (hours, minutes, isLower) {
+        if (hours > 11) {
+            return isLower ? 'pm' : 'PM';
+        } else {
+            return isLower ? 'am' : 'AM';
+        }
+    }
+
+
+    // MOMENTS
+
+    // Setting the hour should keep the time, because the user explicitly
+    // specified which hour he wants. So trying to maintain the same hour (in
+    // a new timezone) makes sense. Adding/subtracting hours does not follow
+    // this rule.
+    var getSetHour = makeGetSet('Hours', true);
+
+    addFormatToken('m', ['mm', 2], 0, 'minute');
+
+    // ALIASES
+
+    addUnitAlias('minute', 'm');
+
+    // PARSING
+
+    addRegexToken('m',  match1to2);
+    addRegexToken('mm', match1to2, match2);
+    addParseToken(['m', 'mm'], MINUTE);
+
+    // MOMENTS
+
+    var getSetMinute = makeGetSet('Minutes', false);
+
+    addFormatToken('s', ['ss', 2], 0, 'second');
+
+    // ALIASES
+
+    addUnitAlias('second', 's');
+
+    // PARSING
+
+    addRegexToken('s',  match1to2);
+    addRegexToken('ss', match1to2, match2);
+    addParseToken(['s', 'ss'], SECOND);
+
+    // MOMENTS
+
+    var getSetSecond = makeGetSet('Seconds', false);
+
+    addFormatToken('S', 0, 0, function () {
+        return ~~(this.millisecond() / 100);
+    });
+
+    addFormatToken(0, ['SS', 2], 0, function () {
+        return ~~(this.millisecond() / 10);
+    });
+
+    function millisecond__milliseconds (token) {
+        addFormatToken(0, [token, 3], 0, 'millisecond');
+    }
+
+    millisecond__milliseconds('SSS');
+    millisecond__milliseconds('SSSS');
+
+    // ALIASES
+
+    addUnitAlias('millisecond', 'ms');
+
+    // PARSING
+
+    addRegexToken('S',    match1to3, match1);
+    addRegexToken('SS',   match1to3, match2);
+    addRegexToken('SSS',  match1to3, match3);
+    addRegexToken('SSSS', matchUnsigned);
+    addParseToken(['S', 'SS', 'SSS', 'SSSS'], function (input, array) {
+        array[MILLISECOND] = toInt(('0.' + input) * 1000);
+    });
+
+    // MOMENTS
+
+    var getSetMillisecond = makeGetSet('Milliseconds', false);
+
+    addFormatToken('z',  0, 0, 'zoneAbbr');
+    addFormatToken('zz', 0, 0, 'zoneName');
+
+    // MOMENTS
+
+    function getZoneAbbr () {
+        return this._isUTC ? 'UTC' : '';
+    }
+
+    function getZoneName () {
+        return this._isUTC ? 'Coordinated Universal Time' : '';
+    }
+
+    var momentPrototype__proto = Moment.prototype;
+
+    momentPrototype__proto.add          = add_subtract__add;
+    momentPrototype__proto.calendar     = moment_calendar__calendar;
+    momentPrototype__proto.clone        = clone;
+    momentPrototype__proto.diff         = diff;
+    momentPrototype__proto.endOf        = endOf;
+    momentPrototype__proto.format       = format;
+    momentPrototype__proto.from         = from;
+    momentPrototype__proto.fromNow      = fromNow;
+    momentPrototype__proto.get          = getSet;
+    momentPrototype__proto.invalidAt    = invalidAt;
+    momentPrototype__proto.isAfter      = isAfter;
+    momentPrototype__proto.isBefore     = isBefore;
+    momentPrototype__proto.isBetween    = isBetween;
+    momentPrototype__proto.isSame       = isSame;
+    momentPrototype__proto.isValid      = moment_valid__isValid;
+    momentPrototype__proto.lang         = lang;
+    momentPrototype__proto.locale       = locale;
+    momentPrototype__proto.localeData   = localeData;
+    momentPrototype__proto.max          = prototypeMax;
+    momentPrototype__proto.min          = prototypeMin;
+    momentPrototype__proto.parsingFlags = parsingFlags;
+    momentPrototype__proto.set          = getSet;
+    momentPrototype__proto.startOf      = startOf;
+    momentPrototype__proto.subtract     = add_subtract__subtract;
+    momentPrototype__proto.toArray      = toArray;
+    momentPrototype__proto.toDate       = toDate;
+    momentPrototype__proto.toISOString  = moment_format__toISOString;
+    momentPrototype__proto.toJSON       = moment_format__toISOString;
+    momentPrototype__proto.toString     = toString;
+    momentPrototype__proto.unix         = unix;
+    momentPrototype__proto.valueOf      = to_type__valueOf;
+
+    // Year
+    momentPrototype__proto.year       = getSetYear;
+    momentPrototype__proto.isLeapYear = getIsLeapYear;
+
+    // Week Year
+    momentPrototype__proto.weekYear    = getSetWeekYear;
+    momentPrototype__proto.isoWeekYear = getSetISOWeekYear;
+
+    // Quarter
+    momentPrototype__proto.quarter = momentPrototype__proto.quarters = getSetQuarter;
+
+    // Month
+    momentPrototype__proto.month       = getSetMonth;
+    momentPrototype__proto.daysInMonth = getDaysInMonth;
+
+    // Week
+    momentPrototype__proto.week           = momentPrototype__proto.weeks        = getSetWeek;
+    momentPrototype__proto.isoWeek        = momentPrototype__proto.isoWeeks     = getSetISOWeek;
+    momentPrototype__proto.weeksInYear    = getWeeksInYear;
+    momentPrototype__proto.isoWeeksInYear = getISOWeeksInYear;
+
+    // Day
+    momentPrototype__proto.date       = getSetDayOfMonth;
+    momentPrototype__proto.day        = momentPrototype__proto.days             = getSetDayOfWeek;
+    momentPrototype__proto.weekday    = getSetLocaleDayOfWeek;
+    momentPrototype__proto.isoWeekday = getSetISODayOfWeek;
+    momentPrototype__proto.dayOfYear  = getSetDayOfYear;
+
+    // Hour
+    momentPrototype__proto.hour = momentPrototype__proto.hours = getSetHour;
+
+    // Minute
+    momentPrototype__proto.minute = momentPrototype__proto.minutes = getSetMinute;
+
+    // Second
+    momentPrototype__proto.second = momentPrototype__proto.seconds = getSetSecond;
+
+    // Millisecond
+    momentPrototype__proto.millisecond = momentPrototype__proto.milliseconds = getSetMillisecond;
+
+    // Offset
+    momentPrototype__proto.utcOffset            = getSetOffset;
+    momentPrototype__proto.utc                  = setOffsetToUTC;
+    momentPrototype__proto.local                = setOffsetToLocal;
+    momentPrototype__proto.parseZone            = setOffsetToParsedOffset;
+    momentPrototype__proto.hasAlignedHourOffset = hasAlignedHourOffset;
+    momentPrototype__proto.isDST                = isDaylightSavingTime;
+    momentPrototype__proto.isDSTShifted         = isDaylightSavingTimeShifted;
+    momentPrototype__proto.isLocal              = isLocal;
+    momentPrototype__proto.isUtcOffset          = isUtcOffset;
+    momentPrototype__proto.isUtc                = isUtc;
+    momentPrototype__proto.isUTC                = isUtc;
+
+    // Timezone
+    momentPrototype__proto.zoneAbbr = getZoneAbbr;
+    momentPrototype__proto.zoneName = getZoneName;
+
+    // Deprecations
+    momentPrototype__proto.dates  = deprecate('dates accessor is deprecated. Use date instead.', getSetDayOfMonth);
+    momentPrototype__proto.months = deprecate('months accessor is deprecated. Use month instead', getSetMonth);
+    momentPrototype__proto.years  = deprecate('years accessor is deprecated. Use year instead', getSetYear);
+    momentPrototype__proto.zone   = deprecate('moment().zone is deprecated, use moment().utcOffset instead. https://github.com/moment/moment/issues/1779', getSetZone);
+
+    var momentPrototype = momentPrototype__proto;
+
+    function moment__createUnix (input) {
+        return local__createLocal(input * 1000);
+    }
+
+    function moment__createInZone () {
+        return local__createLocal.apply(null, arguments).parseZone();
+    }
+
+    var defaultCalendar = {
+        sameDay : '[Today at] LT',
+        nextDay : '[Tomorrow at] LT',
+        nextWeek : 'dddd [at] LT',
+        lastDay : '[Yesterday at] LT',
+        lastWeek : '[Last] dddd [at] LT',
+        sameElse : 'L'
+    };
+
+    function locale_calendar__calendar (key, mom, now) {
+        var output = this._calendar[key];
+        return typeof output === 'function' ? output.call(mom, now) : output;
+    }
+
+    var defaultLongDateFormat = {
+        LTS  : 'h:mm:ss A',
+        LT   : 'h:mm A',
+        L    : 'MM/DD/YYYY',
+        LL   : 'MMMM D, YYYY',
+        LLL  : 'MMMM D, YYYY LT',
+        LLLL : 'dddd, MMMM D, YYYY LT'
+    };
+
+    function longDateFormat (key) {
+        var output = this._longDateFormat[key];
+        if (!output && this._longDateFormat[key.toUpperCase()]) {
+            output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
+                return val.slice(1);
+            });
+            this._longDateFormat[key] = output;
+        }
+        return output;
+    }
+
+    var defaultInvalidDate = 'Invalid date';
+
+    function invalidDate () {
+        return this._invalidDate;
+    }
+
+    var defaultOrdinal = '%d';
+    var defaultOrdinalParse = /\d{1,2}/;
+
+    function ordinal (number) {
+        return this._ordinal.replace('%d', number);
+    }
+
+    function preParsePostFormat (string) {
+        return string;
+    }
+
+    var defaultRelativeTime = {
+        future : 'in %s',
+        past   : '%s ago',
+        s  : 'a few seconds',
+        m  : 'a minute',
+        mm : '%d minutes',
+        h  : 'an hour',
+        hh : '%d hours',
+        d  : 'a day',
+        dd : '%d days',
+        M  : 'a month',
+        MM : '%d months',
+        y  : 'a year',
+        yy : '%d years'
+    };
+
+    function relative__relativeTime (number, withoutSuffix, string, isFuture) {
+        var output = this._relativeTime[string];
+        return (typeof output === 'function') ?
+            output(number, withoutSuffix, string, isFuture) :
+            output.replace(/%d/i, number);
+    }
+
+    function pastFuture (diff, output) {
+        var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
+        return typeof format === 'function' ? format(output) : format.replace(/%s/i, output);
+    }
+
+    function locale_set__set (config) {
+        var prop, i;
+        for (i in config) {
+            prop = config[i];
+            if (typeof prop === 'function') {
+                this[i] = prop;
+            } else {
+                this['_' + i] = prop;
+            }
+        }
+        // Lenient ordinal parsing accepts just a number in addition to
+        // number + (possibly) stuff coming from _ordinalParseLenient.
+        this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + /\d{1,2}/.source);
+    }
+
+    var prototype__proto = Locale.prototype;
+
+    prototype__proto._calendar       = defaultCalendar;
+    prototype__proto.calendar        = locale_calendar__calendar;
+    prototype__proto._longDateFormat = defaultLongDateFormat;
+    prototype__proto.longDateFormat  = longDateFormat;
+    prototype__proto._invalidDate    = defaultInvalidDate;
+    prototype__proto.invalidDate     = invalidDate;
+    prototype__proto._ordinal        = defaultOrdinal;
+    prototype__proto.ordinal         = ordinal;
+    prototype__proto._ordinalParse   = defaultOrdinalParse;
+    prototype__proto.preparse        = preParsePostFormat;
+    prototype__proto.postformat      = preParsePostFormat;
+    prototype__proto._relativeTime   = defaultRelativeTime;
+    prototype__proto.relativeTime    = relative__relativeTime;
+    prototype__proto.pastFuture      = pastFuture;
+    prototype__proto.set             = locale_set__set;
+
+    // Month
+    prototype__proto.months       =        localeMonths;
+    prototype__proto._months      = defaultLocaleMonths;
+    prototype__proto.monthsShort  =        localeMonthsShort;
+    prototype__proto._monthsShort = defaultLocaleMonthsShort;
+    prototype__proto.monthsParse  =        localeMonthsParse;
+
+    // Week
+    prototype__proto.week = localeWeek;
+    prototype__proto._week = defaultLocaleWeek;
+    prototype__proto.firstDayOfYear = localeFirstDayOfYear;
+    prototype__proto.firstDayOfWeek = localeFirstDayOfWeek;
+
+    // Day of Week
+    prototype__proto.weekdays       =        localeWeekdays;
+    prototype__proto._weekdays      = defaultLocaleWeekdays;
+    prototype__proto.weekdaysMin    =        localeWeekdaysMin;
+    prototype__proto._weekdaysMin   = defaultLocaleWeekdaysMin;
+    prototype__proto.weekdaysShort  =        localeWeekdaysShort;
+    prototype__proto._weekdaysShort = defaultLocaleWeekdaysShort;
+    prototype__proto.weekdaysParse  =        localeWeekdaysParse;
+
+    // Hours
+    prototype__proto.isPM = localeIsPM;
+    prototype__proto._meridiemParse = defaultLocaleMeridiemParse;
+    prototype__proto.meridiem = localeMeridiem;
+
+    function lists__get (format, index, field, setter) {
+        var locale = locale_locales__getLocale();
+        var utc = create_utc__createUTC().set(setter, index);
+        return locale[field](utc, format);
+    }
+
+    function list (format, index, field, count, setter) {
+        if (typeof format === 'number') {
+            index = format;
+            format = undefined;
+        }
+
+        format = format || '';
+
+        if (index != null) {
+            return lists__get(format, index, field, setter);
+        }
+
+        var i;
+        var out = [];
+        for (i = 0; i < count; i++) {
+            out[i] = lists__get(format, i, field, setter);
+        }
+        return out;
+    }
+
+    function lists__listMonths (format, index) {
+        return list(format, index, 'months', 12, 'month');
+    }
+
+    function lists__listMonthsShort (format, index) {
+        return list(format, index, 'monthsShort', 12, 'month');
+    }
+
+    function lists__listWeekdays (format, index) {
+        return list(format, index, 'weekdays', 7, 'day');
+    }
+
+    function lists__listWeekdaysShort (format, index) {
+        return list(format, index, 'weekdaysShort', 7, 'day');
+    }
+
+    function lists__listWeekdaysMin (format, index) {
+        return list(format, index, 'weekdaysMin', 7, 'day');
+    }
+
+    locale_locales__getSetGlobalLocale('en', {
+        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
+        ordinal : function (number) {
+            var b = number % 10,
+                output = (toInt(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+            return number + output;
+        }
+    });
+
+    // Side effect imports
+    utils_hooks__hooks.lang = deprecate('moment.lang is deprecated. Use moment.locale instead.', locale_locales__getSetGlobalLocale);
+    utils_hooks__hooks.langData = deprecate('moment.langData is deprecated. Use moment.localeData instead.', locale_locales__getLocale);
+
+    var mathAbs = Math.abs;
+
+    function duration_abs__abs () {
+        var data           = this._data;
+
+        this._milliseconds = mathAbs(this._milliseconds);
+        this._days         = mathAbs(this._days);
+        this._months       = mathAbs(this._months);
+
+        data.milliseconds  = mathAbs(data.milliseconds);
+        data.seconds       = mathAbs(data.seconds);
+        data.minutes       = mathAbs(data.minutes);
+        data.hours         = mathAbs(data.hours);
+        data.months        = mathAbs(data.months);
+        data.years         = mathAbs(data.years);
+
+        return this;
+    }
+
+    function duration_add_subtract__addSubtract (duration, input, value, direction) {
+        var other = create__createDuration(input, value);
+
+        duration._milliseconds += direction * other._milliseconds;
+        duration._days         += direction * other._days;
+        duration._months       += direction * other._months;
+
+        return duration._bubble();
+    }
+
+    // supports only 2.0-style add(1, 's') or add(duration)
+    function duration_add_subtract__add (input, value) {
+        return duration_add_subtract__addSubtract(this, input, value, 1);
+    }
+
+    // supports only 2.0-style subtract(1, 's') or subtract(duration)
+    function duration_add_subtract__subtract (input, value) {
+        return duration_add_subtract__addSubtract(this, input, value, -1);
+    }
+
+    function bubble () {
+        var milliseconds = this._milliseconds;
+        var days         = this._days;
+        var months       = this._months;
+        var data         = this._data;
+        var seconds, minutes, hours, years = 0;
+
+        // The following code bubbles up values, see the tests for
+        // examples of what that means.
+        data.milliseconds = milliseconds % 1000;
+
+        seconds           = absFloor(milliseconds / 1000);
+        data.seconds      = seconds % 60;
+
+        minutes           = absFloor(seconds / 60);
+        data.minutes      = minutes % 60;
+
+        hours             = absFloor(minutes / 60);
+        data.hours        = hours % 24;
+
+        days += absFloor(hours / 24);
+
+        // Accurately convert days to years, assume start from year 0.
+        years = absFloor(daysToYears(days));
+        days -= absFloor(yearsToDays(years));
+
+        // 30 days to a month
+        // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
+        months += absFloor(days / 30);
+        days   %= 30;
+
+        // 12 months -> 1 year
+        years  += absFloor(months / 12);
+        months %= 12;
+
+        data.days   = days;
+        data.months = months;
+        data.years  = years;
+
+        return this;
+    }
+
+    function daysToYears (days) {
+        // 400 years have 146097 days (taking into account leap year rules)
+        return days * 400 / 146097;
+    }
+
+    function yearsToDays (years) {
+        // years * 365 + absFloor(years / 4) -
+        //     absFloor(years / 100) + absFloor(years / 400);
+        return years * 146097 / 400;
+    }
+
+    function as (units) {
+        var days;
+        var months;
+        var milliseconds = this._milliseconds;
+
+        units = normalizeUnits(units);
+
+        if (units === 'month' || units === 'year') {
+            days   = this._days   + milliseconds / 864e5;
+            months = this._months + daysToYears(days) * 12;
+            return units === 'month' ? months : months / 12;
+        } else {
+            // handle milliseconds separately because of floating point math errors (issue #1867)
+            days = this._days + Math.round(yearsToDays(this._months / 12));
+            switch (units) {
+                case 'week'   : return days / 7            + milliseconds / 6048e5;
+                case 'day'    : return days                + milliseconds / 864e5;
+                case 'hour'   : return days * 24           + milliseconds / 36e5;
+                case 'minute' : return days * 24 * 60      + milliseconds / 6e4;
+                case 'second' : return days * 24 * 60 * 60 + milliseconds / 1000;
+                // Math.floor prevents floating point math errors here
+                case 'millisecond': return Math.floor(days * 24 * 60 * 60 * 1000) + milliseconds;
+                default: throw new Error('Unknown unit ' + units);
+            }
+        }
+    }
+
+    // TODO: Use this.as('ms')?
+    function duration_as__valueOf () {
+        return (
+            this._milliseconds +
+            this._days * 864e5 +
+            (this._months % 12) * 2592e6 +
+            toInt(this._months / 12) * 31536e6
+        );
+    }
+
+    function makeAs (alias) {
+        return function () {
+            return this.as(alias);
+        };
+    }
+
+    var asMilliseconds = makeAs('ms');
+    var asSeconds      = makeAs('s');
+    var asMinutes      = makeAs('m');
+    var asHours        = makeAs('h');
+    var asDays         = makeAs('d');
+    var asWeeks        = makeAs('w');
+    var asMonths       = makeAs('M');
+    var asYears        = makeAs('y');
+
+    function duration_get__get (units) {
+        units = normalizeUnits(units);
+        return this[units + 's']();
+    }
+
+    function makeGetter(name) {
+        return function () {
+            return this._data[name];
+        };
+    }
+
+    var duration_get__milliseconds = makeGetter('milliseconds');
+    var seconds      = makeGetter('seconds');
+    var minutes      = makeGetter('minutes');
+    var hours        = makeGetter('hours');
+    var days         = makeGetter('days');
+    var months       = makeGetter('months');
+    var years        = makeGetter('years');
+
+    function weeks () {
+        return absFloor(this.days() / 7);
+    }
+
+    var round = Math.round;
+    var thresholds = {
+        s: 45,  // seconds to minute
+        m: 45,  // minutes to hour
+        h: 22,  // hours to day
+        d: 26,  // days to month
+        M: 11   // months to year
+    };
+
+    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
+    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
+        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+    }
+
+    function duration_humanize__relativeTime (posNegDuration, withoutSuffix, locale) {
+        var duration = create__createDuration(posNegDuration).abs();
+        var seconds  = round(duration.as('s'));
+        var minutes  = round(duration.as('m'));
+        var hours    = round(duration.as('h'));
+        var days     = round(duration.as('d'));
+        var months   = round(duration.as('M'));
+        var years    = round(duration.as('y'));
+
+        var a = seconds < thresholds.s && ['s', seconds]  ||
+                minutes === 1          && ['m']           ||
+                minutes < thresholds.m && ['mm', minutes] ||
+                hours   === 1          && ['h']           ||
+                hours   < thresholds.h && ['hh', hours]   ||
+                days    === 1          && ['d']           ||
+                days    < thresholds.d && ['dd', days]    ||
+                months  === 1          && ['M']           ||
+                months  < thresholds.M && ['MM', months]  ||
+                years   === 1          && ['y']           || ['yy', years];
+
+        a[2] = withoutSuffix;
+        a[3] = +posNegDuration > 0;
+        a[4] = locale;
+        return substituteTimeAgo.apply(null, a);
+    }
+
+    // This function allows you to set a threshold for relative time strings
+    function duration_humanize__getSetRelativeTimeThreshold (threshold, limit) {
+        if (thresholds[threshold] === undefined) {
+            return false;
+        }
+        if (limit === undefined) {
+            return thresholds[threshold];
+        }
+        thresholds[threshold] = limit;
+        return true;
+    }
+
+    function humanize (withSuffix) {
+        var locale = this.localeData();
+        var output = duration_humanize__relativeTime(this, !withSuffix, locale);
+
+        if (withSuffix) {
+            output = locale.pastFuture(+this, output);
+        }
+
+        return locale.postformat(output);
+    }
+
+    var iso_string__abs = Math.abs;
+
+    function iso_string__toISOString() {
+        // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
+        var Y = iso_string__abs(this.years());
+        var M = iso_string__abs(this.months());
+        var D = iso_string__abs(this.days());
+        var h = iso_string__abs(this.hours());
+        var m = iso_string__abs(this.minutes());
+        var s = iso_string__abs(this.seconds() + this.milliseconds() / 1000);
+        var total = this.asSeconds();
+
+        if (!total) {
+            // this is the same as C#'s (Noda) and python (isodate)...
+            // but not other JS (goog.date)
+            return 'P0D';
+        }
+
+        return (total < 0 ? '-' : '') +
+            'P' +
+            (Y ? Y + 'Y' : '') +
+            (M ? M + 'M' : '') +
+            (D ? D + 'D' : '') +
+            ((h || m || s) ? 'T' : '') +
+            (h ? h + 'H' : '') +
+            (m ? m + 'M' : '') +
+            (s ? s + 'S' : '');
+    }
+
+    var duration_prototype__proto = Duration.prototype;
+
+    duration_prototype__proto.abs            = duration_abs__abs;
+    duration_prototype__proto.add            = duration_add_subtract__add;
+    duration_prototype__proto.subtract       = duration_add_subtract__subtract;
+    duration_prototype__proto.as             = as;
+    duration_prototype__proto.asMilliseconds = asMilliseconds;
+    duration_prototype__proto.asSeconds      = asSeconds;
+    duration_prototype__proto.asMinutes      = asMinutes;
+    duration_prototype__proto.asHours        = asHours;
+    duration_prototype__proto.asDays         = asDays;
+    duration_prototype__proto.asWeeks        = asWeeks;
+    duration_prototype__proto.asMonths       = asMonths;
+    duration_prototype__proto.asYears        = asYears;
+    duration_prototype__proto.valueOf        = duration_as__valueOf;
+    duration_prototype__proto._bubble        = bubble;
+    duration_prototype__proto.get            = duration_get__get;
+    duration_prototype__proto.milliseconds   = duration_get__milliseconds;
+    duration_prototype__proto.seconds        = seconds;
+    duration_prototype__proto.minutes        = minutes;
+    duration_prototype__proto.hours          = hours;
+    duration_prototype__proto.days           = days;
+    duration_prototype__proto.weeks          = weeks;
+    duration_prototype__proto.months         = months;
+    duration_prototype__proto.years          = years;
+    duration_prototype__proto.humanize       = humanize;
+    duration_prototype__proto.toISOString    = iso_string__toISOString;
+    duration_prototype__proto.toString       = iso_string__toISOString;
+    duration_prototype__proto.toJSON         = iso_string__toISOString;
+    duration_prototype__proto.locale         = locale;
+    duration_prototype__proto.localeData     = localeData;
+
+    // Deprecations
+    duration_prototype__proto.toIsoString = deprecate('toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)', iso_string__toISOString);
+    duration_prototype__proto.lang = lang;
+
+    // Side effect imports
+
+    addFormatToken('X', 0, 0, 'unix');
+    addFormatToken('x', 0, 0, 'valueOf');
+
+    // PARSING
+
+    addRegexToken('x', matchSigned);
+    addRegexToken('X', matchTimestamp);
+    addParseToken('X', function (input, array, config) {
+        config._d = new Date(parseFloat(input, 10) * 1000);
+    });
+    addParseToken('x', function (input, array, config) {
+        config._d = new Date(toInt(input));
+    });
+
+    // Side effect imports
+
+
+    utils_hooks__hooks.version = '2.10.2';
+
+    setHookCallback(local__createLocal);
+
+    utils_hooks__hooks.fn                    = momentPrototype;
+    utils_hooks__hooks.min                   = min;
+    utils_hooks__hooks.max                   = max;
+    utils_hooks__hooks.utc                   = create_utc__createUTC;
+    utils_hooks__hooks.unix                  = moment__createUnix;
+    utils_hooks__hooks.months                = lists__listMonths;
+    utils_hooks__hooks.isDate                = isDate;
+    utils_hooks__hooks.locale                = locale_locales__getSetGlobalLocale;
+    utils_hooks__hooks.invalid               = valid__createInvalid;
+    utils_hooks__hooks.duration              = create__createDuration;
+    utils_hooks__hooks.isMoment              = isMoment;
+    utils_hooks__hooks.weekdays              = lists__listWeekdays;
+    utils_hooks__hooks.parseZone             = moment__createInZone;
+    utils_hooks__hooks.localeData            = locale_locales__getLocale;
+    utils_hooks__hooks.isDuration            = isDuration;
+    utils_hooks__hooks.monthsShort           = lists__listMonthsShort;
+    utils_hooks__hooks.weekdaysMin           = lists__listWeekdaysMin;
+    utils_hooks__hooks.defineLocale          = defineLocale;
+    utils_hooks__hooks.weekdaysShort         = lists__listWeekdaysShort;
+    utils_hooks__hooks.normalizeUnits        = normalizeUnits;
+    utils_hooks__hooks.relativeTimeThreshold = duration_humanize__getSetRelativeTimeThreshold;
+
+    var _moment = utils_hooks__hooks;
+
+    return _moment;
+
+}));
+},{}],247:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15389,7 +15571,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":357}],247:[function(require,module,exports){
+},{"./focusNode":358}],248:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -15611,7 +15793,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":260,"./EventPropagators":265,"./ExecutionEnvironment":266,"./SyntheticInputEvent":334,"./keyOf":379}],248:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPropagators":266,"./ExecutionEnvironment":267,"./SyntheticInputEvent":335,"./keyOf":380}],249:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15730,7 +15912,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],249:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15865,7 +16047,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":248,"./ExecutionEnvironment":266,"./camelizeStyleName":345,"./dangerousStyleValue":351,"./hyphenateStyleName":370,"./memoizeStringOnly":381,"./warning":391,"_process":242}],250:[function(require,module,exports){
+},{"./CSSProperty":249,"./ExecutionEnvironment":267,"./camelizeStyleName":346,"./dangerousStyleValue":352,"./hyphenateStyleName":371,"./memoizeStringOnly":382,"./warning":392,"_process":241}],251:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15965,7 +16147,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./PooledClass":272,"./invariant":372,"_process":242}],251:[function(require,module,exports){
+},{"./Object.assign":272,"./PooledClass":273,"./invariant":373,"_process":241}],252:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16347,7 +16529,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":260,"./EventPluginHub":262,"./EventPropagators":265,"./ExecutionEnvironment":266,"./ReactUpdates":324,"./SyntheticEvent":332,"./isEventSupported":373,"./isTextInputElement":375,"./keyOf":379}],252:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPluginHub":263,"./EventPropagators":266,"./ExecutionEnvironment":267,"./ReactUpdates":325,"./SyntheticEvent":333,"./isEventSupported":374,"./isTextInputElement":376,"./keyOf":380}],253:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16372,7 +16554,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],253:[function(require,module,exports){
+},{}],254:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16631,7 +16813,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-},{"./EventConstants":260,"./EventPropagators":265,"./ExecutionEnvironment":266,"./ReactInputSelection":304,"./SyntheticCompositionEvent":330,"./getTextContentAccessor":367,"./keyOf":379}],254:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPropagators":266,"./ExecutionEnvironment":267,"./ReactInputSelection":305,"./SyntheticCompositionEvent":331,"./getTextContentAccessor":368,"./keyOf":380}],255:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16806,7 +16988,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":257,"./ReactMultiChildUpdateTypes":310,"./getTextContentAccessor":367,"./invariant":372,"_process":242}],255:[function(require,module,exports){
+},{"./Danger":258,"./ReactMultiChildUpdateTypes":311,"./getTextContentAccessor":368,"./invariant":373,"_process":241}],256:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17105,7 +17287,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],256:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17302,7 +17484,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":255,"./escapeTextForBrowser":355,"./memoizeStringOnly":381,"./warning":391,"_process":242}],257:[function(require,module,exports){
+},{"./DOMProperty":256,"./escapeTextForBrowser":356,"./memoizeStringOnly":382,"./warning":392,"_process":241}],258:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17488,7 +17670,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":266,"./createNodesFromMarkup":349,"./emptyFunction":353,"./getMarkupWrap":364,"./invariant":372,"_process":242}],258:[function(require,module,exports){
+},{"./ExecutionEnvironment":267,"./createNodesFromMarkup":350,"./emptyFunction":354,"./getMarkupWrap":365,"./invariant":373,"_process":241}],259:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17528,7 +17710,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":379}],259:[function(require,module,exports){
+},{"./keyOf":380}],260:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17668,7 +17850,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":260,"./EventPropagators":265,"./ReactMount":308,"./SyntheticMouseEvent":336,"./keyOf":379}],260:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPropagators":266,"./ReactMount":309,"./SyntheticMouseEvent":337,"./keyOf":380}],261:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17740,7 +17922,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":378}],261:[function(require,module,exports){
+},{"./keyMirror":379}],262:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -17830,7 +18012,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":353,"_process":242}],262:[function(require,module,exports){
+},{"./emptyFunction":354,"_process":241}],263:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18106,7 +18288,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":263,"./EventPluginUtils":264,"./accumulateInto":342,"./forEachAccumulated":358,"./invariant":372,"_process":242}],263:[function(require,module,exports){
+},{"./EventPluginRegistry":264,"./EventPluginUtils":265,"./accumulateInto":343,"./forEachAccumulated":359,"./invariant":373,"_process":241}],264:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18386,7 +18568,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],264:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],265:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18607,7 +18789,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":260,"./invariant":372,"_process":242}],265:[function(require,module,exports){
+},{"./EventConstants":261,"./invariant":373,"_process":241}],266:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18749,7 +18931,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":260,"./EventPluginHub":262,"./accumulateInto":342,"./forEachAccumulated":358,"_process":242}],266:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPluginHub":263,"./accumulateInto":343,"./forEachAccumulated":359,"_process":241}],267:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18794,7 +18976,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],267:[function(require,module,exports){
+},{}],268:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18986,7 +19168,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":255,"./ExecutionEnvironment":266}],268:[function(require,module,exports){
+},{"./DOMProperty":256,"./ExecutionEnvironment":267}],269:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19142,7 +19324,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":317,"./invariant":372,"_process":242}],269:[function(require,module,exports){
+},{"./ReactPropTypes":318,"./invariant":373,"_process":241}],270:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -19192,7 +19374,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":275,"./accumulateInto":342,"./forEachAccumulated":358,"./invariant":372,"_process":242}],270:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":276,"./accumulateInto":343,"./forEachAccumulated":359,"./invariant":373,"_process":241}],271:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -19250,7 +19432,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":260,"./emptyFunction":353}],271:[function(require,module,exports){
+},{"./EventConstants":261,"./emptyFunction":354}],272:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -19297,7 +19479,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],272:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19413,7 +19595,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],273:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],274:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19601,7 +19783,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":256,"./EventPluginUtils":264,"./ExecutionEnvironment":266,"./Object.assign":271,"./ReactChildren":276,"./ReactComponent":277,"./ReactCompositeComponent":279,"./ReactContext":280,"./ReactCurrentOwner":281,"./ReactDOM":282,"./ReactDOMComponent":284,"./ReactDefaultInjection":294,"./ReactElement":297,"./ReactElementValidator":298,"./ReactInstanceHandles":305,"./ReactLegacyElement":306,"./ReactMount":308,"./ReactMultiChild":309,"./ReactPerf":313,"./ReactPropTypes":317,"./ReactServerRendering":321,"./ReactTextComponent":323,"./deprecated":352,"./onlyChild":383,"_process":242}],274:[function(require,module,exports){
+},{"./DOMPropertyOperations":257,"./EventPluginUtils":265,"./ExecutionEnvironment":267,"./Object.assign":272,"./ReactChildren":277,"./ReactComponent":278,"./ReactCompositeComponent":280,"./ReactContext":281,"./ReactCurrentOwner":282,"./ReactDOM":283,"./ReactDOMComponent":285,"./ReactDefaultInjection":295,"./ReactElement":298,"./ReactElementValidator":299,"./ReactInstanceHandles":306,"./ReactLegacyElement":307,"./ReactMount":309,"./ReactMultiChild":310,"./ReactPerf":314,"./ReactPropTypes":318,"./ReactServerRendering":322,"./ReactTextComponent":324,"./deprecated":353,"./onlyChild":384,"_process":241}],275:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -19644,7 +19826,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":299,"./ReactMount":308,"./invariant":372,"_process":242}],275:[function(require,module,exports){
+},{"./ReactEmptyComponent":300,"./ReactMount":309,"./invariant":373,"_process":241}],276:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -19999,7 +20181,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":260,"./EventPluginHub":262,"./EventPluginRegistry":263,"./Object.assign":271,"./ReactEventEmitterMixin":301,"./ViewportMetrics":341,"./isEventSupported":373}],276:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPluginHub":263,"./EventPluginRegistry":264,"./Object.assign":272,"./ReactEventEmitterMixin":302,"./ViewportMetrics":342,"./isEventSupported":374}],277:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20149,7 +20331,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":272,"./traverseAllChildren":390,"./warning":391,"_process":242}],277:[function(require,module,exports){
+},{"./PooledClass":273,"./traverseAllChildren":391,"./warning":392,"_process":241}],278:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20592,7 +20774,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./ReactElement":297,"./ReactOwner":312,"./ReactUpdates":324,"./invariant":372,"./keyMirror":378,"_process":242}],278:[function(require,module,exports){
+},{"./Object.assign":272,"./ReactElement":298,"./ReactOwner":313,"./ReactUpdates":325,"./invariant":373,"./keyMirror":379,"_process":241}],279:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -20714,7 +20896,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":286,"./ReactMarkupChecksum":307,"./ReactMount":308,"./ReactPerf":313,"./ReactReconcileTransaction":319,"./getReactRootElementInContainer":366,"./invariant":372,"./setInnerHTML":386,"_process":242}],279:[function(require,module,exports){
+},{"./ReactDOMIDOperations":287,"./ReactMarkupChecksum":308,"./ReactMount":309,"./ReactPerf":314,"./ReactReconcileTransaction":320,"./getReactRootElementInContainer":367,"./invariant":373,"./setInnerHTML":387,"_process":241}],280:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22154,7 +22336,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./ReactComponent":277,"./ReactContext":280,"./ReactCurrentOwner":281,"./ReactElement":297,"./ReactElementValidator":298,"./ReactEmptyComponent":299,"./ReactErrorUtils":300,"./ReactLegacyElement":306,"./ReactOwner":312,"./ReactPerf":313,"./ReactPropTransferer":314,"./ReactPropTypeLocationNames":315,"./ReactPropTypeLocations":316,"./ReactUpdates":324,"./instantiateReactComponent":371,"./invariant":372,"./keyMirror":378,"./keyOf":379,"./mapObject":380,"./monitorCodeUse":382,"./shouldUpdateReactComponent":388,"./warning":391,"_process":242}],280:[function(require,module,exports){
+},{"./Object.assign":272,"./ReactComponent":278,"./ReactContext":281,"./ReactCurrentOwner":282,"./ReactElement":298,"./ReactElementValidator":299,"./ReactEmptyComponent":300,"./ReactErrorUtils":301,"./ReactLegacyElement":307,"./ReactOwner":313,"./ReactPerf":314,"./ReactPropTransferer":315,"./ReactPropTypeLocationNames":316,"./ReactPropTypeLocations":317,"./ReactUpdates":325,"./instantiateReactComponent":372,"./invariant":373,"./keyMirror":379,"./keyOf":380,"./mapObject":381,"./monitorCodeUse":383,"./shouldUpdateReactComponent":389,"./warning":392,"_process":241}],281:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22216,7 +22398,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":271}],281:[function(require,module,exports){
+},{"./Object.assign":272}],282:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22250,7 +22432,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],282:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22433,7 +22615,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./ReactElementValidator":298,"./ReactLegacyElement":306,"./mapObject":380,"_process":242}],283:[function(require,module,exports){
+},{"./ReactElement":298,"./ReactElementValidator":299,"./ReactLegacyElement":307,"./mapObject":381,"_process":241}],284:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -22498,7 +22680,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":246,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297,"./keyMirror":378}],284:[function(require,module,exports){
+},{"./AutoFocusMixin":247,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298,"./keyMirror":379}],285:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -22985,7 +23167,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":249,"./DOMProperty":255,"./DOMPropertyOperations":256,"./Object.assign":271,"./ReactBrowserComponentMixin":274,"./ReactBrowserEventEmitter":275,"./ReactComponent":277,"./ReactMount":308,"./ReactMultiChild":309,"./ReactPerf":313,"./escapeTextForBrowser":355,"./invariant":372,"./isEventSupported":373,"./keyOf":379,"./monitorCodeUse":382,"_process":242}],285:[function(require,module,exports){
+},{"./CSSPropertyOperations":250,"./DOMProperty":256,"./DOMPropertyOperations":257,"./Object.assign":272,"./ReactBrowserComponentMixin":275,"./ReactBrowserEventEmitter":276,"./ReactComponent":278,"./ReactMount":309,"./ReactMultiChild":310,"./ReactPerf":314,"./escapeTextForBrowser":356,"./invariant":373,"./isEventSupported":374,"./keyOf":380,"./monitorCodeUse":383,"_process":241}],286:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23035,7 +23217,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":260,"./LocalEventTrapMixin":269,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297}],286:[function(require,module,exports){
+},{"./EventConstants":261,"./LocalEventTrapMixin":270,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298}],287:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23221,7 +23403,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":249,"./DOMChildrenOperations":254,"./DOMPropertyOperations":256,"./ReactMount":308,"./ReactPerf":313,"./invariant":372,"./setInnerHTML":386,"_process":242}],287:[function(require,module,exports){
+},{"./CSSPropertyOperations":250,"./DOMChildrenOperations":255,"./DOMPropertyOperations":257,"./ReactMount":309,"./ReactPerf":314,"./invariant":373,"./setInnerHTML":387,"_process":241}],288:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23269,7 +23451,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":260,"./LocalEventTrapMixin":269,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297}],288:[function(require,module,exports){
+},{"./EventConstants":261,"./LocalEventTrapMixin":270,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298}],289:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23447,7 +23629,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":246,"./DOMPropertyOperations":256,"./LinkedValueUtils":268,"./Object.assign":271,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297,"./ReactMount":308,"./ReactUpdates":324,"./invariant":372,"_process":242}],289:[function(require,module,exports){
+},{"./AutoFocusMixin":247,"./DOMPropertyOperations":257,"./LinkedValueUtils":269,"./Object.assign":272,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298,"./ReactMount":309,"./ReactUpdates":325,"./invariant":373,"_process":241}],290:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -23500,7 +23682,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297,"./warning":391,"_process":242}],290:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298,"./warning":392,"_process":241}],291:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23684,7 +23866,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":246,"./LinkedValueUtils":268,"./Object.assign":271,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297,"./ReactUpdates":324}],291:[function(require,module,exports){
+},{"./AutoFocusMixin":247,"./LinkedValueUtils":269,"./Object.assign":272,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298,"./ReactUpdates":325}],292:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23893,7 +24075,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":266,"./getNodeForCharacterOffset":365,"./getTextContentAccessor":367}],292:[function(require,module,exports){
+},{"./ExecutionEnvironment":267,"./getNodeForCharacterOffset":366,"./getTextContentAccessor":368}],293:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24034,7 +24216,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":246,"./DOMPropertyOperations":256,"./LinkedValueUtils":268,"./Object.assign":271,"./ReactBrowserComponentMixin":274,"./ReactCompositeComponent":279,"./ReactDOM":282,"./ReactElement":297,"./ReactUpdates":324,"./invariant":372,"./warning":391,"_process":242}],293:[function(require,module,exports){
+},{"./AutoFocusMixin":247,"./DOMPropertyOperations":257,"./LinkedValueUtils":269,"./Object.assign":272,"./ReactBrowserComponentMixin":275,"./ReactCompositeComponent":280,"./ReactDOM":283,"./ReactElement":298,"./ReactUpdates":325,"./invariant":373,"./warning":392,"_process":241}],294:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24107,7 +24289,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":271,"./ReactUpdates":324,"./Transaction":340,"./emptyFunction":353}],294:[function(require,module,exports){
+},{"./Object.assign":272,"./ReactUpdates":325,"./Transaction":341,"./emptyFunction":354}],295:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -24236,7 +24418,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":247,"./ChangeEventPlugin":251,"./ClientReactRootIndex":252,"./CompositionEventPlugin":253,"./DefaultEventPluginOrder":258,"./EnterLeaveEventPlugin":259,"./ExecutionEnvironment":266,"./HTMLDOMPropertyConfig":267,"./MobileSafariClickEventPlugin":270,"./ReactBrowserComponentMixin":274,"./ReactComponentBrowserEnvironment":278,"./ReactDOMButton":283,"./ReactDOMComponent":284,"./ReactDOMForm":285,"./ReactDOMImg":287,"./ReactDOMInput":288,"./ReactDOMOption":289,"./ReactDOMSelect":290,"./ReactDOMTextarea":292,"./ReactDefaultBatchingStrategy":293,"./ReactDefaultPerf":295,"./ReactEventListener":302,"./ReactInjection":303,"./ReactInstanceHandles":305,"./ReactMount":308,"./SVGDOMPropertyConfig":325,"./SelectEventPlugin":326,"./ServerReactRootIndex":327,"./SimpleEventPlugin":328,"./createFullPageComponent":348,"_process":242}],295:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":248,"./ChangeEventPlugin":252,"./ClientReactRootIndex":253,"./CompositionEventPlugin":254,"./DefaultEventPluginOrder":259,"./EnterLeaveEventPlugin":260,"./ExecutionEnvironment":267,"./HTMLDOMPropertyConfig":268,"./MobileSafariClickEventPlugin":271,"./ReactBrowserComponentMixin":275,"./ReactComponentBrowserEnvironment":279,"./ReactDOMButton":284,"./ReactDOMComponent":285,"./ReactDOMForm":286,"./ReactDOMImg":288,"./ReactDOMInput":289,"./ReactDOMOption":290,"./ReactDOMSelect":291,"./ReactDOMTextarea":293,"./ReactDefaultBatchingStrategy":294,"./ReactDefaultPerf":296,"./ReactEventListener":303,"./ReactInjection":304,"./ReactInstanceHandles":306,"./ReactMount":309,"./SVGDOMPropertyConfig":326,"./SelectEventPlugin":327,"./ServerReactRootIndex":328,"./SimpleEventPlugin":329,"./createFullPageComponent":349,"_process":241}],296:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24496,7 +24678,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":255,"./ReactDefaultPerfAnalysis":296,"./ReactMount":308,"./ReactPerf":313,"./performanceNow":385}],296:[function(require,module,exports){
+},{"./DOMProperty":256,"./ReactDefaultPerfAnalysis":297,"./ReactMount":309,"./ReactPerf":314,"./performanceNow":386}],297:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -24702,7 +24884,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":271}],297:[function(require,module,exports){
+},{"./Object.assign":272}],298:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -24948,7 +25130,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":280,"./ReactCurrentOwner":281,"./warning":391,"_process":242}],298:[function(require,module,exports){
+},{"./ReactContext":281,"./ReactCurrentOwner":282,"./warning":392,"_process":241}],299:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -25230,7 +25412,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":281,"./ReactElement":297,"./ReactPropTypeLocations":316,"./monitorCodeUse":382,"./warning":391,"_process":242}],299:[function(require,module,exports){
+},{"./ReactCurrentOwner":282,"./ReactElement":298,"./ReactPropTypeLocations":317,"./monitorCodeUse":383,"./warning":392,"_process":241}],300:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -25307,7 +25489,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./invariant":372,"_process":242}],300:[function(require,module,exports){
+},{"./ReactElement":298,"./invariant":373,"_process":241}],301:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25339,7 +25521,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],301:[function(require,module,exports){
+},{}],302:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25389,7 +25571,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":262}],302:[function(require,module,exports){
+},{"./EventPluginHub":263}],303:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25573,7 +25755,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":261,"./ExecutionEnvironment":266,"./Object.assign":271,"./PooledClass":272,"./ReactInstanceHandles":305,"./ReactMount":308,"./ReactUpdates":324,"./getEventTarget":363,"./getUnboundedScrollPosition":368}],303:[function(require,module,exports){
+},{"./EventListener":262,"./ExecutionEnvironment":267,"./Object.assign":272,"./PooledClass":273,"./ReactInstanceHandles":306,"./ReactMount":309,"./ReactUpdates":325,"./getEventTarget":364,"./getUnboundedScrollPosition":369}],304:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25613,7 +25795,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":255,"./EventPluginHub":262,"./ReactBrowserEventEmitter":275,"./ReactComponent":277,"./ReactCompositeComponent":279,"./ReactEmptyComponent":299,"./ReactNativeComponent":311,"./ReactPerf":313,"./ReactRootIndex":320,"./ReactUpdates":324}],304:[function(require,module,exports){
+},{"./DOMProperty":256,"./EventPluginHub":263,"./ReactBrowserEventEmitter":276,"./ReactComponent":278,"./ReactCompositeComponent":280,"./ReactEmptyComponent":300,"./ReactNativeComponent":312,"./ReactPerf":314,"./ReactRootIndex":321,"./ReactUpdates":325}],305:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -25749,7 +25931,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":291,"./containsNode":346,"./focusNode":357,"./getActiveElement":359}],305:[function(require,module,exports){
+},{"./ReactDOMSelection":292,"./containsNode":347,"./focusNode":358,"./getActiveElement":360}],306:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -26084,7 +26266,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":320,"./invariant":372,"_process":242}],306:[function(require,module,exports){
+},{"./ReactRootIndex":321,"./invariant":373,"_process":241}],307:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -26331,7 +26513,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":281,"./invariant":372,"./monitorCodeUse":382,"./warning":391,"_process":242}],307:[function(require,module,exports){
+},{"./ReactCurrentOwner":282,"./invariant":373,"./monitorCodeUse":383,"./warning":392,"_process":241}],308:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -26379,7 +26561,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":343}],308:[function(require,module,exports){
+},{"./adler32":344}],309:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27077,7 +27259,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":255,"./ReactBrowserEventEmitter":275,"./ReactCurrentOwner":281,"./ReactElement":297,"./ReactInstanceHandles":305,"./ReactLegacyElement":306,"./ReactPerf":313,"./containsNode":346,"./deprecated":352,"./getReactRootElementInContainer":366,"./instantiateReactComponent":371,"./invariant":372,"./shouldUpdateReactComponent":388,"./warning":391,"_process":242}],309:[function(require,module,exports){
+},{"./DOMProperty":256,"./ReactBrowserEventEmitter":276,"./ReactCurrentOwner":282,"./ReactElement":298,"./ReactInstanceHandles":306,"./ReactLegacyElement":307,"./ReactPerf":314,"./containsNode":347,"./deprecated":353,"./getReactRootElementInContainer":367,"./instantiateReactComponent":372,"./invariant":373,"./shouldUpdateReactComponent":389,"./warning":392,"_process":241}],310:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27505,7 +27687,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactComponent":277,"./ReactMultiChildUpdateTypes":310,"./flattenChildren":356,"./instantiateReactComponent":371,"./shouldUpdateReactComponent":388}],310:[function(require,module,exports){
+},{"./ReactComponent":278,"./ReactMultiChildUpdateTypes":311,"./flattenChildren":357,"./instantiateReactComponent":372,"./shouldUpdateReactComponent":389}],311:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -27538,7 +27720,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":378}],311:[function(require,module,exports){
+},{"./keyMirror":379}],312:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -27611,7 +27793,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./invariant":372,"_process":242}],312:[function(require,module,exports){
+},{"./Object.assign":272,"./invariant":373,"_process":241}],313:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27767,7 +27949,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":354,"./invariant":372,"_process":242}],313:[function(require,module,exports){
+},{"./emptyObject":355,"./invariant":373,"_process":241}],314:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -27851,7 +28033,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":242}],314:[function(require,module,exports){
+},{"_process":241}],315:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28018,7 +28200,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./emptyFunction":353,"./invariant":372,"./joinClasses":377,"./warning":391,"_process":242}],315:[function(require,module,exports){
+},{"./Object.assign":272,"./emptyFunction":354,"./invariant":373,"./joinClasses":378,"./warning":392,"_process":241}],316:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28046,7 +28228,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":242}],316:[function(require,module,exports){
+},{"_process":241}],317:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28070,7 +28252,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":378}],317:[function(require,module,exports){
+},{"./keyMirror":379}],318:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28424,7 +28606,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":297,"./ReactPropTypeLocationNames":315,"./deprecated":352,"./emptyFunction":353}],318:[function(require,module,exports){
+},{"./ReactElement":298,"./ReactPropTypeLocationNames":316,"./deprecated":353,"./emptyFunction":354}],319:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28480,7 +28662,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":271,"./PooledClass":272,"./ReactBrowserEventEmitter":275}],319:[function(require,module,exports){
+},{"./Object.assign":272,"./PooledClass":273,"./ReactBrowserEventEmitter":276}],320:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28656,7 +28838,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":250,"./Object.assign":271,"./PooledClass":272,"./ReactBrowserEventEmitter":275,"./ReactInputSelection":304,"./ReactPutListenerQueue":318,"./Transaction":340}],320:[function(require,module,exports){
+},{"./CallbackQueue":251,"./Object.assign":272,"./PooledClass":273,"./ReactBrowserEventEmitter":276,"./ReactInputSelection":305,"./ReactPutListenerQueue":319,"./Transaction":341}],321:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28687,7 +28869,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],321:[function(require,module,exports){
+},{}],322:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -28767,7 +28949,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./ReactInstanceHandles":305,"./ReactMarkupChecksum":307,"./ReactServerRenderingTransaction":322,"./instantiateReactComponent":371,"./invariant":372,"_process":242}],322:[function(require,module,exports){
+},{"./ReactElement":298,"./ReactInstanceHandles":306,"./ReactMarkupChecksum":308,"./ReactServerRenderingTransaction":323,"./instantiateReactComponent":372,"./invariant":373,"_process":241}],323:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -28880,7 +29062,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":250,"./Object.assign":271,"./PooledClass":272,"./ReactPutListenerQueue":318,"./Transaction":340,"./emptyFunction":353}],323:[function(require,module,exports){
+},{"./CallbackQueue":251,"./Object.assign":272,"./PooledClass":273,"./ReactPutListenerQueue":319,"./Transaction":341,"./emptyFunction":354}],324:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -28986,7 +29168,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":256,"./Object.assign":271,"./ReactComponent":277,"./ReactElement":297,"./escapeTextForBrowser":355}],324:[function(require,module,exports){
+},{"./DOMPropertyOperations":257,"./Object.assign":272,"./ReactComponent":278,"./ReactElement":298,"./escapeTextForBrowser":356}],325:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -29276,7 +29458,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":250,"./Object.assign":271,"./PooledClass":272,"./ReactCurrentOwner":281,"./ReactPerf":313,"./Transaction":340,"./invariant":372,"./warning":391,"_process":242}],325:[function(require,module,exports){
+},{"./CallbackQueue":251,"./Object.assign":272,"./PooledClass":273,"./ReactCurrentOwner":282,"./ReactPerf":314,"./Transaction":341,"./invariant":373,"./warning":392,"_process":241}],326:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29368,7 +29550,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":255}],326:[function(require,module,exports){
+},{"./DOMProperty":256}],327:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29563,7 +29745,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":260,"./EventPropagators":265,"./ReactInputSelection":304,"./SyntheticEvent":332,"./getActiveElement":359,"./isTextInputElement":375,"./keyOf":379,"./shallowEqual":387}],327:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPropagators":266,"./ReactInputSelection":305,"./SyntheticEvent":333,"./getActiveElement":360,"./isTextInputElement":376,"./keyOf":380,"./shallowEqual":388}],328:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -29594,7 +29776,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],328:[function(require,module,exports){
+},{}],329:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -30022,7 +30204,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":260,"./EventPluginUtils":264,"./EventPropagators":265,"./SyntheticClipboardEvent":329,"./SyntheticDragEvent":331,"./SyntheticEvent":332,"./SyntheticFocusEvent":333,"./SyntheticKeyboardEvent":335,"./SyntheticMouseEvent":336,"./SyntheticTouchEvent":337,"./SyntheticUIEvent":338,"./SyntheticWheelEvent":339,"./getEventCharCode":360,"./invariant":372,"./keyOf":379,"./warning":391,"_process":242}],329:[function(require,module,exports){
+},{"./EventConstants":261,"./EventPluginUtils":265,"./EventPropagators":266,"./SyntheticClipboardEvent":330,"./SyntheticDragEvent":332,"./SyntheticEvent":333,"./SyntheticFocusEvent":334,"./SyntheticKeyboardEvent":336,"./SyntheticMouseEvent":337,"./SyntheticTouchEvent":338,"./SyntheticUIEvent":339,"./SyntheticWheelEvent":340,"./getEventCharCode":361,"./invariant":373,"./keyOf":380,"./warning":392,"_process":241}],330:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30068,7 +30250,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":332}],330:[function(require,module,exports){
+},{"./SyntheticEvent":333}],331:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30114,7 +30296,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":332}],331:[function(require,module,exports){
+},{"./SyntheticEvent":333}],332:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30153,7 +30335,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":336}],332:[function(require,module,exports){
+},{"./SyntheticMouseEvent":337}],333:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30311,7 +30493,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":271,"./PooledClass":272,"./emptyFunction":353,"./getEventTarget":363}],333:[function(require,module,exports){
+},{"./Object.assign":272,"./PooledClass":273,"./emptyFunction":354,"./getEventTarget":364}],334:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30350,7 +30532,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":338}],334:[function(require,module,exports){
+},{"./SyntheticUIEvent":339}],335:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -30397,7 +30579,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":332}],335:[function(require,module,exports){
+},{"./SyntheticEvent":333}],336:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30484,7 +30666,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":338,"./getEventCharCode":360,"./getEventKey":361,"./getEventModifierState":362}],336:[function(require,module,exports){
+},{"./SyntheticUIEvent":339,"./getEventCharCode":361,"./getEventKey":362,"./getEventModifierState":363}],337:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30567,7 +30749,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":338,"./ViewportMetrics":341,"./getEventModifierState":362}],337:[function(require,module,exports){
+},{"./SyntheticUIEvent":339,"./ViewportMetrics":342,"./getEventModifierState":363}],338:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30615,7 +30797,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":338,"./getEventModifierState":362}],338:[function(require,module,exports){
+},{"./SyntheticUIEvent":339,"./getEventModifierState":363}],339:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30677,7 +30859,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":332,"./getEventTarget":363}],339:[function(require,module,exports){
+},{"./SyntheticEvent":333,"./getEventTarget":364}],340:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -30738,7 +30920,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":336}],340:[function(require,module,exports){
+},{"./SyntheticMouseEvent":337}],341:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -30979,7 +31161,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],341:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],342:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31011,7 +31193,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":368}],342:[function(require,module,exports){
+},{"./getUnboundedScrollPosition":369}],343:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -31077,7 +31259,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],343:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],344:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31111,7 +31293,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],344:[function(require,module,exports){
+},{}],345:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31143,7 +31325,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],345:[function(require,module,exports){
+},{}],346:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -31185,7 +31367,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":344}],346:[function(require,module,exports){
+},{"./camelize":345}],347:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31229,7 +31411,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":376}],347:[function(require,module,exports){
+},{"./isTextNode":377}],348:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31315,7 +31497,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":389}],348:[function(require,module,exports){
+},{"./toArray":390}],349:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -31376,7 +31558,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":279,"./ReactElement":297,"./invariant":372,"_process":242}],349:[function(require,module,exports){
+},{"./ReactCompositeComponent":280,"./ReactElement":298,"./invariant":373,"_process":241}],350:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -31466,7 +31648,7 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":266,"./createArrayFrom":347,"./getMarkupWrap":364,"./invariant":372,"_process":242}],350:[function(require,module,exports){
+},{"./ExecutionEnvironment":267,"./createArrayFrom":348,"./getMarkupWrap":365,"./invariant":373,"_process":241}],351:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31505,7 +31687,7 @@ function cx(classNames) {
 
 module.exports = cx;
 
-},{}],351:[function(require,module,exports){
+},{}],352:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31563,7 +31745,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":248}],352:[function(require,module,exports){
+},{"./CSSProperty":249}],353:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -31614,7 +31796,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":271,"./warning":391,"_process":242}],353:[function(require,module,exports){
+},{"./Object.assign":272,"./warning":392,"_process":241}],354:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31648,7 +31830,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],354:[function(require,module,exports){
+},{}],355:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -31672,7 +31854,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":242}],355:[function(require,module,exports){
+},{"_process":241}],356:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31713,7 +31895,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],356:[function(require,module,exports){
+},{}],357:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -31782,7 +31964,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":323,"./traverseAllChildren":390,"./warning":391,"_process":242}],357:[function(require,module,exports){
+},{"./ReactTextComponent":324,"./traverseAllChildren":391,"./warning":392,"_process":241}],358:[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -31811,7 +31993,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],358:[function(require,module,exports){
+},{}],359:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31842,7 +32024,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],359:[function(require,module,exports){
+},{}],360:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31871,7 +32053,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],360:[function(require,module,exports){
+},{}],361:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -31923,7 +32105,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],361:[function(require,module,exports){
+},{}],362:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32028,7 +32210,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":360}],362:[function(require,module,exports){
+},{"./getEventCharCode":361}],363:[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -32075,7 +32257,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],363:[function(require,module,exports){
+},{}],364:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32106,7 +32288,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],364:[function(require,module,exports){
+},{}],365:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -32223,7 +32405,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":266,"./invariant":372,"_process":242}],365:[function(require,module,exports){
+},{"./ExecutionEnvironment":267,"./invariant":373,"_process":241}],366:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32298,7 +32480,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],366:[function(require,module,exports){
+},{}],367:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32333,7 +32515,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],367:[function(require,module,exports){
+},{}],368:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32370,7 +32552,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":266}],368:[function(require,module,exports){
+},{"./ExecutionEnvironment":267}],369:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32410,7 +32592,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],369:[function(require,module,exports){
+},{}],370:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32443,7 +32625,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],370:[function(require,module,exports){
+},{}],371:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32484,7 +32666,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":369}],371:[function(require,module,exports){
+},{"./hyphenate":370}],372:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -32598,7 +32780,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./ReactEmptyComponent":299,"./ReactLegacyElement":306,"./ReactNativeComponent":311,"./warning":391,"_process":242}],372:[function(require,module,exports){
+},{"./ReactElement":298,"./ReactEmptyComponent":300,"./ReactLegacyElement":307,"./ReactNativeComponent":312,"./warning":392,"_process":241}],373:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -32655,7 +32837,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":242}],373:[function(require,module,exports){
+},{"_process":241}],374:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32720,7 +32902,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":266}],374:[function(require,module,exports){
+},{"./ExecutionEnvironment":267}],375:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32748,7 +32930,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],375:[function(require,module,exports){
+},{}],376:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32792,7 +32974,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],376:[function(require,module,exports){
+},{}],377:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32817,7 +32999,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":374}],377:[function(require,module,exports){
+},{"./isNode":375}],378:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32858,7 +33040,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],378:[function(require,module,exports){
+},{}],379:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -32913,7 +33095,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],379:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],380:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -32949,7 +33131,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],380:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33002,7 +33184,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],381:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33036,7 +33218,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],382:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -33070,7 +33252,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],383:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],384:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33110,7 +33292,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./invariant":372,"_process":242}],384:[function(require,module,exports){
+},{"./ReactElement":298,"./invariant":373,"_process":241}],385:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33138,7 +33320,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":266}],385:[function(require,module,exports){
+},{"./ExecutionEnvironment":267}],386:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33166,7 +33348,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":384}],386:[function(require,module,exports){
+},{"./performance":385}],387:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33244,7 +33426,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":266}],387:[function(require,module,exports){
+},{"./ExecutionEnvironment":267}],388:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33288,7 +33470,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],388:[function(require,module,exports){
+},{}],389:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -33326,7 +33508,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],389:[function(require,module,exports){
+},{}],390:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -33398,7 +33580,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":372,"_process":242}],390:[function(require,module,exports){
+},{"./invariant":373,"_process":241}],391:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -33581,7 +33763,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":297,"./ReactInstanceHandles":305,"./invariant":372,"_process":242}],391:[function(require,module,exports){
+},{"./ReactElement":298,"./ReactInstanceHandles":306,"./invariant":373,"_process":241}],392:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -33626,7 +33808,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":353,"_process":242}],"eventEmitter":[function(require,module,exports){
+},{"./emptyFunction":354,"_process":241}],"eventEmitter":[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -61333,7 +61515,7 @@ module.exports = {
 },{}],"react":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":273}],"reqwest":[function(require,module,exports){
+},{"./lib/React":274}],"reqwest":[function(require,module,exports){
 /*!
   * Reqwest! A general purpose XHR connection manager
   * license MIT (c) Dustin Diaz 2014
