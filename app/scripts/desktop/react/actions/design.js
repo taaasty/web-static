@@ -79,7 +79,7 @@ let DesignActionCreators = {
     // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
     // картинку, то у нас будет backgroundId его и будем передавать.
     delete design.backgroundImageUrl;
-    Submitter.postRequest(url, design);
+    Submitter.postRequest(url, { design });
   }
 };
 
