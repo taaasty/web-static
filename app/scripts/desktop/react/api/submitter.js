@@ -26,6 +26,19 @@ function buildParams(prefix, obj, traditional, add) {
   }
 }
 
+function csrfToken() {
+  let tokenNode = document.querySelector('[name="csrf-token"]'),
+      token;
+
+  if (tokenNode != null) {
+    token = tokenNode.getAttribute('content');
+  } else {
+    token = null;
+  }
+  
+  return token;
+}
+
 const Submitter = {
   request(method = 'POST', url, data, traditional = false) {
     let form = document.createElement('form');
@@ -40,10 +53,16 @@ const Submitter = {
       form.appendChild(hiddenField);
     };
 
-    for(var key in data) {
+    for(let key in data) {
       if(data.hasOwnProperty(key)) {
         buildParams(key, data[key], traditional, add);
       }
+    }
+
+    // Add CSRF-token
+    let token = csrfToken();
+    if (token != null) {
+      buildParams('authenticity_token', token, traditional, add);
     }
 
     document.body.appendChild(form);

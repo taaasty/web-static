@@ -14233,7 +14233,7 @@ module.exports = CurrentUserViewActions;
 
 
 },{"../../resources/current_user":339,"../server/current_user":15}],18:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _, _pendingRequests;
 
 _ = require('lodash');
 
@@ -14256,6 +14256,16 @@ userToken = function() {
   return CurrentUserStore.getAccessToken();
 };
 
+csrfToken = function() {
+  var tokenNode;
+  tokenNode = document.querySelector('[name="csrf-token"]');
+  if (tokenNode != null) {
+    return tokenNode.getAttribute('content');
+  } else {
+    return null;
+  }
+};
+
 request = function(_method, url, data) {
   var contentType, headers, method, processData;
   if (data == null) {
@@ -14268,6 +14278,9 @@ request = function(_method, url, data) {
   };
   if (userToken()) {
     headers['X-User-Token'] = userToken();
+  }
+  if (csrfToken()) {
+    headers['X-CSRF-Token'] = csrfToken();
   }
   method = (function() {
     switch (_method) {
@@ -14433,6 +14446,19 @@ function buildParams(prefix, obj, traditional, add) {
   }
 }
 
+function csrfToken() {
+  var tokenNode = document.querySelector("[name=\"csrf-token\"]"),
+      token = undefined;
+
+  if (tokenNode != null) {
+    token = tokenNode.getAttribute("content");
+  } else {
+    token = null;
+  }
+
+  return token;
+}
+
 var Submitter = {
   request: function request(_x, url, data) {
     var method = arguments[0] === undefined ? "POST" : arguments[0];
@@ -14454,6 +14480,12 @@ var Submitter = {
       if (data.hasOwnProperty(key)) {
         buildParams(key, data[key], traditional, add);
       }
+    }
+
+    // Add CSRF-token
+    var token = csrfToken();
+    if (token != null) {
+      buildParams("authenticity_token", token, traditional, add);
     }
 
     document.body.appendChild(form);
@@ -35662,6 +35694,18 @@ window.moment.locale('ru', momentLocales.ru);
 
 
 },{"../../../bower_components/momentjs/locale/ru":7}],356:[function(require,module,exports){
+var csrfToken;
+
+csrfToken = function() {
+  var tokenNode;
+  tokenNode = document.querySelector('[name="csrf-token"]');
+  if (tokenNode != null) {
+    return tokenNode.getAttribute('content');
+  } else {
+    return null;
+  }
+};
+
 window.Tasty = {
   start: function(options) {
     var flashes, headers, locale, user;
@@ -35672,6 +35716,9 @@ window.Tasty = {
     headers = {};
     if (user != null) {
       headers['X-User-Token'] = user.api_key.access_token;
+    }
+    if (csrfToken()) {
+      headers['X-CSRF-Token'] = csrfToken();
     }
     headers['X-Requested-With'] = 'XMLHttpRequest';
     headers['X-Tasty-Client-Name'] = 'web_desktop';

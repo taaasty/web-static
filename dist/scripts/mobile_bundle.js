@@ -3763,7 +3763,7 @@ module.exports = UsersViewActions;
 
 
 },{"../../api/api":18}],18:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
+var Api, Constants, CurrentUserStore, TIMEOUT, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken, _pendingRequests;
 
 assign = require('react/lib/Object.assign');
 
@@ -3786,6 +3786,16 @@ userToken = function() {
   return CurrentUserStore.getAccessToken();
 };
 
+csrfToken = function() {
+  var tokenNode;
+  tokenNode = document.querySelector('[name="csrf-token"]');
+  if (tokenNode != null) {
+    return tokenNode.getAttribute('content');
+  } else {
+    return null;
+  }
+};
+
 request = function(_method, url, data) {
   var dataType, headers, method, processData;
   if (data == null) {
@@ -3798,6 +3808,9 @@ request = function(_method, url, data) {
   };
   if (userToken()) {
     headers['X-User-Token'] = userToken();
+  }
+  if (csrfToken()) {
+    headers['X-CSRF-Token'] = csrfToken();
   }
   method = (function() {
     switch (_method) {
