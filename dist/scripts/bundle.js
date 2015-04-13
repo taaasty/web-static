@@ -13651,16 +13651,17 @@ var DesignActionCreators = {
   },
 
   saveCurrent: function saveCurrent() {
-    var fields = DesignStore.getUnsavedFields(),
-        userID = CurrentUserStore.getUser().id;
+    var userID = CurrentUserStore.getUser().id,
+        design = DesignStore.getCurrent(),
+        unsavedFields = DesignStore.getUnsavedFields();
 
-    if (Object.keys(fields).length === 0) {
+    if (Object.keys(unsavedFields).length === 0) {
       TastyNotifyController.notifyError(i18n.t("design_settings_no_unsaved_fields_error"));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
-      delete fields.backgroundImageUrl;
-      Api.design.saveCurrent(fields, userID).then(function (design) {
+      delete design.backgroundImageUrl;
+      Api.design.saveCurrent(design, userID).then(function (design) {
         AppDispatcher.handleServerAction({
           type: DesignConstants.SAVE_CURRENT_SUCCESS,
           design: design
@@ -13672,14 +13673,14 @@ var DesignActionCreators = {
     }
   },
 
-  proceedPayment: function proceedPayment(design, slug) {
-    var url = Routes.designSettinsBuy(slug),
-        data = { design: design };
+  proceedPayment: function proceedPayment() {
+    var url = Routes.orders(),
+        design = DesignStore.getCurrent();
 
     // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
     // картинку, то у нас будет backgroundId его и будем передавать.
-    delete data.design.backgroundImageUrl;
-    Submitter.postRequest(url, data);
+    delete design.backgroundImageUrl;
+    Submitter.postRequest(url, design);
   }
 };
 
@@ -14339,11 +14340,11 @@ Api = {
     }
   },
   design: {
-    saveCurrent: function(fields, userID) {
+    saveCurrent: function(design, userID) {
       var data, key, url;
       url = ApiRoutes.design_settings_url(userID);
       key = Constants.api.DESIGN_SAVE;
-      data = fields;
+      data = design;
       abortPendingRequests(key);
       return _pendingRequests[key] = putRequest(url, data);
     },
@@ -14607,8 +14608,6 @@ var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["defau
 
 var DesignStore = _interopRequire(require("../../stores/design"));
 
-var CurrentUserStore = _interopRequire(require("../../stores/current_user"));
-
 var DesignActionCreators = _interopRequire(require("../../actions/design"));
 
 var connectToStores = _interopRequire(require("../../../../shared/react/components/higherOrder/connectToStores"));
@@ -14619,8 +14618,6 @@ var DesignPaymentContainer = React.createClass({
   displayName: "DesignPaymentContainer",
 
   propTypes: {
-    slug: React.PropTypes.string.isRequired,
-    design: React.PropTypes.object.isRequired,
     options: React.PropTypes.object.isRequired
   },
 
@@ -14631,25 +14628,19 @@ var DesignPaymentContainer = React.createClass({
   },
 
   proceedPayment: function proceedPayment() {
-    var _props = this.props;
-    var slug = _props.slug;
-    var design = _props.design;
-
-    DesignActionCreators.proceedPayment(design, slug);
+    DesignActionCreators.proceedPayment();
   }
 });
 
 DesignPaymentContainer = connectToStores(DesignPaymentContainer, [DesignStore], function (props) {
   return {
-    slug: CurrentUserStore.getUser().slug,
-    design: DesignStore.getCurrent(),
     options: DesignStore.getPaymentOptions()
   };
 });
 
 module.exports = DesignPaymentContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":367,"../../actions/design":10,"../../stores/current_user":348,"../../stores/design":349,"./DesignPayment":21}],23:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":367,"../../actions/design":10,"../../stores/design":349,"./DesignPayment":21}],23:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -36723,8 +36714,8 @@ Routes = {
   daylogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/' + page;
   },
-  designSettinsBuy: function(userSlug) {
-    return '/~' + userSlug + '/design_settings_buy';
+  orders: function() {
+    return '/orders';
   }
 };
 

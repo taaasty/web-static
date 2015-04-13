@@ -67,10 +67,10 @@ Api =
       _pendingRequests[key] = getRequest feedUrl
 
   design:
-    saveCurrent: (fields, userID) ->
+    saveCurrent: (design, userID) ->
       url  = ApiRoutes.design_settings_url userID
       key  = Constants.api.DESIGN_SAVE
-      data = fields
+      data = design
 
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, data
