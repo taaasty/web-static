@@ -1,3 +1,4 @@
+import Money from '../../../../../shared/react/components/common/Money/Money';
 import DesignSettingsSlider from '../../DesignSettings/common/slider';
 import DesignPaymentRadioList from '../common/RadioList';
 import DesignPaymentListItem from './ListItem';
@@ -37,7 +38,7 @@ let DesignPaymentList = React.createClass({
         </DesignPaymentListItem>
 
         <DesignPaymentListItem title={i18n.t('design_payment_cost_title')}>
-          {i18n.t('design_payment_cost_description')}
+          <Money value={gon.prices.design.cents} currency={gon.prices.design.currency} />
         </DesignPaymentListItem>
 
         <DesignPaymentListItem title={i18n.t('design_payment_payment_methods_title')}>

@@ -8261,6 +8261,9 @@ a.write-message-button {
   z-index: -1;
   opacity: 0;
 }
+.design-settings.__has-unsaved-fields .design-settings__groups {
+  padding-bottom: 50px;
+}
 .design-settings.__disabled .design-settings__cover:after {
   content: "";
   width: 100%;
@@ -8382,7 +8385,6 @@ a.write-message-button {
 }
 .design-settings__groups {
   height: 100%;
-  padding-bottom: 50px;
   box-sizing: border-box;
 }
 .design-settings__alert + .design-settings__groups,

@@ -73,7 +73,7 @@ let DesignStore = assign(new BaseStore(), {
   },
 
   hasUnsavedFields() {
-    return !!_unsavedFields;
+    return Object.keys(_unsavedFields).length !== 0;
   }
 });
 

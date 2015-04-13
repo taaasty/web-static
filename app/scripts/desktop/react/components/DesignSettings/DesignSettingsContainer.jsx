@@ -44,10 +44,11 @@ let DesignSettingsContainer = React.createClass({
   }
 });
 
-DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore, CurrentUserStore], props => ({
+DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore, CurrentUserStore], (props) => ({
   design: DesignStore.getCurrent(),
   options: DesignStore.getOptions(),
   hasDesignBundle: CurrentUserStore.hasDesignBundle(),
+  hasUnsavedFields: DesignStore.hasUnsavedFields(),
   hasPaidValues: DesignStore.hasPaidValues()
 }));
 

@@ -15,22 +15,22 @@ PopupActions =
     url = location.href
     user = CurrentUserStore.getUser()
 
-    # if url.indexOf(user.tlog_url.toLowerCase()) == -1
-    #   TastyConfirmController.show
-    #     message: i18n.t 'design_settings_page_confirm'
-    #     acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
-    #     acceptButtonColor: 'green'
-    #     onAccept: ->
-    #       window.location.href = Routes.userDesignSettings user.slug
-    # else
-    ReactApp.popupController.open
-      component: DesignSettingsContainer
-      popupProps:
-        title: i18n.t('design_settings_header')
-        className: 'popup--design-settings'
-        clue: 'designSettings'
-        draggable: true
-      containerAttribute: 'design-settings-container'
+    if url.indexOf(user.tlog_url.toLowerCase()) == -1
+      TastyConfirmController.show
+        message: i18n.t 'design_settings_page_confirm'
+        acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
+        acceptButtonColor: 'green'
+        onAccept: ->
+          window.location.href = Routes.userDesignSettings user.slug
+    else
+      ReactApp.popupController.open
+        component: DesignSettingsContainer
+        popupProps:
+          title: i18n.t('design_settings_header')
+          className: 'popup--design-settings'
+          clue: 'designSettings'
+          draggable: true
+        containerAttribute: 'design-settings-container'
 
   showDesignSettingsPayment: ->
     ReactApp.popupController.openWithBackground
