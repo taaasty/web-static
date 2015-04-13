@@ -48,16 +48,17 @@ let DesignActionCreators = {
   },
 
   saveCurrent() {
-    let fields = DesignStore.getUnsavedFields(),
-        userID = CurrentUserStore.getUser().id;
+    let userID = CurrentUserStore.getUser().id,
+        design = DesignStore.getCurrent(),
+        unsavedFields = DesignStore.getUnsavedFields();
 
-    if (Object.keys(fields).length === 0) {
+    if (Object.keys(unsavedFields).length === 0) {
       TastyNotifyController.notifyError(i18n.t('design_settings_no_unsaved_fields_error'));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
-      delete fields.backgroundImageUrl;
-      Api.design.saveCurrent(fields, userID)
+      delete design.backgroundImageUrl;
+      Api.design.saveCurrent(design, userID)
         .then((design) => {
           AppDispatcher.handleServerAction({
             type: DesignConstants.SAVE_CURRENT_SUCCESS,
@@ -71,14 +72,14 @@ let DesignActionCreators = {
     }
   },
 
-  proceedPayment(design, slug) {
-    let url = Routes.designSettinsBuy(slug),
-        data = { design };
+  proceedPayment() {
+    let url = Routes.orders(),
+        design = DesignStore.getCurrent();
 
     // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
     // картинку, то у нас будет backgroundId его и будем передавать.
-    delete data.design.backgroundImageUrl;
-    Submitter.postRequest(url, data);
+    delete design.backgroundImageUrl;
+    Submitter.postRequest(url, design);
   }
 };
 

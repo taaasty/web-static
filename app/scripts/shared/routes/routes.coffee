@@ -27,6 +27,6 @@ Routes =
   tlogPagination:   (userSlug, page) -> '/~' + userSlug + '/page/' + page
   daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page
 
-  designSettinsBuy: (userSlug) -> '/~' + userSlug + '/design_settings_buy'
+  orders: -> '/orders'
 
 module.exports = Routes
