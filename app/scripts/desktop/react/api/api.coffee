@@ -13,6 +13,11 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
+csrfToken = ->
+  tokenNode = document.querySelector '[name="csrf-token"]'
+
+  if tokenNode? then tokenNode.getAttribute('content') else null
+
 request = (_method, url, data = {}) ->
   headers =
     'X-Requested-With': 'XMLHttpRequest'
@@ -20,6 +25,7 @@ request = (_method, url, data = {}) ->
     'X-Tasty-Client-Version': TastySettings.version
 
   headers['X-User-Token'] = userToken() if userToken()
+  headers['X-CSRF-Token'] = csrfToken() if csrfToken()
 
   method = switch _method
     when 'GET'                   then 'GET'
