@@ -5,7 +5,7 @@ global.gon = require './resources/gon'
 mockUser = require './data/user'
 
 $ ->
-  if localStorage.getItem('userLogged') is "true"
+  if localStorage.getItem('userLogged') is 'true'
     if localStorage.getItem 'userToken'
       mockUser.api_key.access_token = localStorage.getItem 'userToken'
 

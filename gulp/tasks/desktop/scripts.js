@@ -24,7 +24,6 @@ var dependencies = {
   'jquery.autosize.input': './app/scripts/desktop/plugins/jquery.autosize.input',
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
-  'jquery.shapeshift': './app/bower_components/jquery.shapeshift/core/jquery.shapeshift',
   'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
   'react': './node_modules/react',
@@ -50,7 +49,8 @@ var dependencies = {
   'nanobar': './app/bower_components/nanobar/index',
   'URIjs': './node_modules/URIjs/src/URI',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
-  'numeral': './node_modules/numeral'
+  'numeral': './node_modules/numeral',
+  'moment': './node_modules/moment/moment'
 }
 
 gulp.task('[D][L] Scripts', function(cb) {
