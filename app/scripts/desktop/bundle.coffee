@@ -7,6 +7,9 @@ require './resources/tasty_utils'
 window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 
+# /*==========  Locales  ==========*/
+require './locales/numeral/ru'
+
 require './react/services/positions'
 window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'

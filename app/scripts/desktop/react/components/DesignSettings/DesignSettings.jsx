@@ -9,6 +9,7 @@ let DesignSettings = React.createClass({
     options: React.PropTypes.object.isRequired,
     hasDesignBundle: React.PropTypes.bool.isRequired,
     hasPaidValues: React.PropTypes.bool.isRequired,
+    hasUnsavedFields: React.PropTypes.bool.isRequired,
     onOptionChange: React.PropTypes.func.isRequired,
     onBgImageChange: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired
@@ -23,6 +24,7 @@ let DesignSettings = React.createClass({
   render() {
     let settingsClasses = classSet({
       'design-settings': true,
+      '__has-unsaved-fields': this.props.hasUnsavedFields,
       '__draghover': this.state.dragActive
     });
 
@@ -38,13 +40,21 @@ let DesignSettings = React.createClass({
               options={this.props.options}
               onOptionChange={this.props.onOptionChange}
               onBgImageChange={this.props.onBgImageChange} />
-          <DesignSettingsSaveButton
-              hasPaidValues={this.props.hasPaidValues}
-              hasDesignBundle={this.props.hasDesignBundle}
-              onClick={this.props.onSave} />
+          {this.renderSaveButton()}
         </div>
       </div>
     );
+  },
+
+  renderSaveButton() {
+    if (this.props.hasUnsavedFields) {
+      return (
+        <DesignSettingsSaveButton
+            hasPaidValues={this.props.hasPaidValues}
+            hasDesignBundle={this.props.hasDesignBundle}
+            onClick={this.props.onSave} />
+      );
+    }
   },
 
   handleDragLeave(e) {

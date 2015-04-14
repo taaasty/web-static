@@ -1,6 +1,6 @@
 require './settings'
 require './bundle'
-require './resources/gon'
+global.gon = require './resources/gon'
 
 mockUser = require './data/user'
 

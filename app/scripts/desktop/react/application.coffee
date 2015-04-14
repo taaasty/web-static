@@ -6,6 +6,7 @@ AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
+numeral = require 'numeral'
 
 window.ReactApp =
 
@@ -19,6 +20,7 @@ window.ReactApp =
 
       DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
+    numeral.language(locale)
     i18n.init
       lng: locale
       fallbackLng: 'ru'
