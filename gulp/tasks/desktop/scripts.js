@@ -49,8 +49,7 @@ var dependencies = {
   'nanobar': './app/bower_components/nanobar/index',
   'URIjs': './node_modules/URIjs/src/URI',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
-  'numeral': './node_modules/numeral',
-  'moment': './node_modules/moment/moment'
+  'numeral': './node_modules/numeral'
 }
 
 gulp.task('[D][L] Scripts', function(cb) {
