@@ -1162,7 +1162,7 @@ window.ReactApp = {
     i18n.init({
       lng: locale,
       fallbackLng: 'ru',
-      resGetPath: TastySettings.localesPath + '/__lng__.json'
+      resGetPath: TastySettings.localesPath + '/__lng__.json?v=2'
     }, function() {
       console.log('Locales loaded');
       return ReactUjs.initialize();
