@@ -28,8 +28,8 @@ CurrentUserStore = _.extend new BaseStore(),
     false
 
   getUser:        -> currentUser
-  getAccessToken: -> currentUser.api_key.access_token
-  getUserpic:     -> currentUser.userpic
+  getAccessToken: -> currentUser?.api_key.access_token
+  getUserpic:     -> currentUser?.userpic
 
   updateUser: (data) ->
     _.extend currentUser, data

@@ -31882,10 +31882,10 @@ CurrentUserStore = _.extend(new BaseStore(), {
     return currentUser;
   },
   getAccessToken: function() {
-    return currentUser.api_key.access_token;
+    return currentUser != null ? currentUser.api_key.access_token : void 0;
   },
   getUserpic: function() {
-    return currentUser.userpic;
+    return currentUser != null ? currentUser.userpic : void 0;
   },
   updateUser: function(data) {
     return _.extend(currentUser, data);
