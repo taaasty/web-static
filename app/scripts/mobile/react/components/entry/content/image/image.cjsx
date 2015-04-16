@@ -12,7 +12,7 @@ ImageEntryContent = React.createClass
   render: ->
     <div className="post__content">
       { @renderEntryImage() }
-      <p>{ @props.title }</p>
+      <p dangerouslySetInnerHTML={{ __html: @props.title }} />
     </div>
 
   renderEntryImage: ->
