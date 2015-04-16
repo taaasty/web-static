@@ -4657,7 +4657,11 @@ ImageEntryContent = React.createClass({
   render: function() {
     return React.createElement("div", {
       "className": "post__content"
-    }, this.renderEntryImage(), React.createElement("p", null, this.props.title));
+    }, this.renderEntryImage(), React.createElement("p", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.title
+      }
+    }));
   },
   renderEntryImage: function() {
     var content;
@@ -4859,144 +4863,155 @@ module.exports = VideoEntryContent;
 
 
 },{}],94:[function(require,module,exports){
-var EntryMixin, EntryViewActions, IMAGE_TYPE, LOAD_MORE_COMMENTS_LIMIT, QUOTE_TYPE, TEXT_TYPE, VIDEO_TYPE, assign;
+"use strict";
 
-assign = require('react/lib/Object.assign');
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-EntryViewActions = require('../../../actions/view/entry');
+var _toConsumableArray = function (arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } };
 
-LOAD_MORE_COMMENTS_LIMIT = 30;
+var assign = _interopRequire(require("react/lib/Object.assign"));
 
-TEXT_TYPE = 'text';
+var EntryViewActions = _interopRequire(require("../../../actions/view/entry"));
 
-IMAGE_TYPE = 'image';
+var LOAD_MORE_COMMENTS_LIMIT = 30,
+    TEXT_TYPE = "text",
+    IMAGE_TYPE = "image",
+    VIDEO_TYPE = "video",
+    QUOTE_TYPE = "quote";
 
-VIDEO_TYPE = 'video';
-
-QUOTE_TYPE = 'quote';
-
-EntryMixin = {
-  getDefaultProps: function() {
+var EntryMixin = {
+  getDefaultProps: function getDefaultProps() {
     return {
       loadPerTime: LOAD_MORE_COMMENTS_LIMIT
     };
   },
-  getInitialState: function() {
-    var _ref, _ref1;
+
+  getInitialState: function getInitialState() {
+    var comments = [],
+        commentsCount = 0;
+
+    if (this.props.entry.comments_info != null) {
+      comments = this.props.entry.comments_info.comments;
+      commentsCount = this.props.entry.comments_info.total_count;
+    }
+
     return {
-      comments: ((_ref = this.props.entry.comments_info) != null ? _ref.comments : void 0) || [],
-      commentsCount: ((_ref1 = this.props.entry.comments_info) != null ? _ref1.total_count : void 0) || 0,
+      comments: comments, commentsCount: commentsCount,
       loading: false
     };
   },
-  isLoadingState: function() {
+
+  isLoadingState: function isLoadingState() {
     return this.state.loading === true;
   },
-  activateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: true
-    });
+
+  activateLoadingState: function activateLoadingState() {
+    this.setState({ loading: true });
   },
-  deactivateLoadingState: function() {
-    return this.safeUpdateState({
-      loading: false
-    });
+
+  deactivateLoadingState: function deactivateLoadingState() {
+    this.setState({ loading: false });
   },
-  loadMoreComments: function() {
-    var entryId, limit, toCommentId;
-    entryId = this.props.entry.id;
-    toCommentId = this.state.comments[0].id;
-    limit = this.props.loadPerTime;
+
+  loadMoreComments: function loadMoreComments() {
+    var _this = this;
+
+    var entryID = this.props.entry.id,
+        toCommentID = this.state.comments[0].id,
+        limit = this.props.loadPerTime;
+
     this.activateLoadingState();
-    return EntryViewActions.loadComments(entryId, toCommentId, limit).then((function(_this) {
-      return function(commentsInfo) {
-        var comments, commentsCount;
-        comments = commentsInfo.comments;
-        commentsCount = commentsInfo.total_count;
-        return _this.safeUpdateState({
-          comments: comments.concat(_this.state.comments),
-          commentsCount: commentsCount
-        });
-      };
-    })(this)).always(this.deactivateLoadingState);
+
+    EntryViewActions.loadComments(entryID, toCommentID, limit).then(function (commentsInfo) {
+      var comments = commentsInfo.comments;
+      var commentsCount = commentsInfo.total_count;
+
+      _this.safeUpdateState({
+        commentsCount: commentsCount,
+        comments: comments.concat(_this.state.comments)
+      });
+    }).always(this.deactivateLoadingState);
   },
-  createComment: function(text) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.createComment(entryId, text).then((function(_this) {
-      return function(comment) {
-        _this.state.comments.push(comment);
-        return _this.safeUpdateState({
-          comments: _this.state.comments,
-          commentsCount: _this.state.commentsCount + 1
-        });
-      };
-    })(this)).always(this.deactivateLoadingState);
+
+  createComment: function createComment(text) {
+    var _this = this;
+
+    var entryID = this.props.entry.id;
+
+    EntryViewActions.createComment(entryID, text).then(function (comment) {
+      var newComments = [].concat(_toConsumableArray(_this.state.comments));
+      newComments.push(comment);
+
+      _this.safeUpdateState({
+        comments: newComments,
+        commentsCount: _this.state.commentsCount + 1
+      });
+    }).always(this.deactivateLoadingState);
   },
-  editComment: function(commentId, text) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.editComment(entryId, commentId, text).then((function(_this) {
-      return function(comment) {
-        var item, _i, _len, _ref;
-        _ref = _this.state.comments;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          item = _ref[_i];
-          if (!(item.id === comment.id)) {
-            continue;
-          }
-          assign(item, comment);
+
+  editComment: function editComment(commentID, text) {
+    var _this = this;
+
+    var entryID = this.props.entry.id;
+
+    EntryViewActions.editComment(entryID, commentID, text).then(function (comment) {
+      for (var i = 0, len = _this.state.comments.length; i < len; i++) {
+        if (_this.state.comments[i].id === comment.id) {
+          assign(_this.state.comments[i], comment);
           break;
         }
-        return _this.forceUpdate();
-      };
-    })(this));
-  },
-  deleteComment: function(commentId) {
-    var entryId;
-    entryId = this.props.entry.id;
-    return EntryViewActions.deleteComment(entryId, commentId).then((function(_this) {
-      return function() {
-        var i, item, _i, _len, _ref;
-        _ref = _this.state.comments;
-        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-          item = _ref[i];
-          if (!(item.id === commentId)) {
-            continue;
-          }
-          _this.state.comments.splice(i, 1);
-          break;
-        }
-        return _this.forceUpdate();
-      };
-    })(this));
-  },
-  reportComment: function(commentId) {
-    return EntryViewActions.reportComment(commentId);
-  },
-  getEntryClasses: function() {
-    var typeClass;
-    typeClass = (function() {
-      switch (this.props.entry.type) {
-        case TEXT_TYPE:
-          return 'text';
-        case IMAGE_TYPE:
-          return 'image';
-        case VIDEO_TYPE:
-          return 'video';
-        case QUOTE_TYPE:
-          return 'quote';
-        default:
-          return 'text';
       }
-    }).call(this);
-    return 'post post--' + typeClass;
+      _this.forceUpdate();
+    });
+  },
+
+  deleteComment: function deleteComment(commentID) {
+    var _this = this;
+
+    var entryID = this.props.entry.id;
+
+    EntryViewActions.deleteComment(entryID, commentID).then(function () {
+      var newComments = [].concat(_toConsumableArray(_this.state.comments));
+
+      for (var i = 0, len = _this.state.comments.length; i < len; i++) {
+        if (_this.state.comments[i].id === commentID) {
+          newComments.splice(i, 1);
+          break;
+        }
+      }
+
+      _this.safeUpdateState({
+        comments: newComments,
+        commentsCount: _this.state.commentsCount - 1
+      });
+    });
+  },
+
+  reportComment: function reportComment(commentID) {
+    EntryViewActions.reportComment(commentID);
+  },
+
+  getEntryClasses: function getEntryClasses() {
+    var typeClass = undefined;
+    // Small hack, depends on layout
+    switch (this.props.entry.type) {
+      case TEXT_TYPE:
+        typeClass = "text";break;
+      case IMAGE_TYPE:
+        typeClass = "image";break;
+      case VIDEO_TYPE:
+        typeClass = "video";break;
+      case QUOTE_TYPE:
+        typeClass = "quote";break;
+      default:
+        typeClass = "text";
+    }
+
+    return "post post--" + typeClass;
   }
 };
 
 module.exports = EntryMixin;
-
-
 
 },{"../../../actions/view/entry":10,"react/lib/Object.assign":272}],95:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
