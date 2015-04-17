@@ -14,7 +14,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass
     })
 
     if @props.conversation.last_message?
-      lastMessageText = <span dangerouslySetInnerHTML={{ __html: this._getLastMessageText() }} />
+      lastMessageText = <span dangerouslySetInnerHTML={{__html: this._getLastMessageText() || ''}} />
       lastCreatedAt   = @_getLastMessageCreatedAt()
     else
       lastCreatedAt   = @_getLastConversationCreatedAt()

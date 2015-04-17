@@ -19,7 +19,7 @@ let SearchResultsTlog = React.createClass({
               onLoad={this.props.onLoadNextPage}>
             <section
                 className="posts"
-                dangerouslySetInnerHTML={{__html: this.props.html}} />
+                dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
           </InfiniteScroll>
         </div>
       </div>

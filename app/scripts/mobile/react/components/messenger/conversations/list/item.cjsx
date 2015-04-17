@@ -34,7 +34,7 @@ ConversationListItem = React.createClass
   renderLastMessageText: ->
     text = @props.item.last_message?.content_html
 
-    return <span dangerouslySetInnerHTML={{ __html: text }} />
+    return <span dangerouslySetInnerHTML={{ __html: text || ''}} />
 
   renderDate: ->
     date = if @props.item.last_message? then @lastMessageCreatedAt() else @lastConversationCreatedAt()

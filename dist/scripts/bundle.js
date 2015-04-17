@@ -11722,7 +11722,7 @@ var DesignPaymentListItem = React.createClass({
       "li",
       { className: "payment__item" },
       React.createElement("div", { className: "payment__item-title",
-        dangerouslySetInnerHTML: { __html: this.props.title } }),
+        dangerouslySetInnerHTML: { __html: this.props.title || "" } }),
       React.createElement(
         "div",
         { className: "payment__item-content" },
@@ -15369,7 +15369,7 @@ var FeedBricks = React.createClass({
         React.createElement("section", {
           ref: "container",
           className: "bricks",
-          dangerouslySetInnerHTML: { __html: this.props.html } })
+          dangerouslySetInnerHTML: { __html: this.props.html || "" } })
       )
     );
   },
@@ -15436,7 +15436,7 @@ var FeedTlog = React.createClass({
           React.createElement("section", {
             ref: "container",
             className: "posts",
-            dangerouslySetInnerHTML: { __html: this.props.html } })
+            dangerouslySetInnerHTML: { __html: this.props.html || "" } })
         )
       )
     );
@@ -15776,7 +15776,7 @@ var SearchResultsFeed = React.createClass({
         React.createElement("section", {
           ref: "container",
           className: "bricks",
-          dangerouslySetInnerHTML: { __html: this.props.html } })
+          dangerouslySetInnerHTML: { __html: this.props.html || "" } })
       )
     );
   },
@@ -15835,7 +15835,7 @@ var SearchResultsTlog = React.createClass({
             onLoad: this.props.onLoadNextPage },
           React.createElement("section", {
             className: "posts",
-            dangerouslySetInnerHTML: { __html: this.props.html } })
+            dangerouslySetInnerHTML: { __html: this.props.html || "" } })
         )
       )
     );
@@ -17188,7 +17188,7 @@ window.CalendarHeader = React.createClass({
     }, day), React.createElement("div", {
       "className": "calendar__date-info",
       "dangerouslySetInnerHTML": {
-        __html: info
+        __html: info || ''
       }
     }));
   }
@@ -18238,7 +18238,7 @@ window.EntryCommentBox_Comment = React.createClass({
       "className": "comment__username comment__username--bold"
     }, this.props.comment.user.name, " ")), React.createElement("span", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.comment.comment_html
+        __html: this.props.comment.comment_html || ''
       }
     }), React.createElement(EntryCommentBox_CommentMetaBar, {
       "name": this.props.comment.user.name,
@@ -20817,7 +20817,7 @@ window.HeroProfileHeadStatic = React.createClass({
       "className": "hero__text"
     }, React.createElement("span", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.user.title
+        __html: this.props.user.title || ''
       }
     })));
   }
@@ -21206,7 +21206,7 @@ window.TastyAlert = React.createClass({
       "className": "confirmation__box"
     }, title, React.createElement("div", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.message
+        __html: this.props.message || ''
       },
       "className": "confirmation__text"
     }), React.createElement("div", {
@@ -21278,7 +21278,7 @@ window.TastyConfirm = React.createClass({
       "className": "confirmation__box"
     }, React.createElement("div", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.message
+        __html: this.props.message || ''
       },
       "className": "confirmation__text"
     }), React.createElement("div", {
@@ -21342,7 +21342,7 @@ window.TastyLockingAlert = React.createClass({
       "className": "confirmation__box"
     }, title, React.createElement("div", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.message
+        __html: this.props.message || ''
       },
       "className": "confirmation__text"
     }), React.createElement("div", {
@@ -21443,7 +21443,7 @@ window.PeopleItem = React.createClass({
       "className": "people-item__name"
     }, this.props.user.slug), React.createElement("p", {
       "dangerouslySetInnerHTML": {
-        __html: this.state.title
+        __html: this.state.title || ''
       },
       "className": "people-item__desc"
     }))));
@@ -23724,7 +23724,7 @@ ScreenViewer_Title = React.createClass({
     return React.createElement("div", {
       "className": 'screen-viewer__title',
       "dangerouslySetInnerHTML": {
-        __html: this.props.title
+        __html: this.props.title || ''
       }
     });
   }
@@ -25560,10 +25560,10 @@ module.experts = window.TlogAlert = React.createClass({
       return React.createElement("div", {
         "className": "alert"
       }, React.createElement("div", {
-        "className": "alert__text",
         "dangerouslySetInnerHTML": {
-          __html: this.props.text
-        }
+          __html: this.props.text || ''
+        },
+        "className": "alert__text"
       }), closeElement);
     } else {
       return null;
@@ -27639,7 +27639,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
     if (this.props.conversation.last_message != null) {
       lastMessageText = React.createElement("span", {
         "dangerouslySetInnerHTML": {
-          __html: this._getLastMessageText()
+          __html: this._getLastMessageText() || ''
         }
       });
       lastCreatedAt = this._getLastMessageCreatedAt();
@@ -28440,7 +28440,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({
     }, userSlug, React.createElement("span", {
       "className": "messages__text",
       "dangerouslySetInnerHTML": {
-        __html: this.props.message.content_html
+        __html: this.props.message.content_html || ''
       }
     })), React.createElement("span", {
       "className": "messages__date"

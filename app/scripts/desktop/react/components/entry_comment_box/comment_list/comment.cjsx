@@ -29,7 +29,7 @@ window.EntryCommentBox_Comment = React.createClass
                    </span>
                    <span className="comment__username comment__username--bold">{ this.props.comment.user.name } </span>
                  </a>
-                 <span dangerouslySetInnerHTML={{ __html: this.props.comment.comment_html }} />
+                 <span dangerouslySetInnerHTML={{__html: this.props.comment.comment_html || ''}} />
                  <EntryCommentBox_CommentMetaBar name={ this.props.comment.user.name }
                                                  commentId={ this.props.comment.id }
                                                  commentCreatedAt={ this.props.comment.created_at }

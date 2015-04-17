@@ -26,7 +26,7 @@ let FeedBricks = React.createClass({
           <section
               ref="container"
               className="bricks"
-              dangerouslySetInnerHTML={{__html: this.props.html}} />
+              dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
         </InfiniteScroll>
       </div>
     );

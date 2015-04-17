@@ -8,6 +8,6 @@ CommentText = React.createClass
 
   render: ->
     <span className="comment__text"
-          dangerouslySetInnerHTML={{ __html: @props.text }} />
+          dangerouslySetInnerHTML={{ __html: @props.text || ''}} />
 
 module.exports = CommentText

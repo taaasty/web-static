@@ -16,7 +16,7 @@ HeroTlogHead = React.createClass
         </span>
       </div>
       <div className="hero__text">
-        <span dangerouslySetInnerHTML={{ __html: @props.author.title }} />
+        <span dangerouslySetInnerHTML={{ __html: @props.author.title || ''}} />
       </div>
     </div>
 

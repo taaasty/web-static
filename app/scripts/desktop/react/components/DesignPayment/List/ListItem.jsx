@@ -10,7 +10,7 @@ let DesignPaymentListItem = React.createClass({
     return (
       <li className="payment__item">
         <div className="payment__item-title"
-             dangerouslySetInnerHTML={{__html: this.props.title}} />
+             dangerouslySetInnerHTML={{__html: this.props.title || ''}} />
         <div className="payment__item-content">
           {this.props.children}
         </div>

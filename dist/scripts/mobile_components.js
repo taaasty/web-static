@@ -4302,7 +4302,7 @@ CommentText = React.createClass({
     return React.createElement("span", {
       "className": "comment__text",
       "dangerouslySetInnerHTML": {
-        __html: this.props.text
+        __html: this.props.text || ''
       }
     });
   }
@@ -4663,7 +4663,7 @@ ImageEntryContent = React.createClass({
       "className": "post__content"
     }, this.renderEntryImage(), React.createElement("p", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.title
+        __html: this.props.title || ''
       }
     }));
   },
@@ -4770,7 +4770,7 @@ TextEntryContent = React.createClass({
     }), React.createElement("div", {
       "className": "post__content",
       "dangerouslySetInnerHTML": {
-        __html: this.props.text
+        __html: this.props.text || ''
       }
     }));
   }
@@ -4851,7 +4851,7 @@ VideoEntryContent = React.createClass({
       return React.createElement("div", {
         "className": "media-video__embed",
         "dangerouslySetInnerHTML": {
-          __html: this.props.iframely.html
+          __html: this.props.iframely.html || ''
         }
       });
     } else {
@@ -6074,7 +6074,7 @@ HeroTlogHead = React.createClass({
       "className": "hero__text"
     }, React.createElement("span", {
       "dangerouslySetInnerHTML": {
-        __html: this.props.author.title
+        __html: this.props.author.title || ''
       }
     })));
   }
@@ -6761,7 +6761,7 @@ MessageListItem = React.createClass({
     }, this.renderSlug(), React.createElement("span", {
       "className": "message__text",
       "dangerouslySetInnerHTML": {
-        __html: this.props.item.content_html
+        __html: this.props.item.content_html || ''
       }
     })), React.createElement("div", {
       "className": "message__meta"
@@ -7073,7 +7073,7 @@ ConversationListItem = React.createClass({
     text = (ref = this.props.item.last_message) != null ? ref.content_html : void 0;
     return React.createElement("span", {
       "dangerouslySetInnerHTML": {
-        __html: text
+        __html: text || ''
       }
     });
   },

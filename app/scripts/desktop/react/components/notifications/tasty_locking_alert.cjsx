@@ -29,7 +29,8 @@ window.TastyLockingAlert = React.createClass
                <div className="confirmation__cell">
                  <div className="confirmation__box">
                    { title }
-                   <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
+                   <div dangerouslySetInnerHTML={{__html: this.props.message || ''}}
+                        className="confirmation__text" />
                    <div className="confirmation__buttons">
                      <Spinner size={ 31 } />
                    </div>

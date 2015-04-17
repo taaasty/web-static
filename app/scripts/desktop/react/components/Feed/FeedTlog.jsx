@@ -20,7 +20,7 @@ let FeedTlog = React.createClass({
             <section
                 ref="container"
                 className="posts"
-                dangerouslySetInnerHTML={{__html: this.props.html}} />
+                dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
           </InfiniteScroll>
         </div>
       </div>

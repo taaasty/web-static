@@ -40,6 +40,6 @@ window.HeroProfileHeadStatic = React.createClass
         <span><a href={ this.props.user.tlog_url }>{ this.props.user.slug }</a></span>
       </div>
       <div className="hero__text">
-        <span dangerouslySetInnerHTML={{ __html: this.props.user.title }} />
+        <span dangerouslySetInnerHTML={{ __html: this.props.user.title || '' }} />
       </div>
     </div>

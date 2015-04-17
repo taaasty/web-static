@@ -13,6 +13,6 @@ window.CalendarHeader = React.createClass
     return <div className="calendar__date">
              <div className="calendar__date-day">{ day }</div>
              <div className="calendar__date-info"
-                  dangerouslySetInnerHTML={{ __html: info }}>
+                  dangerouslySetInnerHTML={{__html: info || ''}}>
              </div>
            </div>

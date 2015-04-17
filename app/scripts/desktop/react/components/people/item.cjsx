@@ -20,7 +20,7 @@ window.PeopleItem = React.createClass
                    { followStatus }
                  </div>
                  <h3 className="people-item__name">{ this.props.user.slug }</h3>
-                 <p dangerouslySetInnerHTML={{ __html: this.state.title }}
+                 <p dangerouslySetInnerHTML={{__html: this.state.title || ''}}
                     className="people-item__desc" />
                </a>
              </div>

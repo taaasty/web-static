@@ -33,7 +33,7 @@ MessageListItem = React.createClass
              <div className="message__bubble">
                { @renderSlug() }
                <span className="message__text"
-                     dangerouslySetInnerHTML={{ __html: @props.item.content_html }} />
+                     dangerouslySetInnerHTML={{ __html: @props.item.content_html || ''}} />
              </div>
              <div className="message__meta">
                { @renderMessageDate() }

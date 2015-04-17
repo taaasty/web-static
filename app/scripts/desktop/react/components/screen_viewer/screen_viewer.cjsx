@@ -135,4 +135,4 @@ ScreenViewer_Title = React.createClass
 
   render: ->
     <div className='screen-viewer__title'
-         dangerouslySetInnerHTML={{ __html: this.props.title }} />
+         dangerouslySetInnerHTML={{__html: this.props.title || ''}} />

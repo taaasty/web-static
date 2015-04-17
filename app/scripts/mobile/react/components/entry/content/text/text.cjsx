@@ -12,7 +12,7 @@ TextEntryContent = React.createClass
     <div>
       <TextEntryHeader title={ @props.title } />
       <div className="post__content"
-           dangerouslySetInnerHTML={{ __html: @props.text }} />
+           dangerouslySetInnerHTML={{ __html: @props.text || ''}} />
     </div>
 
 module.exports = TextEntryContent

@@ -18,7 +18,8 @@ module.experts = window.TlogAlert = React.createClass
         closeElement = <div className="alert__close" onClick={this.close}><i className="icon icon--cross"></i></div>
 
       <div className="alert">
-        <div className="alert__text" dangerouslySetInnerHTML={{ __html: this.props.text }} />
+        <div dangerouslySetInnerHTML={{__html: this.props.text || ''}}
+             className="alert__text" />
         { closeElement }
       </div>
     else

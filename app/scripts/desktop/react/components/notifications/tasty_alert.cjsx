@@ -31,7 +31,8 @@ window.TastyAlert = React.createClass
                <div className="confirmation__cell">
                  <div className="confirmation__box">
                    { title }
-                   <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
+                   <div dangerouslySetInnerHTML={{__html: this.props.message || ''}}
+                        className="confirmation__text" />
                    <div className="confirmation__buttons">
                      <button onClick={ this.onAccept }
                              className={ "button button--" + this.props.buttonColor + " button--small" }>

@@ -34,7 +34,8 @@ window.TastyConfirm = React.createClass
             <i className="icon icon--cross"></i>
           </div>
           <div className="confirmation__box">
-            <div dangerouslySetInnerHTML={{ __html: this.props.message }} className="confirmation__text"></div>
+            <div dangerouslySetInnerHTML={{__html: this.props.message || ''}}
+                 className="confirmation__text" />
             <div className="confirmation__buttons">
               <button onClick={ this.onAccept }
                       className={ "button button--" + this.props.acceptButtonColor + " button--small" }>
