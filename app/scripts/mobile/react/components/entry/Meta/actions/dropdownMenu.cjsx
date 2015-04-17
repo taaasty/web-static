@@ -1,3 +1,4 @@
+classnames = require 'classnames'
 DropdownMenuMixin                          = require '../../../../mixins/dropdownMenu'
 EntryMetaActions_DropdownMenu_LinkItem     = require './dropdownMenu/items/link'
 EntryMetaActions_DropdownMenu_EditItem     = require './dropdownMenu/items/edit'
@@ -16,8 +17,13 @@ EntryMetaActions_DropdownMenu = React.createClass
     visible: PropTypes.bool.isRequired
 
   render: ->
-    <div className={ @getPopupClasses('meta-actions__dropdown-popup') }>
-      { @renderPopupList() }
+    popupClasses = classnames('meta-actions__dropdown-popup', {
+      '__top': @state.top
+      '__right': @state.right
+    })
+
+    <div className={popupClasses}>
+      {@renderPopupList()}
     </div>
 
   renderPopupList: ->

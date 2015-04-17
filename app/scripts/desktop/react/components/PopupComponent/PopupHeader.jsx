@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx'
+import classnames from 'classnames'
 
 let PopupHeader = React.createClass({
   propTypes: {
@@ -8,8 +8,7 @@ let PopupHeader = React.createClass({
   },
 
   render() {
-    let headerClasses = classSet({
-      'popup__header': true,
+    let headerClasses = classnames('popup__header', {
       'cursor--move': this.props.draggable
     });
 

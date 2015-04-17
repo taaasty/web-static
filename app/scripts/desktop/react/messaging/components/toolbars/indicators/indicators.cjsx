@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 MOUSE_LEAVE_TIMEOUT = 800
 BASIC_STATE    = 'basic'
@@ -28,10 +28,10 @@ window.IndicatorsToolbar = React.createClass
     TastyEvents.off TastyEvents.keys.user_toolbar_opened(), @_onUserToolbarOpen
 
   render: ->
-    indicatorsClasses = cx
-      'toolbar__indicators': true
+    indicatorsClasses = classnames('toolbar__indicators', {
       'state--advanced': @isAdvancedState()
       'state--basic':    @isBasicState()
+    })
 
     if ConnectionStateStore.CONNECTED_STATE
       indicators = <div className={ indicatorsClasses }

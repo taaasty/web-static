@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 import EntryViewActions from '../../../actions/view/entry';
 import ComponentMixin from '../../../mixins/component';
 
@@ -19,8 +19,7 @@ let EntryMetaVoting = React.createClass({
   },
 
   render() {
-    let votingClasses = classSet({
-      'meta-voting': true,
+    let votingClasses = classnames('meta-voting', {
       'voted': this.isVoted(),
       'votable': this.isVoteable(),
       'unvotable': !this.isVoteable()

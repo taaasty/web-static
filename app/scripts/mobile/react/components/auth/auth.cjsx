@@ -1,4 +1,4 @@
-cx                    = require 'react/lib/cx'
+classnames            = require 'classnames'
 AuthVkontakteButton   = require './buttons/vkontakte'
 AuthFacebookButton    = require './buttons/facebook'
 AuthEmailSignInButton = require './buttons/emailSignIn'
@@ -16,9 +16,9 @@ global.Auth = React.createClass
     fixed: false
 
   render: ->
-    authClasses = cx
-      'auth': true
+    authClasses = classnames('auth', {
       'auth--fixed': @props.fixed
+    })
     authBgStyles = backgroundImage: 'url("' + TastySettings.authBackgroundUrl + '")'
 
     return <div className={ authClasses }>

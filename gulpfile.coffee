@@ -6,6 +6,7 @@ runSequence = require 'run-sequence'
 requireDir './gulp/tasks', recurse: true
 
 gulp.task 'dist', ['[S] Clean'], ->
+  process.env.NODE_ENV = 'production'
   gulp.start '[D][P] Scripts', '[D][P] Styles', '[D][P] Locales',
              '[M][P] Scripts', '[M][P] Styles', '[M][P] Locales'
 

@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 
 let EditorTypeSwitcherItem = React.createClass({
   propTypes: {
@@ -17,9 +17,7 @@ let EditorTypeSwitcherItem = React.createClass({
   },
 
   render() {
-    let itemClasses = classSet({
-      'button': true,
-      'button--circle': true,
+    let itemClasses = classnames('button', 'button--circle', {
       'state--disable': this.props.loading,
       'state--active' : this.props.active
     });

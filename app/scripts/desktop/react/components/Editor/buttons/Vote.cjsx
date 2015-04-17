@@ -1,4 +1,4 @@
-classSet = require 'react/lib/cx'
+classnames = require 'classnames'
 { PropTypes } = React
 
 EditorVoteButton = React.createClass
@@ -17,10 +17,9 @@ EditorVoteButton = React.createClass
     $button.tooltip 'destroy'
 
   render: ->
-    iconClasses = classSet
-      'icon': true
-      'post-settings-voting': true
+    iconClasses = classnames('icon', 'post-settings-voting', {
       'post-settings-voted': @props.enabled
+    })
 
     return <button title={ @getTitle() }
                    className="button button--outline-grey post-settings-button"

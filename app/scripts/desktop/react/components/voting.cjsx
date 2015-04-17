@@ -1,4 +1,4 @@
-cx              = require 'react/lib/cx'
+classnames = require 'classnames'
 PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
 
 window.Voting = React.createClass
@@ -28,11 +28,11 @@ window.Voting = React.createClass
 
   render: ->
     title = @getTitle()
-    votingClasses = cx
-      'voting':     true
+    votingClasses = classnames('voting', {
       'votable':    @state.canVote
       'unvotable': !@state.canVote
       'voted':      @state.isVoted
+    })
 
     votes = if @state.process then <Spinner size={ 8 } /> else @state.votes
 

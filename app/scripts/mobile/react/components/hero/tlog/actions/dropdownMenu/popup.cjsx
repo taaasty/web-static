@@ -1,3 +1,4 @@
+classnames = require 'classnames'
 RelationshipsStore                 = require '../../../../../stores/relationships'
 ConnectStoreMixin                      = require '../../../../../../../shared/react/mixins/connectStore'
 DropdownMenuMixin                      = require '../../../../../mixins/dropdownMenu'
@@ -22,9 +23,16 @@ HeroTlogActions_DropdownMenu_Popup = React.createClass
     arrangement: 'bottom'
 
   render: ->
-    <div className={ @getPopupClasses('hero__dropdown-popup __' + @props.arrangement) }>
-      { @_renderPopupList() }
-    </div>
+    popupClasses = classnames('hero__dropdown-popup __' + @props.arrangement, {
+      '__top': @state.top
+      '__right': @state.right
+    })
+
+    return (
+      <div className={popupClasses}>
+        {@_renderPopupList()}
+      </div>
+    )
 
   _renderPopupList: ->
     if @state.status isnt IGNORED_STATUS

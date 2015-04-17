@@ -1,4 +1,4 @@
-cx               = require 'react/lib/cx'
+classnames = require 'classnames'
 LinkedStateMixin = require 'react/lib/LinkedStateMixin'
 
 KEYCODE_ENTER = 13
@@ -30,10 +30,10 @@ window.EditableField = React.createClass
       @$textarea.autosize(append: '') # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
 
   render: ->
-    editableFieldClasses = cx
-      'editable-field': true
-      'state--empty':   @isEmpty()
-      'state--focus':   @state.isFocus
+    editableFieldClasses = classnames('editable-field', {
+      'state--empty': @isEmpty()
+      'state--focus': @state.isFocus
+    })
 
     return <div className={ editableFieldClasses }>
              <div className="editable-field__control-wrap">

@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 import DesignSettingsDropZone from './DropZone/DropZone';
 import DesignSettingsGroups from './Groups/Groups';
 import DesignSettingsSaveButton from './buttons/Save';
@@ -22,8 +22,7 @@ let DesignSettings = React.createClass({
   },
 
   render() {
-    let settingsClasses = classSet({
-      'design-settings': true,
+    let settingsClasses = classnames('design-settings', {
       '__has-unsaved-fields': this.props.hasUnsavedFields,
       '__draghover': this.state.dragActive
     });

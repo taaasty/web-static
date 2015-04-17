@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.ImagesCollage_Images = React.createClass
 
@@ -305,8 +305,8 @@ window.ImagesCollage_Image = React.createClass
     itemClasses = {}
     itemClasses[@props.itemClass] = true
     itemClasses[@props.lastItemClass] = @props.isLastInRow
-    cx = cx itemClasses
+    collageClasses = classnames itemClasses
 
-    <a className={cx} href={this.props.src} data-fancybox-group={this.props.key} target="_blank">
+    <a className={collageClasses} href={this.props.src} data-fancybox-group={this.props.key} target="_blank">
       <img className={this.props.imageClass} src={this.props.image.src} width={this.props.image.width} height={this.props.image.height} alt={this.props.alt} />
     </a>

@@ -1,4 +1,4 @@
-cx                        = require 'react/lib/cx'
+classnames = require 'classnames'
 UserToolbarToggle         = require './user/toggle'
 UserToolbarList           = require './user/list'
 UserToolbarListAdditional = require './user/listAdditional'
@@ -15,10 +15,9 @@ UserToolbar = React.createClass
     unreadNotificationsCount: PropTypes.number.isRequired
 
   render: ->
-    toolbarClasses = cx
-      'toolbar__popup': true
-      'toolbar__popup--complex': true
+    toolbarClasses = classnames('toolbar__popup', 'toolbar__popup--complex', {
       '__visible': @isOpenState()
+    })
 
     return <nav className="toolbar toolbar--user">
              <UserToolbarToggle

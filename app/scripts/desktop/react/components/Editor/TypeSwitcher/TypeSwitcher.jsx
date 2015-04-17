@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 import EditorTypeSwitcherItem from './TypeSwitcherItem';
 
 let AVAILABLE_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
@@ -42,8 +42,7 @@ let EditorTypeSwitcher = React.createClass({
   },
 
   render() {
-    let switcherClasses = classSet({
-      'nav-types': true,
+    let switcherClasses = classnames('nav-types', {
       'state--loading': this.props.loading
     });
 

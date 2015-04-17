@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
   mixins: [RequesterMixin, DOMManipulationsMixin, ComponentManipulationsMixin]
@@ -13,10 +13,9 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
     isHover:     false
 
   render: ->
-    iconClasses = cx
-      'icon': true
-      'icon--star': true
+    iconClasses = classnames('icon', 'icon--star', {
       'icon--star-fill': @state.isFavorited
+    })
 
     return <a onClick={ this.onClick }
               onMouseEnter={ this.onMouseEnter }

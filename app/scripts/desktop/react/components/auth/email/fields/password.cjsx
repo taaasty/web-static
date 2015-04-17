@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 EmailPasswordField = React.createClass
 
@@ -9,10 +9,9 @@ EmailPasswordField = React.createClass
     onChange:   React.PropTypes.func.isRequired
 
   render: ->
-    fieldClasses = cx
-      'form-field':         true
-      'form-field--simple': true
-      'form-field--error':  @props.isError
+    fieldClasses = classnames('form-field', 'form-field--simple', {
+      'form-field--error': @props.isError
+    })
 
     return <div className="form-popup__item">
              <div className={ fieldClasses }>

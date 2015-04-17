@@ -19,7 +19,6 @@
     "pusher": "~2.2.3",
     "rangy": "https://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",
     "react-mixin-manager": "~0.7.0",
-    "react-color-picker": "2.1.5",
     "underscore": "~1.7.0",
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",
     "es5-shim": "~4.0.3",

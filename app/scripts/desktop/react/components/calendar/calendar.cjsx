@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 MOUSE_LEAVE_TIMEOUT = 300
 CALENDAR_CLOSED          = 'closed'
@@ -34,12 +34,11 @@ window.Calendar = React.createClass
     @dettachScrollSpy()
 
   render: ->
-    calendarClasses = cx
-      calendar: true
+    calendarClasses = classnames('calendar', {
       'calendar--open': @isOpen()
       'calendar--closed': !@isOpen()
       'calendar--opened-by-click': @isOpenedByClick()
-
+    })
     children = <CalendarHeader date={ this.state.headerDate } />
 
     if @isOpen()

@@ -1,4 +1,4 @@
-cx                    = require 'react/lib/cx'
+classnames = require 'classnames'
 UsersViewActions      = require '../../../actions/view/users'
 ComponentMixin        = require '../../../mixins/component'
 Spinner               = require '../../common/spinner/spinner'
@@ -22,9 +22,9 @@ MessengerChooser = React.createClass
     currentState: null
 
   render: ->
-    chooserClasses = cx
-      'messages__chooser': true
+    chooserClasses = classnames('messages__chooser', {
       '__open': @hasQuery()
+    })
 
     return <div className="messages__scroll">
              <div className={ chooserClasses }>

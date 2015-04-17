@@ -1,4 +1,4 @@
-cx         = require 'react/lib/cx'
+classnames = require 'classnames'
 UserAvatar = require '../../../../common/avatar/user'
 { PropTypes } = React
 
@@ -17,11 +17,11 @@ MessageListItem = React.createClass
     onResendMessage: PropTypes.func.isRequired
 
   render: ->
-    itemClasses = cx
-      'message': true
+    itemClasses = classnames('message', {
       'message--to': @isIncoming()
       'message--from': @isOutgoing()
       'message--error': @isErrorStatus()
+    })
 
     return <div className={ itemClasses }
                 onClick={ @handleClick }>

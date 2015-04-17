@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED = 'closed'
@@ -23,10 +23,9 @@ window.HeroProfile_DropdownMenu = React.createClass
 
   render: ->
     actionList = []
-    dropdownMenuClasses = cx
-      'action-dropdown': true
-      'position-top':    true
-      'state--open':     !@isClosedState()
+    dropdownMenuClasses = classnames('action-dropdown', 'position-top', {
+      'state--open': !@isClosedState()
+    })
 
     if @state.status isnt 'ignored'
       actionList.push <HeroProfile_DropdownMenuIgnoreItem userId={ this.props.userId }
