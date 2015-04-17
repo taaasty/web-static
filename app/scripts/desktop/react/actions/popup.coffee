@@ -5,10 +5,11 @@ PopupActions =
 
   showSettings: ->
     ReactApp.popupController.openWithBackground({
-      component: Settings
+      Component: Settings
       popupProps:
         title: i18n.t('settings_header')
         className: 'popup--settings popup--dark'
+        clue: 'settings'
     })
 
   showDesignSettings: ->
@@ -24,7 +25,7 @@ PopupActions =
           window.location.href = Routes.userDesignSettings user.slug
     else
       ReactApp.popupController.open
-        component: DesignSettingsContainer
+        Component: DesignSettingsContainer
         popupProps:
           title: i18n.t('design_settings_header')
           className: 'popup--design-settings'
@@ -34,7 +35,7 @@ PopupActions =
 
   showDesignSettingsPayment: ->
     ReactApp.popupController.openWithBackground
-      component: DesignPaymentContainer
+      Component: DesignPaymentContainer
       popupProps:
         title: i18n.t('design_payment_header')
         className: 'popup--payment'

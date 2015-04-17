@@ -1,4 +1,4 @@
-cx                         = require 'react/lib/cx'
+classnames                 = require 'classnames'
 ScreenController           = require '../../controllers/screen'
 NotifyController           = require '../../controllers/notify'
 SessionsViewActions        = require '../../actions/view/sessions'
@@ -22,9 +22,9 @@ AuthEmailRecovery = React.createClass
     loading: false
 
   render: ->
-    authClasses = cx
-      'auth': true
+    authClasses = classnames('auth', {
       'auth--fixed': @props.fixed
+    })  
     authBgStyles = backgroundImage: 'url("' + TastySettings.authBackgroundUrl + '")'
 
     return <div className={ authClasses }>

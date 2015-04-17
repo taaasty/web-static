@@ -1,5 +1,5 @@
 _                         = require 'lodash'
-cx                        = require 'react/lib/cx'
+classnames = require 'classnames'
 CurrentUserStore          = require '../../stores/current_user'
 MessagingStatusStore      = require '../../messaging/stores/messaging_status'
 ConnectStoreMixin         = require '../../../../shared/react/mixins/connectStore'
@@ -29,9 +29,9 @@ UserToolbar = React.createClass
     UserToolbarActions.initVisibility @state.open
 
   render: ->
-    navbarClasses = cx
-      'toolbar__navbar': true
+    navbarClasses = classnames('toolbar__navbar', {
       'toolbar__navbar--complex': @state.logged
+    })
 
     <div className="toolbar toolbar--main"
          onMouseEnter={ @handleMouseEnter }

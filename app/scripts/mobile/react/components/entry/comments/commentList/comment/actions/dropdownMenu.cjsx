@@ -1,3 +1,4 @@
+classnames = require 'classnames'
 DropdownMenuMixin                    = require '../../../../../../mixins/dropdownMenu'
 CommentActionsDropdownMenuLinkItem   = require './dropdownMenu/items/link'
 CommentActionsDropdownMenuEditItem   = require './dropdownMenu/items/edit'
@@ -17,9 +18,16 @@ CommentActionsDropdownMenu = React.createClass
     onCommentReport: PropTypes.func.isRequired
 
   render: ->
-    <div className={ @getPopupClasses('comment__dropdown-popup') }>
-      { @renderPopupList() }
-    </div>
+    popupClasses = classnames('comment__dropdown-popup', {
+      '__top': @state.top
+      '__right': @state.right
+    })
+
+    return (
+      <div className={popupClasses}>
+        {@renderPopupList()}
+      </div>
+    )
 
   renderPopupList: ->
     linkItem = <CommentActionsDropdownMenuLinkItem

@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 CLOSED = 'closed'
 OPENED = 'opened'
@@ -13,9 +13,9 @@ window.Search = React.createClass
     currentState: if @props.query then OPENED else CLOSED
 
   render: ->
-    searchClasses = cx
-      'search':        true
+    searchClasses = classnames('search', {
       'state--active': @isOpen()
+    })
 
     return <div className={ searchClasses }>
              <SearchField ref="searchField"

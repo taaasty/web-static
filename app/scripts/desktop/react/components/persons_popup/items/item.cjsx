@@ -2,7 +2,9 @@ window.PersonsPopup_PersonItem = React.createClass
 
   propTypes:
     user:     React.PropTypes.object.isRequired
-    children: React.PropTypes.component.isRequired
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element, React.PropTypes.array
+    ]).isRequired
 
   render: ->
     <li className="person">

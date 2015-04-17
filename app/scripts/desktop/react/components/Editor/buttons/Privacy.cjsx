@@ -1,4 +1,4 @@
-classSet = require 'react/lib/cx'
+classnames = require 'classnames'
 { PropTypes } = React
 
 EditorPrivacyButton = React.createClass
@@ -18,10 +18,10 @@ EditorPrivacyButton = React.createClass
     $button.tooltip 'destroy'
 
   render: ->
-    iconClasses = classSet
-      'icon': true
+    iconClasses = classnames('icon', {
       'icon--unlock': !@props.private
       'icon--lock': @props.private
+    })
 
     return <button title={ @getTitle() }
                    className="button button--outline-grey post-settings-button"

@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 import EditorVoteButton from '../buttons/Vote';
 import EditorPrivacyButton from '../buttons/Privacy';
 import EditorPreviewButton from '../buttons/Preview';
@@ -38,8 +38,7 @@ let EditorActions = React.createClass({
   },
 
   render() {
-    let actionsClasses = classSet({
-      'post-actions': true,
+    let actionsClasses = classnames('post-actions', {
       'state--loading': this.props.loading
     });
 

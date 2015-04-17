@@ -49,6 +49,8 @@ MessageList = React.createClass
     @props.items.length == 0
 
   saveScrollPosition: ->
+    return unless @refs.scroller?
+
     scroller = @refs.scroller.getDOMNode()
     @savedScrollPosition = scroller.scrollHeight - scroller.scrollTop
 

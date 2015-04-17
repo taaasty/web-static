@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 SettingsEmailEdit = React.createClass
 
@@ -15,10 +15,10 @@ SettingsEmailEdit = React.createClass
     hasInput: @props.email.length >= 5
 
   render: ->
-    buttonClasses = cx
-      'button':          true
+    buttonClasses = classnames('button', {
       'button--yellow':  @state.hasInput
       'button--outline': !@state.hasInput
+    })
 
     return <div className="settings__item settings__item--full">
              <div className="settings__right">

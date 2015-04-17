@@ -1,4 +1,4 @@
-cx                                  = require 'react/lib/cx'
+classnames = require 'classnames'
 ClickOutsideMixin                   = require '../../../../mixins/clickOutside'
 HeroTlogActions_DropdownMenu_Button = require './dropdownMenu/buttons/button'
 HeroTlogActions_DropdownMenu_Popup  = require './dropdownMenu/popup'
@@ -19,9 +19,9 @@ HeroTlogActions_DropdownMenu = React.createClass
     currentState: CLOSE_STATE
 
   render: ->
-    menuClasses = cx
-      'hero__user-actions': true
+    menuClasses = classnames('hero__user-actions', {
       '__open': @isOpenState()
+    })
 
     return <div className={ menuClasses }>
              <HeroTlogActions_DropdownMenu_Button onClick={ @toggleOpenState } />

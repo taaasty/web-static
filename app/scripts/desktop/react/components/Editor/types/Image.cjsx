@@ -1,5 +1,5 @@
 _ = require 'lodash'
-classSet = require 'react/lib/cx'
+classnames = require 'classnames'
 EditorStore = require '../../../stores/editor'
 EditorActionCreators = require '../../../actions/editor'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
@@ -31,11 +31,9 @@ EditorTypeImage = React.createClass
     uploadingProgress: null
 
   render: ->
-    editorClasses = classSet
-      'post': true
-      'post--image': true
-      'post--edit': true
+    editorClasses = classnames('post', 'post--image', 'post--edit', {
       'state--insert': @isInsertState()
+    })
 
     return <article className={ editorClasses }>
              <div className="post__content">

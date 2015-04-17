@@ -114,7 +114,7 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 
 require './react/components/common/adaptive_input'
 
-require './react/components/embed'
+global.EmbedComponent = require './react/components/embed'
 require './react/components/tlog_alert'
 
 require './react/components/avatars/avatar'

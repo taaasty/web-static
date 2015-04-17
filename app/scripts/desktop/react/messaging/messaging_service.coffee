@@ -129,24 +129,28 @@ class window.MessagingService
       .fail (errMsg) ->
         console.error 'Проблема при прочтении уведомления', errMsg
 
-  isMessagesPopupShown:      -> @messagesPopup?._lifeCycleState is 'MOUNTED'
-  isNotificationsPopupShown: -> @notificationsPopup?._lifeCycleState is 'MOUNTED'
+  isMessagesPopupShown:      -> @messagesPopup?.isMounted()
+  isNotificationsPopupShown: -> @notificationsPopup?.isMounted()
 
   closeMessagesPopup: ->
     if @isMessagesPopupShown()
       React.unmountComponentAtNode @messagesContainer
+    return
 
   closeNotificationsPopup: ->
     if @isNotificationsPopupShown()
       React.unmountComponentAtNode @notificationsContainer
+    return
 
   openMessagesPopup: ->
     unless @isMessagesPopupShown()
       @messagesPopup = React.render <MessagesPopup />, @messagesContainer
+    return
 
   openNotificationsPopup: ->
     unless @isNotificationsPopupShown()
       @notificationsPopup = React.render <NotificationsPopup />, @notificationsContainer
+    return
 
   toggleMessagesPopup: ->
     if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()

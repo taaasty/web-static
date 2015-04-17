@@ -1,4 +1,4 @@
-cx         = require 'react/lib/cx'
+classnames = require 'classnames'
 UserAvatar = require '../../common/avatar/user'
 Image      = require '../../common/image/image'
 { PropTypes } = React
@@ -11,9 +11,9 @@ NotificationListItem = React.createClass
     onRead: PropTypes.func.isRequired
 
   render: ->
-    itemClasses = cx
-      'notification': true
+    itemClasses = classnames('notification', {
       '__unread': @isUnread()
+    })  
 
     return <li className={ itemClasses }
                onClick={ @handleClick }>

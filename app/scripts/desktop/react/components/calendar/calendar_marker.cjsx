@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.CalendarMarker = React.createClass
   mixins: [ReactGrammarMixin]
@@ -18,10 +18,10 @@ window.CalendarMarker = React.createClass
     createdAt = date.format 'D MMMM'
     leftIndent = @getPercentValueOfDay date.dayOfYear()
 
-    markerClasses = cx
-      'calendar__period-marker': true
+    markerClasses = classnames('calendar__period-marker', {
       'calendar__period-marker--current': @props.selected
       'calendar__period-marker--highlighted': @props.highlighted
+    })
 
     return <li>
              <a href={ this.props.marker.entry_url }

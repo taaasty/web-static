@@ -1,4 +1,4 @@
-cx         = require 'react/lib/cx'
+classnames = require 'classnames'
 UserAvatar = require '../../../common/avatar/user'
 { PropTypes } = React
 
@@ -10,9 +10,9 @@ ConversationListItem = React.createClass
     onClick: PropTypes.func.isRequired
 
   render: ->
-    itemClasses = cx
-      'messages__dialog': true
+    itemClasses = classnames('messages__dialog', {
       '__read': !@hasUnreadMessages()
+    })
 
     return <div className={ itemClasses }
                 onClick={ @handleClick }>

@@ -1,4 +1,4 @@
-cx            = require 'react/lib/cx'
+classnames = require 'classnames'
 NumberHelpers = require '../../../../../../shared/helpers/number'
 { PropTypes } = React
 
@@ -12,9 +12,9 @@ HeroTlogStatsItem = React.createClass
     onClick: PropTypes.func
 
   render: ->
-    itemClasses = cx
-      'hero__stats-item': true
+    itemClasses = classnames('hero__stats-item', {
       'hero__stats-item-handler': @props.onClick
+    })
 
     return <div className={ itemClasses }
                 onClick={ @handleClick }>

@@ -1,5 +1,3 @@
-cx = require 'react/lib/cx'
-
 #TODO: Refactor. Every panel type should have separate component instead of generic one 
 ERROR_STATE   = 'error'
 LOADED_STATE  = 'loaded'

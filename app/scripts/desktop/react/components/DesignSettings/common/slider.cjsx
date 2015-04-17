@@ -1,5 +1,5 @@
 _  = require 'lodash'
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 DesignSettingsSliderPrevButton = require './slider/prevButton'
 DesignSettingsSliderNextButton = require './slider/nextButton'
 { PropTypes } = React
@@ -21,12 +21,11 @@ DesignSettingsSlider = React.createClass
     @setState(inited: true)
 
   render: ->
-    sliderClasses = cx
-      'slider': true
+    sliderClasses = classnames('slider', {
       '__inited': @state.inited
       '__leftlimit': @state.leftLimit
       '__rightlimit': @state.rightLimit
-
+    })
     sliderClasses = [sliderClasses, @props.className].join ' '
 
     return <div className={ sliderClasses }>

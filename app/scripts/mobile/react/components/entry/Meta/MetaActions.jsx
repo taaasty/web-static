@@ -1,4 +1,4 @@
-import classSet from 'react/lib/cx';
+import classnames from 'classnames';
 import ClickOutsideMixin from '../../../mixins/clickOutside';
 import EntryMetaActions_Button from './actions/buttons/button';
 import EntryMetaActions_DropdownMenu from './actions/dropdownMenu';
@@ -20,8 +20,7 @@ let EntryMetaActions = React.createClass({
   },
 
   render() {
-    let actionsClasses = classSet({
-      'meta-actions': true,
+    let actionsClasses = classnames('meta-actions', {
       '__open': this.isOpenState()
     });
 

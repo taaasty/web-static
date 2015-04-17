@@ -1,4 +1,4 @@
-cx               = require 'react/lib/cx'
+classnames = require 'classnames'
 EntryViewActions = require '../../../../../../actions/view/entry'
 { PropTypes } = React
 
@@ -13,10 +13,9 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass
     favorited: @props.favorited
 
   render: ->
-    iconClasses = cx
-      'icon': true
-      'icon--star': true
+    iconClasses = classnames('icon', 'icon--star', {
       'icon--star-fill': @isFavorited()
+    })  
 
     <li className="meta-actions__dropdown-popup-item">
       <a className="meta-actions__dropdown-popup-link"

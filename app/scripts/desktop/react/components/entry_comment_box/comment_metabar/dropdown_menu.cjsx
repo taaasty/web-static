@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED          = 'closed'
@@ -26,9 +26,9 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass
 
   render: ->
     actionList = []
-    menuClasses = cx
-      'comment__dropdown': true
+    menuClasses = classnames('comment__dropdown', {
       'state--open': @isOpen()
+    })
 
     actionList.push <EntryCommentBox_CommentMetaBarDropdownMenuLinkItem
                         commentId={ this.props.commentId }

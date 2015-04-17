@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 MOUSE_LEAVE_TIMEOUT = 300
 DROPDOWN_CLOSED          = 'closed'
@@ -34,10 +34,10 @@ window.EntryMetabarDropdownMenu = React.createClass
 
   render: ->
     actionList = []
-    menuClasses = cx
-      'meta-item__dropdown': true
-      'state--open'        : @isOpen() || @hasActivities()
-      'position-top'       : @isPositionTop()
+    menuClasses = classnames('meta-item__dropdown', {
+      'state--open': @isOpen() || @hasActivities()
+      'position-top': @isPositionTop()
+    })
 
     menuStyles = marginTop: @_getTopPosition()
 

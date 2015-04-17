@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.HeroProfileStatsItem = React.createClass
 
@@ -9,9 +9,9 @@ window.HeroProfileStatsItem = React.createClass
     onClick: React.PropTypes.func
 
   render: ->
-    statsItemClasses = cx
-      'hero__stats-item': true
+    statsItemClasses = classnames('hero__stats-item', {
       'hero__stats-item-handler': @props.onClick?
+    })
 
     if @props.href?
       link = <a href={ this.props.href }

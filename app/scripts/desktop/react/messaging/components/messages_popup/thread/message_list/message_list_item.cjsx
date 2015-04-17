@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 ERROR_STATE   = 'error'
 SENT_STATE    = 'sent'
@@ -14,10 +14,10 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
     onResendMessage: React.PropTypes.func.isRequired
 
   render: ->
-    messageClasses = cx
-      'message': true
+    messageClasses = classnames('message', {
       'message--from': @props.messageInfo.type is 'outgoing'
       'message--to':   @props.messageInfo.type is 'incoming'
+    })
 
     deliveryStatus   = @_getDeliveryStatus() if @isOutgoing()
     messageCreatedAt = @_getMessageCreatedAt() if @props.message.created_at
