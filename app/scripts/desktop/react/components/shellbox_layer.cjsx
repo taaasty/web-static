@@ -1,3 +1,5 @@
+cloneWithProps = require 'react/lib/cloneWithProps'
+
 window.ShellBox = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -30,15 +32,16 @@ window.ShellBox = React.createClass
     Mousetrap.unbind 'esc', @onClose
 
   render: ->
-    React.Children.map @props.children, (context) =>
-      context.props.disableShellbox = @disableShellbox
-      context.props.enableShellbox  = @enableShellbox
+    children = React.Children.map @props.children, (child) =>
+      cloneWithProps child, {
+        disableShellbox: @disableShellbox
+        enableShellbox: @enableShellbox
+      }
 
     return <div className="shellbox">
              <div className="shellbox__main">
-               <div className="shellbox__cell"
-                    onClick={ this.handleClick }>
-                 { this.props.children }
+               <div className="shellbox__cell" onClick={ this.handleClick }>
+                 {children}
                </div>
              </div>
            </div>

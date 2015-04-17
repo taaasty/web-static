@@ -1,4 +1,3 @@
-cloneWithProps = require 'react/lib/cloneWithProps'
 { PropTypes } = React
 
 UserToolbarListItem = React.createClass
@@ -34,10 +33,10 @@ UserToolbarListItem = React.createClass
 
   render: ->
     children = React.Children.map @props.children, (child) =>
-      cloneWithProps child, opened: @isOpen()
+      React.cloneElement child, opened: @isOpen()
 
     <li className="toolbar__nav-item"
-        onMouseEnter={ @handleMouseEnter }
+        onMouseEnter={this.open}
         onMouseLeave={ @handleMouseLeave }>
       <a ref="link"
          href={ @props.href }
@@ -62,9 +61,6 @@ UserToolbarListItem = React.createClass
 
   open:  -> @setState(open: true)
   close: -> @setState(open: false)
-
-  handleMouseEnter: ->
-    @open()
 
   handleMouseLeave: ->
     @close() unless @props.stayOpen

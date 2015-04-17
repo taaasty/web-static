@@ -4,7 +4,7 @@ UserToolbarListSubList = React.createClass
   displayName: 'UserToolbarListSubList'
 
   propTypes:
-    opened: PropTypes.bool.isRequired
+    opened: PropTypes.bool
 
   componentDidUpdate: (prevProps, prevState) ->
     subNav = @getDOMNode()
