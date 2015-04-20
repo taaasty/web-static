@@ -37,7 +37,11 @@ const gon = {
         'exponent': 2
       }
     }
-  }
+  },
+  languages: [
+    { text: 'Русский', value: 'ru' },
+    { text: 'English', value: 'en' }
+  ]
 };
 
 export default gon;
