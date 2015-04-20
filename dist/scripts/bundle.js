@@ -11473,7 +11473,7 @@ var Submitter = {
 module.exports = Submitter;
 
 },{"lodash":"lodash"}],20:[function(require,module,exports){
-var AppDispatcher, DesignActionCreators, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs, numeral;
+var AppDispatcher, DesignActionCreators, GuideController, LayoutStatesController, PopupActions, PopupController, ReactUjs, initLocales, initRoutes, numeral;
 
 window.i18n = require('i18next');
 
@@ -11493,6 +11493,60 @@ PopupController = require('./controllers/popuup');
 
 numeral = require('numeral');
 
+initLocales = function(locale, callback) {
+  numeral.language(locale);
+  moment.locale(locale);
+  return i18n.init({
+    lng: locale,
+    fallbackLng: 'ru',
+    resGetPath: Routes.locale()
+  }, callback);
+};
+
+initRoutes = function() {
+  var UserRouteTarget;
+  UserRouteTarget = {
+    profile: function() {
+      return TastyEvents.emit(TastyEvents.keys.command_hero_open());
+    },
+    settings: function() {
+      return PopupActions.showSettings();
+    },
+    design_settings: function() {
+      return PopupActions.showDesignSettings();
+    },
+    showRequestedById: function(req) {
+      return PopupActions.showFriends('vkontakte', Number(req.params.id));
+    },
+    showRequested: function() {
+      return PopupActions.showFriends('requested');
+    },
+    showVkontakte: function() {
+      return PopupActions.showFriends('vkontakte');
+    },
+    showFacebook: function() {
+      return PopupActions.showFriends('facebook');
+    }
+  };
+  Aviator.setRoutes({
+    '/:user': {
+      target: UserRouteTarget,
+      '/profile': 'profile',
+      '/settings': 'settings',
+      '/design_settings': 'design_settings',
+      '/friends': {
+        '/requested': {
+          '/': 'showRequested',
+          '/:id': 'showRequestedById'
+        },
+        '/vkontakte': 'showVkontakte',
+        '/facebook': 'showFacebook'
+      }
+    }
+  });
+  return Aviator.dispatch();
+};
+
 window.ReactApp = {
   start: function(arg) {
     var locale, user;
@@ -11505,56 +11559,10 @@ window.ReactApp = {
       });
       DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
     }
-    numeral.language(locale);
-    moment.locale(locale);
-    i18n.init({
-      lng: locale,
-      fallbackLng: 'ru',
-      resGetPath: TastySettings.localesPath + '/__lng__.json?v=2'
-    }, function() {
-      var UserRouteTarget;
+    initLocales(locale, function() {
       console.log('Locales loaded');
       ReactUjs.initialize();
-      UserRouteTarget = {
-        profile: function() {
-          return TastyEvents.emit(TastyEvents.keys.command_hero_open());
-        },
-        settings: function() {
-          return PopupActions.showSettings();
-        },
-        design_settings: function() {
-          return PopupActions.showDesignSettings();
-        },
-        showRequestedById: function(req) {
-          return PopupActions.showFriends('vkontakte', Number(req.params.id));
-        },
-        showRequested: function() {
-          return PopupActions.showFriends('requested');
-        },
-        showVkontakte: function() {
-          return PopupActions.showFriends('vkontakte');
-        },
-        showFacebook: function() {
-          return PopupActions.showFriends('facebook');
-        }
-      };
-      Aviator.setRoutes({
-        '/:user': {
-          target: UserRouteTarget,
-          '/profile': 'profile',
-          '/settings': 'settings',
-          '/design_settings': 'design_settings',
-          '/friends': {
-            '/requested': {
-              '/': 'showRequested',
-              '/:id': 'showRequestedById'
-            },
-            '/vkontakte': 'showVkontakte',
-            '/facebook': 'showFacebook'
-          }
-        }
-      });
-      return Aviator.dispatch();
+      return initRoutes();
     });
     this.layoutStatesController = new LayoutStatesController({
       dispatcher: AppDispatcher
@@ -33827,6 +33835,12 @@ module.exports = ApiRoutes;
 var Routes;
 
 Routes = {
+  locale: function() {
+    var localesPath, localesVersion, vParam;
+    localesPath = TastySettings.localesPath, localesVersion = TastySettings.localesVersion;
+    vParam = localesVersion != null ? '?v=' + localesVersion : '';
+    return localesPath + '/__lng__.json' + vParam;
+  },
   logout_path: function() {
     return '/logout';
   },
