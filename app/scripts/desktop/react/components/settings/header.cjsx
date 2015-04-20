@@ -34,7 +34,7 @@ SettingsHeader = React.createClass
     </div>
 
   _getHeroStyles: ->
-    backgroundUrl = @props.user.design.background_url
+    backgroundUrl = @props.user.design.backgroundImageUrl
 
     backgroundImage: "url(#{backgroundUrl})"
 
