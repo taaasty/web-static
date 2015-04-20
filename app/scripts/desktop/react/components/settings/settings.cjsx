@@ -2,6 +2,7 @@ SettingsHeader    = require './header'
 SettingsRadioItem = require './radio_item'
 SettingsEmail     = require './email/email'
 SettingsPassword  = require './password/password'
+SettingsLanguage = require './SettingsLanguage'
 SettingsAccounts  = require './accounts'
 SettingsMixin     = require './mixins/settings'
 LinkedStateMixin  = require 'react/lib/LinkedStateMixin'
@@ -68,6 +69,15 @@ window.Settings = React.createClass
 
           <SettingsPassword onUpdate={ @updatePassword } />
 
+          <SettingsLanguage
+              title={i18n.t('settings_language_title')}
+              value={@state.user.locale}
+              languages={[
+                {text: 'Русский', value: 'ru'},
+                {text: 'English', value: 'en'}
+              ]}
+              onChange={@updateLanguage} />
+
           <SettingsAccounts
               user={ @state.user }
               accounts={ [] } />
@@ -80,17 +90,3 @@ window.Settings = React.createClass
 
   _onStoreChange: ->
     @setState @getStateFromStore()
-
-# Переключалка языка (select2)
-# <div className="settings__item">
-#   <div className="settings__right">
-#     <select rel="select2">
-#       <option value="ru">Русский</option>
-#       <option value="en">English</option>
-#       <option value="ua">Українська</option>
-#     </select>
-#   </div>
-#   <div className="settings__left">
-#     <h3 className="settings__title">Язык</h3>
-#   </div>
-# </div>
