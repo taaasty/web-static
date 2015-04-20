@@ -59,6 +59,10 @@ CurrentUserViewActions =
     }
     @update options
 
+  updateLanguage: (language) ->
+    data = locale: language
+    @update {data}
+
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     CurrentUserResource.cancelEmailConfirmation
       beforeSend: beforeSend

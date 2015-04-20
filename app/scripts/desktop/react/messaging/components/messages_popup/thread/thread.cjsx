@@ -8,7 +8,7 @@ window.MessagesPopup_Thread = React.createClass
     conversation: ConversationsStore.getConversation @props.conversationId
 
   render: ->
-    backgroundUrl = @state.conversation.recipient.design.background_url
+    backgroundUrl = @state.conversation.recipient.design.backgroundImageUrl
     threadStyles  =
       backgroundImage: "url(#{ backgroundUrl })"
 
