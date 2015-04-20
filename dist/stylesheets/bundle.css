@@ -7930,7 +7930,7 @@ a.write-message-button {
   width: 450px;
   height: 94%;
   min-height: 300px;
-  max-height: 670px;
+  max-height: 613px;
   position: fixed;
   top: 3%;
   left: 20px;
@@ -8280,6 +8280,10 @@ a.write-message-button {
 .design-settings.__has-unsaved-fields .design-settings__groups {
   padding-bottom: 50px;
 }
+.design-settings.__has-unsaved-fields .scroller--design:after {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 .design-settings.__disabled .design-settings__cover:after {
   content: "";
   width: 100%;
@@ -8299,6 +8303,10 @@ a.write-message-button {
 }
 .design-settings.__disabled .form-upload__input {
   cursor: default;
+}
+.design-settings .scroller--design:after {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 .design-settings .form-radiogroup {
   width: 100%;
@@ -8868,7 +8876,6 @@ a.write-message-button {
   height: 20px;
   position: absolute;
   left: 0;
-  background: linear-gradient(to bottom, #333333 0%, rgba(51, 51, 51, 0) 100%);
   pointer-events: none;
   z-index: 5001;
   -webkit-backface-visibility: hidden;
@@ -8876,12 +8883,11 @@ a.write-message-button {
 }
 .scroller--design:before {
   top: 0;
+  background: linear-gradient(to bottom, #333333 0%, rgba(51, 51, 51, 0) 100%);
 }
 .scroller--design:after {
   bottom: 0;
-  -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-          transform: rotate(180deg);
+  background: linear-gradient(to bottom, rgba(51, 51, 51, 0) 0%, #333333 100%);
 }
 .scroller--design > .scroller__pane {
   height: 100%;
