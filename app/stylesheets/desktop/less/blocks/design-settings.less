@@ -25,6 +25,13 @@
     .design-settings__groups {
       padding-bottom: 50px;
     }
+
+    .scroller--design {
+      &:after {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
   }
 
   &.__disabled {
@@ -52,6 +59,13 @@
 
     .form-upload__input {
       cursor: default;
+    }
+  }
+
+  .scroller--design {
+    &:after {
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
     }
   }
 
