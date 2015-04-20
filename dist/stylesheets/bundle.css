@@ -983,6 +983,22 @@
   -webkit-animation-name: shake;
   animation-name: shake;
 }
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 /* -- Normalize -- */
 html,
 body,
@@ -11661,6 +11677,10 @@ a.types-posts__item:hover .types-posts__text {
   -webkit-transform: translate(0, -50%);
       -ms-transform: translate(0, -50%);
           transform: translate(0, -50%);
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
 }
 .social-share button {
   margin: 8px 0;
@@ -12254,14 +12274,6 @@ a.types-posts__item:hover .types-posts__text {
 .persons .follow-button.state--active {
   border-color: transparent;
   color: #ffffff !important;
-}
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 100;
-  }
 }
 @keyframes fadeIn {
   from {
