@@ -66,6 +66,16 @@ SettingsMixin =
         TastyNotifyController.notifySuccess i18n.t('settings_change_email_mail_sent'), 2000
       complete:   => @decrementActivities()
 
+  updateLanguage: (language) ->
+    @incrementActivities()
+
+    CurrentUserViewActions.updateLanguage(language)
+      .then (->
+        TastyNotifyController.notifySuccess i18n.t('settings_change_language_success'), 2000
+        setTimeout (-> window.location.reload()), 1000
+      )
+      .always @decrementActivities
+
   cancelEmailConfirmation: ->
     CurrentUserViewActions.cancelEmailConfirmation
       beforeSend: => @incrementActivities()
