@@ -80,6 +80,14 @@
 // Типы постов
 .post--image {
   &:first-child {
+    .post__meta {
+      & ~ .post__content {
+        .media-image {
+          margin-top: 0;
+        }
+      }
+    }
+
     .media-image {
       margin-top: -@indent-base;
     }
@@ -88,6 +96,14 @@
 
 .post--video {
   &:first-child {
+    .post__meta {
+      & ~ .post__content {
+        .media-video {
+          margin-top: 0;
+        }
+      }
+    }
+
     .media-video {
       margin-top: -@indent-base;
     }

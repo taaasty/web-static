@@ -3571,9 +3571,16 @@ a.toolbar__popup-link:active {
 .post__comments {
   margin-top: 16px;
 }
+.post--image:first-child .post__meta ~ .post__content .media-image,
+.post--image:first-child .post__meta ~ .post__content .media-object {
+  margin-top: 0;
+}
 .post--image:first-child .media-image,
 .post--image:first-child .media-object {
   margin-top: -12px;
+}
+.post--video:first-child .post__meta ~ .post__content .media-video {
+  margin-top: 0;
 }
 .post--video:first-child .media-video {
   margin-top: -12px;
