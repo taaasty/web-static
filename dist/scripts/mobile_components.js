@@ -11833,6 +11833,12 @@ module.exports = ApiRoutes;
 var Routes;
 
 Routes = {
+  locale: function() {
+    var localesPath, localesVersion, vParam;
+    localesPath = TastySettings.localesPath, localesVersion = TastySettings.localesVersion;
+    vParam = localesVersion != null ? '?v=' + localesVersion : '';
+    return localesPath + '/__lng__.json' + vParam;
+  },
   logout_path: function() {
     return '/logout';
   },

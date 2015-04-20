@@ -8,6 +8,40 @@ LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
 numeral = require 'numeral'
 
+initLocales = (locale, callback) ->
+  numeral.language(locale)
+  moment.locale(locale)
+  i18n.init({
+    lng: locale,
+    fallbackLng: 'ru',
+    resGetPath: Routes.locale()
+  }, callback)
+
+initRoutes = ->
+  UserRouteTarget =
+    profile:                 -> TastyEvents.emit TastyEvents.keys.command_hero_open()
+    settings:                -> PopupActions.showSettings()
+    design_settings:         -> PopupActions.showDesignSettings()
+    showRequestedById: (req) -> PopupActions.showFriends('vkontakte', Number(req.params.id))
+    showRequested:           -> PopupActions.showFriends('requested')
+    showVkontakte:           -> PopupActions.showFriends('vkontakte')
+    showFacebook:            -> PopupActions.showFriends('facebook')
+
+  Aviator.setRoutes
+    '/:user':
+      target: UserRouteTarget
+      '/profile': 'profile'
+      '/settings': 'settings'
+      '/design_settings': 'design_settings'
+      '/friends':
+        '/requested':
+          '/': 'showRequested'
+          '/:id': 'showRequestedById'
+        '/vkontakte': 'showVkontakte'
+        '/facebook': 'showFacebook'
+
+  Aviator.dispatch()
+
 window.ReactApp =
 
   start: ({user, locale}) ->
@@ -20,41 +54,11 @@ window.ReactApp =
 
       DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
-    numeral.language locale
-    moment.locale locale
-    i18n.init
-      lng: locale
-      fallbackLng: 'ru'
-      resGetPath: TastySettings.localesPath + '/__lng__.json?v=2'
-    , ->
+    initLocales(locale, ->
       console.log 'Locales loaded'
       ReactUjs.initialize()
-
-      # Aviator.pushStateEnabled = false
-
-      UserRouteTarget =
-        profile:                 -> TastyEvents.emit TastyEvents.keys.command_hero_open()
-        settings:                -> PopupActions.showSettings()
-        design_settings:         -> PopupActions.showDesignSettings()
-        showRequestedById: (req) -> PopupActions.showFriends('vkontakte', Number(req.params.id))
-        showRequested:           -> PopupActions.showFriends('requested')
-        showVkontakte:           -> PopupActions.showFriends('vkontakte')
-        showFacebook:            -> PopupActions.showFriends('facebook')
-
-      Aviator.setRoutes
-        '/:user':
-          target: UserRouteTarget
-          '/profile': 'profile'
-          '/settings': 'settings'
-          '/design_settings': 'design_settings'
-          '/friends':
-            '/requested':
-              '/': 'showRequested'
-              '/:id': 'showRequestedById'
-            '/vkontakte': 'showVkontakte'
-            '/facebook': 'showFacebook'
-
-      Aviator.dispatch()
+      initRoutes()
+    )
 
     @layoutStatesController = new LayoutStatesController(dispatcher: AppDispatcher)
     @popupController = new PopupController()
