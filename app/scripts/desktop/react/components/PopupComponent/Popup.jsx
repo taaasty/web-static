@@ -1,4 +1,3 @@
-import cloneWithProps from 'react/lib/cloneWithProps';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions'
 import PopupHeader from './PopupHeader';
 
@@ -30,7 +29,7 @@ let Popup = React.createClass({
   render() {
     let popupClasses = ['popup', this.props.className].join(' ');
     let children = React.Children.map(this.props.children, ((child) =>
-      cloneWithProps(child, {activitiesHandler: this.activitiesHandler})
+      React.cloneElement(child, {activitiesHandler: this.activitiesHandler})
     ));
 
     return (

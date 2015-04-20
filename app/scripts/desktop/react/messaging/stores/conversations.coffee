@@ -35,7 +35,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
   preloadConversationsImages: (conversations) ->
     for conversation in conversations
       image = new Image()
-      image.src = conversation.recipient.design.background_url
+      image.src = conversation.recipient.design.backgroundImageUrl
 
   getConversation: (conversationId) ->
     for conversation in _conversations
