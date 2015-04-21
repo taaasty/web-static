@@ -4,7 +4,8 @@ import MediaBoxActions from '../MediaBox/MediaBoxActions';
 let EditorEmbedLoaded = React.createClass({
   propTypes: {
     embedHtml: React.PropTypes.string.isRequired,
-    onDelete: React.PropTypes.func.isRequired
+    onDelete: React.PropTypes.func.isRequired,
+    loading: React.PropTypes.bool.isRequired
   },
 
   render() {
@@ -12,9 +13,15 @@ let EditorEmbedLoaded = React.createClass({
       <MediaBox entryType="video" state="loaded">
         <div className="media-box__display"
              dangerouslySetInnerHTML={{__html: this.props.embedHtml || ''}} />
-        <MediaBoxActions onDelete={this.props.onDelete} />
+        {this.renderActions()}
       </MediaBox>  
     );
+  },
+
+  renderActions() {
+    if (!this.props.loading) {
+      return <MediaBoxActions onDelete={this.props.onDelete} />;
+    }
   }
 });
 

@@ -11,7 +11,6 @@ let Editor = React.createClass({
     tlogType: React.PropTypes.string.isRequired,
     backUrl: React.PropTypes.string,
     loading: React.PropTypes.bool.isRequired,
-    creatingAttachments: React.PropTypes.bool.isRequired,
     canChangeType: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired,
@@ -25,13 +24,13 @@ let Editor = React.createClass({
             entryPrivacy={this.props.entryPrivacy}
             tlogType={this.props.tlogType}
             loading={this.props.loading}
-            creatingAttachments={this.props.creatingAttachments}
             onSaveEntry={this.props.onSaveEntry}
             onChangePrivacy={this.props.onChangePrivacy} />
         <EditorArea
             entry={this.props.entry}
             entryType={this.props.entryType}
-            entryPrivacy={this.props.entryPrivacy} />
+            entryPrivacy={this.props.entryPrivacy}
+            loading={this.props.loading} />
         {this.renderTypeSwitcher()}
       </EditorLayout>
     )

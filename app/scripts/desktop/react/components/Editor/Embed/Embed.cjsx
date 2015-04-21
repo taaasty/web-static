@@ -16,6 +16,7 @@ EditorEmbed = React.createClass
   propTypes:
     embedUrl: PropTypes.string
     embedHtml: PropTypes.string
+    loading: React.PropTypes.bool.isRequired
     onCreate: PropTypes.func.isRequired
     onChaneEmbedUrl: PropTypes.func.isRequired
     onDelete: PropTypes.func.isRequired
@@ -36,6 +37,7 @@ EditorEmbed = React.createClass
       when LOADED_STATE
         <EditorEmbedLoaded
             embedHtml={ @props.embedHtml }
+            loading={@props.loading}
             onDelete={ @handleDeleteEmbed } />
       when INSERT_STATE
         <EditorEmbedUrlInsert
