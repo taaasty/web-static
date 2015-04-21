@@ -14,6 +14,7 @@ EditorTypeVideo = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
+    loading: React.PropTypes.bool.isRequired
 
   render: ->
     <article className="post post--video post--edit">
@@ -21,6 +22,7 @@ EditorTypeVideo = React.createClass
         <EditorEmbed
             embedUrl={ @state.embedUrl }
             embedHtml={ @state.embedHtml }
+            loading={@props.loading}
             onCreate={ @handleCreateEmbed }
             onChaneEmbedUrl={ @handleChangeEmbedUrl }
             onDelete={ @handleDeleteEmbed }>

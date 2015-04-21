@@ -104,12 +104,12 @@ EditorStore.dispatchToken = AppDispatcher.register (payload) ->
 
       EditorStore.emitChange()
 
-    when Constants.editor.ENTRY_SAVE_SUCCESS
-      EntryKeeperService.remove _entry
-      EditorStore.emitChange()
-
     when Constants.editor.ENTRY_SAVE
       _loading = true
+      EditorStore.emitChange()
+
+    when Constants.editor.ENTRY_SAVE_SUCCESS
+      EntryKeeperService.remove _entry
       EditorStore.emitChange()
 
     when Constants.editor.ENTRY_SAVE_ERROR

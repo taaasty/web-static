@@ -24,6 +24,7 @@ EditorTypeImage = React.createClass
   propTypes:
     entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
+    loading: React.PropTypes.bool.isRequired
 
   getInitialState: ->
     currentState: @getInitialCurrentState()
@@ -69,6 +70,7 @@ EditorTypeImage = React.createClass
         <EditorTypeImageLoaded
             imageUrl={ @state.imageUrl }
             imageAttachments={ @state.imageAttachments }
+            loading={@props.loading}
             onDelete={ @handleDeleteLoadedImages } />
       when LOADING_URL_STATE
         <EditorTypeImageLoadingUrl imageUrl={@state.imageUrl} />
@@ -135,7 +137,11 @@ EditorTypeImage = React.createClass
 
     EditorActionCreators.createImageAttachments files
       .progress (soFar) =>
-        @setState uploadingProgress: soFar * 100
+        # Если пользователь локально удалил картинки, не показываем прогресс-бар
+        if @state.imageAttachments.length
+          @setState(uploadingProgress: soFar * 100)
+        else
+          @setState(uploadingProgress: 0)
       .always =>
         if @isMounted()
           if @state.imageAttachments.length then @activateLoadedState() else @activateWelcomeState()

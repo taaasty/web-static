@@ -9,7 +9,8 @@ let EditorArea = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired
+    entryPrivacy: React.PropTypes.string.isRequired,
+    loading: React.PropTypes.bool.isRequired
   },
 
   render() {
@@ -21,8 +22,8 @@ let EditorArea = React.createClass({
   },
 
   renderEditor() {
-    let { entry, entryType } = this.props;
-    let props = {entry, entryType};
+    let { entry, entryType, loading } = this.props;
+    let props = {entry, entryType, loading};
     let Component;
 
     switch(entryType) {

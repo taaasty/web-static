@@ -22,7 +22,7 @@
     "masonry-layout": "^3.2.3",
     "moment": "^2.10.2",
     "numeral": "^1.5.3",
-    "react": "^0.13.1",
+    "react": "^0.13.2",
     "react-color-picker": "git+https://git@github.com:BrandyMint/react-color-picker.git"
   },
   "devDependencies": {
