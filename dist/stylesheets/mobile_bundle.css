@@ -431,183 +431,183 @@
 }
 @font-face {
   font-family: 'Airborne pilot';
-  src: url('/assets/fonts//airborne/arbn2plt.eot');
-  src: url('/assets/fonts//airborne/arbn2plt.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//airborne/arbn2plt.woff') format('woff'), url('/assets/fonts//airborne/arbn2plt.ttf') format('truetype');
+  src: url('/assets/airborne/arbn2plt.eot');
+  src: url('/assets/airborne/arbn2plt.eot?#iefix') format('embedded-opentype'), url('/assets/airborne/arbn2plt.woff') format('woff'), url('/assets/airborne/arbn2plt.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Beer money';
-  src: url('/assets/fonts//beermoney/beer_money.eot');
-  src: url('/assets/fonts//beermoney/beer_money.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//beermoney/beer_money.woff') format('woff'), url('/assets/fonts//beermoney/beer_money.ttf') format('truetype');
+  src: url('/assets/beermoney/beer_money.eot');
+  src: url('/assets/beermoney/beer_money.eot?#iefix') format('embedded-opentype'), url('/assets/beermoney/beer_money.woff') format('woff'), url('/assets/beermoney/beer_money.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Veles';
-  src: url('/assets/fonts//veles/veles-regular.0.9.2.eot');
-  src: url('/assets/fonts//veles/veles-regular.0.9.2.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//veles/veles-regular.0.9.2.woff') format('woff'), url('/assets/fonts//veles/veles-regular.0.9.2.ttf.gz') format('truetype');
+  src: url('/assets/veles/veles-regular.0.9.2.eot');
+  src: url('/assets/veles/veles-regular.0.9.2.eot?#iefix') format('embedded-opentype'), url('/assets/veles/veles-regular.0.9.2.woff') format('woff'), url('/assets/veles/veles-regular.0.9.2.ttf.gz') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'ZionTrain';
-  src: url('/assets/fonts//zion/andrijtype_-_ziontrainprostencil-demibold.eot');
-  src: url('/assets/fonts//zion/andrijtype_-_ziontrainprostencil-demibold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//zion/andrijtype_-_ziontrainprostencil-demibold.woff') format('woff'), url('/assets/fonts//zion/andrijtype_-_ziontrainprostencil-demibold.ttf') format('truetype');
+  src: url('/assets/zion/andrijtype_-_ziontrainprostencil-demibold.eot');
+  src: url('/assets/zion/andrijtype_-_ziontrainprostencil-demibold.eot?#iefix') format('embedded-opentype'), url('/assets/zion/andrijtype_-_ziontrainprostencil-demibold.woff') format('woff'), url('/assets/zion/andrijtype_-_ziontrainprostencil-demibold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Nautilus Pompilius';
-  src: url('/assets/fonts//nautilus/nautilus.eot');
-  src: url('/assets/fonts//nautilus/nautilus.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//nautilus/nautilus.woff') format('woff'), url('/assets/fonts//nautilus/nautilus.ttf') format('truetype');
+  src: url('/assets/nautilus/nautilus.eot');
+  src: url('/assets/nautilus/nautilus.eot?#iefix') format('embedded-opentype'), url('/assets/nautilus/nautilus.woff') format('woff'), url('/assets/nautilus/nautilus.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'OSP-DIN';
-  src: url('/assets/fonts//ospdin/osp-din.eot');
-  src: url('/assets/fonts//ospdin/osp-din.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//ospdin/osp-din.woff') format('woff'), url('/assets/fonts//ospdin/osp-din.ttf') format('truetype');
+  src: url('/assets/ospdin/osp-din.eot');
+  src: url('/assets/ospdin/osp-din.eot?#iefix') format('embedded-opentype'), url('/assets/ospdin/osp-din.woff') format('woff'), url('/assets/ospdin/osp-din.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Pecita';
-  src: url('/assets/fonts//pecita/pecita.eot');
-  src: url('/assets/fonts//pecita/pecita.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//pecita/pecita.woff') format('woff'), url('/assets/fonts//pecita/pecita.ttf') format('truetype');
+  src: url('/assets/pecita/pecita.eot');
+  src: url('/assets/pecita/pecita.eot?#iefix') format('embedded-opentype'), url('/assets/pecita/pecita.woff') format('woff'), url('/assets/pecita/pecita.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'PoetsenOne';
-  src: url('/assets/fonts//poetsen/poetsenone-regular.eot');
-  src: url('/assets/fonts//poetsen/poetsenone-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//poetsen/poetsenone-regular.woff') format('woff'), url('/assets/fonts//poetsen/poetsenone-regular.ttf') format('truetype');
+  src: url('/assets/poetsen/poetsenone-regular.eot');
+  src: url('/assets/poetsen/poetsenone-regular.eot?#iefix') format('embedded-opentype'), url('/assets/poetsen/poetsenone-regular.woff') format('woff'), url('/assets/poetsen/poetsenone-regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Yes siree bob';
-  src: url('/assets/fonts//yessireebob/yes_siree_bob.eot');
-  src: url('/assets/fonts//yessireebob/yes_siree_bob.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//yessireebob/yes_siree_bob.woff') format('woff'), url('/assets/fonts//yessireebob/yes_siree_bob.ttf') format('truetype');
+  src: url('/assets/yessireebob/yes_siree_bob.eot');
+  src: url('/assets/yessireebob/yes_siree_bob.eot?#iefix') format('embedded-opentype'), url('/assets/yessireebob/yes_siree_bob.woff') format('woff'), url('/assets/yessireebob/yes_siree_bob.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'PT Mono';
-  src: url('/assets/fonts//ptmono/ptm55f_w.eot');
-  src: url('/assets/fonts//ptmono/ptm55f_w.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//ptmono/ptm55f_w.woff') format('woff'), url('/assets/fonts//ptmono/ptm55f_w.ttf') format('truetype');
+  src: url('/assets/ptmono/ptm55f_w.eot');
+  src: url('/assets/ptmono/ptm55f_w.eot?#iefix') format('embedded-opentype'), url('/assets/ptmono/ptm55f_w.woff') format('woff'), url('/assets/ptmono/ptm55f_w.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'PT Mono';
-  src: url('/assets/fonts//ptmono/ptm75f_w.eot');
-  src: url('/assets/fonts//ptmono/ptm75f_w.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//ptmono/ptm75f_w.woff') format('woff'), url('/assets/fonts//ptmono/ptm75f_w.ttf') format('truetype');
+  src: url('/assets/ptmono/ptm75f_w.eot');
+  src: url('/assets/ptmono/ptm75f_w.eot?#iefix') format('embedded-opentype'), url('/assets/ptmono/ptm75f_w.woff') format('woff'), url('/assets/ptmono/ptm75f_w.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'DejaVu Serif Condensed';
-  src: url('/assets/fonts//djserif/dejavuserifcondensed.eot');
-  src: local('DejaVu Serif Condensed'), local('DejaVuSerifCondensed'), url('/assets/fonts//djserif/dejavuserifcondensed.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//djserif/dejavuserifcondensed.woff') format('woff'), url('/assets/fonts//djserif/dejavuserifcondensed.ttf') format('truetype');
+  src: url('/assets/djserif/dejavuserifcondensed.eot');
+  src: local('DejaVu Serif Condensed'), local('DejaVuSerifCondensed'), url('/assets/djserif/dejavuserifcondensed.eot?#iefix') format('embedded-opentype'), url('/assets/djserif/dejavuserifcondensed.woff') format('woff'), url('/assets/djserif/dejavuserifcondensed.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'DejaVu Serif Condensed';
-  src: url('/assets/fonts//djserif/dejavuserifcondensed-italic.eot');
-  src: local('DejaVu Serif Condensed Italic'), local('DejaVuSerifCondensed-Italic'), url('/assets/fonts//djserif/dejavuserifcondensed-italic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//djserif/dejavuserifcondensed-italic.woff') format('woff'), url('/assets/fonts//djserif/dejavuserifcondensed-italic.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'DejaVu Serif Condensed';
-  src: url('/assets/fonts//djserif/dejavuserifcondensed-bold.eot');
-  src: local('DejaVu Serif Condensed Bold'), local('DejaVuSerifCondensed-Bold'), url('/assets/fonts//djserif/dejavuserifcondensed-bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//djserif/dejavuserifcondensed-bold.woff') format('woff'), url('/assets/fonts//djserif/dejavuserifcondensed-bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'DejaVu Serif Condensed';
-  src: url('/assets/fonts//djserif/dejavuserifcondensed-bolditalic.eot');
-  src: local('DejaVu Serif Condensed Bold Italic'), local('DejaVuSerifCondensed-BoldItalic'), url('/assets/fonts//djserif/dejavuserifcondensed-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//djserif/dejavuserifcondensed-bolditalic.woff') format('woff'), url('/assets/fonts//djserif/dejavuserifcondensed-bolditalic.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Heuristica';
-  src: url('/assets/fonts//heuristica/heuristica-regular.eot');
-  src: local('Heuristica Regular'), local('Heuristica-Regular'), url('/assets/fonts//heuristica/heuristica-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//heuristica/heuristica-regular.woff') format('woff'), url('/assets/fonts//heuristica/heuristica-regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Heuristica';
-  src: url('/assets/fonts//heuristica/heuristica-italic.eot');
-  src: local('Heuristica Italic'), local('Heuristica-Italic'), url('/assets/fonts//heuristica/heuristica-italic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//heuristica/heuristica-italic.woff') format('woff'), url('/assets/fonts//heuristica/heuristica-italic.ttf') format('truetype');
+  src: url('/assets/djserif/dejavuserifcondensed-italic.eot');
+  src: local('DejaVu Serif Condensed Italic'), local('DejaVuSerifCondensed-Italic'), url('/assets/djserif/dejavuserifcondensed-italic.eot?#iefix') format('embedded-opentype'), url('/assets/djserif/dejavuserifcondensed-italic.woff') format('woff'), url('/assets/djserif/dejavuserifcondensed-italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
+  font-family: 'DejaVu Serif Condensed';
+  src: url('/assets/djserif/dejavuserifcondensed-bold.eot');
+  src: local('DejaVu Serif Condensed Bold'), local('DejaVuSerifCondensed-Bold'), url('/assets/djserif/dejavuserifcondensed-bold.eot?#iefix') format('embedded-opentype'), url('/assets/djserif/dejavuserifcondensed-bold.woff') format('woff'), url('/assets/djserif/dejavuserifcondensed-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'DejaVu Serif Condensed';
+  src: url('/assets/djserif/dejavuserifcondensed-bolditalic.eot');
+  src: local('DejaVu Serif Condensed Bold Italic'), local('DejaVuSerifCondensed-BoldItalic'), url('/assets/djserif/dejavuserifcondensed-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/djserif/dejavuserifcondensed-bolditalic.woff') format('woff'), url('/assets/djserif/dejavuserifcondensed-bolditalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
   font-family: 'Heuristica';
-  src: url('/assets/fonts//heuristica/heuristica-bold.eot');
-  src: local('Heuristica Bold'), local('Heuristica-Bold'), url('/assets/fonts//heuristica/heuristica-bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//heuristica/heuristica-bold.woff') format('woff'), url('/assets/fonts//heuristica/heuristica-bold.ttf') format('truetype');
+  src: url('/assets/heuristica/heuristica-regular.eot');
+  src: local('Heuristica Regular'), local('Heuristica-Regular'), url('/assets/heuristica/heuristica-regular.eot?#iefix') format('embedded-opentype'), url('/assets/heuristica/heuristica-regular.woff') format('woff'), url('/assets/heuristica/heuristica-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Heuristica';
+  src: url('/assets/heuristica/heuristica-italic.eot');
+  src: local('Heuristica Italic'), local('Heuristica-Italic'), url('/assets/heuristica/heuristica-italic.eot?#iefix') format('embedded-opentype'), url('/assets/heuristica/heuristica-italic.woff') format('woff'), url('/assets/heuristica/heuristica-italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Heuristica';
+  src: url('/assets/heuristica/heuristica-bold.eot');
+  src: local('Heuristica Bold'), local('Heuristica-Bold'), url('/assets/heuristica/heuristica-bold.eot?#iefix') format('embedded-opentype'), url('/assets/heuristica/heuristica-bold.woff') format('woff'), url('/assets/heuristica/heuristica-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Heuristica';
-  src: url('/assets/fonts//heuristica/heuristica-bolditalic.eot');
-  src: local('Heuristica Bold Italic'), local('Heuristica-BoldItalic'), url('/assets/fonts//heuristica/heuristica-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//heuristica/heuristica-bolditalic.woff') format('woff'), url('/assets/fonts//heuristica/heuristica-bolditalic.ttf') format('truetype');
+  src: url('/assets/heuristica/heuristica-bolditalic.eot');
+  src: local('Heuristica Bold Italic'), local('Heuristica-BoldItalic'), url('/assets/heuristica/heuristica-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/heuristica/heuristica-bolditalic.woff') format('woff'), url('/assets/heuristica/heuristica-bolditalic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
 }
 @font-face {
   font-family: 'Permian Slab Serif';
-  src: url('/assets/fonts//permian/permianslabseriftypeface.eot');
-  src: url('/assets/fonts//permian/permianslabseriftypeface.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//permian/permianslabseriftypeface.woff') format('woff'), url('/assets/fonts//permian/permianslabseriftypeface.ttf') format('truetype');
+  src: url('/assets/permian/permianslabseriftypeface.eot');
+  src: url('/assets/permian/permianslabseriftypeface.eot?#iefix') format('embedded-opentype'), url('/assets/permian/permianslabseriftypeface.woff') format('woff'), url('/assets/permian/permianslabseriftypeface.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Permian Slab Serif';
-  src: url('/assets/fonts//permian/permianslabseriftypeface-italic.eot');
-  src: url('/assets/fonts//permian/permianslabseriftypeface-italic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//permian/permianslabseriftypeface-italic.woff') format('woff'), url('/assets/fonts//permian/permianslabseriftypeface-italic.ttf') format('truetype');
+  src: url('/assets/permian/permianslabseriftypeface-italic.eot');
+  src: url('/assets/permian/permianslabseriftypeface-italic.eot?#iefix') format('embedded-opentype'), url('/assets/permian/permianslabseriftypeface-italic.woff') format('woff'), url('/assets/permian/permianslabseriftypeface-italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: 'Permian Slab Serif';
-  src: url('/assets/fonts//permian/permianslabseriftypeface-bold.eot');
-  src: url('/assets/fonts//permian/permianslabseriftypeface-bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//permian/permianslabseriftypeface-bold.woff') format('woff'), url('/assets/fonts//permian/permianslabseriftypeface-bold.ttf') format('truetype');
+  src: url('/assets/permian/permianslabseriftypeface-bold.eot');
+  src: url('/assets/permian/permianslabseriftypeface-bold.eot?#iefix') format('embedded-opentype'), url('/assets/permian/permianslabseriftypeface-bold.woff') format('woff'), url('/assets/permian/permianslabseriftypeface-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Clear Sans';
-  src: url('/assets/fonts//clearsans/clearsans-regular.eot');
-  src: local('Clear Sans Regular'), local('ClearSans'), url('/assets/fonts//clearsans/clearsans-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//clearsans/clearsans-regular.woff') format('woff'), url('/assets/fonts//clearsans/clearsans-regular.ttf') format('truetype');
+  src: url('/assets/clearsans/clearsans-regular.eot');
+  src: local('Clear Sans Regular'), local('ClearSans'), url('/assets/clearsans/clearsans-regular.eot?#iefix') format('embedded-opentype'), url('/assets/clearsans/clearsans-regular.woff') format('woff'), url('/assets/clearsans/clearsans-regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Clear Sans';
-  src: url('/assets/fonts//clearsans/clearsans-italic.eot');
-  src: local('Clear Sans Italic'), local('ClearSans-Italic'), url('/assets/fonts//clearsans/clearsans-italic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//clearsans/clearsans-italic.woff') format('woff'), url('/assets/fonts//clearsans/clearsans-italic.ttf') format('truetype');
+  src: url('/assets/clearsans/clearsans-italic.eot');
+  src: local('Clear Sans Italic'), local('ClearSans-Italic'), url('/assets/clearsans/clearsans-italic.eot?#iefix') format('embedded-opentype'), url('/assets/clearsans/clearsans-italic.woff') format('woff'), url('/assets/clearsans/clearsans-italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: 'Clear Sans';
-  src: url('/assets/fonts//clearsans/clearsans-bold.eot');
-  src: local('Clear Sans Bold'), local('ClearSans-Bold'), url('/assets/fonts//clearsans/clearsans-bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//clearsans/clearsans-bold.woff') format('woff'), url('/assets/fonts//clearsans/clearsans-bold.ttf') format('truetype');
+  src: url('/assets/clearsans/clearsans-bold.eot');
+  src: local('Clear Sans Bold'), local('ClearSans-Bold'), url('/assets/clearsans/clearsans-bold.eot?#iefix') format('embedded-opentype'), url('/assets/clearsans/clearsans-bold.woff') format('woff'), url('/assets/clearsans/clearsans-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Clear Sans';
-  src: url('/assets/fonts//clearsans/clearsans-bolditalic.eot');
-  src: local('Clear Sans Bold Italic'), local('ClearSans-BoldItalic'), url('/assets/fonts//clearsans/clearsans-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts//clearsans/clearsans-bolditalic.woff') format('woff'), url('/assets/fonts//clearsans/clearsans-bolditalic.ttf') format('truetype');
+  src: url('/assets/clearsans/clearsans-bolditalic.eot');
+  src: local('Clear Sans Bold Italic'), local('ClearSans-BoldItalic'), url('/assets/clearsans/clearsans-bolditalic.eot?#iefix') format('embedded-opentype'), url('/assets/clearsans/clearsans-bolditalic.woff') format('woff'), url('/assets/clearsans/clearsans-bolditalic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
 }
