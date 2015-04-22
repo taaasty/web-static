@@ -1,8 +1,7 @@
 CurrentUserStore = require '../stores/current_user'
-Searchbox = require '../components/searchbox/index'
+Searchbox = require '../components/Searchbox/Searchbox'
 
 PopupActions =
-
   showSettings: ->
     ReactApp.popupController.openWithBackground({
       Component: Settings
@@ -58,10 +57,24 @@ PopupActions =
       document.body.appendChild container
 
     React.render (
-      <PersonsPopup
-          panelName={ panelName }
-          userId={ userId } />
+      <PersonsPopup panelName={ panelName } userId={ userId } />
     ), container
+
+  toggleFriends: ->
+    container = document.querySelector '[popup-persons-container]'
+
+    if container?
+      ReactApp.popupController.close 'popup-persons-container'
+    else
+      @showFriends()
+
+  toggleDesignSettings: ->
+    container = document.querySelector '[design-settings-container]'
+
+    if container?
+      ReactApp.popupController.close 'design-settings-container'
+    else
+      @showDesignSettings()
 
   toggleMessages: ->
     messagingService.toggleMessagesPopup()

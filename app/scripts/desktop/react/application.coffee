@@ -60,7 +60,7 @@ window.ReactApp =
       initRoutes()
     )
 
-    @layoutStatesController = new LayoutStatesController(dispatcher: AppDispatcher)
+    @layoutStatesController = new LayoutStatesController()
     @popupController = new PopupController()
 
     @shellbox = new ReactShellBox()
