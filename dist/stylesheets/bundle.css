@@ -3835,7 +3835,7 @@ a.toolbar__popup-link:active {
 }
 .toolbar__nav-item.__opened,
 .toolbar__subnav-item.__opened {
-  background-color: #373737;
+  background-color: #464646;
 }
 .toolbar__nav-link,
 .toolbar__subnav-link {
