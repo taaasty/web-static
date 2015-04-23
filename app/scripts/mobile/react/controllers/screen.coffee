@@ -23,14 +23,14 @@ restorePageName = ->
 
 ScreenController =
 
-  show: (reactClass, props, pageName) ->
+  show: (Component, props, pageName) ->
     props.fixed  = true
     container    = getContainer()
     appContainer = document.getElementById 'App'
     appContainer.style.display = 'none'
 
     switchPageName pageName
-    React.render <reactClass {...props} />, container
+    React.render <Component {...props} />, container
 
   close: ->
     container    = getContainer()

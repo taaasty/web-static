@@ -3792,6 +3792,7 @@ a.toolbar__popup-link:active {
   position: relative;
   text-align: center;
   white-space: nowrap;
+  transition: background-color 0.3s ease-out;
 }
 .toolbar__nav-item .avatar,
 .toolbar__subnav-item .avatar {
@@ -3831,6 +3832,10 @@ a.toolbar__popup-link:active {
   -moz-opacity: 0.95;
   opacity: 0.95;
   filter: alpha(opacity=95);
+}
+.toolbar__nav-item.__opened,
+.toolbar__subnav-item.__opened {
+  background-color: #373737;
 }
 .toolbar__nav-link,
 .toolbar__subnav-link {
@@ -3917,6 +3922,13 @@ a.toolbar__subnav-link:active {
           user-select: none;
   border-radius: 56px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.toolbar--main .toolbar__hover-line {
+  position: absolute;
+  right: -1px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
 }
 .toolbar--main .toolbar__navbar--complex {
   padding-bottom: 150px;
