@@ -49,9 +49,8 @@ let UserToolbarListItem = React.createClass({
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}>
         <a ref="link"
-           href={this.props.url}
            className="toolbar__nav-link"
-           onClick={this.handleClick}>
+           onTouchTap={this.handleClick}>
           <i className={`icon ${this.props.icon}`} />
           <span className="toolbar__nav-text">
             {this.props.title}
@@ -85,10 +84,16 @@ let UserToolbarListItem = React.createClass({
     }
   },
 
-  handleClick(e) {
+  handleClick() {
+    // When we tap on iOS, at first time triggers hover event, and only after
+    // second tap we finally make the click. In this case we listen tap event,
+    // and force execution underlying event at the moment
     if (typeof this.props.onClick === 'function') {
-      e.preventDefault();
       this.props.onClick();
+    } else if (!this.props.children) {
+      // Unless list item has children, make redirect, otherwise allow trigger hover
+      // event, which open subnav list
+      window.location = this.props.url;
     }
   }
 });

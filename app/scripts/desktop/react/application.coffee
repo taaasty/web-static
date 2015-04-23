@@ -7,6 +7,7 @@ GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
 numeral = require 'numeral'
+injectTapEventPlugin = require 'react-tap-event-plugin'
 
 initLocales = (locale, callback) ->
   numeral.language(locale)
@@ -59,6 +60,12 @@ window.ReactApp =
       ReactUjs.initialize()
       initRoutes()
     )
+
+    # Needed for onTouchTap
+    # Can go away when react 1.0 release
+    # Check this repo:
+    # https://github.com/zilverline/react-tap-event-plugin
+    injectTapEventPlugin()
 
     @layoutStatesController = new LayoutStatesController()
     @popupController = new PopupController()

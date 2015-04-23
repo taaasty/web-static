@@ -3,15 +3,17 @@ let UserToolbarSubList = React.createClass({
     opened: React.PropTypes.bool
   },
 
+  shouldComponentUpdate(nextProps) {
+    return this.opened !== nextProps.opened ? true : false;
+  },
+
   componentDidUpdate(prevProps) {
     let $subNav = $(this.getDOMNode());
 
-    if (prevProps.opened !== this.props.opened) {
-      if (this.props.opened) {
-        $subNav.stop().slideDown(300);
-      } else {
-        $subNav.stop().slideUp(300);
-      }
+    if (this.props.opened) {
+      $subNav.stop().slideDown(300);
+    } else {
+      $subNav.stop().slideUp(300);
     }
   },
 

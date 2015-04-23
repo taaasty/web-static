@@ -23,7 +23,8 @@
     "moment": "^2.10.2",
     "numeral": "^1.5.3",
     "react": "^0.13.2",
-    "react-color-picker": "git+https://git@github.com:BrandyMint/react-color-picker.git"
+    "react-color-picker": "git+https://git@github.com:BrandyMint/react-color-picker.git",
+    "react-tap-event-plugin": "^0.1.6"
   },
   "devDependencies": {
     "URIjs": "^1.14.2",
