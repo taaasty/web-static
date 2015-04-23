@@ -15,6 +15,7 @@
     "jquery": "jQuery"
   },
   "dependencies": {
+    "bowser": "^0.7.2",
     "classnames": "^1.2.0",
     "flux": "^2.0.1",
     "imagesloaded": "^3.1.8",

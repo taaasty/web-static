@@ -4,7 +4,6 @@ global.MouseTrap         = require 'mousetrap'
 global.React             = require 'react'
 global.Dispatcher        = require('flux').Dispatcher
 global.EventEmitter      = require 'eventEmitter'
-global.bowser            = require 'bowser'
 global.moment            = require 'moment'
 global.Pusher            = require 'pusher'
 global.Modernizr         = require 'Modernizr'

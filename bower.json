@@ -5,7 +5,6 @@
     "baron": "~0.7.9",
     "blueimp-file-upload": "~9.8.0",
     "bootstrap": "~3.2.0",
-    "bowser": "~0.7.2",
     "eventEmitter": "~4.2.9",
     "jquery-autosize": "~1.18.13",
     "jquery-waypoints": "~2.0.5",

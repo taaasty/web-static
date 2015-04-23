@@ -351,5 +351,7 @@
   "stats_tags_count_plural_2": "тега",
   "stats_tags_count_plural_5": "тегов",
   "signup_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
-  "signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь.."
+  "signin_success": "Добро пожаловать, __userSlug__! Подождите, я перезагружусь..",
+  "browser_support_update_to": "Мы не поддерживаем ваш браузер (__browserName__ __browserVersion__), обновите его до",
+  "browser_support_last_version": "последней версии"
 }

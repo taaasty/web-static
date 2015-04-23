@@ -33,7 +33,7 @@ var dependencies = {
   'react-color-picker': './node_modules/react-color-picker/dist/react-color-picker',
   'baron': './app/bower_components/baron/baron',
   'mousetrap': './app/bower_components/mousetrap/mousetrap',
-  'bowser': './app/bower_components/bowser/bowser',
+  'bowser': './node_modules/bowser',
   'eventEmitter': './app/bower_components/eventEmitter/EventEmitter',
   'pusher': './app/bower_components/pusher/dist/pusher',
   'i18next': './app/bower_components/i18next/i18next',

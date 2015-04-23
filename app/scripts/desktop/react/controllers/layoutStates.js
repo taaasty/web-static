@@ -2,7 +2,8 @@ class LayoutStatesController {
   constructor(layoutEl = document.body) {
     this.layoutEl = layoutEl;
     this.states = {
-      userToolbar: 'main-toolbar-open'
+      userToolbar: 'main-toolbar-open',
+      browserIncompatable: 'browserbar-enabled'
     };
   }
 
