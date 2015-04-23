@@ -3803,15 +3803,15 @@ a.toolbar__popup-link:active {
 }
 .toolbar__nav-item .icon,
 .toolbar__subnav-item .icon {
-  font-size: 30px;
+  font-size: 25px;
 }
 .toolbar__nav-item .icon--plus,
 .toolbar__subnav-item .icon--plus {
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   background: #2ac67e;
-  font-size: 24px;
-  line-height: 38px;
+  font-size: 20px;
+  line-height: 30px;
   color: #fff !important;
   border-radius: 50%;
 }
@@ -3889,7 +3889,7 @@ a.toolbar__subnav-link:active {
   opacity: 0;
 }
 .toolbar--main {
-  width: 70px;
+  width: 62px;
   height: auto;
   padding: 0;
   top: 0;

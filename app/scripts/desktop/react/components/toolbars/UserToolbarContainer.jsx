@@ -135,7 +135,6 @@ let UserToolbarContainer = React.createClass({
 UserToolbarContainer = connectToStores(UserToolbarContainer, [CurrentUserStore, MessagingStatusStore], (props) => ({
   user: CurrentUserStore.getUser(),
   userLogged: CurrentUserStore.isLogged(),
-  // userLogged: false,
   unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
   unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
 }));

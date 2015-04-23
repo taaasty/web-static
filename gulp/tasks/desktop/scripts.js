@@ -50,7 +50,8 @@ var dependencies = {
   'nanobar': './app/bower_components/nanobar/index',
   'URIjs': './node_modules/URIjs/src/URI',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
-  'numeral': './node_modules/numeral'
+  'numeral': './node_modules/numeral',
+  'react-tap-event-plugin': './node_modules/react-tap-event-plugin'
 }
 
 gulp.task('[D][L] Scripts', function(cb) {

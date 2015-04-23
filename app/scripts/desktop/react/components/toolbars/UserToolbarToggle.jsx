@@ -7,7 +7,7 @@ let UserToolbarToggle = React.createClass({
 
   render() {
     return (
-      <div className="toolbar__toggle" onClick={this.handleClick}>
+      <div className="toolbar__toggle" onTouchTap={this.handleClick}>
         {this.renderIndicators()}
         <i className="icon icon--menu" />
       </div>
