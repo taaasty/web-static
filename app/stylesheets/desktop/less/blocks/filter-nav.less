@@ -8,9 +8,11 @@
   font-size: 13px;
   line-height: 16px;
   font-family: @font-family-base;
+  text-align: center;
 }
 
 .filter-nav__item {
+  position: relative;
   display: inline-block;
   vertical-align: middle;
   color: inherit;
@@ -35,5 +37,23 @@
 
   &:hover {
     color: @filter-nav-link-active-color !important;
+  }
+
+  span& {
+    cursor: default;
+  }
+
+  .icon {
+    vertical-align: middle;
+  }
+}
+
+.filter-nav__dropdown {
+  .make-popover();
+
+  &.state--open {
+    visibility: visible;
+    opacity: 1;
+    .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
   }
 }
