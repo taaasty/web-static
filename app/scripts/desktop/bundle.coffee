@@ -44,7 +44,7 @@ require './react/dispatchers/current_user'
 require './react/dispatchers/relationships'
 global.CurrentUserStore = require './react/stores/current_user'
 DesignStore = require './react/stores/design'
-require './react/stores/editor'
+require './react/stores/EditorStore'
 require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
