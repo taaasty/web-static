@@ -24,6 +24,7 @@ var dependencies = {
   'jquery.waypoints': './app/bower_components/jquery-waypoints/waypoints',
   'jquery.autosize.input': './app/scripts/desktop/plugins/jquery.autosize.input',
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
+  'jquery.connection': './app/scripts/desktop/plugins/jquery.connection',
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
   'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
