@@ -1,3 +1,4 @@
+bowser = require 'bowser'
 ReactTransitionGroup = require 'react/lib/ReactTransitionGroup'
 
 TICK = 17

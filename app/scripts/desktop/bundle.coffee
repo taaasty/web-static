@@ -139,6 +139,8 @@ require './react/components/auth/recovery'
 
 require './react/components/settings/settings'
 
+global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
+
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
