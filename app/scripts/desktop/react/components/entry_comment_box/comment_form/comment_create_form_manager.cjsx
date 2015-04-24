@@ -88,7 +88,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
           window.commentsMediator.doFormClosed @
       error: (data) =>
         @safeUpdateState isPostError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isPostLoading: false
 

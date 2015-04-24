@@ -69,7 +69,7 @@ window.Calendar = React.createClass
       success: (calendar) =>
         @safeUpdateState calendar: calendar
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   attachScrollSpy: ->
     that = @

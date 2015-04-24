@@ -32,6 +32,6 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass
         @props.onEditEnd comment
       error: (data) =>
         @safeUpdateState isEditError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isEditLoading: false

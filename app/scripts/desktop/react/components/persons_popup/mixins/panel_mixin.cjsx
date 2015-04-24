@@ -84,7 +84,7 @@ window.PersonsPopup_PanelMixin =
             items: data.relationships
       error: (data) =>
         @activateErrorState()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @activateLoadedState()
         @safeUpdate => @decrementActivities()

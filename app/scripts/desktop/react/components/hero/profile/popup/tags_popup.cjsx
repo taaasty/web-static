@@ -44,7 +44,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
         @safeUpdateState tags: data
       error:   (data) =>
         @safeUpdateState isError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdate => @decrementActivities()
         @safeUpdateState isLoading: false

@@ -34,7 +34,7 @@ CommentsMixin =
           $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState isLoadError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isLoadLoading: false
 
@@ -56,7 +56,7 @@ CommentsMixin =
           $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState isLoadError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isLoadLoading: false
 
@@ -80,7 +80,7 @@ CommentsMixin =
           $(document).trigger 'domChanged'
       error: (data) =>
         @safeUpdateState isLoadMoreError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isLoadMoreLoading: false
 

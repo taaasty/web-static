@@ -18,7 +18,7 @@ window.RecoveryShellbox = React.createClass
 
     if slug.length < 1
       @shake()
-      TastyNotifyController.notifyError i18n.t 'empty_login_error'
+      NoticeService.notifyError i18n.t 'empty_login_error'
       return
 
     @setState inProcess: true
@@ -28,12 +28,12 @@ window.RecoveryShellbox = React.createClass
       data: slug_or_email: slug
       method: 'POST'
       success: (data) =>
-        TastyNotifyController.notifySuccess i18n.t('recovery_mail_sent'), 10000
+        NoticeService.notifySuccess i18n.t('recovery_mail_sent'), 10000
         ReactApp.shellbox.close()
       error: (data) =>
         @shake()
         @refs.slug.getDOMNode().focus()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: => @safeUpdateState inProcess: false
 
   render: ->

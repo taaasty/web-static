@@ -4708,6 +4708,7 @@ a.toolbar__subnav-link:active {
 }
 .notice__inner {
   padding: 12px 20px 11px;
+  cursor: pointer;
 }
 .notice--error {
   background-color: #c00f19;

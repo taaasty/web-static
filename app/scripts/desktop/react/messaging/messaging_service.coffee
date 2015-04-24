@@ -26,7 +26,7 @@ class window.MessagingService
     @channel = @pusher.subscribe @CHANNEL_MAIN(@user.id)
     @channel.bind 'pusher:subscription_succeeded', @_connected
     @channel.bind 'pusher:subscription_error', (error) ->
-      TastyNotifyController.notify 'error', i18n.t 'pusher_subscription_error'
+      NoticeService.notify 'error', i18n.t 'pusher_subscription_error'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
     @channel.bind @EVENT_STATUS,              MessagingDispatcher.updateMessagingStatus
@@ -81,7 +81,7 @@ class window.MessagingService
           conversation: conversation
       .fail (errMsg) ->
         error?()
-        TastyNotifyController.errorResponse errMsg
+        NoticeService.errorResponse errMsg
 
   openConversation: (conversationId) ->
     @loadMessages conversationId
@@ -117,7 +117,7 @@ class window.MessagingService
           conversationId: conversationId
           uuid: uuid
         }
-        TastyNotifyController.errorResponse errMsg
+        NoticeService.errorResponse errMsg
 
   markAsReadMessage: (conversationId, messageId) ->
     @requester.markAsReadMessage(conversationId, messageId)

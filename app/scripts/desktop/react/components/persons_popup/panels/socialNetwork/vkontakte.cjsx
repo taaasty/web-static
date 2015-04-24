@@ -29,7 +29,7 @@ window.PersonsPopup_VkontaktePanel = React.createClass
           suggestions: suggestions
       error: (data) =>
         @activateErrorState()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @activateLoadedState()
 

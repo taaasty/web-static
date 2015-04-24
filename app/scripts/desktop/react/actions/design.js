@@ -53,7 +53,7 @@ let DesignActionCreators = {
         unsavedFields = DesignStore.getUnsavedFields();
 
     if (Object.keys(unsavedFields).length === 0) {
-      TastyNotifyController.notifyError(i18n.t('design_settings_no_unsaved_fields_error'));
+      NoticeService.notifyError(i18n.t('design_settings_no_unsaved_fields_error'));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
@@ -64,10 +64,10 @@ let DesignActionCreators = {
             type: DesignConstants.SAVE_CURRENT_SUCCESS,
             design
           });
-          TastyNotifyController.notifySuccess(i18n.t('design_settings_save_success'));
+          NoticeService.notifySuccess(i18n.t('design_settings_save_success'));
         })
         .fail(() => {
-          TastyNotifyController.notifyError(i18n.t('design_settings_save_error'));
+          NoticeService.notifyError(i18n.t('design_settings_save_error'));
         });
     }
   },

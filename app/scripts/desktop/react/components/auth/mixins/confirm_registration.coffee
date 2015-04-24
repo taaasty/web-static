@@ -17,7 +17,7 @@ ConfirmRegistrationMixin =
         password: password
         slug:     proposedSlug
       success: (data) =>
-        TastyNotifyController.notifySuccess i18n.t 'signup_success', userSlug: data.name
+        NoticeService.notifySuccess i18n.t 'signup_success', userSlug: data.name
         ReactApp.shellbox.close()
         _.defer -> window.location.href = data.tlog_url
       error: (data) =>
@@ -26,7 +26,7 @@ ConfirmRegistrationMixin =
         else
           @shake()
 
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: => @safeUpdateState(isProcess: false)
 
   returnToEmail: ->

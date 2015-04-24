@@ -161,7 +161,7 @@ let EditorActionCreators = {
           let blobIndex = _.findIndex(newAttachments, (item) => item.uuid === uuid);
 
           uploadFailed = true;
-          TastyNotifyController.notifyError(i18n.t('editor_attachment_error', {fileName: file.name}));
+          NoticeService.notifyError(i18n.t('editor_attachment_error', {fileName: file.name}));
           if (blobIndex !== -1) {
             newAttachments.splice(blobIndex, 1);
           }
@@ -227,6 +227,7 @@ let EditorActionCreators = {
       AppDispatcher.handleServerAction({
         type: EditorConstants.ENTRY_SAVE_SUCCESS
       });
+      NoticeService.closeAll();
       TastyLockingAlertController.show({
         title: i18n.t('editor_alert_header'),
         message: i18n.t('editor_create_success'),
@@ -249,7 +250,7 @@ let EditorActionCreators = {
       AppDispatcher.handleServerAction({
         type: EditorConstants.ENTRY_SAVE_ERROR
       });
-      TastyNotifyController.errorResponse(xhr);
+      NoticeService.errorResponse(xhr);
     }
 
     // Если есть незагруженные аттачменты, ждём пока загрузка не завершится,

@@ -16,8 +16,8 @@ VkontakteSubscribeAllButton = React.createClass
           type: 'suggestionsSubscribed'
           source: 'vkontakte'
 
-        TastyNotifyController.notifySuccess i18n.t 'vkontakte_subscribe_all_success'
+        NoticeService.notifySuccess i18n.t 'vkontakte_subscribe_all_success'
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
 module.exports = VkontakteSubscribeAllButton

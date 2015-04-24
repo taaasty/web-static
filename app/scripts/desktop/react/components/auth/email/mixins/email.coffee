@@ -12,10 +12,10 @@ EmailMixin =
 
     switch
       when login.length == 0
-        TastyNotifyController.notifyError i18n.t 'empty_login_error'
+        NoticeService.notifyError i18n.t 'empty_login_error'
         return false
       when password.length == 0
-        TastyNotifyController.notifyError i18n.t 'empty_password_error'
+        NoticeService.notifyError i18n.t 'empty_password_error'
         return false
       else return true
 
@@ -32,7 +32,7 @@ EmailMixin =
         email:    login
         password: password
       success: (data) =>
-        TastyNotifyController.notifySuccess i18n.t 'signin_success', userSlug: data.name
+        NoticeService.notifySuccess i18n.t 'signin_success', userSlug: data.name
         ReactApp.shellbox.close()
         _.defer -> location.reload true
       error: (data) =>
@@ -49,7 +49,7 @@ EmailMixin =
               if proposedData?
                 return @handleInvalidLogin(proposedSlug: proposedData.slug)
 
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState(isProcess: false)
 
