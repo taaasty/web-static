@@ -1,6 +1,6 @@
 import EditorActionCreators from '../../actions/editor';
 import ConnectStoreMixin from '../../../../shared/react/mixins/connectStore';
-import EditorStore from '../../stores/editor';
+import EditorStore from '../../stores/EditorStore';
 import Editor from './Editor';
 
 let EditorContainer = React.createClass({

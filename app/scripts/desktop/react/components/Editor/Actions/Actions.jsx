@@ -6,7 +6,6 @@ import EditorSaveButton from '../buttons/Save';
 
 let ENTRY_PRIVACY_PRIVATE = 'private',
     ENTRY_PRIVACY_PUBLIC = 'public',
-    ENTRY_PRIVACY_ANONYMOUS = 'anonymous',
     ENTRY_PRIVACY_LIVE = 'live',
     TLOG_TYPE_PRIVATE = 'private',
     TLOG_TYPE_PUBLIC = 'public',

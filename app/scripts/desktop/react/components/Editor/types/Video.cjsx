@@ -1,4 +1,4 @@
-EditorStore = require '../../../stores/editor'
+EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 StringHelpers = require '../../../../../shared/helpers/string'
