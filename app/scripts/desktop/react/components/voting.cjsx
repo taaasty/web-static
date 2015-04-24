@@ -1,8 +1,7 @@
 classnames = require 'classnames'
-PureRenderMixin = require 'react/lib/ReactComponentWithPureRenderMixin'
 
 window.Voting = React.createClass
-  mixins: [RequesterMixin, ComponentManipulationsMixin, PureRenderMixin]
+  mixins: [RequesterMixin, ComponentManipulationsMixin]
 
   propTypes:
     entryId:    React.PropTypes.number.isRequired
@@ -20,7 +19,9 @@ window.Voting = React.createClass
 
   componentDidMount: ->
     $voting = $( @getDOMNode() )
-    $voting.tooltip placement: 'top'
+    $voting.tooltip
+      placement: 'top'
+      container: 'body'
 
   componentWillUnmount: ->
     $voting = $( @getDOMNode() )

@@ -12,7 +12,7 @@ let Feed = React.createClass({
   getDefaultProps() {
     return {
       feedUrl: window.location.href
-      // feedUrl: 'http://taaasty.com/@irada/tags/лето'
+      // feedUrl: 'http://taaasty.com/best'
     };
   },
 
