@@ -65,10 +65,10 @@ SettingsPasswordEdit = React.createClass
 
     switch
       when password.length == 0, passwordConfirm.length == 0
-        TastyNotifyController.notifyError i18n.t 'settings_password_empty_error'
+        NoticeService.notifyError i18n.t 'settings_password_empty_error'
         return false
       when password isnt passwordConfirm
-        TastyNotifyController.notifyError i18n.t 'settings_password_arent_equals'
+        NoticeService.notifyError i18n.t 'settings_password_arent_equals'
         return false
       else return true
 

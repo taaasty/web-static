@@ -87,7 +87,7 @@ CurrentUserViewActions =
         CurrentUserServerActions.updateUser user
         success?(user)
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
         error?(data)
       complete: complete
 

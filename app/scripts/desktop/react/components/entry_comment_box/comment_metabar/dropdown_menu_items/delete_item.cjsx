@@ -29,6 +29,6 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass
       data:
         _method: 'DELETE'
       success: =>
-        TastyNotifyController.notifySuccess i18n.t 'delete_comment_success'
+        NoticeService.notifySuccess i18n.t 'delete_comment_success'
         @props.onDelete() if @props.onDelete?
-      error: (data) -> TastyNotifyController.errorResponse data
+      error: (data) -> NoticeService.errorResponse data

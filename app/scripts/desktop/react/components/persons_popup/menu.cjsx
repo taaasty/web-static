@@ -73,7 +73,7 @@ window.PersonsPopup_Menu = React.createClass
           summary: summary
         }
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   getStateFromStore: ->
     followersTotalCount:  RelationshipsStore.getFollowersTotalCount()

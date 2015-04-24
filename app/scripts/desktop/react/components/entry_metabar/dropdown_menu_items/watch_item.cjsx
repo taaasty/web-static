@@ -40,7 +40,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
         @safeUpdateState isWatching: true
         console.info "Оформлена подписка на комментарии поста #{@props.entryId}"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   removeFromWatching: ->
     @createRequest
@@ -53,7 +53,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass
         @safeUpdateState isWatching: false
         console.info "Отменена подписка на комментарии поста #{@props.entryId}"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   onMouseEnter: -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false

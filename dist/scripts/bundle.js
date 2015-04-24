@@ -10079,6 +10079,8 @@ require('./locales/moment/ru');
 
 require('./react/services/positions');
 
+global.NoticeService = require('./react/services/Notice');
+
 window.ThumborService = require('../shared/react/services/thumbor');
 
 require('./react/services/uuid');
@@ -10439,19 +10441,15 @@ require('./react/components/images_collage');
 
 require('./react/components/spinner');
 
-require('./react/components/notifications/tasty_notify');
-
-require('./react/components/notifications/tasty_confirm');
-
-require('./react/components/notifications/tasty_alert');
-
-require('./react/components/notifications/tasty_locking_alert');
-
 require('./react/components/screen_viewer/screen_viewer');
 
-require('./react/controllers/tasty_events');
+require('./react/components/alerts/tasty_confirm');
 
-require('./react/controllers/tasty_notify');
+require('./react/components/alerts/tasty_alert');
+
+require('./react/components/alerts/tasty_locking_alert');
+
+require('./react/controllers/tasty_events');
 
 require('./react/controllers/tasty_confirm');
 
@@ -10472,7 +10470,7 @@ require('./react/application');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/components/common/imageAttachmentsCollage":374,"../shared/react/services/thumbor":379,"../shared/routes/api":381,"../shared/routes/routes":382,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":20,"./react/components/BrowserSupport/BrowserSupportContainer":22,"./react/components/DesignPayment/DesignPaymentContainer":24,"./react/components/DesignSettings/DesignSettingsContainer":31,"./react/components/DesignSettings/common/colorPicker/popup":43,"./react/components/Editor/EditorEdit":54,"./react/components/Editor/EditorNew":55,"./react/components/Feed/Feed":84,"./react/components/SearchResults/SearchResults":91,"./react/components/auth/auth":95,"./react/components/auth/authorization/authorization":96,"./react/components/auth/authorization/facebook":97,"./react/components/auth/authorization/vk":98,"./react/components/auth/buttons/facebook_auth_button":99,"./react/components/auth/buttons/vk_auth_button":100,"./react/components/auth/email/email":104,"./react/components/auth/recovery":109,"./react/components/avatars/avatar":111,"./react/components/avatars/user_avatar":112,"./react/components/buttons/load_more":113,"./react/components/calendar/calendar":114,"./react/components/calendar/calendar_header":115,"./react/components/calendar/calendar_marker":116,"./react/components/calendar/calendar_period":117,"./react/components/calendar/calendar_timeline":118,"./react/components/common/adaptive_input":121,"./react/components/editable_field":124,"./react/components/embed":125,"./react/components/entry_comment_box/comment_form/buttons/submit":126,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":127,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":128,"./react/components/entry_comment_box/comment_form/comment_form":129,"./react/components/entry_comment_box/comment_list/comment":130,"./react/components/entry_comment_box/comment_list/comment_list":131,"./react/components/entry_comment_box/comment_list/comment_manager":132,"./react/components/entry_comment_box/comment_metabar/comment_metabar":133,"./react/components/entry_comment_box/comment_metabar/date":134,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":135,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":136,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":137,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":138,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":139,"./react/components/entry_comment_box/comment_metabar/reply":140,"./react/components/entry_comment_box/entry_comment_box":141,"./react/components/entry_comment_box/load_more":142,"./react/components/entry_comment_box/mixins/comments":143,"./react/components/entry_metabar/author":144,"./react/components/entry_metabar/comment":145,"./react/components/entry_metabar/date":146,"./react/components/entry_metabar/dropdown_menu":147,"./react/components/entry_metabar/dropdown_menu_items/delete_item":148,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":149,"./react/components/entry_metabar/dropdown_menu_items/item":150,"./react/components/entry_metabar/dropdown_menu_items/report_item":151,"./react/components/entry_metabar/dropdown_menu_items/watch_item":152,"./react/components/entry_metabar/entry_metabar":153,"./react/components/entry_metabar/tag":154,"./react/components/entry_metabar/tags":155,"./react/components/follow_status":156,"./react/components/hero/profile/dropdown_menu":158,"./react/components/hero/profile/dropdown_menu_items/ignore":159,"./react/components/hero/profile/dropdown_menu_items/report":160,"./react/components/hero/profile/popup/followers_popup":161,"./react/components/hero/profile/popup/followings_popup":162,"./react/components/hero/profile/popup/items/follower_item":163,"./react/components/hero/profile/popup/items/following_item":164,"./react/components/hero/profile/popup/items/tag_item":165,"./react/components/hero/profile/popup/popup":166,"./react/components/hero/profile/popup/tags_popup":167,"./react/components/hero/profile/profile":168,"./react/components/hero/profile/profile_avatar":169,"./react/components/hero/profile/profile_head":170,"./react/components/hero/profile/profile_stats":171,"./react/components/hero/profile/profile_stats_item":172,"./react/components/images_collage":173,"./react/components/notifications/tasty_alert":174,"./react/components/notifications/tasty_confirm":175,"./react/components/notifications/tasty_locking_alert":176,"./react/components/notifications/tasty_notify":177,"./react/components/people/item":178,"./react/components/persons_popup/items/follower_relationship":179,"./react/components/persons_popup/items/following_relationship":180,"./react/components/persons_popup/items/guess_relationship":181,"./react/components/persons_popup/items/ignored_relationship":182,"./react/components/persons_popup/items/item":183,"./react/components/persons_popup/items/requested_relationship":184,"./react/components/persons_popup/menu":185,"./react/components/persons_popup/menu_item":186,"./react/components/persons_popup/mixins/panel_mixin":187,"./react/components/persons_popup/panels/followers_panel":188,"./react/components/persons_popup/panels/followings_panel":189,"./react/components/persons_popup/panels/guessed_panel":190,"./react/components/persons_popup/panels/ignored_panel":191,"./react/components/persons_popup/panels/requested_panel":192,"./react/components/persons_popup/panels/socialNetwork/facebook":193,"./react/components/persons_popup/panels/socialNetwork/vkontakte":203,"./react/components/persons_popup/persons_popup":210,"./react/components/popup/header":211,"./react/components/popup/layout":212,"./react/components/popup/popup":213,"./react/components/popup/spinner":214,"./react/components/popup_box":215,"./react/components/relationship_buttons/follow_button":216,"./react/components/relationship_buttons/follower_button":217,"./react/components/relationship_buttons/guess_button":218,"./react/components/relationship_buttons/ignore_button":219,"./react/components/relationship_buttons/mixins/relationship":220,"./react/components/relationship_buttons/request_button":221,"./react/components/screen_viewer/screen_viewer":222,"./react/components/search/button":223,"./react/components/search/field":224,"./react/components/search/search":225,"./react/components/settings/settings":242,"./react/components/shellbox_layer":245,"./react/components/shellboxes/confirm_registration":246,"./react/components/smart_follow_status":247,"./react/components/spinner":248,"./react/components/tlog_alert":249,"./react/components/toolbars/AvatarToolbarContainer":251,"./react/components/toolbars/CloseToolbar":252,"./react/components/toolbars/UserToolbarContainer":255,"./react/components/transition/timeout_transition_group":263,"./react/components/voting":264,"./react/controllers/popup":272,"./react/controllers/shellbox":274,"./react/controllers/tasty_alert":275,"./react/controllers/tasty_confirm":276,"./react/controllers/tasty_events":277,"./react/controllers/tasty_locking_alert":278,"./react/controllers/tasty_notify":279,"./react/controllers/tasty_sound":280,"./react/dispatchers/current_user":282,"./react/dispatchers/relationships":284,"./react/helpers/app":288,"./react/mediators/comments":289,"./react/messaging/actions/conversation":290,"./react/messaging/actions/message":291,"./react/messaging/actions/notification":292,"./react/messaging/actions/popup":293,"./react/messaging/components/buttons/write_message":294,"./react/messaging/components/messages_popup/conversations/conversations":295,"./react/messaging/components/messages_popup/conversations/list/empty":296,"./react/messaging/components/messages_popup/conversations/list/list":297,"./react/messaging/components/messages_popup/conversations/list/list_item":298,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":299,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":300,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":301,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":302,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":303,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":304,"./react/messaging/components/messages_popup/loading_message":305,"./react/messaging/components/messages_popup/messages_popup":306,"./react/messaging/components/messages_popup/thread/message_form/message_form":307,"./react/messaging/components/messages_popup/thread/message_list/empty":308,"./react/messaging/components/messages_popup/thread/message_list/message_list":309,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":310,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":311,"./react/messaging/components/messages_popup/thread/thread":312,"./react/messaging/components/messages_popup/ui/back_button":313,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":314,"./react/messaging/components/notifications_popup/notifications/empty":315,"./react/messaging/components/notifications_popup/notifications/notification":316,"./react/messaging/components/notifications_popup/notifications/notifications":317,"./react/messaging/components/notifications_popup/notifications_popup":318,"./react/messaging/components/toolbars/indicators/indicators":319,"./react/messaging/components/toolbars/indicators/messages":320,"./react/messaging/components/toolbars/indicators/notifications":321,"./react/messaging/dispatchers/messaging":322,"./react/messaging/messaging_requester":323,"./react/messaging/messaging_service":324,"./react/messaging/messaging_testing":325,"./react/messaging/stores/connection_state":327,"./react/messaging/stores/conversations":328,"./react/messaging/stores/messages":329,"./react/messaging/stores/messages_popup_state":330,"./react/messaging/stores/messaging_status":331,"./react/messaging/stores/notifications":332,"./react/mixins/activities":333,"./react/mixins/component_manipulations":334,"./react/mixins/dom_manipulations":335,"./react/mixins/error_timer":336,"./react/mixins/grammar":337,"./react/mixins/positions":338,"./react/mixins/requester":339,"./react/mixins/scroller":340,"./react/mixins/shake":341,"./react/mixins/touch":342,"./react/mixins/unmount":343,"./react/services/positions":353,"./react/services/uuid":354,"./react/stores/EditorStore":355,"./react/stores/current_user":357,"./react/stores/design":358,"./react/stores/relationships":359,"./resources/fileReceiver":360,"./resources/is_mobile":361,"./resources/libs":362,"./resources/tasty":363,"./resources/tasty_utils":364}],8:[function(require,module,exports){
+},{"../shared/react/components/common/imageAttachmentsCollage":375,"../shared/react/services/thumbor":380,"../shared/routes/api":382,"../shared/routes/routes":383,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":20,"./react/components/BrowserSupport/BrowserSupportContainer":22,"./react/components/DesignPayment/DesignPaymentContainer":24,"./react/components/DesignSettings/DesignSettingsContainer":31,"./react/components/DesignSettings/common/colorPicker/popup":43,"./react/components/Editor/EditorEdit":54,"./react/components/Editor/EditorNew":55,"./react/components/Feed/Feed":84,"./react/components/SearchResults/SearchResults":91,"./react/components/alerts/tasty_alert":96,"./react/components/alerts/tasty_confirm":97,"./react/components/alerts/tasty_locking_alert":98,"./react/components/auth/auth":99,"./react/components/auth/authorization/authorization":100,"./react/components/auth/authorization/facebook":101,"./react/components/auth/authorization/vk":102,"./react/components/auth/buttons/facebook_auth_button":103,"./react/components/auth/buttons/vk_auth_button":104,"./react/components/auth/email/email":108,"./react/components/auth/recovery":113,"./react/components/avatars/avatar":115,"./react/components/avatars/user_avatar":116,"./react/components/buttons/load_more":117,"./react/components/calendar/calendar":118,"./react/components/calendar/calendar_header":119,"./react/components/calendar/calendar_marker":120,"./react/components/calendar/calendar_period":121,"./react/components/calendar/calendar_timeline":122,"./react/components/common/adaptive_input":125,"./react/components/editable_field":128,"./react/components/embed":129,"./react/components/entry_comment_box/comment_form/buttons/submit":130,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":131,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":132,"./react/components/entry_comment_box/comment_form/comment_form":133,"./react/components/entry_comment_box/comment_list/comment":134,"./react/components/entry_comment_box/comment_list/comment_list":135,"./react/components/entry_comment_box/comment_list/comment_manager":136,"./react/components/entry_comment_box/comment_metabar/comment_metabar":137,"./react/components/entry_comment_box/comment_metabar/date":138,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":139,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":140,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":141,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":142,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":143,"./react/components/entry_comment_box/comment_metabar/reply":144,"./react/components/entry_comment_box/entry_comment_box":145,"./react/components/entry_comment_box/load_more":146,"./react/components/entry_comment_box/mixins/comments":147,"./react/components/entry_metabar/author":148,"./react/components/entry_metabar/comment":149,"./react/components/entry_metabar/date":150,"./react/components/entry_metabar/dropdown_menu":151,"./react/components/entry_metabar/dropdown_menu_items/delete_item":152,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":153,"./react/components/entry_metabar/dropdown_menu_items/item":154,"./react/components/entry_metabar/dropdown_menu_items/report_item":155,"./react/components/entry_metabar/dropdown_menu_items/watch_item":156,"./react/components/entry_metabar/entry_metabar":157,"./react/components/entry_metabar/tag":158,"./react/components/entry_metabar/tags":159,"./react/components/follow_status":160,"./react/components/hero/profile/dropdown_menu":162,"./react/components/hero/profile/dropdown_menu_items/ignore":163,"./react/components/hero/profile/dropdown_menu_items/report":164,"./react/components/hero/profile/popup/followers_popup":165,"./react/components/hero/profile/popup/followings_popup":166,"./react/components/hero/profile/popup/items/follower_item":167,"./react/components/hero/profile/popup/items/following_item":168,"./react/components/hero/profile/popup/items/tag_item":169,"./react/components/hero/profile/popup/popup":170,"./react/components/hero/profile/popup/tags_popup":171,"./react/components/hero/profile/profile":172,"./react/components/hero/profile/profile_avatar":173,"./react/components/hero/profile/profile_head":174,"./react/components/hero/profile/profile_stats":175,"./react/components/hero/profile/profile_stats_item":176,"./react/components/images_collage":177,"./react/components/people/item":178,"./react/components/persons_popup/items/follower_relationship":179,"./react/components/persons_popup/items/following_relationship":180,"./react/components/persons_popup/items/guess_relationship":181,"./react/components/persons_popup/items/ignored_relationship":182,"./react/components/persons_popup/items/item":183,"./react/components/persons_popup/items/requested_relationship":184,"./react/components/persons_popup/menu":185,"./react/components/persons_popup/menu_item":186,"./react/components/persons_popup/mixins/panel_mixin":187,"./react/components/persons_popup/panels/followers_panel":188,"./react/components/persons_popup/panels/followings_panel":189,"./react/components/persons_popup/panels/guessed_panel":190,"./react/components/persons_popup/panels/ignored_panel":191,"./react/components/persons_popup/panels/requested_panel":192,"./react/components/persons_popup/panels/socialNetwork/facebook":193,"./react/components/persons_popup/panels/socialNetwork/vkontakte":203,"./react/components/persons_popup/persons_popup":210,"./react/components/popup/header":211,"./react/components/popup/layout":212,"./react/components/popup/popup":213,"./react/components/popup/spinner":214,"./react/components/popup_box":215,"./react/components/relationship_buttons/follow_button":216,"./react/components/relationship_buttons/follower_button":217,"./react/components/relationship_buttons/guess_button":218,"./react/components/relationship_buttons/ignore_button":219,"./react/components/relationship_buttons/mixins/relationship":220,"./react/components/relationship_buttons/request_button":221,"./react/components/screen_viewer/screen_viewer":222,"./react/components/search/button":223,"./react/components/search/field":224,"./react/components/search/search":225,"./react/components/settings/settings":242,"./react/components/shellbox_layer":245,"./react/components/shellboxes/confirm_registration":246,"./react/components/smart_follow_status":247,"./react/components/spinner":248,"./react/components/tlog_alert":249,"./react/components/toolbars/AvatarToolbarContainer":251,"./react/components/toolbars/CloseToolbar":252,"./react/components/toolbars/UserToolbarContainer":255,"./react/components/transition/timeout_transition_group":263,"./react/components/voting":264,"./react/controllers/popup":272,"./react/controllers/shellbox":274,"./react/controllers/tasty_alert":275,"./react/controllers/tasty_confirm":276,"./react/controllers/tasty_events":277,"./react/controllers/tasty_locking_alert":278,"./react/controllers/tasty_sound":279,"./react/dispatchers/current_user":281,"./react/dispatchers/relationships":283,"./react/helpers/app":288,"./react/mediators/comments":289,"./react/messaging/actions/conversation":290,"./react/messaging/actions/message":291,"./react/messaging/actions/notification":292,"./react/messaging/actions/popup":293,"./react/messaging/components/buttons/write_message":294,"./react/messaging/components/messages_popup/conversations/conversations":295,"./react/messaging/components/messages_popup/conversations/list/empty":296,"./react/messaging/components/messages_popup/conversations/list/list":297,"./react/messaging/components/messages_popup/conversations/list/list_item":298,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":299,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":300,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":301,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":302,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":303,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":304,"./react/messaging/components/messages_popup/loading_message":305,"./react/messaging/components/messages_popup/messages_popup":306,"./react/messaging/components/messages_popup/thread/message_form/message_form":307,"./react/messaging/components/messages_popup/thread/message_list/empty":308,"./react/messaging/components/messages_popup/thread/message_list/message_list":309,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":310,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":311,"./react/messaging/components/messages_popup/thread/thread":312,"./react/messaging/components/messages_popup/ui/back_button":313,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":314,"./react/messaging/components/notifications_popup/notifications/empty":315,"./react/messaging/components/notifications_popup/notifications/notification":316,"./react/messaging/components/notifications_popup/notifications/notifications":317,"./react/messaging/components/notifications_popup/notifications_popup":318,"./react/messaging/components/toolbars/indicators/indicators":319,"./react/messaging/components/toolbars/indicators/messages":320,"./react/messaging/components/toolbars/indicators/notifications":321,"./react/messaging/dispatchers/messaging":322,"./react/messaging/messaging_requester":323,"./react/messaging/messaging_service":324,"./react/messaging/messaging_testing":325,"./react/messaging/stores/connection_state":327,"./react/messaging/stores/conversations":328,"./react/messaging/stores/messages":329,"./react/messaging/stores/messages_popup_state":330,"./react/messaging/stores/messaging_status":331,"./react/messaging/stores/notifications":332,"./react/mixins/activities":333,"./react/mixins/component_manipulations":334,"./react/mixins/dom_manipulations":335,"./react/mixins/error_timer":336,"./react/mixins/grammar":337,"./react/mixins/positions":338,"./react/mixins/requester":339,"./react/mixins/scroller":340,"./react/mixins/shake":341,"./react/mixins/touch":342,"./react/mixins/unmount":343,"./react/services/Notice":348,"./react/services/positions":354,"./react/services/uuid":355,"./react/stores/EditorStore":356,"./react/stores/current_user":358,"./react/stores/design":359,"./react/stores/relationships":360,"./resources/fileReceiver":361,"./resources/is_mobile":362,"./resources/libs":363,"./resources/tasty":364,"./resources/tasty_utils":365}],8:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 "use strict";
@@ -10524,7 +10522,7 @@ moment.locale("ru", {
   }
 });
 
-},{"../../../../../node_modules/moment/locale/ru":409}],9:[function(require,module,exports){
+},{"../../../../../node_modules/moment/locale/ru":410}],9:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -10534,7 +10532,7 @@ var numeral = _interopRequire(require("numeral"));
 var language = require("../../../../../node_modules/numeral/languages/ru");
 numeral.language("ru", language);
 
-},{"../../../../../node_modules/numeral/languages/ru":411,"numeral":"numeral"}],10:[function(require,module,exports){
+},{"../../../../../node_modules/numeral/languages/ru":412,"numeral":"numeral"}],10:[function(require,module,exports){
 "use strict";
 
 var ToolbarActionCreators = {
@@ -10617,7 +10615,7 @@ var DesignActionCreators = {
         unsavedFields = DesignStore.getUnsavedFields();
 
     if (Object.keys(unsavedFields).length === 0) {
-      TastyNotifyController.notifyError(i18n.t("design_settings_no_unsaved_fields_error"));
+      NoticeService.notifyError(i18n.t("design_settings_no_unsaved_fields_error"));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
@@ -10627,9 +10625,9 @@ var DesignActionCreators = {
           type: DesignConstants.SAVE_CURRENT_SUCCESS,
           design: design
         });
-        TastyNotifyController.notifySuccess(i18n.t("design_settings_save_success"));
+        NoticeService.notifySuccess(i18n.t("design_settings_save_success"));
       }).fail(function () {
-        TastyNotifyController.notifyError(i18n.t("design_settings_save_error"));
+        NoticeService.notifyError(i18n.t("design_settings_save_error"));
       });
     }
   },
@@ -10647,7 +10645,7 @@ var DesignActionCreators = {
 
 module.exports = DesignActionCreators;
 
-},{"../../../shared/helpers/browser":366,"../api/api":18,"../api/submitter":19,"../constants/design":267,"../dispatchers/dispatcher":283,"../services/designPreview":350,"../stores/current_user":357,"../stores/design":358}],12:[function(require,module,exports){
+},{"../../../shared/helpers/browser":367,"../api/api":18,"../api/submitter":19,"../constants/design":267,"../dispatchers/dispatcher":282,"../services/designPreview":351,"../stores/current_user":358,"../stores/design":359}],12:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -10831,7 +10829,7 @@ var EditorActionCreators = {
         });
 
         uploadFailed = true;
-        TastyNotifyController.notifyError(i18n.t("editor_attachment_error", { fileName: file.name }));
+        NoticeService.notifyError(i18n.t("editor_attachment_error", { fileName: file.name }));
         if (blobIndex !== -1) {
           newAttachments.splice(blobIndex, 1);
         }
@@ -10896,6 +10894,7 @@ var EditorActionCreators = {
       AppDispatcher.handleServerAction({
         type: EditorConstants.ENTRY_SAVE_SUCCESS
       });
+      NoticeService.closeAll();
       TastyLockingAlertController.show({
         title: i18n.t("editor_alert_header"),
         message: i18n.t("editor_create_success"),
@@ -10922,7 +10921,7 @@ var EditorActionCreators = {
       AppDispatcher.handleServerAction({
         type: EditorConstants.ENTRY_SAVE_ERROR
       });
-      TastyNotifyController.errorResponse(xhr);
+      NoticeService.errorResponse(xhr);
     }
 
     // Если есть незагруженные аттачменты, ждём пока загрузка не завершится,
@@ -10949,7 +10948,7 @@ var EditorActionCreators = {
 
 module.exports = EditorActionCreators;
 
-},{"../../../shared/helpers/api":365,"../../../shared/helpers/browser":366,"../../../shared/react/services/uuid":380,"../api/api":18,"../constants/editor":268,"../dispatchers/dispatcher":283,"../stores/EditorStore":355,"lodash":"lodash"}],13:[function(require,module,exports){
+},{"../../../shared/helpers/api":366,"../../../shared/helpers/browser":367,"../../../shared/react/services/uuid":381,"../api/api":18,"../constants/editor":268,"../dispatchers/dispatcher":282,"../stores/EditorStore":356,"lodash":"lodash"}],13:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11069,7 +11068,7 @@ module.exports = PopupActions;
 
 
 
-},{"../components/Searchbox/Searchbox":94,"../stores/current_user":357}],15:[function(require,module,exports){
+},{"../components/Searchbox/Searchbox":94,"../stores/current_user":358}],15:[function(require,module,exports){
 var Api, SearchActions;
 
 Api = require('../api/api');
@@ -11250,7 +11249,7 @@ CurrentUserViewActions = {
         return typeof success === "function" ? success(user) : void 0;
       },
       error: function(data) {
-        TastyNotifyController.errorResponse(data);
+        NoticeService.errorResponse(data);
         return typeof error === "function" ? error(data) : void 0;
       },
       complete: complete
@@ -11441,7 +11440,7 @@ module.exports = Api;
 
 
 
-},{"../constants/constants":266,"../stores/current_user":357,"lodash":"lodash"}],19:[function(require,module,exports){
+},{"../constants/constants":266,"../stores/current_user":358,"lodash":"lodash"}],19:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11647,7 +11646,7 @@ window.ReactApp = {
 
 
 
-},{"./actions/design":11,"./actions/popup":14,"./controllers/guide":270,"./controllers/layoutStates":271,"./controllers/popuup":273,"./dispatchers/dispatcher":283,"i18next":"i18next","numeral":"numeral","react-tap-event-plugin":"react-tap-event-plugin","reactUjs":"reactUjs"}],21:[function(require,module,exports){
+},{"./actions/design":11,"./actions/popup":14,"./controllers/guide":270,"./controllers/layoutStates":271,"./controllers/popuup":273,"./dispatchers/dispatcher":282,"i18next":"i18next","numeral":"numeral","react-tap-event-plugin":"react-tap-event-plugin","reactUjs":"reactUjs"}],21:[function(require,module,exports){
 "use strict";
 
 var BrowserSupport = React.createClass({
@@ -11833,7 +11832,7 @@ DesignPaymentContainer = connectToStores(DesignPaymentContainer, [DesignStore], 
 
 module.exports = DesignPaymentContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":375,"../../actions/design":11,"../../stores/design":358,"./DesignPayment":23}],25:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":376,"../../actions/design":11,"../../stores/design":359,"./DesignPayment":23}],25:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11907,7 +11906,7 @@ var DesignPaymentList = React.createClass({
 
 module.exports = DesignPaymentList;
 
-},{"../../../../../shared/react/components/common/Money/Money":368,"../../DesignSettings/common/slider":47,"../common/RadioList":28,"./ListItem":26}],26:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Money/Money":369,"../../DesignSettings/common/slider":47,"../common/RadioList":28,"./ListItem":26}],26:[function(require,module,exports){
 "use strict";
 
 var DesignPaymentListItem = React.createClass({
@@ -12139,7 +12138,7 @@ var DesignSettings = React.createClass({
 
 module.exports = DesignSettings;
 
-},{"./DropZone/DropZone":32,"./Groups/Groups":36,"./buttons/Save":41,"classnames":386}],31:[function(require,module,exports){
+},{"./DropZone/DropZone":32,"./Groups/Groups":36,"./buttons/Save":41,"classnames":387}],31:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -12210,7 +12209,7 @@ DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore,
 
 module.exports = DesignSettingsContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":375,"../../actions/design":11,"../../actions/popup":14,"../../stores/current_user":357,"../../stores/design":358,"./DesignSettings":30,"react/lib/Object.assign":441}],32:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":376,"../../actions/design":11,"../../actions/popup":14,"../../stores/current_user":358,"../../stores/design":359,"./DesignSettings":30,"react/lib/Object.assign":442}],32:[function(require,module,exports){
 "use strict";
 
 var DesignSettingsDropZone = React.createClass({
@@ -12491,7 +12490,7 @@ var DesignSettingsGroups = React.createClass({
 
 module.exports = DesignSettingsGroups;
 
-},{"../../common/scroller/scroller":123,"./BackgroundGroup":33,"./FeedGroup":34,"./HeaderGroup":37}],37:[function(require,module,exports){
+},{"../../common/scroller/scroller":127,"./BackgroundGroup":33,"./FeedGroup":34,"./HeaderGroup":37}],37:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -12997,7 +12996,7 @@ module.exports = DesignSettingsRadio;
 
 
 
-},{"../../../services/designOptions":348,"../../../services/designPresenter":349,"./colorPicker":42}],45:[function(require,module,exports){
+},{"../../../services/designOptions":349,"../../../services/designPresenter":350,"./colorPicker":42}],45:[function(require,module,exports){
 var DesignSettingsRadio, DesignSettingsRadioList, PropTypes, _;
 
 _ = require('lodash');
@@ -13275,7 +13274,7 @@ module.exports = DesignSettingsSlider;
 
 
 
-},{"./slider/nextButton":48,"./slider/prevButton":49,"classnames":386,"lodash":"lodash"}],48:[function(require,module,exports){
+},{"./slider/nextButton":48,"./slider/prevButton":49,"classnames":387,"lodash":"lodash"}],48:[function(require,module,exports){
 var DesignSettingsSliderNextButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -13483,7 +13482,7 @@ var EditorActions = React.createClass({
 
 module.exports = EditorActions;
 
-},{"../buttons/Preview":66,"../buttons/Privacy":67,"../buttons/Save":68,"../buttons/Vote":69,"classnames":386}],51:[function(require,module,exports){
+},{"../buttons/Preview":66,"../buttons/Privacy":67,"../buttons/Save":68,"../buttons/Vote":69,"classnames":387}],51:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -13676,7 +13675,7 @@ var EditorContainer = React.createClass({
 
 module.exports = EditorContainer;
 
-},{"../../../../shared/react/mixins/connectStore":377,"../../actions/editor":12,"../../stores/EditorStore":355,"./Editor":52}],54:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":378,"../../actions/editor":12,"../../stores/EditorStore":356,"./Editor":52}],54:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -13869,7 +13868,7 @@ module.exports = EditorEmbed;
 
 
 
-},{"../../../actions/editor":12,"./EmbedLoaded":57,"./EmbedLoading":58,"./EmbedUrlInsert":59,"react/lib/cloneWithProps":529}],57:[function(require,module,exports){
+},{"../../../actions/editor":12,"./EmbedLoaded":57,"./EmbedLoading":58,"./EmbedUrlInsert":59,"react/lib/cloneWithProps":530}],57:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -14217,7 +14216,7 @@ var EditorTypeSwitcher = React.createClass({
 
 module.exports = EditorTypeSwitcher;
 
-},{"./TypeSwitcherItem":65,"classnames":386}],65:[function(require,module,exports){
+},{"./TypeSwitcherItem":65,"classnames":387}],65:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -14270,7 +14269,7 @@ var EditorTypeSwitcherItem = React.createClass({
 
 module.exports = EditorTypeSwitcherItem;
 
-},{"classnames":386}],66:[function(require,module,exports){
+},{"classnames":387}],66:[function(require,module,exports){
 var EditorPreviewButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -14357,7 +14356,7 @@ module.exports = EditorPrivacyButton;
 
 
 
-},{"classnames":386}],68:[function(require,module,exports){
+},{"classnames":387}],68:[function(require,module,exports){
 var EditorSaveButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -14449,7 +14448,7 @@ module.exports = EditorVoteButton;
 
 
 
-},{"classnames":386}],70:[function(require,module,exports){
+},{"classnames":387}],70:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -14545,7 +14544,7 @@ var EditorTextField = React.createClass({
 
 module.exports = EditorTextField;
 
-},{"classnames":386,"lodash":"lodash"}],71:[function(require,module,exports){
+},{"classnames":387,"lodash":"lodash"}],71:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, PropTypes, WELCOME_STATE, _, classnames;
 
 _ = require('lodash');
@@ -14737,7 +14736,7 @@ EditorTypeImage = React.createClass({
     })(this);
     image.onerror = (function(_this) {
       return function() {
-        TastyNotifyController.notifyError(i18n.t('editor_image_doesnt_exist', {
+        NoticeService.notifyError(i18n.t('editor_image_doesnt_exist', {
           imageUrl: imageUrl
         }));
         return _this.activateWelcomeState();
@@ -14751,7 +14750,7 @@ EditorTypeImage = React.createClass({
       return file.type.match(/(\.|\/)(gif|jpe?g|png)$/i);
     });
     if (!imageFiles.length) {
-      return TastyNotifyController.notifyError(i18n.t('editor_files_without_images'));
+      return NoticeService.notifyError(i18n.t('editor_files_without_images'));
     }
     EditorActionCreators.createImageAttachments(files).progress((function(_this) {
       return function(soFar) {
@@ -14799,7 +14798,7 @@ module.exports = EditorTypeImage;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../MediaBox/MediaBox":61,"../MediaBox/MediaBoxProgress":63,"../fields/Text":70,"./Image/Loaded":72,"./Image/LoadingUrl":73,"./Image/UrlInsert":74,"./Image/Welcome":75,"classnames":386,"lodash":"lodash"}],72:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../MediaBox/MediaBox":61,"../MediaBox/MediaBoxProgress":63,"../fields/Text":70,"./Image/Loaded":72,"./Image/LoadingUrl":73,"./Image/UrlInsert":74,"./Image/Welcome":75,"classnames":387,"lodash":"lodash"}],72:[function(require,module,exports){
 var EditorMediaBoxActions, EditorTypeImageLoaded, PropTypes, _;
 
 _ = require('lodash');
@@ -15005,7 +15004,7 @@ module.exports = EditorTypeImageWelcome;
 
 
 
-},{"../../../common/DropZone/DropZone":119}],76:[function(require,module,exports){
+},{"../../../common/DropZone/DropZone":123}],76:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeInstagram, EditorTypeInstagramWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
@@ -15082,7 +15081,7 @@ module.exports = EditorTypeInstagram;
 
 
 
-},{"../../../../../shared/helpers/string":367,"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../Embed/Embed":56,"../fields/Text":70,"./Instagram/Welcome":77}],77:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":368,"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../Embed/Embed":56,"../fields/Text":70,"./Instagram/Welcome":77}],77:[function(require,module,exports){
 var EditorTypeInstagramWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -15193,7 +15192,7 @@ module.exports = EditorTypeMusic;
 
 
 
-},{"../../../../../shared/helpers/string":367,"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../Embed/Embed":56,"../fields/Text":70,"./Music/Welcome":79}],79:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":368,"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../Embed/Embed":56,"../fields/Text":70,"./Music/Welcome":79}],79:[function(require,module,exports){
 var EditorTypeMusicWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -15286,7 +15285,7 @@ module.exports = EditorTypeQuote;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../fields/Text":70}],81:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../fields/Text":70}],81:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorStore, EditorTextField, EditorTypeText, PropTypes;
 
 EditorStore = require('../../../stores/EditorStore');
@@ -15342,7 +15341,7 @@ module.exports = EditorTypeText;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../fields/Text":70}],82:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../fields/Text":70}],82:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeVideo, EditorTypeVideoWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
@@ -15419,7 +15418,7 @@ module.exports = EditorTypeVideo;
 
 
 
-},{"../../../../../shared/helpers/string":367,"../../../../../shared/react/mixins/connectStore":377,"../../../actions/editor":12,"../../../stores/EditorStore":355,"../Embed/Embed":56,"../fields/Text":70,"./Video/Welcome":83}],83:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":368,"../../../../../shared/react/mixins/connectStore":378,"../../../actions/editor":12,"../../../stores/EditorStore":356,"../Embed/Embed":56,"../fields/Text":70,"./Video/Welcome":83}],83:[function(require,module,exports){
 var EditorTypeVideoWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -15633,7 +15632,7 @@ var FeedBricks = React.createClass({
 
 module.exports = FeedBricks;
 
-},{"../common/infiniteScroll/index":122,"masonry-layout":"masonry-layout"}],86:[function(require,module,exports){
+},{"../common/infiniteScroll/index":126,"masonry-layout":"masonry-layout"}],86:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -15683,7 +15682,7 @@ var FeedTlog = React.createClass({
 
 module.exports = FeedTlog;
 
-},{"../common/infiniteScroll/index":122}],87:[function(require,module,exports){
+},{"../common/infiniteScroll/index":126}],87:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -15767,7 +15766,7 @@ Popup = managePositions(Popup);
 
 module.exports = Popup;
 
-},{"../../../../shared/react/components/higherOrder/managePositions":376,"./PopupHeader":89}],88:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/managePositions":377,"./PopupHeader":89}],88:[function(require,module,exports){
 "use strict";
 
 var PopupArea = React.createClass({
@@ -15864,7 +15863,7 @@ var PopupHeader = React.createClass({
 
 module.exports = PopupHeader;
 
-},{"./PopupSpinner":90,"classnames":386}],90:[function(require,module,exports){
+},{"./PopupSpinner":90,"classnames":387}],90:[function(require,module,exports){
 "use strict";
 
 var PopupSpinner = React.createClass({
@@ -16058,7 +16057,7 @@ var SearchResultsFeed = React.createClass({
 
 module.exports = SearchResultsFeed;
 
-},{"../common/infiniteScroll/index":122,"masonry-layout":"masonry-layout"}],93:[function(require,module,exports){
+},{"../common/infiniteScroll/index":126,"masonry-layout":"masonry-layout"}],93:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -16100,7 +16099,7 @@ var SearchResultsTlog = React.createClass({
 
 module.exports = SearchResultsTlog;
 
-},{"../common/infiniteScroll/index":122}],94:[function(require,module,exports){
+},{"../common/infiniteScroll/index":126}],94:[function(require,module,exports){
 "use strict";
 
 var Searchbox = React.createClass({
@@ -16168,6 +16167,280 @@ var Searchbox = React.createClass({
 module.exports = Searchbox;
 
 },{}],95:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var Timer = _interopRequire(require("../../entities/Timer"));
+
+var TYPE = "success",
+    TIMEOUT = 3000;
+
+var Notice = React.createClass({
+  displayName: "Notice",
+
+  propTypes: {
+    text: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string,
+    timeout: React.PropTypes.number,
+    onClose: React.PropTypes.func.isRequired
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      type: TYPE,
+      timeout: TIMEOUT
+    };
+  },
+
+  componentDidMount: function componentDidMount() {
+    this.calculateStyles();
+    this.timer = new Timer(this.close, this.props.timeout);
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this.calculateStyles();
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.pause();
+  },
+
+  render: function render() {
+    return React.createElement(
+      "div",
+      { className: "notice notice--" + this.props.type,
+        onClick: this.close,
+        onMouseEnter: this.pause,
+        onMouseLeave: this.resume },
+      React.createElement(
+        "div",
+        { className: "notice__inner" },
+        this.props.text
+      )
+    );
+  },
+
+  calculateStyles: function calculateStyles() {
+    var node = this.getDOMNode();
+    node.style.marginLeft = "" + node.offsetWidth / 2 * -1 + "px";
+  },
+
+  close: function close() {
+    var $node = $(this.getDOMNode());
+    $node.fadeOut("fast", this.props.onClose);
+  },
+
+  pause: function pause() {
+    if (this.timer != null) {
+      this.timer.pause();
+    }
+  },
+
+  resume: function resume() {
+    if (this.timer != null) {
+      this.timer.resume();
+    }
+  }
+});
+
+module.exports = Notice;
+
+},{"../../entities/Timer":284}],96:[function(require,module,exports){
+var FADE_DURATION;
+
+FADE_DURATION = 300;
+
+window.TastyAlert = React.createClass({
+  mixins: [ReactUnmountMixin],
+  propTypes: {
+    title: React.PropTypes.string,
+    message: React.PropTypes.string.isRequired,
+    buttonText: React.PropTypes.string,
+    buttonColor: React.PropTypes.string,
+    onAccept: React.PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      buttonText: 'OK',
+      buttonColor: 'red'
+    };
+  },
+  componentDidMount: function() {
+    this.open();
+    return $('body').addClass('no-scroll confirmation-enabled');
+  },
+  componentWillUnmount: function() {
+    return $('body').removeClass('no-scroll confirmation-enabled');
+  },
+  render: function() {
+    var title;
+    if (this.props.title) {
+      title = React.createElement("b", null, this.props.title);
+    }
+    return React.createElement("div", {
+      "className": "confirmation"
+    }, React.createElement("div", {
+      "className": "confirmation__main"
+    }, React.createElement("div", {
+      "className": "confirmation__cell"
+    }, React.createElement("div", {
+      "className": "confirmation__box"
+    }, title, React.createElement("div", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.message || ''
+      },
+      "className": "confirmation__text"
+    }), React.createElement("div", {
+      "className": "confirmation__buttons"
+    }, React.createElement("button", {
+      "onClick": this.onAccept,
+      "className": "button button--" + this.props.buttonColor + " button--small"
+    }, this.props.buttonText))))));
+  },
+  open: function() {
+    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
+  },
+  close: function() {
+    return $(this.getDOMNode()).fadeOut(FADE_DURATION, this.unmount);
+  },
+  onAccept: function() {
+    this.close();
+    if (this.props.onAccept != null) {
+      return this.props.onAccept();
+    }
+  }
+});
+
+
+
+},{}],97:[function(require,module,exports){
+var FADE_DURATION;
+
+FADE_DURATION = 300;
+
+window.TastyConfirm = React.createClass({
+  mixins: [ReactUnmountMixin],
+  propTypes: {
+    message: React.PropTypes.string.isRequired,
+    onAccept: React.PropTypes.func.isRequired,
+    acceptButtonText: React.PropTypes.string,
+    rejectButtonText: React.PropTypes.string,
+    acceptButtonColor: React.PropTypes.string
+  },
+  getDefaultProps: function() {
+    return {
+      acceptButtonText: 'OK',
+      rejectButtonText: 'Отмена',
+      acceptButtonColor: 'red'
+    };
+  },
+  componentDidMount: function() {
+    this.open();
+    $('body').addClass('no-scroll confirmation-enabled');
+    return Mousetrap.bind('esc', this.close);
+  },
+  componentWillUnmount: function() {
+    $('body').removeClass('no-scroll confirmation-enabled');
+    return Mousetrap.unbind('esc', this.close);
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "confirmation"
+    }, React.createElement("div", {
+      "className": "confirmation__main"
+    }, React.createElement("div", {
+      "className": "confirmation__cell"
+    }, React.createElement("div", {
+      "onClick": this.close,
+      "className": "confirmation__close"
+    }, React.createElement("i", {
+      "className": "icon icon--cross"
+    })), React.createElement("div", {
+      "className": "confirmation__box"
+    }, React.createElement("div", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.message || ''
+      },
+      "className": "confirmation__text"
+    }), React.createElement("div", {
+      "className": "confirmation__buttons"
+    }, React.createElement("button", {
+      "onClick": this.onAccept,
+      "className": "button button--" + this.props.acceptButtonColor + " button--small"
+    }, this.props.acceptButtonText))))));
+  },
+  open: function() {
+    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
+  },
+  close: function() {
+    return $(this.getDOMNode()).fadeOut(FADE_DURATION, this.unmount);
+  },
+  onAccept: function() {
+    this.close();
+    return this.props.onAccept.call();
+  }
+});
+
+
+
+},{}],98:[function(require,module,exports){
+var FADE_DURATION, START_TIMEOUT;
+
+FADE_DURATION = 300;
+
+START_TIMEOUT = 3000;
+
+window.TastyLockingAlert = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string,
+    message: React.PropTypes.string.isRequired,
+    action: React.PropTypes.func.isRequired
+  },
+  componentDidMount: function() {
+    this.open();
+    setTimeout(((function(_this) {
+      return function() {
+        return _this.props.action();
+      };
+    })(this)), START_TIMEOUT);
+    return $('body').addClass('no-scroll confirmation-enabled');
+  },
+  componentWillUnmount: function() {
+    return $('body').removeClass('no-scroll confirmation-enabled');
+  },
+  render: function() {
+    var title;
+    if (this.props.title) {
+      title = React.createElement("b", null, this.props.title);
+    }
+    return React.createElement("div", {
+      "className": "confirmation"
+    }, React.createElement("div", {
+      "className": "confirmation__main"
+    }, React.createElement("div", {
+      "className": "confirmation__cell"
+    }, React.createElement("div", {
+      "className": "confirmation__box"
+    }, title, React.createElement("div", {
+      "dangerouslySetInnerHTML": {
+        __html: this.props.message || ''
+      },
+      "className": "confirmation__text"
+    }), React.createElement("div", {
+      "className": "confirmation__buttons"
+    }, React.createElement(Spinner, {
+      "size": 31.
+    }))))));
+  },
+  open: function() {
+    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
+  }
+});
+
+
+
+},{}],99:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -16265,7 +16538,7 @@ window.Auth = React.createClass({
 
 
 
-},{"classnames":386}],96:[function(require,module,exports){
+},{"classnames":387}],100:[function(require,module,exports){
 window.AuthorizationShellbox = React.createClass({
   render: function() {
     var boxStyle, entriesCount, usersCount;
@@ -16337,7 +16610,7 @@ window.AuthorizationShellbox = React.createClass({
 
 
 
-},{}],97:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 var AUTH_TIMEOUT;
 
 AUTH_TIMEOUT = 30000;
@@ -16378,7 +16651,7 @@ window.FacebookAuthorizationShellbox = React.createClass({
 
 
 
-},{}],98:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 var AUTH_TIMEOUT;
 
 AUTH_TIMEOUT = 30000;
@@ -16419,7 +16692,7 @@ window.VkAuthorizationShellbox = React.createClass({
 
 
 
-},{}],99:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 window.Shellbox_FacebookAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -16468,7 +16741,7 @@ window.Shellbox_FacebookAuthButton = React.createClass({
 
 
 
-},{}],100:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 window.Shellbox_VkAuthButton = React.createClass({
   propTypes: {
     isActive: React.PropTypes.bool
@@ -16517,7 +16790,7 @@ window.Shellbox_VkAuthButton = React.createClass({
 
 
 
-},{}],101:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var EmailFooter;
 
 EmailFooter = React.createClass({
@@ -16550,7 +16823,7 @@ module.exports = EmailFooter;
 
 
 
-},{}],102:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 var EmailSubmitButton;
 
 EmailSubmitButton = React.createClass({
@@ -16587,7 +16860,7 @@ module.exports = EmailSubmitButton;
 
 
 
-},{}],103:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 var ConfirmRegistrationMixin, EmailConfirmRegistration;
 
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
@@ -16641,7 +16914,7 @@ module.exports = EmailConfirmRegistration;
 
 
 
-},{"../mixins/confirm_registration":108}],104:[function(require,module,exports){
+},{"../mixins/confirm_registration":112}],108:[function(require,module,exports){
 var EmailFooter, EmailLoginField, EmailMixin, EmailPasswordField, EmailSubmitButton;
 
 EmailFooter = require('./_partials/footer');
@@ -16712,7 +16985,7 @@ window.Email = React.createClass({
 
 
 
-},{"./_partials/footer":101,"./buttons/submit":102,"./fields/login":105,"./fields/password":106,"./mixins/email":107}],105:[function(require,module,exports){
+},{"./_partials/footer":105,"./buttons/submit":106,"./fields/login":109,"./fields/password":110,"./mixins/email":111}],109:[function(require,module,exports){
 var EmailLoginField, classnames;
 
 classnames = require('classnames');
@@ -16755,7 +17028,7 @@ module.exports = EmailLoginField;
 
 
 
-},{"classnames":386}],106:[function(require,module,exports){
+},{"classnames":387}],110:[function(require,module,exports){
 var EmailPasswordField, classnames;
 
 classnames = require('classnames');
@@ -16798,7 +17071,7 @@ module.exports = EmailPasswordField;
 
 
 
-},{"classnames":386}],107:[function(require,module,exports){
+},{"classnames":387}],111:[function(require,module,exports){
 var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
 
 EmailConfirmRegistration = require('../confirm_registration');
@@ -16816,10 +17089,10 @@ EmailMixin = {
     password = this.refs.password.getValue();
     switch (false) {
       case login.length !== 0:
-        TastyNotifyController.notifyError(i18n.t('empty_login_error'));
+        NoticeService.notifyError(i18n.t('empty_login_error'));
         return false;
       case password.length !== 0:
-        TastyNotifyController.notifyError(i18n.t('empty_password_error'));
+        NoticeService.notifyError(i18n.t('empty_password_error'));
         return false;
       default:
         return true;
@@ -16841,7 +17114,7 @@ EmailMixin = {
       },
       success: (function(_this) {
         return function(data) {
-          TastyNotifyController.notifySuccess(i18n.t('signin_success', {
+          NoticeService.notifySuccess(i18n.t('signin_success', {
             userSlug: data.name
           }));
           ReactApp.shellbox.close();
@@ -16874,7 +17147,7 @@ EmailMixin = {
                 }
             }
           }
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -16931,7 +17204,7 @@ module.exports = EmailMixin;
 
 
 
-},{"../confirm_registration":103}],108:[function(require,module,exports){
+},{"../confirm_registration":107}],112:[function(require,module,exports){
 var ConfirmRegistrationMixin, USER_EXISTS_MESSAGE;
 
 USER_EXISTS_MESSAGE = 'user_creator/user_exists';
@@ -16956,7 +17229,7 @@ ConfirmRegistrationMixin = {
       },
       success: (function(_this) {
         return function(data) {
-          TastyNotifyController.notifySuccess(i18n.t('signup_success', {
+          NoticeService.notifySuccess(i18n.t('signup_success', {
             userSlug: data.name
           }));
           ReactApp.shellbox.close();
@@ -16972,7 +17245,7 @@ ConfirmRegistrationMixin = {
           } else {
             _this.shake();
           }
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -17001,7 +17274,7 @@ module.exports = ConfirmRegistrationMixin;
 
 
 
-},{}],109:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 window.RecoveryShellbox = React.createClass({
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin],
   getInitialState: function() {
@@ -17023,7 +17296,7 @@ window.RecoveryShellbox = React.createClass({
     slug = this.refs.slug.getDOMNode().value;
     if (slug.length < 1) {
       this.shake();
-      TastyNotifyController.notifyError(i18n.t('empty_login_error'));
+      NoticeService.notifyError(i18n.t('empty_login_error'));
       return;
     }
     this.setState({
@@ -17037,7 +17310,7 @@ window.RecoveryShellbox = React.createClass({
       method: 'POST',
       success: (function(_this) {
         return function(data) {
-          TastyNotifyController.notifySuccess(i18n.t('recovery_mail_sent'), 10000);
+          NoticeService.notifySuccess(i18n.t('recovery_mail_sent'), 10000);
           return ReactApp.shellbox.close();
         };
       })(this),
@@ -17045,7 +17318,7 @@ window.RecoveryShellbox = React.createClass({
         return function(data) {
           _this.shake();
           _this.refs.slug.getDOMNode().focus();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -17110,7 +17383,7 @@ window.RecoveryShellbox = React.createClass({
 
 
 
-},{}],110:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var ConfirmRegistrationMixin, SocialNetworksConfirmRegistration;
 
 ConfirmRegistrationMixin = require('../mixins/confirm_registration');
@@ -17157,7 +17430,7 @@ module.exports = SocialNetworksConfirmRegistration;
 
 
 
-},{"../mixins/confirm_registration":108}],111:[function(require,module,exports){
+},{"../mixins/confirm_registration":112}],115:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -17221,7 +17494,7 @@ window.Avatar = React.createClass({
 
 
 
-},{"classnames":386}],112:[function(require,module,exports){
+},{"classnames":387}],116:[function(require,module,exports){
 window.UserAvatar = React.createClass({
   displayName: 'UserAvatar',
   propTypes: {
@@ -17258,7 +17531,7 @@ window.UserAvatar = React.createClass({
 
 
 
-},{}],113:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 window.LoadMoreButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -17275,7 +17548,7 @@ window.LoadMoreButton = React.createClass({
 
 
 
-},{}],114:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var CALENDAR_CLOSED, CALENDAR_OPENED_BY_CLICK, CALENDAR_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, TARGET_POST_CLASS, TARGET_POST_PARENT_CLASS, classnames;
 
 classnames = require('classnames');
@@ -17373,7 +17646,7 @@ window.Calendar = React.createClass({
       })(this),
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this)
     });
@@ -17492,7 +17765,7 @@ window.Calendar = React.createClass({
 
 
 
-},{"classnames":386}],115:[function(require,module,exports){
+},{"classnames":387}],119:[function(require,module,exports){
 window.CalendarHeader = React.createClass({
   propTypes: {
     date: React.PropTypes.object.isRequired
@@ -17519,7 +17792,7 @@ window.CalendarHeader = React.createClass({
 
 
 
-},{}],116:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -17571,7 +17844,7 @@ window.CalendarMarker = React.createClass({
 
 
 
-},{"classnames":386}],117:[function(require,module,exports){
+},{"classnames":387}],121:[function(require,module,exports){
 window.CalendarPeriod = React.createClass({
   propTypes: {
     period: React.PropTypes.object.isRequired,
@@ -17604,7 +17877,7 @@ window.CalendarPeriod = React.createClass({
 
 
 
-},{}],118:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 window.CalendarTimeline = React.createClass({
   propTypes: {
     periods: React.PropTypes.array.isRequired,
@@ -17637,7 +17910,7 @@ window.CalendarTimeline = React.createClass({
 
 
 
-},{}],119:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 var DropZone, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -17695,7 +17968,7 @@ module.exports = DropZone;
 
 
 
-},{}],120:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 "use strict";
 
 var SelectBox = React.createClass({
@@ -17759,7 +18032,7 @@ var SelectBox = React.createClass({
 
 module.exports = SelectBox;
 
-},{}],121:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 window.AdaptiveInput = React.createClass({
   propTypes: {
     type: React.PropTypes.string,
@@ -17802,7 +18075,7 @@ window.AdaptiveInput = React.createClass({
 
 
 
-},{}],122:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 var InfiniteScroll, PropTypes, THRESHOLD, windowHeight;
 
 PropTypes = React.PropTypes;
@@ -17871,7 +18144,7 @@ module.exports = InfiniteScroll;
 
 
 
-},{}],123:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 "use strict";
 
 var Scroller = React.createClass({
@@ -17968,7 +18241,7 @@ var Scroller = React.createClass({
 
 module.exports = Scroller;
 
-},{}],124:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 var KEYCODE_ENTER, LinkedStateMixin, classnames;
 
 classnames = require('classnames');
@@ -18086,7 +18359,7 @@ window.EditableField = React.createClass({
 
 
 
-},{"classnames":386,"react/lib/LinkedStateMixin":437}],125:[function(require,module,exports){
+},{"classnames":387,"react/lib/LinkedStateMixin":438}],129:[function(require,module,exports){
 "use strict";
 
 var EmbedComponent = React.createClass({
@@ -18185,7 +18458,7 @@ var EmbedComponentWithCover = React.createClass({
 
 module.exports = EmbedComponent;
 
-},{}],126:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 window.EntryCommentBox_CommentFormSubmit = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
@@ -18206,7 +18479,7 @@ window.EntryCommentBox_CommentFormSubmit = React.createClass({
 
 
 
-},{}],127:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 var FORM_STATE, HIDDEN_STATE, LINK_STATE;
 
 HIDDEN_STATE = 'hidden';
@@ -18347,7 +18620,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
           _this.safeUpdateState({
             isPostError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -18366,7 +18639,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass({
 
 
 
-},{}],128:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 window.EntryCommentBox_CommentEditFormManager = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -18413,7 +18686,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
           _this.safeUpdateState({
             isEditError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -18429,7 +18702,7 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
 
 
 
-},{}],129:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var REPLIES_LIMIT;
 
 REPLIES_LIMIT = 5;
@@ -18582,7 +18855,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
 
 
 
-},{}],130:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -18655,7 +18928,7 @@ window.EntryCommentBox_Comment = React.createClass({
 
 
 
-},{"classnames":386}],131:[function(require,module,exports){
+},{"classnames":387}],135:[function(require,module,exports){
 window.EntryCommentBox_CommentList = React.createClass({
   propTypes: {
     comments: React.PropTypes.array.isRequired,
@@ -18708,7 +18981,7 @@ window.EntryCommentBox_CommentList = React.createClass({
 
 
 
-},{}],132:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -18781,7 +19054,7 @@ window.EntryCommentBox_CommentManager = React.createClass({
 
 
 
-},{"classnames":386}],133:[function(require,module,exports){
+},{"classnames":387}],137:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBar = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -18822,7 +19095,7 @@ window.EntryCommentBox_CommentMetaBar = React.createClass({
 
 
 
-},{}],134:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -18860,7 +19133,7 @@ window.EntryCommentBox_CommentMetaBarDate = React.createClass({
 
 
 
-},{}],135:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MOUSE_LEAVE_TIMEOUT, classnames;
 
 classnames = require('classnames');
@@ -18983,7 +19256,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenu = React.createClass({
 
 
 
-},{"classnames":386}],136:[function(require,module,exports){
+},{"classnames":387}],140:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -19017,14 +19290,14 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
       },
       success: (function(_this) {
         return function() {
-          TastyNotifyController.notifySuccess(i18n.t('delete_comment_success'));
+          NoticeService.notifySuccess(i18n.t('delete_comment_success'));
           if (_this.props.onDelete != null) {
             return _this.props.onDelete();
           }
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   }
@@ -19032,7 +19305,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuDeleteItem = React.createClass(
 
 
 
-},{}],137:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -19054,7 +19327,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuEditItem = React.createClass({
 
 
 
-},{}],138:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
   propTypes: {
     commentId: React.PropTypes.number.isRequired
@@ -19075,7 +19348,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuLinkItem = React.createClass({
 
 
 
-},{}],139:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -19105,11 +19378,11 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
       method: 'POST',
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('report_comment_success'));
+          return NoticeService.notifySuccess(i18n.t('report_comment_success'));
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   }
@@ -19117,7 +19390,7 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass(
 
 
 
-},{}],140:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 window.EntryCommentBox_CommentMetaBarReply = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -19136,7 +19409,7 @@ window.EntryCommentBox_CommentMetaBarReply = React.createClass({
 
 
 
-},{}],141:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 var MORE_COMMENTS_LIMIT;
 
 MORE_COMMENTS_LIMIT = 50;
@@ -19212,7 +19485,7 @@ window.EntryCommentBox = React.createClass({
 
 
 
-},{}],142:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 window.EntryCommentBox_LoadMore = React.createClass({
   propTypes: {
     totalCount: React.PropTypes.number.isRequired,
@@ -19247,7 +19520,7 @@ window.EntryCommentBox_LoadMore = React.createClass({
 
 
 
-},{}],143:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var CommentsMixin;
 
 CommentsMixin = {
@@ -19299,7 +19572,7 @@ CommentsMixin = {
           _this.safeUpdateState({
             isLoadError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -19339,7 +19612,7 @@ CommentsMixin = {
           _this.safeUpdateState({
             isLoadError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -19381,7 +19654,7 @@ CommentsMixin = {
           _this.safeUpdateState({
             isLoadMoreError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -19423,7 +19696,7 @@ React.mixins.add('CommentsMixin', [CommentsMixin, RequesterMixin, ComponentManip
 
 
 
-},{}],144:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 window.EntryMetabarAuthor = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -19448,7 +19721,7 @@ window.EntryMetabarAuthor = React.createClass({
 
 
 
-},{}],145:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 window.EntryMetabarComment = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -19492,7 +19765,7 @@ window.EntryMetabarComment = React.createClass({
 
 
 
-},{}],146:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 window.EntryMetabarDate = React.createClass({
   propTypes: {
     time: React.PropTypes.string.isRequired,
@@ -19525,7 +19798,7 @@ window.EntryMetabarDate = React.createClass({
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED_BY_CLICK, DROPDOWN_OPENED_BY_HOVER, MARGIN_BETWEEN_TOGGLER_AND_MENU, MOUSE_LEAVE_TIMEOUT, classnames;
 
 classnames = require('classnames');
@@ -19710,7 +19983,7 @@ window.EntryMetabarDropdownMenu = React.createClass({
 
 
 
-},{"classnames":386}],148:[function(require,module,exports){
+},{"classnames":387}],152:[function(require,module,exports){
 window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
   mixins: [RequesterMixin, 'ReactActivitiesUser', DOMManipulationsMixin],
   propTypes: {
@@ -19772,7 +20045,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
       })(this),
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -19789,7 +20062,7 @@ window.EntryMetabarDropdownMenuDeleteItem = React.createClass({
 
 
 
-},{}],149:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -19857,7 +20130,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   },
@@ -19882,7 +20155,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   },
@@ -19900,7 +20173,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass({
 
 
 
-},{"classnames":386}],150:[function(require,module,exports){
+},{"classnames":387}],154:[function(require,module,exports){
 window.EntryMetabarDropdownMenuItem = React.createClass({
   propTypes: {
     href: React.PropTypes.string.isRequired,
@@ -19919,7 +20192,7 @@ window.EntryMetabarDropdownMenuItem = React.createClass({
 
 
 
-},{}],151:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 window.EntryMetabarDropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -19948,11 +20221,11 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
       method: 'POST',
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('report_entry_success'));
+          return NoticeService.notifySuccess(i18n.t('report_entry_success'));
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   }
@@ -19960,7 +20233,7 @@ window.EntryMetabarDropdownMenuReportItem = React.createClass({
 
 
 
-},{}],152:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 window.EntryMetabarDropdownMenuWatchItem = React.createClass({
   mixins: [RequesterMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -20019,7 +20292,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   },
@@ -20040,7 +20313,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   },
@@ -20058,7 +20331,7 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
 
 
 
-},{}],153:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 window.EntryMetabar = React.createClass({
   propTypes: {
     entryId: React.PropTypes.number.isRequired,
@@ -20127,7 +20400,7 @@ window.EntryMetabar = React.createClass({
 
 
 
-},{}],154:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 window.EntryMetabarTag = React.createClass({
   propTypes: {
     tag: React.PropTypes.string.isRequired
@@ -20144,7 +20417,7 @@ window.EntryMetabarTag = React.createClass({
 
 
 
-},{}],155:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 window.EntryMetabarTags = React.createClass({
   propTypes: {
     tags: React.PropTypes.array.isRequired
@@ -20184,7 +20457,7 @@ window.EntryMetabarTags = React.createClass({
 
 
 
-},{}],156:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 
 CLASS_PREFIX_STATE = 'state--';
@@ -20267,7 +20540,7 @@ window.FollowStatus = React.createClass({
 
 
 
-},{}],157:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 "use strict";
 
 var HeroProfile_SettingsButton = React.createClass({
@@ -20292,7 +20565,7 @@ var HeroProfile_SettingsButton = React.createClass({
 
 module.exports = HeroProfile_SettingsButton;
 
-},{}],158:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 var DROPDOWN_CLOSED, DROPDOWN_OPENED, MOUSE_LEAVE_TIMEOUT, classnames;
 
 classnames = require('classnames');
@@ -20395,7 +20668,7 @@ window.HeroProfile_DropdownMenu = React.createClass({
 
 
 
-},{"classnames":386}],159:[function(require,module,exports){
+},{"classnames":387}],163:[function(require,module,exports){
 window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -20421,7 +20694,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
         };
       })(this),
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     }, {
       progressBar: true
@@ -20431,7 +20704,7 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass({
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 window.HeroProfile_DropdownMenuReportItem = React.createClass({
   mixins: [RequesterMixin],
   propTypes: {
@@ -20451,11 +20724,11 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({
       url: ApiRoutes.tlog_report(this.props.userId),
       method: 'POST',
       success: function() {
-        TastyNotifyController.notifySuccess(i18n.t('report_user_success'));
+        NoticeService.notifySuccess(i18n.t('report_user_success'));
         return this.props.onRequestEnd();
       },
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     }, {
       progressBar: true
@@ -20465,7 +20738,7 @@ window.HeroProfile_DropdownMenuReportItem = React.createClass({
 
 
 
-},{}],161:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 window.HeroProfileStats_FollowersPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -20551,7 +20824,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({
           _this.safeUpdateState({
             isError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -20570,7 +20843,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass({
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 window.HeroProfileStats_FollowingsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -20656,7 +20929,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
           _this.safeUpdateState({
             isError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -20675,7 +20948,7 @@ window.HeroProfileStats_FollowingsPopup = React.createClass({
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 window.HeroProfileStats_FollowerItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -20702,7 +20975,7 @@ window.HeroProfileStats_FollowerItem = React.createClass({
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 window.HeroProfileStats_FollowingItem = React.createClass({
   propTypes: {
     relationship: React.PropTypes.object.isRequired
@@ -20729,7 +21002,7 @@ window.HeroProfileStats_FollowingItem = React.createClass({
 
 
 
-},{}],165:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 window.HeroProfileStats_TagItem = React.createClass({
   propTypes: {
     tag: React.PropTypes.object.isRequired
@@ -20751,7 +21024,7 @@ window.HeroProfileStats_TagItem = React.createClass({
 
 
 
-},{}],166:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 var FADE_DURATION, MARGIN;
 
 MARGIN = 10;
@@ -20834,7 +21107,7 @@ window.HeroProfileStats_Popup = React.createClass({
 
 
 
-},{}],167:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
@@ -20920,7 +21193,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
           _this.safeUpdateState({
             isError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -20939,7 +21212,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
 
 
 
-},{}],168:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 var HERO_CLOSED, HERO_OPENED, HERO_OPENED_CLASS, HeroProfile_SettingsButton, PopupActions;
 
 PopupActions = require('../../../actions/popup');
@@ -21121,7 +21394,7 @@ window.HeroProfile = React.createClass({
 
 
 
-},{"../../../actions/popup":14,"./buttons/Settings":157}],169:[function(require,module,exports){
+},{"../../../actions/popup":14,"./buttons/Settings":161}],173:[function(require,module,exports){
 var HERO_AVATAR_SIZE;
 
 HERO_AVATAR_SIZE = 220;
@@ -21146,7 +21419,7 @@ window.HeroProfileAvatar = React.createClass({
 
 
 
-},{}],170:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 window.HeroProfileHead = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -21212,7 +21485,7 @@ window.HeroProfileHeadStatic = React.createClass({
 
 
 
-},{}],171:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 window.HeroProfileStats = React.createClass({
   mixins: [ReactGrammarMixin],
   propTypes: {
@@ -21351,7 +21624,7 @@ window.HeroProfileStats = React.createClass({
 
 
 
-},{}],172:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -21392,7 +21665,7 @@ window.HeroProfileStatsItem = React.createClass({
 
 
 
-},{"classnames":386}],173:[function(require,module,exports){
+},{"classnames":387}],177:[function(require,module,exports){
 var FIRST_ROW_RATIO, NEXT_ROWS_RATIO, update;
 
 update = require('react/lib/update');
@@ -21551,251 +21824,7 @@ window.ImagesCollage_Legacy = React.createClass({
 
 
 
-},{"react/lib/update":576}],174:[function(require,module,exports){
-var FADE_DURATION;
-
-FADE_DURATION = 300;
-
-window.TastyAlert = React.createClass({
-  mixins: [ReactUnmountMixin],
-  propTypes: {
-    title: React.PropTypes.string,
-    message: React.PropTypes.string.isRequired,
-    buttonText: React.PropTypes.string,
-    buttonColor: React.PropTypes.string,
-    onAccept: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      buttonText: 'OK',
-      buttonColor: 'red'
-    };
-  },
-  componentDidMount: function() {
-    this.open();
-    return $('body').addClass('no-scroll confirmation-enabled');
-  },
-  componentWillUnmount: function() {
-    return $('body').removeClass('no-scroll confirmation-enabled');
-  },
-  render: function() {
-    var title;
-    if (this.props.title) {
-      title = React.createElement("b", null, this.props.title);
-    }
-    return React.createElement("div", {
-      "className": "confirmation"
-    }, React.createElement("div", {
-      "className": "confirmation__main"
-    }, React.createElement("div", {
-      "className": "confirmation__cell"
-    }, React.createElement("div", {
-      "className": "confirmation__box"
-    }, title, React.createElement("div", {
-      "dangerouslySetInnerHTML": {
-        __html: this.props.message || ''
-      },
-      "className": "confirmation__text"
-    }), React.createElement("div", {
-      "className": "confirmation__buttons"
-    }, React.createElement("button", {
-      "onClick": this.onAccept,
-      "className": "button button--" + this.props.buttonColor + " button--small"
-    }, this.props.buttonText))))));
-  },
-  open: function() {
-    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
-  },
-  close: function() {
-    return $(this.getDOMNode()).fadeOut(FADE_DURATION, this.unmount);
-  },
-  onAccept: function() {
-    this.close();
-    if (this.props.onAccept != null) {
-      return this.props.onAccept();
-    }
-  }
-});
-
-
-
-},{}],175:[function(require,module,exports){
-var FADE_DURATION;
-
-FADE_DURATION = 300;
-
-window.TastyConfirm = React.createClass({
-  mixins: [ReactUnmountMixin],
-  propTypes: {
-    message: React.PropTypes.string.isRequired,
-    onAccept: React.PropTypes.func.isRequired,
-    acceptButtonText: React.PropTypes.string,
-    rejectButtonText: React.PropTypes.string,
-    acceptButtonColor: React.PropTypes.string
-  },
-  getDefaultProps: function() {
-    return {
-      acceptButtonText: 'OK',
-      rejectButtonText: 'Отмена',
-      acceptButtonColor: 'red'
-    };
-  },
-  componentDidMount: function() {
-    this.open();
-    $('body').addClass('no-scroll confirmation-enabled');
-    return Mousetrap.bind('esc', this.close);
-  },
-  componentWillUnmount: function() {
-    $('body').removeClass('no-scroll confirmation-enabled');
-    return Mousetrap.unbind('esc', this.close);
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "confirmation"
-    }, React.createElement("div", {
-      "className": "confirmation__main"
-    }, React.createElement("div", {
-      "className": "confirmation__cell"
-    }, React.createElement("div", {
-      "onClick": this.close,
-      "className": "confirmation__close"
-    }, React.createElement("i", {
-      "className": "icon icon--cross"
-    })), React.createElement("div", {
-      "className": "confirmation__box"
-    }, React.createElement("div", {
-      "dangerouslySetInnerHTML": {
-        __html: this.props.message || ''
-      },
-      "className": "confirmation__text"
-    }), React.createElement("div", {
-      "className": "confirmation__buttons"
-    }, React.createElement("button", {
-      "onClick": this.onAccept,
-      "className": "button button--" + this.props.acceptButtonColor + " button--small"
-    }, this.props.acceptButtonText))))));
-  },
-  open: function() {
-    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
-  },
-  close: function() {
-    return $(this.getDOMNode()).fadeOut(FADE_DURATION, this.unmount);
-  },
-  onAccept: function() {
-    this.close();
-    return this.props.onAccept.call();
-  }
-});
-
-
-
-},{}],176:[function(require,module,exports){
-var FADE_DURATION, START_TIMEOUT;
-
-FADE_DURATION = 300;
-
-START_TIMEOUT = 3000;
-
-window.TastyLockingAlert = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string,
-    message: React.PropTypes.string.isRequired,
-    action: React.PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.open();
-    setTimeout(((function(_this) {
-      return function() {
-        return _this.props.action();
-      };
-    })(this)), START_TIMEOUT);
-    return $('body').addClass('no-scroll confirmation-enabled');
-  },
-  componentWillUnmount: function() {
-    return $('body').removeClass('no-scroll confirmation-enabled');
-  },
-  render: function() {
-    var title;
-    if (this.props.title) {
-      title = React.createElement("b", null, this.props.title);
-    }
-    return React.createElement("div", {
-      "className": "confirmation"
-    }, React.createElement("div", {
-      "className": "confirmation__main"
-    }, React.createElement("div", {
-      "className": "confirmation__cell"
-    }, React.createElement("div", {
-      "className": "confirmation__box"
-    }, title, React.createElement("div", {
-      "dangerouslySetInnerHTML": {
-        __html: this.props.message || ''
-      },
-      "className": "confirmation__text"
-    }), React.createElement("div", {
-      "className": "confirmation__buttons"
-    }, React.createElement(Spinner, {
-      "size": 31.
-    }))))));
-  },
-  open: function() {
-    return $(this.getDOMNode()).css('display', 'none').fadeIn(FADE_DURATION);
-  }
-});
-
-
-
-},{}],177:[function(require,module,exports){
-var DEFAULT_TIMEOUT, DEFAULT_TYPE;
-
-DEFAULT_TYPE = 'success';
-
-DEFAULT_TIMEOUT = 3000;
-
-window.TastyNotify = React.createClass({
-  mixins: [ReactUnmountMixin],
-  propTypes: {
-    text: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string,
-    timeout: React.PropTypes.number,
-    onClose: React.PropTypes.func.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      type: DEFAULT_TYPE,
-      timeout: DEFAULT_TIMEOUT
-    };
-  },
-  componentDidMount: function() {
-    var $node;
-    $node = $(this.getDOMNode());
-    $node.css({
-      marginLeft: -($node.width() / 2)
-    });
-    return this.timeout = setTimeout(this.close, this.props.timeout);
-  },
-  componentWillUnmount: function() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    return this.props.onClose(this);
-  },
-  close: function() {
-    return $(this.getDOMNode()).fadeOut('fast', this.unmount);
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "notice notice--" + this.props.type,
-      "onClick": this.close
-    }, React.createElement("div", {
-      "className": "notice__inner"
-    }, this.props.text));
-  }
-});
-
-
-
-},{}],178:[function(require,module,exports){
+},{"react/lib/update":577}],178:[function(require,module,exports){
 window.PeopleItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
@@ -22071,7 +22100,7 @@ window.PersonsPopup_Menu = React.createClass({
         });
       },
       error: function(data) {
-        return TastyNotifyController.errorResponse(data);
+        return NoticeService.errorResponse(data);
       }
     });
   },
@@ -22122,7 +22151,7 @@ window.PersonsPopup_MenuItem = React.createClass({
 
 
 
-},{"classnames":386}],187:[function(require,module,exports){
+},{"classnames":387}],187:[function(require,module,exports){
 var ERROR_STATE, LOADED_STATE, LOADING_STATE;
 
 ERROR_STATE = 'error';
@@ -22259,7 +22288,7 @@ window.PersonsPopup_PanelMixin = {
       error: (function(_this) {
         return function(data) {
           _this.activateErrorState();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -22440,7 +22469,7 @@ window.PersonsPopup_FacebookPanel = React.createClass({
       error: (function(_this) {
         return function(data) {
           _this.activateErrorState();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -22531,11 +22560,11 @@ FacebookSubscribeAllButton = React.createClass({
           type: 'suggestionsSubscribed',
           source: 'facebook'
         });
-        return TastyNotifyController.notifySuccess(i18n.t('facebook_subscribe_all_success'));
+        return NoticeService.notifySuccess(i18n.t('facebook_subscribe_all_success'));
       },
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this)
     });
@@ -22685,7 +22714,7 @@ module.exports = SocialNetworkPanelMixin;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":377}],201:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":378}],201:[function(require,module,exports){
 var PropTypes, SuggestionListMixin;
 
 PropTypes = React.PropTypes;
@@ -22819,7 +22848,7 @@ window.PersonsPopup_VkontaktePanel = React.createClass({
       error: (function(_this) {
         return function(data) {
           _this.activateErrorState();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -22910,11 +22939,11 @@ VkontakteSubscribeAllButton = React.createClass({
           type: 'suggestionsSubscribed',
           source: 'vkontakte'
         });
-        return TastyNotifyController.notifySuccess(i18n.t('vkontakte_subscribe_all_success'));
+        return NoticeService.notifySuccess(i18n.t('vkontakte_subscribe_all_success'));
       },
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this)
     });
@@ -23122,7 +23151,7 @@ window.PopupHeader = React.createClass({
 
 
 
-},{"classnames":386}],212:[function(require,module,exports){
+},{"classnames":387}],212:[function(require,module,exports){
 window.PopupLayout = React.createClass({
   mixins: [ReactUnmountMixin],
   propTypes: {
@@ -23239,7 +23268,7 @@ window.Popup = React.createClass({
 
 
 
-},{"classnames":386}],214:[function(require,module,exports){
+},{"classnames":387}],214:[function(require,module,exports){
 window.PopupSpinner = React.createClass({
   propTypes: {
     hasActivities: React.PropTypes.bool.isRequired
@@ -23317,7 +23346,7 @@ window.PopupBox = React.createClass({
 
 
 
-},{"react/lib/LinkedStateMixin":437}],216:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":438}],216:[function(require,module,exports){
 var STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_REQUESTED;
 
 STATE_FRIEND = 'friend';
@@ -23650,7 +23679,7 @@ window.RelationshipMixin = {
       error: (function(_this) {
         return function(data) {
           _this.startErrorTimer();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23681,7 +23710,7 @@ window.RelationshipMixin = {
       error: (function(_this) {
         return function(data) {
           _this.startErrorTimer();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23705,7 +23734,7 @@ window.RelationshipMixin = {
       },
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this)
     });
@@ -23734,7 +23763,7 @@ window.RelationshipMixin = {
       error: (function(_this) {
         return function(data) {
           _this.startErrorTimer();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23765,7 +23794,7 @@ window.RelationshipMixin = {
       error: (function(_this) {
         return function(data) {
           _this.startErrorTimer();
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23792,7 +23821,7 @@ window.RelationshipMixin = {
       })(this),
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23814,7 +23843,7 @@ window.RelationshipMixin = {
       })(this),
       error: (function(_this) {
         return function(data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       complete: (function(_this) {
@@ -23840,7 +23869,7 @@ window.RelationshipMixin = {
           _this.safeUpdateState({
             isError: true
           });
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this)
     });
@@ -24259,7 +24288,7 @@ window.Search = React.createClass({
 
 
 
-},{"classnames":386}],226:[function(require,module,exports){
+},{"classnames":387}],226:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -24308,7 +24337,7 @@ var SettingsLanguage = React.createClass({
 
 module.exports = SettingsLanguage;
 
-},{"../common/SelectBox/SelectBox":120}],227:[function(require,module,exports){
+},{"../common/SelectBox/SelectBox":124}],227:[function(require,module,exports){
 var SettingsAccounts;
 
 SettingsAccounts = React.createClass({
@@ -24379,7 +24408,7 @@ SettingsAvatar = React.createClass({
       })(this),
       fail: (function(_this) {
         return function(e, data) {
-          return TastyNotifyController.errorResponse(data);
+          return NoticeService.errorResponse(data);
         };
       })(this),
       done: (function(_this) {
@@ -24620,7 +24649,7 @@ module.exports = SettingsEmailEdit;
 
 
 
-},{"classnames":386}],231:[function(require,module,exports){
+},{"classnames":387}],231:[function(require,module,exports){
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
 
 SettingsEmailShow = require('./show');
@@ -24810,7 +24839,7 @@ module.exports = SettingsEmailEstablishEdit;
 
 
 
-},{"classnames":386}],233:[function(require,module,exports){
+},{"classnames":387}],233:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = require('./show');
@@ -25057,7 +25086,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_description_success'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_description_success'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25077,7 +25106,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_privacy_success'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_privacy_success'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25097,7 +25126,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_daylog_success'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_daylog_success'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25117,7 +25146,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_gender_success'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_gender_success'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25139,7 +25168,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          TastyNotifyController.notifySuccess(i18n.t('settings_change_password_success'), 2000);
+          NoticeService.notifySuccess(i18n.t('settings_change_password_success'), 2000);
           return typeof success === "function" ? success() : void 0;
         };
       })(this),
@@ -25160,7 +25189,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_notifications_success'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_notifications_success'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25185,7 +25214,7 @@ SettingsMixin = {
           if (typeof success === "function") {
             success();
           }
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_email_mail_sent'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_email_mail_sent'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25198,7 +25227,7 @@ SettingsMixin = {
   updateLanguage: function(language) {
     this.incrementActivities();
     return CurrentUserViewActions.updateLanguage(language).then((function() {
-      TastyNotifyController.notifySuccess(i18n.t('settings_change_language_success'), 2000);
+      NoticeService.notifySuccess(i18n.t('settings_change_language_success'), 2000);
       return setTimeout((function() {
         return window.location.reload();
       }), 1000);
@@ -25213,7 +25242,7 @@ SettingsMixin = {
       })(this),
       success: (function(_this) {
         return function() {
-          return TastyNotifyController.notifySuccess(i18n.t('settings_change_email_canceled'), 2000);
+          return NoticeService.notifySuccess(i18n.t('settings_change_email_canceled'), 2000);
         };
       })(this),
       complete: (function(_this) {
@@ -25235,7 +25264,7 @@ SettingsMixin = {
       })(this),
       error: error,
       success: function() {
-        TastyNotifyController.notifySuccess(i18n.t('settings_change_email_mail_resent'), 2000);
+        NoticeService.notifySuccess(i18n.t('settings_change_email_mail_resent'), 2000);
         return typeof success === "function" ? success() : void 0;
       },
       complete: (function(_this) {
@@ -25326,10 +25355,10 @@ SettingsPasswordEdit = React.createClass({
     switch (false) {
       case password.length !== 0:
       case passwordConfirm.length !== 0:
-        TastyNotifyController.notifyError(i18n.t('settings_password_empty_error'));
+        NoticeService.notifyError(i18n.t('settings_password_empty_error'));
         return false;
       case password === passwordConfirm:
-        TastyNotifyController.notifyError(i18n.t('settings_password_arent_equals'));
+        NoticeService.notifyError(i18n.t('settings_password_arent_equals'));
         return false;
       default:
         return true;
@@ -25397,7 +25426,7 @@ module.exports = SettingsPasswordEdit;
 
 
 
-},{"classnames":386}],239:[function(require,module,exports){
+},{"classnames":387}],239:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
 
 SettingsPasswordShow = require('./show');
@@ -25644,7 +25673,7 @@ window.Settings = React.createClass({
 
 
 
-},{"./SettingsLanguage":226,"./accounts":227,"./email/email":231,"./header":236,"./mixins/settings":237,"./password/password":239,"./radio_item":241,"react/lib/LinkedStateMixin":437}],243:[function(require,module,exports){
+},{"./SettingsLanguage":226,"./accounts":227,"./email/email":231,"./header":236,"./mixins/settings":237,"./password/password":239,"./radio_item":241,"react/lib/LinkedStateMixin":438}],243:[function(require,module,exports){
 var PropTypes, SettingsSlug;
 
 PropTypes = React.PropTypes;
@@ -25676,7 +25705,7 @@ SettingsSlug = React.createClass({
       });
       return this.props.onChange(slug);
     } else {
-      TastyNotifyController.notifyError(i18n.t('settings_empty_slug_error'), 2000);
+      NoticeService.notifyError(i18n.t('settings_empty_slug_error'), 2000);
       return this.forceUpdate();
     }
   }
@@ -25803,7 +25832,7 @@ window.ShellBox = React.createClass({
 
 
 
-},{"react/lib/cloneWithProps":529}],246:[function(require,module,exports){
+},{"react/lib/cloneWithProps":530}],246:[function(require,module,exports){
 var EmailConfirmRegistration, SocialNetworksConfirmRegistration;
 
 EmailConfirmRegistration = require('../auth/email/confirm_registration');
@@ -25846,7 +25875,7 @@ window.ConfirmRegistrationShellbox = React.createClass({
 
 
 
-},{"../auth/email/confirm_registration":103,"../auth/social_networks/confirm_registration":110}],247:[function(require,module,exports){
+},{"../auth/email/confirm_registration":107,"../auth/social_networks/confirm_registration":114}],247:[function(require,module,exports){
 var STATE_GUESSED, STATE_NONE;
 
 STATE_NONE = 'none';
@@ -26038,7 +26067,7 @@ AvatarToolbarContainer = connectToStores(AvatarToolbarContainer, [CurrentUserSto
 
 module.exports = AvatarToolbarContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":375,"../../stores/current_user":357,"./AvatarToolbar":250}],252:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":376,"../../stores/current_user":358,"./AvatarToolbar":250}],252:[function(require,module,exports){
 "use strict";
 
 var CloseToolbar = React.createClass({
@@ -26164,7 +26193,7 @@ var UserToolbar = React.createClass({
 
 module.exports = UserToolbar;
 
-},{"../common/scroller/scroller":123,"./UserToolbarAdditionalList":254,"./UserToolbarGuestList":256,"./UserToolbarHoverLine":257,"./UserToolbarPrimaryList":259,"./UserToolbarToggle":262,"classnames":386}],254:[function(require,module,exports){
+},{"../common/scroller/scroller":127,"./UserToolbarAdditionalList":254,"./UserToolbarGuestList":256,"./UserToolbarHoverLine":257,"./UserToolbarPrimaryList":259,"./UserToolbarToggle":262,"classnames":387}],254:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -26361,7 +26390,7 @@ UserToolbarContainer = connectToStores(UserToolbarContainer, [CurrentUserStore, 
 
 module.exports = UserToolbarContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":375,"../../actions/Toolbar":10,"../../actions/popup":14,"../../messaging/stores/messaging_status":331,"../../stores/current_user":357,"./UserToolbar":253,"react/lib/Object.assign":441}],256:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":376,"../../actions/Toolbar":10,"../../actions/popup":14,"../../messaging/stores/messaging_status":331,"../../stores/current_user":358,"./UserToolbar":253,"react/lib/Object.assign":442}],256:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -26524,7 +26553,7 @@ var UserToolbarListItem = React.createClass({
 
 module.exports = UserToolbarListItem;
 
-},{"classnames":386}],259:[function(require,module,exports){
+},{"classnames":387}],259:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -26928,7 +26957,7 @@ window.TimeoutTransitionGroup = React.createClass({
 
 
 
-},{"bowser":"bowser","react/lib/ReactTransitionGroup":505}],264:[function(require,module,exports){
+},{"bowser":"bowser","react/lib/ReactTransitionGroup":506}],264:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -27025,7 +27054,7 @@ window.Voting = React.createClass({
 
 
 
-},{"classnames":386}],265:[function(require,module,exports){
+},{"classnames":387}],265:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -27045,7 +27074,7 @@ module.exports = ApiConstants;
 
 
 
-},{"react/lib/keyMirror":562}],266:[function(require,module,exports){
+},{"react/lib/keyMirror":563}],266:[function(require,module,exports){
 var ApiConstants, EditorConstants, UserToolbarConstants;
 
 ApiConstants = require('./api');
@@ -27078,7 +27107,7 @@ var DesignConstants = keyMirror({
 
 module.exports = DesignConstants;
 
-},{"react/lib/keyMirror":562}],268:[function(require,module,exports){
+},{"react/lib/keyMirror":563}],268:[function(require,module,exports){
 var EditorConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -27099,7 +27128,7 @@ module.exports = EditorConstants;
 
 
 
-},{"react/lib/keyMirror":562}],269:[function(require,module,exports){
+},{"react/lib/keyMirror":563}],269:[function(require,module,exports){
 var UserToolbarConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -27113,7 +27142,7 @@ module.exports = UserToolbarConstants;
 
 
 
-},{"react/lib/keyMirror":562}],270:[function(require,module,exports){
+},{"react/lib/keyMirror":563}],270:[function(require,module,exports){
 var GuideController;
 
 GuideController = {
@@ -27540,85 +27569,6 @@ window.TastyLockingAlertController = {
 
 
 },{}],279:[function(require,module,exports){
-window.TastyNotifyController = {
-  _notificationList: [],
-  notify: function(type, text, timeout) {
-    var container, notification;
-    if (timeout == null) {
-      timeout = 5000;
-    }
-    container = $('<\div>').appendTo('body').get(0);
-    notification = React.render(React.createElement(TastyNotify, {
-      "type": type,
-      "text": text,
-      "timeout": timeout,
-      "onClose": this._removeNotification.bind(this)
-    }), container);
-    return this._notificationList.push(notification);
-  },
-  notifySuccess: function(text, timeout) {
-    if (timeout == null) {
-      timeout = 5000;
-    }
-    return this.notify('success', text, timeout);
-  },
-  notifyError: function(text, timeout) {
-    if (timeout == null) {
-      timeout = 5000;
-    }
-    return this.notify('error', text, timeout);
-  },
-  errorResponse: function(response, timeout) {
-    var json, message;
-    if (timeout == null) {
-      timeout = 5000;
-    }
-    if (response.statusText === 'abort') {
-      return;
-    }
-    if (response.responseJSON != null) {
-      json = response.responseJSON;
-      if (typeof console.error === "function") {
-        console.error('errorResponse JSON', json);
-      }
-      if (json.message != null) {
-        message = json.message;
-      }
-      if (json.long_message != null) {
-        message = json.long_message;
-      }
-      if ((json.error != null) && json.error.length > 0) {
-        message || (message = json.error);
-      }
-    } else {
-      message = i18n.t('network_error', {
-        text: response.statusText
-      });
-    }
-    if (!this._isPageLoadingCanceled(response)) {
-      return this.notify('error', message, timeout);
-    }
-  },
-  hideAll: function() {
-    return this._notificationList.forEach(function(notification) {
-      return notification.close();
-    });
-  },
-  _removeNotification: function(notification) {
-    return this._notificationList = _.without(this._notificationList, notification);
-  },
-  _isPageLoadingCanceled: function(response) {
-    return response.statusText === 'error' && response.status === 0 && response.readyState === 0;
-  }
-};
-
-TastyEvents.on(TastyEvents.keys.command_current_notification_hide(), function() {
-  return TastyNotifyController.hideAll();
-});
-
-
-
-},{}],280:[function(require,module,exports){
 var INCOMING_MESSAGE, INCOMING_NOTIFICATION;
 
 window.TastySoundController = {
@@ -27645,7 +27595,7 @@ INCOMING_NOTIFICATION = TastySoundController._buildAudioElement('incoming_messag
 
 
 
-},{}],281:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 var BaseDispatcher,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -27679,7 +27629,7 @@ module.exports = BaseDispatcher;
 
 
 
-},{}],282:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 var BaseDispatcher;
 
 BaseDispatcher = require('./_base');
@@ -27695,7 +27645,7 @@ window.CurrentUserDispatcher = _.extend(new BaseDispatcher(), {
 
 
 
-},{"./_base":281}],283:[function(require,module,exports){
+},{"./_base":280}],282:[function(require,module,exports){
 var AppDispatcher, Dispatcher, _;
 
 _ = require('lodash');
@@ -27721,7 +27671,7 @@ module.exports = AppDispatcher;
 
 
 
-},{"flux":387,"lodash":"lodash"}],284:[function(require,module,exports){
+},{"flux":388,"lodash":"lodash"}],283:[function(require,module,exports){
 window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     var payload;
@@ -27742,6 +27692,34 @@ window.RelationshipsDispatcher = _.extend(new Dispatcher(), {
 });
 
 
+
+},{}],284:[function(require,module,exports){
+"use strict";
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var Timer = function Timer(callback, delay) {
+  _classCallCheck(this, Timer);
+
+  var timerID = undefined,
+      start = undefined,
+      remaining = delay;
+
+  this.pause = function () {
+    window.clearTimeout(timerID);
+    remaining -= new Date() - start;
+  };
+
+  this.resume = function () {
+    start = new Date();
+    window.clearTimeout(timerID);
+    timerID = window.setTimeout(callback, remaining);
+  };
+
+  this.resume();
+};
+
+module.exports = Timer;
 
 },{}],285:[function(require,module,exports){
 var Design, _;
@@ -28282,7 +28260,7 @@ window.MessagesPopup_ConversationsListItem = React.createClass({
 
 
 
-},{"classnames":386}],299:[function(require,module,exports){
+},{"classnames":387}],299:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, classnames;
 
 classnames = require('classnames');
@@ -28353,7 +28331,7 @@ window.MessagesPopup_Chooser = React.createClass({
 
 
 
-},{"classnames":386}],300:[function(require,module,exports){
+},{"classnames":387}],300:[function(require,module,exports){
 window.MessagesPopup_ChooserButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired
@@ -28436,7 +28414,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass({
 
 
 
-},{"react/lib/LinkedStateMixin":437}],302:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":438}],302:[function(require,module,exports){
 var EMPTY_STATE, LOADED_STATE, LOADING_STATE;
 
 LOADING_STATE = 'loadingState';
@@ -28527,7 +28505,7 @@ window.MessagesPopup_ChooserResults = React.createClass({
       })(this),
       error: (function(_this) {
         return function(errMsg) {
-          return TastyNotifyController.errorResponse(errMsg);
+          return NoticeService.errorResponse(errMsg);
         };
       })(this)
     });
@@ -28590,7 +28568,7 @@ window.MessagesPopup_ChooserResultsItem = React.createClass({
 
 
 
-},{"classnames":386}],304:[function(require,module,exports){
+},{"classnames":387}],304:[function(require,module,exports){
 var CHOOSER_STATE, PROCESS_STATE;
 
 PROCESS_STATE = 'process';
@@ -29066,7 +29044,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass({
 
 
 
-},{"classnames":386}],311:[function(require,module,exports){
+},{"classnames":387}],311:[function(require,module,exports){
 var ERROR_STATE, READ_STATE, SENDING_STATE, SENT_STATE, getElementPosition, isElementInViewport;
 
 ERROR_STATE = 'error';
@@ -29367,7 +29345,7 @@ window.NotificationsPopup_Notification = React.createClass({
 
 
 
-},{"classnames":386}],317:[function(require,module,exports){
+},{"classnames":387}],317:[function(require,module,exports){
 window.NotificationsPopup_Notifications = React.createClass({
   getInitialState: function() {
     return this.getStateFromStore();
@@ -29577,7 +29555,7 @@ window.IndicatorsToolbar = React.createClass({
 
 
 
-},{"classnames":386}],320:[function(require,module,exports){
+},{"classnames":387}],320:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -29629,7 +29607,7 @@ window.IndicatorsToolbar_Messages = React.createClass({
 
 
 
-},{"classnames":386}],321:[function(require,module,exports){
+},{"classnames":387}],321:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -29685,7 +29663,7 @@ window.IndicatorsToolbar_Notifications = React.createClass({
 
 
 
-},{"classnames":386}],322:[function(require,module,exports){
+},{"classnames":387}],322:[function(require,module,exports){
 window.MessagingDispatcher = _.extend(new Dispatcher(), {
   handleViewAction: function(action) {
     return this.dispatch({
@@ -29916,7 +29894,7 @@ window.MessagingService = (function() {
     this.channel = this.pusher.subscribe(this.CHANNEL_MAIN(this.user.id));
     this.channel.bind('pusher:subscription_succeeded', this._connected);
     this.channel.bind('pusher:subscription_error', function(error) {
-      TastyNotifyController.notify('error', i18n.t('pusher_subscription_error'));
+      NoticeService.notify('error', i18n.t('pusher_subscription_error'));
       return MessagingDispatcher.changeConnectionState(ConnectionStateStore.ERROR_STATE);
     });
     this.channel.bind(this.EVENT_STATUS, MessagingDispatcher.updateMessagingStatus);
@@ -29985,7 +29963,7 @@ window.MessagingService = (function() {
       if (typeof error === "function") {
         error();
       }
-      return TastyNotifyController.errorResponse(errMsg);
+      return NoticeService.errorResponse(errMsg);
     });
   };
 
@@ -30029,7 +30007,7 @@ window.MessagingService = (function() {
         conversationId: conversationId,
         uuid: uuid
       });
-      return TastyNotifyController.errorResponse(errMsg);
+      return NoticeService.errorResponse(errMsg);
     });
   };
 
@@ -31280,6 +31258,148 @@ module.exports = CurrentUserResource;
 
 
 },{}],348:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _ = _interopRequire(require("lodash"));
+
+var Notice = _interopRequire(require("../components/alerts/Notice"));
+
+var NoticeService = {
+  _ID: 1,
+  _queue: [],
+  _activeID: null,
+  _notices: {},
+
+  getID: function getID() {
+    return "ID_" + this._ID++;
+  },
+
+  getActive: function getActive() {
+    return this._notices[this._activeID];
+  },
+
+  getContainer: function getContainer() {
+    var container = document.querySelector("[notice-container]");
+
+    if (container == null) {
+      container = document.createElement("div");
+      container.setAttribute("notice-container", "");
+      document.body.appendChild(container);
+    }
+
+    return container;
+  },
+
+  getTimeoutForText: function getTimeoutForText() {
+    var text = arguments[0] === undefined ? "" : arguments[0];
+
+    var multiplier = text.length < 30 ? 200 : 100;
+    return text.length * multiplier;
+  },
+
+  register: function register(type, text, timeout) {
+    var ID = this.getID();
+    this._notices[ID] = { type: type, text: text, timeout: timeout };
+    return ID;
+  },
+
+  addToQueue: function addToQueue(ID) {
+    if (!this._notices.hasOwnProperty(ID)) {
+      return false;
+    }
+    this._queue.push(ID);
+  },
+
+  notify: function notify(type, text, timeout) {
+    timeout = timeout || this.getTimeoutForText(text);
+    var ID = this.register(type, text, timeout);
+    this.addToQueue(ID);
+    this.render();
+  },
+
+  notifyError: function notifyError(text, timeout) {
+    this.notify("error", text, timeout);
+  },
+
+  notifySuccess: function notifySuccess(text, timeout) {
+    this.notify("success", text, timeout);
+  },
+
+  errorResponse: function errorResponse(response, timeout) {
+    function isPageLoadingCanceled(response) {
+      // Вернет true, если во время запроса пользователь:
+      // - Остановил загрузку страницы
+      // - Перешёл на другую страницу
+      return response.statusText === "error" && response.status == 0 && response.readyState == 0;
+    }
+
+    if (isPageLoadingCanceled(response) || response.statusText === "abort") {
+      return false;
+    }
+
+    var message = "";
+
+    if (response.responseJSON != null) {
+      var json = response.responseJSON;
+      console.error("errorResponse JSON", json);
+
+      if (json.message != null) {
+        message = json.message;
+      }
+
+      if (json.long_message != null) {
+        message = json.long_message;
+      }
+
+      if (json.error != null && json.error.length) {
+        message = json.error;
+      }
+    } else {
+      message = i18n.t("network_error", { text: response.statusText });
+    }
+
+    this.notifyError(message, timeout);
+  },
+
+  render: function render() {
+    if (this._queue.length < 1) {
+      return false;
+    }
+
+    this._activeID = this._queue[this._queue.length - 1];
+    var container = this.getContainer(),
+        data = this.getActive();
+
+    React.render(React.createElement(Notice, _extends({}, data, { onClose: this.close.bind(this) })), container);
+  },
+
+  close: function close() {
+    var container = this.getContainer(),
+        ID = this._queue.pop();
+
+    React.unmountComponentAtNode(container);
+    delete this._notices[ID];
+    this._activeID = null;
+    this.render();
+  },
+
+  closeAll: function closeAll() {
+    var container = this.getContainer();
+
+    React.unmountComponentAtNode(container);
+    this._queue = [];
+    this._activeID = null;
+    this._notices = {};
+  }
+};
+
+module.exports = NoticeService;
+
+},{"../components/alerts/Notice":95,"lodash":"lodash"}],349:[function(require,module,exports){
 var CurrentUserStore, DesignFreeOptions, DesignOptionsService;
 
 CurrentUserStore = require('../stores/current_user');
@@ -31329,7 +31449,7 @@ module.exports = DesignOptionsService;
 
 
 
-},{"../models/designFreeOptions":344,"../stores/current_user":357}],349:[function(require,module,exports){
+},{"../models/designFreeOptions":344,"../stores/current_user":358}],350:[function(require,module,exports){
 var DesignPresenterService, _;
 
 _ = require('lodash');
@@ -31734,7 +31854,7 @@ module.exports = DesignPresenterService;
 
 
 
-},{"lodash":"lodash"}],350:[function(require,module,exports){
+},{"lodash":"lodash"}],351:[function(require,module,exports){
 var DesignPreviewService, _, jss, sheet;
 
 _ = require('lodash');
@@ -32102,7 +32222,7 @@ module.exports = DesignPreviewService;
 
 
 
-},{"jss":393,"lodash":"lodash"}],351:[function(require,module,exports){
+},{"jss":394,"lodash":"lodash"}],352:[function(require,module,exports){
 var EntryKeeper, LAST_PRIVACY_KEY, NormalizedEntry, STORAGE_PREFIX, key, keyAnonymous, keyExisting, keyNew, storage;
 
 NormalizedEntry = require('../entities/normalizedEntry');
@@ -32184,7 +32304,7 @@ module.exports = EntryKeeper;
 
 
 
-},{"../entities/normalizedEntry":287}],352:[function(require,module,exports){
+},{"../entities/normalizedEntry":287}],353:[function(require,module,exports){
 var CORRESPONDENCE_NORMALIZED_TABLE, EntryNormalizationService, NormalizedEntry, _;
 
 _ = require('lodash');
@@ -32288,7 +32408,7 @@ module.exports = EntryNormalizationService;
 
 
 
-},{"../entities/normalizedEntry":287,"lodash":"lodash"}],353:[function(require,module,exports){
+},{"../entities/normalizedEntry":287,"lodash":"lodash"}],354:[function(require,module,exports){
 var MIN_OFFSET, MOVE_OFFSET, STORAGE_PREFIX;
 
 MOVE_OFFSET = 100;
@@ -32334,7 +32454,7 @@ window.PositionsService = {
 
 
 
-},{}],354:[function(require,module,exports){
+},{}],355:[function(require,module,exports){
 window.UuidService = {
   generate: function() {
     var s4;
@@ -32347,7 +32467,7 @@ window.UuidService = {
 
 
 
-},{}],355:[function(require,module,exports){
+},{}],356:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -32518,7 +32638,7 @@ EditorStore.dispatchToken = AppDispatcher.register(function (payload) {
 
 module.exports = EditorStore;
 
-},{"../constants/constants":266,"../dispatchers/dispatcher":283,"../entities/normalizedEntry":287,"../services/entryKeeper":351,"../services/entryNormalization":352,"./_base":356,"react/lib/Object.assign":441}],356:[function(require,module,exports){
+},{"../constants/constants":266,"../dispatchers/dispatcher":282,"../entities/normalizedEntry":287,"../services/entryKeeper":352,"../services/entryNormalization":353,"./_base":357,"react/lib/Object.assign":442}],357:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -32552,7 +32672,7 @@ module.exports = BaseStore;
 
 
 
-},{}],357:[function(require,module,exports){
+},{}],358:[function(require,module,exports){
 var BaseStore, CurrentUserStore, currentUser;
 
 BaseStore = require('./_base');
@@ -32637,7 +32757,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register(function(payload
 
 
 
-},{"./_base":356}],358:[function(require,module,exports){
+},{"./_base":357}],359:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -32762,7 +32882,7 @@ DesignStore.dispatchToken = AppDispatcher.register(function (payload) {
 
 module.exports = DesignStore;
 
-},{"../constants/design":267,"../dispatchers/dispatcher":283,"../entities/designSet":286,"../models/designOptions":345,"../models/designPaymentOptions":346,"../services/designOptions":348,"./_base":356,"react/lib/Object.assign":441}],359:[function(require,module,exports){
+},{"../constants/design":267,"../dispatchers/dispatcher":282,"../entities/designSet":286,"../models/designOptions":345,"../models/designPaymentOptions":346,"../services/designOptions":349,"./_base":357,"react/lib/Object.assign":442}],360:[function(require,module,exports){
 var CHANGE_EVENT, SUMMARY_CHANGE_EVENT, _relationships;
 
 CHANGE_EVENT = 'changed';
@@ -33020,7 +33140,7 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 
 
 
-},{}],360:[function(require,module,exports){
+},{}],361:[function(require,module,exports){
 var defaults,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -33159,7 +33279,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],361:[function(require,module,exports){
+},{}],362:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -33168,7 +33288,7 @@ window.isMobile = function() {
 
 
 
-},{}],362:[function(require,module,exports){
+},{}],363:[function(require,module,exports){
 (function (global){
 global._ = require('lodash');
 
@@ -33239,7 +33359,7 @@ require('jquery.select2');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":387,"imagesloaded":390,"introJs":"introJs","jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":410,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],363:[function(require,module,exports){
+},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":388,"imagesloaded":391,"introJs":"introJs","jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":411,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],364:[function(require,module,exports){
 var csrfToken;
 
 csrfToken = function() {
@@ -33279,7 +33399,7 @@ window.Tasty = {
         withCredentials: true
       },
       error: function(e) {
-        return TastyNotifyController.errorResponse(e);
+        return NoticeService.errorResponse(e);
       }
     });
     return ReactApp.start({
@@ -33291,14 +33411,14 @@ window.Tasty = {
 
 
 
-},{}],364:[function(require,module,exports){
+},{}],365:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
       flashes = [];
     }
     return _.each(flashes, function(flash) {
-      return TastyNotifyController.notify(flash[0], flash[1]);
+      return NoticeService.notify(flash[0], flash[1]);
     });
   },
   centerHorizontally: function(element) {
@@ -33357,7 +33477,7 @@ window.TastyUtils = {
 
 
 
-},{}],365:[function(require,module,exports){
+},{}],366:[function(require,module,exports){
 var ApiHelpers;
 
 ApiHelpers = {
@@ -33395,7 +33515,7 @@ module.exports = ApiHelpers;
 
 
 
-},{}],366:[function(require,module,exports){
+},{}],367:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -33453,7 +33573,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],367:[function(require,module,exports){
+},{}],368:[function(require,module,exports){
 (function (global){
 global.StringHelpers = {
   strip: function(html) {
@@ -33480,7 +33600,7 @@ module.exports = StringHelpers;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],368:[function(require,module,exports){
+},{}],369:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -33529,7 +33649,7 @@ var Money = React.createClass({
 
 module.exports = Money;
 
-},{"numeral":"numeral"}],369:[function(require,module,exports){
+},{"numeral":"numeral"}],370:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;
 
 CollageMixin = require('./mixins/collage');
@@ -33581,7 +33701,7 @@ module.exports = Collage;
 
 
 
-},{"./mixins/collage":371,"./row":372}],370:[function(require,module,exports){
+},{"./mixins/collage":372,"./row":373}],371:[function(require,module,exports){
 var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
 
 Collage = require('./collage');
@@ -33650,7 +33770,7 @@ module.exports = CollageManager;
 
 
 
-},{"./collage":369}],371:[function(require,module,exports){
+},{"./collage":370}],372:[function(require,module,exports){
 var CollageMixin, assign;
 
 assign = require('react/lib/Object.assign');
@@ -33720,7 +33840,7 @@ module.exports = CollageMixin;
 
 
 
-},{"react/lib/Object.assign":441}],372:[function(require,module,exports){
+},{"react/lib/Object.assign":442}],373:[function(require,module,exports){
 var CollageRow, CollageRowItem, PropTypes;
 
 CollageRowItem = require('./row/item');
@@ -33754,7 +33874,7 @@ module.exports = CollageRow;
 
 
 
-},{"./row/item":373}],373:[function(require,module,exports){
+},{"./row/item":374}],374:[function(require,module,exports){
 var CollageRowItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -33819,7 +33939,7 @@ module.exports = CollageRowItem;
 
 
 
-},{}],374:[function(require,module,exports){
+},{}],375:[function(require,module,exports){
 var CollageManager, ImageAttachmentsCollage, PropTypes;
 
 CollageManager = require('./collage/collageManager');
@@ -33862,7 +33982,7 @@ module.exports = ImageAttachmentsCollage;
 
 
 
-},{"./collage/collageManager":370}],375:[function(require,module,exports){
+},{"./collage/collageManager":371}],376:[function(require,module,exports){
 "use strict";
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -33902,7 +34022,7 @@ function connectToStores(Component, stores, getStateFromStores) {
 
 module.exports = connectToStores;
 
-},{}],376:[function(require,module,exports){
+},{}],377:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -33983,7 +34103,7 @@ function managePositions(Component) {
 
 module.exports = managePositions;
 
-},{"../../services/positions":378}],377:[function(require,module,exports){
+},{"../../services/positions":379}],378:[function(require,module,exports){
 var ConnectStoreMixin, _;
 
 _ = require('lodash');
@@ -34025,7 +34145,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{"lodash":"lodash"}],378:[function(require,module,exports){
+},{"lodash":"lodash"}],379:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -34078,7 +34198,7 @@ var PositionsService = {
 
 module.exports = PositionsService;
 
-},{"react/lib/Object.assign":441}],379:[function(require,module,exports){
+},{"react/lib/Object.assign":442}],380:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -34100,7 +34220,7 @@ module.exports = ThumborService;
 
 
 
-},{}],380:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 var UuidService;
 
 UuidService = {
@@ -34117,7 +34237,7 @@ module.exports = UuidService;
 
 
 
-},{}],381:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 var ApiRoutes;
 
 ApiRoutes = {
@@ -34289,7 +34409,7 @@ module.exports = ApiRoutes;
 
 
 
-},{}],382:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 var Routes;
 
 Routes = {
@@ -34371,7 +34491,7 @@ module.exports = Routes;
 
 
 
-},{}],383:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 /*!
  * URI.js - Mutating URLs
  * IPv6 Support
@@ -34561,7 +34681,7 @@ module.exports = Routes;
   };
 }));
 
-},{}],384:[function(require,module,exports){
+},{}],385:[function(require,module,exports){
 /*!
  * URI.js - Mutating URLs
  * Second Level Domain (SLD) Support
@@ -34804,7 +34924,7 @@ module.exports = Routes;
   return SLD;
 }));
 
-},{}],385:[function(require,module,exports){
+},{}],386:[function(require,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.3 by @mathias */
 ;(function(root) {
@@ -35316,7 +35436,7 @@ module.exports = Routes;
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],386:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 function classNames() {
 	var classes = '';
 	var arg;
@@ -35348,7 +35468,7 @@ if (typeof module !== 'undefined' && module.exports) {
 	module.exports = classNames;
 }
 
-},{}],387:[function(require,module,exports){
+},{}],388:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -35360,7 +35480,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":388}],388:[function(require,module,exports){
+},{"./lib/Dispatcher":389}],389:[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -35612,7 +35732,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":389}],389:[function(require,module,exports){
+},{"./invariant":390}],390:[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -35667,7 +35787,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],390:[function(require,module,exports){
+},{}],391:[function(require,module,exports){
 /*!
  * imagesLoaded v3.1.8
  * JavaScript is all like "You images are done yet or what?"
@@ -36004,7 +36124,7 @@ function makeArray( obj ) {
 
 });
 
-},{"eventie":391,"wolfy87-eventemitter":392}],391:[function(require,module,exports){
+},{"eventie":392,"wolfy87-eventemitter":393}],392:[function(require,module,exports){
 /*!
  * eventie v1.0.6
  * event binding helper
@@ -36088,7 +36208,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{}],392:[function(require,module,exports){
+},{}],393:[function(require,module,exports){
 /*!
  * EventEmitter v4.2.11 - git.io/ee
  * Unlicense - http://unlicense.org/
@@ -36562,7 +36682,7 @@ if ( typeof define === 'function' && define.amd ) {
     }
 }.call(this));
 
-},{}],393:[function(require,module,exports){
+},{}],394:[function(require,module,exports){
 /**
  * StyleSheets written in javascript.
  *
@@ -36573,7 +36693,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 module.exports = require('./lib/index')
 
-},{"./lib/index":396}],394:[function(require,module,exports){
+},{"./lib/index":397}],395:[function(require,module,exports){
 'use strict'
 
 var plugins = require('./plugins')
@@ -36819,7 +36939,7 @@ function indent(level, str) {
     return indentStr + str
 }
 
-},{"./plugins":397}],395:[function(require,module,exports){
+},{"./plugins":398}],396:[function(require,module,exports){
 'use strict'
 
 var Rule = require('./Rule')
@@ -37084,7 +37204,7 @@ StyleSheet.prototype.createElement = function () {
     return element
 }
 
-},{"./Rule":394,"./plugins":397}],396:[function(require,module,exports){
+},{"./Rule":395,"./plugins":398}],397:[function(require,module,exports){
 'use strict'
 
 var StyleSheet = require('./StyleSheet')
@@ -37131,7 +37251,7 @@ exports.createRule = function (selector, style) {
  */
 exports.use = exports.plugins.use
 
-},{"./Rule":394,"./StyleSheet":395,"./plugins":397}],397:[function(require,module,exports){
+},{"./Rule":395,"./StyleSheet":396,"./plugins":398}],398:[function(require,module,exports){
 'use strict'
 
 /**
@@ -37164,7 +37284,7 @@ exports.run = function (rule) {
     }
 }
 
-},{}],398:[function(require,module,exports){
+},{}],399:[function(require,module,exports){
 /**
  * matchesSelector v1.0.3
  * matchesSelector( element, '.selector' )
@@ -37273,7 +37393,7 @@ exports.run = function (rule) {
 
 })( Element.prototype );
 
-},{}],399:[function(require,module,exports){
+},{}],400:[function(require,module,exports){
 /*!
  * docReady v1.0.3
  * Cross browser DOMContentLoaded event emitter
@@ -37347,9 +37467,9 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{"eventie":400}],400:[function(require,module,exports){
-arguments[4][391][0].apply(exports,arguments)
-},{"dup":391}],401:[function(require,module,exports){
+},{"eventie":401}],401:[function(require,module,exports){
+arguments[4][392][0].apply(exports,arguments)
+},{"dup":392}],402:[function(require,module,exports){
 /**
  * Fizzy UI utils v1.0.1
  * MIT license
@@ -37621,7 +37741,7 @@ return utils;
 
 }));
 
-},{"desandro-matches-selector":398,"doc-ready":399}],402:[function(require,module,exports){
+},{"desandro-matches-selector":399,"doc-ready":400}],403:[function(require,module,exports){
 /*!
  * getSize v1.2.2
  * measure size of elements
@@ -37873,7 +37993,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{"desandro-get-style-property":403}],403:[function(require,module,exports){
+},{"desandro-get-style-property":404}],404:[function(require,module,exports){
 /*!
  * getStyleProperty v1.0.4
  * original by kangax
@@ -37930,7 +38050,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{}],404:[function(require,module,exports){
+},{}],405:[function(require,module,exports){
 /**
  * Outlayer Item
  */
@@ -38496,13 +38616,13 @@ return Item;
 
 }));
 
-},{"desandro-get-style-property":405,"fizzy-ui-utils":401,"get-size":402,"wolfy87-eventemitter":407}],405:[function(require,module,exports){
-arguments[4][403][0].apply(exports,arguments)
-},{"dup":403}],406:[function(require,module,exports){
-arguments[4][391][0].apply(exports,arguments)
-},{"dup":391}],407:[function(require,module,exports){
+},{"desandro-get-style-property":406,"fizzy-ui-utils":402,"get-size":403,"wolfy87-eventemitter":408}],406:[function(require,module,exports){
+arguments[4][404][0].apply(exports,arguments)
+},{"dup":404}],407:[function(require,module,exports){
 arguments[4][392][0].apply(exports,arguments)
 },{"dup":392}],408:[function(require,module,exports){
+arguments[4][393][0].apply(exports,arguments)
+},{"dup":393}],409:[function(require,module,exports){
 /*!
  * Outlayer v1.4.0
  * the brains and guts of a layout library
@@ -39404,7 +39524,7 @@ return Outlayer;
 }));
 
 
-},{"./item":404,"eventie":406,"fizzy-ui-utils":401,"get-size":402,"wolfy87-eventemitter":407}],409:[function(require,module,exports){
+},{"./item":405,"eventie":407,"fizzy-ui-utils":402,"get-size":403,"wolfy87-eventemitter":408}],410:[function(require,module,exports){
 //! moment.js locale configuration
 //! locale : russian (ru)
 //! author : Viktorminator : https://github.com/Viktorminator
@@ -39568,7 +39688,7 @@ return Outlayer;
     return ru;
 
 }));
-},{"../moment":410}],410:[function(require,module,exports){
+},{"../moment":411}],411:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.2
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -42652,7 +42772,7 @@ return Outlayer;
     return _moment;
 
 }));
-},{}],411:[function(require,module,exports){
+},{}],412:[function(require,module,exports){
 /*! 
  * numeral.js language configuration
  * language : russian (ru)
@@ -42691,7 +42811,7 @@ return Outlayer;
     }
 }());
 
-},{}],412:[function(require,module,exports){
+},{}],413:[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -43002,7 +43122,7 @@ var ResponderEventPlugin = {
 
 module.exports = ResponderEventPlugin;
 
-},{"react/lib/EventConstants":428,"react/lib/EventPluginUtils":432,"react/lib/EventPropagators":433,"react/lib/SyntheticEvent":515,"react/lib/accumulateInto":525,"react/lib/keyOf":563}],413:[function(require,module,exports){
+},{"react/lib/EventConstants":429,"react/lib/EventPluginUtils":433,"react/lib/EventPropagators":434,"react/lib/SyntheticEvent":516,"react/lib/accumulateInto":526,"react/lib/keyOf":564}],414:[function(require,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -43160,7 +43280,7 @@ var TapEventPlugin = {
 };
 
 module.exports = TapEventPlugin;
-},{"./TouchEventUtils":414,"react/lib/EventConstants":428,"react/lib/EventPluginUtils":432,"react/lib/EventPropagators":433,"react/lib/SyntheticUIEvent":521,"react/lib/ViewportMetrics":524,"react/lib/keyOf":563}],414:[function(require,module,exports){
+},{"./TouchEventUtils":415,"react/lib/EventConstants":429,"react/lib/EventPluginUtils":433,"react/lib/EventPropagators":434,"react/lib/SyntheticUIEvent":522,"react/lib/ViewportMetrics":525,"react/lib/keyOf":564}],415:[function(require,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -43204,7 +43324,7 @@ var TouchEventUtils = {
 
 module.exports = TouchEventUtils;
 
-},{}],415:[function(require,module,exports){
+},{}],416:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43231,7 +43351,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":540}],416:[function(require,module,exports){
+},{"./focusNode":541}],417:[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -43726,7 +43846,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":428,"./EventPropagators":433,"./ExecutionEnvironment":434,"./FallbackCompositionState":435,"./SyntheticCompositionEvent":513,"./SyntheticInputEvent":517,"./keyOf":563}],417:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPropagators":434,"./ExecutionEnvironment":435,"./FallbackCompositionState":436,"./SyntheticCompositionEvent":514,"./SyntheticInputEvent":518,"./keyOf":564}],418:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43851,7 +43971,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],418:[function(require,module,exports){
+},{}],419:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44031,7 +44151,7 @@ var CSSPropertyOperations = {
 
 module.exports = CSSPropertyOperations;
 
-},{"./CSSProperty":417,"./ExecutionEnvironment":434,"./camelizeStyleName":528,"./dangerousStyleValue":534,"./hyphenateStyleName":554,"./memoizeStringOnly":565,"./warning":577}],419:[function(require,module,exports){
+},{"./CSSProperty":418,"./ExecutionEnvironment":435,"./camelizeStyleName":529,"./dangerousStyleValue":535,"./hyphenateStyleName":555,"./memoizeStringOnly":566,"./warning":578}],420:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44129,7 +44249,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 
-},{"./Object.assign":441,"./PooledClass":442,"./invariant":556}],420:[function(require,module,exports){
+},{"./Object.assign":442,"./PooledClass":443,"./invariant":557}],421:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44511,7 +44631,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":428,"./EventPluginHub":430,"./EventPropagators":433,"./ExecutionEnvironment":434,"./ReactUpdates":507,"./SyntheticEvent":515,"./isEventSupported":557,"./isTextInputElement":559,"./keyOf":563}],421:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPluginHub":431,"./EventPropagators":434,"./ExecutionEnvironment":435,"./ReactUpdates":508,"./SyntheticEvent":516,"./isEventSupported":558,"./isTextInputElement":560,"./keyOf":564}],422:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44536,7 +44656,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],422:[function(require,module,exports){
+},{}],423:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44672,7 +44792,7 @@ var DOMChildrenOperations = {
 
 module.exports = DOMChildrenOperations;
 
-},{"./Danger":425,"./ReactMultiChildUpdateTypes":488,"./invariant":556,"./setTextContent":571}],423:[function(require,module,exports){
+},{"./Danger":426,"./ReactMultiChildUpdateTypes":489,"./invariant":557,"./setTextContent":572}],424:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -44969,7 +45089,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 
-},{"./invariant":556}],424:[function(require,module,exports){
+},{"./invariant":557}],425:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45159,7 +45279,7 @@ var DOMPropertyOperations = {
 
 module.exports = DOMPropertyOperations;
 
-},{"./DOMProperty":423,"./quoteAttributeValueForBrowser":569,"./warning":577}],425:[function(require,module,exports){
+},{"./DOMProperty":424,"./quoteAttributeValueForBrowser":570,"./warning":578}],426:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45344,7 +45464,7 @@ var Danger = {
 
 module.exports = Danger;
 
-},{"./ExecutionEnvironment":434,"./createNodesFromMarkup":533,"./emptyFunction":535,"./getMarkupWrap":548,"./invariant":556}],426:[function(require,module,exports){
+},{"./ExecutionEnvironment":435,"./createNodesFromMarkup":534,"./emptyFunction":536,"./getMarkupWrap":549,"./invariant":557}],427:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45383,7 +45503,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":563}],427:[function(require,module,exports){
+},{"./keyOf":564}],428:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45523,7 +45643,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":428,"./EventPropagators":433,"./ReactMount":486,"./SyntheticMouseEvent":519,"./keyOf":563}],428:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPropagators":434,"./ReactMount":487,"./SyntheticMouseEvent":520,"./keyOf":564}],429:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45595,7 +45715,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":562}],429:[function(require,module,exports){
+},{"./keyMirror":563}],430:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  *
@@ -45683,7 +45803,7 @@ var EventListener = {
 
 module.exports = EventListener;
 
-},{"./emptyFunction":535}],430:[function(require,module,exports){
+},{"./emptyFunction":536}],431:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -45959,7 +46079,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 
-},{"./EventPluginRegistry":431,"./EventPluginUtils":432,"./accumulateInto":525,"./forEachAccumulated":541,"./invariant":556}],431:[function(require,module,exports){
+},{"./EventPluginRegistry":432,"./EventPluginUtils":433,"./accumulateInto":526,"./forEachAccumulated":542,"./invariant":557}],432:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46237,7 +46357,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 
-},{"./invariant":556}],432:[function(require,module,exports){
+},{"./invariant":557}],433:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46456,7 +46576,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 
-},{"./EventConstants":428,"./invariant":556}],433:[function(require,module,exports){
+},{"./EventConstants":429,"./invariant":557}],434:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46596,7 +46716,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 
-},{"./EventConstants":428,"./EventPluginHub":430,"./accumulateInto":525,"./forEachAccumulated":541}],434:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPluginHub":431,"./accumulateInto":526,"./forEachAccumulated":542}],435:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46640,7 +46760,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],435:[function(require,module,exports){
+},{}],436:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46731,7 +46851,7 @@ PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
 
-},{"./Object.assign":441,"./PooledClass":442,"./getTextContentAccessor":551}],436:[function(require,module,exports){
+},{"./Object.assign":442,"./PooledClass":443,"./getTextContentAccessor":552}],437:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46942,7 +47062,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":423,"./ExecutionEnvironment":434}],437:[function(require,module,exports){
+},{"./DOMProperty":424,"./ExecutionEnvironment":435}],438:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -46983,7 +47103,7 @@ var LinkedStateMixin = {
 
 module.exports = LinkedStateMixin;
 
-},{"./ReactLink":484,"./ReactStateSetters":503}],438:[function(require,module,exports){
+},{"./ReactLink":485,"./ReactStateSetters":504}],439:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47137,7 +47257,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 
-},{"./ReactPropTypes":495,"./invariant":556}],439:[function(require,module,exports){
+},{"./ReactPropTypes":496,"./invariant":557}],440:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -47192,7 +47312,7 @@ var LocalEventTrapMixin = {
 
 module.exports = LocalEventTrapMixin;
 
-},{"./ReactBrowserEventEmitter":445,"./accumulateInto":525,"./forEachAccumulated":541,"./invariant":556}],440:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":446,"./accumulateInto":526,"./forEachAccumulated":542,"./invariant":557}],441:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47250,7 +47370,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":428,"./emptyFunction":535}],441:[function(require,module,exports){
+},{"./EventConstants":429,"./emptyFunction":536}],442:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -47299,7 +47419,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],442:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47413,7 +47533,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 
-},{"./invariant":556}],443:[function(require,module,exports){
+},{"./invariant":557}],444:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47563,7 +47683,7 @@ React.version = '0.13.2';
 
 module.exports = React;
 
-},{"./EventPluginUtils":432,"./ExecutionEnvironment":434,"./Object.assign":441,"./ReactChildren":447,"./ReactClass":448,"./ReactComponent":449,"./ReactContext":453,"./ReactCurrentOwner":454,"./ReactDOM":455,"./ReactDOMTextComponent":466,"./ReactDefaultInjection":469,"./ReactElement":472,"./ReactElementValidator":473,"./ReactInstanceHandles":481,"./ReactMount":486,"./ReactPerf":491,"./ReactPropTypes":495,"./ReactReconciler":498,"./ReactServerRendering":501,"./findDOMNode":538,"./onlyChild":566}],444:[function(require,module,exports){
+},{"./EventPluginUtils":433,"./ExecutionEnvironment":435,"./Object.assign":442,"./ReactChildren":448,"./ReactClass":449,"./ReactComponent":450,"./ReactContext":454,"./ReactCurrentOwner":455,"./ReactDOM":456,"./ReactDOMTextComponent":467,"./ReactDefaultInjection":470,"./ReactElement":473,"./ReactElementValidator":474,"./ReactInstanceHandles":482,"./ReactMount":487,"./ReactPerf":492,"./ReactPropTypes":496,"./ReactReconciler":499,"./ReactServerRendering":502,"./findDOMNode":539,"./onlyChild":567}],445:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47594,7 +47714,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 
-},{"./findDOMNode":538}],445:[function(require,module,exports){
+},{"./findDOMNode":539}],446:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -47947,7 +48067,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":428,"./EventPluginHub":430,"./EventPluginRegistry":431,"./Object.assign":441,"./ReactEventEmitterMixin":476,"./ViewportMetrics":524,"./isEventSupported":557}],446:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPluginHub":431,"./EventPluginRegistry":432,"./Object.assign":442,"./ReactEventEmitterMixin":477,"./ViewportMetrics":525,"./isEventSupported":558}],447:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -48074,7 +48194,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 
-},{"./ReactReconciler":498,"./flattenChildren":539,"./instantiateReactComponent":555,"./shouldUpdateReactComponent":573}],447:[function(require,module,exports){
+},{"./ReactReconciler":499,"./flattenChildren":540,"./instantiateReactComponent":556,"./shouldUpdateReactComponent":574}],448:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -48225,7 +48345,7 @@ var ReactChildren = {
 
 module.exports = ReactChildren;
 
-},{"./PooledClass":442,"./ReactFragment":478,"./traverseAllChildren":575,"./warning":577}],448:[function(require,module,exports){
+},{"./PooledClass":443,"./ReactFragment":479,"./traverseAllChildren":576,"./warning":578}],449:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49169,7 +49289,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 
-},{"./Object.assign":441,"./ReactComponent":449,"./ReactCurrentOwner":454,"./ReactElement":472,"./ReactErrorUtils":475,"./ReactInstanceMap":482,"./ReactLifeCycle":483,"./ReactPropTypeLocationNames":493,"./ReactPropTypeLocations":494,"./ReactUpdateQueue":506,"./invariant":556,"./keyMirror":562,"./keyOf":563,"./warning":577}],449:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactComponent":450,"./ReactCurrentOwner":455,"./ReactElement":473,"./ReactErrorUtils":476,"./ReactInstanceMap":483,"./ReactLifeCycle":484,"./ReactPropTypeLocationNames":494,"./ReactPropTypeLocations":495,"./ReactUpdateQueue":507,"./invariant":557,"./keyMirror":563,"./keyOf":564,"./warning":578}],450:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49303,7 +49423,7 @@ if ("production" !== "production") {
 
 module.exports = ReactComponent;
 
-},{"./ReactUpdateQueue":506,"./invariant":556,"./warning":577}],450:[function(require,module,exports){
+},{"./ReactUpdateQueue":507,"./invariant":557,"./warning":578}],451:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -49350,7 +49470,7 @@ var ReactComponentBrowserEnvironment = {
 
 module.exports = ReactComponentBrowserEnvironment;
 
-},{"./ReactDOMIDOperations":459,"./ReactMount":486}],451:[function(require,module,exports){
+},{"./ReactDOMIDOperations":460,"./ReactMount":487}],452:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -49409,7 +49529,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 
-},{"./invariant":556}],452:[function(require,module,exports){
+},{"./invariant":557}],453:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50305,7 +50425,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 
-},{"./Object.assign":441,"./ReactComponentEnvironment":451,"./ReactContext":453,"./ReactCurrentOwner":454,"./ReactElement":472,"./ReactElementValidator":473,"./ReactInstanceMap":482,"./ReactLifeCycle":483,"./ReactNativeComponent":489,"./ReactPerf":491,"./ReactPropTypeLocationNames":493,"./ReactPropTypeLocations":494,"./ReactReconciler":498,"./ReactUpdates":507,"./emptyObject":536,"./invariant":556,"./shouldUpdateReactComponent":573,"./warning":577}],453:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactComponentEnvironment":452,"./ReactContext":454,"./ReactCurrentOwner":455,"./ReactElement":473,"./ReactElementValidator":474,"./ReactInstanceMap":483,"./ReactLifeCycle":484,"./ReactNativeComponent":490,"./ReactPerf":492,"./ReactPropTypeLocationNames":494,"./ReactPropTypeLocations":495,"./ReactReconciler":499,"./ReactUpdates":508,"./emptyObject":537,"./invariant":557,"./shouldUpdateReactComponent":574,"./warning":578}],454:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50381,7 +50501,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":441,"./emptyObject":536,"./warning":577}],454:[function(require,module,exports){
+},{"./Object.assign":442,"./emptyObject":537,"./warning":578}],455:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50415,7 +50535,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],455:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50591,7 +50711,7 @@ var ReactDOM = mapObject({
 
 module.exports = ReactDOM;
 
-},{"./ReactElement":472,"./ReactElementValidator":473,"./mapObject":564}],456:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactElementValidator":474,"./mapObject":565}],457:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -50655,7 +50775,7 @@ var ReactDOMButton = ReactClass.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":415,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472,"./keyMirror":562}],457:[function(require,module,exports){
+},{"./AutoFocusMixin":416,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473,"./keyMirror":563}],458:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51161,7 +51281,7 @@ ReactDOMComponent.injection = {
 
 module.exports = ReactDOMComponent;
 
-},{"./CSSPropertyOperations":418,"./DOMProperty":423,"./DOMPropertyOperations":424,"./Object.assign":441,"./ReactBrowserEventEmitter":445,"./ReactComponentBrowserEnvironment":450,"./ReactMount":486,"./ReactMultiChild":487,"./ReactPerf":491,"./escapeTextContentForBrowser":537,"./invariant":556,"./isEventSupported":557,"./keyOf":563,"./warning":577}],458:[function(require,module,exports){
+},{"./CSSPropertyOperations":419,"./DOMProperty":424,"./DOMPropertyOperations":425,"./Object.assign":442,"./ReactBrowserEventEmitter":446,"./ReactComponentBrowserEnvironment":451,"./ReactMount":487,"./ReactMultiChild":488,"./ReactPerf":492,"./escapeTextContentForBrowser":538,"./invariant":557,"./isEventSupported":558,"./keyOf":564,"./warning":578}],459:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51210,7 +51330,7 @@ var ReactDOMForm = ReactClass.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":428,"./LocalEventTrapMixin":439,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472}],459:[function(require,module,exports){
+},{"./EventConstants":429,"./LocalEventTrapMixin":440,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473}],460:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51376,7 +51496,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 
-},{"./CSSPropertyOperations":418,"./DOMChildrenOperations":422,"./DOMPropertyOperations":424,"./ReactMount":486,"./ReactPerf":491,"./invariant":556,"./setInnerHTML":570}],460:[function(require,module,exports){
+},{"./CSSPropertyOperations":419,"./DOMChildrenOperations":423,"./DOMPropertyOperations":425,"./ReactMount":487,"./ReactPerf":492,"./invariant":557,"./setInnerHTML":571}],461:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51421,7 +51541,7 @@ var ReactDOMIframe = ReactClass.createClass({
 
 module.exports = ReactDOMIframe;
 
-},{"./EventConstants":428,"./LocalEventTrapMixin":439,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472}],461:[function(require,module,exports){
+},{"./EventConstants":429,"./LocalEventTrapMixin":440,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473}],462:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51467,7 +51587,7 @@ var ReactDOMImg = ReactClass.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":428,"./LocalEventTrapMixin":439,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472}],462:[function(require,module,exports){
+},{"./EventConstants":429,"./LocalEventTrapMixin":440,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473}],463:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51642,7 +51762,7 @@ var ReactDOMInput = ReactClass.createClass({
 
 module.exports = ReactDOMInput;
 
-},{"./AutoFocusMixin":415,"./DOMPropertyOperations":424,"./LinkedValueUtils":438,"./Object.assign":441,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472,"./ReactMount":486,"./ReactUpdates":507,"./invariant":556}],463:[function(require,module,exports){
+},{"./AutoFocusMixin":416,"./DOMPropertyOperations":425,"./LinkedValueUtils":439,"./Object.assign":442,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473,"./ReactMount":487,"./ReactUpdates":508,"./invariant":557}],464:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51692,7 +51812,7 @@ var ReactDOMOption = ReactClass.createClass({
 
 module.exports = ReactDOMOption;
 
-},{"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472,"./warning":577}],464:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473,"./warning":578}],465:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -51870,7 +51990,7 @@ var ReactDOMSelect = ReactClass.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":415,"./LinkedValueUtils":438,"./Object.assign":441,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472,"./ReactUpdates":507}],465:[function(require,module,exports){
+},{"./AutoFocusMixin":416,"./LinkedValueUtils":439,"./Object.assign":442,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473,"./ReactUpdates":508}],466:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52083,7 +52203,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":434,"./getNodeForCharacterOffset":549,"./getTextContentAccessor":551}],466:[function(require,module,exports){
+},{"./ExecutionEnvironment":435,"./getNodeForCharacterOffset":550,"./getTextContentAccessor":552}],467:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52200,7 +52320,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 
-},{"./DOMPropertyOperations":424,"./Object.assign":441,"./ReactComponentBrowserEnvironment":450,"./ReactDOMComponent":457,"./escapeTextContentForBrowser":537}],467:[function(require,module,exports){
+},{"./DOMPropertyOperations":425,"./Object.assign":442,"./ReactComponentBrowserEnvironment":451,"./ReactDOMComponent":458,"./escapeTextContentForBrowser":538}],468:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52338,7 +52458,7 @@ var ReactDOMTextarea = ReactClass.createClass({
 
 module.exports = ReactDOMTextarea;
 
-},{"./AutoFocusMixin":415,"./DOMPropertyOperations":424,"./LinkedValueUtils":438,"./Object.assign":441,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactElement":472,"./ReactUpdates":507,"./invariant":556,"./warning":577}],468:[function(require,module,exports){
+},{"./AutoFocusMixin":416,"./DOMPropertyOperations":425,"./LinkedValueUtils":439,"./Object.assign":442,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactElement":473,"./ReactUpdates":508,"./invariant":557,"./warning":578}],469:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52411,7 +52531,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":441,"./ReactUpdates":507,"./Transaction":523,"./emptyFunction":535}],469:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactUpdates":508,"./Transaction":524,"./emptyFunction":536}],470:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52568,7 +52688,7 @@ module.exports = {
   inject: inject
 };
 
-},{"./BeforeInputEventPlugin":416,"./ChangeEventPlugin":420,"./ClientReactRootIndex":421,"./DefaultEventPluginOrder":426,"./EnterLeaveEventPlugin":427,"./ExecutionEnvironment":434,"./HTMLDOMPropertyConfig":436,"./MobileSafariClickEventPlugin":440,"./ReactBrowserComponentMixin":444,"./ReactClass":448,"./ReactComponentBrowserEnvironment":450,"./ReactDOMButton":456,"./ReactDOMComponent":457,"./ReactDOMForm":458,"./ReactDOMIDOperations":459,"./ReactDOMIframe":460,"./ReactDOMImg":461,"./ReactDOMInput":462,"./ReactDOMOption":463,"./ReactDOMSelect":464,"./ReactDOMTextComponent":466,"./ReactDOMTextarea":467,"./ReactDefaultBatchingStrategy":468,"./ReactDefaultPerf":470,"./ReactElement":472,"./ReactEventListener":477,"./ReactInjection":479,"./ReactInstanceHandles":481,"./ReactMount":486,"./ReactReconcileTransaction":497,"./SVGDOMPropertyConfig":508,"./SelectEventPlugin":509,"./ServerReactRootIndex":510,"./SimpleEventPlugin":511,"./createFullPageComponent":532}],470:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":417,"./ChangeEventPlugin":421,"./ClientReactRootIndex":422,"./DefaultEventPluginOrder":427,"./EnterLeaveEventPlugin":428,"./ExecutionEnvironment":435,"./HTMLDOMPropertyConfig":437,"./MobileSafariClickEventPlugin":441,"./ReactBrowserComponentMixin":445,"./ReactClass":449,"./ReactComponentBrowserEnvironment":451,"./ReactDOMButton":457,"./ReactDOMComponent":458,"./ReactDOMForm":459,"./ReactDOMIDOperations":460,"./ReactDOMIframe":461,"./ReactDOMImg":462,"./ReactDOMInput":463,"./ReactDOMOption":464,"./ReactDOMSelect":465,"./ReactDOMTextComponent":467,"./ReactDOMTextarea":468,"./ReactDefaultBatchingStrategy":469,"./ReactDefaultPerf":471,"./ReactElement":473,"./ReactEventListener":478,"./ReactInjection":480,"./ReactInstanceHandles":482,"./ReactMount":487,"./ReactReconcileTransaction":498,"./SVGDOMPropertyConfig":509,"./SelectEventPlugin":510,"./ServerReactRootIndex":511,"./SimpleEventPlugin":512,"./createFullPageComponent":533}],471:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -52834,7 +52954,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":423,"./ReactDefaultPerfAnalysis":471,"./ReactMount":486,"./ReactPerf":491,"./performanceNow":568}],471:[function(require,module,exports){
+},{"./DOMProperty":424,"./ReactDefaultPerfAnalysis":472,"./ReactMount":487,"./ReactPerf":492,"./performanceNow":569}],472:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -53040,7 +53160,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":441}],472:[function(require,module,exports){
+},{"./Object.assign":442}],473:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -53346,7 +53466,7 @@ ReactElement.isValidElement = function(object) {
 
 module.exports = ReactElement;
 
-},{"./Object.assign":441,"./ReactContext":453,"./ReactCurrentOwner":454,"./warning":577}],473:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactContext":454,"./ReactCurrentOwner":455,"./warning":578}],474:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -53809,7 +53929,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 
-},{"./ReactCurrentOwner":454,"./ReactElement":472,"./ReactFragment":478,"./ReactNativeComponent":489,"./ReactPropTypeLocationNames":493,"./ReactPropTypeLocations":494,"./getIteratorFn":547,"./invariant":556,"./warning":577}],474:[function(require,module,exports){
+},{"./ReactCurrentOwner":455,"./ReactElement":473,"./ReactFragment":479,"./ReactNativeComponent":490,"./ReactPropTypeLocationNames":494,"./ReactPropTypeLocations":495,"./getIteratorFn":548,"./invariant":557,"./warning":578}],475:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -53902,7 +54022,7 @@ var ReactEmptyComponent = {
 
 module.exports = ReactEmptyComponent;
 
-},{"./ReactElement":472,"./ReactInstanceMap":482,"./invariant":556}],475:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactInstanceMap":483,"./invariant":557}],476:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -53934,7 +54054,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],476:[function(require,module,exports){
+},{}],477:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -53984,7 +54104,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":430}],477:[function(require,module,exports){
+},{"./EventPluginHub":431}],478:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54167,7 +54287,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":429,"./ExecutionEnvironment":434,"./Object.assign":441,"./PooledClass":442,"./ReactInstanceHandles":481,"./ReactMount":486,"./ReactUpdates":507,"./getEventTarget":546,"./getUnboundedScrollPosition":552}],478:[function(require,module,exports){
+},{"./EventListener":430,"./ExecutionEnvironment":435,"./Object.assign":442,"./PooledClass":443,"./ReactInstanceHandles":482,"./ReactMount":487,"./ReactUpdates":508,"./getEventTarget":547,"./getUnboundedScrollPosition":553}],479:[function(require,module,exports){
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -54350,7 +54470,7 @@ var ReactFragment = {
 
 module.exports = ReactFragment;
 
-},{"./ReactElement":472,"./warning":577}],479:[function(require,module,exports){
+},{"./ReactElement":473,"./warning":578}],480:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54392,7 +54512,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":423,"./EventPluginHub":430,"./ReactBrowserEventEmitter":445,"./ReactClass":448,"./ReactComponentEnvironment":451,"./ReactDOMComponent":457,"./ReactEmptyComponent":474,"./ReactNativeComponent":489,"./ReactPerf":491,"./ReactRootIndex":500,"./ReactUpdates":507}],480:[function(require,module,exports){
+},{"./DOMProperty":424,"./EventPluginHub":431,"./ReactBrowserEventEmitter":446,"./ReactClass":449,"./ReactComponentEnvironment":452,"./ReactDOMComponent":458,"./ReactEmptyComponent":475,"./ReactNativeComponent":490,"./ReactPerf":492,"./ReactRootIndex":501,"./ReactUpdates":508}],481:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54527,7 +54647,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":465,"./containsNode":530,"./focusNode":540,"./getActiveElement":542}],481:[function(require,module,exports){
+},{"./ReactDOMSelection":466,"./containsNode":531,"./focusNode":541,"./getActiveElement":543}],482:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54861,7 +54981,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 
-},{"./ReactRootIndex":500,"./invariant":556}],482:[function(require,module,exports){
+},{"./ReactRootIndex":501,"./invariant":557}],483:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -54910,7 +55030,7 @@ var ReactInstanceMap = {
 
 module.exports = ReactInstanceMap;
 
-},{}],483:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -54947,7 +55067,7 @@ var ReactLifeCycle = {
 
 module.exports = ReactLifeCycle;
 
-},{}],484:[function(require,module,exports){
+},{}],485:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55020,7 +55140,7 @@ ReactLink.PropTypes = {
 
 module.exports = ReactLink;
 
-},{"./React":443}],485:[function(require,module,exports){
+},{"./React":444}],486:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55068,7 +55188,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":526}],486:[function(require,module,exports){
+},{"./adler32":527}],487:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -55957,7 +56077,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 
-},{"./DOMProperty":423,"./ReactBrowserEventEmitter":445,"./ReactCurrentOwner":454,"./ReactElement":472,"./ReactElementValidator":473,"./ReactEmptyComponent":474,"./ReactInstanceHandles":481,"./ReactInstanceMap":482,"./ReactMarkupChecksum":485,"./ReactPerf":491,"./ReactReconciler":498,"./ReactUpdateQueue":506,"./ReactUpdates":507,"./containsNode":530,"./emptyObject":536,"./getReactRootElementInContainer":550,"./instantiateReactComponent":555,"./invariant":556,"./setInnerHTML":570,"./shouldUpdateReactComponent":573,"./warning":577}],487:[function(require,module,exports){
+},{"./DOMProperty":424,"./ReactBrowserEventEmitter":446,"./ReactCurrentOwner":455,"./ReactElement":473,"./ReactElementValidator":474,"./ReactEmptyComponent":475,"./ReactInstanceHandles":482,"./ReactInstanceMap":483,"./ReactMarkupChecksum":486,"./ReactPerf":492,"./ReactReconciler":499,"./ReactUpdateQueue":507,"./ReactUpdates":508,"./containsNode":531,"./emptyObject":537,"./getReactRootElementInContainer":551,"./instantiateReactComponent":556,"./invariant":557,"./setInnerHTML":571,"./shouldUpdateReactComponent":574,"./warning":578}],488:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56387,7 +56507,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactChildReconciler":446,"./ReactComponentEnvironment":451,"./ReactMultiChildUpdateTypes":488,"./ReactReconciler":498}],488:[function(require,module,exports){
+},{"./ReactChildReconciler":447,"./ReactComponentEnvironment":452,"./ReactMultiChildUpdateTypes":489,"./ReactReconciler":499}],489:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56420,7 +56540,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":562}],489:[function(require,module,exports){
+},{"./keyMirror":563}],490:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -56525,7 +56645,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 
-},{"./Object.assign":441,"./invariant":556}],490:[function(require,module,exports){
+},{"./Object.assign":442,"./invariant":557}],491:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56635,7 +56755,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 
-},{"./invariant":556}],491:[function(require,module,exports){
+},{"./invariant":557}],492:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56737,7 +56857,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 
-},{}],492:[function(require,module,exports){
+},{}],493:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56847,7 +56967,7 @@ var ReactPropTransferer = {
 
 module.exports = ReactPropTransferer;
 
-},{"./Object.assign":441,"./emptyFunction":535,"./joinClasses":561}],493:[function(require,module,exports){
+},{"./Object.assign":442,"./emptyFunction":536,"./joinClasses":562}],494:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56873,7 +56993,7 @@ if ("production" !== "production") {
 
 module.exports = ReactPropTypeLocationNames;
 
-},{}],494:[function(require,module,exports){
+},{}],495:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -56897,7 +57017,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":562}],495:[function(require,module,exports){
+},{"./keyMirror":563}],496:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57246,7 +57366,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":472,"./ReactFragment":478,"./ReactPropTypeLocationNames":493,"./emptyFunction":535}],496:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactFragment":479,"./ReactPropTypeLocationNames":494,"./emptyFunction":536}],497:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57302,7 +57422,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":441,"./PooledClass":442,"./ReactBrowserEventEmitter":445}],497:[function(require,module,exports){
+},{"./Object.assign":442,"./PooledClass":443,"./ReactBrowserEventEmitter":446}],498:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57478,7 +57598,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":419,"./Object.assign":441,"./PooledClass":442,"./ReactBrowserEventEmitter":445,"./ReactInputSelection":480,"./ReactPutListenerQueue":496,"./Transaction":523}],498:[function(require,module,exports){
+},{"./CallbackQueue":420,"./Object.assign":442,"./PooledClass":443,"./ReactBrowserEventEmitter":446,"./ReactInputSelection":481,"./ReactPutListenerQueue":497,"./Transaction":524}],499:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57600,7 +57720,7 @@ var ReactReconciler = {
 
 module.exports = ReactReconciler;
 
-},{"./ReactElementValidator":473,"./ReactRef":499}],499:[function(require,module,exports){
+},{"./ReactElementValidator":474,"./ReactRef":500}],500:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57671,7 +57791,7 @@ ReactRef.detachRefs = function(instance, element) {
 
 module.exports = ReactRef;
 
-},{"./ReactOwner":490}],500:[function(require,module,exports){
+},{"./ReactOwner":491}],501:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57702,7 +57822,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],501:[function(require,module,exports){
+},{}],502:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -57782,7 +57902,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 
-},{"./ReactElement":472,"./ReactInstanceHandles":481,"./ReactMarkupChecksum":485,"./ReactServerRenderingTransaction":502,"./emptyObject":536,"./instantiateReactComponent":555,"./invariant":556}],502:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactInstanceHandles":482,"./ReactMarkupChecksum":486,"./ReactServerRenderingTransaction":503,"./emptyObject":537,"./instantiateReactComponent":556,"./invariant":557}],503:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -57895,7 +58015,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":419,"./Object.assign":441,"./PooledClass":442,"./ReactPutListenerQueue":496,"./Transaction":523,"./emptyFunction":535}],503:[function(require,module,exports){
+},{"./CallbackQueue":420,"./Object.assign":442,"./PooledClass":443,"./ReactPutListenerQueue":497,"./Transaction":524,"./emptyFunction":536}],504:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58001,7 +58121,7 @@ ReactStateSetters.Mixin = {
 
 module.exports = ReactStateSetters;
 
-},{}],504:[function(require,module,exports){
+},{}],505:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58106,7 +58226,7 @@ var ReactTransitionChildMapping = {
 
 module.exports = ReactTransitionChildMapping;
 
-},{"./ReactChildren":447,"./ReactFragment":478}],505:[function(require,module,exports){
+},{"./ReactChildren":448,"./ReactFragment":479}],506:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58336,7 +58456,7 @@ var ReactTransitionGroup = React.createClass({
 
 module.exports = ReactTransitionGroup;
 
-},{"./Object.assign":441,"./React":443,"./ReactTransitionChildMapping":504,"./cloneWithProps":529,"./emptyFunction":535}],506:[function(require,module,exports){
+},{"./Object.assign":442,"./React":444,"./ReactTransitionChildMapping":505,"./cloneWithProps":530,"./emptyFunction":536}],507:[function(require,module,exports){
 /**
  * Copyright 2015, Facebook, Inc.
  * All rights reserved.
@@ -58633,7 +58753,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 
-},{"./Object.assign":441,"./ReactCurrentOwner":454,"./ReactElement":472,"./ReactInstanceMap":482,"./ReactLifeCycle":483,"./ReactUpdates":507,"./invariant":556,"./warning":577}],507:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactCurrentOwner":455,"./ReactElement":473,"./ReactInstanceMap":483,"./ReactLifeCycle":484,"./ReactUpdates":508,"./invariant":557,"./warning":578}],508:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -58913,7 +59033,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 
-},{"./CallbackQueue":419,"./Object.assign":441,"./PooledClass":442,"./ReactCurrentOwner":454,"./ReactPerf":491,"./ReactReconciler":498,"./Transaction":523,"./invariant":556,"./warning":577}],508:[function(require,module,exports){
+},{"./CallbackQueue":420,"./Object.assign":442,"./PooledClass":443,"./ReactCurrentOwner":455,"./ReactPerf":492,"./ReactReconciler":499,"./Transaction":524,"./invariant":557,"./warning":578}],509:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59005,7 +59125,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":423}],509:[function(require,module,exports){
+},{"./DOMProperty":424}],510:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59200,7 +59320,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":428,"./EventPropagators":433,"./ReactInputSelection":480,"./SyntheticEvent":515,"./getActiveElement":542,"./isTextInputElement":559,"./keyOf":563,"./shallowEqual":572}],510:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPropagators":434,"./ReactInputSelection":481,"./SyntheticEvent":516,"./getActiveElement":543,"./isTextInputElement":560,"./keyOf":564,"./shallowEqual":573}],511:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59231,7 +59351,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],511:[function(require,module,exports){
+},{}],512:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59657,7 +59777,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 
-},{"./EventConstants":428,"./EventPluginUtils":432,"./EventPropagators":433,"./SyntheticClipboardEvent":512,"./SyntheticDragEvent":514,"./SyntheticEvent":515,"./SyntheticFocusEvent":516,"./SyntheticKeyboardEvent":518,"./SyntheticMouseEvent":519,"./SyntheticTouchEvent":520,"./SyntheticUIEvent":521,"./SyntheticWheelEvent":522,"./getEventCharCode":543,"./invariant":556,"./keyOf":563,"./warning":577}],512:[function(require,module,exports){
+},{"./EventConstants":429,"./EventPluginUtils":433,"./EventPropagators":434,"./SyntheticClipboardEvent":513,"./SyntheticDragEvent":515,"./SyntheticEvent":516,"./SyntheticFocusEvent":517,"./SyntheticKeyboardEvent":519,"./SyntheticMouseEvent":520,"./SyntheticTouchEvent":521,"./SyntheticUIEvent":522,"./SyntheticWheelEvent":523,"./getEventCharCode":544,"./invariant":557,"./keyOf":564,"./warning":578}],513:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59702,7 +59822,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
 
-},{"./SyntheticEvent":515}],513:[function(require,module,exports){
+},{"./SyntheticEvent":516}],514:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59747,7 +59867,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticCompositionEvent;
 
-},{"./SyntheticEvent":515}],514:[function(require,module,exports){
+},{"./SyntheticEvent":516}],515:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59786,7 +59906,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":519}],515:[function(require,module,exports){
+},{"./SyntheticMouseEvent":520}],516:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59952,7 +60072,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":441,"./PooledClass":442,"./emptyFunction":535,"./getEventTarget":546}],516:[function(require,module,exports){
+},{"./Object.assign":442,"./PooledClass":443,"./emptyFunction":536,"./getEventTarget":547}],517:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -59991,7 +60111,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":521}],517:[function(require,module,exports){
+},{"./SyntheticUIEvent":522}],518:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60037,7 +60157,7 @@ SyntheticEvent.augmentClass(
 
 module.exports = SyntheticInputEvent;
 
-},{"./SyntheticEvent":515}],518:[function(require,module,exports){
+},{"./SyntheticEvent":516}],519:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60124,7 +60244,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":521,"./getEventCharCode":543,"./getEventKey":544,"./getEventModifierState":545}],519:[function(require,module,exports){
+},{"./SyntheticUIEvent":522,"./getEventCharCode":544,"./getEventKey":545,"./getEventModifierState":546}],520:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60205,7 +60325,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":521,"./ViewportMetrics":524,"./getEventModifierState":545}],520:[function(require,module,exports){
+},{"./SyntheticUIEvent":522,"./ViewportMetrics":525,"./getEventModifierState":546}],521:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60253,7 +60373,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":521,"./getEventModifierState":545}],521:[function(require,module,exports){
+},{"./SyntheticUIEvent":522,"./getEventModifierState":546}],522:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60315,7 +60435,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":515,"./getEventTarget":546}],522:[function(require,module,exports){
+},{"./SyntheticEvent":516,"./getEventTarget":547}],523:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60376,7 +60496,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":519}],523:[function(require,module,exports){
+},{"./SyntheticMouseEvent":520}],524:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60615,7 +60735,7 @@ var Transaction = {
 
 module.exports = Transaction;
 
-},{"./invariant":556}],524:[function(require,module,exports){
+},{"./invariant":557}],525:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60644,7 +60764,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{}],525:[function(require,module,exports){
+},{}],526:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -60708,7 +60828,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 
-},{"./invariant":556}],526:[function(require,module,exports){
+},{"./invariant":557}],527:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60742,7 +60862,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],527:[function(require,module,exports){
+},{}],528:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60774,7 +60894,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],528:[function(require,module,exports){
+},{}],529:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -60816,7 +60936,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":527}],529:[function(require,module,exports){
+},{"./camelize":528}],530:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60873,7 +60993,7 @@ function cloneWithProps(child, props) {
 
 module.exports = cloneWithProps;
 
-},{"./ReactElement":472,"./ReactPropTransferer":492,"./keyOf":563,"./warning":577}],530:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactPropTransferer":493,"./keyOf":564,"./warning":578}],531:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -60917,7 +61037,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":560}],531:[function(require,module,exports){
+},{"./isTextNode":561}],532:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61003,7 +61123,7 @@ function createArrayFromMixed(obj) {
 
 module.exports = createArrayFromMixed;
 
-},{"./toArray":574}],532:[function(require,module,exports){
+},{"./toArray":575}],533:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61063,7 +61183,7 @@ function createFullPageComponent(tag) {
 
 module.exports = createFullPageComponent;
 
-},{"./ReactClass":448,"./ReactElement":472,"./invariant":556}],533:[function(require,module,exports){
+},{"./ReactClass":449,"./ReactElement":473,"./invariant":557}],534:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61151,7 +61271,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 
-},{"./ExecutionEnvironment":434,"./createArrayFromMixed":531,"./getMarkupWrap":548,"./invariant":556}],534:[function(require,module,exports){
+},{"./ExecutionEnvironment":435,"./createArrayFromMixed":532,"./getMarkupWrap":549,"./invariant":557}],535:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61209,7 +61329,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":417}],535:[function(require,module,exports){
+},{"./CSSProperty":418}],536:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61243,7 +61363,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],536:[function(require,module,exports){
+},{}],537:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61265,7 +61385,7 @@ if ("production" !== "production") {
 
 module.exports = emptyObject;
 
-},{}],537:[function(require,module,exports){
+},{}],538:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61305,7 +61425,7 @@ function escapeTextContentForBrowser(text) {
 
 module.exports = escapeTextContentForBrowser;
 
-},{}],538:[function(require,module,exports){
+},{}],539:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61376,7 +61496,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 
-},{"./ReactCurrentOwner":454,"./ReactInstanceMap":482,"./ReactMount":486,"./invariant":556,"./isNode":558,"./warning":577}],539:[function(require,module,exports){
+},{"./ReactCurrentOwner":455,"./ReactInstanceMap":483,"./ReactMount":487,"./invariant":557,"./isNode":559,"./warning":578}],540:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61432,7 +61552,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 
-},{"./traverseAllChildren":575,"./warning":577}],540:[function(require,module,exports){
+},{"./traverseAllChildren":576,"./warning":578}],541:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -61461,7 +61581,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],541:[function(require,module,exports){
+},{}],542:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61492,7 +61612,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],542:[function(require,module,exports){
+},{}],543:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61521,7 +61641,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],543:[function(require,module,exports){
+},{}],544:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61573,7 +61693,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],544:[function(require,module,exports){
+},{}],545:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61678,7 +61798,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":543}],545:[function(require,module,exports){
+},{"./getEventCharCode":544}],546:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61725,7 +61845,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],546:[function(require,module,exports){
+},{}],547:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61756,7 +61876,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],547:[function(require,module,exports){
+},{}],548:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61800,7 +61920,7 @@ function getIteratorFn(maybeIterable) {
 
 module.exports = getIteratorFn;
 
-},{}],548:[function(require,module,exports){
+},{}],549:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61915,7 +62035,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 
-},{"./ExecutionEnvironment":434,"./invariant":556}],549:[function(require,module,exports){
+},{"./ExecutionEnvironment":435,"./invariant":557}],550:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -61990,7 +62110,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],550:[function(require,module,exports){
+},{}],551:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62025,7 +62145,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],551:[function(require,module,exports){
+},{}],552:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62062,7 +62182,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":434}],552:[function(require,module,exports){
+},{"./ExecutionEnvironment":435}],553:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62102,7 +62222,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],553:[function(require,module,exports){
+},{}],554:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62135,7 +62255,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],554:[function(require,module,exports){
+},{}],555:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62176,7 +62296,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":553}],555:[function(require,module,exports){
+},{"./hyphenate":554}],556:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62312,7 +62432,7 @@ function instantiateReactComponent(node, parentCompositeType) {
 
 module.exports = instantiateReactComponent;
 
-},{"./Object.assign":441,"./ReactCompositeComponent":452,"./ReactEmptyComponent":474,"./ReactNativeComponent":489,"./invariant":556,"./warning":577}],556:[function(require,module,exports){
+},{"./Object.assign":442,"./ReactCompositeComponent":453,"./ReactEmptyComponent":475,"./ReactNativeComponent":490,"./invariant":557,"./warning":578}],557:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62367,7 +62487,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],557:[function(require,module,exports){
+},{}],558:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62432,7 +62552,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":434}],558:[function(require,module,exports){
+},{"./ExecutionEnvironment":435}],559:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62459,7 +62579,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],559:[function(require,module,exports){
+},{}],560:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62502,7 +62622,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],560:[function(require,module,exports){
+},{}],561:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62527,7 +62647,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":558}],561:[function(require,module,exports){
+},{"./isNode":559}],562:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62568,7 +62688,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],562:[function(require,module,exports){
+},{}],563:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62621,7 +62741,7 @@ var keyMirror = function(obj) {
 
 module.exports = keyMirror;
 
-},{"./invariant":556}],563:[function(require,module,exports){
+},{"./invariant":557}],564:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62657,7 +62777,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],564:[function(require,module,exports){
+},{}],565:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62710,7 +62830,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],565:[function(require,module,exports){
+},{}],566:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62743,7 +62863,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],566:[function(require,module,exports){
+},{}],567:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62781,7 +62901,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 
-},{"./ReactElement":472,"./invariant":556}],567:[function(require,module,exports){
+},{"./ReactElement":473,"./invariant":557}],568:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62809,7 +62929,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":434}],568:[function(require,module,exports){
+},{"./ExecutionEnvironment":435}],569:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62837,7 +62957,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":567}],569:[function(require,module,exports){
+},{"./performance":568}],570:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62865,7 +62985,7 @@ function quoteAttributeValueForBrowser(value) {
 
 module.exports = quoteAttributeValueForBrowser;
 
-},{"./escapeTextContentForBrowser":537}],570:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":538}],571:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62954,7 +63074,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":434}],571:[function(require,module,exports){
+},{"./ExecutionEnvironment":435}],572:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -62996,7 +63116,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setTextContent;
 
-},{"./ExecutionEnvironment":434,"./escapeTextContentForBrowser":537,"./setInnerHTML":570}],572:[function(require,module,exports){
+},{"./ExecutionEnvironment":435,"./escapeTextContentForBrowser":538,"./setInnerHTML":571}],573:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63040,7 +63160,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],573:[function(require,module,exports){
+},{}],574:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63142,7 +63262,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{"./warning":577}],574:[function(require,module,exports){
+},{"./warning":578}],575:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -63212,7 +63332,7 @@ function toArray(obj) {
 
 module.exports = toArray;
 
-},{"./invariant":556}],575:[function(require,module,exports){
+},{"./invariant":557}],576:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63463,7 +63583,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 
-},{"./ReactElement":472,"./ReactFragment":478,"./ReactInstanceHandles":481,"./getIteratorFn":547,"./invariant":556,"./warning":577}],576:[function(require,module,exports){
+},{"./ReactElement":473,"./ReactFragment":479,"./ReactInstanceHandles":482,"./getIteratorFn":548,"./invariant":557,"./warning":578}],577:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63632,7 +63752,7 @@ function update(value, spec) {
 
 module.exports = update;
 
-},{"./Object.assign":441,"./invariant":556,"./keyOf":563}],577:[function(require,module,exports){
+},{"./Object.assign":442,"./invariant":557,"./keyOf":564}],578:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -63693,7 +63813,7 @@ if ("production" !== "production") {
 
 module.exports = warning;
 
-},{"./emptyFunction":535}],"Modernizr":[function(require,module,exports){
+},{"./emptyFunction":536}],"Modernizr":[function(require,module,exports){
 /*!
  * Modernizr v2.8.3
  * www.modernizr.com
@@ -67185,7 +67305,7 @@ module.exports = Modernizr;
   return URI;
 }));
 
-},{"./IPv6":383,"./SecondLevelDomains":384,"./punycode":385}],"aviator":[function(require,module,exports){
+},{"./IPv6":384,"./SecondLevelDomains":385,"./punycode":386}],"aviator":[function(require,module,exports){
 // Modules
 var Navigator = require('./navigator');
 
@@ -70694,8 +70814,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-arguments[4][392][0].apply(exports,arguments)
-},{"dup":392}],"i18next":[function(require,module,exports){
+arguments[4][393][0].apply(exports,arguments)
+},{"dup":393}],"i18next":[function(require,module,exports){
 // i18next, v1.7.7
 // Copyright (c)2014 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -97687,7 +97807,7 @@ arguments[4][6][0].apply(exports,arguments)
 
 }));
 
-},{"fizzy-ui-utils":401,"get-size":402,"outlayer":408}],"medium-editor":[function(require,module,exports){
+},{"fizzy-ui-utils":402,"get-size":403,"outlayer":409}],"medium-editor":[function(require,module,exports){
 /*global self, document, DOMException */
 
 /*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js */
@@ -111634,7 +111754,7 @@ module.exports = function injectTapEventPlugin () {
   });
 };
 
-},{"./ResponderEventPlugin.js":412,"./TapEventPlugin.js":413,"react":"react","react/lib/EventPluginHub":430}],"reactUjs":[function(require,module,exports){
+},{"./ResponderEventPlugin.js":413,"./TapEventPlugin.js":414,"react":"react","react/lib/EventPluginHub":431}],"reactUjs":[function(require,module,exports){
 var CLASS_NAME_ATTR, PROPS_ATTR, findReactDOMNodes, initialize, mountReactComponents, unmountReactComponents;
 
 CLASS_NAME_ATTR = 'data-react-class';
@@ -111698,7 +111818,7 @@ module.exports = {
 },{}],"react":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":443}],"swfobject":[function(require,module,exports){
+},{"./lib/React":444}],"swfobject":[function(require,module,exports){
 /**
  * SWFObject v1.5: Flash Player detection and embed - http://blog.deconcept.com/swfobject/
  *

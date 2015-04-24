@@ -45,7 +45,7 @@ window.HeroProfileStats_FollowersPopup = React.createClass
         @safeUpdateState relationships: data.relationships
       error:   (data) =>
         @safeUpdateState isError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdate => @decrementActivities()
         @safeUpdateState isLoading: false

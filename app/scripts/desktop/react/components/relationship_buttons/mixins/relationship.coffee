@@ -14,7 +14,7 @@ window.RelationshipMixin =
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isProcess: false
 
@@ -30,7 +30,7 @@ window.RelationshipMixin =
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isProcess: false
 
@@ -43,7 +43,7 @@ window.RelationshipMixin =
       success: ->
         options?.success?()
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   cancel: (options) ->
     @closeError()
@@ -60,7 +60,7 @@ window.RelationshipMixin =
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isProcess: false
 
@@ -76,7 +76,7 @@ window.RelationshipMixin =
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @startErrorTimer()
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isProcess: false
 
@@ -91,7 +91,7 @@ window.RelationshipMixin =
       success: (relationship) =>
         options?.success?(relationship)
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @activateWaitingState()
 
@@ -104,7 +104,7 @@ window.RelationshipMixin =
       success: (relationship) =>
         options?.success?(relationship)
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @activateWaitingState()
 
@@ -116,7 +116,7 @@ window.RelationshipMixin =
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
       error: (data) =>
         @safeUpdateState isError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
 React.mixins.add 'RelationshipMixin', [
   RelationshipMixin, ErrorTimerMixin, RequesterMixin

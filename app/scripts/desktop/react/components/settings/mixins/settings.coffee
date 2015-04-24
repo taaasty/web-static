@@ -17,28 +17,28 @@ SettingsMixin =
     CurrentUserViewActions.updateTitle
       title: title
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_description_success'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_description_success'), 2000
       complete:   => @decrementActivities()
 
   updatePrivacy: (privacy) ->
     CurrentUserViewActions.updatePrivacy
       privacy: privacy
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_privacy_success'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_privacy_success'), 2000
       complete:   => @decrementActivities()
 
   updateDaylog: (daylog) ->
     CurrentUserViewActions.updateDaylog
       daylog: daylog
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_daylog_success'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_daylog_success'), 2000
       complete:   => @decrementActivities()
 
   updateFemale: (female) ->
     CurrentUserViewActions.updateFemale
       female: female
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_gender_success'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_gender_success'), 2000
       complete:   => @decrementActivities()
 
   updatePassword: ({password, success}) ->
@@ -46,7 +46,7 @@ SettingsMixin =
       password: password
       beforeSend: => @incrementActivities()
       success: =>
-        TastyNotifyController.notifySuccess i18n.t('settings_change_password_success'), 2000
+        NoticeService.notifySuccess i18n.t('settings_change_password_success'), 2000
         success?()
       complete: => @decrementActivities()
 
@@ -54,7 +54,7 @@ SettingsMixin =
     CurrentUserViewActions.updateAvailableNotifications
       availableNotifications: availableNotifications
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_notifications_success'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_notifications_success'), 2000
       complete:   => @decrementActivities()
 
   updateEmail: ({email, success}) ->
@@ -63,7 +63,7 @@ SettingsMixin =
       beforeSend: => @incrementActivities()
       success: =>
         success?()
-        TastyNotifyController.notifySuccess i18n.t('settings_change_email_mail_sent'), 2000
+        NoticeService.notifySuccess i18n.t('settings_change_email_mail_sent'), 2000
       complete:   => @decrementActivities()
 
   updateLanguage: (language) ->
@@ -71,7 +71,7 @@ SettingsMixin =
 
     CurrentUserViewActions.updateLanguage(language)
       .then (->
-        TastyNotifyController.notifySuccess i18n.t('settings_change_language_success'), 2000
+        NoticeService.notifySuccess i18n.t('settings_change_language_success'), 2000
         setTimeout (-> window.location.reload()), 1000
       )
       .always @decrementActivities
@@ -79,7 +79,7 @@ SettingsMixin =
   cancelEmailConfirmation: ->
     CurrentUserViewActions.cancelEmailConfirmation
       beforeSend: => @incrementActivities()
-      success:    => TastyNotifyController.notifySuccess i18n.t('settings_change_email_canceled'), 2000
+      success:    => NoticeService.notifySuccess i18n.t('settings_change_email_canceled'), 2000
       complete:   => @decrementActivities()
 
   resendEmailConfirmation: ({beforeSend, error, success}) ->
@@ -89,7 +89,7 @@ SettingsMixin =
         beforeSend?()
       error: error
       success: ->
-        TastyNotifyController.notifySuccess i18n.t('settings_change_email_mail_resent'), 2000
+        NoticeService.notifySuccess i18n.t('settings_change_email_mail_resent'), 2000
         success?()
       complete: => @decrementActivities()
 

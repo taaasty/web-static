@@ -14,7 +14,7 @@ SettingsAvatar = React.createClass
       replaceFileInput: false
       start: => @incrementActivities()
       fail: (e, data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       done: (e, data) =>
         userpic = data.response().jqXHR.responseJSON
 

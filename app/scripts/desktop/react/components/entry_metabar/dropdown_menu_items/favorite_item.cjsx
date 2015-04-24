@@ -50,7 +50,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
         @safeUpdateState isFavorited: true
         console.info "Пост #{@props.entryId} добавлен в избранное"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   removeFromFavorites: ->
     @createRequest
@@ -66,7 +66,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
           @safeUpdateState isFavorited: false
         console.info "Пост #{@props.entryId} удалён из избранного"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   onMouseEnter: -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false

@@ -62,7 +62,7 @@ window.MessagesPopup_ChooserResults = React.createClass
         else
           @activateLoadedState()
       error: (errMsg) =>
-        TastyNotifyController.errorResponse errMsg
+        NoticeService.errorResponse errMsg
 
   getSelectedUserId: ->
     @state.predictedUsers[@state.selectedUserIndex].id

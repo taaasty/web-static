@@ -20,5 +20,5 @@ window.HeroProfile_DropdownMenuIgnoreItem = React.createClass
         TastyEvents.emit TastyEvents.keys.follow_status_changed(@props.userId), relationship.state
         @props.onRequestEnd()
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
     , { progressBar: true })

@@ -123,7 +123,7 @@ EditorTypeImage = React.createClass
       @activateLoadedState()
       EditorActionCreators.changeImageUrl imageUrl
     image.onerror = =>
-      TastyNotifyController.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
+      NoticeService.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
       @activateWelcomeState()
 
     image.src = imageUrl
@@ -133,7 +133,7 @@ EditorTypeImage = React.createClass
       file.type.match /(\.|\/)(gif|jpe?g|png)$/i
 
     unless imageFiles.length
-      return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
+      return NoticeService.notifyError i18n.t 'editor_files_without_images'
 
     EditorActionCreators.createImageAttachments files
       .progress (soFar) =>

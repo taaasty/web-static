@@ -11,7 +11,7 @@ require './locales/numeral/ru'
 require './locales/moment/ru'
 
 require './react/services/positions'
-global.NotificationService = require './react/services/Notification'
+global.NoticeService = require './react/services/Notice'
 window.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
@@ -267,6 +267,10 @@ require './react/components/images_collage'
 require './react/components/spinner'
 
 require './react/components/screen_viewer/screen_viewer'
+
+require './react/components/alerts/tasty_confirm'
+require './react/components/alerts/tasty_alert'
+require './react/components/alerts/tasty_locking_alert'
 
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_confirm'

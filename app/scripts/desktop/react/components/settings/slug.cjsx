@@ -23,7 +23,7 @@ SettingsSlug = React.createClass
       @setState(slug: slug)
       @props.onChange slug
     else
-      TastyNotifyController.notifyError i18n.t('settings_empty_slug_error'), 2000
+      NoticeService.notifyError i18n.t('settings_empty_slug_error'), 2000
       @forceUpdate()
 
 module.exports = SettingsSlug
