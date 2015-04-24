@@ -90,9 +90,8 @@ let UserToolbarListItem = React.createClass({
     // and force execution underlying event at the moment
     if (typeof this.props.onClick === 'function') {
       this.props.onClick();
-    } else if (!this.props.children) {
-      // Unless list item has children, make redirect, otherwise allow trigger hover
-      // event, which open subnav list
+    } else if (this.state.opened || !this.props.children) {
+      // We will make redirect if item has no children, or it has been opened
       window.location = this.props.url;
     }
   }
