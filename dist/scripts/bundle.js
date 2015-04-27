@@ -31327,19 +31327,8 @@ var NoticeService = {
 
     if (response.responseJSON != null) {
       var json = response.responseJSON;
-      console.error("errorResponse JSON", json);
 
-      if (json.message != null) {
-        message = json.message;
-      }
-
-      if (json.long_message != null) {
-        message = json.long_message;
-      }
-
-      if (json.error != null && json.error.length) {
-        message = json.error;
-      }
+      message = json.message || json.long_message || json.error;
     } else {
       message = i18n.t("network_error", { text: response.statusText });
     }
