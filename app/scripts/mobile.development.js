@@ -4,6 +4,6 @@ gon.env = 'development';
 
 ReactApp.start({
   locale: gon.locale,
-  userID: gon.user.id,
-  userToken: gon.user.api_key.access_token
+  userID: gon.user ? gon.user.id : null,
+  userToken: gon.user ? gon.user.api_key.access_token : null
 });

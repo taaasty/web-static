@@ -4,6 +4,7 @@ global.gon = {
   host: localStorage.getItem('host') || 'http://taaasty.com/',
   api_host: localStorage.getItem('api_host') || 'http://taaasty.com/api/',
   localesPath: '../locales',
+  localesVersion: '1.0.0',
   locale: 'ru',
   // taaasty development app
   pusher: {

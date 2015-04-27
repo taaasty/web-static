@@ -9,8 +9,8 @@ gon.env = "development";
 
 ReactApp.start({
   locale: gon.locale,
-  userID: gon.user.id,
-  userToken: gon.user.api_key.access_token
+  userID: gon.user ? gon.user.id : null,
+  userToken: gon.user ? gon.user.api_key.access_token : null
 });
 
 },{"./mobile/bundle":2}],2:[function(require,module,exports){
@@ -1155,7 +1155,7 @@ module.exports = Api;
 
 },{"../constants/constants":200,"../stores/currentUser":229,"react/lib/Object.assign":279}],18:[function(require,module,exports){
 (function (global){
-var MessagingService, ReactUjs;
+var MessagingService, ReactUjs, initLocales;
 
 global.i18n = require('i18next');
 
@@ -1163,17 +1163,21 @@ ReactUjs = require('reactUjs');
 
 MessagingService = require('./services/messaging');
 
+initLocales = function(locale, callback) {
+  return i18n.init({
+    lng: locale,
+    fallbackLng: 'ru',
+    resGetPath: Routes.locale()
+  }, callback);
+};
+
 window.ReactApp = {
   messagingService: null,
   start: function(arg) {
     var locale, userID, userToken;
     locale = arg.locale, userID = arg.userID, userToken = arg.userToken;
     console.log('ReactApp start');
-    i18n.init({
-      lng: locale,
-      fallbackLng: 'ru',
-      resGetPath: gon.localesPath + '/__lng__.json?v=2'
-    }, function() {
+    initLocales(locale, function() {
       console.log('Locales loaded');
       return ReactUjs.initialize();
     });
