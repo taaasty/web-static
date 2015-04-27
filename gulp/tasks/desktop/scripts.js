@@ -1,15 +1,15 @@
 var gulp = require('gulp'),
     browserify = require('browserify'),
     watchify = require('watchify'),
-    envify = require('envify'),
     source = require('vinyl-source-stream'),
     uglify = require('gulp-uglify'),
     streamify = require('gulp-streamify'),
     rename = require('gulp-rename'),
     bundleLogger = require('../../util/bundleLogger'),
     handleErrors = require('../../util/handleErrors'),
-    configLocal = require('../../config').desktop.local.scripts,
-    configProduction = require('../../config').desktop.production.scripts;
+    configStatic = require('../../config').desktop.scripts.static,
+    configDevelopment = require('../../config').desktop.scripts.development,
+    configProduction = require('../../config').desktop.scripts.production;
 
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
@@ -55,15 +55,15 @@ var dependencies = {
   'react-tap-event-plugin': './node_modules/react-tap-event-plugin'
 }
 
-gulp.task('[D][L] Scripts', function(cb) {
+gulp.task('[D][S] Scripts', function(cb) {
 
   /*==========  Client scripts  ==========*/
 
   var bundleQueue = 1;
   var clientBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.client.entries,
-    extensions: configLocal.client.extensions
+    entries: configStatic.client.entries,
+    extensions: configStatic.client.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
@@ -71,14 +71,14 @@ gulp.task('[D][L] Scripts', function(cb) {
   });
 
   var rebundle = function() {
-    bundleLogger.start(configLocal.client.outputName);
+    bundleLogger.start(configStatic.client.outputName);
 
     clientBundler.bundle()
       .on('error', handleErrors)
-      .pipe( source(configLocal.client.outputName) )
-      .pipe( gulp.dest(configLocal.client.dest) )
+      .pipe(source(configStatic.client.outputName))
+      .pipe(gulp.dest(configStatic.client.dest))
       .on('end', function() {
-        bundleLogger.end(configLocal.client.outputName);
+        bundleLogger.end(configStatic.client.outputName);
         bundleQueue--;
         if (bundleQueue === 0) { cb(); }
       });
@@ -95,25 +95,51 @@ gulp.task('[D][L] Scripts', function(cb) {
 
   var vendorBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.vendor.entries,
-    extensions: configLocal.vendor.extensions
+    entries: configStatic.vendor.entries,
+    extensions: configStatic.vendor.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
     vendorBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configLocal.vendor.outputName);
+  bundleLogger.start(configStatic.vendor.outputName);
 
   vendorBundler
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configLocal.vendor.outputName) )
-    .pipe( gulp.dest(configLocal.vendor.dest) )
+    .pipe(source(configStatic.vendor.outputName))
+    .pipe(gulp.dest(configStatic.vendor.dest))
     .on('end', function() {
-      bundleLogger.end(configLocal.vendor.outputName);
+      bundleLogger.end(configStatic.vendor.outputName);
+    });
+});
+
+gulp.task('[D][D] Scripts', function() {
+  var appBundler = browserify({
+    cache: {}, packageCache: {},
+    entries: configDevelopment.bundle.entries,
+    extensions: configDevelopment.bundle.extensions
+  });
+
+  Object.keys(dependencies).forEach(function(key) {
+    appBundler.require(dependencies[key], {expose: key});
+  });
+
+  bundleLogger.start(configDevelopment.bundle.outputName);
+
+  return appBundler
+    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
+    .transform('browserify-shim')
+    .transform('coffee-reactify')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(configDevelopment.bundle.outputName))
+    .pipe(gulp.dest(configDevelopment.bundle.dest))
+    .on('end', function() {
+      bundleLogger.end(configDevelopment.bundle.outputName);
     });
 });
 
@@ -128,20 +154,18 @@ gulp.task('[D][P] Scripts', function() {
     appBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+  bundleLogger.start(configProduction.bundle.outputName);
 
-  appBundler
+  return appBundler
     .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configProduction.bundle.outputName) )
-    .pipe( gulp.dest(configProduction.bundle.dest) )
-    .pipe( streamify(uglify()) )
-    .pipe( rename(configProduction.min.outputName) )
-    .pipe( gulp.dest(configProduction.min.dest) )
+    .pipe(source(configProduction.bundle.outputName))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(configProduction.bundle.dest))
     .on('end', function() {
-      bundleLogger.end(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+      bundleLogger.end(configProduction.bundle.outputName);
     });
 });

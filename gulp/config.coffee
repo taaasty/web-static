@@ -12,98 +12,105 @@ module.exports =
       baseDir: [build, src]
     files: [build + '/**']
   desktop:
-    local:
-      scripts:
+    scripts:
+      static:
         vendor:
           baseDir: src + '/bower_components'
           dest: build + '/scripts'
           outputName: 'vendor.js'
           extensions: ['.coffee']
         client:
-          entries: src + '/scripts/desktop.local.coffee'
+          entries: src + '/scripts/desktop.static.js'
           dest: build + '/scripts'
           outputName: 'client.js'
           extensions: ['.jsx', '.cjsx', '.coffee']
-      styles:
-        src: src + '/stylesheets/desktop.local.less'
-        dest: build + '/stylesheets'
-        outputName: 'main.css'
-      html:
-        src: src + '/html/desktop/*.html'
-        dest: build
-      assets:
-        src: src + '/assets/**/*.*'
-        dest: build + '/assets'
-      locales:
-        src: src + '/scripts/desktop/locales/**/*.json'
-        dest: build + '/locales'
-    production:
-      scripts:
+      development:
         bundle:
-          entries: src + '/scripts/desktop.production.coffee'
+          entries: src + '/scripts/desktop.development.js'
           extensions: ['.jsx', '.cjsx', '.coffee']
           dest: dist + '/scripts/'
-          outputName: 'bundle.js'
-        min:
-          dest: dist + '/scripts'
-          outputName: 'bundle.min.js'
-      styles:
+          outputName: 'desktop.development.js'
+      production:
         bundle:
-          src: src + '/stylesheets/desktop.production.less'
-          dest: dist + '/stylesheets'
-          outputName: 'bundle.css'
-        min:
-          dest: dist + '/stylesheets'
-          outputName: 'bundle.min.css'
-      locales:
+          entries: src + '/scripts/desktop.production.js'
+          extensions: ['.jsx', '.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'desktop.production.js'
+    styles:
+      static:
+        src: src + '/stylesheets/desktop.static.less'
+        dest: build + '/stylesheets'
+        outputName: 'main.css'
+      production:
+        src: src + '/stylesheets/desktop.production.less'
+        dest: dist + '/stylesheets'
+        outputName: 'desktop.production.css'
+    html:
+      static:
+        src: src + '/html/desktop/*.html'
+        dest: build
+    assets:
+      static:
+        src: src + '/assets/**/*.*'
+        dest: build + '/assets'
+    locales:
+      static:
+        src: src + '/scripts/desktop/locales/**/*.json'
+        dest: build + '/locales'
+      production:
         src: src + '/scripts/desktop/locales/**/*.json'
         dest: dist + '/locales/desktop'
   mobile:
-    local:
-      scripts:
+    scripts:
+      static:
         vendor:
           dest: build + '/mobile/scripts'
           outputName: 'vendor.js'
           extensions: ['.coffee']
         client:
-          entries: src + '/scripts/mobile.local.coffee'
+          entries: src + '/scripts/mobile.static.js'
           dest: build + '/mobile/scripts'
           outputName: 'client.js'
           extensions: ['.jsx', '.cjsx', '.coffee']
-      styles:
-        src: src + '/stylesheets/mobile.local.less'
+      development:
+        bundle:
+          entries: src + '/scripts/mobile.development.js'
+          extensions: ['.jsx', '.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobile.development.js'
+        components:
+          entries: src + '/scripts/mobilePrerender.development.js'
+          extensions: ['.jsx', '.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobilePrerender.development.js'
+      production:
+        bundle:
+          entries: src + '/scripts/mobile.production.js'
+          extensions: ['.jsx', '.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobile.production.js'
+        components:
+          entries: src + '/scripts/mobilePrerender.production.js'
+          extensions: ['.jsx', '.cjsx', '.coffee']
+          dest: dist + '/scripts/'
+          outputName: 'mobilePrerender.production.js'
+    styles:
+      static:
+        src: src + '/stylesheets/mobile.static.less'
         dest: build + '/mobile/stylesheets'
         outputName: 'main.css'
-      html:
+      production:
+        src: src + '/stylesheets/mobile.production.less'
+        dest: dist + '/stylesheets'
+        outputName: 'mobile.production.css'
+    html:
+      static:
         src: src + '/html/mobile/**/*.html'
         dest: build + '/mobile'
-      locales:
+    locales:
+      static:
         src: src + '/scripts/mobile/locales/**/*.json'
         dest: build + '/mobile/locales'
-    production:
-      scripts:
-        bundle:
-          entries: src + '/scripts/mobile.production.coffee'
-          extensions: ['.jsx', '.cjsx', '.coffee']
-          dest: dist + '/scripts/'
-          outputName: 'mobile_bundle.js'
-        min:
-          src: dist + '/scripts/mobile_bundle.js'
-          dest: dist + '/scripts'
-          outputName: 'mobile_bundle.min.js'
-        components:
-          entries: src + '/scripts/mobile/components.js'
-          extensions: ['.jsx', '.cjsx', '.coffee']
-          dest: dist + '/scripts/'
-          outputName: 'mobile_components.js'
-      styles:
-        bundle:
-          src: src + '/stylesheets/mobile.production.less'
-          dest: dist + '/stylesheets'
-          outputName: 'mobile_bundle.css'
-        min:
-          dest: dist + '/stylesheets'
-          outputName: 'mobile_bundle.min.css'
-      locales:
+      production:
         src: src + '/scripts/mobile/locales/**/*.json'
         dest: dist + '/locales/mobile'

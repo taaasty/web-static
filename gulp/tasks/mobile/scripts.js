@@ -7,8 +7,9 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     bundleLogger = require('../../util/bundleLogger'),
     handleErrors = require('../../util/handleErrors'),
-    configLocal = require('../../config').mobile.local.scripts,
-    configProduction = require('../../config').mobile.production.scripts;
+    configStatic = require('../../config').mobile.scripts.static,
+    configDevelopment = require('../../config').mobile.scripts.development,
+    configProduction = require('../../config').mobile.scripts.production;
 
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
@@ -23,15 +24,15 @@ var dependencies = {
   jquery: './app/bower_components/jquery/dist/jquery'
 };
 
-gulp.task('[M][L] Scripts', function(cb) {
+gulp.task('[M][S] Scripts', function(cb) {
 
   /*==========  Client scripts  ==========*/
 
   var bundleQueue = 1;
   var clientBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.client.entries,
-    extensions: configLocal.client.extensions
+    entries: configStatic.client.entries,
+    extensions: configStatic.client.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
@@ -39,14 +40,14 @@ gulp.task('[M][L] Scripts', function(cb) {
   });
 
   var rebundle = function() {
-    bundleLogger.start(configLocal.client.outputName);
+    bundleLogger.start(configStatic.client.outputName);
 
     clientBundler.bundle()
       .on('error', handleErrors)
-      .pipe( source(configLocal.client.outputName) )
-      .pipe( gulp.dest(configLocal.client.dest) )
+      .pipe(source(configStatic.client.outputName))
+      .pipe(gulp.dest(configStatic.client.dest))
       .on('end', function() {
-        bundleLogger.end(configLocal.client.outputName);
+        bundleLogger.end(configStatic.client.outputName);
         bundleQueue--;
         if (bundleQueue === 0) { cb(); }
       });
@@ -55,7 +56,7 @@ gulp.task('[M][L] Scripts', function(cb) {
   clientBundler = watchify(clientBundler
     .transform('coffee-reactify')
     .transform('babelify')
-  );
+ );
   clientBundler.on('update', rebundle);
   rebundle();
 
@@ -63,25 +64,79 @@ gulp.task('[M][L] Scripts', function(cb) {
 
   var vendorBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.vendor.entries,
-    extensions: configLocal.vendor.extensions
+    entries: configStatic.vendor.entries,
+    extensions: configStatic.vendor.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
     vendorBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configLocal.vendor.outputName);
+  bundleLogger.start(configStatic.vendor.outputName);
 
   vendorBundler
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configLocal.vendor.outputName) )
-    .pipe( gulp.dest(configLocal.vendor.dest) )
+    .pipe(source(configStatic.vendor.outputName))
+    .pipe(gulp.dest(configStatic.vendor.dest))
     .on('end', function() {
-      bundleLogger.end(configLocal.vendor.outputName);
+      bundleLogger.end(configStatic.vendor.outputName);
+    });
+});
+
+gulp.task('[M][D] Scripts', function() {
+
+  /*==========  Bundle scripts  ==========*/
+
+  var appBundler = browserify({
+    cache: {}, packageCache: {},
+    entries: configDevelopment.bundle.entries,
+    extensions: configDevelopment.bundle.extensions
+  });
+
+  Object.keys(dependencies).forEach(function(key) {
+    appBundler.require(dependencies[key], {expose: key});
+  });
+
+  bundleLogger.start(configDevelopment.bundle.outputName);
+
+  appBundler
+    .transform('browserify-shim')
+    .transform('babelify', {ignore: /(node_modules|bower_components)/})
+    .transform('coffee-reactify')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(configDevelopment.bundle.outputName))
+    .pipe(gulp.dest(configDevelopment.bundle.dest))
+    .on('end', function() {
+      bundleLogger.end(configDevelopment.bundle.outputName);
+    });
+
+  /*==========  Components scripts  ==========*/
+
+  var componentsBundler = browserify({
+    cache: {}, packageCache: {},
+    entries: configDevelopment.components.entries,
+    extensions: configDevelopment.components.extensions
+  });
+
+  Object.keys(dependencies).forEach(function(key) {
+    componentsBundler.require(dependencies[key], {expose: key});
+  });
+
+  bundleLogger.start(configDevelopment.components.outputName);
+  componentsBundler
+    .transform('babelify', {ignore: /(node_modules|bower_components|bundlePrerender\.js)/})
+    .transform('browserify-shim')
+    .transform('coffee-reactify')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(configDevelopment.components.outputName))
+    .pipe(gulp.dest(configDevelopment.components.dest))
+    .on('end', function() {
+      bundleLogger.end(configDevelopment.components.outputName);
     });
 });
 
@@ -99,7 +154,7 @@ gulp.task('[M][P] Scripts', function() {
     appBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+  bundleLogger.start(configProduction.bundle.outputName);
 
   appBundler
     .transform('browserify-shim')
@@ -107,13 +162,11 @@ gulp.task('[M][P] Scripts', function() {
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configProduction.bundle.outputName) )
-    .pipe( gulp.dest(configProduction.bundle.dest) )
-    .pipe( streamify(uglify()) )
-    .pipe( rename(configProduction.min.outputName) )
-    .pipe( gulp.dest(configProduction.min.dest) )
+    .pipe(source(configProduction.bundle.outputName))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(configProduction.bundle.dest))
     .on('end', function() {
-      bundleLogger.end(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+      bundleLogger.end(configProduction.bundle.outputName);
     });
 
   /*==========  Components scripts  ==========*/
@@ -130,14 +183,14 @@ gulp.task('[M][P] Scripts', function() {
 
   bundleLogger.start(configProduction.components.outputName);
   componentsBundler
-    .transform('babelify', {ignore: /(node_modules|bower_components|components\.js)/})
+    .transform('babelify', {ignore: /(node_modules|bower_components|bundlePrerender\.js)/})
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configProduction.components.outputName) )
-    .pipe( gulp.dest(configProduction.components.dest) )
-    .on( 'end', function() {
+    .pipe(source(configProduction.components.outputName))
+    .pipe(gulp.dest(configProduction.components.dest))
+    .on('end', function() {
       bundleLogger.end(configProduction.components.outputName);
     });
 });

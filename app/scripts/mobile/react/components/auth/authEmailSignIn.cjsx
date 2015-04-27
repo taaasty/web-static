@@ -26,8 +26,8 @@ global.AuthEmailSignIn = React.createClass
   render: ->
     authClasses = classnames('auth', {
       'auth--fixed': @props.fixed
-    })  
-    authBgStyles = backgroundImage: 'url("' + TastySettings.authBackgroundUrl + '")'
+    })
+    authBgStyles = backgroundImage: 'url("http://taaasty.com/images/Polly-73.jpg")'
 
     return <div className={ authClasses }>
              <div className="auth__grid-table">

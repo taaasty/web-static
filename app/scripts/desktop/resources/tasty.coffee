@@ -18,7 +18,7 @@ window.Tasty =
 
     headers['X-Requested-With']       = 'XMLHttpRequest'
     headers['X-Tasty-Client-Name']    = 'web_desktop'
-    headers['X-Tasty-Client-Version'] = TastySettings.version
+    headers['X-Tasty-Client-Version'] = gon.version
 
     TastyUtils.showFlashes flashes if flashes?
 
