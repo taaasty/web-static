@@ -16173,33 +16173,19 @@ var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["defau
 
 var Timer = _interopRequire(require("../../entities/Timer"));
 
-var TYPE = "success",
-    TIMEOUT = 3000;
-
 var Notice = React.createClass({
   displayName: "Notice",
 
   propTypes: {
     text: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string,
-    timeout: React.PropTypes.number,
+    type: React.PropTypes.string.isRequired,
+    timeout: React.PropTypes.number.isRequired,
     onClose: React.PropTypes.func.isRequired
-  },
-
-  getDefaultProps: function getDefaultProps() {
-    return {
-      type: TYPE,
-      timeout: TIMEOUT
-    };
   },
 
   componentDidMount: function componentDidMount() {
     this.calculateStyles();
     this.timer = new Timer(this.close, this.props.timeout);
-  },
-
-  componentDidUpdate: function componentDidUpdate() {
-    this.calculateStyles();
   },
 
   componentWillUnmount: function componentWillUnmount() {
@@ -16223,7 +16209,7 @@ var Notice = React.createClass({
 
   calculateStyles: function calculateStyles() {
     var node = this.getDOMNode();
-    node.style.marginLeft = "" + node.offsetWidth / 2 * -1 + "px";
+    node.style.marginLeft = "" + node.offsetWidth / -2 + "px";
   },
 
   close: function close() {
@@ -16232,15 +16218,11 @@ var Notice = React.createClass({
   },
 
   pause: function pause() {
-    if (this.timer != null) {
-      this.timer.pause();
-    }
+    this.timer.pause();
   },
 
   resume: function resume() {
-    if (this.timer != null) {
-      this.timer.resume();
-    }
+    this.timer.resume();
   }
 });
 
@@ -31345,19 +31327,8 @@ var NoticeService = {
 
     if (response.responseJSON != null) {
       var json = response.responseJSON;
-      console.error("errorResponse JSON", json);
 
-      if (json.message != null) {
-        message = json.message;
-      }
-
-      if (json.long_message != null) {
-        message = json.long_message;
-      }
-
-      if (json.error != null && json.error.length) {
-        message = json.error;
-      }
+      message = json.message || json.long_message || json.error;
     } else {
       message = i18n.t("network_error", { text: response.statusText });
     }
@@ -31374,6 +31345,7 @@ var NoticeService = {
     var container = this.getContainer(),
         data = this.getActive();
 
+    React.unmountComponentAtNode(container);
     React.render(React.createElement(Notice, _extends({}, data, { onClose: this.close.bind(this) })), container);
   },
 

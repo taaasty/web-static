@@ -75,20 +75,8 @@ let NoticeService = {
     let message = '';
 
     if (response.responseJSON != null) {
-      let json = response.responseJSON;
-      console.error('errorResponse JSON', json);
-
-      if (json.message != null) {
-        message = json.message;
-      }
-
-      if (json.long_message != null) {
-        message = json.long_message;
-      }
-
-      if (json.error != null && json.error.length) {
-        message = json.error;
-      }
+      let { responseJSON: json } = response;
+      message = json.message || json.long_message || json.error;
     } else {
       message = i18n.t('network_error', {text: response.statusText});
     }
@@ -105,6 +93,7 @@ let NoticeService = {
     let container = this.getContainer(),
         data = this.getActive();
 
+    React.unmountComponentAtNode(container);
     React.render(<Notice {...data} onClose={this.close.bind(this)} />, container);
   },
 
