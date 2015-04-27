@@ -2,7 +2,7 @@ ThumborService =
   thumborUrl: 'http://thumbor0.tasty0.ru'
 
   imageUrl: ({url, path, size}) ->
-    switch TastySettings.env
+    switch gon.env
       when 'static-development', 'development' then url
       # when 'development' then url
       else

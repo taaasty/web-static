@@ -1,7 +1,7 @@
 Routes =
   locale: ->
     # Необходим только для i18next, возвращаем маску урла
-    { localesPath, localesVersion } = TastySettings
+    { localesPath, localesVersion } = gon
 
     vParam = if localesVersion? then '?v=' + localesVersion else ''
     localesPath + '/__lng__.json' + vParam

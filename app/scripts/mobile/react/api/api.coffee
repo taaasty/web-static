@@ -22,7 +22,7 @@ request = (_method, url, data = {}) ->
   headers =
     'X-Requested-With': 'XMLHttpRequest'
     'X-Tasty-Client-Name': 'web_mobile'
-    'X-Tasty-Client-Version': TastySettings.version
+    'X-Tasty-Client-Version': gon.version
 
   headers['X-User-Token'] = userToken() if userToken()
   headers['X-CSRF-Token'] = csrfToken() if csrfToken()
@@ -57,7 +57,7 @@ deleteRequest = (url, data) -> request 'DELETE', url, data
 Api =
   locales:
     load: (locale) ->
-      url = TastySettings.localesPath + '/' + locale + '.json'
+      url = gon.localesPath + '/' + locale + '.json'
       getRequest url
 
   currentUser:

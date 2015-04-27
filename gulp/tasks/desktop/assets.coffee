@@ -1,8 +1,0 @@
-gulp         = require 'gulp'
-handleErrors = require '../../util/handleErrors'
-config       = require('../../config').desktop.local.assets
-
-gulp.task '[D] Assets', ->
-  gulp.src config.src
-    .on 'error', handleErrors
-    .pipe gulp.dest config.dest
