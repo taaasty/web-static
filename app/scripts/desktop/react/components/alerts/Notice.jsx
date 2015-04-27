@@ -1,30 +1,16 @@
 import Timer from '../../entities/Timer';
 
-const TYPE = 'success',
-      TIMEOUT = 3000;
-
 let Notice = React.createClass({
   propTypes: {
     text: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string,
-    timeout: React.PropTypes.number,
+    type: React.PropTypes.string.isRequired,
+    timeout: React.PropTypes.number.isRequired,
     onClose: React.PropTypes.func.isRequired
-  },
-
-  getDefaultProps() {
-    return {
-      type: TYPE,
-      timeout: TIMEOUT
-    };
   },
 
   componentDidMount() {
     this.calculateStyles();
     this.timer = new Timer(this.close, this.props.timeout);
-  },
-
-  componentDidUpdate() {
-    this.calculateStyles();
   },
 
   componentWillUnmount() {
@@ -46,7 +32,7 @@ let Notice = React.createClass({
 
   calculateStyles() {
     let node = this.getDOMNode();
-    node.style.marginLeft = `${(node.offsetWidth / 2) * -1}px`;
+    node.style.marginLeft = `${node.offsetWidth / -2}px`;
   },
 
   close() {
@@ -55,15 +41,11 @@ let Notice = React.createClass({
   },
 
   pause() {
-    if (this.timer != null) {
-      this.timer.pause();
-    }
+    this.timer.pause();
   },
 
   resume() {
-    if (this.timer != null) {
-      this.timer.resume();
-    }
+    this.timer.resume();
   }
 });
 

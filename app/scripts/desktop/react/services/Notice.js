@@ -105,6 +105,7 @@ let NoticeService = {
     let container = this.getContainer(),
         data = this.getActive();
 
+    React.unmountComponentAtNode(container);
     React.render(<Notice {...data} onClose={this.close.bind(this)} />, container);
   },
 
