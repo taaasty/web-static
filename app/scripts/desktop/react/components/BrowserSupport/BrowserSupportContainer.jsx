@@ -1,11 +1,20 @@
 import bowser from 'bowser';
 import BrowserSupport from './BrowserSupport';
 
-// Incompatable browser versions:
-// * Opera < 15
+const MINIMAL_BROWSER_VERSION = {
+  'Chrome': 27,
+  'Firefox': 25,
+  'Safari': 6,
+  'Opera': 15,
+  'Internet Explorer': 10
+};
 
 const UPDATE_URLS = {
-  Opera: 'http://www.opera.com/download'
+  'Chrome': 'https://www.google.com/chrome/browser',
+  'Firefox': 'https://www.mozilla.org/en-US/firefox/new/',
+  'Safari': 'https://support.apple.com/en-us/HT204416',
+  'Opera': 'http://www.opera.com/download',
+  'Internet Explorer': 'https://www.microsoft.com/en-us/download/internet-explorer.aspx'
 };
 
 let BrowserSupportContainer = React.createClass({
@@ -30,7 +39,7 @@ let BrowserSupportContainer = React.createClass({
         incompatable = null,
         updateUrl = null;
 
-    if (name === 'Opera' && version < 15) {
+    if (version < MINIMAL_BROWSER_VERSION[name]) {
       incompatable = true;
       updateUrl = UPDATE_URLS[name];
     } else {
