@@ -27,6 +27,5 @@ window.Tasty =
       cache:   true
       xhrFields:
         withCredentials: true
-      error: (e) -> NoticeService.errorResponse e
 
     ReactApp.start {user, locale}

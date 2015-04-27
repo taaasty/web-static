@@ -33369,9 +33369,6 @@ window.Tasty = {
       cache: true,
       xhrFields: {
         withCredentials: true
-      },
-      error: function(e) {
-        return NoticeService.errorResponse(e);
       }
     });
     return ReactApp.start({
