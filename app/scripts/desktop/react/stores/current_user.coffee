@@ -5,6 +5,7 @@ currentUser = null
 CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
+  isPrivate: -> currentUser?.is_privacy
 
   hasDesignBundle: ->
     !!currentUser?.has_design_bundle
