@@ -116,7 +116,6 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 require './react/components/common/adaptive_input'
 
 global.EmbedComponent = require './react/components/embed'
-require './react/components/tlog_alert'
 
 require './react/components/avatars/avatar'
 require './react/components/avatars/user_avatar'
@@ -141,6 +140,7 @@ require './react/components/auth/recovery'
 require './react/components/settings/settings'
 
 global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
+global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
