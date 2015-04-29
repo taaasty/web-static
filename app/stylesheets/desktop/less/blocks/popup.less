@@ -350,19 +350,26 @@
 .popup--notifications {
   width: @notifications-popup-width;
   display: block;
-  top: 90px;
-  left: 80px;
+  left: 72px;
 
   .popup__arrow {
     left: auto;
-    right: 82px;
   }
 
   .popup__arrow--up {
     border-color: transparent transparent @popup-body-bg;
+    border-width: 7px;
+    top: -7px;
+  }
+
+  .popup__arrow--left {
+    border-color: transparent @popup-body-bg transparent transparent;
+    border-width: 7px 7px 7px 0;
+    left: -7px;
   }
 
   .popup__body {
+    overflow-y: scroll;
     .border-radius-top-left(@popup-border-radius);
     .border-radius-top-right(@popup-border-radius);
   }

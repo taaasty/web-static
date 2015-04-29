@@ -13,7 +13,7 @@ NotificationsLoadMore = React.createClass
     if @props.loading
       <div className="loader">
         <Spinner size={ 30 } />
-      </div>  
+      </div>
     else
       <NotificationsLoadMoreButton onClick={ @props.onClick } />
 

@@ -121,4 +121,21 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, data
 
+  notifications:
+    load: (sinceID) ->
+      url = ApiRoutes.notificationsUrl()
+      key = Constants.api.LOAD_NOTIFICATIONS
+      data =
+        to_notification_id: sinceID
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    markAsRead: (notificationID) ->
+      url = ApiRoutes.notifications_read_url(notificationID)
+      key = Constants.api.READ_NOTIFICATION
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url
+
 module.exports = Api

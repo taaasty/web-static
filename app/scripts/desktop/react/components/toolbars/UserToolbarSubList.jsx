@@ -9,11 +9,15 @@ let UserToolbarSubList = React.createClass({
 
   componentDidUpdate(prevProps) {
     let $subNav = $(this.getDOMNode());
-
+    // Mousewheel events for Pads arrows recalculation
     if (this.props.opened) {
-      $subNav.stop().slideDown(300);
+      $subNav.stop().slideDown(300, function() {
+        $(document).trigger('mousewheel');
+      });
     } else {
-      $subNav.stop().slideUp(300);
+      $subNav.stop().slideUp(300, function() {
+        $(document).trigger('mousewheel');
+      });
     }
   },
 

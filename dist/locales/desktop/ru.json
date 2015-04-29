@@ -12,6 +12,7 @@
   "messages_popup_title": "Мои переписки",
   "messages_thread_title": "Переписка с __slug__",
   "notifications_empty_list": "Нет непросмотренных уведомлений",
+  "notifications_loading_error": "Ошибка загрузки уведомлений",
   "auth_select_signin_method": "Выберите способ входа/регистрации",
   "vkontakte": "Вконтакте",
   "facebook": "Facebook",

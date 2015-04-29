@@ -1,7 +1,8 @@
 let Scroller = React.createClass({
   propTypes: {
     customScroller: React.PropTypes.bool,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    onScroll: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -48,7 +49,7 @@ let Scroller = React.createClass({
     let scrollerClasses = ['scroller', 'scroller--dark', this.props.className].join(' ');
 
     return (
-      <div className={scrollerClasses}>
+      <div className={scrollerClasses} onScroll={this.handleScroll}>
         <div ref="scrollerPane" className="scroller__pane">
           {this.props.children}
         </div>
@@ -80,6 +81,12 @@ let Scroller = React.createClass({
     } else if (up && delta > scrollTop) {
       $(el).scrollTop(0);
       return prevent();
+    }
+  },
+
+  handleScroll(e) {
+    if (this.props.onScroll) {
+      this.props.onScroll(e);
     }
   }
 });

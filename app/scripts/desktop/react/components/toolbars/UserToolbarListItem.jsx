@@ -50,7 +50,7 @@ let UserToolbarListItem = React.createClass({
           onMouseLeave={this.handleMouseLeave}>
         <a ref="link"
            className="toolbar__nav-link"
-           onTouchTap={this.handleClick}>
+           onClick={this.handleClick}>
           <i className={`icon ${this.props.icon}`} />
           <span className="toolbar__nav-text">
             {this.props.title}
@@ -84,10 +84,9 @@ let UserToolbarListItem = React.createClass({
     }
   },
 
-  handleClick() {
-    // When we tap on iOS, at first time triggers hover event, and only after
-    // second tap we finally make the click. In this case we listen tap event,
-    // and force execution underlying event at the moment
+  handleClick(e) {
+    e.stopPropagation();
+
     if (typeof this.props.onClick === 'function') {
       this.props.onClick();
     } else if (this.state.opened || !this.props.children) {

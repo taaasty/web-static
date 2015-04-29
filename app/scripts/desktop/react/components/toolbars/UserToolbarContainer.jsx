@@ -80,7 +80,7 @@ let UserToolbarContainer = React.createClass({
   },
 
   toggleNotifications() {
-    PopupActionCreators.toggleNotifications();
+    PopupActionCreators.openNotifications();
   },
 
   toggleFriends() {
