@@ -16804,11 +16804,13 @@ var TlogAlertContainer = React.createClass({
     var type = _props.type;
     var userPrivate = _props.userPrivate;
 
-    if (type != "owner_private_tlog" || type == "owner_private_tlog" && userPrivate) {
-      return React.createElement(TlogAlert, { text: i18n.t("tlog_alert_" + type) });
-    } else {
-      return null;
+    if (type != null && TYPES.indexOf(type) != -1) {
+      if (type != "owner_private_tlog" || type == "owner_private_tlog" && userPrivate) {
+        return React.createElement(TlogAlert, { text: i18n.t("tlog_alert." + type) });
+      }
     }
+
+    return null;
   }
 });
 

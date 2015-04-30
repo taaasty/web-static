@@ -15,11 +15,13 @@ let TlogAlertContainer = React.createClass({
   render() {
     let { type, userPrivate } = this.props;
 
-    if (type != 'owner_private_tlog' || (type == 'owner_private_tlog' && userPrivate)) {
-      return <TlogAlert text={i18n.t(`tlog_alert_${type}`)} />;
-    } else {
-      return null;
+    if (type != null && TYPES.indexOf(type) != -1) {
+      if (type != 'owner_private_tlog' || (type == 'owner_private_tlog' && userPrivate)) {
+        return <TlogAlert text={i18n.t(`tlog_alert.${type}`)} />;
+      }
     }
+
+    return null;
   }
 });
 
