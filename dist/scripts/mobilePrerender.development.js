@@ -11637,7 +11637,6 @@ ThumborService = {
     var path, size, url;
     url = arg.url, path = arg.path, size = arg.size;
     switch (gon.env) {
-      case 'static-development':
       case 'development':
         return url;
       default:

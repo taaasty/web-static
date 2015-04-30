@@ -3,8 +3,8 @@ ThumborService =
 
   imageUrl: ({url, path, size}) ->
     switch gon.env
-      when 'static-development', 'development' then url
-      # when 'development' then url
+      # when 'static-development', 'development' then url
+      when 'development' then url
       else
         @thumborUrl + "/unsafe/#{ size }/filters:no_upscale()/" + path
 

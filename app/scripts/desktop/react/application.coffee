@@ -6,6 +6,7 @@ AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
 PopupController = require './controllers/popuup'
+PadController = require './controllers/pad'
 numeral = require 'numeral'
 injectTapEventPlugin = require 'react-tap-event-plugin'
 
@@ -69,6 +70,7 @@ window.ReactApp =
 
     @layoutStatesController = new LayoutStatesController()
     @popupController = new PopupController()
+    @padController = new PadController()
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()

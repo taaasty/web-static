@@ -147,6 +147,7 @@ global.ImageAttachmentsCollage = require '../shared/react/components/common/imag
 global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 global.CloseToolbar = require './react/components/toolbars/CloseToolbar'
+global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
 
 require './react/components/shellboxes/confirm_registration'
 

@@ -9,5 +9,7 @@ ApiConstants = keyMirror
   EDITOR_UPDATE_ENTRY: null
   DESIGN_SAVE: null
   CREATE_BG_IMAGE: null
+  LOAD_NOTIFICATIONS: null
+  READ_NOTIFICATION: null
 
 module.exports = ApiConstants
