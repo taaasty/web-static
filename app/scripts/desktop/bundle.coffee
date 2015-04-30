@@ -140,7 +140,6 @@ require './react/components/auth/recovery'
 require './react/components/settings/settings'
 
 global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
-global.TlogAlert = require './react/components/TlogAlert/TlogAlert'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
