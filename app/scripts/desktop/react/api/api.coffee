@@ -135,7 +135,8 @@ Api =
       url = ApiRoutes.notifications_read_url(notificationID)
       key = Constants.api.READ_NOTIFICATION
 
-      abortPendingRequests key
+      # 1 запрос = 1 прочитанному сообщению. При закрытии уведомлений может быть более
+      # одного запроса на прочтение уведомления. Позволяем делать параллельные запросы.
       _pendingRequests[key] = putRequest url
 
 module.exports = Api

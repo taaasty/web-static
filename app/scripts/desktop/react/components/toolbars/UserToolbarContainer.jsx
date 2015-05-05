@@ -48,7 +48,7 @@ let UserToolbarContainer = React.createClass({
       onToggleClick: this.toggleOpenness,
       onLineHover: this.handleLineHover,
       onMessagesClick: this.toggleMessages,
-      onNotificationsClick: this.toggleNotifications,
+      onNotificationsClick: this.showNotifications,
       onFriendsClick: this.toggleFriends,
       onDesignSettingsClick: this.toggleDesignSettings,
       onSettingsClick: this.showSettings,
@@ -79,8 +79,14 @@ let UserToolbarContainer = React.createClass({
     PopupActionCreators.toggleMessages();
   },
 
-  toggleNotifications() {
-    PopupActionCreators.openNotifications();
+  showNotifications() {
+    PopupActionCreators.showNotifications();
+    // Если тулбар был открыт временно, при этом открыли уведомления, то не позволяем
+    // закрыться тулбару
+    this.setState({
+      opened: true,
+      openedTemporarily: false
+    });
   },
 
   toggleFriends() {

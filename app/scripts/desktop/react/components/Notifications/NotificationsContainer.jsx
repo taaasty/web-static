@@ -21,6 +21,12 @@ let NotificationsContainer = React.createClass({
     if (this.props.onUpdate != null) this.props.onUpdate();
   },
 
+  componentWillUnmount() {
+    this.props.notifications.forEach((notification) => {
+      if (notification.read_at === null) this.markAsRead(notification.id);
+    });
+  },
+
   render() {
     let actions = {
       onNotificationRead: this.markAsRead,

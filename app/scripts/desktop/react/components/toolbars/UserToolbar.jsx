@@ -8,7 +8,6 @@ import UserToolbarGuestList from './UserToolbarGuestList';
 
 let UserToolbar = React.createClass({
   propTypes: {
-    openedTemporarily: React.PropTypes.bool.isRequired,
     hovered: React.PropTypes.bool.isRequired,
     userLogged: React.PropTypes.bool.isRequired,
     unreadConversationsCount: React.PropTypes.number.isRequired,
