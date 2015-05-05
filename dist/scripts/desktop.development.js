@@ -14653,7 +14653,7 @@ var EditorTextField = React.createClass({
 module.exports = EditorTextField;
 
 },{"classnames":402,"lodash":"lodash"}],72:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, PropTypes, WELCOME_STATE, _, classnames;
+var ConnectStoreMixin, EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, MAX_ATTACHMENTS, PropTypes, WELCOME_STATE, _, classnames;
 
 _ = require('lodash');
 
@@ -14680,6 +14680,8 @@ EditorTypeImageLoaded = require('./Image/Loaded');
 EditorTypeImageLoadingUrl = require('./Image/LoadingUrl');
 
 PropTypes = React.PropTypes;
+
+MAX_ATTACHMENTS = 8;
 
 WELCOME_STATE = 'welcome';
 
@@ -14860,7 +14862,13 @@ EditorTypeImage = React.createClass({
     if (!imageFiles.length) {
       return NoticeService.notifyError(i18n.t('editor_files_without_images'));
     }
-    EditorActionCreators.createImageAttachments(files).progress((function(_this) {
+    if (imageFiles.length > MAX_ATTACHMENTS) {
+      imageFiles = imageFiles.slice(0, MAX_ATTACHMENTS);
+      NoticeService.notifyError(i18n.t('editor_files_limit_reached', {
+        count: MAX_ATTACHMENTS
+      }));
+    }
+    EditorActionCreators.createImageAttachments(imageFiles).progress((function(_this) {
       return function(soFar) {
         if (_this.state.imageAttachments.length) {
           return _this.setState({
