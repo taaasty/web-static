@@ -10363,10 +10363,6 @@ require('./react/components/entry_metabar/comment');
 
 require('./react/components/entry_metabar/date');
 
-require('./react/components/entry_metabar/tags');
-
-require('./react/components/entry_metabar/tag');
-
 require('./react/components/entry_metabar/dropdown_menu');
 
 require('./react/components/entry_metabar/dropdown_menu_items/item');
@@ -10482,7 +10478,7 @@ require('./react/application');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/components/common/imageAttachmentsCollage":390,"../shared/react/services/thumbor":395,"../shared/routes/api":397,"../shared/routes/routes":398,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":21,"./react/components/BrowserSupport/BrowserSupportContainer":23,"./react/components/DesignPayment/DesignPaymentContainer":25,"./react/components/DesignSettings/DesignSettingsContainer":32,"./react/components/DesignSettings/common/colorPicker/popup":44,"./react/components/Editor/EditorEdit":55,"./react/components/Editor/EditorNew":56,"./react/components/Feed/Feed":85,"./react/components/Notifications/NotificationsContainer":89,"./react/components/SearchResults/SearchResults":101,"./react/components/TlogAlert/TlogAlertContainer":106,"./react/components/alerts/tasty_alert":108,"./react/components/alerts/tasty_confirm":109,"./react/components/alerts/tasty_locking_alert":110,"./react/components/auth/auth":111,"./react/components/auth/authorization/authorization":112,"./react/components/auth/authorization/facebook":113,"./react/components/auth/authorization/vk":114,"./react/components/auth/buttons/facebook_auth_button":115,"./react/components/auth/buttons/vk_auth_button":116,"./react/components/auth/email/email":120,"./react/components/auth/recovery":125,"./react/components/avatars/avatar":127,"./react/components/avatars/user_avatar":128,"./react/components/buttons/load_more":129,"./react/components/calendar/calendar":130,"./react/components/calendar/calendar_header":131,"./react/components/calendar/calendar_marker":132,"./react/components/calendar/calendar_period":133,"./react/components/calendar/calendar_timeline":134,"./react/components/common/adaptive_input":137,"./react/components/editable_field":140,"./react/components/embed":141,"./react/components/entry_comment_box/comment_form/buttons/submit":142,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":143,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":144,"./react/components/entry_comment_box/comment_form/comment_form":145,"./react/components/entry_comment_box/comment_list/comment":146,"./react/components/entry_comment_box/comment_list/comment_list":147,"./react/components/entry_comment_box/comment_list/comment_manager":148,"./react/components/entry_comment_box/comment_metabar/comment_metabar":149,"./react/components/entry_comment_box/comment_metabar/date":150,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":151,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":152,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":153,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":154,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":155,"./react/components/entry_comment_box/comment_metabar/reply":156,"./react/components/entry_comment_box/entry_comment_box":157,"./react/components/entry_comment_box/load_more":158,"./react/components/entry_comment_box/mixins/comments":159,"./react/components/entry_metabar/author":160,"./react/components/entry_metabar/comment":161,"./react/components/entry_metabar/date":162,"./react/components/entry_metabar/dropdown_menu":163,"./react/components/entry_metabar/dropdown_menu_items/delete_item":164,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":165,"./react/components/entry_metabar/dropdown_menu_items/item":166,"./react/components/entry_metabar/dropdown_menu_items/report_item":167,"./react/components/entry_metabar/dropdown_menu_items/watch_item":168,"./react/components/entry_metabar/entry_metabar":169,"./react/components/entry_metabar/tag":170,"./react/components/entry_metabar/tags":171,"./react/components/follow_status":172,"./react/components/hero/profile/dropdown_menu":174,"./react/components/hero/profile/dropdown_menu_items/ignore":175,"./react/components/hero/profile/dropdown_menu_items/report":176,"./react/components/hero/profile/popup/followers_popup":177,"./react/components/hero/profile/popup/followings_popup":178,"./react/components/hero/profile/popup/items/follower_item":179,"./react/components/hero/profile/popup/items/following_item":180,"./react/components/hero/profile/popup/items/tag_item":181,"./react/components/hero/profile/popup/popup":182,"./react/components/hero/profile/popup/tags_popup":183,"./react/components/hero/profile/profile":184,"./react/components/hero/profile/profile_avatar":185,"./react/components/hero/profile/profile_head":186,"./react/components/hero/profile/profile_stats":187,"./react/components/hero/profile/profile_stats_item":188,"./react/components/images_collage":189,"./react/components/people/item":190,"./react/components/persons_popup/items/follower_relationship":191,"./react/components/persons_popup/items/following_relationship":192,"./react/components/persons_popup/items/guess_relationship":193,"./react/components/persons_popup/items/ignored_relationship":194,"./react/components/persons_popup/items/item":195,"./react/components/persons_popup/items/requested_relationship":196,"./react/components/persons_popup/menu":197,"./react/components/persons_popup/menu_item":198,"./react/components/persons_popup/mixins/panel_mixin":199,"./react/components/persons_popup/panels/followers_panel":200,"./react/components/persons_popup/panels/followings_panel":201,"./react/components/persons_popup/panels/guessed_panel":202,"./react/components/persons_popup/panels/ignored_panel":203,"./react/components/persons_popup/panels/requested_panel":204,"./react/components/persons_popup/panels/socialNetwork/facebook":205,"./react/components/persons_popup/panels/socialNetwork/vkontakte":215,"./react/components/persons_popup/persons_popup":222,"./react/components/popup/header":223,"./react/components/popup/layout":224,"./react/components/popup/popup":225,"./react/components/popup/spinner":226,"./react/components/popup_box":227,"./react/components/relationship_buttons/follow_button":228,"./react/components/relationship_buttons/follower_button":229,"./react/components/relationship_buttons/guess_button":230,"./react/components/relationship_buttons/ignore_button":231,"./react/components/relationship_buttons/mixins/relationship":232,"./react/components/relationship_buttons/request_button":233,"./react/components/screen_viewer/screen_viewer":234,"./react/components/search/button":235,"./react/components/search/field":236,"./react/components/search/search":237,"./react/components/settings/settings":254,"./react/components/shellbox_layer":257,"./react/components/shellboxes/confirm_registration":258,"./react/components/smart_follow_status":259,"./react/components/spinner":260,"./react/components/toolbars/AvatarToolbarContainer":262,"./react/components/toolbars/CloseToolbar":263,"./react/components/toolbars/UserToolbarContainer":266,"./react/components/transition/timeout_transition_group":274,"./react/components/voting":275,"./react/controllers/popup":285,"./react/controllers/shellbox":287,"./react/controllers/tasty_alert":288,"./react/controllers/tasty_confirm":289,"./react/controllers/tasty_events":290,"./react/controllers/tasty_locking_alert":291,"./react/controllers/tasty_sound":292,"./react/dispatchers/current_user":294,"./react/dispatchers/relationships":296,"./react/helpers/app":301,"./react/mediators/comments":302,"./react/messaging/actions/conversation":303,"./react/messaging/actions/message":304,"./react/messaging/actions/notification":305,"./react/messaging/actions/popup":306,"./react/messaging/components/buttons/write_message":307,"./react/messaging/components/messages_popup/conversations/conversations":308,"./react/messaging/components/messages_popup/conversations/list/empty":309,"./react/messaging/components/messages_popup/conversations/list/list":310,"./react/messaging/components/messages_popup/conversations/list/list_item":311,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":312,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":313,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":314,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":315,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":316,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":317,"./react/messaging/components/messages_popup/loading_message":318,"./react/messaging/components/messages_popup/messages_popup":319,"./react/messaging/components/messages_popup/thread/message_form/message_form":320,"./react/messaging/components/messages_popup/thread/message_list/empty":321,"./react/messaging/components/messages_popup/thread/message_list/message_list":322,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":323,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":324,"./react/messaging/components/messages_popup/thread/thread":325,"./react/messaging/components/messages_popup/ui/back_button":326,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":327,"./react/messaging/components/notifications_popup/notifications/empty":328,"./react/messaging/components/notifications_popup/notifications/notification":329,"./react/messaging/components/notifications_popup/notifications/notifications":330,"./react/messaging/components/notifications_popup/notifications_popup":331,"./react/messaging/components/toolbars/indicators/indicators":332,"./react/messaging/components/toolbars/indicators/messages":333,"./react/messaging/components/toolbars/indicators/notifications":334,"./react/messaging/dispatchers/messaging":335,"./react/messaging/messaging_requester":336,"./react/messaging/messaging_service":337,"./react/messaging/messaging_testing":338,"./react/messaging/stores/connection_state":340,"./react/messaging/stores/conversations":341,"./react/messaging/stores/messages":342,"./react/messaging/stores/messages_popup_state":343,"./react/messaging/stores/messaging_status":344,"./react/messaging/stores/notifications":345,"./react/mixins/activities":346,"./react/mixins/component_manipulations":347,"./react/mixins/dom_manipulations":348,"./react/mixins/error_timer":349,"./react/mixins/grammar":350,"./react/mixins/positions":351,"./react/mixins/requester":352,"./react/mixins/scroller":353,"./react/mixins/shake":354,"./react/mixins/touch":355,"./react/mixins/unmount":356,"./react/services/Notice":361,"./react/services/positions":367,"./react/services/uuid":368,"./react/stores/EditorStore":369,"./react/stores/current_user":372,"./react/stores/design":373,"./react/stores/relationships":374,"./resources/fileReceiver":375,"./resources/is_mobile":376,"./resources/libs":377,"./resources/tasty":378,"./resources/tasty_utils":379}],8:[function(require,module,exports){
+},{"../shared/react/components/common/imageAttachmentsCollage":390,"../shared/react/services/thumbor":395,"../shared/routes/api":397,"../shared/routes/routes":398,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":21,"./react/components/BrowserSupport/BrowserSupportContainer":23,"./react/components/DesignPayment/DesignPaymentContainer":25,"./react/components/DesignSettings/DesignSettingsContainer":32,"./react/components/DesignSettings/common/colorPicker/popup":44,"./react/components/Editor/EditorEdit":55,"./react/components/Editor/EditorNew":56,"./react/components/Feed/Feed":85,"./react/components/Notifications/NotificationsContainer":89,"./react/components/SearchResults/SearchResults":101,"./react/components/TlogAlert/TlogAlertContainer":106,"./react/components/alerts/tasty_alert":108,"./react/components/alerts/tasty_confirm":109,"./react/components/alerts/tasty_locking_alert":110,"./react/components/auth/auth":111,"./react/components/auth/authorization/authorization":112,"./react/components/auth/authorization/facebook":113,"./react/components/auth/authorization/vk":114,"./react/components/auth/buttons/facebook_auth_button":115,"./react/components/auth/buttons/vk_auth_button":116,"./react/components/auth/email/email":120,"./react/components/auth/recovery":125,"./react/components/avatars/avatar":127,"./react/components/avatars/user_avatar":128,"./react/components/buttons/load_more":129,"./react/components/calendar/calendar":130,"./react/components/calendar/calendar_header":131,"./react/components/calendar/calendar_marker":132,"./react/components/calendar/calendar_period":133,"./react/components/calendar/calendar_timeline":134,"./react/components/common/adaptive_input":137,"./react/components/editable_field":140,"./react/components/embed":141,"./react/components/entry_comment_box/comment_form/buttons/submit":142,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":143,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":144,"./react/components/entry_comment_box/comment_form/comment_form":145,"./react/components/entry_comment_box/comment_list/comment":146,"./react/components/entry_comment_box/comment_list/comment_list":147,"./react/components/entry_comment_box/comment_list/comment_manager":148,"./react/components/entry_comment_box/comment_metabar/comment_metabar":149,"./react/components/entry_comment_box/comment_metabar/date":150,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":151,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":152,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":153,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":154,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":155,"./react/components/entry_comment_box/comment_metabar/reply":156,"./react/components/entry_comment_box/entry_comment_box":157,"./react/components/entry_comment_box/load_more":158,"./react/components/entry_comment_box/mixins/comments":159,"./react/components/entry_metabar/author":160,"./react/components/entry_metabar/comment":161,"./react/components/entry_metabar/date":162,"./react/components/entry_metabar/dropdown_menu":163,"./react/components/entry_metabar/dropdown_menu_items/delete_item":164,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":165,"./react/components/entry_metabar/dropdown_menu_items/item":166,"./react/components/entry_metabar/dropdown_menu_items/report_item":167,"./react/components/entry_metabar/dropdown_menu_items/watch_item":168,"./react/components/entry_metabar/entry_metabar":169,"./react/components/follow_status":172,"./react/components/hero/profile/dropdown_menu":174,"./react/components/hero/profile/dropdown_menu_items/ignore":175,"./react/components/hero/profile/dropdown_menu_items/report":176,"./react/components/hero/profile/popup/followers_popup":177,"./react/components/hero/profile/popup/followings_popup":178,"./react/components/hero/profile/popup/items/follower_item":179,"./react/components/hero/profile/popup/items/following_item":180,"./react/components/hero/profile/popup/items/tag_item":181,"./react/components/hero/profile/popup/popup":182,"./react/components/hero/profile/popup/tags_popup":183,"./react/components/hero/profile/profile":184,"./react/components/hero/profile/profile_avatar":185,"./react/components/hero/profile/profile_head":186,"./react/components/hero/profile/profile_stats":187,"./react/components/hero/profile/profile_stats_item":188,"./react/components/images_collage":189,"./react/components/people/item":190,"./react/components/persons_popup/items/follower_relationship":191,"./react/components/persons_popup/items/following_relationship":192,"./react/components/persons_popup/items/guess_relationship":193,"./react/components/persons_popup/items/ignored_relationship":194,"./react/components/persons_popup/items/item":195,"./react/components/persons_popup/items/requested_relationship":196,"./react/components/persons_popup/menu":197,"./react/components/persons_popup/menu_item":198,"./react/components/persons_popup/mixins/panel_mixin":199,"./react/components/persons_popup/panels/followers_panel":200,"./react/components/persons_popup/panels/followings_panel":201,"./react/components/persons_popup/panels/guessed_panel":202,"./react/components/persons_popup/panels/ignored_panel":203,"./react/components/persons_popup/panels/requested_panel":204,"./react/components/persons_popup/panels/socialNetwork/facebook":205,"./react/components/persons_popup/panels/socialNetwork/vkontakte":215,"./react/components/persons_popup/persons_popup":222,"./react/components/popup/header":223,"./react/components/popup/layout":224,"./react/components/popup/popup":225,"./react/components/popup/spinner":226,"./react/components/popup_box":227,"./react/components/relationship_buttons/follow_button":228,"./react/components/relationship_buttons/follower_button":229,"./react/components/relationship_buttons/guess_button":230,"./react/components/relationship_buttons/ignore_button":231,"./react/components/relationship_buttons/mixins/relationship":232,"./react/components/relationship_buttons/request_button":233,"./react/components/screen_viewer/screen_viewer":234,"./react/components/search/button":235,"./react/components/search/field":236,"./react/components/search/search":237,"./react/components/settings/settings":254,"./react/components/shellbox_layer":257,"./react/components/shellboxes/confirm_registration":258,"./react/components/smart_follow_status":259,"./react/components/spinner":260,"./react/components/toolbars/AvatarToolbarContainer":262,"./react/components/toolbars/CloseToolbar":263,"./react/components/toolbars/UserToolbarContainer":266,"./react/components/transition/timeout_transition_group":274,"./react/components/voting":275,"./react/controllers/popup":285,"./react/controllers/shellbox":287,"./react/controllers/tasty_alert":288,"./react/controllers/tasty_confirm":289,"./react/controllers/tasty_events":290,"./react/controllers/tasty_locking_alert":291,"./react/controllers/tasty_sound":292,"./react/dispatchers/current_user":294,"./react/dispatchers/relationships":296,"./react/helpers/app":301,"./react/mediators/comments":302,"./react/messaging/actions/conversation":303,"./react/messaging/actions/message":304,"./react/messaging/actions/notification":305,"./react/messaging/actions/popup":306,"./react/messaging/components/buttons/write_message":307,"./react/messaging/components/messages_popup/conversations/conversations":308,"./react/messaging/components/messages_popup/conversations/list/empty":309,"./react/messaging/components/messages_popup/conversations/list/list":310,"./react/messaging/components/messages_popup/conversations/list/list_item":311,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":312,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":313,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":314,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":315,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":316,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":317,"./react/messaging/components/messages_popup/loading_message":318,"./react/messaging/components/messages_popup/messages_popup":319,"./react/messaging/components/messages_popup/thread/message_form/message_form":320,"./react/messaging/components/messages_popup/thread/message_list/empty":321,"./react/messaging/components/messages_popup/thread/message_list/message_list":322,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":323,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":324,"./react/messaging/components/messages_popup/thread/thread":325,"./react/messaging/components/messages_popup/ui/back_button":326,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":327,"./react/messaging/components/notifications_popup/notifications/empty":328,"./react/messaging/components/notifications_popup/notifications/notification":329,"./react/messaging/components/notifications_popup/notifications/notifications":330,"./react/messaging/components/notifications_popup/notifications_popup":331,"./react/messaging/components/toolbars/indicators/indicators":332,"./react/messaging/components/toolbars/indicators/messages":333,"./react/messaging/components/toolbars/indicators/notifications":334,"./react/messaging/dispatchers/messaging":335,"./react/messaging/messaging_requester":336,"./react/messaging/messaging_service":337,"./react/messaging/messaging_testing":338,"./react/messaging/stores/connection_state":340,"./react/messaging/stores/conversations":341,"./react/messaging/stores/messages":342,"./react/messaging/stores/messages_popup_state":343,"./react/messaging/stores/messaging_status":344,"./react/messaging/stores/notifications":345,"./react/mixins/activities":346,"./react/mixins/component_manipulations":347,"./react/mixins/dom_manipulations":348,"./react/mixins/error_timer":349,"./react/mixins/grammar":350,"./react/mixins/positions":351,"./react/mixins/requester":352,"./react/mixins/scroller":353,"./react/mixins/shake":354,"./react/mixins/touch":355,"./react/mixins/unmount":356,"./react/services/Notice":361,"./react/services/positions":367,"./react/services/uuid":368,"./react/stores/EditorStore":369,"./react/stores/current_user":372,"./react/stores/design":373,"./react/stores/relationships":374,"./resources/fileReceiver":375,"./resources/is_mobile":376,"./resources/libs":377,"./resources/tasty":378,"./resources/tasty_utils":379}],8:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 "use strict";
@@ -11347,15 +11343,13 @@ module.exports = CurrentUserViewActions;
 
 
 },{"../../resources/current_user":360,"../server/current_user":17}],19:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, _, _pendingRequests, abortPendingRequests, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
+var Api, Constants, CurrentUserStore, _, _pendingRequests, abortPendingRequests, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
 
 _ = require('lodash');
 
 Constants = require('../constants/constants');
 
 CurrentUserStore = require('../stores/current_user');
-
-TIMEOUT = 10000;
 
 _pendingRequests = {};
 
@@ -11425,7 +11419,6 @@ request = function(_method, url, data) {
     contentType: contentType,
     processData: processData,
     headers: headers,
-    timeout: TIMEOUT,
     xhrFields: {
       withCredentials: true,
       crossDomain: true
@@ -20977,8 +20970,13 @@ window.EntryMetabarDropdownMenuWatchItem = React.createClass({
 
 
 },{}],169:[function(require,module,exports){
+var EntryMetabarTags;
+
+EntryMetabarTags = require('./tags');
+
 window.EntryMetabar = React.createClass({
   propTypes: {
+    userSlug: React.PropTypes.string.isRequired,
     entryId: React.PropTypes.number.isRequired,
     author: React.PropTypes.object,
     isFavorited: React.PropTypes.bool.isRequired,
@@ -21025,7 +21023,8 @@ window.EntryMetabar = React.createClass({
       "time": this.props.createdAt,
       "entryUrl": this.props.entryUrl
     }), React.createElement(EntryMetabarTags, {
-      "tags": this.props.tags
+      "tags": this.props.tags,
+      "userSlug": this.props.userSlug
     }), React.createElement(EntryMetabarDropdownMenu, {
       "entryId": this.props.entryId,
       "isFavorited": this.props.isFavorited,
@@ -21045,64 +21044,92 @@ window.EntryMetabar = React.createClass({
 
 
 
-},{}],170:[function(require,module,exports){
-window.EntryMetabarTag = React.createClass({
+},{"./tags":171}],170:[function(require,module,exports){
+"use strict";
+
+var EntryMetabarTag = React.createClass({
+  displayName: "EntryMetabarTag",
+
   propTypes: {
-    tag: React.PropTypes.string.isRequired
+    tag: React.PropTypes.string.isRequired,
+    userSlug: React.PropTypes.string.isRequired
   },
-  render: function() {
-    return React.createElement("a", {
-      "href": Routes.tag_path(this.props.tag),
-      "target": "_blank",
-      "title": '#' + this.props.tag,
-      "className": "meta-item__common meta-item__link"
-    }, '#' + this.props.tag);
+
+  render: function render() {
+    var _props = this.props;
+    var userSlug = _props.userSlug;
+    var tag = _props.tag;
+
+    return React.createElement(
+      "a",
+      { href: Routes.userTag(userSlug, tag),
+        target: "_blank",
+        title: "#" + tag,
+        className: "meta-item__common meta-item__link" },
+      "#" + tag
+    );
   }
 });
 
-
+module.exports = EntryMetabarTag;
 
 },{}],171:[function(require,module,exports){
-window.EntryMetabarTags = React.createClass({
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+var EntryMetabarTag = _interopRequire(require("./tag"));
+
+var EntryMetabarTags = React.createClass({
+  displayName: "EntryMetabarTags",
+
   propTypes: {
-    tags: React.PropTypes.array.isRequired
+    tags: React.PropTypes.array.isRequired,
+    userSlug: React.PropTypes.string.isRequired
   },
-  render: function() {
-    var tagList;
-    if (this.props.tags.length > 0) {
-      tagList = [];
-      this.props.tags.forEach((function(_this) {
-        return function(tag, i) {
-          if (i !== _this.props.tags.length - 1) {
-            return tagList.push(React.createElement(EntryMetabarTag, {
-              "tag": tag,
-              "key": i
-            }), React.createElement("span", {
-              "className": "meta-item__common",
-              "key": i + ' comma'
-            }, ", "));
-          } else {
-            return tagList.push(React.createElement(EntryMetabarTag, {
-              "tag": tag,
-              "key": i
-            }));
-          }
-        };
-      })(this));
-      return React.createElement("span", {
-        "className": "meta-item meta-item--tags"
-      }, React.createElement("span", {
-        "className": "meta-item__content"
-      }, tagList));
+
+  render: function render() {
+    var _this = this;
+
+    if (this.props.tags.length) {
+      var tagList = this.props.tags.map(function (tag, i) {
+        if (i !== _this.props.tags.length - 1) {
+          return React.createElement(
+            "span",
+            { key: i },
+            React.createElement(EntryMetabarTag, { tag: tag, userSlug: _this.props.userSlug }),
+            React.createElement(
+              "span",
+              { className: "meta-item__common", key: "" + i + " comma" },
+              ", "
+            )
+          );
+        } else {
+          return React.createElement(EntryMetabarTag, {
+            tag: tag,
+            userSlug: _this.props.userSlug,
+            key: i });
+        }
+      });
+
+      return React.createElement(
+        "span",
+        { className: "meta-item meta-item--tags" },
+        React.createElement(
+          "span",
+          { className: "meta-item__content" },
+          tagList
+        )
+      );
     } else {
-      return React.createElement("span", null);
+      return null;
     }
   }
 });
 
+module.exports = EntryMetabarTags;
 
-
-},{}],172:[function(require,module,exports){
+},{"./tag":170}],172:[function(require,module,exports){
 var CLASS_PREFIX_STATE, STATE_ERROR, STATE_FRIEND, STATE_GUESSED, STATE_IGNORED, STATE_NONE, STATE_PROCESS, STATE_REQUESTED;
 
 CLASS_PREFIX_STATE = 'state--';
@@ -21648,26 +21675,43 @@ window.HeroProfileStats_FollowingItem = React.createClass({
 
 
 },{}],181:[function(require,module,exports){
+"use strict";
+
 window.HeroProfileStats_TagItem = React.createClass({
+  displayName: "HeroProfileStats_TagItem",
+
   propTypes: {
-    tag: React.PropTypes.object.isRequired
+    tag: React.PropTypes.object.isRequired,
+    userSlug: React.PropTypes.string.isRequired
   },
-  render: function() {
-    return React.createElement("article", {
-      "className": "tag"
-    }, React.createElement("a", {
-      "href": Routes.tag_path(this.props.tag.name),
-      "title": '#' + this.props.tag.name,
-      "className": "tag__link"
-    }, React.createElement("span", {
-      "className": "tag__count"
-    }, this.props.tag.taggings_count), React.createElement("span", {
-      "className": "tag__text"
-    }, '#' + this.props.tag.name)));
+
+  render: function render() {
+    var _props = this.props;
+    var userSlug = _props.userSlug;
+    var tag = _props.tag;
+
+    return React.createElement(
+      "article",
+      { className: "tag" },
+      React.createElement(
+        "a",
+        { href: Routes.userTag(userSlug, tag.name),
+          title: "#" + tag.name,
+          className: "tag__link" },
+        React.createElement(
+          "span",
+          { className: "tag__count" },
+          tag.taggings_count
+        ),
+        React.createElement(
+          "span",
+          { className: "tag__text" },
+          "#" + tag.name
+        )
+      )
+    );
   }
 });
-
-
 
 },{}],182:[function(require,module,exports){
 var FADE_DURATION, MARGIN;
@@ -21756,7 +21800,8 @@ window.HeroProfileStats_Popup = React.createClass({
 window.HeroProfileStats_TagsPopup = React.createClass({
   mixins: ['ReactActivitiesUser', ReactUnmountMixin, RequesterMixin, ScrollerMixin, ComponentManipulationsMixin],
   propTypes: {
-    tlogId: React.PropTypes.number.isRequired,
+    userID: React.PropTypes.number.isRequired,
+    userSlug: React.PropTypes.string.isRequired,
     onClose: React.PropTypes.func
   },
   getInitialState: function() {
@@ -21776,6 +21821,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
         return function(tag, i) {
           return React.createElement(HeroProfileStats_TagItem, {
             "tag": tag,
+            "userSlug": _this.props.userSlug,
             "key": i
           });
         };
@@ -21825,7 +21871,7 @@ window.HeroProfileStats_TagsPopup = React.createClass({
       isLoading: true
     });
     return this.createRequest({
-      url: ApiRoutes.tlog_tags(this.props.tlogId),
+      url: ApiRoutes.tlog_tags(this.props.userID),
       success: (function(_this) {
         return function(data) {
           return _this.safeUpdateState({
@@ -22259,7 +22305,8 @@ window.HeroProfileStats = React.createClass({
       "title": i18n.t('tags'),
       "toggle": $el
     }, React.createElement(HeroProfileStats_TagsPopup, {
-      "tlogId": this.props.user.id
+      "userID": this.props.user.id,
+      "userSlug": this.props.user.slug
     })), this.container);
   },
   _isPrivate: function() {
@@ -35275,9 +35322,6 @@ Routes = {
   tlog_favorite_entries_path: function(slug) {
     return '/~' + slug + '/favorites';
   },
-  tag_path: function(tag) {
-    return '/tags/' + tag;
-  },
   friends_feed_path: function() {
     return '/friends';
   },
@@ -35325,6 +35369,9 @@ Routes = {
   },
   userDesignSettings: function(userSlug) {
     return '/~' + userSlug + '/design_settings';
+  },
+  userTag: function(userSlug, tag) {
+    return '/~' + userSlug + '/tags/' + tag;
   },
   tlogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/page/' + page;
