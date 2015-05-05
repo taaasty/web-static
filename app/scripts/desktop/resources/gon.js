@@ -1,8 +1,8 @@
 global.gon = {
   version: 'static-development',
   env: 'static-development',
-  host: localStorage.getItem('host').length ? localStorage.getItem('host') : 'http://taaasty.com/',
-  api_host: localStorage.getItem('api_host').length ? localStorage.getItem('api_host') : 'http://taaasty.com/api/',
+  host: localStorage.getItem('host') ? localStorage.getItem('host') : 'http://taaasty.com/',
+  api_host: localStorage.getItem('api_host') ? localStorage.getItem('api_host') : 'http://taaasty.com/api/',
   sound_asset_url: 'sounds/',
   localesPath: '../locales',
   localesVersion: '1.0.0',

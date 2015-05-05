@@ -1,6 +1,6 @@
 EmailFooter        = require './_partials/footer'
-EmailLoginField    = require './fields/login'
-EmailPasswordField = require './fields/password'
+EmailLoginField    = require './fields/EmailLoginField'
+EmailPasswordField = require './fields/EmailPasswordField'
 EmailSubmitButton  = require './buttons/submit'
 EmailMixin         = require './mixins/email'
 
@@ -12,15 +12,15 @@ window.Email = React.createClass
     password: React.PropTypes.string
 
   getDefaultProps: ->
-    login:    ''
+    login: ''
     password: ''
 
   getInitialState: ->
     formData:
-      login:    @props.login
+      login: @props.login
       password: @props.password
-    isProcess:       false
-    isLoginError:    false
+    isProcess: false
+    isLoginError: false
     isPasswordError: false
 
   render: ->
