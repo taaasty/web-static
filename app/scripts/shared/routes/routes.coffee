@@ -10,7 +10,6 @@ Routes =
   logout_path: -> '/logout'
 
   tlog_favorite_entries_path: (slug) -> '/~' + slug + '/favorites'
-  tag_path: (tag) -> '/tags/' + tag
 
   friends_feed_path:                  -> '/friends'
   live_feed_path:                     -> '/live'
@@ -26,9 +25,10 @@ Routes =
   messagesUrl:             (userSlug) -> '/~' + userSlug + '/conversations'
   notificationsUrl:        (userSlug) -> '/~' + userSlug + '/notifications'
 
-  userProfile:        (userSlug) -> '/~' + userSlug + '/profile'
-  userSettings:       (userSlug) -> '/~' + userSlug + '/settings'
+  userProfile: (userSlug) -> '/~' + userSlug + '/profile'
+  userSettings: (userSlug) -> '/~' + userSlug + '/settings'
   userDesignSettings: (userSlug) -> '/~' + userSlug + '/design_settings'
+  userTag: (userSlug, tag) -> '/~' + userSlug + '/tags/' + tag
 
   tlogPagination:   (userSlug, page) -> '/~' + userSlug + '/page/' + page
   daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page

@@ -3,7 +3,8 @@ window.HeroProfileStats_TagsPopup = React.createClass
            ScrollerMixin, ComponentManipulationsMixin]
 
   propTypes:
-    tlogId:  React.PropTypes.number.isRequired
+    userID: React.PropTypes.number.isRequired
+    userSlug: React.PropTypes.string.isRequired
     onClose: React.PropTypes.func
 
   getInitialState: ->
@@ -16,7 +17,10 @@ window.HeroProfileStats_TagsPopup = React.createClass
   render: ->
     if @state.tags?.length > 0
       tags = @state.tags.map (tag, i) =>
-        <HeroProfileStats_TagItem tag={ tag } key={ i } />
+        <HeroProfileStats_TagItem
+            tag={tag}
+            userSlug={@props.userSlug}
+            key={i} />
 
       tagList = <section className="users">{ tags }</section>
     else
@@ -39,7 +43,7 @@ window.HeroProfileStats_TagsPopup = React.createClass
     @safeUpdate => @incrementActivities()
     @setState isError: false, isLoading: true
     @createRequest
-      url: ApiRoutes.tlog_tags(@props.tlogId)
+      url: ApiRoutes.tlog_tags(@props.userID)
       success: (data) =>
         @safeUpdateState tags: data
       error:   (data) =>

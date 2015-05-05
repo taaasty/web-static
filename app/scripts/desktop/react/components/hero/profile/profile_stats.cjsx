@@ -91,7 +91,9 @@ window.HeroProfileStats = React.createClass
       <HeroProfileStats_Popup
           title={ i18n.t('tags') }
           toggle={ $el }>
-        <HeroProfileStats_TagsPopup tlogId={ this.props.user.id } />
+        <HeroProfileStats_TagsPopup
+            userID={this.props.user.id}
+            userSlug={this.props.user.slug} />
       </HeroProfileStats_Popup>
     ), @container
 

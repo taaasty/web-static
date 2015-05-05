@@ -12056,9 +12056,6 @@ Routes = {
   tlog_favorite_entries_path: function(slug) {
     return '/~' + slug + '/favorites';
   },
-  tag_path: function(tag) {
-    return '/tags/' + tag;
-  },
   friends_feed_path: function() {
     return '/friends';
   },
@@ -12106,6 +12103,9 @@ Routes = {
   },
   userDesignSettings: function(userSlug) {
     return '/~' + userSlug + '/design_settings';
+  },
+  userTag: function(userSlug, tag) {
+    return '/~' + userSlug + '/tags/' + tag;
   },
   tlogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/page/' + page;

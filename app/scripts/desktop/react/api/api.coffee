@@ -2,7 +2,7 @@ _ = require 'lodash'
 Constants = require '../constants/constants'
 CurrentUserStore = require '../stores/current_user'
 
-TIMEOUT = 10000
+# TIMEOUT = 50000
 _pendingRequests = {}
 
 abortPendingRequests = (key) ->
@@ -47,7 +47,7 @@ request = (_method, url, data = {}) ->
     contentType: contentType
     processData: processData
     headers: headers
-    timeout: TIMEOUT
+    # timeout: TIMEOUT
     xhrFields:
       withCredentials: true
       crossDomain:     true
