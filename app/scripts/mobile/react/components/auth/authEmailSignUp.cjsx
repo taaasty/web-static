@@ -1,11 +1,11 @@
-classnames                = require 'classnames'
-NotifyController          = require '../../controllers/notify'
-SessionsViewActions       = require '../../actions/view/sessions'
-ComponentMixin            = require '../../mixins/component'
-AuthEmailEmailField       = require './fields/emailEmail'
-AuthEmailPasswordField    = require './fields/emailPassword'
-AuthEmailNicknameField    = require './fields/emailNickname'
-AuthEmailSubmitButton     = require './buttons/emailSubmit'
+classnames = require 'classnames'
+NotifyController = require '../../controllers/notify'
+SessionsViewActions = require '../../actions/view/sessions'
+ComponentMixin = require '../../mixins/component'
+EmailEmailField = require './fields/EmailEmailField'
+EmailPasswordField = require './fields/EmailPasswordField'
+EmailNicknameField = require './fields/EmailNicknameField'
+AuthEmailSubmitButton = require './buttons/emailSubmit'
 AuthAlreadyRegisteredLink = require './links/alreadyRegistered'
 { PropTypes } = React
 
@@ -21,6 +21,9 @@ global.AuthEmailSignUp = React.createClass
     fixed: false
 
   getInitialState: ->
+    email: ''
+    password: ''
+    nickname: ''
     loading: false
 
   render: ->
@@ -42,9 +45,9 @@ global.AuthEmailSignUp = React.createClass
                    </div>
                    <div className="auth__body">
                      <form onSubmit={ @handleSubmit }>
-                       <AuthEmailEmailField ref="emailField" />
-                       <AuthEmailPasswordField ref="passwordField" />
-                       <AuthEmailNicknameField ref="nicknameField" />
+                       <EmailEmailField value={this.state.email} onChange={this.handleEmailChange} />
+                       <EmailPasswordField value={this.state.password} onChange={this.handlePasswordChange} />
+                       <EmailNicknameField value={this.state.nickname} onChange={this.handleNicknameChange} />
                        <div className="auth__buttons">
                          <AuthEmailSubmitButton loading={ @state.loading } />
                        </div>
@@ -62,8 +65,8 @@ global.AuthEmailSignUp = React.createClass
   deactivateLoadingState: -> @safeUpdateState(loading: false)
 
   isValid: ->
-    email    = @refs.emailField.getValue()
-    password = @refs.passwordField.getValue()
+    email = @state.email
+    password = @state.password
 
     switch
       when email.length == 0
@@ -75,9 +78,9 @@ global.AuthEmailSignUp = React.createClass
       else true
 
   signUp: ->
-    email    = @refs.emailField.getValue()
-    password = @refs.passwordField.getValue()
-    nickname = @refs.nicknameField.getValue()
+    email = @state.email
+    password = @state.password
+    nickname = @state.nickname
 
     @activateLoadingState()
 
@@ -87,6 +90,15 @@ global.AuthEmailSignUp = React.createClass
           window.location.href = user.tlog_url
         ), 0
       .always @deactivateLoadingState
+
+  handleEmailChange: (email) ->
+    @setState({email})
+
+  handlePasswordChange: (password) ->
+    @setState({password})
+
+  handleNicknameChange: (nickname) ->
+    @setState({nickname})
 
   handleSubmit: (e) ->
     e.preventDefault()

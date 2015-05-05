@@ -16,36 +16,42 @@ let Field = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
+  getDefaultProps() {
+    return {
+      value: ''
+    };
+  },
+
   componentDidMount() {
-    if (!this.isBrowserCanTriggerChangeEvent()) {
-      this.value = this.props.value || '';
-      this.intervalID = setInterval(this.checkAndTriggerAutoFillEvent, 20);
+    if (!this.canBrowserTriggerChangeEvent()) {
+      this.value = this.props.value;
+      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
     }
   },
 
   componentWillUnmount() {
-    if (!this.isBrowserCanTriggerChangeEvent()) {
+    if (!this.canBrowserTriggerChangeEvent()) {
       clearInterval(this.intervalID);
     }
   },
 
   render() {
-    return <input type="text" {...this.props} onChange={this.handleChange} />;
+    return <input {...this.props} onChange={this.handleChange} />;
   },
 
-  isBrowserCanTriggerChangeEvent() {
+  canBrowserTriggerChangeEvent() {
     let name = bowser.browser.name,
         version = parseFloat(bowser.browser.version);
 
     return version < MINIMAL_BROWSER_VERSION[name] ? false : true;
   },
 
-  checkAndTriggerAutoFillEvent() {
+  checkAndTriggerChangeEvent() {
     if (this.value != this.getDOMNode().value) this.props.onChange(this.value);
   },
 
   handleChange(e) {
-    if (this.isBrowserCanTriggerChangeEvent()) {
+    if (this.canBrowserTriggerChangeEvent()) {
       this.props.onChange(e.target.value);
     } else {
       this.value = e.target.value;
