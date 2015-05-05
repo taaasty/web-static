@@ -12,6 +12,7 @@ EditorTypeImageLoaded = require './Image/Loaded'
 EditorTypeImageLoadingUrl = require './Image/LoadingUrl'
 { PropTypes } = React
 
+MAX_ATTACHMENTS = 8
 WELCOME_STATE = 'welcome'
 INSERT_STATE = 'insert'
 LOADING_URL_STATE = 'loading'
@@ -135,7 +136,11 @@ EditorTypeImage = React.createClass
     unless imageFiles.length
       return NoticeService.notifyError i18n.t 'editor_files_without_images'
 
-    EditorActionCreators.createImageAttachments files
+    if imageFiles.length > MAX_ATTACHMENTS
+      imageFiles = imageFiles.slice(0, MAX_ATTACHMENTS)
+      NoticeService.notifyError i18n.t('editor_files_limit_reached', count: MAX_ATTACHMENTS)
+
+    EditorActionCreators.createImageAttachments imageFiles
       .progress (soFar) =>
         # Если пользователь локально удалил картинки, не показываем прогресс-бар
         if @state.imageAttachments.length
