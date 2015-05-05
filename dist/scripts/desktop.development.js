@@ -11138,7 +11138,7 @@ PopupActions = {
   toggleMessages: function() {
     return messagingService.toggleMessagesPopup();
   },
-  openNotifications: function() {
+  showNotifications: function() {
     return ReactApp.padController.open(NotificationsContainer, {
       actSelector: '.toolbar__nav-item .icon--bell'
     });
@@ -11527,7 +11527,6 @@ Api = {
       var key, url;
       url = ApiRoutes.notifications_read_url(notificationID);
       key = Constants.api.READ_NOTIFICATION;
-      abortPendingRequests(key);
       return _pendingRequests[key] = putRequest(url);
     }
   }
@@ -15903,6 +15902,14 @@ var NotificationsContainer = React.createClass({
 
   componentDidUpdate: function componentDidUpdate() {
     if (this.props.onUpdate != null) this.props.onUpdate();
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    var _this = this;
+
+    this.props.notifications.forEach(function (notification) {
+      if (notification.read_at === null) _this.markAsRead(notification.id);
+    });
   },
 
   render: function render() {
@@ -26762,7 +26769,6 @@ var UserToolbar = React.createClass({
   displayName: "UserToolbar",
 
   propTypes: {
-    openedTemporarily: React.PropTypes.bool.isRequired,
     hovered: React.PropTypes.bool.isRequired,
     userLogged: React.PropTypes.bool.isRequired,
     unreadConversationsCount: React.PropTypes.number.isRequired,
@@ -26940,7 +26946,7 @@ var UserToolbarContainer = React.createClass({
       onToggleClick: this.toggleOpenness,
       onLineHover: this.handleLineHover,
       onMessagesClick: this.toggleMessages,
-      onNotificationsClick: this.toggleNotifications,
+      onNotificationsClick: this.showNotifications,
       onFriendsClick: this.toggleFriends,
       onDesignSettingsClick: this.toggleDesignSettings,
       onSettingsClick: this.showSettings,
@@ -26971,8 +26977,14 @@ var UserToolbarContainer = React.createClass({
     PopupActionCreators.toggleMessages();
   },
 
-  toggleNotifications: function toggleNotifications() {
-    PopupActionCreators.openNotifications();
+  showNotifications: function showNotifications() {
+    PopupActionCreators.showNotifications();
+    // Если тулбар был открыт временно, при этом открыли уведомления, то не позволяем
+    // закрыться тулбару
+    this.setState({
+      opened: true,
+      openedTemporarily: false
+    });
   },
 
   toggleFriends: function toggleFriends() {
