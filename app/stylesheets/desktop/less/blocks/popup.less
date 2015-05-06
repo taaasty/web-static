@@ -7,7 +7,7 @@
   left: 0;
   background-color: @popup-overlay-bg;
   overflow: auto;
-  z-index: @zindex-popup;
+  z-index: @zindex-popup-with-background;
 }
 
 .popup-container__main {
@@ -30,6 +30,14 @@
 
   a:hover {
     color: @yellow;
+  }
+
+  &.front-layer {
+    z-index: @zindex-frontlayer;
+  }
+
+  &.back-layer {
+    z-index: @zindex-backlayer;
   }
 }
 

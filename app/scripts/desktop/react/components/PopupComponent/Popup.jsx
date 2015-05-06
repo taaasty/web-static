@@ -33,7 +33,7 @@ let Popup = React.createClass({
     ));
 
     return (
-      <div className={popupClasses} style={this.props.position}>
+      <div className={popupClasses} style={this.props.position} onTouchTap={this.handleClick}>
         <PopupHeader
             ref="header"
             title={this.props.title}
@@ -57,6 +57,23 @@ let Popup = React.createClass({
       stop: (event, ui) => {
         this.props.onPositionChange(ui.position);
         $popup.removeClass('no--transition');
+      }
+    });
+  },
+
+  handleClick(e) {
+    let popups = [].slice.call(document.querySelectorAll('.popup')),
+        currentNode = this.getDOMNode();
+
+    Object.keys(popups).forEach((key) => {
+      let node = popups[key];
+
+      if (node == currentNode) {
+        node.classList.add('front-layer');
+        node.classList.remove('back-layer');
+      } else {
+        node.classList.add('back-layer');
+        node.classList.remove('front-layer');
       }
     });
   }

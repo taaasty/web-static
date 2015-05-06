@@ -24,7 +24,7 @@ let Pad = React.createClass({
     ));
 
     return (
-      <div className="popup popup--notifications popup--dark">
+      <div className="popup popup--notifications popup--dark front-layer">
         <div ref="arrow"
              className={`popup__arrow popup__arrow--${this.props.placement}`} />
         <div className="popup__content">
