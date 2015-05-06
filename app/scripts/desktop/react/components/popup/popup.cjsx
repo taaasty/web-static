@@ -38,7 +38,8 @@ window.Popup = React.createClass
     })
 
     return <div className={ popupClasses }
-                style={ this.initialPositionStyle() }>
+                style={ this.initialPositionStyle() }
+                onTouchTap={this.handleClick}>
              <PopupHeader title={ this.props.title } ref="header"
                           isDraggable= { this.props.isDraggable }
                           hasActivities={ this.props.hasActivities }
@@ -62,3 +63,17 @@ window.Popup = React.createClass
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
+
+  handleClick: (e) ->
+    popups = [].slice.call(document.querySelectorAll('.popup'))
+    currentNode = this.getDOMNode()
+
+    Object.keys(popups).forEach (key) ->
+      node = popups[key]
+
+      if node == currentNode
+        currentNode.classList.add 'front-layer'
+        currentNode.classList.remove 'back-layer'
+      else
+        node.classList.add 'back-layer'
+        node.classList.remove 'front-layer'
