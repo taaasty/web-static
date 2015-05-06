@@ -7,8 +7,8 @@ INVALID_SLUG_MESSAGE     = 'user_authenticator/user_by_slug_not_found'
 EmailMixin =
 
   isValid: ->
-    login    = @refs.login.getValue()
-    password = @refs.password.getValue()
+    login = @state.formData.login
+    password = @state.formData.password
 
     switch
       when login.length == 0
@@ -20,8 +20,8 @@ EmailMixin =
       else return true
 
   login: ->
-    login    = @refs.login.getValue()
-    password = @refs.password.getValue()
+    login = @state.formData.login
+    password = @state.formData.password
 
     @setState(isProcess: true)
 

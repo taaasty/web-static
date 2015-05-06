@@ -124,16 +124,16 @@ require './react/components/avatars/user_avatar'
 # =            Authorization resources            =
 # ===============================================*/
 
-require './react/components/auth/auth'
-require './react/components/auth/authorization/authorization'
-require './react/components/auth/authorization/vk'
-require './react/components/auth/authorization/facebook'
+require './react/components/Auth/Auth'
+require './react/components/Auth/authorization/authorization'
+require './react/components/Auth/authorization/vk'
+require './react/components/Auth/authorization/facebook'
 
-require './react/components/auth/buttons/vk_auth_button'
-require './react/components/auth/buttons/facebook_auth_button'
+require './react/components/Auth/buttons/vk_auth_button'
+require './react/components/Auth/buttons/facebook_auth_button'
 
-require './react/components/auth/email/email'
-require './react/components/auth/recovery'
+require './react/components/Auth/email/email'
+require './react/components/Auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 

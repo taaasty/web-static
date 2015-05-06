@@ -1,12 +1,12 @@
-classnames               = require 'classnames'
-NotifyController         = require '../../controllers/notify'
-SessionsViewActions      = require '../../actions/view/sessions'
-ComponentMixin           = require '../../mixins/component'
-AuthEmailLoginField      = require './fields/emailLogin'
-AuthEmailPasswordField   = require './fields/emailPassword'
-AuthEmailSubmitButton    = require './buttons/emailSubmit'
+classnames = require 'classnames'
+NotifyController = require '../../controllers/notify'
+SessionsViewActions = require '../../actions/view/sessions'
+ComponentMixin = require '../../mixins/component'
+EmailLoginField = require './fields/EmailLoginField'
+EmailPasswordField = require './fields/EmailPasswordField'
+AuthEmailSubmitButton = require './buttons/emailSubmit'
 AuthNotRegisteredYetLink = require './links/notRegisteredYet'
-AuthForgotPasswordLink   = require './links/forgotPassword'
+AuthForgotPasswordLink = require './links/forgotPassword'
 { PropTypes } = React
 
 #FIXME: Remove from global when implement react-router
@@ -21,6 +21,8 @@ global.AuthEmailSignIn = React.createClass
     fixed: false
 
   getInitialState: ->
+    login: ''
+    password: ''
     loading: false
 
   render: ->
@@ -42,8 +44,8 @@ global.AuthEmailSignIn = React.createClass
                    </div>
                    <div className="auth__body">
                      <form onSubmit={ @handleSubmit }>
-                       <AuthEmailLoginField ref="loginField" />
-                       <AuthEmailPasswordField ref="passwordField" />
+                       <EmailLoginField value={this.state.login} onChange={this.handleLoginChange} />
+                       <EmailPasswordField value={this.state.password} onChange={this.handlePasswordChange} />
                        <div className="auth__buttons">
                          <AuthEmailSubmitButton loading={ @state.loading } />
                        </div>
@@ -63,8 +65,8 @@ global.AuthEmailSignIn = React.createClass
   deactivateLoadingState: -> @safeUpdateState(loading: false)
 
   isValid: ->
-    login    = @refs.loginField.getValue()
-    password = @refs.passwordField.getValue()
+    login = @state.login
+    password = @state.password
 
     switch
       when login.length == 0
@@ -76,8 +78,8 @@ global.AuthEmailSignIn = React.createClass
       else true
 
   signIn: ->
-    login    = @refs.loginField.getValue()
-    password = @refs.passwordField.getValue()
+    login = @state.login
+    password = @state.password
 
     @activateLoadingState()
 
@@ -87,6 +89,12 @@ global.AuthEmailSignIn = React.createClass
           window.location.reload true
         ), 0
       .always @deactivateLoadingState
+
+  handleLoginChange: (login) ->
+    @setState({login})
+
+  handlePasswordChange: (password) ->
+    @setState({password})
 
   handleSubmit: (e) ->
     e.preventDefault()

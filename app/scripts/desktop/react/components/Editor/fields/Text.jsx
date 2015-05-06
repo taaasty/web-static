@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import classnames from 'classnames';
 
-function createMarkup() { return {__html: 'First &middot; Second'}; };
-
 //TODO: Maybe will be better if we will get this data from EditorStore?
 const FIELD_MODES = ['inline', 'partial', 'rich'];
 const FIELD_MODE_OPTIONS = {
@@ -63,7 +61,6 @@ let EditorTextField = React.createClass({
   },
 
   render() {
-    this.test = 'okk'
     let fieldClasses = classnames('tasty-editor', this.props.className);
 
     return (
