@@ -35099,7 +35099,6 @@ module.exports = CollageRowItem;
 
 
 },{}],392:[function(require,module,exports){
-(function (global){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35108,13 +35107,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var bowser = _interopRequire(require("bowser"));
 
-global.bowser = bowser;
 // These browsers trigger change event on autofill (http://stackoverflow.com/a/11710295)
 // Anyway Safari doesn't trigger change event at all
 var MINIMAL_BROWSER_VERSION = {
   Chrome: 9,
   Firefox: 5,
   Safari: Infinity,
+  iPhone: Infinity,
+  iPad: Infinity,
   Opera: 15,
   "Internet Explorer": 9
 };
@@ -35159,7 +35159,7 @@ var Field = React.createClass({
 
   checkAndTriggerChangeEvent: function checkAndTriggerChangeEvent() {
     var currentValue = this.getDOMNode().value;
-    console.log("currentValue", currentValue);
+
     if (this.value != currentValue) {
       this.value = currentValue;
       this.props.onChange(currentValue);
@@ -35175,7 +35175,6 @@ var Field = React.createClass({
 
 module.exports = Field;
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"bowser":"bowser"}],393:[function(require,module,exports){
 "use strict";
 
