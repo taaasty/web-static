@@ -14,7 +14,7 @@ let EmailEmailField = React.createClass({
           <i className="icon icon--profile" />
         </label>
         <EmailField
-            value={this.props.value}
+            defaultValue={this.props.value}
             placeholder={i18n.t('placeholders.auth_email')}
             id="auth-email"
             className="auth__field-input"

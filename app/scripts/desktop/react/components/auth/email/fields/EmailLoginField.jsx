@@ -18,7 +18,7 @@ let EmailLoginField = React.createClass({
       <div className="form-popup__item">
         <div className={fieldClasses}>
           <TextField
-              value={this.props.value}
+              defaultValue={this.props.value}
               placeholder={i18n.t('login_field_placeholder')}
               autoFocus={true}
               required={true}

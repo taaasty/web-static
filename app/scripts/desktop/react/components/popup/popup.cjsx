@@ -37,9 +37,10 @@ window.Popup = React.createClass
       'popup--light': @props.colorScheme is 'light'
     })
 
-    return <div className={ popupClasses }
-                style={ this.initialPositionStyle() }
-                onTouchTap={this.handleClick}>
+    return <div className={popupClasses}
+                style={this.initialPositionStyle()}
+                onMouseDown={this.handleClick}
+                onTouchStart={this.handleClick}>
              <PopupHeader title={ this.props.title } ref="header"
                           isDraggable= { this.props.isDraggable }
                           hasActivities={ this.props.hasActivities }

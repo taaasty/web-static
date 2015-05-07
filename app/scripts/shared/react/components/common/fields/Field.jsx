@@ -12,19 +12,19 @@ const MINIMAL_BROWSER_VERSION = {
 
 let Field = React.createClass({
   propTypes: {
-    value: React.PropTypes.string,
+    defaultValue: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
     return {
-      value: ''
+      defaultValue: ''
     };
   },
 
   componentDidMount() {
     if (!this.canBrowserTriggerChangeEvent()) {
-      this.value = this.props.value;
+      this.value = this.props.defaultValue;
       this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
     }
   },
@@ -47,15 +47,18 @@ let Field = React.createClass({
   },
 
   checkAndTriggerChangeEvent() {
-    if (this.value != this.getDOMNode().value) this.props.onChange(this.value);
+    let currentValue = this.getDOMNode().value;
+
+    if (this.value != currentValue) {
+      this.value = currentValue;
+      this.props.onChange(currentValue);
+    }
   },
 
-  handleChange(e) {
-    if (this.canBrowserTriggerChangeEvent()) {
-      this.props.onChange(e.target.value);
-    } else {
-      this.value = e.target.value;
-    }
+  handleChange() {
+    let currentValue = this.getDOMNode().value;
+    if (!this.canBrowserTriggerChangeEvent()) this.value = currentValue;
+    this.props.onChange(currentValue);
   }
 });
 

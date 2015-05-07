@@ -18,7 +18,7 @@ let EmailPasswordField = React.createClass({
       <div className="form-popup__item">
         <div className={fieldClasses}>
           <PasswordField
-              value={this.props.value}
+              defaultValue={this.props.value}
               placeholder={i18n.t('password_field')}
               required={true}
               disabled={this.props.isDisabled}

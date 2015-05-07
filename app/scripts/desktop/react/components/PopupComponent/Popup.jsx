@@ -33,7 +33,10 @@ let Popup = React.createClass({
     ));
 
     return (
-      <div className={popupClasses} style={this.props.position} onTouchTap={this.handleClick}>
+      <div className={popupClasses}
+           style={this.props.position}
+           onMouseDown={this.handleClick}
+           onTouchStart={this.handleClick}>
         <PopupHeader
             ref="header"
             title={this.props.title}
