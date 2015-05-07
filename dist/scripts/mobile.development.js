@@ -2298,7 +2298,7 @@ var EmailEmailField = React.createClass({
         React.createElement("i", { className: "icon icon--profile" })
       ),
       React.createElement(EmailField, {
-        value: this.props.value,
+        defaultValue: this.props.value,
         placeholder: i18n.t("placeholders.auth_email"),
         id: "auth-email",
         className: "auth__field-input",
@@ -2337,7 +2337,7 @@ var EmailLoginField = React.createClass({
         React.createElement("i", { className: "icon icon--profile" })
       ),
       React.createElement(TextField, {
-        value: this.props.value,
+        defaultValue: this.props.value,
         placeholder: i18n.t("placeholders.auth_login"),
         id: "auth-email-nick",
         className: "auth__field-input",
@@ -2376,7 +2376,7 @@ var EmailNicknameField = React.createClass({
         React.createElement("i", { className: "icon icon--diary" })
       ),
       React.createElement(TextField, {
-        value: this.props.value,
+        defaultValue: this.props.value,
         placeholder: i18n.t("placeholders.auth_nickname"),
         id: "auth-nick",
         className: "auth__field-input",
@@ -2415,7 +2415,7 @@ var EmailPasswordField = React.createClass({
         React.createElement("i", { className: "icon icon--lock" })
       ),
       React.createElement(PasswordField, {
-        value: this.props.value,
+        defaultValue: this.props.value,
         placeholder: i18n.t("placeholders.auth_password"),
         id: "auth-password",
         className: "auth__field-input",
@@ -11908,19 +11908,19 @@ var Field = React.createClass({
   displayName: "Field",
 
   propTypes: {
-    value: React.PropTypes.string,
+    defaultValue: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
   getDefaultProps: function getDefaultProps() {
     return {
-      value: ""
+      defaultValue: ""
     };
   },
 
   componentDidMount: function componentDidMount() {
     if (!this.canBrowserTriggerChangeEvent()) {
-      this.value = this.props.value;
+      this.value = this.props.defaultValue;
       this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
     }
   },
@@ -11943,15 +11943,18 @@ var Field = React.createClass({
   },
 
   checkAndTriggerChangeEvent: function checkAndTriggerChangeEvent() {
-    if (this.value != this.getDOMNode().value) this.props.onChange(this.value);
+    var currentValue = this.getDOMNode().value;
+
+    if (this.value != currentValue) {
+      this.value = currentValue;
+      this.props.onChange(currentValue);
+    }
   },
 
-  handleChange: function handleChange(e) {
-    if (this.canBrowserTriggerChangeEvent()) {
-      this.props.onChange(e.target.value);
-    } else {
-      this.value = e.target.value;
-    }
+  handleChange: function handleChange() {
+    var currentValue = this.getDOMNode().value;
+    if (!this.canBrowserTriggerChangeEvent()) this.value = currentValue;
+    this.props.onChange(currentValue);
   }
 });
 
