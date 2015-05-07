@@ -6,6 +6,8 @@ const MINIMAL_BROWSER_VERSION = {
   'Chrome': 9,
   'Firefox': 5,
   'Safari': Infinity,
+  'iPhone': Infinity,
+  'iPad': Infinity,
   'Opera': 15,
   'Internet Explorer': 9
 };
@@ -25,7 +27,7 @@ let Field = React.createClass({
   componentDidMount() {
     if (!this.canBrowserTriggerChangeEvent()) {
       this.value = this.props.defaultValue;
-      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
+      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 1000);
     }
   },
 
