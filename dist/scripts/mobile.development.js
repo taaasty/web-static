@@ -1925,7 +1925,7 @@ global.AuthEmailSignIn = React.createClass({
     });
   },
   handlePasswordChange: function(password) {
-    console.log('passwordChange', login);
+    console.log('passwordChange', password);
     return this.setState({
       password: password
     });
@@ -11888,6 +11888,7 @@ var EmailField = React.createClass({
 module.exports = EmailField;
 
 },{"./Field":244}],244:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11896,6 +11897,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var bowser = _interopRequire(require("bowser"));
 
+global.bowser = bowser;
 // These browsers trigger change event on autofill (http://stackoverflow.com/a/11710295)
 // Anyway Safari doesn't trigger change event at all
 var MINIMAL_BROWSER_VERSION = {
@@ -11962,6 +11964,7 @@ var Field = React.createClass({
 
 module.exports = Field;
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"bowser":252}],245:[function(require,module,exports){
 "use strict";
 

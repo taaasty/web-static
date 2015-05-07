@@ -1,5 +1,5 @@
 import bowser from 'bowser';
-
+global.bowser = bowser;
 // These browsers trigger change event on autofill (http://stackoverflow.com/a/11710295)
 // Anyway Safari doesn't trigger change event at all
 const MINIMAL_BROWSER_VERSION = {

@@ -95,7 +95,7 @@ global.AuthEmailSignIn = React.createClass
     @setState({login})
 
   handlePasswordChange: (password) ->
-    console.log 'passwordChange', login
+    console.log 'passwordChange', password
     @setState({password})
 
   handleSubmit: (e) ->
