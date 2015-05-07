@@ -25,7 +25,7 @@ let Field = React.createClass({
   componentDidMount() {
     if (!this.canBrowserTriggerChangeEvent()) {
       this.value = this.props.defaultValue;
-      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
+      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 1000);
     }
   },
 
@@ -48,7 +48,7 @@ let Field = React.createClass({
 
   checkAndTriggerChangeEvent() {
     let currentValue = this.getDOMNode().value;
-
+    console.log('currentValue', currentValue);
     if (this.value != currentValue) {
       this.value = currentValue;
       this.props.onChange(currentValue);

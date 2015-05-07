@@ -91,9 +91,11 @@ global.AuthEmailSignIn = React.createClass
       .always @deactivateLoadingState
 
   handleLoginChange: (login) ->
+    console.log 'loginChange', login
     @setState({login})
 
   handlePasswordChange: (password) ->
+    console.log 'passwordChange', login
     @setState({password})
 
   handleSubmit: (e) ->

@@ -1919,11 +1919,13 @@ global.AuthEmailSignIn = React.createClass({
     })(this)).always(this.deactivateLoadingState);
   },
   handleLoginChange: function(login) {
+    console.log('loginChange', login);
     return this.setState({
       login: login
     });
   },
   handlePasswordChange: function(password) {
+    console.log('passwordChange', login);
     return this.setState({
       password: password
     });
@@ -11921,7 +11923,7 @@ var Field = React.createClass({
   componentDidMount: function componentDidMount() {
     if (!this.canBrowserTriggerChangeEvent()) {
       this.value = this.props.defaultValue;
-      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 20);
+      this.intervalID = setInterval(this.checkAndTriggerChangeEvent, 1000);
     }
   },
 
@@ -11944,7 +11946,7 @@ var Field = React.createClass({
 
   checkAndTriggerChangeEvent: function checkAndTriggerChangeEvent() {
     var currentValue = this.getDOMNode().value;
-
+    console.log("currentValue", currentValue);
     if (this.value != currentValue) {
       this.value = currentValue;
       this.props.onChange(currentValue);
