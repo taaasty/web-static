@@ -7,6 +7,7 @@ let Editor = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
+    entryFlows: React.PropTypes.array.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     backUrl: React.PropTypes.string,
@@ -21,6 +22,7 @@ let Editor = React.createClass({
     return (
       <EditorLayout loading={this.props.loading} backUrl={this.props.backUrl}>
         <EditorActions
+            entryFlows={this.props.entryFlows}
             entryPrivacy={this.props.entryPrivacy}
             tlogType={this.props.tlogType}
             loading={this.props.loading}

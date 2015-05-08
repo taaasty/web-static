@@ -26,11 +26,13 @@ function prepareEntryData(entryType) {
       text = EditorStore.getEntryValue('text'),
       privacy = EditorStore.getEntryPrivacy(),
       imageAttachmentsIDs = EditorStore.getEntryImageAttachmentsIDs(),
+      flowIDs = EditorStore.getEntryFlowIDs(),
       imageUrl = EditorStore.getEntryValue('imageUrl'),
       embedUrl = EditorStore.getEntryValue('embedUrl'),
       source = EditorStore.getEntryValue('source');
 
   imageAttachmentsIDs = imageAttachmentsIDs.length ? imageAttachmentsIDs : [''];
+  flowIDs = flowIDs.length ? flowIDs : [''];
 
   switch(entryType) {
     case 'text':
@@ -58,6 +60,10 @@ function prepareEntryData(entryType) {
       data = {text, source, privacy};
       break;
   }
+
+  // Здесь устанавливаются общие для всех типов постов данные
+  data.flow_ids = flowIDs;
+
   return data;
 }
 

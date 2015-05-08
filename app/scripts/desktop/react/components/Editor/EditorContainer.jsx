@@ -43,6 +43,7 @@ let EditorContainer = React.createClass({
     return {
       entry: EditorStore.getEntry(),
       entryType: EditorStore.getEntryType(),
+      entryFlows: EditorStore.getEntryFlows(),
       entryPrivacy: EditorStore.getEntryPrivacy(),
       loading: EditorStore.isLoading()
     }
