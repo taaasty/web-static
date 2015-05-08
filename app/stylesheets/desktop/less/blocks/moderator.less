@@ -1,0 +1,28 @@
+.moderator {
+  position: absolute;
+  bottom: @indent-base;
+  left: @indent-base;
+  color: @moderator-avatar-color;
+  z-index: @zindex-moderator;
+}
+
+.moderator__link {
+  color: inherit;
+
+  &:hover {
+    color: @moderator-avatar-color-hover;
+  }
+}
+
+.moderator__avatar {
+  .inline-block-middle();
+  width: @moderator-avatar-size;
+  height: @moderator-avatar-size;
+  margin-right: 10px;
+}
+
+.moderator__desc {
+  .inline-block-middle();
+  font-size: 13px;
+  line-height: 17px;
+}

@@ -248,53 +248,24 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  line-height: 0;
   opacity: 0;
   transition: opacity .3s ease;
+
+  .moderator-action {
+    border-radius: 0;
+    
+    &:first-child {
+      border-top-left-radius: @brick-radius;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: @brick-radius;
+    }
+  }
 
   .brick:hover & {
     opacity: 1;
   }
-}
-
-.brick__action {
-  .inline-block-middle();
-  width: 35px;
-  height: 24px;
-  line-height: 22px;
-  color: #fff !important;
-  text-align: center;
-  cursor: pointer;
-
-  &:first-child {
-    border-top-left-radius: @brick-radius;
-  }
-
-  &:last-child {
-    border-bottom-right-radius: @brick-radius;
-  }
-
-  & + & {
-    margin-left: 1px;
-  }
-
-  .icon {
-    .inline-block-middle();
-    font-size: 18px;
-  }
-
-  .icon--cross {
-    font-weight: bold;
-    font-size: 12px;
-  }
-}
-
-.brick__action--accept {
-  background-color: @emerald;
-}
-
-.brick__action--reject {
-  background-color: #f53952;
 }
 
 // Types
