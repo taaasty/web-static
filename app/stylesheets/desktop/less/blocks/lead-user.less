@@ -1,0 +1,28 @@
+.lead-user {
+  position: absolute;
+  bottom: @indent-base;
+  left: @indent-base;
+  color: @lead-user-avatar-color;
+  z-index: @zindex-lead-user;
+}
+
+.lead-user__link {
+  color: inherit;
+
+  &:hover {
+    color: @lead-user-avatar-color-hover;
+  }
+}
+
+.lead-user__avatar {
+  .inline-block-middle();
+  width: @lead-user-avatar-size;
+  height: @lead-user-avatar-size;
+  margin-right: 10px;
+}
+
+.lead-user__desc {
+  .inline-block-middle();
+  font-size: 13px;
+  line-height: 17px;
+}
