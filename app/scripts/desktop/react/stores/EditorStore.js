@@ -15,6 +15,7 @@ let _loading = false,
     _creatingAttachments = false,
     _entry = new NormalizedEntry({
       type: 'text',
+      flows: [],
       privacy: 'public'
     });
 
@@ -46,6 +47,10 @@ let EditorStore = assign(new BaseStore(), {
     return _entry.type;
   },
 
+  getEntryFlows() {
+    return _entry.flows;
+  },
+
   getEntryPrivacy() {
     return _entry.privacy;
   },
@@ -56,6 +61,17 @@ let EditorStore = assign(new BaseStore(), {
 
     if (imageAttachments != null) {
       imageAttachments.forEach((item) => IDs.push(item.id));
+    }
+
+    return IDs;
+  },
+
+  getEntryFlowIDs() {
+    let IDs = [],
+        flows = this.getEntryFlows();
+
+    if (flows != null) {
+      flows.forEach((flow) => IDs.push(flow.id));
     }
 
     return IDs;
@@ -81,7 +97,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
     case Constants.editor.INIT:
       let { entry, tlogType } = action;
 
-      if (entry != null) {
+      if (entry != null && entry.id) {
         let { id, updated_at } = entry;
 
         if (tlogType === 'anonymous') {
@@ -95,6 +111,8 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             EntryNormalizationService.normalize(entry)
           );
         }
+        // Не храним потоки, устанавливаем те что пришли через пропсы
+        _entry.flows = entry.flows;
       } else {
         if (tlogType === 'anonymous') {
           _entry = (
@@ -113,6 +131,8 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             })
           );
         }
+        // Не храним потоки, устанавливаем те что пришли через пропсы
+        _entry.flows = entry ? entry.flows : [];
       }
       break;
 
