@@ -182,6 +182,12 @@
   line-height: 1em;
 }
 
+.brick__caption {
+  font-size: 14px;
+  line-height: 20px;
+  color: @grey;
+}
+
 .brick__text {
   p {
     font-size: 16px;
@@ -268,6 +274,28 @@
   }
 }
 
+.brick__data {
+  text-align: right;
+}
+
+.brick__data-item {
+  .inline-block-middle();
+  margin-left: 12px;
+  font-size: 12px;
+  color: @grey;
+  white-space: nowrap;
+
+  .icon {
+    .inline-block-middle();
+    margin-right: 4px;
+    font-size: 22px;
+  }
+
+  span {
+    .inline-block-middle();
+  }
+}
+
 // Types
 .brick--quote {
   .brick__body {
@@ -278,5 +306,81 @@
 .brick--code {
   .brick__body {
     font-family: @font-family-monospace;
+  }
+}
+
+.brick--flow {
+  width: 362px;
+  font-family: @font-family-base;
+
+  &.__subscribed {
+    background-color: #36b377;
+
+    .brick__title,
+    .brick__data-item {
+      color: #fff;
+    }
+
+    .brick__caption {
+      color: rgba(255, 255, 255, .5)
+    }
+  }
+
+  .brick__media {
+    position: relative;
+
+    &:before {
+      content: "";
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      background-color: rgba(37, 37, 37, .6);
+      border-top-left-radius: @brick-radius;
+      border-top-right-radius: @brick-radius; 
+      opacity: 0;
+      transition: opacity .3s ease;
+    } 
+
+    .follow-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+
+      &:before {
+        border-color: rgba(255, 255, 255, .5);
+      }
+
+      &:hover:before {
+        border-color: rgba(255, 255, 255, .7)
+      }
+
+      &.state--active:before {
+        border-color: transparent;
+      }
+    }
+  }
+
+  .brick__body {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .brick__title {
+    font-size: 20px;
+    margin-bottom: 0;
+    font-family: @font-family-base-light;
+  }
+
+  &:hover {
+    .brick__media {
+      .follow-button,
+      &:before {
+        opacity: 1;
+      }
+    }
   }
 }
