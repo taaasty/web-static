@@ -149,6 +149,7 @@
   "editor_enable_voting": "Добавить голосование",
   "editor_disable_voting": "Убрать голосование",
   "editor_publish_button": "Опубликовать",
+  "editor_publish_to_tlog_button": "Опубликовать в __tlogName__",
   "editor_save_button": "Сохранить в тлоге",
   "editor_preview_button": "Предпросмотр",
   "editor_public_with_voting_entry": "Открытая запись с голосованием",

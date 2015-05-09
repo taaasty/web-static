@@ -13,9 +13,9 @@ const PRIVACY_TYPES = {
 
 let _loading = false,
     _creatingAttachments = false,
+    _tlog = null,
     _entry = new NormalizedEntry({
       type: 'text',
-      flows: [],
       privacy: 'public'
     });
 
@@ -35,6 +35,10 @@ function getPrivacyByTlogType(tlogType) {
 }
 
 let EditorStore = assign(new BaseStore(), {
+  getTlog() {
+    return _tlog;
+  },
+
   getEntry() {
     return _entry;
   },
@@ -66,17 +70,6 @@ let EditorStore = assign(new BaseStore(), {
     return IDs;
   },
 
-  getEntryFlowIDs() {
-    let IDs = [],
-        flows = this.getEntryFlows();
-
-    if (flows != null) {
-      flows.forEach((flow) => IDs.push(flow.id));
-    }
-
-    return IDs;
-  },
-
   getEntryValue(key) {
     return EntryNormalizationService.getNormalizedEntryValue(_entry, key);
   },
@@ -95,7 +88,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
 
   switch(action.type) {
     case Constants.editor.INIT:
-      let { entry, tlogType } = action;
+      let { entry, tlog, tlogType } = action;
 
       if (entry != null && entry.id) {
         let { id, updated_at } = entry;
@@ -111,8 +104,6 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             EntryNormalizationService.normalize(entry)
           );
         }
-        // Не храним потоки, устанавливаем те что пришли через пропсы
-        _entry.flows = entry.flows;
       } else {
         if (tlogType === 'anonymous') {
           _entry = (
@@ -131,9 +122,8 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             })
           );
         }
-        // Не храним потоки, устанавливаем те что пришли через пропсы
-        _entry.flows = entry ? entry.flows : [];
       }
+      _tlog = tlog || null;
       break;
 
     case Constants.editor.UPDATE_FIELD:

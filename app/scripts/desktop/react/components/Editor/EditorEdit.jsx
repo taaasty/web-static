@@ -3,15 +3,16 @@ import EditorContainer from './EditorContainer';
 
 let EditorEdit = React.createClass({
   propTypes: {
-    entry: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+    entry: React.PropTypes.object.isRequired,
     backUrl: React.PropTypes.string
   },
 
   componentWillMount() {
     // Here we just initialize EditorStore data, it will be used in EditorContainer later on
-    let { entry, tlogType } = this.props;
-    EditorActionCreators.init({entry, tlogType});
+    let { entry, tlog, tlogType } = this.props;
+    EditorActionCreators.init({entry, tlog, tlogType});
   },
 
   render() {
