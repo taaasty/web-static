@@ -26,13 +26,12 @@ function prepareEntryData(entryType) {
       text = EditorStore.getEntryValue('text'),
       privacy = EditorStore.getEntryPrivacy(),
       imageAttachmentsIDs = EditorStore.getEntryImageAttachmentsIDs(),
-      flowIDs = EditorStore.getEntryFlowIDs(),
+      tlogID = EditorStore.getTlog().id,
       imageUrl = EditorStore.getEntryValue('imageUrl'),
       embedUrl = EditorStore.getEntryValue('embedUrl'),
       source = EditorStore.getEntryValue('source');
 
   imageAttachmentsIDs = imageAttachmentsIDs.length ? imageAttachmentsIDs : [''];
-  flowIDs = flowIDs.length ? flowIDs : [''];
 
   switch(entryType) {
     case 'text':
@@ -62,15 +61,15 @@ function prepareEntryData(entryType) {
   }
 
   // Здесь устанавливаются общие для всех типов постов данные
-  data.flow_ids = flowIDs;
+  if (tlogID != null) data.tlog_id = tlogID;
 
   return data;
 }
 
 let EditorActionCreators = {
-  init({entry, tlogType}) {
+  init({entry, tlog, tlogType}) {
     AppDispatcher.handleViewAction({
-      entry, tlogType,
+      entry, tlog, tlogType,
       type: EditorConstants.INIT
     });
   },

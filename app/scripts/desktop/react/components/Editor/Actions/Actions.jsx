@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import EditorVoteButton from '../buttons/Vote';
 import EditorPrivacyButton from '../buttons/Privacy';
 import EditorPreviewButton from '../buttons/Preview';
-import EditorFlowButton from '../buttons/Flow';
 import EditorSaveButton from '../buttons/Save';
 
 let ENTRY_PRIVACY_PRIVATE = 'private',
@@ -14,9 +13,9 @@ let ENTRY_PRIVACY_PRIVATE = 'private',
 
 let EditorActions = React.createClass({
   propTypes: {
-    entryFlows: React.PropTypes.array.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.string.isRequired,
+    entryPrivacy: React.PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired
@@ -45,7 +44,6 @@ let EditorActions = React.createClass({
     return (
       <div className={actionsClasses}>
         {this.renderSpinner()}
-        {this.renderFlows()}
         {this.renderVoteButton()}
         {this.renderPrivacyButton()}
         <div className="post-action post-action--button">
@@ -53,41 +51,28 @@ let EditorActions = React.createClass({
         </div>
         <div className="post-action post-action--button">
           <div className="button-group">
-            <EditorSaveButton private={this.isEntryPrivate()} onClick={this.saveEntry} />
+            <EditorSaveButton
+                tlog={this.props.tlog}
+                private={this.isEntryPrivate()}
+                onClick={this.saveEntry} />
           </div>
         </div>
       </div>
     );
   },
 
-  renderFlows() {
-    if (this.props.entryFlows != null && this.props.entryFlows.length) {
-      let flowButtons = this.props.entryFlows.map((flow) => {
-        return (
-          <div className="post-action post-action--button" key={flow.id}>
-            <EditorFlowButton title={flow.name} />
-          </div>
-        );
-      });
-
-      return flowButtons;
-    }
-  },
-
   renderVoteButton() {
-    if (this.props.entryFlows == null || this.props.entryFlows.length == 0) {
-      if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate())) {
-        return (
-          <div className="post-action post-action--button">
-            <EditorVoteButton enabled={this.isEntryLive()} onClick={this.handleVoteButtonClick} />
-          </div>
-        );
-      }
+    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate()) || this.props.tlog != null) {
+      return (
+        <div className="post-action post-action--button">
+          <EditorVoteButton enabled={this.isEntryLive()} onClick={this.handleVoteButtonClick} />
+        </div>
+      );
     }
   },
 
   renderPrivacyButton() {
-    if (this.props.entryFlows == null || this.props.entryFlows.length == 0) {
+    if (this.props.tlog == null) {
       if (!this.isTlogAnonymous()) {
         return (
           <div className="post-action post-action--button">
