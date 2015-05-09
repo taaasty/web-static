@@ -26,7 +26,7 @@ function prepareEntryData(entryType) {
       text = EditorStore.getEntryValue('text'),
       privacy = EditorStore.getEntryPrivacy(),
       imageAttachmentsIDs = EditorStore.getEntryImageAttachmentsIDs(),
-      tlogID = EditorStore.getTlog().id,
+      tlogID = EditorStore.getTlogID(),
       imageUrl = EditorStore.getEntryValue('imageUrl'),
       embedUrl = EditorStore.getEntryValue('embedUrl'),
       source = EditorStore.getEntryValue('source');
