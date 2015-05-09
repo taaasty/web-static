@@ -39,6 +39,10 @@ let EditorStore = assign(new BaseStore(), {
     return _tlog;
   },
 
+  getTlogID() {
+    return _tlog ? _tlog.id : null;
+  },
+
   getEntry() {
     return _entry;
   },

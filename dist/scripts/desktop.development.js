@@ -10766,7 +10766,7 @@ function prepareEntryData(entryType) {
       text = EditorStore.getEntryValue("text"),
       privacy = EditorStore.getEntryPrivacy(),
       imageAttachmentsIDs = EditorStore.getEntryImageAttachmentsIDs(),
-      tlogID = EditorStore.getTlog().id,
+      tlogID = EditorStore.getTlogID(),
       imageUrl = EditorStore.getEntryValue("imageUrl"),
       embedUrl = EditorStore.getEntryValue("embedUrl"),
       source = EditorStore.getEntryValue("source");
@@ -33516,6 +33516,10 @@ function getPrivacyByTlogType(tlogType) {
 var EditorStore = assign(new BaseStore(), {
   getTlog: function getTlog() {
     return _tlog;
+  },
+
+  getTlogID: function getTlogID() {
+    return _tlog ? _tlog.id : null;
   },
 
   getEntry: function getEntry() {
