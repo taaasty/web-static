@@ -5,14 +5,15 @@ import EditorArea from './Area/Area';
 
 let Editor = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object,
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
+    userID: React.PropTypes.number.isRequired,
     backUrl: React.PropTypes.string,
-    loading: React.PropTypes.bool.isRequired,
     canChangeType: React.PropTypes.bool.isRequired,
+    loading: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired,
     onChangeType: React.PropTypes.func.isRequired
@@ -25,6 +26,7 @@ let Editor = React.createClass({
             tlog={this.props.tlog}
             entryPrivacy={this.props.entryPrivacy}
             tlogType={this.props.tlogType}
+            userID={this.props.userID}
             loading={this.props.loading}
             onSaveEntry={this.props.onSaveEntry}
             onChangePrivacy={this.props.onChangePrivacy} />

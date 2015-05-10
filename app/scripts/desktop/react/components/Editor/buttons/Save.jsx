@@ -2,6 +2,7 @@ let EditorSaveButton = React.createClass({
   propTypes: {
     tlog: React.PropTypes.object,
     private: React.PropTypes.bool.isRequired,
+    entryForCurrentUser: React.PropTypes.bool.isRequired,
     onClick: React.PropTypes.func.isRequired
   },
 
@@ -16,10 +17,10 @@ let EditorSaveButton = React.createClass({
   },
 
   getTitle() {
-    if (this.props.tlog != null) {
-      return i18n.t('editor_publish_to_tlog_button', {tlogName: this.props.tlog.slug});
-    } else {
+    if (this.props.entryForCurrentUser) {
       return this.props.private ? i18n.t('editor_save_button') : i18n.t('editor_publish_button');
+    } else {
+      return i18n.t('editor_publish_to_tlog_button', {tlogName: this.props.tlog.slug});
     }
   }
 });

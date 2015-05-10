@@ -13,9 +13,10 @@ let ENTRY_PRIVACY_PRIVATE = 'private',
 
 let EditorActions = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object,
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
+    userID: React.PropTypes.number.isRequired,
     loading: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired
@@ -54,6 +55,7 @@ let EditorActions = React.createClass({
             <EditorSaveButton
                 tlog={this.props.tlog}
                 private={this.isEntryPrivate()}
+                entryForCurrentUser={this.isEntryForCurrentUser()}
                 onClick={this.saveEntry} />
           </div>
         </div>
@@ -62,7 +64,7 @@ let EditorActions = React.createClass({
   },
 
   renderVoteButton() {
-    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate()) || this.props.tlog != null) {
+    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate()) || !this.isEntryForCurrentUser()) {
       return (
         <div className="post-action post-action--button">
           <EditorVoteButton enabled={this.isEntryLive()} onClick={this.handleVoteButtonClick} />
@@ -72,17 +74,15 @@ let EditorActions = React.createClass({
   },
 
   renderPrivacyButton() {
-    if (this.props.tlog == null) {
-      if (!this.isTlogAnonymous()) {
-        return (
-          <div className="post-action post-action--button">
-            <EditorPrivacyButton
-                live={this.isEntryLive()}
-                private={this.isEntryPrivate()}
-                onClick={this.handlePrivacyButtonClick} />
-          </div>
-        );
-      }
+    if (this.isEntryForCurrentUser() && !this.isTlogAnonymous()) {
+      return (
+        <div className="post-action post-action--button">
+          <EditorPrivacyButton
+              live={this.isEntryLive()}
+              private={this.isEntryPrivate()}
+              onClick={this.handlePrivacyButtonClick} />
+        </div>
+      );
     }
   },
 
@@ -94,6 +94,10 @@ let EditorActions = React.createClass({
         </div>
       );
     }
+  },
+
+  isEntryForCurrentUser() {
+    return this.props.tlog.id == this.props.userID;
   },
 
   isEntryLive() {

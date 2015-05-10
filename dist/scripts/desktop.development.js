@@ -14489,9 +14489,10 @@ var EditorActions = React.createClass({
   displayName: "EditorActions",
 
   propTypes: {
-    tlog: React.PropTypes.object,
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
+    userID: React.PropTypes.number.isRequired,
     loading: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired
@@ -14537,6 +14538,7 @@ var EditorActions = React.createClass({
           React.createElement(EditorSaveButton, {
             tlog: this.props.tlog,
             "private": this.isEntryPrivate(),
+            entryForCurrentUser: this.isEntryForCurrentUser(),
             onClick: this.saveEntry })
         )
       )
@@ -14544,7 +14546,7 @@ var EditorActions = React.createClass({
   },
 
   renderVoteButton: function renderVoteButton() {
-    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate()) || this.props.tlog != null) {
+    if (!(this.isTlogAnonymous() || this.isEntryPrivate() || this.isTlogPrivate()) || !this.isEntryForCurrentUser()) {
       return React.createElement(
         "div",
         { className: "post-action post-action--button" },
@@ -14554,17 +14556,15 @@ var EditorActions = React.createClass({
   },
 
   renderPrivacyButton: function renderPrivacyButton() {
-    if (this.props.tlog == null) {
-      if (!this.isTlogAnonymous()) {
-        return React.createElement(
-          "div",
-          { className: "post-action post-action--button" },
-          React.createElement(EditorPrivacyButton, {
-            live: this.isEntryLive(),
-            "private": this.isEntryPrivate(),
-            onClick: this.handlePrivacyButtonClick })
-        );
-      }
+    if (this.isEntryForCurrentUser() && !this.isTlogAnonymous()) {
+      return React.createElement(
+        "div",
+        { className: "post-action post-action--button" },
+        React.createElement(EditorPrivacyButton, {
+          live: this.isEntryLive(),
+          "private": this.isEntryPrivate(),
+          onClick: this.handlePrivacyButtonClick })
+      );
     }
   },
 
@@ -14576,6 +14576,10 @@ var EditorActions = React.createClass({
         React.createElement(Spinner, { size: 8 })
       );
     }
+  },
+
+  isEntryForCurrentUser: function isEntryForCurrentUser() {
+    return this.props.tlog.id == this.props.userID;
   },
 
   isEntryLive: function isEntryLive() {
@@ -14713,14 +14717,15 @@ var Editor = React.createClass({
   displayName: "Editor",
 
   propTypes: {
-    tlog: React.PropTypes.object,
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.string.isRequired,
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
+    userID: React.PropTypes.number.isRequired,
     backUrl: React.PropTypes.string,
-    loading: React.PropTypes.bool.isRequired,
     canChangeType: React.PropTypes.bool.isRequired,
+    loading: React.PropTypes.bool.isRequired,
     onSaveEntry: React.PropTypes.func.isRequired,
     onChangePrivacy: React.PropTypes.func.isRequired,
     onChangeType: React.PropTypes.func.isRequired
@@ -14734,6 +14739,7 @@ var Editor = React.createClass({
         tlog: this.props.tlog,
         entryPrivacy: this.props.entryPrivacy,
         tlogType: this.props.tlogType,
+        userID: this.props.userID,
         loading: this.props.loading,
         onSaveEntry: this.props.onSaveEntry,
         onChangePrivacy: this.props.onChangePrivacy }),
@@ -14768,21 +14774,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var EditorActionCreators = _interopRequire(require("../../actions/editor"));
 
-var ConnectStoreMixin = _interopRequire(require("../../../../shared/react/mixins/connectStore"));
-
 var EditorStore = _interopRequire(require("../../stores/EditorStore"));
+
+var CurrentUserStore = _interopRequire(require("../../stores/current_user"));
+
+var connectToStores = _interopRequire(require("../../../../shared/react/components/higherOrder/connectToStores"));
 
 var Editor = _interopRequire(require("./Editor"));
 
 var EditorContainer = React.createClass({
   displayName: "EditorContainer",
 
-  mixins: [ConnectStoreMixin(EditorStore)],
-
   propTypes: {
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.oneOf(["public", "private", "anonymous"]).isRequired,
+    entry: React.PropTypes.object.isRequired,
+    entryType: React.PropTypes.string.isRequired,
+    entryPrivacy: React.PropTypes.string.isRequired,
+    userID: React.PropTypes.number.isRequired,
     backUrl: React.PropTypes.string,
-    canChangeType: React.PropTypes.bool
+    canChangeType: React.PropTypes.bool,
+    loading: React.PropTypes.bool.isRequired
   },
 
   render: function render() {
@@ -14792,10 +14804,7 @@ var EditorContainer = React.createClass({
       onChangeType: this.changeType
     };
 
-    return React.createElement(Editor, _extends({}, this.state, actions, {
-      tlogType: this.props.tlogType,
-      backUrl: this.props.backUrl,
-      canChangeType: this.props.canChangeType }));
+    return React.createElement(Editor, _extends({}, this.props, actions));
   },
 
   saveEntry: function saveEntry() {
@@ -14808,22 +14817,23 @@ var EditorContainer = React.createClass({
 
   changeType: function changeType(type) {
     EditorActionCreators.changeEntryType(type);
-  },
-
-  getStateFromStore: function getStateFromStore() {
-    return {
-      tlog: EditorStore.getTlog(),
-      entry: EditorStore.getEntry(),
-      entryType: EditorStore.getEntryType(),
-      entryPrivacy: EditorStore.getEntryPrivacy(),
-      loading: EditorStore.isLoading()
-    };
   }
+});
+
+EditorContainer = connectToStores(EditorContainer, [EditorStore, CurrentUserStore], function (props) {
+  return {
+    tlog: EditorStore.getTlog(),
+    entry: EditorStore.getEntry(),
+    entryType: EditorStore.getEntryType(),
+    entryPrivacy: EditorStore.getEntryPrivacy(),
+    userID: CurrentUserStore.getUserID(),
+    loading: EditorStore.isLoading()
+  };
 });
 
 module.exports = EditorContainer;
 
-},{"../../../../shared/react/mixins/connectStore":398,"../../actions/editor":13,"../../stores/EditorStore":371,"./Editor":68}],70:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":396,"../../actions/editor":13,"../../stores/EditorStore":371,"../../stores/current_user":374,"./Editor":68}],70:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -14843,12 +14853,12 @@ var EditorEdit = React.createClass({
   },
 
   componentWillMount: function componentWillMount() {
-    // Here we just initialize EditorStore data, it will be used in EditorContainer later on
     var _props = this.props;
     var entry = _props.entry;
     var tlog = _props.tlog;
     var tlogType = _props.tlogType;
 
+    // Here we just initialize EditorStore data, it will be used in EditorContainer later on
     EditorActionCreators.init({ entry: entry, tlog: tlog, tlogType: tlogType });
   },
 
@@ -14875,7 +14885,7 @@ var EditorNew = React.createClass({
   displayName: "EditorNew",
 
   propTypes: {
-    tlog: React.PropTypes.object,
+    tlog: React.PropTypes.object.isRequired,
     tlogType: React.PropTypes.oneOf(["public", "private", "anonymous"]).isRequired,
     backUrl: React.PropTypes.string
   },
@@ -15520,6 +15530,7 @@ var EditorSaveButton = React.createClass({
   propTypes: {
     tlog: React.PropTypes.object,
     "private": React.PropTypes.bool.isRequired,
+    entryForCurrentUser: React.PropTypes.bool.isRequired,
     onClick: React.PropTypes.func.isRequired
   },
 
@@ -15536,10 +15547,10 @@ var EditorSaveButton = React.createClass({
   },
 
   getTitle: function getTitle() {
-    if (this.props.tlog != null) {
-      return i18n.t("editor_publish_to_tlog_button", { tlogName: this.props.tlog.slug });
-    } else {
+    if (this.props.entryForCurrentUser) {
       return this.props["private"] ? i18n.t("editor_save_button") : i18n.t("editor_publish_button");
+    } else {
+      return i18n.t("editor_publish_to_tlog_button", { tlogName: this.props.tlog.slug });
     }
   }
 });
@@ -33844,6 +33855,9 @@ CurrentUserStore = _.extend(new BaseStore(), {
   },
   getUser: function() {
     return currentUser;
+  },
+  getUserID: function() {
+    return currentUser != null ? currentUser.id : void 0;
   },
   getAccessToken: function() {
     return currentUser != null ? currentUser.api_key.access_token : void 0;
