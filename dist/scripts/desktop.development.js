@@ -15550,7 +15550,7 @@ var EditorSaveButton = React.createClass({
     if (this.props.entryForCurrentUser) {
       return this.props["private"] ? i18n.t("editor_save_button") : i18n.t("editor_publish_button");
     } else {
-      return i18n.t("editor_publish_to_tlog_button", { tlogName: this.props.tlog.slug });
+      return i18n.t("editor_publish_to_tlog_button", { tlogTag: this.props.tlog.tag });
     }
   }
 });
