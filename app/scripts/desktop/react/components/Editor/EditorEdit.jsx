@@ -10,8 +10,9 @@ let EditorEdit = React.createClass({
   },
 
   componentWillMount() {
-    // Here we just initialize EditorStore data, it will be used in EditorContainer later on
     let { entry, tlog, tlogType } = this.props;
+
+    // Here we just initialize EditorStore data, it will be used in EditorContainer later on
     EditorActionCreators.init({entry, tlog, tlogType});
   },
 
