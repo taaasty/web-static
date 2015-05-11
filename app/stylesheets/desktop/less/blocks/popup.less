@@ -8,6 +8,13 @@
   background-color: @popup-overlay-bg;
   overflow: auto;
   z-index: @zindex-popup-with-background;
+
+  .popup {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    display: block;
+  }
 }
 
 .popup-container__main {
@@ -392,6 +399,11 @@
     .border-radius-top-left(@popup-border-radius);
     .border-radius-top-right(@popup-border-radius);
   }
+}
+
+.popup--flows {
+  width: 586px;
+  color: #fff;
 }
 
 // Responsive height of Persons Popup

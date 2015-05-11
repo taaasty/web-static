@@ -33,6 +33,130 @@
       </div>
     </div>
 
+    <!-- Popup Flows -->
+    <div class="popup-container">
+      <div class="popup-container__main">
+        <div class="popup-container__cell">
+          <div class="popup popup--dark popup--flows">
+            <div class="popup__header">
+              <div class="popup__headbox">
+                <h3 class="popup__title">Добавить в поток</h3>
+              </div>
+              <div class="popup__close">
+                <i class="icon icon--cross"></i>
+              </div>
+            </div>
+            <div class="popup__body">
+              <!-- Flows -->
+              <section class="flows">
+                <div class="flows__search">
+                  <div class="form-field form-field--default">
+                    <input class="form-field__input" type="text" placeholder="Найти поток?" />
+                    <div class="form-field__bg"></div>
+                  </div>
+                </div>
+                <div class="flows__list">
+                  <div class="scroller scroller--dark scroller--flows">
+                    <div class="scroller__pane">
+                      <article class="flow flow--add">
+                        <div class="flow__spacer"></div>
+                        <div class="flow__content">
+                          <i class="flow__plus"></i><br />Создать новый поток
+                        </div>
+                      </article>
+                      <article class="flow">
+                        <div class="flow__image" style="background-image: url(images/images/flows/image_726x382_1.jpg);"></div>
+                        <div class="flow__content">
+                          <h3 class="flow__title">Аниме</h3>
+                          <p class="flow__text">124 подписчика</p>
+                        </div>
+                      </article><article class="flow">
+                        <div class="flow__image" style="background-image: url(images/images/flows/image_726x382_3.jpg);"></div>
+                        <div class="flow__content">
+                          <h3 class="flow__title">Фотография</h3>
+                          <p class="flow__text">124 подписчика</p>
+                        </div>
+                      </article><article class="flow">
+                        <div class="flow__image" style="background-image: url(images/images/flows/image_726x382_2.jpg);"></div>
+                        <div class="flow__content">
+                          <h3 class="flow__title">Кулинария</h3>
+                          <p class="flow__text">124 подписчика</p>
+                        </div>
+                      </article><article class="flow">
+                        <div class="flow__image" style="background-image: url(images/images/flows/image_726x382_3.jpg);"></div>
+                        <div class="flow__content">
+                          <h3 class="flow__title">Фотография</h3>
+                          <p class="flow__text">124 подписчика</p>
+                        </div>
+                      </article><article class="flow">
+                        <div class="flow__image" style="background-image: url(images/images/flows/image_726x382_2.jpg);"></div>
+                        <div class="flow__content">
+                          <h3 class="flow__title">Кулинария</h3>
+                          <p class="flow__text">124 подписчика</p>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="scroller__track">
+                      <div class="scroller__bar"></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- end Flows -->
+            </div>
+          </div>
+          <div class="popup popup--dark popup--flows">
+            <div class="popup__header">
+              <div class="popup__headbox">
+                <h3 class="popup__title">Создать поток</h3>
+              </div>
+              <div class="popup__close">
+                <i class="icon icon--cross"></i>
+              </div>
+            </div>
+            <div class="popup__body">
+              <!-- Flow Form -->
+              <div class="flow-form">
+                <div class="flow-form__header">
+                  <div class="flow-form__hero" style="background-image: url(images/hero-cover.jpg);">
+                    <span class="form-upload form-upload--icon">
+                      <input class="form-upload__input" type="file" />
+                      <span class="form-upload__text">
+                        <i class="icon icon--image-circle"></i>
+                      </span>
+                    </span>
+                    <div class="flow-form__hero-box">
+                      <div class="flow-form__hero-title">
+                        <div data-react-class="EditableField" data-react-props='{"defaultValue": "", "placeholder": "#Название потока", "onEditEnd": "javascript:0"}'></div>
+                      </div>
+                      <div class="flow-form__hero-text">
+                        <div data-react-class="EditableField" data-react-props='{"defaultValue": "", "placeholder": "Краткое описание, не более 150 символов", "onEditEnd": "javascript:0"}'></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flow-form__body">
+                  <div class="flow-form__item">
+                    <div class="flow-form__right">
+                      <button class="button button--yellow">Создать поток</button>
+                    </div>
+                    <div class="flow-form__left">
+                      <div class="form-field form-field--default">
+                        <input class="form-field__input" type="text" placeholder="Укажите модераторов (не более трех)" />
+                        <div class="form-field__bg"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end Flow Form -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end Popup Flows -->
+
     <script src="scripts/vendor.js"></script>
     <script src="scripts/client.js"></script>
   </body>
