@@ -47,7 +47,7 @@
     &:hover {
       border-bottom-color: transparent;
     }
-    
+
     &.fancybox {
       border-bottom: none;
     }
@@ -57,7 +57,9 @@
     margin-bottom: 15px;
 
     img {
-      width: 100%; // Для постов со старого тейсти
+      // Нельзя делать width: 100 потому что  этом случае картикни которые по ширине меньше ширины
+      // поста растягиваются, например: http://taaasty.com/~test/19320729-http-cs14115-vk-me-c540104-v540104681-1935f-hppy44b58is-jpg-kartinka-s-vnes
+      // width: 100%; // Для постов со старого тейсти
     }
   }
 
