@@ -1,0 +1,36 @@
+.moderator-actions {
+  line-height: 0;
+}
+
+.moderator-action {
+  .inline-block-middle();
+  width: @moderator-action-width;
+  height: @moderator-action-height;
+  line-height: @moderator-action-height - 2;
+  color: #fff !important;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 2px;
+
+  & + & {
+    margin-left: 1px;
+  }
+
+  .icon {
+    .inline-block-middle();
+    font-size: 18px;
+  }
+
+  .icon--cross {
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
+
+.moderator-action--accept {
+  background-color: @moderator-action-accept-bg;
+}
+
+.moderator-action--reject {
+  background-color: @moderator-action-reject-bg;
+}

@@ -289,6 +289,20 @@
 /*-- outline --*/
 .button--outline {
   .button-outline-style(@white);
+
+  &.button--gray {
+    background-color: @white;
+    border: 1px solid #b2b2b2;
+    color: #b2b2b2 !important;
+
+    &:before {
+      display: none;
+    }
+
+    .icon {
+      opacity: 1;
+    }
+  }
 }
 
 .button--outline-light-white {

@@ -139,4 +139,10 @@ let EditorActions = React.createClass({
   }
 });
 
+// <div className="post-action post-action--button">
+//   <button className="button button--outline button--gray">
+//     Привязать пост к потоку
+//   </button>
+// </div>
+
 export default EditorActions;
