@@ -5,7 +5,7 @@ import EditorArea from './Area/Area';
 
 let Editor = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.string.isRequired,
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,

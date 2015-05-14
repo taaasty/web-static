@@ -3,7 +3,7 @@ import EditorContainer from './EditorContainer';
 
 let EditorNew = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
     backUrl: React.PropTypes.string
   },
