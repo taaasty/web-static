@@ -15,6 +15,7 @@ require 'aviator'
 
 require 'swfobject'
 require 'es5-shim'
+require 'localStorage-shim'
 require('jquery.mousewheel')(global.jQuery)
 require 'jquery.scrollto'
 
