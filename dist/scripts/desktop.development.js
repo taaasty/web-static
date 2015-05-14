@@ -14536,7 +14536,7 @@ var EditorActions = React.createClass({
   displayName: "EditorActions",
 
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
     userID: React.PropTypes.number.isRequired,
@@ -14626,7 +14626,10 @@ var EditorActions = React.createClass({
   },
 
   isEntryForCurrentUser: function isEntryForCurrentUser() {
-    return this.props.tlog.id == this.props.userID;
+    if (this.props.tlog != null) {
+      return this.props.tlog.id == this.props.userID;
+    }
+    return true;
   },
 
   isEntryLive: function isEntryLive() {
@@ -14770,7 +14773,7 @@ var Editor = React.createClass({
   displayName: "Editor",
 
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.string.isRequired,
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
@@ -14839,7 +14842,7 @@ var EditorContainer = React.createClass({
   displayName: "EditorContainer",
 
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.oneOf(["public", "private", "anonymous"]).isRequired,
     entry: React.PropTypes.object.isRequired,
     entryType: React.PropTypes.string.isRequired,
@@ -14938,7 +14941,7 @@ var EditorNew = React.createClass({
   displayName: "EditorNew",
 
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.oneOf(["public", "private", "anonymous"]).isRequired,
     backUrl: React.PropTypes.string
   },

@@ -13,7 +13,7 @@ let ENTRY_PRIVACY_PRIVATE = 'private',
 
 let EditorActions = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     tlogType: React.PropTypes.string.isRequired,
     entryPrivacy: React.PropTypes.string.isRequired,
     userID: React.PropTypes.number.isRequired,
@@ -97,7 +97,10 @@ let EditorActions = React.createClass({
   },
 
   isEntryForCurrentUser() {
-    return this.props.tlog.id == this.props.userID;
+    if (this.props.tlog != null) {
+      return this.props.tlog.id == this.props.userID;
+    }
+    return true;
   },
 
   isEntryLive() {
