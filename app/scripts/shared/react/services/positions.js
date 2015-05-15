@@ -5,7 +5,7 @@ let MOVE_OFFSET = 100,
     STORAGE_PREFIX = 'positions:';
 
 let PositionsService = {
-  storage: window.localStorage,
+  storage: AppStorage,
 
   savePosition(key, position) {
     this.storage.setItem(this._positionKey(key), JSON.stringify(position));

@@ -12,7 +12,8 @@ require './locales/moment/ru'
 
 require './react/services/positions'
 global.NoticeService = require './react/services/Notice'
-window.ThumborService = require '../shared/react/services/thumbor'
+global.BeepService = require '../shared/react/services/Beep'
+global.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
 # /*===============================
@@ -274,7 +275,6 @@ require './react/components/alerts/tasty_locking_alert'
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
-require './react/controllers/tasty_sound'
 require './react/controllers/tasty_locking_alert'
 
 require './react/controllers/shellbox'

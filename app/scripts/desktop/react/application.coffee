@@ -20,17 +20,35 @@ initLocales = (locale, callback) ->
   }, callback)
 
 initRoutes = ->
+  hasAccessBySlug = (urlSlug) ->
+    user = CurrentUserStore.getUser()
+    userLogged = CurrentUserStore.isLogged()
+
+    return if !userLogged || urlSlug.slice(1).toLowerCase() != user?.slug then false else true
+
   UserRouteTarget =
-    profile:                 -> TastyEvents.emit TastyEvents.keys.command_hero_open()
-    settings:                -> PopupActions.showSettings()
-    design_settings:         -> PopupActions.showDesignSettings()
-    showRequestedById: (req) -> PopupActions.showFriends('vkontakte', Number(req.params.id))
-    showRequested:           -> PopupActions.showFriends('requested')
-    showVkontakte:           -> PopupActions.showFriends('vkontakte')
-    showFacebook:            -> PopupActions.showFriends('facebook')
+    profile: -> TastyEvents.emit TastyEvents.keys.command_hero_open()
+    settings: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showSettings()
+    design_settings: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showDesignSettings(req.params.slug)
+    showRequestedById: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showFriends('vkontakte', Number(req.params.id))
+    showRequested: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showFriends('requested')
+    showVkontakte: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showFriends('vkontakte')
+    showFacebook: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      PopupActions.showFriends('facebook')
 
   Aviator.setRoutes
-    '/:user':
+    '/:slug':
       target: UserRouteTarget
       '/profile': 'profile'
       '/settings': 'settings'
@@ -80,5 +98,10 @@ window.ReactApp =
 
     # Тултип для шаринга
     $("[tooltip]").tooltip()
+
+    $('.js-connection-start').connection({
+      connectionEnd: '.js-connection-end',
+      connectionLineClass: 'connection-line'
+    });
 
     # GuideController.start()

@@ -9,12 +9,12 @@ _currentUser = null
 
 extendByMockData = (user) ->
   # Some mock data for better development process
-  if localStorage?.getItem('userLogged') is 'true'
-    if localStorage.getItem 'userToken'
-      user.api_key.access_token = localStorage.getItem 'userToken'
+  if AppStorage?.getItem('userLogged') is 'true'
+    if AppStorage.getItem 'userToken'
+      user.api_key.access_token = AppStorage.getItem 'userToken'
 
-    if localStorage.getItem 'userId'
-      user.id = parseInt localStorage.getItem('userId')
+    if AppStorage.getItem 'userId'
+      user.id = parseInt AppStorage.getItem('userId')
 
   user
 
