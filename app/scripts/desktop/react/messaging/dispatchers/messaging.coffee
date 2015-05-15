@@ -32,7 +32,7 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     console.info 'Получено сообщение', message
 
     if message.user_id != CurrentUserStore.getUser().id
-      TastySoundController.incomingMessage()
+      BeepService.play()
 
     MessagingDispatcher.handleServerAction {
       type: 'messageReceived'
@@ -43,7 +43,7 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
   notificationReceived: (notification) ->
     console.info 'Получено уведомление', notification
 
-    TastySoundController.incomingNotification()
+    BeepService.play()
 
     MessagingDispatcher.handleServerAction {
       type: 'notificationReceived'
