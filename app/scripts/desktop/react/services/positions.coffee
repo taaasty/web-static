@@ -4,7 +4,7 @@ MIN_OFFSET = 50
 STORAGE_PREFIX = 'positions:'
 
 window.PositionsService =
-  storage: window.localStorage
+  storage: AppStorage
 
   savePosition: (key, position) ->
     @storage.setItem @_positionKey(key), JSON.stringify(position)

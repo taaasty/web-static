@@ -1,3 +1,4 @@
+import AppStorage from './desktop/resources/AppStorage';
 import bundle from './desktop/bundle';
 
 gon.env = 'development';

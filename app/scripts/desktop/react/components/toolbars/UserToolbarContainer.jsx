@@ -23,7 +23,7 @@ let UserToolbarContainer = React.createClass({
 
   getInitialState() {
     return {
-      opened: JSON.parse(localStorage.getItem(STORAGE_KEY)) || false,
+      opened: JSON.parse(AppStorage.getItem(STORAGE_KEY)) || false,
       openedTemporarily: false,
       hovered: false
     };
@@ -64,13 +64,13 @@ let UserToolbarContainer = React.createClass({
   },
 
   open() {
-    localStorage.setItem(STORAGE_KEY, true);
+    AppStorage.setItem(STORAGE_KEY, true);
     ToolbarActionCreators.toggleOpenness(true);
     this.setState({opened: true});
   },
 
   close() {
-    localStorage.setItem(STORAGE_KEY, false);
+    AppStorage.setItem(STORAGE_KEY, false);
     ToolbarActionCreators.toggleOpenness(false);
     this.setState({opened: false});
   },

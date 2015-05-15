@@ -1,8 +1,8 @@
 global.gon = {
   version: 'static-development',
   env: 'static-development',
-  host: localStorage.getItem('host') ? localStorage.getItem('host') : 'http://taaasty.com/',
-  api_host: localStorage.getItem('api_host') ? localStorage.getItem('api_host') : 'http://taaasty.com/api/',
+  host: AppStorage.getItem('host') ? AppStorage.getItem('host') : 'http://taaasty.com/',
+  api_host: AppStorage.getItem('api_host') ? AppStorage.getItem('api_host') : 'http://taaasty.com/api/',
   sound_asset_url: 'sounds/',
   localesPath: '../locales',
   localesVersion: '1.0.0',
@@ -27,7 +27,7 @@ global.gon = {
     key: '40dbf1d864d4b366b5e6'
   },
   user: {
-    "id": parseInt(localStorage.getItem('userId')) || 232992,
+    "id": parseInt(AppStorage.getItem('userId')) || 232992,
     "locale": "ru",
     "name": "sergeylaptev",
     "slug": "sergeylaptev",
@@ -61,7 +61,7 @@ global.gon = {
       }
     ],
     "api_key": {
-      "access_token": localStorage.getItem('userToken') || "dasd;lkCKJ123",
+      "access_token": AppStorage.getItem('userToken') || "dasd;lkCKJ123",
       "user_id": 232992,
       "expires_at": "2015-01-04T18:07:07.000+03:00"
     },
