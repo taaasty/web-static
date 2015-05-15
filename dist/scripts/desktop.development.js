@@ -34176,7 +34176,7 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 },{}],375:[function(require,module,exports){
 "use strict";
 
-var AppStorage = window.localStorage;
+var AppStorage = null;
 
 // Refer to https://gist.github.com/remy/350433
 try {
@@ -34293,6 +34293,9 @@ try {
     AppStorage = new Storage("local");
   })();
 }
+
+// Проблем с localStorage нет, значит AppStorage просто будет ссылаться на localStorage
+if (AppStorage == null) AppStorage = window.localStorage;
 
 module.exports = AppStorage;
 
