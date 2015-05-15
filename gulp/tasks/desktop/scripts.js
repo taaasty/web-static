@@ -40,7 +40,6 @@ var dependencies = {
   'pusher': './app/bower_components/pusher/dist/pusher',
   'i18next': './app/bower_components/i18next/i18next',
   'bootstrap.tooltip': './app/bower_components/bootstrap/js/tooltip',
-  'localStorage-shim': './app/scripts/desktop/shims/localStorage',
   'Modernizr': './app/scripts/desktop/shims/modernizr',
   'swfobject': './app/scripts/desktop/shims/swf/swfobject',
   'introJs': './app/bower_components/intro.js/intro',

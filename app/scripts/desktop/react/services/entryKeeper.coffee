@@ -2,7 +2,7 @@ NormalizedEntry = require '../entities/normalizedEntry'
 
 STORAGE_PREFIX = 'entries'
 LAST_PRIVACY_KEY = 'editor:lastEntryPrivacy'
-storage = localStorage
+storage = AppStorage
 
 key = (normalizedEntry) ->
   switch

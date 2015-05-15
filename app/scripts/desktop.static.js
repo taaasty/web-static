@@ -1,7 +1,8 @@
+import AppStorage from './desktop/resources/AppStorage';
 import gon from './desktop/resources/gon';
 import bundle from './desktop/bundle';
 
-if (localStorage.getItem('userLogged') == 'true') {
+if (AppStorage.getItem('userLogged') == 'true') {
   let { locale, user } = gon;
   Tasty.start({locale, user});
 } else {
