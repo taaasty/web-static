@@ -1,3 +1,4 @@
+global.AppStorage = require('./shared/resources/AppStorage');
 import gon from './mobile/resources/gon';
 import bundle from './mobile/bundle';
 

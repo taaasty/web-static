@@ -4,7 +4,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-global.AppStorage = require("./desktop/resources/AppStorage");
+global.AppStorage = require("./shared/resources/AppStorage");
 
 var bundle = _interopRequire(require("./desktop/bundle"));
 
@@ -17,7 +17,7 @@ Tasty.start({
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./desktop/bundle":7,"./desktop/resources/AppStorage":375}],2:[function(require,module,exports){
+},{"./desktop/bundle":7,"./shared/resources/AppStorage":400}],2:[function(require,module,exports){
 /**
 binds a function to a context
 
@@ -10482,7 +10482,7 @@ require('./react/application');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/components/common/imageAttachmentsCollage":394,"../shared/react/services/thumbor":399,"../shared/routes/api":401,"../shared/routes/routes":402,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":21,"./react/components/Auth/Auth":22,"./react/components/Auth/authorization/authorization":23,"./react/components/Auth/authorization/facebook":24,"./react/components/Auth/authorization/vk":25,"./react/components/Auth/buttons/facebook_auth_button":26,"./react/components/Auth/buttons/vk_auth_button":27,"./react/components/Auth/email/email":31,"./react/components/Auth/recovery":36,"./react/components/BrowserSupport/BrowserSupportContainer":39,"./react/components/DesignPayment/DesignPaymentContainer":41,"./react/components/DesignSettings/DesignSettingsContainer":48,"./react/components/DesignSettings/common/colorPicker/popup":60,"./react/components/Editor/EditorEdit":71,"./react/components/Editor/EditorNew":72,"./react/components/Feed/Feed":101,"./react/components/Notifications/NotificationsContainer":105,"./react/components/SearchResults/SearchResults":117,"./react/components/TlogAlert/TlogAlertContainer":122,"./react/components/alerts/tasty_alert":124,"./react/components/alerts/tasty_confirm":125,"./react/components/alerts/tasty_locking_alert":126,"./react/components/avatars/avatar":127,"./react/components/avatars/user_avatar":128,"./react/components/buttons/load_more":129,"./react/components/calendar/calendar":130,"./react/components/calendar/calendar_header":131,"./react/components/calendar/calendar_marker":132,"./react/components/calendar/calendar_period":133,"./react/components/calendar/calendar_timeline":134,"./react/components/common/adaptive_input":137,"./react/components/editable_field":140,"./react/components/embed":141,"./react/components/entry_comment_box/comment_form/buttons/submit":142,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":143,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":144,"./react/components/entry_comment_box/comment_form/comment_form":145,"./react/components/entry_comment_box/comment_list/comment":146,"./react/components/entry_comment_box/comment_list/comment_list":147,"./react/components/entry_comment_box/comment_list/comment_manager":148,"./react/components/entry_comment_box/comment_metabar/comment_metabar":149,"./react/components/entry_comment_box/comment_metabar/date":150,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":151,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":152,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":153,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":154,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":155,"./react/components/entry_comment_box/comment_metabar/reply":156,"./react/components/entry_comment_box/entry_comment_box":157,"./react/components/entry_comment_box/load_more":158,"./react/components/entry_comment_box/mixins/comments":159,"./react/components/entry_metabar/author":160,"./react/components/entry_metabar/comment":161,"./react/components/entry_metabar/date":162,"./react/components/entry_metabar/dropdown_menu":163,"./react/components/entry_metabar/dropdown_menu_items/delete_item":164,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":165,"./react/components/entry_metabar/dropdown_menu_items/item":166,"./react/components/entry_metabar/dropdown_menu_items/report_item":167,"./react/components/entry_metabar/dropdown_menu_items/watch_item":168,"./react/components/entry_metabar/entry_metabar":169,"./react/components/follow_status":172,"./react/components/hero/profile/dropdown_menu":174,"./react/components/hero/profile/dropdown_menu_items/ignore":175,"./react/components/hero/profile/dropdown_menu_items/report":176,"./react/components/hero/profile/popup/followers_popup":177,"./react/components/hero/profile/popup/followings_popup":178,"./react/components/hero/profile/popup/items/follower_item":179,"./react/components/hero/profile/popup/items/following_item":180,"./react/components/hero/profile/popup/items/tag_item":181,"./react/components/hero/profile/popup/popup":182,"./react/components/hero/profile/popup/tags_popup":183,"./react/components/hero/profile/profile":184,"./react/components/hero/profile/profile_avatar":185,"./react/components/hero/profile/profile_head":186,"./react/components/hero/profile/profile_stats":187,"./react/components/hero/profile/profile_stats_item":188,"./react/components/images_collage":189,"./react/components/people/item":190,"./react/components/persons_popup/items/follower_relationship":191,"./react/components/persons_popup/items/following_relationship":192,"./react/components/persons_popup/items/guess_relationship":193,"./react/components/persons_popup/items/ignored_relationship":194,"./react/components/persons_popup/items/item":195,"./react/components/persons_popup/items/requested_relationship":196,"./react/components/persons_popup/menu":197,"./react/components/persons_popup/menu_item":198,"./react/components/persons_popup/mixins/panel_mixin":199,"./react/components/persons_popup/panels/followers_panel":200,"./react/components/persons_popup/panels/followings_panel":201,"./react/components/persons_popup/panels/guessed_panel":202,"./react/components/persons_popup/panels/ignored_panel":203,"./react/components/persons_popup/panels/requested_panel":204,"./react/components/persons_popup/panels/socialNetwork/facebook":205,"./react/components/persons_popup/panels/socialNetwork/vkontakte":215,"./react/components/persons_popup/persons_popup":222,"./react/components/popup/header":223,"./react/components/popup/layout":224,"./react/components/popup/popup":225,"./react/components/popup/spinner":226,"./react/components/popup_box":227,"./react/components/relationship_buttons/follow_button":228,"./react/components/relationship_buttons/follower_button":229,"./react/components/relationship_buttons/guess_button":230,"./react/components/relationship_buttons/ignore_button":231,"./react/components/relationship_buttons/mixins/relationship":232,"./react/components/relationship_buttons/request_button":233,"./react/components/screen_viewer/screen_viewer":234,"./react/components/search/button":235,"./react/components/search/field":236,"./react/components/search/search":237,"./react/components/settings/settings":254,"./react/components/shellbox_layer":257,"./react/components/shellboxes/confirm_registration":258,"./react/components/smart_follow_status":259,"./react/components/spinner":260,"./react/components/toolbars/AvatarToolbarContainer":262,"./react/components/toolbars/CloseToolbar":263,"./react/components/toolbars/UserToolbarContainer":266,"./react/components/transition/timeout_transition_group":274,"./react/components/voting":275,"./react/controllers/popup":285,"./react/controllers/shellbox":287,"./react/controllers/tasty_alert":288,"./react/controllers/tasty_confirm":289,"./react/controllers/tasty_events":290,"./react/controllers/tasty_locking_alert":291,"./react/controllers/tasty_sound":292,"./react/dispatchers/current_user":294,"./react/dispatchers/relationships":296,"./react/helpers/app":301,"./react/mediators/comments":302,"./react/messaging/actions/conversation":303,"./react/messaging/actions/message":304,"./react/messaging/actions/notification":305,"./react/messaging/actions/popup":306,"./react/messaging/components/buttons/write_message":307,"./react/messaging/components/messages_popup/conversations/conversations":308,"./react/messaging/components/messages_popup/conversations/list/empty":309,"./react/messaging/components/messages_popup/conversations/list/list":310,"./react/messaging/components/messages_popup/conversations/list/list_item":311,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":312,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":313,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":314,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":315,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":316,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":317,"./react/messaging/components/messages_popup/loading_message":318,"./react/messaging/components/messages_popup/messages_popup":319,"./react/messaging/components/messages_popup/thread/message_form/message_form":320,"./react/messaging/components/messages_popup/thread/message_list/empty":321,"./react/messaging/components/messages_popup/thread/message_list/message_list":322,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":323,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":324,"./react/messaging/components/messages_popup/thread/thread":325,"./react/messaging/components/messages_popup/ui/back_button":326,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":327,"./react/messaging/components/notifications_popup/notifications/empty":328,"./react/messaging/components/notifications_popup/notifications/notification":329,"./react/messaging/components/notifications_popup/notifications/notifications":330,"./react/messaging/components/notifications_popup/notifications_popup":331,"./react/messaging/components/toolbars/indicators/indicators":332,"./react/messaging/components/toolbars/indicators/messages":333,"./react/messaging/components/toolbars/indicators/notifications":334,"./react/messaging/dispatchers/messaging":335,"./react/messaging/messaging_requester":336,"./react/messaging/messaging_service":337,"./react/messaging/messaging_testing":338,"./react/messaging/stores/connection_state":340,"./react/messaging/stores/conversations":341,"./react/messaging/stores/messages":342,"./react/messaging/stores/messages_popup_state":343,"./react/messaging/stores/messaging_status":344,"./react/messaging/stores/notifications":345,"./react/mixins/activities":346,"./react/mixins/component_manipulations":347,"./react/mixins/dom_manipulations":348,"./react/mixins/error_timer":349,"./react/mixins/grammar":350,"./react/mixins/positions":351,"./react/mixins/requester":352,"./react/mixins/scroller":353,"./react/mixins/shake":354,"./react/mixins/touch":355,"./react/mixins/unmount":356,"./react/services/Notice":361,"./react/services/positions":367,"./react/services/uuid":368,"./react/stores/EditorStore":369,"./react/stores/current_user":372,"./react/stores/design":373,"./react/stores/relationships":374,"./resources/fileReceiver":376,"./resources/is_mobile":377,"./resources/libs":378,"./resources/tasty":379,"./resources/tasty_utils":380}],8:[function(require,module,exports){
+},{"../shared/react/components/common/imageAttachmentsCollage":393,"../shared/react/services/thumbor":398,"../shared/routes/api":401,"../shared/routes/routes":402,"./locales/moment/ru":8,"./locales/numeral/ru":9,"./react/application":21,"./react/components/Auth/Auth":22,"./react/components/Auth/authorization/authorization":23,"./react/components/Auth/authorization/facebook":24,"./react/components/Auth/authorization/vk":25,"./react/components/Auth/buttons/facebook_auth_button":26,"./react/components/Auth/buttons/vk_auth_button":27,"./react/components/Auth/email/email":31,"./react/components/Auth/recovery":36,"./react/components/BrowserSupport/BrowserSupportContainer":39,"./react/components/DesignPayment/DesignPaymentContainer":41,"./react/components/DesignSettings/DesignSettingsContainer":48,"./react/components/DesignSettings/common/colorPicker/popup":60,"./react/components/Editor/EditorEdit":71,"./react/components/Editor/EditorNew":72,"./react/components/Feed/Feed":101,"./react/components/Notifications/NotificationsContainer":105,"./react/components/SearchResults/SearchResults":117,"./react/components/TlogAlert/TlogAlertContainer":122,"./react/components/alerts/tasty_alert":124,"./react/components/alerts/tasty_confirm":125,"./react/components/alerts/tasty_locking_alert":126,"./react/components/avatars/avatar":127,"./react/components/avatars/user_avatar":128,"./react/components/buttons/load_more":129,"./react/components/calendar/calendar":130,"./react/components/calendar/calendar_header":131,"./react/components/calendar/calendar_marker":132,"./react/components/calendar/calendar_period":133,"./react/components/calendar/calendar_timeline":134,"./react/components/common/adaptive_input":137,"./react/components/editable_field":140,"./react/components/embed":141,"./react/components/entry_comment_box/comment_form/buttons/submit":142,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":143,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":144,"./react/components/entry_comment_box/comment_form/comment_form":145,"./react/components/entry_comment_box/comment_list/comment":146,"./react/components/entry_comment_box/comment_list/comment_list":147,"./react/components/entry_comment_box/comment_list/comment_manager":148,"./react/components/entry_comment_box/comment_metabar/comment_metabar":149,"./react/components/entry_comment_box/comment_metabar/date":150,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":151,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":152,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":153,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":154,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":155,"./react/components/entry_comment_box/comment_metabar/reply":156,"./react/components/entry_comment_box/entry_comment_box":157,"./react/components/entry_comment_box/load_more":158,"./react/components/entry_comment_box/mixins/comments":159,"./react/components/entry_metabar/author":160,"./react/components/entry_metabar/comment":161,"./react/components/entry_metabar/date":162,"./react/components/entry_metabar/dropdown_menu":163,"./react/components/entry_metabar/dropdown_menu_items/delete_item":164,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":165,"./react/components/entry_metabar/dropdown_menu_items/item":166,"./react/components/entry_metabar/dropdown_menu_items/report_item":167,"./react/components/entry_metabar/dropdown_menu_items/watch_item":168,"./react/components/entry_metabar/entry_metabar":169,"./react/components/follow_status":172,"./react/components/hero/profile/dropdown_menu":174,"./react/components/hero/profile/dropdown_menu_items/ignore":175,"./react/components/hero/profile/dropdown_menu_items/report":176,"./react/components/hero/profile/popup/followers_popup":177,"./react/components/hero/profile/popup/followings_popup":178,"./react/components/hero/profile/popup/items/follower_item":179,"./react/components/hero/profile/popup/items/following_item":180,"./react/components/hero/profile/popup/items/tag_item":181,"./react/components/hero/profile/popup/popup":182,"./react/components/hero/profile/popup/tags_popup":183,"./react/components/hero/profile/profile":184,"./react/components/hero/profile/profile_avatar":185,"./react/components/hero/profile/profile_head":186,"./react/components/hero/profile/profile_stats":187,"./react/components/hero/profile/profile_stats_item":188,"./react/components/images_collage":189,"./react/components/people/item":190,"./react/components/persons_popup/items/follower_relationship":191,"./react/components/persons_popup/items/following_relationship":192,"./react/components/persons_popup/items/guess_relationship":193,"./react/components/persons_popup/items/ignored_relationship":194,"./react/components/persons_popup/items/item":195,"./react/components/persons_popup/items/requested_relationship":196,"./react/components/persons_popup/menu":197,"./react/components/persons_popup/menu_item":198,"./react/components/persons_popup/mixins/panel_mixin":199,"./react/components/persons_popup/panels/followers_panel":200,"./react/components/persons_popup/panels/followings_panel":201,"./react/components/persons_popup/panels/guessed_panel":202,"./react/components/persons_popup/panels/ignored_panel":203,"./react/components/persons_popup/panels/requested_panel":204,"./react/components/persons_popup/panels/socialNetwork/facebook":205,"./react/components/persons_popup/panels/socialNetwork/vkontakte":215,"./react/components/persons_popup/persons_popup":222,"./react/components/popup/header":223,"./react/components/popup/layout":224,"./react/components/popup/popup":225,"./react/components/popup/spinner":226,"./react/components/popup_box":227,"./react/components/relationship_buttons/follow_button":228,"./react/components/relationship_buttons/follower_button":229,"./react/components/relationship_buttons/guess_button":230,"./react/components/relationship_buttons/ignore_button":231,"./react/components/relationship_buttons/mixins/relationship":232,"./react/components/relationship_buttons/request_button":233,"./react/components/screen_viewer/screen_viewer":234,"./react/components/search/button":235,"./react/components/search/field":236,"./react/components/search/search":237,"./react/components/settings/settings":254,"./react/components/shellbox_layer":257,"./react/components/shellboxes/confirm_registration":258,"./react/components/smart_follow_status":259,"./react/components/spinner":260,"./react/components/toolbars/AvatarToolbarContainer":262,"./react/components/toolbars/CloseToolbar":263,"./react/components/toolbars/UserToolbarContainer":266,"./react/components/transition/timeout_transition_group":274,"./react/components/voting":275,"./react/controllers/popup":285,"./react/controllers/shellbox":287,"./react/controllers/tasty_alert":288,"./react/controllers/tasty_confirm":289,"./react/controllers/tasty_events":290,"./react/controllers/tasty_locking_alert":291,"./react/controllers/tasty_sound":292,"./react/dispatchers/current_user":294,"./react/dispatchers/relationships":296,"./react/helpers/app":301,"./react/mediators/comments":302,"./react/messaging/actions/conversation":303,"./react/messaging/actions/message":304,"./react/messaging/actions/notification":305,"./react/messaging/actions/popup":306,"./react/messaging/components/buttons/write_message":307,"./react/messaging/components/messages_popup/conversations/conversations":308,"./react/messaging/components/messages_popup/conversations/list/empty":309,"./react/messaging/components/messages_popup/conversations/list/list":310,"./react/messaging/components/messages_popup/conversations/list/list_item":311,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":312,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":313,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":314,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":315,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":316,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":317,"./react/messaging/components/messages_popup/loading_message":318,"./react/messaging/components/messages_popup/messages_popup":319,"./react/messaging/components/messages_popup/thread/message_form/message_form":320,"./react/messaging/components/messages_popup/thread/message_list/empty":321,"./react/messaging/components/messages_popup/thread/message_list/message_list":322,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":323,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":324,"./react/messaging/components/messages_popup/thread/thread":325,"./react/messaging/components/messages_popup/ui/back_button":326,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":327,"./react/messaging/components/notifications_popup/notifications/empty":328,"./react/messaging/components/notifications_popup/notifications/notification":329,"./react/messaging/components/notifications_popup/notifications/notifications":330,"./react/messaging/components/notifications_popup/notifications_popup":331,"./react/messaging/components/toolbars/indicators/indicators":332,"./react/messaging/components/toolbars/indicators/messages":333,"./react/messaging/components/toolbars/indicators/notifications":334,"./react/messaging/dispatchers/messaging":335,"./react/messaging/messaging_requester":336,"./react/messaging/messaging_service":337,"./react/messaging/messaging_testing":338,"./react/messaging/stores/connection_state":340,"./react/messaging/stores/conversations":341,"./react/messaging/stores/messages":342,"./react/messaging/stores/messages_popup_state":343,"./react/messaging/stores/messaging_status":344,"./react/messaging/stores/notifications":345,"./react/mixins/activities":346,"./react/mixins/component_manipulations":347,"./react/mixins/dom_manipulations":348,"./react/mixins/error_timer":349,"./react/mixins/grammar":350,"./react/mixins/positions":351,"./react/mixins/requester":352,"./react/mixins/scroller":353,"./react/mixins/shake":354,"./react/mixins/touch":355,"./react/mixins/unmount":356,"./react/services/Notice":361,"./react/services/positions":367,"./react/services/uuid":368,"./react/stores/EditorStore":369,"./react/stores/current_user":372,"./react/stores/design":373,"./react/stores/relationships":374,"./resources/fileReceiver":375,"./resources/is_mobile":376,"./resources/libs":377,"./resources/tasty":378,"./resources/tasty_utils":379}],8:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 "use strict";
@@ -10728,7 +10728,7 @@ var DesignActionCreators = {
 
 module.exports = DesignActionCreators;
 
-},{"../../../shared/helpers/browser":382,"../api/api":19,"../api/submitter":20,"../constants/design":278,"../dispatchers/dispatcher":295,"../services/designPreview":364,"../stores/current_user":372,"../stores/design":373}],13:[function(require,module,exports){
+},{"../../../shared/helpers/browser":381,"../api/api":19,"../api/submitter":20,"../constants/design":278,"../dispatchers/dispatcher":295,"../services/designPreview":364,"../stores/current_user":372,"../stores/design":373}],13:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11037,7 +11037,7 @@ var EditorActionCreators = {
 
 module.exports = EditorActionCreators;
 
-},{"../../../shared/helpers/api":381,"../../../shared/helpers/browser":382,"../../../shared/react/services/uuid":400,"../api/api":19,"../constants/editor":279,"../dispatchers/dispatcher":295,"../stores/EditorStore":369,"lodash":"lodash"}],14:[function(require,module,exports){
+},{"../../../shared/helpers/api":380,"../../../shared/helpers/browser":381,"../../../shared/react/services/uuid":399,"../api/api":19,"../constants/editor":279,"../dispatchers/dispatcher":295,"../stores/EditorStore":369,"lodash":"lodash"}],14:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -11678,32 +11678,60 @@ initLocales = function(locale, callback) {
 };
 
 initRoutes = function() {
-  var UserRouteTarget;
+  var UserRouteTarget, hasAccessBySlug;
+  hasAccessBySlug = function(urlSlug) {
+    var user, userLogged;
+    user = CurrentUserStore.getUser();
+    userLogged = CurrentUserStore.isLogged();
+    if (!userLogged || urlSlug.slice(1).toLowerCase() !== (user != null ? user.slug : void 0)) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   UserRouteTarget = {
     profile: function() {
       return TastyEvents.emit(TastyEvents.keys.command_hero_open());
     },
-    settings: function() {
+    settings: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
       return PopupActions.showSettings();
     },
-    design_settings: function() {
-      return PopupActions.showDesignSettings();
+    design_settings: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
+      return PopupActions.showDesignSettings(req.params.slug);
     },
     showRequestedById: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
       return PopupActions.showFriends('vkontakte', Number(req.params.id));
     },
-    showRequested: function() {
+    showRequested: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
       return PopupActions.showFriends('requested');
     },
-    showVkontakte: function() {
+    showVkontakte: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
       return PopupActions.showFriends('vkontakte');
     },
-    showFacebook: function() {
+    showFacebook: function(req) {
+      if (!hasAccessBySlug(req.params.slug)) {
+        return;
+      }
       return PopupActions.showFriends('facebook');
     }
   };
   Aviator.setRoutes({
-    '/:user': {
+    '/:slug': {
       target: UserRouteTarget,
       '/profile': 'profile',
       '/settings': 'settings',
@@ -11749,7 +11777,11 @@ window.ReactApp = {
         return _this.shellbox.show(Auth);
       };
     })(this));
-    return $("[tooltip]").tooltip();
+    $("[tooltip]").tooltip();
+    return $('.js-connection-start').connection({
+      connectionEnd: '.js-connection-end',
+      connectionLineClass: 'connection-line'
+    });
   }
 };
 
@@ -12423,7 +12455,7 @@ var EmailLoginField = React.createClass({
 
 module.exports = EmailLoginField;
 
-},{"../../../../../../shared/react/components/common/fields/TextField":393,"classnames":406}],33:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/fields/TextField":392,"classnames":406}],33:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -12468,7 +12500,7 @@ var EmailPasswordField = React.createClass({
 
 module.exports = EmailPasswordField;
 
-},{"../../../../../../shared/react/components/common/fields/PasswordField":392,"classnames":406}],34:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/fields/PasswordField":391,"classnames":406}],34:[function(require,module,exports){
 var EmailConfirmRegistration, EmailMixin, INVALID_EMAIL_MESSAGE, INVALID_PASSWORD_MESSAGE, INVALID_SLUG_MESSAGE;
 
 EmailConfirmRegistration = require('../confirm_registration');
@@ -13022,7 +13054,7 @@ DesignPaymentContainer = connectToStores(DesignPaymentContainer, [DesignStore], 
 
 module.exports = DesignPaymentContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../actions/design":12,"../../stores/design":373,"./DesignPayment":40}],42:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../actions/design":12,"../../stores/design":373,"./DesignPayment":40}],42:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -13096,7 +13128,7 @@ var DesignPaymentList = React.createClass({
 
 module.exports = DesignPaymentList;
 
-},{"../../../../../shared/react/components/common/Money/Money":385,"../../DesignSettings/common/slider":64,"../common/RadioList":45,"./ListItem":43}],43:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Money/Money":384,"../../DesignSettings/common/slider":64,"../common/RadioList":45,"./ListItem":43}],43:[function(require,module,exports){
 "use strict";
 
 var DesignPaymentListItem = React.createClass({
@@ -13399,7 +13431,7 @@ DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore,
 
 module.exports = DesignSettingsContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../actions/design":12,"../../actions/popup":15,"../../stores/current_user":372,"../../stores/design":373,"./DesignSettings":47,"react/lib/Object.assign":461}],49:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../actions/design":12,"../../actions/popup":15,"../../stores/current_user":372,"../../stores/design":373,"./DesignSettings":47,"react/lib/Object.assign":461}],49:[function(require,module,exports){
 "use strict";
 
 var DesignSettingsDropZone = React.createClass({
@@ -14893,7 +14925,7 @@ EditorContainer = connectToStores(EditorContainer, [EditorStore, CurrentUserStor
 
 module.exports = EditorContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../actions/editor":13,"../../stores/EditorStore":369,"../../stores/current_user":372,"./Editor":69}],71:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../actions/editor":13,"../../stores/EditorStore":369,"../../stores/current_user":372,"./Editor":69}],71:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -16027,7 +16059,7 @@ module.exports = EditorTypeImage;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../MediaBox/MediaBox":78,"../MediaBox/MediaBoxProgress":80,"../fields/Text":87,"./Image/Loaded":89,"./Image/LoadingUrl":90,"./Image/UrlInsert":91,"./Image/Welcome":92,"classnames":406,"lodash":"lodash"}],89:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../MediaBox/MediaBox":78,"../MediaBox/MediaBoxProgress":80,"../fields/Text":87,"./Image/Loaded":89,"./Image/LoadingUrl":90,"./Image/UrlInsert":91,"./Image/Welcome":92,"classnames":406,"lodash":"lodash"}],89:[function(require,module,exports){
 var EditorMediaBoxActions, EditorTypeImageLoaded, PropTypes, _;
 
 _ = require('lodash');
@@ -16310,7 +16342,7 @@ module.exports = EditorTypeInstagram;
 
 
 
-},{"../../../../../shared/helpers/string":383,"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Instagram/Welcome":94}],94:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":382,"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Instagram/Welcome":94}],94:[function(require,module,exports){
 var EditorTypeInstagramWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -16421,7 +16453,7 @@ module.exports = EditorTypeMusic;
 
 
 
-},{"../../../../../shared/helpers/string":383,"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Music/Welcome":96}],96:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":382,"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Music/Welcome":96}],96:[function(require,module,exports){
 var EditorTypeMusicWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -16514,7 +16546,7 @@ module.exports = EditorTypeQuote;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../fields/Text":87}],98:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../fields/Text":87}],98:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorStore, EditorTextField, EditorTypeText, PropTypes;
 
 EditorStore = require('../../../stores/EditorStore');
@@ -16570,7 +16602,7 @@ module.exports = EditorTypeText;
 
 
 
-},{"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../fields/Text":87}],99:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../fields/Text":87}],99:[function(require,module,exports){
 var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeVideo, EditorTypeVideoWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
@@ -16647,7 +16679,7 @@ module.exports = EditorTypeVideo;
 
 
 
-},{"../../../../../shared/helpers/string":383,"../../../../../shared/react/mixins/connectStore":397,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Video/Welcome":100}],100:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":382,"../../../../../shared/react/mixins/connectStore":396,"../../../actions/editor":13,"../../../stores/EditorStore":369,"../Embed/Embed":73,"../fields/Text":87,"./Video/Welcome":100}],100:[function(require,module,exports){
 var EditorTypeVideoWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -17067,7 +17099,7 @@ NotificationsContainer = connectToStores(NotificationsContainer, [NotificationSt
 
 module.exports = NotificationsContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../actions/Notification":10,"../../stores/NotificationStore":370,"./Notifications":104}],106:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../actions/Notification":10,"../../stores/NotificationStore":370,"./Notifications":104}],106:[function(require,module,exports){
 "use strict";
 
 var NotificationsErrorMessage = React.createClass({
@@ -17243,7 +17275,7 @@ var NotificationsNotificationListItem = React.createClass({
 
 module.exports = NotificationsNotificationListItem;
 
-},{"../../../../shared/react/components/common/Image/Image":384,"classnames":406}],111:[function(require,module,exports){
+},{"../../../../shared/react/components/common/Image/Image":383,"classnames":406}],111:[function(require,module,exports){
 "use strict";
 
 var OFFSET_TOP = 10,
@@ -17494,7 +17526,7 @@ Popup = managePositions(Popup);
 
 module.exports = Popup;
 
-},{"../../../../shared/react/components/higherOrder/managePositions":396,"./PopupHeader":115}],114:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/managePositions":395,"./PopupHeader":115}],114:[function(require,module,exports){
 "use strict";
 
 var PopupArea = React.createClass({
@@ -17963,7 +17995,7 @@ TlogAlertContainer = connectToStores(TlogAlertContainer, [CurrentUserStore], fun
 
 module.exports = TlogAlertContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../stores/current_user":372,"./TlogAlert":121}],123:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../stores/current_user":372,"./TlogAlert":121}],123:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -23564,7 +23596,7 @@ module.exports = SocialNetworkPanelMixin;
 
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":397}],213:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":396}],213:[function(require,module,exports){
 var PropTypes, SuggestionListMixin;
 
 PropTypes = React.PropTypes;
@@ -26888,7 +26920,7 @@ AvatarToolbarContainer = connectToStores(AvatarToolbarContainer, [CurrentUserSto
 
 module.exports = AvatarToolbarContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../stores/current_user":372,"./AvatarToolbar":261}],263:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../stores/current_user":372,"./AvatarToolbar":261}],263:[function(require,module,exports){
 "use strict";
 
 var CloseToolbar = React.createClass({
@@ -27216,7 +27248,7 @@ UserToolbarContainer = connectToStores(UserToolbarContainer, [CurrentUserStore, 
 
 module.exports = UserToolbarContainer;
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":395,"../../actions/Toolbar":11,"../../actions/popup":15,"../../messaging/stores/messaging_status":344,"../../stores/current_user":372,"./UserToolbar":264,"react/lib/Object.assign":461}],267:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":394,"../../actions/Toolbar":11,"../../actions/popup":15,"../../messaging/stores/messaging_status":344,"../../stores/current_user":372,"./UserToolbar":264,"react/lib/Object.assign":461}],267:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -34174,132 +34206,6 @@ RelationshipsStore.dispatchToken = RelationshipsDispatcher.register(function(pay
 
 
 },{}],375:[function(require,module,exports){
-"use strict";
-
-var AppStorage = null;
-
-// Refer to https://gist.github.com/remy/350433
-try {
-  // Test webstorage existence.
-  if (!window.localStorage) throw "exception";
-  localStorage.setItem("storage_test", 1);
-  localStorage.removeItem("storage_test");
-} catch (e) {
-  (function () {
-    var Storage = function Storage(type) {
-      function createCookie(name, value, days) {
-        var date, expires;
-
-        if (days) {
-          date = new Date();
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          expires = "; expires=" + date.toGMTString();
-        } else {
-          expires = "";
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-      }
-
-      function readCookie(name) {
-        var nameEQ = name + "=",
-            ca = document.cookie.split(";"),
-            i,
-            c;
-
-        for (i = 0; i < ca.length; i++) {
-          c = ca[i];
-          while (c.charAt(0) == " ") {
-            c = c.substring(1, c.length);2480;
-          }
-
-          if (c.indexOf(nameEQ) == 0) {
-            return c.substring(nameEQ.length, c.length);
-          }
-        }
-        return null;
-      }
-
-      function setData(data) {
-        // Convert data into JSON and encode to accommodate for special characters.
-        data = encodeURIComponent(JSON.stringify(data));
-        // Create cookie.
-        if (type == "session") {
-          createCookie(getSessionName(), data, 365);
-        } else {
-          createCookie("localStorage", data, 365);
-        }
-      }
-
-      function clearData() {
-        if (type == "session") {
-          createCookie(getSessionName(), "", 365);
-        } else {
-          createCookie("localStorage", "", 365);
-        }
-      }
-
-      function getData() {
-        // Get cookie data.
-        var data = type == "session" ? readCookie(getSessionName()) : readCookie("localStorage");
-        // If we have some data decode, parse and return it.
-        return data ? JSON.parse(decodeURIComponent(data)) : {};
-      }
-
-      function getSessionName() {
-        // If there is no name for this window, set one.
-        // To ensure it's unquie use the current timestamp.
-        if (!window.name) {
-          window.name = new Date().getTime();
-        }
-        return "sessionStorage" + window.name;
-      }
-
-      // Initialise if there's already data.
-      var data = getData();
-
-      return {
-        length: 0,
-        clear: function clear() {
-          data = {};
-          this.length = 0;
-          clearData();
-        },
-        getItem: function getItem(key) {
-          return data[key] === undefined ? null : data[key];
-        },
-        key: function key(i) {
-          // not perfect, but works
-          var ctr = 0;
-          for (var k in data) {
-            if (ctr == i) {
-              return k;
-            } else ctr++;
-          }
-          return null;
-        },
-        removeItem: function removeItem(key) {
-          delete data[key];
-          this.length--;
-          setData(data);
-        },
-        setItem: function setItem(key, value) {
-          data[key] = value + ""; // forces the value to a string
-          this.length++;
-          setData(data);
-        }
-      };
-    };
-
-    AppStorage = new Storage("local");
-  })();
-}
-
-// Проблем с localStorage нет, значит AppStorage просто будет ссылаться на localStorage
-if (AppStorage == null) AppStorage = window.localStorage;
-
-module.exports = AppStorage;
-
-},{}],376:[function(require,module,exports){
 var defaults,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -34438,7 +34344,7 @@ window.FileReceiver = (function() {
 
 
 
-},{}],377:[function(require,module,exports){
+},{}],376:[function(require,module,exports){
 window.isMobile = function() {
   var userAgent;
   userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -34447,7 +34353,7 @@ window.isMobile = function() {
 
 
 
-},{}],378:[function(require,module,exports){
+},{}],377:[function(require,module,exports){
 (function (global){
 global._ = require('lodash');
 
@@ -34520,7 +34426,7 @@ require('jquery.select2');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":407,"imagesloaded":410,"introJs":"introJs","jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":430,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],379:[function(require,module,exports){
+},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":407,"imagesloaded":410,"introJs":"introJs","jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":430,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],378:[function(require,module,exports){
 var csrfToken;
 
 csrfToken = function() {
@@ -34569,7 +34475,7 @@ window.Tasty = {
 
 
 
-},{}],380:[function(require,module,exports){
+},{}],379:[function(require,module,exports){
 window.TastyUtils = {
   showFlashes: function(flashes) {
     if (flashes == null) {
@@ -34635,7 +34541,7 @@ window.TastyUtils = {
 
 
 
-},{}],381:[function(require,module,exports){
+},{}],380:[function(require,module,exports){
 var ApiHelpers;
 
 ApiHelpers = {
@@ -34673,7 +34579,7 @@ module.exports = ApiHelpers;
 
 
 
-},{}],382:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -34731,7 +34637,7 @@ module.exports = BrowserHelpers;
 
 
 
-},{}],383:[function(require,module,exports){
+},{}],382:[function(require,module,exports){
 "use strict";
 
 var StringHelpers = {
@@ -34752,7 +34658,7 @@ var StringHelpers = {
 
 module.exports = StringHelpers;
 
-},{}],384:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -34819,7 +34725,7 @@ module.exports = Image;
 
 
 
-},{}],385:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -34868,7 +34774,7 @@ var Money = React.createClass({
 
 module.exports = Money;
 
-},{"numeral":"numeral"}],386:[function(require,module,exports){
+},{"numeral":"numeral"}],385:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;
 
 CollageMixin = require('./mixins/collage');
@@ -34920,7 +34826,7 @@ module.exports = Collage;
 
 
 
-},{"./mixins/collage":388,"./row":389}],387:[function(require,module,exports){
+},{"./mixins/collage":387,"./row":388}],386:[function(require,module,exports){
 var Collage, CollageManager, MARGIN, MIN_ROW_HEIGHT, PropTypes;
 
 Collage = require('./collage');
@@ -34989,7 +34895,7 @@ module.exports = CollageManager;
 
 
 
-},{"./collage":386}],388:[function(require,module,exports){
+},{"./collage":385}],387:[function(require,module,exports){
 var CollageMixin, assign;
 
 assign = require('react/lib/Object.assign');
@@ -35059,7 +34965,7 @@ module.exports = CollageMixin;
 
 
 
-},{"react/lib/Object.assign":461}],389:[function(require,module,exports){
+},{"react/lib/Object.assign":461}],388:[function(require,module,exports){
 var CollageRow, CollageRowItem, PropTypes;
 
 CollageRowItem = require('./row/item');
@@ -35093,7 +34999,7 @@ module.exports = CollageRow;
 
 
 
-},{"./row/item":390}],390:[function(require,module,exports){
+},{"./row/item":389}],389:[function(require,module,exports){
 var CollageRowItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -35158,7 +35064,7 @@ module.exports = CollageRowItem;
 
 
 
-},{}],391:[function(require,module,exports){
+},{}],390:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35235,7 +35141,7 @@ var Field = React.createClass({
 
 module.exports = Field;
 
-},{"bowser":"bowser"}],392:[function(require,module,exports){
+},{"bowser":"bowser"}],391:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35254,7 +35160,7 @@ var PasswordField = React.createClass({
 
 module.exports = PasswordField;
 
-},{"./Field":391}],393:[function(require,module,exports){
+},{"./Field":390}],392:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35273,7 +35179,7 @@ var TextField = React.createClass({
 
 module.exports = TextField;
 
-},{"./Field":391}],394:[function(require,module,exports){
+},{"./Field":390}],393:[function(require,module,exports){
 var CollageManager, ImageAttachmentsCollage, PropTypes;
 
 CollageManager = require('./collage/collageManager');
@@ -35316,7 +35222,7 @@ module.exports = ImageAttachmentsCollage;
 
 
 
-},{"./collage/collageManager":387}],395:[function(require,module,exports){
+},{"./collage/collageManager":386}],394:[function(require,module,exports){
 "use strict";
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -35356,7 +35262,7 @@ function connectToStores(Component, stores, getStateFromStores) {
 
 module.exports = connectToStores;
 
-},{}],396:[function(require,module,exports){
+},{}],395:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35437,7 +35343,7 @@ function managePositions(Component) {
 
 module.exports = managePositions;
 
-},{"../../services/positions":398}],397:[function(require,module,exports){
+},{"../../services/positions":397}],396:[function(require,module,exports){
 var ConnectStoreMixin, _;
 
 _ = require('lodash');
@@ -35479,7 +35385,7 @@ module.exports = ConnectStoreMixin;
 
 
 
-},{"lodash":"lodash"}],398:[function(require,module,exports){
+},{"lodash":"lodash"}],397:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -35491,7 +35397,7 @@ var MOVE_OFFSET = 100,
     STORAGE_PREFIX = "positions:";
 
 var PositionsService = {
-  storage: window.localStorage,
+  storage: AppStorage,
 
   savePosition: function savePosition(key, position) {
     this.storage.setItem(this._positionKey(key), JSON.stringify(position));
@@ -35532,7 +35438,7 @@ var PositionsService = {
 
 module.exports = PositionsService;
 
-},{"react/lib/Object.assign":461}],399:[function(require,module,exports){
+},{"react/lib/Object.assign":461}],398:[function(require,module,exports){
 var ThumborService;
 
 ThumborService = {
@@ -35553,7 +35459,7 @@ module.exports = ThumborService;
 
 
 
-},{}],400:[function(require,module,exports){
+},{}],399:[function(require,module,exports){
 var UuidService;
 
 UuidService = {
@@ -35569,6 +35475,132 @@ UuidService = {
 module.exports = UuidService;
 
 
+
+},{}],400:[function(require,module,exports){
+"use strict";
+
+var AppStorage = null;
+
+// Refer to https://gist.github.com/remy/350433
+try {
+  // Test webstorage existence.
+  if (!window.localStorage) throw "exception";
+  localStorage.setItem("storage_test", 1);
+  localStorage.removeItem("storage_test");
+} catch (e) {
+  (function () {
+    var Storage = function Storage(type) {
+      function createCookie(name, value, days) {
+        var date, expires;
+
+        if (days) {
+          date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          expires = "; expires=" + date.toGMTString();
+        } else {
+          expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+      }
+
+      function readCookie(name) {
+        var nameEQ = name + "=",
+            ca = document.cookie.split(";"),
+            i,
+            c;
+
+        for (i = 0; i < ca.length; i++) {
+          c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1, c.length);2480;
+          }
+
+          if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length, c.length);
+          }
+        }
+        return null;
+      }
+
+      function setData(data) {
+        // Convert data into JSON and encode to accommodate for special characters.
+        data = encodeURIComponent(JSON.stringify(data));
+        // Create cookie.
+        if (type == "session") {
+          createCookie(getSessionName(), data, 365);
+        } else {
+          createCookie("localStorage", data, 365);
+        }
+      }
+
+      function clearData() {
+        if (type == "session") {
+          createCookie(getSessionName(), "", 365);
+        } else {
+          createCookie("localStorage", "", 365);
+        }
+      }
+
+      function getData() {
+        // Get cookie data.
+        var data = type == "session" ? readCookie(getSessionName()) : readCookie("localStorage");
+        // If we have some data decode, parse and return it.
+        return data ? JSON.parse(decodeURIComponent(data)) : {};
+      }
+
+      function getSessionName() {
+        // If there is no name for this window, set one.
+        // To ensure it's unquie use the current timestamp.
+        if (!window.name) {
+          window.name = new Date().getTime();
+        }
+        return "sessionStorage" + window.name;
+      }
+
+      // Initialise if there's already data.
+      var data = getData();
+
+      return {
+        length: 0,
+        clear: function clear() {
+          data = {};
+          this.length = 0;
+          clearData();
+        },
+        getItem: function getItem(key) {
+          return data[key] === undefined ? null : data[key];
+        },
+        key: function key(i) {
+          // not perfect, but works
+          var ctr = 0;
+          for (var k in data) {
+            if (ctr == i) {
+              return k;
+            } else ctr++;
+          }
+          return null;
+        },
+        removeItem: function removeItem(key) {
+          delete data[key];
+          this.length--;
+          setData(data);
+        },
+        setItem: function setItem(key, value) {
+          data[key] = value + ""; // forces the value to a string
+          this.length++;
+          setData(data);
+        }
+      };
+    };
+
+    AppStorage = new Storage("local");
+  })();
+}
+
+// Проблем с localStorage нет, значит AppStorage просто будет ссылаться на localStorage
+if (AppStorage == null) AppStorage = window.localStorage;
+
+module.exports = AppStorage;
 
 },{}],401:[function(require,module,exports){
 var ApiRoutes;
