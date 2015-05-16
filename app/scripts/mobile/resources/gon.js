@@ -1,4 +1,4 @@
-global.gon = {
+let gon = {
   version: 'static-development',
   env: 'static-development',
   host: AppStorage.getItem('host') || 'http://taaasty.com/',

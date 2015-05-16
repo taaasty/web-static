@@ -1,5 +1,5 @@
 global.AppStorage = require('./shared/resources/AppStorage');
-import bundle from './mobile/bundle';
+require('./mobile/bundle');
 
 gon.env = 'development';
 

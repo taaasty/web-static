@@ -265,8 +265,6 @@ require './react/components/hero/profile/popup/items/tag_item'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
 
-require './react/components/images_collage'
-
 require './react/components/spinner'
 
 require './react/components/screen_viewer/screen_viewer'

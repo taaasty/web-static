@@ -1,5 +1,5 @@
 var gulp = require('gulp');
 
-gulp.task('default', ['[Shared] Clean'], function() {
+gulp.task('default', ['[S] Clean'], function() {
   gulp.start('server');
 });
