@@ -1,6 +1,6 @@
 global.AppStorage = require('./shared/resources/AppStorage');
-import gon from './mobile/resources/gon';
-import bundle from './mobile/bundle';
+global.gon = require('./mobile/resources/gon');
+require('./mobile/bundle');
 
 ReactApp.start({
   locale: gon.locale,

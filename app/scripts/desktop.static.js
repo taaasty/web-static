@@ -1,6 +1,6 @@
 global.AppStorage = require('./shared/resources/AppStorage');
-import gon from './desktop/resources/gon';
-import bundle from './desktop/bundle';
+global.gon = require('./desktop/resources/gon');
+require('./desktop/bundle');
 
 if (AppStorage.getItem('userLogged') == 'true') {
   let { locale, user } = gon;
