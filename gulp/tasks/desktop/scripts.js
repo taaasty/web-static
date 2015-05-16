@@ -121,15 +121,15 @@ gulp.task('[D][S] Scripts', function(cb) {
 gulp.task('[D][D] Scripts', function() {
   var appBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configDevelopment.bundle.entries,
-    extensions: configDevelopment.bundle.extensions
+    entries: configDevelopment.entries,
+    extensions: configDevelopment.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
     appBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configDevelopment.bundle.outputName);
+  bundleLogger.start(configDevelopment.outputName);
 
   return appBundler
     .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
@@ -137,25 +137,25 @@ gulp.task('[D][D] Scripts', function() {
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe(source(configDevelopment.bundle.outputName))
-    .pipe(gulp.dest(configDevelopment.bundle.dest))
+    .pipe(source(configDevelopment.outputName))
+    .pipe(gulp.dest(configDevelopment.dest))
     .on('end', function() {
-      bundleLogger.end(configDevelopment.bundle.outputName);
+      bundleLogger.end(configDevelopment.outputName);
     });
 });
 
 gulp.task('[D][P] Scripts', function() {
   var appBundler = browserify({
     cache: {}, packageCache: {},
-    entries: configProduction.bundle.entries,
-    extensions: configProduction.bundle.extensions
+    entries: configProduction.entries,
+    extensions: configProduction.extensions
   });
 
   Object.keys(dependencies).forEach(function(key) {
     appBundler.require(dependencies[key], {expose: key});
   });
 
-  bundleLogger.start(configProduction.bundle.outputName);
+  bundleLogger.start(configProduction.outputName);
 
   return appBundler
     .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
@@ -163,10 +163,10 @@ gulp.task('[D][P] Scripts', function() {
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe(source(configProduction.bundle.outputName))
+    .pipe(source(configProduction.outputName))
     .pipe(streamify(uglify()))
-    .pipe(gulp.dest(configProduction.bundle.dest))
+    .pipe(gulp.dest(configProduction.dest))
     .on('end', function() {
-      bundleLogger.end(configProduction.bundle.outputName);
+      bundleLogger.end(configProduction.outputName);
     });
 });
