@@ -1,3 +1,6 @@
+# /*==========  Shims  ==========*/
+require '../shared/shims/console'
+
 require './resources/libs'
 global.Routes    = require '../shared/routes/routes'
 global.ApiRoutes = require '../shared/routes/api'
