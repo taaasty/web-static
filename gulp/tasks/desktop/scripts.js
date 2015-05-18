@@ -21,7 +21,7 @@ var dependencies = {
   'jquery.ui.mouse': './app/bower_components/jquery-ui/ui/mouse',
   'jquery.ui.widget': './app/bower_components/jquery-ui/ui/widget',
   'jquery.ui.touch-punch': './app/bower_components/jqueryui-touch-punch/jquery.ui.touch-punch',
-  'jquery.autosize': './app/bower_components/jquery-autosize/jquery.autosize',
+  'jquery.autosize': './app/bower_components/jquery-autosize/dest/autosize',
   'jquery.waypoints': './app/bower_components/jquery-waypoints/waypoints',
   'jquery.autosize.input': './app/scripts/desktop/plugins/jquery.autosize.input',
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
