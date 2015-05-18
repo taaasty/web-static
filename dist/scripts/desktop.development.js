@@ -20194,7 +20194,9 @@ exports['default'] = Scroller;
 module.exports = exports['default'];
 
 },{}],141:[function(require,module,exports){
-var KEYCODE_ENTER, LinkedStateMixin, classnames;
+var KEYCODE_ENTER, LinkedStateMixin, autosize, classnames;
+
+autosize = require('autosize');
 
 classnames = require('classnames');
 
@@ -20227,12 +20229,11 @@ window.EditableField = React.createClass({
     });
   },
   componentDidMount: function() {
-    this.$textarea = $(this.refs.textarea.getDOMNode());
-    if ($.fn.autosize) {
-      return this.$textarea.autosize({
-        append: ''
-      });
-    }
+    var field;
+    field = this.refs.textarea.getDOMNode();
+    return autosize(field, {
+      append: ''
+    });
   },
   render: function() {
     var editableFieldClasses;
@@ -20272,9 +20273,12 @@ window.EditableField = React.createClass({
     });
     return _.defer((function(_this) {
       return function() {
-        var textareaValue;
+        var field, textareaValue;
         textareaValue = _this.getValue();
-        return _this.$textarea.val('').focus().val(textareaValue);
+        field = _this.refs.textarea.getDOMNode();
+        field.value = '';
+        field.focus();
+        return field.value = textareaValue;
       };
     })(this));
   },
@@ -20291,10 +20295,13 @@ window.EditableField = React.createClass({
     }
     return _.defer((function(_this) {
       return function() {
-        var value;
+        var evt, field, value;
         value = _this.refs.value.getDOMNode();
         $(value).text(_this.getValue());
-        return _this.$textarea.trigger('autosize.resize');
+        field = _this.refs.textarea.getDOMNode();
+        evt = document.createEvent('Event');
+        evt.initEvent('autosize:update', true, false);
+        return field.dispatchEvent(evt);
       };
     })(this));
   },
@@ -20310,7 +20317,7 @@ window.EditableField = React.createClass({
 });
 
 
-},{"classnames":408,"react/lib/LinkedStateMixin":456}],142:[function(require,module,exports){
+},{"autosize":"autosize","classnames":408,"react/lib/LinkedStateMixin":456}],142:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -20655,7 +20662,9 @@ window.EntryCommentBox_CommentEditFormManager = React.createClass({
 
 
 },{}],146:[function(require,module,exports){
-var REPLIES_LIMIT;
+var REPLIES_LIMIT, autosize;
+
+autosize = require('autosize');
 
 REPLIES_LIMIT = 5;
 
@@ -20678,13 +20687,25 @@ window.EntryCommentBox_CommentForm = React.createClass({
     };
   },
   componentDidMount: function() {
-    return this._initAutosize();
+    var field;
+    field = this.refs.commentFormField.getDOMNode();
+    return autosize(field, {
+      append: ''
+    });
   },
   componentDidUpdate: function() {
-    return this.$commentFormField.trigger('autosize.resize');
+    var evt, field;
+    field = this.refs.commentFormField.getDOMNode();
+    evt = document.createEvent('Event');
+    evt.initEvent('autosize:update', true, false);
+    return field.dispatchEvent(evt);
   },
   componentWillUnmount: function() {
-    return this.$commentFormField.trigger('autosize.destroy');
+    var evt, field;
+    field = this.refs.commentFormField.getDOMNode();
+    evt = document.createEvent('Event');
+    evt.initEvent('autosize:destroy', true, false);
+    return field.dispatchEvent(evt);
   },
   render: function() {
     var avatar;
@@ -20731,10 +20752,10 @@ window.EntryCommentBox_CommentForm = React.createClass({
     return this.getValue().trim() === '';
   },
   addReply: function(name) {
-    var newText, postfix, replies;
+    var field, newText, postfix, replies;
     name = '@' + name;
-    postfix = /^@/.exec(this.$commentFormField.val()) ? ', ' : ' ';
-    newText = this.$commentFormField.val();
+    postfix = /^@/.exec(this.getValue()) ? ', ' : ' ';
+    newText = this.getValue();
     replies = this._getReplies();
     if (replies.length > REPLIES_LIMIT) {
       newText = this._removeLastReply();
@@ -20742,12 +20763,14 @@ window.EntryCommentBox_CommentForm = React.createClass({
     if (!RegExp(name).exec(newText)) {
       newText = name + postfix + newText;
     }
-    return this.$commentFormField.val(newText).focus();
+    field = this.refs.commentFormField.getDOMNode();
+    field.value = newText;
+    return field.focus();
   },
   _getReplies: function() {
     var found, regExp, replies, text;
     replies = [];
-    text = this.$commentFormField.val();
+    text = this.getValue();
     regExp = /@[^, ]{1,}/g;
     return replies = ((function() {
       var results;
@@ -20760,7 +20783,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
   },
   _removeLastReply: function() {
     var regExp, text;
-    text = this.$commentFormField.val();
+    text = this.getValue();
     regExp = /, @\w+(?=\s)/g;
     return text.replace(regExp, '');
   },
@@ -20768,12 +20791,13 @@ window.EntryCommentBox_CommentForm = React.createClass({
     return this.props.onSubmit(this.getValue());
   },
   onFocus: function() {
-    var valueLength;
-    valueLength = this.$commentFormField.val().length;
-    if (this.$commentFormField.get(0).setSelectionRange !== void 0) {
-      this.$commentFormField.get(0).setSelectionRange(valueLength, valueLength);
+    var field, valueLength;
+    field = this.refs.commentFormField.getDOMNode();
+    valueLength = field.value.length;
+    if (field.setSelectionRange !== void 0) {
+      field.setSelectionRange(valueLength, valueLength);
     } else {
-      this.$commentFormField.val(this.$commentFormField.val());
+      field.value = field.value;
     }
     return this.setState({
       visibleSubmit: true
@@ -20785,7 +20809,7 @@ window.EntryCommentBox_CommentForm = React.createClass({
     });
   },
   onKeyDown: function(e) {
-    if (e.which === 13 && this.$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+    if (e.which === 13 && this.getValue().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey) {
       e.preventDefault();
       this._submitComment();
     }
@@ -20796,17 +20820,11 @@ window.EntryCommentBox_CommentForm = React.createClass({
   onSubmit: function(e) {
     e.preventDefault();
     return this._submitComment();
-  },
-  _initAutosize: function() {
-    this.$commentFormField = $(this.refs.commentFormField.getDOMNode());
-    return this.$commentFormField.autosize({
-      append: ''
-    });
   }
 });
 
 
-},{}],147:[function(require,module,exports){
+},{"autosize":"autosize"}],147:[function(require,module,exports){
 var classnames;
 
 classnames = require('classnames');
@@ -35378,8 +35396,6 @@ require('jquery.ui.draggable');
 
 require('jquery.ui.touch-punch');
 
-require('jquery.autosize');
-
 require('jquery.autosize.input');
 
 require('jquery.collage');
@@ -35394,7 +35410,7 @@ require('jquery.select2');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":409,"introJs":"introJs","jquery":"jquery","jquery.autosize":"jquery.autosize","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":429,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],377:[function(require,module,exports){
+},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":409,"introJs":"introJs","jquery":"jquery","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":429,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],377:[function(require,module,exports){
 var csrfToken;
 
 csrfToken = function() {
@@ -69588,7 +69604,221 @@ module.exports = Modernizr;
   return URI;
 }));
 
-},{"./IPv6":404,"./SecondLevelDomains":405,"./punycode":406}],"aviator":[function(require,module,exports){
+},{"./IPv6":404,"./SecondLevelDomains":405,"./punycode":406}],"autosize":[function(require,module,exports){
+/*!
+	Autosize 3.0.4
+	license: MIT
+	http://www.jacklmoore.com/autosize
+*/
+(function (global, factory) {
+	if (typeof define === 'function' && define.amd) {
+		define(['exports', 'module'], factory);
+	} else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+		factory(exports, module);
+	} else {
+		var mod = {
+			exports: {}
+		};
+		factory(mod.exports, mod);
+		global.autosize = mod.exports;
+	}
+})(this, function (exports, module) {
+	'use strict';
+
+	function assign(ta) {
+		var _ref = arguments[1] === undefined ? {} : arguments[1];
+
+		var _ref$setOverflowX = _ref.setOverflowX;
+		var setOverflowX = _ref$setOverflowX === undefined ? true : _ref$setOverflowX;
+		var _ref$setOverflowY = _ref.setOverflowY;
+		var setOverflowY = _ref$setOverflowY === undefined ? true : _ref$setOverflowY;
+
+		if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || ta.hasAttribute('data-autosize-on')) {
+			return;
+		}var heightOffset = null;
+		var overflowY = 'hidden';
+
+		function init() {
+			var style = window.getComputedStyle(ta, null);
+
+			if (style.resize === 'vertical') {
+				ta.style.resize = 'none';
+			} else if (style.resize === 'both') {
+				ta.style.resize = 'horizontal';
+			}
+
+			if (style.boxSizing === 'content-box') {
+				heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+			} else {
+				heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+			}
+
+			update();
+		}
+
+		function changeOverflow(value) {
+			{
+				// Chrome/Safari-specific fix:
+				// When the textarea y-overflow is hidden, Chrome/Safari do not reflow the text to account for the space
+				// made available by removing the scrollbar. The following forces the necessary text reflow.
+				var width = ta.style.width;
+				ta.style.width = '0px';
+				// Force reflow:
+				/* jshint ignore:start */
+				ta.offsetWidth;
+				/* jshint ignore:end */
+				ta.style.width = width;
+			}
+
+			overflowY = value;
+
+			if (setOverflowY) {
+				ta.style.overflowY = value;
+			}
+
+			update();
+		}
+
+		function update() {
+			var startHeight = ta.style.height;
+			var htmlTop = document.documentElement.scrollTop;
+			var bodyTop = document.body.scrollTop;
+			var originalHeight = ta.style.height;
+
+			ta.style.height = 'auto';
+
+			var endHeight = ta.scrollHeight + heightOffset;
+
+			if (ta.scrollHeight === 0) {
+				// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
+				ta.style.height = originalHeight;
+				return;
+			}
+
+			ta.style.height = endHeight + 'px';
+
+			// prevents scroll-position jumping
+			document.documentElement.scrollTop = htmlTop;
+			document.body.scrollTop = bodyTop;
+
+			var style = window.getComputedStyle(ta, null);
+
+			if (style.height !== ta.style.height) {
+				if (overflowY !== 'visible') {
+					changeOverflow('visible');
+					return;
+				}
+			} else {
+				if (overflowY !== 'hidden') {
+					changeOverflow('hidden');
+					return;
+				}
+			}
+
+			if (startHeight !== ta.style.height) {
+				var evt = document.createEvent('Event');
+				evt.initEvent('autosize:resized', true, false);
+				ta.dispatchEvent(evt);
+			}
+		}
+
+		var destroy = (function (style) {
+			window.removeEventListener('resize', update);
+			ta.removeEventListener('input', update);
+			ta.removeEventListener('keyup', update);
+			ta.removeAttribute('data-autosize-on');
+			ta.removeEventListener('autosize:destroy', destroy);
+
+			Object.keys(style).forEach(function (key) {
+				ta.style[key] = style[key];
+			});
+		}).bind(ta, {
+			height: ta.style.height,
+			resize: ta.style.resize,
+			overflowY: ta.style.overflowY,
+			overflowX: ta.style.overflowX,
+			wordWrap: ta.style.wordWrap });
+
+		ta.addEventListener('autosize:destroy', destroy);
+
+		// IE9 does not fire onpropertychange or oninput for deletions,
+		// so binding to onkeyup to catch most of those events.
+		// There is no way that I know of to detect something like 'cut' in IE9.
+		if ('onpropertychange' in ta && 'oninput' in ta) {
+			ta.addEventListener('keyup', update);
+		}
+
+		window.addEventListener('resize', update);
+		ta.addEventListener('input', update);
+		ta.addEventListener('autosize:update', update);
+		ta.setAttribute('data-autosize-on', true);
+
+		if (setOverflowY) {
+			ta.style.overflowY = 'hidden';
+		}
+		if (setOverflowX) {
+			ta.style.overflowX = 'hidden';
+			ta.style.wordWrap = 'break-word';
+		}
+
+		init();
+	}
+
+	function destroy(ta) {
+		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) {
+			return;
+		}var evt = document.createEvent('Event');
+		evt.initEvent('autosize:destroy', true, false);
+		ta.dispatchEvent(evt);
+	}
+
+	function update(ta) {
+		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) {
+			return;
+		}var evt = document.createEvent('Event');
+		evt.initEvent('autosize:update', true, false);
+		ta.dispatchEvent(evt);
+	}
+
+	var autosize = null;
+
+	// Do nothing in IE8 or lower
+	if (typeof window.getComputedStyle !== 'function') {
+		autosize = function (el) {
+			return el;
+		};
+		autosize.destroy = function (el) {
+			return el;
+		};
+		autosize.update = function (el) {
+			return el;
+		};
+	} else {
+		autosize = function (el, options) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], function (x) {
+					return assign(x, options);
+				});
+			}
+			return el;
+		};
+		autosize.destroy = function (el) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], destroy);
+			}
+			return el;
+		};
+		autosize.update = function (el) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], update);
+			}
+			return el;
+		};
+	}
+
+	module.exports = autosize;
+});
+},{}],"aviator":[function(require,module,exports){
 // Modules
 var Navigator = require('./navigator');
 
@@ -76688,220 +76918,6 @@ var Plugins;
     })(jQuery);
 })(Plugins || (Plugins = {}));
 
-},{}],"jquery.autosize":[function(require,module,exports){
-/*!
-	Autosize 3.0.4
-	license: MIT
-	http://www.jacklmoore.com/autosize
-*/
-(function (global, factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(['exports', 'module'], factory);
-	} else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
-		factory(exports, module);
-	} else {
-		var mod = {
-			exports: {}
-		};
-		factory(mod.exports, mod);
-		global.autosize = mod.exports;
-	}
-})(this, function (exports, module) {
-	'use strict';
-
-	function assign(ta) {
-		var _ref = arguments[1] === undefined ? {} : arguments[1];
-
-		var _ref$setOverflowX = _ref.setOverflowX;
-		var setOverflowX = _ref$setOverflowX === undefined ? true : _ref$setOverflowX;
-		var _ref$setOverflowY = _ref.setOverflowY;
-		var setOverflowY = _ref$setOverflowY === undefined ? true : _ref$setOverflowY;
-
-		if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || ta.hasAttribute('data-autosize-on')) {
-			return;
-		}var heightOffset = null;
-		var overflowY = 'hidden';
-
-		function init() {
-			var style = window.getComputedStyle(ta, null);
-
-			if (style.resize === 'vertical') {
-				ta.style.resize = 'none';
-			} else if (style.resize === 'both') {
-				ta.style.resize = 'horizontal';
-			}
-
-			if (style.boxSizing === 'content-box') {
-				heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
-			} else {
-				heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
-			}
-
-			update();
-		}
-
-		function changeOverflow(value) {
-			{
-				// Chrome/Safari-specific fix:
-				// When the textarea y-overflow is hidden, Chrome/Safari do not reflow the text to account for the space
-				// made available by removing the scrollbar. The following forces the necessary text reflow.
-				var width = ta.style.width;
-				ta.style.width = '0px';
-				// Force reflow:
-				/* jshint ignore:start */
-				ta.offsetWidth;
-				/* jshint ignore:end */
-				ta.style.width = width;
-			}
-
-			overflowY = value;
-
-			if (setOverflowY) {
-				ta.style.overflowY = value;
-			}
-
-			update();
-		}
-
-		function update() {
-			var startHeight = ta.style.height;
-			var htmlTop = document.documentElement.scrollTop;
-			var bodyTop = document.body.scrollTop;
-			var originalHeight = ta.style.height;
-
-			ta.style.height = 'auto';
-
-			var endHeight = ta.scrollHeight + heightOffset;
-
-			if (ta.scrollHeight === 0) {
-				// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
-				ta.style.height = originalHeight;
-				return;
-			}
-
-			ta.style.height = endHeight + 'px';
-
-			// prevents scroll-position jumping
-			document.documentElement.scrollTop = htmlTop;
-			document.body.scrollTop = bodyTop;
-
-			var style = window.getComputedStyle(ta, null);
-
-			if (style.height !== ta.style.height) {
-				if (overflowY !== 'visible') {
-					changeOverflow('visible');
-					return;
-				}
-			} else {
-				if (overflowY !== 'hidden') {
-					changeOverflow('hidden');
-					return;
-				}
-			}
-
-			if (startHeight !== ta.style.height) {
-				var evt = document.createEvent('Event');
-				evt.initEvent('autosize:resized', true, false);
-				ta.dispatchEvent(evt);
-			}
-		}
-
-		var destroy = (function (style) {
-			window.removeEventListener('resize', update);
-			ta.removeEventListener('input', update);
-			ta.removeEventListener('keyup', update);
-			ta.removeAttribute('data-autosize-on');
-			ta.removeEventListener('autosize:destroy', destroy);
-
-			Object.keys(style).forEach(function (key) {
-				ta.style[key] = style[key];
-			});
-		}).bind(ta, {
-			height: ta.style.height,
-			resize: ta.style.resize,
-			overflowY: ta.style.overflowY,
-			overflowX: ta.style.overflowX,
-			wordWrap: ta.style.wordWrap });
-
-		ta.addEventListener('autosize:destroy', destroy);
-
-		// IE9 does not fire onpropertychange or oninput for deletions,
-		// so binding to onkeyup to catch most of those events.
-		// There is no way that I know of to detect something like 'cut' in IE9.
-		if ('onpropertychange' in ta && 'oninput' in ta) {
-			ta.addEventListener('keyup', update);
-		}
-
-		window.addEventListener('resize', update);
-		ta.addEventListener('input', update);
-		ta.addEventListener('autosize:update', update);
-		ta.setAttribute('data-autosize-on', true);
-
-		if (setOverflowY) {
-			ta.style.overflowY = 'hidden';
-		}
-		if (setOverflowX) {
-			ta.style.overflowX = 'hidden';
-			ta.style.wordWrap = 'break-word';
-		}
-
-		init();
-	}
-
-	function destroy(ta) {
-		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) {
-			return;
-		}var evt = document.createEvent('Event');
-		evt.initEvent('autosize:destroy', true, false);
-		ta.dispatchEvent(evt);
-	}
-
-	function update(ta) {
-		if (!(ta && ta.nodeName && ta.nodeName === 'TEXTAREA')) {
-			return;
-		}var evt = document.createEvent('Event');
-		evt.initEvent('autosize:update', true, false);
-		ta.dispatchEvent(evt);
-	}
-
-	var autosize = null;
-
-	// Do nothing in IE8 or lower
-	if (typeof window.getComputedStyle !== 'function') {
-		autosize = function (el) {
-			return el;
-		};
-		autosize.destroy = function (el) {
-			return el;
-		};
-		autosize.update = function (el) {
-			return el;
-		};
-	} else {
-		autosize = function (el, options) {
-			if (el) {
-				Array.prototype.forEach.call(el.length ? el : [el], function (x) {
-					return assign(x, options);
-				});
-			}
-			return el;
-		};
-		autosize.destroy = function (el) {
-			if (el) {
-				Array.prototype.forEach.call(el.length ? el : [el], destroy);
-			}
-			return el;
-		};
-		autosize.update = function (el) {
-			if (el) {
-				Array.prototype.forEach.call(el.length ? el : [el], update);
-			}
-			return el;
-		};
-	}
-
-	module.exports = autosize;
-});
 },{}],"jquery.collage":[function(require,module,exports){
 // Author: Alex Volosojui
 //

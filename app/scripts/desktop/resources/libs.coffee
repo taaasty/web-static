@@ -30,7 +30,6 @@ require 'jquery.ui.draggable'
 require 'jquery.ui.touch-punch'
 
 # jQuery plugins
-require 'jquery.autosize'
 require 'jquery.autosize.input'
 require 'jquery.collage'
 require 'jquery.connection'

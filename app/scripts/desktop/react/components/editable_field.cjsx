@@ -1,3 +1,4 @@
+autosize = require 'autosize'
 classnames = require 'classnames'
 LinkedStateMixin = require 'react/lib/LinkedStateMixin'
 
@@ -23,11 +24,8 @@ window.EditableField = React.createClass
     @setState(value: nextProps.defaultValue)
 
   componentDidMount: ->
-    @$textarea = $( @refs.textarea.getDOMNode() )
-
-    # require jquery.autosize.min.js
-    if $.fn.autosize
-      @$textarea.autosize(append: '') # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
+    field = @refs.textarea.getDOMNode()
+    autosize(field, {append: ''})
 
   render: ->
     editableFieldClasses = classnames('editable-field', {
@@ -64,7 +62,10 @@ window.EditableField = React.createClass
     _.defer =>
       textareaValue = @getValue()
 
-      @$textarea.val('').focus().val textareaValue
+      field = @refs.textarea.getDOMNode()
+      field.value = ''
+      field.focus()
+      field.value = textareaValue
 
   onBlur: ->
     @props.onEditEnd @getValue()
@@ -80,7 +81,11 @@ window.EditableField = React.createClass
       value = @refs.value.getDOMNode()
 
       $(value).text @getValue()
-      @$textarea.trigger 'autosize.resize'
+
+      field = @refs.textarea.getDOMNode()
+      evt = document.createEvent('Event')
+      evt.initEvent('autosize:update', true, false)
+      field.dispatchEvent(evt)
 
   isEmpty: ->
     # При сохранении данных в настройках, обновляется моделька user,

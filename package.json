@@ -15,6 +15,7 @@
     "jquery": "jQuery"
   },
   "dependencies": {
+    "autosize": "^3.0.4",
     "bowser": "^0.7.2",
     "classnames": "^1.2.0",
     "flux": "^2.0.3",
