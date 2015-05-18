@@ -6,23 +6,29 @@ const FIELD_MODES = ['inline', 'partial', 'rich'];
 const FIELD_MODE_OPTIONS = {
   inline: {
     disableToolbar: true,
-    disableReturn: true,
+    disableReturn: false,
     disableDoubleReturn: true,
-    cleanPastedHTML: true
+    paste: {
+      cleanPastedHTML: true
+    }
   },
   partial: {
     disableToolbar: true,
     disableReturn: false,
     disableDoubleReturn: true,
-    cleanPastedHTML: true
+    paste: {
+      cleanPastedHTML: true
+    }
   },
   rich: {
     buttons: ['anchor', 'italic', 'quote', 'orderedlist', 'unorderedlist'],
     disableToolbar: false,
     disableReturn: false,
     disableDoubleReturn: false,
-    cleanPastedHTML: true,
-    targetBlank: true
+    targetBlank: true,
+    paste: {
+      cleanPastedHTML: true
+    }
   }
 };
 
@@ -56,7 +62,7 @@ let EditorTextField = React.createClass({
   },
     
   componentWillUnmount() {
-    this.mediumEditor.deactivate();
+    this.mediumEditor.destroy();
     this.mediumEditor = null;
   },
 
