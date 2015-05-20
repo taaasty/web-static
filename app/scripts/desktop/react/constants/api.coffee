@@ -11,5 +11,8 @@ ApiConstants = keyMirror
   CREATE_BG_IMAGE: null
   LOAD_NOTIFICATIONS: null
   READ_NOTIFICATION: null
+  UNFOLLOW_TLOG: null
+  FOLLOW_TLOG: null
+  CANCEL_TLOG: null
 
 module.exports = ApiConstants

@@ -139,4 +139,26 @@ Api =
       # одного запроса на прочтение уведомления. Позволяем делать параллельные запросы.
       _pendingRequests[key] = putRequest url
 
+  relationship:
+    unfollow: (tlogID) ->
+      url = ApiRoutes.change_my_relationship_url tlogID, 'unfollow'
+      key = Constants.api.UNFOLLOW_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    follow: (tlogID) ->
+      url = ApiRoutes.change_my_relationship_url tlogID, 'follow'
+      key = Constants.api.FOLLOW_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    cancel: (tlogID) ->
+      url = ApiRoutes.change_my_relationship_url tlogID, 'cancel'
+      key = Constants.api.CANCEL_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
 module.exports = Api

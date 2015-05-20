@@ -245,6 +245,8 @@ require './react/components/entry_comment_box/comment_form/comment_edit_form_man
 require './react/components/entry_comment_box/comment_form/buttons/submit'
 require './react/components/entry_comment_box/load_more'
 
+global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
+
 require './react/components/hero/profile/profile'
 require './react/components/hero/profile/profile_avatar'
 require './react/components/hero/profile/profile_head'
