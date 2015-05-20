@@ -32,7 +32,7 @@ let FollowButton = React.createClass({
 
   render() {
     let buttonClasses = classnames('follow-button', {
-      'state--active': this.props.relState === REL_FRIEND_STATE &&
+      'state--active': this.state.relState === REL_FRIEND_STATE &&
                        this.state.currentState === BUTTON_SHOW_STATE
     });
 

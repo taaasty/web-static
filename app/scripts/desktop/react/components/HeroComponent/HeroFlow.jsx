@@ -1,5 +1,8 @@
 import Hero from './Hero';
 import FollowButton from '../common/FollowButton';
+import HeroSettingsButton from './HeroSettingsButton';
+import HeroSubscriptionsButton from './HeroSubscriptionsButton';
+import HeroDesignSettingsButton from './HeroDesignSettingsButton';
 
 let HeroFlow = React.createClass({
   propTypes: {
@@ -26,11 +29,27 @@ let HeroFlow = React.createClass({
   getActions() {
     return [
       <a href={Routes.new_entry_url(this.props.tlog.slug)}
-         className="button button--small button--green">
+         className="button button--small button--green"
+         key="createEntryButton">
         {i18n.t('buttons.hero_create_entry')}
       </a>,
-      <FollowButton {...this.props} key="followButton" />
+      <FollowButton {...this.props} key="followButton" />,
+      <HeroDesignSettingsButton onClick={this.showDesignSettings} key="designSettingsButton" />,
+      <HeroSubscriptionsButton onClick={this.showSubscriptions} key="subscriptionsButton" />,
+      <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
     ];
+  },
+
+  showDesignSettings() {
+    console.log('Показываем настройки дизайна потока', this.props.tlog);
+  },
+
+  showSettings() {
+    console.log('Показываем настройки потока', this.props.tlog);
+  },
+
+  showSubscriptions() {
+    console.log('Показываем управление подписками потока', this.props.tlog);
   }
 });
 
