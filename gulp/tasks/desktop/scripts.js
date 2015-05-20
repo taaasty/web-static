@@ -35,7 +35,7 @@ var dependencies = {
   'baron': './app/bower_components/baron/baron',
   'mousetrap': './app/bower_components/mousetrap/mousetrap',
   'bowser': './node_modules/bowser',
-  'autosize': './node_modules/autosize/dest/autosize',
+  'autosize': './node_modules/autosize/dist/autosize',
   'eventEmitter': './app/bower_components/eventEmitter/EventEmitter',
   'pusher': './app/bower_components/pusher/dist/pusher',
   'i18next': './app/bower_components/i18next/i18next',

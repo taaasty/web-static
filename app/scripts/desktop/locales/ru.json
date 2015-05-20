@@ -203,6 +203,7 @@
   "follow_button_ignored": "Заблокирован",
   "follow_button_block": "Заблокировать",
   "follow_button_approve": "Одобрить",
+  "follow_button_unknown_state": "Неизвестный статус",
   "search_results_empty": "Мы ничего не нашли по данному запросу",
   "searchbox_titles": {
     "live": "Поиск по Прямому эфиру",
@@ -364,5 +365,13 @@
     "tlog_private": "Здесь отображены ваши скрытые записи. Эта страница доступна только вам.",
     "tlog_favorites": "Здесь отображаются избранные записи.",
     "tlog_my_favorites": "Здесь отображаются ваши избранные записи."
+  },
+  "hero": {
+    "flow_entries_count": "__count__ пост",
+    "flow_entries_count_plural_2": "__count__ поста",
+    "flow_entries_count_plural_5": "__count__ постов"
+  },
+  "buttons": {
+    "hero_create_entry": "Написать в поток"
   }
 }
