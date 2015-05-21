@@ -171,7 +171,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
       _creatingAttachments = false;
       break;
 
-    defaults:
+    default:
       return true;
   }
   EditorStore.emitChange();

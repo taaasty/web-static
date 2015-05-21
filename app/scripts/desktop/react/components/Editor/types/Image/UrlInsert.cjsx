@@ -21,7 +21,7 @@ EditorTypeImageUrlInsert = React.createClass
      </label>
 
   handlePaste: (e) ->
-    @props.onInsertImageUrl e.clipboardData.getData 'text/plain'
+    @props.onInsertImageUrl(e.clipboardData.getData('text'));
 
   handleBlur: ->
     @props.onCancel()

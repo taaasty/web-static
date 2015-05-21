@@ -16232,7 +16232,7 @@ EditorEmbedUrlInsert = React.createClass({
     }));
   },
   handlePaste: function(e) {
-    return this.props.onInsert(e.clipboardData.getData('text/plain'));
+    return this.props.onInsert(e.clipboardData.getData('text'));
   },
   handleBlur: function() {
     return this.props.onCancel();
@@ -16696,6 +16696,13 @@ EditorVoteButton = React.createClass({
       placement: 'bottom'
     });
   },
+  componentDidUpdate: function(prevProps) {
+    var $button;
+    if (prevProps.enabled !== this.props.enabled) {
+      $button = $(this.getDOMNode());
+      return $button.tooltip('hide').tooltip('show');
+    }
+  },
   componentWillUnmount: function() {
     var $button;
     $button = $(this.getDOMNode());
@@ -16707,7 +16714,7 @@ EditorVoteButton = React.createClass({
       'post-settings-voted': this.props.enabled
     });
     return React.createElement("button", {
-      "title": this.getTitle(),
+      "data-original-title": this.getTitle(),
       "className": "button button--outline-grey post-settings-button",
       "onClick": this.handleClick
     }, React.createElement("span", {
@@ -16722,9 +16729,6 @@ EditorVoteButton = React.createClass({
     }
   },
   handleClick: function() {
-    var $button;
-    $button = $(this.getDOMNode());
-    $button.tooltip('hide');
     return this.props.onClick();
   }
 });
@@ -16809,9 +16813,11 @@ var EditorTextField = React.createClass({
     });
 
     this.mediumEditor = new MediumEditor(fieldContent, options);
+    this.mediumEditor.subscribe('editableInput', this.handleInput);
   },
 
   componentWillUnmount: function componentWillUnmount() {
+    this.mediumEditor.unsubscribe('editableInput', this.handleInput);
     this.mediumEditor.destroy();
     this.mediumEditor = null;
   },
@@ -16824,7 +16830,6 @@ var EditorTextField = React.createClass({
       { className: fieldClasses },
       React.createElement('div', { ref: 'fieldContent',
         className: 'tasty-editor-content',
-        onInput: this.handleInput,
         dangerouslySetInnerHTML: { __html: this.props.text || '' } })
     );
   },
@@ -16839,7 +16844,7 @@ exports['default'] = EditorTextField;
 module.exports = exports['default'];
 
 },{"classnames":416,"lodash":"lodash"}],90:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, MAX_ATTACHMENTS, PropTypes, WELCOME_STATE, _, classnames;
+var EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, MAX_ATTACHMENTS, PropTypes, WELCOME_STATE, _, classnames;
 
 _ = require('lodash');
 
@@ -16848,8 +16853,6 @@ classnames = require('classnames');
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 EditorTextField = require('../fields/Text');
 
@@ -16879,18 +16882,19 @@ LOADED_STATE = 'loaded';
 
 EditorTypeImage = React.createClass({
   displayName: 'EditorTypeImage',
-  mixins: [ConnectStoreMixin(EditorStore)],
   propTypes: {
-    entry: PropTypes.object.isRequired,
     entryType: PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired
   },
   getInitialState: function() {
-    return {
+    return _.extend({}, this.getStateFromStore(), {
       currentState: this.getInitialCurrentState(),
       dragging: false,
       uploadingProgress: null
-    };
+    });
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     var editorClasses;
@@ -17099,7 +17103,7 @@ EditorTypeImage = React.createClass({
 module.exports = EditorTypeImage;
 
 
-},{"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../MediaBox/MediaBox":80,"../MediaBox/MediaBoxProgress":82,"../fields/Text":89,"./Image/Loaded":91,"./Image/LoadingUrl":92,"./Image/UrlInsert":93,"./Image/Welcome":94,"classnames":416,"lodash":"lodash"}],91:[function(require,module,exports){
+},{"../../../actions/editor":15,"../../../stores/EditorStore":375,"../MediaBox/MediaBox":80,"../MediaBox/MediaBoxProgress":82,"../fields/Text":89,"./Image/Loaded":91,"./Image/LoadingUrl":92,"./Image/UrlInsert":93,"./Image/Welcome":94,"classnames":416,"lodash":"lodash"}],91:[function(require,module,exports){
 var EditorMediaBoxActions, EditorTypeImageLoaded, PropTypes, _;
 
 _ = require('lodash');
@@ -17228,7 +17232,7 @@ EditorTypeImageUrlInsert = React.createClass({
     }));
   },
   handlePaste: function(e) {
-    return this.props.onInsertImageUrl(e.clipboardData.getData('text/plain'));
+    return this.props.onInsertImageUrl(e.clipboardData.getData('text'));
   },
   handleBlur: function() {
     return this.props.onCancel();
@@ -17307,13 +17311,11 @@ module.exports = EditorTypeImageWelcome;
 
 
 },{"../../../common/DropZone/DropZone":142}],95:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeInstagram, EditorTypeInstagramWelcome, PropTypes, StringHelpers;
+var EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeInstagram, EditorTypeInstagramWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 StringHelpers = require('../../../../../shared/helpers/string');
 
@@ -17327,11 +17329,14 @@ PropTypes = React.PropTypes;
 
 EditorTypeInstagram = React.createClass({
   displayName: 'EditorTypeInstagram',
-  mixins: [ConnectStoreMixin(EditorStore)],
   propTypes: {
-    entry: PropTypes.object.isRequired,
-    entryType: PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     return React.createElement("article", {
@@ -17382,7 +17387,7 @@ EditorTypeInstagram = React.createClass({
 module.exports = EditorTypeInstagram;
 
 
-},{"../../../../../shared/helpers/string":388,"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Instagram/Welcome":96}],96:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":388,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Instagram/Welcome":96}],96:[function(require,module,exports){
 var EditorTypeInstagramWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -17416,13 +17421,11 @@ module.exports = EditorTypeInstagramWelcome;
 
 
 },{"../../MediaBox/MediaBox":80}],97:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeMusic, EditorTypeMusicWelcome, PropTypes, StringHelpers;
+var EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeMusic, EditorTypeMusicWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 StringHelpers = require('../../../../../shared/helpers/string');
 
@@ -17436,11 +17439,14 @@ PropTypes = React.PropTypes;
 
 EditorTypeMusic = React.createClass({
   displayName: 'EditorTypeMusic',
-  mixins: [ConnectStoreMixin(EditorStore)],
   propTypes: {
-    entry: PropTypes.object.isRequired,
-    entryType: PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     return React.createElement("article", {
@@ -17491,7 +17497,7 @@ EditorTypeMusic = React.createClass({
 module.exports = EditorTypeMusic;
 
 
-},{"../../../../../shared/helpers/string":388,"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Music/Welcome":98}],98:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":388,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Music/Welcome":98}],98:[function(require,module,exports){
 var EditorTypeMusicWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -17525,13 +17531,11 @@ module.exports = EditorTypeMusicWelcome;
 
 
 },{"../../MediaBox/MediaBox":80}],99:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorStore, EditorTextField, EditorTypeQuote, PropTypes;
+var EditorActionCreators, EditorStore, EditorTextField, EditorTypeQuote, PropTypes;
 
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 EditorTextField = require('../fields/Text');
 
@@ -17539,10 +17543,11 @@ PropTypes = React.PropTypes;
 
 EditorTypeQuote = React.createClass({
   displayName: 'EditorTypeQuote',
-  mixins: [ConnectStoreMixin(EditorStore)],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    entryType: PropTypes.string.isRequired
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     return React.createElement("article", {
@@ -17582,14 +17587,12 @@ EditorTypeQuote = React.createClass({
 module.exports = EditorTypeQuote;
 
 
-},{"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../fields/Text":89}],100:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorStore, EditorTextField, EditorTypeText, PropTypes;
+},{"../../../actions/editor":15,"../../../stores/EditorStore":375,"../fields/Text":89}],100:[function(require,module,exports){
+var EditorActionCreators, EditorStore, EditorTextField, EditorTypeText, PropTypes;
 
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 EditorTextField = require('../fields/Text');
 
@@ -17597,10 +17600,11 @@ PropTypes = React.PropTypes;
 
 EditorTypeText = React.createClass({
   displayName: 'EditorTypeText',
-  mixins: [ConnectStoreMixin(EditorStore)],
-  propTypes: {
-    entry: PropTypes.object.isRequired,
-    entryType: PropTypes.string.isRequired
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     return React.createElement("article", {
@@ -17637,14 +17641,12 @@ EditorTypeText = React.createClass({
 module.exports = EditorTypeText;
 
 
-},{"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../fields/Text":89}],101:[function(require,module,exports){
-var ConnectStoreMixin, EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeVideo, EditorTypeVideoWelcome, PropTypes, StringHelpers;
+},{"../../../actions/editor":15,"../../../stores/EditorStore":375,"../fields/Text":89}],101:[function(require,module,exports){
+var EditorActionCreators, EditorEmbed, EditorStore, EditorTextField, EditorTypeVideo, EditorTypeVideoWelcome, PropTypes, StringHelpers;
 
 EditorStore = require('../../../stores/EditorStore');
 
 EditorActionCreators = require('../../../actions/editor');
-
-ConnectStoreMixin = require('../../../../../shared/react/mixins/connectStore');
 
 StringHelpers = require('../../../../../shared/helpers/string');
 
@@ -17658,11 +17660,14 @@ PropTypes = React.PropTypes;
 
 EditorTypeVideo = React.createClass({
   displayName: 'EditorTypeVideo',
-  mixins: [ConnectStoreMixin(EditorStore)],
   propTypes: {
-    entry: PropTypes.object.isRequired,
-    entryType: PropTypes.string.isRequired,
     loading: React.PropTypes.bool.isRequired
+  },
+  getInitialState: function() {
+    return this.getStateFromStore();
+  },
+  componentWillReceiveProps: function() {
+    return this.setState(this.getStateFromStore());
   },
   render: function() {
     return React.createElement("article", {
@@ -17713,7 +17718,7 @@ EditorTypeVideo = React.createClass({
 module.exports = EditorTypeVideo;
 
 
-},{"../../../../../shared/helpers/string":388,"../../../../../shared/react/mixins/connectStore":402,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Video/Welcome":102}],102:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":388,"../../../actions/editor":15,"../../../stores/EditorStore":375,"../Embed/Embed":75,"../fields/Text":89,"./Video/Welcome":102}],102:[function(require,module,exports){
 var EditorTypeVideoWelcome, MediaBox, PropTypes;
 
 MediaBox = require('../../MediaBox/MediaBox');
@@ -35035,7 +35040,8 @@ EditorStore.dispatchToken = _dispatchersDispatcher2['default'].register(function
       _creatingAttachments = false;
       break;
 
-      defaults: return true;
+    default:
+      return true;
   }
   EditorStore.emitChange();
 });

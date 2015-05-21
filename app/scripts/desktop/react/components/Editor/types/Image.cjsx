@@ -2,7 +2,6 @@ _ = require 'lodash'
 classnames = require 'classnames'
 EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 EditorMediaBox = require '../MediaBox/MediaBox'
 EditorMediaBoxProgress = require '../MediaBox/MediaBoxProgress'
@@ -20,17 +19,20 @@ LOADED_STATE = 'loaded'
 
 EditorTypeImage = React.createClass
   displayName: 'EditorTypeImage'
-  mixins: [ConnectStoreMixin(EditorStore)]
 
   propTypes:
-    entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
     loading: React.PropTypes.bool.isRequired
 
   getInitialState: ->
-    currentState: @getInitialCurrentState()
-    dragging: false
-    uploadingProgress: null
+    _.extend {}, this.getStateFromStore(), {
+      currentState: this.getInitialCurrentState(),
+      dragging: false,
+      uploadingProgress: null
+    }
+
+  componentWillReceiveProps: ->
+    this.setState(this.getStateFromStore());
 
   render: ->
     editorClasses = classnames('post', 'post--image', 'post--edit', {
@@ -47,7 +49,7 @@ EditorTypeImage = React.createClass
                </EditorMediaBox>
                <EditorTextField
                    mode="rich"
-                   text={ @state.title }
+                   text={this.state.title}
                    placeholder={ i18n.t('editor_description_placeholder') }
                    className="post__content"
                    onChange={ @handleChangeTitle } />
@@ -69,12 +71,12 @@ EditorTypeImage = React.createClass
             onCancel={ @activateWelcomeState } />
       when LOADED_STATE
         <EditorTypeImageLoaded
-            imageUrl={ @state.imageUrl }
-            imageAttachments={ @state.imageAttachments }
+            imageUrl={this.state.imageUrl}
+            imageAttachments={this.state.imageAttachments}
             loading={@props.loading}
             onDelete={ @handleDeleteLoadedImages } />
       when LOADING_URL_STATE
-        <EditorTypeImageLoadingUrl imageUrl={@state.imageUrl} />
+        <EditorTypeImageLoadingUrl imageUrl={this.state.imageUrl} />
       else null
 
   renderProgress: ->
