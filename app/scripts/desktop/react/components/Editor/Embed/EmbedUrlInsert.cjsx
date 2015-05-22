@@ -24,7 +24,7 @@ EditorEmbedUrlInsert = React.createClass
     </MediaBox>
 
   handlePaste: (e) ->
-    @props.onInsert e.clipboardData.getData 'text/plain'
+    @props.onInsert(e.clipboardData.getData('text'));
 
   handleBlur: ->
     @props.onCancel()

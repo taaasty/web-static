@@ -59,9 +59,11 @@ let EditorTextField = React.createClass({
     });
 
     this.mediumEditor = new MediumEditor(fieldContent, options);
+    this.mediumEditor.subscribe('editableInput', this.handleInput);
   },
-    
+
   componentWillUnmount() {
+    this.mediumEditor.unsubscribe('editableInput', this.handleInput);
     this.mediumEditor.destroy();
     this.mediumEditor = null;
   },
@@ -73,7 +75,6 @@ let EditorTextField = React.createClass({
       <div className={fieldClasses}>
         <div ref="fieldContent"
              className="tasty-editor-content"
-             onInput={this.handleInput}
              dangerouslySetInnerHTML={{__html: this.props.text || ''}} />
       </div>
     );

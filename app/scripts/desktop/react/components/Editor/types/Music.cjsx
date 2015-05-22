@@ -1,6 +1,5 @@
 EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 StringHelpers = require '../../../../../shared/helpers/string'
 EditorTextField = require '../fields/Text'
 EditorEmbed = require '../Embed/Embed'
@@ -9,19 +8,22 @@ EditorTypeMusicWelcome = require './Music/Welcome'
 
 EditorTypeMusic = React.createClass
   displayName: 'EditorTypeMusic'
-  mixins: [ConnectStoreMixin(EditorStore)]
 
   propTypes:
-    entry: PropTypes.object.isRequired
-    entryType: PropTypes.string.isRequired
     loading: React.PropTypes.bool.isRequired
+
+  getInitialState: ->
+    this.getStateFromStore();
+
+  componentWillReceiveProps: ->
+    this.setState(this.getStateFromStore());
 
   render: ->
     <article className="post post--video post--edit">
       <div className="post__content">
         <EditorEmbed
-            embedUrl={ @state.embedUrl }
-            embedHtml={ @state.embedHtml }
+            embedUrl={this.state.embedUrl}
+            embedHtml={this.state.embedHtml}
             loading={@props.loading}
             onCreate={ @handleCreateEmbed }
             onChaneEmbedUrl={ @handleChangeEmbedUrl }
@@ -30,7 +32,7 @@ EditorTypeMusic = React.createClass
         </EditorEmbed>
         <EditorTextField
             mode="partial"
-            text={ @state.title }
+            text={this.state.title}
             placeholder={ i18n.t('editor_description_placeholder') }
             onChange={ @handleChangeTitle } />
       </div>
@@ -39,7 +41,7 @@ EditorTypeMusic = React.createClass
   handleCreateEmbed: ({embedHtml, title}) ->
     EditorActionCreators.changeEmbedHtml embedHtml
     # Перезаписываем title описание с iframely, только если он пустой либо с тегами без контента
-    unless StringHelpers.removeTags @state.title
+    unless StringHelpers.removeTags this.state.title
       EditorActionCreators.changeTitle title
 
   handleDeleteEmbed: ->
