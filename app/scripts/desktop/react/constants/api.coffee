@@ -14,5 +14,6 @@ ApiConstants = keyMirror
   UNFOLLOW_TLOG: null
   FOLLOW_TLOG: null
   CANCEL_TLOG: null
+  VOTE_ENTRY: null
 
 module.exports = ApiConstants

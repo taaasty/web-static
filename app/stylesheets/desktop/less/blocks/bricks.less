@@ -30,10 +30,6 @@
   border-radius: @brick-radius;
 
   /** Video **/
-  .video {
-    height: @brick-video-height;
-  }
-
   .video__overlay {
     background: @brick-video-overlay-bg;
 
@@ -169,6 +165,10 @@
   & > .brick__link:hover {
     opacity: .84;
   }
+
+  .video {
+    height: 200px;
+  }
 }
 
 .brick__body {
@@ -180,6 +180,8 @@
   font-weight: normal;
   font-size: 30px;
   line-height: 1em;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .brick__caption {
@@ -189,14 +191,12 @@
 }
 
 .brick__text {
-  p {
-    font-size: 16px;
-    line-height: 135%;
+  font-size: 16px;
+  line-height: 135%;
 
-    img {
+  img {
       max-width: 100%;
       height: auto;
-    }
   }
 
   // Восстанавливаем стили списков после reset.css

@@ -161,4 +161,12 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
+  entry:
+    vote: (entryID) ->
+      url = ApiRoutes.votes_url entryID
+      key = Constants.api.VOTE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
 module.exports = Api

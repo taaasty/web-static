@@ -1,40 +1,56 @@
+import EntryBrick from '../Entry/EntryBrick';
 import Masonry from 'masonry-layout';
-import InfiniteScroll from '../common/infiniteScroll/index';
+// import InfiniteScroll from '../common/infiniteScroll/index';
 
 let FeedBricks = React.createClass({
   propTypes: {
-    html: React.PropTypes.string.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextEntries: React.PropTypes.func.isRequired
+    entries: React.PropTypes.array,
+    sinceEntryID: React.PropTypes.number,
+    loadLimit: React.PropTypes.number
+  },
+
+  getDefaultProps() {
+    return {
+      // entries: [],
+      entries: props.entries,
+      sinceEntryID: null,
+      loadLimit: 10
+    };
+  },
+
+  getInitialState() {
+    return {
+      entries: this.props.entries
+    };
+  },
+
+  componentDidMount() {
+    this.initGridManager()
   },
 
   componentDidUpdate(prevProps) {
-    if (this.props.feedHtml !== prevProps.feedHtml) {
-      this.initGridManager()
+    if (this.state.entries.length !== prevProps.entries.length) {
+      this.msnry.reloadItems();
+      // this.initGridManager()
     }
   },
 
   render() {
+    let entryList = this.state.entries.map((entry) => {
+      return <EntryBrick entry={entry} key={entry.id} />;
+    });
+
     return (
       <div className="bricks-wrapper">
-        <InfiniteScroll
-            loading={this.props.loading}
-            canLoad={this.props.canLoad}
-            onLoad={this.handleScrollLoad}
-            onAfterLoad={this.initGridManager}>
-          <section
-              ref="container"
-              className="bricks"
-              dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
-        </InfiniteScroll>
+        <section ref="container" className="bricks">
+          {entryList}
+        </section>
       </div>
     );
   },
 
   initGridManager() {
-    let container = this.refs.container.getDOMNode();
-    let msnry = new Masonry(container, {
+    this.msnry = new Masonry(this.refs.container.getDOMNode(), {
       itemSelector: '.brick',
       transitionDuration: '0.4s',
       isFitWidth: true,
@@ -48,13 +64,6 @@ let FeedBricks = React.createClass({
         transform: 'opacity(1)'
       }
     });
-  },
-
-  handleScrollLoad() {
-    let $container = $(this.refs.container.getDOMNode());
-    let lastEntryID = $container.children().last().data('id');
-
-    this.props.onLoadNextEntries(lastEntryID);
   }
 });
 
