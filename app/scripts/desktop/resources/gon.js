@@ -31,6 +31,7 @@ let gon = {
     "locale": "ru",
     "name": "sergeylaptev",
     "slug": "sergeylaptev",
+    "tag": "~sergeylaptev",
     "title": "",
     "is_female": false,
     "is_daylog": false,

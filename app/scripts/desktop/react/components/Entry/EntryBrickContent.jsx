@@ -29,11 +29,11 @@ let EntryBrickContent = React.createClass({
         return <EntryBrickQuoteType entry={this.props.entry} />;
       default:
         ErrorService.notifyError('Неизвестный тип brick-поста', {
-            componentName: this.constructor.displayName,
-            method: 'render',
-            entryID: this.props.entry.id,
-            entryType: this.props.entry.type
-          });
+          componentName: this.constructor.displayName,
+          method: 'render',
+          entryID: this.props.entry.id,
+          entryType: this.props.entry.type
+        });
 
         return <EntryBrickUnknownType entry={this.props.entry} />;
     }

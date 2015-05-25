@@ -32,6 +32,8 @@
   /** Video **/
   .video__overlay {
     background: @brick-video-overlay-bg;
+    position: absolute;
+    top: 0;
 
     &:before {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiPgogICAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iOTAiIHkyPSI0NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIC8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI0NSIgeDI9IjAiIHkyPSI5MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIC8+CiAgICA8bGluZSB4MT0iMSIgeTE9IjAiIHgyPSIxIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIiAvPgo8L3N2Zz4=);
@@ -167,7 +169,7 @@
   }
 
   .video {
-    height: 200px;
+    height: auto;
   }
 }
 

@@ -3,9 +3,14 @@ import EntryBrickMetabar from './EntryBrickMetabar';
 let EntryBrickQuoteType = React.createClass({
   propTypes: {
     entry: React.PropTypes.shape({
-      text: React.PropTypes.string.isRequired,
+      id: React.PropTypes.number.isRequired,
+      type: React.PropTypes.string.isRequired,
+      url: React.PropTypes.string.isRequired,
+      text_truncated: React.PropTypes.string.isRequired,
       source: React.PropTypes.string,
-      entry_url: React.PropTypes.string.isRequired
+      rating: React.PropTypes.object.isRequired,
+      tlog: React.PropTypes.object,
+      comments_count: React.PropTypes.number.isRequired
     }).isRequired
   },
 
@@ -13,19 +18,19 @@ let EntryBrickQuoteType = React.createClass({
     return (
       <span>
         <div className="brick__body">
-          <a href={this.props.entry.entry_url} className="brick__link">
+          <a href={this.props.entry.url} className="brick__link">
             <blockquote className="blockquote">
-              <span className="laquo">«</span>{this.props.entry.text}<span className="raquo">»</span>
+              <span className="laquo">«</span>{this.props.entry.text_truncated}<span className="raquo">»</span>
               {this.renderQuoteSource()}
             </blockquote>
           </a>
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
-              author={this.props.entry.author}
+              tlog={this.props.entry.tlog}
               rating={this.props.entry.rating}
               commentsCount={this.props.entry.comments_count}
-              url={this.props.entry.entry_url} />
+              url={this.props.entry.url} />
         </div>
       </span>
     );

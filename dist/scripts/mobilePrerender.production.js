@@ -11792,7 +11792,22 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var ThumborService = {
-  thumborUrl: 'http://thumbor0.tasty0.ru',
+  thumborWithPath: 'http://thumbor0.tasty0.ru',
+  thumborWithUrl: 'http://thumbor4.tasty0.ru',
+
+  newImageUrl: function newImageUrl(url, size) {
+    var width = size.width || '',
+        height = size.height || '';
+
+    return '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url;
+  },
+
+  newRetinaImageUrl: function newRetinaImageUrl(url, size) {
+    var width = size.width ? size.width * 2 : '',
+        height = size.height ? size.height * 2 : '';
+
+    return '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x';
+  },
 
   imageUrl: function imageUrl(_ref) {
     var url = _ref.url;
@@ -11801,9 +11816,10 @@ var ThumborService = {
 
     switch (gon.env) {
       case 'development':
+      case 'static-development':
         return url;
       default:
-        return '' + this.thumborUrl + '/unsafe/' + size + '/filters:no_upscale()/' + path;
+        return '' + this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path;
     }
   },
 
@@ -11814,10 +11830,11 @@ var ThumborService = {
 
     switch (gon.env) {
       case 'development':
+      case 'static-development':
         return 'url 2x';
       default:
         var retinaSize = size.width * 2 + 'x' + size.height * 2;
-        return '' + this.thumborUrl + '/unsafe/' + retinaSize + '/filters:no_upscale()/' + path + ' 2x';
+        return '' + this.thumborWithPath + '/unsafe/' + retinaSize + '/filters:no_upscale()/' + path + ' 2x';
     }
   }
 };

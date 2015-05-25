@@ -1,8 +1,9 @@
+import Avatar from '../common/Avatar';
 import VotingComponent from '../common/Voting';
 
 let EntryBrickMeta = React.createClass({
   propTypes: {
-    author: React.PropTypes.object.isRequired,
+    tlog: React.PropTypes.object,
     rating: React.PropTypes.object.isRequired,
     url: React.PropTypes.string.isRequired,
     commentsCount: React.PropTypes.number.isRequired
@@ -13,7 +14,7 @@ let EntryBrickMeta = React.createClass({
       <span className="meta-bar">
         {this.renderMetaVote()}
         {this.renderMetaComments()}
-        {this.renderMetaAuthor()}
+        {this.renderMetaTlog()}
       </span>
     );
   },
@@ -37,9 +38,7 @@ let EntryBrickMeta = React.createClass({
       return (
         <span className="meta-item meta-item--comments">
           <span className="meta-item__content">
-            <a href={this.props.url + '#comments'}
-               title={title}
-               className="meta-item__link">
+            <a href={this.props.url + '#comments'} title={title} className="meta-item__link">
               {title}
             </a>
           </span>
@@ -48,18 +47,18 @@ let EntryBrickMeta = React.createClass({
     }
   },
 
-  renderMetaAuthor() {
-    if (this.props.author.slug !== 'anonymous') {
+  renderMetaTlog() {
+    if (this.props.tlog != null) {
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">
-            <a href={this.props.author.tlog_url}
-               title={this.props.author.tag}
+            <a href={this.props.tlog.url}
+               title={this.props.tlog.tag}
                className="meta-item__link">
               <span className="meta-item__ava">
-                <UserAvatar user={this.props.author} size={35} />
+                <Avatar userpic={this.props.tlog.userpic} size={35} />
               </span>
-              <span>{this.props.author.tag}</span>
+              <span>{this.props.tlog.tag}</span>
             </a>
           </span>
         </span>

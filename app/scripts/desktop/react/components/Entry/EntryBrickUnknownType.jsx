@@ -3,10 +3,12 @@ import EntryBrickMetabar from './EntryBrickMetabar';
 let EntryBrickUnknownType = React.createClass({
   propTypes: {
     entry: React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      type: React.PropTypes.string.isRequired,
+      url: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,
       rating: React.PropTypes.object.isRequired,
-      author: React.PropTypes.object.isRequired,
-      entry_url: React.PropTypes.string.isRequired,
+      tlog: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
     }).isRequired
   },
@@ -24,7 +26,7 @@ let EntryBrickUnknownType = React.createClass({
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
-              author={this.props.entry.author}
+              tlog={this.props.entry.tlog}
               rating={this.props.entry.rating}
               commentsCount={this.props.entry.comments_count}
               url={this.props.entry.entry_url} />

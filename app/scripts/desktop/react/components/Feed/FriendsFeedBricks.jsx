@@ -10,7 +10,7 @@ let FriendsFeedBricks = React.createClass({
   getDefaultProps() {
     return {
       entries: [],
-      loadLimit: 50
+      loadLimit: 30
     };
   },
 
