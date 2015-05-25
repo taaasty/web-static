@@ -61,12 +61,12 @@ let EntryBrickImageType = React.createClass({
   },
 
   renderBrickBody() {
-    if (this.props.entry.title) {
+    if (this.props.entry.title_truncated) {
       return (
         <div className="brick__body">
           <div className="brick__text">
-            <a href={this.props.entry.entry_url} title={this.props.entry.title} className="brick__link">
-              <Text value={this.props.entry.title} withHTML={true} />
+            <a href={this.props.entry.entry_url} title={this.props.entry.title_truncated} className="brick__link">
+              <Text value={this.props.entry.title_truncated} withHTML={true} />
             </a>
           </div>
         </div>

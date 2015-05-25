@@ -13,18 +13,7 @@ let EntryBrickMeta = React.createClass({
       <span className="meta-bar">
         {this.renderMetaVote()}
         {this.renderMetaComments()}
-        <span className="meta-item meta-item--user">
-          <span className="meta-item__content">
-            <a href={this.props.author.tlog_url}
-               title={this.props.author.tag}
-               className="meta-item__link">
-              <span className="meta-item__ava">
-                <UserAvatar user={this.props.author} size={35} />
-              </span>
-              <span>{this.props.author.tag}</span>
-            </a>
-          </span>
-        </span>
+        {this.renderMetaAuthor()}
       </span>
     );
   },
@@ -52,6 +41,25 @@ let EntryBrickMeta = React.createClass({
                title={title}
                className="meta-item__link">
               {title}
+            </a>
+          </span>
+        </span>
+      );
+    }
+  },
+
+  renderMetaAuthor() {
+    if (this.props.author.slug !== 'anonymous') {
+      return (
+        <span className="meta-item meta-item--user">
+          <span className="meta-item__content">
+            <a href={this.props.author.tlog_url}
+               title={this.props.author.tag}
+               className="meta-item__link">
+              <span className="meta-item__ava">
+                <UserAvatar user={this.props.author} size={35} />
+              </span>
+              <span>{this.props.author.tag}</span>
             </a>
           </span>
         </span>

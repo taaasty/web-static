@@ -70,6 +70,7 @@ ApiRoutes =
   feedLive:    -> gon.api_host + '/v1/feeds/live'
   feedBest:    -> gon.api_host + '/v1/feeds/best'
   feedFriends: -> gon.api_host + '/v1/my_feeds/friends'
+  feedAnonymous: -> gon.api_host + '/v1/feeds/anonymous'
 
   imageAttachments: -> gon.api_host + '/v1/image_attachments'
   imageAttachmentsWithID: (attachmentID) -> gon.api_host + '/v1/image_attachments/' + attachmentID

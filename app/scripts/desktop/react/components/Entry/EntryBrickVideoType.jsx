@@ -52,43 +52,40 @@ let EntryBrickVideoType = React.createClass({
   },
 
   renderVideoOverlay() {
-    if (this.props.entry.iframely.meta.site !== 'Instagram') {
+    let meta = this.props.entry.iframely.meta;
+
+    if (meta && meta.site !== 'Instagram') {
       return <div className="video__overlay" />;
     }
+
     return null;
   },
 
   getVideoStyles() {
-    let styles = {};
+    let meta = this.props.entry.iframely.meta,
+        links = this.props.entry.iframely.links,
+        styles = {};
 
-    switch(this.props.entry.iframely.meta.site) {
-      case 'Instagram':
-        styles.height = 302;
-        break;
-      default:
-        if (this.props.entry.iframely.links.thumbnail) {
-          styles.height = this.props.entry.iframely.links.thumbnail[0].media.height;
-        }
-        break;
+    if (meta && meta.site === 'Instagram') {
+      styles.height = 302;
+    } else if (links && links.thumbnail) {
+      styles.height = (links.thumbnail[0].media.height <= 200) ? links.thumbnail[0].media.height : 200;
     }
 
     return styles;
   },
 
   getCoverStyles() {
-    let styles = {};
+    let meta = this.props.entry.iframely.meta,
+        links = this.props.entry.iframely.links,
+        styles = {};
 
-    switch(this.props.entry.iframely.meta.site) {
-      case 'Instagram':
-        if (this.props.entry.iframely.links.thumbnail) {
-          styles.backgroundImage = `url("${this.props.entry.iframely.links.thumbnail[1].href}")`;
-        }
-        break;
-      default:
-        if (this.props.entry.iframely.links.thumbnail) {
-          styles.backgroundImage = `url("${this.props.entry.iframely.links.thumbnail[0].href}")`;
-        }
-        break;
+    if (meta && meta.site === 'Instagram') {
+      if (links && links.thumbnail) {
+        styles.backgroundImage = `url("${links.thumbnail[1].href}")`;
+      }
+    } else if (links && links.thumbnail) {
+      styles.backgroundImage = `url("${links.thumbnail[0].href}")`;
     }
 
     return styles;

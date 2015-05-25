@@ -8,7 +8,8 @@ import EntryBrickUnknownType from './EntryBrickUnknownType';
 const ENTRY_TEXT_TYPE = 'text',
       ENTRY_IMAGE_TYPE = 'image',
       ENTRY_VIDEO_TYPE = 'video',
-      ENTRY_QUOTE_TYPE = 'quote';
+      ENTRY_QUOTE_TYPE = 'quote',
+      ENTRY_ANONYMOUS_TYPE = 'anonymous';
 
 let EntryBrickContent = React.createClass({
   propTypes: {
@@ -18,6 +19,7 @@ let EntryBrickContent = React.createClass({
   render() {
     switch(this.props.entry.type) {
       case ENTRY_TEXT_TYPE:
+      case ENTRY_ANONYMOUS_TYPE:
         return <EntryBrickTextType entry={this.props.entry} />;
       case ENTRY_IMAGE_TYPE:
         return <EntryBrickImageType entry={this.props.entry} />;

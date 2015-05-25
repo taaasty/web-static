@@ -1,69 +1,41 @@
 import EntryBrick from '../Entry/EntryBrick';
-import Masonry from 'masonry-layout';
-// import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/infiniteScroll/index';
+import MasonryMixin from 'react-masonry-mixin';
+
+const masonryOptions = {
+  itemSelector: '.brick',
+  transitionDuration: 0,
+  isFitWidth: true,
+  gutter: 20
+};
 
 let FeedBricks = React.createClass({
+  mixins: [MasonryMixin('masonryContainer', masonryOptions)],
+
   propTypes: {
-    entries: React.PropTypes.array,
-    sinceEntryID: React.PropTypes.number,
-    loadLimit: React.PropTypes.number
-  },
-
-  getDefaultProps() {
-    return {
-      // entries: [],
-      entries: props.entries,
-      sinceEntryID: null,
-      loadLimit: 10
-    };
-  },
-
-  getInitialState() {
-    return {
-      entries: this.props.entries
-    };
-  },
-
-  componentDidMount() {
-    this.initGridManager()
-  },
-
-  componentDidUpdate(prevProps) {
-    if (this.state.entries.length !== prevProps.entries.length) {
-      this.msnry.reloadItems();
-      // this.initGridManager()
-    }
+    entries: React.PropTypes.array.isRequired,
+    loading: React.PropTypes.bool.isRequired,
+    canLoad: React.PropTypes.bool.isRequired,
+    onLoadMoreEntries: React.PropTypes.func.isRequired
   },
 
   render() {
-    let entryList = this.state.entries.map((entry) => {
+    let entryList = this.props.entries.map((entry) => {
       return <EntryBrick entry={entry} key={entry.id} />;
     });
 
     return (
       <div className="bricks-wrapper">
-        <section ref="container" className="bricks">
-          {entryList}
-        </section>
+        <InfiniteScroll
+            loading={this.props.loading}
+            canLoad={this.props.canLoad}
+            onLoad={this.props.onLoadMoreEntries}>
+          <section ref="masonryContainer" className="bricks">
+            {entryList}
+          </section>
+        </InfiniteScroll>
       </div>
     );
-  },
-
-  initGridManager() {
-    this.msnry = new Masonry(this.refs.container.getDOMNode(), {
-      itemSelector: '.brick',
-      transitionDuration: '0.4s',
-      isFitWidth: true,
-      gutter: 20,
-      hiddenStyle: {
-        opacity: 0,
-        transform: 'opacity(0.001)'
-      },
-      visibleStyle: {
-        opacity: 1,
-        transform: 'opacity(1)'
-      }
-    });
   }
 });
 
