@@ -1,5 +1,6 @@
 import FeedActionCreators from '../../actions/feed';
-import FeedTlog from './FeedTlog';
+import FeedOldBricks from './FeedOldBricks';
+import FeedOldTlog from './FeedOldTlog';
 import URI from 'URIjs';
 
 let Feed = React.createClass({
@@ -10,8 +11,8 @@ let Feed = React.createClass({
 
   getDefaultProps() {
     return {
-      feedUrl: window.location.href
-      // feedUrl: 'http://taaasty.com/best'
+      // feedUrl: window.location.href
+      feedUrl: 'http://taaasty.com/best'
     };
   },
 
@@ -27,7 +28,16 @@ let Feed = React.createClass({
     switch(this.props.style) {
       case 'tlog':
         return (
-          <FeedTlog
+          <FeedOldTlog
+              html={this.state.html}
+              loading={this.state.loading}
+              canLoad={!this.state.loading && !this.state.everythingLoaded}
+              onLoadNextEntries={this.loadNextEntries} />
+        );
+        break;
+      case 'feed':
+        return (
+          <FeedOldBricks
               html={this.state.html}
               loading={this.state.loading}
               canLoad={!this.state.loading && !this.state.everythingLoaded}

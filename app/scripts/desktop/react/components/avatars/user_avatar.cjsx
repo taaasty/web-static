@@ -16,7 +16,7 @@ window.UserAvatar = React.createClass
 
   render: ->
     <Avatar
-        name={ @state.user.tag }
+        name={ @state.user.tag || this.state.user.name }
         userpic={ @state.user.userpic }
         size={ @props.size } />
 

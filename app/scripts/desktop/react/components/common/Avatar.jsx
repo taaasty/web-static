@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import Image from './Image';
 
 let Avatar = React.createClass({
   propTypes: {
@@ -29,8 +30,8 @@ let Avatar = React.createClass({
       };
 
       return (
-        <span className={avatarClasses} style={avatarStyles}>
-          <img src={avatarUrl} className="avatar__img" />
+        <span className={avatarClasses}>
+          <Image image={{url: avatarUrl}} className="avatar__img" />
         </span>
       );
     } else {

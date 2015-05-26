@@ -5,11 +5,16 @@ let Image = React.createClass({
       geometry: React.PropTypes.object
     }).isRequired,
     maxWidth: React.PropTypes.number,
-    maxHeight: React.PropTypes.number
+    maxHeight: React.PropTypes.number,
+    className: React.PropTypes.string
   },
 
   render() {
-    return <img src={this.getUrl()} srcSet={this.getRetinaUrl()} />;
+    return (
+      <img src={this.getUrl()}
+           srcSet={this.getRetinaUrl()}
+           className={this.props.className} />
+    );
   },
 
   getSize() {
