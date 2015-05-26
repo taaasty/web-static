@@ -213,4 +213,16 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
+    accept: (acceptUrl) ->
+      key = Constants.api.ACCEPT_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest acceptUrl
+
+    decline: (declineUrl) ->
+      key = Constants.api.DECLINE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest declineUrl
+
 module.exports = Api

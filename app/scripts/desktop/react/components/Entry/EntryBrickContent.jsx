@@ -13,20 +13,23 @@ const ENTRY_TEXT_TYPE = 'text',
 
 let EntryBrickContent = React.createClass({
   propTypes: {
-    entry: React.PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render() {
     switch(this.props.entry.type) {
       case ENTRY_TEXT_TYPE:
       case ENTRY_ANONYMOUS_TYPE:
-        return <EntryBrickTextType entry={this.props.entry} />;
+        return <EntryBrickTextType {...this.props} />;
       case ENTRY_IMAGE_TYPE:
-        return <EntryBrickImageType entry={this.props.entry} />;
+        return <EntryBrickImageType {...this.props} />;
       case ENTRY_VIDEO_TYPE:
-        return <EntryBrickVideoType entry={this.props.entry} />;
+        return <EntryBrickVideoType {...this.props} />;
       case ENTRY_QUOTE_TYPE:
-        return <EntryBrickQuoteType entry={this.props.entry} />;
+        return <EntryBrickQuoteType {...this.props} />;
       default:
         ErrorService.notifyError('Неизвестный тип brick-поста', {
           componentName: this.constructor.displayName,
@@ -35,7 +38,7 @@ let EntryBrickContent = React.createClass({
           entryType: this.props.entry.type
         });
 
-        return <EntryBrickUnknownType entry={this.props.entry} />;
+        return <EntryBrickUnknownType {...this.props} />;
     }
   }
 });

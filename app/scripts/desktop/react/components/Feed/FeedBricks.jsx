@@ -20,8 +20,13 @@ let FeedBricks = React.createClass({
   },
 
   render() {
-    let entryList = this.props.entries.map((entry) => {
-      return <EntryBrick entry={entry} key={entry.id} />;
+    let entryList = this.props.entries.map((item) => {
+      return (
+        <EntryBrick
+            entry={item.entry}
+            moderation={item.moderation}
+            key={item.entry.id} />
+      );
     });
 
     return (

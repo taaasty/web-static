@@ -20,7 +20,7 @@ let EntryBrickUnknownType = React.createClass({
           {this.renderBrickTitle()}
           <div className="brick__text">
             <a href={this.props.entry.entry_url} title={this.props.entry.title} className="brick__link">
-              Неизвестный тип записи
+              {i18n.t('entry.unknown_type')}
             </a>
           </div>
         </div>

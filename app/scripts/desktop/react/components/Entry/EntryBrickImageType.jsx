@@ -42,7 +42,7 @@ let EntryBrickImageType = React.createClass({
     if (this.props.entry.thumbnail) {
       return <Image image={this.props.entry.thumbnail} maxWidth={brickWidth} />;
     } else {
-      return <span>У записи нет изображений</span>;
+      return <span>{i18n.t('entry.has_no_images')}</span>;
     }
   },
 

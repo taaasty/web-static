@@ -19,5 +19,7 @@ ApiConstants = keyMirror
   LOAD_FRIENDS_ENTRIES: null
   LOAD_BEST_ENTRIES: null
   LOAD_ANONYMOUS_ENTRIES: null
+  ACCEPT_ENTRY: null
+  DECLINE_ENTRY: null
 
 module.exports = ApiConstants

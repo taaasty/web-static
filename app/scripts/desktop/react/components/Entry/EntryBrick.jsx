@@ -1,3 +1,4 @@
+import EntryActionCreators from '../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 
 const ENTRY_TEXT_TYPE = 'text',
@@ -8,19 +9,38 @@ const ENTRY_TEXT_TYPE = 'text',
 
 let EntryBrick = React.createClass({
   propTypes: {
-    entry: React.PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    moderation: React.PropTypes.object
   },
 
-  shouldComponentUpdate() {
-    return false;
+  getInitialState() {
+    return {
+      visible: true,
+      hasModeration: !!this.props.moderation
+    };
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.state.hasModeration != nextState.hasModeration ||
+      this.state.visible != nextState.visible
+    );
   },
 
   render() {
-    return (
-      <article className={this.getBrickClasses()}>
-        <EntryBrickContent entry={this.props.entry} />
-      </article>
-    );
+    if (this.state.visible) {
+      return (
+        <article className={this.getBrickClasses()}>
+          <EntryBrickContent
+              entry={this.props.entry}
+              hasModeration={this.state.hasModeration}
+              onEntryAccept={this.acceptEntry}
+              onEntryDecline={this.declineEntry} />
+        </article>
+      );
+    } else {
+      return null;
+    }
   },
 
   getBrickClasses() {
@@ -36,6 +56,42 @@ let EntryBrick = React.createClass({
     }
 
     return `brick brick--${typeClass}`;
+  },
+
+  acceptEntry() {
+    EntryActionCreators.accept(this.props.moderation.accept_url)
+      .then(() => {
+        let { accept_action } = this.props.moderation;
+
+        if (this.isMounted()) {
+          switch(accept_action) {
+            case 'delete':
+              this.setState({visible: false, hasModeration: false});
+              break;
+            case 'nothing':
+              this.setState({hasModeration: false});
+              break;
+          }
+        }
+      });
+  },
+
+  declineEntry() {
+    EntryActionCreators.decline(this.props.moderation.decline_url)
+      .then(() => {
+        let { decline_action } = this.props.moderation;
+
+        if (this.isMounted()) {
+          switch(decline_action) {
+            case 'delete':
+              this.setState({visible: false, hasModeration: false});
+              break;
+            case 'nothing':
+              this.setState({hasModeration: false});
+              break;
+          }
+        }
+      });
   }
 });
 
