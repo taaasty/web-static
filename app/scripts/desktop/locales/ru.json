@@ -379,7 +379,7 @@
     "hero_create_entry": "Написать в поток"
   },
   "messages": {
-    "entry_accept_success": "Запись принята"
+    "entry_accept_success": "Запись принята",
     "entry_decline_success": "Запись отклонена"
   }
 }

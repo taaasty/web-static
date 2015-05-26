@@ -21667,18 +21667,18 @@ var Avatar = React.createClass({
     });
 
     if (url != null) {
-      var avatarUrl = ThumborService.newImageUrl(url, {
-        width: this.props.size, height: this.props.size
-      });
-
-      var avatarStyles = {
-        backgroundImage: 'url("' + avatarUrl + '")'
+      var image = {
+        url: url,
+        geometry: {
+          width: this.props.size,
+          height: this.props.size
+        }
       };
 
       return React.createElement(
         'span',
         { className: avatarClasses },
-        React.createElement(_Image2['default'], { image: { url: avatarUrl }, className: 'avatar__img' })
+        React.createElement(_Image2['default'], { image: image, className: 'avatar__img' })
       );
     } else {
       var avatarStyles = {

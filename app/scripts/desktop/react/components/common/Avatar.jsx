@@ -21,17 +21,17 @@ let Avatar = React.createClass({
     });
 
     if (url != null) {
-      let avatarUrl = ThumborService.newImageUrl(url, {
-        width: this.props.size, height: this.props.size
-      });
-
-      let avatarStyles = {
-        backgroundImage: `url("${avatarUrl}")`
+      let image = {
+        url,
+        geometry: {
+          width: this.props.size,
+          height: this.props.size
+        }
       };
 
       return (
         <span className={avatarClasses}>
-          <Image image={{url: avatarUrl}} className="avatar__img" />
+          <Image image={image} className="avatar__img" />
         </span>
       );
     } else {
