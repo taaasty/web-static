@@ -18256,6 +18256,10 @@ var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
 var _EntryBrickMetabar2 = _interopRequireDefault(_EntryBrickMetabar);
 
+var _EntryBrickActions = require('./EntryBrickActions');
+
+var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
+
 var brickWidth = 302;
 
 var EntryBrickImageType = React.createClass({
@@ -18271,7 +18275,10 @@ var EntryBrickImageType = React.createClass({
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render: function render() {
@@ -18296,7 +18303,11 @@ var EntryBrickImageType = React.createClass({
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
           url: this.props.entry.url })
-      )
+      ),
+      React.createElement(_EntryBrickActions2['default'], {
+        hasModeration: this.props.hasModeration,
+        onAccept: this.props.onEntryAccept,
+        onDecline: this.props.onEntryDecline })
     );
   },
 
@@ -18334,7 +18345,7 @@ var EntryBrickImageType = React.createClass({
 exports['default'] = EntryBrickImageType;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/components/common/Text":410,"../common/Image":161,"./EntryBrickMetabar":109}],109:[function(require,module,exports){
+},{"../../../../shared/react/components/common/Text":410,"../common/Image":161,"./EntryBrickActions":106,"./EntryBrickMetabar":109}],109:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -18439,20 +18450,24 @@ exports['default'] = EntryBrickMeta;
 module.exports = exports['default'];
 
 },{"../common/Avatar":158,"../common/Voting":163}],110:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _EntryBrickMetabar = require("./EntryBrickMetabar");
+var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
 var _EntryBrickMetabar2 = _interopRequireDefault(_EntryBrickMetabar);
 
+var _EntryBrickActions = require('./EntryBrickActions');
+
+var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
+
 var EntryBrickQuoteType = React.createClass({
-  displayName: "EntryBrickQuoteType",
+  displayName: 'EntryBrickQuoteType',
 
   propTypes: {
     entry: React.PropTypes.shape({
@@ -18464,60 +18479,67 @@ var EntryBrickQuoteType = React.createClass({
       rating: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object,
       comments_count: React.PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render: function render() {
     return React.createElement(
-      "span",
+      'span',
       null,
       React.createElement(
-        "div",
-        { className: "brick__body" },
+        'div',
+        { className: 'brick__body' },
         React.createElement(
-          "a",
-          { href: this.props.entry.url, className: "brick__link" },
+          'a',
+          { href: this.props.entry.url, className: 'brick__link' },
           React.createElement(
-            "blockquote",
-            { className: "blockquote" },
+            'blockquote',
+            { className: 'blockquote' },
             React.createElement(
-              "span",
-              { className: "laquo" },
-              "«"
+              'span',
+              { className: 'laquo' },
+              '«'
             ),
             this.props.entry.text_truncated,
             React.createElement(
-              "span",
-              { className: "raquo" },
-              "»"
+              'span',
+              { className: 'raquo' },
+              '»'
             ),
             this.renderQuoteSource()
           )
         )
       ),
       React.createElement(
-        "div",
-        { className: "brick__meta" },
-        React.createElement(_EntryBrickMetabar2["default"], {
+        'div',
+        { className: 'brick__meta' },
+        React.createElement(_EntryBrickMetabar2['default'], {
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
           url: this.props.entry.url })
-      )
+      ),
+      React.createElement(_EntryBrickActions2['default'], {
+        hasModeration: this.props.hasModeration,
+        onAccept: this.props.onEntryAccept,
+        onDecline: this.props.onEntryDecline })
     );
   },
 
   renderQuoteSource: function renderQuoteSource() {
     if (this.props.entry.source) {
       return React.createElement(
-        "span",
-        { className: "blockquote__caption" },
-        "—",
+        'span',
+        { className: 'blockquote__caption' },
+        '—',
         React.createElement(
-          "span",
-          { className: "blockquote__source" },
+          'span',
+          { className: 'blockquote__source' },
           React.createElement(
-            "i",
+            'i',
             null,
             this.props.entry.source
           )
@@ -18527,10 +18549,10 @@ var EntryBrickQuoteType = React.createClass({
   }
 });
 
-exports["default"] = EntryBrickQuoteType;
-module.exports = exports["default"];
+exports['default'] = EntryBrickQuoteType;
+module.exports = exports['default'];
 
-},{"./EntryBrickMetabar":109}],111:[function(require,module,exports){
+},{"./EntryBrickActions":106,"./EntryBrickMetabar":109}],111:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -18623,20 +18645,24 @@ exports['default'] = EntryBrickTextType;
 module.exports = exports['default'];
 
 },{"../../../../shared/react/components/common/Text":410,"./EntryBrickActions":106,"./EntryBrickMetabar":109}],112:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _EntryBrickMetabar = require("./EntryBrickMetabar");
+var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
 var _EntryBrickMetabar2 = _interopRequireDefault(_EntryBrickMetabar);
 
+var _EntryBrickActions = require('./EntryBrickActions');
+
+var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
+
 var EntryBrickUnknownType = React.createClass({
-  displayName: "EntryBrickUnknownType",
+  displayName: 'EntryBrickUnknownType',
 
   propTypes: {
     entry: React.PropTypes.shape({
@@ -18647,47 +18673,54 @@ var EntryBrickUnknownType = React.createClass({
       rating: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render: function render() {
     return React.createElement(
-      "span",
+      'span',
       null,
       React.createElement(
-        "div",
-        { className: "brick__body" },
+        'div',
+        { className: 'brick__body' },
         this.renderBrickTitle(),
         React.createElement(
-          "div",
-          { className: "brick__text" },
+          'div',
+          { className: 'brick__text' },
           React.createElement(
-            "a",
-            { href: this.props.entry.entry_url, title: this.props.entry.title, className: "brick__link" },
-            i18n.t("entry.unknown_type")
+            'a',
+            { href: this.props.entry.entry_url, title: this.props.entry.title, className: 'brick__link' },
+            i18n.t('entry.unknown_type')
           )
         )
       ),
       React.createElement(
-        "div",
-        { className: "brick__meta" },
-        React.createElement(_EntryBrickMetabar2["default"], {
+        'div',
+        { className: 'brick__meta' },
+        React.createElement(_EntryBrickMetabar2['default'], {
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
           url: this.props.entry.entry_url })
-      )
+      ),
+      React.createElement(_EntryBrickActions2['default'], {
+        hasModeration: this.props.hasModeration,
+        onAccept: this.props.onEntryAccept,
+        onDecline: this.props.onEntryDecline })
     );
   },
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
       return React.createElement(
-        "a",
-        { href: this.props.entry.entry_url, title: this.props.entry.title, className: "brick__link" },
+        'a',
+        { href: this.props.entry.entry_url, title: this.props.entry.title, className: 'brick__link' },
         React.createElement(
-          "h2",
-          { className: "brick__title" },
+          'h2',
+          { className: 'brick__title' },
           this.props.entry.title
         )
       );
@@ -18695,10 +18728,10 @@ var EntryBrickUnknownType = React.createClass({
   }
 });
 
-exports["default"] = EntryBrickUnknownType;
-module.exports = exports["default"];
+exports['default'] = EntryBrickUnknownType;
+module.exports = exports['default'];
 
-},{"./EntryBrickMetabar":109}],113:[function(require,module,exports){
+},{"./EntryBrickActions":106,"./EntryBrickMetabar":109}],113:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -18719,6 +18752,10 @@ var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
 var _EntryBrickMetabar2 = _interopRequireDefault(_EntryBrickMetabar);
 
+var _EntryBrickActions = require('./EntryBrickActions');
+
+var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
+
 var brickWidth = 302;
 
 var EntryBrickVideoType = React.createClass({
@@ -18735,7 +18772,10 @@ var EntryBrickVideoType = React.createClass({
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render: function render() {
@@ -18769,7 +18809,11 @@ var EntryBrickVideoType = React.createClass({
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
           url: this.props.entry.url })
-      )
+      ),
+      React.createElement(_EntryBrickActions2['default'], {
+        hasModeration: this.props.hasModeration,
+        onAccept: this.props.onEntryAccept,
+        onDecline: this.props.onEntryDecline })
     );
   },
 
@@ -18801,7 +18845,7 @@ var EntryBrickVideoType = React.createClass({
 exports['default'] = EntryBrickVideoType;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/components/common/Text":410,"../common/Image":161,"./EntryBrickMetabar":109}],114:[function(require,module,exports){
+},{"../../../../shared/react/components/common/Text":410,"../common/Image":161,"./EntryBrickActions":106,"./EntryBrickMetabar":109}],114:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

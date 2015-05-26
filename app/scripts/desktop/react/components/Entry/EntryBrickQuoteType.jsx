@@ -1,4 +1,5 @@
 import EntryBrickMetabar from './EntryBrickMetabar';
+import EntryBrickActions from './EntryBrickActions';
 
 let EntryBrickQuoteType = React.createClass({
   propTypes: {
@@ -11,7 +12,10 @@ let EntryBrickQuoteType = React.createClass({
       rating: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object,
       comments_count: React.PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    hasModeration: React.PropTypes.bool.isRequired,
+    onEntryAccept: React.PropTypes.func.isRequired,
+    onEntryDecline: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -32,6 +36,10 @@ let EntryBrickQuoteType = React.createClass({
               commentsCount={this.props.entry.comments_count}
               url={this.props.entry.url} />
         </div>
+        <EntryBrickActions
+            hasModeration={this.props.hasModeration}
+            onAccept={this.props.onEntryAccept}
+            onDecline={this.props.onEntryDecline} />
       </span>
     );
   },
