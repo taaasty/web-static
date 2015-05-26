@@ -60,6 +60,15 @@ PopupActions =
       <PersonsPopup panelName={ panelName } userId={ userId } />
     ), container
 
+  createFlow: ->
+    ReactApp.popupController.openWithBackground({
+      Component: CreateFlow
+      popupProps:
+        title: i18n.t('create_flow.header')
+        className: 'popup--dark popup--flows'
+        clue: 'create-flow'
+    })
+
   toggleFriends: ->
     container = document.querySelector '[popup-persons-container]'
 
