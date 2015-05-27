@@ -19030,8 +19030,8 @@ var Feed = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      // feedUrl: window.location.href
-      feedUrl: 'http://taaasty.com/best'
+      feedUrl: window.location.href
+      // feedUrl: 'http://taaasty.com/best'
     };
   },
 

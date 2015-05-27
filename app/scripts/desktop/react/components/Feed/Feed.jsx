@@ -11,8 +11,8 @@ let Feed = React.createClass({
 
   getDefaultProps() {
     return {
-      // feedUrl: window.location.href
-      feedUrl: 'http://taaasty.com/best'
+      feedUrl: window.location.href
+      // feedUrl: 'http://taaasty.com/best'
     };
   },
 
