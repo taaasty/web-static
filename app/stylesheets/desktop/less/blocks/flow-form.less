@@ -71,12 +71,35 @@
   line-height: 34px;
 }
 
-.flow-form__body {
-  padding: 20px;
-}
-
 .flow-form__item {
   .clearfix();
+  padding: 20px 0;
+  margin: 0 20px;
+
+  & + & {
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  .persons {
+    margin-right: -20px;
+    margin-left: -20px;
+  }
+}
+
+.flow-form__title {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  font-family: @font-family-base-light;
+}
+
+.flow-form__subtitle {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  font-family: @font-family-base-light;
 }
 
 .flow-form__right {
@@ -86,4 +109,91 @@
 
 .flow-form__left {
   overflow: hidden;
+}
+
+// Chooser
+.flow-form__chooser {
+  &:extend(.chooser);
+}
+
+.flow-form__chooser.state--open {
+  .flow-form__chooser-button {
+    &:extend(.chooser.state--open .chooser__button all);
+  }
+
+  .flow-form__chooser-dropdown {
+    &:extend(.chooser.state--open .chooser__dropdown all);
+  }
+}
+
+.flow-form__chooser-button {
+  &:extend(.chooser__button all);
+}
+
+.flow-form__chooser-button-text {
+  &:extend(.chooser__button-text all);
+}
+
+.flow-form__chooser-dropdown {
+  &:extend(.chooser__dropdown all);
+}
+
+.flow-form__chooser-input {
+  &:extend(.chooser__input all);
+}
+
+.flow-form__chooser-loading {
+  &:extend(.chooser__loading all);
+}
+
+.flow-form__chooser-empty {
+  &:extend(.chooser__empty all);
+}
+
+.flow-form__chooser-result {
+  &:extend(.chooser__result all);
+
+  &:hover,
+  &.state--active {
+    .flow-form__user-name {
+      opacity: 1;
+    }
+  }
+}
+
+// User
+.flow-form__user {
+  .clearfix();
+}
+
+.flow-form__user-avatar {
+  width: 35px;
+  height: 35px;
+  margin-right: 8px;
+  float: left;
+}
+
+.flow-form__user-name {
+  margin-top: 7px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  opacity: .6;
+  transition: opacity .3s ease;
+}
+
+// Persons
+.flow-form__persons {
+  .flow-form__subtitle {
+    margin-top: 20px;
+  }
+
+  .persons {
+    padding-top: 0;
+  }
+
+  .person {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }

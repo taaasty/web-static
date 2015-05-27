@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.form-field__box {
+  position: relative;
+  z-index: @zindex-form-field;
+}
+
 .form-field__input {
   width: 100%;
   position: relative;
@@ -91,6 +96,33 @@
   .form-field__input:focus + .form-field__bg,
   .form-field__textarea:focus + .form-field__bg {
     opacity: .2;
+  }
+
+  &.form-field--binary {
+    cursor: text;
+
+    .form-field__box {
+      overflow: hidden;
+    }
+
+    .form-field__text {
+      padding: 10px 0 10px 10px;
+      float: left;
+      font-size: @form-field-font-size;
+      line-height: @form-field-line-height;
+      opacity: .5;
+
+      .tilde {
+        position: relative;
+        top: .23em;
+      }
+    }
+
+    .form-field__text + .form-field__input,
+    .form-field__text + .form-field__box .form-field__input {
+      // padding-right: 26px;
+      padding-left: 0;
+    }
   }
 }
 
