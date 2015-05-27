@@ -11145,7 +11145,7 @@ moment.locale('ru', {
   }
 });
 
-},{"../../../../../node_modules/moment/locale/ru":451}],10:[function(require,module,exports){
+},{"../../../../../node_modules/moment/locale/ru":454}],10:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -11157,7 +11157,7 @@ var _numeral2 = _interopRequireDefault(_numeral);
 var language = require('../../../../../node_modules/numeral/languages/ru');
 _numeral2['default'].language('ru', language);
 
-},{"../../../../../node_modules/numeral/languages/ru":453,"numeral":"numeral"}],11:[function(require,module,exports){
+},{"../../../../../node_modules/numeral/languages/ru":456,"numeral":"numeral"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -13777,7 +13777,7 @@ var Bricks = React.createClass({
 exports['default'] = Bricks;
 module.exports = exports['default'];
 
-},{"../Entry/EntryBrick":105,"../common/infiniteScroll/index":160,"react-masonry-mixin":454}],41:[function(require,module,exports){
+},{"../Entry/EntryBrick":105,"../common/infiniteScroll/index":160,"react-masonry-mixin":457}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -35983,7 +35983,7 @@ DesignPreviewService = {
 module.exports = DesignPreviewService;
 
 
-},{"jss":435,"lodash":"lodash"}],385:[function(require,module,exports){
+},{"jss":438,"lodash":"lodash"}],385:[function(require,module,exports){
 var EntryKeeper, LAST_PRIVACY_KEY, NormalizedEntry, STORAGE_PREFIX, key, keyAnonymous, keyExisting, keyNew, storage;
 
 NormalizedEntry = require('../entities/normalizedEntry');
@@ -37299,7 +37299,7 @@ require('jquery.select2');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":432,"introJs":"introJs","jquery":"jquery","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":452,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],398:[function(require,module,exports){
+},{"Modernizr":"Modernizr","aviator":"aviator","baron":"baron","bootstrap.tooltip":"bootstrap.tooltip","es5-shim":"es5-shim","eventEmitter":"eventEmitter","flux":432,"introJs":"introJs","jquery":"jquery","jquery.autosize.input":"jquery.autosize.input","jquery.collage":"jquery.collage","jquery.connection":"jquery.connection","jquery.fileupload":"jquery.fileupload","jquery.mousewheel":"jquery.mousewheel","jquery.scrollto":"jquery.scrollto","jquery.select2":"jquery.select2","jquery.ui.core":"jquery.ui.core","jquery.ui.draggable":"jquery.ui.draggable","jquery.ui.mouse":"jquery.ui.mouse","jquery.ui.slider":"jquery.ui.slider","jquery.ui.touch-punch":"jquery.ui.touch-punch","jquery.ui.widget":"jquery.ui.widget","jquery.waypoints":"jquery.waypoints","lodash":"lodash","medium-editor":"medium-editor","moment":455,"mousetrap":"mousetrap","pusher":"pusher","react":"react","react-mixin-manager":"react-mixin-manager","swfobject":"swfobject","undo":"undo"}],398:[function(require,module,exports){
 var csrfToken;
 
 csrfToken = function() {
@@ -40045,12 +40045,6 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],431:[function(require,module,exports){
-/*!
-  Copyright (c) 2015 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-
 function classNames() {
 	var classes = '';
 	var arg;
@@ -40077,16 +40071,9 @@ function classNames() {
 	return classes.substr(1);
 }
 
-// safely export classNames for node / browserify
+// safely export classNames in case the script is included directly on a page
 if (typeof module !== 'undefined' && module.exports) {
 	module.exports = classNames;
-}
-
-// safely export classNames for RequireJS
-if (typeof define !== 'undefined' && define.amd) {
-	define('classnames', [], function() {
-		return classNames;
-	});
 }
 
 },{}],432:[function(require,module,exports){
@@ -40409,6 +40396,901 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 },{}],435:[function(require,module,exports){
+/*!
+ * imagesLoaded v3.1.8
+ * JavaScript is all like "You images are done yet or what?"
+ * MIT License
+ */
+
+( function( window, factory ) { 'use strict';
+  // universal module definition
+
+  /*global define: false, module: false, require: false */
+
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+      'eventEmitter/EventEmitter',
+      'eventie/eventie'
+    ], function( EventEmitter, eventie ) {
+      return factory( window, EventEmitter, eventie );
+    });
+  } else if ( typeof exports === 'object' ) {
+    // CommonJS
+    module.exports = factory(
+      window,
+      require('wolfy87-eventemitter'),
+      require('eventie')
+    );
+  } else {
+    // browser global
+    window.imagesLoaded = factory(
+      window,
+      window.EventEmitter,
+      window.eventie
+    );
+  }
+
+})( window,
+
+// --------------------------  factory -------------------------- //
+
+function factory( window, EventEmitter, eventie ) {
+
+'use strict';
+
+var $ = window.jQuery;
+var console = window.console;
+var hasConsole = typeof console !== 'undefined';
+
+// -------------------------- helpers -------------------------- //
+
+// extend objects
+function extend( a, b ) {
+  for ( var prop in b ) {
+    a[ prop ] = b[ prop ];
+  }
+  return a;
+}
+
+var objToString = Object.prototype.toString;
+function isArray( obj ) {
+  return objToString.call( obj ) === '[object Array]';
+}
+
+// turn element or nodeList into an array
+function makeArray( obj ) {
+  var ary = [];
+  if ( isArray( obj ) ) {
+    // use object if already an array
+    ary = obj;
+  } else if ( typeof obj.length === 'number' ) {
+    // convert nodeList to array
+    for ( var i=0, len = obj.length; i < len; i++ ) {
+      ary.push( obj[i] );
+    }
+  } else {
+    // array of single index
+    ary.push( obj );
+  }
+  return ary;
+}
+
+  // -------------------------- imagesLoaded -------------------------- //
+
+  /**
+   * @param {Array, Element, NodeList, String} elem
+   * @param {Object or Function} options - if function, use as callback
+   * @param {Function} onAlways - callback function
+   */
+  function ImagesLoaded( elem, options, onAlways ) {
+    // coerce ImagesLoaded() without new, to be new ImagesLoaded()
+    if ( !( this instanceof ImagesLoaded ) ) {
+      return new ImagesLoaded( elem, options );
+    }
+    // use elem as selector string
+    if ( typeof elem === 'string' ) {
+      elem = document.querySelectorAll( elem );
+    }
+
+    this.elements = makeArray( elem );
+    this.options = extend( {}, this.options );
+
+    if ( typeof options === 'function' ) {
+      onAlways = options;
+    } else {
+      extend( this.options, options );
+    }
+
+    if ( onAlways ) {
+      this.on( 'always', onAlways );
+    }
+
+    this.getImages();
+
+    if ( $ ) {
+      // add jQuery Deferred object
+      this.jqDeferred = new $.Deferred();
+    }
+
+    // HACK check async to allow time to bind listeners
+    var _this = this;
+    setTimeout( function() {
+      _this.check();
+    });
+  }
+
+  ImagesLoaded.prototype = new EventEmitter();
+
+  ImagesLoaded.prototype.options = {};
+
+  ImagesLoaded.prototype.getImages = function() {
+    this.images = [];
+
+    // filter & find items if we have an item selector
+    for ( var i=0, len = this.elements.length; i < len; i++ ) {
+      var elem = this.elements[i];
+      // filter siblings
+      if ( elem.nodeName === 'IMG' ) {
+        this.addImage( elem );
+      }
+      // find children
+      // no non-element nodes, #143
+      var nodeType = elem.nodeType;
+      if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
+        continue;
+      }
+      var childElems = elem.querySelectorAll('img');
+      // concat childElems to filterFound array
+      for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
+        var img = childElems[j];
+        this.addImage( img );
+      }
+    }
+  };
+
+  /**
+   * @param {Image} img
+   */
+  ImagesLoaded.prototype.addImage = function( img ) {
+    var loadingImage = new LoadingImage( img );
+    this.images.push( loadingImage );
+  };
+
+  ImagesLoaded.prototype.check = function() {
+    var _this = this;
+    var checkedCount = 0;
+    var length = this.images.length;
+    this.hasAnyBroken = false;
+    // complete if no images
+    if ( !length ) {
+      this.complete();
+      return;
+    }
+
+    function onConfirm( image, message ) {
+      if ( _this.options.debug && hasConsole ) {
+        console.log( 'confirm', image, message );
+      }
+
+      _this.progress( image );
+      checkedCount++;
+      if ( checkedCount === length ) {
+        _this.complete();
+      }
+      return true; // bind once
+    }
+
+    for ( var i=0; i < length; i++ ) {
+      var loadingImage = this.images[i];
+      loadingImage.on( 'confirm', onConfirm );
+      loadingImage.check();
+    }
+  };
+
+  ImagesLoaded.prototype.progress = function( image ) {
+    this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
+    // HACK - Chrome triggers event before object properties have changed. #83
+    var _this = this;
+    setTimeout( function() {
+      _this.emit( 'progress', _this, image );
+      if ( _this.jqDeferred && _this.jqDeferred.notify ) {
+        _this.jqDeferred.notify( _this, image );
+      }
+    });
+  };
+
+  ImagesLoaded.prototype.complete = function() {
+    var eventName = this.hasAnyBroken ? 'fail' : 'done';
+    this.isComplete = true;
+    var _this = this;
+    // HACK - another setTimeout so that confirm happens after progress
+    setTimeout( function() {
+      _this.emit( eventName, _this );
+      _this.emit( 'always', _this );
+      if ( _this.jqDeferred ) {
+        var jqMethod = _this.hasAnyBroken ? 'reject' : 'resolve';
+        _this.jqDeferred[ jqMethod ]( _this );
+      }
+    });
+  };
+
+  // -------------------------- jquery -------------------------- //
+
+  if ( $ ) {
+    $.fn.imagesLoaded = function( options, callback ) {
+      var instance = new ImagesLoaded( this, options, callback );
+      return instance.jqDeferred.promise( $(this) );
+    };
+  }
+
+
+  // --------------------------  -------------------------- //
+
+  function LoadingImage( img ) {
+    this.img = img;
+  }
+
+  LoadingImage.prototype = new EventEmitter();
+
+  LoadingImage.prototype.check = function() {
+    // first check cached any previous images that have same src
+    var resource = cache[ this.img.src ] || new Resource( this.img.src );
+    if ( resource.isConfirmed ) {
+      this.confirm( resource.isLoaded, 'cached was confirmed' );
+      return;
+    }
+
+    // If complete is true and browser supports natural sizes,
+    // try to check for image status manually.
+    if ( this.img.complete && this.img.naturalWidth !== undefined ) {
+      // report based on naturalWidth
+      this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
+      return;
+    }
+
+    // If none of the checks above matched, simulate loading on detached element.
+    var _this = this;
+    resource.on( 'confirm', function( resrc, message ) {
+      _this.confirm( resrc.isLoaded, message );
+      return true;
+    });
+
+    resource.check();
+  };
+
+  LoadingImage.prototype.confirm = function( isLoaded, message ) {
+    this.isLoaded = isLoaded;
+    this.emit( 'confirm', this, message );
+  };
+
+  // -------------------------- Resource -------------------------- //
+
+  // Resource checks each src, only once
+  // separate class from LoadingImage to prevent memory leaks. See #115
+
+  var cache = {};
+
+  function Resource( src ) {
+    this.src = src;
+    // add to cache
+    cache[ src ] = this;
+  }
+
+  Resource.prototype = new EventEmitter();
+
+  Resource.prototype.check = function() {
+    // only trigger checking once
+    if ( this.isChecked ) {
+      return;
+    }
+    // simulate loading on detached element
+    var proxyImage = new Image();
+    eventie.bind( proxyImage, 'load', this );
+    eventie.bind( proxyImage, 'error', this );
+    proxyImage.src = this.src;
+    // set flag
+    this.isChecked = true;
+  };
+
+  // ----- events ----- //
+
+  // trigger specified handler for event type
+  Resource.prototype.handleEvent = function( event ) {
+    var method = 'on' + event.type;
+    if ( this[ method ] ) {
+      this[ method ]( event );
+    }
+  };
+
+  Resource.prototype.onload = function( event ) {
+    this.confirm( true, 'onload' );
+    this.unbindProxyEvents( event );
+  };
+
+  Resource.prototype.onerror = function( event ) {
+    this.confirm( false, 'onerror' );
+    this.unbindProxyEvents( event );
+  };
+
+  // ----- confirm ----- //
+
+  Resource.prototype.confirm = function( isLoaded, message ) {
+    this.isConfirmed = true;
+    this.isLoaded = isLoaded;
+    this.emit( 'confirm', this, message );
+  };
+
+  Resource.prototype.unbindProxyEvents = function( event ) {
+    eventie.unbind( event.target, 'load', this );
+    eventie.unbind( event.target, 'error', this );
+  };
+
+  // -----  ----- //
+
+  return ImagesLoaded;
+
+});
+
+},{"eventie":436,"wolfy87-eventemitter":437}],436:[function(require,module,exports){
+/*!
+ * eventie v1.0.6
+ * event binding helper
+ *   eventie.bind( elem, 'click', myFn )
+ *   eventie.unbind( elem, 'click', myFn )
+ * MIT license
+ */
+
+/*jshint browser: true, undef: true, unused: true */
+/*global define: false, module: false */
+
+( function( window ) {
+
+'use strict';
+
+var docElem = document.documentElement;
+
+var bind = function() {};
+
+function getIEEvent( obj ) {
+  var event = window.event;
+  // add event.target
+  event.target = event.target || event.srcElement || obj;
+  return event;
+}
+
+if ( docElem.addEventListener ) {
+  bind = function( obj, type, fn ) {
+    obj.addEventListener( type, fn, false );
+  };
+} else if ( docElem.attachEvent ) {
+  bind = function( obj, type, fn ) {
+    obj[ type + fn ] = fn.handleEvent ?
+      function() {
+        var event = getIEEvent( obj );
+        fn.handleEvent.call( fn, event );
+      } :
+      function() {
+        var event = getIEEvent( obj );
+        fn.call( obj, event );
+      };
+    obj.attachEvent( "on" + type, obj[ type + fn ] );
+  };
+}
+
+var unbind = function() {};
+
+if ( docElem.removeEventListener ) {
+  unbind = function( obj, type, fn ) {
+    obj.removeEventListener( type, fn, false );
+  };
+} else if ( docElem.detachEvent ) {
+  unbind = function( obj, type, fn ) {
+    obj.detachEvent( "on" + type, obj[ type + fn ] );
+    try {
+      delete obj[ type + fn ];
+    } catch ( err ) {
+      // can't delete window object properties
+      obj[ type + fn ] = undefined;
+    }
+  };
+}
+
+var eventie = {
+  bind: bind,
+  unbind: unbind
+};
+
+// ----- module definition ----- //
+
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( eventie );
+} else if ( typeof exports === 'object' ) {
+  // CommonJS
+  module.exports = eventie;
+} else {
+  // browser global
+  window.eventie = eventie;
+}
+
+})( window );
+
+},{}],437:[function(require,module,exports){
+/*!
+ * EventEmitter v4.2.11 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
+ * @preserve
+ */
+
+;(function () {
+    'use strict';
+
+    /**
+     * Class for managing events.
+     * Can be extended to provide event functionality in other classes.
+     *
+     * @class EventEmitter Manages event registering and emitting.
+     */
+    function EventEmitter() {}
+
+    // Shortcuts to improve speed and size
+    var proto = EventEmitter.prototype;
+    var exports = this;
+    var originalGlobalValue = exports.EventEmitter;
+
+    /**
+     * Finds the index of the listener for the event in its storage array.
+     *
+     * @param {Function[]} listeners Array of listeners to search through.
+     * @param {Function} listener Method to look for.
+     * @return {Number} Index of the specified listener, -1 if not found
+     * @api private
+     */
+    function indexOfListener(listeners, listener) {
+        var i = listeners.length;
+        while (i--) {
+            if (listeners[i].listener === listener) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Alias a method while keeping the context correct, to allow for overwriting of target method.
+     *
+     * @param {String} name The name of the target method.
+     * @return {Function} The aliased method
+     * @api private
+     */
+    function alias(name) {
+        return function aliasClosure() {
+            return this[name].apply(this, arguments);
+        };
+    }
+
+    /**
+     * Returns the listener array for the specified event.
+     * Will initialise the event object and listener arrays if required.
+     * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
+     * Each property in the object response is an array of listener functions.
+     *
+     * @param {String|RegExp} evt Name of the event to return the listeners from.
+     * @return {Function[]|Object} All listener functions for the event.
+     */
+    proto.getListeners = function getListeners(evt) {
+        var events = this._getEvents();
+        var response;
+        var key;
+
+        // Return a concatenated array of all matching events if
+        // the selector is a regular expression.
+        if (evt instanceof RegExp) {
+            response = {};
+            for (key in events) {
+                if (events.hasOwnProperty(key) && evt.test(key)) {
+                    response[key] = events[key];
+                }
+            }
+        }
+        else {
+            response = events[evt] || (events[evt] = []);
+        }
+
+        return response;
+    };
+
+    /**
+     * Takes a list of listener objects and flattens it into a list of listener functions.
+     *
+     * @param {Object[]} listeners Raw listener objects.
+     * @return {Function[]} Just the listener functions.
+     */
+    proto.flattenListeners = function flattenListeners(listeners) {
+        var flatListeners = [];
+        var i;
+
+        for (i = 0; i < listeners.length; i += 1) {
+            flatListeners.push(listeners[i].listener);
+        }
+
+        return flatListeners;
+    };
+
+    /**
+     * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
+     *
+     * @param {String|RegExp} evt Name of the event to return the listeners from.
+     * @return {Object} All listener functions for an event in an object.
+     */
+    proto.getListenersAsObject = function getListenersAsObject(evt) {
+        var listeners = this.getListeners(evt);
+        var response;
+
+        if (listeners instanceof Array) {
+            response = {};
+            response[evt] = listeners;
+        }
+
+        return response || listeners;
+    };
+
+    /**
+     * Adds a listener function to the specified event.
+     * The listener will not be added if it is a duplicate.
+     * If the listener returns true then it will be removed after it is called.
+     * If you pass a regular expression as the event name then the listener will be added to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to attach the listener to.
+     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addListener = function addListener(evt, listener) {
+        var listeners = this.getListenersAsObject(evt);
+        var listenerIsWrapped = typeof listener === 'object';
+        var key;
+
+        for (key in listeners) {
+            if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
+                listeners[key].push(listenerIsWrapped ? listener : {
+                    listener: listener,
+                    once: false
+                });
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of addListener
+     */
+    proto.on = alias('addListener');
+
+    /**
+     * Semi-alias of addListener. It will add a listener that will be
+     * automatically removed after its first execution.
+     *
+     * @param {String|RegExp} evt Name of the event to attach the listener to.
+     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addOnceListener = function addOnceListener(evt, listener) {
+        return this.addListener(evt, {
+            listener: listener,
+            once: true
+        });
+    };
+
+    /**
+     * Alias of addOnceListener.
+     */
+    proto.once = alias('addOnceListener');
+
+    /**
+     * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
+     * You need to tell it what event names should be matched by a regex.
+     *
+     * @param {String} evt Name of the event to create.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.defineEvent = function defineEvent(evt) {
+        this.getListeners(evt);
+        return this;
+    };
+
+    /**
+     * Uses defineEvent to define multiple events.
+     *
+     * @param {String[]} evts An array of event names to define.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.defineEvents = function defineEvents(evts) {
+        for (var i = 0; i < evts.length; i += 1) {
+            this.defineEvent(evts[i]);
+        }
+        return this;
+    };
+
+    /**
+     * Removes a listener function from the specified event.
+     * When passed a regular expression as the event name, it will remove the listener from all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to remove the listener from.
+     * @param {Function} listener Method to remove from the event.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeListener = function removeListener(evt, listener) {
+        var listeners = this.getListenersAsObject(evt);
+        var index;
+        var key;
+
+        for (key in listeners) {
+            if (listeners.hasOwnProperty(key)) {
+                index = indexOfListener(listeners[key], listener);
+
+                if (index !== -1) {
+                    listeners[key].splice(index, 1);
+                }
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of removeListener
+     */
+    proto.off = alias('removeListener');
+
+    /**
+     * Adds listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
+     * You can also pass it a regular expression to add the array of listeners to all events that match it.
+     * Yeah, this function does quite a bit. That's probably a bad thing.
+     *
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addListeners = function addListeners(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(false, evt, listeners);
+    };
+
+    /**
+     * Removes listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be removed.
+     * You can also pass it a regular expression to remove the listeners from all events that match it.
+     *
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to remove.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeListeners = function removeListeners(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(true, evt, listeners);
+    };
+
+    /**
+     * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
+     * The first argument will determine if the listeners are removed (true) or added (false).
+     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be added/removed.
+     * You can also pass it a regular expression to manipulate the listeners of all events that match it.
+     *
+     * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
+        var i;
+        var value;
+        var single = remove ? this.removeListener : this.addListener;
+        var multiple = remove ? this.removeListeners : this.addListeners;
+
+        // If evt is an object then pass each of its properties to this method
+        if (typeof evt === 'object' && !(evt instanceof RegExp)) {
+            for (i in evt) {
+                if (evt.hasOwnProperty(i) && (value = evt[i])) {
+                    // Pass the single listener straight through to the singular method
+                    if (typeof value === 'function') {
+                        single.call(this, i, value);
+                    }
+                    else {
+                        // Otherwise pass back to the multiple function
+                        multiple.call(this, i, value);
+                    }
+                }
+            }
+        }
+        else {
+            // So evt must be a string
+            // And listeners must be an array of listeners
+            // Loop over it and pass each one to the multiple method
+            i = listeners.length;
+            while (i--) {
+                single.call(this, evt, listeners[i]);
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Removes all listeners from a specified event.
+     * If you do not specify an event then all listeners will be removed.
+     * That means every event will be emptied.
+     * You can also pass a regex to remove all events that match it.
+     *
+     * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeEvent = function removeEvent(evt) {
+        var type = typeof evt;
+        var events = this._getEvents();
+        var key;
+
+        // Remove different things depending on the state of evt
+        if (type === 'string') {
+            // Remove all listeners for the specified event
+            delete events[evt];
+        }
+        else if (evt instanceof RegExp) {
+            // Remove all events matching the regex.
+            for (key in events) {
+                if (events.hasOwnProperty(key) && evt.test(key)) {
+                    delete events[key];
+                }
+            }
+        }
+        else {
+            // Remove all listeners in all events
+            delete this._events;
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of removeEvent.
+     *
+     * Added to mirror the node API.
+     */
+    proto.removeAllListeners = alias('removeEvent');
+
+    /**
+     * Emits an event of your choice.
+     * When emitted, every listener attached to that event will be executed.
+     * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
+     * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
+     * So they will not arrive within the array on the other side, they will be separate.
+     * You can also pass a regular expression to emit to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
+     * @param {Array} [args] Optional array of arguments to be passed to each listener.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.emitEvent = function emitEvent(evt, args) {
+        var listeners = this.getListenersAsObject(evt);
+        var listener;
+        var i;
+        var key;
+        var response;
+
+        for (key in listeners) {
+            if (listeners.hasOwnProperty(key)) {
+                i = listeners[key].length;
+
+                while (i--) {
+                    // If the listener returns true then it shall be removed from the event
+                    // The function is executed either with a basic call or an apply if there is an args array
+                    listener = listeners[key][i];
+
+                    if (listener.once === true) {
+                        this.removeListener(evt, listener.listener);
+                    }
+
+                    response = listener.listener.apply(this, args || []);
+
+                    if (response === this._getOnceReturnValue()) {
+                        this.removeListener(evt, listener.listener);
+                    }
+                }
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of emitEvent
+     */
+    proto.trigger = alias('emitEvent');
+
+    /**
+     * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
+     * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
+     * @param {...*} Optional additional arguments to be passed to each listener.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.emit = function emit(evt) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return this.emitEvent(evt, args);
+    };
+
+    /**
+     * Sets the current value to check against when executing listeners. If a
+     * listeners return value matches the one set here then it will be removed
+     * after execution. This value defaults to true.
+     *
+     * @param {*} value The new value to check for when executing listeners.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.setOnceReturnValue = function setOnceReturnValue(value) {
+        this._onceReturnValue = value;
+        return this;
+    };
+
+    /**
+     * Fetches the current value to check against when executing listeners. If
+     * the listeners return value matches this one then it should be removed
+     * automatically. It will return true by default.
+     *
+     * @return {*|Boolean} The current value to check for or the default, true.
+     * @api private
+     */
+    proto._getOnceReturnValue = function _getOnceReturnValue() {
+        if (this.hasOwnProperty('_onceReturnValue')) {
+            return this._onceReturnValue;
+        }
+        else {
+            return true;
+        }
+    };
+
+    /**
+     * Fetches the events object and creates one if required.
+     *
+     * @return {Object} The events storage object.
+     * @api private
+     */
+    proto._getEvents = function _getEvents() {
+        return this._events || (this._events = {});
+    };
+
+    /**
+     * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+     *
+     * @return {Function} Non conflicting EventEmitter class.
+     */
+    EventEmitter.noConflict = function noConflict() {
+        exports.EventEmitter = originalGlobalValue;
+        return EventEmitter;
+    };
+
+    // Expose the class either via AMD, CommonJS or the global object
+    if (typeof define === 'function' && define.amd) {
+        define(function () {
+            return EventEmitter;
+        });
+    }
+    else if (typeof module === 'object' && module.exports){
+        module.exports = EventEmitter;
+    }
+    else {
+        exports.EventEmitter = EventEmitter;
+    }
+}.call(this));
+
+},{}],438:[function(require,module,exports){
 /**
  * StyleSheets written in javascript.
  *
@@ -40419,7 +41301,7 @@ module.exports = invariant;
 
 module.exports = require('./lib/index')
 
-},{"./lib/index":438}],436:[function(require,module,exports){
+},{"./lib/index":441}],439:[function(require,module,exports){
 'use strict'
 
 var plugins = require('./plugins')
@@ -40665,7 +41547,7 @@ function indent(level, str) {
     return indentStr + str
 }
 
-},{"./plugins":439}],437:[function(require,module,exports){
+},{"./plugins":442}],440:[function(require,module,exports){
 'use strict'
 
 var Rule = require('./Rule')
@@ -40930,7 +41812,7 @@ StyleSheet.prototype.createElement = function () {
     return element
 }
 
-},{"./Rule":436,"./plugins":439}],438:[function(require,module,exports){
+},{"./Rule":439,"./plugins":442}],441:[function(require,module,exports){
 'use strict'
 
 var StyleSheet = require('./StyleSheet')
@@ -40977,7 +41859,7 @@ exports.createRule = function (selector, style) {
  */
 exports.use = exports.plugins.use
 
-},{"./Rule":436,"./StyleSheet":437,"./plugins":439}],439:[function(require,module,exports){
+},{"./Rule":439,"./StyleSheet":440,"./plugins":442}],442:[function(require,module,exports){
 'use strict'
 
 /**
@@ -41010,7 +41892,7 @@ exports.run = function (rule) {
     }
 }
 
-},{}],440:[function(require,module,exports){
+},{}],443:[function(require,module,exports){
 /**
  * matchesSelector v1.0.3
  * matchesSelector( element, '.selector' )
@@ -41119,7 +42001,7 @@ exports.run = function (rule) {
 
 })( Element.prototype );
 
-},{}],441:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 /*!
  * docReady v1.0.3
  * Cross browser DOMContentLoaded event emitter
@@ -41193,91 +42075,9 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{"eventie":442}],442:[function(require,module,exports){
-/*!
- * eventie v1.0.6
- * event binding helper
- *   eventie.bind( elem, 'click', myFn )
- *   eventie.unbind( elem, 'click', myFn )
- * MIT license
- */
-
-/*jshint browser: true, undef: true, unused: true */
-/*global define: false, module: false */
-
-( function( window ) {
-
-'use strict';
-
-var docElem = document.documentElement;
-
-var bind = function() {};
-
-function getIEEvent( obj ) {
-  var event = window.event;
-  // add event.target
-  event.target = event.target || event.srcElement || obj;
-  return event;
-}
-
-if ( docElem.addEventListener ) {
-  bind = function( obj, type, fn ) {
-    obj.addEventListener( type, fn, false );
-  };
-} else if ( docElem.attachEvent ) {
-  bind = function( obj, type, fn ) {
-    obj[ type + fn ] = fn.handleEvent ?
-      function() {
-        var event = getIEEvent( obj );
-        fn.handleEvent.call( fn, event );
-      } :
-      function() {
-        var event = getIEEvent( obj );
-        fn.call( obj, event );
-      };
-    obj.attachEvent( "on" + type, obj[ type + fn ] );
-  };
-}
-
-var unbind = function() {};
-
-if ( docElem.removeEventListener ) {
-  unbind = function( obj, type, fn ) {
-    obj.removeEventListener( type, fn, false );
-  };
-} else if ( docElem.detachEvent ) {
-  unbind = function( obj, type, fn ) {
-    obj.detachEvent( "on" + type, obj[ type + fn ] );
-    try {
-      delete obj[ type + fn ];
-    } catch ( err ) {
-      // can't delete window object properties
-      obj[ type + fn ] = undefined;
-    }
-  };
-}
-
-var eventie = {
-  bind: bind,
-  unbind: unbind
-};
-
-// ----- module definition ----- //
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( eventie );
-} else if ( typeof exports === 'object' ) {
-  // CommonJS
-  module.exports = eventie;
-} else {
-  // browser global
-  window.eventie = eventie;
-}
-
-})( window );
-
-},{}],443:[function(require,module,exports){
+},{"eventie":445}],445:[function(require,module,exports){
+arguments[4][436][0].apply(exports,arguments)
+},{"dup":436}],446:[function(require,module,exports){
 /**
  * Fizzy UI utils v1.0.1
  * MIT license
@@ -41549,7 +42349,7 @@ return utils;
 
 }));
 
-},{"desandro-matches-selector":440,"doc-ready":441}],444:[function(require,module,exports){
+},{"desandro-matches-selector":443,"doc-ready":444}],447:[function(require,module,exports){
 /*!
  * getSize v1.2.2
  * measure size of elements
@@ -41801,7 +42601,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{"desandro-get-style-property":445}],445:[function(require,module,exports){
+},{"desandro-get-style-property":448}],448:[function(require,module,exports){
 /*!
  * getStyleProperty v1.0.4
  * original by kangax
@@ -41858,7 +42658,7 @@ if ( typeof define === 'function' && define.amd ) {
 
 })( window );
 
-},{}],446:[function(require,module,exports){
+},{}],449:[function(require,module,exports){
 /**
  * Outlayer Item
  */
@@ -42424,485 +43224,13 @@ return Item;
 
 }));
 
-},{"desandro-get-style-property":447,"fizzy-ui-utils":443,"get-size":444,"wolfy87-eventemitter":449}],447:[function(require,module,exports){
-arguments[4][445][0].apply(exports,arguments)
-},{"dup":445}],448:[function(require,module,exports){
-arguments[4][442][0].apply(exports,arguments)
-},{"dup":442}],449:[function(require,module,exports){
-/*!
- * EventEmitter v4.2.11 - git.io/ee
- * Unlicense - http://unlicense.org/
- * Oliver Caldwell - http://oli.me.uk/
- * @preserve
- */
-
-;(function () {
-    'use strict';
-
-    /**
-     * Class for managing events.
-     * Can be extended to provide event functionality in other classes.
-     *
-     * @class EventEmitter Manages event registering and emitting.
-     */
-    function EventEmitter() {}
-
-    // Shortcuts to improve speed and size
-    var proto = EventEmitter.prototype;
-    var exports = this;
-    var originalGlobalValue = exports.EventEmitter;
-
-    /**
-     * Finds the index of the listener for the event in its storage array.
-     *
-     * @param {Function[]} listeners Array of listeners to search through.
-     * @param {Function} listener Method to look for.
-     * @return {Number} Index of the specified listener, -1 if not found
-     * @api private
-     */
-    function indexOfListener(listeners, listener) {
-        var i = listeners.length;
-        while (i--) {
-            if (listeners[i].listener === listener) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    /**
-     * Alias a method while keeping the context correct, to allow for overwriting of target method.
-     *
-     * @param {String} name The name of the target method.
-     * @return {Function} The aliased method
-     * @api private
-     */
-    function alias(name) {
-        return function aliasClosure() {
-            return this[name].apply(this, arguments);
-        };
-    }
-
-    /**
-     * Returns the listener array for the specified event.
-     * Will initialise the event object and listener arrays if required.
-     * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
-     * Each property in the object response is an array of listener functions.
-     *
-     * @param {String|RegExp} evt Name of the event to return the listeners from.
-     * @return {Function[]|Object} All listener functions for the event.
-     */
-    proto.getListeners = function getListeners(evt) {
-        var events = this._getEvents();
-        var response;
-        var key;
-
-        // Return a concatenated array of all matching events if
-        // the selector is a regular expression.
-        if (evt instanceof RegExp) {
-            response = {};
-            for (key in events) {
-                if (events.hasOwnProperty(key) && evt.test(key)) {
-                    response[key] = events[key];
-                }
-            }
-        }
-        else {
-            response = events[evt] || (events[evt] = []);
-        }
-
-        return response;
-    };
-
-    /**
-     * Takes a list of listener objects and flattens it into a list of listener functions.
-     *
-     * @param {Object[]} listeners Raw listener objects.
-     * @return {Function[]} Just the listener functions.
-     */
-    proto.flattenListeners = function flattenListeners(listeners) {
-        var flatListeners = [];
-        var i;
-
-        for (i = 0; i < listeners.length; i += 1) {
-            flatListeners.push(listeners[i].listener);
-        }
-
-        return flatListeners;
-    };
-
-    /**
-     * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
-     *
-     * @param {String|RegExp} evt Name of the event to return the listeners from.
-     * @return {Object} All listener functions for an event in an object.
-     */
-    proto.getListenersAsObject = function getListenersAsObject(evt) {
-        var listeners = this.getListeners(evt);
-        var response;
-
-        if (listeners instanceof Array) {
-            response = {};
-            response[evt] = listeners;
-        }
-
-        return response || listeners;
-    };
-
-    /**
-     * Adds a listener function to the specified event.
-     * The listener will not be added if it is a duplicate.
-     * If the listener returns true then it will be removed after it is called.
-     * If you pass a regular expression as the event name then the listener will be added to all events that match it.
-     *
-     * @param {String|RegExp} evt Name of the event to attach the listener to.
-     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.addListener = function addListener(evt, listener) {
-        var listeners = this.getListenersAsObject(evt);
-        var listenerIsWrapped = typeof listener === 'object';
-        var key;
-
-        for (key in listeners) {
-            if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
-                listeners[key].push(listenerIsWrapped ? listener : {
-                    listener: listener,
-                    once: false
-                });
-            }
-        }
-
-        return this;
-    };
-
-    /**
-     * Alias of addListener
-     */
-    proto.on = alias('addListener');
-
-    /**
-     * Semi-alias of addListener. It will add a listener that will be
-     * automatically removed after its first execution.
-     *
-     * @param {String|RegExp} evt Name of the event to attach the listener to.
-     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.addOnceListener = function addOnceListener(evt, listener) {
-        return this.addListener(evt, {
-            listener: listener,
-            once: true
-        });
-    };
-
-    /**
-     * Alias of addOnceListener.
-     */
-    proto.once = alias('addOnceListener');
-
-    /**
-     * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
-     * You need to tell it what event names should be matched by a regex.
-     *
-     * @param {String} evt Name of the event to create.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.defineEvent = function defineEvent(evt) {
-        this.getListeners(evt);
-        return this;
-    };
-
-    /**
-     * Uses defineEvent to define multiple events.
-     *
-     * @param {String[]} evts An array of event names to define.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.defineEvents = function defineEvents(evts) {
-        for (var i = 0; i < evts.length; i += 1) {
-            this.defineEvent(evts[i]);
-        }
-        return this;
-    };
-
-    /**
-     * Removes a listener function from the specified event.
-     * When passed a regular expression as the event name, it will remove the listener from all events that match it.
-     *
-     * @param {String|RegExp} evt Name of the event to remove the listener from.
-     * @param {Function} listener Method to remove from the event.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.removeListener = function removeListener(evt, listener) {
-        var listeners = this.getListenersAsObject(evt);
-        var index;
-        var key;
-
-        for (key in listeners) {
-            if (listeners.hasOwnProperty(key)) {
-                index = indexOfListener(listeners[key], listener);
-
-                if (index !== -1) {
-                    listeners[key].splice(index, 1);
-                }
-            }
-        }
-
-        return this;
-    };
-
-    /**
-     * Alias of removeListener
-     */
-    proto.off = alias('removeListener');
-
-    /**
-     * Adds listeners in bulk using the manipulateListeners method.
-     * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
-     * You can also pass it a regular expression to add the array of listeners to all events that match it.
-     * Yeah, this function does quite a bit. That's probably a bad thing.
-     *
-     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
-     * @param {Function[]} [listeners] An optional array of listener functions to add.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.addListeners = function addListeners(evt, listeners) {
-        // Pass through to manipulateListeners
-        return this.manipulateListeners(false, evt, listeners);
-    };
-
-    /**
-     * Removes listeners in bulk using the manipulateListeners method.
-     * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
-     * You can also pass it an event name and an array of listeners to be removed.
-     * You can also pass it a regular expression to remove the listeners from all events that match it.
-     *
-     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
-     * @param {Function[]} [listeners] An optional array of listener functions to remove.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.removeListeners = function removeListeners(evt, listeners) {
-        // Pass through to manipulateListeners
-        return this.manipulateListeners(true, evt, listeners);
-    };
-
-    /**
-     * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
-     * The first argument will determine if the listeners are removed (true) or added (false).
-     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
-     * You can also pass it an event name and an array of listeners to be added/removed.
-     * You can also pass it a regular expression to manipulate the listeners of all events that match it.
-     *
-     * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
-     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
-     * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
-        var i;
-        var value;
-        var single = remove ? this.removeListener : this.addListener;
-        var multiple = remove ? this.removeListeners : this.addListeners;
-
-        // If evt is an object then pass each of its properties to this method
-        if (typeof evt === 'object' && !(evt instanceof RegExp)) {
-            for (i in evt) {
-                if (evt.hasOwnProperty(i) && (value = evt[i])) {
-                    // Pass the single listener straight through to the singular method
-                    if (typeof value === 'function') {
-                        single.call(this, i, value);
-                    }
-                    else {
-                        // Otherwise pass back to the multiple function
-                        multiple.call(this, i, value);
-                    }
-                }
-            }
-        }
-        else {
-            // So evt must be a string
-            // And listeners must be an array of listeners
-            // Loop over it and pass each one to the multiple method
-            i = listeners.length;
-            while (i--) {
-                single.call(this, evt, listeners[i]);
-            }
-        }
-
-        return this;
-    };
-
-    /**
-     * Removes all listeners from a specified event.
-     * If you do not specify an event then all listeners will be removed.
-     * That means every event will be emptied.
-     * You can also pass a regex to remove all events that match it.
-     *
-     * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.removeEvent = function removeEvent(evt) {
-        var type = typeof evt;
-        var events = this._getEvents();
-        var key;
-
-        // Remove different things depending on the state of evt
-        if (type === 'string') {
-            // Remove all listeners for the specified event
-            delete events[evt];
-        }
-        else if (evt instanceof RegExp) {
-            // Remove all events matching the regex.
-            for (key in events) {
-                if (events.hasOwnProperty(key) && evt.test(key)) {
-                    delete events[key];
-                }
-            }
-        }
-        else {
-            // Remove all listeners in all events
-            delete this._events;
-        }
-
-        return this;
-    };
-
-    /**
-     * Alias of removeEvent.
-     *
-     * Added to mirror the node API.
-     */
-    proto.removeAllListeners = alias('removeEvent');
-
-    /**
-     * Emits an event of your choice.
-     * When emitted, every listener attached to that event will be executed.
-     * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
-     * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
-     * So they will not arrive within the array on the other side, they will be separate.
-     * You can also pass a regular expression to emit to all events that match it.
-     *
-     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
-     * @param {Array} [args] Optional array of arguments to be passed to each listener.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.emitEvent = function emitEvent(evt, args) {
-        var listeners = this.getListenersAsObject(evt);
-        var listener;
-        var i;
-        var key;
-        var response;
-
-        for (key in listeners) {
-            if (listeners.hasOwnProperty(key)) {
-                i = listeners[key].length;
-
-                while (i--) {
-                    // If the listener returns true then it shall be removed from the event
-                    // The function is executed either with a basic call or an apply if there is an args array
-                    listener = listeners[key][i];
-
-                    if (listener.once === true) {
-                        this.removeListener(evt, listener.listener);
-                    }
-
-                    response = listener.listener.apply(this, args || []);
-
-                    if (response === this._getOnceReturnValue()) {
-                        this.removeListener(evt, listener.listener);
-                    }
-                }
-            }
-        }
-
-        return this;
-    };
-
-    /**
-     * Alias of emitEvent
-     */
-    proto.trigger = alias('emitEvent');
-
-    /**
-     * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
-     * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
-     *
-     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
-     * @param {...*} Optional additional arguments to be passed to each listener.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.emit = function emit(evt) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        return this.emitEvent(evt, args);
-    };
-
-    /**
-     * Sets the current value to check against when executing listeners. If a
-     * listeners return value matches the one set here then it will be removed
-     * after execution. This value defaults to true.
-     *
-     * @param {*} value The new value to check for when executing listeners.
-     * @return {Object} Current instance of EventEmitter for chaining.
-     */
-    proto.setOnceReturnValue = function setOnceReturnValue(value) {
-        this._onceReturnValue = value;
-        return this;
-    };
-
-    /**
-     * Fetches the current value to check against when executing listeners. If
-     * the listeners return value matches this one then it should be removed
-     * automatically. It will return true by default.
-     *
-     * @return {*|Boolean} The current value to check for or the default, true.
-     * @api private
-     */
-    proto._getOnceReturnValue = function _getOnceReturnValue() {
-        if (this.hasOwnProperty('_onceReturnValue')) {
-            return this._onceReturnValue;
-        }
-        else {
-            return true;
-        }
-    };
-
-    /**
-     * Fetches the events object and creates one if required.
-     *
-     * @return {Object} The events storage object.
-     * @api private
-     */
-    proto._getEvents = function _getEvents() {
-        return this._events || (this._events = {});
-    };
-
-    /**
-     * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
-     *
-     * @return {Function} Non conflicting EventEmitter class.
-     */
-    EventEmitter.noConflict = function noConflict() {
-        exports.EventEmitter = originalGlobalValue;
-        return EventEmitter;
-    };
-
-    // Expose the class either via AMD, CommonJS or the global object
-    if (typeof define === 'function' && define.amd) {
-        define(function () {
-            return EventEmitter;
-        });
-    }
-    else if (typeof module === 'object' && module.exports){
-        module.exports = EventEmitter;
-    }
-    else {
-        exports.EventEmitter = EventEmitter;
-    }
-}.call(this));
-
-},{}],450:[function(require,module,exports){
+},{"desandro-get-style-property":450,"fizzy-ui-utils":446,"get-size":447,"wolfy87-eventemitter":452}],450:[function(require,module,exports){
+arguments[4][448][0].apply(exports,arguments)
+},{"dup":448}],451:[function(require,module,exports){
+arguments[4][436][0].apply(exports,arguments)
+},{"dup":436}],452:[function(require,module,exports){
+arguments[4][437][0].apply(exports,arguments)
+},{"dup":437}],453:[function(require,module,exports){
 /*!
  * Outlayer v1.4.0
  * the brains and guts of a layout library
@@ -43804,7 +44132,7 @@ return Outlayer;
 }));
 
 
-},{"./item":446,"eventie":448,"fizzy-ui-utils":443,"get-size":444,"wolfy87-eventemitter":449}],451:[function(require,module,exports){
+},{"./item":449,"eventie":451,"fizzy-ui-utils":446,"get-size":447,"wolfy87-eventemitter":452}],454:[function(require,module,exports){
 //! moment.js locale configuration
 //! locale : russian (ru)
 //! author : Viktorminator : https://github.com/Viktorminator
@@ -43968,7 +44296,7 @@ return Outlayer;
     return ru;
 
 }));
-},{"../moment":452}],452:[function(require,module,exports){
+},{"../moment":455}],455:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -47080,7 +47408,7 @@ return Outlayer;
     return _moment;
 
 }));
-},{}],453:[function(require,module,exports){
+},{}],456:[function(require,module,exports){
 /*! 
  * numeral.js language configuration
  * language : russian (ru)
@@ -47119,7 +47447,7 @@ return Outlayer;
     }
 }());
 
-},{}],454:[function(require,module,exports){
+},{}],457:[function(require,module,exports){
 var isBrowser = (typeof window !== 'undefined');
 var Masonry = isBrowser ? window.Masonry || require('masonry') : null;
 var imagesloaded = isBrowser ? require('imagesloaded') : null;
@@ -47232,348 +47560,7 @@ function MasonryMixin() {
 
 module.exports = MasonryMixin();
 
-},{"imagesloaded":455,"masonry":458}],455:[function(require,module,exports){
-/*!
- * imagesLoaded v3.1.8
- * JavaScript is all like "You images are done yet or what?"
- * MIT License
- */
-
-( function( window, factory ) { 'use strict';
-  // universal module definition
-
-  /*global define: false, module: false, require: false */
-
-  if ( typeof exports === 'object' ) {
-    // CommonJS
-    module.exports = factory(
-      window,
-      require('wolfy87-eventemitter'),
-      require('eventie')
-    );
-  } else if ( typeof define === 'function' && define.amd ) {
-    // AMD
-    define( [
-      'eventEmitter/EventEmitter',
-      'eventie/eventie'
-    ], function( EventEmitter, eventie ) {
-      return factory( window, EventEmitter, eventie );
-    });
-  } else {
-    // browser global
-    window.imagesLoaded = factory(
-      window,
-      window.EventEmitter,
-      window.eventie
-    );
-  }
-
-})( window,
-
-// --------------------------  factory -------------------------- //
-
-function factory( window, EventEmitter, eventie ) {
-
-'use strict';
-
-var $ = window.jQuery;
-var console = window.console;
-var hasConsole = typeof console !== 'undefined';
-
-// -------------------------- helpers -------------------------- //
-
-// extend objects
-function extend( a, b ) {
-  for ( var prop in b ) {
-    a[ prop ] = b[ prop ];
-  }
-  return a;
-}
-
-var objToString = Object.prototype.toString;
-function isArray( obj ) {
-  return objToString.call( obj ) === '[object Array]';
-}
-
-// turn element or nodeList into an array
-function makeArray( obj ) {
-  var ary = [];
-  if ( isArray( obj ) ) {
-    // use object if already an array
-    ary = obj;
-  } else if ( typeof obj.length === 'number' ) {
-    // convert nodeList to array
-    for ( var i=0, len = obj.length; i < len; i++ ) {
-      ary.push( obj[i] );
-    }
-  } else {
-    // array of single index
-    ary.push( obj );
-  }
-  return ary;
-}
-
-  // -------------------------- imagesLoaded -------------------------- //
-
-  /**
-   * @param {Array, Element, NodeList, String} elem
-   * @param {Object or Function} options - if function, use as callback
-   * @param {Function} onAlways - callback function
-   */
-  function ImagesLoaded( elem, options, onAlways ) {
-    // coerce ImagesLoaded() without new, to be new ImagesLoaded()
-    if ( !( this instanceof ImagesLoaded ) ) {
-      return new ImagesLoaded( elem, options );
-    }
-    // use elem as selector string
-    if ( typeof elem === 'string' ) {
-      elem = document.querySelectorAll( elem );
-    }
-
-    this.elements = makeArray( elem );
-    this.options = extend( {}, this.options );
-
-    if ( typeof options === 'function' ) {
-      onAlways = options;
-    } else {
-      extend( this.options, options );
-    }
-
-    if ( onAlways ) {
-      this.on( 'always', onAlways );
-    }
-
-    this.getImages();
-
-    if ( $ ) {
-      // add jQuery Deferred object
-      this.jqDeferred = new $.Deferred();
-    }
-
-    // HACK check async to allow time to bind listeners
-    var _this = this;
-    setTimeout( function() {
-      _this.check();
-    });
-  }
-
-  ImagesLoaded.prototype = new EventEmitter();
-
-  ImagesLoaded.prototype.options = {};
-
-  ImagesLoaded.prototype.getImages = function() {
-    this.images = [];
-
-    // filter & find items if we have an item selector
-    for ( var i=0, len = this.elements.length; i < len; i++ ) {
-      var elem = this.elements[i];
-      // filter siblings
-      if ( elem.nodeName === 'IMG' ) {
-        this.addImage( elem );
-      }
-      // find children
-      // no non-element nodes, #143
-      var nodeType = elem.nodeType;
-      if ( !nodeType || !( nodeType === 1 || nodeType === 9 || nodeType === 11 ) ) {
-        continue;
-      }
-      var childElems = elem.querySelectorAll('img');
-      // concat childElems to filterFound array
-      for ( var j=0, jLen = childElems.length; j < jLen; j++ ) {
-        var img = childElems[j];
-        this.addImage( img );
-      }
-    }
-  };
-
-  /**
-   * @param {Image} img
-   */
-  ImagesLoaded.prototype.addImage = function( img ) {
-    var loadingImage = new LoadingImage( img );
-    this.images.push( loadingImage );
-  };
-
-  ImagesLoaded.prototype.check = function() {
-    var _this = this;
-    var checkedCount = 0;
-    var length = this.images.length;
-    this.hasAnyBroken = false;
-    // complete if no images
-    if ( !length ) {
-      this.complete();
-      return;
-    }
-
-    function onConfirm( image, message ) {
-      if ( _this.options.debug && hasConsole ) {
-        console.log( 'confirm', image, message );
-      }
-
-      _this.progress( image );
-      checkedCount++;
-      if ( checkedCount === length ) {
-        _this.complete();
-      }
-      return true; // bind once
-    }
-
-    for ( var i=0; i < length; i++ ) {
-      var loadingImage = this.images[i];
-      loadingImage.on( 'confirm', onConfirm );
-      loadingImage.check();
-    }
-  };
-
-  ImagesLoaded.prototype.progress = function( image ) {
-    this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
-    // HACK - Chrome triggers event before object properties have changed. #83
-    var _this = this;
-    setTimeout( function() {
-      _this.emit( 'progress', _this, image );
-      if ( _this.jqDeferred && _this.jqDeferred.notify ) {
-        _this.jqDeferred.notify( _this, image );
-      }
-    });
-  };
-
-  ImagesLoaded.prototype.complete = function() {
-    var eventName = this.hasAnyBroken ? 'fail' : 'done';
-    this.isComplete = true;
-    var _this = this;
-    // HACK - another setTimeout so that confirm happens after progress
-    setTimeout( function() {
-      _this.emit( eventName, _this );
-      _this.emit( 'always', _this );
-      if ( _this.jqDeferred ) {
-        var jqMethod = _this.hasAnyBroken ? 'reject' : 'resolve';
-        _this.jqDeferred[ jqMethod ]( _this );
-      }
-    });
-  };
-
-  // -------------------------- jquery -------------------------- //
-
-  if ( $ ) {
-    $.fn.imagesLoaded = function( options, callback ) {
-      var instance = new ImagesLoaded( this, options, callback );
-      return instance.jqDeferred.promise( $(this) );
-    };
-  }
-
-
-  // --------------------------  -------------------------- //
-
-  function LoadingImage( img ) {
-    this.img = img;
-  }
-
-  LoadingImage.prototype = new EventEmitter();
-
-  LoadingImage.prototype.check = function() {
-    // first check cached any previous images that have same src
-    var resource = cache[ this.img.src ] || new Resource( this.img.src );
-    if ( resource.isConfirmed ) {
-      this.confirm( resource.isLoaded, 'cached was confirmed' );
-      return;
-    }
-
-    // If complete is true and browser supports natural sizes,
-    // try to check for image status manually.
-    if ( this.img.complete && this.img.naturalWidth !== undefined ) {
-      // report based on naturalWidth
-      this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
-      return;
-    }
-
-    // If none of the checks above matched, simulate loading on detached element.
-    var _this = this;
-    resource.on( 'confirm', function( resrc, message ) {
-      _this.confirm( resrc.isLoaded, message );
-      return true;
-    });
-
-    resource.check();
-  };
-
-  LoadingImage.prototype.confirm = function( isLoaded, message ) {
-    this.isLoaded = isLoaded;
-    this.emit( 'confirm', this, message );
-  };
-
-  // -------------------------- Resource -------------------------- //
-
-  // Resource checks each src, only once
-  // separate class from LoadingImage to prevent memory leaks. See #115
-
-  var cache = {};
-
-  function Resource( src ) {
-    this.src = src;
-    // add to cache
-    cache[ src ] = this;
-  }
-
-  Resource.prototype = new EventEmitter();
-
-  Resource.prototype.check = function() {
-    // only trigger checking once
-    if ( this.isChecked ) {
-      return;
-    }
-    // simulate loading on detached element
-    var proxyImage = new Image();
-    eventie.bind( proxyImage, 'load', this );
-    eventie.bind( proxyImage, 'error', this );
-    proxyImage.src = this.src;
-    // set flag
-    this.isChecked = true;
-  };
-
-  // ----- events ----- //
-
-  // trigger specified handler for event type
-  Resource.prototype.handleEvent = function( event ) {
-    var method = 'on' + event.type;
-    if ( this[ method ] ) {
-      this[ method ]( event );
-    }
-  };
-
-  Resource.prototype.onload = function( event ) {
-    this.confirm( true, 'onload' );
-    this.unbindProxyEvents( event );
-  };
-
-  Resource.prototype.onerror = function( event ) {
-    this.confirm( false, 'onerror' );
-    this.unbindProxyEvents( event );
-  };
-
-  // ----- confirm ----- //
-
-  Resource.prototype.confirm = function( isLoaded, message ) {
-    this.isConfirmed = true;
-    this.isLoaded = isLoaded;
-    this.emit( 'confirm', this, message );
-  };
-
-  Resource.prototype.unbindProxyEvents = function( event ) {
-    eventie.unbind( event.target, 'load', this );
-    eventie.unbind( event.target, 'error', this );
-  };
-
-  // -----  ----- //
-
-  return ImagesLoaded;
-
-});
-
-},{"eventie":456,"wolfy87-eventemitter":457}],456:[function(require,module,exports){
-arguments[4][442][0].apply(exports,arguments)
-},{"dup":442}],457:[function(require,module,exports){
-arguments[4][449][0].apply(exports,arguments)
-},{"dup":449}],458:[function(require,module,exports){
+},{"imagesloaded":435,"masonry":458}],458:[function(require,module,exports){
 /*!
  * Masonry v3.1.5
  * Cascading grid layout library
@@ -48004,8 +47991,8 @@ if ( typeof exports === 'object' ) {
 })( typeof window !== 'undefined' ? window : null );
 
 },{"desandro-get-style-property":460}],460:[function(require,module,exports){
-arguments[4][445][0].apply(exports,arguments)
-},{"dup":445}],461:[function(require,module,exports){
+arguments[4][448][0].apply(exports,arguments)
+},{"dup":448}],461:[function(require,module,exports){
 /**
  * Outlayer Item
  */
@@ -48538,10 +48525,10 @@ if (typeof exports === 'object') {
 })( typeof window !== 'undefined' ? window : null );
 
 },{"desandro-get-style-property":462,"eventemitter":465,"get-size":459}],462:[function(require,module,exports){
-arguments[4][445][0].apply(exports,arguments)
-},{"dup":445}],463:[function(require,module,exports){
-arguments[4][440][0].apply(exports,arguments)
-},{"dup":440}],464:[function(require,module,exports){
+arguments[4][448][0].apply(exports,arguments)
+},{"dup":448}],463:[function(require,module,exports){
+arguments[4][443][0].apply(exports,arguments)
+},{"dup":443}],464:[function(require,module,exports){
 /*!
  * docReady v1.0.3
  * Cross browser DOMContentLoaded event emitter
@@ -50573,15 +50560,6 @@ var eventTypes = {
   }
 };
 
-var now = function() {
-  if (Date.now) {
-    return Date.now();
-  } else {
-    // IE8 support: http://stackoverflow.com/questions/9430357/please-explain-why-and-how-new-date-works-as-workaround-for-date-now-in
-    return +new Date;
-  }
-}
-
 var TapEventPlugin = {
 
   tapMoveThreshold: tapMoveThreshold,
@@ -50605,9 +50583,9 @@ var TapEventPlugin = {
       nativeEvent) {
 
     if (isTouch(topLevelType)) {
-      lastTouchEvent = now();
+      lastTouchEvent = nativeEvent.timeStamp;
     } else {
-      if (lastTouchEvent && (now() - lastTouchEvent) < ignoreMouseThreshold) {
+      if (lastTouchEvent && (nativeEvent.timeStamp - lastTouchEvent) < ignoreMouseThreshold) {
         return null;
       }
     }
@@ -50638,7 +50616,6 @@ var TapEventPlugin = {
 };
 
 module.exports = TapEventPlugin;
-
 },{"./TouchEventUtils":470,"react/lib/EventConstants":484,"react/lib/EventPluginUtils":488,"react/lib/EventPropagators":489,"react/lib/SyntheticUIEvent":577,"react/lib/ViewportMetrics":580,"react/lib/keyOf":619}],470:[function(require,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -76784,15 +76761,9 @@ var
       return (match && match.length > 1 && match[1]) || '';
     }
 
-    function getSecondMatch(regex) {
-      var match = ua.match(regex);
-      return (match && match.length > 1 && match[2]) || '';
-    }
-
     var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
       , likeAndroid = /like android/i.test(ua)
       , android = !likeAndroid && /android/i.test(ua)
-      , edgeVersion = getFirstMatch(/edge\/(\d+(\.\d+)?)/i)
       , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
       , tablet = /tablet/i.test(ua)
       , mobile = !tablet && /[^-]mobi/i.test(ua)
@@ -76809,14 +76780,8 @@ var
       result = {
         name: 'Windows Phone'
       , windowsphone: t
-      }
-      if (edgeVersion) {
-        result.msedge = t
-        result.version = edgeVersion
-      }
-      else {
-        result.msie = t
-        result.version = getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
+      , msie: t
+      , version: getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
       }
     }
     else if (/msie|trident/i.test(ua)) {
@@ -76824,13 +76789,6 @@ var
         name: 'Internet Explorer'
       , msie: t
       , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
-      }
-    }
-    else if (/chrome.+? edge/i.test(ua)) {
-      result = {
-        name: 'Microsoft Edge'
-      , msedge: t
-      , version: edgeVersion
       }
     }
     else if (/chrome|crios|crmo/i.test(ua)) {
@@ -76929,15 +76887,10 @@ var
       , version: versionIdentifier
       }
     }
-    else {
-      result = {
-        name: getFirstMatch(/^(.*)\/(.*) /),
-        version: getSecondMatch(/^(.*)\/(.*) /)
-     };
-   }
+    else result = {}
 
     // set webkit or gecko flag for browsers based on these engines
-    if (!result.msedge && /(apple)?webkit/i.test(ua)) {
+    if (/(apple)?webkit/i.test(ua)) {
       result.name = result.name || "Webkit"
       result.webkit = t
       if (!result.version && versionIdentifier) {
@@ -76950,7 +76903,7 @@ var
     }
 
     // set OS flags for platforms that have multiple browsers
-    if (!result.msedge && (android || result.silk)) {
+    if (android || result.silk) {
       result.android = t
     } else if (iosdevice) {
       result[iosdevice] = t
@@ -76959,13 +76912,13 @@ var
 
     // OS version extraction
     var osVersion = '';
-    if (result.windowsphone) {
-      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
-    } else if (iosdevice) {
+    if (iosdevice) {
       osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
       osVersion = osVersion.replace(/[_\s]/g, '.');
     } else if (android) {
       osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
+    } else if (result.windowsphone) {
+      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
     } else if (result.webos) {
       osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
     } else if (result.blackberry) {
@@ -76989,8 +76942,7 @@ var
 
     // Graded Browser Support
     // http://developer.yahoo.com/yui/articles/gbs
-    if (result.msedge ||
-        (result.msie && result.version >= 10) ||
+    if ((result.msie && result.version >= 10) ||
         (result.chrome && result.version >= 20) ||
         (result.firefox && result.version >= 20.0) ||
         (result.safari && result.version >= 6) ||
@@ -77015,17 +76967,6 @@ var
 
   var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
 
-  bowser.test = function (browserList) {
-    for (var i = 0; i < browserList.length; ++i) {
-      var browserItem = browserList[i];
-      if (typeof browserItem=== 'string') {
-        if (browserItem in bowser) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
   /*
    * Set our detect method to the main bowser object so we can
@@ -77053,6 +76994,7 @@ var
 // see https://github.com/umdjs/umd/blob/master/returnExports.js
 (function (root, factory) {
     'use strict';
+
     /*global define, exports, module */
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -77161,14 +77103,10 @@ var defineProperties = (function (has) {
 //
 
 /* replaceable with https://npmjs.com/package/es-abstract /helpers/isPrimitive */
-function isPrimitive(input) {
+var isPrimitive = function isPrimitive(input) {
     var type = typeof input;
-    return input === null ||
-        type === 'undefined' ||
-        type === 'boolean' ||
-        type === 'number' ||
-        type === 'string';
-}
+    return input === null || (type !== 'object' && type !== 'function');
+};
 
 var ES = {
     // ES5 9.4
@@ -77468,6 +77406,7 @@ var properlyBoxesContext = function properlyBoxed(method) {
 
         method.call([1], function () {
             'use strict';
+
             properlyBoxesStrict = typeof this === 'string';
         }, 'x');
     }
@@ -77962,12 +77901,13 @@ if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExt
     Date = (function (NativeDate) {
     /*eslint-enable no-undef*/
         // Date.length === 7
-        function Date(Y, M, D, h, m, s, ms) {
+        var DateShim = function Date(Y, M, D, h, m, s, ms) {
             var length = arguments.length;
+            var date;
             if (this instanceof NativeDate) {
-                var date = length === 1 && String(Y) === Y ? // isString(Y)
+                date = length === 1 && String(Y) === Y ? // isString(Y)
                     // We explicitly pass it through parse:
-                    new NativeDate(Date.parse(Y)) :
+                    new NativeDate(DateShim.parse(Y)) :
                     // We have to manually make calls depending on argument
                     // length here
                     length >= 7 ? new NativeDate(Y, M, D, h, m, s, ms) :
@@ -77978,12 +77918,13 @@ if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExt
                     length >= 2 ? new NativeDate(Y, M) :
                     length >= 1 ? new NativeDate(Y) :
                                   new NativeDate();
-                // Prevent mixups with unfixed Date object
-                defineProperties(date, { constructor: Date }, true);
-                return date;
+            } else {
+                date = NativeDate.apply(this, arguments);
             }
-            return NativeDate.apply(this, arguments);
-        }
+            // Prevent mixups with unfixed Date object
+            defineProperties(date, { constructor: DateShim }, true);
+            return date;
+        };
 
         // 15.9.1.15 Date Time String Format.
         var isoDateExpression = new RegExp('^' +
@@ -78008,11 +77949,9 @@ if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExt
             ')?)?)?)?' +
         '$');
 
-        var months = [
-            0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365
-        ];
+        var months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
 
-        function dayFromMonth(year, month) {
+        var dayFromMonth = function dayFromMonth(year, month) {
             var t = month > 1 ? 1 : 0;
             return (
                 months[month] +
@@ -78021,25 +77960,27 @@ if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExt
                 Math.floor((year - 1601 + t) / 400) +
                 365 * (year - 1970)
             );
-        }
+        };
 
-        function toUTC(t) {
+        var toUTC = function toUTC(t) {
             return Number(new NativeDate(1970, 0, 1, 0, 0, 0, t));
-        }
+        };
 
         // Copy any custom methods a 3rd party library may have added
         for (var key in NativeDate) {
-            Date[key] = NativeDate[key];
+            if (owns(NativeDate, key)) {
+                DateShim[key] = NativeDate[key];
+            }
         }
 
         // Copy "native" methods explicitly; they may be non-enumerable
-        Date.now = NativeDate.now;
-        Date.UTC = NativeDate.UTC;
-        Date.prototype = NativeDate.prototype;
-        Date.prototype.constructor = Date;
+        DateShim.now = NativeDate.now;
+        DateShim.UTC = NativeDate.UTC;
+        DateShim.prototype = NativeDate.prototype;
+        DateShim.prototype.constructor = DateShim;
 
         // Upgrade Date.parse to handle simplified ISO 8601 strings
-        Date.parse = function parse(string) {
+        DateShim.parse = function parse(string) {
             var match = isoDateExpression.exec(string);
             if (match) {
                 // parse months, days, hours, minutes, seconds, and milliseconds
@@ -78095,7 +78036,7 @@ if (!Date.parse || doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExt
             return NativeDate.parse.apply(this, arguments);
         };
 
-        return Date;
+        return DateShim;
     }(Date));
     /*global Date: false */
 }
@@ -78471,8 +78412,8 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 }));
 
 },{}],"eventEmitter":[function(require,module,exports){
-arguments[4][449][0].apply(exports,arguments)
-},{"dup":449}],"i18next":[function(require,module,exports){
+arguments[4][437][0].apply(exports,arguments)
+},{"dup":437}],"i18next":[function(require,module,exports){
 // i18next, v1.8.2
 // Copyright (c)2015 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
@@ -84524,7 +84465,7 @@ var Plugins;
 
 },{"jquery":"jquery"}],"jquery.select2":[function(require,module,exports){
 /*!
- * Select2 4.0.0
+ * Select2 4.0.0-rc.2
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -85239,23 +85180,6 @@ S2.define('select2/utils',[
     });
   };
 
-  // Append an array of jQuery nodes to a given element.
-  Utils.appendMany = function ($element, $nodes) {
-    // jQuery 1.7.x does not support $.fn.append() with an array
-    // Fall back to a jQuery object collection using $.fn.add()
-    if ($.fn.jquery.substr(0, 3) === '1.7') {
-      var $jqNodes = $();
-
-      $.map($nodes, function (node) {
-        $jqNodes = $jqNodes.add(node);
-      });
-
-      $nodes = $jqNodes;
-    }
-
-    $element.append($nodes);
-  };
-
   return Utils;
 });
 
@@ -85370,8 +85294,7 @@ S2.define('select2/results',[
         // id needs to be converted to a string when comparing
         var id = '' + item.id;
 
-        if ((item.element != null && item.element.selected) ||
-            (item.element == null && $.inArray(id, selectedIds) > -1)) {
+        if ($.inArray(id, selectedIds) > -1) {
           $option.attr('aria-selected', 'true');
         } else {
           $option.attr('aria-selected', 'false');
@@ -86107,7 +86030,7 @@ S2.define('select2/selection/multiple',[
       return;
     }
 
-    var $selections = [];
+    var $selections = $();
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -86120,12 +86043,10 @@ S2.define('select2/selection/multiple',[
 
       $selection.data('data', selection);
 
-      $selections.push($selection);
+      $selections = $selections.add($selection);
     }
 
-    var $rendered = this.$selection.find('.select2-selection__rendered');
-
-    Utils.appendMany($rendered, $selections);
+    this.$selection.find('.select2-selection__rendered').append($selections);
   };
 
   return MultipleSelection;
@@ -86182,9 +86103,8 @@ S2.define('select2/selection/placeholder',[
 });
 
 S2.define('select2/selection/allowClear',[
-  'jquery',
-  '../keys'
-], function ($, KEYS) {
+  'jquery'
+], function ($) {
   function AllowClear () { }
 
   AllowClear.prototype.bind = function (decorated, container, $container) {
@@ -86192,8 +86112,8 @@ S2.define('select2/selection/allowClear',[
 
     decorated.call(this, container, $container);
 
-    if (this.placeholder == null) {
-      if (this.options.get('debug') && window.console && console.error) {
+    if (self.placeholder == null) {
+      if (self.options.get('debug') && window.console && console.error) {
         console.error(
           'Select2: The `allowClear` option should be used in combination ' +
           'with the `placeholder` option.'
@@ -86203,59 +86123,34 @@ S2.define('select2/selection/allowClear',[
 
     this.$selection.on('mousedown', '.select2-selection__clear',
       function (evt) {
-        self._handleClear(evt);
+        // Ignore the event if it is disabled
+        if (self.options.get('disabled')) {
+          return;
+        }
+
+        evt.stopPropagation();
+
+        var data = $(this).data('data');
+
+        for (var d = 0; d < data.length; d++) {
+          var unselectData = {
+            data: data[d]
+          };
+
+          // Trigger the `unselect` event, so people can prevent it from being
+          // cleared.
+          self.trigger('unselect', unselectData);
+
+          // If the event was prevented, don't clear it out.
+          if (unselectData.prevented) {
+            return;
+          }
+        }
+
+        self.$element.val(self.placeholder.id).trigger('change');
+
+        self.trigger('toggle');
     });
-
-    container.on('keypress', function (evt) {
-      self._handleKeyboardClear(evt, container);
-    });
-  };
-
-  AllowClear.prototype._handleClear = function (_, evt) {
-    // Ignore the event if it is disabled
-    if (this.options.get('disabled')) {
-      return;
-    }
-
-    var $clear = this.$selection.find('.select2-selection__clear');
-
-    // Ignore the event if nothing has been selected
-    if ($clear.length === 0) {
-      return;
-    }
-
-    evt.stopPropagation();
-
-    var data = $clear.data('data');
-
-    for (var d = 0; d < data.length; d++) {
-      var unselectData = {
-        data: data[d]
-      };
-
-      // Trigger the `unselect` event, so people can prevent it from being
-      // cleared.
-      this.trigger('unselect', unselectData);
-
-      // If the event was prevented, don't clear it out.
-      if (unselectData.prevented) {
-        return;
-      }
-    }
-
-    this.$element.val(this.placeholder.id).trigger('change');
-
-    this.trigger('toggle');
-  };
-
-  AllowClear.prototype._handleKeyboardClear = function (_, evt, container) {
-    if (container.isOpen()) {
-      return;
-    }
-
-    if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
-      this._handleClear(evt);
-    }
   };
 
   AllowClear.prototype.update = function (decorated, data) {
@@ -86356,8 +86251,6 @@ S2.define('select2/selection/search',[
           var item = $previousChoice.data('data');
 
           self.searchRemoveChoice(item);
-
-          evt.preventDefault();
         }
       }
     });
@@ -87438,9 +87331,7 @@ S2.define('select2/data/select',[
   SelectAdapter.prototype.select = function (data) {
     var self = this;
 
-    data.selected = true;
-
-    // If data.element is a DOM node, use it instead
+    // If data.element is a DOM nose, use it instead
     if ($(data.element).is('option')) {
       data.element.selected = true;
 
@@ -87481,8 +87372,6 @@ S2.define('select2/data/select',[
     if (!this.$element.prop('multiple')) {
       return;
     }
-
-    data.selected = false;
 
     if ($(data.element).is('option')) {
       data.element.selected = false;
@@ -87559,7 +87448,7 @@ S2.define('select2/data/select',[
   };
 
   SelectAdapter.prototype.addOptions = function ($options) {
-    Utils.appendMany(this.$element, $options);
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {
@@ -87708,9 +87597,7 @@ S2.define('select2/data/array',[
   Utils.Extend(ArrayAdapter, SelectAdapter);
 
   ArrayAdapter.prototype.select = function (data) {
-    var $option = this.$element.find('option').filter(function (i, elm) {
-      return elm.value == data.id.toString();
-    });
+    var $option = this.$element.find('option[value="' + data.id + '"]');
 
     if ($option.length === 0) {
       $option = this.option(data);
@@ -87729,7 +87616,7 @@ S2.define('select2/data/array',[
       return self.item($(this)).id;
     }).get();
 
-    var $options = [];
+    var $options = $();
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
@@ -87760,10 +87647,10 @@ S2.define('select2/data/array',[
       if (item.children) {
         var $children = this.convertToOptions(item.children);
 
-        Utils.appendMany($option, $children);
+        $option.append($children);
       }
 
-      $options.push($option);
+      $options = $options.add($option);
     }
 
     return $options;
@@ -87817,12 +87704,8 @@ S2.define('select2/data/ajax',[
     var matches = [];
     var self = this;
 
-    if (this._request != null) {
-      // JSONP requests cannot always be aborted
-      if ($.isFunction(this._request.abort)) {
-        this._request.abort();
-      }
-
+    if (this._request) {
+      this._request.abort();
       this._request = null;
     }
 
@@ -87947,7 +87830,7 @@ S2.define('select2/data/tags',[
         var $option = self.option(tag);
         $option.attr('data-select2-tag', true);
 
-        self.addOptions([$option]);
+        self.addOptions($option);
 
         self.insertTag(data, tag);
       }
@@ -88623,16 +88506,9 @@ S2.define('select2/dropdown/attachBody',[
   AttachBody.prototype._resizeDropdown = function () {
     this.$dropdownContainer.width();
 
-    var css = {
+    this.$dropdown.css({
       width: this.$container.outerWidth(false) + 'px'
-    };
-
-    if (this.options.get('dropdownAutoWidth')) {
-      css.minWidth = css.width;
-      css.width = 'auto';
-    }
-
-    this.$dropdown.css(css);
+    });
   };
 
   AttachBody.prototype._showDropdown = function (decorated) {
@@ -88707,9 +88583,7 @@ S2.define('select2/dropdown/selectOnClose',[
       return;
     }
 
-    this.trigger('select', {
-        data: $highlightedResults.data('data')
-    });
+    $highlightedResults.trigger('mouseup');
   };
 
   return SelectOnClose;
@@ -88960,19 +88834,6 @@ S2.define('select2/defaults',[
         );
       }
 
-      if (
-        options.dropdownCssClass != null ||
-        options.dropdownCss != null ||
-        options.adaptDropdownCssClass != null
-      ) {
-        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
-
-        options.dropdownAdapter = Utils.Decorate(
-          options.dropdownAdapter,
-          DropdownCSS
-        );
-      }
-
       options.dropdownAdapter = Utils.Decorate(
         options.dropdownAdapter,
         AttachBody
@@ -89005,19 +88866,6 @@ S2.define('select2/defaults',[
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
           SelectionSearch
-        );
-      }
-
-      if (
-        options.containerCssClass != null ||
-        options.containerCss != null ||
-        options.adaptContainerCssClass != null
-      ) {
-        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
-
-        options.selectionAdapter = Utils.Decorate(
-          options.selectionAdapter,
-          ContainerCSS
         );
       }
 
@@ -89078,14 +88926,7 @@ S2.define('select2/defaults',[
 
       options.translations = languages;
     } else {
-      var baseTranslation = Translation.loadPath(
-        this.defaults.amdLanguageBase + 'en'
-      );
-      var customTranslation = new Translation(options.language);
-
-      customTranslation.extend(baseTranslation);
-
-      options.translations = customTranslation;
+      options.translations = new Translation(options.language);
     }
 
     return options;
@@ -89151,7 +88992,6 @@ S2.define('select2/defaults',[
       amdLanguageBase: './i18n/',
       closeOnSelect: true,
       debug: false,
-      dropdownAutoWidth: false,
       escapeMarkup: Utils.escapeMarkup,
       language: EnglishTranslation,
       matcher: matcher,
@@ -89191,11 +89031,10 @@ S2.define('select2/defaults',[
 });
 
 S2.define('select2/options',[
-  'require',
   'jquery',
   './defaults',
   './utils'
-], function (require, $, Defaults, Utils) {
+], function ($, Defaults, Utils) {
   function Options (options, $element) {
     this.options = options;
 
@@ -89392,9 +89231,8 @@ S2.define('select2/core',[
     });
 
     // Hide the original select
-    $element.addClass('select2-hidden-accessible');
-	$element.attr('aria-hidden', 'true');
-	
+    $element.hide();
+
     // Synchronize any monitored attributes
     this._syncAttributes();
 
@@ -89805,8 +89643,7 @@ S2.define('select2/core',[
     this.$element.off('.select2');
     this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
-    this.$element.removeClass('select2-hidden-accessible');
-	this.$element.attr('aria-hidden', 'false');
+    this.$element.show();
     this.$element.removeData('select2');
 
     this.dataAdapter.destroy();
@@ -89844,18 +89681,15 @@ S2.define('select2/core',[
 
 S2.define('jquery.select2',[
   'jquery',
-  'require',
-
   './select2/core',
   './select2/defaults'
-], function ($, require, Select2, Defaults) {
+], function ($, Select2, Defaults) {
   // Force jQuery.mousewheel to be loaded if it hasn't already
-  require('jquery.mousewheel');
+  try {
+    require('jquery.mousewheel');
+  } catch (Exception) { }
 
   if ($.fn.select2 == null) {
-    // All methods that should return the element
-    var thisMethods = ['open', 'close', 'destroy'];
-
     $.fn.select2 = function (options) {
       options = options || {};
 
@@ -89869,24 +89703,9 @@ S2.define('jquery.select2',[
         return this;
       } else if (typeof options === 'string') {
         var instance = this.data('select2');
-
-        if (instance == null && window.console && console.error) {
-          console.error(
-            'The select2(\'' + options + '\') method was called on an ' +
-            'element that is not using Select2.'
-          );
-        }
-
         var args = Array.prototype.slice.call(arguments, 1);
 
-        var ret = instance[options](args);
-
-        // Check if we should be returning `this`
-        if ($.inArray(options, thisMethods) > -1) {
-          return this;
-        }
-
-        return ret;
+        return instance[options](args);
       } else {
         throw new Error('Invalid arguments for Select2: ' + options);
       }
@@ -89898,13 +89717,6 @@ S2.define('jquery.select2',[
   }
 
   return Select2;
-});
-
-S2.define('jquery.mousewheel',[
-  'jquery'
-], function ($) {
-  // Used to shim jQuery.mousewheel for non-full builds.
-  return $;
 });
 
   // Return the AMD loader configuration so it can be used outside of this file
@@ -89921,7 +89733,7 @@ S2.define('jquery.mousewheel',[
   // Hold the AMD module references on the jQuery function that was just loaded
   // This allows Select2 to use the internal loader outside of this file, such
   // as in the language files.
-  jQuery.fn.select2.amd = S2;
+  $.fn.select2.amd = S2;
 
   // Return the Select2 instance for anyone who is importing it.
   return select2;
@@ -102763,7 +102575,7 @@ return jQuery;
 (function (global){
 /**
  * @license
- * lodash 3.9.2 (Custom Build) <https://lodash.com/>
+ * lodash 3.7.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -102776,7 +102588,7 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.9.2';
+  var VERSION = '3.7.0';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -102851,7 +102663,7 @@ return jQuery;
       reInterpolate = /<%=([\s\S]+?)%>/g;
 
   /** Used to match property names within property paths. */
-  var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
+  var reIsDeepProp = /\.|\[(?:[^[\]]+|(["'])(?:(?!\1)[^\n\\]|\\.)*?)\1\]/,
       reIsPlainProp = /^\w*$/,
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
 
@@ -103038,7 +102850,7 @@ return jQuery;
   /**
    * Used as a reference to the global object.
    *
-   * The `this` value is used if it's the global object to avoid Greasemonkey's
+   * The `this` value is used if it is the global object to avoid Greasemonkey's
    * restricted `window` object, otherwise the `window` object is used.
    */
   var root = freeGlobal || ((freeWindow !== (this && this.window)) && freeWindow) || freeSelf || this;
@@ -103050,28 +102862,19 @@ return jQuery;
    * sorts them in ascending order without guaranteeing a stable sort.
    *
    * @private
-   * @param {*} value The value to compare.
-   * @param {*} other The other value to compare.
+   * @param {*} value The value to compare to `other`.
+   * @param {*} other The value to compare to `value`.
    * @returns {number} Returns the sort order indicator for `value`.
    */
   function baseCompareAscending(value, other) {
     if (value !== other) {
-      var valIsNull = value === null,
-          valIsUndef = value === undefined,
-          valIsReflexive = value === value;
-
-      var othIsNull = other === null,
-          othIsUndef = other === undefined,
+      var valIsReflexive = value === value,
           othIsReflexive = other === other;
 
-      if ((value > other && !othIsNull) || !valIsReflexive ||
-          (valIsNull && !othIsUndef && othIsReflexive) ||
-          (valIsUndef && othIsReflexive)) {
+      if (value > other || !valIsReflexive || (value === undefined && othIsReflexive)) {
         return 1;
       }
-      if ((value < other && !valIsNull) || !othIsReflexive ||
-          (othIsNull && !valIsUndef && valIsReflexive) ||
-          (othIsUndef && valIsReflexive)) {
+      if (value < other || !othIsReflexive || (other === undefined && valIsReflexive)) {
         return -1;
       }
     }
@@ -103139,7 +102942,7 @@ return jQuery;
   }
 
   /**
-   * Converts `value` to a string if it's not one. An empty string is returned
+   * Converts `value` to a string if it is not one. An empty string is returned
    * for `null` or `undefined` values.
    *
    * @private
@@ -103151,6 +102954,17 @@ return jQuery;
       return value;
     }
     return value == null ? '' : (value + '');
+  }
+
+  /**
+   * Used by `_.max` and `_.min` as the default callback for string values.
+   *
+   * @private
+   * @param {string} string The string to inspect.
+   * @returns {number} Returns the code unit of the first character of the string.
+   */
+  function charAtCallback(string) {
+    return string.charCodeAt(0);
   }
 
   /**
@@ -103475,7 +103289,7 @@ return jQuery;
         stringProto = String.prototype;
 
     /** Used to detect DOM support. */
-    var document = (document = context.window) ? document.document : null;
+    var document = (document = context.window) && document.document;
 
     /** Used to resolve the decompiled source of functions. */
     var fnToString = Function.prototype.toString;
@@ -103497,23 +103311,26 @@ return jQuery;
 
     /** Used to detect if a method is native. */
     var reIsNative = RegExp('^' +
-      escapeRegExp(fnToString.call(hasOwnProperty))
-      .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+      escapeRegExp(objToString)
+      .replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
     );
 
     /** Native method references. */
-    var ArrayBuffer = getNative(context, 'ArrayBuffer'),
-        bufferSlice = getNative(ArrayBuffer && new ArrayBuffer(0), 'slice'),
+    var ArrayBuffer = isNative(ArrayBuffer = context.ArrayBuffer) && ArrayBuffer,
+        bufferSlice = isNative(bufferSlice = ArrayBuffer && new ArrayBuffer(0).slice) && bufferSlice,
         ceil = Math.ceil,
         clearTimeout = context.clearTimeout,
         floor = Math.floor,
-        getPrototypeOf = getNative(Object, 'getPrototypeOf'),
+        getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnPropertySymbols) && getOwnPropertySymbols,
+        getPrototypeOf = isNative(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf,
         push = arrayProto.push,
-        Set = getNative(context, 'Set'),
+        preventExtensions = isNative(Object.preventExtensions = Object.preventExtensions) && preventExtensions,
+        propertyIsEnumerable = objectProto.propertyIsEnumerable,
+        Set = isNative(Set = context.Set) && Set,
         setTimeout = context.setTimeout,
         splice = arrayProto.splice,
-        Uint8Array = getNative(context, 'Uint8Array'),
-        WeakMap = getNative(context, 'WeakMap');
+        Uint8Array = isNative(Uint8Array = context.Uint8Array) && Uint8Array,
+        WeakMap = isNative(WeakMap = context.WeakMap) && WeakMap;
 
     /** Used to clone array buffers. */
     var Float64Array = (function() {
@@ -103521,21 +103338,37 @@ return jQuery;
       // where the array buffer's `byteLength` is not a multiple of the typed
       // array's `BYTES_PER_ELEMENT`.
       try {
-        var func = getNative(context, 'Float64Array'),
+        var func = isNative(func = context.Float64Array) && func,
             result = new func(new ArrayBuffer(10), 0, 1) && func;
       } catch(e) {}
-      return result || null;
+      return result;
+    }());
+
+    /** Used as `baseAssign`. */
+    var nativeAssign = (function() {
+      // Avoid `Object.assign` in Firefox 34-37 which have an early implementation
+      // with a now defunct try/catch behavior. See https://bugzilla.mozilla.org/show_bug.cgi?id=1103344
+      // for more details.
+      //
+      // Use `Object.preventExtensions` on a plain object instead of simply using
+      // `Object('x')` because Chrome and IE fail to throw an error when attempting
+      // to assign values to readonly indexes of strings in strict mode.
+      var object = { '1': 0 },
+          func = preventExtensions && isNative(func = Object.assign) && func;
+
+      try { func(preventExtensions(object), 'xo'); } catch(e) {}
+      return !object[1] && func;
     }());
 
     /* Native method references for those with the same name as other `lodash` methods. */
-    var nativeCreate = getNative(Object, 'create'),
-        nativeIsArray = getNative(Array, 'isArray'),
+    var nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray,
+        nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate,
         nativeIsFinite = context.isFinite,
-        nativeKeys = getNative(Object, 'keys'),
+        nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys,
         nativeMax = Math.max,
         nativeMin = Math.min,
-        nativeNow = getNative(Date, 'now'),
-        nativeNumIsFinite = getNative(Number, 'isFinite'),
+        nativeNow = isNative(nativeNow = Date.now) && nativeNow,
+        nativeNumIsFinite = isNative(nativeNumIsFinite = Number.isFinite) && nativeNumIsFinite,
         nativeParseInt = context.parseInt,
         nativeRandom = Math.random;
 
@@ -103544,8 +103377,8 @@ return jQuery;
         POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
 
     /** Used as references for the maximum length and index of an array. */
-    var MAX_ARRAY_LENGTH = 4294967295,
-        MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1,
+    var MAX_ARRAY_LENGTH = Math.pow(2, 32) - 1,
+        MAX_ARRAY_INDEX =  MAX_ARRAY_LENGTH - 1,
         HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
 
     /** Used as the size, in bytes, of each `Float64Array` element. */
@@ -103555,7 +103388,7 @@ return jQuery;
      * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
      * of an array-like value.
      */
-    var MAX_SAFE_INTEGER = 9007199254740991;
+    var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
 
     /** Used to store function metadata. */
     var metaMap = WeakMap && new WeakMap;
@@ -103604,31 +103437,30 @@ return jQuery;
      * `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`, `forEach`,
      * `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `functions`,
      * `groupBy`, `indexBy`, `initial`, `intersection`, `invert`, `invoke`, `keys`,
-     * `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
-     * `memoize`, `merge`, `method`, `methodOf`, `mixin`, `negate`, `omit`, `once`,
-     * `pairs`, `partial`, `partialRight`, `partition`, `pick`, `plant`, `pluck`,
-     * `property`, `propertyOf`, `pull`, `pullAt`, `push`, `range`, `rearg`,
-     * `reject`, `remove`, `rest`, `restParam`, `reverse`, `set`, `shuffle`,
-     * `slice`, `sort`, `sortBy`, `sortByAll`, `sortByOrder`, `splice`, `spread`,
-     * `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`,
-     * `thru`, `times`, `toArray`, `toPlainObject`, `transform`, `union`, `uniq`,
-     * `unshift`, `unzip`, `unzipWith`, `values`, `valuesIn`, `where`, `without`,
-     * `wrap`, `xor`, `zip`, `zipObject`, `zipWith`
+     * `keysIn`, `map`, `mapValues`, `matches`, `matchesProperty`, `memoize`,
+     * `merge`, `mixin`, `negate`, `omit`, `once`, `pairs`, `partial`, `partialRight`,
+     * `partition`, `pick`, `plant`, `pluck`, `property`, `propertyOf`, `pull`,
+     * `pullAt`, `push`, `range`, `rearg`, `reject`, `remove`, `rest`, `reverse`,
+     * `shuffle`, `slice`, `sort`, `sortBy`, `sortByAll`, `sortByOrder`, `splice`,
+     * `spread`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`,
+     * `throttle`, `thru`, `times`, `toArray`, `toPlainObject`, `transform`,
+     * `union`, `uniq`, `unshift`, `unzip`, `values`, `valuesIn`, `where`,
+     * `without`, `wrap`, `xor`, `zip`, and `zipObject`
      *
      * The wrapper methods that are **not** chainable by default are:
      * `add`, `attempt`, `camelCase`, `capitalize`, `clone`, `cloneDeep`, `deburr`,
      * `endsWith`, `escape`, `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`,
-     * `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`, `get`,
-     * `gt`, `gte`, `has`, `identity`, `includes`, `indexOf`, `inRange`, `isArguments`,
-     * `isArray`, `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isError`,
-     * `isFinite` `isFunction`, `isMatch`, `isNative`, `isNaN`, `isNull`, `isNumber`,
-     * `isObject`, `isPlainObject`, `isRegExp`, `isString`, `isUndefined`,
-     * `isTypedArray`, `join`, `kebabCase`, `last`, `lastIndexOf`, `lt`, `lte`,
-     * `max`, `min`, `noConflict`, `noop`, `now`, `pad`, `padLeft`, `padRight`,
-     * `parseInt`, `pop`, `random`, `reduce`, `reduceRight`, `repeat`, `result`,
-     * `runInContext`, `shift`, `size`, `snakeCase`, `some`, `sortedIndex`,
-     * `sortedLastIndex`, `startCase`, `startsWith`, `sum`, `template`, `trim`,
-     * `trimLeft`, `trimRight`, `trunc`, `unescape`, `uniqueId`, `value`, and `words`
+     * `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`, `has`,
+     * `identity`, `includes`, `indexOf`, `inRange`, `isArguments`, `isArray`,
+     * `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isError`, `isFinite`
+     * `isFunction`, `isMatch`, `isNative`, `isNaN`, `isNull`, `isNumber`, `isObject`,
+     * `isPlainObject`, `isRegExp`, `isString`, `isUndefined`, `isTypedArray`,
+     * `join`, `kebabCase`, `last`, `lastIndexOf`, `max`, `min`, `noConflict`,
+     * `noop`, `now`, `pad`, `padLeft`, `padRight`, `parseInt`, `pop`, `random`,
+     * `reduce`, `reduceRight`, `repeat`, `result`, `runInContext`, `shift`, `size`,
+     * `snakeCase`, `some`, `sortedIndex`, `sortedLastIndex`, `startCase`, `startsWith`,
+     * `sum`, `template`, `trim`, `trimLeft`, `trimRight`, `trunc`, `unescape`,
+     * `uniqueId`, `value`, and `words`
      *
      * The wrapper method `sample` will return a wrapped value when `n` is provided,
      * otherwise an unwrapped value is returned.
@@ -103712,6 +103544,24 @@ return jQuery;
       for (var key in new Ctor) { props.push(key); }
 
       /**
+       * Detect if functions can be decompiled by `Function#toString`
+       * (all but Firefox OS certified apps, older Opera mobile browsers, and
+       * the PlayStation 3; forced `false` for Windows 8 apps).
+       *
+       * @memberOf _.support
+       * @type boolean
+       */
+      support.funcDecomp = /\bthis\b/.test(function() { return this; });
+
+      /**
+       * Detect if `Function#name` is supported (all but IE).
+       *
+       * @memberOf _.support
+       * @type boolean
+       */
+      support.funcNames = typeof Function.name == 'string';
+
+      /**
        * Detect if the DOM is supported.
        *
        * @memberOf _.support
@@ -103721,6 +103571,24 @@ return jQuery;
         support.dom = document.createDocumentFragment().nodeType === 11;
       } catch(e) {
         support.dom = false;
+      }
+
+      /**
+       * Detect if `arguments` object indexes are non-enumerable.
+       *
+       * In Firefox < 4, IE < 9, PhantomJS, and Safari < 5.1 `arguments` object
+       * indexes are non-enumerable. Chrome < 25 and Node.js < 0.11.0 treat
+       * `arguments` object indexes as non-enumerable and fail `hasOwnProperty`
+       * checks for indexes that exceed the number of function parameters and
+       * whose associated argument values are `0`.
+       *
+       * @memberOf _.support
+       * @type boolean
+       */
+      try {
+        support.nonEnumArgs = !propertyIsEnumerable.call(arguments, 1);
+      } catch(e) {
+        support.nonEnumArgs = true;
       }
     }(1, 0));
 
@@ -104121,35 +103989,6 @@ return jQuery;
     }
 
     /**
-     * A specialized version of `baseExtremum` for arrays which invokes `iteratee`
-     * with one argument: (value).
-     *
-     * @private
-     * @param {Array} array The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {Function} comparator The function used to compare values.
-     * @param {*} exValue The initial extremum value.
-     * @returns {*} Returns the extremum value.
-     */
-    function arrayExtremum(array, iteratee, comparator, exValue) {
-      var index = -1,
-          length = array.length,
-          computed = exValue,
-          result = computed;
-
-      while (++index < length) {
-        var value = array[index],
-            current = +iteratee(value);
-
-        if (comparator(current, computed)) {
-          computed = current;
-          result = value;
-        }
-      }
-      return result;
-    }
-
-    /**
      * A specialized version of `_.filter` for arrays without support for callback
      * shorthands and `this` binding.
      *
@@ -104189,6 +104028,48 @@ return jQuery;
 
       while (++index < length) {
         result[index] = iteratee(array[index], index, array);
+      }
+      return result;
+    }
+
+    /**
+     * A specialized version of `_.max` for arrays without support for iteratees.
+     *
+     * @private
+     * @param {Array} array The array to iterate over.
+     * @returns {*} Returns the maximum value.
+     */
+    function arrayMax(array) {
+      var index = -1,
+          length = array.length,
+          result = NEGATIVE_INFINITY;
+
+      while (++index < length) {
+        var value = array[index];
+        if (value > result) {
+          result = value;
+        }
+      }
+      return result;
+    }
+
+    /**
+     * A specialized version of `_.min` for arrays without support for iteratees.
+     *
+     * @private
+     * @param {Array} array The array to iterate over.
+     * @returns {*} Returns the minimum value.
+     */
+    function arrayMin(array) {
+      var index = -1,
+          length = array.length,
+          result = POSITIVE_INFINITY;
+
+      while (++index < length) {
+        var value = array[index];
+        if (value < result) {
+          result = value;
+        }
       }
       return result;
     }
@@ -104323,8 +104204,10 @@ return jQuery;
      * @returns {Object} Returns `object`.
      */
     function assignWith(object, source, customizer) {
+      var props = keys(source);
+      push.apply(props, getSymbols(source));
+
       var index = -1,
-          props = keys(source),
           length = props.length;
 
       while (++index < length) {
@@ -104349,11 +104232,11 @@ return jQuery;
      * @param {Object} source The source object.
      * @returns {Object} Returns `object`.
      */
-    function baseAssign(object, source) {
+    var baseAssign = nativeAssign || function(object, source) {
       return source == null
         ? object
-        : baseCopy(source, keys(source), object);
-    }
+        : baseCopy(source, getSymbols(source), baseCopy(source, keys(source), object));
+    };
 
     /**
      * The base implementation of `_.at` without support for string collections
@@ -104366,9 +104249,8 @@ return jQuery;
      */
     function baseAt(collection, props) {
       var index = -1,
-          isNil = collection == null,
-          isArr = !isNil && isArrayLike(collection),
-          length = isArr ? collection.length : 0,
+          length = collection.length,
+          isArr = isLength(length),
           propsLength = props.length,
           result = Array(propsLength);
 
@@ -104377,7 +104259,7 @@ return jQuery;
         if (isArr) {
           result[index] = isIndex(key, length) ? collection[key] : undefined;
         } else {
-          result[index] = isNil ? undefined : collection[key];
+          result[index] = collection[key];
         }
       }
       return result;
@@ -104509,14 +104391,14 @@ return jQuery;
      * @returns {Object} Returns the new object.
      */
     var baseCreate = (function() {
-      function object() {}
+      function Object() {}
       return function(prototype) {
         if (isObject(prototype)) {
-          object.prototype = prototype;
-          var result = new object;
-          object.prototype = null;
+          Object.prototype = prototype;
+          var result = new Object;
+          Object.prototype = null;
         }
-        return result || {};
+        return result || context.Object();
       };
     }());
 
@@ -104626,32 +104508,6 @@ return jQuery;
     }
 
     /**
-     * Gets the extremum value of `collection` invoking `iteratee` for each value
-     * in `collection` to generate the criterion by which the value is ranked.
-     * The `iteratee` is invoked with three arguments: (value, index|key, collection).
-     *
-     * @private
-     * @param {Array|Object|string} collection The collection to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {Function} comparator The function used to compare values.
-     * @param {*} exValue The initial extremum value.
-     * @returns {*} Returns the extremum value.
-     */
-    function baseExtremum(collection, iteratee, comparator, exValue) {
-      var computed = exValue,
-          result = computed;
-
-      baseEach(collection, function(value, index, collection) {
-        var current = +iteratee(value, index, collection);
-        if (comparator(current, computed) || (current === exValue && current === result)) {
-          computed = current;
-          result = value;
-        }
-      });
-      return result;
-    }
-
-    /**
      * The base implementation of `_.fill` without an iteratee call guard.
      *
      * @private
@@ -104730,8 +104586,8 @@ return jQuery;
      *
      * @private
      * @param {Array} array The array to flatten.
-     * @param {boolean} [isDeep] Specify a deep flatten.
-     * @param {boolean} [isStrict] Restrict flattening to arrays-like objects.
+     * @param {boolean} isDeep Specify a deep flatten.
+     * @param {boolean} isStrict Restrict flattening to arrays and `arguments` objects.
      * @returns {Array} Returns the new flattened array.
      */
     function baseFlatten(array, isDeep, isStrict) {
@@ -104742,8 +104598,8 @@ return jQuery;
 
       while (++index < length) {
         var value = array[index];
-        if (isObjectLike(value) && isArrayLike(value) &&
-            (isStrict || isArray(value) || isArguments(value))) {
+
+        if (isObjectLike(value) && isLength(value.length) && (isArray(value) || isArguments(value))) {
           if (isDeep) {
             // Recursively flatten arrays (susceptible to call stack limits).
             value = baseFlatten(value, isDeep, isStrict);
@@ -104751,6 +104607,7 @@ return jQuery;
           var valIndex = -1,
               valLength = value.length;
 
+          result.length += valLength;
           while (++valIndex < valLength) {
             result[++resIndex] = value[valIndex];
           }
@@ -104867,13 +104724,13 @@ return jQuery;
       if (pathKey !== undefined && pathKey in toObject(object)) {
         path = [pathKey];
       }
-      var index = 0,
+      var index = -1,
           length = path.length;
 
-      while (object != null && index < length) {
-        object = object[path[index++]];
+      while (object != null && ++index < length) {
+        var result = object = object[path[index]];
       }
-      return (index && index == length) ? object : undefined;
+      return result;
     }
 
     /**
@@ -104890,10 +104747,18 @@ return jQuery;
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      */
     function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
+      // Exit early for identical values.
       if (value === other) {
-        return true;
+        // Treat `+0` vs. `-0` as not equal.
+        return value !== 0 || (1 / value == 1 / other);
       }
-      if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
+      var valType = typeof value,
+          othType = typeof other;
+
+      // Exit early for unlike primitive values.
+      if ((valType != 'function' && valType != 'object' && othType != 'function' && othType != 'object') ||
+          value == null || other == null) {
+        // Return `false` unless both values are `NaN`.
         return value !== value && other !== other;
       }
       return baseIsEqualDeep(value, other, baseIsEqual, customizer, isLoose, stackA, stackB);
@@ -104944,11 +104809,11 @@ return jQuery;
         return equalByTag(object, other, objTag);
       }
       if (!isLoose) {
-        var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
-            othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+        var valWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
+            othWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
-        if (objIsWrapped || othIsWrapped) {
-          return equalFunc(objIsWrapped ? object.value() : object, othIsWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
+        if (valWrapped || othWrapped) {
+          return equalFunc(valWrapped ? object.value() : object, othWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
         }
       }
       if (!isSameTag) {
@@ -104983,43 +104848,41 @@ return jQuery;
      *
      * @private
      * @param {Object} object The object to inspect.
-     * @param {Array} matchData The propery names, values, and compare flags to match.
+     * @param {Array} props The source property names to match.
+     * @param {Array} values The source values to match.
+     * @param {Array} strictCompareFlags Strict comparison flags for source values.
      * @param {Function} [customizer] The function to customize comparing objects.
      * @returns {boolean} Returns `true` if `object` is a match, else `false`.
      */
-    function baseIsMatch(object, matchData, customizer) {
-      var index = matchData.length,
-          length = index,
+    function baseIsMatch(object, props, values, strictCompareFlags, customizer) {
+      var index = -1,
+          length = props.length,
           noCustomizer = !customizer;
 
-      if (object == null) {
-        return !length;
-      }
-      object = toObject(object);
-      while (index--) {
-        var data = matchData[index];
-        if ((noCustomizer && data[2])
-              ? data[1] !== object[data[0]]
-              : !(data[0] in object)
+      while (++index < length) {
+        if ((noCustomizer && strictCompareFlags[index])
+              ? values[index] !== object[props[index]]
+              : !(props[index] in object)
             ) {
           return false;
         }
       }
+      index = -1;
       while (++index < length) {
-        data = matchData[index];
-        var key = data[0],
+        var key = props[index],
             objValue = object[key],
-            srcValue = data[1];
+            srcValue = values[index];
 
-        if (noCustomizer && data[2]) {
-          if (objValue === undefined && !(key in object)) {
-            return false;
-          }
+        if (noCustomizer && strictCompareFlags[index]) {
+          var result = objValue !== undefined || (key in object);
         } else {
-          var result = customizer ? customizer(objValue, srcValue, key) : undefined;
-          if (!(result === undefined ? baseIsEqual(srcValue, objValue, customizer, true) : result)) {
-            return false;
+          result = customizer ? customizer(objValue, srcValue, key) : undefined;
+          if (result === undefined) {
+            result = baseIsEqual(srcValue, objValue, customizer, true);
           }
+        }
+        if (!result) {
+          return false;
         }
       }
       return true;
@@ -105036,7 +104899,8 @@ return jQuery;
      */
     function baseMap(collection, iteratee) {
       var index = -1,
-          result = isArrayLike(collection) ? Array(collection.length) : [];
+          length = getLength(collection),
+          result = isLength(length) ? Array(length) : [];
 
       baseEach(collection, function(value, key, collection) {
         result[++index] = iteratee(value, key, collection);
@@ -105052,34 +104916,50 @@ return jQuery;
      * @returns {Function} Returns the new function.
      */
     function baseMatches(source) {
-      var matchData = getMatchData(source);
-      if (matchData.length == 1 && matchData[0][2]) {
-        var key = matchData[0][0],
-            value = matchData[0][1];
+      var props = keys(source),
+          length = props.length;
 
-        return function(object) {
-          if (object == null) {
-            return false;
-          }
-          return object[key] === value && (value !== undefined || (key in toObject(object)));
-        };
+      if (!length) {
+        return constant(true);
+      }
+      if (length == 1) {
+        var key = props[0],
+            value = source[key];
+
+        if (isStrictComparable(value)) {
+          return function(object) {
+            if (object == null) {
+              return false;
+            }
+            return object[key] === value && (value !== undefined || (key in toObject(object)));
+          };
+        }
+      }
+      var values = Array(length),
+          strictCompareFlags = Array(length);
+
+      while (length--) {
+        value = source[props[length]];
+        values[length] = value;
+        strictCompareFlags[length] = isStrictComparable(value);
       }
       return function(object) {
-        return baseIsMatch(object, matchData);
+        return object != null && baseIsMatch(toObject(object), props, values, strictCompareFlags);
       };
     }
 
     /**
-     * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
+     * The base implementation of `_.matchesProperty` which does not which does
+     * not clone `value`.
      *
      * @private
      * @param {string} path The path of the property to get.
-     * @param {*} srcValue The value to compare.
+     * @param {*} value The value to compare.
      * @returns {Function} Returns the new function.
      */
-    function baseMatchesProperty(path, srcValue) {
+    function baseMatchesProperty(path, value) {
       var isArr = isArray(path),
-          isCommon = isKey(path) && isStrictComparable(srcValue),
+          isCommon = isKey(path) && isStrictComparable(value),
           pathKey = (path + '');
 
       path = toPath(path);
@@ -105097,9 +104977,9 @@ return jQuery;
           key = last(path);
           object = toObject(object);
         }
-        return object[key] === srcValue
-          ? (srcValue !== undefined || (key in object))
-          : baseIsEqual(srcValue, object[key], undefined, true);
+        return object[key] === value
+          ? (value !== undefined || (key in object))
+          : baseIsEqual(value, object[key], null, true);
       };
     }
 
@@ -105119,9 +104999,11 @@ return jQuery;
       if (!isObject(object)) {
         return object;
       }
-      var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
-          props = isSrcArr ? null : keys(source);
-
+      var isSrcArr = isLength(source.length) && (isArray(source) || isTypedArray(source));
+      if (!isSrcArr) {
+        var props = keys(source);
+        push.apply(props, getSymbols(source));
+      }
       arrayEach(props || source, function(srcValue, key) {
         if (props) {
           key = srcValue;
@@ -105140,7 +105022,7 @@ return jQuery;
           if (isCommon) {
             result = srcValue;
           }
-          if ((result !== undefined || (isSrcArr && !(key in object))) &&
+          if ((isSrcArr || result !== undefined) &&
               (isCommon || (result === result ? (result !== value) : (value === value)))) {
             object[key] = result;
           }
@@ -105180,10 +105062,10 @@ return jQuery;
 
       if (isCommon) {
         result = srcValue;
-        if (isArrayLike(srcValue) && (isArray(srcValue) || isTypedArray(srcValue))) {
+        if (isLength(srcValue.length) && (isArray(srcValue) || isTypedArray(srcValue))) {
           result = isArray(value)
             ? value
-            : (isArrayLike(value) ? arrayCopy(value) : []);
+            : (getLength(value) ? arrayCopy(value) : []);
         }
         else if (isPlainObject(srcValue) || isArguments(srcValue)) {
           result = isArguments(value)
@@ -105245,9 +105127,9 @@ return jQuery;
      * @returns {Array} Returns `array`.
      */
     function basePullAt(array, indexes) {
-      var length = array ? indexes.length : 0;
+      var length = indexes.length;
       while (length--) {
-        var index = indexes[length];
+        var index = parseFloat(indexes[length]);
         if (index != previous && isIndex(index)) {
           var previous = index;
           splice.call(array, index, 1);
@@ -105560,7 +105442,7 @@ return jQuery;
           var mid = (low + high) >>> 1,
               computed = array[mid];
 
-          if ((retHighest ? (computed <= value) : (computed < value)) && computed !== null) {
+          if (retHighest ? (computed <= value) : (computed < value)) {
             low = mid + 1;
           } else {
             high = mid;
@@ -105590,23 +105472,17 @@ return jQuery;
       var low = 0,
           high = array ? array.length : 0,
           valIsNaN = value !== value,
-          valIsNull = value === null,
           valIsUndef = value === undefined;
 
       while (low < high) {
         var mid = floor((low + high) / 2),
             computed = iteratee(array[mid]),
-            isDef = computed !== undefined,
             isReflexive = computed === computed;
 
         if (valIsNaN) {
           var setLow = isReflexive || retHighest;
-        } else if (valIsNull) {
-          setLow = isReflexive && isDef && (retHighest || computed != null);
         } else if (valIsUndef) {
-          setLow = isReflexive && (retHighest || isDef);
-        } else if (computed == null) {
-          setLow = false;
+          setLow = isReflexive && (retHighest || computed !== undefined);
         } else {
           setLow = retHighest ? (computed <= value) : (computed < value);
         }
@@ -105737,12 +105613,12 @@ return jQuery;
       while (++argsIndex < argsLength) {
         result[argsIndex] = args[argsIndex];
       }
-      var offset = argsIndex;
+      var pad = argsIndex;
       while (++rightIndex < rightLength) {
-        result[offset + rightIndex] = partials[rightIndex];
+        result[pad + rightIndex] = partials[rightIndex];
       }
       while (++holdersIndex < holdersLength) {
-        result[offset + holders[holdersIndex]] = args[argsIndex++];
+        result[pad + holders[holdersIndex]] = args[argsIndex++];
       }
       return result;
     }
@@ -105796,19 +105672,19 @@ return jQuery;
       return restParam(function(object, sources) {
         var index = -1,
             length = object == null ? 0 : sources.length,
-            customizer = length > 2 ? sources[length - 2] : undefined,
-            guard = length > 2 ? sources[2] : undefined,
-            thisArg = length > 1 ? sources[length - 1] : undefined;
+            customizer = length > 2 && sources[length - 2],
+            guard = length > 2 && sources[2],
+            thisArg = length > 1 && sources[length - 1];
 
         if (typeof customizer == 'function') {
           customizer = bindCallback(customizer, thisArg, 5);
           length -= 2;
         } else {
-          customizer = typeof thisArg == 'function' ? thisArg : undefined;
+          customizer = typeof thisArg == 'function' ? thisArg : null;
           length -= (customizer ? 1 : 0);
         }
         if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-          customizer = length < 3 ? undefined : customizer;
+          customizer = length < 3 ? null : customizer;
           length = 1;
         }
         while (++index < length) {
@@ -105933,20 +105809,8 @@ return jQuery;
      */
     function createCtorWrapper(Ctor) {
       return function() {
-        // Use a `switch` statement to work with class constructors.
-        // See https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-function-objects-call-thisargument-argumentslist
-        // for more details.
-        var args = arguments;
-        switch (args.length) {
-          case 0: return new Ctor;
-          case 1: return new Ctor(args[0]);
-          case 2: return new Ctor(args[0], args[1]);
-          case 3: return new Ctor(args[0], args[1], args[2]);
-          case 4: return new Ctor(args[0], args[1], args[2], args[3]);
-          case 5: return new Ctor(args[0], args[1], args[2], args[3], args[4]);
-        }
         var thisBinding = baseCreate(Ctor.prototype),
-            result = Ctor.apply(thisBinding, args);
+            result = Ctor.apply(thisBinding, arguments);
 
         // Mimic the constructor's `return` behavior.
         // See https://es5.github.io/#x13.2.2 for more details.
@@ -105977,24 +105841,32 @@ return jQuery;
      * Creates a `_.max` or `_.min` function.
      *
      * @private
-     * @param {Function} comparator The function used to compare values.
-     * @param {*} exValue The initial extremum value.
+     * @param {Function} arrayFunc The function to get the extremum value from an array.
+     * @param {boolean} [isMin] Specify returning the minimum, instead of the maximum,
+     *  extremum value.
      * @returns {Function} Returns the new extremum function.
      */
-    function createExtremum(comparator, exValue) {
+    function createExtremum(arrayFunc, isMin) {
       return function(collection, iteratee, thisArg) {
         if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
           iteratee = null;
         }
-        iteratee = getCallback(iteratee, thisArg, 3);
-        if (iteratee.length == 1) {
-          collection = toIterable(collection);
-          var result = arrayExtremum(collection, iteratee, comparator, exValue);
-          if (!(collection.length && result === exValue)) {
-            return result;
+        var func = getCallback(),
+            noIteratee = iteratee == null;
+
+        if (!(func === baseCallback && noIteratee)) {
+          noIteratee = false;
+          iteratee = func(iteratee, thisArg, 3);
+        }
+        if (noIteratee) {
+          var isArr = isArray(collection);
+          if (!isArr && isString(collection)) {
+            iteratee = charAtCallback;
+          } else {
+            return arrayFunc(isArr ? collection : toIterable(collection));
           }
         }
-        return baseExtremum(collection, iteratee, comparator, exValue);
+        return extremumBy(collection, iteratee, isMin);
       };
     }
 
@@ -106014,7 +105886,7 @@ return jQuery;
           return index > -1 ? collection[index] : undefined;
         }
         return baseFind(collection, predicate, eachFunc);
-      };
+      }
     }
 
     /**
@@ -106057,8 +105929,11 @@ return jQuery;
      */
     function createFlow(fromRight) {
       return function() {
+        var length = arguments.length;
+        if (!length) {
+          return function() { return arguments[0]; };
+        }
         var wrapper,
-            length = arguments.length,
             index = fromRight ? length : -1,
             leftIndex = 0,
             funcs = Array(length);
@@ -106068,18 +105943,16 @@ return jQuery;
           if (typeof func != 'function') {
             throw new TypeError(FUNC_ERROR_TEXT);
           }
-          if (!wrapper && LodashWrapper.prototype.thru && getFuncName(func) == 'wrapper') {
-            wrapper = new LodashWrapper([]);
-          }
+          var funcName = wrapper ? '' : getFuncName(func);
+          wrapper = funcName == 'wrapper' ? new LodashWrapper([]) : wrapper;
         }
         index = wrapper ? -1 : length;
         while (++index < length) {
           func = funcs[index];
+          funcName = getFuncName(func);
 
-          var funcName = getFuncName(func),
-              data = funcName == 'wrapper' ? getData(func) : null;
-
-          if (data && isLaziable(data[0]) && data[1] == (ARY_FLAG | CURRY_FLAG | PARTIAL_FLAG | REARG_FLAG) && !data[4].length && data[9] == 1) {
+          var data = funcName == 'wrapper' ? getData(func) : null;
+          if (data && isLaziable(data[0])) {
             wrapper = wrapper[getFuncName(data[0])].apply(wrapper, data[3]);
           } else {
             wrapper = (func.length == 1 && isLaziable(func)) ? wrapper[funcName]() : wrapper.thru(func);
@@ -106091,7 +105964,7 @@ return jQuery;
             return wrapper.plant(args[0]).value();
           }
           var index = 0,
-              result = length ? funcs[index].apply(this, args) : args[0];
+              result = funcs[index].apply(this, args);
 
           while (++index < length) {
             result = funcs[index].call(this, result);
@@ -106150,28 +106023,6 @@ return jQuery;
     }
 
     /**
-     * Creates a function for `_.mapKeys` or `_.mapValues`.
-     *
-     * @private
-     * @param {boolean} [isMapKeys] Specify mapping keys instead of values.
-     * @returns {Function} Returns the new map function.
-     */
-    function createObjectMapper(isMapKeys) {
-      return function(object, iteratee, thisArg) {
-        var result = {};
-        iteratee = getCallback(iteratee, thisArg, 3);
-
-        baseForOwn(object, function(value, key, object) {
-          var mapped = iteratee(value, key, object);
-          key = isMapKeys ? mapped : key;
-          value = isMapKeys ? value : mapped;
-          result[key] = value;
-        });
-        return result;
-      };
-    }
-
-    /**
      * Creates a function for `_.padLeft` or `_.padRight`.
      *
      * @private
@@ -106181,7 +106032,7 @@ return jQuery;
     function createPadDir(fromRight) {
       return function(string, length, chars) {
         string = baseToString(string);
-        return (fromRight ? string : '') + createPadding(string, length, chars) + (fromRight ? '' : string);
+        return string && ((fromRight ? string : '') + createPadding(string, length, chars) + (fromRight ? '' : string));
       };
     }
 
@@ -106240,8 +106091,10 @@ return jQuery;
           isBindKey = bitmask & BIND_KEY_FLAG,
           isCurry = bitmask & CURRY_FLAG,
           isCurryBound = bitmask & CURRY_BOUND_FLAG,
-          isCurryRight = bitmask & CURRY_RIGHT_FLAG,
-          Ctor = isBindKey ? null : createCtorWrapper(func);
+          isCurryRight = bitmask & CURRY_RIGHT_FLAG;
+
+      var Ctor = !isBindKey && createCtorWrapper(func),
+          key = func;
 
       function wrapper() {
         // Avoid `arguments` object use disqualifying optimizations by
@@ -106288,18 +106141,17 @@ return jQuery;
             return result;
           }
         }
-        var thisBinding = isBind ? thisArg : this,
-            fn = isBindKey ? thisBinding[func] : func;
-
+        var thisBinding = isBind ? thisArg : this;
+        if (isBindKey) {
+          func = thisBinding[key];
+        }
         if (argPos) {
           args = reorder(args, argPos);
         }
         if (isAry && ary < args.length) {
           args.length = ary;
         }
-        if (this && this !== root && this instanceof wrapper) {
-          fn = Ctor || createCtorWrapper(func);
-        }
+        var fn = (this && this !== root && this instanceof wrapper) ? (Ctor || createCtorWrapper(func)) : func;
         return fn.apply(thisBinding, args);
       }
       return wrapper;
@@ -106373,10 +106225,10 @@ return jQuery;
      */
     function createSortedIndex(retHighest) {
       return function(array, value, iteratee, thisArg) {
-        var callback = getCallback(iteratee);
-        return (iteratee == null && callback === baseCallback)
+        var func = getCallback(iteratee);
+        return (func === baseCallback && iteratee == null)
           ? binaryIndex(array, value, retHighest)
-          : binaryIndexBy(array, value, callback(iteratee, thisArg, 1), retHighest);
+          : binaryIndexBy(array, value, func(iteratee, thisArg, 1), retHighest);
       };
     }
 
@@ -106462,35 +106314,40 @@ return jQuery;
     function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stackB) {
       var index = -1,
           arrLength = array.length,
-          othLength = other.length;
+          othLength = other.length,
+          result = true;
 
       if (arrLength != othLength && !(isLoose && othLength > arrLength)) {
         return false;
       }
-      // Ignore non-index properties.
-      while (++index < arrLength) {
+      // Deep compare the contents, ignoring non-numeric properties.
+      while (result && ++index < arrLength) {
         var arrValue = array[index],
-            othValue = other[index],
-            result = customizer ? customizer(isLoose ? othValue : arrValue, isLoose ? arrValue : othValue, index) : undefined;
+            othValue = other[index];
 
-        if (result !== undefined) {
-          if (result) {
-            continue;
-          }
-          return false;
+        result = undefined;
+        if (customizer) {
+          result = isLoose
+            ? customizer(othValue, arrValue, index)
+            : customizer(arrValue, othValue, index);
         }
-        // Recursively compare arrays (susceptible to call stack limits).
-        if (isLoose) {
-          if (!arraySome(other, function(othValue) {
-                return arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
-              })) {
-            return false;
+        if (result === undefined) {
+          // Recursively compare arrays (susceptible to call stack limits).
+          if (isLoose) {
+            var othIndex = othLength;
+            while (othIndex--) {
+              othValue = other[othIndex];
+              result = (arrValue && arrValue === othValue) || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
+              if (result) {
+                break;
+              }
+            }
+          } else {
+            result = (arrValue && arrValue === othValue) || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
           }
-        } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB))) {
-          return false;
         }
       }
-      return true;
+      return !!result;
     }
 
     /**
@@ -106521,7 +106378,8 @@ return jQuery;
           // Treat `NaN` vs. `NaN` as equal.
           return (object != +object)
             ? other != +other
-            : object == +other;
+            // But, treat `-0` vs. `+0` as not equal.
+            : (object == 0 ? ((1 / object) == (1 / other)) : object == +other);
 
         case regexpTag:
         case stringTag:
@@ -106555,22 +106413,29 @@ return jQuery;
       if (objLength != othLength && !isLoose) {
         return false;
       }
-      var index = objLength;
-      while (index--) {
-        var key = objProps[index];
-        if (!(isLoose ? key in other : hasOwnProperty.call(other, key))) {
-          return false;
-        }
-      }
-      var skipCtor = isLoose;
-      while (++index < objLength) {
-        key = objProps[index];
-        var objValue = object[key],
-            othValue = other[key],
-            result = customizer ? customizer(isLoose ? othValue : objValue, isLoose? objValue : othValue, key) : undefined;
+      var skipCtor = isLoose,
+          index = -1;
 
-        // Recursively compare objects (susceptible to call stack limits).
-        if (!(result === undefined ? equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB) : result)) {
+      while (++index < objLength) {
+        var key = objProps[index],
+            result = isLoose ? key in other : hasOwnProperty.call(other, key);
+
+        if (result) {
+          var objValue = object[key],
+              othValue = other[key];
+
+          result = undefined;
+          if (customizer) {
+            result = isLoose
+              ? customizer(othValue, objValue, key)
+              : customizer(objValue, othValue, key);
+          }
+          if (result === undefined) {
+            // Recursively compare objects (susceptible to call stack limits).
+            result = (objValue && objValue === othValue) || equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB);
+          }
+        }
+        if (!result) {
           return false;
         }
         skipCtor || (skipCtor = key == 'constructor');
@@ -106588,6 +106453,34 @@ return jQuery;
         }
       }
       return true;
+    }
+
+    /**
+     * Gets the extremum value of `collection` invoking `iteratee` for each value
+     * in `collection` to generate the criterion by which the value is ranked.
+     * The `iteratee` is invoked with three arguments: (value, index, collection).
+     *
+     * @private
+     * @param {Array|Object|string} collection The collection to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @param {boolean} [isMin] Specify returning the minimum, instead of the
+     *  maximum, extremum value.
+     * @returns {*} Returns the extremum value.
+     */
+    function extremumBy(collection, iteratee, isMin) {
+      var exValue = isMin ? POSITIVE_INFINITY : NEGATIVE_INFINITY,
+          computed = exValue,
+          result = computed;
+
+      baseEach(collection, function(value, index, collection) {
+        var current = iteratee(value, index, collection);
+        if ((isMin ? (current < computed) : (current > computed)) ||
+            (current === exValue && current === result)) {
+          computed = current;
+          result = value;
+        }
+      });
+      return result;
     }
 
     /**
@@ -106623,20 +106516,29 @@ return jQuery;
      * @param {Function} func The function to query.
      * @returns {string} Returns the function name.
      */
-    function getFuncName(func) {
-      var result = func.name,
-          array = realNames[result],
-          length = array ? array.length : 0;
-
-      while (length--) {
-        var data = array[length],
-            otherFunc = data.func;
-        if (otherFunc == null || otherFunc == func) {
-          return data.name;
-        }
+    var getFuncName = (function() {
+      if (!support.funcNames) {
+        return constant('');
       }
-      return result;
-    }
+      if (constant.name == 'constant') {
+        return baseProperty('name');
+      }
+      return function(func) {
+        var result = func.name,
+            array = realNames[result],
+            length = array ? array.length : 0;
+
+        while (length--) {
+          var data = array[length],
+              otherFunc = data.func;
+
+          if (otherFunc == null || otherFunc == func) {
+            return data.name;
+          }
+        }
+        return result;
+      };
+    }());
 
     /**
      * Gets the appropriate "indexOf" function. If the `_.indexOf` method is
@@ -106657,7 +106559,7 @@ return jQuery;
      * Gets the "length" property value of `object`.
      *
      * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
-     * that affects Safari on at least iOS 8.1-8.3 ARM64.
+     * in Safari on iOS 8.1 ARM64.
      *
      * @private
      * @param {Object} object The object to query.
@@ -106666,34 +106568,15 @@ return jQuery;
     var getLength = baseProperty('length');
 
     /**
-     * Gets the propery names, values, and compare flags of `object`.
+     * Creates an array of the own symbols of `object`.
      *
      * @private
      * @param {Object} object The object to query.
-     * @returns {Array} Returns the match data of `object`.
+     * @returns {Array} Returns the array of symbols.
      */
-    function getMatchData(object) {
-      var result = pairs(object),
-          length = result.length;
-
-      while (length--) {
-        result[length][2] = isStrictComparable(result[length][1]);
-      }
-      return result;
-    }
-
-    /**
-     * Gets the native function at `key` of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @param {string} key The key of the method to get.
-     * @returns {*} Returns the function if it's native, else `undefined`.
-     */
-    function getNative(object, key) {
-      var value = object == null ? undefined : object[key];
-      return isNative(value) ? value : undefined;
-    }
+    var getSymbols = !getOwnPropertySymbols ? constant([]) : function(object) {
+      return getOwnPropertySymbols(toObject(object));
+    };
 
     /**
      * Gets the view, applying any `transforms` to the `start` and `end` positions.
@@ -106816,17 +106699,6 @@ return jQuery;
     }
 
     /**
-     * Checks if `value` is array-like.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
-     */
-    function isArrayLike(value) {
-      return value != null && isLength(getLength(value));
-    }
-
-    /**
      * Checks if `value` is a valid array-like index.
      *
      * @private
@@ -106835,7 +106707,7 @@ return jQuery;
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
-      value = typeof value == 'number' ? value : parseFloat(value);
+      value = +value;
       length = length == null ? MAX_SAFE_INTEGER : length;
       return value > -1 && value % 1 == 0 && value < length;
     }
@@ -106854,9 +106726,13 @@ return jQuery;
         return false;
       }
       var type = typeof index;
-      if (type == 'number'
-          ? (isArrayLike(object) && isIndex(index, object.length))
-          : (type == 'string' && index in object)) {
+      if (type == 'number') {
+        var length = getLength(object),
+            prereq = isLength(length) && isIndex(index, length);
+      } else {
+        prereq = type == 'string' && index in object;
+      }
+      if (prereq) {
         var other = object[index];
         return value === value ? (value === other) : (other !== other);
       }
@@ -106892,15 +106768,7 @@ return jQuery;
      */
     function isLaziable(func) {
       var funcName = getFuncName(func);
-      if (!(funcName in LazyWrapper.prototype)) {
-        return false;
-      }
-      var other = lodash[funcName];
-      if (func === other) {
-        return true;
-      }
-      var data = getData(other);
-      return !!data && func === data[0];
+      return !!funcName && func === lodash[funcName] && funcName in LazyWrapper.prototype;
     }
 
     /**
@@ -106925,7 +106793,7 @@ return jQuery;
      *  equality comparisons, else `false`.
      */
     function isStrictComparable(value) {
-      return value === value && !isObject(value);
+      return value === value && (value === 0 ? ((1 / value) > 0) : !isObject(value));
     }
 
     /**
@@ -106999,7 +106867,7 @@ return jQuery;
     }
 
     /**
-     * A specialized version of `_.pick` which picks `object` properties specified
+     * A specialized version of `_.pick` that picks `object` properties specified
      * by `props`.
      *
      * @private
@@ -107024,7 +106892,7 @@ return jQuery;
     }
 
     /**
-     * A specialized version of `_.pick` which picks `object` properties `predicate`
+     * A specialized version of `_.pick` that picks `object` properties `predicate`
      * returns truthy for.
      *
      * @private
@@ -107140,10 +107008,11 @@ return jQuery;
     function shimKeys(object) {
       var props = keysIn(object),
           propsLength = props.length,
-          length = propsLength && object.length;
+          length = propsLength && object.length,
+          support = lodash.support;
 
-      var allowIndexes = !!length && isLength(length) &&
-        (isArray(object) || isArguments(object));
+      var allowIndexes = length && isLength(length) &&
+        (isArray(object) || (support.nonEnumArgs && isArguments(object)));
 
       var index = -1,
           result = [];
@@ -107158,7 +107027,7 @@ return jQuery;
     }
 
     /**
-     * Converts `value` to an array-like object if it's not one.
+     * Converts `value` to an array-like object if it is not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -107168,14 +107037,14 @@ return jQuery;
       if (value == null) {
         return [];
       }
-      if (!isArrayLike(value)) {
+      if (!isLength(getLength(value))) {
         return values(value);
       }
       return isObject(value) ? value : Object(value);
     }
 
     /**
-     * Converts `value` to an object if it's not one.
+     * Converts `value` to an object if it is not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -107186,7 +107055,7 @@ return jQuery;
     }
 
     /**
-     * Converts `value` to property path array if it's not one.
+     * Converts `value` to property path array if it is not one.
      *
      * @private
      * @param {*} value The value to process.
@@ -107285,9 +107154,12 @@ return jQuery;
     }
 
     /**
-     * Creates an array of unique `array` values not included in the other
-     * provided arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons.
+     * Creates an array excluding all values of the provided arrays using
+     * `SameValueZero` for equality comparisons.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -107301,7 +107173,7 @@ return jQuery;
      * // => [1, 3]
      */
     var difference = restParam(function(array, values) {
-      return isArrayLike(array)
+      return (isArray(array) || isArguments(array))
         ? baseDifference(array, baseFlatten(values, false, true))
         : [];
     });
@@ -107696,10 +107568,13 @@ return jQuery;
 
     /**
      * Gets the index at which the first occurrence of `value` is found in `array`
-     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons. If `fromIndex` is negative, it is used as the offset
-     * from the end of `array`. If `array` is sorted providing `true` for `fromIndex`
-     * performs a faster binary search.
+     * using `SameValueZero` for equality comparisons. If `fromIndex` is negative,
+     * it is used as the offset from the end of `array`. If `array` is sorted
+     * providing `true` for `fromIndex` performs a faster binary search.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -107759,9 +107634,12 @@ return jQuery;
     }
 
     /**
-     * Creates an array of unique values that are included in all of the provided
-     * arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * Creates an array of unique values in all provided arrays using `SameValueZero`
      * for equality comparisons.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -107772,19 +107650,27 @@ return jQuery;
      * _.intersection([1, 2], [4, 2], [2, 1]);
      * // => [2]
      */
-    var intersection = restParam(function(arrays) {
-      var othLength = arrays.length,
-          othIndex = othLength,
-          caches = Array(length),
+    function intersection() {
+      var args = [],
+          argsIndex = -1,
+          argsLength = arguments.length,
+          caches = [],
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
           result = [];
 
-      while (othIndex--) {
-        var value = arrays[othIndex] = isArrayLike(value = arrays[othIndex]) ? value : [];
-        caches[othIndex] = (isCommon && value.length >= 120) ? createCache(othIndex && value) : null;
+      while (++argsIndex < argsLength) {
+        var value = arguments[argsIndex];
+        if (isArray(value) || isArguments(value)) {
+          args.push(value);
+          caches.push((isCommon && value.length >= 120) ? createCache(argsIndex && value) : null);
+        }
       }
-      var array = arrays[0],
+      argsLength = args.length;
+      if (argsLength < 2) {
+        return result;
+      }
+      var array = args[0],
           index = -1,
           length = array ? array.length : 0,
           seen = caches[0];
@@ -107793,10 +107679,10 @@ return jQuery;
       while (++index < length) {
         value = array[index];
         if ((seen ? cacheIndexOf(seen, value) : indexOf(result, value, 0)) < 0) {
-          var othIndex = othLength;
-          while (--othIndex) {
-            var cache = caches[othIndex];
-            if ((cache ? cacheIndexOf(cache, value) : indexOf(arrays[othIndex], value, 0)) < 0) {
+          argsIndex = argsLength;
+          while (--argsIndex) {
+            var cache = caches[argsIndex];
+            if ((cache ? cacheIndexOf(cache, value) : indexOf(args[argsIndex], value, 0)) < 0) {
               continue outer;
             }
           }
@@ -107807,7 +107693,7 @@ return jQuery;
         }
       }
       return result;
-    });
+    }
 
     /**
      * Gets the last element of `array`.
@@ -107880,11 +107766,14 @@ return jQuery;
     }
 
     /**
-     * Removes all provided values from `array` using
-     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons.
+     * Removes all provided values from `array` using `SameValueZero` for equality
+     * comparisons.
      *
-     * **Note:** Unlike `_.without`, this method mutates `array`.
+     * **Notes:**
+     *  - Unlike `_.without`, this method mutates `array`
+     *  - [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     *    comparisons are like strict equality comparisons, e.g. `===`, except
+     *    that `NaN` matches `NaN`
      *
      * @static
      * @memberOf _
@@ -107948,6 +107837,7 @@ return jQuery;
      * // => [10, 20]
      */
     var pullAt = restParam(function(array, indexes) {
+      array || (array = []);
       indexes = baseFlatten(indexes);
 
       var result = baseAt(array, indexes);
@@ -108313,9 +108203,12 @@ return jQuery;
     }
 
     /**
-     * Creates an array of unique values, in order, from all of the provided arrays
-     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons.
+     * Creates an array of unique values, in order, of the provided arrays using
+     * `SameValueZero` for equality comparisons.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -108332,9 +108225,8 @@ return jQuery;
     });
 
     /**
-     * Creates a duplicate-free version of an array, using
-     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons, in which only the first occurence of each element
+     * Creates a duplicate-free version of an array, using `SameValueZero` for
+     * equality comparisons, in which only the first occurence of each element
      * is kept. Providing `true` for `isSorted` performs a faster search algorithm
      * for sorted arrays. If an iteratee function is provided it is invoked for
      * each element in the array to generate the criterion by which uniqueness
@@ -108351,6 +108243,10 @@ return jQuery;
      * If an object is provided for `iteratee` the created `_.matches` style
      * callback returns `true` for elements that have the properties of the given
      * object, else `false`.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -108390,9 +108286,9 @@ return jQuery;
         iteratee = isIterateeCall(array, isSorted, thisArg) ? null : isSorted;
         isSorted = false;
       }
-      var callback = getCallback();
-      if (!(iteratee == null && callback === baseCallback)) {
-        iteratee = callback(iteratee, thisArg, 3);
+      var func = getCallback();
+      if (!(func === baseCallback && iteratee == null)) {
+        iteratee = func(iteratee, thisArg, 3);
       }
       return (isSorted && getIndexOf() == baseIndexOf)
         ? sortedUniq(array, iteratee)
@@ -108401,7 +108297,7 @@ return jQuery;
 
     /**
      * This method is like `_.zip` except that it accepts an array of grouped
-     * elements and creates an array regrouping the elements to their pre-zip
+     * elements and creates an array regrouping the elements to their pre-`_.zip`
      * configuration.
      *
      * @static
@@ -108418,19 +108314,10 @@ return jQuery;
      * // => [['fred', 'barney'], [30, 40], [true, false]]
      */
     function unzip(array) {
-      if (!(array && array.length)) {
-        return [];
-      }
       var index = -1,
-          length = 0;
+          length = (array && array.length && arrayMax(arrayMap(array, getLength))) >>> 0,
+          result = Array(length);
 
-      array = arrayFilter(array, function(group) {
-        if (isArrayLike(group)) {
-          length = nativeMax(group.length, length);
-          return true;
-        }
-      });
-      var result = Array(length);
       while (++index < length) {
         result[index] = arrayMap(array, baseProperty(index));
       }
@@ -108438,44 +108325,12 @@ return jQuery;
     }
 
     /**
-     * This method is like `_.unzip` except that it accepts an iteratee to specify
-     * how regrouped values should be combined. The `iteratee` is bound to `thisArg`
-     * and invoked with four arguments: (accumulator, value, index, group).
+     * Creates an array excluding all provided values using `SameValueZero` for
+     * equality comparisons.
      *
-     * @static
-     * @memberOf _
-     * @category Array
-     * @param {Array} array The array of grouped elements to process.
-     * @param {Function} [iteratee] The function to combine regrouped values.
-     * @param {*} [thisArg] The `this` binding of `iteratee`.
-     * @returns {Array} Returns the new array of regrouped elements.
-     * @example
-     *
-     * var zipped = _.zip([1, 2], [10, 20], [100, 200]);
-     * // => [[1, 10, 100], [2, 20, 200]]
-     *
-     * _.unzipWith(zipped, _.add);
-     * // => [3, 30, 300]
-     */
-    function unzipWith(array, iteratee, thisArg) {
-      var length = array ? array.length : 0;
-      if (!length) {
-        return [];
-      }
-      var result = unzip(array);
-      if (iteratee == null) {
-        return result;
-      }
-      iteratee = bindCallback(iteratee, thisArg, 4);
-      return arrayMap(result, function(group) {
-        return arrayReduce(group, iteratee, undefined, true);
-      });
-    }
-
-    /**
-     * Creates an array excluding all provided values using
-     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons.
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -108489,13 +108344,13 @@ return jQuery;
      * // => [3]
      */
     var without = restParam(function(array, values) {
-      return isArrayLike(array)
+      return (isArray(array) || isArguments(array))
         ? baseDifference(array, values)
         : [];
     });
 
     /**
-     * Creates an array of unique values that is the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
+     * Creates an array that is the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
      * of the provided arrays.
      *
      * @static
@@ -108514,7 +108369,7 @@ return jQuery;
 
       while (++index < length) {
         var array = arguments[index];
-        if (isArrayLike(array)) {
+        if (isArray(array) || isArguments(array)) {
           var result = result
             ? baseDifference(result, array).concat(baseDifference(array, result))
             : array;
@@ -108579,38 +108434,6 @@ return jQuery;
       }
       return result;
     }
-
-    /**
-     * This method is like `_.zip` except that it accepts an iteratee to specify
-     * how grouped values should be combined. The `iteratee` is bound to `thisArg`
-     * and invoked with four arguments: (accumulator, value, index, group).
-     *
-     * @static
-     * @memberOf _
-     * @category Array
-     * @param {...Array} [arrays] The arrays to process.
-     * @param {Function} [iteratee] The function to combine grouped values.
-     * @param {*} [thisArg] The `this` binding of `iteratee`.
-     * @returns {Array} Returns the new array of grouped elements.
-     * @example
-     *
-     * _.zipWith([1, 2], [10, 20], [100, 200], _.add);
-     * // => [111, 222]
-     */
-    var zipWith = restParam(function(arrays) {
-      var length = arrays.length,
-          iteratee = length > 2 ? arrays[length - 2] : undefined,
-          thisArg = length > 1 ? arrays[length - 1] : undefined;
-
-      if (length > 2 && typeof iteratee == 'function') {
-        length -= 2;
-      } else {
-        iteratee = (length > 1 && typeof thisArg == 'function') ? (--length, thisArg) : undefined;
-        thisArg = undefined;
-      }
-      arrays.length = length;
-      return unzipWith(arrays, iteratee, thisArg);
-    });
 
     /*------------------------------------------------------------------------*/
 
@@ -108887,6 +108710,10 @@ return jQuery;
      * // => ['barney', 'pebbles']
      */
     var at = restParam(function(collection, props) {
+      var length = collection ? getLength(collection) : 0;
+      if (isLength(length)) {
+        collection = toIterable(collection);
+      }
       return baseAt(collection, baseFlatten(props));
     });
 
@@ -109259,10 +109086,13 @@ return jQuery;
     });
 
     /**
-     * Checks if `value` is in `collection` using
-     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
-     * for equality comparisons. If `fromIndex` is negative, it is used as the offset
-     * from the end of `collection`.
+     * Checks if `value` is in `collection` using `SameValueZero` for equality
+     * comparisons. If `fromIndex` is negative, it is used as the offset from
+     * the end of `collection`.
+     *
+     * **Note:** [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
+     * comparisons are like strict equality comparisons, e.g. `===`, except that
+     * `NaN` matches `NaN`.
      *
      * @static
      * @memberOf _
@@ -109357,7 +109187,7 @@ return jQuery;
     });
 
     /**
-     * Invokes the method at `path` of each element in `collection`, returning
+     * Invokes the method at `path` on each element in `collection`, returning
      * an array of the results of each invoked method. Any additional arguments
      * are provided to each invoked method. If `methodName` is a function it is
      * invoked for, and `this` bound to, each element in `collection`.
@@ -109382,10 +109212,11 @@ return jQuery;
       var index = -1,
           isFunc = typeof path == 'function',
           isProp = isKey(path),
-          result = isArrayLike(collection) ? Array(collection.length) : [];
+          length = getLength(collection),
+          result = isLength(length) ? Array(length) : [];
 
       baseEach(collection, function(value) {
-        var func = isFunc ? path : ((isProp && value != null) ? value[path] : null);
+        var func = isFunc ? path : (isProp && value != null && value[path]);
         result[++index] = func ? func.apply(value, args) : invokePath(value, path, args);
       });
       return result;
@@ -109407,15 +109238,14 @@ return jQuery;
      * callback returns `true` for elements that have the properties of the given
      * object, else `false`.
      *
-     * Many lodash methods are guarded to work as iteratees for methods like
+     * Many lodash methods are guarded to work as interatees for methods like
      * `_.every`, `_.filter`, `_.map`, `_.mapValues`, `_.reject`, and `_.some`.
      *
      * The guarded methods are:
-     * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`,
-     * `drop`, `dropRight`, `every`, `fill`, `flatten`, `invert`, `max`, `min`,
-     * `parseInt`, `slice`, `sortBy`, `take`, `takeRight`, `template`, `trim`,
-     * `trimLeft`, `trimRight`, `trunc`, `random`, `range`, `sample`, `some`,
-     * `sum`, `uniq`, and `words`
+     * `ary`, `callback`, `chunk`, `clone`, `create`, `curry`, `curryRight`, `drop`,
+     * `dropRight`, `every`, `fill`, `flatten`, `invert`, `max`, `min`, `parseInt`,
+     * `slice`, `sortBy`, `take`, `takeRight`, `template`, `trim`, `trimLeft`,
+     * `trimRight`, `trunc`, `random`, `range`, `sample`, `some`, `uniq`, and `words`
      *
      * @static
      * @memberOf _
@@ -109551,7 +109381,7 @@ return jQuery;
      * value. The `iteratee` is bound to `thisArg` and invoked with four arguments:
      * (accumulator, value, index|key, collection).
      *
-     * Many lodash methods are guarded to work as iteratees for methods like
+     * Many lodash methods are guarded to work as interatees for methods like
      * `_.reduce`, `_.reduceRight`, and `_.transform`.
      *
      * The guarded methods are:
@@ -109603,11 +109433,22 @@ return jQuery;
      * }, []);
      * // => [4, 5, 2, 3, 0, 1]
      */
-    var reduceRight = createReduce(arrayReduceRight, baseEachRight);
+    var reduceRight =  createReduce(arrayReduceRight, baseEachRight);
 
     /**
      * The opposite of `_.filter`; this method returns the elements of `collection`
      * that `predicate` does **not** return truthy for.
+     *
+     * If a property name is provided for `predicate` the created `_.property`
+     * style callback returns the property value of the given element.
+     *
+     * If a value is also provided for `thisArg` the created `_.matchesProperty`
+     * style callback returns `true` for elements that have a matching property
+     * value, else `false`.
+     *
+     * If an object is provided for `predicate` the created `_.matches` style
+     * callback returns `true` for elements that have the properties of the given
+     * object, else `false`.
      *
      * @static
      * @memberOf _
@@ -109673,20 +109514,8 @@ return jQuery;
         var length = collection.length;
         return length > 0 ? collection[baseRandom(0, length - 1)] : undefined;
       }
-      var index = -1,
-          result = toArray(collection),
-          length = result.length,
-          lastIndex = length - 1;
-
-      n = nativeMin(n < 0 ? 0 : (+n || 0), length);
-      while (++index < n) {
-        var rand = baseRandom(index, lastIndex),
-            value = result[rand];
-
-        result[rand] = result[index];
-        result[index] = value;
-      }
-      result.length = n;
+      var result = shuffle(collection);
+      result.length = nativeMin(n < 0 ? 0 : (+n || 0), result.length);
       return result;
     }
 
@@ -109705,7 +109534,20 @@ return jQuery;
      * // => [4, 1, 3, 2]
      */
     function shuffle(collection) {
-      return sample(collection, POSITIVE_INFINITY);
+      collection = toIterable(collection);
+
+      var index = -1,
+          length = collection.length,
+          result = Array(length);
+
+      while (++index < length) {
+        var rand = baseRandom(0, index);
+        if (index != rand) {
+          result[index] = result[rand];
+        }
+        result[rand] = collection[index];
+      }
+      return result;
     }
 
     /**
@@ -110331,13 +110173,12 @@ return jQuery;
     var curryRight = createCurry(CURRY_RIGHT_FLAG);
 
     /**
-     * Creates a debounced function that delays invoking `func` until after `wait`
-     * milliseconds have elapsed since the last time the debounced function was
-     * invoked. The debounced function comes with a `cancel` method to cancel
-     * delayed invocations. Provide an options object to indicate that `func`
-     * should be invoked on the leading and/or trailing edge of the `wait` timeout.
-     * Subsequent calls to the debounced function return the result of the last
-     * `func` invocation.
+     * Creates a function that delays invoking `func` until after `wait` milliseconds
+     * have elapsed since the last time it was invoked. The created function comes
+     * with a `cancel` method to cancel delayed invocations. Provide an options
+     * object to indicate that `func` should be invoked on the leading and/or
+     * trailing edge of the `wait` timeout. Subsequent calls to the debounced
+     * function return the result of the last `func` invocation.
      *
      * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
      * on the trailing edge of the timeout only if the the debounced function is
@@ -110651,14 +110492,14 @@ return jQuery;
       }
       var memoized = function() {
         var args = arguments,
-            key = resolver ? resolver.apply(this, args) : args[0],
-            cache = memoized.cache;
+            cache = memoized.cache,
+            key = resolver ? resolver.apply(this, args) : args[0];
 
         if (cache.has(key)) {
           return cache.get(key);
         }
         var result = func.apply(this, args);
-        memoized.cache = cache.set(key, result);
+        cache.set(key, result);
         return result;
       };
       memoized.cache = new memoize.Cache;
@@ -110905,12 +110746,12 @@ return jQuery;
     }
 
     /**
-     * Creates a throttled function that only invokes `func` at most once per
-     * every `wait` milliseconds. The throttled function comes with a `cancel`
-     * method to cancel delayed invocations. Provide an options object to indicate
-     * that `func` should be invoked on the leading and/or trailing edge of the
-     * `wait` timeout. Subsequent calls to the throttled function return the
-     * result of the last `func` call.
+     * Creates a function that only invokes `func` at most once per every `wait`
+     * milliseconds. The created function comes with a `cancel` method to cancel
+     * delayed invocations. Provide an options object to indicate that `func`
+     * should be invoked on the leading and/or trailing edge of the `wait` timeout.
+     * Subsequent calls to the throttled function return the result of the last
+     * `func` call.
      *
      * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
      * on the trailing edge of the timeout only if the the throttled function is
@@ -111050,9 +110891,8 @@ return jQuery;
         customizer = isDeep;
         isDeep = false;
       }
-      return typeof customizer == 'function'
-        ? baseClone(value, isDeep, bindCallback(customizer, thisArg, 1))
-        : baseClone(value, isDeep);
+      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 1);
+      return baseClone(value, isDeep, customizer);
     }
 
     /**
@@ -111101,57 +110941,8 @@ return jQuery;
      * // => 20
      */
     function cloneDeep(value, customizer, thisArg) {
-      return typeof customizer == 'function'
-        ? baseClone(value, true, bindCallback(customizer, thisArg, 1))
-        : baseClone(value, true);
-    }
-
-    /**
-     * Checks if `value` is greater than `other`.
-     *
-     * @static
-     * @memberOf _
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is greater than `other`, else `false`.
-     * @example
-     *
-     * _.gt(3, 1);
-     * // => true
-     *
-     * _.gt(3, 3);
-     * // => false
-     *
-     * _.gt(1, 3);
-     * // => false
-     */
-    function gt(value, other) {
-      return value > other;
-    }
-
-    /**
-     * Checks if `value` is greater than or equal to `other`.
-     *
-     * @static
-     * @memberOf _
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is greater than or equal to `other`, else `false`.
-     * @example
-     *
-     * _.gte(3, 1);
-     * // => true
-     *
-     * _.gte(3, 3);
-     * // => true
-     *
-     * _.gte(1, 3);
-     * // => false
-     */
-    function gte(value, other) {
-      return value >= other;
+      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 1);
+      return baseClone(value, true, customizer);
     }
 
     /**
@@ -111171,7 +110962,8 @@ return jQuery;
      * // => false
      */
     function isArguments(value) {
-      return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
+      var length = isObjectLike(value) ? value.length : undefined;
+      return isLength(length) && objToString.call(value) == argsTag;
     }
 
     /**
@@ -111292,9 +111084,10 @@ return jQuery;
       if (value == null) {
         return true;
       }
-      if (isArrayLike(value) && (isArray(value) || isString(value) || isArguments(value) ||
+      var length = getLength(value);
+      if (isLength(length) && (isArray(value) || isString(value) || isArguments(value) ||
           (isObjectLike(value) && isFunction(value.splice)))) {
-        return !value.length;
+        return !length;
       }
       return !keys(value).length;
     }
@@ -111314,7 +111107,6 @@ return jQuery;
      *
      * @static
      * @memberOf _
-     * @alias eq
      * @category Lang
      * @param {*} value The value to compare.
      * @param {*} other The other value to compare.
@@ -111344,9 +111136,12 @@ return jQuery;
      * // => true
      */
     function isEqual(value, other, customizer, thisArg) {
-      customizer = typeof customizer == 'function' ? bindCallback(customizer, thisArg, 3) : undefined;
+      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 3);
+      if (!customizer && isStrictComparable(value) && isStrictComparable(other)) {
+        return value === other;
+      }
       var result = customizer ? customizer(value, other) : undefined;
-      return  result === undefined ? baseIsEqual(value, other, customizer) : !!result;
+      return result === undefined ? baseIsEqual(value, other, customizer) : !!result;
     }
 
     /**
@@ -111448,7 +111243,7 @@ return jQuery;
       // Avoid a V8 JIT bug in Chrome 19-20.
       // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
       var type = typeof value;
-      return !!value && (type == 'object' || type == 'function');
+      return type == 'function' || (!!value && type == 'object');
     }
 
     /**
@@ -111491,8 +111286,33 @@ return jQuery;
      * // => true
      */
     function isMatch(object, source, customizer, thisArg) {
-      customizer = typeof customizer == 'function' ? bindCallback(customizer, thisArg, 3) : undefined;
-      return baseIsMatch(object, getMatchData(source), customizer);
+      var props = keys(source),
+          length = props.length;
+
+      if (!length) {
+        return true;
+      }
+      if (object == null) {
+        return false;
+      }
+      customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 3);
+      object = toObject(object);
+      if (!customizer && length == 1) {
+        var key = props[0],
+            value = source[key];
+
+        if (isStrictComparable(value)) {
+          return value === object[key] && (value !== undefined || (key in object));
+        }
+      }
+      var values = Array(length),
+          strictCompareFlags = Array(length);
+
+      while (length--) {
+        value = values[length] = source[props[length]];
+        strictCompareFlags[length] = isStrictComparable(value);
+      }
+      return baseIsMatch(object, props, values, strictCompareFlags, customizer);
     }
 
     /**
@@ -111632,8 +111452,8 @@ return jQuery;
       if (!(value && objToString.call(value) == objectTag)) {
         return false;
       }
-      var valueOf = getNative(value, 'valueOf'),
-          objProto = valueOf && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
+      var valueOf = value.valueOf,
+          objProto = isNative(valueOf) && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
 
       return objProto
         ? (value == objProto || getPrototypeOf(value) == objProto)
@@ -111657,7 +111477,7 @@ return jQuery;
      * // => false
      */
     function isRegExp(value) {
-      return isObjectLike(value) && objToString.call(value) == regexpTag;
+      return (isObjectLike(value) && objToString.call(value) == regexpTag) || false;
     }
 
     /**
@@ -111718,54 +111538,6 @@ return jQuery;
      */
     function isUndefined(value) {
       return value === undefined;
-    }
-
-    /**
-     * Checks if `value` is less than `other`.
-     *
-     * @static
-     * @memberOf _
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is less than `other`, else `false`.
-     * @example
-     *
-     * _.lt(1, 3);
-     * // => true
-     *
-     * _.lt(3, 3);
-     * // => false
-     *
-     * _.lt(3, 1);
-     * // => false
-     */
-    function lt(value, other) {
-      return value < other;
-    }
-
-    /**
-     * Checks if `value` is less than or equal to `other`.
-     *
-     * @static
-     * @memberOf _
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if `value` is less than or equal to `other`, else `false`.
-     * @example
-     *
-     * _.lte(1, 3);
-     * // => true
-     *
-     * _.lte(3, 3);
-     * // => true
-     *
-     * _.lte(3, 1);
-     * // => false
-     */
-    function lte(value, other) {
-      return value <= other;
     }
 
     /**
@@ -111832,6 +111604,7 @@ return jQuery;
      *
      * **Note:** This method mutates `object` and is based on
      * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
+     *
      *
      * @static
      * @memberOf _
@@ -112162,7 +111935,7 @@ return jQuery;
     }
 
     /**
-     * Gets the property value at `path` of `object`. If the resolved value is
+     * Gets the property value of `path` on `object`. If the resolved value is
      * `undefined` the `defaultValue` is used in its place.
      *
      * @static
@@ -112220,14 +111993,10 @@ return jQuery;
       if (!result && !isKey(path)) {
         path = toPath(path);
         object = path.length == 1 ? object : baseGet(object, baseSlice(path, 0, -1));
-        if (object == null) {
-          return false;
-        }
         path = last(path);
-        result = hasOwnProperty.call(object, path);
+        result = object != null && hasOwnProperty.call(object, path);
       }
-      return result || (isLength(object.length) && isIndex(path, object.length) &&
-        (isArray(object) || isArguments(object)));
+      return result;
     }
 
     /**
@@ -112308,9 +112077,12 @@ return jQuery;
      * // => ['0', '1']
      */
     var keys = !nativeKeys ? shimKeys : function(object) {
-      var Ctor = object == null ? null : object.constructor;
+      if (object) {
+        var Ctor = object.constructor,
+            length = object.length;
+      }
       if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
-          (typeof object != 'function' && isArrayLike(object))) {
+          (typeof object != 'function' && isLength(length))) {
         return shimKeys(object);
       }
       return isObject(object) ? nativeKeys(object) : [];
@@ -112347,7 +112119,7 @@ return jQuery;
       }
       var length = object.length;
       length = (length && isLength(length) &&
-        (isArray(object) || isArguments(object)) && length) || 0;
+        (isArray(object) || (support.nonEnumArgs && isArguments(object))) && length) || 0;
 
       var Ctor = object.constructor,
           index = -1,
@@ -112366,28 +112138,6 @@ return jQuery;
       }
       return result;
     }
-
-    /**
-     * The opposite of `_.mapValues`; this method creates an object with the
-     * same values as `object` and keys generated by running each own enumerable
-     * property of `object` through `iteratee`.
-     *
-     * @static
-     * @memberOf _
-     * @category Object
-     * @param {Object} object The object to iterate over.
-     * @param {Function|Object|string} [iteratee=_.identity] The function invoked
-     *  per iteration.
-     * @param {*} [thisArg] The `this` binding of `iteratee`.
-     * @returns {Object} Returns the new mapped object.
-     * @example
-     *
-     * _.mapKeys({ 'a': 1, 'b': 2 }, function(value, key) {
-     *   return key + value;
-     * });
-     * // => { 'a1': 1, 'b2': 2 }
-     */
-    var mapKeys = createObjectMapper(true);
 
     /**
      * Creates an object with the same keys as `object` and values generated by
@@ -112430,7 +112180,15 @@ return jQuery;
      * _.mapValues(users, 'age');
      * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
      */
-    var mapValues = createObjectMapper();
+    function mapValues(object, iteratee, thisArg) {
+      var result = {};
+      iteratee = getCallback(iteratee, thisArg, 3);
+
+      baseForOwn(object, function(value, key, object) {
+        result[key] = iteratee(value, key, object);
+      });
+      return result;
+    }
 
     /**
      * Recursively merges own enumerable properties of the source object(s), that
@@ -112485,6 +112243,11 @@ return jQuery;
     /**
      * The opposite of `_.pick`; this method creates an object composed of the
      * own and inherited enumerable properties of `object` that are not omitted.
+     * Property names may be specified as individual arguments or as arrays of
+     * property names. If `predicate` is provided it is invoked for each property
+     * of `object` omitting the properties `predicate` returns truthy for. The
+     * predicate is bound to `thisArg` and invoked with three arguments:
+     * (value, key, object).
      *
      * @static
      * @memberOf _
@@ -112534,8 +112297,6 @@ return jQuery;
      * // => [['barney', 36], ['fred', 40]] (iteration order is not guaranteed)
      */
     function pairs(object) {
-      object = toObject(object);
-
       var index = -1,
           props = keys(object),
           length = props.length,
@@ -112656,13 +112417,13 @@ return jQuery;
 
       var index = -1,
           length = path.length,
-          lastIndex = length - 1,
+          endIndex = length - 1,
           nested = object;
 
       while (nested != null && ++index < length) {
         var key = path[index];
         if (isObject(nested)) {
-          if (index == lastIndex) {
+          if (index == endIndex) {
             nested[key] = value;
           } else if (nested[key] == null) {
             nested[key] = isIndex(path[index + 1]) ? [] : {};
@@ -112712,7 +112473,7 @@ return jQuery;
           if (isArr) {
             accumulator = isArray(object) ? new Ctor : [];
           } else {
-            accumulator = baseCreate(isFunction(Ctor) ? Ctor.prototype : null);
+            accumulator = baseCreate(isFunction(Ctor) && Ctor.prototype);
           }
         } else {
           accumulator = {};
@@ -112991,7 +112752,7 @@ return jQuery;
      * use a third-party library like [_he_](https://mths.be/he).
      *
      * Though the ">" character is escaped for symmetry, characters like
-     * ">" and "/" don't need escaping in HTML and have no special meaning
+     * ">" and "/" don't require escaping in HTML and have no special meaning
      * unless they're part of a tag or unquoted attribute value.
      * See [Mathias Bynens's article](https://mathiasbynens.be/notes/ambiguous-ampersands)
      * (under "semi-related fun fact") for more details.
@@ -113068,7 +112829,7 @@ return jQuery;
     });
 
     /**
-     * Pads `string` on the left and right sides if it's shorter than `length`.
+     * Pads `string` on the left and right sides if it is shorter than `length`.
      * Padding characters are truncated if they can't be evenly divided by `length`.
      *
      * @static
@@ -113106,7 +112867,7 @@ return jQuery;
     }
 
     /**
-     * Pads `string` on the left side if it's shorter than `length`. Padding
+     * Pads `string` on the left side if it is shorter than `length`. Padding
      * characters are truncated if they exceed `length`.
      *
      * @static
@@ -113130,7 +112891,7 @@ return jQuery;
     var padLeft = createPadDir();
 
     /**
-     * Pads `string` on the right side if it's shorter than `length`. Padding
+     * Pads `string` on the right side if it is shorter than `length`. Padding
      * characters are truncated if they exceed `length`.
      *
      * @static
@@ -113611,7 +113372,7 @@ return jQuery;
     }
 
     /**
-     * Truncates `string` if it's longer than the given maximum string length.
+     * Truncates `string` if it is longer than the given maximum string length.
      * The last characters of the truncated string are replaced with the omission
      * string which defaults to "...".
      *
@@ -113825,9 +113586,7 @@ return jQuery;
       if (guard && isIterateeCall(func, thisArg, guard)) {
         thisArg = null;
       }
-      return isObjectLike(func)
-        ? matches(func)
-        : baseCallback(func, thisArg);
+      return baseCallback(func, thisArg);
     }
 
     /**
@@ -113872,7 +113631,7 @@ return jQuery;
     }
 
     /**
-     * Creates a function that performs a deep comparison between a given object
+     * Creates a function which performs a deep comparison between a given object
      * and `source`, returning `true` if the given object has equivalent property
      * values, else `false`.
      *
@@ -113901,7 +113660,7 @@ return jQuery;
     }
 
     /**
-     * Creates a function that compares the property value of `path` on a given
+     * Creates a function which compares the property value of `path` on a given
      * object to `value`.
      *
      * **Note:** This method supports comparing arrays, booleans, `Date` objects,
@@ -113912,7 +113671,7 @@ return jQuery;
      * @memberOf _
      * @category Utility
      * @param {Array|string} path The path of the property to get.
-     * @param {*} srcValue The value to match.
+     * @param {*} value The value to compare.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -113924,19 +113683,17 @@ return jQuery;
      * _.find(users, _.matchesProperty('user', 'fred'));
      * // => { 'user': 'fred' }
      */
-    function matchesProperty(path, srcValue) {
-      return baseMatchesProperty(path, baseClone(srcValue, true));
+    function matchesProperty(path, value) {
+      return baseMatchesProperty(path, baseClone(value, true));
     }
 
     /**
-     * Creates a function that invokes the method at `path` on a given object.
-     * Any additional arguments are provided to the invoked method.
+     * Creates a function which invokes the method at `path` on a given object.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Array|string} path The path of the method to invoke.
-     * @param {...*} [args] The arguments to invoke the method with.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -113954,19 +113711,17 @@ return jQuery;
     var method = restParam(function(path, args) {
       return function(object) {
         return invokePath(object, path, args);
-      };
+      }
     });
 
     /**
-     * The opposite of `_.method`; this method creates a function that invokes
-     * the method at a given path on `object`. Any additional arguments are
-     * provided to the invoked method.
+     * The opposite of `_.method`; this method creates a function which invokes
+     * the method at a given path on `object`.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Object} object The object to query.
-     * @param {...*} [args] The arguments to invoke the method with.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -114010,6 +113765,9 @@ return jQuery;
      *   });
      * }
      *
+     * // use `_.runInContext` to avoid conflicts (esp. in Node.js)
+     * var _ = require('lodash').runInContext();
+     *
      * _.mixin({ 'vowels': vowels });
      * _.vowels('fred');
      * // => ['e']
@@ -114024,8 +113782,8 @@ return jQuery;
     function mixin(object, source, options) {
       if (options == null) {
         var isObj = isObject(source),
-            props = isObj ? keys(source) : null,
-            methodNames = (props && props.length) ? baseFunctions(source, props) : null;
+            props = isObj && keys(source),
+            methodNames = props && props.length && baseFunctions(source, props);
 
         if (!(methodNames ? methodNames.length : isObj)) {
           methodNames = false;
@@ -114092,7 +113850,7 @@ return jQuery;
     }
 
     /**
-     * A no-operation function that returns `undefined` regardless of the
+     * A no-operation function which returns `undefined` regardless of the
      * arguments it receives.
      *
      * @static
@@ -114110,7 +113868,7 @@ return jQuery;
     }
 
     /**
-     * Creates a function that returns the property value at `path` on a
+     * Creates a function which returns the property value at `path` on a
      * given object.
      *
      * @static
@@ -114136,7 +113894,7 @@ return jQuery;
     }
 
     /**
-     * The opposite of `_.property`; this method creates a function that returns
+     * The opposite of `_.property`; this method creates a function which returns
      * the property value at a given path on `object`.
      *
      * @static
@@ -114357,7 +114115,7 @@ return jQuery;
      * _.max(users, 'age');
      * // => { 'user': 'fred', 'age': 40 }
      */
-    var max = createExtremum(gt, NEGATIVE_INFINITY);
+    var max = createExtremum(arrayMax);
 
     /**
      * Gets the minimum value of `collection`. If `collection` is empty or falsey
@@ -114406,7 +114164,7 @@ return jQuery;
      * _.min(users, 'age');
      * // => { 'user': 'barney', 'age': 36 }
      */
-    var min = createExtremum(lt, POSITIVE_INFINITY);
+    var min = createExtremum(arrayMin, true);
 
     /**
      * Gets the sum of the values in `collection`.
@@ -114444,12 +114202,12 @@ return jQuery;
       if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
         iteratee = null;
       }
-      var callback = getCallback(),
+      var func = getCallback(),
           noIteratee = iteratee == null;
 
-      if (!(noIteratee && callback === baseCallback)) {
+      if (!(func === baseCallback && noIteratee)) {
         noIteratee = false;
-        iteratee = callback(iteratee, thisArg, 3);
+        iteratee = func(iteratee, thisArg, 3);
       }
       return noIteratee
         ? arraySum(isArray(collection) ? collection : toIterable(collection))
@@ -114528,7 +114286,6 @@ return jQuery;
     lodash.keys = keys;
     lodash.keysIn = keysIn;
     lodash.map = map;
-    lodash.mapKeys = mapKeys;
     lodash.mapValues = mapValues;
     lodash.matches = matches;
     lodash.matchesProperty = matchesProperty;
@@ -114577,7 +114334,6 @@ return jQuery;
     lodash.union = union;
     lodash.uniq = uniq;
     lodash.unzip = unzip;
-    lodash.unzipWith = unzipWith;
     lodash.values = values;
     lodash.valuesIn = valuesIn;
     lodash.where = where;
@@ -114586,7 +114342,6 @@ return jQuery;
     lodash.xor = xor;
     lodash.zip = zip;
     lodash.zipObject = zipObject;
-    lodash.zipWith = zipWith;
 
     // Add aliases.
     lodash.backflow = flowRight;
@@ -114628,8 +114383,6 @@ return jQuery;
     lodash.findWhere = findWhere;
     lodash.first = first;
     lodash.get = get;
-    lodash.gt = gt;
-    lodash.gte = gte;
     lodash.has = has;
     lodash.identity = identity;
     lodash.includes = includes;
@@ -114659,8 +114412,6 @@ return jQuery;
     lodash.kebabCase = kebabCase;
     lodash.last = last;
     lodash.lastIndexOf = lastIndexOf;
-    lodash.lt = lt;
-    lodash.lte = lte;
     lodash.max = max;
     lodash.min = min;
     lodash.noConflict = noConflict;
@@ -114697,7 +114448,6 @@ return jQuery;
     lodash.all = every;
     lodash.any = some;
     lodash.contains = includes;
-    lodash.eq = isEqual;
     lodash.detect = find;
     lodash.foldl = reduce;
     lodash.foldr = reduceRight;
@@ -114841,13 +114591,8 @@ return jQuery;
 
     LazyWrapper.prototype.slice = function(start, end) {
       start = start == null ? 0 : (+start || 0);
+      var result = start < 0 ? this.takeRight(-start) : this.drop(start);
 
-      var result = this;
-      if (start < 0) {
-        result = this.takeRight(-start);
-      } else if (start) {
-        result = this.drop(start);
-      }
       if (end !== undefined) {
         end = (+end || 0);
         result = end < 0 ? result.dropRight(-end) : result.take(end - start);
@@ -114870,6 +114615,7 @@ return jQuery;
 
       lodash.prototype[methodName] = function() {
         var args = arguments,
+            length = args.length,
             chainAll = this.__chain__,
             value = this.__wrapped__,
             isHybrid = !!this.__actions__.length,
@@ -114983,7 +114729,7 @@ return jQuery;
     if (moduleExports) {
       (freeModule.exports = _)._ = _;
     }
-    // Export for Rhino with CommonJS support.
+    // Export for Narwhal or Rhino -require.
     else {
       freeExports._ = _;
     }
@@ -115200,7 +114946,7 @@ return jQuery;
 
 }));
 
-},{"fizzy-ui-utils":443,"get-size":444,"outlayer":450}],"medium-editor":[function(require,module,exports){
+},{"fizzy-ui-utils":446,"get-size":447,"outlayer":453}],"medium-editor":[function(require,module,exports){
 /*global self, document, DOMException */
 
 /*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js */
@@ -130909,6 +130655,7 @@ window.SWFObject = deconcept.SWFObject;
  * http://jzaefferer.github.com/undo
  *
  * Copyright (c) 2011 Jörn Zaefferer
+ * 
  * MIT licensed.
  */
 (function() {
@@ -130945,12 +130692,9 @@ function extend(target, ref) {
 	return target;
 };
 
-var Undo;
-if (typeof exports !== 'undefined') {
-	Undo = exports;
-} else {
-	Undo = this.Undo = {};
-}
+var Undo = {
+	version: '0.1.15'
+};
 
 Undo.Stack = function() {
 	this.commands = [];
@@ -131022,6 +130766,15 @@ Undo.Command.extend = function(protoProps) {
 	return child;
 };
 	
+// AMD support
+if (typeof define === "function" && define.amd) {
+	// Define as an anonymous module
+	define(Undo);
+} else if(typeof module != "undefined" && module.exports){
+	module.exports = Undo 
+}else {
+	this.Undo = Undo;
+}
 }).call(this);
 
 },{}]},{},[1]);
