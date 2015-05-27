@@ -42353,26 +42353,12 @@ Item.prototype.reveal = function() {
   });
 };
 
-<<<<<<< HEAD
 Item.prototype.onRevealTransitionEnd = function() {
   // check if still visible
   // during transition, item may have been hidden
   if ( !this.isHidden ) {
     this.emitEvent('reveal');
   }
-=======
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
->>>>>>> feature/manage-flows
 };
 
 /**
@@ -50653,11 +50639,7 @@ var TapEventPlugin = {
 
 module.exports = TapEventPlugin;
 
-<<<<<<< HEAD
 },{"./TouchEventUtils":470,"react/lib/EventConstants":484,"react/lib/EventPluginUtils":488,"react/lib/EventPropagators":489,"react/lib/SyntheticUIEvent":577,"react/lib/ViewportMetrics":580,"react/lib/keyOf":619}],470:[function(require,module,exports){
-=======
-},{"./TouchEventUtils":441,"react/lib/EventConstants":455,"react/lib/EventPluginUtils":459,"react/lib/EventPropagators":460,"react/lib/SyntheticUIEvent":548,"react/lib/ViewportMetrics":551,"react/lib/keyOf":590}],441:[function(require,module,exports){
->>>>>>> feature/manage-flows
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
