@@ -2,13 +2,13 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 (function (global){
 'use strict';
 
-require('./mobile/bundlePrerender');
-
 global.gon = {
   env: 'production',
   thumbor: 'http://thumbor0.tasty0.ru',
   thumbor_http_loader: 'http://thumbor4.tasty0.ru'
 };
+
+require('./mobile/bundlePrerender');
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./mobile/bundlePrerender":2}],2:[function(require,module,exports){
