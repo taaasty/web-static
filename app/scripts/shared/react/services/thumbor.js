@@ -1,6 +1,6 @@
 let ThumborService = {
-  thumborWithUrl: gon.thumbor_http_loader,
-  thumborWithPath: gon.thumbor,
+  thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
+  thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
   newImageUrl(url, size) {
     let width = size.width || '',

@@ -12074,8 +12074,8 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var ThumborService = {
-  thumborWithUrl: gon.thumbor_http_loader,
-  thumborWithPath: gon.thumbor,
+  thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
+  thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
   newImageUrl: function newImageUrl(url, size) {
     var width = size.width || '',
