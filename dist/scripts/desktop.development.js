@@ -6,6 +6,8 @@ global.AppStorage = require('./shared/resources/AppStorage');
 require('./desktop/bundle');
 
 gon.env = 'development';
+gon.thumbor = 'http://thumbor0.tasty0.ru';
+gon.thumbor_http_loader = 'http://thumbor4.tasty0.ru';
 
 Tasty.start({
   locale: gon.locale,
@@ -12357,10 +12359,13 @@ Api = {
     load: function(url, sinceEntryID, limit) {
       var data, key;
       key = Constants.api.LOAD_ENTRIES;
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      };
+      data = {};
+      if (sinceEntryID) {
+        data.since_entry_id = sinceEntryID;
+      }
+      if (limit) {
+        data.limit = limit;
+      }
       abortPendingRequests(key);
       return _pendingRequests[key] = getRequest(url, data);
     },

@@ -5,7 +5,9 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 require('./mobile/bundlePrerender');
 
 global.gon = {
-  env: 'development'
+  env: 'development',
+  thumbor: 'http://thumbor0.tasty0.ru',
+  thumbor_http_loader: 'http://thumbor4.tasty0.ru'
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

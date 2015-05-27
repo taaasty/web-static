@@ -176,10 +176,9 @@ Api =
 
     load: (url, sinceEntryID, limit) ->
       key = Constants.api.LOAD_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
+      data = {}
+      data.since_entry_id = sinceEntryID if sinceEntryID
+      data.limit = limit if limit
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
