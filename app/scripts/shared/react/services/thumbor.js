@@ -1,38 +1,30 @@
 let ThumborService = {
-  thumborWithPath: 'http://thumbor0.tasty0.ru',
-  thumborWithUrl: 'http://thumbor4.tasty0.ru',
+  thumborWithUrl: gon.thumbor_http_loader,
+  thumborWithPath: gon.thumbor,
 
   newImageUrl(url, size) {
     let width = size.width || '',
         height = size.height || '';
 
-    return `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url}`;
+    return thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url}` : url;
   },
 
   newRetinaImageUrl(url, size) {
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url} 2x`;
+    return thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url} 2x` : url;
   },
 
   imageUrl({url, path, size}) {
-    switch(gon.env) {
-      case 'development':
-      case 'static-development': return url;
-      default:
-        return `${this.thumborWithPath}/unsafe/${size}/filters:no_upscale()/${path}`;
-    }    
+    return thumborWithPath ? `${this.thumborWithPath}/unsafe/${size}/filters:no_upscale()/${path}` : url;
   },
 
   retinaImageUrl({url, path, size}) {
-    switch(gon.env) {
-      case 'development':
-      case 'static-development': return `url 2x`;
-      default:
-        let retinaSize = size.width * 2 + 'x' + size.height * 2;
-        return `${this.thumborWithPath}/unsafe/${retinaSize}/filters:no_upscale()/${path} 2x`;
-    }    
+    let width = size.width ? size.width * 2 : '',
+        height = size.height ? size.height * 2 : '';
+
+    return thumborWithPath ? `${this.thumborWithPath}/unsafe/${width}x${height}/filters:no_upscale()/${path} 2x` : url;
   }
 };
 

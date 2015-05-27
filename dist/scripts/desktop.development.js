@@ -38547,21 +38547,21 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var ThumborService = {
-  thumborWithPath: 'http://thumbor0.tasty0.ru',
-  thumborWithUrl: 'http://thumbor4.tasty0.ru',
+  thumborWithUrl: gon.thumbor_http_loader,
+  thumborWithPath: gon.thumbor,
 
   newImageUrl: function newImageUrl(url, size) {
     var width = size.width || '',
         height = size.height || '';
 
-    return '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url;
+    return thumborWithUrl ? '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url : url;
   },
 
   newRetinaImageUrl: function newRetinaImageUrl(url, size) {
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x';
+    return thumborWithUrl ? '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x' : url;
   },
 
   imageUrl: function imageUrl(_ref) {
@@ -38569,13 +38569,7 @@ var ThumborService = {
     var path = _ref.path;
     var size = _ref.size;
 
-    switch (gon.env) {
-      case 'development':
-      case 'static-development':
-        return url;
-      default:
-        return '' + this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path;
-    }
+    return thumborWithPath ? '' + this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path : url;
   },
 
   retinaImageUrl: function retinaImageUrl(_ref2) {
@@ -38583,14 +38577,10 @@ var ThumborService = {
     var path = _ref2.path;
     var size = _ref2.size;
 
-    switch (gon.env) {
-      case 'development':
-      case 'static-development':
-        return 'url 2x';
-      default:
-        var retinaSize = size.width * 2 + 'x' + size.height * 2;
-        return '' + this.thumborWithPath + '/unsafe/' + retinaSize + '/filters:no_upscale()/' + path + ' 2x';
-    }
+    var width = size.width ? size.width * 2 : '',
+        height = size.height ? size.height * 2 : '';
+
+    return thumborWithPath ? '' + this.thumborWithPath + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + path + ' 2x' : url;
   }
 };
 
