@@ -184,4 +184,10 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
+    loadHtml: (url) ->
+      key = Constants.api.LOAD_HTML_ENTRIES
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url
+
 module.exports = Api

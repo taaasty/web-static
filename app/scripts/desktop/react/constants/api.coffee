@@ -17,5 +17,6 @@ ApiConstants = keyMirror
   ACCEPT_ENTRY: null
   DECLINE_ENTRY: null
   LOAD_ENTRIES: null
+  LOAD_HTML_ENTRIES: null
 
 module.exports = ApiConstants

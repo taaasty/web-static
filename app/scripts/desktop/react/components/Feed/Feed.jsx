@@ -1,4 +1,4 @@
-import FeedActionCreators from '../../actions/feed';
+import EntryActionCreators from '../../actions/Entry';
 import FeedBricks from './FeedBricks';
 import FeedTlog from './FeedTlog';
 import URI from 'URIjs';
@@ -56,9 +56,9 @@ let Feed = React.createClass({
     if (this.state.loading) { return; }
     this.setState({loading: true});
 
-    FeedActionCreators.loadEntries(feedUrlWithParams)
+    EntryActionCreators.loadHtml(feedUrlWithParams)
       .then((html) => {
-        html = html.trim()
+        html = html.trim();
 
         if (html === '') {
           this.setState({everythingLoaded: true});

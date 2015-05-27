@@ -50,6 +50,17 @@ let EntryActionCreators = {
           response: xhr.responseJSON
         });
       });
+  },
+
+  loadHtml(url) {
+    return Api.entry.loadHtml(url)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка записей в виде HTML', {
+          method: 'EntryActionCreators.loadHtml(url)',
+          methodArguments: {url},
+          response: xhr.responseJSON
+        });
+      });
   }
 };
 
