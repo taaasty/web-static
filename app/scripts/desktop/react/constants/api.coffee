@@ -15,10 +15,6 @@ ApiConstants = keyMirror
   FOLLOW_TLOG: null
   CANCEL_TLOG: null
   VOTE_ENTRY: null
-  LOAD_LIVE_ENTRIES: null
-  LOAD_FRIENDS_ENTRIES: null
-  LOAD_BEST_ENTRIES: null
-  LOAD_ANONYMOUS_ENTRIES: null
   ACCEPT_ENTRY: null
   DECLINE_ENTRY: null
 

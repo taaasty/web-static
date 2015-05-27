@@ -66,55 +66,15 @@ Api =
       _pendingRequests[key] = getRequest searchUrl
 
   feed:
-    loadLiveEntries: (sinceEntryID, limit) ->
-      url = ApiRoutes.feedLive()
-      key = Constants.api.LOAD_LIVE_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadFriendsEntries: (sinceEntryID, limit) ->
-      url = ApiRoutes.feedFriends()
-      key = Constants.api.LOAD_FRIENDS_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadBestEntries: (sinceEntryID, limit) ->
-      url = ApiRoutes.feedBest()
-      key = Constants.api.LOAD_BEST_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadAnonymousEntries: (sinceEntryID, limit) ->
-      url = ApiRoutes.feedAnonymous()
-      key = Constants.api.LOAD_ANONYMOUS_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadEntries: (feedUrl) ->
+    loadEntries: (url, sinceEntryID, limit) ->
       key = Constants.api.FEED_LOAD_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
 
       abortPendingRequests key
-      _pendingRequests[key] = getRequest feedUrl
+      _pendingRequests[key] = getRequest url, data
 
   design:
     saveCurrent: (design, userID) ->
