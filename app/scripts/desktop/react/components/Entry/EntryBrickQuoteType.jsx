@@ -8,7 +8,7 @@ let EntryBrickQuoteType = React.createClass({
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       text_truncated: React.PropTypes.string.isRequired,
-      source: React.PropTypes.string,
+      source_truncated: React.PropTypes.string,
       rating: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object,
       comments_count: React.PropTypes.number.isRequired
@@ -45,11 +45,11 @@ let EntryBrickQuoteType = React.createClass({
   },
 
   renderQuoteSource() {
-    if (this.props.entry.source) {
+    if (this.props.entry.source_truncated) {
       return (
         <span className="blockquote__caption">—
           <span className="blockquote__source">
-            <i>{this.props.entry.source}</i>
+            <i>{this.props.entry.source_truncated}</i>
           </span>
         </span>
       );
