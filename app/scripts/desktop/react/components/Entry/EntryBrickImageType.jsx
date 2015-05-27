@@ -12,7 +12,7 @@ let EntryBrickImageType = React.createClass({
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       title_truncated: React.PropTypes.string.isRequired,
-      thumbnail: React.PropTypes.object.isRequired,
+      preview_image: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
@@ -47,8 +47,8 @@ let EntryBrickImageType = React.createClass({
   },
 
   renderBrickImage() {
-    if (this.props.entry.thumbnail) {
-      return <Image image={this.props.entry.thumbnail} maxWidth={brickWidth} />;
+    if (this.props.entry.preview_image) {
+      return <Image image={this.props.entry.preview_image} maxWidth={brickWidth} />;
     } else {
       return <span>{i18n.t('entry.has_no_images')}</span>;
     }

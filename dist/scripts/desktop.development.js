@@ -18271,7 +18271,7 @@ var EntryBrickImageType = React.createClass({
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       title_truncated: React.PropTypes.string.isRequired,
-      thumbnail: React.PropTypes.object.isRequired,
+      preview_image: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
       comments_count: React.PropTypes.number.isRequired
@@ -18312,8 +18312,8 @@ var EntryBrickImageType = React.createClass({
   },
 
   renderBrickImage: function renderBrickImage() {
-    if (this.props.entry.thumbnail) {
-      return React.createElement(_commonImage2['default'], { image: this.props.entry.thumbnail, maxWidth: brickWidth });
+    if (this.props.entry.preview_image) {
+      return React.createElement(_commonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth });
     } else {
       return React.createElement(
         'span',
@@ -18767,7 +18767,7 @@ var EntryBrickVideoType = React.createClass({
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       title_truncated: React.PropTypes.string.isRequired,
-      thumbnail: React.PropTypes.object.isRequired,
+      preview_image: React.PropTypes.object.isRequired,
       is_playable: React.PropTypes.bool.isRequired,
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
@@ -18794,7 +18794,7 @@ var EntryBrickVideoType = React.createClass({
             React.createElement(
               'div',
               { className: 'video__cover' },
-              React.createElement(_commonImage2['default'], { image: this.props.entry.thumbnail, maxWidth: brickWidth }),
+              React.createElement(_commonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth }),
               this.renderVideoOverlay()
             )
           )

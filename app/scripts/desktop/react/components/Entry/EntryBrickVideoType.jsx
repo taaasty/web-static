@@ -12,7 +12,7 @@ let EntryBrickVideoType = React.createClass({
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       title_truncated: React.PropTypes.string.isRequired,
-      thumbnail: React.PropTypes.object.isRequired,
+      preview_image: React.PropTypes.object.isRequired,
       is_playable: React.PropTypes.bool.isRequired,
       tlog: React.PropTypes.object.isRequired,
       rating: React.PropTypes.object.isRequired,
@@ -30,7 +30,7 @@ let EntryBrickVideoType = React.createClass({
           <figure className="video">
             <a href={this.props.entry.url}>
               <div className="video__cover">
-                <Image image={this.props.entry.thumbnail} maxWidth={brickWidth} />
+                <Image image={this.props.entry.preview_image} maxWidth={brickWidth} />
                 {this.renderVideoOverlay()}
               </div>
             </a>
