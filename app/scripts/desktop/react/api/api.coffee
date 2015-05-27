@@ -65,17 +65,6 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest searchUrl
 
-  feed:
-    loadEntries: (url, sinceEntryID, limit) ->
-      key = Constants.api.FEED_LOAD_ENTRIES
-      data = {
-        since_entry_id: sinceEntryID,
-        limit: limit
-      }
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
   design:
     saveCurrent: (design, userID) ->
       url  = ApiRoutes.design_settings_url userID
@@ -184,5 +173,15 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = putRequest declineUrl
+
+    load: (url, sinceEntryID, limit) ->
+      key = Constants.api.LOAD_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
 
 module.exports = Api

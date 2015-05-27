@@ -1,6 +1,6 @@
 import FeedActionCreators from '../../actions/feed';
-import FeedOldBricks from './FeedOldBricks';
-import FeedOldTlog from './FeedOldTlog';
+import FeedBricks from './FeedBricks';
+import FeedTlog from './FeedTlog';
 import URI from 'URIjs';
 
 let Feed = React.createClass({
@@ -28,7 +28,7 @@ let Feed = React.createClass({
     switch(this.props.style) {
       case 'tlog':
         return (
-          <FeedOldTlog
+          <FeedTlog
               html={this.state.html}
               loading={this.state.loading}
               canLoad={!this.state.loading && !this.state.everythingLoaded}
@@ -37,7 +37,7 @@ let Feed = React.createClass({
         break;
       case 'feed':
         return (
-          <FeedOldBricks
+          <FeedBricks
               html={this.state.html}
               loading={this.state.loading}
               canLoad={!this.state.loading && !this.state.everythingLoaded}

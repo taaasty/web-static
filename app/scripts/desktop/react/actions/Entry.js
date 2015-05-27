@@ -39,6 +39,17 @@ let EntryActionCreators = {
           response: xhr.responseJSON
         });
       });
+  },
+
+  load(url, sinceEntryID, limit) {
+    return Api.entry.load(url, sinceEntryID, limit)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка записей', {
+          method: 'EntryActionCreators.load(url, sinceEntryID, limit)',
+          methodArguments: {url, sinceEntryID, limit},
+          response: xhr.responseJSON
+        });
+      });
   }
 };
 
