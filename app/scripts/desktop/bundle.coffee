@@ -183,6 +183,11 @@ require './react/components/calendar/calendar_period'
 require './react/components/calendar/calendar_marker'
 
 global.Feed = require './react/components/Feed/Feed'
+global.EntryBrick = require './react/components/Entry/EntryBrick'
+global.LiveFeedBricks = require './react/components/Feed/LiveFeedBricks'
+global.BestFeedBricks = require './react/components/Feed/BestFeedBricks'
+global.FriendsFeedBricks = require './react/components/Feed/FriendsFeedBricks'
+global.AnonymousFeedBricks = require './react/components/Feed/AnonymousFeedBricks'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
 
 require './react/components/search/search'

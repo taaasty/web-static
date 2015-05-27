@@ -16,6 +16,7 @@ InfiniteScroll = React.createClass
     onAfterLoad: PropTypes.func
 
   componentDidMount: ->
+    @_prefill()
     $(window).on 'scroll', @handleScroll
 
   componentDidUpdate: ->

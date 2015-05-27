@@ -1,3 +1,5 @@
+import Avatar from '../common/Avatar';
+
 let AvatarToolbar = React.createClass({
   componentDidMount() {
     $(this.getDOMNode()).tooltip({
@@ -15,7 +17,7 @@ let AvatarToolbar = React.createClass({
     return (
       <a href={this.props.user.tlog_url} className="toolbar toolbar--avatar">
         <div className="toolbar__toggle">
-          <UserAvatar user={this.props.user} size={56} />
+          <Avatar userpic={this.props.user.userpic} size={70} />
         </div>
       </a>
     );

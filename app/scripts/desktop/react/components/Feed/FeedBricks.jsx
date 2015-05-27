@@ -1,60 +1,46 @@
-import Masonry from 'masonry-layout';
+import EntryBrick from '../Entry/EntryBrick';
 import InfiniteScroll from '../common/infiniteScroll/index';
+import MasonryMixin from 'react-masonry-mixin';
+
+const masonryOptions = {
+  itemSelector: '.brick',
+  transitionDuration: 0,
+  isFitWidth: true,
+  gutter: 20
+};
 
 let FeedBricks = React.createClass({
+  mixins: [MasonryMixin('masonryContainer', masonryOptions)],
+
   propTypes: {
-    html: React.PropTypes.string.isRequired,
+    entries: React.PropTypes.array.isRequired,
     loading: React.PropTypes.bool.isRequired,
     canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextEntries: React.PropTypes.func.isRequired
-  },
-
-  componentDidUpdate(prevProps) {
-    if (this.props.feedHtml !== prevProps.feedHtml) {
-      this.initGridManager()
-    }
+    onLoadMoreEntries: React.PropTypes.func.isRequired
   },
 
   render() {
+    let entryList = this.props.entries.map((item) => {
+      return (
+        <EntryBrick
+            entry={item.entry}
+            moderation={item.moderation}
+            key={item.entry.id} />
+      );
+    });
+
     return (
       <div className="bricks-wrapper">
         <InfiniteScroll
             loading={this.props.loading}
             canLoad={this.props.canLoad}
-            onLoad={this.handleScrollLoad}
-            onAfterLoad={this.initGridManager}>
-          <section
-              ref="container"
-              className="bricks"
-              dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
+            onLoad={this.props.onLoadMoreEntries}>
+          <section ref="masonryContainer" className="bricks">
+            {entryList}
+          </section>
         </InfiniteScroll>
       </div>
     );
-  },
-
-  initGridManager() {
-    let container = this.refs.container.getDOMNode();
-    let msnry = new Masonry(container, {
-      itemSelector: '.brick',
-      transitionDuration: '0.4s',
-      isFitWidth: true,
-      gutter: 20,
-      hiddenStyle: {
-        opacity: 0,
-        transform: 'opacity(0.001)'
-      },
-      visibleStyle: {
-        opacity: 1,
-        transform: 'opacity(1)'
-      }
-    });
-  },
-
-  handleScrollLoad() {
-    let $container = $(this.refs.container.getDOMNode());
-    let lastEntryID = $container.children().last().data('id');
-
-    this.props.onLoadNextEntries(lastEntryID);
   }
 });
 

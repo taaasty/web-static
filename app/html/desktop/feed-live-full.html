@@ -18,12 +18,11 @@
         <link rel="stylesheet" href="../stylesheets/main.css" />
         <!-- end Styles -->
     </head>
-    <body class="layout--feed not-logged">
+    <body class="layout--feed">
         <div data-react-class="UserToolbarContainer" data-react-props='{"searchUrl":"http://taaasty.com/live","searchTitleI18nKey":"live","locale":"ru"}'></div>
         <div data-react-class="AvatarToolbarContainer" data-react-props='{"locale":"ru"}'></div>
-
         <!-- Page -->
-        <div class="page js-preview-design">
+        <div class="page">
             <div class="page__inner">
                 <div class="page__paper">
                     <!-- Page Header -->
@@ -95,7 +94,7 @@
                                     </li>
                                 </ul>
                             </nav>
-                            <div data-react-class="Feed" data-react-props='{"style": "feed"}'></div>
+                            <div data-react-class="LiveFeedBricks"></div>
                         </div>
                     </div>
                     <!-- end Page Body -->
@@ -104,7 +103,7 @@
         </div>
         <!-- end Page -->
 
-        <script src="scripts/vendor.js"></script>
-        <script src="scripts/client.js"></script>
+        <script src="../scripts/vendor.js"></script>
+        <script src="../scripts/client.js"></script>
     </body>
 </html>

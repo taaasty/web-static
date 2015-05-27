@@ -30,12 +30,10 @@
   border-radius: @brick-radius;
 
   /** Video **/
-  .video {
-    height: @brick-video-height;
-  }
-
   .video__overlay {
     background: @brick-video-overlay-bg;
+    position: absolute;
+    top: 0;
 
     &:before {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiPgogICAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iOTAiIHkyPSI0NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIC8+CiAgICA8bGluZSB4MT0iOTAiIHkxPSI0NSIgeDI9IjAiIHkyPSI5MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIC8+CiAgICA8bGluZSB4MT0iMSIgeTE9IjAiIHgyPSIxIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIiAvPgo8L3N2Zz4=);
@@ -167,7 +165,11 @@
   }
 
   & > .brick__link:hover {
-    opacity: .84;
+    opacity: 1;
+  }
+
+  .video {
+    height: auto;
   }
 }
 
@@ -180,6 +182,7 @@
   font-weight: normal;
   font-size: 30px;
   line-height: 1em;
+  word-wrap: break-word;
 }
 
 .brick__caption {
@@ -189,14 +192,13 @@
 }
 
 .brick__text {
-  p {
-    font-size: 16px;
-    line-height: 135%;
+  font-size: 16px;
+  line-height: 135%;
+  word-wrap: break-word;
 
-    img {
+  img {
       max-width: 100%;
       height: auto;
-    }
   }
 
   // Восстанавливаем стили списков после reset.css

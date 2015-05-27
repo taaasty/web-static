@@ -66,6 +66,50 @@ Api =
       _pendingRequests[key] = getRequest searchUrl
 
   feed:
+    loadLiveEntries: (sinceEntryID, limit) ->
+      url = ApiRoutes.feedLive()
+      key = Constants.api.LOAD_LIVE_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadFriendsEntries: (sinceEntryID, limit) ->
+      url = ApiRoutes.feedFriends()
+      key = Constants.api.LOAD_FRIENDS_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadBestEntries: (sinceEntryID, limit) ->
+      url = ApiRoutes.feedBest()
+      key = Constants.api.LOAD_BEST_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadAnonymousEntries: (sinceEntryID, limit) ->
+      url = ApiRoutes.feedAnonymous()
+      key = Constants.api.LOAD_ANONYMOUS_ENTRIES
+      data = {
+        since_entry_id: sinceEntryID,
+        limit: limit
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
     loadEntries: (feedUrl) ->
       key = Constants.api.FEED_LOAD_ENTRIES
 
@@ -160,5 +204,25 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
+
+  entry:
+    vote: (entryID) ->
+      url = ApiRoutes.votes_url entryID
+      key = Constants.api.VOTE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    accept: (acceptUrl) ->
+      key = Constants.api.ACCEPT_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest acceptUrl
+
+    decline: (declineUrl) ->
+      key = Constants.api.DECLINE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest declineUrl
 
 module.exports = Api

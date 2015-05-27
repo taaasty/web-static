@@ -1,6 +1,7 @@
 classnames = require 'classnames'
 
 window.Avatar = React.createClass
+  displayName: 'Avatar'
 
   propTypes:
     name:     React.PropTypes.string.isRequired
