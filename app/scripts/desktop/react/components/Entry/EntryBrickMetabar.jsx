@@ -56,7 +56,7 @@ let EntryBrickMeta = React.createClass({
                title={this.props.tlog.tag}
                className="meta-item__link">
               <span className="meta-item__ava">
-                <Avatar userpic={this.props.tlog.userpic} size={35} />
+                <Avatar userpic={this.props.tlog.userpic} size={20} />
               </span>
               <span>{this.props.tlog.tag}</span>
             </a>

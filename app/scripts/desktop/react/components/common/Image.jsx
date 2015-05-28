@@ -13,7 +13,8 @@ let Image = React.createClass({
     return (
       <img src={this.getUrl()}
            srcSet={this.getRetinaUrl()}
-           className={this.props.className} />
+           className={this.props.className}
+           style={this.getSize()} />
     );
   },
 

@@ -18442,7 +18442,7 @@ var EntryBrickMeta = React.createClass({
             React.createElement(
               'span',
               { className: 'meta-item__ava' },
-              React.createElement(_commonAvatar2['default'], { userpic: this.props.tlog.userpic, size: 35 })
+              React.createElement(_commonAvatar2['default'], { userpic: this.props.tlog.userpic, size: 20 })
             ),
             React.createElement(
               'span',
@@ -21615,7 +21615,8 @@ var Image = React.createClass({
   render: function render() {
     return React.createElement("img", { src: this.getUrl(),
       srcSet: this.getRetinaUrl(),
-      className: this.props.className });
+      className: this.props.className,
+      style: this.getSize() });
   },
 
   getSize: function getSize() {
