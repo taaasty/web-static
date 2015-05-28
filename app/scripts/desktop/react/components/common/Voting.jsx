@@ -6,10 +6,10 @@ let Voting = React.createClass({
     rating: React.PropTypes.shape({
       votes: React.PropTypes.number.isRequired,
       rating: React.PropTypes.number.isRequired,
-      entry_id: React.PropTypes.number.isRequired,
       is_voted: React.PropTypes.bool.isRequired,
       is_voteable: React.PropTypes.bool.isRequired
-    }).isRequired
+    }).isRequired,
+    entryID: React.PropTypes.number.isRequired
   },
 
   getInitialState() {
@@ -66,7 +66,7 @@ let Voting = React.createClass({
 
     this.setState({process: true});
 
-    EntryActionCreators.vote(this.props.rating.entry_id)
+    EntryActionCreators.vote(this.props.entryID)
       .then((rating) => {
         if (this.isMounted()) {
           this.setState({

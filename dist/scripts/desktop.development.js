@@ -18312,7 +18312,8 @@ var EntryBrickImageType = React.createClass({
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url })
+          url: this.props.entry.url,
+          entryID: this.props.entry.id })
       ),
       React.createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
@@ -18379,7 +18380,8 @@ var EntryBrickMeta = React.createClass({
     tlog: React.PropTypes.object,
     rating: React.PropTypes.object.isRequired,
     url: React.PropTypes.string.isRequired,
-    commentsCount: React.PropTypes.number.isRequired
+    commentsCount: React.PropTypes.number.isRequired,
+    entryID: React.PropTypes.number.isRequired
   },
 
   render: function render() {
@@ -18400,7 +18402,7 @@ var EntryBrickMeta = React.createClass({
         React.createElement(
           'span',
           { className: 'meta-item__content' },
-          React.createElement(_commonVoting2['default'], { rating: this.props.rating })
+          React.createElement(_commonVoting2['default'], { entryID: this.props.entryID, rating: this.props.rating })
         )
       );
     }
@@ -18530,7 +18532,8 @@ var EntryBrickQuoteType = React.createClass({
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url })
+          url: this.props.entry.url,
+          entryID: this.props.entry.id })
       ),
       React.createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
@@ -18627,7 +18630,8 @@ var EntryBrickTextType = React.createClass({
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url })
+          url: this.props.entry.url,
+          entryID: this.props.entry.id })
       ),
       React.createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
@@ -18714,7 +18718,8 @@ var EntryBrickUnknownType = React.createClass({
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.entry_url })
+          url: this.props.entry.entry_url,
+          entryID: this.props.entry.id })
       ),
       React.createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
@@ -18818,7 +18823,8 @@ var EntryBrickVideoType = React.createClass({
           tlog: this.props.entry.tlog,
           rating: this.props.entry.rating,
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url })
+          url: this.props.entry.url,
+          entryID: this.props.entry.id })
       ),
       React.createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
@@ -21778,10 +21784,10 @@ var Voting = React.createClass({
     rating: React.PropTypes.shape({
       votes: React.PropTypes.number.isRequired,
       rating: React.PropTypes.number.isRequired,
-      entry_id: React.PropTypes.number.isRequired,
       is_voted: React.PropTypes.bool.isRequired,
       is_voteable: React.PropTypes.bool.isRequired
-    }).isRequired
+    }).isRequired,
+    entryID: React.PropTypes.number.isRequired
   },
 
   getInitialState: function getInitialState() {
@@ -21840,7 +21846,7 @@ var Voting = React.createClass({
 
     this.setState({ process: true });
 
-    _actionsEntry2['default'].vote(this.props.rating.entry_id).then(function (rating) {
+    _actionsEntry2['default'].vote(this.props.entryID).then(function (rating) {
       if (_this.isMounted()) {
         _this.setState({
           votes: rating.votes,

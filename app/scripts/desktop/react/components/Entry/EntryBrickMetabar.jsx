@@ -6,7 +6,8 @@ let EntryBrickMeta = React.createClass({
     tlog: React.PropTypes.object,
     rating: React.PropTypes.object.isRequired,
     url: React.PropTypes.string.isRequired,
-    commentsCount: React.PropTypes.number.isRequired
+    commentsCount: React.PropTypes.number.isRequired,
+    entryID: React.PropTypes.number.isRequired
   },
 
   render() {
@@ -24,7 +25,7 @@ let EntryBrickMeta = React.createClass({
       return (
         <span className="meta-item meta-item--vote">
           <span className="meta-item__content">
-            <VotingComponent rating={this.props.rating} />
+            <VotingComponent entryID={this.props.entryID} rating={this.props.rating} />
           </span>
         </span>
       );

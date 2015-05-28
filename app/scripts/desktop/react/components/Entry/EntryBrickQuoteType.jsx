@@ -34,7 +34,8 @@ let EntryBrickQuoteType = React.createClass({
               tlog={this.props.entry.tlog}
               rating={this.props.entry.rating}
               commentsCount={this.props.entry.comments_count}
-              url={this.props.entry.url} />
+              url={this.props.entry.url}
+              entryID={this.props.entry.id} />
         </div>
         <EntryBrickActions
             hasModeration={this.props.hasModeration}
