@@ -36305,7 +36305,7 @@ module.exports = warning;
 }.call(this));
 
 },{}],"i18next":[function(require,module,exports){
-// i18next, v1.8.2
+// i18next, v1.9.0
 // Copyright (c)2015 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
 // http://i18next.com
@@ -36390,7 +36390,8 @@ module.exports = warning;
       , replacementCounter = 0
       , languages = []
       , initialized = false
-      , sync = {};
+      , sync = {}
+      , conflictReference = null;
 
 
 
@@ -36404,7 +36405,10 @@ module.exports = warning;
             $.i18n = $.i18n || i18n;
         }
         
-        root.i18n = root.i18n || i18n;
+        if (root.i18n) {
+        	conflictReference = root.i18n;
+        }
+        root.i18n = i18n;
     }
     sync = {
     
@@ -36517,6 +36521,7 @@ module.exports = warning;
                     // load all needed stuff once
                     f.ajax({
                         url: url,
+                        cache: options.cache,
                         success: function(data, status, xhr) {
                             f.log('loaded: ' + url);
                             loadComplete(null, data);
@@ -36526,7 +36531,8 @@ module.exports = warning;
                             loadComplete('failed loading resource.json error: ' + error);
                         },
                         dataType: "json",
-                        async : options.getAsync
+                        async : options.getAsync,
+                        timeout: options.ajaxTimeout
                     });
                 }    
             }
@@ -36536,6 +36542,7 @@ module.exports = warning;
             var url = applyReplacement(options.resGetPath, { lng: lng, ns: ns });
             f.ajax({
                 url: url,
+                cache: options.cache,
                 success: function(data, status, xhr) {
                     f.log('loaded: ' + url);
                     done(null, data);
@@ -36554,7 +36561,8 @@ module.exports = warning;
                     done(error, {});
                 },
                 dataType: "json",
-                async : options.getAsync
+                async : options.getAsync,
+                timeout: options.ajaxTimeout
             });
         },
     
@@ -36602,7 +36610,8 @@ module.exports = warning;
                         f.log('failed posting missing key \'' + key + '\' to: ' + item.url);
                     },
                     dataType: "json",
-                    async : o.postAsync
+                    async : o.postAsync,
+                    timeout: o.ajaxTimeout
                 });
             }
         },
@@ -36627,11 +36636,12 @@ module.exports = warning;
         fallbackOnNull: true,
         fallbackOnEmpty: false,
         fallbackToDefaultNS: false,
+        showKeyIfEmpty: false,
         nsseparator: ':',
         keyseparator: '.',
         selectorAttr: 'data-i18n',
         debug: false,
-        
+    
         resGetPath: 'locales/__lng__/__ns__.json',
         resPostPath: 'locales/add/__lng__/__ns__',
     
@@ -36671,6 +36681,7 @@ module.exports = warning;
         postProcess: undefined,
         parseMissingKey: undefined,
         missingKeyHandler: sync.postMissing,
+        ajaxTimeout: 0,
     
         shortcutFunction: 'sprintf' // or: defaultValue
     };
@@ -37180,13 +37191,13 @@ module.exports = warning;
         }
     };
     function init(options, cb) {
-        
+    
         if (typeof options === 'function') {
             cb = options;
             options = {};
         }
         options = options || {};
-        
+    
         // override defaults with passed in options
         f.extend(o, options);
         delete o.fixLng; /* passed in each time */
@@ -37282,6 +37293,10 @@ module.exports = warning;
         });
     
         if (deferred) return deferred.promise();
+    }
+    
+    function isInitialized() {
+        return initialized;
     }
     function preload(lngs, cb) {
         if (typeof lngs === 'string') lngs = [lngs];
@@ -37491,6 +37506,17 @@ module.exports = warning;
     function reload(cb) {
         resStore = {};
         setLng(currentLng, cb);
+    }
+    
+    function noConflict() {
+        
+        window.i18next = window.i18n;
+    
+        if (conflictReference) {
+            window.i18n = conflictReference;
+        } else {
+            delete window.i18n;
+        }
     }
     function addJqueryFunct() {
         // $.t shortcut
@@ -37904,7 +37930,7 @@ module.exports = warning;
                 optionWithoutCount.lng = optionWithoutCount._origLng;
                 delete optionWithoutCount._origLng;
                 translated = translate(ns + o.nsseparator + key, optionWithoutCount);
-                
+    
                 return applyReplacement(translated, {
                     count: options.count,
                     interpolationPrefix: options.interpolationPrefix,
@@ -37938,7 +37964,7 @@ module.exports = warning;
                 value = value && value[keys[x]];
                 x++;
             }
-            if (value !== undefined) {
+            if (value !== undefined && (!o.showKeyIfEmpty || value !== '')) {
                 var valueType = Object.prototype.toString.apply(value);
                 if (typeof value === 'string') {
                     value = applyReplacement(value, options);
@@ -37992,6 +38018,7 @@ module.exports = warning;
                     }
                 }
             } else {
+                options.ns = o.ns.defaultNs;
                 found = _find(key, options); // fallback to default NS
             }
             options.isFallbackLookup = false;
@@ -38030,7 +38057,10 @@ module.exports = warning;
     
         // get from localStorage
         if (o.detectLngFromLocalStorage && typeof window !== 'undefined' && window.localStorage) {
-            userLngChoices.push(f.localStorage.getItem('i18next_lng'));
+            var lang = f.localStorage.getItem('i18next_lng');
+            if (lang) {
+                userLngChoices.push(lang);
+            }
         }
     
         // get from navigator
@@ -38459,6 +38489,7 @@ module.exports = warning;
     });
     // public api interface
     i18n.init = init;
+    i18n.isInitialized = isInitialized;
     i18n.setLng = setLng;
     i18n.preload = preload;
     i18n.addResourceBundle = addResourceBundle;
@@ -38481,6 +38512,7 @@ module.exports = warning;
     i18n.addPostProcessor = addPostProcessor;
     i18n.applyReplacement = f.applyReplacement;
     i18n.options = o;
+    i18n.noConflict = noConflict;
 
 })(typeof exports === 'undefined' ? window : exports);
 },{}],"jquery":[function(require,module,exports){

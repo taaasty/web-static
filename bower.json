@@ -21,9 +21,9 @@
     "es5-shim": "~4.1.1",
     "aviator": "~0.5.0",
     "intro.js": "~1.0.0",
-    "i18next": "~1.8.2",
     "select2": "~4.0.0",
-    "jqueryui-touch-punch": "*"
+    "jqueryui-touch-punch": "*",
+    "i18next": "~1.9.0"
   },
   "devDependencies": {
     "reqwest": "~1.1.5"

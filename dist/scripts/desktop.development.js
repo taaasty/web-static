@@ -12515,6 +12515,7 @@ initLocales = function(locale, callback) {
   return i18n.init({
     lng: locale,
     fallbackLng: 'ru',
+    cache: true,
     resGetPath: Routes.locale()
   }, callback);
 };
@@ -13842,12 +13843,20 @@ var BricksContainer = React.createClass({
 
     _actionsEntry2['default'].load(url, sinceEntryID, limit).then(function (entriesInfo) {
       if (_this.isMounted()) {
-        _this.setState({
-          entries: _this.state.entries.concat(entriesInfo.items),
-          hasMore: entriesInfo.has_more,
-          sinceEntryID: entriesInfo.next_since_entry_id
-        });
+        // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
+        // нам полей, просто прекращаем дальнейшую загрузку
+        if (entriesInfo.has_more != null && entriesInfo.next_since_entry_id != null) {
+          _this.setState({
+            entries: _this.state.entries.concat(entriesInfo.items),
+            hasMore: entriesInfo.has_more,
+            sinceEntryID: entriesInfo.next_since_entry_id
+          });
+        } else {
+          _this.setState({ hasMore: false });
+        }
       }
+    }).fail(function () {
+      if (_this.isMounted()) _this.setState({ hasMore: false });
     }).always(function () {
       if (_this.isMounted()) _this.setState({ loading: false });
     });
@@ -78473,7 +78482,7 @@ if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
 },{}],"eventEmitter":[function(require,module,exports){
 arguments[4][449][0].apply(exports,arguments)
 },{"dup":449}],"i18next":[function(require,module,exports){
-// i18next, v1.8.2
+// i18next, v1.9.0
 // Copyright (c)2015 Jan Mühlemann (jamuhl).
 // Distributed under MIT license
 // http://i18next.com
@@ -78558,7 +78567,8 @@ arguments[4][449][0].apply(exports,arguments)
       , replacementCounter = 0
       , languages = []
       , initialized = false
-      , sync = {};
+      , sync = {}
+      , conflictReference = null;
 
 
 
@@ -78572,7 +78582,10 @@ arguments[4][449][0].apply(exports,arguments)
             $.i18n = $.i18n || i18n;
         }
         
-        root.i18n = root.i18n || i18n;
+        if (root.i18n) {
+        	conflictReference = root.i18n;
+        }
+        root.i18n = i18n;
     }
     sync = {
     
@@ -78685,6 +78698,7 @@ arguments[4][449][0].apply(exports,arguments)
                     // load all needed stuff once
                     f.ajax({
                         url: url,
+                        cache: options.cache,
                         success: function(data, status, xhr) {
                             f.log('loaded: ' + url);
                             loadComplete(null, data);
@@ -78694,7 +78708,8 @@ arguments[4][449][0].apply(exports,arguments)
                             loadComplete('failed loading resource.json error: ' + error);
                         },
                         dataType: "json",
-                        async : options.getAsync
+                        async : options.getAsync,
+                        timeout: options.ajaxTimeout
                     });
                 }    
             }
@@ -78704,6 +78719,7 @@ arguments[4][449][0].apply(exports,arguments)
             var url = applyReplacement(options.resGetPath, { lng: lng, ns: ns });
             f.ajax({
                 url: url,
+                cache: options.cache,
                 success: function(data, status, xhr) {
                     f.log('loaded: ' + url);
                     done(null, data);
@@ -78722,7 +78738,8 @@ arguments[4][449][0].apply(exports,arguments)
                     done(error, {});
                 },
                 dataType: "json",
-                async : options.getAsync
+                async : options.getAsync,
+                timeout: options.ajaxTimeout
             });
         },
     
@@ -78770,7 +78787,8 @@ arguments[4][449][0].apply(exports,arguments)
                         f.log('failed posting missing key \'' + key + '\' to: ' + item.url);
                     },
                     dataType: "json",
-                    async : o.postAsync
+                    async : o.postAsync,
+                    timeout: o.ajaxTimeout
                 });
             }
         },
@@ -78795,11 +78813,12 @@ arguments[4][449][0].apply(exports,arguments)
         fallbackOnNull: true,
         fallbackOnEmpty: false,
         fallbackToDefaultNS: false,
+        showKeyIfEmpty: false,
         nsseparator: ':',
         keyseparator: '.',
         selectorAttr: 'data-i18n',
         debug: false,
-        
+    
         resGetPath: 'locales/__lng__/__ns__.json',
         resPostPath: 'locales/add/__lng__/__ns__',
     
@@ -78839,6 +78858,7 @@ arguments[4][449][0].apply(exports,arguments)
         postProcess: undefined,
         parseMissingKey: undefined,
         missingKeyHandler: sync.postMissing,
+        ajaxTimeout: 0,
     
         shortcutFunction: 'sprintf' // or: defaultValue
     };
@@ -79348,13 +79368,13 @@ arguments[4][449][0].apply(exports,arguments)
         }
     };
     function init(options, cb) {
-        
+    
         if (typeof options === 'function') {
             cb = options;
             options = {};
         }
         options = options || {};
-        
+    
         // override defaults with passed in options
         f.extend(o, options);
         delete o.fixLng; /* passed in each time */
@@ -79450,6 +79470,10 @@ arguments[4][449][0].apply(exports,arguments)
         });
     
         if (deferred) return deferred.promise();
+    }
+    
+    function isInitialized() {
+        return initialized;
     }
     function preload(lngs, cb) {
         if (typeof lngs === 'string') lngs = [lngs];
@@ -79659,6 +79683,17 @@ arguments[4][449][0].apply(exports,arguments)
     function reload(cb) {
         resStore = {};
         setLng(currentLng, cb);
+    }
+    
+    function noConflict() {
+        
+        window.i18next = window.i18n;
+    
+        if (conflictReference) {
+            window.i18n = conflictReference;
+        } else {
+            delete window.i18n;
+        }
     }
     function addJqueryFunct() {
         // $.t shortcut
@@ -80072,7 +80107,7 @@ arguments[4][449][0].apply(exports,arguments)
                 optionWithoutCount.lng = optionWithoutCount._origLng;
                 delete optionWithoutCount._origLng;
                 translated = translate(ns + o.nsseparator + key, optionWithoutCount);
-                
+    
                 return applyReplacement(translated, {
                     count: options.count,
                     interpolationPrefix: options.interpolationPrefix,
@@ -80106,7 +80141,7 @@ arguments[4][449][0].apply(exports,arguments)
                 value = value && value[keys[x]];
                 x++;
             }
-            if (value !== undefined) {
+            if (value !== undefined && (!o.showKeyIfEmpty || value !== '')) {
                 var valueType = Object.prototype.toString.apply(value);
                 if (typeof value === 'string') {
                     value = applyReplacement(value, options);
@@ -80160,6 +80195,7 @@ arguments[4][449][0].apply(exports,arguments)
                     }
                 }
             } else {
+                options.ns = o.ns.defaultNs;
                 found = _find(key, options); // fallback to default NS
             }
             options.isFallbackLookup = false;
@@ -80198,7 +80234,10 @@ arguments[4][449][0].apply(exports,arguments)
     
         // get from localStorage
         if (o.detectLngFromLocalStorage && typeof window !== 'undefined' && window.localStorage) {
-            userLngChoices.push(f.localStorage.getItem('i18next_lng'));
+            var lang = f.localStorage.getItem('i18next_lng');
+            if (lang) {
+                userLngChoices.push(lang);
+            }
         }
     
         // get from navigator
@@ -80627,6 +80666,7 @@ arguments[4][449][0].apply(exports,arguments)
     });
     // public api interface
     i18n.init = init;
+    i18n.isInitialized = isInitialized;
     i18n.setLng = setLng;
     i18n.preload = preload;
     i18n.addResourceBundle = addResourceBundle;
@@ -80649,6 +80689,7 @@ arguments[4][449][0].apply(exports,arguments)
     i18n.addPostProcessor = addPostProcessor;
     i18n.applyReplacement = f.applyReplacement;
     i18n.options = o;
+    i18n.noConflict = noConflict;
 
 })(typeof exports === 'undefined' ? window : exports);
 },{}],"introJs":[function(require,module,exports){

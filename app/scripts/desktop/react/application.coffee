@@ -16,6 +16,7 @@ initLocales = (locale, callback) ->
   i18n.init({
     lng: locale,
     fallbackLng: 'ru',
+    cache: true,
     resGetPath: Routes.locale()
   }, callback)
 

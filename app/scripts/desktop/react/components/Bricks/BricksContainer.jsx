@@ -46,12 +46,21 @@ let BricksContainer = React.createClass({
     EntryActionCreators.load(url, sinceEntryID, limit)
       .then((entriesInfo) => {
         if (this.isMounted()) {
-          this.setState({
-            entries: this.state.entries.concat(entriesInfo.items),
-            hasMore: entriesInfo.has_more,
-            sinceEntryID: entriesInfo.next_since_entry_id
-          });
+          // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
+          // нам полей, просто прекращаем дальнейшую загрузку
+          if (entriesInfo.has_more != null && entriesInfo.next_since_entry_id != null) {
+            this.setState({
+              entries: this.state.entries.concat(entriesInfo.items),
+              hasMore: entriesInfo.has_more,
+              sinceEntryID: entriesInfo.next_since_entry_id
+            });
+          } else {
+            this.setState({hasMore: false});
+          }
         }
+      })
+      .fail(() => {
+        if (this.isMounted()) this.setState({hasMore: false})
       })
       .always(() => {
         if (this.isMounted()) this.setState({loading: false});
