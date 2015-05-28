@@ -5,7 +5,7 @@ const SEVERITY_INFO_TYPE = 'info',
 let ErrorService = {
   remoteService: global.Bugsnag || null,
 
-  notify(name, meta, stacktrace, severity) {
+  notify(name, message, metaData, severity) {
     if (this.remoteService != null && this.remoteService.notify) {
       this.remoteService.notify(name, meta, stacktrace, severity);
     } else {
@@ -16,16 +16,16 @@ let ErrorService = {
     }
   },
 
-  notifyErrorResponse(name, meta = {}, stacktrace = {}) {
-    this.notifyError('[AJAX] ' + name, meta, stacktrace);
+  notifyErrorResponse(name, metaData = {}) {
+    this.notifyError('[AJAX] ' + name, metaData);
   },
 
-  notifyError(name, meta = {}, stacktrace = {}) {
-    this.notify(name, meta, stacktrace, 'error');
+  notifyError(name, metaData = {}) {
+    this.notify(name, '', metaData, 'error');
   },
 
-  notifyWarning(name, meta = {}, stacktrace = {}) {
-    this.notify(name, meta, stacktrace, 'warning');
+  notifyWarning(name, metaData = {}) {
+    this.notify(name, '', metaData, 'warning');
   },
 
   notifyException(e, name) {

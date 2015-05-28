@@ -6,8 +6,6 @@ global.AppStorage = require('./shared/resources/AppStorage');
 require('./desktop/bundle');
 
 gon.env = 'development';
-gon.thumbor = 'http://thumbor0.tasty0.ru';
-gon.thumbor_http_loader = 'http://thumbor4.tasty0.ru';
 
 Tasty.start({
   locale: gon.locale,
@@ -38377,7 +38375,7 @@ var SEVERITY_INFO_TYPE = 'info',
 var ErrorService = {
   remoteService: global.Bugsnag || null,
 
-  notify: function notify(name, meta, stacktrace, severity) {
+  notify: function notify(name, message, metaData, severity) {
     if (this.remoteService != null && this.remoteService.notify) {
       this.remoteService.notify(name, meta, stacktrace, severity);
     } else {
@@ -38389,24 +38387,21 @@ var ErrorService = {
   },
 
   notifyErrorResponse: function notifyErrorResponse(name) {
-    var meta = arguments[1] === undefined ? {} : arguments[1];
-    var stacktrace = arguments[2] === undefined ? {} : arguments[2];
+    var metaData = arguments[1] === undefined ? {} : arguments[1];
 
-    this.notifyError('[AJAX] ' + name, meta, stacktrace);
+    this.notifyError('[AJAX] ' + name, metaData);
   },
 
   notifyError: function notifyError(name) {
-    var meta = arguments[1] === undefined ? {} : arguments[1];
-    var stacktrace = arguments[2] === undefined ? {} : arguments[2];
+    var metaData = arguments[1] === undefined ? {} : arguments[1];
 
-    this.notify(name, meta, stacktrace, 'error');
+    this.notify(name, '', metaData, 'error');
   },
 
   notifyWarning: function notifyWarning(name) {
-    var meta = arguments[1] === undefined ? {} : arguments[1];
-    var stacktrace = arguments[2] === undefined ? {} : arguments[2];
+    var metaData = arguments[1] === undefined ? {} : arguments[1];
 
-    this.notify(name, meta, stacktrace, 'warning');
+    this.notify(name, '', metaData, 'warning');
   },
 
   notifyException: function notifyException(e, name) {
