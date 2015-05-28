@@ -7,11 +7,10 @@ let ErrorService = {
 
   notify(name, message, metaData, severity) {
     if (this.remoteService != null && this.remoteService.notify) {
-      this.remoteService.notify(name, meta, stacktrace, severity);
+      this.remoteService.notify(name, message, metaData, severity);
     } else {
       console.group(`[${severity}] ${name}`);
-      if (meta != null && Object.keys(meta).length) console.log('Meta:', meta);
-      if (stacktrace != null && Object.keys(stacktrace).length) console.error('Stacktrace:', stacktrace);
+      if (metaData != null && Object.keys(metaData).length) console.log('Meta:', metaData);
       console.groupEnd();
     }
   },
