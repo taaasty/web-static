@@ -1,4 +1,4 @@
-import Avatar from '../common/Avatar';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 
 let AvatarToolbar = React.createClass({
   componentDidMount() {

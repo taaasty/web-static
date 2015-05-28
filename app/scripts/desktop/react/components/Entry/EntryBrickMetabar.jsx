@@ -1,4 +1,4 @@
-import Avatar from '../common/Avatar';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 import VotingComponent from '../common/Voting';
 
 let EntryBrickMeta = React.createClass({

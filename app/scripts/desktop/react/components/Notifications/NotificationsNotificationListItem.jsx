@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import Image from '../../../../shared/react/components/common/Image/Image';
+import Image from '../../../../shared/react/components/common/Image';
 
 let NotificationsNotificationListItem = React.createClass({
   propTypes: {
