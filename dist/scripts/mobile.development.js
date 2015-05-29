@@ -12074,11 +12074,16 @@ module.exports = ConnectStoreMixin;
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+function prepareUrl(url) {
+  return /^\/\/\S*$/.test(url) ? 'http:' + url : url;
+}
+
 var ThumborService = {
   thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
   thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
   newImageUrl: function newImageUrl(url, size) {
+    url = prepareUrl(url);
     var width = size.width || '',
         height = size.height || '';
 
@@ -12086,6 +12091,7 @@ var ThumborService = {
   },
 
   newRetinaImageUrl: function newRetinaImageUrl(url, size) {
+    url = prepareUrl(url);
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
@@ -12105,6 +12111,7 @@ var ThumborService = {
     var path = _ref2.path;
     var size = _ref2.size;
 
+    url = prepareUrl(url);
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 

@@ -6,7 +6,7 @@ let BricksContainer = React.createClass({
     entries_info: React.PropTypes.shape({
       items: React.PropTypes.array.isRequired,
       has_more: React.PropTypes.bool.isRequired,
-      next_since_entry_id: React.PropTypes.number.isRequired
+      next_since_entry_id: React.PropTypes.number
     }).isRequired,
     url: React.PropTypes.string.isRequired,
     limit: React.PropTypes.number

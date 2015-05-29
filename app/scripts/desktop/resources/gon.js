@@ -126,8 +126,14 @@ let gon = {
     { text: 'Русский', value: 'ru' },
     { text: 'English', value: 'en' }
   ],
-  thumbor: 'http://thumbor0.tasty0.ru',
-  thumbor_http_loader: 'http://thumbor4.tasty0.ru'
+  thumbor: {
+    security_key: null,
+    server_url: "http://thumbor0.tasty0.ru"
+  },
+  thumbor_http_loader: {
+    security_key: null,
+    server_url: "http://thumbor4.tasty0.ru"
+  }
 };
 
 export default gon;

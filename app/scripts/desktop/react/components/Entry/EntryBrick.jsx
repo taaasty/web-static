@@ -1,11 +1,9 @@
 import EntryActionCreators from '../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 
-const ENTRY_TEXT_TYPE = 'text',
-      ENTRY_IMAGE_TYPE = 'image',
-      ENTRY_VIDEO_TYPE = 'video',
-      ENTRY_QUOTE_TYPE = 'quote',
-      ENTRY_ANONYMOUS_TYPE = 'anonymous';
+const ENTRY_TYPES = [
+  'text', 'image', 'video', 'quote', 'link', 'song', 'code'
+];
 
 let EntryBrick = React.createClass({
   propTypes: {
@@ -44,16 +42,8 @@ let EntryBrick = React.createClass({
   },
 
   getBrickClasses() {
-    let typeClass;
-
-    switch(this.props.entry.type) {
-      case ENTRY_TEXT_TYPE: typeClass = 'text'; break;
-      case ENTRY_IMAGE_TYPE: typeClass = 'image'; break;
-      case ENTRY_VIDEO_TYPE: typeClass = 'video'; break;
-      case ENTRY_QUOTE_TYPE: typeClass = 'quote'; break;
-      case ENTRY_ANONYMOUS_TYPE: typeClass = 'anonymous'; break;
-      default: typeClass = 'text';
-    }
+    let { type } = this.props.entry;
+    let typeClass = ENTRY_TYPES.indexOf(type) != -1 ? type : 'text';
 
     return `brick brick--${typeClass}`;
   },

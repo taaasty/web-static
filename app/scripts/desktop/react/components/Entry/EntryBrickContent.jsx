@@ -3,12 +3,18 @@ import EntryBrickTextType from './EntryBrickTextType';
 import EntryBrickImageType from './EntryBrickImageType';
 import EntryBrickVideoType from './EntryBrickVideoType';
 import EntryBrickQuoteType from './EntryBrickQuoteType';
+import EntryBrickLinkType from './EntryBrickLinkType';
+import EntryBrickSongType from './EntryBrickSongType';
+import EntryBrickCodeType from './EntryBrickCodeType';
 import EntryBrickUnknownType from './EntryBrickUnknownType';
 
 const ENTRY_TEXT_TYPE = 'text',
       ENTRY_IMAGE_TYPE = 'image',
       ENTRY_VIDEO_TYPE = 'video',
       ENTRY_QUOTE_TYPE = 'quote',
+      ENTRY_LINK_TYPE = 'link',
+      ENTRY_SONG_TYPE = 'song',
+      ENTRY_CODE_TYPE = 'code',
       ENTRY_ANONYMOUS_TYPE = 'anonymous';
 
 let EntryBrickContent = React.createClass({
@@ -30,8 +36,14 @@ let EntryBrickContent = React.createClass({
         return <EntryBrickVideoType {...this.props} />;
       case ENTRY_QUOTE_TYPE:
         return <EntryBrickQuoteType {...this.props} />;
+      case ENTRY_LINK_TYPE:
+        return <EntryBrickLinkType {...this.props} />;
+      case ENTRY_SONG_TYPE:
+        return <EntryBrickSongType {...this.props} />;
+      case ENTRY_CODE_TYPE:
+        return <EntryBrickCodeType {...this.props} />;
       default:
-        ErrorService.notifyError('Неизвестный тип brick-поста', {
+        ErrorService.notifyWarning('Неизвестный тип brick-поста', {
           componentName: this.constructor.displayName,
           method: 'render',
           entryID: this.props.entry.id,

@@ -1,8 +1,13 @@
+function prepareUrl(url) {
+  return /^\/\/\S*$/.test(url) ? `http:${url}` : url;
+}
+
 let ThumborService = {
   thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
   thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
   newImageUrl(url, size) {
+    url = prepareUrl(url);
     let width = size.width || '',
         height = size.height || '';
 
@@ -10,6 +15,7 @@ let ThumborService = {
   },
 
   newRetinaImageUrl(url, size) {
+    url = prepareUrl(url);
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
@@ -21,6 +27,7 @@ let ThumborService = {
   },
 
   retinaImageUrl({url, path, size}) {
+    url = prepareUrl(url);
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 

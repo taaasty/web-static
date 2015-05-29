@@ -29,6 +29,10 @@
   margin-bottom: 20px;
   border-radius: @brick-radius;
 
+  a:hover {
+    opacity: 1;
+  }
+
   /** Video **/
   .video__overlay {
     background: @brick-video-overlay-bg;
@@ -164,12 +168,13 @@
     .border-radius-bottom-right(@brick-radius);
   }
 
-  & > .brick__link:hover {
-    opacity: 1;
-  }
-
   .video {
     height: auto;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
   }
 }
 
@@ -269,10 +274,6 @@
     &:last-child {
       border-bottom-right-radius: @brick-radius;
     }
-  }
-
-  .brick:hover & {
-    opacity: 1;
   }
 }
 
