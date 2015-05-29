@@ -415,11 +415,18 @@
     top: 0;
     left: 0;
     border-bottom-left-radius: 5px;
+
+    & + .tabs-panel {
+      margin-left: 164px;
+
+      .flow-form__save-button {
+        border-bottom-left-radius: 0;
+      }
+    }
   }
 
   .tabs-panel {
     min-height: 300px;
-    margin-left: 164px;
     overflow: visible;
   }
 }
