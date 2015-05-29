@@ -364,6 +364,9 @@
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи"
   },
+  "create_flow": {
+    "header": "Создать поток"
+  },
   "tlog_alert": {
     "owner_private_tlog": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",
     "tlog_private": "Здесь отображены ваши скрытые записи. Эта страница доступна только вам.",
@@ -371,12 +374,17 @@
     "tlog_my_favorites": "Здесь отображаются ваши избранные записи."
   },
   "hero": {
+    "flows": "Потоки",
     "flow_entries_count": "__count__ пост",
     "flow_entries_count_plural_2": "__count__ поста",
-    "flow_entries_count_plural_5": "__count__ постов"
+    "flow_entries_count_plural_5": "__count__ постов",
+    "flows_count": "__count__ поток",
+    "flows_count_plural_2": "__count__ потока",
+    "flows_count_plural_5": "__count__ потоков"
   },
   "buttons": {
-    "hero_create_entry": "Написать в поток"
+    "hero_create_entry": "Написать в поток",
+    "hero_create_flow": "Создать поток"
   },
   "messages": {
     "entry_accept_success": "Запись принята",
