@@ -206,4 +206,13 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url, formData
 
+    load: (url, sinceFlowID, limit) ->
+      key = Constants.api.LOAD_FLOWS
+      data = {}
+      data.since_flow_id = sinceFlowID if sinceFlowID
+      data.limit = limit if limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
 module.exports = Api

@@ -9,7 +9,7 @@ let FlowActionCreators = {
     formData.append('title', title);
     formData.append('flowpic', picFile);
     staff.forEach((user, i) => {
-      formData.append(`staff_ids[${i}]`, user.id);
+      formData.append('staff_ids[]', user.id);
     })
 
     return Api.flow.create(formData)
@@ -17,6 +17,17 @@ let FlowActionCreators = {
         ErrorService.notifyErrorResponse('Создание нового потока', {
           method: 'FlowActionCreators.create({name, title, picFile, staff})',
           methodArguments: {name, title, picFile, staff},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  load(url, sinceFlowID, limit) {
+    return Api.flow.load(url, sinceFlowID, limit)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка потоков', {
+          method: 'FlowActionCreators.load(url, sinceFlowID, limit)',
+          methodArguments: {url, sinceFlowID, limit},
           response: xhr.responseJSON
         });
       });
