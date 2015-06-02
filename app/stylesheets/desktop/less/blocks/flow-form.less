@@ -64,6 +64,10 @@
   .editable-field__button {
     margin-top: 5px;
   }
+
+  .editable-field__value, .editable-field__control {
+    opacity: 1;
+  }
 }
 
 .flow-form__hero-text {
@@ -114,6 +118,16 @@
 // Chooser
 .flow-form__chooser {
   &:extend(.chooser);
+}
+
+.flow-form__chooser-results {
+  max-height: 280px;
+}
+
+.flow-form__chooser.state--disabled {
+  .flow-form__chooser-button {
+    cursor: default;
+  }
 }
 
 .flow-form__chooser.state--open {

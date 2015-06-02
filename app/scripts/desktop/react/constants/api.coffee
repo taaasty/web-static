@@ -18,5 +18,7 @@ ApiConstants = keyMirror
   DECLINE_ENTRY: null
   LOAD_ENTRIES: null
   LOAD_HTML_ENTRIES: null
+  PREDICT_USERS: null
+  CREATE_FLOW: null
 
 module.exports = ApiConstants

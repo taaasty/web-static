@@ -12,7 +12,6 @@ global.Undo              = require 'undo'
 global.introJs           = require 'introJs'
 require 'aviator'
 
-require 'swfobject'
 require 'es5-shim'
 require('jquery.mousewheel')(global.jQuery)
 require 'jquery.scrollto'
@@ -30,7 +29,6 @@ require 'jquery.ui.draggable'
 require 'jquery.ui.touch-punch'
 
 # jQuery plugins
-require 'jquery.autosize.input'
 require 'jquery.collage'
 require 'jquery.connection'
 require 'jquery.waypoints'

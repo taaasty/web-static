@@ -16,7 +16,9 @@ let ErrorService = {
   },
 
   notifyErrorResponse(name, metaData = {}) {
-    this.notifyError('[AJAX] ' + name, metaData);
+    if (metaData.response) {
+      this.notifyError('[AJAX] ' + name, metaData);
+    }
   },
 
   notifyError(name, metaData = {}) {

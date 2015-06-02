@@ -15,6 +15,7 @@ window.EditableField = React.createClass
 
   getDefaultProps: ->
     maxLength: 140
+    defaultValue: ''
 
   getInitialState: ->
     value: @props.defaultValue
