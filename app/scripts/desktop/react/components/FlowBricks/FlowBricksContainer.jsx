@@ -42,7 +42,7 @@ let FlowBricksContainer = React.createClass({
         if (this.isMounted()) {
           // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
           // нам полей, просто прекращаем дальнейшую загрузку
-          if (flowsInfo.has_more != null && flowsInfo.next_since_entry_id != null) {
+          if (flowsInfo.has_more != null && flowsInfo.next_since_flow_id != null) {
             this.setState({
               flows: this.state.flows.concat(flowsInfo.items),
               hasMore: flowsInfo.has_more,
