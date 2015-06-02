@@ -250,6 +250,8 @@ require './react/components/entry_comment_box/load_more'
 global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
 global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
 
+global.CreateFlow = require './react/components/CreateFlow/CreateFlow'
+
 require './react/components/hero/profile/profile'
 require './react/components/hero/profile/profile_avatar'
 require './react/components/hero/profile/profile_head'

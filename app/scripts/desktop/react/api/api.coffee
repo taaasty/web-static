@@ -189,4 +189,21 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url
 
+  user:
+    predict: (query, limit) ->
+      url = ApiRoutes.users_predict()
+      key = Constants.api.PREDICT_USERS
+      data = {query, limit}
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+  flow:
+    create: (formData) ->
+      url = ApiRoutes.flows()
+      key = Constants.api.CREATE_FLOW
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, formData
+
 module.exports = Api

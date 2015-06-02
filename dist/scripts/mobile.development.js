@@ -12434,6 +12434,9 @@ ApiRoutes = {
   },
   backgrounds: function() {
     return gon.api_host + '/v1/backgrounds';
+  },
+  flows: function() {
+    return gon.api_host + '/v1/flows';
   }
 };
 

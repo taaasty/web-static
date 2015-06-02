@@ -77,4 +77,6 @@ ApiRoutes =
 
   backgrounds: -> gon.api_host + '/v1/backgrounds'
 
+  flows: -> gon.api_host + '/v1/flows'
+
 module.exports = ApiRoutes

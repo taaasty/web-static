@@ -15,6 +15,7 @@ const ENTRY_TEXT_TYPE = 'text',
       ENTRY_LINK_TYPE = 'link',
       ENTRY_SONG_TYPE = 'song',
       ENTRY_CODE_TYPE = 'code',
+      ENTRY_CONVO_TYPE = 'convo',
       ENTRY_ANONYMOUS_TYPE = 'anonymous';
 
 let EntryBrickContent = React.createClass({
@@ -29,6 +30,7 @@ let EntryBrickContent = React.createClass({
     switch(this.props.entry.type) {
       case ENTRY_TEXT_TYPE:
       case ENTRY_ANONYMOUS_TYPE:
+      case ENTRY_CONVO_TYPE:
         return <EntryBrickTextType {...this.props} />;
       case ENTRY_IMAGE_TYPE:
         return <EntryBrickImageType {...this.props} />;
