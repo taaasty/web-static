@@ -9,7 +9,7 @@
 .bricks {
   position: relative;
   margin: 0 auto;
-  font-family: @font-family-sans-serif;
+  /*font-family: @font-family-sans-serif;*/
   overflow: visible !important;
 }
 
@@ -274,6 +274,10 @@
     &:last-child {
       border-bottom-right-radius: @brick-radius;
     }
+  }
+
+  .brick:hover & {
+    opacity: 1;
   }
 }
 
