@@ -1,3 +1,4 @@
+import PopupActionCreators from '../../actions/popup';
 import Hero from './Hero';
 import FollowButton from '../common/FollowButton';
 import HeroSettingsButton from './HeroSettingsButton';
@@ -6,50 +7,51 @@ import HeroDesignSettingsButton from './HeroDesignSettingsButton';
 
 let HeroFlow = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.shape({
+    flow: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
       name: React.PropTypes.string.isRequired,
       slug: React.PropTypes.string.isRequired,
       design: React.PropTypes.object.isRequired,
       is_privacy: React.PropTypes.bool.isRequired,
-      total_entries_count: React.PropTypes.number.isRequired
+      entries_count: React.PropTypes.number.isRequired
     }).isRequired,
-    relState: React.PropTypes.string.isRequired
+    relationship: React.PropTypes.object.isRequired
   },
 
   render() {
     return (
-      <Hero backgroundUrl={this.props.tlog.design.backgroundImageUrl}
-            title={'#' + this.props.tlog.name}
-            text={i18n.t('hero.flow_entries_count', {count: this.props.tlog.total_entries_count})}
+      <Hero backgroundUrl={this.props.flow.flowpic.original_url}
+            title={'#' + this.props.flow.name}
+            text={i18n.t('hero.flow_entries_count', {count: this.props.flow.entries_count})}
             actions={this.getActions()} />
     );
   },
 
   getActions() {
     return [
-      <a href={Routes.new_entry_url(this.props.tlog.slug)}
+      <a href={Routes.new_entry_url(this.props.flow.slug)}
          className="button button--small button--green"
          key="createEntryButton">
         {i18n.t('buttons.hero_create_entry')}
       </a>,
-      <FollowButton {...this.props} key="followButton" />,
-      <HeroDesignSettingsButton onClick={this.showDesignSettings} key="designSettingsButton" />,
-      <HeroSubscriptionsButton onClick={this.showSubscriptions} key="subscriptionsButton" />,
+      <FollowButton
+          relState={this.props.relationship.state}
+          tlog={this.props.flow}
+          key="followButton" />,
       <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
     ];
   },
 
   showDesignSettings() {
-    console.log('Показываем настройки дизайна потока', this.props.tlog);
+    console.log('Показываем настройки дизайна потока', this.props.flow);
   },
 
   showSettings() {
-    console.log('Показываем настройки потока', this.props.tlog);
+    PopupActionCreators.manageFlow(this.props.flow);
   },
 
   showSubscriptions() {
-    console.log('Показываем управление подписками потока', this.props.tlog);
+    console.log('Показываем управление подписками потока', this.props.flow);
   }
 });
 
