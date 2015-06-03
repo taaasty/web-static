@@ -45,7 +45,7 @@ let FlowBrick = React.createClass({
             <div className="brick__data-item">
               <Tooltip title={i18n.t('flow_brick.entries_count_tooltip')}>
                 <i className="icon icon--text-circle" />
-                <span>{this.props.flow.entries_count}</span>
+                <span>{this.props.flow.public_tlog_entries_count}</span>
               </Tooltip>
             </div>
           </div>

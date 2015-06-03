@@ -19651,7 +19651,7 @@ var FlowBrick = React.createClass({
               React.createElement(
                 'span',
                 null,
-                this.props.flow.entries_count
+                this.props.flow.public_tlog_entries_count
               )
             )
           )
@@ -21353,7 +21353,7 @@ var HeroFlow = React.createClass({
       slug: React.PropTypes.string.isRequired,
       design: React.PropTypes.object.isRequired,
       is_privacy: React.PropTypes.bool.isRequired,
-      entries_count: React.PropTypes.number.isRequired
+      public_tlog_entries_count: React.PropTypes.number.isRequired
     }).isRequired,
     relationship: React.PropTypes.object
   },
@@ -21361,7 +21361,7 @@ var HeroFlow = React.createClass({
   render: function render() {
     return React.createElement(_Hero2['default'], { backgroundUrl: this.props.flow.flowpic.original_url,
       title: '#' + this.props.flow.name,
-      text: i18n.t('hero.flow_entries_count', { count: this.props.flow.entries_count }),
+      text: i18n.t('hero.flow_entries_count', { count: this.props.flow.public_tlog_entries_count }),
       actions: this.getActions() });
   },
 
