@@ -57,7 +57,7 @@ module.exports = {
     },
     html: {
       static: {
-        src: src + '/html/desktop/*.html',
+        src: src + '/html/desktop/**/*.html',
         dest: build
       }
     },

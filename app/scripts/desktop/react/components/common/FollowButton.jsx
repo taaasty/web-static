@@ -15,7 +15,8 @@ const BUTTON_SHOW_STATE = 'show',
 let FollowButton = React.createClass({
   propTypes: {
     tlog: React.PropTypes.object.isRequired,
-    relState: React.PropTypes.string.isRequired
+    relState: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func
   },
 
   getInitialState() {
@@ -24,6 +25,12 @@ let FollowButton = React.createClass({
       relState: this.props.relState,
       hover: false
     };
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (prevState.relState != this.state.relState) {
+      if (this.props.onChange) this.props.onChange(this.state.relState);
+    }
   },
 
   componentWillUnmount() {

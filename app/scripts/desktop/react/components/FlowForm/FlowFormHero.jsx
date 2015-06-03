@@ -15,7 +15,7 @@ let FlowFormHero = React.createClass({
 
   getInitialState() {
     return {
-      backgroundImage: ThumborService.newImageUrl(this.props.flow.flowpic.url, {
+      backgroundImage: ThumborService.newImageUrl(this.props.flow.flowpic.original_url, {
         width: 586,
         height: 286
       })

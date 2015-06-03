@@ -47,7 +47,8 @@ let FlowFormChooser = React.createClass({
                  value={this.state.slug}
                  className="flow-form__chooser-input"
                  onChange={this.handleFieldChange}
-                 onKeyDown={this.handleFieldKeyDown} />
+                 onKeyDown={this.handleFieldKeyDown}
+                 onBlur={this.handleFieldBlur} />
           <FlowFormChooserResults
               results={this.state.results}
               selectedIndex={this.state.resultIndex}
@@ -104,6 +105,11 @@ let FlowFormChooser = React.createClass({
         this.moveHighlight(1);
         break;
     }
+  },
+
+  handleFieldBlur() {
+    console.log(this.state.slug);
+    if (this.state.slug === '') this.setState({open: false});
   },
 
   moveHighlight(delta) {

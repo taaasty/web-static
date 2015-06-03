@@ -365,12 +365,19 @@
     "entries_count_plural_2": "__count__ записи",
     "entries_count_plural_5": "__count__ записей"
   },
+  "flow_brick": {
+    "followers_count_tooltip": "Подписчики",
+    "entries_count_tooltip": "Записи"
+  },
   "entry": {
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи"
   },
   "create_flow": {
     "header": "Создать поток"
+  },
+  "manage_flow": {
+    "header": "Управление потоком"
   },
   "tlog_alert": {
     "owner_private_tlog": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",

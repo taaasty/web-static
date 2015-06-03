@@ -186,6 +186,8 @@ global.Feed = require './react/components/Feed/Feed'
 global.BricksContainer = require './react/components/Bricks/BricksContainer'
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
+global.FlowCreator = require './react/components/FlowPopups/FlowCreator'
+global.FlowManager = require './react/components/FlowPopups/FlowManager'
 
 require './react/components/search/search'
 require './react/components/search/button'
@@ -249,8 +251,6 @@ require './react/components/entry_comment_box/load_more'
 
 global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
 global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
-
-global.CreateFlow = require './react/components/CreateFlow/CreateFlow'
 
 require './react/components/hero/profile/profile'
 require './react/components/hero/profile/profile_avatar'

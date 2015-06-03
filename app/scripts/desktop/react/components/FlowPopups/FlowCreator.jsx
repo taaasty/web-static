@@ -3,19 +3,13 @@ import FlowFormChooser from '../FlowForm/FlowFormChooser';
 import FlowFormStaff from '../FlowForm/FlowFormStaff';
 import FlowActionCreators from '../../actions/Flow';
 
-let CreateFlow = React.createClass({
+let FlowCreator = React.createClass({
   propTypes: {
-    flow: React.PropTypes.object,
     staffLimit: React.PropTypes.number
   },
 
   getDefaultProps() {
     return {
-      flow: {
-        name: '',
-        title: '',
-        flowpic: {url: 'http://taaasty.com/images/hero-cover.jpg'}
-      },
       staffLimit: 3
     };
   },
@@ -30,14 +24,22 @@ let CreateFlow = React.createClass({
   },
 
   render() {
+    let emptyFlow = {
+      name: '',
+      title: '',
+      flowpic: {
+        original_url: 'http://taaasty.com/images/hero-cover.jpg'
+      }
+    };
+
     return (
       <div className="flow-form">
         <div className="flow-form__header">
           <FlowFormHero
-              flow={this.props.flow}
-              onNameChange={this.handleNameChange}
-              onTitleChange={this.handleTitleChange}
-              onPicFileChange={this.handlePicFileChange} />
+              flow={emptyFlow}
+              onNameChange={this.updateValue.bind(null, 'name')}
+              onTitleChange={this.updateValue.bind(null, 'title')}
+              onPicFileChange={this.updateValue.bind(null, 'picFile')} />
         </div>
         <div className="flow-form__body">
           <div className="flow-form__item">
@@ -61,16 +63,8 @@ let CreateFlow = React.createClass({
     );
   },
 
-  handleNameChange(name) {
-    this.setState({name});
-  },
-
-  handleTitleChange(title) {
-    this.setState({title});
-  },
-
-  handlePicFileChange(picFile) {
-    this.setState({picFile});
+  updateValue(name, value) {
+    this.setState({[name]: value});
   },
 
   handleStaffChoose(user) {
@@ -88,4 +82,4 @@ let CreateFlow = React.createClass({
   }
 });
 
-export default CreateFlow;
+export default FlowCreator;

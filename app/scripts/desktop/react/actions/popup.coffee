@@ -62,11 +62,21 @@ PopupActions =
 
   createFlow: ->
     ReactApp.popupController.openWithBackground({
-      Component: CreateFlow
+      Component: FlowCreator
       popupProps:
         title: i18n.t('create_flow.header')
         className: 'popup--dark popup--flows'
         clue: 'create-flow'
+    })
+
+  manageFlow: (flow) ->
+    ReactApp.popupController.openWithBackground({
+      Component: FlowManager
+      props: {flow}
+      popupProps:
+        title: i18n.t('manage_flow.header')
+        className: 'popup--dark popup--flows'
+        clue: 'manage-flow'
     })
 
   toggleFriends: ->
