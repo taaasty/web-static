@@ -108,7 +108,6 @@ let FlowFormChooser = React.createClass({
   },
 
   handleFieldBlur() {
-    console.log(this.state.slug);
     if (this.state.slug === '') this.setState({open: false});
   },
 

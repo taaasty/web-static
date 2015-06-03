@@ -1,3 +1,5 @@
+import StringHelpers from '../../../helpers/string';
+
 let Text = React.createClass({
   propTypes: {
     value: React.PropTypes.string.isRequired,
@@ -11,10 +13,12 @@ let Text = React.createClass({
   },
 
   render() {
+    let value = StringHelpers.cleanWordPaste(this.props.value);
+
     if (this.props.withHTML) {
-      return <span dangerouslySetInnerHTML={{__html: this.props.value}} />;
+      return <span dangerouslySetInnerHTML={{__html: value}} />;
     } else {
-      return <span>{this.props.value}</span>;
+      return <span>{value}</span>;
     }
   }
 });

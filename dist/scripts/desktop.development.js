@@ -17164,6 +17164,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _sharedHelpersString = require('../../../../../shared/helpers/string');
+
+var _sharedHelpersString2 = _interopRequireDefault(_sharedHelpersString);
+
 //TODO: Maybe will be better if we will get this data from EditorStore?
 var FIELD_MODES = ['inline', 'partial', 'rich'];
 var FIELD_MODE_OPTIONS = {
@@ -17246,7 +17250,7 @@ var EditorTextField = React.createClass({
   },
 
   handleInput: function handleInput(e) {
-    var value = e.target.innerHTML;
+    var value = _sharedHelpersString2['default'].cleanWordPaste(e.target.innerHTML);
     this.props.onChange(value);
   }
 });
@@ -17254,7 +17258,7 @@ var EditorTextField = React.createClass({
 exports['default'] = EditorTextField;
 module.exports = exports['default'];
 
-},{"classnames":456,"lodash":"lodash"}],94:[function(require,module,exports){
+},{"../../../../../shared/helpers/string":426,"classnames":456,"lodash":"lodash"}],94:[function(require,module,exports){
 var EditorActionCreators, EditorMediaBox, EditorMediaBoxProgress, EditorStore, EditorTextField, EditorTypeImage, EditorTypeImageLoaded, EditorTypeImageLoadingUrl, EditorTypeImageUrlInsert, EditorTypeImageWelcome, INSERT_STATE, LOADED_STATE, LOADING_URL_STATE, MAX_ATTACHMENTS, PropTypes, WELCOME_STATE, _, classnames;
 
 _ = require('lodash');
@@ -20057,7 +20061,6 @@ var FlowFormChooser = React.createClass({
   },
 
   handleFieldBlur: function handleFieldBlur() {
-    console.log(this.state.slug);
     if (this.state.slug === '') this.setState({ open: false });
   },
 
@@ -20212,7 +20215,7 @@ var FlowFormHero = React.createClass({
   propTypes: {
     flow: React.PropTypes.shape({
       name: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string,
       flowpic: React.PropTypes.object.isRequired
     }).isRequired,
     onNameChange: React.PropTypes.func.isRequired,
@@ -20772,7 +20775,7 @@ var FlowSettings = React.createClass({
       id: React.PropTypes.number.isRequired,
       name: React.PropTypes.string.isRequired,
       slug: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string,
       flowpic: React.PropTypes.object.isRequired
     }).isRequired,
     staff: React.PropTypes.array.isRequired,
@@ -20820,342 +20823,7 @@ var FlowSettings = React.createClass({
 });
 
 exports['default'] = FlowSettings;
-
-React.createElement(
-  'div',
-  { 'class': 'flow-form__item' },
-  React.createElement(
-    'div',
-    { 'class': 'flow-form__chooser state--open' },
-    React.createElement(
-      'div',
-      { 'class': 'flow-form__chooser-button' },
-      React.createElement(
-        'div',
-        { 'class': 'flow-form__chooser-button-text' },
-        'Укажите модераторов (не более трех)'
-      )
-    ),
-    React.createElement(
-      'div',
-      { 'class': 'flow-form__chooser-dropdown' },
-      React.createElement('input', { 'class': 'flow-form__chooser-input', type: 'text' }),
-      React.createElement(
-        'div',
-        { 'class': 'flow-form__chooser-results' },
-        React.createElement(
-          'div',
-          { 'class': 'flow-form__chooser-result state--active' },
-          React.createElement(
-            'div',
-            { 'class': 'flow-form__user' },
-            React.createElement(
-              'div',
-              { 'class': 'flow-form__user-avatar' },
-              React.createElement(
-                'span',
-                { 'class': 'avatar', style: 'background-image:url(\'http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/5c/85/2_original.jpg\');' },
-                React.createElement('img', { 'class': 'avatar__img', src: 'http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/5c/85/2_original.jpg', alt: 'genue' })
-              )
-            ),
-            React.createElement(
-              'div',
-              { 'class': 'flow-form__user-name' },
-              'genue'
-            )
-          )
-        ),
-        React.createElement(
-          'div',
-          { 'class': 'flow-form__chooser-result' },
-          React.createElement(
-            'div',
-            { 'class': 'flow-form__user' },
-            React.createElement(
-              'div',
-              { 'class': 'flow-form__user-avatar' },
-              React.createElement(
-                'span',
-                { 'class': 'avatar', style: 'background-image:url(\'http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/6d/ec/232992_original.jpeg\');' },
-                React.createElement('img', { 'class': 'avatar__img', src: 'http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/6d/ec/232992_original.jpeg', alt: 'sergeylaptev' })
-              )
-            ),
-            React.createElement(
-              'div',
-              { 'class': 'flow-form__user-name' },
-              'sergeylaptev'
-            )
-          )
-        )
-      )
-    )
-  ),
-  React.createElement(
-    'div',
-    { 'class': 'flow-form__persons' },
-    React.createElement(
-      'h5',
-      { 'class': 'flow-form__subtitle' },
-      'Модераторы'
-    ),
-    React.createElement(
-      'ul',
-      { 'class': 'persons' },
-      React.createElement(
-        'li',
-        { 'class': 'person' },
-        React.createElement(
-          'div',
-          { 'class': 'person__in' },
-          React.createElement(
-            'div',
-            { 'class': 'person__avatar' },
-            React.createElement(
-              'a',
-              { href: 'http://taaasty.com/~tallassa' },
-              React.createElement(
-                'span',
-                { 'class': 'avatar', style: 'background-image:url(\'http://thumbor0.tasty0.ru/unsafe/48x48/filters:no_upscale()/userpic/e1/12/162395_original.jpg\');' },
-                React.createElement('img', { 'class': 'avatar__img', src: 'http://thumbor0.tasty0.ru/unsafe/48x48/filters:no_upscale()/userpic/e1/12/162395_original.jpg', alt: 'tallassa' })
-              )
-            )
-          ),
-          React.createElement(
-            'div',
-            { 'class': 'person__desc' },
-            React.createElement(
-              'a',
-              { href: 'http://taaasty.com/~tallassa' },
-              React.createElement(
-                'p',
-                { 'class': 'person__name' },
-                'tallassa'
-              )
-            ),
-            React.createElement(
-              'div',
-              { 'class': 'person__count' },
-              '699 записей'
-            )
-          ),
-          React.createElement(
-            'div',
-            { 'class': 'person__actions' },
-            React.createElement(
-              'div',
-              { 'class': 'person__dropdown-container' },
-              React.createElement(
-                'button',
-                { 'class': 'button button--small button--outline button--icon' },
-                React.createElement('i', { 'class': 'icon icon--cogwheel' })
-              ),
-              React.createElement(
-                'div',
-                { 'class': 'person__dropdown state--open' },
-                React.createElement(
-                  'a',
-                  { 'class': 'person__dropdown-item state--active', href: '#' },
-                  'Модератор'
-                ),
-                React.createElement(
-                  'a',
-                  { 'class': 'person__dropdown-item', href: '#' },
-                  'Редактор'
-                )
-              )
-            ),
-            React.createElement(
-              'button',
-              { 'class': 'button button--small button--red' },
-              'Удалить'
-            )
-          )
-        )
-      )
-    )
-  )
-);
-
 module.exports = exports['default'];
-// let FlowCreator = React.createClass({
-//   propTypes: {
-//     staffLimit: React.PropTypes.number
-//   },
-
-//   getDefaultProps() {
-//     return {
-//       staffLimit: 3
-//     };
-//   },
-
-//   getInitialState() {
-//     return {
-//       name: '',
-//       title: '',
-//       picFile: null,
-//       staff: []
-//     };
-//   },
-
-//   render() {
-//     let emptyFlow = {
-//       name: '',
-//       title: '',
-//       flowpic: {
-//         url: 'http://taaasty.com/images/hero-cover.jpg'
-//       }
-//     };
-
-//     return (
-//       <div className="flow-form">
-//         <div className="flow-form__header">
-//           <FlowFormHero
-//               flow={emptyFlow}
-//               onNameChange={this.updateValue.bind(null, 'name')}
-//               onTitleChange={this.updateValue.bind(null, 'title')}
-//               onPicFileChange={this.updateValue.bind(null, 'picFile')} />
-//         </div>
-//         <div className="flow-form__body">
-//           <div className="flow-form__item">
-//             <div className="flow-form__right">
-//               <button className="button button--yellow button--small"
-//                       onTouchTap={this.handleButtonClick}>
-//                 Создать поток
-//               </button>
-//             </div>
-//             <div className="flow-form__left">
-//               <FlowFormChooser
-//                   limitReached={this.props.staffLimit == this.state.staff.length}
-//                   onChoose={this.handleStaffChoose} />
-//             </div>
-//             <FlowFormStaff
-//                 staff={this.state.staff}
-//                 onDelete={this.handleStaffDelete} />
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   },
-
-//   updateValue(name, value) {
-//     this.setState({[name]: value});
-//   },
-
-//   handleStaffChoose(user) {
-//     let newStaff = this.state.staff.concat(user);
-//     this.setState({staff: newStaff});
-//   },
-
-//   handleStaffDelete(staff) {
-//     let newStaff = this.state.staff.filter((user) => staff.id !== user.id);
-//     this.setState({staff: newStaff});
-//   },
-
-//   handleButtonClick() {
-//     FlowActionCreators.create(this.state)
-//   }
-// });
-
-// export default FlowCreator;
-
-// <div class="flow-form">
-//                   <div class="flow-form__header">
-//                     <div class="flow-form__hero" style="background-image: url(images/hero-cover.jpg);">
-//                       <span class="form-upload form-upload--icon">
-//                         <input class="form-upload__input" type="file" />
-//                         <span class="form-upload__text">
-//                           <i class="icon icon--image-circle"></i>
-//                         </span>
-//                       </span>
-//                       <div class="flow-form__hero-box">
-//                         <div class="flow-form__hero-title">
-//                           <div data-react-class="EditableField" data-react-props='{"defaultValue": "", "placeholder": "#Название потока", "onEditEnd": "javascript:void(0)"}'></div>
-//                         </div>
-//                         <div class="flow-form__hero-text">
-//                           <div data-react-class="EditableField" data-react-props='{"defaultValue": "", "placeholder": "Краткое описание, не более 150 символов", "onEditEnd": "javascript:void(0)"}'></div>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div class="flow-form__body">
-//                     <div class="flow-form__item">
-//                       <label class="form-field-label">
-//                         <div class="form-field form-field--default form-field--binary">
-//                           <div class="form-field__text">http://taaasty.com/<span class="tilde">~</span></div>
-//                           <div class="form-field__box">
-//                             <input class="form-field__input" type="text" placeholder="адрес потока" />
-//                           </div>
-//                           <div class="form-field__bg"></div>
-//                         </div>
-//                       </label>
-//                     </div>
-//                     <div class="flow-form__item">
-//                       <div class="flow-form__chooser state--open">
-//                         <div class="flow-form__chooser-button">
-//                           <div class="flow-form__chooser-button-text">Укажите модераторов (не более трех)</div>
-//                         </div>
-//                         <div class="flow-form__chooser-dropdown">
-//                           <input class="flow-form__chooser-input" type="text" />
-//                           <div class="flow-form__chooser-results">
-//                             <div class="flow-form__chooser-result state--active">
-//                               <div class="flow-form__user">
-//                                 <div class="flow-form__user-avatar">
-//                                   <span class="avatar" style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/5c/85/2_original.jpg');">
-//                                     <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/5c/85/2_original.jpg" alt="genue" />
-//                                   </span>
-//                                 </div><div class="flow-form__user-name">genue</div>
-//                               </div>
-//                             </div>
-//                             <div class="flow-form__chooser-result">
-//                               <div class="flow-form__user">
-//                                 <div class="flow-form__user-avatar">
-//                                   <span class="avatar" style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/6d/ec/232992_original.jpeg');">
-//                                     <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/35x35/filters:no_upscale()/userpic/6d/ec/232992_original.jpeg" alt="sergeylaptev" />
-//                                   </span>
-//                                 </div><div class="flow-form__user-name">sergeylaptev</div>
-//                               </div>
-//                             </div>
-//                           </div>
-//                         </div>
-//                       </div>
-//                       <div class="flow-form__persons">
-//                         <h5 class="flow-form__subtitle">Модераторы</h5>
-//                         <ul class="persons">
-//                           <li class="person">
-//                             <div class="person__in">
-//                               <div class="person__avatar">
-//                                 <a href="http://taaasty.com/~tallassa">
-//                                   <span class="avatar" style="background-image:url('http://thumbor0.tasty0.ru/unsafe/48x48/filters:no_upscale()/userpic/e1/12/162395_original.jpg');">
-//                                     <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/48x48/filters:no_upscale()/userpic/e1/12/162395_original.jpg" alt="tallassa" />
-//                                   </span>
-//                                 </a>
-//                               </div>
-//                               <div class="person__desc">
-//                                 <a href="http://taaasty.com/~tallassa">
-//                                   <p class="person__name">tallassa</p>
-//                                 </a>
-//                                 <div class="person__count">699 записей</div>
-//                               </div>
-//                               <div class="person__actions">
-//                                 <div class="person__dropdown-container">
-//                                   <button class="button button--small button--outline button--icon"><i class="icon icon--cogwheel"></i></button>
-//                                   <div class="person__dropdown state--open">
-//                                     <a class="person__dropdown-item state--active" href="#">Модератор</a>
-//                                     <a class="person__dropdown-item" href="#">Редактор</a>
-//                                   </div>
-//                                 </div>
-//                                 <button class="button button--small button--red">Удалить</button>
-//                               </div>
-//                             </div>
-//                           </li>
-//                         </ul>
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div class="flow-form__footer">
-//                     <button class="flow-form__save-button">Сохранить</button>
-//                   </div>
-//                 </div>
 
 },{"../../actions/Flow":12,"../FlowForm/FlowFormAddress":126,"../FlowForm/FlowFormChooser":127,"../FlowForm/FlowFormHero":130,"../FlowForm/FlowFormStaff":131}],136:[function(require,module,exports){
 'use strict';
@@ -23719,7 +23387,7 @@ var EditableField = React.createClass({
 
     return React.createElement(
       'div',
-      { className: fieldClasses },
+      { className: fieldClasses, onClick: this.handleClick },
       React.createElement(
         'div',
         { className: 'editable-field__control-wrap' },
@@ -23745,17 +23413,12 @@ var EditableField = React.createClass({
           'span',
           { className: 'editable-field__value' },
           this.state.value
-        ),
-        React.createElement(
-          'span',
-          { className: 'editable-field__button', onClick: this.handleButtonClick },
-          React.createElement('i', { className: 'icon icon--pencil' })
         )
       )
     );
   },
 
-  handleButtonClick: function handleButtonClick() {
+  handleClick: function handleClick() {
     this.setState({ focused: true });
   },
 
@@ -39859,6 +39522,7 @@ module.exports = BrowserHelpers;
 
 
 },{}],426:[function(require,module,exports){
+(function (global){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -39877,12 +39541,33 @@ var StringHelpers = {
     html = html.replace('<br>', '||br||');
     html = this.strip(html);
     return html.replace('||br||', '');
+  },
+
+  cleanWordPaste: function cleanWordPaste(text) {
+    var tmp = document.createElement('div');
+
+    tmp.innerHTML = text;
+    var newString = tmp.textContent || tmp.innerText || '';
+    // this next piece converts line breaks into break tags
+    // and removes the seemingly endless crap code
+    newString = newString.replace(/\n\n/g, '<br />').replace(/.*<!--.*-->/g, '');
+    // this next piece removes any break tags (up to 10) at beginning
+    for (var i = 0; i < 10; i++) {
+      if (newString.substr(0, 6) === '<br />') {
+        newString = newString.replace('<br />', '');
+      }
+    }
+
+    return newString;
   }
 };
+
+global.StringHelpers = StringHelpers;
 
 exports['default'] = StringHelpers;
 module.exports = exports['default'];
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],427:[function(require,module,exports){
 'use strict';
 
@@ -40110,13 +39795,20 @@ exports['default'] = Money;
 module.exports = exports['default'];
 
 },{"numeral":"numeral"}],430:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _helpersString = require('../../../helpers/string');
+
+var _helpersString2 = _interopRequireDefault(_helpersString);
+
 var Text = React.createClass({
-  displayName: "Text",
+  displayName: 'Text',
 
   propTypes: {
     value: React.PropTypes.string.isRequired,
@@ -40130,22 +39822,24 @@ var Text = React.createClass({
   },
 
   render: function render() {
+    var value = _helpersString2['default'].cleanWordPaste(this.props.value);
+
     if (this.props.withHTML) {
-      return React.createElement("span", { dangerouslySetInnerHTML: { __html: this.props.value } });
+      return React.createElement('span', { dangerouslySetInnerHTML: { __html: value } });
     } else {
       return React.createElement(
-        "span",
+        'span',
         null,
-        this.props.value
+        value
       );
     }
   }
 });
 
-exports["default"] = Text;
-module.exports = exports["default"];
+exports['default'] = Text;
+module.exports = exports['default'];
 
-},{}],431:[function(require,module,exports){
+},{"../../../helpers/string":426}],431:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;
 
 CollageMixin = require('./mixins/collage');

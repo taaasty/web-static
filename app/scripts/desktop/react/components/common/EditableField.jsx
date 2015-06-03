@@ -46,7 +46,7 @@ let EditableField = React.createClass({
     });
 
     return (
-      <div className={fieldClasses}>
+      <div className={fieldClasses} onClick={this.handleClick}>
         <div className="editable-field__control-wrap">
           <Textarea
               ref="field"
@@ -65,15 +65,12 @@ let EditableField = React.createClass({
           <span className="editable-field__value">
             {this.state.value}
           </span>
-          <span className="editable-field__button" onClick={this.handleButtonClick}>
-            <i className="icon icon--pencil" />
-          </span>
        </div>
      </div>
     );
   },
 
-  handleButtonClick() {
+  handleClick() {
     this.setState({focused: true});
   },
 

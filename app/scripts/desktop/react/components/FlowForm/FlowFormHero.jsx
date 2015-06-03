@@ -5,7 +5,7 @@ let FlowFormHero = React.createClass({
   propTypes: {
     flow: React.PropTypes.shape({
       name: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string,
       flowpic: React.PropTypes.object.isRequired
     }).isRequired,
     onNameChange: React.PropTypes.func.isRequired,

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import classnames from 'classnames';
+import StringHelpers from '../../../../../shared/helpers/string';
 
 //TODO: Maybe will be better if we will get this data from EditorStore?
 const FIELD_MODES = ['inline', 'partial', 'rich'];
@@ -81,7 +82,7 @@ let EditorTextField = React.createClass({
   },
 
   handleInput(e) {
-    let value = e.target.innerHTML;
+    let value = StringHelpers.cleanWordPaste(e.target.innerHTML);
     this.props.onChange(value);
   }
 })
