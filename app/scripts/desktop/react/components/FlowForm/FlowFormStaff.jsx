@@ -1,4 +1,4 @@
-import Avatar from '../../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 
 let FlowFormStaff = React.createClass({
   propTypes: {

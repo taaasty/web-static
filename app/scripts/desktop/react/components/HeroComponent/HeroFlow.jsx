@@ -15,7 +15,7 @@ let HeroFlow = React.createClass({
       is_privacy: React.PropTypes.bool.isRequired,
       entries_count: React.PropTypes.number.isRequired
     }).isRequired,
-    relationship: React.PropTypes.object.isRequired
+    relationship: React.PropTypes.object
   },
 
   render() {
@@ -34,12 +34,20 @@ let HeroFlow = React.createClass({
          key="createEntryButton">
         {i18n.t('buttons.hero_create_entry')}
       </a>,
-      <FollowButton
-          relState={this.props.relationship.state}
-          tlog={this.props.flow}
-          key="followButton" />,
+      this.renderFollowButton(),
       <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
     ];
+  },
+
+  renderFollowButton() {
+    if (this.props.relationship) {
+      return (
+        <FollowButton
+            tlog={this.props.flow}
+            relState={this.props.relationship.state}
+            key="followButton" />
+      );
+    }
   },
 
   showDesignSettings() {

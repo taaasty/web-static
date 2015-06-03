@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import Avatar from '../../../../../shared/react/components/common/Avatar';
-import Scroller from '../../common/scroller/scroller';
+import Avatar from '../../../../shared/react/components/common/Avatar';
+import Scroller from '../common/scroller/scroller';
 
 let FlowFormChooserResults = React.createClass({
   propTypes: {

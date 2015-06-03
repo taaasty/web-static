@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import UserActionCreators from '../../../actions/User';
+import UserActionCreators from '../../actions/User';
 import FlowFormChooserResults from './FlowFormChooserResults';
 import FlowFormChooserButton from './FlowFormChooserButton';
 
