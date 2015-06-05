@@ -4,7 +4,6 @@ let Tab = React.createClass({
   propTypes: {
     count: React.PropTypes.number,
     active: React.PropTypes.bool,
-    count: React.PropTypes.number,
     onClick: React.PropTypes.func.isRequired
   },
 

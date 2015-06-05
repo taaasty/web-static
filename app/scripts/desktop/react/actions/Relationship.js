@@ -34,6 +34,17 @@ let RelationshipActionCreators = {
           response: xhr.responseJSON
         });
       });
+  },
+
+  load(url, sincePosition, limit) {
+    return Api.relationship.load(url, sincePosition, limit)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка списка отношений', {
+          method: 'RelationshipActionCreators.load(url, sincePosition, limit)',
+          methodArguments: {url, sincePosition, limit},
+          response: xhr.responseJSON
+        });
+      });
   }
 };
 

@@ -1,5 +1,6 @@
 import TabbedArea from '../Tabs/TabbedArea';
 import TabPane from '../Tabs/TabPane';
+import FlowManagerRequests from './FlowManagerRequests';
 import FlowSettingsContainer from '../FlowSettings/FlowSettingsContainer';
 
 let FlowManager = React.createClass({
@@ -8,12 +9,14 @@ let FlowManager = React.createClass({
   },
 
   render() {
+    // <TabPane tab="Настройки">
+    //       <FlowSettingsContainer flow={this.props.flow} />
+    //     </TabPane>
     return (
       <TabbedArea>
-        <TabPane tab="Настройки">
-          <FlowSettingsContainer flow={this.props.flow} />
+        <TabPane tab="Заявки" count={6}>
+          <FlowManagerRequests />
         </TabPane>
-        <TabPane tab="Заявки" count={6}>Компонент заявок</TabPane>
         <TabPane tab="Подписчики" count={23487}>Подписчики</TabPane>
         <TabPane tab="Заблокированные" count={12}>Заблокированные</TabPane>
       </TabbedArea>

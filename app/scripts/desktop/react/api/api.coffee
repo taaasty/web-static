@@ -5,6 +5,14 @@ CurrentUserStore = require '../stores/current_user'
 # TIMEOUT = 50000
 _pendingRequests = {}
 
+prepareData = (sourceData) ->
+  data = {}
+
+  Object.keys(sourceData).forEach (key, idx) ->
+    data[key] = sourceData[key] if sourceData[key]?
+
+  return data
+
 abortPendingRequests = (key) ->
   if _pendingRequests[key]
     _pendingRequests[key].abort()
@@ -153,6 +161,15 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
+
+    load: (url, sincePosition, limit) ->
+      key = Constants.api.LOAD_RELATIONSHIPS
+      data = prepareData({
+        limit: limit
+        since_position: sincePosition
+      })
+
+      _pendingRequests[key] = getRequest url, data
 
   entry:
     vote: (entryID) ->

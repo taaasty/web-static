@@ -19,6 +19,7 @@ let HeroFlow = React.createClass({
   },
 
   render() {
+    console.log(this.props.flow);
     return (
       <Hero backgroundUrl={this.props.flow.flowpic.original_url}
             title={'#' + this.props.flow.name}

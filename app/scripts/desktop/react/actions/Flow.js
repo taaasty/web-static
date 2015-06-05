@@ -7,7 +7,11 @@ let FlowActionCreators = {
     let formData = new FormData();
     formData.append('name', name);
     formData.append('title', title);
-    formData.append('flowpic', picFile);
+
+    if (picFile) {
+      formData.append('flowpic', picFile);
+    }
+
     staff.forEach((user, i) => {
       formData.append('staff_ids[]', user.id);
     })
@@ -16,10 +20,11 @@ let FlowActionCreators = {
       .then((flow) => {
         TastyLockingAlertController.show({
           message: "Поток создан! Переходим на страницу потока..",
-          action: () => window.location.reload() // FIXME: redirect to tlog_url
+          action: (flow) => window.location = flow.tlog_url
         });
       })
       .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
         ErrorService.notifyErrorResponse('Создание нового потока', {
           method: 'FlowActionCreators.create({name, title, picFile, staff})',
           methodArguments: {name, title, picFile, staff},
