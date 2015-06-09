@@ -17449,7 +17449,7 @@ var EditorTextField = React.createClass({
   },
 
   handleInput: function handleInput(e) {
-    this.props.onChange(value);
+    this.props.onChange(e.target.innerHTML);
   }
 });
 

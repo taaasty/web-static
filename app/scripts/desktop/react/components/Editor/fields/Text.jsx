@@ -82,7 +82,7 @@ let EditorTextField = React.createClass({
   },
 
   handleInput(e) {
-    this.props.onChange(value);
+    this.props.onChange(e.target.innerHTML);
   }
 })
 
