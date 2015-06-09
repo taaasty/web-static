@@ -40759,8 +40759,8 @@ function buildParams(prefix, obj, traditional, add) {
 exports['default'] = {
   settle: function settle(promises) {
     var d = $.Deferred(),
-        counter = 0;
-    results = Array(promises.length);
+        counter = 0,
+        results = Array(promises.length);
 
     _.forEach(promises, function (promise, i) {
       promise.then(function () {
@@ -40769,7 +40769,7 @@ exports['default'] = {
         results[i] = { promise: promise, state: 'rejected' };
       }).always(function () {
         counter++;
-        progress = (promises.length - (promises.length - counter)) / promises.length;
+        var progress = (promises.length - (promises.length - counter)) / promises.length;
         d.notify(progress, promises.length);
         if (counter === promises.length) {
           d.resolve(results);

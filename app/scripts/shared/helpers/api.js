@@ -27,7 +27,7 @@ function buildParams(prefix, obj, traditional, add) {
 export default {
   settle(promises) {
     let d = $.Deferred(),
-        counter = 0
+        counter = 0,
         results = Array(promises.length);
 
     _.forEach(promises, (promise,i) => {
@@ -40,7 +40,7 @@ export default {
         })
         .always(() => {
           counter++;
-          progress = (promises.length - (promises.length - counter)) / promises.length;
+          let progress = (promises.length - (promises.length - counter)) / promises.length;
           d.notify(progress, promises.length);
           if (counter === promises.length) {
             d.resolve(results);
