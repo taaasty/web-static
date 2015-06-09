@@ -11,7 +11,7 @@ let RelationshipsList = React.createClass({
       let relationshipList = this.props.relationships.map((item) => {
         return (
           <RelationshipsListItem relationship={item} key={item.id}>
-            {this.props.actions.map(this.renderAction.bind(null, item))}
+            {React.Children.map(this.props.children, this.renderAction.bind(this, item))}
           </RelationshipsListItem>
         );
       });
@@ -35,8 +35,12 @@ let RelationshipsList = React.createClass({
   },
 
   renderAction(relationship, action) {
+    let subject = relationship.reader || relationship.user;
+
     return React.cloneElement(action, {
-      relationship,
+      relState: relationship.state,
+      subjectID: subject.id,
+      subjectPrivacy: subject.is_privacy,
       key: relationship.id
     });
   }

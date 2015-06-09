@@ -14,8 +14,10 @@ const BUTTON_SHOW_STATE = 'show',
 
 let FollowButton = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object.isRequired,
-    relState: React.PropTypes.string.isRequired,
+    objectID: React.PropTypes.number.isRequired,
+    subjectID: React.PropTypes.number,
+    subjectPrivacy: React.PropTypes.bool,
+    relState: React.PropTypes.string,
     onChange: React.PropTypes.func
   },
 
@@ -66,7 +68,7 @@ let FollowButton = React.createClass({
             case REL_REQUESTED_STATE: return i18n.t('follow_button_cancel');
             case REL_IGNORED_STATE: return i18n.t('follow_button_unblock');
             case REL_GUESSED_STATE:
-            case REL_NONE_STATE: return i18n.t(this.props.tlog.is_privacy ? 'follow_button_send_request' : 'follow_button_subscribe');
+            case REL_NONE_STATE: return i18n.t(this.props.subjectPrivacy ? 'follow_button_send_request' : 'follow_button_subscribe');
             default: return i18n.t('follow_button_unknown_state');
           }
         } else {
@@ -75,7 +77,7 @@ let FollowButton = React.createClass({
             case REL_REQUESTED_STATE: return i18n.t('follow_button_requested');
             case REL_IGNORED_STATE: return i18n.t('follow_button_ignored');
             case REL_GUESSED_STATE:
-            case REL_NONE_STATE: return i18n.t(this.props.tlog.is_privacy ? 'follow_button_send_request' : 'follow_button_subscribe');
+            case REL_NONE_STATE: return i18n.t(this.props.subjectPrivacy ? 'follow_button_send_request' : 'follow_button_subscribe');
             default: return i18n.t('follow_button_unknown_state');
           }
         }
@@ -85,7 +87,8 @@ let FollowButton = React.createClass({
   unfollow() {
     this.setState({currentState: BUTTON_PROCESS_STATE});
 
-    RelationshipActionCreators.unfollow(this.props.tlog.id)
+    let { objectID, subjectID } = this.props;
+    RelationshipActionCreators.unfollow(objectID, subjectID)
       .then((relationship) => {
         this.setState({
           currentState: BUTTON_SHOW_STATE,
@@ -103,7 +106,8 @@ let FollowButton = React.createClass({
   follow() {
     this.setState({currentState: BUTTON_PROCESS_STATE});
 
-    RelationshipActionCreators.follow(this.props.tlog.id)
+    let { objectID, subjectID } = this.props;
+    RelationshipActionCreators.follow(objectID, subjectID)
       .then((relationship) => {
         this.setState({
           currentState: BUTTON_SHOW_STATE,
@@ -121,7 +125,8 @@ let FollowButton = React.createClass({
   cancel() {
     this.setState({currentState: BUTTON_PROCESS_STATE});
 
-    RelationshipActionCreators.cancel(this.props.tlog.id)
+    let { objectID, subjectID } = this.props;
+    RelationshipActionCreators.cancel(objectID, subjectID)
       .then((relationship) => {
         this.setState({
           currentState: BUTTON_SHOW_STATE,

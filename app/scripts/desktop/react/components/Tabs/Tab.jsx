@@ -22,7 +22,7 @@ let Tab = React.createClass({
   },
 
   renderCount() {
-    if (this.props.count) {
+    if (this.props.count != null) {
       return (
         <span className="tabs-nav__count">
           {this.props.count}

@@ -3,11 +3,9 @@ import FlowFormUpload from './FlowFormUpload';
 
 let FlowFormHero = React.createClass({
   propTypes: {
-    flow: React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string,
-      flowpic: React.PropTypes.object.isRequired
-    }).isRequired,
+    name: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string,
+    flowpic: React.PropTypes.object.isRequired,
     onNameChange: React.PropTypes.func.isRequired,
     onTitleChange: React.PropTypes.func.isRequired,
     onPicFileChange: React.PropTypes.func.isRequired
@@ -15,7 +13,7 @@ let FlowFormHero = React.createClass({
 
   getInitialState() {
     return {
-      backgroundImage: ThumborService.newImageUrl(this.props.flow.flowpic.original_url, {
+      backgroundImage: ThumborService.newImageUrl(this.props.flowpic.original_url, {
         width: 586,
         height: 286
       })
@@ -33,14 +31,14 @@ let FlowFormHero = React.createClass({
         <div className="flow-form__hero-box">
           <div className="flow-form__hero-title">
             <EditableField
-                defaultValue={this.props.flow.name}
+                value={this.props.name}
                 placeholder="#Название потока"
                 returnFor="blur"
                 onChange={this.props.onNameChange} />
           </div>
           <div className="flow-form__hero-text">
             <EditableField
-                defaultValue={this.props.flow.title}
+                value={this.props.title}
                 placeholder="Краткое описание, не более 140 символов"
                 returnFor="blur"
                 onChange={this.props.onTitleChange} />

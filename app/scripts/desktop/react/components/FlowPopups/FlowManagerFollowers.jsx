@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import RelationshipsContainer from '../Relationships/RelationshipsContainer';
-import RequestButton from '../common/RequestButton';
+import UnfollowButton from '../common/UnfollowButton';
 
-export default class FlowManagerRequests {
+export default class FlowManagerFollowers {
   static propTypes = {
     flow: PropTypes.object.isRequired,
     onCountUpdate: PropTypes.func
@@ -12,9 +12,9 @@ export default class FlowManagerRequests {
 
     return (
       <RelationshipsContainer
-          url={ApiRoutes.tlogRelationshipsBy(objectID, 'requested')}
+          url={ApiRoutes.tlogRelationshipsBy(objectID, 'friend')}
           onCountUpdate={this.props.onCountUpdate}>
-        <RequestButton objectID={objectID} />
+        <UnfollowButton objectID={objectID} />
       </RelationshipsContainer>
     );
   }

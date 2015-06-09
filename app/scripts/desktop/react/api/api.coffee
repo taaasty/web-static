@@ -43,6 +43,7 @@ request = (_method, url, data = {}) ->
   if data instanceof FormData
     contentType = false
     processData = false
+    data.append('_method', _method)
   else
     contentType = 'application/x-www-form-urlencoded'
     processData = true
@@ -141,23 +142,51 @@ Api =
       _pendingRequests[key] = putRequest url
 
   relationship:
-    unfollow: (tlogID) ->
-      url = ApiRoutes.change_my_relationship_url tlogID, 'unfollow'
+    unfollow: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'unfollow'
       key = Constants.api.UNFOLLOW_TLOG
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
-    follow: (tlogID) ->
-      url = ApiRoutes.change_my_relationship_url tlogID, 'follow'
+    unfollowFromYourself: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsByTlog objectID, subjectID
+      key = Constants.api.UNFOLLOW_TLOG_FROM_YOURSELF
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest url
+
+    follow: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'follow'
       key = Constants.api.FOLLOW_TLOG
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
-    cancel: (tlogID) ->
-      url = ApiRoutes.change_my_relationship_url tlogID, 'cancel'
+    cancel: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'cancel'
       key = Constants.api.CANCEL_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    ignore: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'ignore'
+      key = Constants.api.IGNORE_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    approve: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsByApprove objectID, subjectID
+      key = Constants.api.APPROVE_REQUEST_TLOG
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    decline: (objectID, subjectID) ->
+      url = ApiRoutes.tlogRelationshipsByDisapprove objectID, subjectID
+      key = Constants.api.DISAPPROVE_REQUEST_TLOG
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
@@ -222,6 +251,13 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = postRequest url, formData
+
+    update: (flowID, formData) ->
+      url = ApiRoutes.flow(flowID)
+      key = Constants.api.UPDATE_FLOW
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, formData
 
     load: (url, sinceFlowID, limit) ->
       key = Constants.api.LOAD_FLOWS

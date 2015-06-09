@@ -13,54 +13,74 @@ let HeroFlow = React.createClass({
       slug: React.PropTypes.string.isRequired,
       design: React.PropTypes.object.isRequired,
       is_privacy: React.PropTypes.bool.isRequired,
-      public_tlog_entries_count: React.PropTypes.number.isRequired
+      public_tlog_entries_count: React.PropTypes.number.isRequired,
+      can_edit: React.PropTypes.bool,
+      can_write: React.PropTypes.bool
     }).isRequired,
     relationship: React.PropTypes.object
   },
 
+  getInitialState() {
+    return {
+      flow: this.props.flow
+    }
+  },
+
   render() {
-    console.log(this.props.flow);
     return (
-      <Hero backgroundUrl={this.props.flow.flowpic.original_url}
-            title={'#' + this.props.flow.name}
-            text={i18n.t('hero.flow_entries_count', {count: this.props.flow.public_tlog_entries_count})}
+      <Hero backgroundUrl={this.state.flow.flowpic.original_url}
+            title={'#' + this.state.flow.name}
+            text={i18n.t('hero.flow_entries_count', {count: this.state.flow.public_tlog_entries_count})}
             actions={this.getActions()} />
     );
   },
 
   getActions() {
     return [
-      <a href={Routes.new_entry_url(this.props.flow.slug)}
-         className="button button--small button--green"
-         key="createEntryButton">
-        {i18n.t('buttons.hero_create_entry')}
-      </a>,
+      this.renderWriteButton(),
       this.renderFollowButton(),
-      <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
+      this.renderSettingsButton()
     ];
+  },
+
+  renderWriteButton() {
+    if (this.state.flow.can_write) {
+      return (
+        <a href={Routes.new_entry_url(this.state.flow.slug)}
+           className="button button--small button--green"
+           key="createEntryButton">
+          {i18n.t('buttons.hero_create_entry')}
+        </a>
+      );
+    }
   },
 
   renderFollowButton() {
     if (this.props.relationship) {
       return (
         <FollowButton
-            tlog={this.props.flow}
+            subjectID={this.state.flow.id}
+            subjectPrivacy={this.state.flow.is_privacy}
             relState={this.props.relationship.state}
             key="followButton" />
       );
     }
   },
 
-  showDesignSettings() {
-    console.log('Показываем настройки дизайна потока', this.props.flow);
+  renderSettingsButton() {
+    if (this.state.flow.can_edit) {
+      return (
+        <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
+      );
+    }
   },
 
   showSettings() {
-    PopupActionCreators.manageFlow(this.props.flow);
+    PopupActionCreators.manageFlow(this.state.flow, this.updateFlow);
   },
 
-  showSubscriptions() {
-    console.log('Показываем управление подписками потока', this.props.flow);
+  updateFlow(flow) {
+    this.setState({flow});
   }
 });
 

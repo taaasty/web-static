@@ -30,15 +30,15 @@ let Relationships = React.createClass({
     } else if (this.props.state === ERROR_STATE) {
       message = 'Ошибка загрузки';
     } else {
-      return (
-        [
-          <RelationshipsList
-              relationships={this.props.relationships}
-              actions={this.props.actions}
-              key="relList" />,
-          this.renderSpinner()
-        ]
-      );
+      return ([
+        <RelationshipsList
+            relationships={this.props.relationships}
+            actions={this.props.actions}
+            key="relList">
+          {this.props.children}
+        </RelationshipsList>,
+        this.renderSpinner()
+      ]);
     }
 
     return (

@@ -85,7 +85,9 @@ gulp.task('[D][S] Scripts', function(cb) {
 
   clientBundler = watchify(clientBundler
     .transform('coffee-reactify')
-    .transform('babelify')
+    .transform('babelify', {
+      stage: 0
+    })
   );
   clientBundler.on('update', rebundle);
   rebundle();
@@ -130,7 +132,10 @@ gulp.task('[D][D] Scripts', function() {
   bundleLogger.start(configDevelopment.outputName);
 
   return appBundler
-    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
+    .transform('babelify', {
+      ignore: /(node_modules|bower_components|shims)/,
+      stage: 0
+    })
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
@@ -156,7 +161,10 @@ gulp.task('[D][P] Scripts', function() {
   bundleLogger.start(configProduction.outputName);
 
   return appBundler
-    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
+    .transform('babelify', {
+      ignore: /(node_modules|bower_components|shims)/,
+      stage: 0
+    })
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()

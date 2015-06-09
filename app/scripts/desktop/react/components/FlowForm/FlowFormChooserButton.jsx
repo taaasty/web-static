@@ -8,7 +8,7 @@ let FlowFormChooserButton = React.createClass({
     let text;
 
     if (this.props.limitReached) {
-      text = 'Выбрано максимально число модераторов';
+      text = 'Выбрано максимальное число модераторов';
     } else {
       text = 'Укажите модераторов (не более трех)';
     }

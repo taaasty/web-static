@@ -36,6 +36,25 @@ ApiRoutes =
   relationships_by_tlog_approve_url:    (tlogId) -> gon.api_host + '/v1/relationships/by/tlog/' + tlogId + '/approve'
   relationships_by_tlog_disapprove_url: (tlogId) -> gon.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove'
 
+  # Tlog relationships
+  tlogRelationshipsBy: (objectID, state) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/' + state
+
+  tlogRelationshipsTo: (objectID, state) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/to/' + state
+
+  tlogRelationshipsByApprove: (objectID, subjectID) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID + '/approve'
+
+  tlogRelationshipsByDisapprove: (objectID, subjectID) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID + '/disapprove'
+
+  tlogRelationshipsToTlog: (objectID, subjectID, state) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/to/tlog/' + subjectID + '/' + state
+
+  tlogRelationshipsByTlog: (objectID, subjectID) ->
+    gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID
+
   tlog_followers:                       (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/followers'
   tlog_followings:                      (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/followings'
   tlog_tags:                            (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/tags'
@@ -78,5 +97,6 @@ ApiRoutes =
   backgrounds: -> gon.api_host + '/v1/backgrounds'
 
   flows: -> gon.api_host + '/v1/flows'
+  flow: (flowID) -> gon.api_host + '/v1/flows/' + flowID
 
 module.exports = ApiRoutes
