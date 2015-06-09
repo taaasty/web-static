@@ -14,7 +14,8 @@ let FlowFormChooser = React.createClass({
       slug: '',
       results: [],
       resultIndex: 0,
-      open: false
+      open: false,
+      loading: false
     };
   },
 
@@ -49,13 +50,27 @@ let FlowFormChooser = React.createClass({
                  onChange={this.handleFieldChange}
                  onKeyDown={this.handleFieldKeyDown}
                  onBlur={this.handleFieldBlur} />
-          <FlowFormChooserResults
-              results={this.state.results}
-              selectedIndex={this.state.resultIndex}
-              onResultClick={this.chooseResult} />
+          {this.renderResults()}
         </div>
       </div>
     );
+  },
+
+  renderResults() {
+    if (this.state.loading) {
+      return (
+        <div className="flow-form__chooser-loading">
+          <Spinner size={24} />
+        </div>
+      );
+    } else {
+      return (
+        <FlowFormChooserResults
+            results={this.state.results}
+            selectedIndex={this.state.resultIndex}
+            onResultClick={this.chooseResult} />
+      );
+    }
   },
 
   chooseResult(result) {
@@ -76,9 +91,10 @@ let FlowFormChooser = React.createClass({
     let { value } = e.target;
 
     if (value) {
-      this.setState({slug: value, resultIndex: 0});
+      this.setState({slug: value, resultIndex: 0, loading: true});
       UserActionCreators.predict(value, 30)
-        .then((results) => this.setState({results}));
+        .then((results) => this.setState({results}))
+        .always(() => this.setState({loading: false}));
     } else {
       this.setState({slug: value, results: [], resultIndex: 0});
     }

@@ -69,10 +69,10 @@ PopupActions =
         clue: 'create-flow'
     })
 
-  manageFlow: (flow) ->
+  manageFlow: (flow, onUpdate) ->
     ReactApp.popupController.openWithBackground({
       Component: FlowManager
-      props: {flow}
+      props: {flow, onUpdate}
       popupProps:
         title: i18n.t('manage_flow.header')
         className: 'popup--dark popup--flows'

@@ -11948,6 +11948,24 @@ ApiRoutes = {
   relationships_by_tlog_disapprove_url: function(tlogId) {
     return gon.api_host + '/v1/relationships/by/tlog/' + tlogId + '/disapprove';
   },
+  tlogRelationshipsBy: function(objectID, state) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/' + state;
+  },
+  tlogRelationshipsTo: function(objectID, state) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/to/' + state;
+  },
+  tlogRelationshipsByApprove: function(objectID, subjectID) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID + '/approve';
+  },
+  tlogRelationshipsByDisapprove: function(objectID, subjectID) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID + '/disapprove';
+  },
+  tlogRelationshipsToTlog: function(objectID, subjectID, state) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/to/tlog/' + subjectID + '/' + state;
+  },
+  tlogRelationshipsByTlog: function(objectID, subjectID) {
+    return gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID;
+  },
   tlog_followers: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/followers';
   },
@@ -12028,6 +12046,9 @@ ApiRoutes = {
   },
   flows: function() {
     return gon.api_host + '/v1/flows';
+  },
+  flow: function(flowID) {
+    return gon.api_host + '/v1/flows/' + flowID;
   }
 };
 

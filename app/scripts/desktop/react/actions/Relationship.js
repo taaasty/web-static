@@ -3,34 +3,89 @@ import ErrorService from '../../../shared/react/services/Error';
 // TODO: RelationshipStore or smth similar
 
 let RelationshipActionCreators = {
-  unfollow(tlogID) {
-    return Api.relationship.unfollow(tlogID)
+  unfollow(objectID, subjectID) {
+    return Api.relationship.unfollow(objectID, subjectID)
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Отписка от тлога', {
-          method: 'RelationshipActionCreators.unfollow(tlogID)',
-          methodArguments: {tlogID},
+          method: 'RelationshipActionCreators.unfollow(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
           response: xhr.responseJSON
         });
       });
   },
 
-  follow(tlogID) {
-    return Api.relationship.follow(tlogID)
+  unfollowFromYourself(objectID, subjectID) {
+    return Api.relationship.unfollowFromYourself(objectID, subjectID)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Отписка тлога от себя', {
+          method: 'RelationshipActionCreators.unfollowFromYourself(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  follow(objectID, subjectID) {
+    return Api.relationship.follow(objectID, subjectID)
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Подписка на тлог', {
-          method: 'RelationshipActionCreators.follow(tlogID)',
-          methodArguments: {tlogID},
+          method: 'RelationshipActionCreators.follow(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
           response: xhr.responseJSON
         });
       });
   },
 
-  cancel(tlogID) {
-    return Api.relationship.cancel(tlogID)
+  cancel(objectID, subjectID) {
+    return Api.relationship.cancel(objectID, subjectID)
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Отмена заявки на подписку на тлог', {
-          method: 'RelationshipActionCreators.cancel(tlogID)',
-          methodArguments: {tlogID},
+          method: 'RelationshipActionCreators.cancel(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  ignore(objectID, subjectID) {
+    return Api.relationship.ignore(objectID, subjectID)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Игнорирование тлога', {
+          method: 'RelationshipActionCreators.ignore(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  approve(objectID, subjectID) {
+    return Api.relationship.approve(objectID, subjectID)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Подтверждение запроса на дружбу', {
+          method: 'RelationshipActionCreators.approve(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  decline(objectID, subjectID) {
+    return Api.relationship.decline(objectID, subjectID)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Отказ запроса на дружбу', {
+          method: 'RelationshipActionCreators.decline(objectID, subjectID)',
+          methodArguments: {objectID, subjectID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  load(url, sincePosition, limit) {
+    return Api.relationship.load(url, sincePosition, limit)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка списка отношений', {
+          method: 'RelationshipActionCreators.load(url, sincePosition, limit)',
+          methodArguments: {url, sincePosition, limit},
           response: xhr.responseJSON
         });
       });

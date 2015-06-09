@@ -11,8 +11,12 @@ ApiConstants = keyMirror
   LOAD_NOTIFICATIONS: null
   READ_NOTIFICATION: null
   UNFOLLOW_TLOG: null
+  UNFOLLOW_TLOG_FROM_YOURSELF: null
   FOLLOW_TLOG: null
   CANCEL_TLOG: null
+  IGNORE_TLOG: null
+  APPROVE_REQUEST_TLOG: null
+  DISAPPROVE_REQUEST_TLOG: null
   VOTE_ENTRY: null
   ACCEPT_ENTRY: null
   DECLINE_ENTRY: null
@@ -20,6 +24,7 @@ ApiConstants = keyMirror
   LOAD_HTML_ENTRIES: null
   PREDICT_USERS: null
   CREATE_FLOW: null
+  UPDATE_FLOW: null
   LOAD_FLOWS: null
 
 module.exports = ApiConstants

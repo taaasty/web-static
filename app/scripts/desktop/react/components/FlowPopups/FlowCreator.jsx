@@ -1,85 +1,73 @@
+import React, {PropTypes, Component} from 'react';
 import FlowFormHero from '../FlowForm/FlowFormHero';
 import FlowFormChooser from '../FlowForm/FlowFormChooser';
-import FlowFormStaff from '../FlowForm/FlowFormStaff';
+import FlowFormStaffs from '../FlowForm/FlowFormStaffs';
 import FlowActionCreators from '../../actions/Flow';
 
-let FlowCreator = React.createClass({
-  propTypes: {
-    staffLimit: React.PropTypes.number
-  },
-
-  getDefaultProps() {
-    return {
-      staffLimit: 3
-    };
-  },
-
-  getInitialState() {
-    return {
-      name: '',
-      title: '',
-      picFile: null,
-      staff: []
-    };
-  },
-
+export default class FlowCreator extends Component {
+  static propTypes = {
+    staffsLimit: PropTypes.number
+  }
+  static defaultProps = {
+    staffsLimit: 3
+  }
+  state = {
+    name: '',
+    title: '',
+    picFile: null,
+    staffs: []
+  }
   render() {
-    let emptyFlow = {
-      name: '',
-      title: '',
-      flowpic: {
-        original_url: 'http://taaasty.com/images/hero-cover.jpg'
-      }
+    let flowpic = {
+      original_url: 'http://taaasty.com/images/hero-cover.jpg'
     };
 
     return (
       <div className="flow-form">
         <div className="flow-form__header">
           <FlowFormHero
-              flow={emptyFlow}
-              onNameChange={this.updateValue.bind(null, 'name')}
-              onTitleChange={this.updateValue.bind(null, 'title')}
-              onPicFileChange={this.updateValue.bind(null, 'picFile')} />
+              name={this.state.name}
+              title={this.state.title}
+              flowpic={flowpic}
+              onNameChange={this.updateValue.bind(this, 'name')}
+              onTitleChange={this.updateValue.bind(this, 'title')}
+              onPicFileChange={this.updateValue.bind(this, 'picFile')} />
         </div>
         <div className="flow-form__body">
           <div className="flow-form__item">
             <div className="flow-form__right">
               <button className="button button--yellow button--small"
-                      onTouchTap={this.handleButtonClick}>
+                      onTouchTap={this.createFlow.bind(this)}>
                 Создать поток
               </button>
             </div>
             <div className="flow-form__left">
               <FlowFormChooser
-                  limitReached={this.props.staffLimit == this.state.staff.length}
-                  onChoose={this.handleStaffChoose} />
+                  limitReached={this.props.staffsLimit === this.state.staffs.length}
+                  onChoose={this.handleUserChoose.bind(this)} />
             </div>
-            <FlowFormStaff
-                staff={this.state.staff}
-                onDelete={this.handleStaffDelete} />
+            <FlowFormStaffs
+                staffs={this.state.staffs}
+                canChangeRole={false}
+                onDelete={this.handleStaffDelete.bind(this)} />
           </div>
         </div>
       </div>
     );
-  },
-
+  }
   updateValue(name, value) {
     this.setState({[name]: value});
-  },
-
-  handleStaffChoose(user) {
-    let newStaff = this.state.staff.concat(user);
-    this.setState({staff: newStaff});
-  },
-
+  }
+  handleUserChoose(user) {
+    let staff = {user, role: 'moderator'};
+    let newStaff = this.state.staffs.concat(staff);
+    this.setState({staffs: newStaff});
+  }
   handleStaffDelete(staff) {
-    let newStaff = this.state.staff.filter((user) => staff.id !== user.id);
-    this.setState({staff: newStaff});
-  },
-
-  handleButtonClick() {
+    let newStaff = this.state.staffs.filter((user) => staff.id !== user.id);
+    this.setState({staffs: newStaff});
+  }
+  createFlow() {
     FlowActionCreators.create(this.state)
   }
-});
-
-export default FlowCreator;
+}

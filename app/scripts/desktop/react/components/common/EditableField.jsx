@@ -4,6 +4,7 @@ import Textarea from 'react-textarea-autosize';
 let EditableField = React.createClass({
   propTypes: {
     maxLength: React.PropTypes.number,
+    value: React.PropTypes.string,
     defaultValue: React.PropTypes.string,
     returnFor: React.PropTypes.oneOf(['blur', 'nextLine']),
     onChange: React.PropTypes.func
@@ -12,14 +13,13 @@ let EditableField = React.createClass({
   getDefaultProps() {
     return {
       maxLength: 140,
-      defaultValue: '',
       returnFor: 'nextLine'
     };
   },
 
   getInitialState() {
     return {
-      value: this.props.defaultValue,
+      value: this.props.value || this.props.defaultValue || '',
       focused: false
     };
   },
@@ -51,7 +51,7 @@ let EditableField = React.createClass({
           <Textarea
               ref="field"
               maxLength={this.props.maxLength}
-              defaultValue={this.props.defaultValue}
+              value={this.state.value}
               placeholder={this.props.placeholder}
               className="editable-field__control"
               onBlur={this.handleBlur}

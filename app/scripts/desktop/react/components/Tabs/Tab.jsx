@@ -4,7 +4,6 @@ let Tab = React.createClass({
   propTypes: {
     count: React.PropTypes.number,
     active: React.PropTypes.bool,
-    count: React.PropTypes.number,
     onClick: React.PropTypes.func.isRequired
   },
 
@@ -23,7 +22,7 @@ let Tab = React.createClass({
   },
 
   renderCount() {
-    if (this.props.count) {
+    if (this.props.count != null) {
       return (
         <span className="tabs-nav__count">
           {this.props.count}

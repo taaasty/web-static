@@ -1,10 +1,6 @@
 import Tab from './Tab';
 
 let TabbedArea = React.createClass({
-  propTypes: {
-
-  },
-
   getInitialState() {
     return {
       activeKey: 0
@@ -12,6 +8,12 @@ let TabbedArea = React.createClass({
   },
 
   render() {
+    let validChildren = [];
+
+    React.Children.forEach(this.props.children, (child) => {
+      if (React.isValidElement(child)) validChildren.push(child);
+    });
+
     function renderTabIfSet(child, index) {
       return child.props.tab != null ? this.renderTab(child, index) : null;
     };
@@ -19,7 +21,7 @@ let TabbedArea = React.createClass({
     let nav = (
       <nav className="tabs-nav tabs-nav--white">
         <ul className="tabs-nav__list">
-          {React.Children.map(this.props.children, renderTabIfSet.bind(this))}
+          {validChildren.map(renderTabIfSet.bind(this))}
         </ul>
       </nav>
     );
@@ -28,7 +30,7 @@ let TabbedArea = React.createClass({
       <div>
         {nav}
         <div className="tabs-content" ref="panes">
-          {React.Children.map(this.props.children, this.renderPane)}
+          {validChildren.map(this.renderPane)}
         </div>
       </div>
     );
@@ -42,7 +44,8 @@ let TabbedArea = React.createClass({
            active={this.state.activeKey === index}
            count={count}
            disabled={disabled}
-           onClick={this.handleTabClick.bind(null, index)}>
+           onClick={this.handleTabClick.bind(null, index)}
+           key={index}>
         {tab}
       </Tab>
     );

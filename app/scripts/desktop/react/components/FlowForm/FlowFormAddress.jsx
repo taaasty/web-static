@@ -11,7 +11,7 @@ let FlowFormAddress = React.createClass({
           <div className="form-field__text">http://taaasty.com/<span className="tilde">~</span></div>
           <div className="form-field__box">
             <input type="text"
-                   defaultValue={this.props.value}
+                   value={this.props.value}
                    placeholder="адрес потока"
                    className="form-field__input"
                    onChange={this.handleChange} />
