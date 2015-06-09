@@ -59,6 +59,7 @@ let HeroFlow = React.createClass({
     if (this.props.relationship) {
       return (
         <FollowButton
+            objectID={CurrentUserStore.getUserID()}
             subjectID={this.state.flow.id}
             subjectPrivacy={this.state.flow.is_privacy}
             relState={this.props.relationship.state}

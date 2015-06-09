@@ -4,7 +4,8 @@ import Hero from './Hero';
 let HeroFlows = React.createClass({
   propTypes: {
     flowsCount: React.PropTypes.number.isRequired,
-    backgroundUrl: React.PropTypes.string.isRequired
+    backgroundUrl: React.PropTypes.string.isRequired,
+    can_create: React.PropTypes.bool
   },
 
   render() {
@@ -17,11 +18,22 @@ let HeroFlows = React.createClass({
   },
 
   getActions() {
-    return (
-      <button className="button button--small button--green" onClick={this.createFlow}>
-        {i18n.t('buttons.hero_create_flow')}
-      </button>
-    );
+    return [
+      this.renderCreateButton()
+    ];
+  },
+
+  renderCreateButton() {
+    if (this.props.can_create) {
+      return (
+        <button
+            className="button button--small button--green"
+            onClick={this.createFlow}
+            key="createButton">
+          {i18n.t('buttons.hero_create_flow')}
+        </button>
+      );
+    }
   },
 
   createFlow() {

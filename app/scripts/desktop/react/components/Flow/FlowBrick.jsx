@@ -58,7 +58,9 @@ let FlowBrick = React.createClass({
     if (this.state.relState) {
       return (
         <FollowButton
-            tlog={this.props.flow}
+            objectID={CurrentUserStore.getUserID()}
+            subjectID={this.props.flow.id}
+            subjectPrivacy={this.props.flow.is_privacy}
             relState={this.state.relState}
             onChange={this.handleRelStateChange} />
       );

@@ -11317,6 +11317,39 @@ var FlowActionCreators = {
     });
   },
 
+  addStaff: function addStaff(flowID, userID) {
+    return _apiApi2['default'].flow.addStaff(flowID, userID).fail(function (xhr) {
+      _servicesNotice2['default'].errorResponse(xhr);
+      _sharedReactServicesError2['default'].notifyErrorResponse('Добавление модератора потока', {
+        method: 'FlowActionCreators.addStaff(flowID, userID)',
+        methodArguments: { flowID: flowID, userID: userID },
+        response: xhr.responseJSON
+      });
+    });
+  },
+
+  removeStaff: function removeStaff(flowID, userID) {
+    return _apiApi2['default'].flow.removeStaff(flowID, userID).fail(function (xhr) {
+      _servicesNotice2['default'].errorResponse(xhr);
+      _sharedReactServicesError2['default'].notifyErrorResponse('Удаление модератора потока', {
+        method: 'FlowActionCreators.removeStaff(flowID, userID)',
+        methodArguments: { flowID: flowID, userID: userID },
+        response: xhr.responseJSON
+      });
+    });
+  },
+
+  changeStaffRole: function changeStaffRole(flowID, userID, role) {
+    return _apiApi2['default'].flow.changeStaffRole(flowID, userID, role).fail(function (xhr) {
+      _servicesNotice2['default'].errorResponse(xhr);
+      _sharedReactServicesError2['default'].notifyErrorResponse('Изменение роли модератора', {
+        method: 'FlowActionCreators.removeStaff(flowID, userID, role)',
+        methodArguments: { flowID: flowID, userID: userID, role: role },
+        response: xhr.responseJSON
+      });
+    });
+  },
+
   load: function load(url, sinceFlowID, limit) {
     return _apiApi2['default'].flow.load(url, sinceFlowID, limit).fail(function (xhr) {
       _sharedReactServicesError2['default'].notifyErrorResponse('Загрузка потоков', {
@@ -12656,6 +12689,37 @@ Api = {
       key = Constants.api.UPDATE_FLOW;
       abortPendingRequests(key);
       return _pendingRequests[key] = putRequest(url, formData);
+    },
+    addStaff: function(flowID, userID) {
+      var data, key, url;
+      url = ApiRoutes.flowStaffs(flowID);
+      key = Constants.api.ADD_STAFF_FLOW;
+      data = {
+        user_id: userID
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = postRequest(url, data);
+    },
+    removeStaff: function(flowID, userID) {
+      var data, key, url;
+      url = ApiRoutes.flowStaffs(flowID);
+      key = Constants.api.REMOVE_STAFF_FLOW;
+      data = {
+        user_id: userID
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = deleteRequest(url, data);
+    },
+    changeStaffRole: function(flowID, userID, role) {
+      var data, key, url;
+      url = ApiRoutes.flowStaffs(flowID);
+      key = Constants.api.CHANGE_STAFF_ROLE_FLOW;
+      data = {
+        user_id: userID,
+        role: role
+      };
+      abortPendingRequests(key);
+      return _pendingRequests[key] = putRequest(url, data);
     },
     load: function(url, sinceFlowID, limit) {
       var data, key;
@@ -19802,7 +19866,9 @@ var FlowBrick = React.createClass({
   renderFollowButton: function renderFollowButton() {
     if (this.state.relState) {
       return React.createElement(_commonFollowButton2['default'], {
-        tlog: this.props.flow,
+        objectID: CurrentUserStore.getUserID(),
+        subjectID: this.props.flow.id,
+        subjectPrivacy: this.props.flow.is_privacy,
         relState: this.state.relState,
         onChange: this.handleRelStateChange });
     }
@@ -20249,7 +20315,7 @@ var FlowFormChooserButton = React.createClass({
     if (this.props.limitReached) {
       text = 'Выбрано максимальное число модераторов';
     } else {
-      text = 'Укажите модераторов (не более трех)';
+      text = 'Укажите модераторов (не более пяти)';
     }
 
     return React.createElement(
@@ -20757,7 +20823,7 @@ var FlowCreator = (function (_Component) {
   }, {
     key: 'defaultProps',
     value: {
-      staffsLimit: 3
+      staffsLimit: 5
     },
     enumerable: true
   }]);
@@ -21179,25 +21245,36 @@ var FlowManagerSettings = (function (_Component) {
   }, {
     key: 'handleUserChoose',
     value: function handleUserChoose(user) {
-      var staff = { user: user, role: 'moderator' };
-      var newStaff = this.state.staffs.concat(staff);
-      this.setState({ staffs: newStaff });
+      var _this2 = this;
+
+      _actionsFlow2['default'].addStaff(this.props.flow.id, user.id).then(function (staff) {
+        var newStaff = _this2.state.staffs.concat(staff);
+        _this2.setState({ staffs: newStaff });
+      });
     }
   }, {
     key: 'handleStaffDelete',
     value: function handleStaffDelete(staff) {
-      var newStaff = this.state.staffs.filter(function (item) {
-        return item.user.id !== staff.user.id;
+      var _this3 = this;
+
+      _actionsFlow2['default'].removeStaff(this.props.flow.id, staff.user.id).then(function (staff) {
+        var newStaff = _this3.state.staffs.filter(function (item) {
+          return item.user.id !== staff.user.id;
+        });
+        _this3.setState({ staffs: newStaff });
       });
-      this.setState({ staffs: newStaff });
     }
   }, {
     key: 'handleStaffRoleChange',
     value: function handleStaffRoleChange(staff, role) {
-      this.state.staffs.forEach(function (item) {
-        if (item.user.id === staff.user.id) item.role = role;
+      var _this4 = this;
+
+      _actionsFlow2['default'].changeStaffRole(this.props.flow.id, staff.user.id, role).then(function (staff) {
+        _this4.state.staffs.forEach(function (item) {
+          if (item.user.id === staff.user.id) item.role = role;
+        });
+        _this4.forceUpdate();
       });
-      this.forceUpdate();
     }
   }], [{
     key: 'propTypes',
@@ -21217,7 +21294,7 @@ var FlowManagerSettings = (function (_Component) {
   }, {
     key: 'defaultProps',
     value: {
-      staffsLimit: 3
+      staffsLimit: 5
     },
     enumerable: true
   }]);
@@ -21406,6 +21483,7 @@ var HeroFlow = React.createClass({
   renderFollowButton: function renderFollowButton() {
     if (this.props.relationship) {
       return React.createElement(_commonFollowButton2['default'], {
+        objectID: CurrentUserStore.getUserID(),
         subjectID: this.state.flow.id,
         subjectPrivacy: this.state.flow.is_privacy,
         relState: this.props.relationship.state,
@@ -21453,7 +21531,8 @@ var HeroFlows = React.createClass({
 
   propTypes: {
     flowsCount: React.PropTypes.number.isRequired,
-    backgroundUrl: React.PropTypes.string.isRequired
+    backgroundUrl: React.PropTypes.string.isRequired,
+    can_create: React.PropTypes.bool
   },
 
   render: function render() {
@@ -21464,11 +21543,20 @@ var HeroFlows = React.createClass({
   },
 
   getActions: function getActions() {
-    return React.createElement(
-      'button',
-      { className: 'button button--small button--green', onClick: this.createFlow },
-      i18n.t('buttons.hero_create_flow')
-    );
+    return [this.renderCreateButton()];
+  },
+
+  renderCreateButton: function renderCreateButton() {
+    if (this.props.can_create) {
+      return React.createElement(
+        'button',
+        {
+          className: 'button button--small button--green',
+          onClick: this.createFlow,
+          key: 'createButton' },
+        i18n.t('buttons.hero_create_flow')
+      );
+    }
   },
 
   createFlow: function createFlow() {
@@ -34027,7 +34115,9 @@ ApiConstants = keyMirror({
   PREDICT_USERS: null,
   CREATE_FLOW: null,
   UPDATE_FLOW: null,
-  LOAD_FLOWS: null
+  LOAD_FLOWS: null,
+  ADD_STAFF_FLOW: null,
+  REMOVE_STAFF_FLOW: null
 });
 
 module.exports = ApiConstants;
@@ -42298,6 +42388,9 @@ ApiRoutes = {
   },
   flow: function(flowID) {
     return gon.api_host + '/v1/flows/' + flowID;
+  },
+  flowStaffs: function(flowID) {
+    return gon.api_host + '/v1/flows/' + flowID + '/staffs';
   }
 };
 

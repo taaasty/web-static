@@ -19,7 +19,7 @@ export default class FlowManagerSettings extends Component {
     onUpdate: PropTypes.func.isRequired
   }
   static defaultProps = {
-    staffsLimit: 3
+    staffsLimit: 5
   }
   state = {
     name: this.props.flow.name,
@@ -98,18 +98,26 @@ export default class FlowManagerSettings extends Component {
     );
   }
   handleUserChoose(user) {
-    let staff = {user, role: 'moderator'};
-    let newStaff = this.state.staffs.concat(staff);
-    this.setState({staffs: newStaff});
+    FlowActionCreators.addStaff(this.props.flow.id, user.id)
+      .then((staff) => {
+        let newStaff = this.state.staffs.concat(staff);
+        this.setState({staffs: newStaff});
+      });
   }
   handleStaffDelete(staff) {
-    let newStaff = this.state.staffs.filter((item) => item.user.id !== staff.user.id);
-    this.setState({staffs: newStaff});
+    FlowActionCreators.removeStaff(this.props.flow.id, staff.user.id)
+      .then((staff) => {
+        let newStaff = this.state.staffs.filter((item) => item.user.id !== staff.user.id);
+        this.setState({staffs: newStaff});
+      });
   }
   handleStaffRoleChange(staff, role) {
-    this.state.staffs.forEach((item) => {
-      if (item.user.id === staff.user.id) item.role = role
-    });
-    this.forceUpdate();
+    FlowActionCreators.changeStaffRole(this.props.flow.id, staff.user.id, role)
+      .then((staff) => {
+        this.state.staffs.forEach((item) => {
+          if (item.user.id === staff.user.id) item.role = role
+        });
+        this.forceUpdate();
+      });
   }
 }

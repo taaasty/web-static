@@ -9,7 +9,7 @@ export default class FlowCreator extends Component {
     staffsLimit: PropTypes.number
   }
   static defaultProps = {
-    staffsLimit: 3
+    staffsLimit: 5
   }
   state = {
     name: '',

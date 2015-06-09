@@ -259,6 +259,30 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, formData
 
+    addStaff: (flowID, userID) ->
+      url = ApiRoutes.flowStaffs(flowID)
+      key = Constants.api.ADD_STAFF_FLOW
+      data = {user_id: userID}
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    removeStaff: (flowID, userID) ->
+      url = ApiRoutes.flowStaffs(flowID)
+      key = Constants.api.REMOVE_STAFF_FLOW
+      data = {user_id: userID}
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest url, data
+
+    changeStaffRole: (flowID, userID, role) ->
+      url = ApiRoutes.flowStaffs(flowID)
+      key = Constants.api.CHANGE_STAFF_ROLE_FLOW
+      data = {user_id: userID, role}
+
+      abortPendingRequests key
+      _pendingRequests[key] = putRequest url, data      
+
     load: (url, sinceFlowID, limit) ->
       key = Constants.api.LOAD_FLOWS
       data = {}

@@ -50,6 +50,42 @@ let FlowActionCreators = {
       });
   },
 
+  addStaff(flowID, userID) {
+    return Api.flow.addStaff(flowID, userID)
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Добавление модератора потока', {
+          method: 'FlowActionCreators.addStaff(flowID, userID)',
+          methodArguments: {flowID, userID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  removeStaff(flowID, userID) {
+    return Api.flow.removeStaff(flowID, userID)
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Удаление модератора потока', {
+          method: 'FlowActionCreators.removeStaff(flowID, userID)',
+          methodArguments: {flowID, userID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
+  changeStaffRole(flowID, userID, role) {
+    return Api.flow.changeStaffRole(flowID, userID, role)
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Изменение роли модератора', {
+          method: 'FlowActionCreators.removeStaff(flowID, userID, role)',
+          methodArguments: {flowID, userID, role},
+          response: xhr.responseJSON
+        });
+      });
+  },
+
   load(url, sinceFlowID, limit) {
     return Api.flow.load(url, sinceFlowID, limit)
       .fail((xhr) => {

@@ -12049,6 +12049,9 @@ ApiRoutes = {
   },
   flow: function(flowID) {
     return gon.api_host + '/v1/flows/' + flowID;
+  },
+  flowStaffs: function(flowID) {
+    return gon.api_host + '/v1/flows/' + flowID + '/staffs';
   }
 };
 

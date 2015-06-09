@@ -26,5 +26,7 @@ ApiConstants = keyMirror
   CREATE_FLOW: null
   UPDATE_FLOW: null
   LOAD_FLOWS: null
+  ADD_STAFF_FLOW: null
+  REMOVE_STAFF_FLOW: null
 
 module.exports = ApiConstants
