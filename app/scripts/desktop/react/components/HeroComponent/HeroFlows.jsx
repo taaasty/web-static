@@ -5,7 +5,7 @@ let HeroFlows = React.createClass({
   propTypes: {
     flowsCount: React.PropTypes.number.isRequired,
     backgroundUrl: React.PropTypes.string.isRequired,
-    can_create: React.PropTypes.bool
+    canCreate: React.PropTypes.bool
   },
 
   render() {
@@ -24,7 +24,7 @@ let HeroFlows = React.createClass({
   },
 
   renderCreateButton() {
-    if (this.props.can_create) {
+    if (this.props.canCreate) {
       return (
         <button
             className="button button--small button--green"

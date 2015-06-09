@@ -16,7 +16,8 @@ export default class FlowManagerSettings extends Component {
       flowpic: PropTypes.object.isRequired
     }).isRequired,
     staffsLimit: PropTypes.number,
-    onUpdate: PropTypes.func.isRequired
+    onUpdate: PropTypes.func.isRequired,
+    onStaffsUpdate: PropTypes.func.isRequired
   }
   static defaultProps = {
     staffsLimit: 5
@@ -102,6 +103,7 @@ export default class FlowManagerSettings extends Component {
       .then((staff) => {
         let newStaff = this.state.staffs.concat(staff);
         this.setState({staffs: newStaff});
+        this.props.onStaffsUpdate(this.state.staffs);
       });
   }
   handleStaffDelete(staff) {
@@ -109,6 +111,7 @@ export default class FlowManagerSettings extends Component {
       .then((staff) => {
         let newStaff = this.state.staffs.filter((item) => item.user.id !== staff.user.id);
         this.setState({staffs: newStaff});
+        this.props.onStaffsUpdate(this.state.staffs);
       });
   }
   handleStaffRoleChange(staff, role) {
@@ -117,6 +120,7 @@ export default class FlowManagerSettings extends Component {
         this.state.staffs.forEach((item) => {
           if (item.user.id === staff.user.id) item.role = role
         });
+        this.props.onStaffsUpdate(this.state.staffs);
         this.forceUpdate();
       });
   }

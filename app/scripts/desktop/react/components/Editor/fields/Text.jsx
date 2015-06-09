@@ -82,7 +82,6 @@ let EditorTextField = React.createClass({
   },
 
   handleInput(e) {
-    let value = StringHelpers.cleanWordPaste(e.target.innerHTML);
     this.props.onChange(value);
   }
 })

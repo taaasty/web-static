@@ -29,7 +29,8 @@ export default class FlowManager extends Component {
         <TabPane tab="Настройки">
           <FlowManagerSettings
               flow={this.state.flow}
-              onUpdate={this.updateFlow.bind(this)} />
+              onUpdate={this.updateFlow.bind(this)}
+              onStaffsUpdate={this.updateStaffs.bind(this)} />
         </TabPane>
         {this.renderRequested()}
         <TabPane tab="Подписчики" count={this.state.followersCount}>
@@ -48,6 +49,10 @@ export default class FlowManager extends Component {
   updateFlow(flow) {
     this.setState({flow});
     this.props.onUpdate(flow);
+  }
+  updateStaffs(staffs) {
+    this.state.flow.staffs = staffs;
+    this.props.onUpdate(this.state.flow);
   }
   updateCount(rel, count) {
     this.setState({[rel]: count});

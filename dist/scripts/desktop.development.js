@@ -17449,7 +17449,6 @@ var EditorTextField = React.createClass({
   },
 
   handleInput: function handleInput(e) {
-    var value = _sharedHelpersString2['default'].cleanWordPaste(e.target.innerHTML);
     this.props.onChange(value);
   }
 });
@@ -20118,7 +20117,10 @@ var FlowFormAddress = React.createClass({
   },
 
   handleChange: function handleChange(e) {
-    this.props.onChange(e.target.value);
+    var value = e.target.value.replace(/[^\x00-\x7F]/g, "");
+    if (e.target.value == value) {
+      this.props.onChange(e.target.value);
+    }
   }
 });
 
@@ -20903,7 +20905,8 @@ var FlowManager = (function (_Component) {
           { tab: 'Настройки' },
           _react2['default'].createElement(_FlowManagerSettings2['default'], {
             flow: this.state.flow,
-            onUpdate: this.updateFlow.bind(this) })
+            onUpdate: this.updateFlow.bind(this),
+            onStaffsUpdate: this.updateStaffs.bind(this) })
         ),
         this.renderRequested(),
         _react2['default'].createElement(
@@ -20927,6 +20930,12 @@ var FlowManager = (function (_Component) {
     value: function updateFlow(flow) {
       this.setState({ flow: flow });
       this.props.onUpdate(flow);
+    }
+  }, {
+    key: 'updateStaffs',
+    value: function updateStaffs(staffs) {
+      this.state.flow.staffs = staffs;
+      this.props.onUpdate(this.state.flow);
     }
   }, {
     key: 'updateCount',
@@ -21250,6 +21259,7 @@ var FlowManagerSettings = (function (_Component) {
       _actionsFlow2['default'].addStaff(this.props.flow.id, user.id).then(function (staff) {
         var newStaff = _this2.state.staffs.concat(staff);
         _this2.setState({ staffs: newStaff });
+        _this2.props.onStaffsUpdate(_this2.state.staffs);
       });
     }
   }, {
@@ -21262,6 +21272,7 @@ var FlowManagerSettings = (function (_Component) {
           return item.user.id !== staff.user.id;
         });
         _this3.setState({ staffs: newStaff });
+        _this3.props.onStaffsUpdate(_this3.state.staffs);
       });
     }
   }, {
@@ -21273,6 +21284,7 @@ var FlowManagerSettings = (function (_Component) {
         _this4.state.staffs.forEach(function (item) {
           if (item.user.id === staff.user.id) item.role = role;
         });
+        _this4.props.onStaffsUpdate(_this4.state.staffs);
         _this4.forceUpdate();
       });
     }
@@ -21288,7 +21300,8 @@ var FlowManagerSettings = (function (_Component) {
         flowpic: _react.PropTypes.object.isRequired
       }).isRequired,
       staffsLimit: _react.PropTypes.number,
-      onUpdate: _react.PropTypes.func.isRequired
+      onUpdate: _react.PropTypes.func.isRequired,
+      onStaffsUpdate: _react.PropTypes.func.isRequired
     },
     enumerable: true
   }, {
@@ -21532,7 +21545,7 @@ var HeroFlows = React.createClass({
   propTypes: {
     flowsCount: React.PropTypes.number.isRequired,
     backgroundUrl: React.PropTypes.string.isRequired,
-    can_create: React.PropTypes.bool
+    canCreate: React.PropTypes.bool
   },
 
   render: function render() {
@@ -21547,7 +21560,7 @@ var HeroFlows = React.createClass({
   },
 
   renderCreateButton: function renderCreateButton() {
-    if (this.props.can_create) {
+    if (this.props.canCreate) {
       return React.createElement(
         'button',
         {

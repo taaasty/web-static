@@ -23,7 +23,10 @@ let FlowFormAddress = React.createClass({
   },
 
   handleChange(e) {
-    this.props.onChange(e.target.value);
+    let value = e.target.value.replace(/[^\x00-\x7F]/g, '');
+    if (e.target.value == value) {
+      this.props.onChange(e.target.value);
+    }
   }
 });
 
