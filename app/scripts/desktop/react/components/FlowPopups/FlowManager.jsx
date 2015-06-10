@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import TabbedArea from '../Tabs/TabbedArea';
 import TabPane from '../Tabs/TabPane';
+import FlowManagerStaffs from './FlowManagerStaffs';
 import FlowManagerFollowers from './FlowManagerFollowers';
 import FlowManagerIgnored from './FlowManagerIgnored';
 import FlowManagerSettings from './FlowManagerSettings';
@@ -20,6 +21,7 @@ export default class FlowManager extends Component {
   }
   state = {
     flow: this.props.flow,
+    staffsCount: this.props.flow.staffs.length,
     followersCount: null,
     ignoredCount: null
   }
@@ -29,8 +31,13 @@ export default class FlowManager extends Component {
         <TabPane tab="Настройки">
           <FlowManagerSettings
               flow={this.state.flow}
-              onUpdate={this.updateFlow.bind(this)}
-              onStaffsUpdate={this.updateStaffs.bind(this)} />
+              onUpdate={this.updateFlow.bind(this)} />
+        </TabPane>
+        <TabPane tab="Руководство" count={this.state.staffsCount}>
+          <FlowManagerStaffs
+              flowID={this.state.flow.id}
+              staffs={this.state.flow.staffs}
+              onUpdate={this.updateStaffs.bind(this)} />
         </TabPane>
         {this.renderRequested()}
         <TabPane tab="Подписчики" count={this.state.followersCount}>
@@ -52,6 +59,7 @@ export default class FlowManager extends Component {
   }
   updateStaffs(staffs) {
     this.state.flow.staffs = staffs;
+    this.setState({staffsCount: staffs.length});
     this.props.onUpdate(this.state.flow);
   }
   updateCount(rel, count) {

@@ -24,7 +24,6 @@ let FlowFormStaffs = React.createClass({
     if (this.props.staffs.length) {
       return (
         <div className="flow-form__persons">
-          <h5 className="flow-form__subtitle">Модераторы</h5>
           {this.renderStaffList()}
         </div>
       );

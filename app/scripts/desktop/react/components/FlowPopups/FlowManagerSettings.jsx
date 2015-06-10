@@ -1,9 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import FlowActionCreators from '../../actions/Flow';
 import FlowFormHero from '../FlowForm/FlowFormHero';
-import FlowFormChooser from '../FlowForm/FlowFormChooser';
 import FlowFormAddress from '../FlowForm/FlowFormAddress';
-import FlowFormStaffs from '../FlowForm/FlowFormStaffs';
 
 export default class FlowManagerSettings extends Component {
   static propTypes = {
@@ -48,15 +46,6 @@ export default class FlowManagerSettings extends Component {
                 value={this.state.slug}
                 onChange={this.updateValue.bind(this, 'slug')} />
           </div>
-          <div className="flow-form__item">
-            <FlowFormChooser
-                limitReached={this.props.staffsLimit === this.state.staffs.length}
-                onChoose={this.handleUserChoose.bind(this)} />
-            <FlowFormStaffs
-                staffs={this.state.staffs}
-                onDelete={this.handleStaffDelete.bind(this)}
-                onRoleChange={this.handleStaffRoleChange.bind(this)} />
-          </div>
         </div>
         <div className="flow-form__footer">
           {this.renderSaveButton()}
@@ -97,31 +86,5 @@ export default class FlowManagerSettings extends Component {
     return (
       pName !== sName || pSlug !== sSlug || pTitle !== sTitle || picFile != null
     );
-  }
-  handleUserChoose(user) {
-    FlowActionCreators.addStaff(this.props.flow.id, user.id)
-      .then((staff) => {
-        let newStaff = this.state.staffs.concat(staff);
-        this.setState({staffs: newStaff});
-        this.props.onStaffsUpdate(this.state.staffs);
-      });
-  }
-  handleStaffDelete(staff) {
-    FlowActionCreators.removeStaff(this.props.flow.id, staff.user.id)
-      .then((staff) => {
-        let newStaff = this.state.staffs.filter((item) => item.user.id !== staff.user.id);
-        this.setState({staffs: newStaff});
-        this.props.onStaffsUpdate(this.state.staffs);
-      });
-  }
-  handleStaffRoleChange(staff, role) {
-    FlowActionCreators.changeStaffRole(this.props.flow.id, staff.user.id, role)
-      .then((staff) => {
-        this.state.staffs.forEach((item) => {
-          if (item.user.id === staff.user.id) item.role = role
-        });
-        this.props.onStaffsUpdate(this.state.staffs);
-        this.forceUpdate();
-      });
   }
 }
