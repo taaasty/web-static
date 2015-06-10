@@ -30,9 +30,9 @@ let FlowActionCreators = {
       });
   },
 
-  update(flowID, {name, slug, title, picFile}) {
+  update(flowID, {name, slug, title, picFile, is_privacy, has_premoderation}) {
     let formData = ApiHelpers.prepareFormData({
-      name, slug, title, flowpic: picFile
+      name, slug, title, is_privacy, has_premoderation, flowpic: picFile
     });
 
     return Api.flow.update(flowID, formData)
@@ -43,8 +43,8 @@ let FlowActionCreators = {
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);
         ErrorService.notifyErrorResponse('Изменение потока', {
-          method: 'FlowActionCreators.update(flowID, {name, slug, title, picFile})',
-          methodArguments: {flowID, name, slug, title, picFile},
+          method: 'FlowActionCreators.update(flowID, {name, slug, title, picFile, is_privacy, has_premoderation})',
+          methodArguments: {flowID, name, slug, title, picFile, is_privacy, has_premoderation},
           response: xhr.responseJSON
         });
       });

@@ -1,7 +1,9 @@
 import React, {PropTypes, Component} from 'react';
+import classnames from 'classnames';
 import FlowActionCreators from '../../actions/Flow';
 import FlowFormHero from '../FlowForm/FlowFormHero';
 import FlowFormAddress from '../FlowForm/FlowFormAddress';
+import FlowFormRadio from '../FlowForm/FlowFormRadio';
 
 export default class FlowManagerSettings extends Component {
   static propTypes = {
@@ -10,27 +12,28 @@ export default class FlowManagerSettings extends Component {
       name: PropTypes.string.isRequired,
       slug: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      staffs: PropTypes.array.isRequired,
+      is_privacy: PropTypes.bool.isRequired,
+      has_premoderation: PropTypes.bool.isRequired,
       flowpic: PropTypes.object.isRequired
     }).isRequired,
-    staffsLimit: PropTypes.number,
-    onUpdate: PropTypes.func.isRequired,
-    onStaffsUpdate: PropTypes.func.isRequired
-  }
-  static defaultProps = {
-    staffsLimit: 5
+    onUpdate: PropTypes.func.isRequired
   }
   state = {
     name: this.props.flow.name,
     slug: this.props.flow.slug,
     title: this.props.flow.title,
-    staffs: this.props.flow.staffs,
     flowpic: this.props.flow.flowpic,
+    is_privacy: this.props.flow.is_privacy,
+    has_premoderation: this.props.flow.has_premoderation,
     picFile: null
   }
   render() {
+    let formClasses = classnames('flow-form', {
+      '__has-unsaved-fields': this.hasUnsavedFields()
+    });
+
     return (
-      <div className="flow-form">
+      <div className={formClasses}>
         <div className="flow-form__header">
           <FlowFormHero
               name={this.state.name}
@@ -46,6 +49,22 @@ export default class FlowManagerSettings extends Component {
                 value={this.state.slug}
                 onChange={this.updateValue.bind(this, 'slug')} />
           </div>
+          <div className="flow-form__item">
+            <FlowFormRadio
+                id="flow-privacy"
+                title="Закрытый поток?"
+                description="Содержимое потока видно только подписчикам."
+                checked={this.state.is_privacy}
+                onChange={this.updateValue.bind(this, 'is_privacy')} />
+          </div>
+          <div className="flow-form__item">
+            <FlowFormRadio
+                id="flow-has-premoderation"
+                title="Премодерация"
+                description="Записи появляются в потоке только после одобрения руководством потока."
+                checked={this.state.has_premoderation}
+                onChange={this.updateValue.bind(this, 'has_premoderation')} />
+          </div>
         </div>
         <div className="flow-form__footer">
           {this.renderSaveButton()}
@@ -57,7 +76,7 @@ export default class FlowManagerSettings extends Component {
     if (this.hasUnsavedFields()) {
       return (
         <button className="flow-form__save-button"
-                onTouchTap={this.saveFlow.bind(this)}>
+                onClick={::this.saveFlow}>
           Сохранить
         </button>
       );
@@ -69,10 +88,10 @@ export default class FlowManagerSettings extends Component {
   saveFlow() {
     FlowActionCreators.update(this.props.flow.id, this.state)
       .then((flow) => {
-        let { name, slug, title, flowpic } = flow;
+        let { name, slug, title, flowpic, is_privacy, has_premoderation } = flow;
 
         this.setState({
-          name, slug, title, flowpic,
+          name, slug, title, flowpic, is_privacy, has_premoderation,
           picFile: null
         });
 
@@ -80,11 +99,26 @@ export default class FlowManagerSettings extends Component {
       });
   }
   hasUnsavedFields() {
-    let { name: pName, slug: pSlug, title: pTitle } = this.props.flow;
-    let { name: sName, slug: sSlug, title: sTitle, picFile } = this.state;
+    let {
+      name: pName,
+      slug: pSlug,
+      title: pTitle,
+      is_privacy: pisPrivacy,
+      has_premoderation: phasPremoderation
+    } = this.props.flow;
+    let {
+      picFile,
+      name: sName,
+      slug: sSlug,
+      title: sTitle,
+      is_privacy: sisPrivacy,
+      has_premoderation: shasPremoderation
+    } = this.state;
 
     return (
-      pName !== sName || pSlug !== sSlug || pTitle !== sTitle || picFile != null
+      pName !== sName || pSlug !== sSlug || pTitle !== sTitle ||
+      pisPrivacy !== sisPrivacy || phasPremoderation !== shasPremoderation ||
+      picFile != null
     );
   }
 }

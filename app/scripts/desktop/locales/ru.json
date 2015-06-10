@@ -401,5 +401,9 @@
   "messages": {
     "entry_accept_success": "Запись принята",
     "entry_decline_success": "Запись отклонена"
+  },
+  "switcher": {
+    "label_on": "Да",
+    "label_off": "Нет"
   }
 }
