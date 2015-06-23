@@ -1,7 +1,7 @@
 import EntryActionCreators from '../../actions/Entry';
-import Bricks from './Bricks';
+import EntryBricks from './EntryBricks';
 
-let BricksContainer = React.createClass({
+let EntryBricksContainer = React.createClass({
   propTypes: {
     entries_info: React.PropTypes.shape({
       items: React.PropTypes.array.isRequired,
@@ -29,7 +29,7 @@ let BricksContainer = React.createClass({
 
   render() {
     return (
-      <Bricks
+      <EntryBricks
           entries={this.state.entries}
           loading={this.state.loading}
           canLoad={!this.state.loading && this.state.hasMore}
@@ -68,4 +68,4 @@ let BricksContainer = React.createClass({
   }
 });
 
-export default BricksContainer;
+export default EntryBricksContainer;

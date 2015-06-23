@@ -1,4 +1,4 @@
-import EntryActionCreators from '../../actions/Entry';
+import EntryActionCreators from '../../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 
 const ENTRY_TYPES = [

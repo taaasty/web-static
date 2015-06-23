@@ -1,8 +1,8 @@
-import Text from '../../../../shared/react/components/common/Text';
+import Text from '../../../../../shared/react/components/common/Text';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
-let EntryBrickTextType = React.createClass({
+let EntryBrickCodeType = React.createClass({
   propTypes: {
     entry: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
@@ -26,7 +26,9 @@ let EntryBrickTextType = React.createClass({
           {this.renderBrickTitle()}
           <div className="brick__text">
             <a href={this.props.entry.url} title={this.props.entry.title} className="brick__link">
-              <Text value={this.props.entry.text_truncated} withHTML={true} />
+              <pre>
+                <Text value={this.props.entry.text_truncated} withHTML={true} />
+              </pre>
             </a>
           </div>
         </div>
@@ -57,4 +59,4 @@ let EntryBrickTextType = React.createClass({
   }
 });
 
-export default EntryBrickTextType;
+export default EntryBrickCodeType;

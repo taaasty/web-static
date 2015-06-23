@@ -1,15 +1,14 @@
-import Text from '../../../../shared/react/components/common/Text';
+import Text from '../../../../../shared/react/components/common/Text';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
-let EntryBrickCodeType = React.createClass({
+let EntryBrickLinkType = React.createClass({
   propTypes: {
     entry: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
       type: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,
-      text_truncated: React.PropTypes.string.isRequired,
       rating: React.PropTypes.object.isRequired,
       tlog: React.PropTypes.object,
       comments_count: React.PropTypes.number.isRequired
@@ -24,13 +23,6 @@ let EntryBrickCodeType = React.createClass({
       <span>
         <div className="brick__body">
           {this.renderBrickTitle()}
-          <div className="brick__text">
-            <a href={this.props.entry.url} title={this.props.entry.title} className="brick__link">
-              <pre>
-                <Text value={this.props.entry.text_truncated} withHTML={true} />
-              </pre>
-            </a>
-          </div>
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
@@ -59,4 +51,4 @@ let EntryBrickCodeType = React.createClass({
   }
 });
 
-export default EntryBrickCodeType;
+export default EntryBrickLinkType;

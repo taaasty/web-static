@@ -1,5 +1,5 @@
-import Text from '../../../../shared/react/components/common/Text';
-import Image from '../../../../shared/react/components/common/Image';
+import Text from '../../../../../shared/react/components/common/Text';
+import Image from '../../../../../shared/react/components/common/Image';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 

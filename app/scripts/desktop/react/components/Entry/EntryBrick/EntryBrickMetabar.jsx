@@ -1,7 +1,7 @@
-import Avatar from '../../../../shared/react/components/common/Avatar';
-import VotingComponent from '../common/Voting';
+import Avatar from '../../../../../shared/react/components/common/Avatar';
+import VotingComponent from '../../common/Voting';
 
-let EntryBrickMeta = React.createClass({
+let EntryBrickMetabar = React.createClass({
   propTypes: {
     tlog: React.PropTypes.object,
     rating: React.PropTypes.object.isRequired,
@@ -68,4 +68,4 @@ let EntryBrickMeta = React.createClass({
   }
 });
 
-export default EntryBrickMeta;
+export default EntryBrickMetabar;

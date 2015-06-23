@@ -1,4 +1,4 @@
-import EntryBrick from '../Entry/EntryBrick';
+import EntryBrick from '../Entry/EntryBrick/EntryBrick';
 import InfiniteScroll from '../common/infiniteScroll/index';
 import MasonryMixin from 'react-masonry-mixin';
 
@@ -9,7 +9,7 @@ const masonryOptions = {
   gutter: 20
 };
 
-let Bricks = React.createClass({
+let EntryBricks = React.createClass({
   mixins: [MasonryMixin('masonryContainer', masonryOptions)],
 
   propTypes: {
@@ -20,14 +20,12 @@ let Bricks = React.createClass({
   },
 
   render() {
-    let entryList = this.props.entries.map((item) => {
-      return (
-        <EntryBrick
-            entry={item.entry}
-            moderation={item.moderation}
-            key={item.entry.id} />
-      );
-    });
+    let entryList = this.props.entries.map((item) =>
+      <EntryBrick
+          entry={item.entry}
+          moderation={item.moderation}
+          key={item.entry.id} />
+    );
 
     return (
       <div className="bricks-wrapper">
@@ -44,4 +42,4 @@ let Bricks = React.createClass({
   }
 });
 
-export default Bricks;
+export default EntryBricks;

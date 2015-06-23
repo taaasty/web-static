@@ -1,4 +1,4 @@
-import Text from '../../../../shared/react/components/common/Text';
+import Text from '../../../../../shared/react/components/common/Text';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 

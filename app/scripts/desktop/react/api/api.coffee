@@ -208,6 +208,60 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
+    addToFavorites: (entryID) ->
+      url = ApiRoutes.favorites_url()
+      key = Constants.api.ADD_TO_FAVORITES_ENTRY
+      data = {
+        entry_id: entryID
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    removeFromFavorites: (entryID) ->
+      url = ApiRoutes.favorites_url()
+      key = Constants.api.REMOVE_FROM_FAVORITES_ENTRY
+      data = {
+        entry_id: entryID
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest url, data
+
+    addToWatching: (entryID) ->
+      url = ApiRoutes.watching_url()
+      key = Constants.api.ADD_TO_WATCHING_ENTRY
+      data = {
+        entry_id: entryID
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
+    removeFromWatching: (entryID) ->
+      url = ApiRoutes.watching_url()
+      key = Constants.api.REMOVE_FROM_WATCHING_ENTRY
+      data = {
+        entry_id: entryID
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest url, data
+
+    report: (entryID) ->
+      url = ApiRoutes.report_url(entryID)
+      key = Constants.api.REPORT_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url
+
+    delete: (entryID) ->
+      url = ApiRoutes.entry_url entryID
+      key = Constants.api.DELETE_ENTRY
+
+      abortPendingRequests key
+      _pendingRequests[key] = deleteRequest url
+
     accept: (acceptUrl) ->
       key = Constants.api.ACCEPT_ENTRY
 

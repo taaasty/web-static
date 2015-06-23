@@ -1,4 +1,4 @@
-import ErrorService from '../../../../shared/react/services/Error';
+import ErrorService from '../../../../../shared/react/services/Error';
 import EntryBrickTextType from './EntryBrickTextType';
 import EntryBrickImageType from './EntryBrickImageType';
 import EntryBrickVideoType from './EntryBrickVideoType';
