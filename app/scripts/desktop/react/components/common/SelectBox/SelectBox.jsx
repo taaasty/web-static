@@ -27,13 +27,11 @@ let SelectBox = React.createClass({
   },
 
   render() {
-    let optionList = this.props.options.map((option) => {
-      return (
-        <option value={option.value} key={option.value}>
-          {option.text}
-        </option>
-      );
-    });
+    let optionList = this.props.options.map((option) =>
+      <option value={option.value} key={option.value}>
+        {option.text}
+      </option>
+    );
 
     return (
       <select value={this.props.value}>
