@@ -31,16 +31,11 @@ export default class FlowCreator extends Component {
               flowpic={flowpic}
               onNameChange={this.updateValue.bind(this, 'name')}
               onTitleChange={this.updateValue.bind(this, 'title')}
-              onPicFileChange={this.updateValue.bind(this, 'picFile')} />
+              onPicFileChange={this.updateValue.bind(this, 'picFile')}
+              onFlowCreate={::this.createFlow} />
         </div>
         <div className="flow-form__body">
           <div className="flow-form__item">
-            <div className="flow-form__right">
-              <button className="button button--yellow button--small"
-                      onTouchTap={this.createFlow.bind(this)}>
-                Создать поток
-              </button>
-            </div>
             <div className="flow-form__left">
               <FlowFormChooser
                   limitReached={this.props.staffsLimit === this.state.staffs.length}

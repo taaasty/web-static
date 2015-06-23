@@ -43,9 +43,23 @@ let FlowFormHero = React.createClass({
                 returnFor="blur"
                 onChange={this.props.onTitleChange} />
           </div>
+          {this.renderActions()}
         </div>
       </div>
     );
+  },
+
+  renderActions() {
+    if (this.props.onFlowCreate) {
+      return (
+        <div className="flow-form__hero-actions">
+          <button className="button button--yellow button--small"
+                  onClick={this.props.onFlowCreate}>
+            Создать поток
+          </button>
+        </div>
+      );
+    }
   },
 
   showPicFilePreview(file) {
