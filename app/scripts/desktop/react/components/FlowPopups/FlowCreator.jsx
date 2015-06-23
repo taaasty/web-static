@@ -54,6 +54,12 @@ export default class FlowCreator extends Component {
     this.setState({[name]: value});
   }
   handleUserChoose(user) {
+    // Check whether user already in staffs
+    for (let i = 0; i < this.state.staffs.length; i++) {
+      let staff = this.state.staffs[i];
+      if (staff.user.id === user.id) return;
+    }
+
     let staff = {user, role: 'moderator'};
     let newStaff = this.state.staffs.concat(staff);
     this.setState({staffs: newStaff});

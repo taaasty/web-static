@@ -20879,6 +20879,12 @@ var FlowCreator = (function (_Component) {
   }, {
     key: 'handleUserChoose',
     value: function handleUserChoose(user) {
+      // Check whether user already in staffs
+      for (var i = 0; i < this.state.staffs.length; i++) {
+        var _staff = this.state.staffs[i];
+        if (_staff.user.id === user.id) return;
+      }
+
       var staff = { user: user, role: 'moderator' };
       var newStaff = this.state.staffs.concat(staff);
       this.setState({ staffs: newStaff });
@@ -21708,7 +21714,15 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _actionsPopup = require('../../actions/popup');
 
@@ -21718,48 +21732,68 @@ var _Hero = require('./Hero');
 
 var _Hero2 = _interopRequireDefault(_Hero);
 
-var HeroFlows = React.createClass({
-  displayName: 'HeroFlows',
-
-  propTypes: {
-    flowsCount: React.PropTypes.number.isRequired,
-    backgroundUrl: React.PropTypes.string.isRequired,
-    canCreate: React.PropTypes.bool
-  },
-
-  render: function render() {
-    return React.createElement(_Hero2['default'], { backgroundUrl: this.props.backgroundUrl,
-      title: i18n.t('hero.flows'),
-      text: i18n.t('hero.flows_count', { count: this.props.flowsCount }),
-      actions: this.getActions() });
-  },
-
-  getActions: function getActions() {
-    return [this.renderCreateButton()];
-  },
-
-  renderCreateButton: function renderCreateButton() {
-    if (this.props.canCreate) {
-      return React.createElement(
-        'button',
-        {
-          className: 'button button--small button--green',
-          onClick: this.createFlow,
-          key: 'createButton' },
-        i18n.t('buttons.hero_create_flow')
-      );
-    }
-  },
-
-  createFlow: function createFlow() {
-    _actionsPopup2['default'].createFlow();
+var HeroFlows = (function () {
+  function HeroFlows() {
+    _classCallCheck(this, HeroFlows);
   }
-});
+
+  _createClass(HeroFlows, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(_Hero2['default'], { backgroundUrl: this.props.backgroundUrl,
+        title: i18n.t('hero.flows'),
+        text: this.getText(),
+        actions: this.getActions() });
+    }
+  }, {
+    key: 'renderCreateButton',
+    value: function renderCreateButton() {
+      if (this.props.canCreate) {
+        return _react2['default'].createElement(
+          'button',
+          {
+            className: 'button button--small button--green',
+            onClick: this.createFlow,
+            key: 'createButton' },
+          i18n.t('buttons.hero_create_flow')
+        );
+      }
+    }
+  }, {
+    key: 'createFlow',
+    value: function createFlow() {
+      _actionsPopup2['default'].createFlow();
+    }
+  }, {
+    key: 'getText',
+    value: function getText() {
+      var text = this.props.text;
+
+      return text ? text : i18n.t('hero.flows_count', { count: this.props.flowsCount });
+    }
+  }, {
+    key: 'getActions',
+    value: function getActions() {
+      return [this.renderCreateButton()];
+    }
+  }], [{
+    key: 'propTypes',
+    value: {
+      flowsCount: _react.PropTypes.number,
+      backgroundUrl: _react.PropTypes.string.isRequired,
+      canCreate: _react.PropTypes.bool,
+      text: _react.PropTypes.string
+    },
+    enumerable: true
+  }]);
+
+  return HeroFlows;
+})();
 
 exports['default'] = HeroFlows;
 module.exports = exports['default'];
 
-},{"../../actions/popup":19,"./Hero":140}],144:[function(require,module,exports){
+},{"../../actions/popup":19,"./Hero":140,"react":"react"}],144:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
