@@ -33919,11 +33919,11 @@ var UserToolbarPrimaryList = React.createClass({
                 title: i18n.t('feed_live'),
                 icon: 'icon--wave' }),
             React.createElement(_UserToolbarListItem2['default'], {
-                url: Routes.live_feed_path(),
+                url: Routes.best_feed_path(),
                 title: i18n.t('feed_best'),
                 icon: 'icon--rating' }),
             React.createElement(_UserToolbarListItem2['default'], {
-                url: Routes.live_feed_path(),
+                url: Routes.anonymous_feed_path(),
                 title: i18n.t('feed_anonymous'),
                 icon: 'icon--anonymous' }),
             React.createElement(_UserToolbarListItem2['default'], {
