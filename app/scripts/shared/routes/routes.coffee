@@ -34,5 +34,6 @@ Routes =
   daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page
 
   orders: -> '/orders'
+  flows: -> '/flows'
 
 module.exports = Routes

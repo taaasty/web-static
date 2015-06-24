@@ -24,23 +24,23 @@ let UserToolbarPrimaryList = React.createClass({
         <UserToolbarListItem
             url={Routes.friends_feed_path()}
             title={ i18n.t('feed_friends') }
-            icon="icon--friends"
-            stayOpen={this.props.stayOpen}>
-          <UserToolbarSubList>
-            <UserToolbarSubListItem
-                url={Routes.live_feed_path()}
-                title={i18n.t('feed_live')}
-                icon="icon--wave" />
-            <UserToolbarSubListItem
-                url={Routes.best_feed_path()}
-                title={i18n.t('feed_best')}
-                icon="icon--rating" />
-            <UserToolbarSubListItem
-                url={Routes.anonymous_feed_path()}
-                title={i18n.t('feed_anonymous')}
-                icon="icon--anonymous" />
-          </UserToolbarSubList>
-        </UserToolbarListItem>
+            icon="icon--friends" />
+        <UserToolbarListItem
+            url={Routes.flows()}
+            title={i18n.t('toolbar_flows_item')}
+            icon="icon--hash" />
+        <UserToolbarListItem
+            url={Routes.live_feed_path()}
+            title={i18n.t('feed_live')}
+            icon="icon--wave" />
+        <UserToolbarListItem
+            url={Routes.live_feed_path()}
+            title={i18n.t('feed_best')}
+            icon="icon--rating" />
+        <UserToolbarListItem
+            url={Routes.live_feed_path()}
+            title={i18n.t('feed_anonymous')}
+            icon="icon--anonymous" />
         <UserToolbarListItem
             title={i18n.t('toolbar_messages_item')}
             badgeCount={this.props.unreadConversationsCount}
