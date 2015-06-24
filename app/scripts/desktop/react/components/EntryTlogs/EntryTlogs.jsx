@@ -5,19 +5,21 @@ import InfiniteScroll from '../common/infiniteScroll/index';
 export default class EntryTlogs {
   static propTypes = {
     entries: PropTypes.array.isRequired,
+    commentator: PropTypes.object,
     loading: PropTypes.bool.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onDelete: PropTypes.func.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired
   }
   render() {
-    let entryList = this.props.entries.map((item) =>
+    let entryList = this.props.entries.map((item) => (
       <EntryTlog
           entry={item.entry}
+          commentator={this.props.commentator}
           moderation={item.moderation}
           onDelete={this.props.onDelete}
           key={item.entry.id} />
-    );
+    ));
 
     return (
       <div className="content-area">

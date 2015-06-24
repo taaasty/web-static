@@ -21,7 +21,9 @@ const ENTRY_TEXT_TYPE = 'text',
 
 export default class EntryTlogContent {
   static propTypes = {
-    entry: PropTypes.object.isRequired
+    entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
+    hasModeration: PropTypes.bool
   }
   render() {
     switch(this.props.entry.type) {

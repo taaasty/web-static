@@ -8,6 +8,7 @@ import EntryTlogComments from './EntryTlogComments';
 export default class EntryTlogTextType {
   static propTypes = {
     entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
@@ -24,7 +25,7 @@ export default class EntryTlogTextType {
           <EntryTlogMetabar {...this.props} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments commentsInfo={this.props.entry.comments_info} />
+        <EntryTlogComments {...this.props} />
       </span>
     );
   }

@@ -130,6 +130,17 @@ let EntryActionCreators = {
           response: xhr.responseJSON
         });
       });
+  },
+  createComment(entryID, text) {
+    return Api.entry.createComment(entryID, text)
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Создание комментария к записи', {
+          method: 'EntryActionCreators.createComment(entryID, text)',
+          methodArguments: {entryID, text},
+          response: xhr.responseJSON
+        });
+      });
   }
 };
 

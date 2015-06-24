@@ -289,6 +289,16 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url
 
+    createComment: (entryID, text) ->
+      url = ApiRoutes.comments_url()
+      key = Constants.api.CREATE_COMMENT
+      data =
+        text: text
+        entry_id: entryID
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
   user:
     predict: (query, limit) ->
       url = ApiRoutes.users_predict()

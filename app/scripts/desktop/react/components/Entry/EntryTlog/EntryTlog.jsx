@@ -9,6 +9,7 @@ const ENTRY_TYPES = [
 export default class EntryTlog extends Component {
   static propTypes = {
     entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     moderation: PropTypes.object
   }
   state = {
@@ -35,6 +36,7 @@ export default class EntryTlog extends Component {
         <EntryTlogContent
             {...actions}
             entry={this.props.entry}
+            commentator={this.props.commentator}
             hasModeration={this.state.hasModeration} />
       </article>
     );
