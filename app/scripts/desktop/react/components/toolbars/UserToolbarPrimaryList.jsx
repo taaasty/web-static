@@ -28,6 +28,8 @@ let UserToolbarPrimaryList = React.createClass({
         <UserToolbarListItem
             url={Routes.flows()}
             title={i18n.t('toolbar_flows_item')}
+            label="new"
+            labelClassName="toolbar__label--new"
             icon="icon--hash" />
         <UserToolbarListItem
             url={Routes.live_feed_path()}

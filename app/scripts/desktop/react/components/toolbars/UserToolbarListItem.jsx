@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 let UserToolbarListItem = React.createClass({
   propTypes: {
@@ -40,7 +40,7 @@ let UserToolbarListItem = React.createClass({
       return React.cloneElement(child, {opened: this.state.opened});
     });
 
-    let itemClasses = classnames('toolbar__nav-item', {
+    let itemClasses = classNames('toolbar__nav-item', {
       '__opened': this.state.opened
     });
 
@@ -55,6 +55,7 @@ let UserToolbarListItem = React.createClass({
           <span className="toolbar__nav-text">
             {this.props.title}
           </span>
+          {this.renderLabel()}
           {this.renderBadge()}
         </a>
         {children}
@@ -67,6 +68,16 @@ let UserToolbarListItem = React.createClass({
       return (
         <span className={this.props.badgeClassName}>
           {this.props.badgeCount}
+        </span>
+      );
+    }
+  },
+
+  renderLabel() {
+    if (this.props.label) {
+      return (
+        <span className={classNames('toolbar__label', this.props.labelClassName)}>
+          {this.props.label}
         </span>
       );
     }
