@@ -5,11 +5,11 @@ let FlowBricksContainer = React.createClass({
   propTypes: {
     flows_info: React.PropTypes.shape({
       items: React.PropTypes.array.isRequired,
+      limit: React.PropTypes.number.isRequired,
       has_more: React.PropTypes.bool.isRequired,
       next_since_flow_id: React.PropTypes.number
     }).isRequired,
-    url: React.PropTypes.string.isRequired,
-    limit: React.PropTypes.number
+    loadUrl: React.PropTypes.string.isRequired
   },
 
   getInitialState() {
@@ -34,10 +34,10 @@ let FlowBricksContainer = React.createClass({
   loadMoreFlows() {
     this.setState({loading: true});
 
-    let { url, limit } = this.props;
+    let { loadUrl, entries_info: { limit } } = this.props;
     let { sinceFlowID } = this.state;
 
-    FlowActionCreators.load(url, sinceFlowID, limit)
+    FlowActionCreators.load(loadUrl, sinceFlowID, limit)
       .then((flowsInfo) => {
         if (this.isMounted()) {
           // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных

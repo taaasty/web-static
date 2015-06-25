@@ -7,7 +7,8 @@ import EntryTlogMetabarActions from './EntryTlogMetabarActions';
 
 export default class EntryTlogMetabar {
   static propTypes = {
-    entry: PropTypes.object.isRequired
+    entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object
   }
   render() {
     return (
@@ -15,7 +16,9 @@ export default class EntryTlogMetabar {
         {this.renderAuthor()}
         <EntryTlogMetabarComments
             url={this.props.entry.url}
-            commentsCount={this.props.entry.comments_count} />
+            commentator={this.props.commentator}
+            commentsCount={this.props.entry.comments_count}
+            onComment={this.props.onComment} />
         <EntryTlogMetabarDate
             url={this.props.entry.url}
             date={this.props.entry.created_at} />

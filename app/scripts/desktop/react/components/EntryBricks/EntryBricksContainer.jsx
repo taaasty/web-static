@@ -5,17 +5,11 @@ let EntryBricksContainer = React.createClass({
   propTypes: {
     entries_info: React.PropTypes.shape({
       items: React.PropTypes.array.isRequired,
+      limit: React.PropTypes.number.isRequired,
       has_more: React.PropTypes.bool.isRequired,
       next_since_entry_id: React.PropTypes.number
     }).isRequired,
-    url: React.PropTypes.string.isRequired,
-    limit: React.PropTypes.number
-  },
-
-  getDefaultProps() {
-    return {
-      limit: 30
-    };
+    loadUrl: React.PropTypes.string.isRequired
   },
 
   getInitialState() {
@@ -40,10 +34,10 @@ let EntryBricksContainer = React.createClass({
   loadMoreEntries() {
     this.setState({loading: true});
 
-    let { url, limit } = this.props;
+    let { loadUrl, entries_info: { limit } } = this.props;
     let { sinceEntryID } = this.state;
 
-    EntryActionCreators.load(url, sinceEntryID, limit)
+    EntryActionCreators.load(loadUrl, sinceEntryID, limit)
       .then((entriesInfo) => {
         if (this.isMounted()) {
           // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных

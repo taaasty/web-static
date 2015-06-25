@@ -2,10 +2,12 @@ import React, { PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
+import EntryTlogComments from './EntryTlogComments';
 
 export default class EntryTlogQuoteType {
   static propTypes = {
     entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
@@ -27,9 +29,10 @@ export default class EntryTlogQuoteType {
           </blockquote>
         </div>
         <div className="post__meta">
-          <EntryTlogMetabar {...this.props} />
+          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
         </div>
         {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
       </span>
     );
   }
@@ -44,5 +47,8 @@ export default class EntryTlogQuoteType {
     if (this.props.hasModeration) {
       return <EntryTlogActions {...this.props} />;
     }
+  }
+  startComment() {
+    this.refs.comments.startComment();
   }
 }

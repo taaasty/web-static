@@ -5,6 +5,7 @@ import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
 export default class EntryTlogComment {
   static propTypes = {
     comment: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     entryUrl: PropTypes.string.isRequired
   }
   render() {

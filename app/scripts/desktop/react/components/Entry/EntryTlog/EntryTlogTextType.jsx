@@ -22,10 +22,10 @@ export default class EntryTlogTextType {
           <Text value={this.props.entry.text} withHTML={true} />
         </div>
         <div className="post__meta">
-          <EntryTlogMetabar {...this.props} />
+          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} />
+        <EntryTlogComments {...this.props} ref="comments" />
       </span>
     );
   }
@@ -47,5 +47,8 @@ export default class EntryTlogTextType {
     if (this.props.hasModeration) {
       return <EntryTlogActions {...this.props} />;
     }
+  }
+  startComment() {
+    this.refs.comments.startComment();
   }
 }

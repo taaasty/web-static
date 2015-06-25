@@ -3,15 +3,16 @@ import React, { PropTypes } from 'react';
 export default class EntryTlogMetabarComments {
   static propTypes = {
     url: PropTypes.string.isRequired,
-    userLogged: PropTypes.object,
+    commentator: PropTypes.object,
     commentsCount: PropTypes.number.isRequired
   }
   render() {
     let content;
 
-    if (this.props.userLogged) {
+    if (this.props.commentator) {
       content = (
-        <a className="meta-item__common meta__link">
+        <a className="meta-item__common meta__link"
+           onClick={this.props.onComment}>
           {i18n.t('entry_meta_comment_link')}
         </a>
       );

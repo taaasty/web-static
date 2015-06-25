@@ -3,10 +3,12 @@ import Voting from '../../common/Voting';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
+import EntryTlogComments from './EntryTlogComments';
 
 export default class EntryTlogSongType {
   static propTypes = {
     entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
@@ -17,9 +19,10 @@ export default class EntryTlogSongType {
           {this.renderTitle()}
         </header>
         <div className="post__meta">
-          <EntryTlogMetabar {...this.props} />
+          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
         </div>
         {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
       </span>
     );
   }
@@ -45,5 +48,8 @@ export default class EntryTlogSongType {
     if (this.props.hasModeration) {
       return <EntryTlogActions {...this.props} />;
     }
+  }
+  startComment() {
+    this.refs.comments.startComment();
   }
 }

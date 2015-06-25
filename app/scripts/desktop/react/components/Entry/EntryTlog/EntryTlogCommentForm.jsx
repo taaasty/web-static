@@ -76,6 +76,9 @@ export default class EntryTlogCommentForm extends Component {
       );
     }
   }
+  focus() {
+    this.refs.field.focus();
+  }
   isEmpty() {
     return !this.state.text.trim();
   }
@@ -83,7 +86,7 @@ export default class EntryTlogCommentForm extends Component {
     this.setState({ text: '' });
   }
   addReply(username) {
-    let name = `@${name}`,
+    let userTag = `@${username}`,
         postfix = /^@/.exec(this.state.text) ? ', ' : ' ',
         newText = this.state.text,
         replies = this.getReplies();
@@ -91,15 +94,11 @@ export default class EntryTlogCommentForm extends Component {
     if (replies.length > REPLIES_LIMIT) {
       newText = this.removeLastReply();
     }
-    if (!RegExp(name).exec(newText)) {
-      newText = name + postfix + newText;
+    if (!RegExp(userTag).test(newText)) {
+      newText = userTag + postfix + newText;
     }
 
-    this.setState({
-      text: newText
-    }, () => {
-      this.refs.field.focus();
-    })
+    this.setState({ text: newText }, this.focus);
   }
   getReplies() {
     let replies = [],
@@ -139,29 +138,3 @@ export default class EntryTlogCommentForm extends Component {
     this.submit();
   }
 }
-
-//   addReply: (name) ->
-//     name    = '@' + name
-//     postfix = if /^@/.exec @getValue() then ', ' else ' '
-//     newText = @getValue()
-//     replies = @_getReplies()
-
-//     newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
-//     newText = name + postfix + newText unless RegExp(name).exec newText
-
-//     field = @refs.commentFormField.getDOMNode()
-//     field.value = newText
-//     field.focus()
-
-//   _getReplies: ->
-//     replies = []
-//     text    = @getValue()
-//     regExp  = /@[^, ]{1,}/g
-
-//     replies = ( found[0] while found = regExp.exec(text) )
-
-//   _removeLastReply: ->
-//     text   = @getValue()
-//     regExp = /, @\w+(?=\s)/g
-
-//     text.replace regExp, ''

@@ -6,15 +6,11 @@ export default class EntryTlogsContainer extends Component {
   static propTypes = {
     entries_info: PropTypes.shape({
       items: PropTypes.array.isRequired,
+      limit: PropTypes.number.isRequired,
       has_more: PropTypes.bool.isRequired,
       next_since_entry_id: PropTypes.number
     }).isRequired,
-    commentator: PropTypes.object,
-    url: PropTypes.string.isRequired,
-    limit: PropTypes.number
-  }
-  static defaultProps = {
-    limit: 30
+    loadUrl: PropTypes.string.isRequired
   }
   state = {
     entries: this.props.entries_info.items,
@@ -26,7 +22,6 @@ export default class EntryTlogsContainer extends Component {
     return (
       <EntryTlogs
           entries={this.state.entries}
-          commentator={this.props.commentator}
           loading={this.state.loading}
           canLoad={!this.state.loading && this.state.hasMore}
           onDelete={::this.delete}
@@ -36,10 +31,10 @@ export default class EntryTlogsContainer extends Component {
   loadMoreEntries() {
     this.setState({loading: true});
 
-    let { url, limit } = this.props;
+    let { loadUrl, entries_info: { limit } } = this.props;
     let { sinceEntryID } = this.state;
 
-    EntryActionCreators.load(url, sinceEntryID, limit)
+    EntryActionCreators.load(loadUrl, sinceEntryID, limit)
       .then((entriesInfo) => {
         // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
         // нам полей, просто прекращаем дальнейшую загрузку

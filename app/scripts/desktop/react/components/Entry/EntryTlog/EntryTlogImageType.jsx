@@ -4,25 +4,30 @@ import Text from '../../../../../shared/react/components/common/Text';
 import ImageAttachmentsCollage from '../../../../../shared/react/components/common/imageAttachmentsCollage';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
+import EntryTlogComments from './EntryTlogComments';
 
 export default class EntryTlogImageType {
   static propTypes = {
     entry: PropTypes.object.isRequired,
+    commentator: PropTypes.object,
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
     return (
-      <div className="post__content">
-        <ImageAttachmentsCollage
-            imageAttachments={this.props.entry.image_attachments}
-            width={712} />
-        {this.renderVoting()}
-        <Text value={this.props.entry.title} withHTML={true} />
+      <span>
+        <div className="post__content">
+          <ImageAttachmentsCollage
+              imageAttachments={this.props.entry.image_attachments}
+              width={712} />
+          {this.renderVoting()}
+          <Text value={this.props.entry.title} withHTML={true} />
+        </div>
         <div className="post__meta">
-          <EntryTlogMetabar {...this.props} />
+          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
         </div>
         {this.renderActions()}
-      </div>
+        <EntryTlogComments {...this.props} ref="comments" />
+      </span>
     );
   }
   renderVoting() {
@@ -36,5 +41,8 @@ export default class EntryTlogImageType {
     if (this.props.hasModeration) {
       return <EntryTlogActions {...this.props} />;
     }
+  }
+  startComment() {
+    this.refs.comments.startComment();
   }
 }

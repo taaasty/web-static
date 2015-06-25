@@ -131,6 +131,16 @@ let EntryActionCreators = {
         });
       });
   },
+  loadComments(entryID, toCommentID, limit) {
+    return Api.entry.loadComments(entryID, toCommentID, limit)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка комментариев', {
+          method: 'EntryActionCreators.loadComments(entryID, toCommentID, limit)',
+          methodArguments: {entryID, toCommentID, limit},
+          response: xhr.responseJSON
+        });
+      });
+  },
   createComment(entryID, text) {
     return Api.entry.createComment(entryID, text)
       .fail((xhr) => {
@@ -138,6 +148,45 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Создание комментария к записи', {
           method: 'EntryActionCreators.createComment(entryID, text)',
           methodArguments: {entryID, text},
+          response: xhr.responseJSON
+        });
+      });
+  },
+  reportComment(commentID) {
+    return Api.entry.reportComment(commentID)
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('report_comment_success'));
+      })
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Жалоба на комментарий', {
+          method: 'EntryActionCreators.reportComment(commentID)',
+          methodArguments: {commentID},
+          response: xhr.responseJSON
+        });
+      });
+  },
+  editComment(commentID, text) {
+    return Api.entry.editComment(commentID, text)
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Редактирования комментария к записи', {
+          method: 'EntryActionCreators.editComment(commentID, text)',
+          methodArguments: {commentID, text},
+          response: xhr.responseJSON
+        });
+      });
+  },
+  deleteComment(commentID) {
+    return Api.entry.deleteComment(commentID)
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('delete_comment_success'));
+      })
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Удаление комментария', {
+          method: 'EntryActionCreators.deleteComment(commentID)',
+          methodArguments: {commentID},
           response: xhr.responseJSON
         });
       });

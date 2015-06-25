@@ -108,11 +108,19 @@
   "delete_entry_button": "Удалить запись",
   "entry_in_favorites": "В избранном",
   "report_entry_button": "Пожаловаться",
+<<<<<<< HEAD
+=======
+  "delete_entry_button": "Удалить",
+>>>>>>> EntryTlog comments
   "watching_entry_item": "Подписан",
   "entry_meta_comment_link": "Прокомментировать",
   "comments_count": "__count__ комментарий",
   "comments_count_plural_2": "__count__ комментария",
   "comments_count_plural_5": "__count__ комментариев",
+<<<<<<< HEAD
+=======
+  "no_comments": "Нет комментариев",
+>>>>>>> EntryTlog comments
   "hero_stats_popup_loading": "Загружаю..",
   "hero_stats_popup_empty": "Список пуст",
   "hero_stats_popup_error": "Ошибка загрузки",
@@ -287,7 +295,10 @@
   "toolbar_messages_item": "Сообщения",
   "toolbar_notifications_item": "Уведомления",
   "toolbar_friends_item": "Управление подписками",
+<<<<<<< HEAD
   "toolbar_flows_item": "Потоки",
+=======
+>>>>>>> EntryTlog comments
   "toolbar_design_item": "Дизайн дневника",
   "toolbar_settings_item": "Общие настройки",
   "toolbar_logout_item": "Выход",
@@ -301,6 +312,10 @@
   "voted": "Вы уже проголосовали",
   "cant_vote": "Вы не можете проголосовать",
   "report_entry_success": "Жалоба на пост успешно отправлена",
+<<<<<<< HEAD
+=======
+  "delete_entry_success": "Пост успешно удалён",
+>>>>>>> EntryTlog comments
   "report_comment_success": "Жалоба на комментарий успешно отправлена",
   "delete_comment_success": "Комментарий успешно удалён",
   "recovery_mail_sent": "Вам на почту отправлена ссылка для восстановления пароля",
@@ -327,6 +342,10 @@
   "link_entry_item": "Ссылка на запись",
   "report_entry_item": "Пожаловаться",
   "report_entry_confirm": "Вы действительно хотите пожаловаться на пост?",
+<<<<<<< HEAD
+=======
+  "delete_entry_confirm": "Вы действительно хотите удалить запись?",
+>>>>>>> EntryTlog comments
   "start_watch_entry_item": "Подписаться на комментарии",
   "stop_watch_entry_item": "Отписаться от комментариев",
   "report_user_success": "Жалоба на пользователя принята, и будет рассмотрена в ближайшее время",
