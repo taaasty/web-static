@@ -18,6 +18,12 @@ ApiConstants = keyMirror
   APPROVE_REQUEST_TLOG: null
   DISAPPROVE_REQUEST_TLOG: null
   VOTE_ENTRY: null
+  ADD_TO_FAVORITES_ENTRY: null
+  REMOVE_FROM_FAVORITES_ENTRY: null
+  ADD_TO_WATCHING_ENTRY: null
+  REMOVE_FROM_WATCHING_ENTRY: null
+  REPORT_ENTRY: null
+  DELETE_ENTRY: null
   ACCEPT_ENTRY: null
   DECLINE_ENTRY: null
   LOAD_ENTRIES: null
@@ -28,5 +34,9 @@ ApiConstants = keyMirror
   LOAD_FLOWS: null
   ADD_STAFF_FLOW: null
   REMOVE_STAFF_FLOW: null
+  CREATE_COMMENT: null
+  REPORT_COMMENT: null
+  EDIT_COMMENT: null
+  DELETE_COMMENT: null
 
 module.exports = ApiConstants

@@ -12,15 +12,12 @@
 }
 
 .comments__list {
-  margin-bottom: 10px;
-
   .comment-form {
     border-top: 0;
   }
 }
 
 .comments__more {
-  padding-bottom: 7px;
   font-size: @comment-meta-font-size;
   line-height: @comment-meta-line-height;
 }
@@ -191,6 +188,20 @@
     opacity: 1;
     transition: transform .3s ease, visibility 0s ease .0s, opacity .3s ease;
   }
+
+  &.position-top {
+    &:after {
+      content: "";
+      margin-left: -7px;
+      position: absolute;
+      left: 50%;
+      bottom: initial;
+      border-width: 7px 7px 0;
+      border-style: solid;
+      border-color: @popover-bg transparent transparent;
+      .font-null();
+    }
+  }
 }
 
 .comment__dropdown-item {
@@ -201,7 +212,6 @@
 // Block Comment Form
 .comment-form {
   &:extend(.comment);
-  border-top: 10px solid transparent;
 }
 
 .comment-form__table {

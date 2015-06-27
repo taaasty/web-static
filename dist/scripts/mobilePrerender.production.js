@@ -12136,6 +12136,9 @@ Routes = {
   },
   flows: function() {
     return '/flows';
+  },
+  editEntry: function(userTag, entryID) {
+    return '/' + userTag + '/edit/' + entryID;
   }
 };
 

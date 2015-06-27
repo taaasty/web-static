@@ -1,0 +1,65 @@
+import EntryActionCreators from '../../actions/Entry';
+import EntryBricks from './EntryBricks';
+
+let EntryBricksContainer = React.createClass({
+  propTypes: {
+    entries_info: React.PropTypes.shape({
+      items: React.PropTypes.array.isRequired,
+      limit: React.PropTypes.number.isRequired,
+      has_more: React.PropTypes.bool.isRequired,
+      next_since_entry_id: React.PropTypes.number
+    }).isRequired,
+    loadUrl: React.PropTypes.string.isRequired
+  },
+
+  getInitialState() {
+    return {
+      entries: this.props.entries_info.items,
+      hasMore: this.props.entries_info.has_more,
+      sinceEntryID: this.props.entries_info.next_since_entry_id,
+      loading: false
+    };
+  },
+
+  render() {
+    return (
+      <EntryBricks
+          entries={this.state.entries}
+          loading={this.state.loading}
+          canLoad={!this.state.loading && this.state.hasMore}
+          onLoadMoreEntries={this.loadMoreEntries} />
+    );
+  },
+
+  loadMoreEntries() {
+    this.setState({loading: true});
+
+    let { loadUrl, entries_info: { limit } } = this.props;
+    let { sinceEntryID } = this.state;
+
+    EntryActionCreators.load(loadUrl, sinceEntryID, limit)
+      .then((entriesInfo) => {
+        if (this.isMounted()) {
+          // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
+          // нам полей, просто прекращаем дальнейшую загрузку
+          if (entriesInfo.has_more != null && entriesInfo.next_since_entry_id != null) {
+            this.setState({
+              entries: this.state.entries.concat(entriesInfo.items),
+              hasMore: entriesInfo.has_more,
+              sinceEntryID: entriesInfo.next_since_entry_id
+            });
+          } else {
+            this.setState({hasMore: false});
+          }
+        }
+      })
+      .fail(() => {
+        if (this.isMounted()) this.setState({hasMore: false})
+      })
+      .always(() => {
+        if (this.isMounted()) this.setState({loading: false});
+      });
+  }
+});
+
+export default EntryBricksContainer;

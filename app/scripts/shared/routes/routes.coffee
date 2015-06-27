@@ -35,5 +35,6 @@ Routes =
 
   orders: -> '/orders'
   flows: -> '/flows'
+  editEntry: (userTag, entryID) -> '/' + userTag + '/edit/' + entryID
 
 module.exports = Routes
