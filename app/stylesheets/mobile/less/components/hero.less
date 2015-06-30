@@ -179,7 +179,9 @@
 
 // Types
 .hero--static {
-  height: 200px;
+  &:before {
+    min-height: 200px;
+  }
 
   .hero__overlay {
     opacity: .6;

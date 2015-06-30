@@ -1,0 +1,135 @@
+.flows__nav {
+  position: relative;
+  background-color: @flows-nav-bg;
+  font-size: @flows-nav-font-size;
+  line-height: @flows-nav-line-height;
+  white-space: nowrap;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.flows__nav-list {
+  .list-style-none();
+}
+
+.flows__nav-item {
+  display: inline-block;
+  vertical-align: top;
+
+  & + & {
+    .flows__nav-link {
+      margin-left: -1px;
+      border-left: 1px solid @flows-nav-divider;
+    }
+  }
+}
+
+.flows__nav-link {
+  padding: @indent-base;
+  display: inline-block;
+  color: @flows-nav-link-color !important;
+
+  &:active {
+    position: relative;
+    border-left: 1px solid transparent !important;
+    background-color: @flows-nav-link-active-bg !important;
+    color: @flows-nav-link-active-color !important;
+  }
+
+  &.__selected {
+    position: relative;
+    border-left: 1px solid transparent !important;
+    background-color: @flows-nav-link-selected-bg !important;
+    color: @flows-nav-link-selected-color !important;
+  }
+}
+
+.flow {
+  padding: @indent-base;
+  margin-bottom: @indent-base * 2;
+  font-family: @font-family-base;
+
+  a {
+    color: inherit;
+  }
+
+  .media-image {
+    margin-top: -@indent-base;
+    margin-right: -@indent-base;
+    margin-left: -@indent-base;
+  }
+
+  .follow-button {
+    color: inherit;
+
+    &:after {
+      border-color: rgba(0, 0, 0, .3);
+    }
+
+    &.__active {
+      background-color: @follow-button-active-bg;
+      color: #fff;
+
+      &:after {
+        border-color: transparent;
+      }
+
+      &:active {
+        background-color: @follow-button-active-click-bg;
+      }
+    }
+  }
+}
+
+.flow__content {
+  .clearfix();
+  padding-top: @indent-base;
+}
+
+.flow__content-right {
+  margin-left: 15px;
+  float: right;
+}
+
+.flow__content-left {
+  overflow: hidden;
+}
+
+.flow__title {
+  margin: 0 0 .2em;
+  font-weight: normal;
+  font-size: 1.333em;
+  line-height: 1.2em;
+}
+
+.flow__caption {
+  margin: 0 0 .2em;
+  color: #b2b2b2;
+}
+
+.flow__data {
+  padding-top: 8px;
+  text-align: right;
+}
+
+.flow__data-item {
+  margin-left: 14px;
+  display: inline-block;
+  color: #b2b2b2;
+  font-size: @meta-font-size;
+  line-height: @meta-line-height;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  .icon {
+    margin-right: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.429em;
+  }
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
