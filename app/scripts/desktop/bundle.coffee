@@ -183,6 +183,7 @@ require './react/components/calendar/calendar_period'
 require './react/components/calendar/calendar_marker'
 
 global.Feed = require './react/components/Feed/Feed'
+global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
 global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer'
 global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer'
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
