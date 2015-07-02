@@ -339,7 +339,7 @@
   "load_more_comments": "Загрузить ещё __count__ комментарий",
   "load_more_comments_plural_2": "Загрузить ещё __count__ комментария",
   "load_more_comments_plural_5": "Загрузить ещё __count__ комментариев",
-  "load_more_comments_remaining": "Загрузить оставшийся комментарий",
+  "load_more_comments_remaining": "Загрузить оставшийся __count__ комментарий",
   "load_more_comments_remaining_plural_2": "Загрузить оставшиеся __count__ комментария",
   "load_more_comments_remaining_plural_5": "Загрузить оставшиеся __count__ комментариев",
   "stats_entries_count": "пост",

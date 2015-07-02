@@ -34,7 +34,7 @@ let FlowBricksContainer = React.createClass({
   loadMoreFlows() {
     this.setState({loading: true});
 
-    let { loadUrl, entries_info: { limit } } = this.props;
+    let { loadUrl, flows_info: { limit } } = this.props;
     let { sinceFlowID } = this.state;
 
     FlowActionCreators.load(loadUrl, sinceFlowID, limit)

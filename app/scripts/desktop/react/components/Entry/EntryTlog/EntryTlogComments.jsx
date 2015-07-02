@@ -37,6 +37,7 @@ export default class EntryTlogComments extends Component {
             totalCount={this.state.totalCount}
             loadedCount={this.state.comments.length}
             limit={this.props.limit}
+            loading={this.state.loadingMore}
             onLoadMore={::this.loadMore} />
       );
     }
@@ -140,6 +141,7 @@ export default class EntryTlogComments extends Component {
   loadMore() {
     const toCommentID = this.state.comments[0] ? this.state.comments[0].id : null;
 
+    this.setState({ loadingMore: true });
     EntryActionCreators.loadComments(this.props.entry.id, toCommentID, this.props.limit)
       .then((data) => {
         let newComments = data.comments.concat(this.state.comments);
@@ -150,5 +152,8 @@ export default class EntryTlogComments extends Component {
           $(document).trigger('domChanged');
         });
       })
+      .always(() => {
+        this.setState({ loadingMore: false });
+      });
   }
 }
