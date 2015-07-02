@@ -12,6 +12,7 @@ window.ApiRoutes = require '../shared/routes/api'
 # /*==========  Locales  ==========*/
 require './locales/numeral/ru'
 require './locales/moment/ru'
+require './locales/moment/en'
 
 require './react/services/positions'
 global.NoticeService = require './react/services/Notice'

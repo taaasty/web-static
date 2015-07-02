@@ -1,6 +1,4 @@
 import UserToolbarListItem from './UserToolbarListItem';
-import UserToolbarSubList from './UserToolbarSubList';
-import UserToolbarSubListItem from './UserToolbarSubListItem';
 
 let UserToolbarPrimaryList = React.createClass({
   propTypes: {
