@@ -32,7 +32,9 @@ export default class EntryTlog extends Component {
     };
 
     return (
-      <article className={this.getEntryClasses()}>
+      <article data-id={this.props.entry.id}
+               data-time={this.props.entry.created_at}
+               className={this.getEntryClasses()}>
         <EntryTlogContent
             {...actions}
             entry={this.props.entry}

@@ -7,6 +7,7 @@ export default class EntryTlogs {
     entries: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     canLoad: PropTypes.bool.isRequired,
+    infinite: PropTypes.bool,
     onDelete: PropTypes.func.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired
   }
@@ -20,20 +21,23 @@ export default class EntryTlogs {
           key={item.entry.id} />
     ));
 
-    return (
-      <div className="content-area">
-        <div className="content-area__bg" />
-        <div className="content-area__inner">
-          <InfiniteScroll
-              loading={this.props.loading}
-              canLoad={this.props.canLoad}
-              onLoad={this.props.onLoadMoreEntries}>
-            <section className="posts">
-              {entryList}
-            </section>
-          </InfiniteScroll>
-        </div>
-      </div>
-    );
+    if (this.props.infinite) {
+      return (
+        <InfiniteScroll
+            loading={this.props.loading}
+            canLoad={this.props.canLoad}
+            onLoad={this.props.onLoadMoreEntries}>
+          <section className="posts">
+            {entryList}
+          </section>
+        </InfiniteScroll>
+      );
+    } else {
+      return (
+        <section className="posts">
+          {entryList}
+        </section>
+      );
+    }
   }
 }

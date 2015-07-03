@@ -10,7 +10,8 @@ export default class EntryTlogsContainer extends Component {
       has_more: PropTypes.bool.isRequired,
       next_since_entry_id: PropTypes.number
     }).isRequired,
-    loadUrl: PropTypes.string.isRequired
+    loadUrl: PropTypes.string.isRequired,
+    infinite: PropTypes.bool
   }
   state = {
     entries: this.props.entries_info.items,
@@ -24,6 +25,7 @@ export default class EntryTlogsContainer extends Component {
           entries={this.state.entries}
           loading={this.state.loading}
           canLoad={!this.state.loading && this.state.hasMore}
+          infinite={this.props.infinite}
           onDelete={::this.delete}
           onLoadMoreEntries={::this.loadMoreEntries} />
     );
