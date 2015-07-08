@@ -1,7 +1,7 @@
 .chooser {
   position: relative;
 
-  &.state--open {
+  &.__open {
     .chooser__button {
       display: none;
     }
@@ -71,19 +71,48 @@
 .chooser__empty {
   padding: @chooser-padding;
   border-top: 1px solid @chooser-border-color;
-  font-size: 14px;
+  font-size: @font-size-xs;
   text-align: center;
+}
+
+.chooser__results {
+  .list-style-none();
+  border-top: 1px solid @chooser-border-color;
 }
 
 .chooser__result {
   padding: @chooser-padding;
-  border-top: 1px solid @chooser-border-color;
   cursor: pointer;
 
-  &:hover,
-  &.state--active {
-    .messages__person-name {
-      opacity: 1;
+  & + & {
+    border-top: 1px solid @chooser-border-color;
+  }
+
+  &:active,
+  &.__active {
+    .chooser__user {
+      color: #fff;
     }
   }
+}
+
+.chooser__user {
+  .clearfix();
+}
+
+.chooser__user {
+  .clearfix();
+  color: @grey;
+}
+
+.chooser__user-avatar {
+  width: 42px;
+  height: 42px;
+  margin-right: 8px;
+  float: left;
+}
+
+.chooser__user-name {
+  .text-overflow();
+  margin-top: 7px;
 }

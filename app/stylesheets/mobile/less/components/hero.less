@@ -1,5 +1,4 @@
 .hero {
-  min-height: @hero-min-height;
   position: relative;
   background-position: 50% 50%;
   background-size: cover;
@@ -10,6 +9,7 @@
 
   &:before {
     content: "";
+    min-height: @hero-min-height;
     height: 100%;
     position: relative;
     display: inline-block;
@@ -106,8 +106,12 @@
   padding-top: 20px;
 
   button {
-    margin: 0 5px;
+    margin: 2px 5px 3px;
   }
+}
+
+.hero__actions--visible {
+  display: block;
 }
 
 .hero__user-actions {
@@ -175,7 +179,9 @@
 
 // Types
 .hero--static {
-  height: 200px;
+  &:before {
+    min-height: 200px;
+  }
 
   .hero__overlay {
     opacity: .6;
