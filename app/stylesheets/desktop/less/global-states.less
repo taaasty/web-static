@@ -154,6 +154,58 @@
   }
 }
 
+.layout--home {
+  background-color: #5d5d5d;
+  user-select: none;
+
+  .layout-constrain {
+    width: auto;
+    padding: 50px 5%;
+    .clearfix();
+  }
+
+  .logo {
+    margin-right: 20px;
+    float: left;
+  }
+
+  .home-title {
+    color: #fff;
+    text-align: center;
+  }
+
+  .menu--right {
+    margin-right: 0;
+  }
+
+  .page-cover {
+    position: fixed;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  .page-header {
+    min-height: 0;
+    z-index: @zindex-landing-page-header;
+  }
+
+  .page-body {
+    font-family: @font-family-sans-serif;
+  }
+
+  .auth-button {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+
+  @media screen and (max-width: 1024px) { // Убираем фикс для обложки hero, чтобы правильно тянулось на планшетах и телефонах
+    .hero--cover {
+      background-attachment: scroll;
+    }
+  }
+}
+
 // Шаблоны только с определённым контентом (восстановление пароля)
 .layout--tech {
   .page {
