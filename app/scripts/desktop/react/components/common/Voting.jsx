@@ -1,86 +1,79 @@
-import classnames from 'classnames';
+import React, { Component, PropTypes, findDOMNode } from 'react';
+import classNames from 'classnames';
 import EntryActionCreators from '../../actions/Entry';
 
-let Voting = React.createClass({
-  propTypes: {
-    rating: React.PropTypes.shape({
-      votes: React.PropTypes.number.isRequired,
-      rating: React.PropTypes.number.isRequired,
-      is_voted: React.PropTypes.bool.isRequired,
-      is_voteable: React.PropTypes.bool.isRequired
+export default class Voting extends Component {
+  static propTypes = {
+    rating: PropTypes.shape({
+      votes: PropTypes.number.isRequired,
+      rating: PropTypes.number.isRequired,
+      reasons: PropTypes.array,
+      is_voted: PropTypes.bool.isRequired,
+      is_voteable: PropTypes.bool.isRequired
     }).isRequired,
-    entryID: React.PropTypes.number.isRequired
-  },
-
-  getInitialState() {
-    return {
-      canVote: this.props.rating.is_voteable,
-      isVoted: this.props.rating.is_voted,
-      votes: this.props.rating.votes,
-      rating: this.props.rating.rating,
-      process: false
-    };
-  },
-
+    entryID: PropTypes.number.isRequired
+  }
+  state = {
+    votes: this.props.rating.votes,
+    rating: this.props.rating.rating,
+    reasons: this.props.rating.reasons,
+    canVote: this.props.rating.is_voteable,
+    isVoted: this.props.rating.is_voted,
+    isProcess: false
+  }
   componentDidMount() {
-    $(this.getDOMNode()).tooltip({
+    $(findDOMNode(this)).tooltip({
       placement: 'top',
       container: 'body'
     });
-  },
-
+  }
   componentWillUnmount() {
-    $(this.getDOMNode()).tooltip('destroy');
-  },
-
+    $(findDOMNode(this)).tooltip('destroy');
+  }
   render() {
-    let votingClasses = classnames('voting', {
+    const votingClasses = classNames('voting', {
       'votable': this.state.canVote,
       'unvotable': !this.state.canVote,
       'voted': this.state.isVoted
     });
 
-    let content = this.state.process ? <Spinner size={8} /> : this.state.votes;
-
     return (
-      <span data-original-title={this.getTitle()}
-            className={votingClasses}
-            onClick={this.handleClick}>
-        {content}
+      <span
+        data-original-title={this.getTitle.call(this)}
+        className={votingClasses}
+        onClick={this.handleClick.bind(this)}
+      >
+        {this.state.isProcess ? <Spinner size={8} /> : this.state.votes}
       </span>
     );
-  },
-
+  }
   getTitle() {
     if (this.state.canVote && !this.state.isVoted) {
       return i18n.t('vote');
     } else if (this.state.isVoted) {
       return i18n.t('voted');
+    } else if (this.state.reasons.length) {
+      return this.state.reasons.join('\r\n');
     } else {
       return i18n.t('cant_vote');
     }
-  },
-
+  }
   handleClick() {
-    if (this.state.isVoted || !this.state.canVote) return;
+    if (this.state.isVoted || !this.state.canVote) {
+      return;
+    }
 
-    this.setState({process: true});
-
+    this.setState({ isProcess: true });
     EntryActionCreators.vote(this.props.entryID)
       .then((rating) => {
-        if (this.isMounted()) {
-          this.setState({
-            votes: rating.votes,
-            rating: rating.rating,
-            isVoted: rating.is_voted,
-            canVote: rating.is_voteable
-          });
-        }
+        this.setState({
+          votes: rating.votes,
+          rating: rating.rating,
+          reasons: rating.reasons,
+          isVoted: rating.is_voted,
+          canVote: rating.is_voteable
+        });
       })
-      .always(() => {
-        if (this.isMounted()) this.setState({process: false});
-      });
+      .always(() => this.setState({ isProcess: false }))
   }
-});
-
-export default Voting;
+}
