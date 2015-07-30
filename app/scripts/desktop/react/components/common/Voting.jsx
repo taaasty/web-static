@@ -23,6 +23,7 @@ export default class Voting extends Component {
   }
   componentDidMount() {
     $(findDOMNode(this)).tooltip({
+      html: true,
       placement: 'top',
       container: 'body'
     });
@@ -53,7 +54,7 @@ export default class Voting extends Component {
     } else if (this.state.isVoted) {
       return i18n.t('voted');
     } else if (this.state.reasons.length) {
-      return this.state.reasons.join('\r\n');
+      return this.state.reasons.join('<br />');
     } else {
       return i18n.t('cant_vote');
     }
