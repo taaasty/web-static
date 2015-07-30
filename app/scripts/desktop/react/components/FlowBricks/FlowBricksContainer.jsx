@@ -30,8 +30,8 @@ export default class FlowBricksContainer extends Component {
   }
   loadMoreFlows() {
     const data = {
-      limit: this.props.flows_info.limit,
-      next_page: this.state.nextPage
+      page: this.state.nextPage,
+      limit: this.props.flows_info.limit
     };
 
     this.setState({ isLoading: true });
