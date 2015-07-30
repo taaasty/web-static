@@ -43,7 +43,7 @@ export default class EntryTlogsContainer extends Component {
       .then((entriesInfo) => {
         // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
         // нам полей, просто прекращаем дальнейшую загрузку
-        if (entriesInfo.has_more != null && entriesInfo[this.props.nextPageFieldName] != null) {
+        if (entriesInfo.has_more != null) {
           this.setState({
             entries: this.state.entries.concat(entriesInfo.items),
             hasMore: entriesInfo.has_more,

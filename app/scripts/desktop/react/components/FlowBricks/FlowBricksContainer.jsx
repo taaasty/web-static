@@ -39,7 +39,7 @@ export default class FlowBricksContainer extends Component {
       .then((flowsInfo) => {
         // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
         // нам полей, просто прекращаем дальнейшую загрузку
-        if (flowsInfo.has_more != null && flowsInfo.next_page != null) {
+        if (flowsInfo.has_more != null) {
           this.setState({
             flows: this.state.flows.concat(flowsInfo.items),
             hasMore: flowsInfo.has_more,
