@@ -86,12 +86,12 @@ let FlowActionCreators = {
       });
   },
 
-  load(url, sinceFlowID, limit) {
-    return Api.flow.load(url, sinceFlowID, limit)
+  load(url, data) {
+    return Api.flow.load(url, data)
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Загрузка потоков', {
-          method: 'FlowActionCreators.load(url, sinceFlowID, limit)',
-          methodArguments: {url, sinceFlowID, limit},
+          method: 'FlowActionCreators.load(url, data)',
+          methodArguments: {url, data},
           response: xhr.responseJSON
         });
       });

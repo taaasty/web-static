@@ -1,65 +1,55 @@
+import React, { Component, PropTypes } from 'react';
 import FlowActionCreators from '../../actions/Flow';
 import FlowBricks from './FlowBricks';
 
-let FlowBricksContainer = React.createClass({
-  propTypes: {
-    flows_info: React.PropTypes.shape({
-      items: React.PropTypes.array.isRequired,
-      limit: React.PropTypes.number.isRequired,
-      has_more: React.PropTypes.bool.isRequired,
-      next_since_flow_id: React.PropTypes.number
+export default class FlowBricksContainer extends Component {
+  static propTypes = {
+    flows_info: PropTypes.shape({
+      items: PropTypes.array.isRequired,
+      limit: PropTypes.number.isRequired,
+      has_more: PropTypes.bool.isRequired,
+      next_page: PropTypes.number.isRequired
     }).isRequired,
-    loadUrl: React.PropTypes.string.isRequired
-  },
-
-  getInitialState() {
-    return {
-      flows: this.props.flows_info.items,
-      hasMore: this.props.flows_info.has_more,
-      sinceFlowID: this.props.flows_info.next_since_flow_id,
-      loading: false
-    };
-  },
-
+    loadUrl: PropTypes.string.isRequired
+  }
+  state = {
+    flows: this.props.flows_info.items,
+    hasMore: this.props.flows_info.has_more,
+    nextPage: this.props.flows_info.next_page,
+    isLoading: false
+  }
   render() {
     return (
       <FlowBricks
-          flows={this.state.flows}
-          loading={this.state.loading}
-          canLoad={!this.state.loading && this.state.hasMore}
-          onLoadMoreFlows={this.loadMoreFlows} />
+        flows={this.state.flows}
+        loading={this.state.isLoading}
+        canLoad={!this.state.isLoading && this.state.hasMore}
+        onLoadMoreFlows={this.loadMoreFlows.bind(this)}
+      />
     );
-  },
-
+  }
   loadMoreFlows() {
-    this.setState({loading: true});
+    const data = {
+      limit: this.props.flows_info.limit,
+      next_page: this.state.nextPage
+    };
 
-    let { loadUrl, flows_info: { limit } } = this.props;
-    let { sinceFlowID } = this.state;
-
-    FlowActionCreators.load(loadUrl, sinceFlowID, limit)
+    this.setState({ isLoading: true });
+    FlowActionCreators.load(this.props.loadUrl, data)
       .then((flowsInfo) => {
-        if (this.isMounted()) {
-          // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
-          // нам полей, просто прекращаем дальнейшую загрузку
-          if (flowsInfo.has_more != null && flowsInfo.next_since_flow_id != null) {
-            this.setState({
-              flows: this.state.flows.concat(flowsInfo.items),
-              hasMore: flowsInfo.has_more,
-              sinceFlowID: flowsInfo.next_since_flow_id
-            });
-          } else {
-            this.setState({hasMore: false});
-          }
+        // Обрабатываем случай, когда передан левый урл. Если в ответе нет нужных
+        // нам полей, просто прекращаем дальнейшую загрузку
+        if (flowsInfo.has_more != null && flowsInfo.next_page != null) {
+          this.setState({
+            flows: this.state.flows.concat(flowsInfo.items),
+            hasMore: flowsInfo.has_more,
+            nextPage: flowsInfo.next_page
+          });
+        } else {
+          this.setState({ hasMore: false });
         }
       })
-      .fail(() => {
-        if (this.isMounted()) this.setState({hasMore: false})
-      })
-      .always(() => {
-        if (this.isMounted()) this.setState({loading: false});
-      });
+      .fail(() => this.setState({ hasMore: false }))
+      .always(() => this.setState({ isLoading: false }))
   }
-});
-
-export default FlowBricksContainer;
+}
