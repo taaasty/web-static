@@ -111,12 +111,12 @@ let EntryActionCreators = {
         });
       });
   },
-  load(url, sinceEntryID, limit) {
-    return Api.entry.load(url, sinceEntryID, limit)
+  load(url, data) {
+    return Api.entry.load(url, data)
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Загрузка записей', {
-          method: 'EntryActionCreators.load(url, sinceEntryID, limit)',
-          methodArguments: {url, sinceEntryID, limit},
+          method: 'EntryActionCreators.load(url, data)',
+          methodArguments: {url, data},
           response: xhr.responseJSON
         });
       });

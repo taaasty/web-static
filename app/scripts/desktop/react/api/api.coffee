@@ -274,11 +274,8 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = putRequest declineUrl
 
-    load: (url, sinceEntryID, limit) ->
+    load: (url, data) ->
       key = Constants.api.LOAD_ENTRIES
-      data = {}
-      data.since_entry_id = sinceEntryID if sinceEntryID
-      data.limit = limit if limit
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
