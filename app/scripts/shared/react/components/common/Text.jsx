@@ -1,26 +1,18 @@
-import StringHelpers from '../../../helpers/string';
+import React, { PropTypes } from 'react';
 
-let Text = React.createClass({
-  propTypes: {
-    value: React.PropTypes.string.isRequired,
-    withHTML: React.PropTypes.bool
-  },
-
-  getDefaultProps() {
-    return {
-      withHTML: false
-    };
-  },
-
+export default class Text {
+  static propTypes = {
+    value: PropTypes.string.isRequired,
+    withHTML: PropTypes.bool
+  }
+  static defaultProps = {
+    withHTML: false
+  }
   render() {
-    let value = StringHelpers.cleanWordPaste(this.props.value);
-
     if (this.props.withHTML) {
-      return <span dangerouslySetInnerHTML={{__html: value}} />;
+      return <span dangerouslySetInnerHTML={{__html: this.props.value}} />;
     } else {
-      return <span>{value}</span>;
+      return <span>{this.props.value}</span>;
     }
   }
-});
-
-export default Text;
+}
