@@ -38,7 +38,7 @@ export default class EntryTlogMetabarActions extends Component {
             {
               this.props.entry.can_edit && (
                 <EntryTlogMetabarAction
-                    url={Routes.editEntry(this.props.entry.tlog.tag, this.props.entry.id)}
+                    url={this.props.entry.edit_url}
                     title={i18n.t('edit_entry_item')}
                     icon="icon--pencil" />
               )
