@@ -1,3 +1,4 @@
+import React from 'react';
 import ScreenController from '../../../controllers/screen';
 
 let AuthButton = React.createClass({

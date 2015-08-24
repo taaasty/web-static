@@ -1,3 +1,5 @@
+import React from 'react';
+
 let TlogAlert = React.createClass({
   propTypes: {
     text: React.PropTypes.string.isRequired

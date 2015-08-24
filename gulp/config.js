@@ -1,6 +1,7 @@
-var src = './app',
-    build = './build',
-    dist  = './dist';
+const src = './app';
+const build = './build';
+const dist = './dist';
+const test = './test';
 
 module.exports = {
   clean: {
@@ -28,7 +29,13 @@ module.exports = {
           dest: build + '/scripts',
           outputName: 'client.js',
           extensions: ['.jsx', '.cjsx', '.coffee']
-        }
+        },
+        test: {
+          entries: test + '/desktop',
+          dest: build + '/scripts',
+          outputName: 'test.js',
+          extensions: ['.jsx', '.cjsx', '.coffee']
+        },
       },
       development: {
         entries: src + '/scripts/desktop.development.js',
@@ -91,7 +98,13 @@ module.exports = {
           dest: build + '/mobile/scripts',
           outputName: 'client.js',
           extensions: ['.jsx', '.cjsx', '.coffee']
-        }
+        },
+        test: {
+          entries: test + '/mobile',
+          dest: build + '/mobile/scripts',
+          outputName: 'test.js',
+          extensions: ['.jsx', '.cjsx', '.coffee']
+        },
       },
       development: {
         bundle: {
