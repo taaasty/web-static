@@ -8,8 +8,8 @@ requireDir('./gulp/tasks', { recurse: true });
 gulp.task('dist', ['[D] Test with build', '[M] Test with build'], (cb) => {
   runSequence(
     ['[S] Clean'],
-    ['[D][P] Scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts'],
-    ['[M][P] Scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts'],
+    ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts'],
+    ['[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts'],
   cb);
 });
 
