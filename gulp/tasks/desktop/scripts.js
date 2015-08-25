@@ -1,19 +1,16 @@
-var gulp = require('gulp'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
-    source = require('vinyl-source-stream'),
-    uglify = require('gulp-uglify'),
-    streamify = require('gulp-streamify'),
-    rename = require('gulp-rename'),
-    bundleLogger = require('../../util/bundleLogger'),
-    handleErrors = require('../../util/handleErrors'),
-    configStatic = require('../../config').desktop.scripts.static,
-    configDevelopment = require('../../config').desktop.scripts.development,
-    configProduction = require('../../config').desktop.scripts.production;
+import gulp from 'gulp';
+import browserify from 'browserify';
+import watchify from 'watchify';
+import source from 'vinyl-source-stream';
+import uglify from 'gulp-uglify';
+import streamify from 'gulp-streamify';
+import bundleLogger from '../../util/bundleLogger';
+import handleErrors from '../../util/handleErrors';
+const config = require('../../config').desktop.scripts;
 
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
-var dependencies = {
+const dependencies = {
   'jquery': './node_modules/jquery/dist/jquery',
   'jquery.ui.core': './app/bower_components/jquery-ui/ui/core',
   'jquery.ui.slider': './app/bower_components/jquery-ui/ui/slider',
@@ -27,7 +24,7 @@ var dependencies = {
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
   'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
-  'react': './node_modules/react',
+  'react': './node_modules/react/addons',
   'react-mixin-manager': './app/bower_components/react-mixin-manager/react-mixin-manager',
   'reactUjs': './app/scripts/shared/libs/react_ujs',
   'react-color-picker': './node_modules/react-color-picker/dist/react-color-picker',
@@ -51,128 +48,182 @@ var dependencies = {
   'URIjs': './node_modules/URIjs/src/URI',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
   'numeral': './node_modules/numeral',
-  'react-tap-event-plugin': './node_modules/react-tap-event-plugin'
-}
+  'react-tap-event-plugin': './node_modules/react-tap-event-plugin',
+};
 
-gulp.task('[D][S] Scripts', function(cb) {
-
-  /*==========  Client scripts  ==========*/
-
-  var bundleQueue = 1;
-  var clientBundler = browserify({
+gulp.task('[D][S] Client scripts', () => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configStatic.client.entries,
-    extensions: configStatic.client.extensions
+    entries: config.static.client.entries,
+    extensions: config.static.client.extensions
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    clientBundler.external(key);
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.external(dep);
   });
 
-  var rebundle = function() {
-    bundleLogger.start(configStatic.client.outputName);
+  function rebundle() {
+    bundleLogger.start(config.static.client.outputName);
 
-    clientBundler.bundle()
+    bundler.bundle()
       .on('error', handleErrors)
-      .pipe(source(configStatic.client.outputName))
-      .pipe(gulp.dest(configStatic.client.dest))
-      .on('end', function() {
-        bundleLogger.end(configStatic.client.outputName);
-        bundleQueue--;
-        if (bundleQueue === 0) { cb(); }
+      .pipe(source(config.static.client.outputName))
+      .pipe(gulp.dest(config.static.client.dest))
+      .on('end', () => {
+        bundleLogger.end(config.static.client.outputName);
       });
   };
 
-  clientBundler = watchify(clientBundler
-    .transform('coffee-reactify')
-    .transform('babelify', {
-      stage: 0
-    })
-  );
-  clientBundler.on('update', rebundle);
+  if (global.isWatching) {
+    bundler = watchify(bundler
+      .transform('babelify', {
+        stage: 0,
+        ignore: /(node_modules|bower_components|shims)/
+      })
+      .transform('browserify-shim')
+      .transform('coffee-reactify')
+    );
+    bundler.on('update', rebundle);
+  } else {
+    bundler
+      .transform('babelify', {
+        stage: 0,
+        ignore: /(node_modules|bower_components|shims)/
+      })
+      .transform('browserify-shim')
+      .transform('coffee-reactify');
+  }
+
   rebundle();
+});
 
-  /*==========  Vendor scripts  ==========*/
-
-  var vendorBundler = browserify({
+gulp.task('[D][S] Vendor scripts', (cb) => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configStatic.vendor.entries,
-    extensions: configStatic.vendor.extensions
+    entries: config.static.vendor.entries,
+    extensions: config.static.vendor.extensions
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    vendorBundler.require(dependencies[key], {expose: key});
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
   });
 
-  bundleLogger.start(configStatic.vendor.outputName);
+  bundleLogger.start(config.static.vendor.outputName);
 
-  vendorBundler
+  bundler
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe(source(configStatic.vendor.outputName))
-    .pipe(gulp.dest(configStatic.vendor.dest))
-    .on('end', function() {
-      bundleLogger.end(configStatic.vendor.outputName);
+    .pipe(source(config.static.vendor.outputName))
+    .pipe(gulp.dest(config.static.vendor.dest))
+    .on('end', () => {
+      bundleLogger.end(config.static.vendor.outputName);
+      cb();
     });
 });
 
-gulp.task('[D][D] Scripts', function() {
-  var appBundler = browserify({
+gulp.task('[D][S] Test scripts', () => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configDevelopment.entries,
-    extensions: configDevelopment.extensions
+    entries: config.static.test.entries,
+    extensions: config.static.test.extensions
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    appBundler.require(dependencies[key], {expose: key});
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.external(dep);
   });
 
-  bundleLogger.start(configDevelopment.outputName);
+  function rebundle() {
+    bundleLogger.start(config.static.test.outputName);
 
-  return appBundler
+    return bundler.bundle()
+      .on('error', handleErrors)
+      .pipe(source(config.static.test.outputName))
+      .pipe(gulp.dest(config.static.test.dest))
+      .on('end', () => {
+        bundleLogger.end(config.static.test.outputName);
+      });
+  };
+
+  if (global.isWatching) {
+    bundler = watchify(bundler
+      .transform('babelify', {
+        stage: 0,
+        ignore: /(node_modules|bower_components|shims)/
+      })
+      .transform('browserify-shim')
+      .transform('coffee-reactify')
+    );
+    bundler.on('update', rebundle);
+  } else {
+    bundler
+      .transform('babelify', {
+        stage: 0,
+        ignore: /(node_modules|bower_components|shims)/
+      })
+      .transform('browserify-shim')
+      .transform('coffee-reactify');
+  }
+
+  return rebundle();
+});
+
+gulp.task('[D][D] Scripts', () => {
+  let bundler = browserify({
+    cache: {}, packageCache: {},
+    entries: config.development.entries,
+    extensions: config.development.extensions
+  });
+
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
+  });
+
+  bundleLogger.start(config.development.outputName);
+
+  return bundler
     .transform('babelify', {
-      ignore: /(node_modules|bower_components|shims)/,
-      stage: 0
+      stage: 0,
+      ignore: /(node_modules|bower_components|shims)/
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe(source(configDevelopment.outputName))
-    .pipe(gulp.dest(configDevelopment.dest))
-    .on('end', function() {
-      bundleLogger.end(configDevelopment.outputName);
+    .pipe(source(config.development.outputName))
+    .pipe(gulp.dest(config.development.dest))
+    .on('end', () => {
+      bundleLogger.end(config.development.outputName);
     });
 });
 
-gulp.task('[D][P] Scripts', function() {
-  var appBundler = browserify({
+gulp.task('[D][P] Scripts', () => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configProduction.entries,
-    extensions: configProduction.extensions
+    entries: config.production.entries,
+    extensions: config.production.extensions
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    appBundler.require(dependencies[key], {expose: key});
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
   });
 
-  bundleLogger.start(configProduction.outputName);
+  bundleLogger.start(config.production.outputName);
 
-  return appBundler
+  return bundler
     .transform('babelify', {
-      ignore: /(node_modules|bower_components|shims)/,
-      stage: 0
+      stage: 0,
+      ignore: /(node_modules|bower_components|shims)/
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe(source(configProduction.outputName))
+    .pipe(source(config.production.outputName))
     .pipe(streamify(uglify()))
-    .pipe(gulp.dest(configProduction.dest))
-    .on('end', function() {
-      bundleLogger.end(configProduction.outputName);
+    .pipe(gulp.dest(config.production.dest))
+    .on('end', () => {
+      bundleLogger.end(config.production.outputName);
     });
 });
