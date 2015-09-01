@@ -95,6 +95,17 @@ let FlowActionCreators = {
           response: xhr.responseJSON
         });
       });
+  },
+
+  loadMine(data) {
+    return Api.flow.loadMine(data)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка моих потоков', {
+          method: 'FlowActionCreators.loadMine(data)',
+          methodArguments: {data},
+          response: xhr.responseJSON
+        });
+      });
   }
 };
 

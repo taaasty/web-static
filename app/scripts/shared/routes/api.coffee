@@ -5,6 +5,7 @@ ApiRoutes =
 
   calendar_url:               (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/calendar'
   votes_url:                 (entryId) -> gon.api_host + '/v1/entries/' + entryId + '/votes'
+  reposts_url:                         -> gon.api_host + '/v1/reposts'
   embed_url:                           -> gon.api_host + '/v1/embed'
   design_settings_url:          (slug) -> gon.api_host + '/v1/design_settings/' + slug
   design_settings_cover_url:    (slug) -> gon.api_host + '/v1/design_settings/' + slug + '/cover'
@@ -97,6 +98,7 @@ ApiRoutes =
   backgrounds: -> gon.api_host + '/v1/backgrounds'
 
   flows: -> gon.api_host + '/v1/flows'
+  flowsMine: -> gon.api_host + '/v1/flows/my'
   flow: (flowID) -> gon.api_host + '/v1/flows/' + flowID
   flowStaffs: (flowID) -> gon.api_host + '/v1/flows/' + flowID + '/staffs'
 

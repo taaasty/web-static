@@ -85,6 +85,20 @@ let EntryActionCreators = {
         });
       });
   },
+  repost(entryID, tlogID) {
+    return Api.entry.repost(entryID, tlogID)
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('repost_entry_success'));
+      })
+      .fail((xhr) => {
+        NoticeService.errorResponse(xhr);
+        ErrorService.notifyErrorResponse('Репост поста', {
+          method: 'EntryActionCreators.repost(entryID, tlogID)',
+          methodArguments: {entryID, tlogID},
+          response: xhr.responseJSON
+        });
+      });
+  },
   accept(acceptUrl) {
     return Api.entry.accept(acceptUrl)
       .then(() => {

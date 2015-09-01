@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
 import EntryTlogMetabarComments from './EntryTlogMetabarComments';
 import EntryTlogMetabarDate from './EntryTlogMetabarDate';
+import EntryTlogMetabarRepost from './EntryTlogMetabarRepost';
 import EntryTlogMetabarTags from './EntryTlogMetabarTags';
 import EntryTlogMetabarActions from './EntryTlogMetabarActions';
 
@@ -22,6 +23,10 @@ export default class EntryTlogMetabar {
         <EntryTlogMetabarDate
             url={this.props.entry.url}
             date={this.props.entry.created_at} />
+        <EntryTlogMetabarRepost
+          entryID={this.props.entry.id}
+          commentator={this.props.commentator}
+        />
         {this.renderTags()}
         <EntryTlogMetabarActions {...this.props} />
       </span>

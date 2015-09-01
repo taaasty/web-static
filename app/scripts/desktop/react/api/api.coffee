@@ -248,6 +248,17 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = deleteRequest url, data
 
+    repost: (entryID, tlogID) ->
+      url = ApiRoutes.reposts_url()
+      key = Constants.api.REPOST_ENTRY
+      data = {
+        entry_id: entryID
+        tlog_id: tlogID
+      }
+
+      abortPendingRequests key
+      _pendingRequests[key] = postRequest url, data
+
     report: (entryID) ->
       url = ApiRoutes.report_url(entryID)
       key = Constants.api.REPORT_ENTRY
@@ -378,6 +389,13 @@ Api =
 
     load: (url, data) ->
       key = Constants.api.LOAD_FLOWS
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadMine: (data) ->
+      url = ApiRoutes.flowsMine()
+      key = Constants.api.LOAD_MY_FLOWS
 
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data

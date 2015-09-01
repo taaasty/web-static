@@ -27,8 +27,10 @@
     "react": "^0.13.3",
     "react-color-picker": "git+https://git@github.com:BrandyMint/react-color-picker.git",
     "react-masonry-mixin": "^0.5.7",
+    "react-portal": "^0.7.0",
     "react-tap-event-plugin": "^0.1.6",
-    "react-textarea-autosize": "^2.2.1"
+    "react-textarea-autosize": "^2.2.1",
+    "tether": "^1.1.0"
   },
   "devDependencies": {
     "URIjs": "^1.15.1",
