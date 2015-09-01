@@ -25,6 +25,7 @@ ApiConstants = keyMirror
   REPORT_ENTRY: null
   DELETE_ENTRY: null
   ACCEPT_ENTRY: null
+  REPOST_ENTRY: null
   DECLINE_ENTRY: null
   LOAD_ENTRIES: null
   LOAD_HTML_ENTRIES: null
@@ -32,6 +33,7 @@ ApiConstants = keyMirror
   CREATE_FLOW: null
   UPDATE_FLOW: null
   LOAD_FLOWS: null
+  LOAD_MY_FLOWS: null
   ADD_STAFF_FLOW: null
   REMOVE_STAFF_FLOW: null
   CREATE_COMMENT: null

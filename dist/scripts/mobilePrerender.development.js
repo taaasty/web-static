@@ -11903,6 +11903,9 @@ ApiRoutes = {
   votes_url: function(entryId) {
     return gon.api_host + '/v1/entries/' + entryId + '/votes';
   },
+  reposts_url: function() {
+    return gon.api_host + '/v1/reposts';
+  },
   embed_url: function() {
     return gon.api_host + '/v1/embed';
   },
@@ -12073,6 +12076,9 @@ ApiRoutes = {
   },
   flows: function() {
     return gon.api_host + '/v1/flows';
+  },
+  flowsMine: function() {
+    return gon.api_host + '/v1/flows/my';
   },
   flow: function(flowID) {
     return gon.api_host + '/v1/flows/' + flowID;
