@@ -1,5 +1,5 @@
 SettingsAvatar = require './avatar'
-SettingsSlug   = require './slug'
+SettingsSlug   = require './SettingsSlug'
 SettingsTitle  = require './title'
 
 SettingsHeader = React.createClass
