@@ -11108,7 +11108,7 @@ require('./react/application');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/components/common/imageAttachmentsCollage":484,"../shared/react/services/Beep":488,"../shared/react/services/thumbor":491,"../shared/routes/api":494,"../shared/routes/routes":495,"../shared/shims/console":496,"./locales/moment/en":9,"./locales/moment/ru":10,"./locales/numeral/ru":11,"./react/application":26,"./react/components/Auth/Auth":27,"./react/components/Auth/authorization/authorization":28,"./react/components/Auth/authorization/facebook":29,"./react/components/Auth/authorization/vk":30,"./react/components/Auth/buttons/facebook_auth_button":31,"./react/components/Auth/buttons/vk_auth_button":32,"./react/components/Auth/email/email":36,"./react/components/Auth/recovery":41,"./react/components/BrowserSupport/BrowserSupportContainer":44,"./react/components/DesignPayment/DesignPaymentContainer":46,"./react/components/DesignSettings/DesignSettingsContainer":53,"./react/components/DesignSettings/common/colorPicker/popup":65,"./react/components/Editor/EditorEdit":76,"./react/components/Editor/EditorNew":77,"./react/components/Entry/EntryTlog/EntryTlog":118,"./react/components/EntryBricks/EntryBricksContainer":147,"./react/components/EntryTlogs/EntryTlogsContainer":149,"./react/components/Feed/Feed":150,"./react/components/FlowBricks/FlowBricksContainer":156,"./react/components/FlowPopups/FlowCreator":165,"./react/components/FlowPopups/FlowManager":166,"./react/components/HeroComponent/HeroFlow":173,"./react/components/HeroComponent/HeroFlows":174,"./react/components/Notifications/NotificationsContainer":178,"./react/components/SearchResults/SearchResults":194,"./react/components/TlogAlert/TlogAlertContainer":202,"./react/components/alerts/tasty_alert":204,"./react/components/alerts/tasty_confirm":205,"./react/components/alerts/tasty_locking_alert":206,"./react/components/avatars/avatar":207,"./react/components/avatars/user_avatar":208,"./react/components/buttons/load_more":209,"./react/components/calendar/calendar":210,"./react/components/calendar/calendar_header":211,"./react/components/calendar/calendar_marker":212,"./react/components/calendar/calendar_period":213,"./react/components/calendar/calendar_timeline":214,"./react/components/common/adaptive_input":226,"./react/components/editable_field":229,"./react/components/embed":230,"./react/components/entry_comment_box/comment_form/buttons/submit":231,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":232,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":233,"./react/components/entry_comment_box/comment_form/comment_form":234,"./react/components/entry_comment_box/comment_list/comment":235,"./react/components/entry_comment_box/comment_list/comment_list":236,"./react/components/entry_comment_box/comment_list/comment_manager":237,"./react/components/entry_comment_box/comment_metabar/comment_metabar":238,"./react/components/entry_comment_box/comment_metabar/date":239,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":240,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":241,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":242,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":243,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":244,"./react/components/entry_comment_box/comment_metabar/reply":245,"./react/components/entry_comment_box/entry_comment_box":246,"./react/components/entry_comment_box/load_more":247,"./react/components/entry_comment_box/mixins/comments":248,"./react/components/entry_metabar/author":249,"./react/components/entry_metabar/comment":250,"./react/components/entry_metabar/date":251,"./react/components/entry_metabar/dropdown_menu":252,"./react/components/entry_metabar/dropdown_menu_items/delete_item":253,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":254,"./react/components/entry_metabar/dropdown_menu_items/item":255,"./react/components/entry_metabar/dropdown_menu_items/report_item":256,"./react/components/entry_metabar/dropdown_menu_items/watch_item":257,"./react/components/entry_metabar/entry_metabar":258,"./react/components/follow_status":261,"./react/components/hero/profile/dropdown_menu":263,"./react/components/hero/profile/dropdown_menu_items/ignore":264,"./react/components/hero/profile/dropdown_menu_items/report":265,"./react/components/hero/profile/popup/followers_popup":266,"./react/components/hero/profile/popup/followings_popup":267,"./react/components/hero/profile/popup/items/follower_item":268,"./react/components/hero/profile/popup/items/following_item":269,"./react/components/hero/profile/popup/items/tag_item":270,"./react/components/hero/profile/popup/popup":271,"./react/components/hero/profile/popup/tags_popup":272,"./react/components/hero/profile/profile":273,"./react/components/hero/profile/profile_avatar":274,"./react/components/hero/profile/profile_head":275,"./react/components/hero/profile/profile_stats":276,"./react/components/hero/profile/profile_stats_item":277,"./react/components/people/item":278,"./react/components/persons_popup/items/follower_relationship":279,"./react/components/persons_popup/items/following_relationship":280,"./react/components/persons_popup/items/guess_relationship":281,"./react/components/persons_popup/items/ignored_relationship":282,"./react/components/persons_popup/items/item":283,"./react/components/persons_popup/items/requested_relationship":284,"./react/components/persons_popup/menu":285,"./react/components/persons_popup/menu_item":286,"./react/components/persons_popup/mixins/panel_mixin":287,"./react/components/persons_popup/panels/followers_panel":288,"./react/components/persons_popup/panels/followings_panel":289,"./react/components/persons_popup/panels/guessed_panel":290,"./react/components/persons_popup/panels/ignored_panel":291,"./react/components/persons_popup/panels/requested_panel":292,"./react/components/persons_popup/panels/socialNetwork/facebook":293,"./react/components/persons_popup/panels/socialNetwork/vkontakte":303,"./react/components/persons_popup/persons_popup":310,"./react/components/popup/header":311,"./react/components/popup/layout":312,"./react/components/popup/popup":313,"./react/components/popup/spinner":314,"./react/components/popup_box":315,"./react/components/relationship_buttons/follow_button":320,"./react/components/relationship_buttons/follower_button":321,"./react/components/relationship_buttons/guess_button":322,"./react/components/relationship_buttons/ignore_button":323,"./react/components/relationship_buttons/mixins/relationship":324,"./react/components/relationship_buttons/request_button":325,"./react/components/screen_viewer/screen_viewer":326,"./react/components/search/button":327,"./react/components/search/field":328,"./react/components/search/search":329,"./react/components/settings/settings":346,"./react/components/shellbox_layer":349,"./react/components/shellboxes/confirm_registration":350,"./react/components/smart_follow_status":351,"./react/components/spinner":352,"./react/components/toolbars/AvatarToolbarContainer":354,"./react/components/toolbars/CloseToolbar":355,"./react/components/toolbars/UserToolbarContainer":358,"./react/components/transition/timeout_transition_group":364,"./react/components/voting":365,"./react/controllers/popup":375,"./react/controllers/shellbox":377,"./react/controllers/tasty_alert":378,"./react/controllers/tasty_confirm":379,"./react/controllers/tasty_events":380,"./react/controllers/tasty_locking_alert":381,"./react/dispatchers/current_user":383,"./react/dispatchers/relationships":385,"./react/helpers/app":390,"./react/mediators/comments":391,"./react/messaging/actions/conversation":392,"./react/messaging/actions/message":393,"./react/messaging/actions/notification":394,"./react/messaging/actions/popup":395,"./react/messaging/components/buttons/write_message":396,"./react/messaging/components/messages_popup/conversations/conversations":397,"./react/messaging/components/messages_popup/conversations/list/empty":398,"./react/messaging/components/messages_popup/conversations/list/list":399,"./react/messaging/components/messages_popup/conversations/list/list_item":400,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":401,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":402,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":403,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":404,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":405,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":406,"./react/messaging/components/messages_popup/loading_message":407,"./react/messaging/components/messages_popup/messages_popup":408,"./react/messaging/components/messages_popup/thread/message_form/message_form":409,"./react/messaging/components/messages_popup/thread/message_list/empty":410,"./react/messaging/components/messages_popup/thread/message_list/message_list":411,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":412,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":413,"./react/messaging/components/messages_popup/thread/thread":414,"./react/messaging/components/messages_popup/ui/back_button":415,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":416,"./react/messaging/components/notifications_popup/notifications/empty":417,"./react/messaging/components/notifications_popup/notifications/notification":418,"./react/messaging/components/notifications_popup/notifications/notifications":419,"./react/messaging/components/notifications_popup/notifications_popup":420,"./react/messaging/components/toolbars/indicators/indicators":421,"./react/messaging/components/toolbars/indicators/messages":422,"./react/messaging/components/toolbars/indicators/notifications":423,"./react/messaging/dispatchers/messaging":424,"./react/messaging/messaging_requester":425,"./react/messaging/messaging_service":426,"./react/messaging/messaging_testing":427,"./react/messaging/stores/connection_state":429,"./react/messaging/stores/conversations":430,"./react/messaging/stores/messages":431,"./react/messaging/stores/messages_popup_state":432,"./react/messaging/stores/messaging_status":433,"./react/messaging/stores/notifications":434,"./react/mixins/activities":435,"./react/mixins/component_manipulations":436,"./react/mixins/dom_manipulations":437,"./react/mixins/error_timer":438,"./react/mixins/grammar":439,"./react/mixins/positions":440,"./react/mixins/requester":441,"./react/mixins/scroller":442,"./react/mixins/shake":443,"./react/mixins/touch":444,"./react/mixins/unmount":445,"./react/services/Notice":450,"./react/services/positions":456,"./react/services/uuid":457,"./react/stores/EditorStore":458,"./react/stores/current_user":461,"./react/stores/design":462,"./react/stores/relationships":463,"./resources/fileReceiver":464,"./resources/is_mobile":465,"./resources/libs":466,"./resources/tasty":467,"./resources/tasty_utils":468}],9:[function(require,module,exports){
+},{"../shared/react/components/common/imageAttachmentsCollage":484,"../shared/react/services/Beep":488,"../shared/react/services/thumbor":491,"../shared/routes/api":494,"../shared/routes/routes":495,"../shared/shims/console":496,"./locales/moment/en":9,"./locales/moment/ru":10,"./locales/numeral/ru":11,"./react/application":26,"./react/components/Auth/Auth":27,"./react/components/Auth/authorization/authorization":28,"./react/components/Auth/authorization/facebook":29,"./react/components/Auth/authorization/vk":30,"./react/components/Auth/buttons/facebook_auth_button":31,"./react/components/Auth/buttons/vk_auth_button":32,"./react/components/Auth/email/email":36,"./react/components/Auth/recovery":41,"./react/components/BrowserSupport/BrowserSupportContainer":44,"./react/components/DesignPayment/DesignPaymentContainer":46,"./react/components/DesignSettings/DesignSettingsContainer":53,"./react/components/DesignSettings/common/colorPicker/popup":65,"./react/components/Editor/EditorEdit":76,"./react/components/Editor/EditorNew":77,"./react/components/Entry/EntryTlog/EntryTlog":118,"./react/components/EntryBricks/EntryBricksContainer":147,"./react/components/EntryTlogs/EntryTlogsContainer":149,"./react/components/Feed/Feed":150,"./react/components/FlowBricks/FlowBricksContainer":156,"./react/components/FlowPopups/FlowCreator":165,"./react/components/FlowPopups/FlowManager":166,"./react/components/HeroComponent/HeroFlow":173,"./react/components/HeroComponent/HeroFlows":174,"./react/components/Notifications/NotificationsContainer":178,"./react/components/SearchResults/SearchResults":194,"./react/components/TlogAlert/TlogAlertContainer":202,"./react/components/alerts/tasty_alert":204,"./react/components/alerts/tasty_confirm":205,"./react/components/alerts/tasty_locking_alert":206,"./react/components/avatars/avatar":207,"./react/components/avatars/user_avatar":208,"./react/components/buttons/load_more":209,"./react/components/calendar/calendar":210,"./react/components/calendar/calendar_header":211,"./react/components/calendar/calendar_marker":212,"./react/components/calendar/calendar_period":213,"./react/components/calendar/calendar_timeline":214,"./react/components/common/adaptive_input":226,"./react/components/editable_field":229,"./react/components/embed":230,"./react/components/entry_comment_box/comment_form/buttons/submit":231,"./react/components/entry_comment_box/comment_form/comment_create_form_manager":232,"./react/components/entry_comment_box/comment_form/comment_edit_form_manager":233,"./react/components/entry_comment_box/comment_form/comment_form":234,"./react/components/entry_comment_box/comment_list/comment":235,"./react/components/entry_comment_box/comment_list/comment_list":236,"./react/components/entry_comment_box/comment_list/comment_manager":237,"./react/components/entry_comment_box/comment_metabar/comment_metabar":238,"./react/components/entry_comment_box/comment_metabar/date":239,"./react/components/entry_comment_box/comment_metabar/dropdown_menu":240,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item":241,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item":242,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item":243,"./react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item":244,"./react/components/entry_comment_box/comment_metabar/reply":245,"./react/components/entry_comment_box/entry_comment_box":246,"./react/components/entry_comment_box/load_more":247,"./react/components/entry_comment_box/mixins/comments":248,"./react/components/entry_metabar/author":249,"./react/components/entry_metabar/comment":250,"./react/components/entry_metabar/date":251,"./react/components/entry_metabar/dropdown_menu":252,"./react/components/entry_metabar/dropdown_menu_items/delete_item":253,"./react/components/entry_metabar/dropdown_menu_items/favorite_item":254,"./react/components/entry_metabar/dropdown_menu_items/item":255,"./react/components/entry_metabar/dropdown_menu_items/report_item":256,"./react/components/entry_metabar/dropdown_menu_items/watch_item":257,"./react/components/entry_metabar/entry_metabar":258,"./react/components/follow_status":261,"./react/components/hero/profile/dropdown_menu":263,"./react/components/hero/profile/dropdown_menu_items/ignore":264,"./react/components/hero/profile/dropdown_menu_items/report":265,"./react/components/hero/profile/popup/followers_popup":266,"./react/components/hero/profile/popup/followings_popup":267,"./react/components/hero/profile/popup/items/follower_item":268,"./react/components/hero/profile/popup/items/following_item":269,"./react/components/hero/profile/popup/items/tag_item":270,"./react/components/hero/profile/popup/popup":271,"./react/components/hero/profile/popup/tags_popup":272,"./react/components/hero/profile/profile":273,"./react/components/hero/profile/profile_avatar":274,"./react/components/hero/profile/profile_head":275,"./react/components/hero/profile/profile_stats":276,"./react/components/hero/profile/profile_stats_item":277,"./react/components/people/item":278,"./react/components/persons_popup/items/follower_relationship":279,"./react/components/persons_popup/items/following_relationship":280,"./react/components/persons_popup/items/guess_relationship":281,"./react/components/persons_popup/items/ignored_relationship":282,"./react/components/persons_popup/items/item":283,"./react/components/persons_popup/items/requested_relationship":284,"./react/components/persons_popup/menu":285,"./react/components/persons_popup/menu_item":286,"./react/components/persons_popup/mixins/panel_mixin":287,"./react/components/persons_popup/panels/followers_panel":288,"./react/components/persons_popup/panels/followings_panel":289,"./react/components/persons_popup/panels/guessed_panel":290,"./react/components/persons_popup/panels/ignored_panel":291,"./react/components/persons_popup/panels/requested_panel":292,"./react/components/persons_popup/panels/socialNetwork/facebook":293,"./react/components/persons_popup/panels/socialNetwork/vkontakte":303,"./react/components/persons_popup/persons_popup":310,"./react/components/popup/header":311,"./react/components/popup/layout":312,"./react/components/popup/popup":313,"./react/components/popup/spinner":314,"./react/components/popup_box":315,"./react/components/relationship_buttons/follow_button":320,"./react/components/relationship_buttons/follower_button":321,"./react/components/relationship_buttons/guess_button":322,"./react/components/relationship_buttons/ignore_button":323,"./react/components/relationship_buttons/mixins/relationship":324,"./react/components/relationship_buttons/request_button":325,"./react/components/screen_viewer/screen_viewer":326,"./react/components/search/button":327,"./react/components/search/field":328,"./react/components/search/search":329,"./react/components/settings/settings":347,"./react/components/shellbox_layer":349,"./react/components/shellboxes/confirm_registration":350,"./react/components/smart_follow_status":351,"./react/components/spinner":352,"./react/components/toolbars/AvatarToolbarContainer":354,"./react/components/toolbars/CloseToolbar":355,"./react/components/toolbars/UserToolbarContainer":358,"./react/components/transition/timeout_transition_group":364,"./react/components/voting":365,"./react/controllers/popup":375,"./react/controllers/shellbox":377,"./react/controllers/tasty_alert":378,"./react/controllers/tasty_confirm":379,"./react/controllers/tasty_events":380,"./react/controllers/tasty_locking_alert":381,"./react/dispatchers/current_user":383,"./react/dispatchers/relationships":385,"./react/helpers/app":390,"./react/mediators/comments":391,"./react/messaging/actions/conversation":392,"./react/messaging/actions/message":393,"./react/messaging/actions/notification":394,"./react/messaging/actions/popup":395,"./react/messaging/components/buttons/write_message":396,"./react/messaging/components/messages_popup/conversations/conversations":397,"./react/messaging/components/messages_popup/conversations/list/empty":398,"./react/messaging/components/messages_popup/conversations/list/list":399,"./react/messaging/components/messages_popup/conversations/list/list_item":400,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser":401,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button":402,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown":403,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results":404,"./react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item":405,"./react/messaging/components/messages_popup/create_new_conversation/create_new_conversation":406,"./react/messaging/components/messages_popup/loading_message":407,"./react/messaging/components/messages_popup/messages_popup":408,"./react/messaging/components/messages_popup/thread/message_form/message_form":409,"./react/messaging/components/messages_popup/thread/message_list/empty":410,"./react/messaging/components/messages_popup/thread/message_list/message_list":411,"./react/messaging/components/messages_popup/thread/message_list/message_list_item":412,"./react/messaging/components/messages_popup/thread/message_list/message_list_item_manager":413,"./react/messaging/components/messages_popup/thread/thread":414,"./react/messaging/components/messages_popup/ui/back_button":415,"./react/messaging/components/messages_popup/ui/create_new_conversation_button":416,"./react/messaging/components/notifications_popup/notifications/empty":417,"./react/messaging/components/notifications_popup/notifications/notification":418,"./react/messaging/components/notifications_popup/notifications/notifications":419,"./react/messaging/components/notifications_popup/notifications_popup":420,"./react/messaging/components/toolbars/indicators/indicators":421,"./react/messaging/components/toolbars/indicators/messages":422,"./react/messaging/components/toolbars/indicators/notifications":423,"./react/messaging/dispatchers/messaging":424,"./react/messaging/messaging_requester":425,"./react/messaging/messaging_service":426,"./react/messaging/messaging_testing":427,"./react/messaging/stores/connection_state":429,"./react/messaging/stores/conversations":430,"./react/messaging/stores/messages":431,"./react/messaging/stores/messages_popup_state":432,"./react/messaging/stores/messaging_status":433,"./react/messaging/stores/notifications":434,"./react/mixins/activities":435,"./react/mixins/component_manipulations":436,"./react/mixins/dom_manipulations":437,"./react/mixins/error_timer":438,"./react/mixins/grammar":439,"./react/mixins/positions":440,"./react/mixins/requester":441,"./react/mixins/scroller":442,"./react/mixins/shake":443,"./react/mixins/touch":444,"./react/mixins/unmount":445,"./react/services/Notice":450,"./react/services/positions":456,"./react/services/uuid":457,"./react/stores/EditorStore":458,"./react/stores/current_user":461,"./react/stores/design":462,"./react/stores/relationships":463,"./resources/fileReceiver":464,"./resources/is_mobile":465,"./resources/libs":466,"./resources/tasty":467,"./resources/tasty_utils":468}],9:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 'use strict';
@@ -35907,6 +35907,86 @@ exports["default"] = SettingsLanguage;
 module.exports = exports["default"];
 
 },{"../common/SelectBox/SelectBox":221}],331:[function(require,module,exports){
+/*global i18n, EditableField */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _servicesNotice = require('../../services/Notice');
+
+var _servicesNotice2 = _interopRequireDefault(_servicesNotice);
+
+var SettingsSlug = (function (_Component) {
+  _inherits(SettingsSlug, _Component);
+
+  function SettingsSlug() {
+    _classCallCheck(this, SettingsSlug);
+
+    _get(Object.getPrototypeOf(SettingsSlug.prototype), 'constructor', this).apply(this, arguments);
+
+    this.state = {
+      slug: this.props.slug
+    };
+  }
+
+  _createClass(SettingsSlug, [{
+    key: 'handleEditEnd',
+    value: function handleEditEnd(slug) {
+      if (slug) {
+        if (slug !== this.state.slug) {
+          this.setState({ slug: slug });
+          this.props.onChange(slug);
+        }
+      } else {
+        _servicesNotice2['default'].notifyError(i18n.t('settings_empty_slug_error'), 2000);
+        //TODO: removed this.forceUpdate(), check if was necessary
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'settings__hero__name' },
+        _react2['default'].createElement(EditableField, {
+          defaultValue: this.state.slug,
+          onEditEnd: this.handleEditEnd.bind(this) }),
+        'placeholder=',
+        i18n.t('settings_slug_placeholder')
+      );
+    }
+  }], [{
+    key: 'propTypes',
+    value: {
+      onChange: _react.PropTypes.func.isRequired,
+      slug: _react.PropTypes.string.isRequired
+    },
+    enumerable: true
+  }]);
+
+  return SettingsSlug;
+})(_react.Component);
+
+exports['default'] = SettingsSlug;
+module.exports = exports['default'];
+
+},{"../../services/Notice":450,"react":"react"}],332:[function(require,module,exports){
 var SettingsAccounts;
 
 SettingsAccounts = React.createClass({
@@ -35952,7 +36032,7 @@ SettingsAccounts = React.createClass({
 module.exports = SettingsAccounts;
 
 
-},{}],332:[function(require,module,exports){
+},{}],333:[function(require,module,exports){
 var CurrentUserServerActions, PropTypes, SettingsAvatar;
 
 CurrentUserServerActions = require('../../actions/server/current_user');
@@ -36023,7 +36103,7 @@ SettingsAvatar = React.createClass({
 module.exports = SettingsAvatar;
 
 
-},{"../../actions/server/current_user":22}],333:[function(require,module,exports){
+},{"../../actions/server/current_user":22}],334:[function(require,module,exports){
 var ERROR_STATE, SENDING_STATE, SENT_STATE, SHOW_STATE, SettingsEmailConfirmation;
 
 SHOW_STATE = 'show';
@@ -36108,7 +36188,7 @@ SettingsEmailConfirmation = React.createClass({
 module.exports = SettingsEmailConfirmation;
 
 
-},{}],334:[function(require,module,exports){
+},{}],335:[function(require,module,exports){
 var SettingsEmailEdit, classnames;
 
 classnames = require('classnames');
@@ -36214,7 +36294,7 @@ SettingsEmailEdit = React.createClass({
 module.exports = SettingsEmailEdit;
 
 
-},{"classnames":501}],335:[function(require,module,exports){
+},{"classnames":501}],336:[function(require,module,exports){
 var EDIT_STATE, ESTABLISH_STATE, SHOW_STATE, SettingsEmail, SettingsEmailEdit, SettingsEmailEstablish, SettingsEmailShow;
 
 SettingsEmailShow = require('./show');
@@ -36304,7 +36384,7 @@ SettingsEmail = React.createClass({
 module.exports = SettingsEmail;
 
 
-},{"./edit":334,"./establish/establish":337,"./show":339}],336:[function(require,module,exports){
+},{"./edit":335,"./establish/establish":338,"./show":340}],337:[function(require,module,exports){
 var SettingsEmailEstablishEdit, classnames;
 
 classnames = require('classnames');
@@ -36402,7 +36482,7 @@ SettingsEmailEstablishEdit = React.createClass({
 module.exports = SettingsEmailEstablishEdit;
 
 
-},{"classnames":501}],337:[function(require,module,exports){
+},{"classnames":501}],338:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsEmailEstablish, SettingsEmailEstablishEdit, SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = require('./show');
@@ -36452,7 +36532,7 @@ SettingsEmailEstablish = React.createClass({
 module.exports = SettingsEmailEstablish;
 
 
-},{"./edit":336,"./show":338}],338:[function(require,module,exports){
+},{"./edit":337,"./show":339}],339:[function(require,module,exports){
 var SettingsEmailEstablishShow;
 
 SettingsEmailEstablishShow = React.createClass({
@@ -36482,7 +36562,7 @@ SettingsEmailEstablishShow = React.createClass({
 module.exports = SettingsEmailEstablishShow;
 
 
-},{}],339:[function(require,module,exports){
+},{}],340:[function(require,module,exports){
 var SettingsEmailConfirmation, SettingsEmailShow;
 
 SettingsEmailConfirmation = require('./confirmation');
@@ -36548,12 +36628,12 @@ SettingsEmailShow = React.createClass({
 module.exports = SettingsEmailShow;
 
 
-},{"./confirmation":333}],340:[function(require,module,exports){
+},{"./confirmation":334}],341:[function(require,module,exports){
 var SettingsAvatar, SettingsHeader, SettingsSlug, SettingsTitle;
 
 SettingsAvatar = require('./avatar');
 
-SettingsSlug = require('./slug');
+SettingsSlug = require('./SettingsSlug');
 
 SettingsTitle = require('./title');
 
@@ -36603,7 +36683,7 @@ SettingsHeader = React.createClass({
 module.exports = SettingsHeader;
 
 
-},{"./avatar":332,"./slug":347,"./title":348}],341:[function(require,module,exports){
+},{"./SettingsSlug":331,"./avatar":333,"./title":348}],342:[function(require,module,exports){
 var CurrentUserViewActions, SettingsMixin;
 
 CurrentUserViewActions = require('../../../actions/view/current_user');
@@ -36838,7 +36918,7 @@ SettingsMixin = {
 module.exports = SettingsMixin;
 
 
-},{"../../../actions/view/current_user":23}],342:[function(require,module,exports){
+},{"../../../actions/view/current_user":23}],343:[function(require,module,exports){
 var CANCEL_TIMEOUT, SettingsPasswordEdit, classnames;
 
 classnames = require('classnames');
@@ -36983,7 +37063,7 @@ SettingsPasswordEdit = React.createClass({
 module.exports = SettingsPasswordEdit;
 
 
-},{"classnames":501}],343:[function(require,module,exports){
+},{"classnames":501}],344:[function(require,module,exports){
 var EDIT_STATE, SHOW_STATE, SettingsPassword, SettingsPasswordEdit, SettingsPasswordShow;
 
 SettingsPasswordShow = require('./show');
@@ -37039,7 +37119,7 @@ SettingsPassword = React.createClass({
 module.exports = SettingsPassword;
 
 
-},{"./edit":342,"./show":344}],344:[function(require,module,exports){
+},{"./edit":343,"./show":345}],345:[function(require,module,exports){
 var SettingsPasswordShow;
 
 SettingsPasswordShow = React.createClass({
@@ -37073,7 +37153,7 @@ SettingsPasswordShow = React.createClass({
 module.exports = SettingsPasswordShow;
 
 
-},{}],345:[function(require,module,exports){
+},{}],346:[function(require,module,exports){
 var SettingsRadioItem;
 
 SettingsRadioItem = React.createClass({
@@ -37126,7 +37206,7 @@ SettingsRadioItem = React.createClass({
 module.exports = SettingsRadioItem;
 
 
-},{}],346:[function(require,module,exports){
+},{}],347:[function(require,module,exports){
 var LinkedStateMixin, SettingsAccounts, SettingsEmail, SettingsHeader, SettingsLanguage, SettingsMixin, SettingsPassword, SettingsRadioItem;
 
 SettingsHeader = require('./header');
@@ -37226,48 +37306,7 @@ window.Settings = React.createClass({
 });
 
 
-},{"./SettingsLanguage":330,"./accounts":331,"./email/email":335,"./header":340,"./mixins/settings":341,"./password/password":343,"./radio_item":345,"react/lib/LinkedStateMixin":571}],347:[function(require,module,exports){
-var PropTypes, SettingsSlug;
-
-PropTypes = React.PropTypes;
-
-SettingsSlug = React.createClass({
-  displayName: 'SettingsSlug',
-  propTypes: {
-    slug: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      slug: this.props.slug
-    };
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "settings__hero__name"
-    }, React.createElement(EditableField, {
-      "defaultValue": this.state.slug,
-      "placeholder": i18n.t('settings_slug_placeholder'),
-      "onEditEnd": this.handleEditEnd
-    }));
-  },
-  handleEditEnd: function(slug) {
-    if (slug && slug !== this.state.slug) {
-      this.setState({
-        slug: slug
-      });
-      return this.props.onChange(slug);
-    } else {
-      NoticeService.notifyError(i18n.t('settings_empty_slug_error'), 2000);
-      return this.forceUpdate();
-    }
-  }
-});
-
-module.exports = SettingsSlug;
-
-
-},{}],348:[function(require,module,exports){
+},{"./SettingsLanguage":330,"./accounts":332,"./email/email":336,"./header":341,"./mixins/settings":342,"./password/password":344,"./radio_item":346,"react/lib/LinkedStateMixin":571}],348:[function(require,module,exports){
 var SettingsTitle;
 
 SettingsTitle = React.createClass({
