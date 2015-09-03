@@ -11,7 +11,8 @@ export default class EntryTlog extends Component {
     entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
     host_tlog_id: PropTypes.number,
-    moderation: PropTypes.object
+    moderation: PropTypes.object,
+    isAuthorVisible: PropTypes.bool,
   }
   state = {
     entry: this.props.entry,
@@ -33,14 +34,18 @@ export default class EntryTlog extends Component {
     };
 
     return (
-      <article data-id={this.props.entry.id}
-               data-time={this.props.entry.created_at}
-               className={this.getEntryClasses()}>
+      <article
+        data-id={this.props.entry.id}
+        data-time={this.props.entry.created_at}
+        className={this.getEntryClasses()}
+      >
         <EntryTlogContent
-            {...actions}
-            entry={this.props.entry}
-            commentator={this.props.commentator}
-            hasModeration={this.state.hasModeration} />
+          {...actions}
+          entry={this.props.entry}
+          commentator={this.props.commentator}
+          hasModeration={this.state.hasModeration}
+          isAuthorVisible={this.props.isAuthorVisible}
+        />
       </article>
     );
   }

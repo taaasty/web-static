@@ -9,7 +9,11 @@ import EntryTlogMetabarActions from './EntryTlogMetabarActions';
 export default class EntryTlogMetabar {
   static propTypes = {
     entry: PropTypes.object.isRequired,
-    commentator: PropTypes.object
+    commentator: PropTypes.object,
+    isAuthorVisible: PropTypes.bool,
+  }
+  defaultProps = {
+    isAuthorVisible: true
   }
   render() {
     return (
@@ -33,7 +37,7 @@ export default class EntryTlogMetabar {
     );
   }
   renderAuthor() {
-    if (this.props.entry.tlog != null) {
+    if (this.props.entry.tlog != null && this.props.isAuthorVisible) {
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">

@@ -62,7 +62,7 @@ class RelativePopup {
       target: target,
       attachment: 'bottom center',
       targetAttachment: 'top center',
-      offset: '10px 0'
+      offset: '10px 0',
     });
   }
   handleOutsideMouseClick(e) {
