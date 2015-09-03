@@ -71,16 +71,16 @@ let EntryActionCreators = {
         });
       });
   },
-  delete(entryID) {
-    return Api.entry.delete(entryID)
+  delete(entryID, tlogID) {
+    return Api.entry.delete(entryID, tlogID)
       .then(() => {
         NoticeService.notifySuccess(i18n.t('delete_entry_success'));
       })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);
         ErrorService.notifyErrorResponse('Удаление поста', {
-          method: 'EntryActionCreators.delete(entryID)',
-          methodArguments: {entryID},
+          method: 'EntryActionCreators.delete(entryID, tlogID)',
+          methodArguments: {entryID, tlogID},
           response: xhr.responseJSON
         });
       });

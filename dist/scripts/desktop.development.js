@@ -11262,14 +11262,14 @@ var EntryActionCreators = {
       });
     });
   },
-  'delete': function _delete(entryID) {
-    return _apiApi2['default'].entry['delete'](entryID).then(function () {
+  'delete': function _delete(entryID, tlogID) {
+    return _apiApi2['default'].entry['delete'](entryID, tlogID).then(function () {
       _servicesNotice2['default'].notifySuccess(i18n.t('delete_entry_success'));
     }).fail(function (xhr) {
       _servicesNotice2['default'].errorResponse(xhr);
       _sharedReactServicesError2['default'].notifyErrorResponse('Удаление поста', {
-        method: 'EntryActionCreators.delete(entryID)',
-        methodArguments: { entryID: entryID },
+        method: 'EntryActionCreators.delete(entryID, tlogID)',
+        methodArguments: { entryID: entryID, tlogID: tlogID },
         response: xhr.responseJSON
       });
     });
@@ -12847,12 +12847,16 @@ Api = {
       abortPendingRequests(key);
       return _pendingRequests[key] = postRequest(url);
     },
-    "delete": function(entryID) {
-      var key, url;
-      url = ApiRoutes.entry_url(entryID);
+    "delete": function(entryID, tlogID) {
+      var data, key, url;
+      url = ApiRoutes.reposts_url();
       key = Constants.api.DELETE_ENTRY;
+      data = {
+        entry_id: entryID,
+        tlog_id: tlogID
+      };
       abortPendingRequests(key);
-      return _pendingRequests[key] = deleteRequest(url);
+      return _pendingRequests[key] = deleteRequest(url, data);
     },
     accept: function(acceptUrl) {
       var key;
@@ -19729,30 +19733,32 @@ var EntryTlog = (function (_Component) {
   }, {
     key: 'delete',
     value: function _delete() {
-      var _this6 = this;
+      var _props = this.props;
+      var entryID = _props.entry.id;
+      var tlogID = _props.host_tlog_id;
 
       TastyConfirmController.show({
         message: i18n.t('delete_entry_confirm'),
         acceptButtonText: i18n.t('delete_entry_button'),
         onAccept: function onAccept() {
-          _actionsEntry2['default']['delete'](_this6.props.entry.id);
+          _actionsEntry2['default']['delete'](entryID, tlogID);
         }
       });
     }
   }, {
     key: 'accept',
     value: function accept() {
-      var _this7 = this;
+      var _this6 = this;
 
       _actionsEntry2['default'].accept(this.props.moderation.accept_url).then(function () {
-        var accept_action = _this7.props.moderation.accept_action;
+        var accept_action = _this6.props.moderation.accept_action;
 
         switch (accept_action) {
           case 'delete':
-            _this7.props.onDelete(_this7.props.entry.id);
+            _this6.props.onDelete(_this6.props.entry.id);
             break;
           case 'nothing':
-            _this7.setState({ hasModeration: false });
+            _this6.setState({ hasModeration: false });
             break;
         }
       });
@@ -19760,17 +19766,17 @@ var EntryTlog = (function (_Component) {
   }, {
     key: 'decline',
     value: function decline() {
-      var _this8 = this;
+      var _this7 = this;
 
       _actionsEntry2['default'].decline(this.props.moderation.decline_url).then(function () {
-        var decline_action = _this8.props.moderation.decline_action;
+        var decline_action = _this7.props.moderation.decline_action;
 
         switch (decline_action) {
           case 'delete':
-            _this8.props.onDelete(_this8.props.entry.id);
+            _this7.props.onDelete(_this7.props.entry.id);
             break;
           case 'nothing':
-            _this8.setState({ hasModeration: false });
+            _this7.setState({ hasModeration: false });
             break;
         }
       });
@@ -19789,6 +19795,7 @@ var EntryTlog = (function (_Component) {
     value: {
       entry: _react.PropTypes.object.isRequired,
       commentator: _react.PropTypes.object,
+      host_tlog_id: _react.PropTypes.number,
       moderation: _react.PropTypes.object
     },
     enumerable: true
