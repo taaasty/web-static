@@ -266,12 +266,16 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url
 
-    delete: (entryID) ->
-      url = ApiRoutes.entry_url entryID
+    delete: (entryID, tlogID) ->
+      url = ApiRoutes.reposts_url()
       key = Constants.api.DELETE_ENTRY
+      data = {
+        entry_id: entryID
+        tlog_id: tlogID
+      }
 
       abortPendingRequests key
-      _pendingRequests[key] = deleteRequest url
+      _pendingRequests[key] = deleteRequest url, data
 
     accept: (acceptUrl) ->
       key = Constants.api.ACCEPT_ENTRY

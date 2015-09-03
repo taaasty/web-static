@@ -10,6 +10,7 @@ export default class EntryTlog extends Component {
   static propTypes = {
     entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
+    host_tlog_id: PropTypes.number,
     moderation: PropTypes.object
   }
   state = {
@@ -81,11 +82,12 @@ export default class EntryTlog extends Component {
     });
   }
   delete() {
+    const { entry: { id: entryID }, host_tlog_id: tlogID } = this.props;
     TastyConfirmController.show({
       message: i18n.t('delete_entry_confirm'),
       acceptButtonText: i18n.t('delete_entry_button'),
       onAccept: () => {
-        EntryActionCreators.delete(this.props.entry.id);
+        EntryActionCreators.delete(entryID, tlogID);
       }
     });
   }
