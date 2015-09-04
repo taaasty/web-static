@@ -34,6 +34,7 @@ ApiConstants = keyMirror
   UPDATE_FLOW: null
   LOAD_FLOWS: null
   LOAD_MY_FLOWS: null
+  LOAD_AVAILABLE_FLOWS: null
   ADD_STAFF_FLOW: null
   REMOVE_STAFF_FLOW: null
   CREATE_COMMENT: null

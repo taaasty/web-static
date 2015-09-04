@@ -106,7 +106,18 @@ let FlowActionCreators = {
           response: xhr.responseJSON
         });
       });
-  }
+  },
+
+  loadAvailable(data) {
+    return Api.flow.loadAvailable(data)
+      .fail((xhr) => {
+        ErrorService.notifyErrorResponse('Загрузка доступных для репостинга потоков', {
+          method: 'FlowActionCreators.loadAvailable(data)',
+          methodArguments: {data},
+          response: xhr.responseJSON
+        });
+      });
+  },
 };
 
 export default FlowActionCreators;

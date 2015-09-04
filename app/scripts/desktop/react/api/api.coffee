@@ -404,4 +404,11 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
+    loadAvailable: (data) ->
+      url = ApiRoutes.flowsAvailable()
+      key = Constants.api.LOAD_AVAILABLE_FLOWS
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
 module.exports = Api

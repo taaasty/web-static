@@ -99,6 +99,7 @@ ApiRoutes =
 
   flows: -> gon.api_host + '/v1/flows'
   flowsMine: -> gon.api_host + '/v1/flows/my'
+  flowsAvailable: -> gon.api_host + '/v1/flows/available'
   flow: (flowID) -> gon.api_host + '/v1/flows/' + flowID
   flowStaffs: (flowID) -> gon.api_host + '/v1/flows/' + flowID + '/staffs'
 

@@ -12489,6 +12489,9 @@ ApiRoutes = {
   flowsMine: function() {
     return gon.api_host + '/v1/flows/my';
   },
+  flowsAvailable: function() {
+    return gon.api_host + '/v1/flows/available';
+  },
   flow: function(flowID) {
     return gon.api_host + '/v1/flows/' + flowID;
   },

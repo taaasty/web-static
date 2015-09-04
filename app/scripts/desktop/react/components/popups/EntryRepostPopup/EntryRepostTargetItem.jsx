@@ -17,7 +17,7 @@ export default class EntryRepostTargetItem {
         >
         <span className="user__avatar">
           <Avatar
-            userpic={this.props.target.flowpic}
+            userpic={this.props.target.flowpic || this.props.target.userpic}
             size={40}
           />
         </span>

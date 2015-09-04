@@ -12,8 +12,8 @@ export default class EntryRepostPopup extends Component {
     entryID: PropTypes.number.isRequired,
   }
   state = {
-    targetList: [],
-    visibleList: [],
+    targetList: [CurrentUserStore.getUser()],
+    visibleList: [CurrentUserStore.getUser()],
     nextPage: 1,
     pattern: '',
     isLoading: true,
@@ -88,7 +88,7 @@ export default class EntryRepostPopup extends Component {
     const data = { page: this.state.nextPage };
 
     this.setState({ [loadingState]: true, isError: false });
-    FlowActionCreators.loadMine(data)
+    FlowActionCreators.loadAvailable(data)
       .then((flowsInfo) => {
         const list = this.state.targetList.concat(flowsInfo.items.map((item) => item.flow));
 
