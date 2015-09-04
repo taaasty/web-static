@@ -293,6 +293,17 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, data
 
+  tlog:
+    loadEntriesTlogs: (tlogId, sinceEntryId, limit) ->
+      url = ApiRoutes.tlogEntriesTlogs(tlogId)
+      key = Constants.api.LOAD_TLOG_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
   feed:
     loadLiveEntries: (sinceEntryId, limit) ->
       url  = ApiRoutes.feedLive()

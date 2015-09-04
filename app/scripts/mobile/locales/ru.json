@@ -130,6 +130,7 @@
     "comment_edit": "Изм",
     "feed_load_more": "Загрузить еще",
     "hero_current_user": "Это вы",
+    "hero_create_entry": "Написать в поток",
     "auth_reset_password": "Сбросить пароль",
     "auth_email_signin": "Войти с помощью эл. почты",
     "auth_email_signup": "или зарегистрироваться",

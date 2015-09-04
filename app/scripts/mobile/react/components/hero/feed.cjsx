@@ -20,6 +20,7 @@ HeroFeed = React.createClass
           <div className="hero__smalltext">
             <span>{ i18n.t('hero.feed_entries_count', {count: @props.entriesCount}) }</span>
           </div>
+          {@props.children}
         </div>
       </div>
     </div>
