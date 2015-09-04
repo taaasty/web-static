@@ -4,7 +4,7 @@
   "dependencies": {
     "baron": "~0.7.10",
     "blueimp-file-upload": "~9.9.3",
-    "bootstrap": "~3.3.4",
+    "bootstrap": "3.3.4",
     "eventEmitter": "~4.2.11",
     "jquery-waypoints": "~2.0.5",
     "jquery.shapeshift": "~2.0.0",
