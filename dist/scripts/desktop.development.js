@@ -19618,6 +19618,7 @@ exports['default'] = EntryBrickVideoType;
 module.exports = exports['default'];
 
 },{"../../../../../shared/react/components/common/Image":474,"../../../../../shared/react/components/common/Text":476,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],118:[function(require,module,exports){
+/*global i18n, TastyConfirmController, DOMManipulationsMixin */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19757,12 +19758,24 @@ var EntryTlog = (function (_Component) {
       var _props = this.props;
       var entryID = _props.entry.id;
       var tlogID = _props.host_tlog_id;
+      var onDelete = _props.onDelete;
+      var successDeleteUrl = _props.successDeleteUrl;
 
       TastyConfirmController.show({
         message: i18n.t('delete_entry_confirm'),
         acceptButtonText: i18n.t('delete_entry_button'),
         onAccept: function onAccept() {
-          _actionsEntry2['default']['delete'](entryID, tlogID);
+          _actionsEntry2['default']['delete'](entryID, tlogID).then(function () {
+            // onDelete у нас есть только если пост рендерят из контейнера
+            // тогда отдаем удаление контейнеру, иначе редиректим куда указано
+            if (typeof onDelete === 'function') {
+              onDelete(entryID);
+            } else if (successDeleteUrl) {
+              window.setTimeout(function () {
+                return window.location.href = successDeleteUrl;
+              }, 0);
+            }
+          });
         }
       });
     }
@@ -19814,11 +19827,13 @@ var EntryTlog = (function (_Component) {
   }], [{
     key: 'propTypes',
     value: {
-      entry: _react.PropTypes.object.isRequired,
       commentator: _react.PropTypes.object,
+      entry: _react.PropTypes.object.isRequired,
       host_tlog_id: _react.PropTypes.number,
+      isAuthorVisible: _react.PropTypes.bool,
       moderation: _react.PropTypes.object,
-      isAuthorVisible: _react.PropTypes.bool
+      onDelete: _react.PropTypes.func,
+      successDeleteUrl: _react.PropTypes.string
     },
     enumerable: true
   }]);
