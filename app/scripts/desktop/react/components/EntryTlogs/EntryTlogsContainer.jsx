@@ -16,7 +16,7 @@ export default class EntryTlogsContainer extends Component {
     nextPageParamName: PropTypes.oneOf(['page', 'since_entry_id']).isRequired
   }
   state = {
-    entries: this.props.entries_info.items,
+    entries: this.props.entries_info.items.filter((entry) => entry),
     hasMore: this.props.entries_info.has_more,
     nextPage: this.props.entries_info[this.props.nextPageFieldName],
     isLoading: false
@@ -45,7 +45,7 @@ export default class EntryTlogsContainer extends Component {
         // нам полей, просто прекращаем дальнейшую загрузку
         if (entriesInfo.has_more != null) {
           this.setState({
-            entries: this.state.entries.concat(entriesInfo.items),
+            entries: this.state.entries.concat(entriesInfo.items.filter((entry) => entry)),
             hasMore: entriesInfo.has_more,
             nextPage: entriesInfo[this.props.nextPageFieldName]
           });
