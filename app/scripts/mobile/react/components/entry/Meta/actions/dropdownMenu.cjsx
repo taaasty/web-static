@@ -14,6 +14,7 @@ EntryMetaActions_DropdownMenu = React.createClass
 
   propTypes:
     entry:   PropTypes.object.isRequired
+    onDelete: PropTypes.func,
     visible: PropTypes.bool.isRequired
 
   render: ->
@@ -56,6 +57,7 @@ EntryMetaActions_DropdownMenu = React.createClass
     if @props.entry.can_delete
       deleteItem = <EntryMetaActions_DropdownMenu_DeleteItem
                        entryId={ @props.entry.id }
+                       onDelete={ @props.onDelete }
                        key="delete" />
 
     return <ul className="meta-actions__dropdown-popup-list">

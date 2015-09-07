@@ -10,7 +10,8 @@ let EntryMetaActions = React.createClass({
   mixins: [ClickOutsideMixin],
 
   propTypes: {
-    entry: React.PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    onDelete: React.PropTypes.func,
   },
 
   getInitialState() {
@@ -27,7 +28,11 @@ let EntryMetaActions = React.createClass({
     return (
       <div className={actionsClasses}>
         <EntryMetaActions_Button onClick={this.toggleOpenState} />
-        <EntryMetaActions_DropdownMenu entry={this.props.entry} visible={this.isOpenState()} />
+        <EntryMetaActions_DropdownMenu
+          entry={this.props.entry}
+          onDelete={this.props.onDelete}
+          visible={this.isOpenState()}
+        />
       </div>
     );
   },

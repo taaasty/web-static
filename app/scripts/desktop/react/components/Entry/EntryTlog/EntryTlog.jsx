@@ -1,3 +1,4 @@
+/*global i18n, TastyConfirmController, DOMManipulationsMixin */
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
@@ -8,11 +9,13 @@ const ENTRY_TYPES = [
 
 export default class EntryTlog extends Component {
   static propTypes = {
-    entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
+    entry: PropTypes.object.isRequired,
     host_tlog_id: PropTypes.number,
-    moderation: PropTypes.object,
     isAuthorVisible: PropTypes.bool,
+    moderation: PropTypes.object,
+    onDelete: PropTypes.func,
+    successDeleteUrl: PropTypes.string,
   }
   state = {
     entry: this.props.entry,
@@ -87,13 +90,28 @@ export default class EntryTlog extends Component {
     });
   }
   delete() {
-    const { entry: { id: entryID }, host_tlog_id: tlogID } = this.props;
+    const {
+      entry: { id: entryID },
+      host_tlog_id: tlogID,
+      onDelete,
+      successDeleteUrl,
+    } = this.props;
+
     TastyConfirmController.show({
       message: i18n.t('delete_entry_confirm'),
       acceptButtonText: i18n.t('delete_entry_button'),
       onAccept: () => {
-        EntryActionCreators.delete(entryID, tlogID);
-      }
+        EntryActionCreators.delete(entryID, tlogID)
+          .then(() => {
+            // onDelete у нас есть только если пост рендерят из контейнера
+            // тогда отдаем удаление контейнеру, иначе редиректим куда указано
+            if (typeof onDelete === 'function') {
+              onDelete(entryID);
+            } else if (successDeleteUrl) {
+              window.setTimeout(() => window.location.href = successDeleteUrl, 0);
+            }
+          });
+      },
     });
   }
   accept() {

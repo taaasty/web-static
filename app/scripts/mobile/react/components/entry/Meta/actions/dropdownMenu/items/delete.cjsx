@@ -6,6 +6,7 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
 
   propTypes:
     entryId: PropTypes.number.isRequired
+    onDelete: PropTypes.func
 
   render: ->
     <li className="meta-actions__dropdown-popup-item">
@@ -17,8 +18,8 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass
     </li>
 
   delete: ->
-    #TODO: Redirect after success delete
     EntryViewActions.delete @props.entryId
+      .then onDelete
 
   handleClick: ->
     @delete() if confirm i18n.t 'entry.delete_confirm'
