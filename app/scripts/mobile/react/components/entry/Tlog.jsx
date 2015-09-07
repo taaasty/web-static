@@ -12,7 +12,9 @@ let EntryTlog = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
-    commentFormVisible: React.PropTypes.bool
+    commentFormVisible: React.PropTypes.bool,
+    onDelete: React.PropTypes.func,
+    successDeleteUrl: React.PropTypes.string,
   },
 
   getDefaultProps() {
@@ -32,22 +34,25 @@ let EntryTlog = React.createClass({
       <div className={this.getEntryClasses()}>
         <EntryContent entry={this.props.entry} />
         <EntryMeta
-            entry={this.props.entry}
-            commentsCount={this.state.commentsCount}
-            onMetaCommentsClick={this.toggleCommentForm} />        
+          entry={this.props.entry}
+          commentsCount={this.state.commentsCount}
+          onDelete={this.onDelete.bind(this)}
+          onMetaCommentsClick={this.toggleCommentForm}
+        />
         <EntryComments
-            user={this.state.user}
-            entry={this.props.entry}
-            comments={this.state.comments}
-            commentsCount={this.state.commentsCount}
-            loading={this.isLoadingState()}
-            loadPerTime={this.props.loadPerTime}
-            formVisible={this.state.commentFormVisible}
-            onCommentsLoadMore={this.loadMoreComments}
-            onCommentCreate={this.createComment}
-            onCommentEdit={this.editComment}
-            onCommentDelete={this.deleteComment}
-            onCommentReport={this.reportComment} />
+          user={this.state.user}
+          entry={this.props.entry}
+          comments={this.state.comments}
+          commentsCount={this.state.commentsCount}
+          loading={this.isLoadingState()}
+          loadPerTime={this.props.loadPerTime}
+          formVisible={this.state.commentFormVisible}
+          onCommentsLoadMore={this.loadMoreComments}
+          onCommentCreate={this.createComment}
+          onCommentEdit={this.editComment}
+          onCommentDelete={this.deleteComment}
+          onCommentReport={this.reportComment}
+        />
       </div>
     );
   },
@@ -59,8 +64,17 @@ let EntryTlog = React.createClass({
   getStateFromStore() {
     return {
       user: CurrentUserStore.getUser()
+    };
+  },
+
+  onDelete() {
+    const { entry: { id }, onDelete, successDeleteUrl } = this.props;
+    if (typeof onDelete === 'function') {
+      onDelete(id);
+    } else if (successDeleteUrl) {
+      window.setTimeout(() => window.location.href = successDeleteUrl, 0);
     }
-  }
+  },
 });
 
 export default EntryTlog;

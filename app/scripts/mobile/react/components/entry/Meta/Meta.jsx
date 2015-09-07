@@ -7,20 +7,26 @@ let EntryMeta = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     commentsCount: React.PropTypes.number.isRequired,
-    onMetaCommentsClick: React.PropTypes.func.isRequired
+    onDelete: React.PropTypes.func,
+    onMetaCommentsClick: React.PropTypes.func.isRequired,
   },
 
   render() {
     return(
       <div className="post__meta">
-        <EntryMetaActions entry={this.props.entry} />
+        <EntryMetaActions
+          entry={this.props.entry}
+          onDelete={this.props.onDelete}
+        />
         {this.renderVoting()}
         <EntryMetaComments
-            commentsCount={this.props.commentsCount}
-            onClick={this.props.onMetaCommentsClick} />
+          commentsCount={this.props.commentsCount}
+          onClick={this.props.onMetaCommentsClick}
+        />
         <EntryMetaDate
-            date={this.props.entry.created_at}
-            entryUrl={this.props.entry.entry_url} />
+          date={this.props.entry.created_at}
+          entryUrl={this.props.entry.entry_url}
+        />
       </div>
     );
   },
