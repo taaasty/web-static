@@ -3240,6 +3240,7 @@ var EntryMeta = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     commentsCount: React.PropTypes.number.isRequired,
+    onDelete: React.PropTypes.func,
     onMetaCommentsClick: React.PropTypes.func.isRequired
   },
 
@@ -3247,14 +3248,19 @@ var EntryMeta = React.createClass({
     return React.createElement(
       'div',
       { className: 'post__meta' },
-      React.createElement(_MetaActions2['default'], { entry: this.props.entry }),
+      React.createElement(_MetaActions2['default'], {
+        entry: this.props.entry,
+        onDelete: this.props.onDelete
+      }),
       this.renderVoting(),
       React.createElement(_MetaComments2['default'], {
         commentsCount: this.props.commentsCount,
-        onClick: this.props.onMetaCommentsClick }),
+        onClick: this.props.onMetaCommentsClick
+      }),
       React.createElement(_MetaDate2['default'], {
         date: this.props.entry.created_at,
-        entryUrl: this.props.entry.entry_url })
+        entryUrl: this.props.entry.entry_url
+      })
     );
   },
 
@@ -3304,7 +3310,8 @@ var EntryMetaActions = React.createClass({
   mixins: [_mixinsClickOutside2['default']],
 
   propTypes: {
-    entry: React.PropTypes.object.isRequired
+    entry: React.PropTypes.object.isRequired,
+    onDelete: React.PropTypes.func
   },
 
   getInitialState: function getInitialState() {
@@ -3322,7 +3329,11 @@ var EntryMetaActions = React.createClass({
       'div',
       { className: actionsClasses },
       React.createElement(_actionsButtonsButton2['default'], { onClick: this.toggleOpenState }),
-      React.createElement(_actionsDropdownMenu2['default'], { entry: this.props.entry, visible: this.isOpenState() })
+      React.createElement(_actionsDropdownMenu2['default'], {
+        entry: this.props.entry,
+        onDelete: this.props.onDelete,
+        visible: this.isOpenState()
+      })
     );
   },
 
@@ -3595,6 +3606,7 @@ EntryMetaActions_DropdownMenu = React.createClass({
   mixins: [DropdownMenuMixin],
   propTypes: {
     entry: PropTypes.object.isRequired,
+    onDelete: PropTypes.func,
     visible: PropTypes.bool.isRequired
   },
   render: function() {
@@ -3642,6 +3654,7 @@ EntryMetaActions_DropdownMenu = React.createClass({
     if (this.props.entry.can_delete) {
       deleteItem = React.createElement(EntryMetaActions_DropdownMenu_DeleteItem, {
         "entryId": this.props.entry.id,
+        "onDelete": this.props.onDelete,
         "key": "delete"
       });
     }
@@ -3664,7 +3677,8 @@ PropTypes = React.PropTypes;
 EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
   displayName: 'EntryMetaActions_DropdownMenu_DeleteItem',
   propTypes: {
-    entryId: PropTypes.number.isRequired
+    entryId: PropTypes.number.isRequired,
+    onDelete: PropTypes.func
   },
   render: function() {
     return React.createElement("li", {
@@ -3677,7 +3691,7 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
     }), React.createElement("span", null, i18n.t('entry.delete_item'))));
   },
   "delete": function() {
-    return EntryViewActions["delete"](this.props.entryId);
+    return EntryViewActions["delete"](this.props.entryId).then(onDelete);
   },
   handleClick: function() {
     if (confirm(i18n.t('entry.delete_confirm'))) {
@@ -3961,7 +3975,9 @@ var EntryTlog = React.createClass({
   propTypes: {
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
-    commentFormVisible: React.PropTypes.bool
+    commentFormVisible: React.PropTypes.bool,
+    onDelete: React.PropTypes.func,
+    successDeleteUrl: React.PropTypes.string
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -3984,7 +4000,9 @@ var EntryTlog = React.createClass({
       React.createElement(_MetaMeta2['default'], {
         entry: this.props.entry,
         commentsCount: this.state.commentsCount,
-        onMetaCommentsClick: this.toggleCommentForm }),
+        onDelete: this.onDelete.bind(this),
+        onMetaCommentsClick: this.toggleCommentForm
+      }),
       React.createElement(_commentsComments2['default'], {
         user: this.state.user,
         entry: this.props.entry,
@@ -3997,7 +4015,8 @@ var EntryTlog = React.createClass({
         onCommentCreate: this.createComment,
         onCommentEdit: this.editComment,
         onCommentDelete: this.deleteComment,
-        onCommentReport: this.reportComment })
+        onCommentReport: this.reportComment
+      })
     );
   },
 
@@ -4009,6 +4028,21 @@ var EntryTlog = React.createClass({
     return {
       user: _storesCurrentUser2['default'].getUser()
     };
+  },
+
+  onDelete: function onDelete() {
+    var _props = this.props;
+    var id = _props.entry.id;
+    var onDelete = _props.onDelete;
+    var successDeleteUrl = _props.successDeleteUrl;
+
+    if (typeof onDelete === 'function') {
+      onDelete(id);
+    } else if (successDeleteUrl) {
+      window.setTimeout(function () {
+        return window.location.href = successDeleteUrl;
+      }, 0);
+    }
   }
 });
 
