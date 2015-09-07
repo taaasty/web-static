@@ -23115,7 +23115,9 @@ var EntryBricksContainer = (function (_Component) {
     _get(Object.getPrototypeOf(EntryBricksContainer.prototype), 'constructor', this).apply(this, arguments);
 
     this.state = {
-      entries: this.props.entries_info.items,
+      entries: this.props.entries_info.items.filter(function (entry) {
+        return entry;
+      }),
       hasMore: this.props.entries_info.has_more,
       nextPage: this.props.entries_info[this.props.nextPageFieldName],
       isLoading: false
@@ -23146,7 +23148,9 @@ var EntryBricksContainer = (function (_Component) {
         // нам полей, просто прекращаем дальнейшую загрузку
         if (entriesInfo.has_more != null) {
           _this.setState({
-            entries: _this.state.entries.concat(entriesInfo.items),
+            entries: _this.state.entries.concat(entriesInfo.items.filter(function (entry) {
+              return entry;
+            })),
             hasMore: entriesInfo.has_more,
             nextPage: entriesInfo[_this.props.nextPageFieldName]
           });
@@ -23299,7 +23303,9 @@ var EntryTlogsContainer = (function (_Component) {
     _get(Object.getPrototypeOf(EntryTlogsContainer.prototype), 'constructor', this).apply(this, arguments);
 
     this.state = {
-      entries: this.props.entries_info.items,
+      entries: this.props.entries_info.items.filter(function (entry) {
+        return entry;
+      }),
       hasMore: this.props.entries_info.has_more,
       nextPage: this.props.entries_info[this.props.nextPageFieldName],
       isLoading: false
@@ -23331,7 +23337,9 @@ var EntryTlogsContainer = (function (_Component) {
         // нам полей, просто прекращаем дальнейшую загрузку
         if (entriesInfo.has_more != null) {
           _this.setState({
-            entries: _this.state.entries.concat(entriesInfo.items),
+            entries: _this.state.entries.concat(entriesInfo.items.filter(function (entry) {
+              return entry;
+            })),
             hasMore: entriesInfo.has_more,
             nextPage: entriesInfo[_this.props.nextPageFieldName]
           });
