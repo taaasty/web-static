@@ -1,4 +1,17 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
+'use strict';
+
+global.gon = {
+  env: 'development',
+  thumbor: 'http://thumbor0.tasty0.ru',
+  thumbor_http_loader: 'http://thumbor4.tasty0.ru'
+};
+
+require('./mobile/bundlePrerender');
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./mobile/bundlePrerender":2}],2:[function(require,module,exports){
 window       = undefined; // React-rails set window to this, it's unexpected behavior
 React        = require('react');
 moment       = require('../../../node_modules/moment');
@@ -31,7 +44,7 @@ NotificationsPage   = require('./react/pages/notifications');
 MessengerPage       = require('./react/pages/messenger');
 MessengerThreadPage = require('./react/pages/messengerThread');
 AuthPage            = require('./react/pages/auth');
-},{"../../../node_modules/moment":252,"../shared/react/services/thumbor":241,"../shared/routes/api":243,"../shared/routes/routes":244,"./locales/moment/ru":2,"./locales/ru":3,"./react/pages/auth":209,"./react/pages/entry":210,"./react/pages/feedBest":211,"./react/pages/feedFriends":212,"./react/pages/feedLive":213,"./react/pages/messenger":214,"./react/pages/messengerThread":215,"./react/pages/notifications":217,"./react/pages/settings":218,"./react/pages/tlogDaylog":219,"./react/pages/tlogRegular":220,"eventEmitter":"eventEmitter","i18next":"i18next","react":"react"}],2:[function(require,module,exports){
+},{"../../../node_modules/moment":252,"../shared/react/services/thumbor":241,"../shared/routes/api":243,"../shared/routes/routes":244,"./locales/moment/ru":3,"./locales/ru":4,"./react/pages/auth":210,"./react/pages/entry":211,"./react/pages/feedBest":212,"./react/pages/feedFriends":213,"./react/pages/feedLive":214,"./react/pages/messenger":215,"./react/pages/messengerThread":216,"./react/pages/notifications":218,"./react/pages/settings":219,"./react/pages/tlogDaylog":220,"./react/pages/tlogRegular":221,"eventEmitter":"eventEmitter","i18next":"i18next","react":"react"}],3:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 'use strict';
@@ -83,7 +96,7 @@ moment.locale('ru', {
   }
 });
 
-},{"../../../../../node_modules/moment/locale/ru":251}],3:[function(require,module,exports){
+},{"../../../../../node_modules/moment/locale/ru":251}],4:[function(require,module,exports){
 module.exports={
   "feed": {
     "best": "Лучшее",
@@ -294,7 +307,7 @@ module.exports={
     "messenger_cant_talk": "Пользователь вас заблокировал"
   }
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var AppDispatcher, Constants, CurrentUserServerActions;
 
 Constants = require('../../constants/constants');
@@ -324,7 +337,7 @@ CurrentUserServerActions = {
 module.exports = CurrentUserServerActions;
 
 
-},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],5:[function(require,module,exports){
+},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],6:[function(require,module,exports){
 var AppDispatcher, Constants, FeedServerActions;
 
 Constants = require('../../constants/constants');
@@ -349,7 +362,7 @@ FeedServerActions = {
 module.exports = FeedServerActions;
 
 
-},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],6:[function(require,module,exports){
+},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],7:[function(require,module,exports){
 var AppDispatcher, Constants, MessengerServerActions;
 
 Constants = require('../../constants/constants');
@@ -392,7 +405,7 @@ MessengerServerActions = {
 module.exports = MessengerServerActions;
 
 
-},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],7:[function(require,module,exports){
+},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],8:[function(require,module,exports){
 var AppDispatcher, Constants, NotificationsServerActions;
 
 Constants = require('../../constants/constants');
@@ -424,7 +437,7 @@ NotificationsServerActions = {
 module.exports = NotificationsServerActions;
 
 
-},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],8:[function(require,module,exports){
+},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],9:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
 
 Constants = require('../../constants/constants');
@@ -446,7 +459,7 @@ RelationshipServerActions = {
 module.exports = RelationshipServerActions;
 
 
-},{"../../constants/constants":195,"../../dispatcher/dispatcher":205}],9:[function(require,module,exports){
+},{"../../constants/constants":196,"../../dispatcher/dispatcher":206}],10:[function(require,module,exports){
 var Api, CurrentUserServerActions, CurrentUserViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -490,7 +503,7 @@ CurrentUserViewActions = {
 module.exports = CurrentUserViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203,"../server/currentUser":4}],10:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204,"../server/currentUser":5}],11:[function(require,module,exports){
 var Api, EntryViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -574,7 +587,7 @@ EntryViewActions = {
 module.exports = EntryViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203}],11:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204}],12:[function(require,module,exports){
 var Api, FeedServerActions, FeedViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -619,7 +632,7 @@ FeedViewActions = {
 module.exports = FeedViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203,"../server/feed":5}],12:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204,"../server/feed":6}],13:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessengerServerActions, MessengerViewActions, NotifyController, UuidService;
 
 Api = require('../../api/api');
@@ -692,7 +705,7 @@ MessengerViewActions = {
 module.exports = MessengerViewActions;
 
 
-},{"../../../../shared/react/services/uuid":242,"../../api/api":17,"../../constants/constants":195,"../../controllers/notify":203,"../../dispatcher/dispatcher":205,"../server/messenger":6}],13:[function(require,module,exports){
+},{"../../../../shared/react/services/uuid":242,"../../api/api":18,"../../constants/constants":196,"../../controllers/notify":204,"../../dispatcher/dispatcher":206,"../server/messenger":7}],14:[function(require,module,exports){
 var Api, NotificationsServerActions, NotificationsViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -735,7 +748,7 @@ NotificationsViewActions = {
 module.exports = NotificationsViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203,"../server/notifications":7}],14:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204,"../server/notifications":8}],15:[function(require,module,exports){
 var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
 
 Api = require('../../api/api');
@@ -807,7 +820,7 @@ RelationshipViewActions = {
 module.exports = RelationshipViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203,"../server/relationship":8}],15:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204,"../server/relationship":9}],16:[function(require,module,exports){
 var Api, NotifyController, SessionsViewActions;
 
 Api = require('../../api/api');
@@ -847,7 +860,7 @@ SessionsViewActions = {
 module.exports = SessionsViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":203}],16:[function(require,module,exports){
+},{"../../api/api":18,"../../controllers/notify":204}],17:[function(require,module,exports){
 var Api, UsersViewActions;
 
 Api = require('../../api/api');
@@ -861,7 +874,7 @@ UsersViewActions = {
 module.exports = UsersViewActions;
 
 
-},{"../../api/api":17}],17:[function(require,module,exports){
+},{"../../api/api":18}],18:[function(require,module,exports){
 var Api, Constants, CurrentUserStore, TIMEOUT, _pendingRequests, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
 
 assign = require('react/lib/Object.assign');
@@ -896,7 +909,7 @@ csrfToken = function() {
 };
 
 request = function(_method, url, data) {
-  var dataType, headers, method, processData;
+  var contentType, headers, method, processData;
   if (data == null) {
     data = {};
   }
@@ -924,23 +937,27 @@ request = function(_method, url, data) {
     }
   })();
   if (data instanceof FormData) {
-    dataType = 'multipart/form-data';
+    contentType = false;
     processData = false;
+    data.append('_method', _method);
   } else {
-    dataType = 'json';
+    contentType = 'application/x-www-form-urlencoded';
     processData = true;
-    assign(data, {
+    data = _.extend({}, data, {
       _method: _method
     });
   }
-  return reqwest({
+  return $.ajax({
     url: url,
     method: method,
     data: data,
-    dataType: dataType,
+    contentType: contentType,
     processData: processData,
-    timeout: TIMEOUT,
-    headers: headers
+    headers: headers,
+    xhrFields: {
+      withCredentials: true,
+      crossDomain: true
+    }
   });
 };
 
@@ -1309,7 +1326,7 @@ Api = {
 module.exports = Api;
 
 
-},{"../constants/constants":195,"../stores/currentUser":223,"react/lib/Object.assign":280}],18:[function(require,module,exports){
+},{"../constants/constants":196,"../stores/currentUser":224,"react/lib/Object.assign":280}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1395,7 +1412,7 @@ var Daylog = React.createClass({
 exports['default'] = Daylog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"../entry/Tlog":65,"./DaylogEmptyPage":19,"./DaylogOwnEmptyPage":20}],19:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"../entry/Tlog":66,"./DaylogEmptyPage":20,"./DaylogOwnEmptyPage":21}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1416,7 +1433,7 @@ var DaylogEmptyPage = React.createClass({
       React.createElement(
         "p",
         { className: "content-info__text" },
-        i18n.t('tlog.daylog_empty_page')
+        i18n.t("tlog.daylog_empty_page")
       )
     );
   }
@@ -1425,7 +1442,7 @@ var DaylogEmptyPage = React.createClass({
 exports["default"] = DaylogEmptyPage;
 module.exports = exports["default"];
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1520,7 +1537,7 @@ var DaylogOwnEmptyPage = React.createClass({
 exports['default'] = DaylogOwnEmptyPage;
 module.exports = exports['default'];
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1606,7 +1623,7 @@ var Tlog = React.createClass({
 exports['default'] = Tlog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"../entry/Tlog":65,"./TlogEmptyPage":22,"./TlogOwnEmptyPage":23}],22:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"../entry/Tlog":66,"./TlogEmptyPage":23,"./TlogOwnEmptyPage":24}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1627,7 +1644,7 @@ var TlogEmptyPage = React.createClass({
       React.createElement(
         "p",
         { className: "content-info__text" },
-        i18n.t('tlog.tlog_empty_page')
+        i18n.t("tlog.tlog_empty_page")
       )
     );
   }
@@ -1637,7 +1654,7 @@ var TlogEmptyPage = React.createClass({
 exports["default"] = TlogEmptyPage;
 module.exports = exports["default"];
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1732,7 +1749,7 @@ var TlogOwnEmptyPage = React.createClass({
 exports['default'] = TlogOwnEmptyPage;
 module.exports = exports['default'];
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1758,8 +1775,7 @@ var Notify = (function () {
 
     this.defaultProps = {
       type: TYPE,
-      timeout: TIMEOUT
-    };
+      timeout: TIMEOUT };
   }
 
   _createClass(Notify, [{
@@ -1787,8 +1803,7 @@ var Notify = (function () {
       text: _react.PropTypes.string.isRequired,
       type: _react.PropTypes.string,
       timeout: _react.PropTypes.number,
-      onClose: _react.PropTypes.func.isRequired
-    },
+      onClose: _react.PropTypes.func.isRequired },
     enumerable: true
   }]);
 
@@ -1798,7 +1813,7 @@ var Notify = (function () {
 exports['default'] = Notify;
 module.exports = exports['default'];
 
-},{"react":"react"}],25:[function(require,module,exports){
+},{"react":"react"}],26:[function(require,module,exports){
 (function (global){
 var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton, PropTypes, classnames;
 
@@ -1864,7 +1879,7 @@ module.exports = Auth;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./buttons/emailSignIn":30,"./buttons/emailSignUp":31,"./buttons/facebook":33,"./buttons/vkontakte":34,"classnames":247}],26:[function(require,module,exports){
+},{"./buttons/emailSignIn":31,"./buttons/emailSignUp":32,"./buttons/facebook":34,"./buttons/vkontakte":35,"classnames":247}],27:[function(require,module,exports){
 var AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, EmailLoginField, NotifyController, PropTypes, ScreenController, SessionsViewActions, classnames;
 
 classnames = require('classnames');
@@ -1982,7 +1997,7 @@ AuthEmailRecovery = React.createClass({
 module.exports = AuthEmailRecovery;
 
 
-},{"../../actions/view/sessions":15,"../../controllers/notify":203,"../../controllers/screen":204,"../../mixins/component":207,"./buttons/emailReset":29,"./fields/EmailLoginField":35,"./links/rememberedPassword":39,"classnames":247}],27:[function(require,module,exports){
+},{"../../actions/view/sessions":16,"../../controllers/notify":204,"../../controllers/screen":205,"../../mixins/component":208,"./buttons/emailReset":30,"./fields/EmailLoginField":36,"./links/rememberedPassword":40,"classnames":247}],28:[function(require,module,exports){
 (function (global){
 var AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, EmailLoginField, EmailPasswordField, NotifyController, PropTypes, SessionsViewActions, classnames;
 
@@ -2127,7 +2142,7 @@ module.exports = AuthEmailSignIn;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":15,"../../controllers/notify":203,"../../mixins/component":207,"./buttons/emailSubmit":32,"./fields/EmailLoginField":35,"./fields/EmailPasswordField":36,"./links/forgotPassword":37,"./links/notRegisteredYet":38,"classnames":247}],28:[function(require,module,exports){
+},{"../../actions/view/sessions":16,"../../controllers/notify":204,"../../mixins/component":208,"./buttons/emailSubmit":33,"./fields/EmailLoginField":36,"./fields/EmailPasswordField":37,"./links/forgotPassword":38,"./links/notRegisteredYet":39,"classnames":247}],29:[function(require,module,exports){
 var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -2156,7 +2171,7 @@ AuthManager = React.createClass({
 module.exports = AuthManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"./auth":25}],29:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"./auth":26}],30:[function(require,module,exports){
 var AuthEmailResetButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -2185,7 +2200,7 @@ AuthEmailResetButton = React.createClass({
 module.exports = AuthEmailResetButton;
 
 
-},{"../../common/spinner/spinner":48}],30:[function(require,module,exports){
+},{"../../common/spinner/spinner":49}],31:[function(require,module,exports){
 var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2208,7 +2223,7 @@ AuthEmailSignInButton = React.createClass({
 module.exports = AuthEmailSignInButton;
 
 
-},{"../../../controllers/screen":204,"../authEmailSignIn":27}],31:[function(require,module,exports){
+},{"../../../controllers/screen":205,"../authEmailSignIn":28}],32:[function(require,module,exports){
 var AuthEmailSignUpButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2229,7 +2244,7 @@ AuthEmailSignUpButton = React.createClass({
 module.exports = AuthEmailSignUpButton;
 
 
-},{"../../../controllers/screen":204}],32:[function(require,module,exports){
+},{"../../../controllers/screen":205}],33:[function(require,module,exports){
 var AuthEmailSubmitButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -2258,7 +2273,7 @@ AuthEmailSubmitButton = React.createClass({
 module.exports = AuthEmailSubmitButton;
 
 
-},{"../../common/spinner/spinner":48}],33:[function(require,module,exports){
+},{"../../common/spinner/spinner":49}],34:[function(require,module,exports){
 var AuthFacebookButton;
 
 AuthFacebookButton = React.createClass({
@@ -2277,7 +2292,7 @@ AuthFacebookButton = React.createClass({
 module.exports = AuthFacebookButton;
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var AuthVkontakteButton;
 
 AuthVkontakteButton = React.createClass({
@@ -2296,7 +2311,7 @@ AuthVkontakteButton = React.createClass({
 module.exports = AuthVkontakteButton;
 
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2344,7 +2359,7 @@ var EmailLoginField = React.createClass({
 exports['default'] = EmailLoginField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/TextField":239,"classnames":247}],36:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/TextField":239,"classnames":247}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2392,7 +2407,7 @@ var EmailPasswordField = React.createClass({
 exports['default'] = EmailPasswordField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/PasswordField":238,"classnames":247}],37:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/PasswordField":238,"classnames":247}],38:[function(require,module,exports){
 var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2415,7 +2430,7 @@ AuthForgotPasswordLink = React.createClass({
 module.exports = AuthForgotPasswordLink;
 
 
-},{"../../../controllers/screen":204,"../authEmailRecovery":26}],38:[function(require,module,exports){
+},{"../../../controllers/screen":205,"../authEmailRecovery":27}],39:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2436,7 +2451,7 @@ AuthNotRegisteredYetLink = React.createClass({
 module.exports = AuthNotRegisteredYetLink;
 
 
-},{"../../../controllers/screen":204}],39:[function(require,module,exports){
+},{"../../../controllers/screen":205}],40:[function(require,module,exports){
 var AuthRememberedPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2457,7 +2472,7 @@ AuthRememberedPasswordLink = React.createClass({
 module.exports = AuthRememberedPasswordLink;
 
 
-},{"../../../controllers/screen":204}],40:[function(require,module,exports){
+},{"../../../controllers/screen":205}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2495,7 +2510,7 @@ var AuthButton = _react2['default'].createClass({
 exports['default'] = AuthButton;
 module.exports = exports['default'];
 
-},{"../../../controllers/screen":204,"react":"react"}],41:[function(require,module,exports){
+},{"../../../controllers/screen":205,"react":"react"}],42:[function(require,module,exports){
 var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -2529,7 +2544,7 @@ AuthButtonManager = React.createClass({
 module.exports = AuthButtonManager;
 
 
-},{"../../../../../shared/react/mixins/connectStore":240,"../../../controllers/screen":204,"../../../stores/currentUser":223,"./auth":40}],42:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":240,"../../../controllers/screen":205,"../../../stores/currentUser":224,"./auth":41}],43:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, classnames;
 
 classnames = require('classnames');
@@ -2672,7 +2687,7 @@ FollowButton = React.createClass({
 module.exports = FollowButton;
 
 
-},{"../../../../../shared/react/mixins/connectStore":240,"../../../mixins/component":207,"../../../stores/relationships":228,"./mixins/relationship":43,"classnames":247}],43:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":240,"../../../mixins/component":208,"../../../stores/relationships":229,"./mixins/relationship":44,"classnames":247}],44:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -2709,7 +2724,7 @@ RelationshipButtonMixin = {
 module.exports = RelationshipButtonMixin;
 
 
-},{"../../../../actions/view/relationship":14}],44:[function(require,module,exports){
+},{"../../../../actions/view/relationship":15}],45:[function(require,module,exports){
 var Avatar, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -2777,7 +2792,7 @@ Avatar = React.createClass({
 module.exports = Avatar;
 
 
-},{"classnames":247}],45:[function(require,module,exports){
+},{"classnames":247}],46:[function(require,module,exports){
 var Avatar, PropTypes, UserAvatar;
 
 Avatar = require('./avatar');
@@ -2802,7 +2817,7 @@ UserAvatar = React.createClass({
 module.exports = UserAvatar;
 
 
-},{"./avatar":44}],46:[function(require,module,exports){
+},{"./avatar":45}],47:[function(require,module,exports){
 var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
@@ -2839,7 +2854,7 @@ FollowStatus = React.createClass({
 module.exports = FollowStatus;
 
 
-},{"../../../../../shared/react/mixins/connectStore":240,"../../../stores/relationships":228}],47:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":240,"../../../stores/relationships":229}],48:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -2905,7 +2920,7 @@ Image = React.createClass({
 module.exports = Image;
 
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -2934,7 +2949,7 @@ Spinner = React.createClass({
 module.exports = Spinner;
 
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3038,7 +3053,7 @@ var EntryFeed = React.createClass({
 exports['default'] = EntryFeed;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":207,"../../stores/currentUser":223,"./Feed/Meta":50,"./Meta/Meta":51,"./comments/comments":83,"./content/content":85,"./mixins/entry":94}],50:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":208,"../../stores/currentUser":224,"./Feed/Meta":51,"./Meta/Meta":52,"./comments/comments":84,"./content/content":86,"./mixins/entry":95}],51:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3047,7 +3062,7 @@ Object.defineProperty(exports, "__esModule", {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _MetaMetaAuthor = require('../Meta/MetaAuthor');
+var _MetaMetaAuthor = require("../Meta/MetaAuthor");
 
 var _MetaMetaAuthor2 = _interopRequireDefault(_MetaMetaAuthor);
 
@@ -3070,7 +3085,7 @@ var EntryFeedMeta = React.createClass({
 exports["default"] = EntryFeedMeta;
 module.exports = exports["default"];
 
-},{"../Meta/MetaAuthor":53}],51:[function(require,module,exports){
+},{"../Meta/MetaAuthor":54}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3102,8 +3117,7 @@ var EntryMeta = React.createClass({
     entry: React.PropTypes.object.isRequired,
     commentsCount: React.PropTypes.number.isRequired,
     onDelete: React.PropTypes.func,
-    onMetaCommentsClick: React.PropTypes.func.isRequired
-  },
+    onMetaCommentsClick: React.PropTypes.func.isRequired },
 
   render: function render() {
     return React.createElement(
@@ -3137,7 +3151,7 @@ var EntryMeta = React.createClass({
 exports['default'] = EntryMeta;
 module.exports = exports['default'];
 
-},{"./MetaActions":52,"./MetaComments":54,"./MetaDate":55,"./MetaVoting":56}],52:[function(require,module,exports){
+},{"./MetaActions":53,"./MetaComments":55,"./MetaDate":56,"./MetaVoting":57}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3172,8 +3186,7 @@ var EntryMetaActions = React.createClass({
 
   propTypes: {
     entry: React.PropTypes.object.isRequired,
-    onDelete: React.PropTypes.func
-  },
+    onDelete: React.PropTypes.func },
 
   getInitialState: function getInitialState() {
     return {
@@ -3218,7 +3231,7 @@ var EntryMetaActions = React.createClass({
 exports['default'] = EntryMetaActions;
 module.exports = exports['default'];
 
-},{"../../../mixins/clickOutside":206,"./actions/buttons/button":57,"./actions/dropdownMenu":58,"classnames":247}],53:[function(require,module,exports){
+},{"../../../mixins/clickOutside":207,"./actions/buttons/button":58,"./actions/dropdownMenu":59,"classnames":247}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3227,7 +3240,7 @@ Object.defineProperty(exports, "__esModule", {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _commonAvatarUser = require('../../common/avatar/user');
+var _commonAvatarUser = require("../../common/avatar/user");
 
 var _commonAvatarUser2 = _interopRequireDefault(_commonAvatarUser);
 
@@ -3260,7 +3273,7 @@ var EntryMetaAuthor = React.createClass({
 exports["default"] = EntryMetaAuthor;
 module.exports = exports["default"];
 
-},{"../../common/avatar/user":45}],54:[function(require,module,exports){
+},{"../../common/avatar/user":46}],55:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3290,7 +3303,7 @@ var EntryMetaComments = React.createClass({
 exports["default"] = EntryMetaComments;
 module.exports = exports["default"];
 
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3334,7 +3347,7 @@ var EntryMetaDate = React.createClass({
 exports['default'] = EntryMetaDate;
 module.exports = exports['default'];
 
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3418,7 +3431,7 @@ var EntryMetaVoting = React.createClass({
 exports['default'] = EntryMetaVoting;
 module.exports = exports['default'];
 
-},{"../../../actions/view/entry":10,"../../../mixins/component":207,"classnames":247}],57:[function(require,module,exports){
+},{"../../../actions/view/entry":11,"../../../mixins/component":208,"classnames":247}],58:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -3441,7 +3454,7 @@ EntryMetaActions_Button = React.createClass({
 module.exports = EntryMetaActions_Button;
 
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -3528,7 +3541,7 @@ EntryMetaActions_DropdownMenu = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu;
 
 
-},{"../../../../mixins/dropdownMenu":208,"./dropdownMenu/items/delete":59,"./dropdownMenu/items/edit":60,"./dropdownMenu/items/favorite":61,"./dropdownMenu/items/link":62,"./dropdownMenu/items/report":63,"./dropdownMenu/items/watch":64,"classnames":247}],59:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":209,"./dropdownMenu/items/delete":60,"./dropdownMenu/items/edit":61,"./dropdownMenu/items/favorite":62,"./dropdownMenu/items/link":63,"./dropdownMenu/items/report":64,"./dropdownMenu/items/watch":65,"classnames":247}],60:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -3564,7 +3577,7 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
-},{"../../../../../../actions/view/entry":10}],60:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11}],61:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -3589,7 +3602,7 @@ EntryMetaActions_DropdownMenu_EditItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -3663,7 +3676,7 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
-},{"../../../../../../actions/view/entry":10,"classnames":247}],62:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11,"classnames":247}],63:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -3688,7 +3701,7 @@ EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -3723,7 +3736,7 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
-},{"../../../../../../actions/view/entry":10}],64:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11}],65:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -3791,7 +3804,7 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
-},{"../../../../../../actions/view/entry":10}],65:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":11}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3838,8 +3851,7 @@ var EntryTlog = React.createClass({
     loadPerTime: React.PropTypes.number,
     commentFormVisible: React.PropTypes.bool,
     onDelete: React.PropTypes.func,
-    successDeleteUrl: React.PropTypes.string
-  },
+    successDeleteUrl: React.PropTypes.string },
 
   getDefaultProps: function getDefaultProps() {
     return {
@@ -3904,13 +3916,12 @@ var EntryTlog = React.createClass({
         return window.location.href = successDeleteUrl;
       }, 0);
     }
-  }
-});
+  } });
 
 exports['default'] = EntryTlog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":207,"../../stores/currentUser":223,"./Meta/Meta":51,"./comments/comments":83,"./content/content":85,"./mixins/entry":94}],66:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":208,"../../stores/currentUser":224,"./Meta/Meta":52,"./comments/comments":84,"./content/content":86,"./mixins/entry":95}],67:[function(require,module,exports){
 var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -3932,7 +3943,7 @@ CommentsLoadMoreButton = React.createClass({
 module.exports = CommentsLoadMoreButton;
 
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var CommentForm, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -3998,7 +4009,7 @@ CommentForm = React.createClass({
 module.exports = CommentForm;
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -4041,7 +4052,7 @@ CommentCreateForm = React.createClass({
 module.exports = CommentCreateForm;
 
 
-},{"../../../../mixins/component":207,"../commentForm":67}],69:[function(require,module,exports){
+},{"../../../../mixins/component":208,"../commentForm":68}],70:[function(require,module,exports){
 var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -4086,7 +4097,7 @@ CommentEditForm = React.createClass({
 module.exports = CommentEditForm;
 
 
-},{"../../../../mixins/component":207,"../commentForm":67}],70:[function(require,module,exports){
+},{"../../../../mixins/component":208,"../commentForm":68}],71:[function(require,module,exports){
 var CommentList, CommentManager, PropTypes;
 
 CommentManager = require('./commentList/commentManager');
@@ -4125,7 +4136,7 @@ CommentList = React.createClass({
 module.exports = CommentList;
 
 
-},{"./commentList/commentManager":82}],71:[function(require,module,exports){
+},{"./commentList/commentManager":83}],72:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -4167,7 +4178,7 @@ Comment = React.createClass({
 module.exports = Comment;
 
 
-},{"./comment/actions":72,"./comment/date":79,"./comment/text":80,"./comment/user":81}],72:[function(require,module,exports){
+},{"./comment/actions":73,"./comment/date":80,"./comment/text":81,"./comment/user":82}],73:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -4239,7 +4250,7 @@ CommentActions = React.createClass({
 module.exports = CommentActions;
 
 
-},{"../../../../../mixins/clickOutside":206,"../../../../common/avatar/user":45,"./actions/buttons/button":73,"./actions/dropdownMenu":74,"classnames":247}],73:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":207,"../../../../common/avatar/user":46,"./actions/buttons/button":74,"./actions/dropdownMenu":75,"classnames":247}],74:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4262,7 +4273,7 @@ CommentActionsButton = React.createClass({
 module.exports = CommentActionsButton;
 
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -4335,7 +4346,7 @@ CommentActionsDropdownMenu = React.createClass({
 module.exports = CommentActionsDropdownMenu;
 
 
-},{"../../../../../../mixins/dropdownMenu":208,"./dropdownMenu/items/delete":75,"./dropdownMenu/items/edit":76,"./dropdownMenu/items/link":77,"./dropdownMenu/items/report":78,"classnames":247}],75:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":209,"./dropdownMenu/items/delete":76,"./dropdownMenu/items/edit":77,"./dropdownMenu/items/link":78,"./dropdownMenu/items/report":79,"classnames":247}],76:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4369,7 +4380,7 @@ CommentActionsDropdownMenuDeleteItem = React.createClass({
 module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4394,7 +4405,7 @@ CommentActionsDropdownMenuEditItem = React.createClass({
 module.exports = CommentActionsDropdownMenuEditItem;
 
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4423,7 +4434,7 @@ CommentActionsDropdownMenuLinkItem = React.createClass({
 module.exports = CommentActionsDropdownMenuLinkItem;
 
 
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4457,7 +4468,7 @@ CommentActionsDropdownMenuReportItem = React.createClass({
 module.exports = CommentActionsDropdownMenuReportItem;
 
 
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4502,7 +4513,7 @@ CommentDate = React.createClass({
 module.exports = CommentDate;
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4525,7 +4536,7 @@ CommentText = React.createClass({
 module.exports = CommentText;
 
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -4557,7 +4568,7 @@ CommentUser = React.createClass({
 module.exports = CommentUser;
 
 
-},{"../../../../common/avatar/user":45}],82:[function(require,module,exports){
+},{"../../../../common/avatar/user":46}],83:[function(require,module,exports){
 var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
 
 Comment = require('./comment');
@@ -4625,7 +4636,7 @@ CommentManager = React.createClass({
 module.exports = CommentManager;
 
 
-},{"../../../../mixins/component":207,"../commentForm/edit":69,"./comment":71}],83:[function(require,module,exports){
+},{"../../../../mixins/component":208,"../commentForm/edit":70,"./comment":72}],84:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -4695,7 +4706,7 @@ EntryComments = React.createClass({
 module.exports = EntryComments;
 
 
-},{"./commentForm/create":68,"./commentList":70,"./commentsLoadMore":84}],84:[function(require,module,exports){
+},{"./commentForm/create":69,"./commentList":71,"./commentsLoadMore":85}],85:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -4751,7 +4762,7 @@ CommentsLoadMore = React.createClass({
 module.exports = CommentsLoadMore;
 
 
-},{"../../common/spinner/spinner":48,"./buttons/loadMore":66}],85:[function(require,module,exports){
+},{"../../common/spinner/spinner":49,"./buttons/loadMore":67}],86:[function(require,module,exports){
 var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
 
 TextEntryContent = require('./text/text');
@@ -4812,7 +4823,7 @@ EntryContent = React.createClass({
 module.exports = EntryContent;
 
 
-},{"./image/image":87,"./quote/quote":88,"./text/text":90,"./unknown/unknown":92,"./video/video":93}],86:[function(require,module,exports){
+},{"./image/image":88,"./quote/quote":89,"./text/text":91,"./unknown/unknown":93,"./video/video":94}],87:[function(require,module,exports){
 var CollageManager, ImageEntryAttachments, PropTypes;
 
 CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
@@ -4851,7 +4862,7 @@ ImageEntryAttachments = React.createClass({
 module.exports = ImageEntryAttachments;
 
 
-},{"../../../../../../shared/react/components/common/collage/collageManager":233}],87:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/collage/collageManager":233}],88:[function(require,module,exports){
 var ImageEntryAttachments, ImageEntryContent, PropTypes;
 
 ImageEntryAttachments = require('./attachments');
@@ -4899,7 +4910,7 @@ ImageEntryContent = React.createClass({
 module.exports = ImageEntryContent;
 
 
-},{"./attachments":86}],88:[function(require,module,exports){
+},{"./attachments":87}],89:[function(require,module,exports){
 var PropTypes, QuoteEntryContent;
 
 PropTypes = React.PropTypes;
@@ -4933,7 +4944,7 @@ QuoteEntryContent = React.createClass({
 module.exports = QuoteEntryContent;
 
 
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var PropTypes, TextEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -4955,7 +4966,7 @@ TextEntryHeader = React.createClass({
 module.exports = TextEntryHeader;
 
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 var PropTypes, TextEntryContent, TextEntryHeader;
 
 TextEntryHeader = require('./header');
@@ -4983,7 +4994,7 @@ TextEntryContent = React.createClass({
 module.exports = TextEntryContent;
 
 
-},{"./header":89}],91:[function(require,module,exports){
+},{"./header":90}],92:[function(require,module,exports){
 var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -5005,7 +5016,7 @@ UnknownEntryHeader = React.createClass({
 module.exports = UnknownEntryHeader;
 
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 var PropTypes, UnknownEntryContent, UnknownEntryHeader;
 
 UnknownEntryHeader = require('./header');
@@ -5029,7 +5040,7 @@ UnknownEntryContent = React.createClass({
 module.exports = UnknownEntryContent;
 
 
-},{"./header":91}],93:[function(require,module,exports){
+},{"./header":92}],94:[function(require,module,exports){
 var PropTypes, VideoEntryContent;
 
 PropTypes = React.PropTypes;
@@ -5066,7 +5077,7 @@ VideoEntryContent = React.createClass({
 module.exports = VideoEntryContent;
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -5226,7 +5237,7 @@ var EntryMixin = {
 exports['default'] = EntryMixin;
 module.exports = exports['default'];
 
-},{"../../../actions/view/entry":10,"react/lib/Object.assign":280}],95:[function(require,module,exports){
+},{"../../../actions/view/entry":11,"react/lib/Object.assign":280}],96:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5247,7 +5258,7 @@ FeedLoadMoreButton = React.createClass({
 module.exports = FeedLoadMoreButton;
 
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 var FeedEmptyPageMessage, MESSAGE;
 
 MESSAGE = 'В ленте нет записей';
@@ -5270,7 +5281,7 @@ FeedEmptyPageMessage = React.createClass({
 module.exports = FeedEmptyPageMessage;
 
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
 FeedEmptyPageMessage = require('./emptyPageMessage');
@@ -5319,7 +5330,7 @@ Feed = React.createClass({
 module.exports = Feed;
 
 
-},{"../entry/Feed":49,"./emptyPageMessage":96,"./loadMore":101}],98:[function(require,module,exports){
+},{"../entry/Feed":50,"./emptyPageMessage":97,"./loadMore":102}],99:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -5362,7 +5373,7 @@ FeedBest = React.createClass({
 module.exports = FeedBest;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],99:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],100:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -5405,7 +5416,7 @@ FeedFriends = React.createClass({
 module.exports = FeedFriends;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],100:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],101:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -5448,7 +5459,7 @@ FeedLive = React.createClass({
 module.exports = FeedLive;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":11,"../../mixins/component":207,"../../stores/feed":224,"./feed":97,"./mixins/feed":102}],101:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../actions/view/feed":12,"../../mixins/component":208,"../../stores/feed":225,"./feed":98,"./mixins/feed":103}],102:[function(require,module,exports){
 var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -5486,7 +5497,7 @@ FeedLoadMore = React.createClass({
 module.exports = FeedLoadMore;
 
 
-},{"../common/spinner/spinner":48,"./buttons/loadMore":95}],102:[function(require,module,exports){
+},{"../common/spinner/spinner":49,"./buttons/loadMore":96}],103:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedStore, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedStore = require('../../../stores/feed');
@@ -5539,7 +5550,7 @@ FeedMixin = {
 module.exports = FeedMixin;
 
 
-},{"../../../stores/feed":224}],103:[function(require,module,exports){
+},{"../../../stores/feed":225}],104:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5579,7 +5590,7 @@ HeroFeed = React.createClass({
 module.exports = HeroFeed;
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var HeroFeed, HeroFeedBest, PropTypes;
 
 HeroFeed = require('./feed');
@@ -5602,7 +5613,7 @@ HeroFeedBest = React.createClass({
 module.exports = HeroFeedBest;
 
 
-},{"./feed":103}],105:[function(require,module,exports){
+},{"./feed":104}],106:[function(require,module,exports){
 var HeroFeed, HeroFeedFriends, PropTypes;
 
 HeroFeed = require('./feed');
@@ -5625,7 +5636,7 @@ HeroFeedFriends = React.createClass({
 module.exports = HeroFeedFriends;
 
 
-},{"./feed":103}],106:[function(require,module,exports){
+},{"./feed":104}],107:[function(require,module,exports){
 var HeroFeed, HeroFeedLive, PropTypes;
 
 HeroFeed = require('./feed');
@@ -5648,7 +5659,7 @@ HeroFeedLive = React.createClass({
 module.exports = HeroFeedLive;
 
 
-},{"./feed":103}],107:[function(require,module,exports){
+},{"./feed":104}],108:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -5790,7 +5801,7 @@ HeroTlog = React.createClass({
 module.exports = HeroTlog;
 
 
-},{"../../../../shared/helpers/browser":230,"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"./tlog/actions":108,"./tlog/avatar":118,"./tlog/buttons/close":119,"./tlog/head":120,"./tlog/stats":121}],108:[function(require,module,exports){
+},{"../../../../shared/helpers/browser":230,"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"./tlog/actions":109,"./tlog/avatar":119,"./tlog/buttons/close":120,"./tlog/head":121,"./tlog/stats":122}],109:[function(require,module,exports){
 var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
 HeroTlogActions_User = require('./actions/user');
@@ -5833,7 +5844,7 @@ HeroTlogActions = React.createClass({
 module.exports = HeroTlogActions;
 
 
-},{"./actions/currentUser":111,"./actions/user":117}],109:[function(require,module,exports){
+},{"./actions/currentUser":112,"./actions/user":118}],110:[function(require,module,exports){
 var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5859,7 +5870,7 @@ HeroTlogActions_SettingsButton = React.createClass({
 module.exports = HeroTlogActions_SettingsButton;
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 var HeroTlogActions_WriteMessageButton;
 
 HeroTlogActions_WriteMessageButton = React.createClass({
@@ -5880,7 +5891,7 @@ HeroTlogActions_WriteMessageButton = React.createClass({
 module.exports = HeroTlogActions_WriteMessageButton;
 
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
 HeroTlogActions_SettingsButton = require('./buttons/settings');
@@ -5906,7 +5917,7 @@ HeroTlogActions_CurrentUser = React.createClass({
 module.exports = HeroTlogActions_CurrentUser;
 
 
-},{"./buttons/settings":109}],112:[function(require,module,exports){
+},{"./buttons/settings":110}],113:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -5977,7 +5988,7 @@ HeroTlogActions_DropdownMenu = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu;
 
 
-},{"../../../../mixins/clickOutside":206,"./dropdownMenu/buttons/button":113,"./dropdownMenu/popup":116,"classnames":247}],113:[function(require,module,exports){
+},{"../../../../mixins/clickOutside":207,"./dropdownMenu/buttons/button":114,"./dropdownMenu/popup":117,"classnames":247}],114:[function(require,module,exports){
 var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6000,7 +6011,7 @@ HeroTlogActions_DropdownMenu_Button = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -6031,7 +6042,7 @@ HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
 module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
-},{"../../../../../../actions/view/relationship":14}],115:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":15}],116:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -6062,7 +6073,7 @@ HeroTlogActions_DropdownMenuReportItem = React.createClass({
 module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
-},{"../../../../../../actions/view/relationship":14}],116:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":15}],117:[function(require,module,exports){
 var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore, classnames;
 
 classnames = require('classnames');
@@ -6131,7 +6142,7 @@ HeroTlogActions_DropdownMenu_Popup = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":240,"../../../../../mixins/dropdownMenu":208,"../../../../../stores/relationships":228,"./items/ignore":114,"./items/report":115,"classnames":247}],117:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":240,"../../../../../mixins/dropdownMenu":209,"../../../../../stores/relationships":229,"./items/ignore":115,"./items/report":116,"classnames":247}],118:[function(require,module,exports){
 var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
@@ -6166,7 +6177,7 @@ HeroTlogActions_User = React.createClass({
 module.exports = HeroTlogActions_User;
 
 
-},{"../../../buttons/relationship/follow":42,"./buttons/writeMessage":110,"./dropdownMenu":112}],118:[function(require,module,exports){
+},{"../../../buttons/relationship/follow":43,"./buttons/writeMessage":111,"./dropdownMenu":113}],119:[function(require,module,exports){
 var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -6214,7 +6225,7 @@ HeroTlogAvatar = React.createClass({
 module.exports = HeroTlogAvatar;
 
 
-},{"../../common/avatar/user":45,"../../common/followStatus/followStatus":46}],119:[function(require,module,exports){
+},{"../../common/avatar/user":46,"../../common/followStatus/followStatus":47}],120:[function(require,module,exports){
 var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6237,7 +6248,7 @@ HeroTlogCloseButton = React.createClass({
 module.exports = HeroTlogCloseButton;
 
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6267,7 +6278,7 @@ HeroTlogHead = React.createClass({
 module.exports = HeroTlogHead;
 
 
-},{}],121:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 var HeroTlogStats, HeroTlogStatsItem, PropTypes;
 
 HeroTlogStatsItem = require('./stats/item');
@@ -6353,7 +6364,7 @@ HeroTlogStats = React.createClass({
 module.exports = HeroTlogStats;
 
 
-},{"./stats/item":122}],122:[function(require,module,exports){
+},{"./stats/item":123}],123:[function(require,module,exports){
 var HeroTlogStatsItem, NumberHelpers, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -6408,7 +6419,7 @@ HeroTlogStatsItem = React.createClass({
 module.exports = HeroTlogStatsItem;
 
 
-},{"../../../../../../shared/helpers/number":231,"classnames":247}],123:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":231,"classnames":247}],124:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6433,7 +6444,7 @@ CreateConversationButton = React.createClass({
 module.exports = CreateConversationButton;
 
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 var MessengerHeader, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6455,7 +6466,7 @@ MessengerHeader = React.createClass({
 module.exports = MessengerHeader;
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -6505,7 +6516,7 @@ MessengerConversation = React.createClass({
 module.exports = MessengerConversation;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/conversation":222,"./conversation/header":126,"./conversation/messageForm":127,"./conversation/messages":129}],126:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/conversation":223,"./conversation/header":127,"./conversation/messageForm":128,"./conversation/messages":130}],127:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../common/header');
@@ -6529,7 +6540,7 @@ ConversationHeader = React.createClass({
 module.exports = ConversationHeader;
 
 
-},{"../common/header":124}],127:[function(require,module,exports){
+},{"../common/header":125}],128:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -6592,7 +6603,7 @@ ConversationMessageForm = React.createClass({
 module.exports = ConversationMessageForm;
 
 
-},{"../../../actions/view/messenger":12,"../../../controllers/notify":203,"./messageForm/field":128}],128:[function(require,module,exports){
+},{"../../../actions/view/messenger":13,"../../../controllers/notify":204,"./messageForm/field":129}],129:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -6649,7 +6660,7 @@ ConversationMessageFormField = React.createClass({
 module.exports = ConversationMessageFormField;
 
 
-},{"lodash":"lodash"}],129:[function(require,module,exports){
+},{"lodash":"lodash"}],130:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -6773,7 +6784,7 @@ ConversationMessages = React.createClass({
 module.exports = ConversationMessages;
 
 
-},{"../../../../../shared/react/mixins/connectStore":240,"../../../actions/view/messenger":12,"../../../mixins/component":207,"../../../stores/conversation":222,"../../../stores/message":225,"../../common/spinner/spinner":48,"./messages/list":130}],130:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":240,"../../../actions/view/messenger":13,"../../../mixins/component":208,"../../../stores/conversation":223,"../../../stores/message":226,"../../common/spinner/spinner":49,"./messages/list":131}],131:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -6871,7 +6882,7 @@ MessageList = React.createClass({
 module.exports = MessageList;
 
 
-},{"./list/empty":131,"./list/itemManager":133,"lodash":"lodash"}],131:[function(require,module,exports){
+},{"./list/empty":132,"./list/itemManager":134,"lodash":"lodash"}],132:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -6888,7 +6899,7 @@ MessageListEmpty = React.createClass({
 module.exports = MessageListEmpty;
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -7003,7 +7014,7 @@ MessageListItem = React.createClass({
 module.exports = MessageListItem;
 
 
-},{"../../../../common/avatar/user":45,"classnames":247}],133:[function(require,module,exports){
+},{"../../../../common/avatar/user":46,"classnames":247}],134:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -7071,7 +7082,7 @@ MessageListItemManager = React.createClass({
 module.exports = MessageListItemManager;
 
 
-},{"../../../../../actions/view/messenger":12,"../../../../../stores/message":225,"./item":132}],134:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":13,"../../../../../stores/message":226,"./item":133}],135:[function(require,module,exports){
 var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -7117,7 +7128,7 @@ MessengerConversations = React.createClass({
 module.exports = MessengerConversations;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/conversation":222,"./buttons/createConversation":123,"./conversations/header":135,"./conversations/list":136}],135:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/conversation":223,"./buttons/createConversation":124,"./conversations/header":136,"./conversations/list":137}],136:[function(require,module,exports){
 var ConversationsHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -7134,7 +7145,7 @@ ConversationsHeader = React.createClass({
 module.exports = ConversationsHeader;
 
 
-},{"../common/header":124}],136:[function(require,module,exports){
+},{"../common/header":125}],137:[function(require,module,exports){
 var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -7183,7 +7194,7 @@ ConversationList = React.createClass({
 module.exports = ConversationList;
 
 
-},{"./list/empty":137,"./list/item":138,"lodash":"lodash"}],137:[function(require,module,exports){
+},{"./list/empty":138,"./list/item":139,"lodash":"lodash"}],138:[function(require,module,exports){
 var ConversationListEmpty;
 
 ConversationListEmpty = React.createClass({
@@ -7200,7 +7211,7 @@ ConversationListEmpty = React.createClass({
 module.exports = ConversationListEmpty;
 
 
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 var ConversationListItem, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -7284,7 +7295,7 @@ ConversationListItem = React.createClass({
 module.exports = ConversationListItem;
 
 
-},{"../../../common/avatar/user":45,"classnames":247}],139:[function(require,module,exports){
+},{"../../../common/avatar/user":46,"classnames":247}],140:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -7312,7 +7323,7 @@ MessengerCreateConversation = React.createClass({
 module.exports = MessengerCreateConversation;
 
 
-},{"./createConversation/chooser":140,"./createConversation/header":145}],140:[function(require,module,exports){
+},{"./createConversation/chooser":141,"./createConversation/header":146}],141:[function(require,module,exports){
 var ComponentMixin, LOADED_STATE, LOADING_STATE, MessengerChooser, MessengerChooserField, MessengerChooserList, PropTypes, Spinner, UsersViewActions, classnames;
 
 classnames = require('classnames');
@@ -7418,7 +7429,7 @@ MessengerChooser = React.createClass({
 module.exports = MessengerChooser;
 
 
-},{"../../../actions/view/users":16,"../../../mixins/component":207,"../../common/spinner/spinner":48,"./chooser/field":141,"./chooser/list":142,"classnames":247}],141:[function(require,module,exports){
+},{"../../../actions/view/users":17,"../../../mixins/component":208,"../../common/spinner/spinner":49,"./chooser/field":142,"./chooser/list":143,"classnames":247}],142:[function(require,module,exports){
 var MessengerChooserField, PropTypes, _;
 
 _ = require('lodash');
@@ -7454,7 +7465,7 @@ MessengerChooserField = React.createClass({
 module.exports = MessengerChooserField;
 
 
-},{"lodash":"lodash"}],142:[function(require,module,exports){
+},{"lodash":"lodash"}],143:[function(require,module,exports){
 var MessengerChooserList, MessengerChooserListEmpty, MessengerChooserListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -7504,7 +7515,7 @@ MessengerChooserList = React.createClass({
 module.exports = MessengerChooserList;
 
 
-},{"./list/empty":143,"./list/item":144,"lodash":"lodash"}],143:[function(require,module,exports){
+},{"./list/empty":144,"./list/item":145,"lodash":"lodash"}],144:[function(require,module,exports){
 var MessengerChooserListEmpty;
 
 MessengerChooserListEmpty = React.createClass({
@@ -7521,7 +7532,7 @@ MessengerChooserListEmpty = React.createClass({
 module.exports = MessengerChooserListEmpty;
 
 
-},{}],144:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 var MessengerChooserListItem, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -7556,7 +7567,7 @@ MessengerChooserListItem = React.createClass({
 module.exports = MessengerChooserListItem;
 
 
-},{"../../../../common/avatar/user":45}],145:[function(require,module,exports){
+},{"../../../../common/avatar/user":46}],146:[function(require,module,exports){
 var CreateConversationHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -7573,7 +7584,7 @@ CreateConversationHeader = React.createClass({
 module.exports = CreateConversationHeader;
 
 
-},{"../common/header":124}],146:[function(require,module,exports){
+},{"../common/header":125}],147:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -7657,7 +7668,7 @@ Messenger = React.createClass({
 module.exports = Messenger;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":207,"../../stores/conversation":222,"./conversation":125,"./conversations":134,"./createConversation":139,"./mixins/messenger":147}],147:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":208,"../../stores/conversation":223,"./conversation":126,"./conversations":135,"./createConversation":140,"./mixins/messenger":148}],148:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -7675,7 +7686,7 @@ MessengerMixin = {
 module.exports = MessengerMixin;
 
 
-},{"../../../actions/view/messenger":12}],148:[function(require,module,exports){
+},{"../../../actions/view/messenger":13}],149:[function(require,module,exports){
 var NotificationsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7700,7 +7711,7 @@ NotificationsLoadMoreButton = React.createClass({
 module.exports = NotificationsLoadMoreButton;
 
 
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 var NotificationsMarkButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7724,7 +7735,7 @@ NotificationsMarkButton = React.createClass({
 module.exports = NotificationsMarkButton;
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var NotificationsHeader;
 
 NotificationsHeader = React.createClass({
@@ -7741,7 +7752,7 @@ NotificationsHeader = React.createClass({
 module.exports = NotificationsHeader;
 
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 var NotificationList, NotificationListEmpty, NotificationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -7788,7 +7799,7 @@ NotificationList = React.createClass({
 module.exports = NotificationList;
 
 
-},{"./list/empty":152,"./list/item":153,"lodash":"lodash"}],152:[function(require,module,exports){
+},{"./list/empty":153,"./list/item":154,"lodash":"lodash"}],153:[function(require,module,exports){
 var NotificationsListEmpty;
 
 NotificationsListEmpty = React.createClass({
@@ -7802,7 +7813,7 @@ NotificationsListEmpty = React.createClass({
 module.exports = NotificationsListEmpty;
 
 
-},{}],153:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 var Image, NotificationListItem, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -7876,7 +7887,7 @@ NotificationListItem = React.createClass({
 module.exports = NotificationListItem;
 
 
-},{"../../common/avatar/user":45,"../../common/image/image":47,"classnames":247}],154:[function(require,module,exports){
+},{"../../common/avatar/user":46,"../../common/image/image":48,"classnames":247}],155:[function(require,module,exports){
 var NotificationsLoadMore, NotificationsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -7909,7 +7920,7 @@ NotificationsLoadMore = React.createClass({
 module.exports = NotificationsLoadMore;
 
 
-},{"../common/spinner/spinner":48,"./buttons/loadMore":148}],155:[function(require,module,exports){
+},{"../common/spinner/spinner":49,"./buttons/loadMore":149}],156:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, LOAD_MORE_LIMIT, NotificationsMixin, NotificationsViewActions, SHOW_STATE, _;
 
 _ = require('lodash');
@@ -7973,7 +7984,7 @@ NotificationsMixin = {
 module.exports = NotificationsMixin;
 
 
-},{"../../../actions/view/notifications":13,"lodash":"lodash"}],156:[function(require,module,exports){
+},{"../../../actions/view/notifications":14,"lodash":"lodash"}],157:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
@@ -8035,7 +8046,7 @@ Notifications = React.createClass({
 module.exports = Notifications;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":207,"../../stores/notification":227,"./buttons/mark":149,"./header":150,"./list":151,"./loadMore":154,"./mixins/notifications":155}],157:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../mixins/component":208,"../../stores/notification":228,"./buttons/mark":150,"./header":151,"./list":152,"./loadMore":155,"./mixins/notifications":156}],158:[function(require,module,exports){
 var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
 
 PaginationPrev = require('./items/prev');
@@ -8081,7 +8092,7 @@ DaylogPagination = React.createClass({
 module.exports = DaylogPagination;
 
 
-},{"./items/next":159,"./items/prev":160}],158:[function(require,module,exports){
+},{"./items/next":160,"./items/prev":161}],159:[function(require,module,exports){
 var EntryPagination, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8104,7 +8115,7 @@ EntryPagination = React.createClass({
 module.exports = EntryPagination;
 
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 var PaginationNext, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -8137,7 +8148,7 @@ PaginationNext = React.createClass({
 module.exports = PaginationNext;
 
 
-},{"classnames":247}],160:[function(require,module,exports){
+},{"classnames":247}],161:[function(require,module,exports){
 var PaginationPrev, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -8170,7 +8181,7 @@ PaginationPrev = React.createClass({
 module.exports = PaginationPrev;
 
 
-},{"classnames":247}],161:[function(require,module,exports){
+},{"classnames":247}],162:[function(require,module,exports){
 var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
 
 PaginationPrev = require('./items/prev');
@@ -8237,7 +8248,7 @@ TlogPagination = React.createClass({
 module.exports = TlogPagination;
 
 
-},{"./items/next":159,"./items/prev":160}],162:[function(require,module,exports){
+},{"./items/next":160,"./items/prev":161}],163:[function(require,module,exports){
 var PropTypes, SettingsAccounts, UserAvatar;
 
 UserAvatar = require('../common/avatar/user');
@@ -8281,7 +8292,7 @@ SettingsAccounts = React.createClass({
 module.exports = SettingsAccounts;
 
 
-},{"../common/avatar/user":45}],163:[function(require,module,exports){
+},{"../common/avatar/user":46}],164:[function(require,module,exports){
 var PropTypes, SettingsSaveButton;
 
 PropTypes = React.PropTypes;
@@ -8308,7 +8319,7 @@ SettingsSaveButton = React.createClass({
 module.exports = SettingsSaveButton;
 
 
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 var PropTypes, Settings_Radio, UuidService;
 
 UuidService = require('../../../../../shared/react/services/uuid');
@@ -8363,7 +8374,7 @@ Settings_Radio = React.createClass({
 module.exports = Settings_Radio;
 
 
-},{"../../../../../shared/react/services/uuid":242}],165:[function(require,module,exports){
+},{"../../../../../shared/react/services/uuid":242}],166:[function(require,module,exports){
 var DECLARE_STATE, PropTypes, SHOW_STATE, SettingsEmail, SettingsEmailDeclare, SettingsEmailMixin, SettingsEmailShow, SettingsEmailUnconfirmed, UNCONFIRMED_STATE;
 
 SettingsEmailMixin = require('./mixins/email');
@@ -8439,7 +8450,7 @@ SettingsEmail = React.createClass({
 module.exports = SettingsEmail;
 
 
-},{"./email/declare":169,"./email/show":171,"./email/unconfirmed":172,"./mixins/email":177}],166:[function(require,module,exports){
+},{"./email/declare":170,"./email/show":172,"./email/unconfirmed":173,"./mixins/email":178}],167:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton;
 
 PropTypes = React.PropTypes;
@@ -8464,7 +8475,7 @@ SettingsEmailCancelButton = React.createClass({
 module.exports = SettingsEmailCancelButton;
 
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 var PropTypes, SettingsEmailChangeButton;
 
 PropTypes = React.PropTypes;
@@ -8489,7 +8500,7 @@ SettingsEmailChangeButton = React.createClass({
 module.exports = SettingsEmailChangeButton;
 
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var PropTypes, SettingsEmailDeclareButton;
 
 PropTypes = React.PropTypes;
@@ -8514,7 +8525,7 @@ SettingsEmailDeclareButton = React.createClass({
 module.exports = SettingsEmailDeclareButton;
 
 
-},{}],169:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailDeclare, SettingsEmailDeclareButton, SettingsEmailField;
 
 NotifyController = require('../../../controllers/notify');
@@ -8567,7 +8578,7 @@ SettingsEmailDeclare = React.createClass({
 module.exports = SettingsEmailDeclare;
 
 
-},{"../../../controllers/notify":203,"./buttons/declare":168,"./fields/email":170}],170:[function(require,module,exports){
+},{"../../../controllers/notify":204,"./buttons/declare":169,"./fields/email":171}],171:[function(require,module,exports){
 var PropTypes, SettingsEmailField, _;
 
 _ = require('lodash');
@@ -8606,7 +8617,7 @@ SettingsEmailField = React.createClass({
 module.exports = SettingsEmailField;
 
 
-},{"lodash":"lodash"}],171:[function(require,module,exports){
+},{"lodash":"lodash"}],172:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsEmailChangeButton, SettingsEmailField, SettingsEmailShow;
 
 NotifyController = require('../../../controllers/notify');
@@ -8665,7 +8676,7 @@ SettingsEmailShow = React.createClass({
 module.exports = SettingsEmailShow;
 
 
-},{"../../../controllers/notify":203,"./buttons/change":167,"./fields/email":170}],172:[function(require,module,exports){
+},{"../../../controllers/notify":204,"./buttons/change":168,"./fields/email":171}],173:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton, SettingsEmailField, SettingsEmailUnconfirmed;
 
 SettingsEmailField = require('./fields/email');
@@ -8704,7 +8715,7 @@ SettingsEmailUnconfirmed = React.createClass({
 module.exports = SettingsEmailUnconfirmed;
 
 
-},{"./buttons/cancel":166,"./fields/email":170}],173:[function(require,module,exports){
+},{"./buttons/cancel":167,"./fields/email":171}],174:[function(require,module,exports){
 var PropTypes, SettingsHero, SettingsHeroAvatar, SettingsHeroSlug, SettingsHeroTitle;
 
 SettingsHeroAvatar = require('./hero/avatar');
@@ -8752,7 +8763,7 @@ SettingsHero = React.createClass({
 module.exports = SettingsHero;
 
 
-},{"./hero/avatar":174,"./hero/slug":175,"./hero/title":176}],174:[function(require,module,exports){
+},{"./hero/avatar":175,"./hero/slug":176,"./hero/title":177}],175:[function(require,module,exports){
 var CurrentUserViewAcitons, LOADING_STATE, PropTypes, SHOW_STATE, SettingsHeroAvatar, Spinner, UserAvatar;
 
 CurrentUserViewAcitons = require('../../../actions/view/currentUser');
@@ -8872,7 +8883,7 @@ SettingsHeroAvatar = React.createClass({
 module.exports = SettingsHeroAvatar;
 
 
-},{"../../../actions/view/currentUser":9,"../../common/avatar/user":45,"../../common/spinner/spinner":48}],175:[function(require,module,exports){
+},{"../../../actions/view/currentUser":10,"../../common/avatar/user":46,"../../common/spinner/spinner":49}],176:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsHeroSlug, _, findDOMNode;
 
 _ = require('lodash');
@@ -8922,7 +8933,7 @@ SettingsHeroSlug = React.createClass({
 module.exports = SettingsHeroSlug;
 
 
-},{"../../../controllers/notify":203,"lodash":"lodash"}],176:[function(require,module,exports){
+},{"../../../controllers/notify":204,"lodash":"lodash"}],177:[function(require,module,exports){
 var PropTypes, SettingsHeroTitle, _;
 
 _ = require('lodash');
@@ -8954,7 +8965,7 @@ SettingsHeroTitle = React.createClass({
 module.exports = SettingsHeroTitle;
 
 
-},{"lodash":"lodash"}],177:[function(require,module,exports){
+},{"lodash":"lodash"}],178:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');
@@ -8971,7 +8982,7 @@ SettingsEmailMixin = {
 module.exports = SettingsEmailMixin;
 
 
-},{"../../../actions/view/currentUser":9}],178:[function(require,module,exports){
+},{"../../../actions/view/currentUser":10}],179:[function(require,module,exports){
 var CurrentUserViewActions, NotifyController, SettingsMixin, _;
 
 _ = require('lodash');
@@ -8993,7 +9004,7 @@ SettingsMixin = {
 module.exports = SettingsMixin;
 
 
-},{"../../../actions/view/currentUser":9,"../../../controllers/notify":203,"lodash":"lodash"}],179:[function(require,module,exports){
+},{"../../../actions/view/currentUser":10,"../../../controllers/notify":204,"lodash":"lodash"}],180:[function(require,module,exports){
 var PropTypes, SettingsPassword, SettingsPasswordConfirmField, SettingsPasswordField;
 
 SettingsPasswordField = require('./password/fields/password');
@@ -9061,7 +9072,7 @@ SettingsPassword = React.createClass({
 module.exports = SettingsPassword;
 
 
-},{"./password/fields/password":180,"./password/fields/passwordConfirm":181}],180:[function(require,module,exports){
+},{"./password/fields/password":181,"./password/fields/passwordConfirm":182}],181:[function(require,module,exports){
 var PropTypes, SettingsPasswordField;
 
 PropTypes = React.PropTypes;
@@ -9091,7 +9102,7 @@ SettingsPasswordField = React.createClass({
 module.exports = SettingsPasswordField;
 
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 var PropTypes, SettingsPasswordConfirmField;
 
 PropTypes = React.PropTypes;
@@ -9121,7 +9132,7 @@ SettingsPasswordConfirmField = React.createClass({
 module.exports = SettingsPasswordConfirmField;
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, Settings, SettingsAccounts, SettingsEmail, SettingsHero, SettingsMixin, SettingsPassword, SettingsSaveButton, Settings_Radio, _;
 
 _ = require('lodash');
@@ -9227,7 +9238,7 @@ Settings = React.createClass({
 module.exports = Settings;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"./accounts":162,"./buttons/save":163,"./common/radio":164,"./email":165,"./hero":173,"./mixins/settings":178,"./password":179,"lodash":"lodash"}],183:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"./accounts":163,"./buttons/save":164,"./common/radio":165,"./email":166,"./hero":174,"./mixins/settings":179,"./password":180,"lodash":"lodash"}],184:[function(require,module,exports){
 var PropTypes, ToolbarItem, classnames;
 
 classnames = require('classnames');
@@ -9286,7 +9297,7 @@ ToolbarItem = React.createClass({
 module.exports = ToolbarItem;
 
 
-},{"classnames":247}],184:[function(require,module,exports){
+},{"classnames":247}],185:[function(require,module,exports){
 var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, classnames;
 
 classnames = require('classnames');
@@ -9339,7 +9350,7 @@ FeedToolbar = React.createClass({
 module.exports = FeedToolbar;
 
 
-},{"./feed/list":185,"./mixins/toolbar":187,"classnames":247}],185:[function(require,module,exports){
+},{"./feed/list":186,"./mixins/toolbar":188,"classnames":247}],186:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -9390,7 +9401,7 @@ FeedToolbarList = React.createClass({
 module.exports = FeedToolbarList;
 
 
-},{"../_item":183}],186:[function(require,module,exports){
+},{"../_item":184}],187:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -9417,7 +9428,7 @@ FeedToolbarManager = React.createClass({
 module.exports = FeedToolbarManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"./feed":184}],187:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"./feed":185}],188:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -9448,7 +9459,7 @@ ToolbarMixin = {
 module.exports = ToolbarMixin;
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, UserToolbarListAdditional, UserToolbarToggle, classnames;
 
 classnames = require('classnames');
@@ -9508,7 +9519,7 @@ UserToolbar = React.createClass({
 module.exports = UserToolbar;
 
 
-},{"./mixins/toolbar":187,"./user/list":189,"./user/listAdditional":190,"./user/toggle":192,"classnames":247}],189:[function(require,module,exports){
+},{"./mixins/toolbar":188,"./user/list":190,"./user/listAdditional":191,"./user/toggle":193,"classnames":247}],190:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -9587,7 +9598,7 @@ UserToolbarList = React.createClass({
 module.exports = UserToolbarList;
 
 
-},{"../_item":183,"./mixins/list":191}],190:[function(require,module,exports){
+},{"../_item":184,"./mixins/list":192}],191:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -9606,7 +9617,7 @@ UserToolbarListAdditional = React.createClass({
 module.exports = UserToolbarListAdditional;
 
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -9621,7 +9632,7 @@ UserToolbarListMixin = {
 module.exports = UserToolbarListMixin;
 
 
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -9668,7 +9679,7 @@ UserToolbarToggle = React.createClass({
 module.exports = UserToolbarToggle;
 
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -9706,7 +9717,7 @@ UserToolbarManager = React.createClass({
 module.exports = UserToolbarManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":223,"../../stores/messagingStatus":226,"./user":188}],194:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":240,"../../stores/currentUser":224,"../../stores/messagingStatus":227,"./user":189}],195:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9748,7 +9759,7 @@ ApiConstants = keyMirror({
 module.exports = ApiConstants;
 
 
-},{"react/lib/keyMirror":408}],195:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],196:[function(require,module,exports){
 var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessagingConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
 
 ApiConstants = require('./api');
@@ -9779,7 +9790,7 @@ module.exports = {
 };
 
 
-},{"./api":194,"./currentUser":196,"./entry":197,"./feed":198,"./messaging":199,"./messenger":200,"./notifications":201,"./relationship":202}],196:[function(require,module,exports){
+},{"./api":195,"./currentUser":197,"./entry":198,"./feed":199,"./messaging":200,"./messenger":201,"./notifications":202,"./relationship":203}],197:[function(require,module,exports){
 var CurrentUserConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9793,7 +9804,7 @@ CurrentUserConstants = keyMirror({
 module.exports = CurrentUserConstants;
 
 
-},{"react/lib/keyMirror":408}],197:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],198:[function(require,module,exports){
 var EntryConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9809,7 +9820,7 @@ EntryConstants = keyMirror({
 module.exports = EntryConstants;
 
 
-},{"react/lib/keyMirror":408}],198:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],199:[function(require,module,exports){
 var FeedConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9822,7 +9833,7 @@ FeedConstants = keyMirror({
 module.exports = FeedConstants;
 
 
-},{"react/lib/keyMirror":408}],199:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],200:[function(require,module,exports){
 var MessagingConstants;
 
 MessagingConstants = {
@@ -9840,7 +9851,7 @@ MessagingConstants = {
 module.exports = MessagingConstants;
 
 
-},{}],200:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 var MessengerConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9858,7 +9869,7 @@ MessengerConstants = keyMirror({
 module.exports = MessengerConstants;
 
 
-},{"react/lib/keyMirror":408}],201:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],202:[function(require,module,exports){
 var NotificationsConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9871,7 +9882,7 @@ NotificationsConstants = keyMirror({
 module.exports = NotificationsConstants;
 
 
-},{"react/lib/keyMirror":408}],202:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],203:[function(require,module,exports){
 var RelationshipConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -9883,7 +9894,7 @@ RelationshipConstants = keyMirror({
 module.exports = RelationshipConstants;
 
 
-},{"react/lib/keyMirror":408}],203:[function(require,module,exports){
+},{"react/lib/keyMirror":408}],204:[function(require,module,exports){
 var Notify, NotifyController, _pendingNotification, closeNotification, getContainer, isPageLoadingCanceled;
 
 Notify = require('../components/alerts/notify');
@@ -9972,7 +9983,7 @@ NotifyController = {
 module.exports = NotifyController;
 
 
-},{"../components/alerts/notify":24}],204:[function(require,module,exports){
+},{"../components/alerts/notify":25}],205:[function(require,module,exports){
 var ScreenController, _oldPageName, getContainer, restorePageName, switchPageName;
 
 _oldPageName = null;
@@ -10030,7 +10041,7 @@ ScreenController = {
 module.exports = ScreenController;
 
 
-},{}],205:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 var AppDispatcher, Dispatcher, assign;
 
 assign = require('react/lib/Object.assign');
@@ -10055,7 +10066,7 @@ AppDispatcher = assign(new Dispatcher(), {
 module.exports = AppDispatcher;
 
 
-},{"flux":248,"react/lib/Object.assign":280}],206:[function(require,module,exports){
+},{"flux":248,"react/lib/Object.assign":280}],207:[function(require,module,exports){
 var ClickOutsideMixin, closest;
 
 closest = function(el, target) {
@@ -10090,7 +10101,7 @@ ClickOutsideMixin = {
 module.exports = ClickOutsideMixin;
 
 
-},{}],207:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 var ComponentMixin;
 
 ComponentMixin = {
@@ -10112,7 +10123,7 @@ ComponentMixin = {
 module.exports = ComponentMixin;
 
 
-},{}],208:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -10181,7 +10192,7 @@ DropdownMenuMixin = {
 module.exports = DropdownMenuMixin;
 
 
-},{}],209:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 var Auth, AuthPage, PageMixin, PropTypes;
 
 PageMixin = require('./mixins/page');
@@ -10207,7 +10218,7 @@ AuthPage = React.createClass({
 module.exports = AuthPage;
 
 
-},{"../components/auth/auth":25,"./mixins/page":216}],210:[function(require,module,exports){
+},{"../components/auth/auth":26,"./mixins/page":217}],211:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10261,7 +10272,7 @@ EntryPage = React.createClass({
 module.exports = EntryPage;
 
 
-},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/entry/Tlog":65,"../components/hero/tlog":107,"../components/pagination/entry":158,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],211:[function(require,module,exports){
+},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/entry/Tlog":66,"../components/hero/tlog":108,"../components/pagination/entry":159,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],212:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10315,7 +10326,7 @@ FeedBestPage = React.createClass({
 module.exports = FeedBestPage;
 
 
-},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedBest":98,"../components/hero/feedBest":104,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],212:[function(require,module,exports){
+},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedBest":99,"../components/hero/feedBest":105,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],213:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedStore, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10369,7 +10380,7 @@ FeedFriendsPage = React.createClass({
 module.exports = FeedFriendsPage;
 
 
-},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedFriends":99,"../components/hero/feedFriends":105,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],213:[function(require,module,exports){
+},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedFriends":100,"../components/hero/feedFriends":106,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],214:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedStore, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10421,7 +10432,7 @@ FeedLivePage = React.createClass({
 module.exports = FeedLivePage;
 
 
-},{"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/feed/feedLive":100,"../components/hero/feedLive":106,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/feed":224,"./mixins/page":216}],214:[function(require,module,exports){
+},{"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/feed/feedLive":101,"../components/hero/feedLive":107,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/feed":225,"./mixins/page":217}],215:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10464,7 +10475,7 @@ MessengerPage = React.createClass({
 module.exports = MessengerPage;
 
 
-},{"../components/messenger/messenger":146,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/conversation":222,"../stores/currentUser":223,"./mixins/page":216}],215:[function(require,module,exports){
+},{"../components/messenger/messenger":147,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/conversation":223,"../stores/currentUser":224,"./mixins/page":217}],216:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10513,7 +10524,7 @@ MessengerThreadPage = React.createClass({
 module.exports = MessengerThreadPage;
 
 
-},{"../components/messenger/messenger":146,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/conversation":222,"../stores/currentUser":223,"../stores/message":225,"./mixins/page":216}],216:[function(require,module,exports){
+},{"../components/messenger/messenger":147,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/conversation":223,"../stores/currentUser":224,"../stores/message":226,"./mixins/page":217}],217:[function(require,module,exports){
 var PageMixin, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -10533,7 +10544,7 @@ PageMixin = {
 module.exports = PageMixin;
 
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, NotificationStore, Notifications, NotificationsPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10573,7 +10584,7 @@ NotificationsPage = React.createClass({
 module.exports = NotificationsPage;
 
 
-},{"../components/notifications/notifications":156,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"../stores/notification":227,"./mixins/page":216}],218:[function(require,module,exports){
+},{"../components/notifications/notifications":157,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"../stores/notification":228,"./mixins/page":217}],219:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, PageMixin, PropTypes, Settings, SettingsPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10609,7 +10620,7 @@ SettingsPage = React.createClass({
 module.exports = SettingsPage;
 
 
-},{"../components/settings/settings":182,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],219:[function(require,module,exports){
+},{"../components/settings/settings":183,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],220:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10667,7 +10678,7 @@ TlogDaylogPage = React.createClass({
 module.exports = TlogDaylogPage;
 
 
-},{"../components/Daylog/Daylog":18,"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/hero/tlog":107,"../components/pagination/daylog":157,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],220:[function(require,module,exports){
+},{"../components/Daylog/Daylog":19,"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/hero/tlog":108,"../components/pagination/daylog":158,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],221:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -10725,7 +10736,7 @@ TlogRegularPage = React.createClass({
 module.exports = TlogRegularPage;
 
 
-},{"../components/Tlog/Tlog":21,"../components/auth/authManager":28,"../components/buttons/auth/authManager":41,"../components/hero/tlog":107,"../components/pagination/tlog":161,"../components/toolbars/feedManager":186,"../components/toolbars/userManager":193,"../stores/currentUser":223,"./mixins/page":216}],221:[function(require,module,exports){
+},{"../components/Tlog/Tlog":22,"../components/auth/authManager":29,"../components/buttons/auth/authManager":42,"../components/hero/tlog":108,"../components/pagination/tlog":162,"../components/toolbars/feedManager":187,"../components/toolbars/userManager":194,"../stores/currentUser":224,"./mixins/page":217}],222:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -10758,7 +10769,7 @@ BaseStore = (function(superClass) {
 module.exports = BaseStore;
 
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, _, _conversations, _currentID, assign;
 
 _ = require('lodash');
@@ -10839,7 +10850,7 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":"lodash","react/lib/Object.assign":280}],223:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":"lodash","react/lib/Object.assign":280}],224:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, CurrentUserStore, _currentUser, assign, extendByMockData;
 
 assign = require('react/lib/Object.assign');
@@ -10912,7 +10923,7 @@ CurrentUserStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":280}],224:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":280}],225:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, FeedStore, _entries, _everythingLoaded, assign, pushEntries;
 
 assign = require('react/lib/Object.assign');
@@ -10961,7 +10972,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":280}],225:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":280}],226:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, CurrentUserStore, MessageStore, _, _localMessages, _messages, addLocalMessage, addRemoteMessage, assign;
 
 _ = require('lodash');
@@ -11116,7 +11127,7 @@ MessageStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"./conversation":222,"./currentUser":223,"lodash":"lodash","react/lib/Object.assign":280}],226:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"./conversation":223,"./currentUser":224,"lodash":"lodash","react/lib/Object.assign":280}],227:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, MessagingStatusStore, _, _messagingStatus, assign;
 
 _ = require('lodash');
@@ -11160,7 +11171,7 @@ MessagingStatusStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":"lodash","react/lib/Object.assign":280}],227:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":"lodash","react/lib/Object.assign":280}],228:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, NotificationStore, _, _everythingLoaded, _notifications, assign;
 
 _ = require('lodash');
@@ -11238,7 +11249,7 @@ NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"lodash":"lodash","react/lib/Object.assign":280}],228:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"lodash":"lodash","react/lib/Object.assign":280}],229:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, _relationships, assign, updateStatus;
 
 assign = require('react/lib/Object.assign');
@@ -11280,20 +11291,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":195,"../dispatcher/dispatcher":205,"./_base":221,"react/lib/Object.assign":280}],229:[function(require,module,exports){
-(function (global){
-'use strict';
-
-global.gon = {
-  env: 'development',
-  thumbor: 'http://thumbor0.tasty0.ru',
-  thumbor_http_loader: 'http://thumbor4.tasty0.ru'
-};
-
-require('./mobile/bundlePrerender');
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./mobile/bundlePrerender":1}],230:[function(require,module,exports){
+},{"../constants/constants":196,"../dispatcher/dispatcher":206,"./_base":222,"react/lib/Object.assign":280}],230:[function(require,module,exports){
 var BrowserHelpers;
 
 BrowserHelpers = {
@@ -11778,7 +11776,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _Field = require('./Field');
+var _Field = require("./Field");
 
 var _Field2 = _interopRequireDefault(_Field);
 
@@ -11804,7 +11802,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _Field = require('./Field');
+var _Field = require("./Field");
 
 var _Field2 = _interopRequireDefault(_Field);
 
@@ -11867,8 +11865,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 function prepareUrl(url) {
-  return (/^\/\/\S*$/.test(url) ? 'http:' + url : url
-  );
+  return /^\/\/\S*$/.test(url) ? 'http:' + url : url;
 }
 
 var ThumborService = {
@@ -11880,7 +11877,7 @@ var ThumborService = {
     var width = size.width || '',
         height = size.height || '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url : url;
+    return this.thumborWithUrl ? '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url : url;
   },
 
   newRetinaImageUrl: function newRetinaImageUrl(url, size) {
@@ -11888,7 +11885,7 @@ var ThumborService = {
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x' : url;
+    return this.thumborWithUrl ? '' + this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x' : url;
   },
 
   imageUrl: function imageUrl(_ref) {
@@ -11896,7 +11893,7 @@ var ThumborService = {
     var path = _ref.path;
     var size = _ref.size;
 
-    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path : url;
+    return this.thumborWithPath ? '' + this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path : url;
   },
 
   retinaImageUrl: function retinaImageUrl(_ref2) {
@@ -11908,7 +11905,7 @@ var ThumborService = {
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + path + ' 2x' : url;
+    return this.thumborWithPath ? '' + this.thumborWithPath + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + path + ' 2x' : url;
   }
 };
 
@@ -12653,12 +12650,11 @@ if (typeof define !== 'undefined' && define.amd) {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-module.exports.Dispatcher = require('./lib/Dispatcher');
+module.exports.Dispatcher = require('./lib/Dispatcher')
 
 },{"./lib/Dispatcher":249}],249:[function(require,module,exports){
-(function (process){
-/**
- * Copyright (c) 2014-2015, Facebook, Inc.
+/*
+ * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -12666,18 +12662,14 @@ module.exports.Dispatcher = require('./lib/Dispatcher');
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule Dispatcher
- * 
- * @preventMunge
+ * @typechecks
  */
 
-'use strict';
+"use strict";
 
-exports.__esModule = true;
+var invariant = require('./invariant');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var invariant = require('fbjs/lib/invariant');
-
+var _lastID = 1;
 var _prefix = 'ID_';
 
 /**
@@ -12727,7 +12719,7 @@ var _prefix = 'ID_';
  *
  * This payload is digested by both stores:
  *
- *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+ *    CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
  *     if (payload.actionType === 'country-update') {
  *       CountryStore.country = payload.selectedCountry;
  *     }
@@ -12755,10 +12747,14 @@ var _prefix = 'ID_';
  *     flightDispatcher.register(function(payload) {
  *       switch (payload.actionType) {
  *         case 'country-update':
- *         case 'city-update':
  *           flightDispatcher.waitFor([CityStore.dispatchToken]);
  *           FlightPriceStore.price =
  *             getFlightPriceStore(CountryStore.country, CityStore.city);
+ *           break;
+ *
+ *         case 'city-update':
+ *           FlightPriceStore.price =
+ *             FlightPriceStore(CountryStore.country, CityStore.city);
  *           break;
  *     }
  *   });
@@ -12768,109 +12764,131 @@ var _prefix = 'ID_';
  * `FlightPriceStore`.
  */
 
-var Dispatcher = (function () {
   function Dispatcher() {
-    _classCallCheck(this, Dispatcher);
-
-    this._callbacks = {};
-    this._isDispatching = false;
-    this._isHandled = {};
-    this._isPending = {};
-    this._lastID = 1;
+    this.$Dispatcher_callbacks = {};
+    this.$Dispatcher_isPending = {};
+    this.$Dispatcher_isHandled = {};
+    this.$Dispatcher_isDispatching = false;
+    this.$Dispatcher_pendingPayload = null;
   }
 
   /**
    * Registers a callback to be invoked with every dispatched payload. Returns
    * a token that can be used with `waitFor()`.
+   *
+   * @param {function} callback
+   * @return {string}
    */
-
-  Dispatcher.prototype.register = function register(callback) {
-    var id = _prefix + this._lastID++;
-    this._callbacks[id] = callback;
+  Dispatcher.prototype.register=function(callback) {
+    var id = _prefix + _lastID++;
+    this.$Dispatcher_callbacks[id] = callback;
     return id;
   };
 
   /**
    * Removes a callback based on its token.
+   *
+   * @param {string} id
    */
-
-  Dispatcher.prototype.unregister = function unregister(id) {
-    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-    delete this._callbacks[id];
+  Dispatcher.prototype.unregister=function(id) {
+    invariant(
+      this.$Dispatcher_callbacks[id],
+      'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
+      id
+    );
+    delete this.$Dispatcher_callbacks[id];
   };
 
   /**
    * Waits for the callbacks specified to be invoked before continuing execution
    * of the current callback. This method should only be used by a callback in
    * response to a dispatched payload.
+   *
+   * @param {array<string>} ids
    */
-
-  Dispatcher.prototype.waitFor = function waitFor(ids) {
-    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
+  Dispatcher.prototype.waitFor=function(ids) {
+    invariant(
+      this.$Dispatcher_isDispatching,
+      'Dispatcher.waitFor(...): Must be invoked while dispatching.'
+    );
     for (var ii = 0; ii < ids.length; ii++) {
       var id = ids[ii];
-      if (this._isPending[id]) {
-        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
+      if (this.$Dispatcher_isPending[id]) {
+        invariant(
+          this.$Dispatcher_isHandled[id],
+          'Dispatcher.waitFor(...): Circular dependency detected while ' +
+          'waiting for `%s`.',
+          id
+        );
         continue;
       }
-      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-      this._invokeCallback(id);
+      invariant(
+        this.$Dispatcher_callbacks[id],
+        'Dispatcher.waitFor(...): `%s` does not map to a registered callback.',
+        id
+      );
+      this.$Dispatcher_invokeCallback(id);
     }
   };
 
   /**
    * Dispatches a payload to all registered callbacks.
+   *
+   * @param {object} payload
    */
-
-  Dispatcher.prototype.dispatch = function dispatch(payload) {
-    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
-    this._startDispatching(payload);
+  Dispatcher.prototype.dispatch=function(payload) {
+    invariant(
+      !this.$Dispatcher_isDispatching,
+      'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
+    );
+    this.$Dispatcher_startDispatching(payload);
     try {
-      for (var id in this._callbacks) {
-        if (this._isPending[id]) {
+      for (var id in this.$Dispatcher_callbacks) {
+        if (this.$Dispatcher_isPending[id]) {
           continue;
         }
-        this._invokeCallback(id);
+        this.$Dispatcher_invokeCallback(id);
       }
     } finally {
-      this._stopDispatching();
+      this.$Dispatcher_stopDispatching();
     }
   };
 
   /**
    * Is this Dispatcher currently dispatching.
+   *
+   * @return {boolean}
    */
-
-  Dispatcher.prototype.isDispatching = function isDispatching() {
-    return this._isDispatching;
+  Dispatcher.prototype.isDispatching=function() {
+    return this.$Dispatcher_isDispatching;
   };
 
   /**
    * Call the callback stored with the given id. Also do some internal
    * bookkeeping.
    *
+   * @param {string} id
    * @internal
    */
-
-  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
-    this._isPending[id] = true;
-    this._callbacks[id](this._pendingPayload);
-    this._isHandled[id] = true;
+  Dispatcher.prototype.$Dispatcher_invokeCallback=function(id) {
+    this.$Dispatcher_isPending[id] = true;
+    this.$Dispatcher_callbacks[id](this.$Dispatcher_pendingPayload);
+    this.$Dispatcher_isHandled[id] = true;
   };
 
   /**
    * Set up bookkeeping needed when dispatching.
    *
+   * @param {object} payload
    * @internal
    */
-
-  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
-    for (var id in this._callbacks) {
-      this._isPending[id] = false;
-      this._isHandled[id] = false;
+  Dispatcher.prototype.$Dispatcher_startDispatching=function(payload) {
+    for (var id in this.$Dispatcher_callbacks) {
+      this.$Dispatcher_isPending[id] = false;
+      this.$Dispatcher_isHandled[id] = false;
     }
-    this._pendingPayload = payload;
-    this._isDispatching = true;
+    this.$Dispatcher_pendingPayload = payload;
+    this.$Dispatcher_isDispatching = true;
   };
 
   /**
@@ -12878,21 +12896,17 @@ var Dispatcher = (function () {
    *
    * @internal
    */
-
-  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
-    delete this._pendingPayload;
-    this._isDispatching = false;
+  Dispatcher.prototype.$Dispatcher_stopDispatching=function() {
+    this.$Dispatcher_pendingPayload = null;
+    this.$Dispatcher_isDispatching = false;
   };
 
-  return Dispatcher;
-})();
 
 module.exports = Dispatcher;
-}).call(this,require('_process'))
-},{"_process":246,"fbjs/lib/invariant":250}],250:[function(require,module,exports){
-(function (process){
+
+},{"./invariant":250}],250:[function(require,module,exports){
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -12915,8 +12929,8 @@ module.exports = Dispatcher;
  * will remain to ensure logic does not differ in production.
  */
 
-var invariant = function (condition, format, a, b, c, d, e, f) {
-  if (process.env.NODE_ENV !== 'production') {
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (false) {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
@@ -12925,13 +12939,17 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
   if (!condition) {
     var error;
     if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
     } else {
       var args = [a, b, c, d, e, f];
       var argIndex = 0;
-      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
+      error = new Error(
+        'Invariant Violation: ' +
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
     }
 
     error.framesToPop = 1; // we don't care about invariant's own frame
@@ -12940,8 +12958,8 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 };
 
 module.exports = invariant;
-}).call(this,require('_process'))
-},{"_process":246}],251:[function(require,module,exports){
+
+},{}],251:[function(require,module,exports){
 //! moment.js locale configuration
 //! locale : russian (ru)
 //! author : Viktorminator : https://github.com/Viktorminator
@@ -13013,11 +13031,11 @@ module.exports = invariant;
         monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
         longDateFormat : {
             LT : 'HH:mm',
-            LTS : 'HH:mm:ss',
+            LTS : 'LT:ss',
             L : 'DD.MM.YYYY',
             LL : 'D MMMM YYYY г.',
-            LLL : 'D MMMM YYYY г., HH:mm',
-            LLLL : 'dddd, D MMMM YYYY г., HH:mm'
+            LLL : 'D MMMM YYYY г., LT',
+            LLLL : 'dddd, D MMMM YYYY г., LT'
         },
         calendar : {
             sameDay: '[Сегодня в] LT',
@@ -13107,7 +13125,7 @@ module.exports = invariant;
 }));
 },{"../moment":252}],252:[function(require,module,exports){
 //! moment.js
-//! version : 2.10.6
+//! version : 2.10.3
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -13202,7 +13220,6 @@ module.exports = invariant;
                 flags.overflow < 0 &&
                 !flags.empty &&
                 !flags.invalidMonth &&
-                !flags.invalidWeekday &&
                 !flags.nullInput &&
                 !flags.invalidFormat &&
                 !flags.userInvalidated;
@@ -13283,7 +13300,7 @@ module.exports = invariant;
     // Moment prototype object
     function Moment(config) {
         copyConfig(this, config);
-        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
+        this._d = new Date(+config._d);
         // Prevent infinite loop in case updateOffset creates new moment
         // objects.
         if (updateInProgress === false) {
@@ -13297,20 +13314,16 @@ module.exports = invariant;
         return obj instanceof Moment || (obj != null && obj._isAMomentObject != null);
     }
 
-    function absFloor (number) {
-        if (number < 0) {
-            return Math.ceil(number);
-        } else {
-            return Math.floor(number);
-        }
-    }
-
     function toInt(argumentForCoercion) {
         var coercedNumber = +argumentForCoercion,
             value = 0;
 
         if (coercedNumber !== 0 && isFinite(coercedNumber)) {
-            value = absFloor(coercedNumber);
+            if (coercedNumber >= 0) {
+                value = Math.floor(coercedNumber);
+            } else {
+                value = Math.ceil(coercedNumber);
+            }
         }
 
         return value;
@@ -13408,7 +13421,9 @@ module.exports = invariant;
     function defineLocale (name, values) {
         if (values !== null) {
             values.abbr = name;
-            locales[name] = locales[name] || new Locale();
+            if (!locales[name]) {
+                locales[name] = new Locale();
+            }
             locales[name].set(values);
 
             // backwards compat for now: also set the locale
@@ -13512,14 +13527,16 @@ module.exports = invariant;
     }
 
     function zeroFill(number, targetLength, forceSign) {
-        var absNumber = '' + Math.abs(number),
-            zerosToFill = targetLength - absNumber.length,
+        var output = '' + Math.abs(number),
             sign = number >= 0;
-        return (sign ? (forceSign ? '+' : '') : '-') +
-            Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) + absNumber;
+
+        while (output.length < targetLength) {
+            output = '0' + output;
+        }
+        return (sign ? (forceSign ? '+' : '') : '-') + output;
     }
 
-    var formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
+    var formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g;
 
     var localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g;
 
@@ -13587,7 +13604,10 @@ module.exports = invariant;
         }
 
         format = expandFormat(format, m.localeData());
-        formatFunctions[format] = formatFunctions[format] || makeFormatFunction(format);
+
+        if (!formatFunctions[format]) {
+            formatFunctions[format] = makeFormatFunction(format);
+        }
 
         return formatFunctions[format](m);
     }
@@ -13631,15 +13651,8 @@ module.exports = invariant;
 
     var regexes = {};
 
-    function isFunction (sth) {
-        // https://github.com/moment/moment/issues/2325
-        return typeof sth === 'function' &&
-            Object.prototype.toString.call(sth) === '[object Function]';
-    }
-
-
     function addRegexToken (token, regex, strictRegex) {
-        regexes[token] = isFunction(regex) ? regex : function (isStrict) {
+        regexes[token] = typeof regex === 'function' ? regex : function (isStrict) {
             return (isStrict && strictRegex) ? strictRegex : regex;
         };
     }
@@ -13847,11 +13860,12 @@ module.exports = invariant;
     }
 
     function deprecate(msg, fn) {
-        var firstTime = true;
+        var firstTime = true,
+            msgWithStack = msg + '\n' + (new Error()).stack;
 
         return extend(function () {
             if (firstTime) {
-                warn(msg + '\n' + (new Error()).stack);
+                warn(msgWithStack);
                 firstTime = false;
             }
             return fn.apply(this, arguments);
@@ -13899,14 +13913,14 @@ module.exports = invariant;
             getParsingFlags(config).iso = true;
             for (i = 0, l = isoDates.length; i < l; i++) {
                 if (isoDates[i][1].exec(string)) {
-                    config._f = isoDates[i][0];
+                    // match[5] should be 'T' or undefined
+                    config._f = isoDates[i][0] + (match[6] || ' ');
                     break;
                 }
             }
             for (i = 0, l = isoTimes.length; i < l; i++) {
                 if (isoTimes[i][1].exec(string)) {
-                    // match[6] should be 'T' or space
-                    config._f += (match[6] || ' ') + isoTimes[i][0];
+                    config._f += isoTimes[i][0];
                     break;
                 }
             }
@@ -13985,10 +13999,7 @@ module.exports = invariant;
     addRegexToken('YYYYY',  match1to6, match6);
     addRegexToken('YYYYYY', match1to6, match6);
 
-    addParseToken(['YYYYY', 'YYYYYY'], YEAR);
-    addParseToken('YYYY', function (input, array) {
-        array[YEAR] = input.length === 2 ? utils_hooks__hooks.parseTwoDigitYear(input) : toInt(input);
-    });
+    addParseToken(['YYYY', 'YYYYY', 'YYYYYY'], YEAR);
     addParseToken('YY', function (input, array) {
         array[YEAR] = utils_hooks__hooks.parseTwoDigitYear(input);
     });
@@ -14115,18 +14126,18 @@ module.exports = invariant;
 
     //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
     function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
-        var week1Jan = 6 + firstDayOfWeek - firstDayOfWeekOfYear, janX = createUTCDate(year, 0, 1 + week1Jan), d = janX.getUTCDay(), dayOfYear;
-        if (d < firstDayOfWeek) {
-            d += 7;
-        }
+        var d = createUTCDate(year, 0, 1).getUTCDay();
+        var daysToAdd;
+        var dayOfYear;
 
-        weekday = weekday != null ? 1 * weekday : firstDayOfWeek;
-
-        dayOfYear = 1 + week1Jan + 7 * (week - 1) - d + weekday;
+        d = d === 0 ? 7 : d;
+        weekday = weekday != null ? weekday : firstDayOfWeek;
+        daysToAdd = firstDayOfWeek - d + (d > firstDayOfWeekOfYear ? 7 : 0) - (d < firstDayOfWeek ? 7 : 0);
+        dayOfYear = 7 * (week - 1) + (weekday - firstDayOfWeek) + daysToAdd + 1;
 
         return {
-            year: dayOfYear > 0 ? year : year - 1,
-            dayOfYear: dayOfYear > 0 ?  dayOfYear : daysInYear(year - 1) + dayOfYear
+            year      : dayOfYear > 0 ? year      : year - 1,
+            dayOfYear : dayOfYear > 0 ? dayOfYear : daysInYear(year - 1) + dayOfYear
         };
     }
 
@@ -14412,19 +14423,9 @@ module.exports = invariant;
     }
 
     function createFromConfig (config) {
-        var res = new Moment(checkOverflow(prepareConfig(config)));
-        if (res._nextDay) {
-            // Adding is smart enough around DST
-            res.add(1, 'd');
-            res._nextDay = undefined;
-        }
-
-        return res;
-    }
-
-    function prepareConfig (config) {
         var input = config._i,
-            format = config._f;
+            format = config._f,
+            res;
 
         config._locale = config._locale || locale_locales__getLocale(config._l);
 
@@ -14448,7 +14449,14 @@ module.exports = invariant;
             configFromInput(config);
         }
 
-        return config;
+        res = new Moment(checkOverflow(config));
+        if (res._nextDay) {
+            // Adding is smart enough around DST
+            res.add(1, 'd');
+            res._nextDay = undefined;
+        }
+
+        return res;
     }
 
     function configFromInput(config) {
@@ -14528,7 +14536,7 @@ module.exports = invariant;
         }
         res = moments[0];
         for (i = 1; i < moments.length; ++i) {
-            if (!moments[i].isValid() || moments[i][fn](res)) {
+            if (moments[i][fn](res)) {
                 res = moments[i];
             }
         }
@@ -14640,6 +14648,7 @@ module.exports = invariant;
         } else {
             return local__createLocal(input).local();
         }
+        return model._isUTC ? local__createLocal(input).zone(model._offset || 0) : local__createLocal(input).local();
     }
 
     function getDateOffset (m) {
@@ -14739,7 +14748,12 @@ module.exports = invariant;
     }
 
     function hasAlignedHourOffset (input) {
-        input = input ? local__createLocal(input).utcOffset() : 0;
+        if (!input) {
+            input = 0;
+        }
+        else {
+            input = local__createLocal(input).utcOffset();
+        }
 
         return (this.utcOffset() - input) % 60 === 0;
     }
@@ -14752,24 +14766,12 @@ module.exports = invariant;
     }
 
     function isDaylightSavingTimeShifted () {
-        if (typeof this._isDSTShifted !== 'undefined') {
-            return this._isDSTShifted;
+        if (this._a) {
+            var other = this._isUTC ? create_utc__createUTC(this._a) : local__createLocal(this._a);
+            return this.isValid() && compareArrays(this._a, other.toArray()) > 0;
         }
 
-        var c = {};
-
-        copyConfig(c, this);
-        c = prepareConfig(c);
-
-        if (c._a) {
-            var other = c._isUTC ? create_utc__createUTC(c._a) : local__createLocal(c._a);
-            this._isDSTShifted = this.isValid() &&
-                compareArrays(c._a, other.toArray()) > 0;
-        } else {
-            this._isDSTShifted = false;
-        }
-
-        return this._isDSTShifted;
+        return false;
     }
 
     function isLocal () {
@@ -14929,7 +14931,7 @@ module.exports = invariant;
     var add_subtract__add      = createAdder(1, 'add');
     var add_subtract__subtract = createAdder(-1, 'subtract');
 
-    function moment_calendar__calendar (time, formats) {
+    function moment_calendar__calendar (time) {
         // We want to compare the start of today, vs this.
         // Getting start-of-today depends on whether we're local/utc/offset or not.
         var now = time || local__createLocal(),
@@ -14941,7 +14943,7 @@ module.exports = invariant;
                 diff < 1 ? 'sameDay' :
                 diff < 2 ? 'nextDay' :
                 diff < 7 ? 'nextWeek' : 'sameElse';
-        return this.format(formats && formats[format] || this.localeData().calendar(format, this, local__createLocal(now)));
+        return this.format(this.localeData().calendar(format, this, local__createLocal(now)));
     }
 
     function clone () {
@@ -14985,6 +14987,14 @@ module.exports = invariant;
         } else {
             inputMs = +local__createLocal(input);
             return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
+        }
+    }
+
+    function absFloor (number) {
+        if (number < 0) {
+            return Math.ceil(number);
+        } else {
+            return Math.floor(number);
         }
     }
 
@@ -15178,19 +15188,6 @@ module.exports = invariant;
         return [m.year(), m.month(), m.date(), m.hour(), m.minute(), m.second(), m.millisecond()];
     }
 
-    function toObject () {
-        var m = this;
-        return {
-            years: m.year(),
-            months: m.month(),
-            date: m.date(),
-            hours: m.hours(),
-            minutes: m.minutes(),
-            seconds: m.seconds(),
-            milliseconds: m.milliseconds()
-        };
-    }
-
     function moment_valid__isValid () {
         return valid__isValid(this);
     }
@@ -15362,20 +15359,18 @@ module.exports = invariant;
     // HELPERS
 
     function parseWeekday(input, locale) {
-        if (typeof input !== 'string') {
-            return input;
+        if (typeof input === 'string') {
+            if (!isNaN(input)) {
+                input = parseInt(input, 10);
+            }
+            else {
+                input = locale.weekdaysParse(input);
+                if (typeof input !== 'number') {
+                    return null;
+                }
+            }
         }
-
-        if (!isNaN(input)) {
-            return parseInt(input, 10);
-        }
-
-        input = locale.weekdaysParse(input);
-        if (typeof input === 'number') {
-            return input;
-        }
-
-        return null;
+        return input;
     }
 
     // LOCALES
@@ -15398,7 +15393,9 @@ module.exports = invariant;
     function localeWeekdaysParse (weekdayName) {
         var i, mom, regex;
 
-        this._weekdaysParse = this._weekdaysParse || [];
+        if (!this._weekdaysParse) {
+            this._weekdaysParse = [];
+        }
 
         for (i = 0; i < 7; i++) {
             // make the regex if we don't have it already
@@ -15545,26 +15542,12 @@ module.exports = invariant;
         return ~~(this.millisecond() / 10);
     });
 
-    addFormatToken(0, ['SSS', 3], 0, 'millisecond');
-    addFormatToken(0, ['SSSS', 4], 0, function () {
-        return this.millisecond() * 10;
-    });
-    addFormatToken(0, ['SSSSS', 5], 0, function () {
-        return this.millisecond() * 100;
-    });
-    addFormatToken(0, ['SSSSSS', 6], 0, function () {
-        return this.millisecond() * 1000;
-    });
-    addFormatToken(0, ['SSSSSSS', 7], 0, function () {
-        return this.millisecond() * 10000;
-    });
-    addFormatToken(0, ['SSSSSSSS', 8], 0, function () {
-        return this.millisecond() * 100000;
-    });
-    addFormatToken(0, ['SSSSSSSSS', 9], 0, function () {
-        return this.millisecond() * 1000000;
-    });
+    function millisecond__milliseconds (token) {
+        addFormatToken(0, [token, 3], 0, 'millisecond');
+    }
 
+    millisecond__milliseconds('SSS');
+    millisecond__milliseconds('SSSS');
 
     // ALIASES
 
@@ -15575,19 +15558,11 @@ module.exports = invariant;
     addRegexToken('S',    match1to3, match1);
     addRegexToken('SS',   match1to3, match2);
     addRegexToken('SSS',  match1to3, match3);
-
-    var token;
-    for (token = 'SSSS'; token.length <= 9; token += 'S') {
-        addRegexToken(token, matchUnsigned);
-    }
-
-    function parseMs(input, array) {
+    addRegexToken('SSSS', matchUnsigned);
+    addParseToken(['S', 'SS', 'SSS', 'SSSS'], function (input, array) {
         array[MILLISECOND] = toInt(('0.' + input) * 1000);
-    }
+    });
 
-    for (token = 'S'; token.length <= 9; token += 'S') {
-        addParseToken(token, parseMs);
-    }
     // MOMENTS
 
     var getSetMillisecond = makeGetSet('Milliseconds', false);
@@ -15634,7 +15609,6 @@ module.exports = invariant;
     momentPrototype__proto.startOf      = startOf;
     momentPrototype__proto.subtract     = add_subtract__subtract;
     momentPrototype__proto.toArray      = toArray;
-    momentPrototype__proto.toObject     = toObject;
     momentPrototype__proto.toDate       = toDate;
     momentPrototype__proto.toISOString  = moment_format__toISOString;
     momentPrototype__proto.toJSON       = moment_format__toISOString;
@@ -15734,23 +15708,19 @@ module.exports = invariant;
         LT   : 'h:mm A',
         L    : 'MM/DD/YYYY',
         LL   : 'MMMM D, YYYY',
-        LLL  : 'MMMM D, YYYY h:mm A',
-        LLLL : 'dddd, MMMM D, YYYY h:mm A'
+        LLL  : 'MMMM D, YYYY LT',
+        LLLL : 'dddd, MMMM D, YYYY LT'
     };
 
     function longDateFormat (key) {
-        var format = this._longDateFormat[key],
-            formatUpper = this._longDateFormat[key.toUpperCase()];
-
-        if (format || !formatUpper) {
-            return format;
+        var output = this._longDateFormat[key];
+        if (!output && this._longDateFormat[key.toUpperCase()]) {
+            output = this._longDateFormat[key.toUpperCase()].replace(/MMMM|MM|DD|dddd/g, function (val) {
+                return val.slice(1);
+            });
+            this._longDateFormat[key] = output;
         }
-
-        this._longDateFormat[key] = formatUpper.replace(/MMMM|MM|DD|dddd/g, function (val) {
-            return val.slice(1);
-        });
-
-        return this._longDateFormat[key];
+        return output;
     }
 
     var defaultInvalidDate = 'Invalid date';
@@ -15959,29 +15929,12 @@ module.exports = invariant;
         return duration_add_subtract__addSubtract(this, input, value, -1);
     }
 
-    function absCeil (number) {
-        if (number < 0) {
-            return Math.floor(number);
-        } else {
-            return Math.ceil(number);
-        }
-    }
-
     function bubble () {
         var milliseconds = this._milliseconds;
         var days         = this._days;
         var months       = this._months;
         var data         = this._data;
-        var seconds, minutes, hours, years, monthsFromDays;
-
-        // if we have a mix of positive and negative values, bubble down first
-        // check: https://github.com/moment/moment/issues/2166
-        if (!((milliseconds >= 0 && days >= 0 && months >= 0) ||
-                (milliseconds <= 0 && days <= 0 && months <= 0))) {
-            milliseconds += absCeil(monthsToDays(months) + days) * 864e5;
-            days = 0;
-            months = 0;
-        }
+        var seconds, minutes, hours, years = 0;
 
         // The following code bubbles up values, see the tests for
         // examples of what that means.
@@ -15998,13 +15951,17 @@ module.exports = invariant;
 
         days += absFloor(hours / 24);
 
-        // convert days to months
-        monthsFromDays = absFloor(daysToMonths(days));
-        months += monthsFromDays;
-        days -= absCeil(monthsToDays(monthsFromDays));
+        // Accurately convert days to years, assume start from year 0.
+        years = absFloor(daysToYears(days));
+        days -= absFloor(yearsToDays(years));
+
+        // 30 days to a month
+        // TODO (iskren): Use anchor date (like 1st Jan) to compute this.
+        months += absFloor(days / 30);
+        days   %= 30;
 
         // 12 months -> 1 year
-        years = absFloor(months / 12);
+        years  += absFloor(months / 12);
         months %= 12;
 
         data.days   = days;
@@ -16014,15 +15971,15 @@ module.exports = invariant;
         return this;
     }
 
-    function daysToMonths (days) {
+    function daysToYears (days) {
         // 400 years have 146097 days (taking into account leap year rules)
-        // 400 years have 12 months === 4800
-        return days * 4800 / 146097;
+        return days * 400 / 146097;
     }
 
-    function monthsToDays (months) {
-        // the reverse of daysToMonths
-        return months * 146097 / 4800;
+    function yearsToDays (years) {
+        // years * 365 + absFloor(years / 4) -
+        //     absFloor(years / 100) + absFloor(years / 400);
+        return years * 146097 / 400;
     }
 
     function as (units) {
@@ -16034,11 +15991,11 @@ module.exports = invariant;
 
         if (units === 'month' || units === 'year') {
             days   = this._days   + milliseconds / 864e5;
-            months = this._months + daysToMonths(days);
+            months = this._months + daysToYears(days) * 12;
             return units === 'month' ? months : months / 12;
         } else {
             // handle milliseconds separately because of floating point math errors (issue #1867)
-            days = this._days + Math.round(monthsToDays(this._months));
+            days = this._days + Math.round(yearsToDays(this._months / 12));
             switch (units) {
                 case 'week'   : return days / 7     + milliseconds / 6048e5;
                 case 'day'    : return days         + milliseconds / 864e5;
@@ -16088,7 +16045,7 @@ module.exports = invariant;
         };
     }
 
-    var milliseconds = makeGetter('milliseconds');
+    var duration_get__milliseconds = makeGetter('milliseconds');
     var seconds      = makeGetter('seconds');
     var minutes      = makeGetter('minutes');
     var hours        = makeGetter('hours');
@@ -16166,36 +16123,13 @@ module.exports = invariant;
     var iso_string__abs = Math.abs;
 
     function iso_string__toISOString() {
-        // for ISO strings we do not use the normal bubbling rules:
-        //  * milliseconds bubble up until they become hours
-        //  * days do not bubble at all
-        //  * months bubble up until they become years
-        // This is because there is no context-free conversion between hours and days
-        // (think of clock changes)
-        // and also not between days and months (28-31 days per month)
-        var seconds = iso_string__abs(this._milliseconds) / 1000;
-        var days         = iso_string__abs(this._days);
-        var months       = iso_string__abs(this._months);
-        var minutes, hours, years;
-
-        // 3600 seconds -> 60 minutes -> 1 hour
-        minutes           = absFloor(seconds / 60);
-        hours             = absFloor(minutes / 60);
-        seconds %= 60;
-        minutes %= 60;
-
-        // 12 months -> 1 year
-        years  = absFloor(months / 12);
-        months %= 12;
-
-
         // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
-        var Y = years;
-        var M = months;
-        var D = days;
-        var h = hours;
-        var m = minutes;
-        var s = seconds;
+        var Y = iso_string__abs(this.years());
+        var M = iso_string__abs(this.months());
+        var D = iso_string__abs(this.days());
+        var h = iso_string__abs(this.hours());
+        var m = iso_string__abs(this.minutes());
+        var s = iso_string__abs(this.seconds() + this.milliseconds() / 1000);
         var total = this.asSeconds();
 
         if (!total) {
@@ -16232,7 +16166,7 @@ module.exports = invariant;
     duration_prototype__proto.valueOf        = duration_as__valueOf;
     duration_prototype__proto._bubble        = bubble;
     duration_prototype__proto.get            = duration_get__get;
-    duration_prototype__proto.milliseconds   = milliseconds;
+    duration_prototype__proto.milliseconds   = duration_get__milliseconds;
     duration_prototype__proto.seconds        = seconds;
     duration_prototype__proto.minutes        = minutes;
     duration_prototype__proto.hours          = hours;
@@ -16270,7 +16204,7 @@ module.exports = invariant;
     // Side effect imports
 
 
-    utils_hooks__hooks.version = '2.10.6';
+    utils_hooks__hooks.version = '2.10.3';
 
     setHookCallback(local__createLocal);
 
@@ -40757,7 +40691,7 @@ module.exports = warning;
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
- * jQuery JavaScript Library v2.1.4
+ * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -40767,7 +40701,7 @@ module.exports = warning;
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2015-04-28T16:01Z
+ * Date: 2014-12-18T15:11Z
  */
 
 (function( global, factory ) {
@@ -40825,7 +40759,7 @@ var
 	// Use the correct document accordingly with window argument (sandbox)
 	document = window.document,
 
-	version = "2.1.4",
+	version = "2.1.3",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -41289,12 +41223,7 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object Error".spli
 });
 
 function isArraylike( obj ) {
-
-	// Support: iOS 8.2 (not reproducible in simulator)
-	// `in` check used to prevent JIT error (gh-2145)
-	// hasOwn isn't used here due to false negatives
-	// regarding Nodelist length in IE
-	var length = "length" in obj && obj.length,
+	var length = obj.length,
 		type = jQuery.type( obj );
 
 	if ( type === "function" || jQuery.isWindow( obj ) ) {
@@ -49976,7 +49905,7 @@ return jQuery;
 (function (global){
 /**
  * @license
- * lodash 3.10.1 (Custom Build) <https://lodash.com/>
+ * lodash 3.9.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern -d -o ./index.js`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -49989,7 +49918,7 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '3.10.1';
+  var VERSION = '3.9.2';
 
   /** Used to compose bitmasks for wrapper metadata. */
   var BIND_FLAG = 1,
@@ -50010,11 +49939,9 @@ return jQuery;
   var HOT_COUNT = 150,
       HOT_SPAN = 16;
 
-  /** Used as the size to enable large array optimizations. */
-  var LARGE_ARRAY_SIZE = 200;
-
   /** Used to indicate the type of lazy iteratees. */
-  var LAZY_FILTER_FLAG = 1,
+  var LAZY_DROP_WHILE_FLAG = 0,
+      LAZY_FILTER_FLAG = 1,
       LAZY_MAP_FLAG = 2;
 
   /** Used as the `TypeError` message for "Functions" methods. */
@@ -50071,10 +49998,11 @@ return jQuery;
       rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
 
   /**
-   * Used to match `RegExp` [syntax characters](http://ecma-international.org/ecma-262/6.0/#sec-patterns)
-   * and those outlined by [`EscapeRegExpPattern`](http://ecma-international.org/ecma-262/6.0/#sec-escaperegexppattern).
+   * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
+   * In addition to special characters the forward slash is escaped to allow for
+   * easier `eval` use and `Function` compilation.
    */
-  var reRegExpChars = /^[:!,]|[\\^$.*+?()[\]{}|\/]|(^[0-9a-fA-Fnrtuvx])|([\n\r\u2028\u2029])/g,
+  var reRegExpChars = /[.*+?^${}()|[\]\/\\]/g,
       reHasRegExpChars = RegExp(reRegExpChars.source);
 
   /** Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks). */
@@ -50083,7 +50011,7 @@ return jQuery;
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
 
-  /** Used to match [ES template delimiters](http://ecma-international.org/ecma-262/6.0/#sec-template-literal-lexical-components). */
+  /** Used to match [ES template delimiters](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-template-literal-lexical-components). */
   var reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g;
 
   /** Used to match `RegExp` flags from their coerced string values. */
@@ -50094,9 +50022,6 @@ return jQuery;
 
   /** Used to detect host constructors (Safari > 5). */
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-  /** Used to detect unsigned integer values. */
-  var reIsUint = /^\d+$/;
 
   /** Used to match latin-1 supplementary letters (excluding mathematical operators). */
   var reLatin1 = /[\xc0-\xd6\xd8-\xde\xdf-\xf6\xf8-\xff]/g;
@@ -50115,13 +50040,26 @@ return jQuery;
     return RegExp(upper + '+(?=' + upper + lower + ')|' + upper + '?' + lower + '|' + upper + '+|[0-9]+', 'g');
   }());
 
+  /** Used to detect and test for whitespace. */
+  var whitespace = (
+    // Basic whitespace characters.
+    ' \t\x0b\f\xa0\ufeff' +
+
+    // Line terminators.
+    '\n\r\u2028\u2029' +
+
+    // Unicode category "Zs" space separators.
+    '\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000'
+  );
+
   /** Used to assign default `context` object properties. */
   var contextProps = [
     'Array', 'ArrayBuffer', 'Date', 'Error', 'Float32Array', 'Float64Array',
     'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Math', 'Number',
-    'Object', 'RegExp', 'Set', 'String', '_', 'clearTimeout', 'isFinite',
-    'parseFloat', 'parseInt', 'setTimeout', 'TypeError', 'Uint8Array',
-    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap'
+    'Object', 'RegExp', 'Set', 'String', '_', 'clearTimeout', 'document',
+    'isFinite', 'parseInt', 'setTimeout', 'TypeError', 'Uint8Array',
+    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
+    'window'
   ];
 
   /** Used to make template sourceURLs easier to identify. */
@@ -50156,6 +50094,13 @@ return jQuery;
   cloneableTags[errorTag] = cloneableTags[funcTag] =
   cloneableTags[mapTag] = cloneableTags[setTag] =
   cloneableTags[weakMapTag] = false;
+
+  /** Used as an internal `_.debounce` options object by `_.throttle`. */
+  var debounceOptions = {
+    'leading': false,
+    'maxWait': 0,
+    'trailing': false
+  };
 
   /** Used to map latin-1 supplementary letters to basic latin letters. */
   var deburredLetters = {
@@ -50202,15 +50147,6 @@ return jQuery;
   var objectTypes = {
     'function': true,
     'object': true
-  };
-
-  /** Used to escape characters for inclusion in compiled regexes. */
-  var regexpEscapes = {
-    '0': 'x30', '1': 'x31', '2': 'x32', '3': 'x33', '4': 'x34',
-    '5': 'x35', '6': 'x36', '7': 'x37', '8': 'x38', '9': 'x39',
-    'A': 'x41', 'B': 'x42', 'C': 'x43', 'D': 'x44', 'E': 'x45', 'F': 'x46',
-    'a': 'x61', 'b': 'x62', 'c': 'x63', 'd': 'x64', 'e': 'x65', 'f': 'x66',
-    'n': 'x6e', 'r': 'x72', 't': 'x74', 'u': 'x75', 'v': 'x76', 'x': 'x78'
   };
 
   /** Used to escape characters for inclusion in compiled string literals. */
@@ -50353,6 +50289,9 @@ return jQuery;
    * @returns {string} Returns the string.
    */
   function baseToString(value) {
+    if (typeof value == 'string') {
+      return value;
+    }
     return value == null ? '' : (value + '');
   }
 
@@ -50394,8 +50333,8 @@ return jQuery;
    * sort them in ascending order.
    *
    * @private
-   * @param {Object} object The object to compare.
-   * @param {Object} other The other object to compare.
+   * @param {Object} object The object to compare to `other`.
+   * @param {Object} other The object to compare to `object`.
    * @returns {number} Returns the sort order indicator for `object`.
    */
   function compareAscending(object, other) {
@@ -50403,16 +50342,16 @@ return jQuery;
   }
 
   /**
-   * Used by `_.sortByOrder` to compare multiple properties of a value to another
-   * and stable sort them.
+   * Used by `_.sortByOrder` to compare multiple properties of each element
+   * in a collection and stable sort them in the following order:
    *
-   * If `orders` is unspecified, all valuess are sorted in ascending order. Otherwise,
-   * a value is sorted in ascending order if its corresponding order is "asc", and
-   * descending if "desc".
+   * If `orders` is unspecified, sort in ascending order for all properties.
+   * Otherwise, for each property, sort in ascending order if its corresponding value in
+   * orders is true, and descending order if false.
    *
    * @private
-   * @param {Object} object The object to compare.
-   * @param {Object} other The other object to compare.
+   * @param {Object} object The object to compare to `other`.
+   * @param {Object} other The object to compare to `object`.
    * @param {boolean[]} orders The order to sort by for each property.
    * @returns {number} Returns the sort order indicator for `object`.
    */
@@ -50429,8 +50368,7 @@ return jQuery;
         if (index >= ordersLength) {
           return result;
         }
-        var order = orders[index];
-        return result * ((order === 'asc' || order === true) ? 1 : -1);
+        return result * (orders[index] ? 1 : -1);
       }
     }
     // Fixes an `Array#sort` bug in the JS engine embedded in Adobe applications
@@ -50466,25 +50404,8 @@ return jQuery;
   }
 
   /**
-   * Used by `_.escapeRegExp` to escape characters for inclusion in compiled regexes.
-   *
-   * @private
-   * @param {string} chr The matched character to escape.
-   * @param {string} leadingChar The capture group for a leading character.
-   * @param {string} whitespaceChar The capture group for a whitespace character.
-   * @returns {string} Returns the escaped character.
-   */
-  function escapeRegExpChar(chr, leadingChar, whitespaceChar) {
-    if (leadingChar) {
-      chr = regexpEscapes[chr];
-    } else if (whitespaceChar) {
-      chr = stringEscapes[chr];
-    }
-    return '\\' + chr;
-  }
-
-  /**
-   * Used by `_.template` to escape characters for inclusion in compiled string literals.
+   * Used by `_.template` to escape characters for inclusion in compiled
+   * string literals.
    *
    * @private
    * @param {string} chr The matched character to escape.
@@ -50695,6 +50616,9 @@ return jQuery;
         objectProto = Object.prototype,
         stringProto = String.prototype;
 
+    /** Used to detect DOM support. */
+    var document = (document = context.window) ? document.document : null;
+
     /** Used to resolve the decompiled source of functions. */
     var fnToString = Function.prototype.toString;
 
@@ -50705,42 +50629,55 @@ return jQuery;
     var idCounter = 0;
 
     /**
-     * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+     * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
      * of values.
      */
     var objToString = objectProto.toString;
 
     /** Used to restore the original `_` reference in `_.noConflict`. */
-    var oldDash = root._;
+    var oldDash = context._;
 
     /** Used to detect if a method is native. */
     var reIsNative = RegExp('^' +
-      fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+      escapeRegExp(fnToString.call(hasOwnProperty))
       .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
     );
 
     /** Native method references. */
-    var ArrayBuffer = context.ArrayBuffer,
+    var ArrayBuffer = getNative(context, 'ArrayBuffer'),
+        bufferSlice = getNative(ArrayBuffer && new ArrayBuffer(0), 'slice'),
+        ceil = Math.ceil,
         clearTimeout = context.clearTimeout,
-        parseFloat = context.parseFloat,
-        pow = Math.pow,
-        propertyIsEnumerable = objectProto.propertyIsEnumerable,
+        floor = Math.floor,
+        getPrototypeOf = getNative(Object, 'getPrototypeOf'),
+        push = arrayProto.push,
         Set = getNative(context, 'Set'),
         setTimeout = context.setTimeout,
         splice = arrayProto.splice,
-        Uint8Array = context.Uint8Array,
+        Uint8Array = getNative(context, 'Uint8Array'),
         WeakMap = getNative(context, 'WeakMap');
 
+    /** Used to clone array buffers. */
+    var Float64Array = (function() {
+      // Safari 5 errors when using an array buffer to initialize a typed array
+      // where the array buffer's `byteLength` is not a multiple of the typed
+      // array's `BYTES_PER_ELEMENT`.
+      try {
+        var func = getNative(context, 'Float64Array'),
+            result = new func(new ArrayBuffer(10), 0, 1) && func;
+      } catch(e) {}
+      return result || null;
+    }());
+
     /* Native method references for those with the same name as other `lodash` methods. */
-    var nativeCeil = Math.ceil,
-        nativeCreate = getNative(Object, 'create'),
-        nativeFloor = Math.floor,
+    var nativeCreate = getNative(Object, 'create'),
         nativeIsArray = getNative(Array, 'isArray'),
         nativeIsFinite = context.isFinite,
         nativeKeys = getNative(Object, 'keys'),
         nativeMax = Math.max,
         nativeMin = Math.min,
         nativeNow = getNative(Date, 'now'),
+        nativeNumIsFinite = getNative(Number, 'isFinite'),
         nativeParseInt = context.parseInt,
         nativeRandom = Math.random;
 
@@ -50753,8 +50690,11 @@ return jQuery;
         MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1,
         HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
 
+    /** Used as the size, in bytes, of each `Float64Array` element. */
+    var FLOAT64_BYTES_PER_ELEMENT = Float64Array ? Float64Array.BYTES_PER_ELEMENT : 0;
+
     /**
-     * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
+     * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
      * of an array-like value.
      */
     var MAX_SAFE_INTEGER = 9007199254740991;
@@ -50770,16 +50710,15 @@ return jQuery;
     /**
      * Creates a `lodash` object which wraps `value` to enable implicit chaining.
      * Methods that operate on and return arrays, collections, and functions can
-     * be chained together. Methods that retrieve a single value or may return a
-     * primitive value will automatically end the chain returning the unwrapped
-     * value. Explicit chaining may be enabled using `_.chain`. The execution of
-     * chained methods is lazy, that is, execution is deferred until `_#value`
-     * is implicitly or explicitly called.
+     * be chained together. Methods that return a boolean or single value will
+     * automatically end the chain returning the unwrapped value. Explicit chaining
+     * may be enabled using `_.chain`. The execution of chained methods is lazy,
+     * that is, execution is deferred until `_#value` is implicitly or explicitly
+     * called.
      *
      * Lazy evaluation allows several methods to support shortcut fusion. Shortcut
-     * fusion is an optimization strategy which merge iteratee calls; this can help
-     * to avoid the creation of intermediate data structures and greatly reduce the
-     * number of iteratee executions.
+     * fusion is an optimization that merges iteratees to avoid creating intermediate
+     * arrays and reduce the number of iteratee executions.
      *
      * Chaining is supported in custom builds as long as the `_#value` method is
      * directly or indirectly included in the build.
@@ -50802,37 +50741,36 @@ return jQuery;
      * The chainable wrapper methods are:
      * `after`, `ary`, `assign`, `at`, `before`, `bind`, `bindAll`, `bindKey`,
      * `callback`, `chain`, `chunk`, `commit`, `compact`, `concat`, `constant`,
-     * `countBy`, `create`, `curry`, `debounce`, `defaults`, `defaultsDeep`,
-     * `defer`, `delay`, `difference`, `drop`, `dropRight`, `dropRightWhile`,
-     * `dropWhile`, `fill`, `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`,
-     * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
-     * `functions`, `groupBy`, `indexBy`, `initial`, `intersection`, `invert`,
-     * `invoke`, `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`,
-     * `matchesProperty`, `memoize`, `merge`, `method`, `methodOf`, `mixin`,
-     * `modArgs`, `negate`, `omit`, `once`, `pairs`, `partial`, `partialRight`,
-     * `partition`, `pick`, `plant`, `pluck`, `property`, `propertyOf`, `pull`,
-     * `pullAt`, `push`, `range`, `rearg`, `reject`, `remove`, `rest`, `restParam`,
-     * `reverse`, `set`, `shuffle`, `slice`, `sort`, `sortBy`, `sortByAll`,
-     * `sortByOrder`, `splice`, `spread`, `take`, `takeRight`, `takeRightWhile`,
-     * `takeWhile`, `tap`, `throttle`, `thru`, `times`, `toArray`, `toPlainObject`,
-     * `transform`, `union`, `uniq`, `unshift`, `unzip`, `unzipWith`, `values`,
-     * `valuesIn`, `where`, `without`, `wrap`, `xor`, `zip`, `zipObject`, `zipWith`
+     * `countBy`, `create`, `curry`, `debounce`, `defaults`, `defer`, `delay`,
+     * `difference`, `drop`, `dropRight`, `dropRightWhile`, `dropWhile`, `fill`,
+     * `filter`, `flatten`, `flattenDeep`, `flow`, `flowRight`, `forEach`,
+     * `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `functions`,
+     * `groupBy`, `indexBy`, `initial`, `intersection`, `invert`, `invoke`, `keys`,
+     * `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
+     * `memoize`, `merge`, `method`, `methodOf`, `mixin`, `negate`, `omit`, `once`,
+     * `pairs`, `partial`, `partialRight`, `partition`, `pick`, `plant`, `pluck`,
+     * `property`, `propertyOf`, `pull`, `pullAt`, `push`, `range`, `rearg`,
+     * `reject`, `remove`, `rest`, `restParam`, `reverse`, `set`, `shuffle`,
+     * `slice`, `sort`, `sortBy`, `sortByAll`, `sortByOrder`, `splice`, `spread`,
+     * `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`,
+     * `thru`, `times`, `toArray`, `toPlainObject`, `transform`, `union`, `uniq`,
+     * `unshift`, `unzip`, `unzipWith`, `values`, `valuesIn`, `where`, `without`,
+     * `wrap`, `xor`, `zip`, `zipObject`, `zipWith`
      *
      * The wrapper methods that are **not** chainable by default are:
-     * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clone`, `cloneDeep`,
-     * `deburr`, `endsWith`, `escape`, `escapeRegExp`, `every`, `find`, `findIndex`,
-     * `findKey`, `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`,
-     * `floor`, `get`, `gt`, `gte`, `has`, `identity`, `includes`, `indexOf`,
-     * `inRange`, `isArguments`, `isArray`, `isBoolean`, `isDate`, `isElement`,
-     * `isEmpty`, `isEqual`, `isError`, `isFinite` `isFunction`, `isMatch`,
-     * `isNative`, `isNaN`, `isNull`, `isNumber`, `isObject`, `isPlainObject`,
-     * `isRegExp`, `isString`, `isUndefined`, `isTypedArray`, `join`, `kebabCase`,
-     * `last`, `lastIndexOf`, `lt`, `lte`, `max`, `min`, `noConflict`, `noop`,
-     * `now`, `pad`, `padLeft`, `padRight`, `parseInt`, `pop`, `random`, `reduce`,
-     * `reduceRight`, `repeat`, `result`, `round`, `runInContext`, `shift`, `size`,
-     * `snakeCase`, `some`, `sortedIndex`, `sortedLastIndex`, `startCase`,
-     * `startsWith`, `sum`, `template`, `trim`, `trimLeft`, `trimRight`, `trunc`,
-     * `unescape`, `uniqueId`, `value`, and `words`
+     * `add`, `attempt`, `camelCase`, `capitalize`, `clone`, `cloneDeep`, `deburr`,
+     * `endsWith`, `escape`, `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`,
+     * `findLast`, `findLastIndex`, `findLastKey`, `findWhere`, `first`, `get`,
+     * `gt`, `gte`, `has`, `identity`, `includes`, `indexOf`, `inRange`, `isArguments`,
+     * `isArray`, `isBoolean`, `isDate`, `isElement`, `isEmpty`, `isEqual`, `isError`,
+     * `isFinite` `isFunction`, `isMatch`, `isNative`, `isNaN`, `isNull`, `isNumber`,
+     * `isObject`, `isPlainObject`, `isRegExp`, `isString`, `isUndefined`,
+     * `isTypedArray`, `join`, `kebabCase`, `last`, `lastIndexOf`, `lt`, `lte`,
+     * `max`, `min`, `noConflict`, `noop`, `now`, `pad`, `padLeft`, `padRight`,
+     * `parseInt`, `pop`, `random`, `reduce`, `reduceRight`, `repeat`, `result`,
+     * `runInContext`, `shift`, `size`, `snakeCase`, `some`, `sortedIndex`,
+     * `sortedLastIndex`, `startCase`, `startsWith`, `sum`, `template`, `trim`,
+     * `trimLeft`, `trimRight`, `trunc`, `unescape`, `uniqueId`, `value`, and `words`
      *
      * The wrapper method `sample` will return a wrapped value when `n` is provided,
      * otherwise an unwrapped value is returned.
@@ -50907,6 +50845,27 @@ return jQuery;
      */
     var support = lodash.support = {};
 
+    (function(x) {
+      var Ctor = function() { this.x = x; },
+          object = { '0': x, 'length': x },
+          props = [];
+
+      Ctor.prototype = { 'valueOf': x, 'y': x };
+      for (var key in new Ctor) { props.push(key); }
+
+      /**
+       * Detect if the DOM is supported.
+       *
+       * @memberOf _.support
+       * @type boolean
+       */
+      try {
+        support.dom = document.createDocumentFragment().nodeType === 11;
+      } catch(e) {
+        support.dom = false;
+      }
+    }(1, 0));
+
     /**
      * By default, the template delimiters used by lodash are like those in
      * embedded Ruby (ERB). Change the following template settings to use
@@ -50978,12 +50937,13 @@ return jQuery;
      */
     function LazyWrapper(value) {
       this.__wrapped__ = value;
-      this.__actions__ = [];
+      this.__actions__ = null;
       this.__dir__ = 1;
+      this.__dropCount__ = 0;
       this.__filtered__ = false;
-      this.__iteratees__ = [];
+      this.__iteratees__ = null;
       this.__takeCount__ = POSITIVE_INFINITY;
-      this.__views__ = [];
+      this.__views__ = null;
     }
 
     /**
@@ -50995,13 +50955,17 @@ return jQuery;
      * @returns {Object} Returns the cloned `LazyWrapper` object.
      */
     function lazyClone() {
-      var result = new LazyWrapper(this.__wrapped__);
-      result.__actions__ = arrayCopy(this.__actions__);
+      var actions = this.__actions__,
+          iteratees = this.__iteratees__,
+          views = this.__views__,
+          result = new LazyWrapper(this.__wrapped__);
+
+      result.__actions__ = actions ? arrayCopy(actions) : null;
       result.__dir__ = this.__dir__;
       result.__filtered__ = this.__filtered__;
-      result.__iteratees__ = arrayCopy(this.__iteratees__);
+      result.__iteratees__ = iteratees ? arrayCopy(iteratees) : null;
       result.__takeCount__ = this.__takeCount__;
-      result.__views__ = arrayCopy(this.__views__);
+      result.__views__ = views ? arrayCopy(views) : null;
       return result;
     }
 
@@ -51034,25 +50998,22 @@ return jQuery;
      * @returns {*} Returns the unwrapped value.
      */
     function lazyValue() {
-      var array = this.__wrapped__.value(),
-          dir = this.__dir__,
-          isArr = isArray(array),
+      var array = this.__wrapped__.value();
+      if (!isArray(array)) {
+        return baseWrapperValue(array, this.__actions__);
+      }
+      var dir = this.__dir__,
           isRight = dir < 0,
-          arrLength = isArr ? array.length : 0,
-          view = getView(0, arrLength, this.__views__),
+          view = getView(0, array.length, this.__views__),
           start = view.start,
           end = view.end,
           length = end - start,
           index = isRight ? end : (start - 1),
+          takeCount = nativeMin(length, this.__takeCount__),
           iteratees = this.__iteratees__,
-          iterLength = iteratees.length,
+          iterLength = iteratees ? iteratees.length : 0,
           resIndex = 0,
-          takeCount = nativeMin(length, this.__takeCount__);
-
-      if (!isArr || arrLength < LARGE_ARRAY_SIZE || (arrLength == length && takeCount == length)) {
-        return baseWrapperValue((isRight && isArr) ? array.reverse() : array, this.__actions__);
-      }
-      var result = [];
+          result = [];
 
       outer:
       while (length-- && resIndex < takeCount) {
@@ -51064,16 +51025,30 @@ return jQuery;
         while (++iterIndex < iterLength) {
           var data = iteratees[iterIndex],
               iteratee = data.iteratee,
-              type = data.type,
-              computed = iteratee(value);
+              type = data.type;
 
-          if (type == LAZY_MAP_FLAG) {
-            value = computed;
-          } else if (!computed) {
-            if (type == LAZY_FILTER_FLAG) {
-              continue outer;
-            } else {
-              break outer;
+          if (type == LAZY_DROP_WHILE_FLAG) {
+            if (data.done && (isRight ? (index > data.index) : (index < data.index))) {
+              data.count = 0;
+              data.done = false;
+            }
+            data.index = index;
+            if (!data.done) {
+              var limit = data.limit;
+              if (!(data.done = limit > -1 ? (data.count++ >= limit) : !iteratee(value))) {
+                continue outer;
+              }
+            }
+          } else {
+            var computed = iteratee(value);
+            if (type == LAZY_MAP_FLAG) {
+              value = computed;
+            } else if (!computed) {
+              if (type == LAZY_FILTER_FLAG) {
+                continue outer;
+              } else {
+                break outer;
+              }
             }
           }
         }
@@ -51204,30 +51179,6 @@ return jQuery;
     }
 
     /*------------------------------------------------------------------------*/
-
-    /**
-     * Creates a new array joining `array` with `other`.
-     *
-     * @private
-     * @param {Array} array The array to join.
-     * @param {Array} other The other array to join.
-     * @returns {Array} Returns the new concatenated array.
-     */
-    function arrayConcat(array, other) {
-      var index = -1,
-          length = array.length,
-          othIndex = -1,
-          othLength = other.length,
-          result = Array(length + othLength);
-
-      while (++index < length) {
-        result[index] = array[index];
-      }
-      while (++othIndex < othLength) {
-        result[index++] = other[othIndex];
-      }
-      return result;
-    }
 
     /**
      * Copies the values of `source` to `array`.
@@ -51385,25 +51336,6 @@ return jQuery;
     }
 
     /**
-     * Appends the elements of `values` to `array`.
-     *
-     * @private
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to append.
-     * @returns {Array} Returns `array`.
-     */
-    function arrayPush(array, values) {
-      var index = -1,
-          length = values.length,
-          offset = array.length;
-
-      while (++index < length) {
-        array[offset + index] = values[index];
-      }
-      return array;
-    }
-
-    /**
      * A specialized version of `_.reduce` for arrays without support for callback
      * shorthands and `this` binding.
      *
@@ -51474,20 +51406,18 @@ return jQuery;
     }
 
     /**
-     * A specialized version of `_.sum` for arrays without support for callback
-     * shorthands and `this` binding..
+     * A specialized version of `_.sum` for arrays without support for iteratees.
      *
      * @private
      * @param {Array} array The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
      * @returns {number} Returns the sum.
      */
-    function arraySum(array, iteratee) {
+    function arraySum(array) {
       var length = array.length,
           result = 0;
 
       while (length--) {
-        result += +iteratee(array[length]) || 0;
+        result += +array[length] || 0;
       }
       return result;
     }
@@ -51691,7 +51621,7 @@ return jQuery;
             : (object ? value : {});
         }
       }
-      // Check for circular references and return its corresponding clone.
+      // Check for circular references and return corresponding clone.
       stackA || (stackA = []);
       stackB || (stackB = []);
 
@@ -51726,7 +51656,7 @@ return jQuery;
         if (isObject(prototype)) {
           object.prototype = prototype;
           var result = new object;
-          object.prototype = undefined;
+          object.prototype = null;
         }
         return result || {};
       };
@@ -51768,7 +51698,7 @@ return jQuery;
       var index = -1,
           indexOf = getIndexOf(),
           isCommon = indexOf == baseIndexOf,
-          cache = (isCommon && values.length >= LARGE_ARRAY_SIZE) ? createCache(values) : null,
+          cache = (isCommon && values.length >= 200) ? createCache(values) : null,
           valuesLength = values.length;
 
       if (cache) {
@@ -51944,14 +51874,13 @@ return jQuery;
      * @param {Array} array The array to flatten.
      * @param {boolean} [isDeep] Specify a deep flatten.
      * @param {boolean} [isStrict] Restrict flattening to arrays-like objects.
-     * @param {Array} [result=[]] The initial result value.
      * @returns {Array} Returns the new flattened array.
      */
-    function baseFlatten(array, isDeep, isStrict, result) {
-      result || (result = []);
-
+    function baseFlatten(array, isDeep, isStrict) {
       var index = -1,
-          length = array.length;
+          length = array.length,
+          resIndex = -1,
+          result = [];
 
       while (++index < length) {
         var value = array[index];
@@ -51959,12 +51888,16 @@ return jQuery;
             (isStrict || isArray(value) || isArguments(value))) {
           if (isDeep) {
             // Recursively flatten arrays (susceptible to call stack limits).
-            baseFlatten(value, isDeep, isStrict, result);
-          } else {
-            arrayPush(result, value);
+            value = baseFlatten(value, isDeep, isStrict);
+          }
+          var valIndex = -1,
+              valLength = value.length;
+
+          while (++valIndex < valLength) {
+            result[++resIndex] = value[valIndex];
           }
         } else if (!isStrict) {
-          result[result.length] = value;
+          result[++resIndex] = value;
         }
       }
       return result;
@@ -52319,7 +52252,7 @@ return jQuery;
      * @private
      * @param {Object} object The destination object.
      * @param {Object} source The source object.
-     * @param {Function} [customizer] The function to customize merged values.
+     * @param {Function} [customizer] The function to customize merging properties.
      * @param {Array} [stackA=[]] Tracks traversed source objects.
      * @param {Array} [stackB=[]] Associates values with source counterparts.
      * @returns {Object} Returns `object`.
@@ -52329,7 +52262,7 @@ return jQuery;
         return object;
       }
       var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
-          props = isSrcArr ? undefined : keys(source);
+          props = isSrcArr ? null : keys(source);
 
       arrayEach(props || source, function(srcValue, key) {
         if (props) {
@@ -52368,7 +52301,7 @@ return jQuery;
      * @param {Object} source The source object.
      * @param {string} key The key of the value to merge.
      * @param {Function} mergeFunc The function to merge values.
-     * @param {Function} [customizer] The function to customize merged values.
+     * @param {Function} [customizer] The function to customize merging properties.
      * @param {Array} [stackA=[]] Tracks traversed source objects.
      * @param {Array} [stackB=[]] Associates values with source counterparts.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
@@ -52475,7 +52408,7 @@ return jQuery;
      * @returns {number} Returns the random number.
      */
     function baseRandom(min, max) {
-      return min + nativeFloor(nativeRandom() * (max - min + 1));
+      return min + floor(nativeRandom() * (max - min + 1));
     }
 
     /**
@@ -52641,7 +52574,7 @@ return jQuery;
           indexOf = getIndexOf(),
           length = array.length,
           isCommon = indexOf == baseIndexOf,
-          isLarge = isCommon && length >= LARGE_ARRAY_SIZE,
+          isLarge = isCommon && length >= 200,
           seen = isLarge ? createCache() : null,
           result = [];
 
@@ -52740,8 +52673,11 @@ return jQuery;
           length = actions.length;
 
       while (++index < length) {
-        var action = actions[index];
-        result = action.func.apply(action.thisArg, arrayPush([result], action.args));
+        var args = [result],
+            action = actions[index];
+
+        push.apply(args, action.args);
+        result = action.func.apply(action.thisArg, args);
       }
       return result;
     }
@@ -52800,7 +52736,7 @@ return jQuery;
           valIsUndef = value === undefined;
 
       while (low < high) {
-        var mid = nativeFloor((low + high) / 2),
+        var mid = floor((low + high) / 2),
             computed = iteratee(array[mid]),
             isDef = computed !== undefined,
             isReflexive = computed === computed;
@@ -52869,11 +52805,26 @@ return jQuery;
      * @returns {ArrayBuffer} Returns the cloned array buffer.
      */
     function bufferClone(buffer) {
-      var result = new ArrayBuffer(buffer.byteLength),
-          view = new Uint8Array(result);
+      return bufferSlice.call(buffer, 0);
+    }
+    if (!bufferSlice) {
+      // PhantomJS has `ArrayBuffer` and `Uint8Array` but not `Float64Array`.
+      bufferClone = !(ArrayBuffer && Uint8Array) ? constant(null) : function(buffer) {
+        var byteLength = buffer.byteLength,
+            floatLength = Float64Array ? floor(byteLength / FLOAT64_BYTES_PER_ELEMENT) : 0,
+            offset = floatLength * FLOAT64_BYTES_PER_ELEMENT,
+            result = new ArrayBuffer(byteLength);
 
-      view.set(new Uint8Array(buffer));
-      return result;
+        if (floatLength) {
+          var view = new Float64Array(result, 0, floatLength);
+          view.set(new Float64Array(buffer, 0, floatLength));
+        }
+        if (byteLength != offset) {
+          view = new Uint8Array(result, offset);
+          view.set(new Uint8Array(buffer, offset));
+        }
+        return result;
+      };
     }
 
     /**
@@ -52892,7 +52843,7 @@ return jQuery;
           argsLength = nativeMax(args.length - holdersLength, 0),
           leftIndex = -1,
           leftLength = partials.length,
-          result = Array(leftLength + argsLength);
+          result = Array(argsLength + leftLength);
 
       while (++leftIndex < leftLength) {
         result[leftIndex] = partials[leftIndex];
@@ -52939,7 +52890,12 @@ return jQuery;
     }
 
     /**
-     * Creates a `_.countBy`, `_.groupBy`, `_.indexBy`, or `_.partition` function.
+     * Creates a function that aggregates a collection, creating an accumulator
+     * object composed from the results of running each element in the collection
+     * through an iteratee.
+     *
+     * **Note:** This function is used to create `_.countBy`, `_.groupBy`, `_.indexBy`,
+     * and `_.partition`.
      *
      * @private
      * @param {Function} setter The function to set keys and values of the accumulator object.
@@ -52969,7 +52925,10 @@ return jQuery;
     }
 
     /**
-     * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
+     * Creates a function that assigns properties of source object(s) to a given
+     * destination object.
+     *
+     * **Note:** This function is used to create `_.assign`, `_.defaults`, and `_.merge`.
      *
      * @private
      * @param {Function} assigner The function to assign values.
@@ -53080,9 +53039,9 @@ return jQuery;
      * @param {Array} [values] The values to cache.
      * @returns {null|Object} Returns the new cache object if `Set` is supported, else `null`.
      */
-    function createCache(values) {
-      return (nativeCreate && Set) ? new SetCache(values) : null;
-    }
+    var createCache = !(nativeCreate && Set) ? constant(null) : function(values) {
+      return new SetCache(values);
+    };
 
     /**
      * Creates a function that produces compound words out of the words in a
@@ -53117,7 +53076,7 @@ return jQuery;
     function createCtorWrapper(Ctor) {
       return function() {
         // Use a `switch` statement to work with class constructors.
-        // See http://ecma-international.org/ecma-262/6.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
+        // See https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-function-objects-call-thisargument-argumentslist
         // for more details.
         var args = arguments;
         switch (args.length) {
@@ -53127,8 +53086,6 @@ return jQuery;
           case 3: return new Ctor(args[0], args[1], args[2]);
           case 4: return new Ctor(args[0], args[1], args[2], args[3]);
           case 5: return new Ctor(args[0], args[1], args[2], args[3], args[4]);
-          case 6: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5]);
-          case 7: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
         }
         var thisBinding = baseCreate(Ctor.prototype),
             result = Ctor.apply(thisBinding, args);
@@ -53149,32 +53106,13 @@ return jQuery;
     function createCurry(flag) {
       function curryFunc(func, arity, guard) {
         if (guard && isIterateeCall(func, arity, guard)) {
-          arity = undefined;
+          arity = null;
         }
-        var result = createWrapper(func, flag, undefined, undefined, undefined, undefined, undefined, arity);
+        var result = createWrapper(func, flag, null, null, null, null, null, arity);
         result.placeholder = curryFunc.placeholder;
         return result;
       }
       return curryFunc;
-    }
-
-    /**
-     * Creates a `_.defaults` or `_.defaultsDeep` function.
-     *
-     * @private
-     * @param {Function} assigner The function to assign values.
-     * @param {Function} customizer The function to customize assigned values.
-     * @returns {Function} Returns the new defaults function.
-     */
-    function createDefaults(assigner, customizer) {
-      return restParam(function(args) {
-        var object = args[0];
-        if (object == null) {
-          return object;
-        }
-        args.push(customizer);
-        return assigner.apply(undefined, args);
-      });
     }
 
     /**
@@ -53188,11 +53126,11 @@ return jQuery;
     function createExtremum(comparator, exValue) {
       return function(collection, iteratee, thisArg) {
         if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
-          iteratee = undefined;
+          iteratee = null;
         }
         iteratee = getCallback(iteratee, thisArg, 3);
         if (iteratee.length == 1) {
-          collection = isArray(collection) ? collection : toIterable(collection);
+          collection = toIterable(collection);
           var result = arrayExtremum(collection, iteratee, comparator, exValue);
           if (!(collection.length && result === exValue)) {
             return result;
@@ -53273,7 +53211,7 @@ return jQuery;
             throw new TypeError(FUNC_ERROR_TEXT);
           }
           if (!wrapper && LodashWrapper.prototype.thru && getFuncName(func) == 'wrapper') {
-            wrapper = new LodashWrapper([], true);
+            wrapper = new LodashWrapper([]);
           }
         }
         index = wrapper ? -1 : length;
@@ -53281,7 +53219,7 @@ return jQuery;
           func = funcs[index];
 
           var funcName = getFuncName(func),
-              data = funcName == 'wrapper' ? getData(func) : undefined;
+              data = funcName == 'wrapper' ? getData(func) : null;
 
           if (data && isLaziable(data[0]) && data[1] == (ARY_FLAG | CURRY_FLAG | PARTIAL_FLAG | REARG_FLAG) && !data[4].length && data[9] == 1) {
             wrapper = wrapper[getFuncName(data[0])].apply(wrapper, data[3]);
@@ -53290,14 +53228,12 @@ return jQuery;
           }
         }
         return function() {
-          var args = arguments,
-              value = args[0];
-
-          if (wrapper && args.length == 1 && isArray(value) && value.length >= LARGE_ARRAY_SIZE) {
-            return wrapper.plant(value).value();
+          var args = arguments;
+          if (wrapper && args.length == 1 && isArray(args[0])) {
+            return wrapper.plant(args[0]).value();
           }
           var index = 0,
-              result = length ? funcs[index].apply(this, args) : value;
+              result = length ? funcs[index].apply(this, args) : args[0];
 
           while (++index < length) {
             result = funcs[index].call(this, result);
@@ -53401,7 +53337,7 @@ return jQuery;
     function createPartial(flag) {
       var partialFunc = restParam(function(func, partials) {
         var holders = replaceHolders(partials, partialFunc.placeholder);
-        return createWrapper(func, flag, undefined, partials, holders);
+        return createWrapper(func, flag, null, partials, holders);
       });
       return partialFunc;
     }
@@ -53447,7 +53383,7 @@ return jQuery;
           isCurry = bitmask & CURRY_FLAG,
           isCurryBound = bitmask & CURRY_BOUND_FLAG,
           isCurryRight = bitmask & CURRY_RIGHT_FLAG,
-          Ctor = isBindKey ? undefined : createCtorWrapper(func);
+          Ctor = isBindKey ? null : createCtorWrapper(func);
 
       function wrapper() {
         // Avoid `arguments` object use disqualifying optimizations by
@@ -53471,12 +53407,12 @@ return jQuery;
 
           length -= argsHolders.length;
           if (length < arity) {
-            var newArgPos = argPos ? arrayCopy(argPos) : undefined,
+            var newArgPos = argPos ? arrayCopy(argPos) : null,
                 newArity = nativeMax(arity - length, 0),
-                newsHolders = isCurry ? argsHolders : undefined,
-                newHoldersRight = isCurry ? undefined : argsHolders,
-                newPartials = isCurry ? args : undefined,
-                newPartialsRight = isCurry ? undefined : args;
+                newsHolders = isCurry ? argsHolders : null,
+                newHoldersRight = isCurry ? null : argsHolders,
+                newPartials = isCurry ? args : null,
+                newPartialsRight = isCurry ? null : args;
 
             bitmask |= (isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG);
             bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
@@ -53530,7 +53466,7 @@ return jQuery;
       }
       var padLength = length - strLength;
       chars = chars == null ? ' ' : (chars + '');
-      return repeat(chars, nativeCeil(padLength / chars.length)).slice(0, padLength);
+      return repeat(chars, ceil(padLength / chars.length)).slice(0, padLength);
     }
 
     /**
@@ -53556,7 +53492,7 @@ return jQuery;
             argsLength = arguments.length,
             leftIndex = -1,
             leftLength = partials.length,
-            args = Array(leftLength + argsLength);
+            args = Array(argsLength + leftLength);
 
         while (++leftIndex < leftLength) {
           args[leftIndex] = partials[leftIndex];
@@ -53568,25 +53504,6 @@ return jQuery;
         return fn.apply(isBind ? thisArg : this, args);
       }
       return wrapper;
-    }
-
-    /**
-     * Creates a `_.ceil`, `_.floor`, or `_.round` function.
-     *
-     * @private
-     * @param {string} methodName The name of the `Math` method to use when rounding.
-     * @returns {Function} Returns the new round function.
-     */
-    function createRound(methodName) {
-      var func = Math[methodName];
-      return function(number, precision) {
-        precision = precision === undefined ? 0 : (+precision || 0);
-        if (precision) {
-          precision = pow(10, precision);
-          return func(number * precision) / precision;
-        }
-        return func(number);
-      };
     }
 
     /**
@@ -53638,16 +53555,16 @@ return jQuery;
       var length = partials ? partials.length : 0;
       if (!length) {
         bitmask &= ~(PARTIAL_FLAG | PARTIAL_RIGHT_FLAG);
-        partials = holders = undefined;
+        partials = holders = null;
       }
       length -= (holders ? holders.length : 0);
       if (bitmask & PARTIAL_RIGHT_FLAG) {
         var partialsRight = partials,
             holdersRight = holders;
 
-        partials = holders = undefined;
+        partials = holders = null;
       }
-      var data = isBindKey ? undefined : getData(func),
+      var data = isBindKey ? null : getData(func),
           newData = [func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity];
 
       if (data) {
@@ -53726,7 +53643,7 @@ return jQuery;
      * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
      *
      * @private
-     * @param {Object} object The object to compare.
+     * @param {Object} value The object to compare.
      * @param {Object} other The other object to compare.
      * @param {string} tag The `toStringTag` of the objects to compare.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
@@ -53926,13 +53843,13 @@ return jQuery;
      * @private
      * @param {number} start The start of the view.
      * @param {number} end The end of the view.
-     * @param {Array} transforms The transformations to apply to the view.
+     * @param {Array} [transforms] The transformations to apply to the view.
      * @returns {Object} Returns an object containing the `start` and `end`
      *  positions of the view.
      */
     function getView(start, end, transforms) {
       var index = -1,
-          length = transforms.length;
+          length = transforms ? transforms.length : 0;
 
       while (++index < length) {
         var data = transforms[index],
@@ -54060,7 +53977,7 @@ return jQuery;
      * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
      */
     function isIndex(value, length) {
-      value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
+      value = typeof value == 'number' ? value : parseFloat(value);
       length = length == null ? MAX_SAFE_INTEGER : length;
       return value > -1 && value % 1 == 0 && value < length;
     }
@@ -54131,7 +54048,7 @@ return jQuery;
     /**
      * Checks if `value` is a valid array-like length.
      *
-     * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+     * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
      *
      * @private
      * @param {*} value The value to check.
@@ -54221,18 +54138,6 @@ return jQuery;
       data[1] = newBitmask;
 
       return data;
-    }
-
-    /**
-     * Used by `_.defaultsDeep` to customize its `_.merge` use.
-     *
-     * @private
-     * @param {*} objectValue The destination object property value.
-     * @param {*} sourceValue The source object property value.
-     * @returns {*} Returns the value to assign to the destination object.
-     */
-    function mergeDefaults(objectValue, sourceValue) {
-      return objectValue === undefined ? sourceValue : merge(objectValue, sourceValue, mergeDefaults);
     }
 
     /**
@@ -54333,6 +54238,38 @@ return jQuery;
         return baseSetData(key, value);
       };
     }());
+
+    /**
+     * A fallback implementation of `_.isPlainObject` which checks if `value`
+     * is an object created by the `Object` constructor or has a `[[Prototype]]`
+     * of `null`.
+     *
+     * @private
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+     */
+    function shimIsPlainObject(value) {
+      var Ctor,
+          support = lodash.support;
+
+      // Exit early for non `Object` objects.
+      if (!(isObjectLike(value) && objToString.call(value) == objectTag) ||
+          (!hasOwnProperty.call(value, 'constructor') &&
+            (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
+        return false;
+      }
+      // IE < 9 iterates inherited properties before own properties. If the first
+      // iterated property is an object's own property then there are no inherited
+      // enumerable properties.
+      var result;
+      // In most environments an object's own properties are iterated before
+      // its inherited properties. If the last iterated property is an object's
+      // own property then there are no inherited enumerable properties.
+      baseForIn(value, function(subValue, key) {
+        result = key;
+      });
+      return result === undefined || hasOwnProperty.call(value, result);
+    }
 
     /**
      * A fallback implementation of `Object.keys` which creates an array of the
@@ -54447,12 +54384,12 @@ return jQuery;
       if (guard ? isIterateeCall(array, size, guard) : size == null) {
         size = 1;
       } else {
-        size = nativeMax(nativeFloor(size) || 1, 1);
+        size = nativeMax(+size || 1, 1);
       }
       var index = 0,
           length = array ? array.length : 0,
           resIndex = -1,
-          result = Array(nativeCeil(length / size));
+          result = Array(ceil(length / size));
 
       while (index < length) {
         result[++resIndex] = baseSlice(array, index, (index += size));
@@ -54491,7 +54428,7 @@ return jQuery;
 
     /**
      * Creates an array of unique `array` values not included in the other
-     * provided arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * provided arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
      *
      * @static
@@ -54506,7 +54443,7 @@ return jQuery;
      * // => [1, 3]
      */
     var difference = restParam(function(array, values) {
-      return (isObjectLike(array) && isArrayLike(array))
+      return isArrayLike(array)
         ? baseDifference(array, baseFlatten(values, false, true))
         : [];
     });
@@ -54901,7 +54838,7 @@ return jQuery;
 
     /**
      * Gets the index at which the first occurrence of `value` is found in `array`
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons. If `fromIndex` is negative, it is used as the offset
      * from the end of `array`. If `array` is sorted providing `true` for `fromIndex`
      * performs a faster binary search.
@@ -54935,9 +54872,10 @@ return jQuery;
       if (typeof fromIndex == 'number') {
         fromIndex = fromIndex < 0 ? nativeMax(length + fromIndex, 0) : fromIndex;
       } else if (fromIndex) {
-        var index = binaryIndex(array, value);
-        if (index < length &&
-            (value === value ? (value === array[index]) : (array[index] !== array[index]))) {
+        var index = binaryIndex(array, value),
+            other = array[index];
+
+        if (value === value ? (value === other) : (other !== other)) {
           return index;
         }
         return -1;
@@ -54964,7 +54902,7 @@ return jQuery;
 
     /**
      * Creates an array of unique values that are included in all of the provided
-     * arrays using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * arrays using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
      *
      * @static
@@ -55085,7 +55023,7 @@ return jQuery;
 
     /**
      * Removes all provided values from `array` using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
      *
      * **Note:** Unlike `_.without`, this method mutates `array`.
@@ -55518,7 +55456,7 @@ return jQuery;
 
     /**
      * Creates an array of unique values, in order, from all of the provided arrays
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * using [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
      *
      * @static
@@ -55537,7 +55475,7 @@ return jQuery;
 
     /**
      * Creates a duplicate-free version of an array, using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons, in which only the first occurence of each element
      * is kept. Providing `true` for `isSorted` performs a faster search algorithm
      * for sorted arrays. If an iteratee function is provided it is invoked for
@@ -55591,7 +55529,7 @@ return jQuery;
       }
       if (isSorted != null && typeof isSorted != 'boolean') {
         thisArg = iteratee;
-        iteratee = isIterateeCall(array, isSorted, thisArg) ? undefined : isSorted;
+        iteratee = isIterateeCall(array, isSorted, thisArg) ? null : isSorted;
         isSorted = false;
       }
       var callback = getCallback();
@@ -55678,7 +55616,7 @@ return jQuery;
 
     /**
      * Creates an array excluding all provided values using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons.
      *
      * @static
@@ -55720,7 +55658,7 @@ return jQuery;
         var array = arguments[index];
         if (isArrayLike(array)) {
           var result = result
-            ? arrayPush(baseDifference(result, array), baseDifference(array, result))
+            ? baseDifference(result, array).concat(baseDifference(array, result))
             : array;
         }
       }
@@ -55942,16 +55880,16 @@ return jQuery;
      * @example
      *
      * var array = [1, 2];
-     * var wrapped = _(array).push(3);
+     * var wrapper = _(array).push(3);
      *
      * console.log(array);
      * // => [1, 2]
      *
-     * wrapped = wrapped.commit();
+     * wrapper = wrapper.commit();
      * console.log(array);
      * // => [1, 2, 3]
      *
-     * wrapped.last();
+     * wrapper.last();
      * // => 3
      *
      * console.log(array);
@@ -55960,33 +55898,6 @@ return jQuery;
     function wrapperCommit() {
       return new LodashWrapper(this.value(), this.__chain__);
     }
-
-    /**
-     * Creates a new array joining a wrapped array with any additional arrays
-     * and/or values.
-     *
-     * @name concat
-     * @memberOf _
-     * @category Chain
-     * @param {...*} [values] The values to concatenate.
-     * @returns {Array} Returns the new concatenated array.
-     * @example
-     *
-     * var array = [1];
-     * var wrapped = _(array).concat(2, [3], [[4]]);
-     *
-     * console.log(wrapped.value());
-     * // => [1, 2, 3, [4]]
-     *
-     * console.log(array);
-     * // => [1]
-     */
-    var wrapperConcat = restParam(function(values) {
-      values = baseFlatten(values);
-      return this.thru(function(array) {
-        return arrayConcat(isArray(array) ? array : [toObject(array)], values);
-      });
-    });
 
     /**
      * Creates a clone of the chained sequence planting `value` as the wrapped value.
@@ -55998,17 +55909,17 @@ return jQuery;
      * @example
      *
      * var array = [1, 2];
-     * var wrapped = _(array).map(function(value) {
+     * var wrapper = _(array).map(function(value) {
      *   return Math.pow(value, 2);
      * });
      *
      * var other = [3, 4];
-     * var otherWrapped = wrapped.plant(other);
+     * var otherWrapper = wrapper.plant(other);
      *
-     * otherWrapped.value();
+     * otherWrapper.value();
      * // => [9, 16]
      *
-     * wrapped.value();
+     * wrapper.value();
      * // => [1, 4]
      */
     function wrapperPlant(value) {
@@ -56051,20 +55962,15 @@ return jQuery;
      */
     function wrapperReverse() {
       var value = this.__wrapped__;
-
-      var interceptor = function(value) {
-        return (wrapped && wrapped.__dir__ < 0) ? value : value.reverse();
-      };
       if (value instanceof LazyWrapper) {
-        var wrapped = value;
         if (this.__actions__.length) {
-          wrapped = new LazyWrapper(this);
+          value = new LazyWrapper(this);
         }
-        wrapped = wrapped.reverse();
-        wrapped.__actions__.push({ 'func': thru, 'args': [interceptor], 'thisArg': undefined });
-        return new LodashWrapper(wrapped, this.__chain__);
+        return new LodashWrapper(value.reverse(), this.__chain__);
       }
-      return this.thru(interceptor);
+      return this.thru(function(value) {
+        return value.reverse();
+      });
     }
 
     /**
@@ -56222,7 +56128,7 @@ return jQuery;
     function every(collection, predicate, thisArg) {
       var func = isArray(collection) ? arrayEvery : baseEvery;
       if (thisArg && isIterateeCall(collection, predicate, thisArg)) {
-        predicate = undefined;
+        predicate = null;
       }
       if (typeof predicate != 'function' || thisArg !== undefined) {
         predicate = getCallback(predicate, thisArg, 3);
@@ -56496,7 +56402,7 @@ return jQuery;
 
     /**
      * Checks if `value` is in `collection` using
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+     * [`SameValueZero`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero)
      * for equality comparisons. If `fromIndex` is negative, it is used as the offset
      * from the end of `collection`.
      *
@@ -56529,14 +56435,17 @@ return jQuery;
         collection = values(collection);
         length = collection.length;
       }
+      if (!length) {
+        return false;
+      }
       if (typeof fromIndex != 'number' || (guard && isIterateeCall(target, fromIndex, guard))) {
         fromIndex = 0;
       } else {
         fromIndex = fromIndex < 0 ? nativeMax(length + fromIndex, 0) : (fromIndex || 0);
       }
       return (typeof collection == 'string' || !isArray(collection) && isString(collection))
-        ? (fromIndex <= length && collection.indexOf(target, fromIndex) > -1)
-        : (!!length && getIndexOf(collection, target, fromIndex) > -1);
+        ? (fromIndex < length && collection.indexOf(target, fromIndex) > -1)
+        : (getIndexOf(collection, target, fromIndex) > -1);
     }
 
     /**
@@ -56618,7 +56527,7 @@ return jQuery;
           result = isArrayLike(collection) ? Array(collection.length) : [];
 
       baseEach(collection, function(value) {
-        var func = isFunc ? path : ((isProp && value != null) ? value[path] : undefined);
+        var func = isFunc ? path : ((isProp && value != null) ? value[path] : null);
         result[++index] = func ? func.apply(value, args) : invokePath(value, path, args);
       });
       return result;
@@ -56788,8 +56697,7 @@ return jQuery;
      * `_.reduce`, `_.reduceRight`, and `_.transform`.
      *
      * The guarded methods are:
-     * `assign`, `defaults`, `defaultsDeep`, `includes`, `merge`, `sortByAll`,
-     * and `sortByOrder`
+     * `assign`, `defaults`, `includes`, `merge`, `sortByAll`, and `sortByOrder`
      *
      * @static
      * @memberOf _
@@ -57019,7 +56927,7 @@ return jQuery;
     function some(collection, predicate, thisArg) {
       var func = isArray(collection) ? arraySome : baseSome;
       if (thisArg && isIterateeCall(collection, predicate, thisArg)) {
-        predicate = undefined;
+        predicate = null;
       }
       if (typeof predicate != 'function' || thisArg !== undefined) {
         predicate = getCallback(predicate, thisArg, 3);
@@ -57080,7 +56988,7 @@ return jQuery;
         return [];
       }
       if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
-        iteratee = undefined;
+        iteratee = null;
       }
       var index = -1;
       iteratee = getCallback(iteratee, thisArg, 3);
@@ -57139,9 +57047,9 @@ return jQuery;
 
     /**
      * This method is like `_.sortByAll` except that it allows specifying the
-     * sort orders of the iteratees to sort by. If `orders` is unspecified, all
-     * values are sorted in ascending order. Otherwise, a value is sorted in
-     * ascending order if its corresponding order is "asc", and descending if "desc".
+     * sort orders of the iteratees to sort by. A truthy value in `orders` will
+     * sort the corresponding property name in ascending order while a falsey
+     * value will sort it in descending order.
      *
      * If a property name is provided for an iteratee the created `_.property`
      * style callback returns the property value of the given element.
@@ -57155,7 +57063,7 @@ return jQuery;
      * @category Collection
      * @param {Array|Object|string} collection The collection to iterate over.
      * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
-     * @param {boolean[]} [orders] The sort orders of `iteratees`.
+     * @param {boolean[]} orders The sort orders of `iteratees`.
      * @param- {Object} [guard] Enables use as a callback for functions like `_.reduce`.
      * @returns {Array} Returns the new sorted array.
      * @example
@@ -57168,7 +57076,7 @@ return jQuery;
      * ];
      *
      * // sort by `user` in ascending order and by `age` in descending order
-     * _.map(_.sortByOrder(users, ['user', 'age'], ['asc', 'desc']), _.values);
+     * _.map(_.sortByOrder(users, ['user', 'age'], [true, false]), _.values);
      * // => [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
      */
     function sortByOrder(collection, iteratees, orders, guard) {
@@ -57176,7 +57084,7 @@ return jQuery;
         return [];
       }
       if (guard && isIterateeCall(iteratees, orders, guard)) {
-        orders = undefined;
+        orders = null;
       }
       if (!isArray(iteratees)) {
         iteratees = iteratees == null ? [] : [iteratees];
@@ -57301,10 +57209,10 @@ return jQuery;
      */
     function ary(func, n, guard) {
       if (guard && isIterateeCall(func, n, guard)) {
-        n = undefined;
+        n = null;
       }
       n = (func && n == null) ? func.length : nativeMax(+n || 0, 0);
-      return createWrapper(func, ARY_FLAG, undefined, undefined, undefined, undefined, n);
+      return createWrapper(func, ARY_FLAG, null, null, null, null, n);
     }
 
     /**
@@ -57339,7 +57247,7 @@ return jQuery;
           result = func.apply(this, arguments);
         }
         if (n <= 1) {
-          func = undefined;
+          func = null;
         }
         return result;
       };
@@ -57647,9 +57555,9 @@ return jQuery;
         var leading = true;
         trailing = false;
       } else if (isObject(options)) {
-        leading = !!options.leading;
+        leading = options.leading;
         maxWait = 'maxWait' in options && nativeMax(+options.maxWait || 0, wait);
-        trailing = 'trailing' in options ? !!options.trailing : trailing;
+        trailing = 'trailing' in options ? options.trailing : trailing;
       }
 
       function cancel() {
@@ -57659,35 +57567,41 @@ return jQuery;
         if (maxTimeoutId) {
           clearTimeout(maxTimeoutId);
         }
-        lastCalled = 0;
         maxTimeoutId = timeoutId = trailingCall = undefined;
-      }
-
-      function complete(isCalled, id) {
-        if (id) {
-          clearTimeout(id);
-        }
-        maxTimeoutId = timeoutId = trailingCall = undefined;
-        if (isCalled) {
-          lastCalled = now();
-          result = func.apply(thisArg, args);
-          if (!timeoutId && !maxTimeoutId) {
-            args = thisArg = undefined;
-          }
-        }
       }
 
       function delayed() {
         var remaining = wait - (now() - stamp);
         if (remaining <= 0 || remaining > wait) {
-          complete(trailingCall, maxTimeoutId);
+          if (maxTimeoutId) {
+            clearTimeout(maxTimeoutId);
+          }
+          var isCalled = trailingCall;
+          maxTimeoutId = timeoutId = trailingCall = undefined;
+          if (isCalled) {
+            lastCalled = now();
+            result = func.apply(thisArg, args);
+            if (!timeoutId && !maxTimeoutId) {
+              args = thisArg = null;
+            }
+          }
         } else {
           timeoutId = setTimeout(delayed, remaining);
         }
       }
 
       function maxDelayed() {
-        complete(trailing, timeoutId);
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        maxTimeoutId = timeoutId = trailingCall = undefined;
+        if (trailing || (maxWait !== wait)) {
+          lastCalled = now();
+          result = func.apply(thisArg, args);
+          if (!timeoutId && !maxTimeoutId) {
+            args = thisArg = null;
+          }
+        }
       }
 
       function debounced() {
@@ -57727,7 +57641,7 @@ return jQuery;
           result = func.apply(thisArg, args);
         }
         if (isCalled && !timeoutId && !maxTimeoutId) {
-          args = thisArg = undefined;
+          args = thisArg = null;
         }
         return result;
       }
@@ -57832,7 +57746,7 @@ return jQuery;
      *
      * **Note:** The cache is exposed as the `cache` property on the memoized
      * function. Its creation may be customized by replacing the `_.memoize.Cache`
-     * constructor with one whose instances implement the [`Map`](http://ecma-international.org/ecma-262/6.0/#sec-properties-of-the-map-prototype-object)
+     * constructor with one whose instances implement the [`Map`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-properties-of-the-map-prototype-object)
      * method interface of `get`, `has`, and `set`.
      *
      * @static
@@ -57892,52 +57806,6 @@ return jQuery;
       memoized.cache = new memoize.Cache;
       return memoized;
     }
-
-    /**
-     * Creates a function that runs each argument through a corresponding
-     * transform function.
-     *
-     * @static
-     * @memberOf _
-     * @category Function
-     * @param {Function} func The function to wrap.
-     * @param {...(Function|Function[])} [transforms] The functions to transform
-     * arguments, specified as individual functions or arrays of functions.
-     * @returns {Function} Returns the new function.
-     * @example
-     *
-     * function doubled(n) {
-     *   return n * 2;
-     * }
-     *
-     * function square(n) {
-     *   return n * n;
-     * }
-     *
-     * var modded = _.modArgs(function(x, y) {
-     *   return [x, y];
-     * }, square, doubled);
-     *
-     * modded(1, 2);
-     * // => [1, 4]
-     *
-     * modded(5, 10);
-     * // => [25, 20]
-     */
-    var modArgs = restParam(function(func, transforms) {
-      transforms = baseFlatten(transforms);
-      if (typeof func != 'function' || !arrayEvery(transforms, baseIsFunction)) {
-        throw new TypeError(FUNC_ERROR_TEXT);
-      }
-      var length = transforms.length;
-      return restParam(function(args) {
-        var index = nativeMin(args.length, length);
-        while (index--) {
-          args[index] = transforms[index](args[index]);
-        }
-        return func.apply(this, args);
-      });
-    });
 
     /**
      * Creates a function that negates the result of the predicate `func`. The
@@ -58084,7 +57952,7 @@ return jQuery;
      * // => [3, 6, 9]
      */
     var rearg = restParam(function(func, indexes) {
-      return createWrapper(func, REARG_FLAG, undefined, undefined, undefined, baseFlatten(indexes));
+      return createWrapper(func, REARG_FLAG, null, null, null, baseFlatten(indexes));
     });
 
     /**
@@ -58230,7 +58098,10 @@ return jQuery;
         leading = 'leading' in options ? !!options.leading : leading;
         trailing = 'trailing' in options ? !!options.trailing : trailing;
       }
-      return debounce(func, wait, { 'leading': leading, 'maxWait': +wait, 'trailing': trailing });
+      debounceOptions.leading = leading;
+      debounceOptions.maxWait = +wait;
+      debounceOptions.trailing = trailing;
+      return debounce(func, wait, debounceOptions);
     }
 
     /**
@@ -58256,7 +58127,7 @@ return jQuery;
      */
     function wrap(value, wrapper) {
       wrapper = wrapper == null ? identity : wrapper;
-      return createWrapper(wrapper, PARTIAL_FLAG, undefined, [value], []);
+      return createWrapper(wrapper, PARTIAL_FLAG, null, [value], []);
     }
 
     /*------------------------------------------------------------------------*/
@@ -58442,8 +58313,7 @@ return jQuery;
      * // => false
      */
     function isArguments(value) {
-      return isObjectLike(value) && isArrayLike(value) &&
-        hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
+      return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
     }
 
     /**
@@ -58523,7 +58393,14 @@ return jQuery;
      * // => false
      */
     function isElement(value) {
-      return !!value && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
+      return !!value && value.nodeType === 1 && isObjectLike(value) &&
+        (objToString.call(value).indexOf('Element') > -1);
+    }
+    // Fallback for environments without DOM support.
+    if (!support.dom) {
+      isElement = function(value) {
+        return !!value && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
+      };
     }
 
     /**
@@ -58638,7 +58515,7 @@ return jQuery;
     /**
      * Checks if `value` is a finite primitive number.
      *
-     * **Note:** This method is based on [`Number.isFinite`](http://ecma-international.org/ecma-262/6.0/#sec-number.isfinite).
+     * **Note:** This method is based on [`Number.isFinite`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isfinite).
      *
      * @static
      * @memberOf _
@@ -58662,9 +58539,9 @@ return jQuery;
      * _.isFinite(Infinity);
      * // => false
      */
-    function isFinite(value) {
+    var isFinite = nativeNumIsFinite || function(value) {
       return typeof value == 'number' && nativeIsFinite(value);
-    }
+    };
 
     /**
      * Checks if `value` is classified as a `Function` object.
@@ -58682,12 +58559,12 @@ return jQuery;
      * _.isFunction(/abc/);
      * // => false
      */
-    function isFunction(value) {
+    var isFunction = !(baseIsFunction(/x/) || (Uint8Array && !baseIsFunction(Uint8Array))) ? baseIsFunction : function(value) {
       // The use of `Object#toString` avoids issues with the `typeof` operator
       // in older versions of Chrome and Safari which return 'function' for regexes
       // and Safari 8 equivalents which return 'object' for typed array constructors.
-      return isObject(value) && objToString.call(value) == funcTag;
-    }
+      return objToString.call(value) == funcTag;
+    };
 
     /**
      * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
@@ -58811,7 +58688,7 @@ return jQuery;
       if (value == null) {
         return false;
       }
-      if (isFunction(value)) {
+      if (objToString.call(value) == funcTag) {
         return reIsNative.test(fnToString.call(value));
       }
       return isObjectLike(value) && reIsHostCtor.test(value);
@@ -58893,26 +58770,17 @@ return jQuery;
      * _.isPlainObject(Object.create(null));
      * // => true
      */
-    function isPlainObject(value) {
-      var Ctor;
-
-      // Exit early for non `Object` objects.
-      if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
-          (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
+    var isPlainObject = !getPrototypeOf ? shimIsPlainObject : function(value) {
+      if (!(value && objToString.call(value) == objectTag)) {
         return false;
       }
-      // IE < 9 iterates inherited properties before own properties. If the first
-      // iterated property is an object's own property then there are no inherited
-      // enumerable properties.
-      var result;
-      // In most environments an object's own properties are iterated before
-      // its inherited properties. If the last iterated property is an object's
-      // own property then there are no inherited enumerable properties.
-      baseForIn(value, function(subValue, key) {
-        result = key;
-      });
-      return result === undefined || hasOwnProperty.call(value, result);
-    }
+      var valueOf = getNative(value, 'valueOf'),
+          objProto = valueOf && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
+
+      return objProto
+        ? (value == objProto || getPrototypeOf(value) == objProto)
+        : shimIsPlainObject(value);
+    };
 
     /**
      * Checks if `value` is classified as a `RegExp` object.
@@ -58931,7 +58799,7 @@ return jQuery;
      * // => false
      */
     function isRegExp(value) {
-      return isObject(value) && objToString.call(value) == regexpTag;
+      return isObjectLike(value) && objToString.call(value) == regexpTag;
     }
 
     /**
@@ -59098,56 +58966,6 @@ return jQuery;
     /*------------------------------------------------------------------------*/
 
     /**
-     * Recursively merges own enumerable properties of the source object(s), that
-     * don't resolve to `undefined` into the destination object. Subsequent sources
-     * overwrite property assignments of previous sources. If `customizer` is
-     * provided it is invoked to produce the merged values of the destination and
-     * source properties. If `customizer` returns `undefined` merging is handled
-     * by the method instead. The `customizer` is bound to `thisArg` and invoked
-     * with five arguments: (objectValue, sourceValue, key, object, source).
-     *
-     * @static
-     * @memberOf _
-     * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @param {Function} [customizer] The function to customize assigned values.
-     * @param {*} [thisArg] The `this` binding of `customizer`.
-     * @returns {Object} Returns `object`.
-     * @example
-     *
-     * var users = {
-     *   'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
-     * };
-     *
-     * var ages = {
-     *   'data': [{ 'age': 36 }, { 'age': 40 }]
-     * };
-     *
-     * _.merge(users, ages);
-     * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
-     *
-     * // using a customizer callback
-     * var object = {
-     *   'fruits': ['apple'],
-     *   'vegetables': ['beet']
-     * };
-     *
-     * var other = {
-     *   'fruits': ['banana'],
-     *   'vegetables': ['carrot']
-     * };
-     *
-     * _.merge(object, other, function(a, b) {
-     *   if (_.isArray(a)) {
-     *     return a.concat(b);
-     *   }
-     * });
-     * // => { 'fruits': ['apple', 'banana'], 'vegetables': ['beet', 'carrot'] }
-     */
-    var merge = createAssigner(baseMerge);
-
-    /**
      * Assigns own enumerable properties of source object(s) to the destination
      * object. Subsequent sources overwrite property assignments of previous sources.
      * If `customizer` is provided it is invoked to produce the assigned values.
@@ -59155,7 +58973,7 @@ return jQuery;
      * (objectValue, sourceValue, key, object, source).
      *
      * **Note:** This method mutates `object` and is based on
-     * [`Object.assign`](http://ecma-international.org/ecma-262/6.0/#sec-object.assign).
+     * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
      *
      * @static
      * @memberOf _
@@ -59222,7 +59040,7 @@ return jQuery;
     function create(prototype, properties, guard) {
       var result = baseCreate(prototype);
       if (guard && isIterateeCall(prototype, properties, guard)) {
-        properties = undefined;
+        properties = null;
       }
       return properties ? baseAssign(result, properties) : result;
     }
@@ -59245,27 +59063,14 @@ return jQuery;
      * _.defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
      * // => { 'user': 'barney', 'age': 36 }
      */
-    var defaults = createDefaults(assign, assignDefaults);
-
-    /**
-     * This method is like `_.defaults` except that it recursively assigns
-     * default properties.
-     *
-     * **Note:** This method mutates `object`.
-     *
-     * @static
-     * @memberOf _
-     * @category Object
-     * @param {Object} object The destination object.
-     * @param {...Object} [sources] The source objects.
-     * @returns {Object} Returns `object`.
-     * @example
-     *
-     * _.defaultsDeep({ 'user': { 'name': 'barney' } }, { 'user': { 'name': 'fred', 'age': 36 } });
-     * // => { 'user': { 'name': 'barney', 'age': 36 } }
-     *
-     */
-    var defaultsDeep = createDefaults(merge, mergeDefaults);
+    var defaults = restParam(function(args) {
+      var object = args[0];
+      if (object == null) {
+        return object;
+      }
+      args.push(assignDefaults);
+      return assign.apply(undefined, args);
+    });
 
     /**
      * This method is like `_.find` except that it returns the key of the first
@@ -59592,7 +59397,7 @@ return jQuery;
      */
     function invert(object, multiValue, guard) {
       if (guard && isIterateeCall(object, multiValue, guard)) {
-        multiValue = undefined;
+        multiValue = null;
       }
       var index = -1,
           props = keys(object),
@@ -59621,7 +59426,7 @@ return jQuery;
      * Creates an array of the own enumerable property names of `object`.
      *
      * **Note:** Non-object values are coerced to objects. See the
-     * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
+     * [ES spec](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.keys)
      * for more details.
      *
      * @static
@@ -59645,7 +59450,7 @@ return jQuery;
      * // => ['0', '1']
      */
     var keys = !nativeKeys ? shimKeys : function(object) {
-      var Ctor = object == null ? undefined : object.constructor;
+      var Ctor = object == null ? null : object.constructor;
       if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
           (typeof object != 'function' && isArrayLike(object))) {
         return shimKeys(object);
@@ -59768,6 +59573,56 @@ return jQuery;
      * // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
      */
     var mapValues = createObjectMapper();
+
+    /**
+     * Recursively merges own enumerable properties of the source object(s), that
+     * don't resolve to `undefined` into the destination object. Subsequent sources
+     * overwrite property assignments of previous sources. If `customizer` is
+     * provided it is invoked to produce the merged values of the destination and
+     * source properties. If `customizer` returns `undefined` merging is handled
+     * by the method instead. The `customizer` is bound to `thisArg` and invoked
+     * with five arguments: (objectValue, sourceValue, key, object, source).
+     *
+     * @static
+     * @memberOf _
+     * @category Object
+     * @param {Object} object The destination object.
+     * @param {...Object} [sources] The source objects.
+     * @param {Function} [customizer] The function to customize assigned values.
+     * @param {*} [thisArg] The `this` binding of `customizer`.
+     * @returns {Object} Returns `object`.
+     * @example
+     *
+     * var users = {
+     *   'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
+     * };
+     *
+     * var ages = {
+     *   'data': [{ 'age': 36 }, { 'age': 40 }]
+     * };
+     *
+     * _.merge(users, ages);
+     * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
+     *
+     * // using a customizer callback
+     * var object = {
+     *   'fruits': ['apple'],
+     *   'vegetables': ['beet']
+     * };
+     *
+     * var other = {
+     *   'fruits': ['banana'],
+     *   'vegetables': ['carrot']
+     * };
+     *
+     * _.merge(object, other, function(a, b) {
+     *   if (_.isArray(a)) {
+     *     return a.concat(b);
+     *   }
+     * });
+     * // => { 'fruits': ['apple', 'banana'], 'vegetables': ['beet', 'carrot'] }
+     */
+    var merge = createAssigner(baseMerge);
 
     /**
      * The opposite of `_.pick`; this method creates an object composed of the
@@ -59999,7 +59854,7 @@ return jQuery;
           if (isArr) {
             accumulator = isArray(object) ? new Ctor : [];
           } else {
-            accumulator = baseCreate(isFunction(Ctor) ? Ctor.prototype : undefined);
+            accumulator = baseCreate(isFunction(Ctor) ? Ctor.prototype : null);
           }
         } else {
           accumulator = {};
@@ -60102,7 +59957,7 @@ return jQuery;
      */
     function inRange(value, start, end) {
       start = +start || 0;
-      if (end === undefined) {
+      if (typeof end === 'undefined') {
         end = start;
         start = 0;
       } else {
@@ -60140,7 +59995,7 @@ return jQuery;
      */
     function random(min, max, floating) {
       if (floating && isIterateeCall(min, max, floating)) {
-        max = floating = undefined;
+        max = floating = null;
       }
       var noMin = min == null,
           noMax = max == null;
@@ -60327,8 +60182,8 @@ return jQuery;
     function escapeRegExp(string) {
       string = baseToString(string);
       return (string && reHasRegExpChars.test(string))
-        ? string.replace(reRegExpChars, escapeRegExpChar)
-        : (string || '(?:)');
+        ? string.replace(reRegExpChars, '\\$&')
+        : string;
     }
 
     /**
@@ -60385,8 +60240,8 @@ return jQuery;
         return string;
       }
       var mid = (length - strLength) / 2,
-          leftLength = nativeFloor(mid),
-          rightLength = nativeCeil(mid);
+          leftLength = floor(mid),
+          rightLength = ceil(mid);
 
       chars = createPadding('', rightLength, chars);
       return chars.slice(0, leftLength) + string + chars;
@@ -60464,16 +60319,25 @@ return jQuery;
      * // => [6, 8, 10]
      */
     function parseInt(string, radix, guard) {
-      // Firefox < 21 and Opera < 15 follow ES3 for `parseInt`.
-      // Chrome fails to trim leading <BOM> whitespace characters.
-      // See https://code.google.com/p/v8/issues/detail?id=3109 for more details.
-      if (guard ? isIterateeCall(string, radix, guard) : radix == null) {
+      if (guard && isIterateeCall(string, radix, guard)) {
         radix = 0;
-      } else if (radix) {
-        radix = +radix;
       }
-      string = trim(string);
-      return nativeParseInt(string, radix || (reHasHexPrefix.test(string) ? 16 : 10));
+      return nativeParseInt(string, radix);
+    }
+    // Fallback for environments with pre-ES5 implementations.
+    if (nativeParseInt(whitespace + '08') != 8) {
+      parseInt = function(string, radix, guard) {
+        // Firefox < 21 and Opera < 15 follow ES3 for `parseInt`.
+        // Chrome fails to trim leading <BOM> whitespace characters.
+        // See https://code.google.com/p/v8/issues/detail?id=3109 for more details.
+        if (guard ? isIterateeCall(string, radix, guard) : radix == null) {
+          radix = 0;
+        } else if (radix) {
+          radix = +radix;
+        }
+        string = trim(string);
+        return nativeParseInt(string, radix || (reHasHexPrefix.test(string) ? 16 : 10));
+      };
     }
 
     /**
@@ -60509,7 +60373,7 @@ return jQuery;
         if (n % 2) {
           result += string;
         }
-        n = nativeFloor(n / 2);
+        n = floor(n / 2);
         string += string;
       } while (n);
 
@@ -60694,7 +60558,7 @@ return jQuery;
       var settings = lodash.templateSettings;
 
       if (otherOptions && isIterateeCall(string, options, otherOptions)) {
-        options = otherOptions = undefined;
+        options = otherOptions = null;
       }
       string = baseToString(string);
       options = assignWith(baseAssign({}, otherOptions || options), settings, assignOwnDefaults);
@@ -60930,7 +60794,7 @@ return jQuery;
      */
     function trunc(string, options, guard) {
       if (guard && isIterateeCall(string, options, guard)) {
-        options = undefined;
+        options = null;
       }
       var length = DEFAULT_TRUNC_LENGTH,
           omission = DEFAULT_TRUNC_OMISSION;
@@ -61025,7 +60889,7 @@ return jQuery;
      */
     function words(string, pattern, guard) {
       if (guard && isIterateeCall(string, pattern, guard)) {
-        pattern = undefined;
+        pattern = null;
       }
       string = baseToString(string);
       return string.match(pattern || reWords) || [];
@@ -61101,7 +60965,7 @@ return jQuery;
      */
     function callback(func, thisArg, guard) {
       if (guard && isIterateeCall(func, thisArg, guard)) {
-        thisArg = undefined;
+        thisArg = null;
       }
       return isObjectLike(func)
         ? matches(func)
@@ -61302,8 +61166,8 @@ return jQuery;
     function mixin(object, source, options) {
       if (options == null) {
         var isObj = isObject(source),
-            props = isObj ? keys(source) : undefined,
-            methodNames = (props && props.length) ? baseFunctions(source, props) : undefined;
+            props = isObj ? keys(source) : null,
+            methodNames = (props && props.length) ? baseFunctions(source, props) : null;
 
         if (!(methodNames ? methodNames.length : isObj)) {
           methodNames = false;
@@ -61342,7 +61206,9 @@ return jQuery;
                 result.__chain__ = chainAll;
                 return result;
               }
-              return func.apply(object, arrayPush([this.value()], arguments));
+              var args = [this.value()];
+              push.apply(args, arguments);
+              return func.apply(object, args);
             };
           }(func));
         }
@@ -61363,7 +61229,7 @@ return jQuery;
      * var lodash = _.noConflict();
      */
     function noConflict() {
-      root._ = oldDash;
+      context._ = oldDash;
       return this;
     }
 
@@ -61472,7 +61338,7 @@ return jQuery;
      */
     function range(start, end, step) {
       if (step && isIterateeCall(start, end, step)) {
-        end = step = undefined;
+        end = step = null;
       }
       start = +start || 0;
       step = step == null ? 1 : (+step || 0);
@@ -61486,7 +61352,7 @@ return jQuery;
       // Use `Array(length)` so engines like Chakra and V8 avoid slower modes.
       // See https://youtu.be/XAqIpGU8ZZk#t=17m25s for more details.
       var index = -1,
-          length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
+          length = nativeMax(ceil((end - start) / (step || 1)), 0),
           result = Array(length);
 
       while (++index < length) {
@@ -61524,7 +61390,7 @@ return jQuery;
      * // => also invokes `mage.castSpell(n)` three times
      */
     function times(n, iteratee, thisArg) {
-      n = nativeFloor(n);
+      n = floor(n);
 
       // Exit early to avoid a JSC JIT bug in Safari 8
       // where `Array(0)` is treated as `Array(1)`.
@@ -61585,50 +61451,6 @@ return jQuery;
     function add(augend, addend) {
       return (+augend || 0) + (+addend || 0);
     }
-
-    /**
-     * Calculates `n` rounded up to `precision`.
-     *
-     * @static
-     * @memberOf _
-     * @category Math
-     * @param {number} n The number to round up.
-     * @param {number} [precision=0] The precision to round up to.
-     * @returns {number} Returns the rounded up number.
-     * @example
-     *
-     * _.ceil(4.006);
-     * // => 5
-     *
-     * _.ceil(6.004, 2);
-     * // => 6.01
-     *
-     * _.ceil(6040, -2);
-     * // => 6100
-     */
-    var ceil = createRound('ceil');
-
-    /**
-     * Calculates `n` rounded down to `precision`.
-     *
-     * @static
-     * @memberOf _
-     * @category Math
-     * @param {number} n The number to round down.
-     * @param {number} [precision=0] The precision to round down to.
-     * @returns {number} Returns the rounded down number.
-     * @example
-     *
-     * _.floor(4.006);
-     * // => 4
-     *
-     * _.floor(0.046, 2);
-     * // => 0.04
-     *
-     * _.floor(4060, -2);
-     * // => 4000
-     */
-    var floor = createRound('floor');
 
     /**
      * Gets the maximum value of `collection`. If `collection` is empty or falsey
@@ -61729,28 +61551,6 @@ return jQuery;
     var min = createExtremum(lt, POSITIVE_INFINITY);
 
     /**
-     * Calculates `n` rounded to `precision`.
-     *
-     * @static
-     * @memberOf _
-     * @category Math
-     * @param {number} n The number to round.
-     * @param {number} [precision=0] The precision to round to.
-     * @returns {number} Returns the rounded number.
-     * @example
-     *
-     * _.round(4.006);
-     * // => 4
-     *
-     * _.round(4.006, 2);
-     * // => 4.01
-     *
-     * _.round(4060, -2);
-     * // => 4100
-     */
-    var round = createRound('round');
-
-    /**
      * Gets the sum of the values in `collection`.
      *
      * @static
@@ -61784,11 +61584,17 @@ return jQuery;
      */
     function sum(collection, iteratee, thisArg) {
       if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
-        iteratee = undefined;
+        iteratee = null;
       }
-      iteratee = getCallback(iteratee, thisArg, 3);
-      return iteratee.length == 1
-        ? arraySum(isArray(collection) ? collection : toIterable(collection), iteratee)
+      var callback = getCallback(),
+          noIteratee = iteratee == null;
+
+      if (!(noIteratee && callback === baseCallback)) {
+        noIteratee = false;
+        iteratee = callback(iteratee, thisArg, 3);
+      }
+      return noIteratee
+        ? arraySum(isArray(collection) ? collection : toIterable(collection))
         : baseSum(collection, iteratee);
     }
 
@@ -61835,7 +61641,6 @@ return jQuery;
     lodash.curryRight = curryRight;
     lodash.debounce = debounce;
     lodash.defaults = defaults;
-    lodash.defaultsDeep = defaultsDeep;
     lodash.defer = defer;
     lodash.delay = delay;
     lodash.difference = difference;
@@ -61874,7 +61679,6 @@ return jQuery;
     lodash.method = method;
     lodash.methodOf = methodOf;
     lodash.mixin = mixin;
-    lodash.modArgs = modArgs;
     lodash.negate = negate;
     lodash.omit = omit;
     lodash.once = once;
@@ -61950,7 +61754,6 @@ return jQuery;
     lodash.attempt = attempt;
     lodash.camelCase = camelCase;
     lodash.capitalize = capitalize;
-    lodash.ceil = ceil;
     lodash.clone = clone;
     lodash.cloneDeep = cloneDeep;
     lodash.deburr = deburr;
@@ -61966,7 +61769,6 @@ return jQuery;
     lodash.findLastKey = findLastKey;
     lodash.findWhere = findWhere;
     lodash.first = first;
-    lodash.floor = floor;
     lodash.get = get;
     lodash.gt = gt;
     lodash.gte = gte;
@@ -62015,7 +61817,6 @@ return jQuery;
     lodash.reduceRight = reduceRight;
     lodash.repeat = repeat;
     lodash.result = result;
-    lodash.round = round;
     lodash.runInContext = runInContext;
     lodash.size = size;
     lodash.snakeCase = snakeCase;
@@ -62086,20 +61887,48 @@ return jQuery;
       lodash[methodName].placeholder = lodash;
     });
 
+    // Add `LazyWrapper` methods that accept an `iteratee` value.
+    arrayEach(['dropWhile', 'filter', 'map', 'takeWhile'], function(methodName, type) {
+      var isFilter = type != LAZY_MAP_FLAG,
+          isDropWhile = type == LAZY_DROP_WHILE_FLAG;
+
+      LazyWrapper.prototype[methodName] = function(iteratee, thisArg) {
+        var filtered = this.__filtered__,
+            result = (filtered && isDropWhile) ? new LazyWrapper(this) : this.clone(),
+            iteratees = result.__iteratees__ || (result.__iteratees__ = []);
+
+        iteratees.push({
+          'done': false,
+          'count': 0,
+          'index': 0,
+          'iteratee': getCallback(iteratee, thisArg, 1),
+          'limit': -1,
+          'type': type
+        });
+
+        result.__filtered__ = filtered || isFilter;
+        return result;
+      };
+    });
+
     // Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
     arrayEach(['drop', 'take'], function(methodName, index) {
-      LazyWrapper.prototype[methodName] = function(n) {
-        var filtered = this.__filtered__;
-        if (filtered && !index) {
-          return new LazyWrapper(this);
-        }
-        n = n == null ? 1 : nativeMax(nativeFloor(n) || 0, 0);
+      var whileName = methodName + 'While';
 
-        var result = this.clone();
+      LazyWrapper.prototype[methodName] = function(n) {
+        var filtered = this.__filtered__,
+            result = (filtered && !index) ? this.dropWhile() : this.clone();
+
+        n = n == null ? 1 : nativeMax(floor(n) || 0, 0);
         if (filtered) {
-          result.__takeCount__ = nativeMin(result.__takeCount__, n);
+          if (index) {
+            result.__takeCount__ = nativeMin(result.__takeCount__, n);
+          } else {
+            last(result.__iteratees__).limit = n;
+          }
         } else {
-          result.__views__.push({ 'size': n, 'type': methodName + (result.__dir__ < 0 ? 'Right' : '') });
+          var views = result.__views__ || (result.__views__ = []);
+          views.push({ 'size': n, 'type': methodName + (result.__dir__ < 0 ? 'Right' : '') });
         }
         return result;
       };
@@ -62107,18 +61936,9 @@ return jQuery;
       LazyWrapper.prototype[methodName + 'Right'] = function(n) {
         return this.reverse()[methodName](n).reverse();
       };
-    });
 
-    // Add `LazyWrapper` methods that accept an `iteratee` value.
-    arrayEach(['filter', 'map', 'takeWhile'], function(methodName, index) {
-      var type = index + 1,
-          isFilter = type != LAZY_MAP_FLAG;
-
-      LazyWrapper.prototype[methodName] = function(iteratee, thisArg) {
-        var result = this.clone();
-        result.__iteratees__.push({ 'iteratee': getCallback(iteratee, thisArg, 1), 'type': type });
-        result.__filtered__ = result.__filtered__ || isFilter;
-        return result;
+      LazyWrapper.prototype[methodName + 'RightWhile'] = function(predicate, thisArg) {
+        return this.reverse()[whileName](predicate, thisArg).reverse();
       };
     });
 
@@ -62136,7 +61956,7 @@ return jQuery;
       var dropName = 'drop' + (index ? '' : 'Right');
 
       LazyWrapper.prototype[methodName] = function() {
-        return this.__filtered__ ? new LazyWrapper(this) : this[dropName](1);
+        return this[dropName](1);
       };
     });
 
@@ -62165,13 +61985,10 @@ return jQuery;
       start = start == null ? 0 : (+start || 0);
 
       var result = this;
-      if (result.__filtered__ && (start > 0 || end < 0)) {
-        return new LazyWrapper(result);
-      }
       if (start < 0) {
-        result = result.takeRight(-start);
+        result = this.takeRight(-start);
       } else if (start) {
-        result = result.drop(start);
+        result = this.drop(start);
       }
       if (end !== undefined) {
         end = (+end || 0);
@@ -62180,25 +61997,21 @@ return jQuery;
       return result;
     };
 
-    LazyWrapper.prototype.takeRightWhile = function(predicate, thisArg) {
-      return this.reverse().takeWhile(predicate, thisArg).reverse();
-    };
-
     LazyWrapper.prototype.toArray = function() {
-      return this.take(POSITIVE_INFINITY);
+      return this.drop(0);
     };
 
     // Add `LazyWrapper` methods to `lodash.prototype`.
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
-      var checkIteratee = /^(?:filter|map|reject)|While$/.test(methodName),
-          retUnwrapped = /^(?:first|last)$/.test(methodName),
-          lodashFunc = lodash[retUnwrapped ? ('take' + (methodName == 'last' ? 'Right' : '')) : methodName];
-
+      var lodashFunc = lodash[methodName];
       if (!lodashFunc) {
         return;
       }
+      var checkIteratee = /^(?:filter|map|reject)|While$/.test(methodName),
+          retUnwrapped = /^(?:first|last)$/.test(methodName);
+
       lodash.prototype[methodName] = function() {
-        var args = retUnwrapped ? [1] : arguments,
+        var args = arguments,
             chainAll = this.__chain__,
             value = this.__wrapped__,
             isHybrid = !!this.__actions__.length,
@@ -62207,30 +62020,28 @@ return jQuery;
             useLazy = isLazy || isArray(value);
 
         if (useLazy && checkIteratee && typeof iteratee == 'function' && iteratee.length != 1) {
-          // Avoid lazy use if the iteratee has a "length" value other than `1`.
+          // avoid lazy use if the iteratee has a "length" value other than `1`
           isLazy = useLazy = false;
         }
-        var interceptor = function(value) {
-          return (retUnwrapped && chainAll)
-            ? lodashFunc(value, 1)[0]
-            : lodashFunc.apply(undefined, arrayPush([value], args));
-        };
-
-        var action = { 'func': thru, 'args': [interceptor], 'thisArg': undefined },
-            onlyLazy = isLazy && !isHybrid;
-
+        var onlyLazy = isLazy && !isHybrid;
         if (retUnwrapped && !chainAll) {
-          if (onlyLazy) {
-            value = value.clone();
-            value.__actions__.push(action);
-            return func.call(value);
-          }
-          return lodashFunc.call(undefined, this.value())[0];
+          return onlyLazy
+            ? func.call(value)
+            : lodashFunc.call(lodash, this.value());
         }
-        if (!retUnwrapped && useLazy) {
-          value = onlyLazy ? value : new LazyWrapper(this);
-          var result = func.apply(value, args);
-          result.__actions__.push(action);
+        var interceptor = function(value) {
+          var otherArgs = [value];
+          push.apply(otherArgs, args);
+          return lodashFunc.apply(lodash, otherArgs);
+        };
+        if (useLazy) {
+          var wrapper = onlyLazy ? value : new LazyWrapper(this),
+              result = func.apply(wrapper, args);
+
+          if (!retUnwrapped && (isHybrid || result.__actions__)) {
+            var actions = result.__actions__ || (result.__actions__ = []);
+            actions.push({ 'func': thru, 'args': [interceptor], 'thisArg': lodash });
+          }
           return new LodashWrapper(result, chainAll);
         }
         return this.thru(interceptor);
@@ -62238,7 +62049,7 @@ return jQuery;
     });
 
     // Add `Array` and `String` methods to `lodash.prototype`.
-    arrayEach(['join', 'pop', 'push', 'replace', 'shift', 'sort', 'splice', 'split', 'unshift'], function(methodName) {
+    arrayEach(['concat', 'join', 'pop', 'push', 'replace', 'shift', 'sort', 'splice', 'split', 'unshift'], function(methodName) {
       var func = (/^(?:replace|split)$/.test(methodName) ? stringProto : arrayProto)[methodName],
           chainName = /^(?:push|sort|unshift)$/.test(methodName) ? 'tap' : 'thru',
           retUnwrapped = /^(?:join|pop|replace|shift)$/.test(methodName);
@@ -62265,7 +62076,7 @@ return jQuery;
       }
     });
 
-    realNames[createHybridWrapper(undefined, BIND_KEY_FLAG).name] = [{ 'name': 'wrapper', 'func': undefined }];
+    realNames[createHybridWrapper(null, BIND_KEY_FLAG).name] = [{ 'name': 'wrapper', 'func': null }];
 
     // Add functions to the lazy wrapper.
     LazyWrapper.prototype.clone = lazyClone;
@@ -62275,7 +62086,6 @@ return jQuery;
     // Add chaining functions to the `lodash` wrapper.
     lodash.prototype.chain = wrapperChain;
     lodash.prototype.commit = wrapperCommit;
-    lodash.prototype.concat = wrapperConcat;
     lodash.prototype.plant = wrapperPlant;
     lodash.prototype.reverse = wrapperReverse;
     lodash.prototype.toString = wrapperToString;
@@ -66415,621 +66225,4 @@ module.exports = {
 },{}],"react":[function(require,module,exports){
 module.exports = require('./lib/ReactWithAddons');
 
-},{"./lib/ReactWithAddons":352}],"reqwest":[function(require,module,exports){
-/*!
-  * Reqwest! A general purpose XHR connection manager
-  * license MIT (c) Dustin Diaz 2014
-  * https://github.com/ded/reqwest
-  */
-
-!function (name, context, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (typeof define == 'function' && define.amd) define(definition)
-  else context[name] = definition()
-}('reqwest', this, function () {
-
-  var win = window
-    , doc = document
-    , httpsRe = /^http/
-    , protocolRe = /(^\w+):\/\//
-    , twoHundo = /^(20\d|1223)$/ //http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
-    , byTag = 'getElementsByTagName'
-    , readyState = 'readyState'
-    , contentType = 'Content-Type'
-    , requestedWith = 'X-Requested-With'
-    , head = doc[byTag]('head')[0]
-    , uniqid = 0
-    , callbackPrefix = 'reqwest_' + (+new Date())
-    , lastValue // data stored by the most recent JSONP callback
-    , xmlHttpRequest = 'XMLHttpRequest'
-    , xDomainRequest = 'XDomainRequest'
-    , noop = function () {}
-
-    , isArray = typeof Array.isArray == 'function'
-        ? Array.isArray
-        : function (a) {
-            return a instanceof Array
-          }
-
-    , defaultHeaders = {
-          'contentType': 'application/x-www-form-urlencoded'
-        , 'requestedWith': xmlHttpRequest
-        , 'accept': {
-              '*':  'text/javascript, text/html, application/xml, text/xml, */*'
-            , 'xml':  'application/xml, text/xml'
-            , 'html': 'text/html'
-            , 'text': 'text/plain'
-            , 'json': 'application/json, text/javascript'
-            , 'js':   'application/javascript, text/javascript'
-          }
-      }
-
-    , xhr = function(o) {
-        // is it x-domain
-        if (o['crossOrigin'] === true) {
-          var xhr = win[xmlHttpRequest] ? new XMLHttpRequest() : null
-          if (xhr && 'withCredentials' in xhr) {
-            return xhr
-          } else if (win[xDomainRequest]) {
-            return new XDomainRequest()
-          } else {
-            throw new Error('Browser does not support cross-origin requests')
-          }
-        } else if (win[xmlHttpRequest]) {
-          return new XMLHttpRequest()
-        } else {
-          return new ActiveXObject('Microsoft.XMLHTTP')
-        }
-      }
-    , globalSetupOptions = {
-        dataFilter: function (data) {
-          return data
-        }
-      }
-
-  function succeed(r) {
-    var protocol = protocolRe.exec(r.url);
-    protocol = (protocol && protocol[1]) || window.location.protocol;
-    return httpsRe.test(protocol) ? twoHundo.test(r.request.status) : !!r.request.response;
-  }
-
-  function handleReadyState(r, success, error) {
-    return function () {
-      // use _aborted to mitigate against IE err c00c023f
-      // (can't read props on aborted request objects)
-      if (r._aborted) return error(r.request)
-      if (r._timedOut) return error(r.request, 'Request is aborted: timeout')
-      if (r.request && r.request[readyState] == 4) {
-        r.request.onreadystatechange = noop
-        if (succeed(r)) success(r.request)
-        else
-          error(r.request)
-      }
-    }
-  }
-
-  function setHeaders(http, o) {
-    var headers = o['headers'] || {}
-      , h
-
-    headers['Accept'] = headers['Accept']
-      || defaultHeaders['accept'][o['type']]
-      || defaultHeaders['accept']['*']
-
-    var isAFormData = typeof FormData === 'function' && (o['data'] instanceof FormData);
-    // breaks cross-origin requests with legacy browsers
-    if (!o['crossOrigin'] && !headers[requestedWith]) headers[requestedWith] = defaultHeaders['requestedWith']
-    if (!headers[contentType] && !isAFormData) headers[contentType] = o['contentType'] || defaultHeaders['contentType']
-    for (h in headers)
-      headers.hasOwnProperty(h) && 'setRequestHeader' in http && http.setRequestHeader(h, headers[h])
-  }
-
-  function setCredentials(http, o) {
-    if (typeof o['withCredentials'] !== 'undefined' && typeof http.withCredentials !== 'undefined') {
-      http.withCredentials = !!o['withCredentials']
-    }
-  }
-
-  function generalCallback(data) {
-    lastValue = data
-  }
-
-  function urlappend (url, s) {
-    return url + (/\?/.test(url) ? '&' : '?') + s
-  }
-
-  function handleJsonp(o, fn, err, url) {
-    var reqId = uniqid++
-      , cbkey = o['jsonpCallback'] || 'callback' // the 'callback' key
-      , cbval = o['jsonpCallbackName'] || reqwest.getcallbackPrefix(reqId)
-      , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
-      , match = url.match(cbreg)
-      , script = doc.createElement('script')
-      , loaded = 0
-      , isIE10 = navigator.userAgent.indexOf('MSIE 10.0') !== -1
-
-    if (match) {
-      if (match[3] === '?') {
-        url = url.replace(cbreg, '$1=' + cbval) // wildcard callback func name
-      } else {
-        cbval = match[3] // provided callback func name
-      }
-    } else {
-      url = urlappend(url, cbkey + '=' + cbval) // no callback details, add 'em
-    }
-
-    win[cbval] = generalCallback
-
-    script.type = 'text/javascript'
-    script.src = url
-    script.async = true
-    if (typeof script.onreadystatechange !== 'undefined' && !isIE10) {
-      // need this for IE due to out-of-order onreadystatechange(), binding script
-      // execution to an event listener gives us control over when the script
-      // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
-      script.htmlFor = script.id = '_reqwest_' + reqId
-    }
-
-    script.onload = script.onreadystatechange = function () {
-      if ((script[readyState] && script[readyState] !== 'complete' && script[readyState] !== 'loaded') || loaded) {
-        return false
-      }
-      script.onload = script.onreadystatechange = null
-      script.onclick && script.onclick()
-      // Call the user callback with the last value stored and clean up values and scripts.
-      fn(lastValue)
-      lastValue = undefined
-      head.removeChild(script)
-      loaded = 1
-    }
-
-    // Add the script to the DOM head
-    head.appendChild(script)
-
-    // Enable JSONP timeout
-    return {
-      abort: function () {
-        script.onload = script.onreadystatechange = null
-        err({}, 'Request is aborted: timeout', {})
-        lastValue = undefined
-        head.removeChild(script)
-        loaded = 1
-      }
-    }
-  }
-
-  function getRequest(fn, err) {
-    var o = this.o
-      , method = (o['method'] || 'GET').toUpperCase()
-      , url = typeof o === 'string' ? o : o['url']
-      // convert non-string objects to query-string form unless o['processData'] is false
-      , data = (o['processData'] !== false && o['data'] && typeof o['data'] !== 'string')
-        ? reqwest.toQueryString(o['data'])
-        : (o['data'] || null)
-      , http
-      , sendWait = false
-
-    // if we're working on a GET request and we have data then we should append
-    // query string to end of URL and not post data
-    if ((o['type'] == 'jsonp' || method == 'GET') && data) {
-      url = urlappend(url, data)
-      data = null
-    }
-
-    if (o['type'] == 'jsonp') return handleJsonp(o, fn, err, url)
-
-    // get the xhr from the factory if passed
-    // if the factory returns null, fall-back to ours
-    http = (o.xhr && o.xhr(o)) || xhr(o)
-
-    http.open(method, url, o['async'] === false ? false : true)
-    setHeaders(http, o)
-    setCredentials(http, o)
-    if (win[xDomainRequest] && http instanceof win[xDomainRequest]) {
-        http.onload = fn
-        http.onerror = err
-        // NOTE: see
-        // http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/30ef3add-767c-4436-b8a9-f1ca19b4812e
-        http.onprogress = function() {}
-        sendWait = true
-    } else {
-      http.onreadystatechange = handleReadyState(this, fn, err)
-    }
-    o['before'] && o['before'](http)
-    if (sendWait) {
-      setTimeout(function () {
-        http.send(data)
-      }, 200)
-    } else {
-      http.send(data)
-    }
-    return http
-  }
-
-  function Reqwest(o, fn) {
-    this.o = o
-    this.fn = fn
-
-    init.apply(this, arguments)
-  }
-
-  function setType(header) {
-    // json, javascript, text/plain, text/html, xml
-    if (header.match('json')) return 'json'
-    if (header.match('javascript')) return 'js'
-    if (header.match('text')) return 'html'
-    if (header.match('xml')) return 'xml'
-  }
-
-  function init(o, fn) {
-
-    this.url = typeof o == 'string' ? o : o['url']
-    this.timeout = null
-
-    // whether request has been fulfilled for purpose
-    // of tracking the Promises
-    this._fulfilled = false
-    // success handlers
-    this._successHandler = function(){}
-    this._fulfillmentHandlers = []
-    // error handlers
-    this._errorHandlers = []
-    // complete (both success and fail) handlers
-    this._completeHandlers = []
-    this._erred = false
-    this._responseArgs = {}
-
-    var self = this
-
-    fn = fn || function () {}
-
-    if (o['timeout']) {
-      this.timeout = setTimeout(function () {
-        timedOut()
-      }, o['timeout'])
-    }
-
-    if (o['success']) {
-      this._successHandler = function () {
-        o['success'].apply(o, arguments)
-      }
-    }
-
-    if (o['error']) {
-      this._errorHandlers.push(function () {
-        o['error'].apply(o, arguments)
-      })
-    }
-
-    if (o['complete']) {
-      this._completeHandlers.push(function () {
-        o['complete'].apply(o, arguments)
-      })
-    }
-
-    function complete (resp) {
-      o['timeout'] && clearTimeout(self.timeout)
-      self.timeout = null
-      while (self._completeHandlers.length > 0) {
-        self._completeHandlers.shift()(resp)
-      }
-    }
-
-    function success (resp) {
-      var type = o['type'] || resp && setType(resp.getResponseHeader('Content-Type')) // resp can be undefined in IE
-      resp = (type !== 'jsonp') ? self.request : resp
-      // use global data filter on response text
-      var filteredResponse = globalSetupOptions.dataFilter(resp.responseText, type)
-        , r = filteredResponse
-      try {
-        resp.responseText = r
-      } catch (e) {
-        // can't assign this in IE<=8, just ignore
-      }
-      if (r) {
-        switch (type) {
-        case 'json':
-          try {
-            resp = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
-          } catch (err) {
-            return error(resp, 'Could not parse JSON in response', err)
-          }
-          break
-        case 'js':
-          resp = eval(r)
-          break
-        case 'html':
-          resp = r
-          break
-        case 'xml':
-          resp = resp.responseXML
-              && resp.responseXML.parseError // IE trololo
-              && resp.responseXML.parseError.errorCode
-              && resp.responseXML.parseError.reason
-            ? null
-            : resp.responseXML
-          break
-        }
-      }
-
-      self._responseArgs.resp = resp
-      self._fulfilled = true
-      fn(resp)
-      self._successHandler(resp)
-      while (self._fulfillmentHandlers.length > 0) {
-        resp = self._fulfillmentHandlers.shift()(resp)
-      }
-
-      complete(resp)
-    }
-
-    function timedOut() {
-      self._timedOut = true
-      self.request.abort()      
-    }
-
-    function error(resp, msg, t) {
-      resp = self.request
-      self._responseArgs.resp = resp
-      self._responseArgs.msg = msg
-      self._responseArgs.t = t
-      self._erred = true
-      while (self._errorHandlers.length > 0) {
-        self._errorHandlers.shift()(resp, msg, t)
-      }
-      complete(resp)
-    }
-
-    this.request = getRequest.call(this, success, error)
-  }
-
-  Reqwest.prototype = {
-    abort: function () {
-      this._aborted = true
-      this.request.abort()
-    }
-
-  , retry: function () {
-      init.call(this, this.o, this.fn)
-    }
-
-    /**
-     * Small deviation from the Promises A CommonJs specification
-     * http://wiki.commonjs.org/wiki/Promises/A
-     */
-
-    /**
-     * `then` will execute upon successful requests
-     */
-  , then: function (success, fail) {
-      success = success || function () {}
-      fail = fail || function () {}
-      if (this._fulfilled) {
-        this._responseArgs.resp = success(this._responseArgs.resp)
-      } else if (this._erred) {
-        fail(this._responseArgs.resp, this._responseArgs.msg, this._responseArgs.t)
-      } else {
-        this._fulfillmentHandlers.push(success)
-        this._errorHandlers.push(fail)
-      }
-      return this
-    }
-
-    /**
-     * `always` will execute whether the request succeeds or fails
-     */
-  , always: function (fn) {
-      if (this._fulfilled || this._erred) {
-        fn(this._responseArgs.resp)
-      } else {
-        this._completeHandlers.push(fn)
-      }
-      return this
-    }
-
-    /**
-     * `fail` will execute when the request fails
-     */
-  , fail: function (fn) {
-      if (this._erred) {
-        fn(this._responseArgs.resp, this._responseArgs.msg, this._responseArgs.t)
-      } else {
-        this._errorHandlers.push(fn)
-      }
-      return this
-    }
-  , 'catch': function (fn) {
-      return this.fail(fn)
-    }
-  }
-
-  function reqwest(o, fn) {
-    return new Reqwest(o, fn)
-  }
-
-  // normalize newline variants according to spec -> CRLF
-  function normalize(s) {
-    return s ? s.replace(/\r?\n/g, '\r\n') : ''
-  }
-
-  function serial(el, cb) {
-    var n = el.name
-      , t = el.tagName.toLowerCase()
-      , optCb = function (o) {
-          // IE gives value="" even where there is no value attribute
-          // 'specified' ref: http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-862529273
-          if (o && !o['disabled'])
-            cb(n, normalize(o['attributes']['value'] && o['attributes']['value']['specified'] ? o['value'] : o['text']))
-        }
-      , ch, ra, val, i
-
-    // don't serialize elements that are disabled or without a name
-    if (el.disabled || !n) return
-
-    switch (t) {
-    case 'input':
-      if (!/reset|button|image|file/i.test(el.type)) {
-        ch = /checkbox/i.test(el.type)
-        ra = /radio/i.test(el.type)
-        val = el.value
-        // WebKit gives us "" instead of "on" if a checkbox has no value, so correct it here
-        ;(!(ch || ra) || el.checked) && cb(n, normalize(ch && val === '' ? 'on' : val))
-      }
-      break
-    case 'textarea':
-      cb(n, normalize(el.value))
-      break
-    case 'select':
-      if (el.type.toLowerCase() === 'select-one') {
-        optCb(el.selectedIndex >= 0 ? el.options[el.selectedIndex] : null)
-      } else {
-        for (i = 0; el.length && i < el.length; i++) {
-          el.options[i].selected && optCb(el.options[i])
-        }
-      }
-      break
-    }
-  }
-
-  // collect up all form elements found from the passed argument elements all
-  // the way down to child elements; pass a '<form>' or form fields.
-  // called with 'this'=callback to use for serial() on each element
-  function eachFormElement() {
-    var cb = this
-      , e, i
-      , serializeSubtags = function (e, tags) {
-          var i, j, fa
-          for (i = 0; i < tags.length; i++) {
-            fa = e[byTag](tags[i])
-            for (j = 0; j < fa.length; j++) serial(fa[j], cb)
-          }
-        }
-
-    for (i = 0; i < arguments.length; i++) {
-      e = arguments[i]
-      if (/input|select|textarea/i.test(e.tagName)) serial(e, cb)
-      serializeSubtags(e, [ 'input', 'select', 'textarea' ])
-    }
-  }
-
-  // standard query string style serialization
-  function serializeQueryString() {
-    return reqwest.toQueryString(reqwest.serializeArray.apply(null, arguments))
-  }
-
-  // { 'name': 'value', ... } style serialization
-  function serializeHash() {
-    var hash = {}
-    eachFormElement.apply(function (name, value) {
-      if (name in hash) {
-        hash[name] && !isArray(hash[name]) && (hash[name] = [hash[name]])
-        hash[name].push(value)
-      } else hash[name] = value
-    }, arguments)
-    return hash
-  }
-
-  // [ { name: 'name', value: 'value' }, ... ] style serialization
-  reqwest.serializeArray = function () {
-    var arr = []
-    eachFormElement.apply(function (name, value) {
-      arr.push({name: name, value: value})
-    }, arguments)
-    return arr
-  }
-
-  reqwest.serialize = function () {
-    if (arguments.length === 0) return ''
-    var opt, fn
-      , args = Array.prototype.slice.call(arguments, 0)
-
-    opt = args.pop()
-    opt && opt.nodeType && args.push(opt) && (opt = null)
-    opt && (opt = opt.type)
-
-    if (opt == 'map') fn = serializeHash
-    else if (opt == 'array') fn = reqwest.serializeArray
-    else fn = serializeQueryString
-
-    return fn.apply(null, args)
-  }
-
-  reqwest.toQueryString = function (o, trad) {
-    var prefix, i
-      , traditional = trad || false
-      , s = []
-      , enc = encodeURIComponent
-      , add = function (key, value) {
-          // If value is a function, invoke it and return its value
-          value = ('function' === typeof value) ? value() : (value == null ? '' : value)
-          s[s.length] = enc(key) + '=' + enc(value)
-        }
-    // If an array was passed in, assume that it is an array of form elements.
-    if (isArray(o)) {
-      for (i = 0; o && i < o.length; i++) add(o[i]['name'], o[i]['value'])
-    } else {
-      // If traditional, encode the "old" way (the way 1.3.2 or older
-      // did it), otherwise encode params recursively.
-      for (prefix in o) {
-        if (o.hasOwnProperty(prefix)) buildParams(prefix, o[prefix], traditional, add)
-      }
-    }
-
-    // spaces should be + according to spec
-    return s.join('&').replace(/%20/g, '+')
-  }
-
-  function buildParams(prefix, obj, traditional, add) {
-    var name, i, v
-      , rbracket = /\[\]$/
-
-    if (isArray(obj)) {
-      // Serialize array item.
-      for (i = 0; obj && i < obj.length; i++) {
-        v = obj[i]
-        if (traditional || rbracket.test(prefix)) {
-          // Treat each array item as a scalar.
-          add(prefix, v)
-        } else {
-          buildParams(prefix + '[' + (typeof v === 'object' ? i : '') + ']', v, traditional, add)
-        }
-      }
-    } else if (obj && obj.toString() === '[object Object]') {
-      // Serialize object item.
-      for (name in obj) {
-        buildParams(prefix + '[' + name + ']', obj[name], traditional, add)
-      }
-
-    } else {
-      // Serialize scalar item.
-      add(prefix, obj)
-    }
-  }
-
-  reqwest.getcallbackPrefix = function () {
-    return callbackPrefix
-  }
-
-  // jQuery and Zepto compatibility, differences can be remapped here so you can call
-  // .ajax.compat(options, callback)
-  reqwest.compat = function (o, fn) {
-    if (o) {
-      o['type'] && (o['method'] = o['type']) && delete o['type']
-      o['dataType'] && (o['type'] = o['dataType'])
-      o['jsonpCallback'] && (o['jsonpCallbackName'] = o['jsonpCallback']) && delete o['jsonpCallback']
-      o['jsonp'] && (o['jsonpCallback'] = o['jsonp'])
-    }
-    return new Reqwest(o, fn)
-  }
-
-  reqwest.ajaxSetup = function (options) {
-    options = options || {}
-    for (var k in options) {
-      globalSetupOptions[k] = options[k]
-    }
-  }
-
-  return reqwest
-});
-
-},{}]},{},[229]);
+},{"./lib/ReactWithAddons":352}]},{},[1]);

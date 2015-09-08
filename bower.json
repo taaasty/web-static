@@ -24,8 +24,5 @@
     "select2": "~4.0.0",
     "jqueryui-touch-punch": "*",
     "i18next": "~1.9.0"
-  },
-  "devDependencies": {
-    "reqwest": "~1.1.5"
   }
 }
