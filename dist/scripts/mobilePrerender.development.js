@@ -8873,13 +8873,13 @@ module.exports = SettingsHeroAvatar;
 
 
 },{"../../../actions/view/currentUser":9,"../../common/avatar/user":45,"../../common/spinner/spinner":48}],175:[function(require,module,exports){
-var NotifyController, PropTypes, SettingsHeroSlug, _;
+var NotifyController, PropTypes, SettingsHeroSlug, _, findDOMNode;
 
 _ = require('lodash');
 
 NotifyController = require('../../../controllers/notify');
 
-PropTypes = React.PropTypes;
+findDOMNode = React.findDOMNode, PropTypes = React.PropTypes;
 
 SettingsHeroSlug = React.createClass({
   displayName: 'SettingsHeroSlug',
@@ -8890,12 +8890,14 @@ SettingsHeroSlug = React.createClass({
   render: function() {
     return React.createElement("div", {
       "className": "settings__hero__name"
-    }, React.createElement("textarea", {
+    }, React.createElement("input", {
+      "ref": "slugInput",
       "defaultValue": this.props.slug,
       "placeholder": i18n.t('placeholders.settings_slug'),
-      "maxLength": 140.,
+      "maxLength": 20.,
       "className": "settings__hero__textarea",
-      "onBlur": this.handleBlur
+      "onBlur": this.handleBlur,
+      "onKeyDown": this.onKeyDown
     }));
   },
   handleBlur: function(e) {
@@ -8905,6 +8907,14 @@ SettingsHeroSlug = React.createClass({
       return this.props.onChange(value);
     } else {
       return NotifyController.notifyError(i18n.t('messages.settings_empty_slug_error'));
+    }
+  },
+  onKeyDown: function(ev) {
+    var input;
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      input = findDOMNode(this.refs.slugInput);
+      return input.blur();
     }
   }
 });
