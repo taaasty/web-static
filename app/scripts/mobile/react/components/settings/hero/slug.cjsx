@@ -1,6 +1,6 @@
 _                = require 'lodash'
 NotifyController = require '../../../controllers/notify'
-{ PropTypes } = React
+{ findDOMNode, PropTypes } = React
 
 SettingsHeroSlug = React.createClass
   displayName: 'SettingsHeroSlug'
@@ -11,12 +11,15 @@ SettingsHeroSlug = React.createClass
 
   render: ->
     <div className="settings__hero__name">
-      <textarea
-          defaultValue={ @props.slug }
-          placeholder={ i18n.t('placeholders.settings_slug') }
-          maxLength={ 140 }
-          className="settings__hero__textarea"
-          onBlur={ @handleBlur } />
+      <input
+        ref="slugInput"
+        defaultValue={ @props.slug }
+        placeholder={ i18n.t('placeholders.settings_slug') }
+        maxLength={ 20 }
+        className="settings__hero__textarea"
+        onBlur={ @handleBlur }
+        onKeyDown={ @onKeyDown }
+      />
     </div>
 
   handleBlur: (e) ->
@@ -26,5 +29,11 @@ SettingsHeroSlug = React.createClass
       @props.onChange value
     else
       NotifyController.notifyError i18n.t('messages.settings_empty_slug_error')
+
+  onKeyDown: (ev) ->
+    if ev.key == 'Enter'
+      ev.preventDefault()
+      input = findDOMNode(@refs.slugInput)
+      input.blur()
 
 module.exports = SettingsHeroSlug
