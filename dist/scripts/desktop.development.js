@@ -23234,24 +23234,31 @@ var EntryTlogs = (function () {
   _createClass(EntryTlogs, [{
     key: 'render',
     value: function render() {
-      var _this = this;
+      var _props = this.props;
+      var canLoad = _props.canLoad;
+      var entries = _props.entries;
+      var isAuthorVisible = _props.isAuthorVisible;
+      var loading = _props.loading;
+      var onDelete = _props.onDelete;
+      var onLoadMoreEntries = _props.onLoadMoreEntries;
 
-      var entryList = this.props.entries.map(function (item) {
+      var entryList = entries.map(function (item) {
         return _react2['default'].createElement(_EntryEntryTlogEntryTlog2['default'], {
+          isAuthorVisible: isAuthorVisible,
           key: item.entry.id,
           entry: item.entry,
           commentator: item.commentator,
           moderation: item.moderation,
-          onDelete: _this.props.onDelete
+          onDelete: onDelete
         });
       });
 
       return _react2['default'].createElement(
         _commonInfiniteScrollIndex2['default'],
         {
-          loading: this.props.loading,
-          canLoad: this.props.canLoad,
-          onLoad: this.props.onLoadMoreEntries
+          loading: loading,
+          canLoad: canLoad,
+          onLoad: onLoadMoreEntries
         },
         _react2['default'].createElement(
           'section',
@@ -23264,6 +23271,7 @@ var EntryTlogs = (function () {
     key: 'propTypes',
     value: {
       entries: _react.PropTypes.array.isRequired,
+      isAuthorVisible: _react.PropTypes.bool,
       loading: _react.PropTypes.bool.isRequired,
       canLoad: _react.PropTypes.bool.isRequired,
       onDelete: _react.PropTypes.func.isRequired,
@@ -23332,6 +23340,7 @@ var EntryTlogsContainer = (function (_Component) {
     value: function render() {
       return _react2['default'].createElement(_EntryTlogs2['default'], {
         entries: this.state.entries,
+        isAuthorVisible: this.props.isAuthorVisible,
         loading: this.state.isLoading,
         canLoad: !this.state.isLoading && this.state.hasMore,
         onDelete: this.deleteEntry.bind(this),
@@ -23385,6 +23394,7 @@ var EntryTlogsContainer = (function (_Component) {
         next_page: _react.PropTypes.number,
         next_since_entry_id: _react.PropTypes.number
       }).isRequired,
+      isAuthorVisible: _react.PropTypes.bool,
       loadUrl: _react.PropTypes.string.isRequired,
       nextPageFieldName: _react.PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
       nextPageParamName: _react.PropTypes.oneOf(['page', 'since_entry_id']).isRequired
