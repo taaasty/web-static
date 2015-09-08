@@ -8,7 +8,8 @@ i18n         = require('i18next');
 require('./locales/moment/ru');
 
 Phrases = {
-  ru: { translation: require('./locales/ru') }
+  ru: { translation: require('./locales/ru') },
+  en: { translation: require('./locales/en') }
 };
 
 i18n.init({
