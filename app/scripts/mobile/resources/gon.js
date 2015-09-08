@@ -5,7 +5,7 @@ let gon = {
   api_host: AppStorage.getItem('api_host') || 'http://taaasty.com/api/',
   localesPath: '../locales',
   localesVersion: '1.0.0',
-  locale: 'ru',
+  locale: 'en',
   // taaasty development app
   pusher: {
     key: '40dbf1d864d4b366b5e6'
