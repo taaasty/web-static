@@ -33,21 +33,25 @@ request = (_method, url, data = {}) ->
     else 'GET'
 
   if data instanceof FormData
-    dataType    = 'multipart/form-data'
+    contentType = false
     processData = false
+    data.append('_method', _method)
   else
-    dataType    = 'json'
+    contentType = 'application/x-www-form-urlencoded'
     processData = true
-    assign data, {_method}
+    data = _.extend {}, data, {_method}
 
-  reqwest
+  $.ajax
     url: url
     method: method
     data: data
-    dataType: dataType
+    contentType: contentType
     processData: processData
-    timeout: TIMEOUT
     headers: headers
+    # timeout: TIMEOUT
+    xhrFields:
+      withCredentials: true
+      crossDomain:     true
 
 getRequest =    (url, data) -> request 'GET', url, data
 postRequest =   (url, data) -> request 'POST', url, data

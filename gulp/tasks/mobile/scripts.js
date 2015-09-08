@@ -15,7 +15,6 @@ const dependencies = {
   lodash: './node_modules/lodash',
   reactUjs: './app/scripts/shared/libs/react_ujs',
   eventEmitter: './app/bower_components/eventEmitter/EventEmitter',
-  reqwest: './app/bower_components/reqwest/reqwest',
   i18next: './app/bower_components/i18next/i18next',
   pusher: './app/bower_components/pusher/dist/pusher',
   jquery: './app/bower_components/jquery/dist/jquery',
