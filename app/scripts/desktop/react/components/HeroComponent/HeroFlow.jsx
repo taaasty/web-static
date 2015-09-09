@@ -1,3 +1,4 @@
+import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import PopupActionCreators from '../../actions/popup';
 import Hero from './Hero';
 import FollowButton from '../common/FollowButton';
@@ -7,17 +8,8 @@ import HeroDesignSettingsButton from './HeroDesignSettingsButton';
 
 let HeroFlow = React.createClass({
   propTypes: {
-    flow: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      name: React.PropTypes.string.isRequired,
-      slug: React.PropTypes.string.isRequired,
-      design: React.PropTypes.object.isRequired,
-      is_privacy: React.PropTypes.bool.isRequired,
-      public_tlog_entries_count: React.PropTypes.number.isRequired,
-      can_edit: React.PropTypes.bool,
-      can_write: React.PropTypes.bool
-    }).isRequired,
-    relationship: React.PropTypes.object
+    flow: ProjectTypes.flow.isRequired,
+    relationship: ProjectTypes.relationship,
   },
 
   getInitialState() {

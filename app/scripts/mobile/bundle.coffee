@@ -27,11 +27,12 @@ global.TlogDaylogPage      = require './react/pages/tlogDaylog'
 global.FeedLivePage        = require './react/pages/feedLive'
 global.FeedBestPage        = require './react/pages/feedBest'
 global.FeedFriendsPage     = require './react/pages/feedFriends'
-global.SettingsPage        = require './react/pages/settings'
 global.NotificationsPage   = require './react/pages/notifications'
 global.MessengerPage       = require './react/pages/messenger'
 global.MessengerThreadPage = require './react/pages/messengerThread'
 global.AuthPage            = require './react/pages/auth'
+global.FlowPage            = require './react/components/FlowPage'
+global.SettingsPage        = require './react/components/SettingsPage'
 
 # /*==========  Stores  ==========*/
 
