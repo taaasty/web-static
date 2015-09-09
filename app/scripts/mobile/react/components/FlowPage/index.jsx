@@ -30,8 +30,9 @@ export default class FlowPage extends Component {
     
     return (
       <PageWithAuth
-          currentUser={currentUser}
-          locale={locale}>
+        currentUser={currentUser}
+        locale={locale}
+      >
         <PageLayout>
           <PageHeader>
             <HeroFlow
