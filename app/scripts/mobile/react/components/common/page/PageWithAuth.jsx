@@ -8,10 +8,13 @@ export default class PageWithAuth {
   static propTypes = PageWithToolbars.propTypes;
 
   render() {
-    const { locale, children } = this.props;
+    const { children, currentUser, locale } = this.props;
     
     return (
-      <PageWithToolbars locale={locale}>
+      <PageWithToolbars
+        currentUser={currentUser}
+        locale={locale}
+      >
         <AuthButtonManager />
         {children}
         <AuthManager />
