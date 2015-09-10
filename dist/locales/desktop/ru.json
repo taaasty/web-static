@@ -115,6 +115,7 @@
   "comments_count_plural_2": "__count__ комментария",
   "comments_count_plural_5": "__count__ комментариев",
   "no_comments": "Нет комментариев",
+  "entry_meta_repost_link": "Сделать репост",
   "entry_repost_loading": "Загружаю..",
   "entry_repost_empty": "Список пуст",
   "entry_repost_error": "Ошибка загрузки",

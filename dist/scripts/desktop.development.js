@@ -22278,6 +22278,7 @@ exports['default'] = EntryTlogMetabarDate;
 module.exports = exports['default'];
 
 },{"react":"react"}],139:[function(require,module,exports){
+/*global i18n */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -22331,7 +22332,7 @@ var EntryTlogMetabarRepost = (function (_Component) {
               _react2['default'].createElement(
                 'span',
                 { className: 'meta-item__common' },
-                'Репост'
+                i18n.t('entry_meta_repost_link')
               )
             )
           ),
