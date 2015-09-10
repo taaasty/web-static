@@ -34719,9 +34719,29 @@ var EntryRepostPopup = (function (_Component) {
             className: 'scroller--users',
             onScroll: this.handleScroll.bind(this)
           },
-          this.state.visibleList.length && !this.state.isLoading ? this.renderTargetList.call(this) : this.renderMessage.call(this)
+          this.state.visibleList.length && !this.state.isLoading ? this.renderTargetList.call(this) : this.renderListStateMessage.call(this)
         )
       );
+    }
+  }, {
+    key: 'renderMessage',
+    value: function renderMessage(message) {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'grid-full' },
+        _react2['default'].createElement(
+          'div',
+          { className: 'grid-full__middle' },
+          _react2['default'].createElement('div', { className: 'popup__text',
+            dangerouslySetInnerHTML: { __html: message }
+          })
+        )
+      );
+    }
+  }, {
+    key: 'renderAddFlowMessage',
+    value: function renderAddFlowMessage() {
+      return this.state.targetList.length <= 1 && this.renderMessage(i18n.t('entry.repost.no_flows'));
     }
   }, {
     key: 'renderSearch',
@@ -34745,15 +34765,15 @@ var EntryRepostPopup = (function (_Component) {
           onSelect: _this.handleTargetSelect.bind(_this, target) });
       });
 
-      return _react2['default'].createElement(
+      return [_react2['default'].createElement(
         'section',
         { className: 'users' },
         items
-      );
+      ), this.renderAddFlowMessage()];
     }
   }, {
-    key: 'renderMessage',
-    value: function renderMessage() {
+    key: 'renderListStateMessage',
+    value: function renderListStateMessage() {
       var message = '';
 
       if (this.state.isError) {
@@ -34764,19 +34784,7 @@ var EntryRepostPopup = (function (_Component) {
         message = i18n.t('entry_repost_empty');
       }
 
-      return _react2['default'].createElement(
-        'div',
-        { className: 'grid-full' },
-        _react2['default'].createElement(
-          'div',
-          { className: 'grid-full__middle' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'popup__text' },
-            message
-          )
-        )
-      );
+      return this.renderMessage(message);
     }
   }, {
     key: 'loadTargets',
