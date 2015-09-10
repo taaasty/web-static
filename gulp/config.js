@@ -5,21 +5,21 @@ const test = './test';
 
 module.exports = {
   clean: {
-    dest: [build, dist]
+    dest: [build, dist],
   },
   browserSync: {
     port: 9000,
     open: false,
     server: {
-      baseDir: [build, src]
+      baseDir: [build, src],
     },
-    files: [build + '/**']
+    files: [build + '/**'],
   },
   ghPages: {
     src: build + '/**/*',
     options: {
-      message: 'gh-pages'
-    }
+      message: 'gh-pages',
+    },
   },
   desktop: {
     scripts: {
@@ -28,68 +28,76 @@ module.exports = {
           baseDir: src + '/bower_components',
           dest: build + '/scripts',
           outputName: 'vendor.js',
-          extensions: ['.coffee']
+          extensions: ['.coffee'],
         },
         client: {
           entries: src + '/scripts/desktop.static.js',
           dest: build + '/scripts',
           outputName: 'client.js',
-          extensions: ['.jsx', '.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee'],
         },
         test: {
-          entries: test + '/desktop',
+          entries: test + '/desktop/index.js',
           dest: build + '/scripts',
           outputName: 'test.js',
-          extensions: ['.jsx', '.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee'],
         },
       },
       development: {
         entries: src + '/scripts/desktop.development.js',
         extensions: ['.jsx', '.cjsx', '.coffee'],
         dest: dist + '/scripts/',
-        outputName: 'desktop.development.js'
+        outputName: 'desktop.development.js',
       },
       production: {
-        entries: src + '/scripts/desktop.production.js',
-        extensions: ['.jsx', '.cjsx', '.coffee'],
-        dest: dist + '/scripts/',
-        outputName: 'desktop.production.js'
-      }
+        bundle: {
+          entries: src + '/scripts/desktop.production.js',
+          extensions: ['.jsx', '.cjsx', '.coffee'],
+          dest: dist + '/scripts/',
+          outputName: 'desktop.production.js',
+        },
+        test: {
+          entries: `${test}/desktop/dist.js`,
+          dest: `${dist}/scripts`,
+          outputName: 'testDesktopDist.js',
+          extensions: ['.jsx', '.js'],
+        },
+      },
     },
     styles: {
       static: {
         src: src + '/stylesheets/desktop.static.less',
         dest: build + '/stylesheets',
-        outputName: 'main.css'
+        outputName: 'main.css',
       },
       production: {
         src: src + '/stylesheets/desktop.production.less',
         dest: dist + '/stylesheets',
-        outputName: 'desktop.production.css'
-      }
+        outputName: 'desktop.production.css',
+      },
     },
     html: {
       static: {
         src: src + '/html/desktop/**/*.html',
-        dest: build
-      }
+        dest: build,
+      },
     },
     assets: {
       static: {
         src: src + '/assets/**/*.*',
-        dest: build + '/assets'
-      }
+        dest: build + '/assets',
+      },
     },
     locales: {
       static: {
         src: src + '/scripts/desktop/locales/**/*.json',
-        dest: build + '/locales'
+        dest: build + '/locales',
       },
       production: {
         src: src + '/scripts/desktop/locales/**/*.json',
-        dest: dist + '/locales/desktop'
-      }
-    }
+        dest: dist + '/locales/desktop',
+      },
+    },
   },
   mobile: {
     scripts: {
@@ -97,19 +105,19 @@ module.exports = {
         vendor: {
           dest: build + '/mobile/scripts',
           outputName: 'vendor.js',
-          extensions: ['.coffee']
+          extensions: ['.coffee'],
         },
         client: {
           entries: src + '/scripts/mobile.static.js',
           dest: build + '/mobile/scripts',
           outputName: 'client.js',
-          extensions: ['.jsx', '.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee'],
         },
         test: {
-          entries: test + '/mobile',
+          entries: test + '/mobile/index.js',
           dest: build + '/mobile/scripts',
           outputName: 'test.js',
-          extensions: ['.jsx', '.cjsx', '.coffee']
+          extensions: ['.jsx', '.cjsx', '.coffee'],
         },
       },
       development: {
@@ -117,57 +125,63 @@ module.exports = {
           entries: src + '/scripts/mobile.development.js',
           extensions: ['.jsx', '.cjsx', '.coffee'],
           dest: dist + '/scripts/',
-          outputName: 'mobile.development.js'
+          outputName: 'mobile.development.js',
         },
         components: {
           entries: src + '/scripts/mobilePrerender.development.js',
           extensions: ['.jsx', '.cjsx', '.coffee'],
           dest: dist + '/scripts/',
-          outputName: 'mobilePrerender.development.js'
-        }
+          outputName: 'mobilePrerender.development.js',
+        },
       },
       production: {
         bundle: {
           entries: src + '/scripts/mobile.production.js',
           extensions: ['.jsx', '.cjsx', '.coffee'],
           dest: dist + '/scripts/',
-          outputName: 'mobile.production.js'
+          outputName: 'mobile.production.js',
         },
         components: {
           entries: src + '/scripts/mobilePrerender.production.js',
           extensions: ['.jsx', '.cjsx', '.coffee'],
           dest: dist + '/scripts/',
-          outputName: 'mobilePrerender.production.js'
-        }
-      }
+          outputName: 'mobilePrerender.production.js',
+        },
+        test: {
+          entries: `${test}/mobile/dist.js`,
+          dest: `${dist}/scripts`,
+          outputName: 'testMobileDist.js',
+          extensions: ['.jsx', '.js'],
+        },
+      },
     },
     styles: {
       static: {
         src: src + '/stylesheets/mobile.static.less',
         dest: build + '/mobile/stylesheets',
-        outputName: 'main.css'
+        outputName: 'main.css',
       },
       production: {
         src: src + '/stylesheets/mobile.production.less',
         dest: dist + '/stylesheets',
-        outputName: 'mobile.production.css'
-      }
+        outputName: 'mobile.production.css',
+      },
     },
     html: {
       static: {
         src: src + '/html/mobile/**/*.html',
-        dest: build + '/mobile'
-      }
+        dest: build + '/mobile',
+      },
     },
     locales: {
       static: {
         src: src + '/scripts/mobile/locales/**/*.json',
-        dest: build + '/mobile/locales'
+        dest: build + '/mobile/locales',
       },
       production: {
         src: src + '/scripts/mobile/locales/**/*.json',
-        dest: dist + '/locales/mobile'
-      }
-    }
-  }
+        dest: dist + '/locales/mobile',
+      },
+    },
+  },
 };

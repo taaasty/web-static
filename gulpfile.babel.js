@@ -5,11 +5,12 @@ import runSequence from 'run-sequence';
 // Require all tasks in gulp/tasks, including subfolders
 requireDir('./gulp/tasks', { recurse: true });
 
-gulp.task('dist', ['[D] Test with build', '[M] Test with build'], (cb) => {
+gulp.task('dist', (cb) => {
   runSequence(
     ['[S] Clean'],
-    ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts'],
-    ['[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts'],
+    ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts',
+     '[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts'],
+    ['[D] Dist tests', '[M] Dist tests'],
   cb);
 });
 
@@ -25,7 +26,7 @@ gulp.task('buildDesktop', ['[S] Clean'], (cb) => {
     '[D][S] Locales',
     '[D][S] Styles',
     '[D] Assets',
-    '[D] Html'
+    '[D] Html',
   ], cb);
 });
 

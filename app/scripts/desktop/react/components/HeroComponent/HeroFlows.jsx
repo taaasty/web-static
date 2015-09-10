@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import PopupActionCreators from '../../actions/popup';
 import Hero from './Hero';
 
-export default class HeroFlows {
+export default class HeroFlows extends Component {
   static propTypes = {
     flowsCount: PropTypes.number,
     backgroundUrl: PropTypes.string.isRequired,

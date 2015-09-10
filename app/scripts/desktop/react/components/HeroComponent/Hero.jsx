@@ -1,8 +1,8 @@
 let Hero = React.createClass({
   propTypes: {
     backgroundUrl: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
+    title: React.PropTypes.node.isRequired,
+    text: React.PropTypes.string,
     actions: React.PropTypes.oneOfType([
       React.PropTypes.element, React.PropTypes.arrayOf(React.PropTypes.element)
     ]).isRequired
