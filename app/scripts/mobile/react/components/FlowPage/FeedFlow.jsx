@@ -24,8 +24,8 @@ const FeedFlow = createClass({
     const sinceEntryId = entries[entries.length - 1].id;
 
     this.activateLoadingState();
-    // TODO: create Tlog store/actions ?
-    FeedViewActions.loadTlogEntriesTlogs(flowId, sinceEntryId, limit)
+
+    FeedViewActions.loadTlogEntries(flowId, sinceEntryId, limit)
       .then(this.activateShowState)
       .fail(this.activateErrorState);
   },
