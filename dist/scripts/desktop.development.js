@@ -23256,6 +23256,7 @@ var EntryTlogs = (function () {
 
       var entryList = entries.map(function (item) {
         return _react2['default'].createElement(_EntryEntryTlogEntryTlog2['default'], {
+          host_tlog_id: item.host_tlog_id,
           key: item.entry.id,
           entry: item.entry,
           commentator: item.commentator,
