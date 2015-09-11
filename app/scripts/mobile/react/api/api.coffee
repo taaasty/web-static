@@ -1,3 +1,4 @@
+_                = require 'lodash'
 assign           = require 'react/lib/Object.assign'
 Constants        = require '../constants/constants'
 CurrentUserStore = require '../stores/currentUser'

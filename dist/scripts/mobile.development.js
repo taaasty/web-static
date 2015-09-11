@@ -703,7 +703,9 @@ module.exports = UsersViewActions;
 
 
 },{"../../api/api":17}],17:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, _pendingRequests, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
+var Api, Constants, CurrentUserStore, TIMEOUT, _, _pendingRequests, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
+
+_ = require('lodash');
 
 assign = require('react/lib/Object.assign');
 
@@ -1178,7 +1180,7 @@ Api = {
 module.exports = Api;
 
 
-},{"../constants/constants":210,"../stores/currentUser":238,"react/lib/Object.assign":299}],18:[function(require,module,exports){
+},{"../constants/constants":210,"../stores/currentUser":238,"lodash":"lodash","react/lib/Object.assign":299}],18:[function(require,module,exports){
 (function (global){
 var MessagingService, ReactUjs, initLocales;
 

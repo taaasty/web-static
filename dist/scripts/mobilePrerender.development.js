@@ -1085,7 +1085,9 @@ module.exports = UsersViewActions;
 
 
 },{"../../api/api":18}],18:[function(require,module,exports){
-var Api, Constants, CurrentUserStore, TIMEOUT, _pendingRequests, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
+var Api, Constants, CurrentUserStore, TIMEOUT, _, _pendingRequests, abortPendingRequests, assign, csrfToken, deleteRequest, getRequest, postRequest, putRequest, request, userToken;
+
+_ = require('lodash');
 
 assign = require('react/lib/Object.assign');
 
@@ -1560,7 +1562,7 @@ Api = {
 module.exports = Api;
 
 
-},{"../constants/constants":206,"../stores/currentUser":233,"react/lib/Object.assign":291}],19:[function(require,module,exports){
+},{"../constants/constants":206,"../stores/currentUser":233,"lodash":"lodash","react/lib/Object.assign":291}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
