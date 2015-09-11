@@ -2725,13 +2725,13 @@ module.exports = SettingsHeroAvatar;
 
 
 },{"../../../actions/view/currentUser":10,"../../common/avatar/user":71,"../../common/spinner/spinner":80}],38:[function(require,module,exports){
-var NotifyController, PropTypes, SettingsHeroSlug, _, findDOMNode;
+var NotifyController, PropTypes, SettingsHeroSlug, _;
 
 _ = require('lodash');
 
 NotifyController = require('../../../controllers/notify');
 
-findDOMNode = React.findDOMNode, PropTypes = React.PropTypes;
+PropTypes = React.PropTypes;
 
 SettingsHeroSlug = React.createClass({
   displayName: 'SettingsHeroSlug',
@@ -2739,34 +2739,47 @@ SettingsHeroSlug = React.createClass({
     slug: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   },
+  getInitialState: function() {
+    return {
+      value: this.props.slug
+    };
+  },
   render: function() {
     return React.createElement("div", {
       "className": "settings__hero__name"
     }, React.createElement("input", {
-      "ref": "slugInput",
-      "defaultValue": this.props.slug,
-      "placeholder": i18n.t('placeholders.settings_slug'),
-      "maxLength": 20.,
       "className": "settings__hero__textarea",
-      "onBlur": this.handleBlur,
-      "onKeyDown": this.onKeyDown
+      "maxLength": 20.,
+      "onBlur": this.onBlur,
+      "onChange": this.onChange,
+      "onKeyDown": this.onKeyDown,
+      "placeholder": i18n.t('placeholders.settings_slug'),
+      "value": this.state.value
     }));
   },
-  handleBlur: function(e) {
-    var value;
-    value = _.trim(e.target.value);
+  onBlur: function(ev) {
+    return this.setState({
+      value: this.props.slug
+    });
+  },
+  onChange: function(ev) {
+    return this.setState({
+      value: ev.target.value
+    });
+  },
+  onKeyDown: function(ev) {
+    if (ev.key === 'Enter') {
+      this.commitChanges(_.trim(ev.target.value));
+      ev.target.blur();
+      this.onChange(ev);
+      return ev.preventDefault();
+    }
+  },
+  commitChanges: function(value) {
     if (value.length) {
       return this.props.onChange(value);
     } else {
       return NotifyController.notifyError(i18n.t('messages.settings_empty_slug_error'));
-    }
-  },
-  onKeyDown: function(ev) {
-    var input;
-    if (ev.key === 'Enter') {
-      ev.preventDefault();
-      input = findDOMNode(this.refs.slugInput);
-      return input.blur();
     }
   }
 });
@@ -2786,6 +2799,11 @@ SettingsHeroTitle = React.createClass({
   propTypes: {
     title: PropTypes.string.isRequired
   },
+  getInitialState: function() {
+    return {
+      value: this.props.title
+    };
+  },
   render: function() {
     return React.createElement("div", {
       "className": "settings__hero__text"
@@ -2793,13 +2811,29 @@ SettingsHeroTitle = React.createClass({
       "placeholder": i18n.t('placeholders.settings_title'),
       "maxLength": 140.,
       "className": "settings__hero__textarea",
-      "onBlur": this.handleBlur
+      "onBlur": this.onBlur,
+      "onChange": this.onChange,
+      "onKeyDown": this.onKeyDown,
+      "value": this.state.value
     }));
   },
-  handleBlur: function(e) {
-    var value;
-    value = _.trim(e.target.value);
-    return this.props.onChange(value);
+  onBlur: function(ev) {
+    return this.setState({
+      value: this.props.title
+    });
+  },
+  onChange: function(ev) {
+    return this.setState({
+      value: ev.target.value
+    });
+  },
+  onKeyDown: function(ev) {
+    if (ev.key === 'Enter') {
+      this.props.onChange(_.trim(ev.target.value));
+      ev.target.blur();
+      this.onChange(ev);
+      return ev.preventDefault();
+    }
   }
 });
 

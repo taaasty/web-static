@@ -36,13 +36,13 @@ window.EditableField = React.createClass
 
     return <div className={ editableFieldClasses }>
              <div className="editable-field__control-wrap">
-               <textarea ref="textarea"
-                         maxLength={ this.props.maxLength }
-                         valueLink={ @linkState('value') }
-                         className="editable-field__control"
-                         onBlur={ this.onBlur }
-                         onKeyDown={ this.onChange }
-                         onPaste={ this.onChange } />
+               <input ref="textarea"
+                      maxLength={ this.props.maxLength }
+                      valueLink={ @linkState('value') }
+                      className="editable-field__control"
+                      onBlur={ this.onBlur }
+                      onKeyDown={ this.onChange }
+                      onPaste={ this.onChange } />
              </div>
              <div className="editable-field__content">
                <span className="editable-field__placeholder">{ this.props.placeholder }</span>
@@ -69,13 +69,15 @@ window.EditableField = React.createClass
       field.value = textareaValue
 
   onBlur: ->
-    @props.onEditEnd @getValue()
-    @setState isFocus: false
+    @setState
+      value: @props.defaultValue
+      isFocus: false
 
   onChange: (e) ->
     # По нажатию на enter выходим из редактирования (либо организуем сохранение на сервер)
     if e.which == KEYCODE_ENTER
-      $(e.target).trigger 'blur'
+      @props.onEditEnd @getValue()
+      e.target.blur()
       e.preventDefault()
 
     _.defer =>

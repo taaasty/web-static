@@ -27,6 +27,7 @@ export default class SettingsSlug extends Component {
       <div className="settings__hero__name">
         <EditableField
           defaultValue={this.state.slug}
+          maxLength={20}
           onEditEnd={this.handleEditEnd.bind(this)}
           placeholder={i18n.t('settings_slug_placeholder')}
         />
