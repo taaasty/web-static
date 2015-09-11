@@ -380,7 +380,10 @@
     },
     "entry": {
         "has_no_images": "There are no images for entry",
-        "unknown_type": "Unknown type of entry"
+        "unknown_type": "Unknown type of entry",
+        "meta": {
+            "repost_from": "Repost from __tag__"
+        }
     },
     "create_flow": {
         "header": "Create flow"

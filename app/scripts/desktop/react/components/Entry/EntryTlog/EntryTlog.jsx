@@ -12,7 +12,6 @@ export default class EntryTlog extends Component {
     commentator: PropTypes.object,
     entry: PropTypes.object.isRequired,
     host_tlog_id: PropTypes.number,
-    isAuthorVisible: PropTypes.bool,
     moderation: PropTypes.object,
     onDelete: PropTypes.func,
     successDeleteUrl: PropTypes.string,
@@ -25,6 +24,8 @@ export default class EntryTlog extends Component {
     return this.state.hasModeration !== nextState.hasModeration;
   }
   render() {
+    const { commentator, entry, host_tlog_id } = this.props;
+
     let actions = {
       onAddToFavorites: ::this.addToFavorites,
       onRemoveFromFavorites: ::this.removeFromFavorites,
@@ -38,16 +39,16 @@ export default class EntryTlog extends Component {
 
     return (
       <article
-        data-id={this.props.entry.id}
-        data-time={this.props.entry.created_at}
+        data-id={entry.id}
+        data-time={entry.created_at}
         className={this.getEntryClasses()}
       >
         <EntryTlogContent
           {...actions}
-          entry={this.props.entry}
-          commentator={this.props.commentator}
+          entry={entry}
+          commentator={commentator}
           hasModeration={this.state.hasModeration}
-          isAuthorVisible={this.props.isAuthorVisible}
+          host_tlog_id={host_tlog_id}
         />
       </article>
     );
