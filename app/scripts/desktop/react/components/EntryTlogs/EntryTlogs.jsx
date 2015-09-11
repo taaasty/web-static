@@ -15,6 +15,7 @@ export default class EntryTlogs {
 
     let entryList = entries.map((item) => (
       <EntryTlog
+        host_tlog_id={item.host_tlog_id}
         key={item.entry.id}
         entry={item.entry}
         commentator={item.commentator}
