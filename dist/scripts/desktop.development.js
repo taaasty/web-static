@@ -29571,7 +29571,7 @@ window.EditableField = React.createClass({
       "className": editableFieldClasses
     }, React.createElement("div", {
       "className": "editable-field__control-wrap"
-    }, React.createElement("textarea", {
+    }, React.createElement("input", {
       "ref": "textarea",
       "maxLength": this.props.maxLength,
       "valueLink": this.linkState('value'),
@@ -29609,14 +29609,15 @@ window.EditableField = React.createClass({
     })(this));
   },
   onBlur: function() {
-    this.props.onEditEnd(this.getValue());
     return this.setState({
+      value: this.props.defaultValue,
       isFocus: false
     });
   },
   onChange: function(e) {
     if (e.which === KEYCODE_ENTER) {
-      $(e.target).trigger('blur');
+      this.props.onEditEnd(this.getValue());
+      e.target.blur();
       e.preventDefault();
     }
     return _.defer((function(_this) {
@@ -36147,6 +36148,7 @@ var SettingsSlug = (function (_Component) {
         { className: 'settings__hero__name' },
         _react2['default'].createElement(EditableField, {
           defaultValue: this.state.slug,
+          maxLength: 20,
           onEditEnd: this.handleEditEnd.bind(this),
           placeholder: i18n.t('settings_slug_placeholder')
         })

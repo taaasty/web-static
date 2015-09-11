@@ -1,6 +1,6 @@
 _                = require 'lodash'
 NotifyController = require '../../../controllers/notify'
-{ findDOMNode, PropTypes } = React
+{ PropTypes } = React
 
 SettingsHeroSlug = React.createClass
   displayName: 'SettingsHeroSlug'
@@ -9,31 +9,39 @@ SettingsHeroSlug = React.createClass
     slug:     PropTypes.string.isRequired
     onChange: PropTypes.func.isRequired
 
+  getInitialState: ->
+    { value: @props.slug }
+
   render: ->
     <div className="settings__hero__name">
       <input
-        ref="slugInput"
-        defaultValue={ @props.slug }
-        placeholder={ i18n.t('placeholders.settings_slug') }
-        maxLength={ 20 }
         className="settings__hero__textarea"
-        onBlur={ @handleBlur }
+        maxLength={ 20 }
+        onBlur={ @onBlur }
+        onChange={ @onChange }
         onKeyDown={ @onKeyDown }
+        placeholder={ i18n.t('placeholders.settings_slug') }
+        value={ @state.value }
       />
     </div>
 
-  handleBlur: (e) ->
-    value = _.trim e.target.value
+  onBlur: (ev) ->
+    @setState({ value: @props.slug })
 
+  onChange: (ev) ->
+    @setState({ value: ev.target.value })
+
+  onKeyDown: (ev) ->
+    if ev.key == 'Enter'
+      @commitChanges(_.trim(ev.target.value))
+      ev.target.blur()
+      @onChange(ev) # to set value after blur
+      ev.preventDefault()
+
+  commitChanges: (value) ->
     if value.length
       @props.onChange value
     else
       NotifyController.notifyError i18n.t('messages.settings_empty_slug_error')
-
-  onKeyDown: (ev) ->
-    if ev.key == 'Enter'
-      ev.preventDefault()
-      input = findDOMNode(@refs.slugInput)
-      input.blur()
 
 module.exports = SettingsHeroSlug
