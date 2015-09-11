@@ -383,6 +383,9 @@
         "unknown_type": "Unknown type of entry",
         "meta": {
             "repost_from": "Repost from __tag__"
+        },
+        "repost": {
+          "no_flows": "Follow or create new <span class\"popup__text--bold\">flows</span> to share your thoughts there"
         }
     },
     "create_flow": {
@@ -392,10 +395,10 @@
         "header": "Flow management"
     },
     "tlog_alert": {
-        "owner_private_tlog": "Tlog visible only to followers and requesters, which can then be approved. And of course for you.",
-        "tlog_private": "Here is your hidden records. This page is available only to you.",
-        "tlog_favorites": "Here is your favorite records.",
-        "tlog_my_favorites": "Here is your favorite records."
+        "owner_private_tlog": "Tlog is visible only to the followers and to requesters after approval. And of course for you.",
+        "tlog_private": "Here are your hidden records. This page is available only to you.",
+        "tlog_favorites": "Here are your favorite records.",
+        "tlog_my_favorites": "Here are your favorite records."
     },
     "hero": {
         "flows": "Flows",

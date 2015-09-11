@@ -38,11 +38,25 @@ export default class EntryRepostPopup extends Component {
         >
           {this.state.visibleList.length && !this.state.isLoading
             ? this.renderTargetList.call(this)
-            : this.renderMessage.call(this)
+            : this.renderListStateMessage.call(this)
           }
         </Scroller>
       </RelativePopup>
     );
+  }
+  renderMessage(message) {
+    return (
+      <div className="grid-full">
+        <div className="grid-full__middle">
+          <div className="popup__text"
+            dangerouslySetInnerHTML={{__html: message}}
+          />
+        </div>
+      </div>
+    );
+  }
+  renderAddFlowMessage() {
+    return this.state.targetList.length <= 1 && this.renderMessage(i18n.t('entry.repost.no_flows'));
   }
   renderSearch() {
     if (this.state.targetList.length && !this.state.isLoading) {
@@ -62,9 +76,12 @@ export default class EntryRepostPopup extends Component {
         onSelect={this.handleTargetSelect.bind(this, target)} />
     ));
 
-    return <section className="users">{items}</section>;
+    return [
+      <section className="users">{items}</section>,
+      this.renderAddFlowMessage(),
+    ];
   }
-  renderMessage() {
+  renderListStateMessage() {
     let message = '';
 
     if (this.state.isError) {
@@ -75,13 +92,7 @@ export default class EntryRepostPopup extends Component {
       message = i18n.t('entry_repost_empty');
     }
 
-    return (
-      <div className="grid-full">
-        <div className="grid-full__middle">
-          <div className="popup__text">{message}</div>
-        </div>
-      </div>
-    );
+    return this.renderMessage(message);
   }
   loadTargets() {
     const loadingState = this.state.nextPage > 1 ? 'isLoadingMore' : 'isLoading';
