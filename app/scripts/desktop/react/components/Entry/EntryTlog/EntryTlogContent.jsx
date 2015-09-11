@@ -23,7 +23,6 @@ export default class EntryTlogContent {
   static propTypes = {
     entry: PropTypes.object.isRequired,
     hasModeration: PropTypes.bool,
-    isAuthorVisible: PropTypes.bool,
   }
   render() {
     switch(this.props.entry.type) {

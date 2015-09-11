@@ -19673,6 +19673,11 @@ var EntryTlog = (function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var commentator = _props.commentator;
+      var entry = _props.entry;
+      var host_tlog_id = _props.host_tlog_id;
+
       var actions = {
         onAddToFavorites: this.addToFavorites.bind(this),
         onRemoveFromFavorites: this.removeFromFavorites.bind(this),
@@ -19687,15 +19692,15 @@ var EntryTlog = (function (_Component) {
       return _react2['default'].createElement(
         'article',
         {
-          'data-id': this.props.entry.id,
-          'data-time': this.props.entry.created_at,
+          'data-id': entry.id,
+          'data-time': entry.created_at,
           className: this.getEntryClasses()
         },
         _react2['default'].createElement(_EntryTlogContent2['default'], _extends({}, actions, {
-          entry: this.props.entry,
-          commentator: this.props.commentator,
+          entry: entry,
+          commentator: commentator,
           hasModeration: this.state.hasModeration,
-          isAuthorVisible: this.props.isAuthorVisible
+          host_tlog_id: host_tlog_id
         }))
       );
     }
@@ -19755,11 +19760,11 @@ var EntryTlog = (function (_Component) {
   }, {
     key: 'delete',
     value: function _delete() {
-      var _props = this.props;
-      var entryID = _props.entry.id;
-      var tlogID = _props.host_tlog_id;
-      var onDelete = _props.onDelete;
-      var successDeleteUrl = _props.successDeleteUrl;
+      var _props2 = this.props;
+      var entryID = _props2.entry.id;
+      var tlogID = _props2.host_tlog_id;
+      var onDelete = _props2.onDelete;
+      var successDeleteUrl = _props2.successDeleteUrl;
 
       TastyConfirmController.show({
         message: i18n.t('delete_entry_confirm'),
@@ -19830,7 +19835,6 @@ var EntryTlog = (function (_Component) {
       commentator: _react.PropTypes.object,
       entry: _react.PropTypes.object.isRequired,
       host_tlog_id: _react.PropTypes.number,
-      isAuthorVisible: _react.PropTypes.bool,
       moderation: _react.PropTypes.object,
       onDelete: _react.PropTypes.func,
       successDeleteUrl: _react.PropTypes.string
@@ -21423,8 +21427,7 @@ var EntryTlogContent = (function () {
     key: 'propTypes',
     value: {
       entry: _react.PropTypes.object.isRequired,
-      hasModeration: _react.PropTypes.bool,
-      isAuthorVisible: _react.PropTypes.bool
+      hasModeration: _react.PropTypes.bool
     },
     enumerable: true
   }]);
@@ -21706,10 +21709,6 @@ var _EntryTlogMetabarActions2 = _interopRequireDefault(_EntryTlogMetabarActions)
 var EntryTlogMetabar = (function () {
   function EntryTlogMetabar() {
     _classCallCheck(this, EntryTlogMetabar);
-
-    this.defaultProps = {
-      isAuthorVisible: true
-    };
   }
 
   _createClass(EntryTlogMetabar, [{
@@ -21738,7 +21737,21 @@ var EntryTlogMetabar = (function () {
   }, {
     key: 'renderAuthor',
     value: function renderAuthor() {
-      if (this.props.entry.tlog != null && this.props.isAuthorVisible) {
+      var _props = this.props;
+      var tlog = _props.entry.tlog;
+      var host_tlog_id = _props.host_tlog_id;
+
+      var authorMeta = '';
+
+      if (tlog != null) {
+        if (host_tlog_id === null) {
+          authorMeta = tlog.tag;
+        } else if (host_tlog_id !== tlog.id) {
+          authorMeta = i18n.t('entry.meta.repost_from', { tag: tlog.tag });
+        } else {
+          return null;
+        }
+
         return _react2['default'].createElement(
           'span',
           { className: 'meta-item meta-item--user' },
@@ -21747,16 +21760,16 @@ var EntryTlogMetabar = (function () {
             { className: 'meta-item__content' },
             _react2['default'].createElement(
               'a',
-              { href: this.props.entry.tlog.url, className: 'meta-item__link' },
+              { href: tlog.url, className: 'meta-item__link' },
               _react2['default'].createElement(
                 'span',
                 { className: 'meta-item__ava' },
-                _react2['default'].createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: this.props.entry.tlog.userpic, size: 20 })
+                _react2['default'].createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: tlog.userpic, size: 20 })
               ),
               _react2['default'].createElement(
                 'span',
                 null,
-                this.props.entry.tlog.tag
+                authorMeta
               )
             )
           )
@@ -21776,8 +21789,7 @@ var EntryTlogMetabar = (function () {
     key: 'propTypes',
     value: {
       entry: _react.PropTypes.object.isRequired,
-      commentator: _react.PropTypes.object,
-      isAuthorVisible: _react.PropTypes.bool
+      commentator: _react.PropTypes.object
     },
     enumerable: true
   }]);
@@ -23238,14 +23250,12 @@ var EntryTlogs = (function () {
       var _props = this.props;
       var canLoad = _props.canLoad;
       var entries = _props.entries;
-      var isAuthorVisible = _props.isAuthorVisible;
       var loading = _props.loading;
       var onDelete = _props.onDelete;
       var onLoadMoreEntries = _props.onLoadMoreEntries;
 
       var entryList = entries.map(function (item) {
         return _react2['default'].createElement(_EntryEntryTlogEntryTlog2['default'], {
-          isAuthorVisible: isAuthorVisible,
           key: item.entry.id,
           entry: item.entry,
           commentator: item.commentator,
@@ -23272,7 +23282,6 @@ var EntryTlogs = (function () {
     key: 'propTypes',
     value: {
       entries: _react.PropTypes.array.isRequired,
-      isAuthorVisible: _react.PropTypes.bool,
       loading: _react.PropTypes.bool.isRequired,
       canLoad: _react.PropTypes.bool.isRequired,
       onDelete: _react.PropTypes.func.isRequired,
@@ -23341,7 +23350,6 @@ var EntryTlogsContainer = (function (_Component) {
     value: function render() {
       return _react2['default'].createElement(_EntryTlogs2['default'], {
         entries: this.state.entries,
-        isAuthorVisible: this.props.isAuthorVisible,
         loading: this.state.isLoading,
         canLoad: !this.state.isLoading && this.state.hasMore,
         onDelete: this.deleteEntry.bind(this),
@@ -23395,7 +23403,6 @@ var EntryTlogsContainer = (function (_Component) {
         next_page: _react.PropTypes.number,
         next_since_entry_id: _react.PropTypes.number
       }).isRequired,
-      isAuthorVisible: _react.PropTypes.bool,
       loadUrl: _react.PropTypes.string.isRequired,
       nextPageFieldName: _react.PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
       nextPageParamName: _react.PropTypes.oneOf(['page', 'since_entry_id']).isRequired

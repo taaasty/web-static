@@ -383,7 +383,10 @@
   },
   "entry": {
     "has_no_images": "У записи нет изображений",
-    "unknown_type": "Неизвестный тип записи"
+    "unknown_type": "Неизвестный тип записи",
+    "meta": {
+      "repost_from": "Репост из __tag__"
+    }
   },
   "create_flow": {
     "header": "Создать поток"

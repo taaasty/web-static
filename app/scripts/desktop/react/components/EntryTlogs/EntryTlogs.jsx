@@ -5,18 +5,16 @@ import InfiniteScroll from '../common/infiniteScroll/index';
 export default class EntryTlogs {
   static propTypes = {
     entries: PropTypes.array.isRequired,
-    isAuthorVisible: PropTypes.bool,
     loading: PropTypes.bool.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onDelete: PropTypes.func.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired,
   }
   render() {
-    const { canLoad, entries, isAuthorVisible, loading, onDelete, onLoadMoreEntries } = this.props;
+    const { canLoad, entries, loading, onDelete, onLoadMoreEntries } = this.props;
 
     let entryList = entries.map((item) => (
       <EntryTlog
-        isAuthorVisible={isAuthorVisible}
         key={item.entry.id}
         entry={item.entry}
         commentator={item.commentator}

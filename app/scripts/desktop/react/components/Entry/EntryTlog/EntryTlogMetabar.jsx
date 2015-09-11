@@ -10,10 +10,6 @@ export default class EntryTlogMetabar {
   static propTypes = {
     entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    isAuthorVisible: PropTypes.bool,
-  }
-  defaultProps = {
-    isAuthorVisible: true
   }
   render() {
     return (
@@ -37,15 +33,26 @@ export default class EntryTlogMetabar {
     );
   }
   renderAuthor() {
-    if (this.props.entry.tlog != null && this.props.isAuthorVisible) {
+    const { entry: { tlog }, host_tlog_id } = this.props;
+    let authorMeta = '';
+
+    if (tlog != null) {
+      if (host_tlog_id === null) {
+        authorMeta = tlog.tag;
+      } else if (host_tlog_id !== tlog.id) {
+        authorMeta = i18n.t('entry.meta.repost_from', { tag: tlog.tag });
+      } else {
+        return null;
+      }
+
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">
-            <a href={this.props.entry.tlog.url} className="meta-item__link">
+            <a href={tlog.url} className="meta-item__link">
               <span className="meta-item__ava">
-                <Avatar userpic={this.props.entry.tlog.userpic} size={20} />
+                <Avatar userpic={tlog.userpic} size={20} />
               </span>
-              <span>{this.props.entry.tlog.tag}</span>
+              <span>{authorMeta}</span>
             </a>
           </span>
         </span>
