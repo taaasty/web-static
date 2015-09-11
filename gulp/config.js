@@ -15,6 +15,12 @@ module.exports = {
     },
     files: [build + '/**']
   },
+  ghPages: {
+    src: build + '/**/*',
+    options: {
+      message: 'gh-pages'
+    }
+  },
   desktop: {
     scripts: {
       static: {
@@ -131,9 +137,9 @@ module.exports = {
           entries: src + '/scripts/mobilePrerender.production.js',
           extensions: ['.jsx', '.cjsx', '.coffee'],
           dest: dist + '/scripts/',
-          outputName: 'mobilePrerender.production.js'  
+          outputName: 'mobilePrerender.production.js'
         }
-      } 
+      }
     },
     styles: {
       static: {
@@ -144,7 +150,7 @@ module.exports = {
       production: {
         src: src + '/stylesheets/mobile.production.less',
         dest: dist + '/stylesheets',
-        outputName: 'mobile.production.css'  
+        outputName: 'mobile.production.css'
       }
     },
     html: {

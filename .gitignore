@@ -5,6 +5,7 @@ app/bower_components/
 /rails
 /gems.tags
 /tags
+/.publish
 *.swo
 .sass-cache
 node_modules/

@@ -40,6 +40,10 @@ gulp.task('buildMobile', ['[S] Clean'], (cb) => {
   ], cb);
 });
 
+gulp.task('deploy', ['build'], () => {
+  gulp.start('[S] GithubPages');
+});
+
 gulp.task('server', ['[S] SetWatch', 'build'], () => {
   gulp.start('[S] Watch');
 });
