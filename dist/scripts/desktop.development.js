@@ -18498,6 +18498,10 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _actionsEntry = require('../../../actions/Entry');
 
 var _actionsEntry2 = _interopRequireDefault(_actionsEntry);
@@ -18508,12 +18512,13 @@ var _EntryBrickContent2 = _interopRequireDefault(_EntryBrickContent);
 
 var ENTRY_TYPES = ['text', 'image', 'video', 'quote', 'link', 'song', 'code'];
 
-var EntryBrick = React.createClass({
+var EntryBrick = _react2['default'].createClass({
   displayName: 'EntryBrick',
 
   propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    moderation: React.PropTypes.object
+    entry: _react.PropTypes.object.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    moderation: _react.PropTypes.object
   },
 
   getInitialState: function getInitialState() {
@@ -18529,14 +18534,16 @@ var EntryBrick = React.createClass({
 
   render: function render() {
     if (this.state.visible) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'article',
         { className: this.getBrickClasses() },
-        React.createElement(_EntryBrickContent2['default'], {
+        _react2['default'].createElement(_EntryBrickContent2['default'], {
           entry: this.props.entry,
           hasModeration: this.state.hasModeration,
+          host_tlog_id: this.props.host_tlog_id,
           onEntryAccept: this.acceptEntry,
-          onEntryDecline: this.declineEntry })
+          onEntryDecline: this.declineEntry
+        })
       );
     } else {
       return null;
@@ -18593,7 +18600,7 @@ var EntryBrick = React.createClass({
 exports['default'] = EntryBrick;
 module.exports = exports['default'];
 
-},{"../../../actions/Entry":12,"./EntryBrickContent":109}],107:[function(require,module,exports){
+},{"../../../actions/Entry":12,"./EntryBrickContent":109,"react":"react"}],107:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18648,6 +18655,10 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
 var _sharedReactComponentsCommonText2 = _interopRequireDefault(_sharedReactComponentsCommonText);
@@ -18660,58 +18671,61 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickCodeType = React.createClass({
+var EntryBrickCodeType = _react2['default'].createClass({
   displayName: 'EntryBrickCodeType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      text_truncated: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title: _react.PropTypes.string.isRequired,
+      text_truncated: _react.PropTypes.string.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
         this.renderBrickTitle(),
-        React.createElement(
+        _react2['default'].createElement(
           'div',
           { className: 'brick__text' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-            React.createElement(
+            _react2['default'].createElement(
               'pre',
               null,
-              React.createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.text_truncated, withHTML: true })
+              _react2['default'].createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.text_truncated, withHTML: true })
             )
           )
         )
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -18720,10 +18734,10 @@ var EntryBrickCodeType = React.createClass({
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'a',
         { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-        React.createElement(
+        _react2['default'].createElement(
           'h2',
           { className: 'brick__title' },
           this.props.entry.title
@@ -18736,7 +18750,7 @@ var EntryBrickCodeType = React.createClass({
 exports['default'] = EntryBrickCodeType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],109:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],109:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -18844,6 +18858,10 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
 var _sharedReactComponentsCommonText2 = _interopRequireDefault(_sharedReactComponentsCommonText);
@@ -18862,50 +18880,53 @@ var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
 var brickWidth = 302;
 
-var EntryBrickImageType = React.createClass({
+var EntryBrickImageType = _react2['default'].createClass({
   displayName: 'EntryBrickImageType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title_truncated: React.PropTypes.string.isRequired,
-      preview_image: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title_truncated: _react.PropTypes.string.isRequired,
+      preview_image: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__media' },
-        React.createElement(
+        _react2['default'].createElement(
           'a',
           { href: this.props.entry.url, className: 'brick__link' },
           this.renderBrickImage()
         )
       ),
       this.renderBrickBody(),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -18914,9 +18935,9 @@ var EntryBrickImageType = React.createClass({
 
   renderBrickImage: function renderBrickImage() {
     if (this.props.entry.preview_image) {
-      return React.createElement(_sharedReactComponentsCommonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth });
+      return _react2['default'].createElement(_sharedReactComponentsCommonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth });
     } else {
-      return React.createElement(
+      return _react2['default'].createElement(
         'span',
         null,
         i18n.t('entry.has_no_images')
@@ -18926,16 +18947,16 @@ var EntryBrickImageType = React.createClass({
 
   renderBrickBody: function renderBrickBody() {
     if (this.props.entry.title_truncated) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
-        React.createElement(
+        _react2['default'].createElement(
           'div',
           { className: 'brick__text' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.entry.url, title: this.props.entry.title_truncated, className: 'brick__link' },
-            React.createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.title_truncated, withHTML: true })
+            _react2['default'].createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.title_truncated, withHTML: true })
           )
         )
       );
@@ -18946,7 +18967,7 @@ var EntryBrickImageType = React.createClass({
 exports['default'] = EntryBrickImageType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Image":475,"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],111:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Image":475,"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],111:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -18954,6 +18975,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
@@ -18967,44 +18992,47 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickLinkType = React.createClass({
+var EntryBrickLinkType = _react2['default'].createClass({
   displayName: 'EntryBrickLinkType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title: _react.PropTypes.string.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
         this.renderBrickTitle()
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -19013,10 +19041,10 @@ var EntryBrickLinkType = React.createClass({
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'a',
         { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-        React.createElement(
+        _react2['default'].createElement(
           'h2',
           { className: 'brick__title' },
           this.props.entry.title
@@ -19029,7 +19057,7 @@ var EntryBrickLinkType = React.createClass({
 exports['default'] = EntryBrickLinkType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],112:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],112:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19037,6 +19065,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _sharedReactComponentsCommonAvatar = require('../../../../../shared/react/components/common/Avatar');
 
@@ -19046,19 +19078,20 @@ var _commonVoting = require('../../common/Voting');
 
 var _commonVoting2 = _interopRequireDefault(_commonVoting);
 
-var EntryBrickMetabar = React.createClass({
+var EntryBrickMetabar = _react2['default'].createClass({
   displayName: 'EntryBrickMetabar',
 
   propTypes: {
-    tlog: React.PropTypes.object,
-    rating: React.PropTypes.object.isRequired,
-    url: React.PropTypes.string.isRequired,
-    commentsCount: React.PropTypes.number.isRequired,
-    entryID: React.PropTypes.number.isRequired
+    commentsCount: _react.PropTypes.number.isRequired,
+    entryID: _react.PropTypes.number.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    rating: _react.PropTypes.object.isRequired,
+    tlog: _react.PropTypes.object,
+    url: _react.PropTypes.string.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       { className: 'meta-bar' },
       this.renderMetaVote(),
@@ -19069,13 +19102,13 @@ var EntryBrickMetabar = React.createClass({
 
   renderMetaVote: function renderMetaVote() {
     if (this.props.rating.is_voteable) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'span',
         { className: 'meta-item meta-item--vote' },
-        React.createElement(
+        _react2['default'].createElement(
           'span',
           { className: 'meta-item__content' },
-          React.createElement(_commonVoting2['default'], { entryID: this.props.entryID, rating: this.props.rating })
+          _react2['default'].createElement(_commonVoting2['default'], { entryID: this.props.entryID, rating: this.props.rating })
         )
       );
     }
@@ -19085,13 +19118,13 @@ var EntryBrickMetabar = React.createClass({
     if (this.props.commentsCount) {
       var title = i18n.t('comments_count', { count: this.props.commentsCount });
 
-      return React.createElement(
+      return _react2['default'].createElement(
         'span',
         { className: 'meta-item meta-item--comments' },
-        React.createElement(
+        _react2['default'].createElement(
           'span',
           { className: 'meta-item__content' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.url + '#comments', title: title, className: 'meta-item__link' },
             title
@@ -19102,39 +19135,53 @@ var EntryBrickMetabar = React.createClass({
   },
 
   renderMetaTlog: function renderMetaTlog() {
-    if (this.props.tlog != null) {
-      return React.createElement(
+    var _props = this.props;
+    var host_tlog_id = _props.host_tlog_id;
+    var tlog = _props.tlog;
+
+    var authorMeta = '';
+
+    if (tlog != null) {
+      if (host_tlog_id == null) {
+        authorMeta = tlog.tag;
+      } else if (host_tlog_id !== tlog.id) {
+        authorMeta = [_react2['default'].createElement('i', { className: 'icon icon--retweet' }), tlog.tag];
+      } else {
+        return null;
+      }
+    }
+
+    return _react2['default'].createElement(
+      'span',
+      { className: 'meta-item meta-item--user' },
+      _react2['default'].createElement(
         'span',
-        { className: 'meta-item meta-item--user' },
-        React.createElement(
-          'span',
-          { className: 'meta-item__content' },
-          React.createElement(
-            'a',
-            { href: this.props.tlog.url,
-              title: this.props.tlog.tag,
-              className: 'meta-item__link' },
-            React.createElement(
-              'span',
-              { className: 'meta-item__ava' },
-              React.createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: this.props.tlog.userpic, size: 20 })
-            ),
-            React.createElement(
-              'span',
-              null,
-              this.props.tlog.tag
-            )
+        { className: 'meta-item__content' },
+        _react2['default'].createElement(
+          'a',
+          { href: tlog.url,
+            title: tlog.tag,
+            className: 'meta-item__link' },
+          _react2['default'].createElement(
+            'span',
+            { className: 'meta-item__ava' },
+            _react2['default'].createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: tlog.userpic, size: 20 })
+          ),
+          _react2['default'].createElement(
+            'span',
+            { className: 'meta-item__author' },
+            authorMeta
           )
         )
-      );
-    }
+      )
+    );
   }
 });
 
 exports['default'] = EntryBrickMetabar;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Avatar":474,"../../common/Voting":225}],113:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Avatar":474,"../../common/Voting":225,"react":"react"}],113:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19142,6 +19189,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
@@ -19151,45 +19202,46 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickQuoteType = React.createClass({
+var EntryBrickQuoteType = _react2['default'].createClass({
   displayName: 'EntryBrickQuoteType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      text_truncated: React.PropTypes.string.isRequired,
-      source_truncated: React.PropTypes.string,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      text_truncated: _react.PropTypes.string.isRequired,
+      source_truncated: _react.PropTypes.string,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
-        React.createElement(
+        _react2['default'].createElement(
           'a',
           { href: this.props.entry.url, className: 'brick__link' },
-          React.createElement(
+          _react2['default'].createElement(
             'blockquote',
             { className: 'blockquote' },
-            React.createElement(
+            _react2['default'].createElement(
               'span',
               { className: 'laquo' },
               '«'
             ),
             this.props.entry.text_truncated,
-            React.createElement(
+            _react2['default'].createElement(
               'span',
               { className: 'raquo' },
               '»'
@@ -19198,17 +19250,19 @@ var EntryBrickQuoteType = React.createClass({
           )
         )
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -19217,14 +19271,14 @@ var EntryBrickQuoteType = React.createClass({
 
   renderQuoteSource: function renderQuoteSource() {
     if (this.props.entry.source_truncated) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'span',
         { className: 'blockquote__caption' },
         '—',
-        React.createElement(
+        _react2['default'].createElement(
           'span',
           { className: 'blockquote__source' },
-          React.createElement(
+          _react2['default'].createElement(
             'i',
             null,
             this.props.entry.source_truncated
@@ -19238,7 +19292,7 @@ var EntryBrickQuoteType = React.createClass({
 exports['default'] = EntryBrickQuoteType;
 module.exports = exports['default'];
 
-},{"./EntryBrickActions":107,"./EntryBrickMetabar":112}],114:[function(require,module,exports){
+},{"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],114:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19246,6 +19300,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
@@ -19259,44 +19317,47 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickSongType = React.createClass({
+var EntryBrickSongType = _react2['default'].createClass({
   displayName: 'EntryBrickSongType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title: _react.PropTypes.string.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
         this.renderBrickTitle()
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -19305,10 +19366,10 @@ var EntryBrickSongType = React.createClass({
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'a',
         { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-        React.createElement(
+        _react2['default'].createElement(
           'h2',
           { className: 'brick__title' },
           this.props.entry.title
@@ -19321,7 +19382,7 @@ var EntryBrickSongType = React.createClass({
 exports['default'] = EntryBrickSongType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],115:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],115:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19329,6 +19390,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
@@ -19342,66 +19407,76 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickTextType = React.createClass({
+var EntryBrickTextType = _react2['default'].createClass({
   displayName: 'EntryBrickTextType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      text_truncated: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title: _react.PropTypes.string.isRequired,
+      text_truncated: _react.PropTypes.string.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    var _props = this.props;
+    var entry = _props.entry;
+    var hasModeration = _props.hasModeration;
+    var host_tlog_id = _props.host_tlog_id;
+    var onEntryAccept = _props.onEntryAccept;
+    var onEntryDecline = _props.onEntryDecline;
+
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
         this.renderBrickTitle(),
-        React.createElement(
+        _react2['default'].createElement(
           'div',
           { className: 'brick__text' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
-            { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-            React.createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.text_truncated, withHTML: true })
+            { href: entry.url, title: entry.title, className: 'brick__link' },
+            _react2['default'].createElement(_sharedReactComponentsCommonText2['default'], { value: entry.text_truncated, withHTML: true })
           )
         )
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
-          commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
+          commentsCount: entry.comments_count,
+          entryID: entry.id,
+          host_tlog_id: host_tlog_id,
+          rating: entry.rating,
+          tlog: entry.tlog,
+          url: entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
-        hasModeration: this.props.hasModeration,
-        onAccept: this.props.onEntryAccept,
-        onDecline: this.props.onEntryDecline })
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
+        hasModeration: hasModeration,
+        onAccept: onEntryAccept,
+        onDecline: onEntryDecline })
     );
   },
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'a',
         { href: this.props.entry.url, title: this.props.entry.title, className: 'brick__link' },
-        React.createElement(
+        _react2['default'].createElement(
           'h2',
           { className: 'brick__title' },
           this.props.entry.title
@@ -19414,7 +19489,7 @@ var EntryBrickTextType = React.createClass({
 exports['default'] = EntryBrickTextType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],116:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],116:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19422,6 +19497,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _EntryBrickMetabar = require('./EntryBrickMetabar');
 
@@ -19431,53 +19510,56 @@ var _EntryBrickActions = require('./EntryBrickActions');
 
 var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
-var EntryBrickUnknownType = React.createClass({
+var EntryBrickUnknownType = _react2['default'].createClass({
   displayName: 'EntryBrickUnknownType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object.isRequired,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title: _react.PropTypes.string.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      tlog: _react.PropTypes.object.isRequired,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
         this.renderBrickTitle(),
-        React.createElement(
+        _react2['default'].createElement(
           'div',
           { className: 'brick__text' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.entry.entry_url, title: this.props.entry.title, className: 'brick__link' },
             i18n.t('entry.unknown_type')
           )
         )
       ),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.entry_url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.entry_url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -19486,10 +19568,10 @@ var EntryBrickUnknownType = React.createClass({
 
   renderBrickTitle: function renderBrickTitle() {
     if (this.props.entry.title) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'a',
         { href: this.props.entry.entry_url, title: this.props.entry.title, className: 'brick__link' },
-        React.createElement(
+        _react2['default'].createElement(
           'h2',
           { className: 'brick__title' },
           this.props.entry.title
@@ -19502,7 +19584,7 @@ var EntryBrickUnknownType = React.createClass({
 exports['default'] = EntryBrickUnknownType;
 module.exports = exports['default'];
 
-},{"./EntryBrickActions":107,"./EntryBrickMetabar":112}],117:[function(require,module,exports){
+},{"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],117:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -19510,6 +19592,10 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _sharedReactComponentsCommonText = require('../../../../../shared/react/components/common/Text');
 
@@ -19529,60 +19615,63 @@ var _EntryBrickActions2 = _interopRequireDefault(_EntryBrickActions);
 
 var brickWidth = 302;
 
-var EntryBrickVideoType = React.createClass({
+var EntryBrickVideoType = _react2['default'].createClass({
   displayName: 'EntryBrickVideoType',
 
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title_truncated: React.PropTypes.string.isRequired,
-      preview_image: React.PropTypes.object.isRequired,
-      is_playable: React.PropTypes.bool.isRequired,
-      tlog: React.PropTypes.object.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      comments_count: React.PropTypes.number.isRequired
+    entry: _react.PropTypes.shape({
+      id: _react.PropTypes.number.isRequired,
+      type: _react.PropTypes.string.isRequired,
+      url: _react.PropTypes.string.isRequired,
+      title_truncated: _react.PropTypes.string.isRequired,
+      preview_image: _react.PropTypes.object.isRequired,
+      is_playable: _react.PropTypes.bool.isRequired,
+      tlog: _react.PropTypes.object.isRequired,
+      rating: _react.PropTypes.object.isRequired,
+      comments_count: _react.PropTypes.number.isRequired
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: _react.PropTypes.bool.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    onEntryAccept: _react.PropTypes.func.isRequired,
+    onEntryDecline: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2['default'].createElement(
       'span',
       null,
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__media' },
-        React.createElement(
+        _react2['default'].createElement(
           'figure',
           { className: 'video' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.entry.url },
-            React.createElement(
+            _react2['default'].createElement(
               'div',
               { className: 'video__cover' },
-              React.createElement(_sharedReactComponentsCommonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth }),
+              _react2['default'].createElement(_sharedReactComponentsCommonImage2['default'], { image: this.props.entry.preview_image, maxWidth: brickWidth }),
               this.renderVideoOverlay()
             )
           )
         )
       ),
       this.renderBrickBody(),
-      React.createElement(
+      _react2['default'].createElement(
         'div',
         { className: 'brick__meta' },
-        React.createElement(_EntryBrickMetabar2['default'], {
-          tlog: this.props.entry.tlog,
-          rating: this.props.entry.rating,
+        _react2['default'].createElement(_EntryBrickMetabar2['default'], {
           commentsCount: this.props.entry.comments_count,
-          url: this.props.entry.url,
-          entryID: this.props.entry.id })
+          entryID: this.props.entry.id,
+          host_tlog_id: this.props.host_tlog_id,
+          rating: this.props.entry.rating,
+          tlog: this.props.entry.tlog,
+          url: this.props.entry.url
+        })
       ),
-      React.createElement(_EntryBrickActions2['default'], {
+      _react2['default'].createElement(_EntryBrickActions2['default'], {
         hasModeration: this.props.hasModeration,
         onAccept: this.props.onEntryAccept,
         onDecline: this.props.onEntryDecline })
@@ -19591,16 +19680,16 @@ var EntryBrickVideoType = React.createClass({
 
   renderBrickBody: function renderBrickBody() {
     if (this.props.entry.title_truncated) {
-      return React.createElement(
+      return _react2['default'].createElement(
         'div',
         { className: 'brick__body' },
-        React.createElement(
+        _react2['default'].createElement(
           'div',
           { className: 'brick__text' },
-          React.createElement(
+          _react2['default'].createElement(
             'a',
             { href: this.props.entry.url, title: this.props.entry.title_truncated, className: 'brick__link' },
-            React.createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.title_truncated, withHTML: true })
+            _react2['default'].createElement(_sharedReactComponentsCommonText2['default'], { value: this.props.entry.title_truncated, withHTML: true })
           )
         )
       );
@@ -19609,7 +19698,7 @@ var EntryBrickVideoType = React.createClass({
 
   renderVideoOverlay: function renderVideoOverlay() {
     if (this.props.entry.is_playable) {
-      return React.createElement('div', { className: 'video__overlay' });
+      return _react2['default'].createElement('div', { className: 'video__overlay' });
     }
   }
 });
@@ -19617,7 +19706,7 @@ var EntryBrickVideoType = React.createClass({
 exports['default'] = EntryBrickVideoType;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/Image":475,"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112}],118:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Image":475,"../../../../../shared/react/components/common/Text":477,"./EntryBrickActions":107,"./EntryBrickMetabar":112,"react":"react"}],118:[function(require,module,exports){
 /*global i18n, TastyConfirmController, DOMManipulationsMixin */
 'use strict';
 
@@ -21722,10 +21811,12 @@ var EntryTlogMetabar = (function () {
           url: this.props.entry.url,
           commentator: this.props.commentator,
           commentsCount: this.props.entry.comments_count,
-          onComment: this.props.onComment }),
+          onComment: this.props.onComment
+        }),
         _react2['default'].createElement(_EntryTlogMetabarDate2['default'], {
           url: this.props.entry.url,
-          date: this.props.entry.created_at }),
+          date: this.props.entry.created_at
+        }),
         _react2['default'].createElement(_EntryTlogMetabarRepost2['default'], {
           entryID: this.props.entry.id,
           commentator: this.props.commentator
@@ -21744,7 +21835,7 @@ var EntryTlogMetabar = (function () {
       var authorMeta = '';
 
       if (tlog != null) {
-        if (host_tlog_id === null) {
+        if (host_tlog_id == null) {
           authorMeta = tlog.tag;
         } else if (host_tlog_id !== tlog.id) {
           authorMeta = i18n.t('entry.meta.repost_from', { tag: tlog.tag });
@@ -21788,8 +21879,9 @@ var EntryTlogMetabar = (function () {
   }], [{
     key: 'propTypes',
     value: {
+      commentator: _react.PropTypes.object,
       entry: _react.PropTypes.object.isRequired,
-      commentator: _react.PropTypes.object
+      host_tlog_id: _react.PropTypes.number
     },
     enumerable: true
   }]);
@@ -23042,6 +23134,10 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _EntryEntryBrickEntryBrick = require('../Entry/EntryBrick/EntryBrick');
 
 var _EntryEntryBrickEntryBrick2 = _interopRequireDefault(_EntryEntryBrickEntryBrick);
@@ -23061,36 +23157,41 @@ var masonryOptions = {
   gutter: 20
 };
 
-var EntryBricks = React.createClass({
+var EntryBricks = _react2['default'].createClass({
   displayName: 'EntryBricks',
 
   mixins: [(0, _reactMasonryMixin2['default'])('masonryContainer', masonryOptions)],
 
   propTypes: {
-    entries: React.PropTypes.array.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadMoreEntries: React.PropTypes.func.isRequired
+    entries: _react.PropTypes.array.isRequired,
+    host_tlog_id: _react.PropTypes.number,
+    loading: _react.PropTypes.bool.isRequired,
+    canLoad: _react.PropTypes.bool.isRequired,
+    onLoadMoreEntries: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
+    var _this = this;
+
     var entryList = this.props.entries.map(function (item) {
-      return React.createElement(_EntryEntryBrickEntryBrick2['default'], {
+      return _react2['default'].createElement(_EntryEntryBrickEntryBrick2['default'], {
         entry: item.entry,
+        host_tlog_id: _this.props.host_tlog_id,
         moderation: item.moderation,
-        key: item.entry.id });
+        key: item.entry.id
+      });
     });
 
-    return React.createElement(
+    return _react2['default'].createElement(
       'div',
       { className: 'bricks-wrapper' },
-      React.createElement(
+      _react2['default'].createElement(
         _commonInfiniteScrollIndex2['default'],
         {
           loading: this.props.loading,
           canLoad: this.props.canLoad,
           onLoad: this.props.onLoadMoreEntries },
-        React.createElement(
+        _react2['default'].createElement(
           'section',
           { ref: 'masonryContainer', className: 'bricks' },
           entryList
@@ -23103,7 +23204,7 @@ var EntryBricks = React.createClass({
 exports['default'] = EntryBricks;
 module.exports = exports['default'];
 
-},{"../Entry/EntryBrick/EntryBrick":106,"../common/infiniteScroll/index":227,"react-masonry-mixin":528}],147:[function(require,module,exports){
+},{"../Entry/EntryBrick/EntryBrick":106,"../common/infiniteScroll/index":227,"react":"react","react-masonry-mixin":528}],147:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -23157,6 +23258,7 @@ var EntryBricksContainer = (function (_Component) {
     value: function render() {
       return _react2['default'].createElement(_EntryBricks2['default'], {
         entries: this.state.entries,
+        host_tlog_id: this.props.host_tlog_id,
         loading: this.state.isLoading,
         canLoad: !this.state.isLoading && this.state.hasMore,
         onLoadMoreEntries: this.loadMoreEntries.bind(this)
@@ -23201,6 +23303,7 @@ var EntryBricksContainer = (function (_Component) {
         next_page: _react.PropTypes.number,
         next_since_entry_id: _react.PropTypes.number
       }).isRequired,
+      host_tlog_id: _react.PropTypes.number,
       loadUrl: _react.PropTypes.string.isRequired,
       nextPageFieldName: _react.PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
       nextPageParamName: _react.PropTypes.oneOf(['page', 'since_entry_id']).isRequired
@@ -23250,13 +23353,14 @@ var EntryTlogs = (function () {
       var _props = this.props;
       var canLoad = _props.canLoad;
       var entries = _props.entries;
+      var host_tlog_id = _props.host_tlog_id;
       var loading = _props.loading;
       var onDelete = _props.onDelete;
       var onLoadMoreEntries = _props.onLoadMoreEntries;
 
       var entryList = entries.map(function (item) {
         return _react2['default'].createElement(_EntryEntryTlogEntryTlog2['default'], {
-          host_tlog_id: item.host_tlog_id,
+          host_tlog_id: host_tlog_id,
           key: item.entry.id,
           entry: item.entry,
           commentator: item.commentator,
@@ -23283,6 +23387,7 @@ var EntryTlogs = (function () {
     key: 'propTypes',
     value: {
       entries: _react.PropTypes.array.isRequired,
+      host_tlog_id: _react.PropTypes.number,
       loading: _react.PropTypes.bool.isRequired,
       canLoad: _react.PropTypes.bool.isRequired,
       onDelete: _react.PropTypes.func.isRequired,
@@ -23351,6 +23456,7 @@ var EntryTlogsContainer = (function (_Component) {
     value: function render() {
       return _react2['default'].createElement(_EntryTlogs2['default'], {
         entries: this.state.entries,
+        host_tlog_id: this.props.host_tlog_id,
         loading: this.state.isLoading,
         canLoad: !this.state.isLoading && this.state.hasMore,
         onDelete: this.deleteEntry.bind(this),
@@ -23404,6 +23510,7 @@ var EntryTlogsContainer = (function (_Component) {
         next_page: _react.PropTypes.number,
         next_since_entry_id: _react.PropTypes.number
       }).isRequired,
+      host_tlog_id: _react.PropTypes.number,
       loadUrl: _react.PropTypes.string.isRequired,
       nextPageFieldName: _react.PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
       nextPageParamName: _react.PropTypes.oneOf(['page', 'since_entry_id']).isRequired

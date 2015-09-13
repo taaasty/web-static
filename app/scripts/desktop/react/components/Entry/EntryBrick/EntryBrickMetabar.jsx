@@ -1,13 +1,15 @@
+import React, { PropTypes } from 'react';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
 import VotingComponent from '../../common/Voting';
 
 let EntryBrickMetabar = React.createClass({
   propTypes: {
-    tlog: React.PropTypes.object,
-    rating: React.PropTypes.object.isRequired,
-    url: React.PropTypes.string.isRequired,
-    commentsCount: React.PropTypes.number.isRequired,
-    entryID: React.PropTypes.number.isRequired
+    commentsCount: PropTypes.number.isRequired,
+    entryID: PropTypes.number.isRequired,
+    host_tlog_id: PropTypes.number,
+    rating: PropTypes.object.isRequired,
+    tlog: PropTypes.object,
+    url: PropTypes.string.isRequired,
   },
 
   render() {
@@ -49,23 +51,39 @@ let EntryBrickMetabar = React.createClass({
   },
 
   renderMetaTlog() {
-    if (this.props.tlog != null) {
-      return (
-        <span className="meta-item meta-item--user">
-          <span className="meta-item__content">
-            <a href={this.props.tlog.url}
-               title={this.props.tlog.tag}
-               className="meta-item__link">
-              <span className="meta-item__ava">
-                <Avatar userpic={this.props.tlog.userpic} size={20} />
-              </span>
-              <span>{this.props.tlog.tag}</span>
-            </a>
-          </span>
-        </span>
-      );
+    const { host_tlog_id, tlog } = this.props;
+    let authorMeta = '';
+
+    if (tlog != null) {
+      if (host_tlog_id == null) {
+        authorMeta = tlog.tag;
+      } else if (host_tlog_id !== tlog.id) {
+        authorMeta = [
+          <i className="icon icon--retweet" />,
+          tlog.tag,
+        ];
+      } else {
+        return null;
+      }
     }
-  }
+
+    return (
+      <span className="meta-item meta-item--user">
+        <span className="meta-item__content">
+          <a href={tlog.url}
+             title={tlog.tag}
+             className="meta-item__link">
+            <span className="meta-item__ava">
+              <Avatar userpic={tlog.userpic} size={20} />
+            </span>
+            <span className="meta-item__author">
+              {authorMeta}
+            </span>
+          </a>
+        </span>
+      </span>
+    );
+  },
 });
 
 export default EntryBrickMetabar;

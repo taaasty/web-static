@@ -1,3 +1,4 @@
+import React, { PropTypes } from 'react';
 import EntryBrick from '../Entry/EntryBrick/EntryBrick';
 import InfiniteScroll from '../common/infiniteScroll/index';
 import MasonryMixin from 'react-masonry-mixin';
@@ -13,18 +14,21 @@ let EntryBricks = React.createClass({
   mixins: [MasonryMixin('masonryContainer', masonryOptions)],
 
   propTypes: {
-    entries: React.PropTypes.array.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadMoreEntries: React.PropTypes.func.isRequired
+    entries: PropTypes.array.isRequired,
+    host_tlog_id: PropTypes.number,
+    loading: PropTypes.bool.isRequired,
+    canLoad: PropTypes.bool.isRequired,
+    onLoadMoreEntries: PropTypes.func.isRequired,
   },
 
   render() {
     let entryList = this.props.entries.map((item) =>
       <EntryBrick
-          entry={item.entry}
-          moderation={item.moderation}
-          key={item.entry.id} />
+        entry={item.entry}
+        host_tlog_id={this.props.host_tlog_id}
+        moderation={item.moderation}
+        key={item.entry.id}
+      />
     );
 
     return (

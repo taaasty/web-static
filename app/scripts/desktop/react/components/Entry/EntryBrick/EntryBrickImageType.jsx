@@ -1,3 +1,4 @@
+import React, { PropTypes } from 'react';
 import Text from '../../../../../shared/react/components/common/Text';
 import Image from '../../../../../shared/react/components/common/Image';
 import EntryBrickMetabar from './EntryBrickMetabar';
@@ -7,19 +8,20 @@ const brickWidth = 302;
 
 let EntryBrickImageType = React.createClass({
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title_truncated: React.PropTypes.string.isRequired,
-      preview_image: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      comments_count: React.PropTypes.number.isRequired
+    entry: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      title_truncated: PropTypes.string.isRequired,
+      preview_image: PropTypes.object.isRequired,
+      tlog: PropTypes.object.isRequired,
+      rating: PropTypes.object.isRequired,
+      comments_count: PropTypes.number.isRequired,
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: PropTypes.bool.isRequired,
+    host_tlog_id: PropTypes.number,
+    onEntryAccept: PropTypes.func.isRequired,
+    onEntryDecline: PropTypes.func.isRequired,
   },
 
   render() {
@@ -33,11 +35,13 @@ let EntryBrickImageType = React.createClass({
         {this.renderBrickBody()}
         <div className="brick__meta">
           <EntryBrickMetabar
-              tlog={this.props.entry.tlog}
-              rating={this.props.entry.rating}
-              commentsCount={this.props.entry.comments_count}
-              url={this.props.entry.url}
-              entryID={this.props.entry.id} />
+            commentsCount={this.props.entry.comments_count}
+            entryID={this.props.entry.id}
+            host_tlog_id={this.props.host_tlog_id}
+            rating={this.props.entry.rating}
+            tlog={this.props.entry.tlog}
+            url={this.props.entry.url}
+          />
         </div>
         <EntryBrickActions
             hasModeration={this.props.hasModeration}

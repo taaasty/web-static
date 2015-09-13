@@ -11,6 +11,7 @@ export default class EntryTlogsContainer extends Component {
       next_page: PropTypes.number,
       next_since_entry_id: PropTypes.number
     }).isRequired,
+    host_tlog_id: PropTypes.number,
     loadUrl: PropTypes.string.isRequired,
     nextPageFieldName: PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
     nextPageParamName: PropTypes.oneOf(['page', 'since_entry_id']).isRequired
@@ -25,6 +26,7 @@ export default class EntryTlogsContainer extends Component {
     return (
       <EntryTlogs
         entries={this.state.entries}
+        host_tlog_id={this.props.host_tlog_id}
         loading={this.state.isLoading}
         canLoad={!this.state.isLoading && this.state.hasMore}
         onDelete={this.deleteEntry.bind(this)}
