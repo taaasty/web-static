@@ -1,3 +1,4 @@
+import React, { PropTypes } from 'react';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 
@@ -7,8 +8,9 @@ const ENTRY_TYPES = [
 
 let EntryBrick = React.createClass({
   propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    moderation: React.PropTypes.object
+    entry: PropTypes.object.isRequired,
+    host_tlog_id: PropTypes.number,
+    moderation: PropTypes.object
   },
 
   getInitialState() {
@@ -30,10 +32,12 @@ let EntryBrick = React.createClass({
       return (
         <article className={this.getBrickClasses()}>
           <EntryBrickContent
-              entry={this.props.entry}
-              hasModeration={this.state.hasModeration}
-              onEntryAccept={this.acceptEntry}
-              onEntryDecline={this.declineEntry} />
+            entry={this.props.entry}
+            hasModeration={this.state.hasModeration}
+            host_tlog_id={this.props.host_tlog_id}
+            onEntryAccept={this.acceptEntry}
+            onEntryDecline={this.declineEntry}
+          />
         </article>
       );
     } else {

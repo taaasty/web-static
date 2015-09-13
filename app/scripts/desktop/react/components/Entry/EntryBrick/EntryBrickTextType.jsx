@@ -1,47 +1,53 @@
+import React, { PropTypes } from 'react';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
 let EntryBrickTextType = React.createClass({
   propTypes: {
-    entry: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      type: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      text_truncated: React.PropTypes.string.isRequired,
-      rating: React.PropTypes.object.isRequired,
-      tlog: React.PropTypes.object,
-      comments_count: React.PropTypes.number.isRequired
+    entry: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      text_truncated: PropTypes.string.isRequired,
+      rating: PropTypes.object.isRequired,
+      tlog: PropTypes.object,
+      comments_count: PropTypes.number.isRequired,
     }).isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
+    hasModeration: PropTypes.bool.isRequired,
+    host_tlog_id: PropTypes.number,
+    onEntryAccept: PropTypes.func.isRequired,
+    onEntryDecline: PropTypes.func.isRequired,
   },
 
   render() {
+    const { entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline } = this.props;
+    
     return (
       <span>
         <div className="brick__body">
           {this.renderBrickTitle()}
           <div className="brick__text">
-            <a href={this.props.entry.url} title={this.props.entry.title} className="brick__link">
-              <Text value={this.props.entry.text_truncated} withHTML={true} />
+            <a href={entry.url} title={entry.title} className="brick__link">
+              <Text value={entry.text_truncated} withHTML={true} />
             </a>
           </div>
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
-              tlog={this.props.entry.tlog}
-              rating={this.props.entry.rating}
-              commentsCount={this.props.entry.comments_count}
-              url={this.props.entry.url}
-              entryID={this.props.entry.id} />
+            commentsCount={entry.comments_count}
+            entryID={entry.id}
+            host_tlog_id={host_tlog_id}
+            rating={entry.rating}
+            tlog={entry.tlog}
+            url={entry.url}
+          />
         </div>
         <EntryBrickActions
-            hasModeration={this.props.hasModeration}
-            onAccept={this.props.onEntryAccept}
-            onDecline={this.props.onEntryDecline} />
+            hasModeration={hasModeration}
+            onAccept={onEntryAccept}
+            onDecline={onEntryDecline} />
       </span>
     );
   },
