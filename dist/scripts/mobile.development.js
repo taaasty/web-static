@@ -12920,14 +12920,26 @@ module.exports = ConnectStoreMixin;
 
 
 },{"lodash":"lodash"}],258:[function(require,module,exports){
+/*global gon */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
 function prepareUrl(url) {
   return (/^\/\/\S*$/.test(url) ? 'http:' + url : url
   );
+}
+
+function filters() {
+  var additional = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+  var common = []; //['no_upscale()'];
+  var fx = [].concat(common, _toConsumableArray(additional));
+  return fx.length ? '/filters:' + fx.join(':') : '';
 }
 
 var ThumborService = {
@@ -12939,7 +12951,7 @@ var ThumborService = {
     var width = size.width || '',
         height = size.height || '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url : url;
+    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters() + '/' + url : url;
   },
 
   newRetinaImageUrl: function newRetinaImageUrl(url, size) {
@@ -12947,7 +12959,7 @@ var ThumborService = {
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + url + ' 2x' : url;
+    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters() + '/' + url + ' 2x' : url;
   },
 
   imageUrl: function imageUrl(_ref) {
@@ -12955,7 +12967,7 @@ var ThumborService = {
     var path = _ref.path;
     var size = _ref.size;
 
-    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + size + '/filters:no_upscale()/' + path : url;
+    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + size + filters() + '/' + path : url;
   },
 
   retinaImageUrl: function retinaImageUrl(_ref2) {
@@ -12967,7 +12979,7 @@ var ThumborService = {
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + width + 'x' + height + '/filters:no_upscale()/' + path + ' 2x' : url;
+    return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + width + 'x' + height + filters() + '/' + path + ' 2x' : url;
   }
 };
 
