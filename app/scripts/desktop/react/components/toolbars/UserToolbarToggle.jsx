@@ -1,13 +1,20 @@
+import React, { PropTypes } from 'react';
+
 let UserToolbarToggle = React.createClass({
   propTypes: {
-    hasConversations: React.PropTypes.bool.isRequired,
-    hasNotifications: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    hasConversations: PropTypes.bool.isRequired,
+    hasNotifications: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
   },
 
   render() {
     return (
-      <div className="toolbar__toggle" onTouchTap={this.handleClick}>
+      <div
+        className="toolbar__toggle"
+        onMouseEnter={this.onMouseEnter}
+        onTouchTap={this.onClick}
+      >
         {this.renderIndicators()}
         <i className="icon icon--menu" />
       </div>
@@ -33,9 +40,13 @@ let UserToolbarToggle = React.createClass({
     );
   },
 
-  handleClick() {
+  onClick() {
     this.props.onClick();
-  }
+  },
+
+  onMouseEnter() {
+    this.props.onMouseEnter();
+  },
 });
 
 export default UserToolbarToggle;

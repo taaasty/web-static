@@ -37,9 +37,11 @@ let UserToolbar = React.createClass({
            onMouseLeave={this.props.onMouseLeave}>
         <UserToolbarHoverLine onMouseEnter={this.props.onLineHover} />
         <UserToolbarToggle
-            hasConversations={!!this.props.unreadConversationsCount}
-            hasNotifications={!!this.props.unreadNotificationsCount}
-            onClick={this.props.onToggleClick} />
+          hasConversations={!!this.props.unreadConversationsCount}
+          hasNotifications={!!this.props.unreadNotificationsCount}
+          onClick={this.props.onToggleClick}
+          onMouseEnter={this.props.onLineHover}
+        />
         <div className={navbarClasses}>
           <Scroller>
             {this.renderPrimaryList()}
