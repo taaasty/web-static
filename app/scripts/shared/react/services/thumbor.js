@@ -1,5 +1,15 @@
+/*global gon */
 function prepareUrl(url) {
   return /^\/\/\S*$/.test(url) ? `http:${url}` : url;
+}
+
+function filters(additional=[]) {
+  const common = []; //['no_upscale()'];
+  const fx = [
+    ...common,
+    ...additional,
+  ];
+  return fx.length ? `/filters:${fx.join(':')}` : '';
 }
 
 let ThumborService = {
@@ -11,7 +21,7 @@ let ThumborService = {
     let width = size.width || '',
         height = size.height || '';
 
-    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url}` : url;
+    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters()}/${url}` : url;
   },
 
   newRetinaImageUrl(url, size) {
@@ -19,11 +29,11 @@ let ThumborService = {
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}/filters:no_upscale()/${url} 2x` : url;
+    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters()}/${url} 2x` : url;
   },
 
   imageUrl({url, path, size}) {
-    return this.thumborWithPath ? `${this.thumborWithPath}/unsafe/${size}/filters:no_upscale()/${path}` : url;
+    return this.thumborWithPath ? `${this.thumborWithPath}/unsafe/${size}${filters()}/${path}` : url;
   },
 
   retinaImageUrl({url, path, size}) {
@@ -31,8 +41,8 @@ let ThumborService = {
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithPath ? `${this.thumborWithPath}/unsafe/${width}x${height}/filters:no_upscale()/${path} 2x` : url;
-  }
+    return this.thumborWithPath ? `${this.thumborWithPath}/unsafe/${width}x${height}${filters()}/${path} 2x` : url;
+  },
 };
 
 export default ThumborService;
