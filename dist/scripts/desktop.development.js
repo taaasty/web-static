@@ -34735,6 +34735,7 @@ exports["default"] = EntryRepostTargetSearch;
 module.exports = exports["default"];
 
 },{"react":"react"}],318:[function(require,module,exports){
+/*global Routes, i18n */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -34850,7 +34851,7 @@ var EntryRepostPopup = (function (_Component) {
   }, {
     key: 'renderAddFlowMessage',
     value: function renderAddFlowMessage() {
-      return this.state.targetList.length <= 1 && this.renderMessage(i18n.t('entry.repost.no_flows'));
+      return this.state.targetList.length <= 1 && this.renderMessage(i18n.t('entry.repost.no_flows', { flowsLink: Routes.flows }));
     }
   }, {
     key: 'renderSearch',

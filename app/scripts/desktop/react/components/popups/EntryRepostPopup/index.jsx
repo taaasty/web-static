@@ -1,3 +1,4 @@
+/*global Routes, i18n */
 import React, { Component, PropTypes } from 'react';
 import fuzzy from 'fuzzy';
 import EntryActionCreators from '../../../actions/Entry';
@@ -56,7 +57,8 @@ export default class EntryRepostPopup extends Component {
     );
   }
   renderAddFlowMessage() {
-    return this.state.targetList.length <= 1 && this.renderMessage(i18n.t('entry.repost.no_flows'));
+    return this.state.targetList.length <= 1 &&
+      this.renderMessage(i18n.t('entry.repost.no_flows', { flowsLink: Routes.flows}));
   }
   renderSearch() {
     if (this.state.targetList.length && !this.state.isLoading) {
