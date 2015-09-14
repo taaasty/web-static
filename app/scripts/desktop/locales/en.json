@@ -385,7 +385,7 @@
             "repost_from": "Repost from __tag__"
         },
         "repost": {
-          "no_flows": "Follow or create new <span class\"popup__text--bold\">flows</span> to share your thoughts there"
+          "no_flows": "Follow or create new <a class=\"popup__link\" href=\"__flowsLink__\">flows</a> to share your thoughts there"
         }
     },
     "create_flow": {

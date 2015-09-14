@@ -388,7 +388,7 @@
       "repost_from": "Репост из __tag__"
     },
     "repost": {
-      "no_flows": "Подписывайтесь или создавайте <span class=\"popup__text--bold\">потоки</span> чтобы добавлять туда посты"
+      "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"__flowsLink__\">потоки</a> чтобы добавлять туда посты"
     }
   },
   "create_flow": {
