@@ -59,20 +59,27 @@ let UserToolbarContainer = React.createClass({
   },
 
   toggleOpenness() {
-    let newOpenness = !this.state.opened;
-    newOpenness ? this.open() : this.close();
+    !this.state.opened
+      ? this.open()
+      : this.close();
   },
 
   open() {
     AppStorage.setItem(STORAGE_KEY, true);
     ToolbarActionCreators.toggleOpenness(true);
-    this.setState({opened: true});
+    this.setState({
+      opened: true,
+      openedTemporarily: false,
+    });
   },
 
   close() {
     AppStorage.setItem(STORAGE_KEY, false);
     ToolbarActionCreators.toggleOpenness(false);
-    this.setState({opened: false});
+    this.setState({
+      opened: false,
+      openedTemporarily: false,
+    });
   },
 
   toggleMessages() {

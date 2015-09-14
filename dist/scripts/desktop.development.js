@@ -38023,7 +38023,9 @@ var UserToolbar = React.createClass({
       React.createElement(_UserToolbarToggle2['default'], {
         hasConversations: !!this.props.unreadConversationsCount,
         hasNotifications: !!this.props.unreadNotificationsCount,
-        onClick: this.props.onToggleClick }),
+        onClick: this.props.onToggleClick,
+        onMouseEnter: this.props.onLineHover
+      }),
       React.createElement(
         'div',
         { className: navbarClasses },
@@ -38205,20 +38207,25 @@ var UserToolbarContainer = React.createClass({
   },
 
   toggleOpenness: function toggleOpenness() {
-    var newOpenness = !this.state.opened;
-    newOpenness ? this.open() : this.close();
+    !this.state.opened ? this.open() : this.close();
   },
 
   open: function open() {
     AppStorage.setItem(STORAGE_KEY, true);
     _actionsToolbar2['default'].toggleOpenness(true);
-    this.setState({ opened: true });
+    this.setState({
+      opened: true,
+      openedTemporarily: false
+    });
   },
 
   close: function close() {
     AppStorage.setItem(STORAGE_KEY, false);
     _actionsToolbar2['default'].toggleOpenness(false);
-    this.setState({ opened: false });
+    this.setState({
+      opened: false,
+      openedTemporarily: false
+    });
   },
 
   toggleMessages: function toggleMessages() {
@@ -38592,21 +38599,33 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var UserToolbarToggle = React.createClass({
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var UserToolbarToggle = _react2["default"].createClass({
   displayName: "UserToolbarToggle",
 
   propTypes: {
-    hasConversations: React.PropTypes.bool.isRequired,
-    hasNotifications: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    hasConversations: _react.PropTypes.bool.isRequired,
+    hasNotifications: _react.PropTypes.bool.isRequired,
+    onClick: _react.PropTypes.func.isRequired,
+    onMouseEnter: _react.PropTypes.func.isRequired
   },
 
   render: function render() {
-    return React.createElement(
+    return _react2["default"].createElement(
       "div",
-      { className: "toolbar__toggle", onTouchTap: this.handleClick },
+      {
+        className: "toolbar__toggle",
+        onMouseEnter: this.onMouseEnter,
+        onTouchTap: this.onClick
+      },
       this.renderIndicators(),
-      React.createElement("i", { className: "icon icon--menu" })
+      _react2["default"].createElement("i", { className: "icon icon--menu" })
     );
   },
 
@@ -38615,14 +38634,14 @@ var UserToolbarToggle = React.createClass({
         notificationsIndicator = undefined;
 
     if (this.props.hasConversations) {
-      conversationsIndicator = React.createElement("i", { className: "toolbar__m-indicator toolbar__m-indicator--messages" });
+      conversationsIndicator = _react2["default"].createElement("i", { className: "toolbar__m-indicator toolbar__m-indicator--messages" });
     }
 
     if (this.props.hasNotifications) {
-      notificationsIndicator = React.createElement("i", { className: "toolbar__m-indicator toolbar__m-indicator--notifications" });
+      notificationsIndicator = _react2["default"].createElement("i", { className: "toolbar__m-indicator toolbar__m-indicator--notifications" });
     }
 
-    return React.createElement(
+    return _react2["default"].createElement(
       "span",
       { className: "toolbar__m-indicators" },
       conversationsIndicator,
@@ -38630,15 +38649,19 @@ var UserToolbarToggle = React.createClass({
     );
   },
 
-  handleClick: function handleClick() {
+  onClick: function onClick() {
     this.props.onClick();
+  },
+
+  onMouseEnter: function onMouseEnter() {
+    this.props.onMouseEnter();
   }
 });
 
 exports["default"] = UserToolbarToggle;
 module.exports = exports["default"];
 
-},{}],365:[function(require,module,exports){
+},{"react":"react"}],365:[function(require,module,exports){
 var EVENT_NAME_MAP, ReactTransitionGroup, TICK, TimeoutTransitionGroupChild, animationAllowed, animationSupported, bowser, detectEvents, endEvents;
 
 bowser = require('bowser');
