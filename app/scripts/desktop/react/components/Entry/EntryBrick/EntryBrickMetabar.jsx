@@ -65,24 +65,25 @@ let EntryBrickMetabar = React.createClass({
       } else {
         return null;
       }
+
+      return (
+        <span className="meta-item meta-item--user">
+          <span className="meta-item__content">
+            <a href={tlog.url}
+               title={tlog.tag}
+               className="meta-item__link">
+              <span className="meta-item__ava">
+                <Avatar userpic={tlog.userpic} size={20} />
+              </span>
+              <span className="meta-item__author">
+                {authorMeta}
+              </span>
+            </a>
+          </span>
+        </span>
+      );
     }
 
-    return (
-      <span className="meta-item meta-item--user">
-        <span className="meta-item__content">
-          <a href={tlog.url}
-             title={tlog.tag}
-             className="meta-item__link">
-            <span className="meta-item__ava">
-              <Avatar userpic={tlog.userpic} size={20} />
-            </span>
-            <span className="meta-item__author">
-              {authorMeta}
-            </span>
-          </a>
-        </span>
-      </span>
-    );
   },
 });
 

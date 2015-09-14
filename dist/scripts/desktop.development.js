@@ -19149,32 +19149,32 @@ var EntryBrickMetabar = _react2['default'].createClass({
       } else {
         return null;
       }
-    }
 
-    return _react2['default'].createElement(
-      'span',
-      { className: 'meta-item meta-item--user' },
-      _react2['default'].createElement(
+      return _react2['default'].createElement(
         'span',
-        { className: 'meta-item__content' },
+        { className: 'meta-item meta-item--user' },
         _react2['default'].createElement(
-          'a',
-          { href: tlog.url,
-            title: tlog.tag,
-            className: 'meta-item__link' },
+          'span',
+          { className: 'meta-item__content' },
           _react2['default'].createElement(
-            'span',
-            { className: 'meta-item__ava' },
-            _react2['default'].createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: tlog.userpic, size: 20 })
-          ),
-          _react2['default'].createElement(
-            'span',
-            { className: 'meta-item__author' },
-            authorMeta
+            'a',
+            { href: tlog.url,
+              title: tlog.tag,
+              className: 'meta-item__link' },
+            _react2['default'].createElement(
+              'span',
+              { className: 'meta-item__ava' },
+              _react2['default'].createElement(_sharedReactComponentsCommonAvatar2['default'], { userpic: tlog.userpic, size: 20 })
+            ),
+            _react2['default'].createElement(
+              'span',
+              { className: 'meta-item__author' },
+              authorMeta
+            )
           )
         )
-      )
-    );
+      );
+    }
   }
 });
 
