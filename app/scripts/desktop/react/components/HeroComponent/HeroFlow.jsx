@@ -1,7 +1,7 @@
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import PopupActionCreators from '../../actions/popup';
 import Hero from './Hero';
-import FollowButton from '../common/FollowButton';
+import RelationButton from '../common/RelationButton';
 import HeroSettingsButton from './HeroSettingsButton';
 import HeroSubscriptionsButton from './HeroSubscriptionsButton';
 import HeroDesignSettingsButton from './HeroDesignSettingsButton';
@@ -30,7 +30,7 @@ let HeroFlow = React.createClass({
   getActions() {
     return [
       this.renderWriteButton(),
-      this.renderFollowButton(),
+      this.renderRelationButton(),
       this.renderSettingsButton()
     ];
   },
@@ -47,15 +47,15 @@ let HeroFlow = React.createClass({
     }
   },
 
-  renderFollowButton() {
+  renderRelationButton() {
     if (this.props.relationship) {
       return (
-        <FollowButton
+        <RelationButton
             objectID={CurrentUserStore.getUserID()}
             subjectID={this.state.flow.id}
             subjectPrivacy={this.state.flow.is_privacy}
             relState={this.props.relationship.state}
-            key="followButton" />
+            key="relationButton" />
       );
     }
   },
