@@ -6,8 +6,8 @@ CLASSNAME_ACTIVE = '__active'
 
 DELAY_SLIDESHOW  = 8000
 
-window.ScreenViewer = React.createClass
-
+module.exports = React.createClass
+  displayName: 'ScreenViewer'
   propTypes:
     title:        React.PropTypes.string
     sourceImages: React.PropTypes.array.isRequired
