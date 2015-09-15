@@ -24,9 +24,8 @@ class LandingPageBody {
     );
   }
 }
-
 LandingPageBody.propTypes = {
-  bricksContainer: EntryBricksContainer.propTypes,
+  bricksContainer: PropTypes.shape(EntryBricksContainer.propTypes),
   locale: PropTypes.string,
   sourceImages: PropTypes.array.isRequired,
   title: PropTypes.string,

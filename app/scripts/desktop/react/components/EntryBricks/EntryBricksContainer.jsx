@@ -12,7 +12,7 @@ export default class EntryBricksContainer extends Component {
       next_since_entry_id: PropTypes.number,
     }).isRequired,
     host_tlog_id: PropTypes.number,
-    loadUrl: PropTypes.string.isRequired,
+    loadUrl: PropTypes.string,
     nextPageFieldName: PropTypes.oneOf(['next_page', 'next_since_entry_id']).isRequired,
     nextPageParamName: PropTypes.oneOf(['page', 'since_entry_id']).isRequired,
   }
