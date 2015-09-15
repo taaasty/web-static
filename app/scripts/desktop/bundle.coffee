@@ -277,7 +277,8 @@ global.EditorEdit = require './react/components/Editor/EditorEdit'
 
 require './react/components/spinner'
 
-require './react/components/screen_viewer/screen_viewer'
+global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
+global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'

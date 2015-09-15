@@ -88,7 +88,7 @@
   }
 
   .page {
-    height: 100% !important;
+    height: auto !important;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .45);
 
     // Хак для ie10+
@@ -98,6 +98,13 @@
       text-shadow: none;
     }
   }
+
+  .layout-outer {
+    position: relative;
+    z-index: @zindex-content-area-inner;
+    text-shadow: initial;
+  }
+
 
   .page__inner {
     height: 100%;
@@ -111,14 +118,25 @@
 
   .page-header {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
     z-index: @zindex-landing-page-header;
   }
 
   .page-body {
     height: 100%;
+  }
+
+  .page-cover {
+    position: fixed;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  .home-title {
+    color: #fff;
+    text-align: center;
   }
 
   .auth-button {
