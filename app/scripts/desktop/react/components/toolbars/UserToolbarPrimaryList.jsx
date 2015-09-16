@@ -36,7 +36,7 @@ let UserToolbarPrimaryList = React.createClass({
         <UserToolbarListItem
             url={Routes.best_feed_path()}
             title={i18n.t('feed_best')}
-            icon="icon--rating" />
+            icon="icon--fire" />
         <UserToolbarListItem
             url={Routes.anonymous_feed_path()}
             title={i18n.t('feed_anonymous')}
