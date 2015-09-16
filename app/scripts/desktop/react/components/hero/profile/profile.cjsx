@@ -42,7 +42,7 @@ window.HeroProfile = React.createClass
                   <HeroProfile_SettingsButton onClick={this.showSettings} />
                 </div>
     else if @props.relationship?
-      actions = <div className="hero__actions">
+      actions = <div className="hero__actions hero__actions--visible">
                   <FollowButton relationship={ this.props.relationship } />
                   <WriteMessageButton user={ this.props.user } />
                   <HeroProfile_DropdownMenu
