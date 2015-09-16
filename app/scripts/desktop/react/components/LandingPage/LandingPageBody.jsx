@@ -11,12 +11,10 @@ class LandingPageBody {
         <nav className="menu menu--main">
           <ul className="menu__list">
             <li className="menu__item">
-              <a
-                className="menu__link"
-                href={link}
-                title={title}
-              >
-                {title}
+              <a href={link}>
+                <button className="auth-button">
+                  {title}
+                </button>
               </a>
             </li>
           </ul>
