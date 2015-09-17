@@ -1,7 +1,7 @@
 import EditorLayout from './Layout/Layout';
 import EditorActions from './Actions/Actions';
 import EditorTypeSwitcher from './TypeSwitcher/TypeSwitcher';
-import EditorArea from './Area/Area';
+import EditorArea from './EditorArea';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 
 let Editor = React.createClass({
