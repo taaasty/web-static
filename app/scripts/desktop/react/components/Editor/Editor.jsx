@@ -2,6 +2,7 @@ import EditorLayout from './Layout/Layout';
 import EditorActions from './Actions/Actions';
 import EditorTypeSwitcher from './TypeSwitcher/TypeSwitcher';
 import EditorArea from './Area/Area';
+import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 
 let Editor = React.createClass({
   propTypes: {
@@ -41,7 +42,7 @@ let Editor = React.createClass({
   },
 
   renderTypeSwitcher() {
-    if (this.props.tlogType !== 'anonymous') {
+    if (this.props.tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) {
       return (
         <EditorTypeSwitcher
             entryType={this.props.entryType}
