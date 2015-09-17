@@ -5,31 +5,36 @@ import EntryTlogMetabarDate from './EntryTlogMetabarDate';
 import EntryTlogMetabarRepost from './EntryTlogMetabarRepost';
 import EntryTlogMetabarTags from './EntryTlogMetabarTags';
 import EntryTlogMetabarActions from './EntryTlogMetabarActions';
+import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../../shared/constants/TlogEntry';
 
 export default class EntryTlogMetabar {
   static propTypes = {
     commentator: PropTypes.object,
     entry: PropTypes.object.isRequired,
     host_tlog_id: PropTypes.number,
+    onComment: PropTypes.func,
   }
   render() {
+    const { commentator, entry, onComment } = this.props;
+
     return (
       <span className="meta-bar">
         {this.renderAuthor()}
         <EntryTlogMetabarComments
-          url={this.props.entry.url}
-          commentator={this.props.commentator}
-          commentsCount={this.props.entry.comments_count}
-          onComment={this.props.onComment}
+          commentator={commentator}
+          commentsCount={entry.comments_count}
+          onComment={onComment}
+          url={entry.url}
         />
         <EntryTlogMetabarDate
-          url={this.props.entry.url}
-          date={this.props.entry.created_at}
+          date={entry.created_at}
+          url={entry.url}
         />
-        <EntryTlogMetabarRepost
-          entryID={this.props.entry.id}
-          commentator={this.props.commentator}
-        />
+        {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
+         <EntryTlogMetabarRepost
+          commentator={commentator}
+          entryID={entry.id}
+         />}
         {this.renderTags()}
         <EntryTlogMetabarActions {...this.props} />
       </span>
