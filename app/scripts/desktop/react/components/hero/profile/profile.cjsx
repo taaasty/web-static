@@ -1,5 +1,6 @@
 PopupActions = require '../../../actions/popup'
 HeroProfile_SettingsButton = require './buttons/Settings'
+{ TLOG_SLUG_ANONYMOUS } = require '../../../../../shared/constants/Tlog'
 
 HERO_CLOSED = 'closed'
 HERO_OPENED = 'opened'
@@ -45,9 +46,10 @@ window.HeroProfile = React.createClass
       actions = <div className="hero__actions hero__actions--visible">
                   <FollowButton relationship={ this.props.relationship } />
                   <WriteMessageButton user={ this.props.user } />
-                  <HeroProfile_DropdownMenu
-                      userId={ this.props.user.id }
-                      status={ this.props.relationship.state } />
+                  {(this.props.user.slug != TLOG_SLUG_ANONYMOUS) and <HeroProfile_DropdownMenu
+                     userId={ this.props.user.id }
+                     status={ this.props.relationship.state }
+                   />}
                 </div>
       follow_status = <SmartFollowStatus
                           tlogId={ this.props.user.id }
