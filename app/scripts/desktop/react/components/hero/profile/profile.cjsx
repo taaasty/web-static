@@ -45,11 +45,12 @@ window.HeroProfile = React.createClass
     else if @props.relationship?
       actions = <div className="hero__actions hero__actions--visible">
                   <FollowButton relationship={ this.props.relationship } />
-                  <WriteMessageButton user={ this.props.user } />
-                  {(this.props.user.slug != TLOG_SLUG_ANONYMOUS) and <HeroProfile_DropdownMenu
-                     userId={ this.props.user.id }
-                     status={ this.props.relationship.state }
-                   />}
+                  {(this.props.user.slug != TLOG_SLUG_ANONYMOUS) and
+                   [ <WriteMessageButton user={ this.props.user } />,
+                     <HeroProfile_DropdownMenu
+                       userId={ this.props.user.id }
+                       status={ this.props.relationship.state }
+                     /> ]}
                 </div>
       follow_status = <SmartFollowStatus
                           tlogId={ this.props.user.id }
