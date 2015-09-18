@@ -78,16 +78,18 @@
 
 .button-hero-style() {
   &:extend(.button all, .button--small all);
-  color: @hero-button-color;
+  //color: @hero-button-color;
 
   &:before {
-    border: 1px solid @hero-button-border-color;
+    opacity: @hero-button-border-opacity;
+    border: 1px solid; // @hero-button-border-color;
   }
 
   &:hover {
     &:before {
-      border-color: @hero-button-border-color-hover;
-      color: @hero-button-color-hover;
+      opacity: @hero-button-border-opacity-hover;
+      //border-color: @hero-button-border-color-hover;
+      //color: @hero-button-color-hover;
     }
   }
 }
@@ -96,10 +98,12 @@
   .button-hero-style();
   width: 46px;
   padding: 0;
-  color: rgba(255, 255, 255, .6);
+  opacity: 0.6;
+  //color: rgba(255, 255, 255, .6);
 
   &:hover {
-    color: @white;
+    //color: @white;
+    opacity: 1.0;
   }
 }
 
