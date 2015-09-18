@@ -42,7 +42,7 @@ const dependencies = {
   'jquery.mousewheel': './app/bower_components/jquery.mousewheel/jquery.mousewheel',
   'jquery.scrollto': './app/bower_components/jquery.scrollto/jquery.scrollTo',
   'undo': './app/bower_components/undo/undo',
-  'medium-editor': './app/bower_components/medium-editor/dist/js/medium-editor',
+  'medium-editor': './node_modules/medium-editor/dist/js/medium-editor',
   'aviator': './app/bower_components/aviator/src/main',
   'nanobar': './app/bower_components/nanobar/index',
   'URIjs': './node_modules/URIjs/src/URI',
