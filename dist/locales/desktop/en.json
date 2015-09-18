@@ -158,7 +158,7 @@
     "editor_save_button": "Save in Tlog",
     "editor_preview_button": "Preview",
     "editor_title_placeholder": "Heading (199 symbols)",
-    "editor_text_placeholder": "Start typing entry's text. <br> Shift + Enter a new line, Enter - new paragraph",
+    "editor_text_placeholder": "Start typing entry's text. <br>Shift + Enter a new line, Enter - new paragraph",
     "editor_description_placeholder": "Invent signature",
     "editor_image_doesnt_exist": "Image with url __imageUrl__ doesn't exist",
     "editor_quote_text_placeholder": "Text of quote (499 characters)",
