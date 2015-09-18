@@ -21,7 +21,7 @@ let HeroFlow = React.createClass({
   render() {
     return (
       <Hero backgroundUrl={this.state.flow.flowpic.original_url}
-            title={'#' + this.state.flow.name}
+            title={<a href={this.state.flow.tlog_url}>{'#' + this.state.flow.name}</a>}
             text={i18n.t('hero.flow_entries_count', {count: this.state.flow.public_tlog_entries_count})}
             actions={this.getActions()} />
     );
