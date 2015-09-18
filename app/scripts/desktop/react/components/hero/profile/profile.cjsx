@@ -46,8 +46,12 @@ window.HeroProfile = React.createClass
       actions = <div className="hero__actions hero__actions--visible">
                   <FollowButton relationship={ this.props.relationship } />
                   {(this.props.user.slug != TLOG_SLUG_ANONYMOUS) and
-                   [ <WriteMessageButton user={ this.props.user } />,
+                   [ <WriteMessageButton
+                       key="write-message-button"
+                       user={ this.props.user }
+                     />,
                      <HeroProfile_DropdownMenu
+                       key="ellipsis-button"
                        userId={ this.props.user.id }
                        status={ this.props.relationship.state }
                      /> ]}
