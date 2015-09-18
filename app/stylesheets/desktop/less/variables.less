@@ -176,8 +176,10 @@
 @social-share-button-tw-bg: #55acee;
 
 // Hero Button
-@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
-@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), .6);
+@hero-button-border-opacity: .3;
+@hero-button-border-opacity-hover: .6;
+@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), @hero-button-border-opacity);
+@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), @hero-button-border-opacity-hover);
 
 @hero-button-color: @white;
 @hero-button-color-hover: @white;
