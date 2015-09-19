@@ -1,7 +1,8 @@
-/*global i18n, TastyConfirmController, DOMManipulationsMixin */
+/*global i18n, TastyConfirmController */
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
+import ErrorService from '../../../../../shared/react/services/Error';
 
 const ENTRY_TYPES = [
   'text', 'image', 'video', 'quote', 'link', 'song', 'code'
@@ -19,6 +20,19 @@ export default class EntryTlog extends Component {
   state = {
     entry: this.props.entry,
     hasModeration: !!this.props.moderation
+  }
+  componentWillMount() {
+    const { entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
+    if (can_delete && !host_tlog_id) {
+      ErrorService.notifyWarning('Неконсистентный флаг can_delete', {
+        componentName: 'EntryTlog',
+        method: 'componentWillMount',
+        canDelete: can_delete,
+        entryID: id,
+        entryTlogID: tlog && tlog.id,
+        hostTlogID: host_tlog_id,
+      });
+    }
   }
   shouldComponentUpdate(nextProps, nextState) {
     return this.state.hasModeration !== nextState.hasModeration;
