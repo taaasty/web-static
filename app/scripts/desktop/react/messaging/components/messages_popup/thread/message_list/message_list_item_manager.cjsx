@@ -72,6 +72,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
     MessageActions.resendMessage {
       conversationId: @props.message.conversation_id
       content:        @props.message.content
+      files:          @props.message.files
       uuid:           @props.message.uuid
     }
 
