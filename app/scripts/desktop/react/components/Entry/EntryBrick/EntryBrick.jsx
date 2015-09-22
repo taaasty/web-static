@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 
@@ -8,9 +9,9 @@ const ENTRY_TYPES = [
 
 let EntryBrick = React.createClass({
   propTypes: {
-    entry: PropTypes.object.isRequired,
+    entry: ProjectTypes.tlogEntry.isRequired,
     host_tlog_id: PropTypes.number,
-    moderation: PropTypes.object
+    moderation: PropTypes.object,
   },
 
   getInitialState() {

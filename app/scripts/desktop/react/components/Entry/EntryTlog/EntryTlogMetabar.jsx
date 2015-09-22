@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
+import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
 import EntryTlogMetabarComments from './EntryTlogMetabarComments';
 import EntryTlogMetabarDate from './EntryTlogMetabarDate';
 import EntryTlogMetabarRepost from './EntryTlogMetabarRepost';
@@ -41,18 +42,10 @@ export default class EntryTlogMetabar {
     );
   }
   renderAuthor() {
-    const { entry: { tlog }, host_tlog_id } = this.props;
-    let authorMeta = '';
+    const { entry: { author, tlog }, host_tlog_id } = this.props;
+    const authorMeta = metabarAuthor({ host_tlog_id, author, tlog });
 
-    if (tlog != null) {
-      if (host_tlog_id == null) {
-        authorMeta = tlog.tag;
-      } else if (host_tlog_id !== tlog.id) {
-        authorMeta = i18n.t('entry.meta.repost_from', { tag: tlog.tag });
-      } else {
-        return null;
-      }
-
+    if (authorMeta) {
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">

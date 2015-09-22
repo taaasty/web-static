@@ -1,15 +1,13 @@
 import React, { PropTypes } from 'react';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
+import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
 import VotingComponent from '../../common/Voting';
 
 let EntryBrickMetabar = React.createClass({
   propTypes: {
-    commentsCount: PropTypes.number.isRequired,
-    entryID: PropTypes.number.isRequired,
+    entry: ProjectTypes.tlogEntry.isRequired,
     host_tlog_id: PropTypes.number,
-    rating: PropTypes.object.isRequired,
-    tlog: PropTypes.object,
-    url: PropTypes.string.isRequired,
   },
 
   render() {
@@ -23,11 +21,13 @@ let EntryBrickMetabar = React.createClass({
   },
 
   renderMetaVote() {
-    if (this.props.rating.is_voteable) {
+    const { id, rating} = this.props.entry;
+
+    if (rating.is_voteable) {
       return (
         <span className="meta-item meta-item--vote">
           <span className="meta-item__content">
-            <VotingComponent entryID={this.props.entryID} rating={this.props.rating} />
+            <VotingComponent entryID={id} rating={rating} />
           </span>
         </span>
       );
@@ -35,13 +35,15 @@ let EntryBrickMetabar = React.createClass({
   },
 
   renderMetaComments() {
-    if (this.props.commentsCount) {
-      let title = i18n.t('comments_count', {count: this.props.commentsCount});
+    const { comments_count: commentsCount, url } = this.props.entry;
+
+    if (commentsCount) {
+      let title = i18n.t('comments_count', {count: commentsCount});
 
       return (
         <span className="meta-item meta-item--comments">
           <span className="meta-item__content">
-            <a href={this.props.url + '#comments'} title={title} className="meta-item__link">
+            <a href={url + '#comments'} title={title} className="meta-item__link">
               {title}
             </a>
           </span>
@@ -51,21 +53,10 @@ let EntryBrickMetabar = React.createClass({
   },
 
   renderMetaTlog() {
-    const { host_tlog_id, tlog } = this.props;
-    let authorMeta = '';
+    const { entry: { author, tlog }, host_tlog_id } = this.props;
+    const authorMeta = metabarAuthor({ host_tlog_id, tlog, author });
 
-    if (tlog != null) {
-      if (host_tlog_id == null) {
-        authorMeta = tlog.tag;
-      } else if (host_tlog_id !== tlog.id) {
-        authorMeta = [
-          <i className="icon icon--retweet" />,
-          tlog.tag,
-        ];
-      } else {
-        return null;
-      }
-
+    if (authorMeta) {
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">
