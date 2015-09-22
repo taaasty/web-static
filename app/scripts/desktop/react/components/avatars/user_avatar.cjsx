@@ -1,4 +1,4 @@
-window.UserAvatar = React.createClass
+UserAvatar = React.createClass
   displayName: 'UserAvatar'
 
   propTypes:
@@ -25,3 +25,5 @@ window.UserAvatar = React.createClass
     newUser.userpic = userpic
 
     @setState(user: newUser)
+
+module.exports = UserAvatar

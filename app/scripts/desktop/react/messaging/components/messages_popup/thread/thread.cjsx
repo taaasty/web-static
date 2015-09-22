@@ -1,3 +1,5 @@
+MessagesPopupThreadForm = require('./MessagesPopupThreadForm')
+
 window.MessagesPopup_Thread = React.createClass
   displayName: 'MessagesPopup_Thread'
 
@@ -18,6 +20,6 @@ window.MessagesPopup_Thread = React.createClass
                <MessagesPopup_ThreadMessageList conversationId={ this.props.conversationId} />
              </div>
              <footer className="messages__footer">
-               <MessagesPopup_ThreadMessageForm conversationId={ this.props.conversationId } />
+               <MessagesPopupThreadForm conversationId={ this.props.conversationId } />
              </footer>
            </div>
