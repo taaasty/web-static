@@ -12372,7 +12372,49 @@ var relationship = _react.PropTypes.shape({
   state: _react.PropTypes.string,
   user_id: _react.PropTypes.number
 });
+
 exports.relationship = relationship;
+var userpicData = _react.PropTypes.shape({
+  kind: _react.PropTypes.string.isRequired,
+  original_url: _react.PropTypes.string,
+  symbol: _react.PropTypes.string
+});
+
+var tlogData = _react.PropTypes.shape({
+  id: _react.PropTypes.number.isRequired,
+  tag: _react.PropTypes.string.isRequired,
+  url: _react.PropTypes.string.isRequired,
+  userpic: userpicData.isRequired
+});
+
+var tlogEntry = _react.PropTypes.shape({
+  author: tlogData.isRequired,
+  can_delete: _react.PropTypes.bool,
+  can_edit: _react.PropTypes.bool,
+  can_favorite: _react.PropTypes.bool,
+  can_moderate: _react.PropTypes.bool,
+  can_report: _react.PropTypes.bool,
+  can_vote: _react.PropTypes.bool,
+  can_watch: _react.PropTypes.bool,
+  comments_count: _react.PropTypes.number.isRequired,
+  id: _react.PropTypes.number.isRequired,
+  is_favorited: _react.PropTypes.bool,
+  is_voteable: _react.PropTypes.bool,
+  is_watching: _react.PropTypes.bool,
+  preview_image: _react.PropTypes.shape({
+    geometry: _react.PropTypes.shape({
+      height: _react.PropTypes.number.isRequired,
+      width: _react.PropTypes.number.isRequired
+    }),
+    url: _react.PropTypes.string.isRequired
+  }).isRequired,
+  rating: _react.PropTypes.object.isRequired,
+  title_truncated: _react.PropTypes.string.isRequired,
+  tlog: tlogData.isRequired,
+  type: _react.PropTypes.string.isRequired,
+  url: _react.PropTypes.string.isRequired
+});
+exports.tlogEntry = tlogEntry;
 
 },{"react":"react"}],243:[function(require,module,exports){
 var Collage, CollageMixin, CollageRow, PropTypes;

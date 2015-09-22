@@ -1,20 +1,12 @@
 import React, { PropTypes } from 'react';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
 let EntryBrickTextType = React.createClass({
   propTypes: {
-    entry: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      text_truncated: PropTypes.string.isRequired,
-      rating: PropTypes.object.isRequired,
-      tlog: PropTypes.object,
-      comments_count: PropTypes.number.isRequired,
-    }).isRequired,
+    entry: ProjectTypes.tlogEntry.isRequired,
     hasModeration: PropTypes.bool.isRequired,
     host_tlog_id: PropTypes.number,
     onEntryAccept: PropTypes.func.isRequired,
@@ -36,12 +28,8 @@ let EntryBrickTextType = React.createClass({
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
-            commentsCount={entry.comments_count}
-            entryID={entry.id}
+            entry={entry}
             host_tlog_id={host_tlog_id}
-            rating={entry.rating}
-            tlog={entry.tlog}
-            url={entry.url}
           />
         </div>
         <EntryBrickActions

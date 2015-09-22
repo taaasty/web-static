@@ -385,7 +385,9 @@
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи",
     "meta": {
-      "repost_from": "Репост из __tag__"
+      "repost_from": "Репост из __tag__",
+      "author_posted_in": "__author__ написала в __tlog__",
+      "author_posted_in_m": "__author__ написал в __tlog__"
     },
     "repost": {
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"__flowsLink__\">потоки</a> чтобы добавлять туда посты"
