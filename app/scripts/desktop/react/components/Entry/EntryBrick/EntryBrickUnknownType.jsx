@@ -1,18 +1,11 @@
 import React, { PropTypes } from 'react';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 
 let EntryBrickUnknownType = React.createClass({
   propTypes: {
-    entry: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      rating: PropTypes.object.isRequired,
-      tlog: PropTypes.object.isRequired,
-      comments_count: PropTypes.number.isRequired,
-    }).isRequired,
+    entry: ProjectTypes.tlogEntry.isRequired,
     hasModeration: PropTypes.bool.isRequired,
     host_tlog_id: PropTypes.number,
     onEntryAccept: PropTypes.func.isRequired,
@@ -25,19 +18,15 @@ let EntryBrickUnknownType = React.createClass({
         <div className="brick__body">
           {this.renderBrickTitle()}
           <div className="brick__text">
-            <a href={this.props.entry.entry_url} title={this.props.entry.title} className="brick__link">
+            <a href={this.props.entry.url} title={this.props.entry.title} className="brick__link">
               {i18n.t('entry.unknown_type')}
             </a>
           </div>
         </div>
         <div className="brick__meta">
           <EntryBrickMetabar
-            commentsCount={this.props.entry.comments_count}
-            entryID={this.props.entry.id}
+            entry={this.props.entry}
             host_tlog_id={this.props.host_tlog_id}
-            rating={this.props.entry.rating}
-            tlog={this.props.entry.tlog}
-            url={this.props.entry.entry_url}
           />
         </div>
         <EntryBrickActions
