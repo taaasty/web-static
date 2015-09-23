@@ -22,7 +22,7 @@ export default class HeroFlow extends Component {
         <button className="button button--extra-small button--green"
           onClick={redirect.bind(this)}
         >
-          {i18n.t('buttons.hero_create_entry')}
+          {i18n.t('buttons.hero_flow_create_entry')}
         </button>
     );
   }

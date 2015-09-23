@@ -1570,7 +1570,7 @@ var HeroFlow = (function (_Component) {
           { className: 'button button--extra-small button--green',
             onClick: redirect.bind(this)
           },
-          i18n.t('buttons.hero_create_entry')
+          i18n.t('buttons.hero_flow_create_entry')
         )
       );
     }
@@ -7548,12 +7548,27 @@ HeroFeedLive = React.createClass({
   displayName: 'HeroFeedLive',
   propTypes: {
     backgroundUrl: PropTypes.string.isRequired,
+    currentUser: PropTypes.object,
     entriesCount: PropTypes.number.isRequired
+  },
+  renderWriteButton: function() {
+    var redirect;
+    redirect = (function(_this) {
+      return function() {
+        return window.location.href = Routes.new_entry_url(_this.props.currentUser.slug);
+      };
+    })(this);
+    return React.createElement("button", {
+      "className": "button button--extra-small button--green",
+      "onClick": redirect
+    }, i18n.t('buttons.hero_live_create_entry'));
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
       "title": i18n.t('feed.live')
-    }));
+    }), React.createElement("div", {
+      "className": "hero__actions hero__actions--visible"
+    }, this.props.currentUser && this.renderWriteButton()));
   }
 });
 
@@ -11334,6 +11349,7 @@ FeedLivePage = React.createClass({
       "className": "layout__header"
     }, React.createElement(HeroFeedLive, {
       "backgroundUrl": this.props.feed.backgroundUrl,
+      "currentUser": this.props.currentUser,
       "entriesCount": this.props.feed.entriesCount
     })), React.createElement("div", {
       "className": "layout__body"

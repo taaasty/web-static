@@ -130,6 +130,8 @@
         "comment_edit": "Edit",
         "feed_load_more": "Load more",
         "hero_current_user": "It's you",
+        "hero_flow_create_entry": "Post to the flow",
+        "hero_live_create_entry": "Create new post",
         "auth_reset_password": "Delete the password",
         "auth_email_signin": "Log in with email",
         "auth_email_signup": "or register",

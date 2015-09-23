@@ -167,6 +167,8 @@ module.exports={
         "comment_edit": "Edit",
         "feed_load_more": "Load more",
         "hero_current_user": "It's you",
+        "hero_flow_create_entry": "Post to the flow",
+        "hero_live_create_entry": "Create new post",
         "auth_reset_password": "Delete the password",
         "auth_email_signin": "Log in with email",
         "auth_email_signup": "or register",
@@ -245,6 +247,7 @@ module.exports={
         "messenger_cant_talk": "This user has ignored you"
     }
 }
+
 },{}],3:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
@@ -430,7 +433,8 @@ module.exports={
     "comment_edit": "Изм",
     "feed_load_more": "Загрузить еще",
     "hero_current_user": "Это вы",
-    "hero_create_entry": "Написать в поток",
+    "hero_flow_create_entry": "Написать в поток",
+    "hero_live_create_entry": "Добавить запись",
     "auth_reset_password": "Сбросить пароль",
     "auth_email_signin": "Войти с помощью эл. почты",
     "auth_email_signup": "или зарегистрироваться",
@@ -1915,7 +1919,7 @@ var HeroFlow = (function (_Component) {
           { className: 'button button--extra-small button--green',
             onClick: redirect.bind(this)
           },
-          i18n.t('buttons.hero_create_entry')
+          i18n.t('buttons.hero_flow_create_entry')
         )
       );
     }
@@ -7623,12 +7627,27 @@ HeroFeedLive = React.createClass({
   displayName: 'HeroFeedLive',
   propTypes: {
     backgroundUrl: PropTypes.string.isRequired,
+    currentUser: PropTypes.object,
     entriesCount: PropTypes.number.isRequired
+  },
+  renderWriteButton: function() {
+    var redirect;
+    redirect = (function(_this) {
+      return function() {
+        return window.location.href = Routes.new_entry_url(_this.props.currentUser.slug);
+      };
+    })(this);
+    return React.createElement("button", {
+      "className": "button button--extra-small button--green",
+      "onClick": redirect
+    }, i18n.t('buttons.hero_live_create_entry'));
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
       "title": i18n.t('feed.live')
-    }));
+    }), React.createElement("div", {
+      "className": "hero__actions hero__actions--visible"
+    }, this.props.currentUser && this.renderWriteButton()));
   }
 });
 
@@ -11409,6 +11428,7 @@ FeedLivePage = React.createClass({
       "className": "layout__header"
     }, React.createElement(HeroFeedLive, {
       "backgroundUrl": this.props.feed.backgroundUrl,
+      "currentUser": this.props.currentUser,
       "entriesCount": this.props.feed.entriesCount
     })), React.createElement("div", {
       "className": "layout__body"

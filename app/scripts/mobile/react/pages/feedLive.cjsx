@@ -34,8 +34,10 @@ FeedLivePage = React.createClass
       <div className="layout">
         <div className="layout__header">
           <HeroFeedLive
-              backgroundUrl={ @props.feed.backgroundUrl }
-              entriesCount={ @props.feed.entriesCount } />
+            backgroundUrl={ @props.feed.backgroundUrl }
+            currentUser={ this.props.currentUser }
+            entriesCount={ @props.feed.entriesCount }
+          />
         </div>
         <div className="layout__body">
           <FeedLive />
