@@ -7460,7 +7460,7 @@ HeroFeed = React.createClass({
   propTypes: {
     title: PropTypes.string.isRequired,
     backgroundUrl: PropTypes.string.isRequired,
-    entriesCount: PropTypes.number.isRequired
+    entriesCount: PropTypes.number
   },
   render: function() {
     return React.createElement("div", {
@@ -7474,7 +7474,7 @@ HeroFeed = React.createClass({
       "className": "hero__head"
     }, React.createElement("div", {
       "className": "hero__title"
-    }, React.createElement("span", null, this.props.title)), React.createElement("div", {
+    }, React.createElement("span", null, this.props.title)), this.props.entriesCount !== null && React.createElement("div", {
       "className": "hero__smalltext"
     }, React.createElement("span", null, i18n.t('hero.feed_entries_count', {
       count: this.props.entriesCount
@@ -7505,6 +7505,7 @@ HeroFeedBest = React.createClass({
   },
   render: function() {
     return React.createElement(HeroFeed, React.__spread({}, this.props, {
+      "entriesCount": null,
       "title": i18n.t('feed.best')
     }));
   }
