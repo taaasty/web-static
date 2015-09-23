@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ThreadFormMediaPreviewImage from './ThreadFormMediaPreviewImage';
+import ImgFromFile from './ImgFromFile';
 
 class ThreadFormMediaPreview {
   render() {
@@ -11,7 +11,7 @@ class ThreadFormMediaPreview {
               className="message-form__media-preview__item"
               key={`file-${idx}-${file.name}-${file.size}`}
             >
-              <ThreadFormMediaPreviewImage image={file} />
+              <ImgFromFile file={file} />
             </div>
           ))
         }

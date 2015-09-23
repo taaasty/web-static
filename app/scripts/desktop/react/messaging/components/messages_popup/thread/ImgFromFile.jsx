@@ -1,7 +1,7 @@
 import React, { findDOMNode, PropTypes } from 'react';
 import BrowserHelpers from '../../../../../../shared/helpers/browser';
 
-class ThreadFormMediaPreviewImage {
+class ImgFromFile {
   componentDidMount() {
     this.image = new Image();
     this.image.onload = () => {
@@ -10,7 +10,7 @@ class ThreadFormMediaPreviewImage {
         container.appendChild(this.image);
       }
     };
-    this.imageSrc = BrowserHelpers.createObjectURL(this.props.image);
+    this.imageSrc = BrowserHelpers.createObjectURL(this.props.file);
     this.image.src = this.imageSrc;
   }
   componentWillUnmount() {
@@ -21,8 +21,8 @@ class ThreadFormMediaPreviewImage {
   }
 }
 
-ThreadFormMediaPreviewImage.propTypes = {
-  image: PropTypes.object.isRequired,
+ImgFromFile.propTypes = {
+  file: PropTypes.object.isRequired,
 }
 
-export default ThreadFormMediaPreviewImage;
+export default ImgFromFile;

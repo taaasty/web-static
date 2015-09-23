@@ -17,7 +17,7 @@ class MessagesPopupThreadForm extends Component {
     isLoading: false,
   }
   onKeyDown(ev) {
-    if (ev.key === 'Enter' && !this.isFormEmpty() &&
+    if (ev.key === 'Enter' && (!this.isFormEmpty() || this.state.files.length) &&
         !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
       ev.preventDefault();
 
@@ -25,9 +25,9 @@ class MessagesPopupThreadForm extends Component {
         content: ev.target.value,
         files: this.state.files,
         conversationId: this.props.conversationId,
-      })
-        .done(() => this.clearForm())
-        .fail();
+      });
+
+      this.clearForm();
     }
   }
   onFileInputChange(ev) {
