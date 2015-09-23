@@ -123,7 +123,7 @@ require './react/components/common/adaptive_input'
 global.EmbedComponent = require './react/components/embed'
 
 require './react/components/avatars/avatar'
-require './react/components/avatars/user_avatar'
+global.UserAvatar = require './react/components/avatars/user_avatar'
 
 # /*===============================================
 # =            Authorization resources            =

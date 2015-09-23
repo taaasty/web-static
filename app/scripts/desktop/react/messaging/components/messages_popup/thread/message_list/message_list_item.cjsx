@@ -1,4 +1,5 @@
 classnames = require 'classnames'
+ImgFromFile = require '../ImgFromFile'
 
 ERROR_STATE   = 'error'
 SENT_STATE    = 'sent'
@@ -32,6 +33,21 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
     else
       userSlug = <span className="messages__user-name">{ this.props.messageInfo.user.slug }</span>
 
+    attachments = if this.props.message.attachments && this.props.message.attachments.length
+      this.props.message.attachments.map((img) =>
+        <div className="messages__img">
+          <img src={img.url} />
+        </div>
+      )
+    else if this.props.message.files && this.props.message.files.length
+      this.props.message.files.map((file) =>
+        <div className="messages__img">
+          <ImgFromFile file={file} />
+        </div>
+      )
+    else
+      null
+
     return <div className={ messageClasses }>
              <span className="messages__user-avatar">
                <UserAvatar user={ this.props.messageInfo.user } size={ 35 } />
@@ -40,6 +56,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
                { userSlug }
                <span className="messages__text"
                      dangerouslySetInnerHTML={{__html: this.props.message.content_html || ''}} />
+               { attachments }
              </div>
              <span className="messages__date">
                { messageCreatedAt }

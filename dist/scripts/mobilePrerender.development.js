@@ -12306,6 +12306,15 @@ BrowserHelpers = {
     } else {
       return null;
     }
+  },
+  revokeObjectURL: function(str) {
+    if (window.URL && window.URL.revokeObjectURL) {
+      return window.URL.revokeObjectURL(str);
+    } else if (window.webkitURL) {
+      return window.webkitURL.revokeObjectURL(str);
+    } else {
+      return null;
+    }
   }
 };
 

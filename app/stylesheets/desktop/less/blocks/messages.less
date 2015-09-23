@@ -1,5 +1,5 @@
 .messages {
-  height: @messages-height;
+//FIXME  height: @messages-height;
   overflow: hidden;
   position: relative;
 
@@ -428,6 +428,8 @@
 
 .messages__section--thread {
   padding: 43px 0 104px;
+  //FIXME
+  padding-bottom: initial;
 
   .messages__header {
     width: 100%;
@@ -438,7 +440,7 @@
   }
 
   .messages__footer {
-    height: 104px;
+    //FIXME height: 104px;
   }
 
   .messages__thread-overlay {
@@ -469,6 +471,9 @@
     }
   }
 
+  .messages__img {
+    max-width: 220px;
+  }
 }
 
 .message-form {
@@ -476,15 +481,64 @@
   position: relative;
 }
 
-.message-form__textarea {
+.message-form__textarea-container {
+  position: relative;
   width: 100%;
   height: 63px;
+}
+
+.message-form__textarea {
+  width: 100%;
+  height: 100%;
   padding: 8px 12px;
   border: 1px solid #d9d9d9;
   background: @white;
   font: inherit;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.message-form__upload-button-container {
+  position: absolute;
+  overflow: hidden;
+  bottom: 8px; right: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+.message-form__upload-button {
+  font-size: 24px;
+  opacity: 0.5;
+  &:hover {
+    opacity: 0.8;
+  }
+  transition: opacity 0.3s ease-in;
+}
+
+.message-form__upload-input {
+  position: absolute;
+  top: 0; left: 0;
+  curson: pointer;
+  opacity: 0.01;
+}
+
+.message-form__media-preview {
+  text-align: left;
+  margin-top: 7px;
+  padding: 0 1px;
+}
+
+.message-form__media-preview__item {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 40px;
+  width: 80px;
+  margin: 0 7px 7px 0;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .message,

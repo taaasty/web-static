@@ -1,0 +1,28 @@
+import React, { findDOMNode, PropTypes } from 'react';
+import BrowserHelpers from '../../../../../../shared/helpers/browser';
+
+class ImgFromFile {
+  componentDidMount() {
+    this.image = new Image();
+    this.image.onload = () => {
+      const container = findDOMNode(this.refs.container);
+      if (container instanceof HTMLElement) {
+        container.appendChild(this.image);
+      }
+    };
+    this.imageSrc = BrowserHelpers.createObjectURL(this.props.file);
+    this.image.src = this.imageSrc;
+  }
+  componentWillUnmount() {
+    BrowserHelpers.revokeObjectURL(this.imageSrc);
+  }
+  render() {
+    return (<div ref="container" />);
+  }
+}
+
+ImgFromFile.propTypes = {
+  file: PropTypes.object.isRequired,
+}
+
+export default ImgFromFile;

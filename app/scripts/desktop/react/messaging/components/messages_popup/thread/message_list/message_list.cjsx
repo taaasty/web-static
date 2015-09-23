@@ -45,7 +45,7 @@ window.MessagesPopup_ThreadMessageList = React.createClass
       messages = @state.messages.map (message, i) ->
         <MessagesPopup_ThreadMessageListItemManager message={ message }
                                                     messagesCount={ that.state.messages.length }
-                                                    key={ message.uuid } />
+                                                    key={"msg-#{message.uuid}"} />
 
     return <div ref="scroller"
                 className="scroller scroller--dark scroller--messages">
