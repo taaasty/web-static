@@ -382,7 +382,8 @@
         "has_no_images": "There are no images for entry",
         "unknown_type": "Unknown type of entry",
         "meta": {
-            "repost_from": "Repost from __tag__"
+          "repost_from": "Repost from __tag__",
+          "author_posted_in": "__author__ posted in __tlog__"
         },
         "repost": {
           "no_flows": "Follow or create new <a class=\"popup__link\" href=\"__flowsLink__\">flows</a> to share your thoughts there"

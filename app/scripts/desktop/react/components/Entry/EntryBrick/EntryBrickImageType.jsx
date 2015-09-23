@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Text from '../../../../../shared/react/components/common/Text';
 import Image from '../../../../../shared/react/components/common/Image';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
@@ -8,16 +9,7 @@ const brickWidth = 302;
 
 let EntryBrickImageType = React.createClass({
   propTypes: {
-    entry: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      title_truncated: PropTypes.string.isRequired,
-      preview_image: PropTypes.object.isRequired,
-      tlog: PropTypes.object.isRequired,
-      rating: PropTypes.object.isRequired,
-      comments_count: PropTypes.number.isRequired,
-    }).isRequired,
+    entry: ProjectTypes.tlogEntry.isRequired,
     hasModeration: PropTypes.bool.isRequired,
     host_tlog_id: PropTypes.number,
     onEntryAccept: PropTypes.func.isRequired,
@@ -35,12 +27,8 @@ let EntryBrickImageType = React.createClass({
         {this.renderBrickBody()}
         <div className="brick__meta">
           <EntryBrickMetabar
-            commentsCount={this.props.entry.comments_count}
-            entryID={this.props.entry.id}
+            entry={this.props.entry}
             host_tlog_id={this.props.host_tlog_id}
-            rating={this.props.entry.rating}
-            tlog={this.props.entry.tlog}
-            url={this.props.entry.url}
           />
         </div>
         <EntryBrickActions
