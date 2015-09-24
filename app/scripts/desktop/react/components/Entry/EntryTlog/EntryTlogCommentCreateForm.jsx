@@ -9,22 +9,26 @@ export default class EntryTlogCommentCreateForm extends Component {
   static propTypes = {
     entryID: PropTypes.number.isRequired,
     commentator: PropTypes.object.isRequired,
+    isInList: PropTypes.bool,
     totalCommentsCount: PropTypes.number.isRequired,
-    process: PropTypes.bool
+    process: PropTypes.bool,
   }
   state = {
-    currentState: this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
+    currentState: this.props.isInList
+      ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
+      : FORM_SHOW_STATE,
   }
   render() {
     switch(this.state.currentState) {
       case FORM_SHOW_STATE:
         return (
           <EntryTlogCommentForm
-              ref="form"
-              commentator={this.props.commentator}
-              process={this.props.process}
-              onSubmit={this.props.onCommentCreate}
-              onCancel={::this.close} />
+            commentator={this.props.commentator}
+            onCancel={::this.close}
+            onSubmit={this.props.onCommentCreate}
+            process={this.props.process}
+            ref="form"
+          />
         );
       case FORM_LINK_STATE:
         return (

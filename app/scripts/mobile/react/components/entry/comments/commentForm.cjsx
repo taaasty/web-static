@@ -1,4 +1,4 @@
-{ PropTypes } = React
+{ findDOMNode, PropTypes } = React
 
 CommentForm = React.createClass
   displayName: 'CommentForm'
@@ -6,6 +6,7 @@ CommentForm = React.createClass
   propTypes:
     text:        PropTypes.string
     buttonTitle: PropTypes.string.isRequired
+    formFocus:   PropTypes.bool.isRequired,
     placeholder: PropTypes.string.isRequired
     disabled:    PropTypes.bool
     onSubmit:    React.PropTypes.func.isRequired
@@ -13,6 +14,17 @@ CommentForm = React.createClass
 
   getDefaultProps: ->
     disabled: false
+
+  componentDidMount: ->
+    this.formFocus()
+
+  componentDidUpdate: ->
+    this.formFocus()
+
+  formFocus: ->
+    textField = findDOMNode(this.refs.textField)
+    if textField and this.props.formFocus
+      textField.focus()
 
   render: ->
     <form className="comment-form">
@@ -24,7 +36,6 @@ CommentForm = React.createClass
       <div className="comment-form__field">
         <textarea
             ref="textField"
-            autoFocus={ true }
             defaultValue={ @props.text }
             placeholder={ @props.placeholder }
             disabled={ @props.disabled }
@@ -41,11 +52,11 @@ CommentForm = React.createClass
       </button>
 
   clearForm: ->
-    @refs.textField.getDOMNode().value = ''
+    findDOMNode(@refs.textField).value = ''
 
   handleSubmit: (e) ->
     e.preventDefault()
-    value = @refs.textField.getDOMNode().value.trim()
+    value = findDOMNode(@refs.textField).value.trim()
 
     @props.onSubmit(value) unless @props.disabled
 

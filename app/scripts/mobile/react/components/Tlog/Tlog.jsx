@@ -25,7 +25,7 @@ let Tlog = React.createClass({
   },
 
   renderEntryList() {
-    let listItems = this.props.entries.map((entry) => <EntryTlog entry={entry} key={entry.id} />)
+    let listItems = this.props.entries.map((entry) => <EntryTlog entry={entry} key={entry.id} isInList={true} />)
 
     return (
       <div className="posts">

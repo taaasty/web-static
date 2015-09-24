@@ -13,6 +13,7 @@ export default class EntryTlog extends Component {
     commentator: PropTypes.object,
     entry: PropTypes.object.isRequired,
     host_tlog_id: PropTypes.number,
+    isInList: PropTypes.bool,
     moderation: PropTypes.object,
     onDelete: PropTypes.func,
     successDeleteUrl: PropTypes.string,
@@ -63,6 +64,7 @@ export default class EntryTlog extends Component {
           commentator={commentator}
           hasModeration={this.state.hasModeration}
           host_tlog_id={host_tlog_id}
+          isInList={this.props.isInList}
         />
       </article>
     );

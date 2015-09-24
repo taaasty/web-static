@@ -13,6 +13,7 @@ EntryComments = React.createClass
     commentsCount: PropTypes.number.isRequired
     loading: PropTypes.bool.isRequired
     loadPerTime: PropTypes.number
+    formFocus: PropTypes.bool.isRequired,
     formVisible: PropTypes.bool.isRequired
     onCommentsLoadMore: PropTypes.func.isRequired
     onCommentCreate: PropTypes.func.isRequired
@@ -50,8 +51,10 @@ EntryComments = React.createClass
   renderCommentForm: ->
     if @props.user? and @props.formVisible
       <CommentCreateForm
-          entryId={ @props.entry.id }
-          loading={ @props.loading }
-          onCommentCreate={ @props.onCommentCreate } />
+        formFocus={this.props.formFocus}
+        entryId={ @props.entry.id }
+        loading={ @props.loading }
+        onCommentCreate={ @props.onCommentCreate }
+      />
 
 module.exports = EntryComments

@@ -8,12 +8,13 @@ const LOAD_COMMENTS_LIMIT = 50;
 
 export default class EntryTlogComments extends Component {
   static propTypes = {
-    entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    limit: PropTypes.number
+    entry: PropTypes.object.isRequired,
+    isInList: PropTypes.bool,
+    limit: PropTypes.number,
   }
   static defaultProps = {
-    limit: LOAD_COMMENTS_LIMIT
+    limit: LOAD_COMMENTS_LIMIT,
   }
   state = {
     comments: this.props.entry.comments || [],
@@ -66,10 +67,12 @@ export default class EntryTlogComments extends Component {
 
       return (
         <EntryTlogCommentCreateForm {...this.props} {...actions}
-            ref="createForm"
-            entryID={this.props.entry.id}
-            totalCommentsCount={this.state.totalCount}
-            process={this.state.processCreate} />
+          ref="createForm"
+          entryID={this.props.entry.id}
+          isInList={this.props.isInList}
+          totalCommentsCount={this.state.totalCount}
+          process={this.state.processCreate}
+        />
       );
     }
   }
