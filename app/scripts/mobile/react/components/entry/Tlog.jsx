@@ -13,19 +13,21 @@ let EntryTlog = React.createClass({
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
     commentFormVisible: React.PropTypes.bool,
+    isInList: React.PropTypes.bool,
     onDelete: React.PropTypes.func,
     successDeleteUrl: React.PropTypes.string,
   },
 
   getDefaultProps() {
     return {
-      commentFormVisible: false
+      commentFormVisible: false,
     }
   },
 
   getInitialState() {
     return {
-      commentFormVisible: this.props.commentFormVisible
+      commentFormVisible: this.props.commentFormVisible || !this.props.isInList,
+      formFocus: this.props.isInList,
     }
   },
 
@@ -46,7 +48,9 @@ let EntryTlog = React.createClass({
           commentsCount={this.state.commentsCount}
           loading={this.isLoadingState()}
           loadPerTime={this.props.loadPerTime}
+          formFocus={this.state.formFocus}
           formVisible={this.state.commentFormVisible}
+          isInList={this.props.isInList}
           onCommentsLoadMore={this.loadMoreComments}
           onCommentCreate={this.createComment}
           onCommentEdit={this.editComment}
@@ -58,7 +62,12 @@ let EntryTlog = React.createClass({
   },
 
   toggleCommentForm() {
-    this.setState({commentFormVisible: !this.state.commentFormVisible});
+    const { commentFormVisible, formFocus } = this.state;
+
+    this.setState({
+      commentFormVisible: formFocus ? !commentFormVisible : true,
+      formFocus: true,
+    });
   },
 
   getStateFromStore() {

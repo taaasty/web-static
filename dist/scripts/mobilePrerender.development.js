@@ -3248,7 +3248,7 @@ var Tlog = React.createClass({
 
   renderEntryList: function renderEntryList() {
     var listItems = this.props.entries.map(function (entry) {
-      return React.createElement(_entryTlog2['default'], { entry: entry, key: entry.id });
+      return React.createElement(_entryTlog2['default'], { entry: entry, key: entry.id, isInList: true });
     });
 
     return React.createElement(
@@ -5827,6 +5827,7 @@ var EntryTlog = React.createClass({
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
     commentFormVisible: React.PropTypes.bool,
+    isInList: React.PropTypes.bool,
     onDelete: React.PropTypes.func,
     successDeleteUrl: React.PropTypes.string
   },
@@ -5839,7 +5840,8 @@ var EntryTlog = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      commentFormVisible: this.props.commentFormVisible
+      commentFormVisible: this.props.commentFormVisible || !this.props.isInList,
+      formFocus: this.props.isInList
     };
   },
 
@@ -5861,7 +5863,9 @@ var EntryTlog = React.createClass({
         commentsCount: this.state.commentsCount,
         loading: this.isLoadingState(),
         loadPerTime: this.props.loadPerTime,
+        formFocus: this.state.formFocus,
         formVisible: this.state.commentFormVisible,
+        isInList: this.props.isInList,
         onCommentsLoadMore: this.loadMoreComments,
         onCommentCreate: this.createComment,
         onCommentEdit: this.editComment,
@@ -5872,7 +5876,14 @@ var EntryTlog = React.createClass({
   },
 
   toggleCommentForm: function toggleCommentForm() {
-    this.setState({ commentFormVisible: !this.state.commentFormVisible });
+    var _state = this.state;
+    var commentFormVisible = _state.commentFormVisible;
+    var formFocus = _state.formFocus;
+
+    this.setState({
+      commentFormVisible: formFocus ? !commentFormVisible : true,
+      formFocus: true
+    });
   },
 
   getStateFromStore: function getStateFromStore() {
@@ -5923,15 +5934,16 @@ module.exports = CommentsLoadMoreButton;
 
 
 },{}],99:[function(require,module,exports){
-var CommentForm, PropTypes;
+var CommentForm, PropTypes, findDOMNode;
 
-PropTypes = React.PropTypes;
+findDOMNode = React.findDOMNode, PropTypes = React.PropTypes;
 
 CommentForm = React.createClass({
   displayName: 'CommentForm',
   propTypes: {
     text: PropTypes.string,
     buttonTitle: PropTypes.string.isRequired,
+    formFocus: PropTypes.bool.isRequired,
     placeholder: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
     onSubmit: React.PropTypes.func.isRequired,
@@ -5941,6 +5953,19 @@ CommentForm = React.createClass({
     return {
       disabled: false
     };
+  },
+  componentDidMount: function() {
+    return this.formFocus();
+  },
+  componentDidUpdate: function() {
+    return this.formFocus();
+  },
+  formFocus: function() {
+    var textField;
+    textField = findDOMNode(this.refs.textField);
+    if (textField && this.props.formFocus) {
+      return textField.focus();
+    }
   },
   render: function() {
     return React.createElement("form", {
@@ -5952,7 +5977,6 @@ CommentForm = React.createClass({
       "className": "comment-form__field"
     }, React.createElement("textarea", {
       "ref": "textField",
-      "autoFocus": true,
       "defaultValue": this.props.text,
       "placeholder": this.props.placeholder,
       "disabled": this.props.disabled,
@@ -5969,12 +5993,12 @@ CommentForm = React.createClass({
     }
   },
   clearForm: function() {
-    return this.refs.textField.getDOMNode().value = '';
+    return findDOMNode(this.refs.textField).value = '';
   },
   handleSubmit: function(e) {
     var value;
     e.preventDefault();
-    value = this.refs.textField.getDOMNode().value.trim();
+    value = findDOMNode(this.refs.textField).value.trim();
     if (!this.props.disabled) {
       return this.props.onSubmit(value);
     }
@@ -6001,12 +6025,14 @@ CommentCreateForm = React.createClass({
   displayName: 'CommentCreateForm',
   propTypes: {
     entryId: PropTypes.number.isRequired,
+    formFocus: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
     onCommentCreate: PropTypes.func.isRequired
   },
   render: function() {
     return React.createElement(CommentForm, {
       "ref": "commentForm",
+      "formFocus": this.props.formFocus,
       "buttonTitle": i18n.t('buttons.comment_create'),
       "placeholder": i18n.t('placeholders.comment_create'),
       "disabled": this.props.loading,
@@ -6635,6 +6661,7 @@ EntryComments = React.createClass({
     commentsCount: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
     loadPerTime: PropTypes.number,
+    formFocus: PropTypes.bool.isRequired,
     formVisible: PropTypes.bool.isRequired,
     onCommentsLoadMore: PropTypes.func.isRequired,
     onCommentCreate: PropTypes.func.isRequired,
@@ -6674,6 +6701,7 @@ EntryComments = React.createClass({
   renderCommentForm: function() {
     if ((this.props.user != null) && this.props.formVisible) {
       return React.createElement(CommentCreateForm, {
+        "formFocus": this.props.formFocus,
         "entryId": this.props.entry.id,
         "loading": this.props.loading,
         "onCommentCreate": this.props.onCommentCreate
