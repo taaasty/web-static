@@ -24,12 +24,12 @@ let FlowBrick = React.createClass({
 
   render() {
     let brickClasses = classnames('brick', 'brick--flow', {
-      '__subscribed': this.state.relState === 'friend'
+      '__subscribed': this.state.relState === 'friend',
     });
 
     return (
       <article className={brickClasses}>
-        <a href="#" onTouchTap={this.onTouchTap}>
+        <a href={this.props.flow.tlog_url} >
           <div className="brick__media">
             {this.renderFollowButton()}
             <FlowBrickAvatar flowpic={this.props.flow.flowpic} />
@@ -75,11 +75,6 @@ let FlowBrick = React.createClass({
 
   handleRelStateChange(relState) {
     this.setState({relState});
-  },
-
-  onTouchTap(ev) {
-    ev.preventDefault();
-    window.location.href = this.props.flow.tlog_url;
   },
 });
 
