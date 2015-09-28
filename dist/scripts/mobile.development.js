@@ -10344,18 +10344,14 @@ FeedToolbarList = React.createClass({
     user: PropTypes.object
   },
   render: function() {
-    var friends;
-    if (this.props.user != null) {
-      friends = React.createElement(ToolbarItem, {
-        "title": i18n.t('feed.friends'),
-        "href": Routes.friends_feed_path(),
-        "icon": "icon--friends",
-        "key": "friends"
-      });
-    }
     return React.createElement("ul", {
       "className": "toolbar__popup-list"
-    }, friends, React.createElement(ToolbarItem, {
+    }, this.props.user !== null && React.createElement(ToolbarItem, {
+      "title": i18n.t('feed.friends'),
+      "href": Routes.friends_feed_path(),
+      "icon": "icon--friends",
+      "key": "friends"
+    }), React.createElement(ToolbarItem, {
       "title": i18n.t('feed.live'),
       "href": Routes.live_feed_path(),
       "icon": "icon--wave",
@@ -10366,15 +10362,15 @@ FeedToolbarList = React.createClass({
       "icon": "icon--fire",
       "key": "best"
     }), React.createElement(ToolbarItem, {
+      "title": i18n.t('feed.people'),
+      "href": Routes.people_path(),
+      "icon": "icon--people",
+      "key": "people"
+    }), React.createElement(ToolbarItem, {
       "title": i18n.t('feed.anonymous'),
       "href": Routes.anonymous_feed_path(),
       "icon": "icon--anonymous",
       "key": "anonymous"
-    }), React.createElement(ToolbarItem, {
-      "title": i18n.t('feed.people'),
-      "href": Routes.people_path(),
-      "icon": "icon--friends",
-      "key": "people"
     }));
   }
 });

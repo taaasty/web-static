@@ -1,30 +1,40 @@
+import React, { createClass } from 'react';
 import UserToolbarListItem from './UserToolbarListItem';
 
-let UserToolbarGuestList = React.createClass({
+let UserToolbarGuestList = createClass({
   render() {
     return (
       <ul className="toolbar__nav">
         <UserToolbarListItem
-            url={Routes.flows()}
-            title={i18n.t('toolbar_flows_item')}
-            label="new"
-            labelClassName="toolbar__label--new"
-            icon="icon--hash" />
+          icon="icon--hash"
+          label="new"
+          labelClassName="toolbar__label--new"
+          title={i18n.t('toolbar_flows_item')}
+          url={Routes.flows()}
+        />
         <UserToolbarListItem
-            url={Routes.live_feed_path()}
-            title={i18n.t('feed_live')}
-            icon="icon--wave" />
+          icon="icon--wave"
+          title={i18n.t('feed_live')}
+          url={Routes.live_feed_path()}
+        />
         <UserToolbarListItem
-            url={Routes.best_feed_path()}
-            title={i18n.t('feed_best')}
-            icon="icon--fire" />
+          icon="icon--fire"
+          title={i18n.t('feed_best')}
+          url={Routes.best_feed_path()}
+        />
         <UserToolbarListItem
-            url={Routes.anonymous_feed_path()}
-            title={i18n.t('feed_anonymous')}
-            icon="icon--anonymous" />
+          icon="icon--people"
+          title={i18n.t('feed_people')}
+          url={Routes.people_path()}
+        />
+        <UserToolbarListItem
+          icon="icon--anonymous"
+          title={i18n.t('feed_anonymous')}
+          url={Routes.anonymous_feed_path()}
+        />
       </ul>
     );
-  }
+  },
 });
 
 export default UserToolbarGuestList;

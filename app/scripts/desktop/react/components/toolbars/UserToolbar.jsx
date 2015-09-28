@@ -10,7 +10,9 @@ let UserToolbar = React.createClass({
   propTypes: {
     hovered: React.PropTypes.bool.isRequired,
     userLogged: React.PropTypes.bool.isRequired,
+    unreadBestCount: React.PropTypes.number.isRequired,
     unreadConversationsCount: React.PropTypes.number.isRequired,
+    unreadLiveCount: React.PropTypes.number.isRequired,
     unreadNotificationsCount: React.PropTypes.number.isRequired,
     searchUrl: React.PropTypes.string.isRequired,
     searchTitleI18nKey: React.PropTypes.string.isRequired,
@@ -23,7 +25,7 @@ let UserToolbar = React.createClass({
     onFriendsClick: React.PropTypes.func.isRequired,
     onDesignSettingsClick: React.PropTypes.func.isRequired,
     onSettingsClick: React.PropTypes.func.isRequired,
-    onSearchClick: React.PropTypes.func.isRequired
+    onSearchClick: React.PropTypes.func.isRequired,
   },
 
   render() {
@@ -56,14 +58,17 @@ let UserToolbar = React.createClass({
     if (this.props.userLogged) {
       return (
         <UserToolbarPrimaryList
-            user={this.props.user}
-            unreadConversationsCount={this.props.unreadConversationsCount}
-            unreadNotificationsCount={this.props.unreadNotificationsCount}
-            stayOpen={this.props.hovered}
-            onMessagesClick={this.props.onMessagesClick}
-            onNotificationsClick={this.props.onNotificationsClick}
-            onFriendsClick={this.props.onFriendsClick}
-            onDesignSettingsClick={this.props.onDesignSettingsClick} />
+          onDesignSettingsClick={this.props.onDesignSettingsClick}
+          onFriendsClick={this.props.onFriendsClick}
+          onMessagesClick={this.props.onMessagesClick}
+          onNotificationsClick={this.props.onNotificationsClick}
+          stayOpen={this.props.hovered}
+          unreadBestCount={this.props.unreadBestCount}
+          unreadConversationsCount={this.props.unreadConversationsCount}
+          unreadLiveCount={this.props.unreadLiveCount}
+          unreadNotificationsCount={this.props.unreadNotificationsCount}
+          user={this.props.user}
+        />
       );
     } else {
       return <UserToolbarGuestList />;

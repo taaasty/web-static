@@ -9,6 +9,7 @@ PopupController = require './controllers/popuup'
 PadController = require './controllers/pad'
 numeral = require 'numeral'
 injectTapEventPlugin = require 'react-tap-event-plugin'
+FeedsUpdateService = require './services/FeedsUpdateService';
 
 initLocales = (locale, callback) ->
   numeral.language(locale)
@@ -74,6 +75,8 @@ window.ReactApp =
         user: CurrentUserStore.getUser()
 
       DesignActionCreators.initCurrent CurrentUserStore.getUser().design
+
+    FeedsUpdateService();
 
     initLocales(locale, ->
       console.log 'Locales loaded'
