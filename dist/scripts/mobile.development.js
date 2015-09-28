@@ -1269,14 +1269,18 @@ var Daylog = React.createClass({
   },
 
   renderEntryList: function renderEntryList() {
-    var listItems = this.props.entries.map(function (entry) {
-      return React.createElement(_entryTlog2['default'], { entry: entry, key: entry.id });
-    });
+    var entries = this.props.entries;
 
     return React.createElement(
       'div',
       { className: 'posts' },
-      listItems
+      entries.map(function (entry) {
+        return React.createElement(_entryTlog2['default'], {
+          commentFormVisible: entries.length === 1,
+          entry: entry,
+          key: entry.id
+        });
+      })
     );
   },
 
@@ -2898,14 +2902,18 @@ var Tlog = React.createClass({
   },
 
   renderEntryList: function renderEntryList() {
-    var listItems = this.props.entries.map(function (entry) {
-      return React.createElement(_entryTlog2['default'], { entry: entry, key: entry.id, isInList: true });
-    });
+    var entries = this.props.entries;
 
     return React.createElement(
       'div',
       { className: 'posts' },
-      listItems
+      entries.map(function (entry) {
+        return React.createElement(_entryTlog2['default'], {
+          commentFormVisible: entries.length === 1,
+          entry: entry,
+          key: entry.id
+        });
+      })
     );
   },
 
@@ -5748,7 +5756,6 @@ var EntryTlog = React.createClass({
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
     commentFormVisible: React.PropTypes.bool,
-    isInList: React.PropTypes.bool,
     onDelete: React.PropTypes.func,
     successDeleteUrl: React.PropTypes.string
   },
@@ -5761,8 +5768,8 @@ var EntryTlog = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      commentFormVisible: this.props.commentFormVisible || !this.props.isInList,
-      formFocus: this.props.isInList
+      commentFormVisible: this.props.commentFormVisible,
+      formFocus: !this.props.commentFormVisible
     };
   },
 
@@ -5786,7 +5793,6 @@ var EntryTlog = React.createClass({
         loadPerTime: this.props.loadPerTime,
         formFocus: this.state.formFocus,
         formVisible: this.state.commentFormVisible,
-        isInList: this.props.isInList,
         onCommentsLoadMore: this.loadMoreComments,
         onCommentCreate: this.createComment,
         onCommentEdit: this.editComment,
@@ -11217,6 +11223,7 @@ EntryPage = React.createClass({
     })), React.createElement("div", {
       "className": "layout__body"
     }, React.createElement(EntryTlog, {
+      "commentFormVisible": true,
       "entry": this.props.entry
     }), React.createElement(EntryPagination, {
       "tlogUrl": this.props.tlog.tlog_url

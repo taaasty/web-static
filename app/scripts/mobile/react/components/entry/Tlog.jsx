@@ -13,7 +13,6 @@ let EntryTlog = React.createClass({
     entry: React.PropTypes.object.isRequired,
     loadPerTime: React.PropTypes.number,
     commentFormVisible: React.PropTypes.bool,
-    isInList: React.PropTypes.bool,
     onDelete: React.PropTypes.func,
     successDeleteUrl: React.PropTypes.string,
   },
@@ -26,8 +25,8 @@ let EntryTlog = React.createClass({
 
   getInitialState() {
     return {
-      commentFormVisible: this.props.commentFormVisible || !this.props.isInList,
-      formFocus: this.props.isInList,
+      commentFormVisible: this.props.commentFormVisible,
+      formFocus: !this.props.commentFormVisible,
     }
   },
 
@@ -50,7 +49,6 @@ let EntryTlog = React.createClass({
           loadPerTime={this.props.loadPerTime}
           formFocus={this.state.formFocus}
           formVisible={this.state.commentFormVisible}
-          isInList={this.props.isInList}
           onCommentsLoadMore={this.loadMoreComments}
           onCommentCreate={this.createComment}
           onCommentEdit={this.editComment}

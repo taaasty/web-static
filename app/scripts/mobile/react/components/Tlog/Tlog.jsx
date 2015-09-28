@@ -25,13 +25,21 @@ let Tlog = React.createClass({
   },
 
   renderEntryList() {
-    let listItems = this.props.entries.map((entry) => <EntryTlog entry={entry} key={entry.id} isInList={true} />)
-
+    const { entries } = this.props;
+    
     return (
       <div className="posts">
-        {listItems}
+        {
+          entries.map((entry) =>
+            <EntryTlog
+              commentFormVisible={entries.length === 1}
+              entry={entry}
+              key={entry.id}
+            />)
+        }
       </div>
     );
+
   },
 
   renderEmptyPage() {

@@ -10,7 +10,7 @@ export default class EntryTlogComments extends Component {
   static propTypes = {
     commentator: PropTypes.object,
     entry: PropTypes.object.isRequired,
-    isInList: PropTypes.bool,
+    hideCommentForm: PropTypes.bool,
     limit: PropTypes.number,
   }
   static defaultProps = {
@@ -69,7 +69,7 @@ export default class EntryTlogComments extends Component {
         <EntryTlogCommentCreateForm {...this.props} {...actions}
           ref="createForm"
           entryID={this.props.entry.id}
-          isInList={this.props.isInList}
+          hideCommentForm={this.props.hideCommentForm}
           totalCommentsCount={this.state.totalCount}
           process={this.state.processCreate}
         />

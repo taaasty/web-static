@@ -9,12 +9,12 @@ export default class EntryTlogCommentCreateForm extends Component {
   static propTypes = {
     entryID: PropTypes.number.isRequired,
     commentator: PropTypes.object.isRequired,
-    isInList: PropTypes.bool,
+    hideCommentForm: PropTypes.bool,
     totalCommentsCount: PropTypes.number.isRequired,
     process: PropTypes.bool,
   }
   state = {
-    currentState: this.props.isInList
+    currentState: this.props.hideCommentForm
       ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
       : FORM_SHOW_STATE,
   }
