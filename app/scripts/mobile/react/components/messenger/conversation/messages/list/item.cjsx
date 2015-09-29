@@ -1,5 +1,6 @@
 classnames = require 'classnames'
 UserAvatar = require '../../../../common/avatar/user'
+Image = require '../../../../../../../shared/react/components/common/Image'
 { PropTypes } = React
 
 ERROR_STATE   = 'error'
@@ -34,6 +35,9 @@ MessageListItem = React.createClass
                { @renderSlug() }
                <span className="message__text"
                      dangerouslySetInnerHTML={{ __html: @props.item.content_html || ''}} />
+               <div className="message__img-container">
+                 { @renderAttachments() }
+               </div>
              </div>
              <div className="message__meta">
                { @renderMessageDate() }
@@ -53,6 +57,24 @@ MessageListItem = React.createClass
       <span className="message__user-name">
         { @props.itemInfo.user.slug }
       </span>
+
+  renderAttachments: ->
+    if @props.item.attachments and @props.item.attachments.length
+      @props.item.attachments.map((img) ->
+        <div className="message__img">
+          <a
+            href={img.url}
+            target="_blank"
+          >
+            <Image
+              image={img}
+              isRawUrl={true}
+            />
+          </a>
+        </div>
+      )
+    else
+      null
 
   renderMessageDate: ->
     if @props.item.created_at

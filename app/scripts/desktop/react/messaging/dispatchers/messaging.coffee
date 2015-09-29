@@ -63,12 +63,13 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       notifications: data.notifications
     }
 
-  messageSubmitted: ({ conversationId, content, uuid }) ->
+  messageSubmitted: ({ conversationId, content, files, uuid }) ->
     conversation = ConversationsStore.getConversation conversationId
     currentUser  = CurrentUserStore.getUser()
     recipient    = conversation.recipient
     message      = {
       content:         content
+      files:           files
       content_html:    _.escape(content)
       conversation_id: conversationId
       recipient_id:    recipient.id

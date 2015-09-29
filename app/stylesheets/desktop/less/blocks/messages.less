@@ -427,7 +427,7 @@
 }
 
 .messages__section--thread {
-  padding: 43px 0 104px;
+  padding: 43px 0 137px;
 
   .messages__header {
     width: 100%;
@@ -438,7 +438,12 @@
   }
 
   .messages__footer {
-    height: 104px;
+    min-height: 137px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
   }
 
   .messages__thread-overlay {
@@ -469,22 +474,132 @@
     }
   }
 
+  .messages__img {
+    max-width: 220px;
+    margin-top: 6px;
+    overflow: hidden;
+    img {
+      width: 100%!important;
+      height: 100%!important;
+    }
+  }
 }
 
 .message-form {
-  padding: 20px 15px 20px 60px;
+  padding: 20px 15px 7px 60px;
   position: relative;
+}
+
+.message-form__controls {
+  width: 100%;
+  height: 100%;
+}
+
+.message-form__textarea-container {
+  position: relative;
+  width: 100%;
+  height: 63px;
 }
 
 .message-form__textarea {
   width: 100%;
-  height: 63px;
+  height: 100%;
   padding: 8px 12px;
   border: 1px solid #d9d9d9;
   background: @white;
   font: inherit;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.message-form__button-container {
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  position: relative;
+  height: @button-small-height;
+  text-align: left;
+}
+
+.message-form__button-send {
+  float: right;
+  &:extend(.button, .button--small, .button--green);
+}
+
+.message-form__upload-button-container {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  bottom: 8px; right: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+.message-form__upload-button {
+  position: relative;
+  font-size: 24px;
+  opacity: 0.5;
+  &:hover {
+    opacity: 0.8;
+  }
+  transition: opacity 0.3s ease-in;
+}
+
+.message-form__upload-input {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; bottom: 0;
+  opacity: 0.01;
+}
+
+.message-form__media-preview {
+  text-align: left;
+  margin-top: 7px;
+  padding: 0 1px;
+}
+
+.message-form__media-preview__item {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  height: 40px;
+  width: 80px;
+  margin: 0 7px 7px 0;
+  img {
+    width: 100%!important;
+    height: 100%!important;
+  }
+
+  .message-form__media-preview__item-remove {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0;
+    cursor: pointer;
+    opacity: 0;
+    background-color: @black;
+    color: @white;
+    text-align: center;
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &:before {
+      content: "";
+      height: 100%;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .icon {
+      font-size: 26px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
 }
 
 .message,
@@ -522,6 +637,10 @@
       .transform(rotateY(180deg));
     }
 
+    .messages_img-container {
+      text-align: left;
+    }
+
   }
 
 }
@@ -540,6 +659,10 @@
 
     &:before {
       border-color: #f1f1f1;
+    }
+
+    .messages__img-container {
+      text-align: right;
     }
 
   }

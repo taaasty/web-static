@@ -33,7 +33,7 @@ MessageList = React.createClass
 
   renderListItems: ->
     listItems = _.map @props.items, (item) ->
-      <MessageListItemManager item={ item } key={ item.uuid } />
+      <MessageListItemManager item={ item } key={ "#{item.id}-#{item.uuid}" } />
 
     return <div ref="scroller"
                 className="messages__scroll"

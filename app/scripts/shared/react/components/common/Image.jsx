@@ -1,20 +1,26 @@
-let Image = React.createClass({
+import React, { createClass, PropTypes } from 'react';
+
+const Image = createClass({
   propTypes: {
-    image: React.PropTypes.shape({
-      url: React.PropTypes.string.isRequired,
-      geometry: React.PropTypes.object
+    className: PropTypes.string,
+    image: PropTypes.shape({
+      geometry: PropTypes.object,
+      url: PropTypes.string.isRequired,
     }).isRequired,
-    maxWidth: React.PropTypes.number,
-    maxHeight: React.PropTypes.number,
-    className: React.PropTypes.string
+    isRawUrl: PropTypes.bool,
+    maxHeight: PropTypes.number,
+    maxWidth: PropTypes.number,
   },
 
   render() {
+    const { image: { url }, isRawUrl } = this.props;
     return (
-      <img src={this.getUrl()}
-           srcSet={this.getRetinaUrl()}
-           className={this.props.className}
-           style={this.getSize()} />
+      <img
+        className={this.props.className}
+        src={isRawUrl ? url : this.getUrl()}
+        srcSet={isRawUrl ? void 0 : this.getRetinaUrl()}
+        style={this.getSize()}
+      />
     );
   },
 
@@ -50,18 +56,18 @@ let Image = React.createClass({
 
         size = {
           width: parseInt(width, 10),
-          height: parseInt(height, 10)
+          height: parseInt(height, 10),
         };
       } else {
         size = {
           width: geometry.width,
-          height: geometry.height
+          height: geometry.height,
         };
       }
     } else {
       size = {
         width: this.props.maxWidth || null,
-        height: this.props.maxHeight || null
+        height: this.props.maxHeight || null,
       };
     }
 
@@ -76,7 +82,7 @@ let Image = React.createClass({
   getRetinaUrl() {
     let size = this.getSize();
     return ThumborService.newRetinaImageUrl(this.props.image.url, size);
-  }
+  },
 });
 
 export default Image;

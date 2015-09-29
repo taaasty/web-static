@@ -106,7 +106,7 @@ require './react/messaging/components/messages_popup/create_new_conversation/cho
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
 require './react/messaging/components/messages_popup/thread/thread'
-require './react/messaging/components/messages_popup/thread/message_form/message_form'
+#require './react/messaging/components/messages_popup/thread/message_form/message_form'
 require './react/messaging/components/messages_popup/thread/message_list/message_list'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
@@ -123,7 +123,7 @@ require './react/components/common/adaptive_input'
 global.EmbedComponent = require './react/components/embed'
 
 require './react/components/avatars/avatar'
-require './react/components/avatars/user_avatar'
+global.UserAvatar = require './react/components/avatars/user_avatar'
 
 # /*===============================================
 # =            Authorization resources            =

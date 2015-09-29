@@ -1,4 +1,6 @@
 classnames = require 'classnames'
+ImgFromFile = require '../ImgFromFile'
+Image = require '../../../../../../../shared/react/components/common/Image';
 
 ERROR_STATE   = 'error'
 SENT_STATE    = 'sent'
@@ -32,6 +34,30 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
     else
       userSlug = <span className="messages__user-name">{ this.props.messageInfo.user.slug }</span>
 
+    attachments = if this.props.message.attachments && this.props.message.attachments.length
+      this.props.message.attachments.map((img) =>
+        <div className="messages__img">
+          <a
+            href={img.url}
+            target="_blank"
+          >
+            <Image
+              image={img}
+              isRawUrl={true}
+              maxWidth={220}
+            />
+          </a>
+        </div>
+      )
+    else if this.props.message.files && this.props.message.files.length
+      this.props.message.files.map((file) =>
+        <div className="messages__img">
+          <ImgFromFile file={file} />
+        </div>
+      )
+    else
+      null
+
     return <div className={ messageClasses }>
              <span className="messages__user-avatar">
                <UserAvatar user={ this.props.messageInfo.user } size={ 35 } />
@@ -40,6 +66,9 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
                { userSlug }
                <span className="messages__text"
                      dangerouslySetInnerHTML={{__html: this.props.message.content_html || ''}} />
+               <div className="messages__img-container">
+                 { attachments }
+               </div>
              </div>
              <span className="messages__date">
                { messageCreatedAt }
