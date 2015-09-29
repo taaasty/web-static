@@ -1,4 +1,4 @@
-/* global gon */
+/*global gon */
 import ApiRoutes from '../../../shared/routes/api';
 import AppDispatcher from '../dispatchers/dispatcher';
 import FeedConstants from '../constants/FeedConstants';
@@ -11,6 +11,10 @@ const pusherEvent = {
 let _instance = void 0;
 
 function FeedsUpdateService() {
+  if (!(gon.pusher && gon.pusher.key)) {
+    return;
+  }
+
   const pusher = new Pusher(gon.pusher.key, {
     authEndpoint: ApiRoutes.pusher_auth_url(),
     pong_timeout: 6000,
