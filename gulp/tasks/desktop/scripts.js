@@ -78,7 +78,8 @@ gulp.task('[D][S] Client scripts', () => {
     bundler = watchify(bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify')
@@ -88,7 +89,8 @@ gulp.task('[D][S] Client scripts', () => {
     bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify');
@@ -150,7 +152,8 @@ gulp.task('[D][S] Test scripts', () => {
     bundler = watchify(bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify')
@@ -160,7 +163,8 @@ gulp.task('[D][S] Test scripts', () => {
     bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify');
@@ -185,7 +189,8 @@ gulp.task('[D][D] Scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|shims)/
+      ignore: /(node_modules|bower_components|shims)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
@@ -214,7 +219,8 @@ gulp.task('[D][P] Scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|shims)/
+      ignore: /(node_modules|bower_components|shims)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')

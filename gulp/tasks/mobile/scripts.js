@@ -47,7 +47,8 @@ gulp.task('[M][S] Client scripts', () => {
     bundler = watchify(bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify')
@@ -57,7 +58,8 @@ gulp.task('[M][S] Client scripts', () => {
     bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify');
@@ -119,7 +121,8 @@ gulp.task('[M][S] Test scripts', () => {
     bundler = watchify(bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify')
@@ -129,7 +132,8 @@ gulp.task('[M][S] Test scripts', () => {
     bundler
       .transform('babelify', {
         stage: 0,
-        ignore: /(node_modules|bower_components|shims)/
+        ignore: /(node_modules|bower_components|shims)/,
+        optional: ['runtime'],
       })
       .transform('browserify-shim')
       .transform('coffee-reactify');
@@ -154,7 +158,8 @@ gulp.task('[M][D] Scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|shims)/
+      ignore: /(node_modules|bower_components|shims)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
@@ -183,7 +188,8 @@ gulp.task('[M][D] Components scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|bundlePrerender\.js)/
+      ignore: /(node_modules|bower_components|bundlePrerender\.js)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
@@ -212,7 +218,8 @@ gulp.task('[M][P] Scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|shims)/
+      ignore: /(node_modules|bower_components|shims)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
@@ -242,7 +249,8 @@ gulp.task('[M][P] Components scripts', () => {
   return bundler
     .transform('babelify', {
       stage: 0,
-      ignore: /(node_modules|bower_components|bundlePrerender\.js)/
+      ignore: /(node_modules|bower_components|bundlePrerender\.js)/,
+      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
