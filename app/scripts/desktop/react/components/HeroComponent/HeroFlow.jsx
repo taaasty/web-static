@@ -1,3 +1,4 @@
+import React, { createClass } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import PopupActionCreators from '../../actions/popup';
 import Hero from './Hero';
@@ -6,7 +7,7 @@ import HeroSettingsButton from './HeroSettingsButton';
 import HeroSubscriptionsButton from './HeroSubscriptionsButton';
 import HeroDesignSettingsButton from './HeroDesignSettingsButton';
 
-let HeroFlow = React.createClass({
+let HeroFlow = createClass({
   propTypes: {
     flow: ProjectTypes.flow.isRequired,
     relationship: ProjectTypes.relationship,
@@ -14,16 +15,25 @@ let HeroFlow = React.createClass({
 
   getInitialState() {
     return {
-      flow: this.props.flow
+      flow: this.props.flow,
     }
   },
 
+  getText(count) {
+    return count
+      ?  i18n.t('hero.flow_entries_count', { count })
+      :  null;
+  },
+
   render() {
+    const { flowpic: { original_url }, name, public_tlog_entries_count, tlog_url } = this.state.flow;
     return (
-      <Hero backgroundUrl={this.state.flow.flowpic.original_url}
-            title={<a href={this.state.flow.tlog_url}>{'#' + this.state.flow.name}</a>}
-            text={i18n.t('hero.flow_entries_count', {count: this.state.flow.public_tlog_entries_count})}
-            actions={this.getActions()} />
+      <Hero
+        actions={this.getActions()}
+        backgroundUrl={original_url}
+        text={this.getText(public_tlog_entries_count)}
+        title={<a href={tlog_url}>{`#${name}`}</a>}
+      />
     );
   },
 
@@ -31,7 +41,7 @@ let HeroFlow = React.createClass({
     return [
       this.renderWriteButton(),
       this.renderRelationButton(),
-      this.renderSettingsButton()
+      this.renderSettingsButton(),
     ];
   },
 

@@ -33,8 +33,12 @@ export default class HeroFlows {
     PopupActionCreators.createFlow();
   }
   getText() {
-    const { text } = this.props;
-    return text ? text : i18n.t('hero.flows_count', {count: this.props.flowsCount})
+    const { flowsCount, text } = this.props;
+    return text
+      ? text
+      : flowsCount
+        ? i18n.t('hero.flows_count', { count: flowsCount })
+        : null;
   }
   getActions() {
     return [
