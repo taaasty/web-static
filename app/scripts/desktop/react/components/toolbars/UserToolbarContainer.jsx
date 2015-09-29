@@ -1,6 +1,8 @@
+import React, { createClass, PropTypes } from 'react';
 import assign from 'react/lib/Object.assign';
 import CurrentUserStore from '../../stores/current_user';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
+import FeedsStatusStore from '../../stores/FeedsStore';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import ToolbarActionCreators from '../../actions/Toolbar';
 import PopupActionCreators from '../../actions/popup';
@@ -9,23 +11,25 @@ import UserToolbar from './UserToolbar';
 const STORAGE_KEY = 'states:mainToolbarOpened';
 const SEARCH_TITLE_I18N_KEYS = [
   'live', 'best', 'friends', 'anonymous', 'mytlog',
-  'tlog', 'favorites', 'privates', 'people'
+  'tlog', 'favorites', 'privates', 'people',
 ];
 
-let UserToolbarContainer = React.createClass({
+let UserToolbarContainer = createClass({
   propTypes: {
-    userLogged: React.PropTypes.bool.isRequired,
-    unreadConversationsCount: React.PropTypes.number.isRequired,
-    unreadNotificationsCount: React.PropTypes.number.isRequired,
-    searchUrl: React.PropTypes.string.isRequired,
-    searchTitleI18nKey: React.PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired
+    searchTitleI18nKey: PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired,
+    searchUrl: PropTypes.string.isRequired,
+    unreadBestCount: PropTypes.number.isRequired,
+    unreadConversationsCount: PropTypes.number.isRequired,
+    unreadLiveCount: PropTypes.number.isRequired,
+    unreadNotificationsCount: PropTypes.number.isRequired,
+    userLogged: PropTypes.bool.isRequired,
   },
 
   getInitialState() {
     return {
       opened: JSON.parse(AppStorage.getItem(STORAGE_KEY)) || false,
       openedTemporarily: false,
-      hovered: false
+      hovered: false,
     };
   },
 
@@ -52,7 +56,7 @@ let UserToolbarContainer = React.createClass({
       onFriendsClick: this.toggleFriends,
       onDesignSettingsClick: this.toggleDesignSettings,
       onSettingsClick: this.showSettings,
-      onSearchClick: this.showSearch
+      onSearchClick: this.showSearch,
     };
 
     return <UserToolbar {...this.props} {...this.state} {...actions} />;
@@ -111,7 +115,7 @@ let UserToolbarContainer = React.createClass({
   showSearch() {
     PopupActionCreators.showSearch({
       searchUrl: this.props.searchUrl,
-      searchTitleI18nKey: this.props.searchTitleI18nKey
+      searchTitleI18nKey: this.props.searchTitleI18nKey,
     });
   },
 
@@ -142,14 +146,20 @@ let UserToolbarContainer = React.createClass({
     if (this.state.opened) {
       this.close();
     }
-  }
+  },
 });
 
-UserToolbarContainer = connectToStores(UserToolbarContainer, [CurrentUserStore, MessagingStatusStore], (props) => ({
-  user: CurrentUserStore.getUser(),
-  userLogged: CurrentUserStore.isLogged(),
-  unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
-  unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount()
-}));
+UserToolbarContainer = connectToStores(
+  UserToolbarContainer,
+  [CurrentUserStore, FeedsStatusStore, MessagingStatusStore],
+  () => ({
+    user: CurrentUserStore.getUser(),
+    userLogged: CurrentUserStore.isLogged(),
+    unreadBestCount: FeedsStatusStore.getUnreadBestCount(),
+    unreadLiveCount: FeedsStatusStore.getUnreadLiveCount(),
+    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
+    unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),
+  })
+);
 
 export default UserToolbarContainer;
