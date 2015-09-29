@@ -38,6 +38,7 @@
     "URIjs": "^1.15.1",
     "app-root-path": "^1.0.0",
     "babel": "^5.8.21",
+    "babel-runtime": "^5.8.25",
     "babelify": "^6.1.1",
     "bower": "^1.4.1",
     "browser-sync": "^2.7.1",
