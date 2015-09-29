@@ -45,7 +45,7 @@ let UserToolbarPrimaryList = React.createClass({
         />
         <UserToolbarListItem
           badgeClassName="messages-badge"
-          badgeCount={Math.min(this.props.unreadBestCount, MAX_BADGE_NUMBER)}
+          badgeCount={0 * Math.min(this.props.unreadBestCount, MAX_BADGE_NUMBER)}
           icon="icon--fire"
           title={i18n.t('feed_best')}
           url={Routes.best_feed_path()}
