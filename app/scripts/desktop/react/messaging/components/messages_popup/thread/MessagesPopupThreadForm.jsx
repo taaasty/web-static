@@ -1,6 +1,7 @@
 /*global i18n */
 import React, { findDOMNode, Component, PropTypes } from 'react';
 import UserAvatar from '../../../../components/avatars/user_avatar';
+import Spinner from '../../../../components/Spinner';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 
@@ -58,13 +59,8 @@ class MessagesPopupThreadForm extends Component {
         <span className="messages__user-avatar">
           {
             this.state.isLoading
-              ? <span className="spinner spinner--31x31">
-                  <span className="spinner__icon"></span>
-                </span>
-              : <UserAvatar
-                  size={35}
-                  user={this.state.user}
-                />
+              ? <Spinner size={31} />
+              : <UserAvatar size={35} user={this.state.user} />
           }
         </span>
         <div className="message-form__controls">

@@ -18,7 +18,7 @@ class ThreadFormMediaPreview {
                 className="message-form__media-preview__item-remove"
                 onTouchTap={this.onTouchTap.bind(this, idx)}
               >
-                <i className="icon icon--cross"/>
+                <i className="icon icon--cross" />
               </div>
               <ImgFromFile file={file} />
             </div>

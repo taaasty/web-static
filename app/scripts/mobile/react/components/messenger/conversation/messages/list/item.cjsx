@@ -62,14 +62,8 @@ MessageListItem = React.createClass
     if @props.item.attachments and @props.item.attachments.length
       @props.item.attachments.map((img) ->
         <div className="message__img">
-          <a
-            href={img.url}
-            target="_blank"
-          >
-            <Image
-              image={img}
-              isRawUrl={true}
-            />
+          <a href={img.url} target="_blank">
+            <Image image={img} isRawUrl={true} />
           </a>
         </div>
       )
