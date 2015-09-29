@@ -37,10 +37,7 @@ window.MessagesPopup_ThreadMessageListItem = React.createClass
     attachments = if this.props.message.attachments && this.props.message.attachments.length
       this.props.message.attachments.map((img) =>
         <div className="messages__img">
-          <a
-            href={img.url}
-            target="_blank"
-          >
+          <a href={img.url} target="_blank">
             <Image
               image={img}
               isRawUrl={true}

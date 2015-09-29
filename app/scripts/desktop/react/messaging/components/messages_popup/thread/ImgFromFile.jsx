@@ -19,7 +19,7 @@ class ImgFromFile {
     BrowserHelpers.revokeObjectURL(this.imageSrc);
   }
   render() {
-    return (<div ref="container" />);
+    return <div ref="container" />;
   }
 }
 
