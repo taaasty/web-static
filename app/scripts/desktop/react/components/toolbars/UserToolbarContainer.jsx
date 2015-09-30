@@ -8,6 +8,9 @@ import ToolbarActionCreators from '../../actions/Toolbar';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
 
+import AppDispatcher from '../../dispatchers/dispatcher';
+import FeedConstants from '../../constants/FeedConstants';
+
 const STORAGE_KEY = 'states:mainToolbarOpened';
 const SEARCH_TITLE_I18N_KEYS = [
   'live', 'best', 'friends', 'anonymous', 'mytlog',
@@ -35,6 +38,10 @@ let UserToolbarContainer = createClass({
 
   componentWillMount() {
     ToolbarActionCreators.initVisibility(this.state.opened);
+    AppDispatcher.handleViewAction({
+      type: FeedConstants.FEED_LIVE_INITIAL_COUNT,
+      payload: this.props.unreadLiveCount || 0,
+    });
   },
 
   componentDidMount() {
