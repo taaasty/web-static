@@ -38,10 +38,6 @@ let UserToolbarContainer = createClass({
 
   componentWillMount() {
     ToolbarActionCreators.initVisibility(this.state.opened);
-    AppDispatcher.handleViewAction({
-      type: FeedConstants.FEED_LIVE_INITIAL_COUNT,
-      payload: this.props.unreadLiveCount || 0,
-    });
   },
 
   componentDidMount() {
@@ -159,11 +155,11 @@ let UserToolbarContainer = createClass({
 UserToolbarContainer = connectToStores(
   UserToolbarContainer,
   [CurrentUserStore, FeedsStatusStore, MessagingStatusStore],
-  () => ({
+  (props) => ({
     user: CurrentUserStore.getUser(),
     userLogged: CurrentUserStore.isLogged(),
     unreadBestCount: FeedsStatusStore.getUnreadBestCount(),
-    unreadLiveCount: FeedsStatusStore.getUnreadLiveCount(),
+    unreadLiveCount: (props.unreadLiveCount || 0) + FeedsStatusStore.getUnreadLiveCount(),
     unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
     unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),
   })
