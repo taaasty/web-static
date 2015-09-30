@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import PageWithToolbars from '../common/page/PageWithToolbars';
 import PageLayout from '../common/page/PageLayout';
 import PageBody from  '../common/page/PageBody';
 import Settings from  './settings';
 
-export default class SettingsPage {
+export default class SettingsPage extends Component {
   static propTypes = {
     currentUser: PropTypes.object.isRequired,
   }

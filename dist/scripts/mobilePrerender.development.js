@@ -2853,6 +2853,10 @@ module.exports = SettingsHeroTitle;
 },{"lodash":"lodash"}],40:[function(require,module,exports){
 'use strict';
 
+var _get = require('babel-runtime/helpers/get')['default'];
+
+var _inherits = require('babel-runtime/helpers/inherits')['default'];
+
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
@@ -2883,9 +2887,13 @@ var _settings = require('./settings');
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var SettingsPage = (function () {
+var SettingsPage = (function (_Component) {
+  _inherits(SettingsPage, _Component);
+
   function SettingsPage() {
     _classCallCheck(this, SettingsPage);
+
+    _get(Object.getPrototypeOf(SettingsPage.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(SettingsPage, [{
@@ -2921,12 +2929,12 @@ var SettingsPage = (function () {
   }]);
 
   return SettingsPage;
-})();
+})(_react.Component);
 
 exports['default'] = SettingsPage;
 module.exports = exports['default'];
 
-},{"../common/page/PageBody":75,"../common/page/PageLayout":77,"../common/page/PageWithToolbars":79,"./settings":46,"babel-runtime/helpers/class-call-check":263,"babel-runtime/helpers/create-class":264,"babel-runtime/helpers/interop-require-default":268,"react":"react"}],41:[function(require,module,exports){
+},{"../common/page/PageBody":75,"../common/page/PageLayout":77,"../common/page/PageWithToolbars":79,"./settings":46,"babel-runtime/helpers/class-call-check":263,"babel-runtime/helpers/create-class":264,"babel-runtime/helpers/get":266,"babel-runtime/helpers/inherits":267,"babel-runtime/helpers/interop-require-default":268,"react":"react"}],41:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');

@@ -8,6 +8,12 @@ import bundleLogger from '../../util/bundleLogger';
 import handleErrors from '../../util/handleErrors';
 const config = require('../../config').mobile.scripts;
 
+const babelifyOpts = {
+  stage: 0,
+  ignore: /(node_modules|bower_components|shims)/,
+  optional: ['runtime'],
+};
+
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
 const dependencies = {
@@ -24,7 +30,7 @@ gulp.task('[M][S] Client scripts', () => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.static.client.entries,
-    extensions: config.static.client.extensions
+    extensions: config.static.client.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -45,22 +51,14 @@ gulp.task('[M][S] Client scripts', () => {
 
   if (global.isWatching) {
     bundler = watchify(bundler
-      .transform('babelify', {
-        stage: 0,
-        ignore: /(node_modules|bower_components|shims)/,
-        optional: ['runtime'],
-      })
+      .transform('babelify', babelifyOpts)
       .transform('browserify-shim')
       .transform('coffee-reactify')
     );
     bundler.on('update', rebundle);
   } else {
     bundler
-      .transform('babelify', {
-        stage: 0,
-        ignore: /(node_modules|bower_components|shims)/,
-        optional: ['runtime'],
-      })
+      .transform('babelify', babelifyOpts)
       .transform('browserify-shim')
       .transform('coffee-reactify');
   }
@@ -72,7 +70,7 @@ gulp.task('[M][S] Vendor scripts', (cb) => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.static.vendor.entries,
-    extensions: config.static.vendor.extensions
+    extensions: config.static.vendor.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -98,7 +96,7 @@ gulp.task('[M][S] Test scripts', () => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.static.test.entries,
-    extensions: config.static.test.extensions
+    extensions: config.static.test.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -119,22 +117,14 @@ gulp.task('[M][S] Test scripts', () => {
 
   if (global.isWatching) {
     bundler = watchify(bundler
-      .transform('babelify', {
-        stage: 0,
-        ignore: /(node_modules|bower_components|shims)/,
-        optional: ['runtime'],
-      })
+      .transform('babelify', babelifyOpts)
       .transform('browserify-shim')
       .transform('coffee-reactify')
     );
     bundler.on('update', rebundle);
   } else {
     bundler
-      .transform('babelify', {
-        stage: 0,
-        ignore: /(node_modules|bower_components|shims)/,
-        optional: ['runtime'],
-      })
+      .transform('babelify', babelifyOpts)
       .transform('browserify-shim')
       .transform('coffee-reactify');
   }
@@ -142,11 +132,33 @@ gulp.task('[M][S] Test scripts', () => {
   return rebundle();
 });
 
+gulp.task('[M][P] Test scripts', () => {
+  const { dest, entries, extensions, outputName } = config.production.test;
+
+  bundleLogger.start(outputName);
+
+  return browserify({
+    cache: {},
+    packageCache: {},
+    entries: entries,
+    extensions: extensions,
+  })
+    .transform('babelify', babelifyOpts)
+    .transform('browserify-shim')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(outputName))
+    .pipe(gulp.dest(dest))
+    .on('end', () => {
+      bundleLogger.end(outputName);
+    });
+});
+
 gulp.task('[M][D] Scripts', () => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.development.bundle.entries,
-    extensions: config.development.bundle.extensions
+    extensions: config.development.bundle.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -156,11 +168,7 @@ gulp.task('[M][D] Scripts', () => {
   bundleLogger.start(config.development.bundle.outputName);
 
   return bundler
-    .transform('babelify', {
-      stage: 0,
-      ignore: /(node_modules|bower_components|shims)/,
-      optional: ['runtime'],
-    })
+    .transform('babelify', babelifyOpts)
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
@@ -187,9 +195,8 @@ gulp.task('[M][D] Components scripts', () => {
 
   return bundler
     .transform('babelify', {
-      stage: 0,
+      ...babelifyOpts,
       ignore: /(node_modules|bower_components|bundlePrerender\.js)/,
-      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
@@ -206,7 +213,7 @@ gulp.task('[M][P] Scripts', () => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.production.bundle.entries,
-    extensions: config.production.bundle.extensions
+    extensions: config.production.bundle.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -216,11 +223,7 @@ gulp.task('[M][P] Scripts', () => {
   bundleLogger.start(config.production.bundle.outputName);
 
   return bundler
-    .transform('babelify', {
-      stage: 0,
-      ignore: /(node_modules|bower_components|shims)/,
-      optional: ['runtime'],
-    })
+    .transform('babelify', babelifyOpts)
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
@@ -237,7 +240,7 @@ gulp.task('[M][P] Components scripts', () => {
   let bundler = browserify({
     cache: {}, packageCache: {},
     entries: config.production.components.entries,
-    extensions: config.production.components.extensions
+    extensions: config.production.components.extensions,
   });
 
   Object.keys(dependencies).forEach((dep) => {
@@ -248,9 +251,8 @@ gulp.task('[M][P] Components scripts', () => {
 
   return bundler
     .transform('babelify', {
-      stage: 0,
+      ...babelifyOpts,
       ignore: /(node_modules|bower_components|bundlePrerender\.js)/,
-      optional: ['runtime'],
     })
     .transform('browserify-shim')
     .transform('coffee-reactify')
