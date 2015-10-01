@@ -528,6 +528,11 @@
 .message-form__button-send {
   float: right;
   &:extend(.button, .button--small, .button--green);
+
+  &.--disabled {
+    cursor: no-drop;
+    &:extend(.button--grey);
+  }
 }
 
 .message-form__upload-button-container {
