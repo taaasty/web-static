@@ -7593,7 +7593,8 @@ var components = {
     }
   },
   Voting: {},
-  UserToolbarContainer: {}
+  UserToolbarContainer: {},
+  LiveLoadButtonContainer: {}
 };
 
 _Object$keys(components).forEach(function (componentName) {
