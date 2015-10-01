@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { findDOMNode, Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import UserAvatar from '../../../../components/avatars/user_avatar';
 import Spinner from '../../../../components/Spinner';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
@@ -42,8 +43,11 @@ class MessagesPopupThreadForm extends Component {
     this.form.value = '';
     this.setState({ files: [] });
   }
+  msgReadyToSend() {
+    return ((this.form && this.form.value !== '') || this.state.files.length);
+  }
   sendMessage() {
-    if (this.form.value !== '' || this.state.files.length) {
+    if (this.msgReadyToSend()) {
       MessageActions.newMessage({
         content: this.form.value,
         files: this.state.files,
@@ -54,6 +58,11 @@ class MessagesPopupThreadForm extends Component {
     }
   }
   render() {
+    const buttonClasses = classNames({
+      'message-form__button-send': true,
+      '--disabled': !this.msgReadyToSend(),
+    });
+
     return (
       <div className="message-form">
         <span className="messages__user-avatar">
@@ -67,6 +76,7 @@ class MessagesPopupThreadForm extends Component {
           <div className="message-form__textarea-container">
             <textarea
                 className="message-form__textarea"
+                onChange={this.forceUpdate.bind(this)}
                 onKeyDown={this.onKeyDown.bind(this)}
                 placeholder={i18n.t('new_message_placeholder')}
                 ref="messageForm"
@@ -79,7 +89,7 @@ class MessagesPopupThreadForm extends Component {
           <div className="message-form__button-container">
             <ThreadFormUploadButton onChange={this.onFileInputChange.bind(this)}/>
             <button
-              className="message-form__button-send"
+              className={buttonClasses}
               onTouchTap={this.sendMessage.bind(this)}  
             >
               {i18n.t('buttons.messenger.send')}
