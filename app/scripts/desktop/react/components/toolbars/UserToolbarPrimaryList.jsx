@@ -1,7 +1,5 @@
 import UserToolbarListItem from './UserToolbarListItem';
 
-const MAX_BADGE_NUMBER = 999;
-
 let UserToolbarPrimaryList = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired,
@@ -38,14 +36,14 @@ let UserToolbarPrimaryList = React.createClass({
         />
         <UserToolbarListItem
           badgeClassName="messages-badge"
-          badgeCount={Math.min(this.props.unreadLiveCount, MAX_BADGE_NUMBER)}
+          badgeCount={this.props.unreadLiveCount}
           icon="icon--wave"
           title={i18n.t('feed_live')}
           url={Routes.live_feed_path()}
         />
         <UserToolbarListItem
           badgeClassName="messages-badge"
-          badgeCount={0 * Math.min(this.props.unreadBestCount, MAX_BADGE_NUMBER)}
+          badgeCount={this.props.unreadBestCount}
           icon="icon--fire"
           title={i18n.t('feed_best')}
           url={Routes.best_feed_path()}

@@ -1,5 +1,8 @@
 import classNames from 'classnames';
 
+const MAX_BADGE_COUNT = 99;
+const MAX_BADGE_PRESENTATION = `${MAX_BADGE_COUNT}+`;
+
 let UserToolbarListItem = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
@@ -64,10 +67,12 @@ let UserToolbarListItem = React.createClass({
   },
 
   renderBadge() {
-    if (this.props.badgeCount) {
+    const { badgeClassName, badgeCount } = this.props;
+
+    if (badgeCount) {
       return (
-        <span className={this.props.badgeClassName}>
-          {this.props.badgeCount}
+        <span className={badgeClassName}>
+          {badgeCount > MAX_BADGE_COUNT ? MAX_BADGE_PRESENTATION : badgeCount}
         </span>
       );
     }
