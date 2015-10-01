@@ -419,6 +419,12 @@
     "hero_create_flow": "Создать поток",
     "messenger": {
       "send": "Отправить"
+    },
+    "unread_load": {
+      "unread_entries_count": "__count__ новая публикация",
+      "unread_entries_count_plural_2": "__count__ новых публикации",
+      "unread_entries_count_plural_5": "__count__ новых публикаций",
+      "show_unread": "Показать"
     }
   },
   "messages": {
