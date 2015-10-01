@@ -4,7 +4,7 @@ import connectToStores from '../../../../shared/react/components/higherOrder/con
 import Routes from '../../../../shared/routes/routes';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
-export class LiveLoadButtonContainer extends Component {
+class LiveLoadButtonContainer extends Component {
   render() {
     return (
       <UnreadLoadButton
