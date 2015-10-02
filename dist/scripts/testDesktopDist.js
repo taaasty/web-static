@@ -7594,7 +7594,8 @@ var components = {
   },
   Voting: {},
   UserToolbarContainer: {},
-  LiveLoadButtonContainer: {}
+  LiveLoadButtonContainer: {},
+  BestLoadButtonContainer: {}
 };
 
 _Object$keys(components).forEach(function (componentName) {

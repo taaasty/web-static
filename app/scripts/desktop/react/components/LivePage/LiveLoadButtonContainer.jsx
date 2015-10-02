@@ -25,4 +25,4 @@ export default connectToStores(
   () => ({
     unreadLiveCount: FeedsStatusStore.getUnreadLiveCount(),
   })
-);
+)

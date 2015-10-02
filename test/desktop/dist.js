@@ -85,6 +85,7 @@ const components = {
   Voting: {},
   UserToolbarContainer: {},
   LiveLoadButtonContainer: {},
+  BestLoadButtonContainer: {},
 };
 
 Object.keys(components).forEach((componentName) => {
