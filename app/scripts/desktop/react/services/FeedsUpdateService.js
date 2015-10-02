@@ -5,7 +5,7 @@ import FeedConstants from '../constants/FeedConstants';
 import Pusher from 'pusher';
 
 const pusherEvent = {
-  NEW_ENTRY: 'new',
+  NEW_ENTRY: 'new_entry',
 };
 
 let _instance = void 0;
