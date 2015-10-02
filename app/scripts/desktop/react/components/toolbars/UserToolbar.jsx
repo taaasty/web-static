@@ -65,13 +65,17 @@ let UserToolbar = React.createClass({
           stayOpen={this.props.hovered}
           unreadBestCount={this.props.unreadBestCount}
           unreadConversationsCount={this.props.unreadConversationsCount}
+          unreadFriendsCount={this.props.unreadFriendsCount}  
           unreadLiveCount={this.props.unreadLiveCount}
           unreadNotificationsCount={this.props.unreadNotificationsCount}
           user={this.props.user}
         />
       );
     } else {
-      return <UserToolbarGuestList />;
+      return <UserToolbarGuestList
+               unreadBestCount={this.props.unreadBestCount}
+               unreadLiveCount={this.props.unreadLiveCount}
+             />;
     }
   },
 

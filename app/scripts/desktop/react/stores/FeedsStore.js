@@ -7,6 +7,8 @@ const unreadFeeds = {
   liveInitialCount: 0,
   best: [],
   bestInitialCount: 0,
+  friends: [],
+  friendsInitialCount: 0,
 };
 
 const actionMap = {
@@ -25,6 +27,14 @@ const actionMap = {
   [FeedConstants.FEED_BEST_INITIAL_COUNT](payload) {
     unreadFeeds.bestInitialCount = payload;
   },
+
+  [FeedConstants.FEED_FRIENDS_NEW_ENTRY](payload) {
+    unreadFeeds.friends.push(payload);
+  },
+
+  [FeedConstants.FEED_FRIENDS_INITIAL_COUNT](payload) {
+    unreadFeeds.friendsInitialCount = payload;
+  },
 };
 
 const FeedsStore = Object.assign(
@@ -38,6 +48,11 @@ const FeedsStore = Object.assign(
     getUnreadLiveCount() {
       const { live, liveInitialCount } = unreadFeeds;
       return liveInitialCount + live.length;
+    },
+
+    getUnreadFriendsCount() {
+      const { friends, friendsInitialCount } = unreadFeeds;
+      return friendsInitialCount + friends.length;
     },
   }
 );

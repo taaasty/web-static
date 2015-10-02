@@ -5,6 +5,7 @@ let UserToolbarPrimaryList = React.createClass({
     user: React.PropTypes.object.isRequired,
     unreadBestCount: React.PropTypes.number.isRequired,
     unreadConversationsCount: React.PropTypes.number.isRequired,
+    unreadFriendsCount: React.PropTypes.number.isRequired,
     unreadLiveCount: React.PropTypes.number.isRequired,
     unreadNotificationsCount: React.PropTypes.number.isRequired,
     stayOpen: React.PropTypes.bool.isRequired,
@@ -23,9 +24,11 @@ let UserToolbarPrimaryList = React.createClass({
           icon="icon--plus"
         />
         <UserToolbarListItem
-          url={Routes.friends_feed_path()}
-          title={ i18n.t('feed_friends') }
+          badgeClassName="messages-badge"
+          badgeCount={this.props.unreadFriendsCount}
           icon="icon--friends"
+          title={i18n.t('feed_friends')}
+          url={Routes.friends_feed_path()}
         />
         <UserToolbarListItem
           url={Routes.flows()}
