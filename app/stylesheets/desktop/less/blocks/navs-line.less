@@ -1,11 +1,26 @@
 .navs-line {
   &:extend(.layout-constrain);
-
-  nav.nav-view-mode {
-    float: right;
+  position: relative;
+  
+  &.navs-centered {
+    text-align: center;
   }
 
-  nav.filter-nav {
-    text-align: left!important;
+  &.navs-justify {
+    text-align: justify;
+    font-size: 0;
+    line-height: 0;
+
+    &:after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+      height: 0;
+    }
+
+    & > nav, & > div {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
 }

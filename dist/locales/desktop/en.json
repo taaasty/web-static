@@ -417,8 +417,8 @@
       "send": "Send"
     },
     "unread_load": {
-      "unread_entries_count": "__count__ new post",
-      "unread_entries_count_plural": "__count__ new posts",
+      "unread_entries_count": "__count__ new post. ",
+      "unread_entries_count_plural": "__count__ new posts. ",
       "show_unread": "Show"
     }
   },
