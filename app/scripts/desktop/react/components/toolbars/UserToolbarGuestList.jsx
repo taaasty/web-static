@@ -1,7 +1,9 @@
-import React, { createClass } from 'react';
+/*global i18n */
+import React, { PropTypes } from 'react';
+import Routes from '../../../../shared/routes/routes';
 import UserToolbarListItem from './UserToolbarListItem';
 
-let UserToolbarGuestList = createClass({
+class UserToolbarGuestList {
   render() {
     return (
       <ul className="toolbar__nav">
@@ -13,11 +15,15 @@ let UserToolbarGuestList = createClass({
           url={Routes.flows()}
         />
         <UserToolbarListItem
+          badgeClassName="messages-badge"
+          badgeCount={this.props.unreadLiveCount}
           icon="icon--wave"
           title={i18n.t('feed_live')}
           url={Routes.live_feed_path()}
         />
         <UserToolbarListItem
+          badgeClassName="messages-badge"
+          badgeCount={this.props.unreadBestCount}
           icon="icon--fire"
           title={i18n.t('feed_best')}
           url={Routes.best_feed_path()}
@@ -34,7 +40,12 @@ let UserToolbarGuestList = createClass({
         />
       </ul>
     );
-  },
-});
+  }
+}
+
+UserToolbarGuestList.propTypes = {
+  unreadBestCount: PropTypes.number.isRequired,
+  unreadLiveCount: PropTypes.number.isRequired,
+};
 
 export default UserToolbarGuestList;

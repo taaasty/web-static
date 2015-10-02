@@ -191,7 +191,9 @@ global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksCo
 global.SearchResults = require './react/components/SearchResults/SearchResults'
 global.FlowCreator = require './react/components/FlowPopups/FlowCreator'
 global.FlowManager = require './react/components/FlowPopups/FlowManager'
-global.LiveLoadButtonContainer = require('./react/components/LivePage/LiveLoadButtonContainer')
+global.LiveLoadButtonContainer = require('./react/components/LiveFeedPage/LiveLoadButtonContainer')
+global.BestLoadButtonContainer = require('./react/components/BestFeedPage/BestLoadButtonContainer')
+global.FriendsLoadButtonContainer = require('./react/components/FriendsFeedPage/FriendsLoadButtonContainer')
 
 require './react/components/search/search'
 require './react/components/search/button'

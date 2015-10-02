@@ -23,6 +23,7 @@ let UserToolbarContainer = createClass({
     searchUrl: PropTypes.string.isRequired,
     unreadBestCount: PropTypes.number.isRequired,
     unreadConversationsCount: PropTypes.number.isRequired,
+    unreadFriendsCount: PropTypes.number.isRequired,
     unreadLiveCount: PropTypes.number.isRequired,
     unreadNotificationsCount: PropTypes.number.isRequired,
     userLogged: PropTypes.bool.isRequired,
@@ -158,7 +159,8 @@ UserToolbarContainer = connectToStores(
   (props) => ({
     user: CurrentUserStore.getUser(),
     userLogged: CurrentUserStore.isLogged(),
-    unreadBestCount: FeedsStatusStore.getUnreadBestCount(),
+    unreadBestCount: (props.unreadBestCount || 0) + FeedsStatusStore.getUnreadBestCount(),
+    unreadFriendsCount: (props.unreadFriendsCount || 0) + FeedsStatusStore.getUnreadFriendsCount(),
     unreadLiveCount: (props.unreadLiveCount || 0) + FeedsStatusStore.getUnreadLiveCount(),
     unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
     unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),

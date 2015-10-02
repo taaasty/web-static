@@ -76,7 +76,7 @@ window.ReactApp =
 
       DesignActionCreators.initCurrent CurrentUserStore.getUser().design
 
-    FeedsUpdateService();
+    FeedsUpdateService(user);
 
     initLocales(locale, ->
       console.log 'Locales loaded'
