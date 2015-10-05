@@ -12473,77 +12473,127 @@ module.exports = NumberHelpers;
 },{}],247:[function(require,module,exports){
 'use strict';
 
+var _extends = require('babel-runtime/helpers/extends')['default'];
+
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
 var _react = require('react');
 
-var flow = _react.PropTypes.shape({
-  id: _react.PropTypes.number.isRequired,
-  name: _react.PropTypes.string.isRequired,
-  slug: _react.PropTypes.string.isRequired,
-  design: _react.PropTypes.object.isRequired,
-  is_privacy: _react.PropTypes.bool.isRequired,
-  public_tlog_entries_count: _react.PropTypes.number.isRequired,
-  can_edit: _react.PropTypes.bool,
-  can_write: _react.PropTypes.bool
+var any = _react.PropTypes.any;
+var bool = _react.PropTypes.bool;
+var number = _react.PropTypes.number;
+var object = _react.PropTypes.object;
+var oneOf = _react.PropTypes.oneOf;
+var shape = _react.PropTypes.shape;
+var string = _react.PropTypes.string;
+var flow = shape({
+  id: number.isRequired,
+  name: string.isRequired,
+  slug: string.isRequired,
+  design: object.isRequired,
+  is_privacy: bool.isRequired,
+  public_tlog_entries_count: number.isRequired,
+  can_edit: bool,
+  can_write: bool
 });
 
 exports.flow = flow;
 // TODO: specify required fields and type of position field
-var relationship = _react.PropTypes.shape({
-  id: _react.PropTypes.number,
-  position: _react.PropTypes.any,
-  reader_id: _react.PropTypes.number,
-  state: _react.PropTypes.string,
-  user_id: _react.PropTypes.number
+var relationship = shape({
+  id: number,
+  position: any,
+  reader_id: number,
+  state: string,
+  user_id: number
 });
 
 exports.relationship = relationship;
-var userpicData = _react.PropTypes.shape({
-  kind: _react.PropTypes.string.isRequired,
-  original_url: _react.PropTypes.string,
-  symbol: _react.PropTypes.string
+var gender = oneOf(['f', 'm']);
+
+var userpicData = shape({
+  kind: string.isRequired,
+  original_url: string,
+  symbol: string
 });
 
-var tlogData = _react.PropTypes.shape({
-  id: _react.PropTypes.number.isRequired,
-  tag: _react.PropTypes.string.isRequired,
-  url: _react.PropTypes.string.isRequired,
+var heroUser = shape({
+  gender: gender,
+  created_at: string.isRequired,
+  features: shape({
+    flows: bool.isRequired,
+    notification: bool.isRequired,
+    search: bool.isRequired
+  }),
+  has_design_bundle: bool.isRequired,
+  id: number.isRequired,
+  is_daylog: bool.isRequired,
+  is_female: bool.isRequired,
+  is_flow: bool.isRequired,
+  is_premium: bool.isRequired,
+  is_privacy: bool.isRequired,
+  locale: string.isRequired,
+  name: string.isRequired,
+  private_entries_count: number.isRequired,
+  public_entries_count: number.isRequired,
+  slug: string.isRequired,
+  tag: string.isRequired,
+  title: string,
+  tlog_url: string.isRequired,
+  total_entries_count: number.isRequired,
+  updated_ad: string.isRequired,
+  userpic: _extends({
+    default_colors: shape({
+      background: string,
+      name: string
+    })
+  }, userpicData, {
+    large_url: string,
+    thumb128_url: string,
+    thumb64_url: string,
+    thumbor_path: string.isRequired
+  })
+});
+
+exports.heroUser = heroUser;
+var tlogData = shape({
+  id: number.isRequired,
+  tag: string.isRequired,
+  url: string.isRequired,
   userpic: userpicData.isRequired
 });
 
-var tlogEntry = _react.PropTypes.shape({
+var tlogEntry = shape({
   author: tlogData.isRequired,
-  can_delete: _react.PropTypes.bool,
-  can_edit: _react.PropTypes.bool,
-  can_favorite: _react.PropTypes.bool,
-  can_moderate: _react.PropTypes.bool,
-  can_report: _react.PropTypes.bool,
-  can_vote: _react.PropTypes.bool,
-  can_watch: _react.PropTypes.bool,
-  comments_count: _react.PropTypes.number.isRequired,
-  id: _react.PropTypes.number.isRequired,
-  is_favorited: _react.PropTypes.bool,
-  is_voteable: _react.PropTypes.bool,
-  is_watching: _react.PropTypes.bool,
-  preview_image: _react.PropTypes.shape({
-    geometry: _react.PropTypes.shape({
-      height: _react.PropTypes.number.isRequired,
-      width: _react.PropTypes.number.isRequired
+  can_delete: bool,
+  can_edit: bool,
+  can_favorite: bool,
+  can_moderate: bool,
+  can_report: bool,
+  can_vote: bool,
+  can_watch: bool,
+  comments_count: number.isRequired,
+  id: number.isRequired,
+  is_favorited: bool,
+  is_voteable: bool,
+  is_watching: bool,
+  preview_image: shape({
+    geometry: shape({
+      height: number.isRequired,
+      width: number.isRequired
     }),
-    url: _react.PropTypes.string.isRequired
+    url: string.isRequired
   }).isRequired,
-  rating: _react.PropTypes.object.isRequired,
-  title_truncated: _react.PropTypes.string.isRequired,
+  rating: object.isRequired,
+  title_truncated: string.isRequired,
   tlog: tlogData.isRequired,
-  type: _react.PropTypes.string.isRequired,
-  url: _react.PropTypes.string.isRequired
+  type: string.isRequired,
+  url: string.isRequired
 });
 exports.tlogEntry = tlogEntry;
 
-},{"react":"react"}],248:[function(require,module,exports){
+},{"babel-runtime/helpers/extends":273,"react":"react"}],248:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];

@@ -1,6 +1,4 @@
-PopupActions = require '../../../actions/popup'
-HeroProfile_SettingsButton = require './buttons/Settings'
-{ TLOG_SLUG_ANONYMOUS } = require '../../../../../shared/constants/Tlog'
+HeroProfileActionsContainer = require('./HeroProfileActionsContainer');
 
 HERO_CLOSED = 'closed'
 HERO_OPENED = 'opened'
@@ -37,42 +35,34 @@ window.HeroProfile = React.createClass
     TastyEvents.off TastyEvents.keys.command_hero_close(), @close
 
   render: ->
-    if @isCurrentUser()
-      actions = <div className="hero__actions">
-                  <button className="button button--small button--outline">Это вы</button>
-                  <HeroProfile_SettingsButton onClick={this.showSettings} />
-                </div>
-    else if @props.relationship?
-      actions = <div className="hero__actions hero__actions--visible">
-                  <FollowButton relationship={ this.props.relationship } />
-                  {(this.props.user.slug != TLOG_SLUG_ANONYMOUS) and
-                   [ <WriteMessageButton
-                       key="write-message-button"
-                       user={ this.props.user }
-                     />,
-                     <HeroProfile_DropdownMenu
-                       key="ellipsis-button"
-                       userId={ this.props.user.id }
-                       status={ this.props.relationship.state }
-                     /> ]}
-                </div>
-      follow_status = <SmartFollowStatus
-                          tlogId={ this.props.user.id }
-                          status={ this.props.relationship.state } />
+    followButtonVisible = !@isCurrentUser() and @props.relationship?
 
     return <div className="hero hero-profile">
              <CloseToolbar onClick={ this.close } />
              <div className="hero__overlay"></div>
              <div className="hero__gradient"></div>
              <div className="hero__box" ref="heroBox">
-               <HeroProfileAvatar user={ this.props.user }
-                                  onClick={ this.handleAvatarClick } />
-               { follow_status }
+               <HeroProfileAvatar
+                 user={ this.props.user }
+                 onClick={ this.handleAvatarClick }
+               />
+               { followButtonVisible and
+                 <SmartFollowStatus
+                   tlogId={ this.props.user.id }
+                   status={ this.props.relationship.state }
+                 />
+               }
                <HeroProfileHead user={ this.props.user } />
-               { actions }
+               <HeroProfileActionsContainer
+                 isCurrentUser={this.isCurrentUser()}
+                 relationship={this.props.relationship}
+                 user={this.props.user}
+               />
              </div>
-             <HeroProfileStats user={ this.props.user }
-                               stats={ this.props.stats } />
+             <HeroProfileStats
+               user={ this.props.user }
+               stats={ this.props.stats }
+             />
            </div>
 
   isCurrentUser: ->
@@ -139,9 +129,6 @@ window.HeroProfile = React.createClass
   onResize: -> @setHeroWindowHeight() if @isOpen()
 
   isOpen: -> @state.currentState != HERO_CLOSED
-
-  showSettings: ->
-    PopupActions.showSettings()
 
   handleAvatarClick: (e) ->
     unless @isOpen()
