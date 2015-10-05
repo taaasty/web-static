@@ -420,6 +420,9 @@
     "actions": {
       "thats_you": "Это вы"
     },
+    "notifications": {
+      "mark_all_read": "отметить все как прочитанные"
+    },
     "messenger": {
       "send": "Отправить"
     },

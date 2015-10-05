@@ -1,59 +1,67 @@
+import React, { PropTypes } from 'react';
 import NotificationStore from '../../stores/NotificationStore';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import NotificationActionCreators from '../../actions/Notification';
 import Notifications from './Notifications';
 
-let NotificationsContainer = React.createClass({
-  propTypes: {
-    notifications: React.PropTypes.array.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    loadingMore: React.PropTypes.bool.isRequired,
-    error: React.PropTypes.bool.isRequired,
-    everythingLoaded: React.PropTypes.bool.isRequired,
-    onUpdate: React.PropTypes.func
-  },
-
+class NotificationsContainer {
   componentDidMount() {
     NotificationActionCreators.load();
-  },
-
+  }
   componentDidUpdate() {
-    if (this.props.onUpdate != null) this.props.onUpdate();
-  },
-
+    if (this.props.onUpdate != null) {
+      this.props.onUpdate();
+    }
+  }
   componentWillUnmount() {
-    this.props.notifications.forEach((notification) => {
-      if (notification.read_at === null) this.markAsRead(notification.id);
-    });
-  },
-
-  render() {
-    let actions = {
-      onNotificationRead: this.markAsRead,
-      onLoadMore: this.loadMore
-    };
-
-    return <Notifications {...this.props} {...actions} />;
-  },
-
+    this.markAllAsRead();
+  }
   markAsRead(notificationID) {
     NotificationActionCreators.markAsRead(notificationID);
-  },
-
+  }
+  markAllAsRead() {
+    this.props.notifications.forEach((notification) => {
+      if (notification.read_at === null) {
+        this.markAsRead(notification.id);
+      }
+    });
+  }
   loadMore() {
-    let { notifications } = this.props;
-    let sinceID = notifications[notifications.length - 1].id;
+    const { notifications } = this.props;
+    const sinceID = notifications[notifications.length - 1].id;
 
     NotificationActionCreators.loadMore(sinceID);
   }
-});
+  render() {
+    return (
+      <Notifications {...this.props}
+        markAllAsRead={this.markAllAsRead.bind(this)}
+        onLoadMore={this.loadMore.bind(this)}
+        onNotificationRead={this.markAsRead.bind(this)}
+      /> 
+    );
+  }
+}
 
-NotificationsContainer = connectToStores(NotificationsContainer, [NotificationStore], (props) => ({
-  notifications: NotificationStore.getAllChrono(),
-  loading: NotificationStore.isLoading(),
-  loadingMore: NotificationStore.isLoadingMore(),
-  error: NotificationStore.isError(),
-  everythingLoaded: NotificationStore.isEverythingLoaded()
-}));
+NotificationsContainer.propTypes = {
+  error: PropTypes.bool.isRequired,
+  everythingLoaded: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadingMore: PropTypes.bool.isRequired,
+  notifications: PropTypes.array.isRequired,
+  onUpdate: PropTypes.func,
+};
 
-export default NotificationsContainer;
+const ConnectedNotificationsContainer = connectToStores(
+  NotificationsContainer,
+  [NotificationStore],
+  () => ({
+    notifications: NotificationStore.getAllChrono(),
+    loading: NotificationStore.isLoading(),
+    loadingMore: NotificationStore.isLoadingMore(),
+    error: NotificationStore.isError(),
+    everythingLoaded: NotificationStore.isEverythingLoaded(),
+  })
+);
+
+export default ConnectedNotificationsContainer;

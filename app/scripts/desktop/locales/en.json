@@ -416,6 +416,9 @@
     "actions": {
       "thats_you": "That's you"
     },
+    "notifications": {
+      "mark_all_read": "mark all as read"
+    },
     "messenger": {
       "send": "Send"
     },
