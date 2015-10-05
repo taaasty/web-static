@@ -1,62 +1,104 @@
 import { PropTypes } from 'react';
 
-export const flow = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  design: PropTypes.object.isRequired,
-  is_privacy: PropTypes.bool.isRequired,
-  public_tlog_entries_count: PropTypes.number.isRequired,
-  can_edit: PropTypes.bool,
-  can_write: PropTypes.bool,
+const { any, bool, number, object, oneOf, shape, string } = PropTypes;
+
+export const flow = shape({
+  id: number.isRequired,
+  name: string.isRequired,
+  slug: string.isRequired,
+  design: object.isRequired,
+  is_privacy: bool.isRequired,
+  public_tlog_entries_count: number.isRequired,
+  can_edit: bool,
+  can_write: bool,
 })
 
 // TODO: specify required fields and type of position field
-export const relationship = PropTypes.shape({
-  id: PropTypes.number,
-  position: PropTypes.any,
-  reader_id: PropTypes.number,
-  state: PropTypes.string,
-  user_id: PropTypes.number,
+export const relationship = shape({
+  id: number,
+  position: any,
+  reader_id: number,
+  state: string,
+  user_id: number,
 })
 
-const userpicData = PropTypes.shape({
-  kind: PropTypes.string.isRequired,
-  original_url: PropTypes.string,
-  symbol: PropTypes.string,
+const gender = oneOf(['f', 'm']);
+
+const userpicData = shape({
+  kind: string.isRequired,
+  original_url: string,
+  symbol: string,
 });
 
-const tlogData = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  tag: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+export const heroUser = shape({
+  gender,
+  created_at: string.isRequired,
+  features: shape({
+    flows: bool.isRequired,
+    notification: bool.isRequired,
+    search: bool.isRequired,
+  }),
+  has_design_bundle: bool.isRequired,
+  id: number.isRequired,
+  is_daylog: bool.isRequired,
+  is_female: bool.isRequired,
+  is_flow: bool.isRequired,
+  is_premium: bool.isRequired,
+  is_privacy: bool.isRequired,
+  locale: string.isRequired,
+  name: string.isRequired,
+  private_entries_count: number.isRequired,
+  public_entries_count: number.isRequired,
+  slug: string.isRequired,
+  tag: string.isRequired,
+  title: string,
+  tlog_url: string.isRequired,
+  total_entries_count: number.isRequired,
+  updated_ad: string.isRequired,
+  userpic: {
+    default_colors: shape({
+      background: string,
+      name: string,
+    }),
+    ...userpicData,
+    large_url: string,
+    thumb128_url: string,
+    thumb64_url: string,
+    thumbor_path: string.isRequired,
+  },
+})
+
+const tlogData = shape({
+  id: number.isRequired,
+  tag: string.isRequired,
+  url: string.isRequired,
   userpic: userpicData.isRequired,
 });
 
-export const tlogEntry = PropTypes.shape({
+export const tlogEntry = shape({
   author: tlogData.isRequired,
-  can_delete: PropTypes.bool,
-  can_edit: PropTypes.bool,
-  can_favorite: PropTypes.bool,
-  can_moderate: PropTypes.bool,
-  can_report: PropTypes.bool,
-  can_vote: PropTypes.bool,
-  can_watch: PropTypes.bool,
-  comments_count: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
-  is_favorited: PropTypes.bool,
-  is_voteable: PropTypes.bool,
-  is_watching: PropTypes.bool,
-  preview_image: PropTypes.shape({
-    geometry: PropTypes.shape({
-      height: PropTypes.number.isRequired,
-      width: PropTypes.number.isRequired,
+  can_delete: bool,
+  can_edit: bool,
+  can_favorite: bool,
+  can_moderate: bool,
+  can_report: bool,
+  can_vote: bool,
+  can_watch: bool,
+  comments_count: number.isRequired,
+  id: number.isRequired,
+  is_favorited: bool,
+  is_voteable: bool,
+  is_watching: bool,
+  preview_image: shape({
+    geometry: shape({
+      height: number.isRequired,
+      width: number.isRequired,
     }),
-    url: PropTypes.string.isRequired,
+    url: string.isRequired,
   }).isRequired,
-  rating: PropTypes.object.isRequired,
-  title_truncated: PropTypes.string.isRequired,
+  rating: object.isRequired,
+  title_truncated: string.isRequired,
   tlog: tlogData.isRequired,
-  type: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  type: string.isRequired,
+  url: string.isRequired,
 })

@@ -417,6 +417,9 @@
   "buttons": {
     "hero_create_entry": "Написать в поток",
     "hero_create_flow": "Создать поток",
+    "actions": {
+      "thats_you": "Это вы"
+    },
     "messenger": {
       "send": "Отправить"
     },

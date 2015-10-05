@@ -55,6 +55,7 @@ const dependencies = {
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
   'numeral': './node_modules/numeral',
   'react-tap-event-plugin': './node_modules/react-tap-event-plugin',
+  'color': './node_modules/color',
 };
 
 gulp.task('[D][S] Client scripts', () => {

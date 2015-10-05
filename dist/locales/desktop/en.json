@@ -413,6 +413,9 @@
   "buttons": {
     "hero_create_entry": "Write to the flow",
     "hero_create_flow": "Create flow",
+    "actions": {
+      "thats_you": "That's you"
+    },
     "messenger": {
       "send": "Send"
     },
