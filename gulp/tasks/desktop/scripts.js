@@ -56,6 +56,8 @@ const dependencies = {
   'numeral': './node_modules/numeral',
   'react-tap-event-plugin': './node_modules/react-tap-event-plugin',
   'color': './node_modules/color',
+  'react-lazy-load': './node_modules/react-lazy-load',
+  'react-imageloader': './node_modules/react-imageloader',
 };
 
 gulp.task('[D][S] Client scripts', () => {

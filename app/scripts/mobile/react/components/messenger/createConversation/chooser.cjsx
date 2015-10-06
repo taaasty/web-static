@@ -1,7 +1,7 @@
 classnames = require 'classnames'
 UsersViewActions      = require '../../../actions/view/users'
 ComponentMixin        = require '../../../mixins/component'
-Spinner               = require '../../common/spinner/spinner'
+Spinner               = require '../../../../../shared/react/components/common/Spinner'
 MessengerChooserField = require './chooser/field'
 MessengerChooserList  = require './chooser/list'
 { PropTypes } = React

@@ -24,6 +24,8 @@ const dependencies = {
   i18next: './app/bower_components/i18next/i18next',
   pusher: './app/bower_components/pusher/dist/pusher',
   jquery: './app/bower_components/jquery/dist/jquery',
+  'react-lazy-load': './node_modules/react-lazy-load',
+  'react-image-loader': './node_modules/react-imageloader',
 };
 
 gulp.task('[M][S] Client scripts', () => {

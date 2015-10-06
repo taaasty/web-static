@@ -1,5 +1,5 @@
 CurrentUserViewAcitons = require '../../../actions/view/currentUser'
-Spinner                = require '../../common/spinner/spinner'
+Spinner                = require '../../../../../shared/react/components/common/Spinner'
 UserAvatar             = require '../../common/avatar/user'
 { PropTypes } = React
 

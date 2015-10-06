@@ -1,4 +1,7 @@
+import LazyLoad from 'react-lazy-load';
 import React, { createClass, PropTypes } from 'react';
+import ImageLoader from 'react-imageloader';
+import FitSpinner from './FitSpinner';
 
 const Image = createClass({
   propTypes: {
@@ -12,15 +15,35 @@ const Image = createClass({
     maxWidth: PropTypes.number,
   },
 
-  render() {
-    const { image: { url }, isRawUrl } = this.props;
+  renderPreloader() {
+    const style = this.getSize();
+    const { width, height } = style;
+
     return (
-      <img
-        className={this.props.className}
-        src={isRawUrl ? url : this.getUrl()}
-        srcSet={isRawUrl ? void 0 : this.getRetinaUrl()}
-        style={this.getSize()}
-      />
+      <div className="image-loader-spinner" style={style}>
+        <FitSpinner size={Math.min(height, width)} />
+      </div>
+    );
+  },
+
+  render() {
+    const { className, image: { url }, isRawUrl } = this.props;
+    const style = this.getSize();
+    const imgProps = {
+      className,
+      style,
+      srcSet: isRawUrl ? void 0 : this.getRetinaUrl(),
+    };
+
+    return (
+      <LazyLoad height={style.height}>
+        <ImageLoader
+          imgProps={imgProps}
+          preloader={this.renderPreloader.bind(this)}
+          src={isRawUrl ? url : this.getUrl()}
+          style={style}
+        />
+      </LazyLoad>
     );
   },
 
