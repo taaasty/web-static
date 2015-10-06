@@ -19,6 +19,9 @@ class HeroProfileActionsContainer extends Component {
            background-color: ${currentColor}; 
            opacity: 0.6;
         }
+        .hero__actions button:before {
+          border: none;
+        }
         .hero__actions button:hover { opacity: 1; }
         .hero__actions,
         .hero__actions button.button--outline {
