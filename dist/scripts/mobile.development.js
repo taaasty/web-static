@@ -38,8 +38,6 @@ require('./react/components/auth/authEmailSignUp');
 
 global.EntryPage = require('./react/pages/entry');
 
-global.TlogRegularPage = require('./react/pages/tlogRegular');
-
 global.TlogDaylogPage = require('./react/pages/tlogDaylog');
 
 global.FeedLivePage = require('./react/pages/feedLive');
@@ -60,6 +58,8 @@ global.FlowPage = require('./react/components/FlowPage');
 
 global.SettingsPage = require('./react/components/SettingsPage');
 
+global.TlogRegularPage = require('./react/components/TlogRegularPage');
+
 require('./react/stores/conversation');
 
 require('./react/stores/currentUser');
@@ -76,7 +76,7 @@ require('./react/stores/relationships');
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../shared/react/services/thumbor":259,"../shared/routes/api":262,"../shared/routes/routes":263,"../shared/shims/console":264,"./locales/moment/ru":3,"./react/application":18,"./react/components/FlowPage":24,"./react/components/SettingsPage":40,"./react/components/auth/auth":51,"./react/components/auth/authEmailSignIn":53,"./react/components/auth/authEmailSignUp":54,"./react/pages/auth":224,"./react/pages/entry":225,"./react/pages/feedBest":226,"./react/pages/feedFriends":227,"./react/pages/feedLive":228,"./react/pages/messenger":229,"./react/pages/messengerThread":230,"./react/pages/notifications":232,"./react/pages/tlogDaylog":233,"./react/pages/tlogRegular":234,"./react/stores/conversation":237,"./react/stores/currentUser":238,"./react/stores/feed":239,"./react/stores/message":240,"./react/stores/messagingStatus":241,"./react/stores/notification":242,"./react/stores/relationships":243,"./resources/libs":244}],3:[function(require,module,exports){
+},{"../shared/react/services/thumbor":259,"../shared/routes/api":262,"../shared/routes/routes":263,"../shared/shims/console":264,"./locales/moment/ru":3,"./react/application":18,"./react/components/FlowPage":24,"./react/components/SettingsPage":40,"./react/components/TlogRegularPage":50,"./react/components/auth/auth":52,"./react/components/auth/authEmailSignIn":54,"./react/components/auth/authEmailSignUp":55,"./react/pages/auth":225,"./react/pages/entry":226,"./react/pages/feedBest":227,"./react/pages/feedFriends":228,"./react/pages/feedLive":229,"./react/pages/messenger":230,"./react/pages/messengerThread":231,"./react/pages/notifications":233,"./react/pages/tlogDaylog":234,"./react/stores/conversation":237,"./react/stores/currentUser":238,"./react/stores/feed":239,"./react/stores/message":240,"./react/stores/messagingStatus":241,"./react/stores/notification":242,"./react/stores/relationships":243,"./resources/libs":244}],3:[function(require,module,exports){
 // Подключаем оригинальный файл с локализацией. В нём производится определение перевода
 // вида moment.defineLocale(...)
 'use strict';
@@ -158,7 +158,7 @@ CurrentUserServerActions = {
 module.exports = CurrentUserServerActions;
 
 
-},{"../../constants/constants":210,"../../dispatcher/dispatcher":220}],5:[function(require,module,exports){
+},{"../../constants/constants":211,"../../dispatcher/dispatcher":221}],5:[function(require,module,exports){
 var AppDispatcher, Constants, FeedServerActions;
 
 Constants = require('../../constants/constants');
@@ -183,7 +183,7 @@ FeedServerActions = {
 module.exports = FeedServerActions;
 
 
-},{"../../constants/constants":210,"../../dispatcher/dispatcher":220}],6:[function(require,module,exports){
+},{"../../constants/constants":211,"../../dispatcher/dispatcher":221}],6:[function(require,module,exports){
 var AppDispatcher, Constants, MessengerServerActions;
 
 Constants = require('../../constants/constants');
@@ -226,7 +226,7 @@ MessengerServerActions = {
 module.exports = MessengerServerActions;
 
 
-},{"../../constants/constants":210,"../../dispatcher/dispatcher":220}],7:[function(require,module,exports){
+},{"../../constants/constants":211,"../../dispatcher/dispatcher":221}],7:[function(require,module,exports){
 var AppDispatcher, Constants, NotificationsServerActions;
 
 Constants = require('../../constants/constants');
@@ -258,7 +258,7 @@ NotificationsServerActions = {
 module.exports = NotificationsServerActions;
 
 
-},{"../../constants/constants":210,"../../dispatcher/dispatcher":220}],8:[function(require,module,exports){
+},{"../../constants/constants":211,"../../dispatcher/dispatcher":221}],8:[function(require,module,exports){
 var AppDispatcher, Constants, RelationshipServerActions;
 
 Constants = require('../../constants/constants');
@@ -280,7 +280,7 @@ RelationshipServerActions = {
 module.exports = RelationshipServerActions;
 
 
-},{"../../constants/constants":210,"../../dispatcher/dispatcher":220}],9:[function(require,module,exports){
+},{"../../constants/constants":211,"../../dispatcher/dispatcher":221}],9:[function(require,module,exports){
 var Api, CurrentUserServerActions, CurrentUserViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -324,7 +324,7 @@ CurrentUserViewActions = {
 module.exports = CurrentUserViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218,"../server/currentUser":4}],10:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219,"../server/currentUser":4}],10:[function(require,module,exports){
 var Api, EntryViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -408,7 +408,7 @@ EntryViewActions = {
 module.exports = EntryViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218}],11:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219}],11:[function(require,module,exports){
 var Api, FeedServerActions, FeedViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -460,7 +460,7 @@ FeedViewActions = {
 module.exports = FeedViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218,"../server/feed":5}],12:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219,"../server/feed":5}],12:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessengerServerActions, MessengerViewActions, NotifyController, UuidService;
 
 Api = require('../../api/api');
@@ -533,7 +533,7 @@ MessengerViewActions = {
 module.exports = MessengerViewActions;
 
 
-},{"../../../../shared/react/services/uuid":260,"../../api/api":17,"../../constants/constants":210,"../../controllers/notify":218,"../../dispatcher/dispatcher":220,"../server/messenger":6}],13:[function(require,module,exports){
+},{"../../../../shared/react/services/uuid":260,"../../api/api":17,"../../constants/constants":211,"../../controllers/notify":219,"../../dispatcher/dispatcher":221,"../server/messenger":6}],13:[function(require,module,exports){
 var Api, NotificationsServerActions, NotificationsViewActions, NotifyController;
 
 Api = require('../../api/api');
@@ -576,7 +576,7 @@ NotificationsViewActions = {
 module.exports = NotificationsViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218,"../server/notifications":7}],14:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219,"../server/notifications":7}],14:[function(require,module,exports){
 var Api, NotifyController, RelationshipServerActions, RelationshipViewActions;
 
 Api = require('../../api/api');
@@ -648,7 +648,7 @@ RelationshipViewActions = {
 module.exports = RelationshipViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218,"../server/relationship":8}],15:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219,"../server/relationship":8}],15:[function(require,module,exports){
 var Api, NotifyController, SessionsViewActions;
 
 Api = require('../../api/api');
@@ -688,7 +688,7 @@ SessionsViewActions = {
 module.exports = SessionsViewActions;
 
 
-},{"../../api/api":17,"../../controllers/notify":218}],16:[function(require,module,exports){
+},{"../../api/api":17,"../../controllers/notify":219}],16:[function(require,module,exports){
 var Api, UsersViewActions;
 
 Api = require('../../api/api');
@@ -1180,7 +1180,7 @@ Api = {
 module.exports = Api;
 
 
-},{"../constants/constants":210,"../stores/currentUser":238,"lodash":"lodash","react/lib/Object.assign":364}],18:[function(require,module,exports){
+},{"../constants/constants":211,"../stores/currentUser":238,"lodash":"lodash","react/lib/Object.assign":364}],18:[function(require,module,exports){
 (function (global){
 var MessagingService, ReactUjs, initLocales;
 
@@ -1307,7 +1307,7 @@ var Daylog = React.createClass({
 exports['default'] = Daylog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../entry/Tlog":101,"./DaylogEmptyPage":20,"./DaylogOwnEmptyPage":21,"babel-runtime/helpers/interop-require-default":276}],20:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../entry/Tlog":102,"./DaylogEmptyPage":20,"./DaylogOwnEmptyPage":21,"babel-runtime/helpers/interop-require-default":276}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1513,7 +1513,7 @@ var FeedFlow = (0, _react.createClass)({
 exports['default'] = FeedFlow;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/ProjectTypes":247,"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":222,"../../stores/feed":239,"../feed/feed":133,"../feed/mixins/feed":138,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],23:[function(require,module,exports){
+},{"../../../../shared/react/ProjectTypes":247,"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":223,"../../stores/feed":239,"../feed/feed":134,"../feed/mixins/feed":139,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],23:[function(require,module,exports){
 /*global i18n, Routes */
 'use strict';
 
@@ -1619,7 +1619,7 @@ var HeroFlow = (function (_Component) {
 exports['default'] = HeroFlow;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/ProjectTypes":247,"../buttons/relationship/follow":72,"../hero/feed":139,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],24:[function(require,module,exports){
+},{"../../../../shared/react/ProjectTypes":247,"../buttons/relationship/follow":73,"../hero/feed":140,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],24:[function(require,module,exports){
 'use strict';
 
 var _get = require('babel-runtime/helpers/get')['default'];
@@ -1750,7 +1750,7 @@ var FlowPage = (function (_Component) {
 exports['default'] = FlowPage;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/ProjectTypes":247,"../../stores/feed":239,"../common/page/PageBody":79,"../common/page/PageHeader":80,"../common/page/PageLayout":81,"../common/page/PageWithAuth":82,"./FeedFlow":22,"./HeroFlow":23,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],25:[function(require,module,exports){
+},{"../../../../shared/react/ProjectTypes":247,"../../stores/feed":239,"../common/page/PageBody":80,"../common/page/PageHeader":81,"../common/page/PageLayout":82,"../common/page/PageWithAuth":83,"./FeedFlow":22,"./HeroFlow":23,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],25:[function(require,module,exports){
 var PropTypes, SettingsAccounts, UserAvatar;
 
 UserAvatar = require('../common/avatar/user');
@@ -1794,7 +1794,7 @@ SettingsAccounts = React.createClass({
 module.exports = SettingsAccounts;
 
 
-},{"../common/avatar/user":75}],26:[function(require,module,exports){
+},{"../common/avatar/user":76}],26:[function(require,module,exports){
 var PropTypes, SettingsSaveButton;
 
 PropTypes = React.PropTypes;
@@ -2080,7 +2080,7 @@ SettingsEmailDeclare = React.createClass({
 module.exports = SettingsEmailDeclare;
 
 
-},{"../../../controllers/notify":218,"./buttons/declare":31,"./fields/email":33}],33:[function(require,module,exports){
+},{"../../../controllers/notify":219,"./buttons/declare":31,"./fields/email":33}],33:[function(require,module,exports){
 var PropTypes, SettingsEmailField, _;
 
 _ = require('lodash');
@@ -2178,7 +2178,7 @@ SettingsEmailShow = React.createClass({
 module.exports = SettingsEmailShow;
 
 
-},{"../../../controllers/notify":218,"./buttons/change":30,"./fields/email":33}],35:[function(require,module,exports){
+},{"../../../controllers/notify":219,"./buttons/change":30,"./fields/email":33}],35:[function(require,module,exports){
 var PropTypes, SettingsEmailCancelButton, SettingsEmailField, SettingsEmailUnconfirmed;
 
 SettingsEmailField = require('./fields/email');
@@ -2385,7 +2385,7 @@ SettingsHeroAvatar = React.createClass({
 module.exports = SettingsHeroAvatar;
 
 
-},{"../../../actions/view/currentUser":9,"../../common/avatar/user":75,"../../common/spinner/spinner":84}],38:[function(require,module,exports){
+},{"../../../actions/view/currentUser":9,"../../common/avatar/user":76,"../../common/spinner/spinner":85}],38:[function(require,module,exports){
 var NotifyController, PropTypes, SettingsHeroSlug, _;
 
 _ = require('lodash');
@@ -2448,7 +2448,7 @@ SettingsHeroSlug = React.createClass({
 module.exports = SettingsHeroSlug;
 
 
-},{"../../../controllers/notify":218,"lodash":"lodash"}],39:[function(require,module,exports){
+},{"../../../controllers/notify":219,"lodash":"lodash"}],39:[function(require,module,exports){
 var PropTypes, SettingsHeroTitle, _;
 
 _ = require('lodash');
@@ -2585,7 +2585,7 @@ var SettingsPage = (function (_Component) {
 exports['default'] = SettingsPage;
 module.exports = exports['default'];
 
-},{"../common/page/PageBody":79,"../common/page/PageLayout":81,"../common/page/PageWithToolbars":83,"./settings":46,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],41:[function(require,module,exports){
+},{"../common/page/PageBody":80,"../common/page/PageLayout":82,"../common/page/PageWithToolbars":84,"./settings":46,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],41:[function(require,module,exports){
 var CurrentUserViewActions, SettingsEmailMixin;
 
 CurrentUserViewActions = require('../../../actions/view/currentUser');
@@ -2624,7 +2624,7 @@ SettingsMixin = {
 module.exports = SettingsMixin;
 
 
-},{"../../../actions/view/currentUser":9,"../../../controllers/notify":218,"lodash":"lodash"}],43:[function(require,module,exports){
+},{"../../../actions/view/currentUser":9,"../../../controllers/notify":219,"lodash":"lodash"}],43:[function(require,module,exports){
 var PropTypes, SettingsPassword, SettingsPasswordConfirmField, SettingsPasswordField;
 
 SettingsPasswordField = require('./password/fields/password');
@@ -2948,7 +2948,7 @@ var Tlog = React.createClass({
 exports['default'] = Tlog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../entry/Tlog":101,"./TlogEmptyPage":48,"./TlogOwnEmptyPage":49,"babel-runtime/helpers/interop-require-default":276}],48:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../entry/Tlog":102,"./TlogEmptyPage":48,"./TlogOwnEmptyPage":49,"babel-runtime/helpers/interop-require-default":276}],48:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3077,6 +3077,125 @@ module.exports = exports['default'];
 },{}],50:[function(require,module,exports){
 'use strict';
 
+var _get = require('babel-runtime/helpers/get')['default'];
+
+var _inherits = require('babel-runtime/helpers/inherits')['default'];
+
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+var _interopRequireWildcard = require('babel-runtime/helpers/interop-require-wildcard')['default'];
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _sharedReactProjectTypes = require('../../../../shared/react/ProjectTypes');
+
+var ProjectTypes = _interopRequireWildcard(_sharedReactProjectTypes);
+
+var _commonPagePageWithAuth = require('../common/page/PageWithAuth');
+
+var _commonPagePageWithAuth2 = _interopRequireDefault(_commonPagePageWithAuth);
+
+var _commonPagePageLayout = require('../common/page/PageLayout');
+
+var _commonPagePageLayout2 = _interopRequireDefault(_commonPagePageLayout);
+
+var _commonPagePageHeader = require('../common/page/PageHeader');
+
+var _commonPagePageHeader2 = _interopRequireDefault(_commonPagePageHeader);
+
+var _commonPagePageBody = require('../common/page/PageBody');
+
+var _commonPagePageBody2 = _interopRequireDefault(_commonPagePageBody);
+
+var _heroTlog = require('../hero/tlog');
+
+var _heroTlog2 = _interopRequireDefault(_heroTlog);
+
+var _TlogTlog = require('../Tlog/Tlog');
+
+var _TlogTlog2 = _interopRequireDefault(_TlogTlog);
+
+var _paginationTlogPagination = require('../pagination/TlogPagination');
+
+var _paginationTlogPagination2 = _interopRequireDefault(_paginationTlogPagination);
+
+var TlogRegularPage = (function (_Component) {
+  _inherits(TlogRegularPage, _Component);
+
+  function TlogRegularPage() {
+    _classCallCheck(this, TlogRegularPage);
+
+    _get(Object.getPrototypeOf(TlogRegularPage.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(TlogRegularPage, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var currentUser = _props.currentUser;
+      var entries = _props.entries;
+      var locale = _props.locale;
+      var pagination = _props.pagination;
+      var tlog = _props.tlog;
+
+      return _react2['default'].createElement(
+        _commonPagePageWithAuth2['default'],
+        { currentUser: currentUser, locale: locale },
+        _react2['default'].createElement(
+          _commonPagePageLayout2['default'],
+          null,
+          _react2['default'].createElement(
+            _commonPagePageHeader2['default'],
+            null,
+            _react2['default'].createElement(_heroTlog2['default'], { tlog: tlog })
+          ),
+          _react2['default'].createElement(
+            _commonPagePageBody2['default'],
+            null,
+            _react2['default'].createElement(_TlogTlog2['default'], { entries: entries, tlog: tlog }),
+            _react2['default'].createElement(_paginationTlogPagination2['default'], {
+              pagination: pagination,
+              slug: tlog.author.slug
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return TlogRegularPage;
+})(_react.Component);
+
+exports['default'] = TlogRegularPage;
+
+TlogRegularPage.propTypes = {
+  currentUser: _react.PropTypes.object, //elaborate
+  entries: _react.PropTypes.array.isRequired,
+  locale: _react.PropTypes.string.isRequired,
+  pagination: ProjectTypes.pagination,
+  tlog: ProjectTypes.tlog.isRequired
+};
+
+TlogRegularPage.defaultProps = {
+  entries: []
+};
+
+exports['default'] = TlogRegularPage;
+module.exports = exports['default'];
+
+},{"../../../../shared/react/ProjectTypes":247,"../Tlog/Tlog":47,"../common/page/PageBody":80,"../common/page/PageHeader":81,"../common/page/PageLayout":82,"../common/page/PageWithAuth":83,"../hero/tlog":144,"../pagination/TlogPagination":194,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/get":274,"babel-runtime/helpers/inherits":275,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],51:[function(require,module,exports){
+'use strict';
+
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
@@ -3140,7 +3259,7 @@ var Notify = (function () {
 exports['default'] = Notify;
 module.exports = exports['default'];
 
-},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],51:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],52:[function(require,module,exports){
 (function (global){
 var AuthEmailSignInButton, AuthEmailSignUpButton, AuthFacebookButton, AuthVkontakteButton, PropTypes, classnames;
 
@@ -3206,7 +3325,7 @@ module.exports = Auth;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./buttons/emailSignIn":57,"./buttons/emailSignUp":58,"./buttons/facebook":60,"./buttons/vkontakte":61,"classnames":331}],52:[function(require,module,exports){
+},{"./buttons/emailSignIn":58,"./buttons/emailSignUp":59,"./buttons/facebook":61,"./buttons/vkontakte":62,"classnames":331}],53:[function(require,module,exports){
 var AuthEmailRecovery, AuthEmailResetButton, AuthRememberedPasswordLink, ComponentMixin, EmailLoginField, NotifyController, PropTypes, ScreenController, SessionsViewActions, classnames;
 
 classnames = require('classnames');
@@ -3324,7 +3443,7 @@ AuthEmailRecovery = React.createClass({
 module.exports = AuthEmailRecovery;
 
 
-},{"../../actions/view/sessions":15,"../../controllers/notify":218,"../../controllers/screen":219,"../../mixins/component":222,"./buttons/emailReset":56,"./fields/EmailLoginField":63,"./links/rememberedPassword":69,"classnames":331}],53:[function(require,module,exports){
+},{"../../actions/view/sessions":15,"../../controllers/notify":219,"../../controllers/screen":220,"../../mixins/component":223,"./buttons/emailReset":57,"./fields/EmailLoginField":64,"./links/rememberedPassword":70,"classnames":331}],54:[function(require,module,exports){
 (function (global){
 var AuthEmailSubmitButton, AuthForgotPasswordLink, AuthNotRegisteredYetLink, ComponentMixin, EmailLoginField, EmailPasswordField, NotifyController, PropTypes, SessionsViewActions, classnames;
 
@@ -3469,7 +3588,7 @@ module.exports = AuthEmailSignIn;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":15,"../../controllers/notify":218,"../../mixins/component":222,"./buttons/emailSubmit":59,"./fields/EmailLoginField":63,"./fields/EmailPasswordField":65,"./links/forgotPassword":67,"./links/notRegisteredYet":68,"classnames":331}],54:[function(require,module,exports){
+},{"../../actions/view/sessions":15,"../../controllers/notify":219,"../../mixins/component":223,"./buttons/emailSubmit":60,"./fields/EmailLoginField":64,"./fields/EmailPasswordField":66,"./links/forgotPassword":68,"./links/notRegisteredYet":69,"classnames":331}],55:[function(require,module,exports){
 (function (global){
 var AuthAlreadyRegisteredLink, AuthEmailSubmitButton, ComponentMixin, EmailEmailField, EmailNicknameField, EmailPasswordField, NotifyController, PropTypes, SessionsViewActions, classnames;
 
@@ -3622,7 +3741,7 @@ module.exports = AuthEmailSignUp;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../actions/view/sessions":15,"../../controllers/notify":218,"../../mixins/component":222,"./buttons/emailSubmit":59,"./fields/EmailEmailField":62,"./fields/EmailNicknameField":64,"./fields/EmailPasswordField":65,"./links/alreadyRegistered":66,"classnames":331}],55:[function(require,module,exports){
+},{"../../actions/view/sessions":15,"../../controllers/notify":219,"../../mixins/component":223,"./buttons/emailSubmit":60,"./fields/EmailEmailField":63,"./fields/EmailNicknameField":65,"./fields/EmailPasswordField":66,"./links/alreadyRegistered":67,"classnames":331}],56:[function(require,module,exports){
 var Auth, AuthManager, ConnectStoreMixin, CurrentUserStore;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -3651,7 +3770,7 @@ AuthManager = React.createClass({
 module.exports = AuthManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./auth":51}],56:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./auth":52}],57:[function(require,module,exports){
 var AuthEmailResetButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -3680,7 +3799,7 @@ AuthEmailResetButton = React.createClass({
 module.exports = AuthEmailResetButton;
 
 
-},{"../../common/spinner/spinner":84}],57:[function(require,module,exports){
+},{"../../common/spinner/spinner":85}],58:[function(require,module,exports){
 var AuthEmailSignIn, AuthEmailSignInButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -3703,7 +3822,7 @@ AuthEmailSignInButton = React.createClass({
 module.exports = AuthEmailSignInButton;
 
 
-},{"../../../controllers/screen":219,"../authEmailSignIn":53}],58:[function(require,module,exports){
+},{"../../../controllers/screen":220,"../authEmailSignIn":54}],59:[function(require,module,exports){
 var AuthEmailSignUpButton, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -3724,7 +3843,7 @@ AuthEmailSignUpButton = React.createClass({
 module.exports = AuthEmailSignUpButton;
 
 
-},{"../../../controllers/screen":219}],59:[function(require,module,exports){
+},{"../../../controllers/screen":220}],60:[function(require,module,exports){
 var AuthEmailSubmitButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -3753,7 +3872,7 @@ AuthEmailSubmitButton = React.createClass({
 module.exports = AuthEmailSubmitButton;
 
 
-},{"../../common/spinner/spinner":84}],60:[function(require,module,exports){
+},{"../../common/spinner/spinner":85}],61:[function(require,module,exports){
 var AuthFacebookButton;
 
 AuthFacebookButton = React.createClass({
@@ -3772,7 +3891,7 @@ AuthFacebookButton = React.createClass({
 module.exports = AuthFacebookButton;
 
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var AuthVkontakteButton;
 
 AuthVkontakteButton = React.createClass({
@@ -3791,7 +3910,7 @@ AuthVkontakteButton = React.createClass({
 module.exports = AuthVkontakteButton;
 
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -3839,7 +3958,7 @@ var EmailEmailField = React.createClass({
 exports['default'] = EmailEmailField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/EmailField":254,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],63:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/EmailField":254,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],64:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -3887,7 +4006,7 @@ var EmailLoginField = React.createClass({
 exports['default'] = EmailLoginField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/TextField":257,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],64:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/TextField":257,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],65:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -3935,7 +4054,7 @@ var EmailNicknameField = React.createClass({
 exports['default'] = EmailNicknameField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/TextField":257,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],65:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/TextField":257,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],66:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -3983,7 +4102,7 @@ var EmailPasswordField = React.createClass({
 exports['default'] = EmailPasswordField;
 module.exports = exports['default'];
 
-},{"../../../../../shared/react/components/common/fields/PasswordField":256,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],66:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/fields/PasswordField":256,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],67:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -4004,7 +4123,7 @@ AuthNotRegisteredYetLink = React.createClass({
 module.exports = AuthNotRegisteredYetLink;
 
 
-},{"../../../controllers/screen":219}],67:[function(require,module,exports){
+},{"../../../controllers/screen":220}],68:[function(require,module,exports){
 var AuthEmailRecovery, AuthForgotPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -4027,7 +4146,7 @@ AuthForgotPasswordLink = React.createClass({
 module.exports = AuthForgotPasswordLink;
 
 
-},{"../../../controllers/screen":219,"../authEmailRecovery":52}],68:[function(require,module,exports){
+},{"../../../controllers/screen":220,"../authEmailRecovery":53}],69:[function(require,module,exports){
 var AuthNotRegisteredYetLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -4048,7 +4167,7 @@ AuthNotRegisteredYetLink = React.createClass({
 module.exports = AuthNotRegisteredYetLink;
 
 
-},{"../../../controllers/screen":219}],69:[function(require,module,exports){
+},{"../../../controllers/screen":220}],70:[function(require,module,exports){
 var AuthRememberedPasswordLink, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -4069,7 +4188,7 @@ AuthRememberedPasswordLink = React.createClass({
 module.exports = AuthRememberedPasswordLink;
 
 
-},{"../../../controllers/screen":219}],70:[function(require,module,exports){
+},{"../../../controllers/screen":220}],71:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -4107,7 +4226,7 @@ var AuthButton = _react2['default'].createClass({
 exports['default'] = AuthButton;
 module.exports = exports['default'];
 
-},{"../../../controllers/screen":219,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],71:[function(require,module,exports){
+},{"../../../controllers/screen":220,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],72:[function(require,module,exports){
 var AuthButton, AuthButtonManager, ConnectStoreMixin, CurrentUserStore, ScreenController;
 
 ScreenController = require('../../../controllers/screen');
@@ -4141,7 +4260,7 @@ AuthButtonManager = React.createClass({
 module.exports = AuthButtonManager;
 
 
-},{"../../../../../shared/react/mixins/connectStore":258,"../../../controllers/screen":219,"../../../stores/currentUser":238,"./auth":70}],72:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":258,"../../../controllers/screen":220,"../../../stores/currentUser":238,"./auth":71}],73:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ERROR_STATE, FRIEND_STATUS, FollowButton, GUESSED_STATUS, IGNORED_STATUS, NONE_STATUS, PROCESS_STATE, PropTypes, REQUESTED_STATUS, RelationshipButtonMixin, RelationshipsStore, SHOW_STATE, classnames;
 
 classnames = require('classnames');
@@ -4284,7 +4403,7 @@ FollowButton = React.createClass({
 module.exports = FollowButton;
 
 
-},{"../../../../../shared/react/mixins/connectStore":258,"../../../mixins/component":222,"../../../stores/relationships":243,"./mixins/relationship":73,"classnames":331}],73:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":258,"../../../mixins/component":223,"../../../stores/relationships":243,"./mixins/relationship":74,"classnames":331}],74:[function(require,module,exports){
 var RelationshipButtonMixin, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../actions/view/relationship');
@@ -4321,7 +4440,7 @@ RelationshipButtonMixin = {
 module.exports = RelationshipButtonMixin;
 
 
-},{"../../../../actions/view/relationship":14}],74:[function(require,module,exports){
+},{"../../../../actions/view/relationship":14}],75:[function(require,module,exports){
 var Avatar, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -4389,7 +4508,7 @@ Avatar = React.createClass({
 module.exports = Avatar;
 
 
-},{"classnames":331}],75:[function(require,module,exports){
+},{"classnames":331}],76:[function(require,module,exports){
 var Avatar, PropTypes, UserAvatar;
 
 Avatar = require('./avatar');
@@ -4414,7 +4533,7 @@ UserAvatar = React.createClass({
 module.exports = UserAvatar;
 
 
-},{"./avatar":74}],76:[function(require,module,exports){
+},{"./avatar":75}],77:[function(require,module,exports){
 var ConnectStoreMixin, FollowStatus, PropTypes, RelationshipsStore;
 
 RelationshipsStore = require('../../../stores/relationships');
@@ -4451,7 +4570,7 @@ FollowStatus = React.createClass({
 module.exports = FollowStatus;
 
 
-},{"../../../../../shared/react/mixins/connectStore":258,"../../../stores/relationships":243}],77:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":258,"../../../stores/relationships":243}],78:[function(require,module,exports){
 var Image, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -4517,7 +4636,7 @@ Image = React.createClass({
 module.exports = Image;
 
 
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 /*global i18n, moment */
 'use strict';
 
@@ -4573,7 +4692,7 @@ var Page = (function () {
 exports['default'] = Page;
 module.exports = exports['default'];
 
-},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],79:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],80:[function(require,module,exports){
 "use strict";
 
 var _createClass = require("babel-runtime/helpers/create-class")["default"];
@@ -4612,7 +4731,7 @@ var PageBody = (function () {
 exports["default"] = PageBody;
 module.exports = exports["default"];
 
-},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],80:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],81:[function(require,module,exports){
 "use strict";
 
 var _createClass = require("babel-runtime/helpers/create-class")["default"];
@@ -4651,7 +4770,7 @@ var PageHeader = (function () {
 exports["default"] = PageHeader;
 module.exports = exports["default"];
 
-},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],81:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],82:[function(require,module,exports){
 "use strict";
 
 var _createClass = require("babel-runtime/helpers/create-class")["default"];
@@ -4690,7 +4809,7 @@ var PageLayout = (function () {
 exports["default"] = PageLayout;
 module.exports = exports["default"];
 
-},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],82:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],83:[function(require,module,exports){
 'use strict';
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
@@ -4755,7 +4874,7 @@ var PageWithAuth = (function () {
 exports['default'] = PageWithAuth;
 module.exports = exports['default'];
 
-},{"../../auth/authManager":55,"../../buttons/auth/authManager":71,"./PageWithToolbars":83,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],83:[function(require,module,exports){
+},{"../../auth/authManager":56,"../../buttons/auth/authManager":72,"./PageWithToolbars":84,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],84:[function(require,module,exports){
 'use strict';
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
@@ -4832,7 +4951,7 @@ var PageWithToolbars = (function () {
 exports['default'] = PageWithToolbars;
 module.exports = exports['default'];
 
-},{"../../../stores/currentUser":238,"../../toolbars/feedManager":201,"../../toolbars/userManager":208,"./Page":78,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/extends":273,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],84:[function(require,module,exports){
+},{"../../../stores/currentUser":238,"../../toolbars/feedManager":202,"../../toolbars/userManager":209,"./Page":79,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/extends":273,"babel-runtime/helpers/interop-require-default":276,"react":"react"}],85:[function(require,module,exports){
 var PropTypes, Spinner;
 
 PropTypes = React.PropTypes;
@@ -4861,7 +4980,7 @@ Spinner = React.createClass({
 module.exports = Spinner;
 
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -4965,7 +5084,7 @@ var EntryFeed = React.createClass({
 exports['default'] = EntryFeed;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":222,"../../stores/currentUser":238,"./Feed/Meta":86,"./Meta/Meta":87,"./comments/comments":119,"./content/content":121,"./mixins/entry":130,"babel-runtime/helpers/interop-require-default":276}],86:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":223,"../../stores/currentUser":238,"./Feed/Meta":87,"./Meta/Meta":88,"./comments/comments":120,"./content/content":122,"./mixins/entry":131,"babel-runtime/helpers/interop-require-default":276}],87:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -4997,7 +5116,7 @@ var EntryFeedMeta = React.createClass({
 exports["default"] = EntryFeedMeta;
 module.exports = exports["default"];
 
-},{"../Meta/MetaAuthor":89,"babel-runtime/helpers/interop-require-default":276}],87:[function(require,module,exports){
+},{"../Meta/MetaAuthor":90,"babel-runtime/helpers/interop-require-default":276}],88:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -5064,7 +5183,7 @@ var EntryMeta = React.createClass({
 exports['default'] = EntryMeta;
 module.exports = exports['default'];
 
-},{"./MetaActions":88,"./MetaComments":90,"./MetaDate":91,"./MetaVoting":92,"babel-runtime/helpers/interop-require-default":276}],88:[function(require,module,exports){
+},{"./MetaActions":89,"./MetaComments":91,"./MetaDate":92,"./MetaVoting":93,"babel-runtime/helpers/interop-require-default":276}],89:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -5145,7 +5264,7 @@ var EntryMetaActions = React.createClass({
 exports['default'] = EntryMetaActions;
 module.exports = exports['default'];
 
-},{"../../../mixins/clickOutside":221,"./actions/buttons/button":93,"./actions/dropdownMenu":94,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],89:[function(require,module,exports){
+},{"../../../mixins/clickOutside":222,"./actions/buttons/button":94,"./actions/dropdownMenu":95,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],90:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -5187,7 +5306,7 @@ var EntryMetaAuthor = React.createClass({
 exports["default"] = EntryMetaAuthor;
 module.exports = exports["default"];
 
-},{"../../common/avatar/user":75,"babel-runtime/helpers/interop-require-default":276}],90:[function(require,module,exports){
+},{"../../common/avatar/user":76,"babel-runtime/helpers/interop-require-default":276}],91:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5217,7 +5336,7 @@ var EntryMetaComments = React.createClass({
 exports["default"] = EntryMetaComments;
 module.exports = exports["default"];
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -5261,7 +5380,7 @@ var EntryMetaDate = React.createClass({
 exports['default'] = EntryMetaDate;
 module.exports = exports['default'];
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -5345,7 +5464,7 @@ var EntryMetaVoting = React.createClass({
 exports['default'] = EntryMetaVoting;
 module.exports = exports['default'];
 
-},{"../../../actions/view/entry":10,"../../../mixins/component":222,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],93:[function(require,module,exports){
+},{"../../../actions/view/entry":10,"../../../mixins/component":223,"babel-runtime/helpers/interop-require-default":276,"classnames":331}],94:[function(require,module,exports){
 var EntryMetaActions_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5368,7 +5487,7 @@ EntryMetaActions_Button = React.createClass({
 module.exports = EntryMetaActions_Button;
 
 
-},{}],94:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var DropdownMenuMixin, EntryMetaActions_DropdownMenu, EntryMetaActions_DropdownMenu_DeleteItem, EntryMetaActions_DropdownMenu_EditItem, EntryMetaActions_DropdownMenu_FavoriteItem, EntryMetaActions_DropdownMenu_LinkItem, EntryMetaActions_DropdownMenu_ReportItem, EntryMetaActions_DropdownMenu_WatchItem, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -5455,7 +5574,7 @@ EntryMetaActions_DropdownMenu = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu;
 
 
-},{"../../../../mixins/dropdownMenu":223,"./dropdownMenu/items/delete":95,"./dropdownMenu/items/edit":96,"./dropdownMenu/items/favorite":97,"./dropdownMenu/items/link":98,"./dropdownMenu/items/report":99,"./dropdownMenu/items/watch":100,"classnames":331}],95:[function(require,module,exports){
+},{"../../../../mixins/dropdownMenu":224,"./dropdownMenu/items/delete":96,"./dropdownMenu/items/edit":97,"./dropdownMenu/items/favorite":98,"./dropdownMenu/items/link":99,"./dropdownMenu/items/report":100,"./dropdownMenu/items/watch":101,"classnames":331}],96:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_DeleteItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -5491,7 +5610,7 @@ EntryMetaActions_DropdownMenu_DeleteItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_DeleteItem;
 
 
-},{"../../../../../../actions/view/entry":10}],96:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],97:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_EditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5516,7 +5635,7 @@ EntryMetaActions_DropdownMenu_EditItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_EditItem;
 
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_FavoriteItem, EntryViewActions, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -5590,7 +5709,7 @@ EntryMetaActions_DropdownMenu_FavoriteItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_FavoriteItem;
 
 
-},{"../../../../../../actions/view/entry":10,"classnames":331}],98:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10,"classnames":331}],99:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_LinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5615,7 +5734,7 @@ EntryMetaActions_DropdownMenu_LinkItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_LinkItem;
 
 
-},{}],99:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_ReportItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -5650,7 +5769,7 @@ EntryMetaActions_DropdownMenu_ReportItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_ReportItem;
 
 
-},{"../../../../../../actions/view/entry":10}],100:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],101:[function(require,module,exports){
 var EntryMetaActions_DropdownMenu_WatchItem, EntryViewActions, PropTypes;
 
 EntryViewActions = require('../../../../../../actions/view/entry');
@@ -5718,7 +5837,7 @@ EntryMetaActions_DropdownMenu_WatchItem = React.createClass({
 module.exports = EntryMetaActions_DropdownMenu_WatchItem;
 
 
-},{"../../../../../../actions/view/entry":10}],101:[function(require,module,exports){
+},{"../../../../../../actions/view/entry":10}],102:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -5846,7 +5965,7 @@ var EntryTlog = React.createClass({
 exports['default'] = EntryTlog;
 module.exports = exports['default'];
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":222,"../../stores/currentUser":238,"./Meta/Meta":87,"./comments/comments":119,"./content/content":121,"./mixins/entry":130,"babel-runtime/helpers/interop-require-default":276}],102:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":223,"../../stores/currentUser":238,"./Meta/Meta":88,"./comments/comments":120,"./content/content":122,"./mixins/entry":131,"babel-runtime/helpers/interop-require-default":276}],103:[function(require,module,exports){
 var CommentsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -5868,7 +5987,7 @@ CommentsLoadMoreButton = React.createClass({
 module.exports = CommentsLoadMoreButton;
 
 
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 var CommentForm, PropTypes, findDOMNode;
 
 findDOMNode = React.findDOMNode, PropTypes = React.PropTypes;
@@ -5947,7 +6066,7 @@ CommentForm = React.createClass({
 module.exports = CommentForm;
 
 
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var CommentCreateForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -5992,7 +6111,7 @@ CommentCreateForm = React.createClass({
 module.exports = CommentCreateForm;
 
 
-},{"../../../../mixins/component":222,"../commentForm":103}],105:[function(require,module,exports){
+},{"../../../../mixins/component":223,"../commentForm":104}],106:[function(require,module,exports){
 var CommentEditForm, CommentForm, ComponentMixin, PropTypes;
 
 CommentForm = require('../commentForm');
@@ -6037,7 +6156,7 @@ CommentEditForm = React.createClass({
 module.exports = CommentEditForm;
 
 
-},{"../../../../mixins/component":222,"../commentForm":103}],106:[function(require,module,exports){
+},{"../../../../mixins/component":223,"../commentForm":104}],107:[function(require,module,exports){
 var CommentList, CommentManager, PropTypes;
 
 CommentManager = require('./commentList/commentManager');
@@ -6076,7 +6195,7 @@ CommentList = React.createClass({
 module.exports = CommentList;
 
 
-},{"./commentList/commentManager":118}],107:[function(require,module,exports){
+},{"./commentList/commentManager":119}],108:[function(require,module,exports){
 var Comment, CommentActions, CommentDate, CommentText, CommentUser, PropTypes;
 
 CommentUser = require('./comment/user');
@@ -6118,7 +6237,7 @@ Comment = React.createClass({
 module.exports = Comment;
 
 
-},{"./comment/actions":108,"./comment/date":115,"./comment/text":116,"./comment/user":117}],108:[function(require,module,exports){
+},{"./comment/actions":109,"./comment/date":116,"./comment/text":117,"./comment/user":118}],109:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, CommentActions, CommentActionsButton, CommentActionsDropdownMenu, OPEN_STATE, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -6190,7 +6309,7 @@ CommentActions = React.createClass({
 module.exports = CommentActions;
 
 
-},{"../../../../../mixins/clickOutside":221,"../../../../common/avatar/user":75,"./actions/buttons/button":109,"./actions/dropdownMenu":110,"classnames":331}],109:[function(require,module,exports){
+},{"../../../../../mixins/clickOutside":222,"../../../../common/avatar/user":76,"./actions/buttons/button":110,"./actions/dropdownMenu":111,"classnames":331}],110:[function(require,module,exports){
 var CommentActionsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6213,7 +6332,7 @@ CommentActionsButton = React.createClass({
 module.exports = CommentActionsButton;
 
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 var CommentActionsDropdownMenu, CommentActionsDropdownMenuDeleteItem, CommentActionsDropdownMenuEditItem, CommentActionsDropdownMenuLinkItem, CommentActionsDropdownMenuReportItem, DropdownMenuMixin, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -6286,7 +6405,7 @@ CommentActionsDropdownMenu = React.createClass({
 module.exports = CommentActionsDropdownMenu;
 
 
-},{"../../../../../../mixins/dropdownMenu":223,"./dropdownMenu/items/delete":111,"./dropdownMenu/items/edit":112,"./dropdownMenu/items/link":113,"./dropdownMenu/items/report":114,"classnames":331}],111:[function(require,module,exports){
+},{"../../../../../../mixins/dropdownMenu":224,"./dropdownMenu/items/delete":112,"./dropdownMenu/items/edit":113,"./dropdownMenu/items/link":114,"./dropdownMenu/items/report":115,"classnames":331}],112:[function(require,module,exports){
 var CommentActionsDropdownMenuDeleteItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6320,7 +6439,7 @@ CommentActionsDropdownMenuDeleteItem = React.createClass({
 module.exports = CommentActionsDropdownMenuDeleteItem;
 
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 var CommentActionsDropdownMenuEditItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6345,7 +6464,7 @@ CommentActionsDropdownMenuEditItem = React.createClass({
 module.exports = CommentActionsDropdownMenuEditItem;
 
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var CommentActionsDropdownMenuLinkItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6374,7 +6493,7 @@ CommentActionsDropdownMenuLinkItem = React.createClass({
 module.exports = CommentActionsDropdownMenuLinkItem;
 
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 var CommentActionsDropdownMenuReportItem, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6408,7 +6527,7 @@ CommentActionsDropdownMenuReportItem = React.createClass({
 module.exports = CommentActionsDropdownMenuReportItem;
 
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 var CommentDate, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6453,7 +6572,7 @@ CommentDate = React.createClass({
 module.exports = CommentDate;
 
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 var CommentText, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -6476,7 +6595,7 @@ CommentText = React.createClass({
 module.exports = CommentText;
 
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var CommentUser, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -6508,7 +6627,7 @@ CommentUser = React.createClass({
 module.exports = CommentUser;
 
 
-},{"../../../../common/avatar/user":75}],118:[function(require,module,exports){
+},{"../../../../common/avatar/user":76}],119:[function(require,module,exports){
 var Comment, CommentEditForm, CommentManager, ComponentMixin, EDIT_STATE, PropTypes, SHOW_STATE;
 
 Comment = require('./comment');
@@ -6576,7 +6695,7 @@ CommentManager = React.createClass({
 module.exports = CommentManager;
 
 
-},{"../../../../mixins/component":222,"../commentForm/edit":105,"./comment":107}],119:[function(require,module,exports){
+},{"../../../../mixins/component":223,"../commentForm/edit":106,"./comment":108}],120:[function(require,module,exports){
 var CommentCreateForm, CommentList, CommentsLoadMore, EntryComments, PropTypes;
 
 CommentList = require('./commentList');
@@ -6648,7 +6767,7 @@ EntryComments = React.createClass({
 module.exports = EntryComments;
 
 
-},{"./commentForm/create":104,"./commentList":106,"./commentsLoadMore":120}],120:[function(require,module,exports){
+},{"./commentForm/create":105,"./commentList":107,"./commentsLoadMore":121}],121:[function(require,module,exports){
 var CommentsLoadMore, CommentsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../../common/spinner/spinner');
@@ -6704,7 +6823,7 @@ CommentsLoadMore = React.createClass({
 module.exports = CommentsLoadMore;
 
 
-},{"../../common/spinner/spinner":84,"./buttons/loadMore":102}],121:[function(require,module,exports){
+},{"../../common/spinner/spinner":85,"./buttons/loadMore":103}],122:[function(require,module,exports){
 var EntryContent, IMAGE_TYPE, ImageEntryContent, PropTypes, QUOTE_TYPE, QuoteEntryContent, TEXT_TYPE, TextEntryContent, UnknownEntryContent, VIDEO_TYPE, VideoEntryContent;
 
 TextEntryContent = require('./text/text');
@@ -6765,7 +6884,7 @@ EntryContent = React.createClass({
 module.exports = EntryContent;
 
 
-},{"./image/image":123,"./quote/quote":124,"./text/text":126,"./unknown/unknown":128,"./video/video":129}],122:[function(require,module,exports){
+},{"./image/image":124,"./quote/quote":125,"./text/text":127,"./unknown/unknown":129,"./video/video":130}],123:[function(require,module,exports){
 var CollageManager, ImageEntryAttachments, PropTypes;
 
 CollageManager = require('../../../../../../shared/react/components/common/collage/collageManager');
@@ -6804,7 +6923,7 @@ ImageEntryAttachments = React.createClass({
 module.exports = ImageEntryAttachments;
 
 
-},{"../../../../../../shared/react/components/common/collage/collageManager":250}],123:[function(require,module,exports){
+},{"../../../../../../shared/react/components/common/collage/collageManager":250}],124:[function(require,module,exports){
 var ImageEntryAttachments, ImageEntryContent, PropTypes;
 
 ImageEntryAttachments = require('./attachments');
@@ -6852,7 +6971,7 @@ ImageEntryContent = React.createClass({
 module.exports = ImageEntryContent;
 
 
-},{"./attachments":122}],124:[function(require,module,exports){
+},{"./attachments":123}],125:[function(require,module,exports){
 var PropTypes, QuoteEntryContent;
 
 PropTypes = React.PropTypes;
@@ -6886,7 +7005,7 @@ QuoteEntryContent = React.createClass({
 module.exports = QuoteEntryContent;
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 var PropTypes, TextEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -6908,7 +7027,7 @@ TextEntryHeader = React.createClass({
 module.exports = TextEntryHeader;
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 var PropTypes, TextEntryContent, TextEntryHeader;
 
 TextEntryHeader = require('./header');
@@ -6936,7 +7055,7 @@ TextEntryContent = React.createClass({
 module.exports = TextEntryContent;
 
 
-},{"./header":125}],127:[function(require,module,exports){
+},{"./header":126}],128:[function(require,module,exports){
 var PropTypes, UnknownEntryHeader;
 
 PropTypes = React.PropTypes;
@@ -6958,7 +7077,7 @@ UnknownEntryHeader = React.createClass({
 module.exports = UnknownEntryHeader;
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var PropTypes, UnknownEntryContent, UnknownEntryHeader;
 
 UnknownEntryHeader = require('./header');
@@ -6982,7 +7101,7 @@ UnknownEntryContent = React.createClass({
 module.exports = UnknownEntryContent;
 
 
-},{"./header":127}],129:[function(require,module,exports){
+},{"./header":128}],130:[function(require,module,exports){
 var PropTypes, VideoEntryContent;
 
 PropTypes = React.PropTypes;
@@ -7019,7 +7138,7 @@ VideoEntryContent = React.createClass({
 module.exports = VideoEntryContent;
 
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 'use strict';
 
 var _toConsumableArray = require('babel-runtime/helpers/to-consumable-array')['default'];
@@ -7179,7 +7298,7 @@ var EntryMixin = {
 exports['default'] = EntryMixin;
 module.exports = exports['default'];
 
-},{"../../../actions/view/entry":10,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/to-consumable-array":278,"react/lib/Object.assign":364}],131:[function(require,module,exports){
+},{"../../../actions/view/entry":10,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/to-consumable-array":278,"react/lib/Object.assign":364}],132:[function(require,module,exports){
 var FeedLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7200,7 +7319,7 @@ FeedLoadMoreButton = React.createClass({
 module.exports = FeedLoadMoreButton;
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var FeedEmptyPageMessage, MESSAGE;
 
 MESSAGE = 'В ленте нет записей';
@@ -7223,7 +7342,7 @@ FeedEmptyPageMessage = React.createClass({
 module.exports = FeedEmptyPageMessage;
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 var EntryFeed, Feed, FeedEmptyPageMessage, FeedLoadMore, PropTypes;
 
 FeedEmptyPageMessage = require('./emptyPageMessage');
@@ -7272,7 +7391,7 @@ Feed = React.createClass({
 module.exports = Feed;
 
 
-},{"../entry/Feed":85,"./emptyPageMessage":132,"./loadMore":137}],134:[function(require,module,exports){
+},{"../entry/Feed":86,"./emptyPageMessage":133,"./loadMore":138}],135:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedBest, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -7315,7 +7434,7 @@ FeedBest = React.createClass({
 module.exports = FeedBest;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":222,"../../stores/feed":239,"./feed":133,"./mixins/feed":138}],135:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":223,"../../stores/feed":239,"./feed":134,"./mixins/feed":139}],136:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedFriends, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -7358,7 +7477,7 @@ FeedFriends = React.createClass({
 module.exports = FeedFriends;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":222,"../../stores/feed":239,"./feed":133,"./mixins/feed":138}],136:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":223,"../../stores/feed":239,"./feed":134,"./mixins/feed":139}],137:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, Feed, FeedLive, FeedMixin, FeedStore, FeedViewActions, PropTypes;
 
 FeedStore = require('../../stores/feed');
@@ -7401,7 +7520,7 @@ FeedLive = React.createClass({
 module.exports = FeedLive;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":222,"../../stores/feed":239,"./feed":133,"./mixins/feed":138}],137:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../actions/view/feed":11,"../../mixins/component":223,"../../stores/feed":239,"./feed":134,"./mixins/feed":139}],138:[function(require,module,exports){
 var FeedLoadMore, FeedLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -7439,7 +7558,7 @@ FeedLoadMore = React.createClass({
 module.exports = FeedLoadMore;
 
 
-},{"../common/spinner/spinner":84,"./buttons/loadMore":131}],138:[function(require,module,exports){
+},{"../common/spinner/spinner":85,"./buttons/loadMore":132}],139:[function(require,module,exports){
 var ERROR_STATE, FeedMixin, FeedStore, LOADING_STATE, LOAD_MORE_ENTRIES_LIMIT, SHOW_STATE;
 
 FeedStore = require('../../../stores/feed');
@@ -7492,7 +7611,7 @@ FeedMixin = {
 module.exports = FeedMixin;
 
 
-},{"../../../stores/feed":239}],139:[function(require,module,exports){
+},{"../../../stores/feed":239}],140:[function(require,module,exports){
 var HeroFeed, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7532,7 +7651,7 @@ HeroFeed = React.createClass({
 module.exports = HeroFeed;
 
 
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 var HeroFeed, HeroFeedBest, PropTypes;
 
 HeroFeed = require('./feed');
@@ -7556,7 +7675,7 @@ HeroFeedBest = React.createClass({
 module.exports = HeroFeedBest;
 
 
-},{"./feed":139}],141:[function(require,module,exports){
+},{"./feed":140}],142:[function(require,module,exports){
 var HeroFeed, HeroFeedFriends, PropTypes;
 
 HeroFeed = require('./feed');
@@ -7579,7 +7698,7 @@ HeroFeedFriends = React.createClass({
 module.exports = HeroFeedFriends;
 
 
-},{"./feed":139}],142:[function(require,module,exports){
+},{"./feed":140}],143:[function(require,module,exports){
 var HeroFeed, HeroFeedLive, PropTypes;
 
 HeroFeed = require('./feed');
@@ -7617,7 +7736,7 @@ HeroFeedLive = React.createClass({
 module.exports = HeroFeedLive;
 
 
-},{"./feed":139}],143:[function(require,module,exports){
+},{"./feed":140}],144:[function(require,module,exports){
 var BrowserHelpers, CLOSE_STATE, ConnectStoreMixin, CurrentUserStore, HeroTlog, HeroTlogActions, HeroTlogAvatar, HeroTlogCloseButton, HeroTlogHead, HeroTlogStats, OPEN_STATE, PropTypes, _initialHeroHeight, _openHeroHeight, _screenOrientation;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -7759,7 +7878,7 @@ HeroTlog = React.createClass({
 module.exports = HeroTlog;
 
 
-},{"../../../../shared/helpers/browser":245,"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./tlog/actions":144,"./tlog/avatar":154,"./tlog/buttons/close":155,"./tlog/head":156,"./tlog/stats":157}],144:[function(require,module,exports){
+},{"../../../../shared/helpers/browser":245,"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./tlog/actions":145,"./tlog/avatar":155,"./tlog/buttons/close":156,"./tlog/head":157,"./tlog/stats":158}],145:[function(require,module,exports){
 var HeroTlogActions, HeroTlogActions_CurrentUser, HeroTlogActions_User, PropTypes;
 
 HeroTlogActions_User = require('./actions/user');
@@ -7802,7 +7921,7 @@ HeroTlogActions = React.createClass({
 module.exports = HeroTlogActions;
 
 
-},{"./actions/currentUser":147,"./actions/user":153}],145:[function(require,module,exports){
+},{"./actions/currentUser":148,"./actions/user":154}],146:[function(require,module,exports){
 var HeroTlogActions_SettingsButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7828,7 +7947,7 @@ HeroTlogActions_SettingsButton = React.createClass({
 module.exports = HeroTlogActions_SettingsButton;
 
 
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var HeroTlogActions_WriteMessageButton;
 
 HeroTlogActions_WriteMessageButton = React.createClass({
@@ -7849,7 +7968,7 @@ HeroTlogActions_WriteMessageButton = React.createClass({
 module.exports = HeroTlogActions_WriteMessageButton;
 
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 var HeroTlogActions_CurrentUser, HeroTlogActions_SettingsButton, PropTypes;
 
 HeroTlogActions_SettingsButton = require('./buttons/settings');
@@ -7875,7 +7994,7 @@ HeroTlogActions_CurrentUser = React.createClass({
 module.exports = HeroTlogActions_CurrentUser;
 
 
-},{"./buttons/settings":145}],148:[function(require,module,exports){
+},{"./buttons/settings":146}],149:[function(require,module,exports){
 var CLOSE_STATE, ClickOutsideMixin, HeroTlogActions_DropdownMenu, HeroTlogActions_DropdownMenu_Button, HeroTlogActions_DropdownMenu_Popup, OPEN_STATE, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -7946,7 +8065,7 @@ HeroTlogActions_DropdownMenu = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu;
 
 
-},{"../../../../mixins/clickOutside":221,"./dropdownMenu/buttons/button":149,"./dropdownMenu/popup":152,"classnames":331}],149:[function(require,module,exports){
+},{"../../../../mixins/clickOutside":222,"./dropdownMenu/buttons/button":150,"./dropdownMenu/popup":153,"classnames":331}],150:[function(require,module,exports){
 var HeroTlogActions_DropdownMenu_Button, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -7969,7 +8088,7 @@ HeroTlogActions_DropdownMenu_Button = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu_Button;
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuIgnoreItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -8000,7 +8119,7 @@ HeroTlogActions_DropdownMenuIgnoreItem = React.createClass({
 module.exports = HeroTlogActions_DropdownMenuIgnoreItem;
 
 
-},{"../../../../../../actions/view/relationship":14}],151:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":14}],152:[function(require,module,exports){
 var HeroTlogActions_DropdownMenuReportItem, PropTypes, RelationshipViewActions;
 
 RelationshipViewActions = require('../../../../../../actions/view/relationship');
@@ -8031,7 +8150,7 @@ HeroTlogActions_DropdownMenuReportItem = React.createClass({
 module.exports = HeroTlogActions_DropdownMenuReportItem;
 
 
-},{"../../../../../../actions/view/relationship":14}],152:[function(require,module,exports){
+},{"../../../../../../actions/view/relationship":14}],153:[function(require,module,exports){
 var ConnectStoreMixin, DropdownMenuMixin, HeroTlogActions_DropdownMenuIgnoreItem, HeroTlogActions_DropdownMenuReportItem, HeroTlogActions_DropdownMenu_Popup, IGNORED_STATUS, PropTypes, RelationshipsStore, classnames;
 
 classnames = require('classnames');
@@ -8100,7 +8219,7 @@ HeroTlogActions_DropdownMenu_Popup = React.createClass({
 module.exports = HeroTlogActions_DropdownMenu_Popup;
 
 
-},{"../../../../../../../shared/react/mixins/connectStore":258,"../../../../../mixins/dropdownMenu":223,"../../../../../stores/relationships":243,"./items/ignore":150,"./items/report":151,"classnames":331}],153:[function(require,module,exports){
+},{"../../../../../../../shared/react/mixins/connectStore":258,"../../../../../mixins/dropdownMenu":224,"../../../../../stores/relationships":243,"./items/ignore":151,"./items/report":152,"classnames":331}],154:[function(require,module,exports){
 var FollowButton, HeroTlogActions_DropdownMenu, HeroTlogActions_User, HeroTlogActions_WriteMessageButton, PropTypes;
 
 FollowButton = require('../../../buttons/relationship/follow');
@@ -8135,7 +8254,7 @@ HeroTlogActions_User = React.createClass({
 module.exports = HeroTlogActions_User;
 
 
-},{"../../../buttons/relationship/follow":72,"./buttons/writeMessage":146,"./dropdownMenu":148}],154:[function(require,module,exports){
+},{"../../../buttons/relationship/follow":73,"./buttons/writeMessage":147,"./dropdownMenu":149}],155:[function(require,module,exports){
 var FollowStatus, HERO_AVATAR_SIZE, HeroTlogAvatar, PropTypes, UserAvatar;
 
 UserAvatar = require('../../common/avatar/user');
@@ -8183,7 +8302,7 @@ HeroTlogAvatar = React.createClass({
 module.exports = HeroTlogAvatar;
 
 
-},{"../../common/avatar/user":75,"../../common/followStatus/followStatus":76}],155:[function(require,module,exports){
+},{"../../common/avatar/user":76,"../../common/followStatus/followStatus":77}],156:[function(require,module,exports){
 var HeroTlogCloseButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8206,7 +8325,7 @@ HeroTlogCloseButton = React.createClass({
 module.exports = HeroTlogCloseButton;
 
 
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 var HeroTlogHead, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8236,7 +8355,7 @@ HeroTlogHead = React.createClass({
 module.exports = HeroTlogHead;
 
 
-},{}],157:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 var HeroTlogStats, HeroTlogStatsItem, PropTypes;
 
 HeroTlogStatsItem = require('./stats/item');
@@ -8322,7 +8441,7 @@ HeroTlogStats = React.createClass({
 module.exports = HeroTlogStats;
 
 
-},{"./stats/item":158}],158:[function(require,module,exports){
+},{"./stats/item":159}],159:[function(require,module,exports){
 var HeroTlogStatsItem, NumberHelpers, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -8377,7 +8496,7 @@ HeroTlogStatsItem = React.createClass({
 module.exports = HeroTlogStatsItem;
 
 
-},{"../../../../../../shared/helpers/number":246,"classnames":331}],159:[function(require,module,exports){
+},{"../../../../../../shared/helpers/number":246,"classnames":331}],160:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8402,7 +8521,7 @@ CreateConversationButton = React.createClass({
 module.exports = CreateConversationButton;
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 var MessengerHeader, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -8424,7 +8543,7 @@ MessengerHeader = React.createClass({
 module.exports = MessengerHeader;
 
 
-},{}],161:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -8474,7 +8593,7 @@ MessengerConversation = React.createClass({
 module.exports = MessengerConversation;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/conversation":237,"./conversation/header":162,"./conversation/messageForm":163,"./conversation/messages":165}],162:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/conversation":237,"./conversation/header":163,"./conversation/messageForm":164,"./conversation/messages":166}],163:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../common/header');
@@ -8498,7 +8617,7 @@ ConversationHeader = React.createClass({
 module.exports = ConversationHeader;
 
 
-},{"../common/header":160}],163:[function(require,module,exports){
+},{"../common/header":161}],164:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -8561,7 +8680,7 @@ ConversationMessageForm = React.createClass({
 module.exports = ConversationMessageForm;
 
 
-},{"../../../actions/view/messenger":12,"../../../controllers/notify":218,"./messageForm/field":164}],164:[function(require,module,exports){
+},{"../../../actions/view/messenger":12,"../../../controllers/notify":219,"./messageForm/field":165}],165:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -8618,7 +8737,7 @@ ConversationMessageFormField = React.createClass({
 module.exports = ConversationMessageFormField;
 
 
-},{"lodash":"lodash"}],165:[function(require,module,exports){
+},{"lodash":"lodash"}],166:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -8742,7 +8861,7 @@ ConversationMessages = React.createClass({
 module.exports = ConversationMessages;
 
 
-},{"../../../../../shared/react/mixins/connectStore":258,"../../../actions/view/messenger":12,"../../../mixins/component":222,"../../../stores/conversation":237,"../../../stores/message":240,"../../common/spinner/spinner":84,"./messages/list":166}],166:[function(require,module,exports){
+},{"../../../../../shared/react/mixins/connectStore":258,"../../../actions/view/messenger":12,"../../../mixins/component":223,"../../../stores/conversation":237,"../../../stores/message":240,"../../common/spinner/spinner":85,"./messages/list":167}],167:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -8840,7 +8959,7 @@ MessageList = React.createClass({
 module.exports = MessageList;
 
 
-},{"./list/empty":167,"./list/itemManager":169,"lodash":"lodash"}],167:[function(require,module,exports){
+},{"./list/empty":168,"./list/itemManager":170,"lodash":"lodash"}],168:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -8857,7 +8976,7 @@ MessageListEmpty = React.createClass({
 module.exports = MessageListEmpty;
 
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 var ERROR_STATE, Image, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -8993,7 +9112,7 @@ MessageListItem = React.createClass({
 module.exports = MessageListItem;
 
 
-},{"../../../../../../../shared/react/components/common/Image":248,"../../../../common/avatar/user":75,"classnames":331}],169:[function(require,module,exports){
+},{"../../../../../../../shared/react/components/common/Image":248,"../../../../common/avatar/user":76,"classnames":331}],170:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -9061,7 +9180,7 @@ MessageListItemManager = React.createClass({
 module.exports = MessageListItemManager;
 
 
-},{"../../../../../actions/view/messenger":12,"../../../../../stores/message":240,"./item":168}],170:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":12,"../../../../../stores/message":240,"./item":169}],171:[function(require,module,exports){
 var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -9107,7 +9226,7 @@ MessengerConversations = React.createClass({
 module.exports = MessengerConversations;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/conversation":237,"./buttons/createConversation":159,"./conversations/header":171,"./conversations/list":172}],171:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/conversation":237,"./buttons/createConversation":160,"./conversations/header":172,"./conversations/list":173}],172:[function(require,module,exports){
 var ConversationsHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -9124,7 +9243,7 @@ ConversationsHeader = React.createClass({
 module.exports = ConversationsHeader;
 
 
-},{"../common/header":160}],172:[function(require,module,exports){
+},{"../common/header":161}],173:[function(require,module,exports){
 var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -9173,7 +9292,7 @@ ConversationList = React.createClass({
 module.exports = ConversationList;
 
 
-},{"./list/empty":173,"./list/item":174,"lodash":"lodash"}],173:[function(require,module,exports){
+},{"./list/empty":174,"./list/item":175,"lodash":"lodash"}],174:[function(require,module,exports){
 var ConversationListEmpty;
 
 ConversationListEmpty = React.createClass({
@@ -9190,7 +9309,7 @@ ConversationListEmpty = React.createClass({
 module.exports = ConversationListEmpty;
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 var ConversationListItem, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -9274,7 +9393,7 @@ ConversationListItem = React.createClass({
 module.exports = ConversationListItem;
 
 
-},{"../../../common/avatar/user":75,"classnames":331}],175:[function(require,module,exports){
+},{"../../../common/avatar/user":76,"classnames":331}],176:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -9302,7 +9421,7 @@ MessengerCreateConversation = React.createClass({
 module.exports = MessengerCreateConversation;
 
 
-},{"./createConversation/chooser":176,"./createConversation/header":181}],176:[function(require,module,exports){
+},{"./createConversation/chooser":177,"./createConversation/header":182}],177:[function(require,module,exports){
 var ComponentMixin, LOADED_STATE, LOADING_STATE, MessengerChooser, MessengerChooserField, MessengerChooserList, PropTypes, Spinner, UsersViewActions, classnames;
 
 classnames = require('classnames');
@@ -9408,7 +9527,7 @@ MessengerChooser = React.createClass({
 module.exports = MessengerChooser;
 
 
-},{"../../../actions/view/users":16,"../../../mixins/component":222,"../../common/spinner/spinner":84,"./chooser/field":177,"./chooser/list":178,"classnames":331}],177:[function(require,module,exports){
+},{"../../../actions/view/users":16,"../../../mixins/component":223,"../../common/spinner/spinner":85,"./chooser/field":178,"./chooser/list":179,"classnames":331}],178:[function(require,module,exports){
 var MessengerChooserField, PropTypes, _;
 
 _ = require('lodash');
@@ -9444,7 +9563,7 @@ MessengerChooserField = React.createClass({
 module.exports = MessengerChooserField;
 
 
-},{"lodash":"lodash"}],178:[function(require,module,exports){
+},{"lodash":"lodash"}],179:[function(require,module,exports){
 var MessengerChooserList, MessengerChooserListEmpty, MessengerChooserListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -9494,7 +9613,7 @@ MessengerChooserList = React.createClass({
 module.exports = MessengerChooserList;
 
 
-},{"./list/empty":179,"./list/item":180,"lodash":"lodash"}],179:[function(require,module,exports){
+},{"./list/empty":180,"./list/item":181,"lodash":"lodash"}],180:[function(require,module,exports){
 var MessengerChooserListEmpty;
 
 MessengerChooserListEmpty = React.createClass({
@@ -9511,7 +9630,7 @@ MessengerChooserListEmpty = React.createClass({
 module.exports = MessengerChooserListEmpty;
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 var MessengerChooserListItem, PropTypes, UserAvatar;
 
 UserAvatar = require('../../../../common/avatar/user');
@@ -9546,7 +9665,7 @@ MessengerChooserListItem = React.createClass({
 module.exports = MessengerChooserListItem;
 
 
-},{"../../../../common/avatar/user":75}],181:[function(require,module,exports){
+},{"../../../../common/avatar/user":76}],182:[function(require,module,exports){
 var CreateConversationHeader, MessengerHeader;
 
 MessengerHeader = require('../common/header');
@@ -9563,7 +9682,7 @@ CreateConversationHeader = React.createClass({
 module.exports = CreateConversationHeader;
 
 
-},{"../common/header":160}],182:[function(require,module,exports){
+},{"../common/header":161}],183:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -9647,7 +9766,7 @@ Messenger = React.createClass({
 module.exports = Messenger;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":222,"../../stores/conversation":237,"./conversation":161,"./conversations":170,"./createConversation":175,"./mixins/messenger":183}],183:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":223,"../../stores/conversation":237,"./conversation":162,"./conversations":171,"./createConversation":176,"./mixins/messenger":184}],184:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -9665,7 +9784,7 @@ MessengerMixin = {
 module.exports = MessengerMixin;
 
 
-},{"../../../actions/view/messenger":12}],184:[function(require,module,exports){
+},{"../../../actions/view/messenger":12}],185:[function(require,module,exports){
 var NotificationsLoadMoreButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9690,7 +9809,7 @@ NotificationsLoadMoreButton = React.createClass({
 module.exports = NotificationsLoadMoreButton;
 
 
-},{}],185:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 var NotificationsMarkButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -9714,7 +9833,7 @@ NotificationsMarkButton = React.createClass({
 module.exports = NotificationsMarkButton;
 
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 var NotificationsHeader;
 
 NotificationsHeader = React.createClass({
@@ -9731,7 +9850,7 @@ NotificationsHeader = React.createClass({
 module.exports = NotificationsHeader;
 
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var NotificationList, NotificationListEmpty, NotificationListItem, PropTypes, _;
 
 _ = require('lodash');
@@ -9778,7 +9897,7 @@ NotificationList = React.createClass({
 module.exports = NotificationList;
 
 
-},{"./list/empty":188,"./list/item":189,"lodash":"lodash"}],188:[function(require,module,exports){
+},{"./list/empty":189,"./list/item":190,"lodash":"lodash"}],189:[function(require,module,exports){
 var NotificationsListEmpty;
 
 NotificationsListEmpty = React.createClass({
@@ -9792,7 +9911,7 @@ NotificationsListEmpty = React.createClass({
 module.exports = NotificationsListEmpty;
 
 
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 var Image, NotificationListItem, PropTypes, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -9866,7 +9985,7 @@ NotificationListItem = React.createClass({
 module.exports = NotificationListItem;
 
 
-},{"../../common/avatar/user":75,"../../common/image/image":77,"classnames":331}],190:[function(require,module,exports){
+},{"../../common/avatar/user":76,"../../common/image/image":78,"classnames":331}],191:[function(require,module,exports){
 var NotificationsLoadMore, NotificationsLoadMoreButton, PropTypes, Spinner;
 
 Spinner = require('../common/spinner/spinner');
@@ -9899,7 +10018,7 @@ NotificationsLoadMore = React.createClass({
 module.exports = NotificationsLoadMore;
 
 
-},{"../common/spinner/spinner":84,"./buttons/loadMore":184}],191:[function(require,module,exports){
+},{"../common/spinner/spinner":85,"./buttons/loadMore":185}],192:[function(require,module,exports){
 var ERROR_STATE, LOADING_STATE, LOAD_MORE_LIMIT, NotificationsMixin, NotificationsViewActions, SHOW_STATE, _;
 
 _ = require('lodash');
@@ -9963,7 +10082,7 @@ NotificationsMixin = {
 module.exports = NotificationsMixin;
 
 
-},{"../../../actions/view/notifications":13,"lodash":"lodash"}],192:[function(require,module,exports){
+},{"../../../actions/view/notifications":13,"lodash":"lodash"}],193:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, NotificationList, NotificationStore, Notifications, NotificationsHeader, NotificationsLoadMore, NotificationsMarkButton, NotificationsMixin;
 
 NotificationStore = require('../../stores/notification');
@@ -10025,7 +10144,114 @@ Notifications = React.createClass({
 module.exports = Notifications;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":222,"../../stores/notification":242,"./buttons/mark":185,"./header":186,"./list":187,"./loadMore":190,"./mixins/notifications":191}],193:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../mixins/component":223,"../../stores/notification":242,"./buttons/mark":186,"./header":187,"./list":188,"./loadMore":191,"./mixins/notifications":192}],194:[function(require,module,exports){
+'use strict';
+
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+var _interopRequireWildcard = require('babel-runtime/helpers/interop-require-wildcard')['default'];
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _sharedRoutesRoutes = require('../../../../shared/routes/routes');
+
+var _sharedRoutesRoutes2 = _interopRequireDefault(_sharedRoutesRoutes);
+
+var _sharedReactProjectTypes = require('../../../../shared/react/ProjectTypes');
+
+var ProjectTypes = _interopRequireWildcard(_sharedReactProjectTypes);
+
+var _itemsPrev = require('./items/prev');
+
+var _itemsPrev2 = _interopRequireDefault(_itemsPrev);
+
+var _itemsNext = require('./items/next');
+
+var _itemsNext2 = _interopRequireDefault(_itemsNext);
+
+var TlogPagination = (function () {
+  function TlogPagination() {
+    _classCallCheck(this, TlogPagination);
+  }
+
+  _createClass(TlogPagination, [{
+    key: 'renderPaginationItems',
+    value: function renderPaginationItems() {
+      var _props = this.props;
+      var _props$pagination = _props.pagination;
+      var currentPage = _props$pagination.currentPage;
+      var totalPagesCount = _props$pagination.totalPagesCount;
+      var type = _props$pagination.type;
+      var slug = _props.slug;
+
+      var paginationItems = [];
+
+      switch (false) {
+        case !(currentPage == 0 && totalPagesCount == 0):
+          break;
+        case !(currentPage == 1 && totalPagesCount > 1):
+          paginationItems.push(_react2['default'].createElement(_itemsPrev2['default'], {
+            href: _sharedRoutesRoutes2['default'].tlogPagination(slug, type, currentPage + 1),
+            key: 'prev',
+            single: true
+          }));
+          break;
+        case !(totalPagesCount > currentPage > 1):
+          paginationItems.push(_react2['default'].createElement(_itemsPrev2['default'], {
+            href: _sharedRoutesRoutes2['default'].tlogPagination(slug, type, currentPage + 1),
+            key: 'prev'
+          }));
+          paginationItems.push(_react2['default'].createElement(_itemsNext2['default'], {
+            href: _sharedRoutesRoutes2['default'].tlogPagination(slug, type, currentPage - 1),
+            key: 'next'
+          }));
+          break;
+        case !(currentPage > totalPagesCount):
+          paginationItems.push(_react2['default'].createElement(_itemsNext2['default'], {
+            href: _sharedRoutesRoutes2['default'].tlogPagination(slug, type, totalPagesCount),
+            key: 'next',
+            single: true
+          }));
+          break;
+        case !(currentPage == totalPagesCount && currentPage != 1):
+          paginationItems.push(_react2['default'].createElement(_itemsNext2['default'], {
+            href: _sharedRoutesRoutes2['default'].tlogPagination(slug, type, currentPage - 1),
+            key: 'next',
+            single: true
+          }));
+          break;
+      }
+
+      return paginationItems;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'pagination' },
+        this.renderPaginationItems()
+      );
+    }
+  }]);
+
+  return TlogPagination;
+})();
+
+TlogPagination.propTypes = {
+  pagination: ProjectTypes.pagination.isRequired,
+  slug: _react.PropTypes.string.isRequired
+};
+
+module.exports = TlogPagination;
+
+},{"../../../../shared/react/ProjectTypes":247,"../../../../shared/routes/routes":263,"./items/next":197,"./items/prev":198,"babel-runtime/helpers/class-call-check":271,"babel-runtime/helpers/create-class":272,"babel-runtime/helpers/interop-require-default":276,"babel-runtime/helpers/interop-require-wildcard":277,"react":"react"}],195:[function(require,module,exports){
 var DaylogPagination, PaginationNext, PaginationPrev, PropTypes;
 
 PaginationPrev = require('./items/prev');
@@ -10071,7 +10297,7 @@ DaylogPagination = React.createClass({
 module.exports = DaylogPagination;
 
 
-},{"./items/next":195,"./items/prev":196}],194:[function(require,module,exports){
+},{"./items/next":197,"./items/prev":198}],196:[function(require,module,exports){
 var EntryPagination, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -10094,7 +10320,7 @@ EntryPagination = React.createClass({
 module.exports = EntryPagination;
 
 
-},{}],195:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 var PaginationNext, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -10127,7 +10353,7 @@ PaginationNext = React.createClass({
 module.exports = PaginationNext;
 
 
-},{"classnames":331}],196:[function(require,module,exports){
+},{"classnames":331}],198:[function(require,module,exports){
 var PaginationPrev, PropTypes, classnames;
 
 classnames = require('classnames');
@@ -10160,74 +10386,7 @@ PaginationPrev = React.createClass({
 module.exports = PaginationPrev;
 
 
-},{"classnames":331}],197:[function(require,module,exports){
-var PaginationNext, PaginationPrev, PropTypes, TlogPagination;
-
-PaginationPrev = require('./items/prev');
-
-PaginationNext = require('./items/next');
-
-PropTypes = React.PropTypes;
-
-TlogPagination = React.createClass({
-  displayName: 'TlogPagination',
-  propTypes: {
-    slug: PropTypes.string.isRequired,
-    currentPage: PropTypes.number.isRequired,
-    totalPagesCount: PropTypes.number.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "pagination"
-    }, this.renderPaginationItems());
-  },
-  renderPaginationItems: function() {
-    var currentPage, paginationItems, ref, slug, totalPagesCount;
-    ref = this.props, currentPage = ref.currentPage, totalPagesCount = ref.totalPagesCount, slug = ref.slug;
-    paginationItems = [];
-    switch (false) {
-      case !(currentPage === 0 && totalPagesCount === 0):
-        null;
-        break;
-      case !(currentPage === 1 && totalPagesCount > 1):
-        paginationItems.push(React.createElement(PaginationPrev, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-          "single": true,
-          "key": "prev"
-        }));
-        break;
-      case !((totalPagesCount > currentPage && currentPage > 1)):
-        paginationItems.push(React.createElement(PaginationPrev, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage + 1),
-          "key": "prev"
-        }));
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-          "key": "next"
-        }));
-        break;
-      case !(currentPage > totalPagesCount):
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, totalPagesCount),
-          "single": true,
-          "key": "next"
-        }));
-        break;
-      case !(currentPage === totalPagesCount && currentPage !== 1):
-        paginationItems.push(React.createElement(PaginationNext, {
-          "href": Routes.tlogPagination(this.props.slug, currentPage - 1),
-          "single": true,
-          "key": "next"
-        }));
-    }
-    return paginationItems;
-  }
-});
-
-module.exports = TlogPagination;
-
-
-},{"./items/next":195,"./items/prev":196}],198:[function(require,module,exports){
+},{"classnames":331}],199:[function(require,module,exports){
 var PropTypes, ToolbarItem, classnames;
 
 classnames = require('classnames');
@@ -10286,7 +10445,7 @@ ToolbarItem = React.createClass({
 module.exports = ToolbarItem;
 
 
-},{"classnames":331}],199:[function(require,module,exports){
+},{"classnames":331}],200:[function(require,module,exports){
 var FeedToolbar, FeedToolbarList, PropTypes, ToolbarMixin, classnames;
 
 classnames = require('classnames');
@@ -10339,7 +10498,7 @@ FeedToolbar = React.createClass({
 module.exports = FeedToolbar;
 
 
-},{"./feed/list":200,"./mixins/toolbar":202,"classnames":331}],200:[function(require,module,exports){
+},{"./feed/list":201,"./mixins/toolbar":203,"classnames":331}],201:[function(require,module,exports){
 var FeedToolbarList, PropTypes, ToolbarItem;
 
 ToolbarItem = require('../_item');
@@ -10386,7 +10545,7 @@ FeedToolbarList = React.createClass({
 module.exports = FeedToolbarList;
 
 
-},{"../_item":198}],201:[function(require,module,exports){
+},{"../_item":199}],202:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, FeedToolbar, FeedToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -10413,7 +10572,7 @@ FeedToolbarManager = React.createClass({
 module.exports = FeedToolbarManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./feed":199}],202:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"./feed":200}],203:[function(require,module,exports){
 var CLOSE_STATE, OPEN_STATE, ToolbarMixin;
 
 CLOSE_STATE = 'close';
@@ -10444,7 +10603,7 @@ ToolbarMixin = {
 module.exports = ToolbarMixin;
 
 
-},{}],203:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 var PropTypes, ToolbarMixin, UserToolbar, UserToolbarList, UserToolbarListAdditional, UserToolbarToggle, classnames;
 
 classnames = require('classnames');
@@ -10504,7 +10663,7 @@ UserToolbar = React.createClass({
 module.exports = UserToolbar;
 
 
-},{"./mixins/toolbar":202,"./user/list":204,"./user/listAdditional":205,"./user/toggle":207,"classnames":331}],204:[function(require,module,exports){
+},{"./mixins/toolbar":203,"./user/list":205,"./user/listAdditional":206,"./user/toggle":208,"classnames":331}],205:[function(require,module,exports){
 var PropTypes, ToolbarItem, UserToolbarList, UserToolbarListMixin;
 
 ToolbarItem = require('../_item');
@@ -10583,7 +10742,7 @@ UserToolbarList = React.createClass({
 module.exports = UserToolbarList;
 
 
-},{"../_item":198,"./mixins/list":206}],205:[function(require,module,exports){
+},{"../_item":199,"./mixins/list":207}],206:[function(require,module,exports){
 var UserToolbarListAdditional;
 
 UserToolbarListAdditional = React.createClass({
@@ -10602,7 +10761,7 @@ UserToolbarListAdditional = React.createClass({
 module.exports = UserToolbarListAdditional;
 
 
-},{}],206:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 var UserToolbarListMixin;
 
 UserToolbarListMixin = {
@@ -10617,7 +10776,7 @@ UserToolbarListMixin = {
 module.exports = UserToolbarListMixin;
 
 
-},{}],207:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 var PropTypes, UserToolbarToggle;
 
 PropTypes = React.PropTypes;
@@ -10664,7 +10823,7 @@ UserToolbarToggle = React.createClass({
 module.exports = UserToolbarToggle;
 
 
-},{}],208:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 var ConnectStoreMixin, CurrentUserStore, MessagingStatusStore, UserToolbar, UserToolbarManager;
 
 CurrentUserStore = require('../../stores/currentUser');
@@ -10702,7 +10861,7 @@ UserToolbarManager = React.createClass({
 module.exports = UserToolbarManager;
 
 
-},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../../stores/messagingStatus":241,"./user":203}],209:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":258,"../../stores/currentUser":238,"../../stores/messagingStatus":241,"./user":204}],210:[function(require,module,exports){
 var ApiConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10745,7 +10904,7 @@ ApiConstants = keyMirror({
 module.exports = ApiConstants;
 
 
-},{"react/lib/keyMirror":492}],210:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],211:[function(require,module,exports){
 var ApiConstants, CurrentUserConstants, EntryConstants, FeedConstants, MessagingConstants, MessengerConstants, NotificationsConstants, RelationshipConstants;
 
 ApiConstants = require('./api');
@@ -10776,7 +10935,7 @@ module.exports = {
 };
 
 
-},{"./api":209,"./currentUser":211,"./entry":212,"./feed":213,"./messaging":214,"./messenger":215,"./notifications":216,"./relationship":217}],211:[function(require,module,exports){
+},{"./api":210,"./currentUser":212,"./entry":213,"./feed":214,"./messaging":215,"./messenger":216,"./notifications":217,"./relationship":218}],212:[function(require,module,exports){
 var CurrentUserConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10790,7 +10949,7 @@ CurrentUserConstants = keyMirror({
 module.exports = CurrentUserConstants;
 
 
-},{"react/lib/keyMirror":492}],212:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],213:[function(require,module,exports){
 var EntryConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10806,7 +10965,7 @@ EntryConstants = keyMirror({
 module.exports = EntryConstants;
 
 
-},{"react/lib/keyMirror":492}],213:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],214:[function(require,module,exports){
 var FeedConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10819,7 +10978,7 @@ FeedConstants = keyMirror({
 module.exports = FeedConstants;
 
 
-},{"react/lib/keyMirror":492}],214:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],215:[function(require,module,exports){
 var MessagingConstants;
 
 MessagingConstants = {
@@ -10837,7 +10996,7 @@ MessagingConstants = {
 module.exports = MessagingConstants;
 
 
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 var MessengerConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10855,7 +11014,7 @@ MessengerConstants = keyMirror({
 module.exports = MessengerConstants;
 
 
-},{"react/lib/keyMirror":492}],216:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],217:[function(require,module,exports){
 var NotificationsConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10868,7 +11027,7 @@ NotificationsConstants = keyMirror({
 module.exports = NotificationsConstants;
 
 
-},{"react/lib/keyMirror":492}],217:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],218:[function(require,module,exports){
 var RelationshipConstants, keyMirror;
 
 keyMirror = require('react/lib/keyMirror');
@@ -10880,7 +11039,7 @@ RelationshipConstants = keyMirror({
 module.exports = RelationshipConstants;
 
 
-},{"react/lib/keyMirror":492}],218:[function(require,module,exports){
+},{"react/lib/keyMirror":492}],219:[function(require,module,exports){
 var Notify, NotifyController, _pendingNotification, closeNotification, getContainer, isPageLoadingCanceled;
 
 Notify = require('../components/alerts/notify');
@@ -10969,7 +11128,7 @@ NotifyController = {
 module.exports = NotifyController;
 
 
-},{"../components/alerts/notify":50}],219:[function(require,module,exports){
+},{"../components/alerts/notify":51}],220:[function(require,module,exports){
 var ScreenController, _oldPageName, getContainer, restorePageName, switchPageName;
 
 _oldPageName = null;
@@ -11027,7 +11186,7 @@ ScreenController = {
 module.exports = ScreenController;
 
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 var AppDispatcher, Dispatcher, assign;
 
 assign = require('react/lib/Object.assign');
@@ -11052,7 +11211,7 @@ AppDispatcher = assign(new Dispatcher(), {
 module.exports = AppDispatcher;
 
 
-},{"flux":332,"react/lib/Object.assign":364}],221:[function(require,module,exports){
+},{"flux":332,"react/lib/Object.assign":364}],222:[function(require,module,exports){
 var ClickOutsideMixin, closest;
 
 closest = function(el, target) {
@@ -11087,7 +11246,7 @@ ClickOutsideMixin = {
 module.exports = ClickOutsideMixin;
 
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 var ComponentMixin;
 
 ComponentMixin = {
@@ -11109,7 +11268,7 @@ ComponentMixin = {
 module.exports = ComponentMixin;
 
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var DropdownMenuMixin, REVERSE_MARGIN, getSize, getViewportWH;
 
 REVERSE_MARGIN = 5;
@@ -11178,7 +11337,7 @@ DropdownMenuMixin = {
 module.exports = DropdownMenuMixin;
 
 
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 var Auth, AuthPage, PageMixin, PropTypes;
 
 PageMixin = require('./mixins/page');
@@ -11204,7 +11363,7 @@ AuthPage = React.createClass({
 module.exports = AuthPage;
 
 
-},{"../components/auth/auth":51,"./mixins/page":231}],225:[function(require,module,exports){
+},{"../components/auth/auth":52,"./mixins/page":232}],226:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, EntryPage, EntryPagination, EntryTlog, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11259,7 +11418,7 @@ EntryPage = React.createClass({
 module.exports = EntryPage;
 
 
-},{"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/entry/Tlog":101,"../components/hero/tlog":143,"../components/pagination/entry":194,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"./mixins/page":231}],226:[function(require,module,exports){
+},{"../components/auth/authManager":56,"../components/buttons/auth/authManager":72,"../components/entry/Tlog":102,"../components/hero/tlog":144,"../components/pagination/entry":196,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"./mixins/page":232}],227:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedBest, FeedBestPage, FeedStore, FeedToolbarManager, HeroFeedBest, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11313,7 +11472,7 @@ FeedBestPage = React.createClass({
 module.exports = FeedBestPage;
 
 
-},{"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/feed/feedBest":134,"../components/hero/feedBest":140,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":231}],227:[function(require,module,exports){
+},{"../components/auth/authManager":56,"../components/buttons/auth/authManager":72,"../components/feed/feedBest":135,"../components/hero/feedBest":141,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":232}],228:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedFriends, FeedFriendsPage, FeedStore, FeedToolbarManager, HeroFeedFriends, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11367,7 +11526,7 @@ FeedFriendsPage = React.createClass({
 module.exports = FeedFriendsPage;
 
 
-},{"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/feed/feedFriends":135,"../components/hero/feedFriends":141,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":231}],228:[function(require,module,exports){
+},{"../components/auth/authManager":56,"../components/buttons/auth/authManager":72,"../components/feed/feedFriends":136,"../components/hero/feedFriends":142,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":232}],229:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, FeedLive, FeedLivePage, FeedStore, FeedToolbarManager, HeroFeedLive, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11420,7 +11579,7 @@ FeedLivePage = React.createClass({
 module.exports = FeedLivePage;
 
 
-},{"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/feed/feedLive":136,"../components/hero/feedLive":142,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":231}],229:[function(require,module,exports){
+},{"../components/auth/authManager":56,"../components/buttons/auth/authManager":72,"../components/feed/feedLive":137,"../components/hero/feedLive":143,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"../stores/feed":239,"./mixins/page":232}],230:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, Messenger, MessengerPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11463,7 +11622,7 @@ MessengerPage = React.createClass({
 module.exports = MessengerPage;
 
 
-},{"../components/messenger/messenger":182,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/conversation":237,"../stores/currentUser":238,"./mixins/page":231}],230:[function(require,module,exports){
+},{"../components/messenger/messenger":183,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/conversation":237,"../stores/currentUser":238,"./mixins/page":232}],231:[function(require,module,exports){
 var ConversationStore, CurrentUserStore, FeedToolbarManager, MessageStore, Messenger, MessengerThreadPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11512,7 +11671,7 @@ MessengerThreadPage = React.createClass({
 module.exports = MessengerThreadPage;
 
 
-},{"../components/messenger/messenger":182,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/conversation":237,"../stores/currentUser":238,"../stores/message":240,"./mixins/page":231}],231:[function(require,module,exports){
+},{"../components/messenger/messenger":183,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/conversation":237,"../stores/currentUser":238,"../stores/message":240,"./mixins/page":232}],232:[function(require,module,exports){
 var PageMixin, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -11532,7 +11691,7 @@ PageMixin = {
 module.exports = PageMixin;
 
 
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 var CurrentUserStore, FeedToolbarManager, NotificationStore, Notifications, NotificationsPage, PageMixin, PropTypes, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11572,7 +11731,7 @@ NotificationsPage = React.createClass({
 module.exports = NotificationsPage;
 
 
-},{"../components/notifications/notifications":192,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"../stores/notification":242,"./mixins/page":231}],233:[function(require,module,exports){
+},{"../components/notifications/notifications":193,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"../stores/notification":242,"./mixins/page":232}],234:[function(require,module,exports){
 var AuthButtonManager, AuthManager, CurrentUserStore, Daylog, DaylogPagination, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, TlogDaylogPage, UserToolbarManager;
 
 CurrentUserStore = require('../stores/currentUser');
@@ -11630,65 +11789,7 @@ TlogDaylogPage = React.createClass({
 module.exports = TlogDaylogPage;
 
 
-},{"../components/Daylog/Daylog":19,"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/hero/tlog":143,"../components/pagination/daylog":193,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"./mixins/page":231}],234:[function(require,module,exports){
-var AuthButtonManager, AuthManager, CurrentUserStore, FeedToolbarManager, HeroTlog, PageMixin, PropTypes, Tlog, TlogPagination, TlogRegularPage, UserToolbarManager;
-
-CurrentUserStore = require('../stores/currentUser');
-
-PageMixin = require('./mixins/page');
-
-FeedToolbarManager = require('../components/toolbars/feedManager');
-
-UserToolbarManager = require('../components/toolbars/userManager');
-
-HeroTlog = require('../components/hero/tlog');
-
-Tlog = require('../components/Tlog/Tlog');
-
-TlogPagination = require('../components/pagination/tlog');
-
-AuthManager = require('../components/auth/authManager');
-
-AuthButtonManager = require('../components/buttons/auth/authManager');
-
-PropTypes = React.PropTypes;
-
-TlogRegularPage = React.createClass({
-  displayName: 'TlogRegularPage',
-  mixins: [PageMixin],
-  propTypes: {
-    currentUser: PropTypes.object,
-    tlog: PropTypes.object.isRequired,
-    entries: PropTypes.array.isRequired,
-    pagination: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
-    return CurrentUserStore.initialize(this.props.currentUser);
-  },
-  render: function() {
-    return React.createElement("div", null, React.createElement(FeedToolbarManager, null), React.createElement(UserToolbarManager, null), React.createElement(AuthButtonManager, null), React.createElement("div", {
-      "className": "layout"
-    }, React.createElement("div", {
-      "className": "layout__header"
-    }, React.createElement(HeroTlog, {
-      "tlog": this.props.tlog
-    })), React.createElement("div", {
-      "className": "layout__body"
-    }, React.createElement(Tlog, {
-      "tlog": this.props.tlog,
-      "entries": this.props.entries
-    }), React.createElement(TlogPagination, {
-      "slug": this.props.tlog.author.slug,
-      "currentPage": this.props.pagination.currentPage,
-      "totalPagesCount": this.props.pagination.totalPagesCount
-    }))), React.createElement(AuthManager, null));
-  }
-});
-
-module.exports = TlogRegularPage;
-
-
-},{"../components/Tlog/Tlog":47,"../components/auth/authManager":55,"../components/buttons/auth/authManager":71,"../components/hero/tlog":143,"../components/pagination/tlog":197,"../components/toolbars/feedManager":201,"../components/toolbars/userManager":208,"../stores/currentUser":238,"./mixins/page":231}],235:[function(require,module,exports){
+},{"../components/Daylog/Daylog":19,"../components/auth/authManager":56,"../components/buttons/auth/authManager":72,"../components/hero/tlog":144,"../components/pagination/daylog":195,"../components/toolbars/feedManager":202,"../components/toolbars/userManager":209,"../stores/currentUser":238,"./mixins/page":232}],235:[function(require,module,exports){
 var Api, AppDispatcher, Constants, MessagingService, NotifyController,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -11803,7 +11904,7 @@ MessagingService = (function(superClass) {
 module.exports = MessagingService;
 
 
-},{"../api/api":17,"../constants/constants":210,"../controllers/notify":218,"../dispatcher/dispatcher":220}],236:[function(require,module,exports){
+},{"../api/api":17,"../constants/constants":211,"../controllers/notify":219,"../dispatcher/dispatcher":221}],236:[function(require,module,exports){
 var BaseStore, CHANGE_EVENT,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -11917,7 +12018,7 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],238:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],238:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, CurrentUserStore, _currentUser, assign, extendByMockData;
 
 assign = require('react/lib/Object.assign');
@@ -11990,7 +12091,7 @@ CurrentUserStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"react/lib/Object.assign":364}],239:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"react/lib/Object.assign":364}],239:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, FeedStore, _entries, _everythingLoaded, assign, pushEntries;
 
 assign = require('react/lib/Object.assign');
@@ -12039,7 +12140,7 @@ FeedStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"react/lib/Object.assign":364}],240:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"react/lib/Object.assign":364}],240:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, ConversationStore, CurrentUserStore, MessageStore, _, _localMessages, _messages, addLocalMessage, addRemoteMessage, assign;
 
 _ = require('lodash');
@@ -12195,7 +12296,7 @@ MessageStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"./conversation":237,"./currentUser":238,"lodash":"lodash","react/lib/Object.assign":364}],241:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"./conversation":237,"./currentUser":238,"lodash":"lodash","react/lib/Object.assign":364}],241:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, MessagingStatusStore, _, _messagingStatus, assign;
 
 _ = require('lodash');
@@ -12239,7 +12340,7 @@ MessagingStatusStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],242:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],242:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, NotificationStore, _, _everythingLoaded, _notifications, assign;
 
 _ = require('lodash');
@@ -12317,7 +12418,7 @@ NotificationStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],243:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"lodash":"lodash","react/lib/Object.assign":364}],243:[function(require,module,exports){
 var AppDispatcher, BaseStore, Constants, RelationshipsStore, _relationships, assign, updateStatus;
 
 assign = require('react/lib/Object.assign');
@@ -12359,7 +12460,7 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 });
 
 
-},{"../constants/constants":210,"../dispatcher/dispatcher":220,"./_base":236,"react/lib/Object.assign":364}],244:[function(require,module,exports){
+},{"../constants/constants":211,"../dispatcher/dispatcher":221,"./_base":236,"react/lib/Object.assign":364}],244:[function(require,module,exports){
 (function (global){
 global.$ = global.jQuery = require('jquery');
 
@@ -12488,7 +12589,7 @@ var object = _react.PropTypes.object;
 var oneOf = _react.PropTypes.oneOf;
 var shape = _react.PropTypes.shape;
 var string = _react.PropTypes.string;
-var flow = shape({
+var tlog = shape({
   id: number.isRequired,
   name: string.isRequired,
   slug: string.isRequired,
@@ -12499,7 +12600,17 @@ var flow = shape({
   can_write: bool
 });
 
+exports.tlog = tlog;
+var flow = tlog;
+
 exports.flow = flow;
+var pagination = shape({
+  type: string.isRequired,
+  currentPage: number.isRequired,
+  totalPagesCount: number.isRequired
+});
+
+exports.pagination = pagination;
 // TODO: specify required fields and type of position field
 var relationship = shape({
   id: number,
@@ -13699,8 +13810,27 @@ Routes = {
   userTag: function(userSlug, tag) {
     return '/~' + userSlug + '/tags/' + tag;
   },
-  tlogPagination: function(userSlug, page) {
-    return '/~' + userSlug + '/page/' + page;
+  tlogPagination: function(userSlug, type, page) {
+    var pageParam, typeFragment;
+    if (type == null) {
+      type = 'tlog';
+    }
+    if (page == null) {
+      page = 1;
+    }
+    pageParam = page === 1 ? '' : "?page=" + page;
+    typeFragment = (function() {
+      switch (type) {
+        case 'tlog':
+        case 'flow':
+          return '';
+        case 'private':
+          return 'privates';
+        case 'favorite':
+          return 'favorites';
+      }
+    })();
+    return "/~" + userSlug + "/" + typeFragment + pageParam;
   },
   daylogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/' + page;

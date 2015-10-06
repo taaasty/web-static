@@ -30,7 +30,14 @@ Routes =
   userDesignSettings: (userSlug) -> '/~' + userSlug + '/design_settings'
   userTag: (userSlug, tag) -> '/~' + userSlug + '/tags/' + tag
 
-  tlogPagination:   (userSlug, page) -> '/~' + userSlug + '/page/' + page
+  tlogPagination:   (userSlug, type='tlog', page=1) ->
+    pageParam = if page == 1 then '' else "?page=#{page}"
+    typeFragment = switch (type)
+      when 'tlog', 'flow' then ''
+      when 'private' then 'privates'
+      when 'favorite' then 'favorites'
+    "/~#{userSlug}/#{typeFragment}#{pageParam}"
+
   daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page
 
   orders: -> '/orders'

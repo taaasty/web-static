@@ -2,7 +2,7 @@ import { PropTypes } from 'react';
 
 const { any, bool, number, object, oneOf, shape, string } = PropTypes;
 
-export const flow = shape({
+export const tlog = shape({
   id: number.isRequired,
   name: string.isRequired,
   slug: string.isRequired,
@@ -11,7 +11,15 @@ export const flow = shape({
   public_tlog_entries_count: number.isRequired,
   can_edit: bool,
   can_write: bool,
-})
+});
+
+export const flow = tlog;
+
+export const pagination = shape({
+  type: string.isRequired,
+  currentPage: number.isRequired,
+  totalPagesCount: number.isRequired,
+});
 
 // TODO: specify required fields and type of position field
 export const relationship = shape({
@@ -20,7 +28,7 @@ export const relationship = shape({
   reader_id: number,
   state: string,
   user_id: number,
-})
+});
 
 const gender = oneOf(['f', 'm']);
 
@@ -66,7 +74,7 @@ export const heroUser = shape({
     thumb64_url: string,
     thumbor_path: string.isRequired,
   },
-})
+});
 
 const tlogData = shape({
   id: number.isRequired,
@@ -101,4 +109,4 @@ export const tlogEntry = shape({
   tlog: tlogData.isRequired,
   type: string.isRequired,
   url: string.isRequired,
-})
+});
