@@ -127,15 +127,19 @@ let UserToolbarContainer = createClass({
     this.setState({hovered: true});
   },
 
-  handleMouseLeave() {
+  handleMouseLeave(ev) {
+    if (ev.clientX <= 0) {
+      return;
+    }
+
     if (this.state.openedTemporarily) {
       this.setState({
         openedTemporarily: false,
-        hovered: false
+        hovered: false,
       });
       ToolbarActionCreators.toggleOpenness(false);
     } else {
-      this.setState({hovered: false});
+      this.setState({ hovered: false });
     }
   },
 
