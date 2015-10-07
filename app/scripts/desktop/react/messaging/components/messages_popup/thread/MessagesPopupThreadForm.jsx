@@ -68,7 +68,7 @@ class MessagesPopupThreadForm extends Component {
         <span className="messages__user-avatar">
           {
             this.state.isLoading
-              ? <Spinner size={31} />
+              ? <Spinner size={30} />
               : <UserAvatar size={35} user={this.state.user} />
           }
         </span>

@@ -9,7 +9,7 @@ window.Shellbox_VkAuthButton = React.createClass
   render: ->
     if @props.isActive
       icon = <span className="icon">
-               <Spinner size={ 15 } />
+               <Spinner size={ 14 } />
              </span>
     else
       icon = <span className="icon icon--vkontakte" />

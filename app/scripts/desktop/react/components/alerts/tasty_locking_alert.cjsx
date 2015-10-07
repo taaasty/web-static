@@ -32,7 +32,7 @@ window.TastyLockingAlert = React.createClass
                    <div dangerouslySetInnerHTML={{__html: this.props.message || ''}}
                         className="confirmation__text" />
                    <div className="confirmation__buttons">
-                     <Spinner size={ 31 } />
+                     <Spinner size={ 30 } />
                    </div>
                  </div>
                </div>

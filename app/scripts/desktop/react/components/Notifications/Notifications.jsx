@@ -43,7 +43,7 @@ class Notifications {
     if (this.props.loadingMore) {
       return (
         <div className="loader">
-          <Spinner size={15} />
+          <Spinner size={14} />
         </div>
       );
     }

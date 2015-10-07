@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 /** 
 Известные размеры:
  - 8x8
- - 15x15
+ - 14x14
  - 24x24
- - 31x31
+ - 30x30
  - 70x70
 */
 

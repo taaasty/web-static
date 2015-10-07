@@ -12668,7 +12668,7 @@ var FitSpinner = (function () {
   _createClass(FitSpinner, [{
     key: 'fitSize',
     value: function fitSize(size) {
-      var knownSizes = [8, 15, 24, 31, 70];
+      var knownSizes = [8, 14, 24, 30, 70];
       var lesserSizes = knownSizes.filter(function (s) {
         return s < size - 4;
       }); // -4px for padding
@@ -12869,9 +12869,9 @@ var _react2 = _interopRequireDefault(_react);
 /** 
 Известные размеры:
  - 8x8
- - 15x15
+ - 14x14
  - 24x24
- - 31x31
+ - 30x30
  - 70x70
 */
 
