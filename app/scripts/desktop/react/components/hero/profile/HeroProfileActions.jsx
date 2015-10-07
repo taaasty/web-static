@@ -2,6 +2,8 @@ import React from 'react';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../../shared/constants/Tlog';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 
+import WriteMessageButton from './WriteMessageButton';
+
 class HeroProfileActions {
   render() {
     const { relationship, user } = this.props;

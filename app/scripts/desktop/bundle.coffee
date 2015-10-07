@@ -81,13 +81,12 @@ require './react/messaging/messaging_testing'
 # /*==========  Actions  ==========*/
 
 require './react/messaging/actions/popup'
-require './react/messaging/actions/conversation'
+global.ConversationActions = require './react/messaging/actions/ConversationActions'
 require './react/messaging/actions/message'
 require './react/messaging/actions/notification'
 
 # /*==========  Components  ==========*/
 
-require './react/messaging/components/buttons/write_message'
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
 require './react/messaging/components/toolbars/indicators/notifications'
