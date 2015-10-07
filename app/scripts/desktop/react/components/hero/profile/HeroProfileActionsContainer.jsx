@@ -41,7 +41,8 @@ class HeroProfileActionsContainer extends Component {
         </style>
         {isCurrentUser
            ? <HeroProfileSelfActions />
-           : <HeroProfileActions
+           : relationship &&
+             <HeroProfileActions
                relationship={relationship}
                user={user}
              />
