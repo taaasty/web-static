@@ -12731,15 +12731,17 @@ module.exports = exports['default'];
 },{"./Spinner":249,"babel-runtime/helpers/class-call-check":272,"babel-runtime/helpers/create-class":273,"babel-runtime/helpers/interop-require-default":277,"react":"react"}],248:[function(require,module,exports){
 'use strict';
 
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _extends = require('babel-runtime/helpers/extends')['default'];
+
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _reactLazyLoad = require('react-lazy-load');
-
-var _reactLazyLoad2 = _interopRequireDefault(_reactLazyLoad);
 
 var _react = require('react');
 
@@ -12753,123 +12755,137 @@ var _FitSpinner = require('./FitSpinner');
 
 var _FitSpinner2 = _interopRequireDefault(_FitSpinner);
 
-var Image = (0, _react.createClass)({
-  propTypes: {
-    className: _react.PropTypes.string,
-    image: _react.PropTypes.shape({
-      geometry: _react.PropTypes.object,
-      url: _react.PropTypes.string.isRequired
-    }).isRequired,
-    isRawUrl: _react.PropTypes.bool,
-    maxHeight: _react.PropTypes.number,
-    maxWidth: _react.PropTypes.number
-  },
+var Image = (function () {
+  function Image() {
+    _classCallCheck(this, Image);
+  }
 
-  renderPreloader: function renderPreloader() {
-    var style = this.getSize();
-    var width = style.width;
-    var height = style.height;
+  _createClass(Image, [{
+    key: 'renderPreloader',
+    value: function renderPreloader() {
+      var style = this.getSize();
+      var width = style.width;
+      var height = style.height;
 
-    return _react2['default'].createElement(
-      'div',
-      { className: 'image-loader-spinner', style: style },
-      _react2['default'].createElement(_FitSpinner2['default'], { size: Math.min(height, width) })
-    );
-  },
+      return _react2['default'].createElement(
+        'div',
+        { className: 'image-loader-spinner', style: style },
+        _react2['default'].createElement(_FitSpinner2['default'], { size: Math.min(height, width) })
+      );
+    }
+  }, {
+    key: 'getSize',
+    value: function getSize() {
+      var _props = this.props;
+      var geometry = _props.image.geometry;
+      var maxWidth = _props.maxWidth;
+      var maxHeight = _props.maxHeight;
 
-  render: function render() {
-    var _props = this.props;
-    var className = _props.className;
-    var url = _props.image.url;
-    var isRawUrl = _props.isRawUrl;
+      return Image.getSize(_extends({}, geometry, {
+        maxWidth: maxWidth,
+        maxHeight: maxHeight
+      }));
+    }
+  }, {
+    key: 'getUrl',
+    value: function getUrl() {
+      var size = this.getSize();
+      return ThumborService.newImageUrl(this.props.image.url, size);
+    }
+  }, {
+    key: 'getRetinaUrl',
+    value: function getRetinaUrl() {
+      var size = this.getSize();
+      return ThumborService.newRetinaImageUrl(this.props.image.url, size);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props;
+      var className = _props2.className;
+      var url = _props2.image.url;
+      var isRawUrl = _props2.isRawUrl;
 
-    var style = this.getSize();
-    var imgProps = {
-      className: className,
-      style: style,
-      srcSet: isRawUrl ? void 0 : this.getRetinaUrl()
-    };
+      var style = this.getSize();
+      var imgProps = {
+        className: className,
+        style: style,
+        srcSet: isRawUrl ? void 0 : this.getRetinaUrl()
+      };
 
-    return _react2['default'].createElement(
-      _reactLazyLoad2['default'],
-      { height: style.height },
-      _react2['default'].createElement(_reactImageloader2['default'], {
+      return _react2['default'].createElement(_reactImageloader2['default'], {
         imgProps: imgProps,
         preloader: this.renderPreloader.bind(this),
         src: isRawUrl ? url : this.getUrl(),
         style: style
-      })
-    );
-  },
+      });
+    }
+  }]);
 
-  getSize: function getSize() {
-    var geometry = this.props.image.geometry;
+  return Image;
+})();
 
-    var size = undefined;
+Image.propTypes = {
+  className: _react.PropTypes.string,
+  image: _react.PropTypes.shape({
+    geometry: _react.PropTypes.object,
+    url: _react.PropTypes.string.isRequired
+  }).isRequired,
+  isRawUrl: _react.PropTypes.bool,
+  maxHeight: _react.PropTypes.number,
+  maxWidth: _react.PropTypes.number
+};
 
-    if (geometry && geometry.width && geometry.height) {
-      if (this.props.maxWidth || this.props.maxHeight) {
-        var maxWidth = this.props.maxWidth || this.props.maxHeight,
-            maxHeight = this.props.maxHeight || this.props.maxWidth,
-            srcWidth = geometry.width,
-            srcHeight = geometry.height;
+Image.getSize = function getSize(_ref) {
+  var width = _ref.width;
+  var height = _ref.height;
+  var maxWidth = _ref.maxWidth;
+  var maxHeight = _ref.maxHeight;
 
-        var width = undefined,
-            height = undefined,
-            ratio = undefined;
+  if (width && height) {
+    if (maxWidth || maxHeight) {
+      var tMaxWidth = maxWidth || maxHeight;
+      var tMaxHeight = maxHeight || maxWidth;
 
-        if (srcWidth > maxWidth) {
-          ratio = maxWidth / srcWidth;
-          width = maxWidth;
-          height = srcHeight * ratio;
-          srcHeight = srcHeight * ratio;
-          srcWidth = srcWidth * ratio;
-        } else if (srcHeight > maxHeight) {
-          ratio = maxHeight / srcHeight;
-          height = maxHeight;
-          width = srcWidth * ratio;
-          srcWidth = srcWidth * ratio;
-          srcHeight = srcHeight * ratio;
-        } else {
-          width = srcWidth;
-          height = srcHeight;
-        }
+      var calcWidth = undefined,
+          calcHeight = undefined,
+          ratio = undefined;
 
-        size = {
-          width: parseInt(width, 10),
-          height: parseInt(height, 10)
-        };
+      if (width > tMaxWidth) {
+        ratio = tMaxWidth / width;
+        calcWidth = tMaxWidth;
+        calcHeight = height * ratio;
+      } else if (height > tMaxHeight) {
+        ratio = tMaxHeight / height;
+        calcHeight = tMaxHeight;
+        calcWidth = width * ratio;
       } else {
-        size = {
-          width: geometry.width,
-          height: geometry.height
-        };
+        calcWidth = width;
+        calcHeight = height;
       }
+
+      return {
+        width: parseInt(calcWidth, 10),
+        height: parseInt(calcHeight, 10)
+      };
     } else {
-      size = {
-        width: this.props.maxWidth || null,
-        height: this.props.maxHeight || null
+      return {
+        width: width,
+        height: height
       };
     }
-
-    return size;
-  },
-
-  getUrl: function getUrl() {
-    var size = this.getSize();
-    return ThumborService.newImageUrl(this.props.image.url, size);
-  },
-
-  getRetinaUrl: function getRetinaUrl() {
-    var size = this.getSize();
-    return ThumborService.newRetinaImageUrl(this.props.image.url, size);
+  } else {
+    return {
+      width: maxWidth || null,
+      height: maxHeight || null
+    };
   }
-});
+};
 
 exports['default'] = Image;
 module.exports = exports['default'];
 
-},{"./FitSpinner":247,"babel-runtime/helpers/interop-require-default":277,"react":"react","react-imageloader":"react-image-loader","react-lazy-load":"react-lazy-load"}],249:[function(require,module,exports){
+},{"./FitSpinner":247,"babel-runtime/helpers/class-call-check":272,"babel-runtime/helpers/create-class":273,"babel-runtime/helpers/extends":274,"babel-runtime/helpers/interop-require-default":277,"react":"react","react-imageloader":"react-image-loader"}],249:[function(require,module,exports){
 "use strict";
 
 var _createClass = require("babel-runtime/helpers/create-class")["default"];
@@ -13200,7 +13216,8 @@ CollageRowItem = React.createClass({
       "style": this.getContainerStyles(),
       "className": "collage__item"
     }, React.createElement(LazyLoad, {
-      "height": this.props.height
+      "height": this.props.height,
+      "threshold": parseInt(window.innerHeight, 10)
     }, React.createElement(ImageLoader, {
       "imgProps": imgProps,
       "preloader": this.renderPreloader,
@@ -69124,7 +69141,8 @@ var React = require('react'),
     LazyLoad = React.createClass({
         displayName: 'LazyLoad',
         propTypes: {
-            height: React.PropTypes.string
+            height: React.PropTypes.string,
+            threshold: React.PropTypes.number
         },
         getInitialState: function() {
             return {
@@ -69135,9 +69153,11 @@ var React = require('react'),
             var bounds = this.getDOMNode().getBoundingClientRect(),
                 scrollTop = window.pageYOffset,
                 top = bounds.top + scrollTop,
-                height = bounds.bottom - bounds.top;
+                height = bounds.bottom - bounds.top,
+                threshold = this.props.threshold || 0;
 
-            if(top === 0 || (top < (scrollTop + window.innerHeight) && (top + height) > scrollTop)){
+            if(top === 0 || (top <= (scrollTop + window.innerHeight + threshold)
+                             && (top + height) > (scrollTop - threshold))){
                 this.setState({visible: true});
                 this.handleVisible();
             }

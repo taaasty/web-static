@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import Image from './Image';
+import LazyLoadImage from './LazyLoadImage';
 
 let Avatar = React.createClass({
   propTypes: {
     userpic: React.PropTypes.object.isRequired,
-    size: React.PropTypes.number.isRequired
+    size: React.PropTypes.number.isRequired,
   },
 
   getDefaultProps() {
@@ -17,7 +17,7 @@ let Avatar = React.createClass({
     let { original_url: url, symbol, kind } = this.props.userpic;
 
     let avatarClasses = classnames('avatar', {
-      'anonymous_char': kind === 'anonymous'
+      'anonymous_char': kind === 'anonymous',
     });
 
     if (url != null) {
@@ -25,13 +25,13 @@ let Avatar = React.createClass({
         url,
         geometry: {
           width: this.props.size,
-          height: this.props.size
-        }
+          height: this.props.size,
+        },
       };
 
       return (
         <span className={avatarClasses}>
-          <Image image={image} className="avatar__img" />
+          <LazyLoadImage image={image} className="avatar__img" />
         </span>
       );
     } else {

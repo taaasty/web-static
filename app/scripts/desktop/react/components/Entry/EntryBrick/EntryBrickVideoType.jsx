@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import Text from '../../../../../shared/react/components/common/Text';
-import Image from '../../../../../shared/react/components/common/Image';
+import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoadImage';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
@@ -23,7 +23,7 @@ let EntryBrickVideoType = React.createClass({
           <figure className="video">
             <a href={this.props.entry.url}>
               <div className="video__cover">
-                <Image image={this.props.entry.preview_image} maxWidth={brickWidth} />
+                <LazyLoadImage image={this.props.entry.preview_image} maxWidth={brickWidth} />
                 {this.renderVideoOverlay()}
               </div>
             </a>

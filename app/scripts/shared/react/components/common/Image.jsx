@@ -1,20 +1,8 @@
-import LazyLoad from 'react-lazy-load';
-import React, { createClass, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ImageLoader from 'react-imageloader';
 import FitSpinner from './FitSpinner';
 
-const Image = createClass({
-  propTypes: {
-    className: PropTypes.string,
-    image: PropTypes.shape({
-      geometry: PropTypes.object,
-      url: PropTypes.string.isRequired,
-    }).isRequired,
-    isRawUrl: PropTypes.bool,
-    maxHeight: PropTypes.number,
-    maxWidth: PropTypes.number,
-  },
-
+class Image {
   renderPreloader() {
     const style = this.getSize();
     const { width, height } = style;
@@ -24,8 +12,23 @@ const Image = createClass({
         <FitSpinner size={Math.min(height, width)} />
       </div>
     );
-  },
-
+  }
+  getSize() {
+    const { image: { geometry }, maxWidth, maxHeight } = this.props;
+    return Image.getSize({
+      ...geometry,
+      maxWidth,
+      maxHeight,
+    });
+  }
+  getUrl() {
+    let size = this.getSize();
+    return ThumborService.newImageUrl(this.props.image.url, size);
+  }
+  getRetinaUrl() {
+    let size = this.getSize();
+    return ThumborService.newRetinaImageUrl(this.props.image.url, size);
+  }
   render() {
     const { className, image: { url }, isRawUrl } = this.props;
     const style = this.getSize();
@@ -36,76 +39,64 @@ const Image = createClass({
     };
 
     return (
-      <LazyLoad height={style.height}>
-        <ImageLoader
-          imgProps={imgProps}
-          preloader={this.renderPreloader.bind(this)}
-          src={isRawUrl ? url : this.getUrl()}
-          style={style}
-        />
-      </LazyLoad>
+      <ImageLoader
+        imgProps={imgProps}
+        preloader={this.renderPreloader.bind(this)}
+        src={isRawUrl ? url : this.getUrl()}
+        style={style}
+      />
     );
-  },
+  }
+}
 
-  getSize() {
-    let { geometry } = this.props.image;
-    let size;
+Image.propTypes = {
+  className: PropTypes.string,
+  image: PropTypes.shape({
+    geometry: PropTypes.object,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+  isRawUrl: PropTypes.bool,
+  maxHeight: PropTypes.number,
+  maxWidth: PropTypes.number,
+};
 
-    if (geometry && geometry.width && geometry.height) {
-      if (this.props.maxWidth || this.props.maxHeight) {
-        let maxWidth = this.props.maxWidth || this.props.maxHeight,
-            maxHeight = this.props.maxHeight || this.props.maxWidth,
-            srcWidth = geometry.width,
-            srcHeight = geometry.height;
+Image.getSize = function getSize({ width, height, maxWidth, maxHeight }) {
+  if (width && height) {
+    if (maxWidth || maxHeight) {
+      const tMaxWidth = maxWidth || maxHeight;
+      const tMaxHeight = maxHeight || maxWidth;
 
-        let width, height, ratio;
+      let calcWidth, calcHeight, ratio;
 
-        if (srcWidth > maxWidth) {
-          ratio = maxWidth / srcWidth;
-          width = maxWidth;
-          height = srcHeight * ratio;
-          srcHeight = srcHeight * ratio;
-          srcWidth = srcWidth * ratio;
-        } else if (srcHeight > maxHeight) {
-          ratio = maxHeight / srcHeight;
-          height = maxHeight;
-          width = srcWidth * ratio;
-          srcWidth = srcWidth * ratio;
-          srcHeight = srcHeight * ratio;
-        } else {
-          width = srcWidth;
-          height = srcHeight;
-        }
-
-        size = {
-          width: parseInt(width, 10),
-          height: parseInt(height, 10),
-        };
+      if (width > tMaxWidth) {
+        ratio = tMaxWidth / width;
+        calcWidth = tMaxWidth;
+        calcHeight = height * ratio;
+      } else if (height > tMaxHeight) {
+        ratio = tMaxHeight / height;
+        calcHeight = tMaxHeight;
+        calcWidth = width * ratio;
       } else {
-        size = {
-          width: geometry.width,
-          height: geometry.height,
-        };
+        calcWidth = width;
+        calcHeight = height;
       }
+
+      return ({
+        width: parseInt(calcWidth, 10),
+        height: parseInt(calcHeight, 10),
+      });
     } else {
-      size = {
-        width: this.props.maxWidth || null,
-        height: this.props.maxHeight || null,
-      };
+      return ({
+        width,
+        height,
+      });
     }
-
-    return size;
-  },
-
-  getUrl() {
-    let size = this.getSize();
-    return ThumborService.newImageUrl(this.props.image.url, size);
-  },
-
-  getRetinaUrl() {
-    let size = this.getSize();
-    return ThumborService.newRetinaImageUrl(this.props.image.url, size);
-  },
-});
+  } else {
+    return ({
+      width: maxWidth || null,
+      height: maxHeight || null,
+    });
+  }
+};
 
 export default Image;
