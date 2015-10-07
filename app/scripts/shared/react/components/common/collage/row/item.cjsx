@@ -31,7 +31,10 @@ CollageRowItem = React.createClass
     }
     
     <div style={ @getContainerStyles() } className="collage__item">
-      <LazyLoad height={this.props.height}>
+      <LazyLoad
+        height={this.props.height}
+        threshold={parseInt(window.innerHeight, 10)}
+      >
         <ImageLoader
           imgProps={imgProps}
           preloader={this.renderPreloader}

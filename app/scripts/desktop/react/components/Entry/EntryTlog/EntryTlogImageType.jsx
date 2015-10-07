@@ -17,8 +17,9 @@ export default class EntryTlogImageType {
       <span>
         <div className="post__content">
           <ImageAttachmentsCollage
-              imageAttachments={this.props.entry.image_attachments}
-              width={712} />
+            imageAttachments={this.props.entry.image_attachments}
+            width={712}
+          />
           {this.renderVoting()}
           <Text value={this.props.entry.title} withHTML={true} />
         </div>

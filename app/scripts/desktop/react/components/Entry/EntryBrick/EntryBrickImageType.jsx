@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Text from '../../../../../shared/react/components/common/Text';
-import Image from '../../../../../shared/react/components/common/Image';
+import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoadImage';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
@@ -32,16 +32,17 @@ let EntryBrickImageType = React.createClass({
           />
         </div>
         <EntryBrickActions
-            hasModeration={this.props.hasModeration}
-            onAccept={this.props.onEntryAccept}
-            onDecline={this.props.onEntryDecline} />
+          hasModeration={this.props.hasModeration}
+          onAccept={this.props.onEntryAccept}
+          onDecline={this.props.onEntryDecline}
+        />
       </span>
     );
   },
 
   renderBrickImage() {
     if (this.props.entry.preview_image) {
-      return <Image image={this.props.entry.preview_image} maxWidth={brickWidth} />;
+      return <LazyLoadImage image={this.props.entry.preview_image} maxWidth={brickWidth} />;
     } else {
       return <span>{i18n.t('entry.has_no_images')}</span>;
     }

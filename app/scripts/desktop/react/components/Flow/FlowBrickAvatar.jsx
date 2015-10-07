@@ -1,12 +1,12 @@
-import Image from '../../../../shared/react/components/common/Image';
+import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
 
 let FlowBrickAvatar = React.createClass({
   propTypes: {
-    flowpic: React.PropTypes.object.isRequired
+    flowpic: React.PropTypes.object.isRequired,
   },
 
   render() {
-    return <Image image={this.getImage()} />;
+    return <LazyLoadImage image={this.getImage()} />;
   },
 
   getImage() {
@@ -14,7 +14,7 @@ let FlowBrickAvatar = React.createClass({
       url: this.props.flowpic.original_url,
       geometry: {
         width: 362,
-        height: 180
+        height: 180,
       }
     };
   }
