@@ -3,7 +3,7 @@ import Scroller from '../common/scroller/scroller';
 import NotificationsNotificationList from './NotificationsNotificationList';
 import NotificationsLoadingMessage from './NotificationsLoadingMessage';
 import NotificationsErrorMessage from './NotificationsErrorMessage';
-import Spinner from '../Spinner';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 class Notifications {
   handleScroll(ev) {

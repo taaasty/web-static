@@ -278,7 +278,7 @@ require './react/components/hero/profile/popup/items/tag_item'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
 
-global.Spinner = require './react/components/Spinner'
+global.Spinner = require '../shared/react/components/common/Spinner'
 
 global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
 global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'

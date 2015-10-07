@@ -3,7 +3,7 @@ ConversationStore = require '../../../stores/conversation'
 MessengerViewActions = require '../../../actions/view/messenger'
 ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 ComponentMixin = require '../../../mixins/component'
-Spinner = require '../../common/spinner/spinner'
+Spinner = require '../../../../../shared/react/components/common/Spinner'
 MessageList = require './messages/list'
 
 LOADED_STATE       = 'loaded'
