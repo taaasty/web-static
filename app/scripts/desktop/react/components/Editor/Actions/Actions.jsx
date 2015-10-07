@@ -45,6 +45,12 @@ let EditorActions = React.createClass({
     return (
       <div className={actionsClasses}>
         {this.renderSpinner()}
+        <div className="post-action post-action--button">
+          <button className="button post-settings-button post-settings-promotion-button">Закрепить пост в прямом эфире</button>
+        </div>
+        <div className="post-action post-action--button">
+          <button className="button post-settings-button post-settings-promotion-button __promoted">Будет закреплен до 11:23 16 сентября</button>
+        </div>
         {this.renderVoteButton()}
         {this.renderPrivacyButton()}
         <div className="post-action post-action--button">
