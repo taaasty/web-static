@@ -4,8 +4,7 @@ import Text from '../../../../../shared/react/components/common/Text';
 import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoadImage';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
-
-const brickWidth = 302;
+import { brickWidth } from './constants';
 
 let EntryBrickVideoType = React.createClass({
   propTypes: {
