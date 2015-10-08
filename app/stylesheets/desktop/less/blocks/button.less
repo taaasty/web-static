@@ -466,6 +466,28 @@
       .ico-fire-fill-reg; // :before - иконка заполненного огня
     }
   }
+
+  &.post-settings-promotion-button {
+    padding-right: 22px;
+    padding-left: 22px;
+    background-color: @white;
+    border: 1px solid rgba(red(@green), green(@green), blue(@green), .5);
+    font-size: 15px;
+    line-height: 38px;
+    letter-spacing: 0;
+    color: @green;
+    text-transform: none;
+
+    &:hover {
+      border-color: rgba(red(@green), green(@green), blue(@green), .8);
+    }
+
+    &.__promoted {
+      background-color: @green;
+      border-color: transparent;
+      color: #fff;
+    }
+  }
 }
 
 // Auth Button

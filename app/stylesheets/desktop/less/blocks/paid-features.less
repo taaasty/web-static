@@ -1,0 +1,151 @@
+// Layout
+.paid-features {
+  position: relative;
+}
+
+.paid-features__body {
+  padding: 15px;
+  background-color: #ececec;
+  text-align: center;
+}
+
+.paid-features__content {
+  width: 100%;
+  height: 430px;
+  display: table;
+}
+
+.paid-features__content-middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.paid-features__footer {
+  .clearfix();
+  background-color: #323232;
+  color: #fff;
+
+  .paid-features__period {
+    float: left;
+  }
+
+  .paid-features__actions {
+    float: right;
+  }
+
+  .paid-features__button {
+    margin-left: 25px;
+    border-radius: 0;
+  }
+
+  .paid-features__summary {
+    display: inline-block;
+    text-align: right;
+  }
+}
+
+// Elements
+.paid-features__cover {
+  margin-bottom: -60px;
+  padding-bottom: 46%;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: contain;
+}
+
+.paid-features__cover--posts {
+  background-image: url("@{images-path}/promotion-posts.png");
+
+  &:before {
+    content: "";
+    width: 2px;
+    height: 130px;
+    position: absolute;
+    top: 98px;
+    left: 54px;
+    background-color: #38a06e;
+  }
+}
+
+.paid-features__title {
+  max-width: 350px;
+  margin: 50px auto;
+  position: relative;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.paid-features__item {
+  width: 33.3333%;
+  padding: 0 10px 20px;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.paid-features__item-icon {
+  margin-bottom: 10px;
+  font-size: 36px;
+  line-height: 1;
+  color: #3ea272;
+}
+
+.paid-features__item-title {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.paid-features__period {
+  padding: 18px 20px;
+}
+
+.paid-features__period-input {
+  width: 32px;
+  margin-right: 8px;
+  padding: 4px;
+  border: 0;
+  background-color: #a2a2a2;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: @font-family-base;
+  color: #323232;
+  border-radius: 3px;
+  box-sizing: border-box;
+  text-align: center;
+
+  &:focus {
+    background-color: #ccc;
+  }
+}
+
+.paid-features__period-text {
+  font-size: 14px;
+  line-height: 20px;
+  opacity: .6;
+}
+
+.paid-features__summary {
+  margin-top: 2px;
+  display: inline-block;
+  font-size: 24px;
+  line-height: 30px;
+  vertical-align: middle;
+}
+
+.paid-features__button {
+  &:extend(.button all, .button--green all, .button--small all);
+  height: 65px;
+  padding-right: 40px;
+  padding-left: 40px;
+  line-height: 67px;
+}
+
+.paid-features__button--close {
+  &:extend(.button--block all);
+  margin-left: 0 !important;
+  padding-right: 0;
+  padding-left: 0;
+}

@@ -1,3 +1,4 @@
+import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import EditorVoteButton from '../buttons/Vote';
 import EditorPrivacyButton from '../buttons/Privacy';
@@ -11,19 +12,19 @@ let ENTRY_PRIVACY_PRIVATE = 'private',
     TLOG_TYPE_PUBLIC = 'public',
     TLOG_TYPE_ANONYMOUS = 'anonymous';
 
-let EditorActions = React.createClass({
+let EditorActions = createClass({
   propTypes: {
-    tlog: React.PropTypes.object,
-    tlogType: React.PropTypes.string.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired,
-    userID: React.PropTypes.number.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    onSaveEntry: React.PropTypes.func.isRequired,
-    onChangePrivacy: React.PropTypes.func.isRequired
+    tlog: PropTypes.object,
+    tlogType: PropTypes.string.isRequired,
+    entryPrivacy: PropTypes.string.isRequired,
+    userID: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onSaveEntry: PropTypes.func.isRequired,
+    onChangePrivacy: PropTypes.func.isRequired
   },
 
   getInitialState() {
-    return {preview: false}
+    return { preview: false };
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -37,14 +38,37 @@ let EditorActions = React.createClass({
     }
   },
 
+  renderPromoPostButton() {
+    const promoFlag = false; //FIXME: change to actual flag
+    const buttonClasses = classnames({
+      'button': true,
+      'post-settings-button': true,
+      'post-settings-promotion-button': true,
+      '__promoted': promoFlag,
+    });
+    //FIXME: create actual i18n strings
+    const buttonText = promoFlag
+      ? 'Будет закреплен до 11:23 16 сентября'
+      : 'Закрепить пост в прямом эфире';
+
+    return (
+      <div className="post-action post-action--button">
+        <button className={buttonClasses}>
+          {buttonText}
+        </button>
+      </div>
+    );
+  },
+
   render() {
     let actionsClasses = classnames('post-actions', {
-      'state--loading': this.props.loading
+      'state--loading': this.props.loading,
     });
 
     return (
       <div className={actionsClasses}>
         {this.renderSpinner()}
+        {false && this.renderPromoPostButton()}
         {this.renderVoteButton()}
         {this.renderPrivacyButton()}
         <div className="post-action post-action--button">
