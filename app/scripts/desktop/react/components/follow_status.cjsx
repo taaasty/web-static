@@ -35,7 +35,7 @@ window.FollowStatus = React.createClass
       else console.warn 'Неизвестный статус', @props.status
 
     content = <i className='icon'></i>
-    content = <Spinner size={ 15 } /> if @props.process
+    content = <Spinner size={ 14 } /> if @props.process
 
     stateClass = @props.status
     stateClass = STATE_ERROR   if @props.error

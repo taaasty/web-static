@@ -26,7 +26,7 @@ let Relationships = React.createClass({
     let message;
 
     if (this.props.state === LOADING_STATE && this.props.relationships.length === 0) {
-      message = <Spinner size={15} />;
+      message = <Spinner size={14} />;
     } else if (this.props.state === ERROR_STATE) {
       message = 'Ошибка загрузки';
     } else {
@@ -56,7 +56,7 @@ let Relationships = React.createClass({
     if (this.props.state === LOADING_STATE) {
       return (
         <div className="loader" key="loader">
-          <Spinner size={15} />
+          <Spinner size={14} />
         </div>
       );
     }

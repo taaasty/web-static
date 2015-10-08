@@ -8,7 +8,7 @@ window.MessagesPopup_LoadingMessage = React.createClass
       <div className="grid-full__middle">
         <div className="messages-loading">
           <div className="messages-loading__header">
-            <Spinner size={ 31 } />
+            <Spinner size={ 30 } />
           </div>
           <div className="messages-loading__body">
             { this.props.content }

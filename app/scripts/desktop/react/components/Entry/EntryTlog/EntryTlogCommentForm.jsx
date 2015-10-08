@@ -57,7 +57,7 @@ export default class EntryTlogCommentForm extends Component {
       <span className="comment-form__avatar">
         {
           process
-            ? <Spinner size={31} />
+            ? <Spinner size={30} />
             : <Avatar
                 size={35}
                 userpic={userpic}
