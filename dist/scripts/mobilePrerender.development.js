@@ -12670,7 +12670,7 @@ var FitSpinner = (function () {
     value: function fitSize(size) {
       var knownSizes = [8, 14, 24, 30, 70];
       var lesserSizes = knownSizes.filter(function (s) {
-        return s < size - 4;
+        return s <= size - 4;
       }); // -4px for padding
 
       return lesserSizes[lesserSizes.length - 1];
@@ -12731,10 +12731,11 @@ var Image = (function () {
       var width = style.width;
       var height = style.height;
 
+      // 28 - 4 = 24 maximum spinner size for loader
       return _react2['default'].createElement(
         'div',
         { className: 'image-loader-spinner', style: style },
-        _react2['default'].createElement(_FitSpinner2['default'], { size: Math.min(height, width) })
+        _react2['default'].createElement(_FitSpinner2['default'], { size: Math.min(height, width, 28) })
       );
     }
   }, {
@@ -13167,7 +13168,7 @@ CollageRowItem = React.createClass({
       "className": "collage__item-spinner",
       "style": this.getImageStyles()
     }, React.createElement(FitSpinner, {
-      "size": Math.min(width, height)
+      "size": Math.min(width, height, 28)
     }));
   },
   render: function() {

@@ -7,9 +7,10 @@ class Image {
     const style = this.getSize();
     const { width, height } = style;
 
+    // 28 - 4 = 24 maximum spinner size for loader
     return (
       <div className="image-loader-spinner" style={style}>
-        <FitSpinner size={Math.min(height, width)} />
+        <FitSpinner size={Math.min(height, width, 28)} />
       </div>
     );
   }
