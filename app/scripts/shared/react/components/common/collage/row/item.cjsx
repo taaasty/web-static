@@ -20,8 +20,9 @@ CollageRowItem = React.createClass
   renderPreloader: ->
     { width, height } = this.props;
 
+    # 28-4=24 maximum size for spinner
     <div className="collage__item-spinner" style={this.getImageStyles()}>
-      <FitSpinner size={Math.min(width, height)} />
+      <FitSpinner size={Math.min(width, height, 28)} />
     </div>
 
   render: ->
