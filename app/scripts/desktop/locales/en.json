@@ -426,6 +426,10 @@
       "unread_entries_count": "__count__ new post. ",
       "unread_entries_count_plural": "__count__ new posts. ",
       "show_unread": "Show"
+    },
+    "editor": {
+      "pin_entry": "Pin the post on the live feed",
+      "pin_entry_promoted": "Post will remain pinned till __date__"
     }
   },
   "messages": {

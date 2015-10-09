@@ -12624,7 +12624,7 @@ var heroUser = shape({
   title: string,
   tlog_url: string.isRequired,
   total_entries_count: number.isRequired,
-  updated_ad: string.isRequired,
+  updated_at: string.isRequired,
   userpic: _extends({
     default_colors: shape({
       background: string,
@@ -14003,6 +14003,12 @@ Routes = {
   },
   orders: function() {
     return '/orders';
+  },
+  ordersNew: function(_entryID, _type) {
+    var entryID, type;
+    entryID = window.encodeURIComponent(_entryID);
+    type = window.encodeURIComponent(_type);
+    return "/orders/new?entry_id=" + entryID + "&type=" + type;
   },
   flows: function() {
     return '/flows';

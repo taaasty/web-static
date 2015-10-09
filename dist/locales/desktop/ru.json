@@ -431,6 +431,10 @@
       "unread_entries_count_plural_2": "__count__ новых публикации. ",
       "unread_entries_count_plural_5": "__count__ новых публикаций. ",
       "show_unread": "Показать"
+    },
+    "editor": {
+      "pin_entry": "Закрепить пост в прямом эфире",
+      "pin_entry_promoted": "Будет закреплен до __date__"
     }
   },
   "messages": {

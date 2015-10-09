@@ -13,14 +13,14 @@ function createBlobAttachment(image, uuid) {
     image: {
       geometry: {
         width: image.width,
-        height: image.height
+        height: image.height,
       },
-      url: image.src
-    } 
+      url: image.src,
+    },
   };
 }
 
-function prepareEntryData(entryType) {
+function prepareEntryData(entryType, pinEntry=false) {
   let data = {},
       title = EditorStore.getEntryValue('title'),
       text = EditorStore.getEntryValue('text'),
@@ -44,7 +44,7 @@ function prepareEntryData(entryType) {
       data = {
         title, privacy,
         image_url: imageUrl,
-        image_attachments_ids: imageAttachmentsIDs
+        image_attachments_ids: imageAttachmentsIDs,
       };
       break;
     case 'instagram':
@@ -52,7 +52,7 @@ function prepareEntryData(entryType) {
     case 'video':
       data = {
         title, privacy,
-        video_url: embedUrl
+        video_url: embedUrl,
       };
       break;
     case 'quote':
@@ -62,6 +62,9 @@ function prepareEntryData(entryType) {
 
   // Здесь устанавливаются общие для всех типов постов данные
   if (tlogID != null) data.tlog_id = tlogID;
+  if (pinEntry) {
+    data.want_to_fix = true;
+  }
 
   return data;
 }
@@ -70,28 +73,28 @@ let EditorActionCreators = {
   init({entry, tlog, tlogType}) {
     AppDispatcher.handleViewAction({
       entry, tlog, tlogType,
-      type: EditorConstants.INIT
+      type: EditorConstants.INIT,
     });
   },
 
   updateField(key, value) {
     AppDispatcher.handleViewAction({
       key, value,
-      type: EditorConstants.UPDATE_FIELD
+      type: EditorConstants.UPDATE_FIELD,
     });
   },
 
   changeEntryType(entryType) {
     AppDispatcher.handleViewAction({
       entryType,
-      type: EditorConstants.CHANGE_TYPE
+      type: EditorConstants.CHANGE_TYPE,
     });
   },
 
   changeEntryPrivacy(entryPrivacy) {
     AppDispatcher.handleViewAction({
       entryPrivacy,
-      type: EditorConstants.CHANGE_PRIVACY
+      type: EditorConstants.CHANGE_PRIVACY,
     });
   },
 
@@ -171,19 +174,19 @@ let EditorActionCreators = {
             newAttachments.splice(blobIndex, 1);
           }
 
-          this.updateField('imageAttachments', newAttachments)
+          this.updateField('imageAttachments', newAttachments);
         });
       promises.push(promise);
     });
 
     AppDispatcher.handleServerAction({
-      type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_START
+      type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_START,
     });
 
     return ApiHelpers.settle(promises)
       .always(() => {
         AppDispatcher.handleServerAction({
-          type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_END
+          type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_END,
         });
       });
   },
@@ -216,72 +219,84 @@ let EditorActionCreators = {
     return Api.editor.createEmbed(embedUrl);
   },
 
-  saveEntry() {
-    let entryType = EditorStore.getEntryType();
-
-    // Сохраняем Video, Instagram и Music в video точке
-    if (entryType === 'music' || entryType === 'instagram') {
-      entryType = 'video';
-    }
-
-    AppDispatcher.handleServerAction({
-      type: EditorConstants.ENTRY_SAVE
+  pinEntry() {
+    AppDispatcher.handleViewAction({
+      type: EditorConstants.ENTRY_PIN,
     });
 
-    function onSuccessCreate(entry) {
+    return this.saveEntry(true);
+  },
+
+  saveEntry(pinEntry) {
+    return new Promise((resolve, reject) => {
+      let entryType = EditorStore.getEntryType();
+
+      // Сохраняем Video, Instagram и Music в video точке
+      if (entryType === 'music' || entryType === 'instagram') {
+        entryType = 'video';
+      }
+
       AppDispatcher.handleServerAction({
-        type: EditorConstants.ENTRY_SAVE_SUCCESS
+        type: EditorConstants.ENTRY_SAVE,
       });
-      NoticeService.closeAll();
-      TastyLockingAlertController.show({
-        title: i18n.t('editor_alert_header'),
-        message: i18n.t('editor_create_success'),
-        action: () => window.location = entry.entry_url
-      });
-    }
 
-    function onSuccessEdit(entry) {
-      AppDispatcher.handleServerAction({
-        type: EditorConstants.ENTRY_SAVE_SUCCESS
-      });
-      TastyLockingAlertController.show({
-        title: i18n.t('editor_alert_header'),
-        message: i18n.t('editor_edit_success'),
-        action: () => window.location = entry.entry_url
-      });
-    }
+      function onSuccessCreate(entry) {
+        AppDispatcher.handleServerAction({
+          type: EditorConstants.ENTRY_SAVE_SUCCESS,
+        });
+        NoticeService.closeAll();
+        TastyLockingAlertController.show({
+          title: i18n.t('editor_alert_header'),
+          message: i18n.t('editor_create_success'),
+          action: () => resolve(entry),
+        });
+      }
 
-    function onFail(xhr) {
-      AppDispatcher.handleServerAction({
-        type: EditorConstants.ENTRY_SAVE_ERROR
-      });
-      NoticeService.errorResponse(xhr);
-    }
+      function onSuccessEdit(entry) {
+        AppDispatcher.handleServerAction({
+          type: EditorConstants.ENTRY_SAVE_SUCCESS,
+        });
+        TastyLockingAlertController.show({
+          title: i18n.t('editor_alert_header'),
+          message: i18n.t('editor_edit_success'),
+          action: () => resolve(entry),
+        });
+      }
 
-    // Если есть незагруженные аттачменты, ждём пока загрузка не завершится,
-    // чтобы отправить данные не выводя лишних сообщений.
-    let saveInterval = setInterval(saveWhenPossible, 500);
+      function onFail(xhr) {
+        AppDispatcher.handleServerAction({
+          type: EditorConstants.ENTRY_SAVE_ERROR,
+        });
+        NoticeService.errorResponse(xhr);
+        reject(xhr);
+      }
 
-    function saveWhenPossible() {
-      if (!EditorStore.isCreatingAttachments()) {
-        clearInterval(saveInterval);
-        let entryID = EditorStore.getEntryID(),
-            data = prepareEntryData(entryType);
+      // Если есть незагруженные аттачменты, ждём пока загрузка не завершится,
+      // чтобы отправить данные не выводя лишних сообщений.
+      let saveInterval = setInterval(saveWhenPossible, 500);
 
-        if(entryID) {
-          let url = ApiRoutes.update_entry_url(entryID, entryType);
-          Api.editor.updateEntry(url, data)
-            .then(onSuccessEdit)
-            .fail(onFail);
-        } else {
-          let url = ApiRoutes.create_entry_url(entryType);
-          Api.editor.createEntry(url, data)
-            .then(onSuccessCreate)
-            .fail(onFail);
+      function saveWhenPossible() {
+        if (!EditorStore.isCreatingAttachments()) {
+          clearInterval(saveInterval);
+
+          const entryID = EditorStore.getEntryID();
+          const data = prepareEntryData(entryType, pinEntry);
+
+          if(entryID) {
+            let url = ApiRoutes.update_entry_url(entryID, entryType);
+            Api.editor.updateEntry(url, data)
+              .then(onSuccessEdit)
+              .fail(onFail);
+          } else {
+            let url = ApiRoutes.create_entry_url(entryType);
+            Api.editor.createEntry(url, data)
+              .then(onSuccessCreate)
+              .fail(onFail);
+          }
         }
       }
-    }
-  }
+    });
+  },
 };
 
 export default EditorActionCreators;
