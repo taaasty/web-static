@@ -16,20 +16,20 @@ let ThumborService = {
   thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
   thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
-  newImageUrl(url, size) {
+  newImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
     let width = size.width || '',
         height = size.height || '';
 
-    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters()}/${url}` : url;
+    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters(filtersArr)}/${url}` : url;
   },
 
-  newRetinaImageUrl(url, size) {
+  newRetinaImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
     let width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters()}/${url} 2x` : url;
+    return this.thumborWithUrl ? `${this.thumborWithUrl}/unsafe/${width}x${height}${filters(filtersArr)}/${url} 2x` : url;
   },
 
   imageUrl({url, path, size}) {

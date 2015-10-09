@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
+import EntryBrickFlowHeader from './EntryBrickFlowHeader';
 
 const ENTRY_TYPES = [
-  'text', 'image', 'video', 'quote', 'link', 'song', 'code'
+  'text', 'image', 'video', 'quote', 'link', 'song', 'code',
 ];
 
 let EntryBrick = React.createClass({
@@ -17,7 +18,7 @@ let EntryBrick = React.createClass({
   getInitialState() {
     return {
       visible: true,
-      hasModeration: !!this.props.moderation
+      hasModeration: !!this.props.moderation,
     };
   },
 
@@ -28,10 +29,18 @@ let EntryBrick = React.createClass({
     );
   },
 
+  renderFlowHeader() {
+    const { entry: { author, tlog }, host_tlog_id } = this.props;
+    if (host_tlog_id == null && author && tlog && author.id !== tlog.id) {
+      return <EntryBrickFlowHeader flow={tlog} />;
+    }
+  },
+
   render() {
     if (this.state.visible) {
       return (
         <article className={this.getBrickClasses()}>
+          {this.renderFlowHeader()}
           <EntryBrickContent
             entry={this.props.entry}
             hasModeration={this.state.hasModeration}

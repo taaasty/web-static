@@ -4,8 +4,7 @@ import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoa
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
-
-const brickWidth = 302;
+import { brickWidth } from './constants';
 
 let EntryBrickImageType = React.createClass({
   propTypes: {

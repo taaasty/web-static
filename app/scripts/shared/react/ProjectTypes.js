@@ -76,7 +76,7 @@ export const heroUser = shape({
   },
 });
 
-const tlogData = shape({
+export const tlogData = shape({
   id: number.isRequired,
   tag: string.isRequired,
   url: string.isRequired,

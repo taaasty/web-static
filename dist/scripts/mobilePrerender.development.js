@@ -12610,6 +12610,7 @@ var tlogData = shape({
   userpic: userpicData.isRequired
 });
 
+exports.tlogData = tlogData;
 var tlogEntry = shape({
   author: tlogData.isRequired,
   can_delete: bool,
@@ -13443,20 +13444,20 @@ var ThumborService = {
   thumborWithUrl: gon.thumbor_http_loader ? gon.thumbor_http_loader.server_url : null,
   thumborWithPath: gon.thumbor ? gon.thumbor.server_url : null,
 
-  newImageUrl: function newImageUrl(url, size) {
+  newImageUrl: function newImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
     var width = size.width || '',
         height = size.height || '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters() + '/' + url : url;
+    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters(filtersArr) + '/' + url : url;
   },
 
-  newRetinaImageUrl: function newRetinaImageUrl(url, size) {
+  newRetinaImageUrl: function newRetinaImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
     var width = size.width ? size.width * 2 : '',
         height = size.height ? size.height * 2 : '';
 
-    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters() + '/' + url + ' 2x' : url;
+    return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters(filtersArr) + '/' + url + ' 2x' : url;
   },
 
   imageUrl: function imageUrl(_ref) {
