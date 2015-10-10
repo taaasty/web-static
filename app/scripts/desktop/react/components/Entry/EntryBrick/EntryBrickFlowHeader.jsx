@@ -1,5 +1,4 @@
 import React from 'react';
-import Tooltip from '../../common/Tooltip';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoadImage';
 import { brickWidth, flowAvatarSize } from './constants';
@@ -23,36 +22,30 @@ class EntryBrickFlowHeader {
 
     return(
       <div className="brick__flow-header-container" style={bgStyle}>
-        <div className="brick__flow-header">
-          <span className="brick__flow-header-avatar-container">
-            <a href={flow.url}>
+        <a href={flow.url}>
+          <div className="brick__flow-header">
+            <span className="brick__flow-header-avatar-container">
               <div className="brick__flow-header-avatar">
                 <LazyLoadImage image={avatarData} />
               </div>
-            </a>
-          </span>
-          <span className="brick__flow-header-data">
-            <div className="brick__flow-header-name">
-              <a href={flow.url}>
+            </span>
+            <span className="brick__flow-header-data">
+              <div className="brick__flow-header-name">
                 {`#${flow.name}`}
-              </a>
-            </div>
-            <div className="brick__flow-header-info">
-              <div className="brick__data-item">
-                <Tooltip title={i18n.t('flow_brick.followers_count_tooltip')}>
+              </div>
+              <div className="brick__flow-header-info">
+                <div className="brick__data-item">
                   <i className="icon icon--friends" />
                   <span>{flow.followers_count || 0}</span>
-                </Tooltip>
-              </div>
-              <div className="brick__data-item">
-                <Tooltip title={i18n.t('flow_brick.entries_count_tooltip')}>
+                </div>
+                <div className="brick__data-item">
                   <i className="icon icon--text-circle" />
                   <span>{flow.public_tlog_entries_count || 0}</span>
-                </Tooltip>
+                </div>
               </div>
-            </div>
-          </span>
-        </div>
+            </span>
+          </div>
+        </a>
       </div>  
     );
   }
