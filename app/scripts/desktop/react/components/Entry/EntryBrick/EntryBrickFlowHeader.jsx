@@ -34,7 +34,7 @@ class EntryBrickFlowHeader {
           <span className="brick__flow-header-data">
             <div className="brick__flow-header-name">
               <a href={flow.url}>
-                {flow.name}
+                {`#${flow.name}`}
               </a>
             </div>
             <div className="brick__flow-header-info">
