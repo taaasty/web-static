@@ -21,6 +21,7 @@ InfiniteScroll = React.createClass
 
   componentDidUpdate: ->
     @_prefill()
+    $(document).trigger('domChanged')
     @props.onAfterLoad?()
 
   componentWillUnmount: ->

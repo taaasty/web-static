@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import setQuery from 'set-query-string';
+import WaypointService from '../../services/WaypointService';
 import EntryBrick from '../Entry/EntryBrick/EntryBrick';
 import InfiniteScroll from '../common/infiniteScroll/index';
 import MasonryMixin from 'react-masonry-mixin';
@@ -19,6 +21,18 @@ let EntryBricks = React.createClass({
     loading: PropTypes.bool.isRequired,
     canLoad: PropTypes.bool.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired,
+  },
+
+  componentDidMount() {
+    this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
+  },
+
+  componentWillUnmount() {
+    this.waypointService.detach();
+  },
+
+  onWaypointTrigger(data) {
+    setQuery({ since_entry_id: data.id });
   },
 
   render() {
