@@ -1,3 +1,4 @@
+PinEntryPopup = require('../components/Editor/PinEntryPopup');
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/Searchbox/Searchbox'
 
@@ -101,6 +102,17 @@ PopupActions =
   showNotifications: ->
     ReactApp.padController.open(NotificationsContainer, {
       actSelector: '.toolbar__nav-item .icon--bell'
+    });
+
+  showPinEntryPopup: (props) ->
+    ReactApp.popupController.openWithBackground({
+      props,
+      Component: PinEntryPopup,
+      popupProps: {
+        title: 'eeee',
+        className: '',
+        clue: '',
+      }
     });
 
 module.exports = PopupActions

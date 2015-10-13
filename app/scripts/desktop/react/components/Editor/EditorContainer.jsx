@@ -1,52 +1,69 @@
+import React, { PropTypes } from 'react';
+import Routes from '../../../../shared/routes/routes';
 import EditorActionCreators from '../../actions/editor';
+//import PopupActions from '../../actions/popup';
 import EditorStore from '../../stores/EditorStore';
 import CurrentUserStore from '../../stores/current_user';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Editor from './Editor';
 
-let EditorContainer = React.createClass({
-  propTypes: {
-    tlog: React.PropTypes.object,
-    tlogType: React.PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
-    entry: React.PropTypes.object.isRequired,
-    entryType: React.PropTypes.string.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired,
-    userID: React.PropTypes.number.isRequired,
-    backUrl: React.PropTypes.string,
-    canChangeType: React.PropTypes.bool,
-    loading: React.PropTypes.bool.isRequired
-  },
+import * as orderConstants from '../../constants/OrderConstants';
 
-  render() {
-    let actions = {
-      onSaveEntry: this.saveEntry,
-      onChangePrivacy: this.changePrivacy,
-      onChangeType: this.changeType
-    };
-
-    return <Editor {...this.props} {...actions} />;
-  },
-
+class _EditorContainer {
+  pinEntry() {
+    EditorActionCreators.pinEntry()
+      .then((entry) => {
+        //PopupActions.showPinEntryPopup({ entry });
+        window.location.href = Routes.ordersNew(entry.id, orderConstants.PIN_ENTRY_ORDER);
+      });
+  }
   saveEntry() {
-    EditorActionCreators.saveEntry();
-  },
-
+    EditorActionCreators.saveEntry()
+      .then((entry) => {
+        window.location.href = entry.entry_url;
+      });
+  }
   changePrivacy(privacy) {
     EditorActionCreators.changeEntryPrivacy(privacy);
-  },
-
+  }
   changeType(type) {
     EditorActionCreators.changeEntryType(type);
   }
-});
+  render() {
+    return (
+      <Editor {...this.props}
+        onChangePrivacy={this.changePrivacy}
+        onChangeType={this.changeType}
+        onPinEntry={this.pinEntry}
+        onSaveEntry={this.saveEntry}
+      />
+    );
+  }
+}
 
-EditorContainer = connectToStores(EditorContainer, [EditorStore, CurrentUserStore], (props) => ({
-  tlog: EditorStore.getTlog(),
-  entry: EditorStore.getEntry(),
-  entryType: EditorStore.getEntryType(),
-  entryPrivacy: EditorStore.getEntryPrivacy(),
-  userID: CurrentUserStore.getUserID(),
-  loading: EditorStore.isLoading()
-}));
+_EditorContainer.propTypes = {
+  backUrl: PropTypes.string,
+  canChangeType: PropTypes.bool,
+  entry: PropTypes.object.isRequired,
+  entryPrivacy: PropTypes.string.isRequired,
+  entryType: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  tlog: PropTypes.object,
+  tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+  userID: PropTypes.number.isRequired,
+};
+
+const EditorContainer = connectToStores(
+  _EditorContainer,
+  [ EditorStore, CurrentUserStore ],
+  (props) => ({
+    entry: EditorStore.getEntry(),
+    entryType: EditorStore.getEntryType(),
+    entryPrivacy: EditorStore.getEntryPrivacy(),
+    loading: EditorStore.isLoading(),
+    tlog: EditorStore.getTlog(),
+    userID: CurrentUserStore.getUserID(),
+  })
+);
 
 export default EditorContainer;

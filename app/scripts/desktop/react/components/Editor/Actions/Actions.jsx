@@ -38,21 +38,29 @@ let EditorActions = createClass({
     }
   },
 
-  renderPromoPostButton() {
+  onPinEntryButtonClick() {
+    if (this.props.loading) {
+      return;
+    }
+
+    this.props.onPinEntry();
+  },
+
+  renderPinEntryButton() {
     const promoFlag = false; //FIXME: change to actual flag
+    const unpinDate = '11:23 16 сентября';
     const buttonClasses = classnames({
       'button': true,
       'post-settings-button': true,
       'post-settings-promotion-button': true,
       '__promoted': promoFlag,
     });
-    //FIXME: create actual i18n strings
     const buttonText = promoFlag
-      ? 'Будет закреплен до 11:23 16 сентября'
-      : 'Закрепить пост в прямом эфире';
+      ? i18n.t('buttons.editor.pin_entry_promoted', { date: unpinDate })
+      : i18n.t('buttons.editor.pin_entry');
 
     return (
-      <div className="post-action post-action--button">
+      <div className="post-action post-action--button" onClick={this.onPinEntryButtonClick.bind(this)}>
         <button className={buttonClasses}>
           {buttonText}
         </button>
@@ -68,7 +76,7 @@ let EditorActions = createClass({
     return (
       <div className={actionsClasses}>
         {this.renderSpinner()}
-        {false && this.renderPromoPostButton()}
+        {this.renderPinEntryButton()}
         {this.renderVoteButton()}
         {this.renderPrivacyButton()}
         <div className="post-action post-action--button">
@@ -163,7 +171,7 @@ let EditorActions = createClass({
     if (this.props.loading) { return; }
     let newEntryPrivacy = this.isEntryPrivate() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_PRIVATE;
     this.props.onChangePrivacy(newEntryPrivacy);
-  }
+  },
 });
 
 // <div className="post-action post-action--button">

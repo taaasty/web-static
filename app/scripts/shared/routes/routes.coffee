@@ -41,6 +41,10 @@ Routes =
   daylogPagination: (userSlug, page) -> '/~' + userSlug + '/' + page
 
   orders: -> '/orders'
+  ordersNew: (_entryID, _type) ->
+    entryID = window.encodeURIComponent(_entryID)
+    type = window.encodeURIComponent(_type)
+    "/orders/new?entry_id=#{entryID}&type=#{type}"
   flows: -> '/flows'
   editEntry: (userTag, entryID) -> '/' + userTag + '/edit/' + entryID
 

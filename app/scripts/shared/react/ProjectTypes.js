@@ -62,7 +62,7 @@ export const heroUser = shape({
   title: string,
   tlog_url: string.isRequired,
   total_entries_count: number.isRequired,
-  updated_ad: string.isRequired,
+  updated_at: string.isRequired,
   userpic: {
     default_colors: shape({
       background: string,
