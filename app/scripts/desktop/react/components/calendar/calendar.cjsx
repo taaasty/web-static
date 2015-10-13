@@ -24,14 +24,18 @@ window.Calendar = React.createClass
 
   componentDidMount: ->
     @getCalendarFromServer @props.tlogId
-    @attachScrollSpy()
     @setVisibleMarkers()
-    $(document).bind 'domChanged', @reattachScrollSpy
+
+    $post = $(TARGET_POST_CLASS)
+
+    # Следим за скроллингом, только если находимся на странице списка постов
+    if $post.closest(TARGET_POST_PARENT_CLASS)
+      $(document).on('waypoint.trigger', (ev, { id, time }) =>
+        this.updateSelectedEntry(id, time);
+      )
 
   componentWillUnmount: ->
     clearTimeout @timeout if @timeout
-
-    @dettachScrollSpy()
 
   render: ->
     calendarClasses = classnames('calendar', {
@@ -70,41 +74,6 @@ window.Calendar = React.createClass
         @safeUpdateState calendar: calendar
       error: (data) =>
         NoticeService.errorResponse data
-
-  attachScrollSpy: ->
-    that = @
-    $post = $(TARGET_POST_CLASS)
-
-    # Следим за скроллингом, только если находимся на странице списка постов
-    if $post.closest(TARGET_POST_PARENT_CLASS)
-      $post.waypoint (direction) ->
-        scrollTop = $(document).scrollTop()
-        $el = $(@)
-        $elTop = $el.offset().top
-        $elTopWithHeight = $elTop + $el.outerHeight(true)
-
-        # console.info "Пост с id = #{$el.data('id')}, движение #{direction}"
-        # console.log $elTopWithHeight, scrollTop, $elTop, "движение #{direction}"
-
-        if $elTopWithHeight >= scrollTop >= $elTop
-          # Активируется пост
-          that.updateSelectedEntry $el.data('id'), $el.data('time')
-
-        if direction is 'up' && $el.waypoint('prev').length > 0
-          $prevEl = $( $el.waypoint('prev') )
-          $prevElTop = $prevEl.offset().top
-          $prevElTopWithHeight = $prevElTop + $prevEl.outerHeight(true)
-
-          # console.log $prevElTopWithHeight, scrollTop, $prevElTop, "движение #{direction}"
-          if $prevElTopWithHeight >= scrollTop >= $prevElTop
-            # Активируется предыдущий пост
-            that.updateSelectedEntry $prevEl.data('id'), $prevEl.data('time')
-
-  reattachScrollSpy: -> $.waypoints 'refresh'
-
-  dettachScrollSpy: ->
-    $post = $(TARGET_POST_CLASS)
-    $post.waypoint 'destroy'
 
   updateSelectedEntry: (id, time) ->
     date = moment(time)

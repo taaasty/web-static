@@ -37,12 +37,14 @@ let EntryBrick = React.createClass({
   },
 
   render() {
+    const { entry } = this.props;
+
     if (this.state.visible) {
       return (
-        <article className={this.getBrickClasses()}>
+          <article className={this.getBrickClasses()} data-id={entry.id}>
           {this.renderFlowHeader()}
           <EntryBrickContent
-            entry={this.props.entry}
+            entry={entry}
             hasModeration={this.state.hasModeration}
             host_tlog_id={this.props.host_tlog_id}
             onEntryAccept={this.acceptEntry}

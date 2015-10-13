@@ -35,7 +35,9 @@
     "react-portal": "^0.7.0",
     "react-tap-event-plugin": "^0.1.6",
     "react-textarea-autosize": "^2.2.1",
-    "tether": "^1.1.0"
+    "set-query-string": "^2.1.0",
+    "tether": "^1.1.0",
+    "waypoints": "^4.0.0"
   },
   "devDependencies": {
     "URIjs": "^1.15.1",

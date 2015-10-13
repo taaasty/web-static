@@ -6,7 +6,6 @@
     "blueimp-file-upload": "~9.9.3",
     "bootstrap": "3.3.4",
     "eventEmitter": "~4.2.11",
-    "jquery-waypoints": "~2.0.5",
     "jquery.shapeshift": "~2.0.0",
     "jquery.scrollto": "flesler/jquery.scrollTo",
     "jquery.mousewheel": "jquery/jquery-mousewheel",
