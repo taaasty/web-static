@@ -382,6 +382,7 @@
     "entries_count_tooltip": "Записи"
   },
   "entry": {
+    "pinned_header": "Этот пост закреплен автором",
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи",
     "meta": {

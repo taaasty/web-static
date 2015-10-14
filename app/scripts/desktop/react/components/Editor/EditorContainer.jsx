@@ -50,7 +50,7 @@ _EditorContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   tlog: PropTypes.object,
   tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
-  userID: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const EditorContainer = connectToStores(
@@ -62,7 +62,7 @@ const EditorContainer = connectToStores(
     entryPrivacy: EditorStore.getEntryPrivacy(),
     loading: EditorStore.isLoading(),
     tlog: EditorStore.getTlog(),
-    userID: CurrentUserStore.getUserID(),
+    user: CurrentUserStore.getUser(),
   })
 );
 

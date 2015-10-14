@@ -4,9 +4,7 @@ import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
 import ErrorService from '../../../../../shared/react/services/Error';
 
-const ENTRY_TYPES = [
-  'text', 'image', 'video', 'quote', 'link', 'song', 'code'
-];
+import { ENTRY_TYPES } from '../../../constants/EntryConstants';
 
 export default class EntryTlog extends Component {
   static propTypes = {

@@ -49,7 +49,9 @@ const components = {
   Auth: {},
   AvatarToolbarContainer: {},
   EditorNew: {},
-  EditorEdit: {},
+  EditorEdit: {
+    entry: {},
+  },
   EntryTlog: {
     commentator: {
       userpic: {
