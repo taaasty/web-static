@@ -3,10 +3,9 @@ import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryBrickContent from './EntryBrickContent';
 import EntryBrickFlowHeader from './EntryBrickFlowHeader';
+import EntryBrickPinHeader from './EntryBrickPinHeader';
 
-const ENTRY_TYPES = [
-  'text', 'image', 'video', 'quote', 'link', 'song', 'code',
-];
+import { ENTRY_TYPES, ENTRY_PINNED_STATE } from '../../../constants/EntryConstants';
 
 let EntryBrick = React.createClass({
   propTypes: {
@@ -36,13 +35,20 @@ let EntryBrick = React.createClass({
     }
   },
 
+  renderPinHeader() {
+    if (this.props.entry.fixed_state === ENTRY_PINNED_STATE) {
+      return <EntryBrickPinHeader />;
+    }
+  },
+
   render() {
     const { entry } = this.props;
 
     if (this.state.visible) {
       return (
-          <article className={this.getBrickClasses()} data-id={entry.id}>
+        <article className={this.getBrickClasses()} data-id={entry.id}>
           {this.renderFlowHeader()}
+          {this.renderPinHeader()}
           <EntryBrickContent
             entry={entry}
             hasModeration={this.state.hasModeration}

@@ -379,6 +379,7 @@
     "entries_count_tooltip": "Entries"
   },
   "entry": {
+    "pinned_header": "This post is pinned by the author",
     "has_no_images": "There are no images for entry",
     "unknown_type": "Unknown type of entry",
     "meta": {

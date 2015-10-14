@@ -1,9 +1,12 @@
 import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
+import moment from 'moment';
 import EditorVoteButton from '../buttons/Vote';
 import EditorPrivacyButton from '../buttons/Privacy';
 import EditorPreviewButton from '../buttons/Preview';
 import EditorSaveButton from '../buttons/Save';
+
+import { ENTRY_PINNED_STATE } from '../../../constants/EntryConstants';
 
 let ENTRY_PRIVACY_PRIVATE = 'private',
     ENTRY_PRIVACY_PUBLIC = 'public',
@@ -14,13 +17,16 @@ let ENTRY_PRIVACY_PRIVATE = 'private',
 
 let EditorActions = createClass({
   propTypes: {
+    canPinEntry: PropTypes.bool,
+    entryPrivacy: PropTypes.string.isRequired,
+    isPinned: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onChangePrivacy: PropTypes.func.isRequired,
+    onSaveEntry: PropTypes.func.isRequired,
+    pinnedTill: PropTypes.string,
     tlog: PropTypes.object,
     tlogType: PropTypes.string.isRequired,
-    entryPrivacy: PropTypes.string.isRequired,
     userID: PropTypes.number.isRequired,
-    loading: PropTypes.bool.isRequired,
-    onSaveEntry: PropTypes.func.isRequired,
-    onChangePrivacy: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -39,7 +45,9 @@ let EditorActions = createClass({
   },
 
   onPinEntryButtonClick() {
-    if (this.props.loading) {
+    const { isPinned, loading } = this.props;
+
+    if (loading || isPinned) {
       return;
     }
 
@@ -47,16 +55,21 @@ let EditorActions = createClass({
   },
 
   renderPinEntryButton() {
-    const promoFlag = false; //FIXME: change to actual flag
-    const unpinDate = '11:23 16 сентября';
+    const { canPinEntry, isPinned, pinnedTill } = this.props;
+
+    if (!(isPinned && pinnedTill) && !canPinEntry) {
+      return null;
+    }
+
+    const pinnedTillStr = moment(pinnedTill).format('H:mm D MMMM');
     const buttonClasses = classnames({
       'button': true,
       'post-settings-button': true,
       'post-settings-promotion-button': true,
-      '__promoted': promoFlag,
+      '__promoted': isPinned,
     });
-    const buttonText = promoFlag
-      ? i18n.t('buttons.editor.pin_entry_promoted', { date: unpinDate })
+    const buttonText = isPinned
+      ? i18n.t('buttons.editor.pin_entry_promoted', { date: pinnedTillStr })
       : i18n.t('buttons.editor.pin_entry');
 
     return (
