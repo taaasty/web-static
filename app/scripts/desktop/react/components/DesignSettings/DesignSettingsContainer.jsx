@@ -1,4 +1,3 @@
-import assign from 'react/lib/Object.assign';
 import DesignActionCreators from '../../actions/design';
 import PopupActionCreators from '../../actions/popup';
 import CurrentUserStore from '../../stores/current_user';
@@ -9,9 +8,10 @@ import DesignSettings from './DesignSettings';
 let DesignSettingsContainer = React.createClass({
   propTypes: {
     design: React.PropTypes.object.isRequired,
-    options: React.PropTypes.object.isRequired,
     hasDesignBundle: React.PropTypes.bool.isRequired,
-    hasPaidValues: React.PropTypes.bool.isRequired
+    hasPaidValues: React.PropTypes.bool.isRequired,
+    isSaving: React.PropTypes.bool.isRequired,
+    options: React.PropTypes.object.isRequired,
   },
 
   componentWillUnmount() {
@@ -21,9 +21,10 @@ let DesignSettingsContainer = React.createClass({
   render() {
     return (
       <DesignSettings {...this.props}
-          onOptionChange={this.changeOption}
-          onBgImageChange={this.changeBgImage}
-          onSave={this.save} />
+        onBgImageChange={this.changeBgImage}
+        onOptionChange={this.changeOption}
+        onSave={this.save}
+      />
     );
   },
 
@@ -41,7 +42,7 @@ let DesignSettingsContainer = React.createClass({
     } else {
       DesignActionCreators.saveCurrent();
     }
-  }
+  },
 });
 
 DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore, CurrentUserStore], (props) => ({
@@ -49,7 +50,8 @@ DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore,
   options: DesignStore.getOptions(),
   hasDesignBundle: CurrentUserStore.hasDesignBundle(),
   hasUnsavedFields: DesignStore.hasUnsavedFields(),
-  hasPaidValues: DesignStore.hasPaidValues()
+  hasPaidValues: DesignStore.hasPaidValues(),
+  isSaving: DesignStore.isSaving(),
 }));
 
 export default DesignSettingsContainer;
