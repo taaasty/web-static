@@ -435,7 +435,8 @@
     },
     "editor": {
       "pin_entry": "Закрепить пост в прямом эфире",
-      "pin_entry_promoted": "Будет закреплен до __date__"
+      "pin_entry_promoted": "Оплачен до __date__",
+      "pin_entry_awaiting_payment": "Пост ожидает оплаты"
     }
   },
   "messages": {

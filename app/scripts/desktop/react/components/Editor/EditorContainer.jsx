@@ -10,11 +10,11 @@ import Editor from './Editor';
 import * as orderConstants from '../../constants/OrderConstants';
 
 class _EditorContainer {
-  pinEntry() {
+  pinEntry(pinOrderUrl) {
     EditorActionCreators.pinEntry()
       .then((entry) => {
         //PopupActions.showPinEntryPopup({ entry });
-        window.location.href = Routes.ordersNew(entry.id, orderConstants.PIN_ENTRY_ORDER);
+        window.location.href = pinOrderUrl || Routes.ordersNew(entry.id, orderConstants.PIN_ENTRY_ORDER);
       });
   }
   saveEntry() {
