@@ -10,12 +10,18 @@ EditorPrivacyButton = React.createClass
     onClick: PropTypes.func.isRequired
 
   componentDidMount: ->
-    $button = $( @getDOMNode() )
-    $button.tooltip placement: 'bottom'
+    this.$button = $( @getDOMNode() )
+    this.setTooltip()
+
+  componentDidUpdate: ->
+    this.$button?.tooltip('destroy')
+    this.setTooltip()
 
   componentWillUnmount: ->
-    $button = $( @getDOMNode() )
-    $button.tooltip 'destroy'
+    this.$button?.tooltip('destroy');
+
+  setTooltip: ->
+    this.$button?.tooltip({ placement: 'bottom', title: this.getTitle() });
 
   render: ->
     iconClasses = classnames('icon', {
@@ -35,8 +41,7 @@ EditorPrivacyButton = React.createClass
     title
 
   handleClick: ->
-    $button = $( @getDOMNode() )
-    $button.tooltip 'hide'
+    @$button?.tooltip 'hide'
     @props.onClick()
 
 module.exports = EditorPrivacyButton

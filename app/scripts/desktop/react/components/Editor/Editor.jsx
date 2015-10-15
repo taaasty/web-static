@@ -20,19 +20,20 @@ class Editor {
     }
   }
   render() {
-    const { backUrl, entry, entryPrivacy, entryType, isPinned, loading, onChangePrivacy,
-            onPinEntry, onSaveEntry, pinnedTill, tlog, tlogType, user: { id, features } } = this.props;
+    const { backUrl, entry, entryPrivacy, entryType, loading, onChangePrivacy,
+            onPinEntry, onSaveEntry, tlog, tlogType, user: { id, features } } = this.props;
     return (
       <EditorLayout backUrl={backUrl} loading={loading}>
         <EditorActions
           canPinEntry={features.fixup}
           entryPrivacy={entryPrivacy}
-          isPinned={isPinned}
           loading={loading}
           onChangePrivacy={onChangePrivacy}
           onPinEntry={onPinEntry}
           onSaveEntry={onSaveEntry}
-          pinnedTill={pinnedTill}
+          pinOrderUrl={entry.pinOrderUrl}
+          pinState={entry.pinState}
+          pinnedTill={entry.pinnedTill}
           tlog={tlog}
           tlogType={tlogType}
           userID={id}
@@ -55,13 +56,11 @@ Editor.propTypes = {
   entry: PropTypes.object.isRequired,
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
-  isPinned: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onChangePrivacy: PropTypes.func.isRequired,
   onChangeType: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,
-  pinnedTill: PropTypes.string,
   tlog: PropTypes.object,
   tlogType: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
