@@ -1,3 +1,4 @@
+/*global $ */
 import Api from '../api/api';
 import Submitter from '../api/submitter';
 import CurrentUserStore from '../stores/current_user';
@@ -6,6 +7,8 @@ import AppDispatcher from '../dispatchers/dispatcher';
 import DesignPreviewService from '../services/designPreview';
 import DesignConstants from '../constants/design';
 import BrowserHelpers from '../../../shared/helpers/browser';
+
+let uploadBgPromise = $.Deferred().resolve();
 
 let DesignActionCreators = {
   initCurrent(design) {
@@ -30,7 +33,7 @@ let DesignActionCreators = {
     formData.append('image', file);
 
     //TODO: Делать что-то на случай если картинка не создастся, а base64 мы уже показали
-    Api.design.createBgImage(formData)
+    uploadBgPromise = Api.design.createBgImage(formData)
       .then((image) => {
         this.changeOption('backgroundId', image.id);
       });
@@ -40,7 +43,7 @@ let DesignActionCreators = {
 
   closeDesignSettings() {
     AppDispatcher.handleViewAction({
-      type: DesignConstants.CLOSE_DESIGN_SETTINGS
+      type: DesignConstants.CLOSE_DESIGN_SETTINGS,
     });
 
     let design = DesignStore.getCurrent();
@@ -48,27 +51,36 @@ let DesignActionCreators = {
   },
 
   saveCurrent() {
-    let userID = CurrentUserStore.getUser().id,
-        design = DesignStore.getCurrent(),
-        unsavedFields = DesignStore.getUnsavedFields();
+    const userID = CurrentUserStore.getUser().id;
+    const unsavedFields = DesignStore.getUnsavedFields();
 
     if (Object.keys(unsavedFields).length === 0) {
       NoticeService.notifyError(i18n.t('design_settings_no_unsaved_fields_error'));
     } else {
       // Удаляем ключ содержащий фон картинки, если такой имеется. если мы загрузили
       // картинку, то у нас будет backgroundId его и будем передавать.
-      delete design.backgroundImageUrl;
-      Api.design.saveCurrent(design, userID)
-        .then((design) => {
-          AppDispatcher.handleServerAction({
-            type: DesignConstants.SAVE_CURRENT_SUCCESS,
-            design
+      AppDispatcher.handleViewAction({
+        type: DesignConstants.SAVE_CURRENT_START,
+      });
+
+      uploadBgPromise.then(() => { //wait for bg uploads if any
+        const design = DesignStore.getCurrent();
+        delete design.backgroundImageUrl;
+        Api.design.saveCurrent(design, userID)
+          .then((design) => {
+            AppDispatcher.handleServerAction({
+              type: DesignConstants.SAVE_CURRENT_SUCCESS,
+              design,
+            });
+            NoticeService.notifySuccess(i18n.t('design_settings_save_success'));
+          })
+          .fail(() => {
+            AppDispatcher.handleServerAction({
+              type: DesignConstants.SAVE_CURRENT_FAIL,
+            });
+            NoticeService.notifyError(i18n.t('design_settings_save_error'));
           });
-          NoticeService.notifySuccess(i18n.t('design_settings_save_success'));
-        })
-        .fail(() => {
-          NoticeService.notifyError(i18n.t('design_settings_save_error'));
-        });
+      });
     }
   },
 
@@ -80,7 +92,7 @@ let DesignActionCreators = {
     // картинку, то у нас будет backgroundId его и будем передавать.
     delete design.backgroundImageUrl;
     Submitter.postRequest(url, { design });
-  }
+  },
 };
 
 export default DesignActionCreators;

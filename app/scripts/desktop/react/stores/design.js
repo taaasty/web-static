@@ -9,6 +9,7 @@ import DesignOptionsService from '../services/designOptions';
 
 let _designSet = {};
 let _unsavedFields = {};
+let _saving = false;
 const _designOptions = DesignOptions,
       _designPaymentOptions = DesignPaymentOptions;
 
@@ -60,6 +61,10 @@ let DesignStore = assign(new BaseStore(), {
     return _unsavedFields;
   },
 
+  isSaving() {
+    return _saving;
+  },
+
   hasPaidValues() {
     let design;
 
@@ -74,35 +79,46 @@ let DesignStore = assign(new BaseStore(), {
 
   hasUnsavedFields() {
     return Object.keys(_unsavedFields).length !== 0;
-  }
+  },
 });
 
 DesignStore.dispatchToken = AppDispatcher.register(function(payload) {
   let { action } = payload;
 
   switch(action.type) {
-    case DesignConstants.INIT_CURRENT:
-      initDesignSet(action.design);
-      DesignStore.emitChange();
-      break;
+  case DesignConstants.INIT_CURRENT:
+    initDesignSet(action.design);
+    DesignStore.emitChange();
+    break;
 
-    case DesignConstants.CHANGE_OPTION:
-      let { name, value } = action;
+  case DesignConstants.CHANGE_OPTION:
+    let { name, value } = action;
 
-      changeOption(name, value);
-      DesignStore.emitChange();
-      break;
+    changeOption(name, value);
+    DesignStore.emitChange();
+    break;
 
-    case DesignConstants.CLOSE_DESIGN_SETTINGS:
-      _unsavedFields = {};
-      DesignStore.emitChange();
-      break;
+  case DesignConstants.CLOSE_DESIGN_SETTINGS:
+    _unsavedFields = {};
+    DesignStore.emitChange();
+    break;
 
-    case DesignConstants.SAVE_CURRENT_SUCCESS:
-      _unsavedFields = {};
-      updateDesignSet(action.design);
-      DesignStore.emitChange();
-      break;
+  case DesignConstants.SAVE_CURRENT_SUCCESS:
+    _unsavedFields = {};
+    _saving = false;
+    updateDesignSet(action.design);
+    DesignStore.emitChange();
+    break;
+
+  case DesignConstants.SAVE_CURRENT_FAIL:
+    _saving = false;
+    DesignStore.emitChange();
+    break;
+
+  case DesignConstants.SAVE_CURRENT_START:
+    _saving = true;
+    DesignStore.emitChange();
+    break;
   }
 
   return true; //It is necessary for correct waitFor work
