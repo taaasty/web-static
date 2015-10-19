@@ -1,10 +1,12 @@
 /*global i18n */
 import React, { findDOMNode, Component, PropTypes } from 'react';
 import classNames from 'classnames';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const propTypes = {
   count: PropTypes.number.isRequired,
   href: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 class UnreadLoadButton extends Component {
@@ -31,8 +33,16 @@ class UnreadLoadButton extends Component {
       offScreen: (this.offsetTop && scrollTop > this.offsetTop),
     });
   }
+  onClick(ev) {
+    const { onClick } = this.props;
+
+    if (onClick) {
+      ev.preventDefault();
+      return onClick();
+    }
+  }
   render() {
-    const { count, href } = this.props;
+    const { count, href, isLoading } = this.props;
     const containerClasses = classNames({
       'unread-load-button-container': true,
       'unread-load-button-container--fixed': this.state.offScreen,
@@ -42,10 +52,16 @@ class UnreadLoadButton extends Component {
     return (
       <div className={containerClasses} ref="container">
         <div className="unread-load-button">
-          {i18n.t('buttons.unread_load.unread_entries_count', { count })}
-          <a href={href}>
-            {i18n.t('buttons.unread_load.show_unread')}
-          </a>
+          {
+            isLoading
+              ? <Spinner size={14} />
+              : <span>
+                  {i18n.t('buttons.unread_load.unread_entries_count', { count })}
+                  <a href={href} onClick={this.onClick.bind(this)}>
+                    {i18n.t('buttons.unread_load.show_unread')}
+                  </a>
+                </span>
+          }
         </div>
       </div>
     );

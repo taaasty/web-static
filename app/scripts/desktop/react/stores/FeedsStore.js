@@ -16,6 +16,10 @@ const actionMap = {
     unreadFeeds.live.push(payload);
   },
 
+  [FeedConstants.FEED_LIVE_RESET](payload) {
+    unreadFeeds.live = [];
+  },
+
   [FeedConstants.FEED_LIVE_INITIAL_COUNT](payload) {
     unreadFeeds.liveInitialCount = payload;
   },
@@ -24,12 +28,20 @@ const actionMap = {
     unreadFeeds.best.push(payload);
   },
 
+  [FeedConstants.FEED_BEST_RESET](payload) {
+    unreadFeeds.best = [];
+  },
+
   [FeedConstants.FEED_BEST_INITIAL_COUNT](payload) {
     unreadFeeds.bestInitialCount = payload;
   },
 
   [FeedConstants.FEED_FRIENDS_NEW_ENTRY](payload) {
     unreadFeeds.friends.push(payload);
+  },
+
+  [FeedConstants.FEED_FRIENDS_RESET](payload) {
+    unreadFeeds.friends = [];
   },
 
   [FeedConstants.FEED_FRIENDS_INITIAL_COUNT](payload) {

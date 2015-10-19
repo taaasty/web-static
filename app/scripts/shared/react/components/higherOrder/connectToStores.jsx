@@ -3,7 +3,7 @@ function connectToStores(Component, stores, getStateFromStores) {
     getInitialState() {
       return getStateFromStores(this.props);
     },
-    componentDidMount() {
+    componentWillMount() {
       stores.forEach(store =>
         store.addChangeListener(this.handleStoresChanged)
       );
