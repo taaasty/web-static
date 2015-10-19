@@ -36,7 +36,7 @@ function WaypointService (selector, { cb, context=window }={}) {
 
   function detach() {
     const waypointContext = window.Waypoint.Context.findByElement(context);
-    waypointContext.destroy();
+    (waypointContext && waypointContext.destroy());
     $(document).off('domChanged', refresh);
   }
 

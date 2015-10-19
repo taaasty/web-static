@@ -1,7 +1,6 @@
 /*global gon */
 import ApiRoutes from '../../../shared/routes/api';
-import AppDispatcher from '../dispatchers/dispatcher';
-import FeedConstants from '../constants/FeedConstants';
+import * as FeedsUpdateActions from '../actions/FeedsUpdateActions';
 import Pusher from 'pusher';
 
 const pusherEvent = {
@@ -36,34 +35,13 @@ function FeedsUpdateService(user={}) {
   const channelLive = pusher.subscribe('live');
   const channelBest = pusher.subscribe('best');
 
-  channelLive.bind(pusherEvent.NEW_ENTRY, onNewLiveEntry);
-  channelBest.bind(pusherEvent.NEW_ENTRY, onNewBestEntry);
+  channelLive.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addLiveEntry);
+  channelBest.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addBestEntry);
 
   if (userToken && user.id) {
     const channelFriends = pusher.subscribe(`private-${user.id}-friends`);
 
-    channelFriends.bind(pusherEvent.NEW_ENTRY, onNewFriendsEntry);
-  }
-
-  function onNewLiveEntry(payload) {
-    AppDispatcher.handleServerAction({
-      payload,
-      type: FeedConstants.FEED_LIVE_NEW_ENTRY,
-    });
-  }
-
-  function onNewBestEntry(payload) {
-    AppDispatcher.handleServerAction({
-      payload,
-      type: FeedConstants.FEED_BEST_NEW_ENTRY,
-    });
-  }
-
-  function onNewFriendsEntry(payload) {
-    AppDispatcher.handleServerAction({
-      payload,
-      type: FeedConstants.FEED_FRIENDS_NEW_ENTRY,
-    });
+    channelFriends.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addFriendsEntry);
   }
 }
 

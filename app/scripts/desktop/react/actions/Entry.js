@@ -1,3 +1,4 @@
+/*global i18n */
 import Api from '../api/api';
 import ErrorService from '../../../shared/react/services/Error';
 import NoticeService from '../services/Notice';
@@ -9,7 +10,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Голосование за запись', {
           method: 'EntryActionCreators.vote(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -20,7 +21,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Добавление записи в избранное', {
           method: 'EntryActionCreators.addToFavorites(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -31,7 +32,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Удаление записи из избранного', {
           method: 'EntryActionCreators.removeFromFavorites(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -42,7 +43,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Подписка на комментарии к посту', {
           method: 'EntryActionCreators.addToWatching(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -53,7 +54,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Отписка от комментариев к посту', {
           method: 'EntryActionCreators.removeFromWatching(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -67,7 +68,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Жалоба на пост', {
           method: 'EntryActionCreators.report(entryID)',
           methodArguments: {entryID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -81,7 +82,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Удаление поста', {
           method: 'EntryActionCreators.delete(entryID, tlogID)',
           methodArguments: {entryID, tlogID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -95,7 +96,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Репост поста', {
           method: 'EntryActionCreators.repost(entryID, tlogID)',
           methodArguments: {entryID, tlogID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -108,7 +109,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Принятие записи', {
           method: 'EntryActionCreators.accept(acceptUrl)',
           methodArguments: {acceptUrl},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -121,7 +122,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Отклонение записи', {
           method: 'EntryActionCreators.decline(declineUrl)',
           methodArguments: {declineUrl},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -131,7 +132,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Загрузка записей', {
           method: 'EntryActionCreators.load(url, data)',
           methodArguments: {url, data},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -141,7 +142,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Загрузка записей в виде HTML', {
           method: 'EntryActionCreators.loadHtml(url)',
           methodArguments: {url},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -151,7 +152,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Загрузка комментариев', {
           method: 'EntryActionCreators.loadComments(entryID, toCommentID, limit)',
           methodArguments: {entryID, toCommentID, limit},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -162,7 +163,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Создание комментария к записи', {
           method: 'EntryActionCreators.createComment(entryID, text)',
           methodArguments: {entryID, text},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -176,7 +177,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Жалоба на комментарий', {
           method: 'EntryActionCreators.reportComment(commentID)',
           methodArguments: {commentID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -187,7 +188,7 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Редактирования комментария к записи', {
           method: 'EntryActionCreators.editComment(commentID, text)',
           methodArguments: {commentID, text},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -201,10 +202,10 @@ let EntryActionCreators = {
         ErrorService.notifyErrorResponse('Удаление комментария', {
           method: 'EntryActionCreators.deleteComment(commentID)',
           methodArguments: {commentID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
-  }
+  },
 };
 
 export default EntryActionCreators;

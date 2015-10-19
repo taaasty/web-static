@@ -1,5 +1,4 @@
 import React, { createClass, PropTypes } from 'react';
-import assign from 'react/lib/Object.assign';
 import CurrentUserStore from '../../stores/current_user';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import FeedsStatusStore from '../../stores/FeedsStore';
@@ -7,9 +6,6 @@ import connectToStores from '../../../../shared/react/components/higherOrder/con
 import ToolbarActionCreators from '../../actions/Toolbar';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
-
-import AppDispatcher from '../../dispatchers/dispatcher';
-import FeedConstants from '../../constants/FeedConstants';
 
 const STORAGE_KEY = 'states:mainToolbarOpened';
 const SEARCH_TITLE_I18N_KEYS = [
