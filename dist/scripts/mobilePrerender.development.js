@@ -13552,6 +13552,9 @@ ApiRoutes = {
   users_predict: function() {
     return gon.api_host + '/v1/users/predict';
   },
+  fb_crosspost_url: function() {
+    return gon.api_host + "/v1/facebook/crossposting";
+  },
   create_entry_url: function(type) {
     return gon.api_host + '/v1/entries/' + type;
   },

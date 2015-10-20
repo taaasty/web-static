@@ -1,7 +1,7 @@
 BaseStore = require './_base'
+{ CROSSPOST_NONE } = require('../constants/CrosspostConstants');
 
 currentUser = null
-
 CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
@@ -36,6 +36,19 @@ CurrentUserStore = _.extend new BaseStore(),
   updateUser: (data) ->
     _.extend currentUser, data
 
+  updateAuthenticationCrosspost: (social, type) ->
+    authentications = currentUser?.authentications || []
+    a.crossposting_cd = type for a in authentications when a.provider == social
+
+  getOmniauthEnableUrl: (social) ->
+    authentications = currentUser?.authentications || []
+    authentications.reduce(((acc, el) ->
+      if el.provider == social
+        el.omniauth_enable_url
+      else
+        acc
+    ), null)
+
   _setupUser: (user) ->
     currentUser = user
     console.debug? 'Залогинен пользователь:', user.slug
@@ -58,3 +71,7 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
     when 'confirmationEmailCanceled'
       CurrentUserStore.updateUser(confirmation_email: null)
       CurrentUserStore.emitChange()
+    when 'stopFbCrosspost'
+      CurrentUserStore.updateAuthenticationCrosspost('facebook', CROSSPOST_NONE);
+      CurrentUserStore.emitChange();
+

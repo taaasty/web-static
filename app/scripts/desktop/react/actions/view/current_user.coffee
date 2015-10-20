@@ -63,6 +63,13 @@ CurrentUserViewActions =
     data = locale: language
     @update {data}
 
+  stopFbCrosspost: (options = {}) ->
+    oldSuccess = options.success
+    options.success = ->
+      CurrentUserServerActions.stopFbCrosspost()
+      oldSuccess?()
+    CurrentUserResource.stopFbCrosspost(options);
+
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     CurrentUserResource.cancelEmailConfirmation
       beforeSend: beforeSend

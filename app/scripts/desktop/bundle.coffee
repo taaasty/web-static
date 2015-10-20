@@ -141,7 +141,7 @@ require './react/components/Auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 
-require './react/components/settings/settings'
+global.Settings = require './react/components/Settings'
 
 global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'

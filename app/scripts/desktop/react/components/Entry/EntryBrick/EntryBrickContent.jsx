@@ -54,7 +54,7 @@ let EntryBrickContent = React.createClass({
 
         return <EntryBrickUnknownType {...this.props} />;
     }
-  }
+  },
 });
 
 export default EntryBrickContent;
