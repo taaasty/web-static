@@ -1,15 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import FeedsStatusStore from '../../stores/FeedsStore';
+import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButton from '../common/UnreadLoadButton';
+import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
 
 class FriendsLoadButtonContainer extends Component {
+  onLoad(promise) {
+    (promise && promise.then(FeedsUpdateActions.resetFriendsEntries));
+  }
   render() {
     return (
-      <UnreadLoadButton
+      <UnreadLoadButtonContainer
         count={this.props.unreadFriendsCount}
         href={Routes.friends_feed_path()}
+        onLoad={this.onLoad}
       />
     );
   }
@@ -21,7 +26,7 @@ FriendsLoadButtonContainer.propTypes = {
 
 export default connectToStores(
   FriendsLoadButtonContainer,
-  [FeedsStatusStore],
+  [ FeedsStatusStore ],
   () => ({
     unreadFriendsCount: FeedsStatusStore.getUnreadFriendsCount(),
   })
