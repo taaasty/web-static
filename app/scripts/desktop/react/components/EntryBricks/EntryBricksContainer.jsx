@@ -12,7 +12,7 @@ class EntryBricksContainer extends Component {
     EntriesActions.loadMoreEntries();
   }
   render() {
-    const { entries, hasMore, host_tlog_id, isLoading } = this.props;
+    const { children, entries, hasMore, host_tlog_id, isLoading } = this.props;
 
     return (
       <EntryBricks
@@ -21,7 +21,9 @@ class EntryBricksContainer extends Component {
         host_tlog_id={host_tlog_id}
         loading={isLoading}
         onLoadMoreEntries={this.loadMoreEntries}
-      />
+      >
+        {children}
+      </EntryBricks>
     );
   }
 }

@@ -10,10 +10,13 @@ class BestLoadButtonContainer extends Component {
     (promise && promise.then(FeedsUpdateActions.resetBestEntries));
   }
   render() {
+    const { limit, unreadBestCount } = this.props;
+
     return (
       <UnreadLoadButtonContainer
-        count={this.props.unreadBestCount}
+        count={unreadBestCount}
         href={Routes.best_feed_path()}
+        limit={limit}
         onLoad={this.onLoad}
       />
     );
@@ -21,6 +24,7 @@ class BestLoadButtonContainer extends Component {
 }
 
 BestLoadButtonContainer.propTypes = {
+  limit: PropTypes.number,
   unreadBestCount: PropTypes.number.isRequired,
 };
 

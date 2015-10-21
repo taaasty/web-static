@@ -184,8 +184,8 @@ require './react/components/calendar/calendar_marker'
 
 global.Feed = require './react/components/Feed/Feed'
 global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
-global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer'
-global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer'
+global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
+global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
 global.FlowCreator = require './react/components/FlowPopups/FlowCreator'
@@ -193,6 +193,10 @@ global.FlowManager = require './react/components/FlowPopups/FlowManager'
 global.LiveLoadButtonContainer = require('./react/components/LiveFeedPage/LiveLoadButtonContainer')
 global.BestLoadButtonContainer = require('./react/components/BestFeedPage/BestLoadButtonContainer')
 global.FriendsLoadButtonContainer = require('./react/components/FriendsFeedPage/FriendsLoadButtonContainer')
+
+global.LiveFeedPageBody = require './react/components/LiveFeedPage/LiveFeedPageBody';
+global.BestFeedPageBody = require './react/components/BestFeedPage/BestFeedPageBody';
+global.FriendsFeedPageBody = require './react/components/FriendsFeedPage/FriendsFeedPageBody';
 
 require './react/components/search/search'
 require './react/components/search/button'

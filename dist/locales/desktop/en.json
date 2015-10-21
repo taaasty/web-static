@@ -379,6 +379,10 @@
     "entries_count_plural_2": "__count__ entries",
     "entries_count_plural_5": "__count__ entries"
   },
+  "filters": {
+    "view_feed": "Show as bricks",
+    "view_tlog": "Show as a list"
+  },
   "flow_brick": {
     "followers_count_tooltip": "Followers",
     "entries_count_tooltip": "Entries"

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import WaypointService from '../../services/WaypointService';
@@ -7,28 +8,36 @@ import MasonryMixin from 'react-masonry-mixin';
 
 const masonryOptions = {
   itemSelector: '.brick',
-  transitionDuration: 0,
+  transitionDuration: 0.1,
   isFitWidth: true,
-  gutter: 20
+  gutter: 20,
+  stamp: '.navs-line',
 };
 
 let EntryBricks = React.createClass({
   mixins: [MasonryMixin('masonryContainer', masonryOptions)],
 
   propTypes: {
+    canLoad: PropTypes.bool.isRequired,
     entries: PropTypes.array.isRequired,
     host_tlog_id: PropTypes.number,
     loading: PropTypes.bool.isRequired,
-    canLoad: PropTypes.bool.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
     this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
+    this.onResize = _.debounce(this.restamp, 100);
+    window.addEventListener('resize', this.onResize, false);
   },
 
   componentWillUnmount() {
     this.waypointService.detach();
+    window.removeEventListener('resize', this.onRsize, false);
+  },
+
+  restamp() {
+    this.forceUpdate();
   },
 
   onWaypointTrigger(data) {
@@ -36,23 +45,25 @@ let EntryBricks = React.createClass({
   },
 
   render() {
-    let entryList = this.props.entries.map((item) =>
-      <EntryBrick
-        entry={item.entry}
-        host_tlog_id={this.props.host_tlog_id}
-        moderation={item.moderation}
-        key={item.entry.id}
-      />
-    );
+    const { canLoad, children, entries, host_tlog_id, loading, onLoadMoreEntries } = this.props;
 
     return (
       <div className="bricks-wrapper">
         <InfiniteScroll
-            loading={this.props.loading}
-            canLoad={this.props.canLoad}
-            onLoad={this.props.onLoadMoreEntries}>
-          <section ref="masonryContainer" className="bricks">
-            {entryList}
+          canLoad={canLoad}
+          loading={loading}
+          onLoad={onLoadMoreEntries}
+        >
+          <section className="bricks" ref="masonryContainer">
+            {children}
+            {entries.map((item) =>
+               <EntryBrick
+                 entry={item.entry}
+                 host_tlog_id={host_tlog_id}
+                 key={item.entry.id}
+                 moderation={item.moderation}
+               />)
+            }
           </section>
         </InfiniteScroll>
       </div>
