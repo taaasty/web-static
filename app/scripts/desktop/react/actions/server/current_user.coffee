@@ -14,4 +14,9 @@ CurrentUserServerActions =
     CurrentUserDispatcher.handleServerAction
       type: 'confirmationEmailCanceled'
 
+  stopFbCrosspost: ->
+    CurrentUserDispatcher.handleServerAction({
+      type: 'stopFbCrosspost',
+    })
+
 module.exports = CurrentUserServerActions

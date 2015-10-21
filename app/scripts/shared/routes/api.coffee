@@ -19,6 +19,8 @@ ApiRoutes =
   userpic_url:         -> gon.api_host + '/v1/users/userpic'
   users_predict:       -> gon.api_host + '/v1/users/predict'
 
+  fb_crosspost_url:    -> "#{gon.api_host}/v1/facebook/crossposting"
+
   create_entry_url:                (type) -> gon.api_host + '/v1/entries/' + type
   update_entry_url:  (entryId, entryType) -> gon.api_host + '/v1/entries/' + entryType + '/' + entryId
   update_images_url:            (entryId) -> gon.api_host + '/v1/entries/image/' +entryId+ '/images'
