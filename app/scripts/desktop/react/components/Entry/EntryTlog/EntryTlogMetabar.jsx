@@ -53,8 +53,8 @@ export default class EntryTlogMetabar {
               <span className="meta-item__ava">
                 <Avatar userpic={tlog.userpic} size={20} />
               </span>
-              <span>{authorMeta}</span>
             </a>
+            <span dangerouslySetInnerHTML={{ __html: authorMeta }} />
           </span>
         </span>
       );

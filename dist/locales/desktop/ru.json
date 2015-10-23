@@ -395,9 +395,9 @@
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи",
     "meta": {
-      "repost_from": "Репост из __tag__",
-      "author_posted_in": "__author__ написала в __tlog__",
-      "author_posted_in_m": "__author__ написал в __tlog__"
+      "repost_from": "Репост из <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
+      "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написала в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>",
+      "author_posted_in_m": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написал в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>"
     },
     "repost": {
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"__flowsLink__\">потоки</a> чтобы добавлять туда посты"
