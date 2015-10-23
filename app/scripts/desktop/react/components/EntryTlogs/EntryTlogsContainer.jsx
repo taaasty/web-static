@@ -15,17 +15,20 @@ class EntryTlogsContainer extends Component {
     EntriesActions.deleteEntry(entryId);
   }
   render() {
-    const { entries, hasMore, host_tlog_id, isLoading } = this.props;
+    const { children, entries, hasMore, host_tlog_id, isLoading } = this.props;
 
     return (
-      <EntryTlogs
-        canLoad={!isLoading && hasMore}
-        entries={entries}
-        host_tlog_id={host_tlog_id}
-        loading={isLoading}
-        onDelete={this.deleteEntry}
-        onLoadMoreEntries={this.loadMoreEntries}
-      />
+      <div>
+        {children}
+        <EntryTlogs
+          canLoad={!isLoading && hasMore}
+          entries={entries}
+          host_tlog_id={host_tlog_id}
+          loading={isLoading}
+          onDelete={this.deleteEntry}
+          onLoadMoreEntries={this.loadMoreEntries}
+        />
+      </div>
     );
   }
 }

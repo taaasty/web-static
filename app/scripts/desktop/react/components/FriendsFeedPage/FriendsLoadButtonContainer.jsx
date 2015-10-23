@@ -10,10 +10,13 @@ class FriendsLoadButtonContainer extends Component {
     (promise && promise.then(FeedsUpdateActions.resetFriendsEntries));
   }
   render() {
+    const { limit, unreadFriendsCount } = this.props;
+
     return (
       <UnreadLoadButtonContainer
-        count={this.props.unreadFriendsCount}
+        count={unreadFriendsCount}
         href={Routes.friends_feed_path()}
+        limit={limit}
         onLoad={this.onLoad}
       />
     );
@@ -21,6 +24,7 @@ class FriendsLoadButtonContainer extends Component {
 }
 
 FriendsLoadButtonContainer.propTypes = {
+  limit: PropTypes.number,
   unreadFriendsCount: PropTypes.number.isRequired,
 };
 

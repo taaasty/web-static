@@ -10,10 +10,13 @@ class LiveLoadButtonContainer extends Component {
     (promise && promise.then(FeedsUpdateActions.resetLiveEntries));
   }
   render() {
+    const { limit, unreadLiveCount } = this.props;
+
     return (
       <UnreadLoadButtonContainer
-        count={this.props.unreadLiveCount}
+        count={unreadLiveCount}
         href={Routes.live_feed_path()}
+        limit={limit}
         onLoad={this.onLoad}
       />
     );
@@ -21,6 +24,7 @@ class LiveLoadButtonContainer extends Component {
 }
 
 LiveLoadButtonContainer.propTypes = {
+  limit: PropTypes.number,
   unreadLiveCount: PropTypes.number.isRequired,
 };
 

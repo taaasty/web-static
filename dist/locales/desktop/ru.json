@@ -382,6 +382,10 @@
     "entries_count_plural_2": "__count__ записи",
     "entries_count_plural_5": "__count__ записей"
   },
+  "filters": {
+    "view_feed": "Показать кирпичиками",
+    "view_tlog": "Показать списком"
+  },
   "flow_brick": {
     "followers_count_tooltip": "Подписчики",
     "entries_count_tooltip": "Записи"

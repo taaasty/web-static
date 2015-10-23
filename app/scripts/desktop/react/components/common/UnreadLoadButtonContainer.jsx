@@ -4,7 +4,7 @@ import EntriesActions from '../../actions/EntriesActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
-//FIXME magic number
+//magic number
 const ENTRIES_LIMIT = 60;
 
 class UnreadLoadButtonContainer extends Component {
@@ -33,7 +33,12 @@ UnreadLoadButtonContainer.propTypes = {
   firstEntryId: PropTypes.number,
   href: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
+  limit: PropTypes.number,
   onLoad: PropTypes.func,
+};
+
+UnreadLoadButtonContainer.defaultProps = {
+  limit: ENTRIES_LIMIT,
 };
 
 export default connectToStores(
