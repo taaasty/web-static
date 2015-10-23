@@ -60,16 +60,19 @@ let EntryBrickMetabar = React.createClass({
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">
-            <a href={tlog.url}
-               title={tlog.tag}
-               className="meta-item__link">
+            <a
+              className="meta-item__link"
+              href={tlog.url}
+              title={tlog.tag}
+            >
               <span className="meta-item__ava">
                 <Avatar userpic={tlog.userpic} size={20} />
               </span>
-              <span className="meta-item__author">
-                {authorMeta}
-              </span>
             </a>
+            <span
+              className="meta-item__author"
+              dangerouslySetInnerHTML={{ __html: authorMeta }}
+            />
           </span>
         </span>
       );

@@ -392,8 +392,8 @@
     "has_no_images": "There are no images for entry",
     "unknown_type": "Unknown type of entry",
     "meta": {
-      "repost_from": "Repost from __tag__",
-      "author_posted_in": "__author__ posted in __tlog__"
+      "repost_from": "Repost from <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
+      "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> posted in <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>"
     },
     "repost": {
       "no_flows": "Follow or create new <a class=\"popup__link\" href=\"__flowsLink__\">flows</a> to share your thoughts there"
