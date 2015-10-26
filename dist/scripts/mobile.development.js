@@ -13745,6 +13745,9 @@ ApiRoutes = {
   fb_crosspost_url: function() {
     return gon.api_host + "/v1/facebook/crossposting";
   },
+  twitter_crosspost_url: function() {
+    return gon.api_host + "/v1/twitter/crossposting";
+  },
   create_entry_url: function(type) {
     return gon.api_host + '/v1/entries/' + type;
   },

@@ -19,4 +19,9 @@ CurrentUserServerActions =
       type: 'stopFbCrosspost',
     })
 
+  stopTwitterCrosspost: ->
+    CurrentUserDispatcher.handleServerAction({
+      type: 'stopTwitterCrosspost',
+    })
+
 module.exports = CurrentUserServerActions

@@ -23,6 +23,17 @@ CurrentUserResource =
       data: { _method: 'DELETE' },
     });
 
+  stopTwitterCrosspost: ({ beforeSend, success, error, complete }) ->
+    $.ajax({
+      beforeSend,
+      success,
+      error,
+      complete,
+      url: ApiRoutes.twitter_crosspost_url(),
+      method: 'POST',
+      data: { _method: 'DELETE' },
+    });
+
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     $.ajax
       url: ApiRoutes.request_confirm_url()

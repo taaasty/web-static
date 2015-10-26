@@ -74,4 +74,6 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
     when 'stopFbCrosspost'
       CurrentUserStore.updateAuthenticationCrosspost('facebook', CROSSPOST_NONE);
       CurrentUserStore.emitChange();
-
+    when 'stopTwitterCrosspost'
+      CurrentUserStore.updateAuthenticationCrosspost('twitter', CROSSPOST_NONE);
+      CurrentUserStore.emitChange();

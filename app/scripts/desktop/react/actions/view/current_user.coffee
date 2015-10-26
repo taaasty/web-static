@@ -70,6 +70,13 @@ CurrentUserViewActions =
       oldSuccess?()
     CurrentUserResource.stopFbCrosspost(options);
 
+  stopTwitterCrosspost: (options = {}) ->
+    oldSuccess = options.success
+    options.success = ->
+      CurrentUserServerActions.stopTwitterCrosspost()
+      oldSuccess?()
+    CurrentUserResource.stopTwitterCrosspost(options);
+
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     CurrentUserResource.cancelEmailConfirmation
       beforeSend: beforeSend
