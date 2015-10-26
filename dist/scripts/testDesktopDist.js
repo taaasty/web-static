@@ -7598,7 +7598,8 @@ var components = {
   UserToolbarContainer: {},
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},
-  FriendsLoadButtonContainer: {}
+  FriendsLoadButtonContainer: {},
+  FeedPageBody: {}
 };
 
 _Object$keys(components).forEach(function (componentName) {
