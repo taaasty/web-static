@@ -26,13 +26,13 @@ let EntryBricks = React.createClass({
   },
 
   componentDidMount() {
-    this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
+    //this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
     this.onResize = _.debounce(this.restamp, 100);
     window.addEventListener('resize', this.onResize, false);
   },
 
   componentWillUnmount() {
-    this.waypointService.detach();
+    //this.waypointService.detach();
     window.removeEventListener('resize', this.onRsize, false);
   },
 

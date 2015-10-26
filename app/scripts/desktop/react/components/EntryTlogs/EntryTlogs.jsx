@@ -14,10 +14,12 @@ export default class EntryTlogs {
     onLoadMoreEntries: PropTypes.func.isRequired,
   }
   componentDidMount() {
-    this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
+    if (this.props.host_tlog_id) {
+      this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
+    }
   }
   componentWillUnmount() {
-    this.waypointService.detach();
+    this.waypointService && this.waypointService.detach();
   }
   onWaypointTrigger(data) {
     $(document).trigger('waypoint.trigger', data); //trigger calendar
@@ -28,11 +30,11 @@ export default class EntryTlogs {
 
     let entryList = entries.map((item) => (
       <EntryTlog
+        commentator={item.commentator}
+        entry={item.entry}
         hideCommentForm={entries.length > 1}
         host_tlog_id={host_tlog_id}
         key={item.entry.id}
-        entry={item.entry}
-        commentator={item.commentator}
         moderation={item.moderation}
         onDelete={onDelete}
       />
@@ -40,8 +42,8 @@ export default class EntryTlogs {
 
     return (
       <InfiniteScroll
-        loading={loading}
         canLoad={canLoad}
+        loading={loading}
         onLoad={onLoadMoreEntries}
       >
         <section className="posts">{entryList}</section>
