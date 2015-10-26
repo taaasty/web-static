@@ -89,6 +89,7 @@ const components = {
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
+  FeedPageBody: {},
 };
 
 Object.keys(components).forEach((componentName) => {
