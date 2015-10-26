@@ -87,10 +87,19 @@ const Settings = createClass({
             {crossposts.facebook &&
               <SettingsRadioItem
                 checked={crossposts.facebook.crossposting_cd === CROSSPOST_OUT}
-                description={i18n.t('settings_fb_crosspost_description')}
+                description={i18n.t('settings_crosspost_description', { context: 'facebook' })}
                 id="fbCrosspost"
                 onChange={this.updateFbCrosspost}
-                title={i18n.t('settings_fb_crosspost')}
+                title={i18n.t('settings_crosspost', { context: 'facebook' })}
+              />
+            }
+            {crossposts.twitter &&
+              <SettingsRadioItem
+                checked={crossposts.twitter.crossposting_cd === CROSSPOST_OUT}
+                description={i18n.t('settings_crosspost_description', { context: 'twitter' })}
+                id="twitterCrosspost"
+                onChange={this.updateTwitterCrosspost}
+                title={i18n.t('settings_crosspost', { context: 'twitter' })}
               />
             }
             <SettingsPassword onUpdate={this.updatePassword} />

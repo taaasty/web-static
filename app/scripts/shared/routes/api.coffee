@@ -20,6 +20,7 @@ ApiRoutes =
   users_predict:       -> gon.api_host + '/v1/users/predict'
 
   fb_crosspost_url:    -> "#{gon.api_host}/v1/facebook/crossposting"
+  twitter_crosspost_url:    -> "#{gon.api_host}/v1/twitter/crossposting"
 
   create_entry_url:                (type) -> gon.api_host + '/v1/entries/' + type
   update_entry_url:  (entryId, entryType) -> gon.api_host + '/v1/entries/' + entryType + '/' + entryId
