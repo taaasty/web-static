@@ -224,6 +224,13 @@
     "people": "Поиск людей"
   },
   "searchbox_placeholder": "Введите Ваш запрос",
+  "settings_phone": "Телефон",
+  "settings_phone_placeholder": "7 (987) 654 32 10 ",
+  "settings_phone_button_add": "добавить",
+  "settings_phone_button_cancel": "отмена",
+  "settings_phone_button_edit": "изменить",
+  "settings_phone_button_update": "сохранить",
+  "settings_phone_change_success": "Номер телефона успешно изменен",
   "settings_email_establish_approve": "установить",
   "settings_email_establish_disapprove": "отмена",
   "settings_email_establish": "Установить",
