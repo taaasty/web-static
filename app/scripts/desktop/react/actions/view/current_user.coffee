@@ -45,6 +45,14 @@ CurrentUserViewActions =
     }
     @update options
 
+  updatePhone: (options = {}) ->
+    _.extend(options, {
+      data: {
+        phone: options.phone
+      }
+    })
+    this.update(options)
+
   updateEmail: (options = {}) ->
     _.extend options, {
       data:

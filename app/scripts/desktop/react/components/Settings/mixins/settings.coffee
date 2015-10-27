@@ -107,6 +107,16 @@ SettingsMixin =
         complete: => this.decrementActivities()
       })
 
+  updatePhone: ({phone, success}) ->
+    CurrentUserViewActions.updatePhone({
+      phone
+      beforeSend: => this.incrementActivities()
+      success: =>
+        success?()
+        NoticeService.notifySuccess(i18n.t('settings_phone_change_success'), 2000)
+      complete: => this.decrementActivities()
+    })
+
   updateEmail: ({email, success}) ->
     CurrentUserViewActions.updateEmail
       email: email

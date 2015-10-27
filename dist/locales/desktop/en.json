@@ -222,6 +222,13 @@
     "people": "Search people"
   },
   "searchbox_placeholder": "Enter your query",
+  "settings_phone": "Phone",
+  "settings_phone_placeholder": "1-XXX-XXX-XXXX",
+  "settings_phone_button_add": "add",
+  "settings_phone_button_cancel": "cancel",
+  "settings_phone_button_edit": "change",
+  "settings_phone_button_update": "save",
+  "settings_phone_change_success": "Phone number has been changed",
   "settings_email_establish_approve": "set",
   "settings_email_establish_disapprove": "cancel",
   "settings_email_establish": "Set",

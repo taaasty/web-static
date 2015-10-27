@@ -2,6 +2,7 @@
 import React, { createClass } from 'react';
 import SettingsHeader from './header';
 import SettingsRadioItem from './SettingsRadioItem';
+import SettingsPhone from './SettingsPhone';
 import SettingsEmail from './email/email';
 import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
@@ -69,6 +70,10 @@ const Settings = createClass({
               id="isFemale"
               onChange={this.updateFemale}
               title={i18n.t('settings_gender')}
+            />
+            <SettingsPhone
+              onUpdate={this.updatePhone}
+              phone={user.phone}
             />
             <SettingsEmail
               confirmationEmail={user.confirmation_email}
