@@ -1,4 +1,34 @@
 // Mixins
+.toolbar-size(@size, @align: left) {
+  height: @size;
+  line-height: @size;
+
+  & when (@align = left) {
+    padding-left: @size;
+  }
+
+  & when (@align = right) {
+    padding-left: 0;
+    padding-right: @size;
+  }
+
+  .toolbar__toggle {
+    width: @size;
+    height: @size;
+  }
+}
+
+.toolbar-align(@align) {
+  & when (@align = left) {
+    left: @toolbar-indent;
+  }
+
+  & when (@align = right) {
+    right: @toolbar-indent;
+    left: auto;
+  }
+}
+
 .toolbar-active(@color: @yellow) {
   color: @color;
 }
@@ -21,14 +51,12 @@
 
 // Styles
 .toolbar {
-  height: @toolbar-size;
-  padding-left: @toolbar-size;
+  .toolbar-size(@toolbar-size);
+  .toolbar-align(left);
   position: fixed;
   top: @toolbar-indent;
-  left: @toolbar-indent;
   background: @toolbar-bg-base;
   background-color: @toolbar-bg;
-  line-height: @toolbar-size;
   color: @white;
   text-align: center;
   white-space: nowrap;
@@ -640,15 +668,29 @@
 }
 
 .toolbar--avatar {
-  left: auto;
-  right: 20px;
-  height: 70px;
-  padding-left: 70px;
+  .toolbar-size(@toolbar-size-lg);
+  .toolbar-align(right);
 
   .toolbar__toggle {
     background: none;
-    width: 70px;
-    height: 70px;
+  }
+}
+
+.toolbar--compose {
+  .toolbar-size(@toolbar-size-lg);
+  .toolbar-align(right);
+  background-color: @emerald;
+
+  &:hover {
+    background-color: lighten(@emerald, 8%);
+  }
+
+  .toolbar__toggle {
+    background: none;
+
+    .icon {
+      font-size: 40px;
+    }
   }
 }
 
