@@ -77,6 +77,11 @@
   line-height: 22px;
 }
 
+.paid-features__title--margin-sm {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .paid-features__item {
   width: 33.3333%;
   padding: 0 10px 20px;
@@ -96,6 +101,59 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
+}
+
+.paid-features__payment-methods {
+
+}
+
+.paid-features__payment-method {
+  width: 185px;
+  margin: 12px;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+
+  &:hover {
+    .paid-features__payment-method-image {
+      box-shadow: 0 0 14px rgba(0, 0, 0, .08);
+    }
+  }
+}
+
+.paid-features__payment-method-image {
+  width: 185px;
+  height: 185px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: box-shadow .3s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.paid-features__payment-method-title {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.paid-features__input {
+  .placeholder(#cecece);
+  width: 100%;
+  padding: 14px 12px 12px;
+  border: 0;
+  background-color: #fff;
+  font-size: 30px;
+  line-height: 40px;
+  font-family: @font-family-base-light;
+  text-align: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.paid-features__input--limited {
+  max-width: 410px;
+  margin: 0 auto;
 }
 
 .paid-features__period {
@@ -144,6 +202,13 @@
 }
 
 .paid-features__button--close {
+  &:extend(.button--block all);
+  margin-left: 0 !important;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.paid-features__button--entire {
   &:extend(.button--block all);
   margin-left: 0 !important;
   padding-right: 0;
