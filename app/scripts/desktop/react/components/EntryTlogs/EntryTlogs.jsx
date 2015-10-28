@@ -1,7 +1,9 @@
+/*global $ */
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
-import WaypointService from '../../services/WaypointService';
+import WaypointService from '../../services/CustomWaypointService';
 import InfiniteScroll from '../common/infiniteScroll/index';
 
 export default class EntryTlogs {
@@ -14,12 +16,16 @@ export default class EntryTlogs {
     onLoadMoreEntries: PropTypes.func.isRequired,
   }
   componentDidMount() {
-    if (this.props.host_tlog_id) {
-      this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
-    }
+    this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
+    this.waypointService.attach();
+    this.waypointRefresh = _.debounce(this.waypointService.refresh, 100);
+    $(document).on('domChanged', this.waypointRefresh);
   }
   componentWillUnmount() {
-    this.waypointService && this.waypointService.detach();
+    if (this.waypointService) {
+      this.waypointService.detach();
+      $(document).off('domChanged', this.waypointRefresh);
+    }
   }
   onWaypointTrigger(data) {
     $(document).trigger('waypoint.trigger', data); //trigger calendar
