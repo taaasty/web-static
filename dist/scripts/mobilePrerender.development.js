@@ -13747,6 +13747,12 @@ Routes = {
   live_feed_path: function() {
     return '/live';
   },
+  live_anonymous_feed_path: function() {
+    return '/live/anonymous';
+  },
+  live_flows_feed_path: function() {
+    return '/live/flows';
+  },
   best_feed_path: function() {
     return '/best';
   },

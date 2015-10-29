@@ -13,6 +13,8 @@ Routes =
 
   friends_feed_path:                  -> '/friends'
   live_feed_path:                     -> '/live'
+  live_anonymous_feed_path:           -> '/live/anonymous'
+  live_flows_feed_path:                -> '/live/flows'
   best_feed_path:                     -> '/best'
   anonymous_feed_path:                -> '/anonymous'
   people_path:                        -> '/people'
