@@ -1,28 +1,33 @@
+/*global i18n */
+import React, { PropTypes } from 'react';
+import Routes from '../../../../shared/routes/routes';
 import UserToolbarListItem from './UserToolbarListItem';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 
 let UserToolbarPrimaryList = React.createClass({
   propTypes: {
-    user: React.PropTypes.object.isRequired,
-    unreadBestCount: React.PropTypes.number.isRequired,
-    unreadConversationsCount: React.PropTypes.number.isRequired,
-    unreadFriendsCount: React.PropTypes.number.isRequired,
-    unreadLiveCount: React.PropTypes.number.isRequired,
-    unreadNotificationsCount: React.PropTypes.number.isRequired,
-    stayOpen: React.PropTypes.bool.isRequired,
-    onMessagesClick: React.PropTypes.func.isRequired,
-    onNotificationsClick: React.PropTypes.func.isRequired,
-    onFriendsClick: React.PropTypes.func.isRequired,
-    onDesignSettingsClick: React.PropTypes.func.isRequired,
+    onDesignSettingsClick: PropTypes.func.isRequired,
+    onFriendsClick: PropTypes.func.isRequired,
+    onMessagesClick: PropTypes.func.isRequired,
+    onNotificationsClick: PropTypes.func.isRequired,
+    stayOpen: PropTypes.bool.isRequired,
+    unreadBestCount: PropTypes.number.isRequired,
+    unreadConversationsCount: PropTypes.number.isRequired,
+    unreadFriendsCount: PropTypes.number.isRequired,
+    unreadLiveCount: PropTypes.number.isRequired,
+    unreadNotificationsCount: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired,
   },
 
   render() {
     return (
       <ul className="toolbar__nav">
         <UserToolbarListItem
-          url={Routes.new_entry_url(this.props.user.slug)}
-          title={ i18n.t('toolbar_new_entry_item') }
-          icon="icon--plus"
-        />
+          title={i18n.t('avatar_toolbar_tooltip')}
+          url={this.props.user.tlog_url}
+        >
+          <Avatar size={35} userpic={this.props.user.userpic} />
+        </UserToolbarListItem>
         <UserToolbarListItem
           badgeClassName="messages-badge"
           badgeCount={this.props.unreadFriendsCount}

@@ -1,54 +1,57 @@
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import LazyLoadImage from './LazyLoadImage';
 
-let Avatar = React.createClass({
-  propTypes: {
-    userpic: React.PropTypes.object.isRequired,
-    size: React.PropTypes.number.isRequired,
-  },
-
-  getDefaultProps() {
-    return {
-      size: 220
-    };
-  },
-
-  render() {
-    let { original_url: url, symbol, kind } = this.props.userpic;
-
-    let avatarClasses = classnames('avatar', {
-      'anonymous_char': kind === 'anonymous',
+class Avatar {
+  getAvatarClasses() {
+    return classnames({
+      'avatar': true,
+      'anonymous_char': this.props.userpic.kind === 'anonymous',
     });
-
-    if (url != null) {
-      let image = {
-        url,
-        geometry: {
-          width: this.props.size,
-          height: this.props.size,
-        },
-      };
-
-      return (
-        <span className={avatarClasses}>
-          <LazyLoadImage image={image} className="avatar__img" />
-        </span>
-      );
-    } else {
-      let avatarStyles = {
-        backgroundColor: this.props.userpic.default_colors.background,
-        color: this.props.userpic.default_colors.name
-      };
-
-      return (
-        <span className={avatarClasses} style={avatarStyles}>
-          <span className="avatar__text">
-            {symbol}
-          </span>
-        </span>
-      );
-    }
   }
-});
+  renderImage() {
+    const { userpic: { original_url: url }, size } = this.props;
+    const image = {
+      url,
+      geometry: {
+        width: size,
+        height: size,
+      },
+    };
+
+    return (
+      <span className={this.getAvatarClasses()}>
+        <LazyLoadImage className="avatar__img" image={image} />
+      </span>
+    );
+  }
+  renderSymbol() {
+    const { default_colors: { background, name }, symbol } = this.props.userpic;
+    const avatarStyles = {
+      backgroundColor: background,
+      color: name,
+    };
+
+    return (
+      <span className={this.getAvatarClasses()} style={avatarStyles}>
+        <span className="avatar__text">
+          {symbol}
+        </span>
+      </span>
+    );
+  }
+  render() {
+    return (this.props.userpic.original_url != null) ? this.renderImage() : this.renderSymbol();
+  }
+}
+
+Avatar.propTypes = {
+  size: PropTypes.number.isRequired,
+  userpic: PropTypes.object.isRequired,
+};
+
+Avatar.defaultProps = {
+  size: 220,
+};
 
 export default Avatar;
