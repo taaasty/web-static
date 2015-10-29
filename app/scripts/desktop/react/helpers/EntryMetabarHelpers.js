@@ -4,7 +4,7 @@ export function metabarAuthor({ author, tlog, host_tlog_id }) {
   if (tlog != null && author != null) {
     if (host_tlog_id == null) {
       if (author.id === tlog.id) {
-        return `<a class="meta-item__link" "href="${author.url}">${author.tag}</a>`;
+        return `<a class="meta-item__link" href="${author.url}">${author.tag}</a>`;
       } else {
         return i18n.t(
           'entry.meta.author_posted_in',

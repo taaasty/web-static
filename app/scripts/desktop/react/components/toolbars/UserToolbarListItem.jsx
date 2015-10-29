@@ -1,3 +1,4 @@
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
 const MAX_BADGE_COUNT = 99;
@@ -16,7 +17,7 @@ let UserToolbarListItem = React.createClass({
 
   getInitialState() {
     return {
-      opened: false
+      opened: false,
     };
   },
 
@@ -24,7 +25,7 @@ let UserToolbarListItem = React.createClass({
     $(this.refs.link.getDOMNode()).tooltip({
       title: this.props.title,
       placement: 'right',
-      container: '.toolbar--main'
+      container: '.toolbar--main',
     });
   },
 
@@ -38,30 +39,45 @@ let UserToolbarListItem = React.createClass({
     $(this.refs.link.getDOMNode()).tooltip('destroy');
   },
 
+  renderIcon() {
+    const { icon, title } = this.props;
+
+    return (
+      <div>
+        <i className={`icon ${icon}`} />
+        <span className="toolbar__nav-text">
+          {title}
+        </span>
+        {this.renderLabel()}
+        {this.renderBadge()}
+      </div>
+    );
+  },
+  
   render() {
-    let children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {opened: this.state.opened});
+    const { children, icon } = this.props;
+    const { opened } = this.state;
+    const tChildren = React.Children.map(children, (child) => {
+      return React.cloneElement(child, { opened });
     });
 
-    let itemClasses = classNames('toolbar__nav-item', {
-      '__opened': this.state.opened
+    const itemClasses = classNames('toolbar__nav-item', {
+      '__opened': opened,
     });
 
     return (
-      <li className={itemClasses}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}>
-        <a ref="link"
-           className="toolbar__nav-link"
-           onClick={this.handleClick}>
-          <i className={`icon ${this.props.icon}`} />
-          <span className="toolbar__nav-text">
-            {this.props.title}
-          </span>
-          {this.renderLabel()}
-          {this.renderBadge()}
+      <li
+        className={itemClasses}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        <a 
+          className="toolbar__nav-link"
+          onClick={this.handleClick}
+          ref="link"
+        >
+          {icon ? this.renderIcon() : tChildren}
         </a>
-        {children}
       </li>
     );
   },
@@ -109,7 +125,7 @@ let UserToolbarListItem = React.createClass({
       // We will make redirect if item has no children, or it has been opened
       window.location = this.props.url;
     }
-  }
+  },
 });
 
 export default UserToolbarListItem;
