@@ -95,10 +95,12 @@ let UserToolbarListItem = React.createClass({
   },
 
   renderLabel() {
-    if (this.props.label) {
+    const { badgeCount, label, labelClassName } = this.props;
+
+    if (!badgeCount && label) {
       return (
-        <span className={classNames('toolbar__label', this.props.labelClassName)}>
-          {this.props.label}
+        <span className={classNames('toolbar__label', labelClassName)}>
+          {label}
         </span>
       );
     }

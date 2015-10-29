@@ -10,9 +10,12 @@ let UserToolbar = React.createClass({
   propTypes: {
     hovered: React.PropTypes.bool.isRequired,
     userLogged: React.PropTypes.bool.isRequired,
+    unreadAnonymousCount: React.PropTypes.number.isRequired,
     unreadBestCount: React.PropTypes.number.isRequired,
     unreadConversationsCount: React.PropTypes.number.isRequired,
+    unreadFriendsCount: React.PropTypes.number.isRequired,
     unreadLiveCount: React.PropTypes.number.isRequired,
+    unreadLiveFlowCount: React.PropTypes.number.isRequired,
     unreadNotificationsCount: React.PropTypes.number.isRequired,
     searchUrl: React.PropTypes.string.isRequired,
     searchTitleI18nKey: React.PropTypes.string.isRequired,
@@ -63,10 +66,12 @@ let UserToolbar = React.createClass({
           onMessagesClick={this.props.onMessagesClick}
           onNotificationsClick={this.props.onNotificationsClick}
           stayOpen={this.props.hovered}
+          unreadAnonymousCount={this.props.unreadAnonymousCount}
           unreadBestCount={this.props.unreadBestCount}
           unreadConversationsCount={this.props.unreadConversationsCount}
           unreadFriendsCount={this.props.unreadFriendsCount}  
           unreadLiveCount={this.props.unreadLiveCount}
+          unreadLiveFlowCount={this.props.unreadLiveFlowCount}
           unreadNotificationsCount={this.props.unreadNotificationsCount}
           user={this.props.user}
         />

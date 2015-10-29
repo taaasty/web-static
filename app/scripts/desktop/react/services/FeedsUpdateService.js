@@ -34,9 +34,13 @@ function FeedsUpdateService(user={}) {
 
   const channelLive = pusher.subscribe('live');
   const channelBest = pusher.subscribe('best');
+  const channelAnonymous = pusher.subscribe('anonymous');
+  const channelLiveFlow = pusher.subscribe('live_flow_entries');
 
   channelLive.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addLiveEntry);
   channelBest.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addBestEntry);
+  channelAnonymous.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addAnonymousEntry);
+  channelLiveFlow.bind(pusherEvent.NEW_ENTRY, FeedsUpdateActions.addLiveFlowEntry);
 
   if (userToken && user.id) {
     const channelFriends = pusher.subscribe(`private-${user.id}-friends`);

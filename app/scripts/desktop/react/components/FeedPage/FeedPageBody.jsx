@@ -2,9 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import LiveLoadButtonContainer from './LiveLoadButtonContainer';
 import BestLoadButtonContainer from './BestLoadButtonContainer';
 import FriendsLoadButtonContainer from './FriendsLoadButtonContainer';
+import AnonymousLoadButtonContainer from './AnonymousLoadButtonContainer';
+import LiveFlowLoadButtonContainer from './LiveFlowLoadButtonContainer';
 import EntryBricksContainer from '../EntryBricks/EntryBricksContainer';
 import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
 import FeedFilters from '../FeedFilters';
+
+const LoadButtons = {
+  'live': LiveLoadButtonContainer,
+  'best': BestLoadButtonContainer,
+  'friends': FriendsLoadButtonContainer,
+  'anonymous': AnonymousLoadButtonContainer,
+  'live_flow_entries': LiveFlowLoadButtonContainer,
+};
 
 class FeedPageBody extends Component {
   renderFilters() {
@@ -15,11 +25,7 @@ class FeedPageBody extends Component {
       return null;
     }
 
-    const LoadButtonContainer = feedType === 'friends'
-      ? FriendsLoadButtonContainer
-      : feedType === 'best'
-        ? BestLoadButtonContainer
-        : LiveLoadButtonContainer;
+    const LoadButtonContainer = LoadButtons[feedType];
 
     return (
       <FeedFilters
@@ -27,7 +33,7 @@ class FeedPageBody extends Component {
         navViewMode={navViewMode}
         viewMode={viewMode}
       >
-        <LoadButtonContainer limit={limit} locale={locale} />
+        {LoadButtonContainer && <LoadButtonContainer limit={limit} locale={locale} />}
       </FeedFilters>
     );
   }
@@ -60,7 +66,10 @@ class FeedPageBody extends Component {
 
 FeedPageBody.propTypes = {
   entries_info: PropTypes.object,
-  feedType: PropTypes.oneOf(['live', 'best', 'friends']).isRequired,
+  feedType: PropTypes.oneOf([
+    'live', 'best', 'friends',
+    'anonymous', 'live_flow_entries',
+  ]).isRequired,
   locale: PropTypes.string,
   navFilters: PropTypes.object,
   navViewMode: PropTypes.bool.isRequired,

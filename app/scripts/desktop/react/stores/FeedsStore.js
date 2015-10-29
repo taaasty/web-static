@@ -9,6 +9,10 @@ const unreadFeeds = {
   bestInitialCount: 0,
   friends: [],
   friendsInitialCount: 0,
+  anonymous: [],
+  anonymousInitialCount: 0,
+  liveFlow: [],
+  liveFlowInitialCount: 0,
 };
 
 const actionMap = {
@@ -47,6 +51,22 @@ const actionMap = {
   [FeedConstants.FEED_FRIENDS_INITIAL_COUNT](payload) {
     unreadFeeds.friendsInitialCount = payload;
   },
+
+  [FeedConstants.FEED_ANONYMOUS_NEW_ENTRY](payload) {
+    unreadFeeds.anonymous.push(payload);
+  },
+
+  [FeedConstants.FEED_ANONYMOUS_RESET](payload) {
+    unreadFeeds.anonymous = [];
+  },
+
+  [FeedConstants.FEED_LIVE_FLOW_NEW_ENTRY](payload) {
+    unreadFeeds.liveFlow.push(payload);
+  },
+
+  [FeedConstants.FEED_LIVE_FLOW_RESET](payload) {
+    unreadFeeds.liveFlow = [];
+  },
 };
 
 const FeedsStore = Object.assign(
@@ -65,6 +85,16 @@ const FeedsStore = Object.assign(
     getUnreadFriendsCount() {
       const { friends, friendsInitialCount } = unreadFeeds;
       return friendsInitialCount + friends.length;
+    },
+
+    getUnreadAnonymousCount() {
+      const { anonymous, anonymousInitialCount } = unreadFeeds;
+      return anonymousInitialCount + anonymous.length;
+    },
+
+    getUnreadLiveFlowCount() {
+      const { liveFlow, liveFlowInitialCount } = unreadFeeds;
+      return liveFlowInitialCount + liveFlow.length;
     },
   }
 );

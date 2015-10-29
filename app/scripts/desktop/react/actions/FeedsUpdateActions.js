@@ -39,3 +39,27 @@ export function resetFriendsEntries() {
     type: FeedConstants.FEED_FRIENDS_RESET,
   });
 }
+
+export function addAnonymousEntry() {
+  AppDispatcher.handleViewAction({
+    type: FeedConstants.FEED_ANONYMOUS_NEW_ENTRY,
+  });
+}
+
+export function resetAnonymousEntries() {
+  AppDispatcher.handleViewAction({
+    type: FeedConstants.FEED_ANONYMOUS_RESET,
+  });
+}
+
+export function addLiveFlowEntry() {
+  AppDispatcher.handleViewAction({
+    type: FeedConstants.FEED_LIVE_FLOW_NEW_ENTRY,
+  });
+}
+
+export function resetLiveFlowEntries() {
+  AppDispatcher.handleViewAction({
+    type: FeedConstants.FEED_LIVE_FLOW_RESET,
+  });
+}
