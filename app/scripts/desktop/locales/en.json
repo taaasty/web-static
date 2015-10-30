@@ -403,6 +403,7 @@
     "pinned_header": "This post is pinned by the author",
     "has_no_images": "There are no images for entry",
     "unknown_type": "Unknown type of entry",
+    "privacy_badge": "This is a private post,<br />nobody sees it but you",
     "meta": {
       "repost_from": "Repost from <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
       "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> posted in <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>"

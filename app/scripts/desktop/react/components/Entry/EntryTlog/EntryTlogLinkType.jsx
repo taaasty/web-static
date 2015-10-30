@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Voting from '../../common/Voting';
+import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
@@ -12,14 +13,17 @@ export default class EntryTlogLinkType {
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
+    const { is_private, text } = this.props.entry;
+
     return (
       <span>
         <header className="post__header">
           {this.renderVoting()}
+          {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__content">
-          <Text value={this.props.entry.text} withHTML={true} />
+          <Text value={text} withHTML={true} />
         </div>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={::this.startComment} />

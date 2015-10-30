@@ -406,6 +406,7 @@
     "pinned_header": "Этот пост закреплен автором",
     "has_no_images": "У записи нет изображений",
     "unknown_type": "Неизвестный тип записи",
+    "privacy_badge": "Это приватный пост,<br />его не увидит никто кроме вас",
     "meta": {
       "repost_from": "Репост из <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
       "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написала в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>",
