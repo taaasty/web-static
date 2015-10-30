@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Voting from '../../common/Voting';
+import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
@@ -12,6 +13,8 @@ export default class EntryTlogVideoType {
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
+    const { iframely, is_private, title } = this.props.entry;
+
     return (
       <span>
         <div className="post__content">
@@ -19,10 +22,11 @@ export default class EntryTlogVideoType {
               autoplay={false}
               frameWidth={712}
               frameHeight={400}
-              embedHtml={this.props.entry.iframely.html} />
+              embedHtml={iframely.html} />
           <div className="video_comment">
             {this.renderVoting()}
-            <Text value={this.props.entry.title} withHTML={true} />
+            {is_private && <PrivacyBadge />}
+            <Text value={title} withHTML={true} />
           </div>
         </div>
         <div className="post__meta">

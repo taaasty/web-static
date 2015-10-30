@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Voting from '../../common/Voting';
+import PrivacyBadge from '../../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
@@ -11,18 +12,21 @@ export default class EntryTlogQuoteType {
     hasModeration: PropTypes.bool.isRequired
   }
   render() {
+    const { is_private, source, text } = this.props.entry;
+
     return (
       <span>
         <header className="post__header">
           {this.renderVoting()}
+          {is_private && <PrivacyBadge />}
         </header>
         <div className="post__content">
           <blockquote className="blockquote">
-            <span className="laquo">«</span>{this.props.entry.text}<span className="raquo">»</span>
+            <span className="laquo">«</span>{text}<span className="raquo">»</span>
             {
-              this.props.entry.source && (
+              source && (
                 <span className="blockquote__caption">—
-                  <span className="blockquote__source"> {this.props.entry.source}</span>
+                  <span className="blockquote__source"> {source}</span>
                 </span>
               )
             }
