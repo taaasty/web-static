@@ -17,7 +17,7 @@ class UserToolbarPrimaryList {
           title={i18n.t('avatar_toolbar_tooltip')}
           url={tlog_url}
         >
-          <Avatar size={35} userpic={userpic} />
+          <Avatar size={30} userpic={userpic} />
         </UserToolbarListItem>
         <UserToolbarListItem
           badgeClassName="messages-badge"
