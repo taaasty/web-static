@@ -225,7 +225,7 @@
   },
   "searchbox_placeholder": "Введите Ваш запрос",
   "settings_phone": "Телефон",
-  "settings_phone_placeholder": "7 (987) 654 32 10 ",
+  "settings_phone_placeholder": "Например: +7 (987) 654 32 10 ",
   "settings_phone_button_add": "добавить",
   "settings_phone_button_cancel": "отмена",
   "settings_phone_button_edit": "изменить",
