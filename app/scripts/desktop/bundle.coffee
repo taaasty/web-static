@@ -195,6 +195,7 @@ global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadBu
 global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
 
 global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
+global.TlogPageBody = require './react/components/TlogPage/TlogPageBody';
 
 require './react/components/search/search'
 require './react/components/search/button'

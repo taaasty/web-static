@@ -440,6 +440,7 @@
   "buttons": {
     "hero_create_entry": "Написать в поток",
     "hero_create_flow": "Создать поток",
+    "load_previous_entries": "Перейти к новым записям",
     "actions": {
       "thats_you": "Это вы"
     },

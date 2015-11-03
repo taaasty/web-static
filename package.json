@@ -1,5 +1,5 @@
 {
-  "name": "TastyApp", 
+  "name": "TastyApp",
   "version": "0.0.2",
   "description": "JS application for taaasty.com",
   "repository": {
@@ -27,6 +27,7 @@
     "medium-editor": "^5.8.1",
     "moment": "^2.10.3",
     "numeral": "^1.5.3",
+    "query-string": "^3.0.0",
     "react": "^0.13.3",
     "react-color-picker": "git+https://git@github.com:BrandyMint/react-color-picker.git",
     "react-imageloader": "^2.1.0",
