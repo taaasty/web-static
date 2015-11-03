@@ -1,5 +1,5 @@
 {
-  "name": "TastyApp",
+  "name": "TastyApp", 
   "version": "0.0.2",
   "description": "JS application for taaasty.com",
   "repository": {
@@ -33,11 +33,10 @@
     "react-lazy-load": "git+https://git@github.com:aleksxor/react-lazy-load.git",
     "react-masonry-mixin": "^0.5.7",
     "react-portal": "^0.7.0",
-    "react-tap-event-plugin": "^0.1.6",
+    "react-tap-event-plugin": "0.1.7",
     "react-textarea-autosize": "^2.2.1",
     "set-query-string": "^2.1.0",
-    "tether": "^1.1.0",
-    "waypoints": "^4.0.0"
+    "tether": "^1.1.0"
   },
   "devDependencies": {
     "URIjs": "^1.15.1",

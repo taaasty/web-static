@@ -25,50 +25,19 @@ exports.__esModule = true;
 },{"babel-runtime/core-js/object/assign":1}],4:[function(require,module,exports){
 require('../../modules/es6.object.assign');
 module.exports = require('../../modules/$.core').Object.assign;
-},{"../../modules/$.core":8,"../../modules/es6.object.assign":19}],5:[function(require,module,exports){
+},{"../../modules/$.core":7,"../../modules/es6.object.assign":17}],5:[function(require,module,exports){
 require('../../modules/es6.object.keys');
 module.exports = require('../../modules/$.core').Object.keys;
-},{"../../modules/$.core":8,"../../modules/es6.object.keys":20}],6:[function(require,module,exports){
-// 19.1.2.1 Object.assign(target, source, ...)
-var toObject = require('./$.to-object')
-  , IObject  = require('./$.iobject')
-  , enumKeys = require('./$.enum-keys')
-  , has      = require('./$.has');
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = require('./$.fails')(function(){
-  var a = Object.assign
-    , A = {}
-    , B = {}
-    , S = Symbol()
-    , K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function(k){ B[k] = k; });
-  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
-}) ? function assign(target, source){   // eslint-disable-line no-unused-vars
-  var T = toObject(target)
-    , l = arguments.length
-    , i = 1;
-  while(l > i){
-    var S      = IObject(arguments[i++])
-      , keys   = enumKeys(S)
-      , length = keys.length
-      , j      = 0
-      , key;
-    while(length > j)if(has(S, key = keys[j++]))T[key] = S[key];
-  }
-  return T;
-} : Object.assign;
-},{"./$.enum-keys":11,"./$.fails":12,"./$.has":14,"./$.iobject":15,"./$.to-object":18}],7:[function(require,module,exports){
+},{"../../modules/$.core":7,"../../modules/es6.object.keys":18}],6:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],8:[function(require,module,exports){
-var core = module.exports = {version: '1.2.0'};
+},{}],7:[function(require,module,exports){
+var core = module.exports = {version: '1.2.5'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var global    = require('./$.global')
   , core      = require('./$.core')
   , PROTOTYPE = 'prototype';
@@ -116,28 +85,13 @@ $def.P = 8;  // proto
 $def.B = 16; // bind
 $def.W = 32; // wrap
 module.exports = $def;
-},{"./$.core":8,"./$.global":13}],10:[function(require,module,exports){
+},{"./$.core":7,"./$.global":11}],9:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],11:[function(require,module,exports){
-// all enumerable object keys, includes symbols
-var $ = require('./$');
-module.exports = function(it){
-  var keys       = $.getKeys(it)
-    , getSymbols = $.getSymbols;
-  if(getSymbols){
-    var symbols = getSymbols(it)
-      , isEnum  = $.isEnum
-      , i       = 0
-      , key;
-    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))keys.push(key);
-  }
-  return keys;
-};
-},{"./$":16}],12:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -145,24 +99,18 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],13:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var UNDEFINED = 'undefined';
-var global = module.exports = typeof window != UNDEFINED && window.Math == Math
-  ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],14:[function(require,module,exports){
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function(it, key){
-  return hasOwnProperty.call(it, key);
-};
-},{}],15:[function(require,module,exports){
-// indexed object, fallback for non-array-like ES3 strings
+},{}],12:[function(require,module,exports){
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = require('./$.cof');
-module.exports = 0 in Object('z') ? Object : function(it){
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./$.cof":7}],16:[function(require,module,exports){
+},{"./$.cof":6}],13:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -176,27 +124,64 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],17:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
+// 19.1.2.1 Object.assign(target, source, ...)
+var $        = require('./$')
+  , toObject = require('./$.to-object')
+  , IObject  = require('./$.iobject');
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = require('./$.fails')(function(){
+  var a = Object.assign
+    , A = {}
+    , B = {}
+    , S = Symbol()
+    , K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function(k){ B[k] = k; });
+  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+  var T     = toObject(target)
+    , $$    = arguments
+    , $$len = $$.length
+    , index = 1
+    , getKeys    = $.getKeys
+    , getSymbols = $.getSymbols
+    , isEnum     = $.isEnum;
+  while($$len > index){
+    var S      = IObject($$[index++])
+      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+      , length = keys.length
+      , j      = 0
+      , key;
+    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+  }
+  return T;
+} : Object.assign;
+},{"./$":13,"./$.fails":10,"./$.iobject":12,"./$.to-object":16}],15:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
+var $def  = require('./$.def')
+  , core  = require('./$.core')
+  , fails = require('./$.fails');
 module.exports = function(KEY, exec){
   var $def = require('./$.def')
-    , fn   = (require('./$.core').Object || {})[KEY] || Object[KEY]
+    , fn   = (core.Object || {})[KEY] || Object[KEY]
     , exp  = {};
   exp[KEY] = exec(fn);
-  $def($def.S + $def.F * require('./$.fails')(function(){ fn(1); }), 'Object', exp);
+  $def($def.S + $def.F * fails(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":8,"./$.def":9,"./$.fails":12}],18:[function(require,module,exports){
+},{"./$.core":7,"./$.def":8,"./$.fails":10}],16:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./$.defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":10}],19:[function(require,module,exports){
+},{"./$.defined":9}],17:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $def = require('./$.def');
 
-$def($def.S + $def.F, 'Object', {assign: require('./$.assign')});
-},{"./$.assign":6,"./$.def":9}],20:[function(require,module,exports){
+$def($def.S + $def.F, 'Object', {assign: require('./$.object-assign')});
+},{"./$.def":8,"./$.object-assign":14}],18:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./$.to-object');
 
@@ -205,13 +190,15 @@ require('./$.object-sap')('keys', function($keys){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":17,"./$.to-object":18}],21:[function(require,module,exports){
+},{"./$.object-sap":15,"./$.to-object":16}],19:[function(require,module,exports){
+(function (global){
 /*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
  * @license  MIT
  */
+/* eslint-disable no-proto */
 
 var base64 = require('base64-js')
 var ieee754 = require('ieee754')
@@ -251,7 +238,11 @@ var rootParent = {}
  * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
  * get the Object implementation, which is slower but behaves correctly.
  */
-Buffer.TYPED_ARRAY_SUPPORT = (function () {
+Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+  ? global.TYPED_ARRAY_SUPPORT
+  : typedArraySupport()
+
+function typedArraySupport () {
   function Bar () {}
   try {
     var arr = new Uint8Array(1)
@@ -264,7 +255,7 @@ Buffer.TYPED_ARRAY_SUPPORT = (function () {
   } catch (e) {
     return false
   }
-})()
+}
 
 function kMaxLength () {
   return Buffer.TYPED_ARRAY_SUPPORT
@@ -420,10 +411,16 @@ function fromJsonObject (that, object) {
   return that
 }
 
+if (Buffer.TYPED_ARRAY_SUPPORT) {
+  Buffer.prototype.__proto__ = Uint8Array.prototype
+  Buffer.__proto__ = Uint8Array
+}
+
 function allocate (that, length) {
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Return an augmented `Uint8Array` instance, for best performance
     that = Buffer._augment(new Uint8Array(length))
+    that.__proto__ = Buffer.prototype
   } else {
     // Fallback: Return an object instance of the Buffer class
     that.length = length
@@ -1212,7 +1209,7 @@ Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
   offset = offset | 0
   if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
   if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
-  this[offset] = value
+  this[offset] = (value & 0xff)
   return offset + 1
 }
 
@@ -1229,7 +1226,7 @@ Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert
   offset = offset | 0
   if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
   if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value
+    this[offset] = (value & 0xff)
     this[offset + 1] = (value >>> 8)
   } else {
     objectWriteUInt16(this, value, offset, true)
@@ -1243,7 +1240,7 @@ Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert
   if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     this[offset] = (value >>> 8)
-    this[offset + 1] = value
+    this[offset + 1] = (value & 0xff)
   } else {
     objectWriteUInt16(this, value, offset, false)
   }
@@ -1265,7 +1262,7 @@ Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert
     this[offset + 3] = (value >>> 24)
     this[offset + 2] = (value >>> 16)
     this[offset + 1] = (value >>> 8)
-    this[offset] = value
+    this[offset] = (value & 0xff)
   } else {
     objectWriteUInt32(this, value, offset, true)
   }
@@ -1280,7 +1277,7 @@ Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert
     this[offset] = (value >>> 24)
     this[offset + 1] = (value >>> 16)
     this[offset + 2] = (value >>> 8)
-    this[offset + 3] = value
+    this[offset + 3] = (value & 0xff)
   } else {
     objectWriteUInt32(this, value, offset, false)
   }
@@ -1333,7 +1330,7 @@ Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
   if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
   if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
   if (value < 0) value = 0xff + value + 1
-  this[offset] = value
+  this[offset] = (value & 0xff)
   return offset + 1
 }
 
@@ -1342,7 +1339,7 @@ Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) 
   offset = offset | 0
   if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
   if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value
+    this[offset] = (value & 0xff)
     this[offset + 1] = (value >>> 8)
   } else {
     objectWriteUInt16(this, value, offset, true)
@@ -1356,7 +1353,7 @@ Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) 
   if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     this[offset] = (value >>> 8)
-    this[offset + 1] = value
+    this[offset + 1] = (value & 0xff)
   } else {
     objectWriteUInt16(this, value, offset, false)
   }
@@ -1368,7 +1365,7 @@ Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) 
   offset = offset | 0
   if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
   if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = value
+    this[offset] = (value & 0xff)
     this[offset + 1] = (value >>> 8)
     this[offset + 2] = (value >>> 16)
     this[offset + 3] = (value >>> 24)
@@ -1387,7 +1384,7 @@ Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) 
     this[offset] = (value >>> 24)
     this[offset + 1] = (value >>> 16)
     this[offset + 2] = (value >>> 8)
-    this[offset + 3] = value
+    this[offset + 3] = (value & 0xff)
   } else {
     objectWriteUInt32(this, value, offset, false)
   }
@@ -1740,7 +1737,8 @@ function blitBuffer (src, dst, offset, length) {
   return i
 }
 
-},{"base64-js":22,"ieee754":23,"is-array":24}],22:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"base64-js":20,"ieee754":21,"is-array":22}],20:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -1866,7 +1864,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],23:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -1952,7 +1950,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],24:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 
 /**
  * isArray
@@ -1987,10 +1985,10 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],25:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = require('./lib/chai');
 
-},{"./lib/chai":26}],26:[function(require,module,exports){
+},{"./lib/chai":24}],24:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -2004,7 +2002,7 @@ var used = []
  * Chai version
  */
 
-exports.version = '3.2.0';
+exports.version = '3.4.0';
 
 /*!
  * Assertion Error
@@ -2085,7 +2083,7 @@ exports.use(should);
 var assert = require('./chai/interface/assert');
 exports.use(assert);
 
-},{"./chai/assertion":27,"./chai/config":28,"./chai/core/assertions":29,"./chai/interface/assert":30,"./chai/interface/expect":31,"./chai/interface/should":32,"./chai/utils":45,"assertion-error":53}],27:[function(require,module,exports){
+},{"./chai/assertion":25,"./chai/config":26,"./chai/core/assertions":27,"./chai/interface/assert":28,"./chai/interface/expect":29,"./chai/interface/should":30,"./chai/utils":44,"assertion-error":52}],25:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -2218,7 +2216,7 @@ module.exports = function (_chai, util) {
   });
 };
 
-},{"./config":28}],28:[function(require,module,exports){
+},{"./config":26}],26:[function(require,module,exports){
 module.exports = {
 
   /**
@@ -2275,7 +2273,7 @@ module.exports = {
 
 };
 
-},{}],29:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -2414,6 +2412,7 @@ module.exports = function (chai, _) {
    *     expect({ foo: 'bar' }).to.be.an('object');
    *     expect(null).to.be.a('null');
    *     expect(undefined).to.be.an('undefined');
+   *     expect(new Error).to.be.an('error');
    *     expect(new Promise).to.be.a('promise');
    *     expect(new Float32Array()).to.be.a('float32array');
    *     expect(Symbol()).to.be.a('symbol');
@@ -2473,9 +2472,12 @@ module.exports = function (chai, _) {
   }
 
   function include (val, msg) {
+    _.expectTypes(this, ['array', 'object', 'string']);
+
     if (msg) flag(this, 'message', msg);
     var obj = flag(this, 'object');
     var expected = false;
+
     if (_.type(obj) === 'array' && _.type(val) === 'object') {
       for (var i in obj) {
         if (_.eql(obj[i], val)) {
@@ -2492,7 +2494,7 @@ module.exports = function (chai, _) {
       for (var k in val) subset[k] = obj[k];
       expected = _.eql(subset, val);
     } else {
-      expected = obj && ~obj.indexOf(val);
+      expected = (obj != undefined) && ~obj.indexOf(val);
     }
     this.assert(
         expected
@@ -2510,7 +2512,7 @@ module.exports = function (chai, _) {
    *
    * Asserts that the target is truthy.
    *
-   *     expect('everthing').to.be.ok;
+   *     expect('everything').to.be.ok;
    *     expect(1).to.be.ok;
    *     expect(false).to.not.be.ok;
    *     expect(undefined).to.not.be.ok;
@@ -3530,9 +3532,9 @@ module.exports = function (chai, _) {
       constructor = null;
       errMsg = null;
     } else if (typeof constructor === 'function') {
-      name = constructor.prototype.name || constructor.name;
-      if (name === 'Error' && constructor !== Error) {
-        name = (new constructor()).name;
+      name = constructor.prototype.name;
+      if (!name || (name === 'Error' && constructor !== Error)) {
+        name = constructor.name || (new constructor()).name;
       }
     } else {
       constructor = null;
@@ -3716,7 +3718,7 @@ module.exports = function (chai, _) {
       , result
     );
   }
-  
+
   Assertion.addMethod('satisfy', satisfy);
   Assertion.addMethod('satisfies', satisfy);
 
@@ -3728,19 +3730,20 @@ module.exports = function (chai, _) {
    *     expect(1.5).to.be.closeTo(1, 0.5);
    *
    * @name closeTo
+   * @alias approximately
    * @param {Number} expected
    * @param {Number} delta
    * @param {String} message _optional_
    * @api public
    */
 
-  Assertion.addMethod('closeTo', function (expected, delta, msg) {
+  function closeTo(expected, delta, msg) {
     if (msg) flag(this, 'message', msg);
     var obj = flag(this, 'object');
 
     new Assertion(obj, msg).is.a('number');
     if (_.type(expected) !== 'number' || _.type(delta) !== 'number') {
-      throw new Error('the arguments to closeTo must be numbers');
+      throw new Error('the arguments to closeTo or approximately must be numbers');
     }
 
     this.assert(
@@ -3748,7 +3751,10 @@ module.exports = function (chai, _) {
       , 'expected #{this} to be close to ' + expected + ' +/- ' + delta
       , 'expected #{this} not to be close to ' + expected + ' +/- ' + delta
     );
-  });
+  }
+
+  Assertion.addMethod('closeTo', closeTo);
+  Assertion.addMethod('approximately', closeTo);
 
   function isSubsetOf(subset, superset, cmp) {
     return subset.every(function(elem) {
@@ -3809,6 +3815,44 @@ module.exports = function (chai, _) {
         , subset
     );
   });
+
+  /**
+   * ### .oneOf(list)
+   *
+   * Assert that a value appears somewhere in the top level of array `list`.
+   *
+   *     expect('a').to.be.oneOf(['a', 'b', 'c']);
+   *     expect(9).to.not.be.oneOf(['z']);
+   *     expect([3]).to.not.be.oneOf([1, 2, [3]]);
+   *
+   *     var three = [3];
+   *     // for object-types, contents are not compared
+   *     expect(three).to.not.be.oneOf([1, 2, [3]]);
+   *     // comparing references works
+   *     expect(three).to.be.oneOf([1, 2, three]);
+   *
+   * @name oneOf
+   * @param {Array<*>} list
+   * @param {String} message _optional_
+   * @api public
+   */
+
+  function oneOf (list, msg) {
+    if (msg) flag(this, 'message', msg);
+    var expected = flag(this, 'object');
+    new Assertion(list).to.be.an('array');
+
+    this.assert(
+        list.indexOf(expected) > -1
+      , 'expected #{this} to be one of #{exp}'
+      , 'expected #{this} to not be one of #{exp}'
+      , list
+      , expected
+    );
+  }
+
+  Assertion.addMethod('oneOf', oneOf);
+
 
   /**
    * ### .change(function)
@@ -3926,7 +3970,7 @@ module.exports = function (chai, _) {
   /**
    * ### .extensible
    *
-   * Asserts that the target is extensible (can have new properties added to 
+   * Asserts that the target is extensible (can have new properties added to
    * it).
    *
    *     var nonExtensibleObject = Object.preventExtensions({});
@@ -3945,8 +3989,22 @@ module.exports = function (chai, _) {
   Assertion.addProperty('extensible', function() {
     var obj = flag(this, 'object');
 
+    // In ES5, if the argument to this method is not an object (a primitive), then it will cause a TypeError.
+    // In ES6, a non-object argument will be treated as if it was a non-extensible ordinary object, simply return false.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible
+    // The following provides ES6 behavior when a TypeError is thrown under ES5.
+
+    var isExtensible;
+
+    try {
+      isExtensible = Object.isExtensible(obj);
+    } catch (err) {
+      if (err instanceof TypeError) isExtensible = false;
+      else throw err;
+    }
+
     this.assert(
-      Object.isExtensible(obj)
+      isExtensible
       , 'expected #{this} to be extensible'
       , 'expected #{this} to not be extensible'
     );
@@ -3972,8 +4030,22 @@ module.exports = function (chai, _) {
   Assertion.addProperty('sealed', function() {
     var obj = flag(this, 'object');
 
+    // In ES5, if the argument to this method is not an object (a primitive), then it will cause a TypeError.
+    // In ES6, a non-object argument will be treated as if it was a sealed ordinary object, simply return true.
+    // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed
+    // The following provides ES6 behavior when a TypeError is thrown under ES5.
+
+    var isSealed;
+
+    try {
+      isSealed = Object.isSealed(obj);
+    } catch (err) {
+      if (err instanceof TypeError) isSealed = true;
+      else throw err;
+    }
+
     this.assert(
-      Object.isSealed(obj)
+      isSealed
       , 'expected #{this} to be sealed'
       , 'expected #{this} to not be sealed'
     );
@@ -3997,16 +4069,29 @@ module.exports = function (chai, _) {
   Assertion.addProperty('frozen', function() {
     var obj = flag(this, 'object');
 
+    // In ES5, if the argument to this method is not an object (a primitive), then it will cause a TypeError.
+    // In ES6, a non-object argument will be treated as if it was a frozen ordinary object, simply return true.
+    // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen
+    // The following provides ES6 behavior when a TypeError is thrown under ES5.
+
+    var isFrozen;
+
+    try {
+      isFrozen = Object.isFrozen(obj);
+    } catch (err) {
+      if (err instanceof TypeError) isFrozen = true;
+      else throw err;
+    }
+
     this.assert(
-      Object.isFrozen(obj)
+      isFrozen
       , 'expected #{this} to be frozen'
       , 'expected #{this} to not be frozen'
     );
   });
-
 };
 
-},{}],30:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -4234,24 +4319,6 @@ module.exports = function (chai, util) {
     new Assertion(act, msg).to.not.eql(exp);
   };
 
-  /**
-   * ### .isTrue(value, [message])
-   *
-   * Asserts that `value` is true.
-   *
-   *     var teaServed = true;
-   *     assert.isTrue(teaServed, 'the tea has been served');
-   *
-   * @name isTrue
-   * @param {Mixed} value
-   * @param {String} message
-   * @api public
-   */
-
-  assert.isAbove = function (val, abv, msg) {
-    new Assertion(val, msg).to.be.above(abv);
-  };
-
    /**
    * ### .isAbove(valueToCheck, valueToBeAbove, [message])
    *
@@ -4266,8 +4333,27 @@ module.exports = function (chai, util) {
    * @api public
    */
 
-  assert.isBelow = function (val, blw, msg) {
-    new Assertion(val, msg).to.be.below(blw);
+  assert.isAbove = function (val, abv, msg) {
+    new Assertion(val, msg).to.be.above(abv);
+  };
+
+   /**
+   * ### .isAtLeast(valueToCheck, valueToBeAtLeast, [message])
+   *
+   * Asserts `valueToCheck` is greater than or equal to (>=) `valueToBeAtLeast`
+   *
+   *     assert.isAtLeast(5, 2, '5 is greater or equal to 2');
+   *     assert.isAtLeast(3, 3, '3 is greater or equal to 3');
+   *
+   * @name isAtLeast
+   * @param {Mixed} valueToCheck
+   * @param {Mixed} valueToBeAtLeast
+   * @param {String} message
+   * @api public
+   */
+
+  assert.isAtLeast = function (val, atlst, msg) {
+    new Assertion(val, msg).to.be.least(atlst);
   };
 
    /**
@@ -4284,8 +4370,63 @@ module.exports = function (chai, util) {
    * @api public
    */
 
+  assert.isBelow = function (val, blw, msg) {
+    new Assertion(val, msg).to.be.below(blw);
+  };
+
+   /**
+   * ### .isAtMost(valueToCheck, valueToBeAtMost, [message])
+   *
+   * Asserts `valueToCheck` is less than or equal to (<=) `valueToBeAtMost`
+   *
+   *     assert.isAtMost(3, 6, '3 is less than or equal to 6');
+   *     assert.isAtMost(4, 4, '4 is less than or equal to 4');
+   *
+   * @name isAtMost
+   * @param {Mixed} valueToCheck
+   * @param {Mixed} valueToBeAtMost
+   * @param {String} message
+   * @api public
+   */
+
+  assert.isAtMost = function (val, atmst, msg) {
+    new Assertion(val, msg).to.be.most(atmst);
+  };
+
+  /**
+   * ### .isTrue(value, [message])
+   *
+   * Asserts that `value` is true.
+   *
+   *     var teaServed = true;
+   *     assert.isTrue(teaServed, 'the tea has been served');
+   *
+   * @name isTrue
+   * @param {Mixed} value
+   * @param {String} message
+   * @api public
+   */
+
   assert.isTrue = function (val, msg) {
     new Assertion(val, msg).is['true'];
+  };
+
+  /**
+   * ### .isNotTrue(value, [message])
+   *
+   * Asserts that `value` is not true.
+   *
+   *     var tea = 'tasty chai';
+   *     assert.isNotTrue(tea, 'great, time for tea!');
+   *
+   * @name isNotTrue
+   * @param {Mixed} value
+   * @param {String} message
+   * @api public
+   */
+
+  assert.isNotTrue = function (val, msg) {
+    new Assertion(val, msg).to.not.equal(true);
   };
 
   /**
@@ -4304,6 +4445,24 @@ module.exports = function (chai, util) {
 
   assert.isFalse = function (val, msg) {
     new Assertion(val, msg).is['false'];
+  };
+
+  /**
+   * ### .isNotFalse(value, [message])
+   *
+   * Asserts that `value` is not false.
+   *
+   *     var tea = 'tasty chai';
+   *     assert.isNotFalse(tea, 'great, time for tea!');
+   *
+   * @name isNotFalse
+   * @param {Mixed} value
+   * @param {String} message
+   * @api public
+   */
+
+  assert.isNotFalse = function (val, msg) {
+    new Assertion(val, msg).to.not.equal(false);
   };
 
   /**
@@ -4955,7 +5114,7 @@ module.exports = function (chai, util) {
    * Asserts that `object` has a `length` property with the expected value.
    *
    *     assert.lengthOf([1,2,3], 3, 'array has length of 3');
-   *     assert.lengthOf('foobar', 5, 'string has length of 6');
+   *     assert.lengthOf('foobar', 6, 'string has length of 6');
    *
    * @name lengthOf
    * @param {Mixed} object
@@ -5102,6 +5261,25 @@ module.exports = function (chai, util) {
   };
 
   /**
+   * ### .approximately(actual, expected, delta, [message])
+   *
+   * Asserts that the target is equal `expected`, to within a +/- `delta` range.
+   *
+   *     assert.approximately(1.5, 1, 0.5, 'numbers are close');
+   *
+   * @name approximately
+   * @param {Number} actual
+   * @param {Number} expected
+   * @param {Number} delta
+   * @param {String} message
+   * @api public
+   */
+
+  assert.approximately = function (act, exp, delta, msg) {
+    new Assertion(act, msg).to.be.approximately(exp, delta);
+  };
+
+  /**
    * ### .sameMembers(set1, set2, [message])
    *
    * Asserts that `set1` and `set2` have the same members.
@@ -5156,6 +5334,24 @@ module.exports = function (chai, util) {
 
   assert.includeMembers = function (superset, subset, msg) {
     new Assertion(superset, msg).to.include.members(subset);
+  }
+
+  /**
+   * ### .oneOf(inList, list, [message])
+   *
+   * Asserts that non-object, non-array value `inList` appears in the flat array `list`.
+   *
+   *     assert.oneOf(1, [ 2, 1 ], 'Not found in list');
+   *
+   * @name oneOf
+   * @param {*} inList
+   * @param {Array<*>} list
+   * @param {String} message
+   * @api public
+   */
+
+  assert.oneOf = function (inList, list, msg) {
+    new Assertion(inList, msg).to.be.oneOf(list);
   }
 
    /**
@@ -5446,7 +5642,7 @@ module.exports = function (chai, util) {
   ('isNotFrozen', 'notFrozen');
 };
 
-},{}],31:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5481,7 +5677,7 @@ module.exports = function (chai, util) {
   };
 };
 
-},{}],32:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5581,7 +5777,7 @@ module.exports = function (chai, util) {
   chai.Should = loadShould;
 };
 
-},{}],33:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*!
  * Chai - addChainingMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5694,7 +5890,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   });
 };
 
-},{"../config":28,"./flag":36,"./transferFlags":52}],34:[function(require,module,exports){
+},{"../config":26,"./flag":35,"./transferFlags":51}],32:[function(require,module,exports){
 /*!
  * Chai - addMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5739,12 +5935,15 @@ module.exports = function (ctx, name, method) {
   };
 };
 
-},{"../config":28,"./flag":36}],35:[function(require,module,exports){
+},{"../config":26,"./flag":35}],33:[function(require,module,exports){
 /*!
  * Chai - addProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
  * MIT Licensed
  */
+
+var config = require('../config');
+var flag = require('./flag');
 
 /**
  * ### addProperty (ctx, name, getter)
@@ -5773,7 +5972,11 @@ module.exports = function (ctx, name, method) {
 
 module.exports = function (ctx, name, getter) {
   Object.defineProperty(ctx, name,
-    { get: function () {
+    { get: function addProperty() {
+        var old_ssfi = flag(this, 'ssfi');
+        if (old_ssfi && config.includeStack === false)
+          flag(this, 'ssfi', addProperty);
+
         var result = getter.call(this);
         return result === undefined ? this : result;
       }
@@ -5781,7 +5984,50 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{}],36:[function(require,module,exports){
+},{"../config":26,"./flag":35}],34:[function(require,module,exports){
+/*!
+ * Chai - expectTypes utility
+ * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
+ * MIT Licensed
+ */
+
+/**
+ * ### expectTypes(obj, types)
+ *
+ * Ensures that the object being tested against is of a valid type.
+ *
+ *     utils.expectTypes(this, ['array', 'object', 'string']);
+ *
+ * @param {Mixed} obj constructed Assertion
+ * @param {Array} type A list of allowed types for this assertion
+ * @name expectTypes
+ * @api public
+ */
+
+var AssertionError = require('assertion-error');
+var flag = require('./flag');
+var type = require('type-detect');
+
+module.exports = function (obj, types) {
+  var obj = flag(obj, 'object');
+  types = types.map(function (t) { return t.toLowerCase(); });
+  types.sort();
+
+  // Transforms ['lorem', 'ipsum'] into 'a lirum, or an ipsum'
+  var str = types.map(function (t, index) {
+    var art = ~[ 'a', 'e', 'i', 'o', 'u' ].indexOf(t.charAt(0)) ? 'an' : 'a';
+    var or = types.length > 1 && index === types.length - 1 ? 'or ' : '';
+    return or + art + ' ' + t;
+  }).join(', ');
+
+  if (!types.some(function (expected) { return type(obj) === expected; })) {
+    throw new AssertionError(
+      'object tested must be ' + str + ', but ' + type(obj) + ' given'
+    );
+  }
+};
+
+},{"./flag":35,"assertion-error":52,"type-detect":57}],35:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5815,7 +6061,7 @@ module.exports = function (obj, key, value) {
   }
 };
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*!
  * Chai - getActual utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5835,7 +6081,7 @@ module.exports = function (obj, args) {
   return args.length > 4 ? args[4] : obj._obj;
 };
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /*!
  * Chai - getEnumerableProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5862,7 +6108,7 @@ module.exports = function getEnumerableProperties(object) {
   return result;
 };
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*!
  * Chai - message composition utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5914,7 +6160,7 @@ module.exports = function (obj, args) {
   return flagMsg ? flagMsg + ': ' + msg : msg;
 };
 
-},{"./flag":36,"./getActual":37,"./inspect":46,"./objDisplay":47}],40:[function(require,module,exports){
+},{"./flag":35,"./getActual":36,"./inspect":45,"./objDisplay":46}],39:[function(require,module,exports){
 /*!
  * Chai - getName utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5936,7 +6182,7 @@ module.exports = function (func) {
   return match && match[1] ? match[1] : "";
 };
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*!
  * Chai - getPathInfo utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6048,7 +6294,7 @@ function _getPathValue (parsed, obj, index) {
   return res;
 }
 
-},{"./hasProperty":44}],42:[function(require,module,exports){
+},{"./hasProperty":43}],41:[function(require,module,exports){
 /*!
  * Chai - getPathValue utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6092,7 +6338,7 @@ module.exports = function(path, obj) {
   return info.value;
 }; 
 
-},{"./getPathInfo":41}],43:[function(require,module,exports){
+},{"./getPathInfo":40}],42:[function(require,module,exports){
 /*!
  * Chai - getProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6129,7 +6375,7 @@ module.exports = function getProperties(object) {
   return result;
 };
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /*!
  * Chai - hasProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6194,7 +6440,7 @@ module.exports = function hasProperty(name, obj) {
   return name in obj;
 };
 
-},{"type-detect":58}],45:[function(require,module,exports){
+},{"type-detect":57}],44:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011 Jake Luer <jake@alogicalparadox.com>
@@ -6218,6 +6464,11 @@ exports.test = require('./test');
  */
 
 exports.type = require('type-detect');
+
+/*!
+ * expectTypes utility
+ */
+exports.expectTypes = require('./expectTypes');
 
 /*!
  * message utility
@@ -6321,8 +6572,7 @@ exports.addChainableMethod = require('./addChainableMethod');
 
 exports.overwriteChainableMethod = require('./overwriteChainableMethod');
 
-
-},{"./addChainableMethod":33,"./addMethod":34,"./addProperty":35,"./flag":36,"./getActual":37,"./getMessage":39,"./getName":40,"./getPathInfo":41,"./getPathValue":42,"./hasProperty":44,"./inspect":46,"./objDisplay":47,"./overwriteChainableMethod":48,"./overwriteMethod":49,"./overwriteProperty":50,"./test":51,"./transferFlags":52,"deep-eql":54,"type-detect":58}],46:[function(require,module,exports){
+},{"./addChainableMethod":31,"./addMethod":32,"./addProperty":33,"./expectTypes":34,"./flag":35,"./getActual":36,"./getMessage":38,"./getName":39,"./getPathInfo":40,"./getPathValue":41,"./hasProperty":43,"./inspect":45,"./objDisplay":46,"./overwriteChainableMethod":47,"./overwriteMethod":48,"./overwriteProperty":49,"./test":50,"./transferFlags":51,"deep-eql":53,"type-detect":57}],45:[function(require,module,exports){
 // This is (almost) directly from Node.js utils
 // https://github.com/joyent/node/blob/f8c335d0caf47f16d31413f89aa28eda3878e3aa/lib/util.js
 
@@ -6657,7 +6907,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-},{"./getEnumerableProperties":38,"./getName":40,"./getProperties":43}],47:[function(require,module,exports){
+},{"./getEnumerableProperties":37,"./getName":39,"./getProperties":42}],46:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6708,7 +6958,7 @@ module.exports = function (obj) {
   }
 };
 
-},{"../config":28,"./inspect":46}],48:[function(require,module,exports){
+},{"../config":26,"./inspect":45}],47:[function(require,module,exports){
 /*!
  * Chai - overwriteChainableMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6763,7 +7013,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   };
 };
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /*!
  * Chai - overwriteMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6816,7 +7066,7 @@ module.exports = function (ctx, name, method) {
   }
 };
 
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 /*!
  * Chai - overwriteProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6872,7 +7122,7 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*!
  * Chai - test utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6900,7 +7150,7 @@ module.exports = function (obj, args) {
   return negate ? !expr : expr;
 };
 
-},{"./flag":36}],52:[function(require,module,exports){
+},{"./flag":35}],51:[function(require,module,exports){
 /*!
  * Chai - transferFlags utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6946,7 +7196,7 @@ module.exports = function (assertion, object, includeAll) {
   }
 };
 
-},{}],53:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /*!
  * assertion-error
  * Copyright(c) 2013 Jake Luer <jake@qualiancy.com>
@@ -7060,10 +7310,10 @@ AssertionError.prototype.toJSON = function (stack) {
   return props;
 };
 
-},{}],54:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = require('./lib/eql');
 
-},{"./lib/eql":55}],55:[function(require,module,exports){
+},{"./lib/eql":54}],54:[function(require,module,exports){
 /*!
  * deep-eql
  * Copyright(c) 2013 Jake Luer <jake@alogicalparadox.com>
@@ -7322,10 +7572,10 @@ function objectEqual(a, b, m) {
   return true;
 }
 
-},{"buffer":21,"type-detect":56}],56:[function(require,module,exports){
+},{"buffer":19,"type-detect":55}],55:[function(require,module,exports){
 module.exports = require('./lib/type');
 
-},{"./lib/type":57}],57:[function(require,module,exports){
+},{"./lib/type":56}],56:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7469,9 +7719,9 @@ Library.prototype.test = function (obj, type) {
   }
 };
 
-},{}],58:[function(require,module,exports){
-arguments[4][56][0].apply(exports,arguments)
-},{"./lib/type":59,"dup":56}],59:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
+arguments[4][55][0].apply(exports,arguments)
+},{"./lib/type":58,"dup":55}],58:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7607,7 +7857,7 @@ Library.prototype.test = function(obj, type) {
   }
 };
 
-},{}],60:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7701,4 +7951,4 @@ _Object$keys(components).forEach(function (componentName) {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"babel-runtime/core-js/object/keys":2,"babel-runtime/helpers/extends":3,"chai":25}]},{},[60]);
+},{"babel-runtime/core-js/object/keys":2,"babel-runtime/helpers/extends":3,"chai":23}]},{},[59]);

@@ -30,6 +30,5 @@ require 'jquery.ui.touch-punch'
 # jQuery plugins
 require 'jquery.collage'
 require 'jquery.connection'
-require 'jquery.waypoints'
 require 'jquery.fileupload'
 require 'jquery.select2'

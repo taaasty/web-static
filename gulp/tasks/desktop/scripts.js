@@ -24,7 +24,6 @@ const dependencies = {
   'jquery.ui.mouse': './app/bower_components/jquery-ui/ui/mouse',
   'jquery.ui.widget': './app/bower_components/jquery-ui/ui/widget',
   'jquery.ui.touch-punch': './app/bower_components/jqueryui-touch-punch/jquery.ui.touch-punch',
-  'jquery.waypoints': './node_modules/waypoints/lib/jquery.waypoints',
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
   'jquery.connection': './app/scripts/desktop/plugins/jquery.connection',
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
