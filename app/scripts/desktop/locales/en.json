@@ -436,6 +436,7 @@
   "buttons": {
     "hero_create_entry": "Write to the flow",
     "hero_create_flow": "Create flow",
+    "load_previous_entries": "Go to newest entries",
     "actions": {
       "thats_you": "That's you"
     },
