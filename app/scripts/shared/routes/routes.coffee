@@ -18,7 +18,7 @@ Routes =
   best_feed_path:                     -> '/best'
   anonymous_feed_path:                -> '/anonymous'
   people_path:                        -> '/people'
-  new_entry_url:           (userSlug) -> '/~' + userSlug + '/new'
+  new_entry_url:     (userSlug, type) -> "/~#{userSlug}/new#{if type then "##{type}" else ""}"
   new_anonymous_entry_url: (userSlug) -> '/~' + userSlug + '/anonymous/new'
   my_tlog_url:             (userSlug) -> '/~' + userSlug
   favorites_url:           (userSlug) -> '/~' + userSlug + '/favorites'

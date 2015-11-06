@@ -1,35 +1,66 @@
 /*global i18n */
-import React, { findDOMNode, PropTypes } from 'react';
+import React, { findDOMNode, Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
+import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
 
-class ComposeToolbar {
+class ComposeToolbar extends Component {
+  state = {
+    dropdownVisible: false,
+  }
   componentDidMount() {
-    $(findDOMNode(this.refs.container)).tooltip({
+    $(findDOMNode(this.refs.button)).tooltip({
       title: i18n.t('toolbar_new_entry_item'),
       placement: 'left',
       container: '.toolbar--compose'
     });
   }
   componentWillUnmount() {
-    $(findDOMNode(this.refs.container)).tooltip('destroy');
+    $(findDOMNode(this.refs.button)).tooltip('destroy');
+  }
+  onMouseEnter(ev) {
+    this.setState({ dropdownVisible: true });
+  }
+  onMouseLeave(ev) {
+    this.setState({ dropdownVisible: false });
   }
   render() {
+    const { tlog, user } = this.props;
+    const containerClasses = classNames({
+      'toolbar': true,
+      'toolbar--compose': true,
+      'state--open': this.state.dropdownVisible,
+    });
+
     return (
-      <a
-        className="toolbar toolbar--compose"
-        href={Routes.new_entry_url(this.props.user.slug)}
-        ref="container"
+      <div
+        className={containerClasses}
+        onMouseEnter={this.onMouseEnter.bind(this)}
+        onMouseLeave={this.onMouseLeave.bind(this)}
       >
-          <div className="toolbar__toggle">
+        <a href={Routes.new_entry_url(this.props.user.slug)}>
+          <div className="toolbar__toggle" ref="button">
             <i className="icon icon--plus" />
           </div>
-      </a>
+        </a>
+        <ComposeToolbarDropdownList
+          isFlow={tlog.is_flow}
+          tlogSlug={tlog.slug}
+          userSlug={user.slug}
+        />
+      </div>
     );
   }
 }
 
 ComposeToolbar.propTypes = {
+  tlog: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+};
+
+ComposeToolbar.defaultProps = {
+  tlog: {},
+  user: {},
 };
 
 export default ComposeToolbar;
