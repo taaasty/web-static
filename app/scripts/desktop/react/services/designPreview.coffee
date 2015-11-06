@@ -6,8 +6,8 @@ sheet.element.setAttribute 'design-settings-sheet', ''
 
 DesignPreviewService =
   page: document.body
-  pageCover: document.querySelector '.page-cover'
-  feed: document.querySelector '.content-area__bg'
+  pageCover: -> document.querySelector '.page-cover'
+  feed: -> document.querySelector '.content-area__bg'
 
   states:
     headerFont:          'designtlog-headerfont'
@@ -339,10 +339,10 @@ DesignPreviewService =
       @setStyles state, value if propertyClassName is 'custom'
 
     if design.backgroundImageUrl
-      @pageCover.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")'
+      @pageCover()?.style.backgroundImage = 'url("' + design.backgroundImageUrl + '")'
 
     if _.isNumber design.feedOpacity
-      @feed.style.opacity = design.feedOpacity
+      @feed()?.style.opacity = design.feedOpacity
 
     @page.className = _.trim classes.join ' '
 
