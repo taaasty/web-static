@@ -5090,11 +5090,19 @@ module.exports = exports["default"];
 },{"../Meta/MetaAuthor":89,"babel-runtime/helpers/interop-require-default":277}],87:[function(require,module,exports){
 'use strict';
 
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _MetaVoting = require('./MetaVoting');
 
@@ -5112,49 +5120,67 @@ var _MetaDate = require('./MetaDate');
 
 var _MetaDate2 = _interopRequireDefault(_MetaDate);
 
-var EntryMeta = React.createClass({
-  displayName: 'EntryMeta',
-
-  propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    commentsCount: React.PropTypes.number.isRequired,
-    onDelete: React.PropTypes.func,
-    onMetaCommentsClick: React.PropTypes.func.isRequired
-  },
-
-  render: function render() {
-    return React.createElement(
-      'div',
-      { className: 'post__meta' },
-      React.createElement(_MetaActions2['default'], {
-        entry: this.props.entry,
-        onDelete: this.props.onDelete
-      }),
-      this.renderVoting(),
-      React.createElement(_MetaComments2['default'], {
-        commentsCount: this.props.commentsCount,
-        onClick: this.props.onMetaCommentsClick
-      }),
-      React.createElement(_MetaDate2['default'], {
-        date: this.props.entry.created_at,
-        entryUrl: this.props.entry.entry_url
-      })
-    );
-  },
-
-  renderVoting: function renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return React.createElement(_MetaVoting2['default'], {
-        rating: this.props.entry.rating,
-        entryId: this.props.entry.id });
-    }
+var EntryMeta = (function () {
+  function EntryMeta() {
+    _classCallCheck(this, EntryMeta);
   }
-});
+
+  _createClass(EntryMeta, [{
+    key: 'renderVoting',
+    value: function renderVoting() {
+      var _props$entry = this.props.entry;
+      var id = _props$entry.id;
+      var is_voteable = _props$entry.is_voteable;
+      var rating = _props$entry.rating;
+
+      if (is_voteable) {
+        return _react2['default'].createElement(_MetaVoting2['default'], { entryId: id, rating: rating });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var commentsCount = _props.commentsCount;
+      var entry = _props.entry;
+      var onDelete = _props.onDelete;
+      var onMetaCommentsClick = _props.onMetaCommentsClick;
+
+      return _react2['default'].createElement(
+        'div',
+        { className: 'post__meta' },
+        _react2['default'].createElement(_MetaActions2['default'], {
+          entry: entry,
+          onDelete: onDelete
+        }),
+        this.renderVoting(),
+        entry.is_private && _react2['default'].createElement('div', { className: 'meta-private' }),
+        _react2['default'].createElement(_MetaComments2['default'], {
+          commentsCount: commentsCount,
+          onClick: onMetaCommentsClick
+        }),
+        _react2['default'].createElement(_MetaDate2['default'], {
+          date: entry.created_at,
+          entryUrl: entry.entry_url
+        })
+      );
+    }
+  }]);
+
+  return EntryMeta;
+})();
+
+EntryMeta.propTypes = {
+  entry: _react.PropTypes.object.isRequired,
+  commentsCount: _react.PropTypes.number.isRequired,
+  onDelete: _react.PropTypes.func,
+  onMetaCommentsClick: _react.PropTypes.func.isRequired
+};
 
 exports['default'] = EntryMeta;
 module.exports = exports['default'];
 
-},{"./MetaActions":88,"./MetaComments":90,"./MetaDate":91,"./MetaVoting":92,"babel-runtime/helpers/interop-require-default":277}],88:[function(require,module,exports){
+},{"./MetaActions":88,"./MetaComments":90,"./MetaDate":91,"./MetaVoting":92,"babel-runtime/helpers/class-call-check":272,"babel-runtime/helpers/create-class":273,"babel-runtime/helpers/interop-require-default":277,"react":"react"}],88:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
