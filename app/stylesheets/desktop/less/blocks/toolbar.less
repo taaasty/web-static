@@ -601,6 +601,54 @@
   color: @toolbar-label-new-color;
 }
 
+// Buttons
+.toolbar__drops {
+  padding-top: 8px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  line-height: 0;
+  visibility: hidden;
+  transform: translate(-50%, 0);
+  transition: visibility .2s ease;
+}
+
+.toolbar__drop {
+  padding: 8px 0;
+  opacity: 0;
+  transform: scale(.6);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.toolbar {
+  &.state--open {
+    .toolbar__drops {
+      visibility: visible;
+    }
+
+    .toolbar__drop {
+      opacity: 1;
+      transform: scale(1);
+
+      &:nth-child(1) {
+        transition: opacity .3s ease, transform .3s ease;
+      }
+
+      &:nth-child(2) {
+        transition: opacity .5s ease, transform .5s ease;
+      }
+
+      &:nth-child(3) {
+        transition: opacity .7s ease, transform .7s ease;
+      }
+
+      &:nth-child(4) {
+        transition: opacity .9s ease, transform .9s ease;
+      }
+    }
+  }
+}
+
 // Types
 .toolbar--right {
   padding-left: 0;
@@ -679,17 +727,17 @@
 .toolbar--compose {
   .toolbar-size(@toolbar-size-lg);
   .toolbar-align(right);
-  background-color: @emerald;
-
-  &:hover {
-    background-color: lighten(@emerald, 8%);
-  }
+  background: none;
 
   .toolbar__toggle {
-    background: none;
+    background-color: @emerald;
+
+    &:hover {
+      background-color: lighten(@emerald, 8%);
+    }
 
     .icon {
-      font-size: 40px;
+      font-size: 34px;
     }
   }
 }

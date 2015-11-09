@@ -371,6 +371,7 @@
   .icon {
     margin: 2px;
     font-size: 38px;
+    line-height: 1;
   }
 
   &:hover,
@@ -382,6 +383,20 @@
   &.state--disable {
     background-color: @grey;
     color: @white;
+  }
+
+  .icon--hash {
+    font-size: 26px;
+  }
+}
+
+.button--emerald {
+  background-color: @emerald;
+  color: #fff;
+
+  &:hover {
+    background-color: lighten(@emerald, 8%);
+    color: #fff;
   }
 }
 
