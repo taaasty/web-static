@@ -13978,8 +13978,8 @@ Routes = {
   people_path: function() {
     return '/people';
   },
-  new_entry_url: function(userSlug) {
-    return '/~' + userSlug + '/new';
+  new_entry_url: function(userSlug, type) {
+    return "/~" + userSlug + "/new" + (type ? "#" + type : "");
   },
   new_anonymous_entry_url: function(userSlug) {
     return '/~' + userSlug + '/anonymous/new';

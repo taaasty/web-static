@@ -10,6 +10,8 @@ PadController = require './controllers/pad'
 numeral = require 'numeral'
 injectTapEventPlugin = require 'react-tap-event-plugin'
 FeedsUpdateService = require './services/FeedsUpdateService';
+EditorActionCreators = require './actions/editor';
+EntryConstants = require './constants/EntryConstants';
 
 initLocales = (locale, callback) ->
   numeral.language(locale)
@@ -49,12 +51,22 @@ initRoutes = ->
       return unless hasAccessBySlug(req.params.slug)
       PopupActions.showFriends('facebook')
 
+  EditorTarget =
+    index: (req) ->
+      return unless hasAccessBySlug(req.params.slug)
+      reqHash = window.location.hash.substr(1)
+      if (EntryConstants.ENTRY_TYPES.indexOf(reqHash) > -1)
+        EditorActionCreators.changeEntryType(reqHash)
+
   Aviator.setRoutes
     '/:slug':
       target: UserRouteTarget
       '/profile': 'profile'
       '/settings': 'settings'
       '/design_settings': 'design_settings'
+      '/new':
+        target: EditorTarget
+        '/': 'index'
       '/friends':
         '/requested':
           '/': 'showRequested'
