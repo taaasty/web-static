@@ -1,3 +1,6 @@
+MessagesPopupConversations = require './conversations';
+MessagesPopupThread = require './thread';
+
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
 THREAD_STATE                  = 'thread'
@@ -20,14 +23,16 @@ window.MessagesPopup = React.createClass
 
     switch @state.currentState
       when CONVERSATIONS_STATE
-        content         = <MessagesPopup_Conversations key="conversations" />
+        content         = <MessagesPopupConversations key="conversations" />
         transitionName  = 'conversations'
       when CREATE_NEW_CONVERSATION_STATE
         content         = <MessagesPopup_CreateNewConversation key="newConversation" />
         transitionName  = 'new-conversation'
       when THREAD_STATE
-        content         = <MessagesPopup_Thread conversationId={ this.state.currentConversationId }
-                                                key="thread" />
+        content         = <MessagesPopupThread
+                            conversationId={ this.state.currentConversationId }
+                            key="thread"
+                          />
         transitionName  = 'thread'
 
     unless @isConversationsState()

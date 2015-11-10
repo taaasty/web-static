@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { findDOMNode, Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import UserAvatar from '../../../../components/avatars/user_avatar';
+import UserAvatar from '../../../../components/avatars/UserAvatar';
 import Spinner from '../../../../../../shared/react/components/common/Spinner';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
