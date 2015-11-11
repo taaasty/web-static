@@ -352,6 +352,14 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
+  onboarding:
+    loadMore: (params) ->
+      url = ApiRoutes.onboarding()
+      key = Constants.api.USER_ONBOARDING_LOAD_MORE
+
+      abortPendingRequests(key);
+      _pendingRequests[key] = getRequest(url, params);
+
   flow:
     create: (formData) ->
       url = ApiRoutes.flows()
