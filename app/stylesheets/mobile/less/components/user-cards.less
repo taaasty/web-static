@@ -1,0 +1,84 @@
+.user-cards {
+  padding: @indent-base 0;
+}
+
+.user-card {
+  width: 50%;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
+
+.user-card__inner {
+  padding: @indent-base;
+}
+
+.user-card__link {
+  color: inherit;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.user-card__avatar {
+  width: 110px;
+  height: 110px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 14px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+
+  .follow-status {
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.user-card__name {
+  margin: 0 0 5px;
+  font-weight: normal;
+  font-size: 19px;
+  line-height: 23px;
+  font-family: @font-family-base;
+  word-wrap: break-word;
+}
+
+.user-card__text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 17px;
+  color: #888;
+}
+
+@media screen and (min-width: 480px) {
+  .user-card {
+    margin: @indent-base/2 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .user-card {
+    width: 33.3333%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .user-card {
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .user-card {
+    width: 20%;
+  }
+}
