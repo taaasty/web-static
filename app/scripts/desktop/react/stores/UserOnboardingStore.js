@@ -3,18 +3,13 @@ import AppDispatcher from '../dispatchers/dispatcher';
 import UserOnboardingConstants from '../constants/UserOnboardingConstants';
 
 const userList = {
-  users: [],
+  relationships: [],
   isLoading: false,
-  hasMore: false,
 };
 
 const actionMap = {
-  [UserOnboardingConstants.USER_ONBOARDING_SET_USERS](payload) {
-    userList.items = payload;
-  },
-
-  [UserOnboardingConstants.USER_ONBOARDING_SET_MORE](payload) {
-    userList.hasMore = payload;
+  [UserOnboardingConstants.USER_ONBOARDING_SET_RELATIONSHIPS](payload) {
+    userList.relationships = payload;
   },
 
   [UserOnboardingConstants.USER_ONBOARDING_SET_ISLOADING](payload) {

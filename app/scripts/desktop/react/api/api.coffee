@@ -353,9 +353,9 @@ Api =
       _pendingRequests[key] = getRequest url, data
 
   onboarding:
-    loadMore: (params) ->
-      url = ApiRoutes.onboarding()
-      key = Constants.api.USER_ONBOARDING_LOAD_MORE
+    load: (params) ->
+      url = ApiRoutes.relationships_to_url('friend') #ApiRoutes.onboarding()
+      key = Constants.api.USER_ONBOARDING_LOAD
 
       abortPendingRequests(key);
       _pendingRequests[key] = getRequest(url, params);

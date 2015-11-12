@@ -13750,6 +13750,9 @@ ApiRoutes = {
   signin_url: function() {
     return gon.api_host + '/v1/sessions';
   },
+  onboarding: function() {
+    return gon.api_host + "/v1/onboarding";
+  },
   signup_url: function() {
     return gon.api_host + '/v1/users';
   },

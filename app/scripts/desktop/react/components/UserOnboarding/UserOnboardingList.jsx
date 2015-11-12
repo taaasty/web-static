@@ -6,16 +6,18 @@ import Scroller from '../common/scroller/scroller';
 
 class UserOnboardingList {
   render() {
-    const { isLoading, users } = this.props;
+    const { isLoading, relationships: rels } = this.props;
 
     return (
       <div className="user-onboarding__list">
         <Scroller className="scroller--persons">
-          {users.length === 0
-             ? <din className="grid-full">
+          {rels.length === 0
+             ? <div className="grid-full">
                  <div className="grid-full__middle">
                    {isLoading
-                      ? <Spinner size={30} />
+                      ? <div className="user-onboarding__spinner-container">
+                          <Spinner size={30} />
+                        </div>
                       : <div className="popup__text">
                           {i18n.t('user_onboarding_empty_list')}
                         </div>
@@ -23,7 +25,7 @@ class UserOnboardingList {
                  </div>
                </div>
              : <ul className="persons">
-                 {users.map((user) => <UserOnboardingListItem key={user.id} user={user} />)}
+                 {rels.map((rel) => <UserOnboardingListItem key={rel.id} relationship={rel} />)}
                </ul>
           }
         </Scroller>
@@ -34,11 +36,11 @@ class UserOnboardingList {
 
 UserOnboardingList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  users: PropTypes.array.isRequired,
+  relationships: PropTypes.array.isRequired,
 };
 
 UserOnboardingList.defaultProps = {
-  users: [],
+  relationships: [],
 };
 
 export default UserOnboardingList;

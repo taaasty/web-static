@@ -31,3 +31,15 @@ class UserOnboardingListItem {
     );
   }
 }
+
+UserOnboardingListItem.propTypes = {
+  relationship: PropTypes.object.isRequired,
+};
+
+UserOnboardingListItem.defaultProps = {
+  relationship: {
+    user: {},
+  },
+};
+
+export default UserOnboardingListItem;

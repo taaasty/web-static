@@ -3,37 +3,45 @@ import React, { Component, PropTypes } from 'react';
 import UserOnboardingList from './UserOnboardingList';
 import UserOnboardingMoreButton from './UserOnboardingMoreButton';
 import UserOnboardingStore from '../../stores/UserOnboardingStore';
-import UserOnboardingActions from '../../actions/UserOnboardingActions';
+import * as UserOnboardingActions from '../../actions/UserOnboardingActions';
+
+const RELS_PER_PAGE = 6;
 
 class UserOnboarding extends Component {
-  state = this._syncWithStore()
+  state = Object.assign({}, this.getStoreState(), { page: 0 })
   componentWillMount() {
-    const { isLoading, users } = this.state;
+    const { isLoading, relationships: rels } = this.state;
     this.sync = this._syncWithStore.bind(this);
     UserOnboardingStore.addChangeListener(this.sync);
-    if (users.length === 0 && !isLoading) {
-      this.loadMore();
+    if (rels.length === 0 && !isLoading) {
+      UserOnboardingActions.load();
     }
   }
   componentWillUnmount() {
     UserOnboardingStore.removeChangeListener(this.sync);
   }
-  _syncWithStore() {
+  getStoreState() {
     return UserOnboardingStore.getState();
   }
-  loadMore() {
-    UserOnboardingActions.loadMore();
+  _syncWithStore() {
+    this.setState(this.getStoreState());
+  }
+  showMore() {
+    this.setState({ page: this.state.page + 1 });
   }
   render() {
-    const { isLoading, status, users } = this.state;
+    const { isLoading, page, relationships } = this.state;
+    const relationshipsPage = relationships.slice(page * RELS_PER_PAGE, (page + 1) * RELS_PER_PAGE);
+    const hasMore = (page + 1) * RELS_PER_PAGE < relationships.length;
+
     return (
       <div className="user-onboarding">
         <div className="user-onboarding__header">
           {i18n.t('user_onboarding_header')}
         </div>
         <div className="user-onboarding__body">
-          <UserOnboardingList isLoading={isLoading} users={users} />
-          {hasMore && <UserOnboardingMoreButton isLoading={isLoading} loadMore={this.loadMore} />}
+          <UserOnboardingList isLoading={isLoading} relationships={relationshipsPage} />
+          {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
         </div>
       </div>
     );

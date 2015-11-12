@@ -17,7 +17,7 @@ PopupActions =
     ReactApp.popupController.openWithBackground({
       Component: UserOnboarding,
       popupProps:
-        title: i18n.t('user_onboarding_header')
+        title: i18n.t('user_onboarding_title')
         className: 'popup--onboarding popup--dark'
         clue: 'userOnboarding'
     })

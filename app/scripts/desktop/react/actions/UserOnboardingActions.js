@@ -4,8 +4,7 @@ import NoticeService from '../services/Notice';
 import AppDispatcher from '../dispatchers/dispatcher';
 import {
   USER_ONBOARDING_SET_ISLOADING,
-  USER_ONBOARDING_SET_MORE,
-  USER_ONBOARDING_SET_USERS,
+  USER_ONBOARDING_SET_RELATIONSHIPS,
 } from '../constants/UserOnboardingConstants';
 
 function setIsLoading(status) {
@@ -15,18 +14,14 @@ function setIsLoading(status) {
   });
 }
 
-export function loadMore() {
+export function load() {
   setIsLoading(true);
-
-  return Api.onboarding.loadMore()
-    .then((usersData) => {
+  
+  return Api.onboarding.load()
+    .then((data) => {
       AppDispatcher.handleServerAction({
-        payload: usersData.items,
-        type: USER_ONBOARDING_SET_USERS,
-      });
-      AppDispatcher.handleServerAction({
-        payload: usersData.has_more,
-        type: USER_ONBOARDING_SET_MORE,
+        payload: data.relationships,
+        type: USER_ONBOARDING_SET_RELATIONSHIPS,
       });
     })
     .fail((xhr) => {
@@ -37,5 +32,5 @@ export function loadMore() {
         response: xhr.responseJSON,
       });
     })
-    .always(setIsLoading(false));
+    .always(() => setIsLoading(false));
 }
