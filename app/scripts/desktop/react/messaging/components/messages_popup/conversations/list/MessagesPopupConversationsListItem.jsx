@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import ConversationActions from '../../../../actions/ConversationActions';
 import ConversationsListItemText from './ConversationsListItemText';
 import ConversationsListItemEntry from './ConversationsListItemEntry';
-import { CONVERSATION_ENTRY } from '../../../../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION } from '../../../../constants/ConversationConstants';
 
 class MessagesPopupConversationsListItem {
   hasUnread() {
@@ -25,7 +25,7 @@ class MessagesPopupConversationsListItem {
       onClick: this.onClick.bind(this),
     };
 
-    return conversation.type === CONVERSATION_ENTRY
+    return conversation.type === PUBLIC_CONVERSATION
       ? <ConversationsListItemEntry {...props} />
       : <ConversationsListItemText {...props} />;
   }
