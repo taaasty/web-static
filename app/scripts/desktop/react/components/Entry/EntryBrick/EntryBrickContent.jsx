@@ -1,3 +1,4 @@
+import React, { PropTypes } from 'react';
 import ErrorService from '../../../../../shared/react/services/Error';
 import EntryBrickTextType from './EntryBrickTextType';
 import EntryBrickImageType from './EntryBrickImageType';
@@ -7,54 +8,57 @@ import EntryBrickLinkType from './EntryBrickLinkType';
 import EntryBrickSongType from './EntryBrickSongType';
 import EntryBrickCodeType from './EntryBrickCodeType';
 import EntryBrickUnknownType from './EntryBrickUnknownType';
+import {
+  ENTRY_TYPE_TEXT,
+  ENTRY_TYPE_ANONYMOUS,
+  ENTRY_TYPE_CONVO,
+  ENTRY_TYPE_IMAGE,
+  ENTRY_TYPE_VIDEO,
+  ENTRY_TYPE_QUOTE,
+  ENTRY_TYPE_LINK,
+  ENTRY_TYPE_SONG,
+  ENTRY_TYPE_CODE,
+} from '../../../constants/EntryConstants';
 
-const ENTRY_TEXT_TYPE = 'text',
-      ENTRY_IMAGE_TYPE = 'image',
-      ENTRY_VIDEO_TYPE = 'video',
-      ENTRY_QUOTE_TYPE = 'quote',
-      ENTRY_LINK_TYPE = 'link',
-      ENTRY_SONG_TYPE = 'song',
-      ENTRY_CODE_TYPE = 'code',
-      ENTRY_CONVO_TYPE = 'convo',
-      ENTRY_ANONYMOUS_TYPE = 'anonymous';
-
-let EntryBrickContent = React.createClass({
-  propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    hasModeration: React.PropTypes.bool.isRequired,
-    onEntryAccept: React.PropTypes.func.isRequired,
-    onEntryDecline: React.PropTypes.func.isRequired
-  },
-
+class EntryBrickContent {
   render() {
-    switch(this.props.entry.type) {
-      case ENTRY_TEXT_TYPE:
-      case ENTRY_ANONYMOUS_TYPE:
-      case ENTRY_CONVO_TYPE:
+    const { id, type } = this.props.entry;
+
+    switch(type) {
+      case ENTRY_TYPE_TEXT:
+      case ENTRY_TYPE_ANONYMOUS:
+      case ENTRY_TYPE_CONVO:
         return <EntryBrickTextType {...this.props} />;
-      case ENTRY_IMAGE_TYPE:
+      case ENTRY_TYPE_IMAGE:
         return <EntryBrickImageType {...this.props} />;
-      case ENTRY_VIDEO_TYPE:
+      case ENTRY_TYPE_VIDEO:
         return <EntryBrickVideoType {...this.props} />;
-      case ENTRY_QUOTE_TYPE:
+      case ENTRY_TYPE_QUOTE:
         return <EntryBrickQuoteType {...this.props} />;
-      case ENTRY_LINK_TYPE:
+      case ENTRY_TYPE_LINK:
         return <EntryBrickLinkType {...this.props} />;
-      case ENTRY_SONG_TYPE:
+      case ENTRY_TYPE_SONG:
         return <EntryBrickSongType {...this.props} />;
-      case ENTRY_CODE_TYPE:
+      case ENTRY_TYPE_CODE:
         return <EntryBrickCodeType {...this.props} />;
       default:
         ErrorService.notifyWarning('Неизвестный тип brick-поста', {
           componentName: this.constructor.displayName,
           method: 'render',
-          entryID: this.props.entry.id,
-          entryType: this.props.entry.type
+          entryID: id,
+          entryType: type
         });
 
         return <EntryBrickUnknownType {...this.props} />;
     }
-  },
-});
+  }
+}
+
+EntryBrickContent.propTypes = {
+  entry: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+  onEntryAccept: PropTypes.func.isRequired,
+  onEntryDecline: PropTypes.func.isRequired
+};
 
 export default EntryBrickContent;
