@@ -7,7 +7,7 @@ import ConversationsListItemEntryUsers from './ConversationsListItemEntryUsers';
 
 class ConversationsListItemEntry {
   render() {
-    const { conversation: { created_at, entry, last_message, recipient, notify, online, userList },
+    const { conversation: { created_at, entry, last_message, recipient, notify, online, users },
             hasUnread, onClick, showUsers } = this.props;
 
     const listItemClasses = classNames({
@@ -37,7 +37,7 @@ class ConversationsListItemEntry {
         <span className="messages__date">
           {moment(last_message ? last_message.created_at : created_at).format('D MMMM HH:mm')}
         </span>
-        {showUsers && <ConversationsListItemEntryUsers users={userList} />}
+        {showUsers && <ConversationsListItemEntryUsers users={users} />}
       </div>
     );
   }

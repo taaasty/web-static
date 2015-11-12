@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import MessagesPopupThreadForm from './MessagesPopupThreadForm';
 import ConversationsListItemEntry from '../conversations/list/ConversationsListItemEntry';
-import { CONVERSATION_ENTRY } from '../../../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread {
   render() {
@@ -13,7 +13,7 @@ class MessagesPopupThread {
 
     return (
       <div className="messages__section messages__section--thread">
-        {conversation.type === CONVERSATION_ENTRY &&
+        {conversation.type === PUBLIC_CONVERSATION &&
           <ConversationsListItemEntry
             conversation={conversation}
             hasUnread={conversation.unread_messages_count}
