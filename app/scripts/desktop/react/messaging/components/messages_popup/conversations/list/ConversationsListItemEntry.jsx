@@ -7,7 +7,7 @@ import ConversationsListItemEntryUsers from './ConversationsListItemEntryUsers';
 
 class ConversationsListItemEntry {
   render() {
-    const { conversation: { created_at, entry, last_message, recipient, notify, online, users },
+    const { conversation: { created_at, entry, last_message, notify, online, users },
             hasUnread, onClick, showUsers } = this.props;
 
     const listItemClasses = classNames({
@@ -28,7 +28,7 @@ class ConversationsListItemEntry {
            </button>
         }
         <span className="messages__user-avatar">
-          <UserAvatar user={recipient} size={ 35 } />
+          <UserAvatar user={entry.author} size={ 35 } />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-content">
