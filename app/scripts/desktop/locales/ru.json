@@ -16,6 +16,7 @@
   "messages_empty_list": "Здесь будут отображаться сообщения",
   "messages_popup_title": "Мои переписки",
   "messages_thread_title": "Переписка с __slug__",
+  "messages_entry_title": "Обсуждение записи",
   "notifications_empty_list": "Нет непросмотренных уведомлений",
   "notifications_loading_error": "Ошибка загрузки уведомлений",
   "auth_select_signin_method": "Выберите способ входа/регистрации",
