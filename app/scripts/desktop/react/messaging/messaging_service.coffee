@@ -1,3 +1,5 @@
+MessagesPopup = require './components/messages_popup';
+
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'

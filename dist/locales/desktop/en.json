@@ -15,6 +15,7 @@
   "messages_empty_list": "Your messages are shown here",
   "messages_popup_title": "My messages",
   "messages_thread_title": "Talk with__slug__",
+  "messages_entry_title": "Post discussion",
   "notifications_empty_list": "You have no new notifications",
   "notifications_loading_error": "Loading notifications error",
   "auth_select_signin_method": "Choose way to log in",
