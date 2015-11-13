@@ -4,7 +4,8 @@ let gon = {
   host: AppStorage.getItem('host') ? AppStorage.getItem('host') : 'http://taaasty.com/',
   api_host: AppStorage.getItem('api_host') ? AppStorage.getItem('api_host') : 'http://taaasty.com/api/',
   sound_asset_url: 'sounds/',
-  localesPath: '../locales',
+  locale: "ru",
+  localesPath: document.domain === 'taaasty.github.io' ? './locales' : '../locales',
   localesVersion: '1.0.0',
   app_stats: {
     anonymous_entries_in_day_count: '5',
