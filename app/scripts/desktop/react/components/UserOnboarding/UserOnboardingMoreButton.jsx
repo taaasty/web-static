@@ -12,11 +12,9 @@ class UserOnboardingMoreButton {
     const { isLoading } = this.props;
 
     return (
-      <div className="popup__more">
-        <button className="more-button" onClick={this.showMore.bind(this)}>
-          {isLoading ? <Spinner size={24} /> : i18n.t('load_more_button')}
-        </button>
-      </div>      
+      <button className="more-button" onClick={this.showMore.bind(this)}>
+        {isLoading ? <Spinner size={24} /> : i18n.t('load_more_button')}
+      </button>
     );
   }
 }

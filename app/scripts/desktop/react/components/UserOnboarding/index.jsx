@@ -31,7 +31,7 @@ class UserOnboarding extends Component {
   }
   render() {
     const { isLoading, page, relationships } = this.state;
-    const relationshipsPage = relationships.slice(page * RELS_PER_PAGE, (page + 1) * RELS_PER_PAGE);
+    const relationshipsPage = relationships.slice(0, (page + 1) * RELS_PER_PAGE);
     const hasMore = (page + 1) * RELS_PER_PAGE < relationships.length;
 
     return (
@@ -41,7 +41,9 @@ class UserOnboarding extends Component {
         </div>
         <div className="user-onboarding__body">
           <UserOnboardingList isLoading={isLoading} relationships={relationshipsPage} />
-          {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
+          <div className="popup__more">
+            {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
+          </div>
         </div>
       </div>
     );
