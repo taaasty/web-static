@@ -8,7 +8,9 @@ class MessagesPopupThread {
   render() {
     const id = this.props.conversationId;
     const conversation = ConversationsStore.getConversation(id);
-    const backgroundUrl = conversation.recipient.design.backgroundImageUrl;
+    const backgroundUrl = conversation.type === PUBLIC_CONVERSATION
+      ? conversation.entry.author.design.backgroundImageUrl
+      : conversation.recipient.design.backgroundImageUrl;
     const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
 
     return (
