@@ -14,7 +14,7 @@ const LEAVE_TIMEOUT = 300;
 const MessagesPopup = createClass({
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
   getInitialState() {
-    this.getStateFromStore();
+    return this.getStateFromStore();
   },
 
   componentDidMount() {
@@ -73,15 +73,18 @@ const MessagesPopup = createClass({
     case CONVERSATIONS_STATE:
       content = <MessagesPopupConversations key="conversations" />;
       transitionName = 'conversations';
+      break;
     case CREATE_NEW_CONVERSATION_STATE:
       content = <MessagesPopup_CreateNewConversation key="newConversation" />;
       transitionName = 'new-conversation';
+      break;
     case THREAD_STATE:
       content = <MessagesPopupThread
                   conversationId={ this.state.currentConversationId }
                   key="thread"
                 />;
       transitionName = 'thread';
+      break;
     }
 
     return (
@@ -96,7 +99,7 @@ const MessagesPopup = createClass({
         type="messages"
       >
         <div className="messages">
-          {!this.isConversationsState() && <MessagesPopup_UIBackButton onClick={this.handleBackButtonClick}/>}
+          {!this.isConversationsState() && <MessagesPopup_UIBackButton onClick={this.handleBackButtonClick} />}
           {content}
         </div>
       </Popup>
