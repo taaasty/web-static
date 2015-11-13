@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 class ConversationsListItemEntryContent {
   render() {
-    const { preview_image, text, url } = this.props.entry;
+    const { preview_image, title, url } = this.props.entry;
 
     return (
       <div>
@@ -16,7 +16,7 @@ class ConversationsListItemEntryContent {
           </div>
         }
         <div className="messages__dialog-text">
-          {text}
+          {title}
         </div>
       </div>
     );
