@@ -32,7 +32,7 @@ class ConversationsListItemEntry {
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-content">
-          <ConversationListItemEntryContent entry={entry} />
+          <ConversationsListItemEntryContent entry={entry} />
         </div>
         <span className="messages__date">
           {moment(last_message ? last_message.created_at : created_at).format('D MMMM HH:mm')}
