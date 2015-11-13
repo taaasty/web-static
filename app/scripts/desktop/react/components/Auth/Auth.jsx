@@ -37,7 +37,7 @@ global.Auth = React.createClass({
                    onClick={this.handleFacebookClick}>
                   {i18n.t('facebook')}
                 </a>
-                <a href="http://taaasty.ru/auth/site"
+                <a href="#"
                    className="site-auth-button"
                    onClick={this.handleEmailClick}>
                   {i18n.t('auth_signin_login')}
@@ -100,8 +100,8 @@ global.Auth = React.createClass({
     );
   },
 
-  handleEmailClick(e) {
-    e.preventDefault();
+  handleEmailClick(ev) {
+    ev.preventDefault();
     ReactApp.shellbox.show(Email);
   }
 });
