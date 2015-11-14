@@ -102,7 +102,7 @@
             <div class="page__inner">
                 <div class="page__paper">
                     <!-- Page Cover -->
-                    <div class="page-cover js-cover" style="background-image:url(images/bg.jpg);"></div>
+                    <div class="page-cover js-cover" style="background-image: url(http://taaasty.ru/assets/backgrounds/45/33/1842083_37623_42ce40fdba0cfe3e0cc15f68.jpg);"></div>
                     <!-- end Page Cover -->
                     <!-- Page Header -->
                     <header class="page-header">
@@ -165,18 +165,19 @@
                     <div class="page-body">
                       <!-- Content Area -->
                       <div class="content-area">
-                        <div class="content-area__bg" tlog-body=""></div>
+                        <div class="content-area__bg"></div>
                         <div class="content-area__inner">
-                            <!-- Flex Container -->
-                            <div class="flex-container">
-                                <button class="add-post-button">Добавить новую запись в свой дневник</button>
-                            </div>
-                            <!-- end Flex Container -->
-                          <article class="post post--image ng-scope" data-id="19187271" data-type="image" ng-controller="Post">
+                            <!-- <div class="flex-container">
+                                <a class="add-post-button" href="#">Добавить новую запись в свой дневник</a>
+                            </div> -->
+                          <article class="post post--image" data-id="19187271" data-type="image">
+                          <div class="post__fixbar">
+                            <p class="post__fixbar-text">Закрепить пост в прямом эфире на <input class="post__fixbar-input" type="text" value="5" /> часов за&nbsp;<span class="post__fixbar-sum">13 000</span>&nbsp;руб.</p>
+                            <a class="button button--emerald" href="#">Оплатить и закрепить.</a>
+                          </div>
                           <div class="post__content">
-                            <figure class="image"><img src="http://thumbor0.tasty0.ru/cR3S6yo2SujdW9y2KRCSwitXeGQ=/604x381/att/57/65/15900238_234360_19187271_44c72095e92b7e9cd26931f0.jpg" width="712" alt="" /></figure>
-
-                            <p></p>
+                            <figure class="image"><img src="http://thumbor0.tasty0.ru/unsafe/712x971/att/e0/9c/17421102_1f3f3276-00fa-4ab7-98a6-1d6caaeb48b5.jpg" width="712" alt="" /></figure>
+                            <span class="voting votable">2</span>
                             <span class="meta-bar">
                               <span class="meta-item meta-item_comments state--visible">
                                 <span class="meta__content">
@@ -230,12 +231,6 @@
                           </section>
 
                           </article>
-
-                          <!--
-                          <div class='return_from_permalink'>
-                            <haml_loud> link_to &quot;&amp;#x2190; обратно в #{current_site.gender(&quot;его&quot;, &quot;её&quot;)} тлог&quot;, tlog_url_for_entry(@entry), :class =&gt; &#39;f56&#39; </haml_loud>
-                          </div>
-                          -->
 
                           <!-- Pagination -->
                           <nav class="pagination">
