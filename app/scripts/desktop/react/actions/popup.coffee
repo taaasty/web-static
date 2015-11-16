@@ -1,4 +1,5 @@
 PinEntryPopup = require('../components/Editor/PinEntryPopup');
+UserOnboarding = require '../components/UserOnboarding';
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/Searchbox/Searchbox'
 
@@ -10,6 +11,15 @@ PopupActions =
         title: i18n.t('settings_header')
         className: 'popup--settings popup--dark'
         clue: 'settings'
+    })
+
+  showUserOnboarding: ->
+    ReactApp.popupController.openWithBackground({
+      Component: UserOnboarding,
+      popupProps:
+        title: i18n.t('user_onboarding_title')
+        className: 'popup--onboarding popup--dark'
+        clue: 'userOnboarding'
     })
 
   showDesignSettings: ->
