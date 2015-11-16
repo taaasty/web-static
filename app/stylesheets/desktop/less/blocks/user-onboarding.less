@@ -1,9 +1,5 @@
 .popup--onboarding {
   width: 500px;
-
-  .popup__more {
-    height: 40px;
-  }
 }
 
 .user-onboarding__header {
@@ -26,5 +22,12 @@
 }
 
 .user-onboarding__list {
-  height: 436px;
+  box-sizing: border-box;
+  height: 494px;
+  padding-bottom: 18px;
+
+  &.--has-more {
+    height: 436px;
+    padding-bottom: 0;
+  }
 }
