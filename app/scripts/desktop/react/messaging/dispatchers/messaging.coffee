@@ -72,7 +72,7 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
       files:           files
       content_html:    _.escape(content)
       conversation_id: conversationId
-      recipient_id:    recipient.id
+      recipient_id:    recipient?.id
       user_id:         currentUser.id
       uuid:            uuid
     }

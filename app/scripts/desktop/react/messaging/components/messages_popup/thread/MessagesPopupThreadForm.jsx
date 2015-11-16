@@ -15,6 +15,7 @@ class MessagesPopupThreadForm extends Component {
   }
   state = {
     user: window.CurrentUserStore.getUser(),
+    hasText: false,
     files: [],
     isLoading: false,
   }
@@ -39,12 +40,15 @@ class MessagesPopupThreadForm extends Component {
   getFileData(file) {
     return file;
   }
+  updateFormState() {
+    this.setState({ hasText: this.form && this.form.value !== '' });
+  }
   clearForm() {
     this.form.value = '';
-    this.setState({ files: [] });
+    this.setState({ hasText: false, files: [] });
   }
   msgReadyToSend() {
-    return ((this.form && this.form.value !== '') || this.state.files.length);
+    return (this.state.hasText || this.state.files.length);
   }
   sendMessage() {
     if (this.msgReadyToSend()) {
@@ -76,7 +80,7 @@ class MessagesPopupThreadForm extends Component {
           <div className="message-form__textarea-container">
             <textarea
                 className="message-form__textarea"
-                onChange={this.forceUpdate.bind(this)}
+                onChange={this.updateFormState.bind(this)}
                 onKeyDown={this.onKeyDown.bind(this)}
                 placeholder={i18n.t('new_message_placeholder')}
                 ref="messageForm"

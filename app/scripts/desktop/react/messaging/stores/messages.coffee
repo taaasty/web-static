@@ -1,3 +1,4 @@
+{ PUBLIC_CONVERSATION } = require '../constants/ConversationConstants';
 CHANGE_EVENT = 'change'
 
 _messages = {}
@@ -47,12 +48,18 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
   getMessageInfo: (message, conversationId) ->
     conversation = ConversationsStore.getConversation conversationId
     currentUser  = CurrentUserStore.getUser()
-    recipient    = conversation.recipient
-
-    if recipient.id == message.recipient_id
-      messageInfo = { type: 'outgoing', user: currentUser }
+    if conversation.type == PUBLIC_CONVERSATION
+      msgAuthor = conversation.users.filter((u) -> u.id == message.user_id)[0]
+      messageInfo = {
+        type: if message.user_id == currentUser.id then 'outgoing' else 'incoming'
+        user: msgAuthor
+      }
     else
-      messageInfo = { type: 'incoming', user: recipient }
+      recipient    = conversation.recipient
+      if recipient.id == message.recipient_id
+        messageInfo = { type: 'outgoing', user: currentUser }
+      else
+        messageInfo = { type: 'incoming', user: recipient }
 
     messageInfo
 
