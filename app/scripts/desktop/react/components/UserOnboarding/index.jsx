@@ -40,10 +40,12 @@ class UserOnboarding extends Component {
           {i18n.t('user_onboarding_header')}
         </div>
         <div className="user-onboarding__body">
-          <UserOnboardingList isLoading={isLoading} relationships={relationshipsPage} />
-          <div className="popup__more">
-            {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
-          </div>
+          <UserOnboardingList
+            hasMore={hasMore}
+            isLoading={isLoading}
+            relationships={relationshipsPage}
+          />
+          {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
         </div>
       </div>
     );

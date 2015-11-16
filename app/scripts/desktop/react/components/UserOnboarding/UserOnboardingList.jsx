@@ -1,15 +1,20 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import UserOnboardingListItem from './UserOnboardingListItem';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import Scroller from '../common/scroller/scroller';
 
 class UserOnboardingList {
   render() {
-    const { isLoading, relationships: rels } = this.props;
+    const { hasMore, isLoading, relationships: rels } = this.props;
+    const containerClasses = classNames({
+      'user-onboarding__list': true,
+      '--has-more': hasMore,
+    });
 
     return (
-      <div className="user-onboarding__list">
+      <div className={containerClasses}>
         <Scroller className="scroller--persons">
           {rels.length === 0
              ? <div className="grid-full">
