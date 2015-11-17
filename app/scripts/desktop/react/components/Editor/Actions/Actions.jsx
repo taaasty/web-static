@@ -98,7 +98,7 @@ class EditorActions extends Component {
     const { canPinEntry, pinnedTill } = this.props;
     const isPinned = this.isPinned();
 
-    if (!((isPinned && pinnedTill) || canPinEntry) || !this.isVotable()) {
+    if (true || !((isPinned && pinnedTill) || canPinEntry) || !this.isVotable()) {
       return null;
     }
 
