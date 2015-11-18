@@ -1,3 +1,5 @@
+Auth = require '../Auth';
+
 window.RecoveryShellbox = React.createClass
   mixins: [ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin]
 

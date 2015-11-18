@@ -1,3 +1,5 @@
+Auth = require '../../../Auth';
+
 EmailFooter = React.createClass
 
   render: ->

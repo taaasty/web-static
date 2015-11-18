@@ -12,6 +12,8 @@ injectTapEventPlugin = require 'react-tap-event-plugin'
 FeedsUpdateService = require './services/FeedsUpdateService';
 EditorActionCreators = require './actions/editor';
 EntryConstants = require './constants/EntryConstants';
+PostAuthService = require './services/PostAuthService';
+Auth = require './components/Auth';
 
 initLocales = (locale, callback) ->
   numeral.language(locale)
@@ -111,6 +113,9 @@ window.ReactApp =
 
     @shellbox = new ReactShellBox()
     @popup    = new ReactPopup()
+
+    PostAuthService.init(this, 'taaasty');
+    PostAuthService.restore();
 
     # Есть только у анонимов
     $('[invite-button]').click => @shellbox.show Auth

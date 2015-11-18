@@ -19,6 +19,7 @@
   "notifications_empty_list": "You have no new notifications",
   "notifications_loading_error": "Loading notifications error",
   "auth_select_signin_method": "Choose way to log in",
+  "auth_for_vote": "Register first for your vote being counted",
   "vkontakte": "Vkontakte",
   "facebook": "Facebook",
   "auth_signin_login": "Email or name",

@@ -1,39 +1,24 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
 import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
-import VotingComponent from '../../common/Voting';
+import Voting from '../../common/Voting';
 
-let EntryBrickMetabar = React.createClass({
-  propTypes: {
-    entry: ProjectTypes.tlogEntry.isRequired,
-    host_tlog_id: PropTypes.number,
-  },
-
-  render() {
-    return (
-      <span className="meta-bar">
-        {this.renderMetaVote()}
-        {this.renderMetaComments()}
-        {this.renderMetaTlog()}
-      </span>
-    );
-  },
-
+class EntryBrickMetabar {
   renderMetaVote() {
-    const { id, rating} = this.props.entry;
+    const { id, is_voteable, rating } = this.props.entry;
 
-    if (rating.is_voteable) {
+    if (is_voteable) {
       return (
         <span className="meta-item meta-item--vote">
           <span className="meta-item__content">
-            <VotingComponent entryID={id} rating={rating} />
+            <Voting entryID={id} rating={rating} />
           </span>
         </span>
       );
     }
-  },
-
+  }
   renderMetaComments() {
     const { comments_count: commentsCount, url } = this.props.entry;
 
@@ -43,15 +28,18 @@ let EntryBrickMetabar = React.createClass({
       return (
         <span className="meta-item meta-item--comments">
           <span className="meta-item__content">
-            <a href={url + '#comments'} title={title} className="meta-item__link">
+            <a
+              className="meta-item__link"
+              href={url + '#comments'}
+              title={title}
+            >
               {title}
             </a>
           </span>
         </span>
       );
     }
-  },
-
+  }
   renderMetaTlog() {
     const { entry: { author, tlog }, host_tlog_id } = this.props;
     const authorMeta = metabarAuthor({ host_tlog_id, tlog, author });
@@ -66,7 +54,7 @@ let EntryBrickMetabar = React.createClass({
               title={tlog.tag}
             >
               <span className="meta-item__ava">
-                <Avatar userpic={tlog.userpic} size={20} />
+                <Avatar size={20} userpic={tlog.userpic} />
               </span>
             </a>
             <span
@@ -77,8 +65,21 @@ let EntryBrickMetabar = React.createClass({
         </span>
       );
     }
+  }
+  render() {
+    return (
+      <span className="meta-bar">
+        {this.renderMetaVote()}
+        {this.renderMetaComments()}
+        {this.renderMetaTlog()}
+      </span>
+    );
+  }
+}
 
-  },
-});
+EntryBrickMetabar.propTypes = {
+  entry: ProjectTypes.tlogEntry.isRequired,
+  host_tlog_id: PropTypes.number,
+};
 
 export default EntryBrickMetabar;
