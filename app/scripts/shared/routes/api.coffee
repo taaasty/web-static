@@ -11,8 +11,7 @@ ApiRoutes =
   design_settings_cover_url:    (slug) -> gon.api_host + '/v1/design_settings/' + slug + '/cover'
   signin_url:                          -> gon.api_host + '/v1/sessions'
 
-  #FIXME: change to the actual value later
-  onboarding:                          -> "#{gon.api_host}/v1/onboarding"
+  onboarding_url:                      -> "#{gon.api_host}/v1/onboarding/users"
 
   # Users
   signup_url:          -> gon.api_host + '/v1/users'
