@@ -8,6 +8,9 @@ class ConversationsListItemEntryUserAvatar extends Component {
   state = {
     hover: false,
   }
+  stopPropagation(ev) {
+    ev.stopPropagation();
+  }
   onMouseEnter() {
     this.setState({ hover: true });
   }
@@ -36,7 +39,7 @@ class ConversationsListItemEntryUserAvatar extends Component {
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
         <UserAvatar user={user} size={30} />
-        <div className={dropdownClasses}>
+        <div className={dropdownClasses} onClick={this.stopPropagation}>
           <a
             className="messages__dropdown-item"
             href={user.tlog_url}

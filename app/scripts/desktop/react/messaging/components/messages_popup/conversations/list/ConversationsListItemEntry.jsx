@@ -28,7 +28,7 @@ class ConversationsListItemEntry {
            </button>
         }
         <span className="messages__user-avatar">
-          <UserAvatar user={entry.author} size={ 35 } />
+          <UserAvatar user={entry.author} size={35} />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-content">

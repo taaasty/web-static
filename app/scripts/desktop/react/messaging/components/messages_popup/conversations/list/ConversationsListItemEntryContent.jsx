@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import Image from '../../../../../../../shared/react/components/common/Image';
 
 class ConversationsListItemEntryContent {
   render() {
