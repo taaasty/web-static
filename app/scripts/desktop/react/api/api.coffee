@@ -354,7 +354,7 @@ Api =
 
   onboarding:
     load: (params) ->
-      url = ApiRoutes.relationships_to_url('friend') #ApiRoutes.onboarding()
+      url = ApiRoutes.onboarding_url()
       key = Constants.api.USER_ONBOARDING_LOAD
 
       abortPendingRequests(key);
