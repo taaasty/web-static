@@ -12428,8 +12428,12 @@ RelationshipsStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 global.gon = {
   env: 'development',
-  thumbor: 'http://thumbor0.tasty0.ru',
-  thumbor_http_loader: 'http://thumbor4.tasty0.ru'
+  thumbor: {
+    server_url: 'http://thumbor0.tasty0.ru'
+  },
+  thumbor_http_loader: {
+    server_url: 'http://thumbor4.tasty0.ru'
+  }
 };
 
 require('./mobile/bundlePrerender');
