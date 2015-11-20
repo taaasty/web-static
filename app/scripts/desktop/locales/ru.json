@@ -20,6 +20,7 @@
   "notifications_empty_list": "Нет непросмотренных уведомлений",
   "notifications_loading_error": "Ошибка загрузки уведомлений",
   "auth_select_signin_method": "Выберите способ входа/регистрации",
+  "auth_for_vote": "Чтобы Ваш голос был учтен необходимо зарегистрироваться",
   "vkontakte": "Вконтакте",
   "facebook": "Facebook",
   "auth_signin_login": "Емейл или Ник",

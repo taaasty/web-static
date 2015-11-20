@@ -128,7 +128,7 @@ global.UserAvatar = require './react/components/avatars/UserAvatar';
 # =            Authorization resources            =
 # ===============================================*/
 
-require './react/components/Auth/Auth'
+global.Auth = require './react/components/Auth'
 require './react/components/Auth/authorization/authorization'
 require './react/components/Auth/authorization/vk'
 require './react/components/Auth/authorization/facebook'

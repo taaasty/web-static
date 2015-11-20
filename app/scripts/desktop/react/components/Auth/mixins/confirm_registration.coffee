@@ -1,3 +1,5 @@
+Auth = require '../../Auth';
+
 USER_EXISTS_MESSAGE = 'user_creator/user_exists'
 
 ConfirmRegistrationMixin =
