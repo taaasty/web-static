@@ -94,6 +94,9 @@ window.ReactApp =
       console.log 'Locales loaded'
       ReactUjs.initialize()
       initRoutes()
+
+      if window.gon.showUserOnboarding
+        PopupActions.showUserOnboarding()
     )
 
     # Needed for onTouchTap
