@@ -1,14 +1,23 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import queryString from 'query-string';
 import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
-import PreviousEntriesButton from './PreviousEntriesButton';
+import PreviousEntriesButton from '../common/PreviousEntriesButton';
 
-class TlogPageBody {
+class TlogPageBody extends Component {
+  state = {
+    prevButtonVisible: false,
+  }
+  componentWillMount() {
+    const queryHash = queryString.parse(window.location.search);
+    this.setState({ prevButtonVisible: queryHash.since_entry_id });
+  }
   render() {
     const { bgStyle, host_tlog_id, hostTlogUrl } = this.props;
+    const { prevButtonVisible } = this.state;
 
     return (
       <div className="page-body">
-        {host_tlog_id && <PreviousEntriesButton href={hostTlogUrl} />}
+        {host_tlog_id && prevButtonVisible && <PreviousEntriesButton href={hostTlogUrl} />}
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle}/>
           <div className="content-area__inner">
@@ -21,14 +30,15 @@ class TlogPageBody {
 }
 
 TlogPageBody.propTypes = {
-  entries_info: PropTypes.object,
   bgStyle: PropTypes.object,
+  entries_info: PropTypes.object,
   hostTlogUrl: PropTypes.string,
+  host_tlog_id: PropTypes.number,
 };
 
 TlogPageBody.defaultProps = {
   bgStyle: { opacity: '1.0' },
-  hostTlogUrl: 'http://ya.ru',
+  hostTlogUrl: '',
 };
 
 export default TlogPageBody;
