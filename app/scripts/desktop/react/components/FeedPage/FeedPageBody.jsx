@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import queryString from 'query-string';
 import LiveLoadButtonContainer from './LiveLoadButtonContainer';
 import BestLoadButtonContainer from './BestLoadButtonContainer';
 import FriendsLoadButtonContainer from './FriendsLoadButtonContainer';
@@ -7,25 +8,34 @@ import LiveFlowLoadButtonContainer from './LiveFlowLoadButtonContainer';
 import EntryBricksContainer from '../EntryBricks/EntryBricksContainer';
 import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
 import FeedFilters from '../FeedFilters';
+import PreviousEntriesButton from '../common/PreviousEntriesButton';
+import Routes from '../../../../shared/routes/routes';
 
 const LoadButtons = {
-  'live': LiveLoadButtonContainer,
-  'best': BestLoadButtonContainer,
-  'friends': FriendsLoadButtonContainer,
-  'anonymous': AnonymousLoadButtonContainer,
-  'live_flow_entries': LiveFlowLoadButtonContainer,
+  'live': { component: LiveLoadButtonContainer, href: Routes.live_feed_path() },
+  'best': { component: BestLoadButtonContainer, href: Routes.best_feed_path() },
+  'friends': { component: FriendsLoadButtonContainer, href: Routes.friends_feed_path() },
+  'anonymous': { component: AnonymousLoadButtonContainer, href: Routes.live_anonymous_feed_path() },
+  'live_flow_entries': { component: LiveFlowLoadButtonContainer, href: Routes.live_flows_feed_path() },
 };
 
 class FeedPageBody extends Component {
   renderFilters() {
     const { entries_info: { limit }, feedType, locale,
             navFilters, navViewMode, viewMode } = this.props;
+    const queryHash = queryString.parse(window.location.search);
 
     if (!(navFilters.items.length || navViewMode)) {
       return null;
     }
 
-    const LoadButtonContainer = LoadButtons[feedType];
+    let UnreadButton = LoadButtons[feedType];
+
+    const button = queryHash.since_entry_id
+      ? <PreviousEntriesButton href={UnreadButton.href} />
+      : UnreadButton
+        ? <UnreadButton.component limit={limit} locale={locale} />
+        :null;
 
     return (
       <FeedFilters
@@ -33,7 +43,7 @@ class FeedPageBody extends Component {
         navViewMode={navViewMode}
         viewMode={viewMode}
       >
-        {LoadButtonContainer && <LoadButtonContainer limit={limit} locale={locale} />}
+        {button}
       </FeedFilters>
     );
   }
