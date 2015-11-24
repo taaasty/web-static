@@ -1,36 +1,6 @@
-let Hero = React.createClass({
-  propTypes: {
-    backgroundUrl: React.PropTypes.string.isRequired,
-    title: React.PropTypes.node.isRequired,
-    text: React.PropTypes.string,
-    actions: React.PropTypes.oneOfType([
-      React.PropTypes.element, React.PropTypes.arrayOf(React.PropTypes.element)
-    ]).isRequired
-  },
+import React, { Component, PropTypes } from 'react';
 
-  render() {
-    let heroStyles = {
-      backgroundImage: `url(${this.props.backgroundUrl})`
-    };
-
-    return (
-      <div className="hero hero--cover" style={heroStyles}>
-        <div className="hero__overlay" />
-        <div className="hero__box">
-          <div className="hero__head">
-            <div className="hero__title">
-              <span>{this.props.title}</span>
-            </div>
-          </div>
-          <div className="hero__text">
-            <span>{this.props.text}</span>
-          </div>
-          {this.renderActions()}
-        </div>
-      </div>
-    );
-  },
-
+class Hero extends Component {
   renderActions() {
     if (this.props.actions != null) {
       return (
@@ -42,6 +12,38 @@ let Hero = React.createClass({
 
     return null;
   }
-});
+  render() {
+    const { backgroundUrl, text, title } = this.props;
+    const heroStyles = {
+      backgroundImage: `url(${backgroundUrl})`,
+    };
+
+    return (
+      <div className="hero hero--cover" style={heroStyles}>
+        <div className="hero__overlay" />
+        <div className="hero__box">
+          <div className="hero__head">
+            <div className="hero__title">
+              <span>{title}</span>
+            </div>
+          </div>
+          <div className="hero__text">
+            <span>{text}</span>
+          </div>
+          {this.renderActions()}
+        </div>
+      </div>
+    );
+  }
+}
+
+Hero.propTypes = {
+  actions: PropTypes.oneOfType([
+    PropTypes.element, PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+  backgroundUrl: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  title: PropTypes.node.isRequired,
+};
 
 export default Hero;

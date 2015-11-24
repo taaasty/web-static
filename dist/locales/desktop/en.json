@@ -470,6 +470,9 @@
       "pin_entry": "Pin the post on the live feed",
       "pin_entry_promoted": "Post is paid till __date__",
       "pin_entry_awaiting_payment": "The post is awaiting payment"
+    },
+    "pagination": {
+      "tlog_root": "Read all posts"
     }
   },
   "messages": {
