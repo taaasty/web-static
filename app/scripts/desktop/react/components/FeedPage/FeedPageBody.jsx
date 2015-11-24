@@ -31,11 +31,11 @@ class FeedPageBody extends Component {
 
     let UnreadButton = LoadButtons[feedType];
 
-    const button = queryHash.since_entry_id
-      ? <PreviousEntriesButton href={UnreadButton.href} />
-      : UnreadButton
-        ? <UnreadButton.component limit={limit} locale={locale} />
-        :null;
+    const button = UnreadButton
+      ? queryHash.since_entry_id
+        ? <PreviousEntriesButton href={UnreadButton.href} />
+        : <UnreadButton.component limit={limit} locale={locale} />
+      :null;
 
     return (
       <FeedFilters
