@@ -30,7 +30,7 @@ class UserOnboardingList {
                  </div>
                </div>
              : <ul className="persons">
-                 {rels.map((rel) => <UserOnboardingListItem key={rel.id} relationship={rel} />)}
+                 {rels.map((rel) => <UserOnboardingListItem key={rel.user_id} relationship={rel} />)}
                </ul>
           }
         </Scroller>
