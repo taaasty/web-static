@@ -13,7 +13,7 @@ const HeroProfileDropdownMenuIgnoreItem = createClass({
     this.createRequest({
       url: ApiRoutes.change_my_relationship_url(this.props.userId, 'ignore'),
       method: 'POST',
-      success(relationship) {
+      success: (relationship) => {
         TastyEvents.emit(TastyEvents.keys.follow_status_changed(this.props.userId), relationship.state);
         this.props.onRequestEnd();
       },

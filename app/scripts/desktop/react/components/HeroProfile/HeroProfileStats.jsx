@@ -1,9 +1,11 @@
-/*global $, i18n, ReactGrammarMixin, HeroProfileStats_Popup, 
- HeroProfileStats_FollowersPopup, HeroProfileStats_FollowingsPopup,
- HeroProfileStats_TagsPopup */
+/*global $, i18n, ReactGrammarMixin */
 import React, { createClass, PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import HeroProfileStatsItem from './HeroProfileStatsItem';
+import HeroProfileStatsPopup from './HeroProfileStatsPopup';
+import HeroProfileStatsFollowersPopup from './HeroProfileStatsFollowersPopup';
+import HeroProfileStatsFollowingsPopup from './HeroProfileStatsFollowingsPopup';
+import HeroProfileStatsTagsPopup from './HeroProfileStatsTagsPopup';
 
 const HeroProfileStats = createClass({
   propTypes: {
@@ -26,37 +28,37 @@ const HeroProfileStats = createClass({
 
   handleFollowersClick($el) {
     React.render((
-      <HeroProfileStats_Popup
+      <HeroProfileStatsPopup
         title={i18n.t('followers')}
         toggle={$el}
       >
-        <HeroProfileStats_FollowersPopup tlogId={this.props.user.id} />
-      </HeroProfileStats_Popup>
+        <HeroProfileStatsFollowersPopup tlogId={this.props.user.id} />
+      </HeroProfileStatsPopup>
     ), this.container);
   },
   
   handleFollowingsClick($el) {
     React.render((
-      <HeroProfileStats_Popup
+      <HeroProfileStatsPopup
         title={i18n.t('followings')}
         toggle={$el}
       >
-        <HeroProfileStats_FollowingsPopup tlogId={this.props.user.id} />
-      </HeroProfileStats_Popup>
+        <HeroProfileStatsFollowingsPopup tlogId={this.props.user.id} />
+      </HeroProfileStatsPopup>
     ), this.container);
   },
 
   handleTagsClick($el) {
     React.render((
-      <HeroProfileStats_Popup
+      <HeroProfileStatsPopup
         title={i18n.t('tags')}
         toggle={$el}
       >
-        <HeroProfileStats_TagsPopup
+        <HeroProfileStatsTagsPopup
           userID={this.props.user.id}
           userSlug={this.props.user.slug}
         />
-      </HeroProfileStats_Popup>
+      </HeroProfileStatsPopup>
     ), this.container);
   },
 

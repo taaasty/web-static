@@ -13,7 +13,7 @@ const HeroProfileDropdownMenuReportItem = createClass({
     this.createRequest({
       url: ApiRoutes.tlog_report(this.props.userId),
       method: 'POST',
-      success() {
+      success: () => {
         NoticeService.notifySuccess(i18n.t('report_user_success'));
         this.props.onRequestEnd();
       },
