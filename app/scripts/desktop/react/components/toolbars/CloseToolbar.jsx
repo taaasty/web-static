@@ -1,10 +1,12 @@
-let CloseToolbar = React.createClass({
-  mixins: [TouchMixin],
+import React, { PropTypes } from 'react';
 
-  propTypes: {
-    onClick: React.PropTypes.func.isRequired
-  },
-
+class CloseToolbar {
+  componentWillMount() {
+    if (window.isMobile()) {
+      this.onMouseEnter = () => {};
+      this.onMouseLeave = () => {};
+    }
+  }
   render() {
     return (
       <div className="toolbar toolbar--close" onClick={this.props.onClick}>
@@ -14,6 +16,10 @@ let CloseToolbar = React.createClass({
       </div>
     );
   }
-});
+}
+
+CloseToolbar.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 export default CloseToolbar;

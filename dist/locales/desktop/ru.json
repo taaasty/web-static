@@ -476,6 +476,9 @@
       "pin_entry": "Закрепить пост в прямом эфире",
       "pin_entry_promoted": "Оплачен до __date__",
       "pin_entry_awaiting_payment": "Пост ожидает оплаты"
+    },
+    "pagination": {
+      "tlog_root": "Смотреть все записи"
     }
   },
   "messages": {
