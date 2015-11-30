@@ -270,6 +270,8 @@ global.Spinner = require '../shared/react/components/common/Spinner'
 global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
 global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
 
+global.EntryPageContainer = require './react/components/EntryPage';
+
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
 require './react/components/alerts/tasty_locking_alert'

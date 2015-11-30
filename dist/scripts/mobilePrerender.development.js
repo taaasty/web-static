@@ -13856,10 +13856,14 @@ Routes = {
   daylogPagination: function(userSlug, page) {
     return '/~' + userSlug + '/' + page;
   },
-  orders: function() {
-    return '/orders';
+  orders: function(orderId) {
+    if (orderId) {
+      return "/orders/" + orderId;
+    } else {
+      return "/orders";
+    }
   },
-  ordersNew: function(_entryID, _type) {
+  newOrder: function(_entryID, _type) {
     var entryID, type;
     entryID = window.encodeURIComponent(_entryID);
     type = window.encodeURIComponent(_type);

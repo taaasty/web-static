@@ -90,6 +90,30 @@ const components = {
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
   FeedPageBody: {},
+  EntryPageContainer: {
+    user: {
+      tag: '',
+      name: '',
+      userpic: {
+        default_colors: {},
+      },
+    },
+    stats: {},
+    commentator: {
+      userpic: {
+        default_colors: {},
+      },
+    },
+    entry: {
+      author: {
+        userpic: {},
+      },
+      tlog: {
+        userpic: {},
+      },
+      rating: {},
+    },
+  },
 };
 
 Object.keys(components).forEach((componentName) => {

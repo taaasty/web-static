@@ -11,7 +11,8 @@ class HeroProfileActionsContainer extends Component {
   componentDidMount() {
     const container = findDOMNode(this.refs.container);
     if (container) {
-      const currentColor = window.getComputedStyle(container).getPropertyValue('color');
+      // #fff is a fallback color to pass headless browser tests
+      const currentColor = window.getComputedStyle(container).getPropertyValue('color') || '#fff';
       const contrastColor = Color(currentColor).luminosity() > 0.5 ? 'black' : 'white';
 
       const extraStyles = `
