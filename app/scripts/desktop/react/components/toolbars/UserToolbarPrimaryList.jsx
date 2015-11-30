@@ -30,8 +30,6 @@ class UserToolbarPrimaryList {
           badgeClassName="messages-badge"
           badgeCount={unreadLiveFlowCount}
           icon="icon--hash"
-          label="new"
-          labelClassName="toolbar__label--new"
           title={i18n.t('toolbar_flows_item')}
           url={Routes.flows()}
         />
