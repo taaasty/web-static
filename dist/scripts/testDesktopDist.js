@@ -7866,7 +7866,31 @@ var components = {
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
-  FeedPageBody: {}
+  FeedPageBody: {},
+  EntryPageContainer: {
+    user: {
+      tag: '',
+      name: '',
+      userpic: {
+        default_colors: {}
+      }
+    },
+    stats: {},
+    commentator: {
+      userpic: {
+        default_colors: {}
+      }
+    },
+    entry: {
+      author: {
+        userpic: {}
+      },
+      tlog: {
+        userpic: {}
+      },
+      rating: {}
+    }
+  }
 };
 
 _Object$keys(components).forEach(function (componentName) {

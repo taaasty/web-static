@@ -473,6 +473,11 @@
     },
     "pagination": {
       "tlog_root": "Read all posts"
+    },
+    "entry": {
+      "pin_entry": "The post is pinned up on live feed",
+      "pinned": "The post is pinned itll __date__",
+      "awaiting_payment": "The post is awaiting payment to be pinned"
     }
   },
   "messages": {

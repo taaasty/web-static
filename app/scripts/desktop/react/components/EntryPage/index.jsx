@@ -1,8 +1,10 @@
+/*global i18n, Calendar */
 import React, { Component, PropTypes } from 'react';
 
-import HeroProfile from '../hero/profile';
-import EntryTlog from '../Entry/EntryTlog';
-import Calendar from '../Calendar';
+import HeroProfile from '../HeroProfile';
+import EntryTlog from '../Entry/EntryTlog/EntryTlog';
+import PinPostButton from './PinPostButton';
+//import Calendar from '../Calendar/calendar';
 
 class EntryPageContainer extends Component {
   render() {
@@ -26,6 +28,14 @@ class EntryPageContainer extends Component {
               <div className="content-area">
                 <div className="content-area__bg" style={{ backgroundImage: bgImage }} />
                 <div className="content-area__inner">
+                  {user.id === entry.author.id && !entry.is_private &&
+                   <PinPostButton
+                     entryId={entry.id}
+                     orderId={entry.fixed_order_id}
+                     status={entry.fixed_state}
+                     till={entry.fixed_up_at}
+                   />
+                  }
                   <EntryTlog
                     commentator={commentator}
                     entry={entry}
