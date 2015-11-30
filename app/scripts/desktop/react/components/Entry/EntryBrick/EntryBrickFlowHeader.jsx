@@ -18,7 +18,7 @@ class EntryBrickFlowHeader {
         height: flowAvatarSize,
       },
       url: flow.userpic.original_url,
-    }
+    };
 
     return(
       <div className="brick__flow-header-container" style={bgStyle}>
