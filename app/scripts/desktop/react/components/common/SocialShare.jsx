@@ -24,6 +24,10 @@ class SocialShare extends Component {
     el.innerHtml = title;
     return el.innerText || el.text || el.textContent;
   }
+  open(url, ev) {
+    ev.preventDefault();
+    window.open(url);
+  }
   render() {
     const { img, url } = this.props;
     const { title } = this.state;
@@ -31,11 +35,16 @@ class SocialShare extends Component {
     const eTitle = window.encodeURIComponent(title);
     const eUrl = window.encodeURIComponent(url);
 
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${eUrl}`;
+    const vkUrl = `http://vkontakte.ru/share.php?url=${eUrl}&title=${eTitle}&image=${eImg}`;
+    const twUrl = `http://twitter.com/share?url=${eUrl}&text=${eTitle}`;
+
     return (
       <div className="social-share">
         <a
-          href={`https://www.facebook.com/sharer/sharer.php?u=${eUrl}`}
-          target="_blank"
+          href={fbUrl}
+          onClick={this.open.bind(null, fbUrl)}
+          target="social"
         >
           <Tooltip
               placement="left"
@@ -47,8 +56,9 @@ class SocialShare extends Component {
           </Tooltip>
         </a>
         <a
-          href={`http://vkontakte.ru/share.php?url=${eUrl}&title=${eTitle}&image=${eImg}`}
-          target="_blank"
+          href={vkUrl}
+          onClick={this.open.bind(null, vkUrl)}
+          target="social"
         >
           <Tooltip
               placement="left"
@@ -60,8 +70,9 @@ class SocialShare extends Component {
           </Tooltip>
         </a>
         <a
-          href={`http://twitter.com/share?url=${eUrl}&text=${eTitle}`}
-          target="_blank"
+          href={twUrl}
+          onClick={this.open.bind(null, twUrl)}
+          target="social"
         >
           <Tooltip
               placement="left"
