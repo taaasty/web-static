@@ -1,4 +1,5 @@
 {
+  "tasty": "Tasty",
   "network_error": "Net error: __text__",
   "pusher_subscription_error": "Connection error ",
   "conversations_empty_list": "Your messages are shown here",
@@ -478,6 +479,11 @@
       "pin_entry": "The post is pinned up on live feed",
       "pinned": "The post is pinned itll __date__",
       "awaiting_payment": "The post is awaiting payment to be pinned"
+    },
+    "share": {
+      "vk": "Share on VKontakte",
+      "fb": "Share on Facebook",
+      "twitter": "Share on Twitter"
     }
   },
   "messages": {

@@ -271,6 +271,7 @@ global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
 global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
 
 global.EntryPageContainer = require './react/components/EntryPage';
+global.SocialShare = require './react/components/common/SocialShare';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'

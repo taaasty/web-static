@@ -4,9 +4,18 @@ import React, { Component, PropTypes } from 'react';
 import HeroProfile from '../HeroProfile';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
+import SocialShare from '../common/SocialShare';
 //import Calendar from '../Calendar/calendar';
 
 class EntryPageContainer extends Component {
+  getEntryImg(entry={}) {
+    return (entry.image_attachments && entry.image_attachments.length)
+      ? entry.image_attachments[0].image.url
+      : entry.author && entry.author.userpic.original_url
+        ? entry.author.userpic.original_url
+        : null;
+        
+  }
   render() {
     const { bgImage, bgStyle, commentator, entry, locale,
             relationship, stats, successDeleteUrl, user } = this.props;
@@ -53,6 +62,11 @@ class EntryPageContainer extends Component {
             </div>
           </div>
         </div>
+        <SocialShare
+          img={this.getEntryImg(entry)}
+          title={entry.title}
+          url={entry.url}
+        />
         <Calendar
           entryCreatedAt={entry.created_at}
           entryId={entry.id}
