@@ -1,28 +1,16 @@
-let Tooltip = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    placement: React.PropTypes.string,
-    container: React.PropTypes.string
-  },
+/*global $ */
+import React, { findDOMNode, PropTypes } from 'react';
 
-  getDefaultProps() {
-    return {
-      placement: 'top',
-      container: 'body'
-    };
-  },
-
+class Tooltip {
   componentDidMount() {
-    $(this.getDOMNode()).tooltip({
+    $(findDOMNode(this)).tooltip({
+      container: this.props.container,
       placement: this.props.placement,
-      container: this.props.container
     });
-  },
-
+  }
   componentWillUnmount() {
-    $(this.getDOMNode()).tooltip('destroy');
-  },
-
+    $(findDOMNode(this)).tooltip('destroy');
+  }
   render() {
     return (
       <span title={this.props.title}>
@@ -30,6 +18,17 @@ let Tooltip = React.createClass({
       </span>
     );
   }
-});
+}
+
+Tooltip.propTypes = {
+  container: PropTypes.string,
+  placement: PropTypes.string,
+  title: PropTypes.string.isRequired,
+};
+
+Tooltip.defaultProps = {
+  container: 'body',
+  placement: 'top',
+};
 
 export default Tooltip;
