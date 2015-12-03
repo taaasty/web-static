@@ -1,10 +1,13 @@
 /*global i18n, Calendar */
 import React, { Component, PropTypes } from 'react';
+import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
+import CurrentUserStore from '../../stores/current_user';
 
 import HeroProfile from '../HeroProfile';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
 import SocialShare from '../common/SocialShare';
+import Auth from '../Auth';
 //import Calendar from '../Calendar/calendar';
 
 class EntryPageContainer extends Component {
@@ -17,14 +20,14 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgImage, bgStyle, commentator, entry, locale,
-            relationship, stats, successDeleteUrl, user } = this.props;
+    const { bgImage, bgStyle, commentator, entry, isLogged,
+            locale, relationship, stats, successDeleteUrl, user } = this.props;
 
     return (
       <div className="page">
         <div className="page__inner">
           <div className="page__paper">
-            <div className="page-cover js-cover" style={{ bgStyle }} />
+            <div className="page-cover js-cover" style={{ backgroundImage: `url('${bgImage}')` }} />
             <header className="page-header">
               <HeroProfile
                 locale={locale}
@@ -35,7 +38,7 @@ class EntryPageContainer extends Component {
             </header>
             <div className="page-body">
               <div className="content-area">
-                <div className="content-area__bg" style={{ backgroundImage: bgImage }} />
+                <div className="content-area__bg" style={bgStyle} />
                 <div className="content-area__inner">
                   {user.id === entry.author.id && !entry.is_private &&
                    <PinPostButton
@@ -62,6 +65,7 @@ class EntryPageContainer extends Component {
             </div>
           </div>
         </div>
+        {!isLogged && <Auth fixed={true} locale={locale} />}
         <SocialShare
           img={this.getEntryImg(entry)}
           title={entry.title}
@@ -82,7 +86,9 @@ EntryPageContainer.propTypes = {
   bgImage: PropTypes.string.isRequired,
   bgStyle: PropTypes.object,
   commentator: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
+  isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
@@ -90,4 +96,11 @@ EntryPageContainer.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-export default EntryPageContainer;
+export default connectToStores(
+  EntryPageContainer,
+  [ CurrentUserStore ],
+  () => ({
+    currentUser: CurrentUserStore.getUser(),
+    isLogged: CurrentUserStore.isLogged(),
+  })
+);
