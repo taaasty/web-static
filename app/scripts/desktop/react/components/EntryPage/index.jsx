@@ -20,7 +20,7 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgImage, bgStyle, commentator, entry, isLogged,
+    const { bgImage, bgStyle, commentator, currentUserId, entry, isLogged,
             locale, relationship, stats, successDeleteUrl, user } = this.props;
 
     return (
@@ -40,7 +40,8 @@ class EntryPageContainer extends Component {
               <div className="content-area">
                 <div className="content-area__bg" style={bgStyle} />
                 <div className="content-area__inner">
-                  {user.id === entry.author.id && !entry.is_private &&
+                  {currentUserId && entry.author &&
+                   currentUserId === entry.author.id && !entry.is_private &&
                    <PinPostButton
                      entryId={entry.id}
                      orderId={entry.fixed_order_id}
@@ -48,13 +49,15 @@ class EntryPageContainer extends Component {
                      till={entry.fixed_up_at}
                    />
                   }
-                  <EntryTlog
-                    commentator={commentator}
-                    entry={entry}
-                    host_tlog_id={user.id}
-                    locale={locale}
-                    successDeleteUrl={successDeleteUrl}
-                  />
+                  <div>
+                    <EntryTlog
+                      commentator={commentator}
+                      entry={entry}
+                      host_tlog_id={user.id}
+                      locale={locale}
+                      successDeleteUrl={successDeleteUrl}
+                    />
+                  </div>
                   <nav className="pagination">
                     <a className="pagination__item" href={user.tlog_url}>
                       {i18n.t('buttons.pagination.tlog_root')}
@@ -86,7 +89,7 @@ EntryPageContainer.propTypes = {
   bgImage: PropTypes.string.isRequired,
   bgStyle: PropTypes.object,
   commentator: PropTypes.object,
-  currentUser: PropTypes.object.isRequired,
+  currentUserId: PropTypes.number,
   entry: PropTypes.object.isRequired,
   isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
@@ -100,7 +103,7 @@ export default connectToStores(
   EntryPageContainer,
   [ CurrentUserStore ],
   () => ({
-    currentUser: CurrentUserStore.getUser(),
+    currentUserId: CurrentUserStore.getUserID(),
     isLogged: CurrentUserStore.isLogged(),
   })
 );
