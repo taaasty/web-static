@@ -6,16 +6,18 @@ import ErrorService from '../../../../../shared/react/services/Error';
 
 import { ENTRY_TYPES } from '../../../constants/EntryConstants';
 
-export default class EntryTlog extends Component {
-  static propTypes = {
-    commentator: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    hideCommentForm: PropTypes.bool,
-    host_tlog_id: PropTypes.number,
-    moderation: PropTypes.object,
-    onDelete: PropTypes.func,
-    successDeleteUrl: PropTypes.string,
-  }
+const anonCommentator = {
+  userpic: {
+    default_colors: {
+      background: '#42d792',
+      name: '#ffffff',
+    },
+    kind: 'user',
+    symbol: '?',
+  },
+};
+
+class EntryTlog extends Component {
   state = {
     entry: this.props.entry,
     hasModeration: !!this.props.moderation
@@ -37,32 +39,29 @@ export default class EntryTlog extends Component {
     return this.state.hasModeration !== nextState.hasModeration;
   }
   render() {
-    const { commentator, entry, host_tlog_id } = this.props;
-
-    let actions = {
-      onAddToFavorites: ::this.addToFavorites,
-      onRemoveFromFavorites: ::this.removeFromFavorites,
-      onAddToWatching: ::this.addToWatching,
-      onRemoveFromWatching: ::this.removeFromWatching,
-      onReport: ::this.report,
-      onDelete: ::this.delete,
-      onAccept: ::this.accept,
-      onDecline: ::this.decline
-    };
+    const { commentator: _commentator, entry, host_tlog_id } = this.props;
+    const commentator = _commentator || anonCommentator;
 
     return (
       <article
+        className={this.getEntryClasses()}
         data-id={entry.id}
         data-time={entry.created_at}
-        className={this.getEntryClasses()}
       >
         <EntryTlogContent
-          {...actions}
-          entry={entry}
           commentator={commentator}
+          entry={entry}
           hasModeration={this.state.hasModeration}
           hideCommentForm={this.props.hideCommentForm}
           host_tlog_id={host_tlog_id}
+          onAccept={this.accept.bind(this)}
+          onAddToFavorites={this.addToFavorites.bind(this)}
+          onAddToWatching={this.addToWatching.bind(this)}
+          onDecline={this.decline.bind(this)}
+          onDelete={this.delete.bind(this)}
+          onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
+          onRemoveFromWatching={this.removeFromWatching.bind(this)}
+          onReport={this.report.bind(this)}
         />
       </article>
     );
@@ -101,7 +100,7 @@ export default class EntryTlog extends Component {
       acceptButtonText: i18n.t('report_entry_button'),
       onAccept: () => {
         EntryActionCreators.report(this.props.entry.id);
-      }
+      },
     });
   }
   delete() {
@@ -166,3 +165,15 @@ export default class EntryTlog extends Component {
     return `post post--${typeClass}`;
   }
 }
+
+EntryTlog.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hideCommentForm: PropTypes.bool,
+  host_tlog_id: PropTypes.number,
+  moderation: PropTypes.object,
+  onDelete: PropTypes.func,
+  successDeleteUrl: PropTypes.string,
+};
+
+export default EntryTlog;

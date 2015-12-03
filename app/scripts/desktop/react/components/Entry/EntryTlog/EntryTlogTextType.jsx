@@ -8,9 +8,9 @@ import EntryTlogComments from './EntryTlogComments';
 
 export default class EntryTlogTextType {
   static propTypes = {
-    entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
+    entry: PropTypes.object.isRequired,
+    hasModeration: PropTypes.bool.isRequired,
   }
   render() {
     const { is_private, text } = this.props.entry;

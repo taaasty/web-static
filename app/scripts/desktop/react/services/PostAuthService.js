@@ -1,6 +1,8 @@
+/*global i18n */
 import EntryActionCreators from '../actions/Entry';
 import CurrentUserStore from '../stores/current_user';
 import Auth from '../components/Auth';
+import NoticeService from './Notice';
 
 /*
  пока решаем проблему хранения действия через actionMap и sessionStorage/localStorage
@@ -8,7 +10,16 @@ import Auth from '../components/Auth';
  */
 
 const actionMap = {
-  'vote': EntryActionCreators.vote,
+  'vote': {
+    action: EntryActionCreators.vote,
+    textReason: 'auth_for_vote',
+    textComplete: 'auth_for_vote_complete',
+  },
+  'comment': {
+    action: EntryActionCreators.createComment,
+    textReason: 'auth_for_comment',
+    textComplete: 'auth_for_comment_complete',
+  },
 };
 
 const ss = window.sessionStorage;
@@ -50,21 +61,25 @@ function PostAuthService() {
   }
 
   function runDelayed([ key, args ]) {
-    const f = actionMap[key.replace(reg, '')];
+    const a = actionMap[key.replace(reg, '')];
     const isLogged = CurrentUserStore.isLogged();
 
-    if (isLogged && f) {
-      f.apply(null, args);
+    if (isLogged && a) {
+      a.action.apply(null, args)
+        .then(() => {
+          NoticeService.notifySuccess(i18n.t(a.textComplete));
+        });
       ss.removeItem(key);
     }
   }
 
-  function run(key, reason, cb, ...args) {
+  function run(key, cb, ...args) {
     if (CurrentUserStore.isLogged()) {
       cb(...args);
     } else {
+      const a = actionMap[key];
       delayAction(key, args);
-      app.shellbox.show(Auth, { text: reason });
+      app.shellbox.show(Auth, { text: a.textReason });
     }
   }
 
