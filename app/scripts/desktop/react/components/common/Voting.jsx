@@ -51,7 +51,6 @@ export default class Voting extends Component {
 
     PostAuthService.run(
       'vote',
-      'auth_for_vote',
       () => {
         this.setState({ isProcess: true });
         EntryActionCreators.vote(this.props.entryID)

@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import EntryTlogCommentForm from './EntryTlogCommentForm';
 
@@ -5,42 +6,11 @@ const FORM_SHOW_STATE = 'show',
       FORM_LINK_STATE = 'link',
       FORM_HIDDEN_STATE = 'hidden';
 
-export default class EntryTlogCommentCreateForm extends Component {
-  static propTypes = {
-    entryID: PropTypes.number.isRequired,
-    commentator: PropTypes.object.isRequired,
-    hideCommentForm: PropTypes.bool,
-    totalCommentsCount: PropTypes.number.isRequired,
-    process: PropTypes.bool,
-  }
+class EntryTlogCommentCreateForm extends Component {
   state = {
     currentState: this.props.hideCommentForm
       ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
       : FORM_SHOW_STATE,
-  }
-  render() {
-    switch(this.state.currentState) {
-      case FORM_SHOW_STATE:
-        return (
-          <EntryTlogCommentForm
-            commentator={this.props.commentator}
-            onCancel={::this.close}
-            onSubmit={this.props.onCommentCreate}
-            process={this.props.process}
-            ref="form"
-          />
-        );
-      case FORM_LINK_STATE:
-        return (
-          <div className="comments__more">
-            <a className="comments__more-link" onClick={::this.open}>
-              {i18n.t('comment_more_link')}
-            </a>
-          </div>
-        );
-      default:
-        return null;
-    }
   }
   clear() {
     if (this.state.currentState === FORM_SHOW_STATE) {
@@ -57,7 +27,7 @@ export default class EntryTlogCommentCreateForm extends Component {
     }
   }
   close() {
-    let newState = this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE;
+    const newState = this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE;
     this.setState({ currentState: newState });
   }
   open() {
@@ -65,4 +35,41 @@ export default class EntryTlogCommentCreateForm extends Component {
       this.refs.form.focus();
     });
   }
+  render() {
+    const { commentator, onCommentCreate, process } = this.props;
+
+    switch(this.state.currentState) {
+      case FORM_SHOW_STATE:
+        return (
+          <EntryTlogCommentForm
+            commentator={commentator}
+            onCancel={this.close.bind(this)}
+            onSubmit={onCommentCreate}
+            process={process}
+            ref="form"
+          />
+        );
+      case FORM_LINK_STATE:
+        return (
+          <div className="comments__more">
+            <a className="comments__more-link" onClick={this.open.bind(this)}>
+              {i18n.t('comment_more_link')}
+            </a>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }
 }
+
+EntryTlogCommentCreateForm.propTypes = {
+  commentator: PropTypes.object.isRequired,
+  entryID: PropTypes.number.isRequired,
+  hideCommentForm: PropTypes.bool,
+  onCommentCreate: PropTypes.func,
+  process: PropTypes.bool,
+  totalCommentsCount: PropTypes.number.isRequired,
+};
+
+export default EntryTlogCommentCreateForm;

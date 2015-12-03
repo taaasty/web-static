@@ -3,6 +3,7 @@ import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogCommentCreateForm from './EntryTlogCommentCreateForm';
 import EntryTlogCommentList from './EntryTlogCommentList';
 import EntryTlogCommentsLoadMore from './EntryTlogCommentsLoadMore';
+import PostAuthService from '../../../services/PostAuthService';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
@@ -20,12 +21,12 @@ export default class EntryTlogComments extends Component {
     comments: this.props.entry.comments || [],
     totalCount: this.props.entry.comments_count,
     processCreate: false,
-    loadingMore: false
+    loadingMore: false,
   }
   render() {
     return (
       <section className="comments">
-        {::this.renderLoadMoreButton()}
+        {this.renderLoadMoreButton()}
         {this.renderCommentList()}
         {this.renderCommentForm()}
       </section>
@@ -35,63 +36,66 @@ export default class EntryTlogComments extends Component {
     if (this.state.totalCount > this.state.comments.length) {
       return (
         <EntryTlogCommentsLoadMore 
-            totalCount={this.state.totalCount}
-            loadedCount={this.state.comments.length}
-            limit={this.props.limit}
-            loading={this.state.loadingMore}
-            onLoadMore={::this.loadMore} />
+          limit={this.props.limit}
+          loadedCount={this.state.comments.length}
+          loading={this.state.loadingMore}
+          onLoadMore={this.loadMore.bind(this)}
+          totalCount={this.state.totalCount}
+        />
       );
     }
   }
   renderCommentList() {
     if (this.state.comments.length) {
-      let actions = {
-        onCommentReport: ::this.reportComment,
-        onCommentDelete: ::this.deleteComment,
-        onCommentUpdate: ::this.updateComment,
-        onCommentReply: ::this.replyComment
-      };
       return (
-        <EntryTlogCommentList {...actions}
-            comments={this.state.comments}
-            commentator={this.props.commentator}
-            entryUrl={this.props.entry.url} />
-      );
-    }
-  }
-  renderCommentForm() {
-    if (this.props.commentator) {
-      const actions = {
-        onCommentCreate: ::this.createComment
-      };
-
-      return (
-        <EntryTlogCommentCreateForm {...this.props} {...actions}
-          ref="createForm"
-          entryID={this.props.entry.id}
-          hideCommentForm={this.props.hideCommentForm}
-          totalCommentsCount={this.state.totalCount}
-          process={this.state.processCreate}
+        <EntryTlogCommentList
+          commentator={this.props.commentator}
+          comments={this.state.comments}
+          entryUrl={this.props.entry.url}
+          onCommentDelete={this.deleteComment.bind(this)}
+          onCommentReply={this.replyComment.bind(this)}
+          onCommentReport={this.reportComment.bind(this)}
+          onCommentUpdate={this.updateComment.bind(this)}
         />
       );
     }
   }
+  renderCommentForm() {
+    return (
+      <EntryTlogCommentCreateForm {...this.props}
+        ref="createForm"
+        entryID={this.props.entry.id}
+        hideCommentForm={this.props.hideCommentForm}
+        onCommentCreate={this.createComment.bind(this)}
+        totalCommentsCount={this.state.totalCount}
+        process={this.state.processCreate}
+      />
+    );
+  }
   createComment(text) {
-    this.setState({ processCreate: true });
+    const { id } = this.props.entry;
 
-    EntryActionCreators.createComment(this.props.entry.id, text)
-      .then((comment) => {
-        this.setState({
-          comments: this.state.comments.concat(comment),
-          totalCount: this.state.totalCount + 1
-        }, () => {
-          $(document).trigger('domChanged');
-        });
-        this.refs.createForm.clear();
-      })
-      .always(() => {
-        this.setState({ processCreate: false });
-      });
+    PostAuthService.run(
+      'comment',
+      () => {
+        this.setState({ processCreate: true });
+        EntryActionCreators.createComment(id, text)
+          .then((comment) => {
+            this.setState({
+              comments: this.state.comments.concat(comment),
+              totalCount: this.state.totalCount + 1,
+            }, () => {
+              $(document).trigger('domChanged');
+            });
+            this.refs.createForm.clear();
+          })
+          .always(() => {
+            this.setState({ processCreate: false });
+          });
+      },
+      id,
+      text
+    );
   }
   replyComment(username) {
     this.refs.createForm.reply(username);
@@ -150,7 +154,7 @@ export default class EntryTlogComments extends Component {
         let newComments = data.comments.concat(this.state.comments);
         this.setState({
           comments: data.comments.concat(this.state.comments),
-          totalCount: data.total_count
+          totalCount: data.total_count,
         }, () => {
           $(document).trigger('domChanged');
         });
