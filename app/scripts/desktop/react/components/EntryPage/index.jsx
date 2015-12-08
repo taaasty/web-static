@@ -8,7 +8,7 @@ import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
 import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
-//import Calendar from '../Calendar/calendar';
+import Calendar from '../Calendar';
 
 class EntryPageContainer extends Component {
   getEntryImg(entry={}) {

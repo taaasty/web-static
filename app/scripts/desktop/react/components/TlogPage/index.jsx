@@ -7,9 +7,9 @@ import HeroProfile from '../HeroProfile';
 import TlogPageBody from './TlogPageBody';
 import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
-//import Calendar from '../Calendar';
+import Calendar from '../Calendar';
 
-const defaultUserpic = '//';
+const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageContainer extends Component {
   getShareImg(user) {
@@ -18,8 +18,9 @@ class TlogPageContainer extends Component {
       : defaultUserpic;
   }
   render() {
-    const { bgImage, bgStyle, entries_info, isLogged, loadUrl, locale,
-            nextPageFieldName, nextPageParamName, relationship, stats, user } = this.props;
+    const { bgImage, bgStyle, currentUserId, entries_info, isLogged, loadUrl,
+            locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
+            relationship, stats, user } = this.props;
 
     return (
       <div className="page">
@@ -36,12 +37,16 @@ class TlogPageContainer extends Component {
             </header>
             <TlogPageBody
               bgStyle={bgStyle}
+              currentUserId={currentUserId}
               entries_info={entries_info}
               hostTlogUrl={user.tlog_url}
               loadUrl={loadUrl}
               locale={locale}
               nextPageFieldName={nextPageFieldName}
               nextPageParamName={nextPageParamName}
+              nextPageUrl={nextPageUrl}
+              prevPageUrl={prevPageUrl}
+              user={user}
             />
           </div>
         </div>
@@ -63,12 +68,15 @@ class TlogPageContainer extends Component {
 TlogPageContainer.propTypes = {
   bgImage: PropTypes.string.isRequired,
   bgStyle: PropTypes.object,
+  currentUserId: PropTypes.number,
   entries_info: PropTypes.object,
   isLogged: PropTypes.bool,
   loadUrl: PropTypes.string,
   locale: PropTypes.string.isRequired,
   nextPageFieldName: PropTypes.string,
   nextPageParamName: PropTypes.string,
+  nextPageUrl: PropTypes.string,
+  prevPageUrl: PropTypes.string,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
@@ -81,6 +89,7 @@ export default connectToStores(
   TlogPageContainer,
   [ CurrentUserStore ],
   () => ({
+    currentUserId: CurrentUserStore.getUserID(),
     isLogged: CurrentUserStore.isLogged,
   })
 );
