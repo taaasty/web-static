@@ -243,3 +243,27 @@ gulp.task('[D][P] Scripts', () => {
       bundleLogger.end(outputName);
     });
 });
+
+gulp.task('[D][P] GA', () => {
+  const { dest, entries, extensions, outputName } = config.production.ga;
+
+  const bundler = browserify({
+    cache: {},
+    packageCache: {},
+    entries: entries,
+    extensions: extensions,
+  });
+
+  bundleLogger.start(outputName);
+
+  return bundler
+    .transform('babelify', babelifyOpts)
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(outputName))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(dest))
+    .on('end', () => {
+      bundleLogger.end(outputName);
+    });
+});

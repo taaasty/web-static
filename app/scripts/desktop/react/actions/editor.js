@@ -244,12 +244,25 @@ let EditorActionCreators = {
         AppDispatcher.handleServerAction({
           type: EditorConstants.ENTRY_SAVE_SUCCESS,
         });
+
         NoticeService.closeAll();
-        TastyLockingAlertController.show({
-          title: i18n.t('editor_alert_header'),
-          message: i18n.t('editor_create_success'),
-          action: () => resolve(entry),
-        });
+
+        function redirect() {
+          TastyLockingAlertController.show({
+            title: i18n.t('editor_alert_header'),
+            message: i18n.t('editor_create_success'),
+            action: () => resolve(entry),
+          });
+        }
+
+        if (window.ga) {
+          ga('send', 'event', 'UX',
+             entry.is_private ? 'CreateAnonymous' : 'CreatePost',
+             entry.type, { hitCallback: redirect });
+        } else {
+          redirect();
+        }
+        
       }
 
       function onSuccessEdit(entry) {

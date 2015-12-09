@@ -5,11 +5,16 @@ import ErrorService from '../../../shared/react/services/Error';
 let RelationshipActionCreators = {
   unfollow(objectID, subjectID) {
     return Api.relationship.unfollow(objectID, subjectID)
+      .then((data) => {
+        if (window.ga && data.user && data.user.is_flow) {
+          window.ga('send', 'event', 'UX', 'UnFollowFlow', data.user.name);
+        }
+      })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Отписка от тлога', {
           method: 'RelationshipActionCreators.unfollow(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -20,18 +25,23 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Отписка тлога от себя', {
           method: 'RelationshipActionCreators.unfollowFromYourself(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
 
   follow(objectID, subjectID) {
     return Api.relationship.follow(objectID, subjectID)
+      .then((data) => {
+        if (window.ga && data.user && data.user.is_flow) {
+          window.ga('send', 'event', 'UX', 'FollowFlow', data.user.name);
+        }
+      })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Подписка на тлог', {
           method: 'RelationshipActionCreators.follow(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -42,7 +52,7 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Отмена заявки на подписку на тлог', {
           method: 'RelationshipActionCreators.cancel(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -53,7 +63,7 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Игнорирование тлога', {
           method: 'RelationshipActionCreators.ignore(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -64,7 +74,7 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Подтверждение запроса на дружбу', {
           method: 'RelationshipActionCreators.approve(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -75,7 +85,7 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Отказ запроса на дружбу', {
           method: 'RelationshipActionCreators.decline(objectID, subjectID)',
           methodArguments: {objectID, subjectID},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
   },
@@ -86,10 +96,10 @@ let RelationshipActionCreators = {
         ErrorService.notifyErrorResponse('Загрузка списка отношений', {
           method: 'RelationshipActionCreators.load(url, sincePosition, limit)',
           methodArguments: {url, sincePosition, limit},
-          response: xhr.responseJSON
+          response: xhr.responseJSON,
         });
       });
-  }
+  },
 };
 
 export default RelationshipActionCreators;
