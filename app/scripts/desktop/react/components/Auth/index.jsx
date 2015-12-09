@@ -6,6 +6,7 @@ import ApiRoutes from '../../../../shared/routes/api';
 class Auth extends Component {
   handleEmailClick(ev) {
     ev.preventDefault();
+    ev.stopPropagation();
     ReactApp.shellbox.show(Email);
   }
   renderEntriesCount() {

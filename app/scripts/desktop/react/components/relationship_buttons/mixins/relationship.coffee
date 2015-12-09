@@ -12,6 +12,8 @@ window.RelationshipMixin =
       success: (data) =>
         @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
+        if window.ga
+          ga('send', 'event', 'UX', 'FollowTlog', data.user?.name)
       error: (data) =>
         @startErrorTimer()
         NoticeService.errorResponse data
@@ -28,6 +30,8 @@ window.RelationshipMixin =
       success: (data) =>
         @safeUpdateState relationship: data
         TastyEvents.trigger TastyEvents.keys.follow_status_changed(data.user_id), [data.state]
+        if window.ga
+          ga('send', 'event', 'UX', 'UnFollowTlog', data.user?.name)
       error: (data) =>
         @startErrorTimer()
         NoticeService.errorResponse data

@@ -9,7 +9,8 @@ gulp.task('dist', (cb) => {
   runSequence(
     ['[S] Clean'],
     ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts',
-     '[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts'],
+     '[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts',
+     '[D][P] GA'],
     ['[D] Dist tests', '[M] Dist tests'],
   cb);
 });
@@ -17,6 +18,8 @@ gulp.task('dist', (cb) => {
 gulp.task('build', ['[S] Clean'], (cb) => {
   runSequence(['buildDesktop', 'buildMobile'], cb);
 });
+
+gulp.task('ga', ['[D][P] GA']);
 
 gulp.task('buildDesktop', ['[S] Clean'], (cb) => {
   runSequence([

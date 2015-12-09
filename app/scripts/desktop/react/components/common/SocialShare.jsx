@@ -24,9 +24,13 @@ class SocialShare extends Component {
     el.innerHtml = title;
     return el.innerText || el.text || el.textContent;
   }
-  open(url, ev) {
+  open(type, url, ev) {
     ev.preventDefault();
-    window.open(url);
+    if (window.ga) {
+      window.ga('send', 'event', 'UX', 'ShareSocial', type);
+    } else {
+      window.open(url);
+    }
   }
   render() {
     const { img, url } = this.props;
@@ -43,7 +47,7 @@ class SocialShare extends Component {
       <div className="social-share">
         <a
           href={fbUrl}
-          onClick={this.open.bind(null, fbUrl)}
+          onClick={this.open.bind(null, 'Facebook', fbUrl)}
           target="social"
         >
           <Tooltip
@@ -57,7 +61,7 @@ class SocialShare extends Component {
         </a>
         <a
           href={vkUrl}
-          onClick={this.open.bind(null, vkUrl)}
+          onClick={this.open.bind(null, 'Vk', vkUrl)}
           target="social"
         >
           <Tooltip
@@ -71,7 +75,7 @@ class SocialShare extends Component {
         </a>
         <a
           href={twUrl}
-          onClick={this.open.bind(null, twUrl)}
+          onClick={this.open.bind(null, 'Twitter', twUrl)}
           target="social"
         >
           <Tooltip

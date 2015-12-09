@@ -62,6 +62,12 @@ module.exports = {
           outputName: 'testDesktopDist.js',
           extensions: ['.jsx', '.js'],
         },
+        ga: {
+          entries: src + '/scripts/desktop/ga.js',
+          extensions: ['.js'],
+          dest: dist + '/scripts/',
+          outputName: 'ga.js',
+        },
       },
     },
     styles: {

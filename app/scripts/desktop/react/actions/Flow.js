@@ -13,12 +13,21 @@ let FlowActionCreators = {
 
     return Api.flow.create(formData)
       .then((flow) => {
-        TastyLockingAlertController.show({
-          message: "Поток создан! Переходим на страницу потока..",
-          action() {
-            window.location = flow.tlog_url
-          }
-        });
+        function redirect() {
+          TastyLockingAlertController.show({
+            message: "Поток создан! Переходим на страницу потока..",
+            action() { window.location = flow.tlog_url; },
+          });
+        }
+
+        if (window.ga) {
+          ga('send', 'event', 'UX', 'CreateFlow', flow.name, {
+            hitCallback: redirect,
+          });
+        } else {
+          redirect();
+        }
+          
       })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);

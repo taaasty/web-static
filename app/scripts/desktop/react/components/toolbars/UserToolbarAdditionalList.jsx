@@ -1,32 +1,55 @@
+/*global i18n */
+import React, { PropTypes } from 'react';
 import UserToolbarListItem from './UserToolbarListItem';
+import Routes from '../../../../shared/routes/routes';
 
-let UserToolbarAdditionalList = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired,
-    searchTitleI18nKey: React.PropTypes.string.isRequired,
-    onSettingsClick: React.PropTypes.func.isRequired,
-    onSearchClick: React.PropTypes.func.isRequired
-  },
+class UserToolbarAdditionalList {
+  onClickLogout(ev) {
+    function redirect() {
+      window.location.href = Routes.logout_path(this.props.slug);
+    }
 
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    if (window.ga) {
+      window.ga('send', 'event', 'Account', 'Logout', { hitCallback: redirect });
+    } else {
+      redirect();
+    }
+  }
   render() {
+    const { onSearchClick, onSettingsClick, searchTitleI18nKey, user: { slug } } = this.props;
+
     return (
       <ul className="toolbar__nav toolbar__nav--bottom">
         <UserToolbarListItem
-            title={i18n.t(`searchbox_titles.${this.props.searchTitleI18nKey}`)}
-            icon="icon--magnifier"
-            onClick={this.props.onSearchClick} />
+          icon="icon--magnifier"
+          onClick={onSearchClick}
+          title={i18n.t(`searchbox_titles.${searchTitleI18nKey}`)}
+        />
         <UserToolbarListItem
-            url={Routes.userSettings(this.props.user.slug)}
-            title={i18n.t('toolbar_settings_item')}
-            icon="icon--cogwheel"
-            onClick={this.props.onSettingsClick} />
+          icon="icon--cogwheel"
+          onClick={onSettingsClick}
+          title={i18n.t('toolbar_settings_item')}
+          url={Routes.userSettings(slug)}
+        />
         <UserToolbarListItem
-            url={Routes.logout_path(this.props.user.slug)}
-            title={ i18n.t('toolbar_logout_item') }
-            icon="icon--logout" />
+          icon="icon--logout"
+          onClick={this.onClickLogout.bind(this)}
+          title={i18n.t('toolbar_logout_item')}
+          url={Routes.logout_path(slug)}
+        />
       </ul>
     );
   }
-});
+}
+
+UserToolbarAdditionalList.propTypes = {
+  onSearchClick: PropTypes.func.isRequired,
+  onSettingsClick: PropTypes.func.isRequired,
+  searchTitleI18nKey: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
 export default UserToolbarAdditionalList;

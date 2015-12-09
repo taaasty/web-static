@@ -89,6 +89,9 @@ let EntryActionCreators = {
   repost(entryID, tlogID) {
     return Api.entry.repost(entryID, tlogID)
       .then(() => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'Repost');
+        }
         NoticeService.notifySuccess(i18n.t('repost_entry_success'));
       })
       .fail((xhr) => {

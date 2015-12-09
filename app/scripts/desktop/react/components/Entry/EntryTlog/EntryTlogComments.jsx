@@ -81,6 +81,9 @@ export default class EntryTlogComments extends Component {
         this.setState({ processCreate: true });
         EntryActionCreators.createComment(id, text)
           .then((comment) => {
+            if (window.ga) {
+              window.ga('send', 'event', 'UX', 'Comment');
+            }
             this.setState({
               comments: this.state.comments.concat(comment),
               totalCount: this.state.totalCount + 1,
