@@ -36,7 +36,7 @@ class TlogPageBody extends Component {
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle}/>
           <div className="content-area__inner">
-            {isPrivate
+            {is_privacy
              ? <TlogPagePrivate />
              : items.length > 0
                ? this.renderTlog()
