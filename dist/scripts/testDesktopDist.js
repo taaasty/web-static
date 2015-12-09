@@ -7890,6 +7890,25 @@ var components = {
       },
       rating: {}
     }
+  },
+  TlogPageBody: {},
+  TlogPageContainer: {
+    relationship: {
+      state: ''
+    },
+    user: {
+      tag: '',
+      name: '',
+      userpic: {
+        default_colors: {}
+      }
+    },
+    stats: {},
+    commentator: {
+      userpic: {
+        default_colors: {}
+      }
+    }
   }
 };
 

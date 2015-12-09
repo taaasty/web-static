@@ -182,6 +182,7 @@ global.FriendsLoadButtonContainer = require('./react/components/FeedPage/Friends
 
 global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
 global.TlogPageBody = require './react/components/TlogPage/TlogPageBody';
+global.TlogPageContainer = require './react/components/TlogPage';
 
 require './react/components/search/search'
 require './react/components/search/button'
