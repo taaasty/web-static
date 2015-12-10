@@ -13,7 +13,7 @@ class UserToolbarAdditionalList {
     ev.stopPropagation();
 
     if (window.ga) {
-      window.ga('send', 'event', 'Account', 'Logout', { hitCallback: redirect });
+      window.ga('send', 'event', 'Account', 'Logout', { hitCallback: redirect.bind(this) });
     } else {
       redirect();
     }

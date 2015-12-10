@@ -27,7 +27,9 @@ class SocialShare extends Component {
   open(type, url, ev) {
     ev.preventDefault();
     if (window.ga) {
-      window.ga('send', 'event', 'UX', 'ShareSocial', type);
+      window.ga('send', 'event', 'UX', 'ShareSocial', type, {
+        hitCallback: () => window.open(url),
+      });
     } else {
       window.open(url);
     }
