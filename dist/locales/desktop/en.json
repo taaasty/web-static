@@ -9,7 +9,7 @@
   "conversation_entry_user_private": "Write private message",
   "new_thread_hint": "To message start entering your friends name",
   "new_thread_placeholder": "Enter your name here",
-  "new_thread_button": "Start messaging",
+  "new_thread_button": "New message",
   "new_thread_unknown_user": "We can't find user with this name",
   "new_thread_process": "Creating a talk...",
   "new_message_placeholder": "Your message",
