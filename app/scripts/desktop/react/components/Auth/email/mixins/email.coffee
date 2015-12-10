@@ -35,7 +35,7 @@ EmailMixin =
         NoticeService.notifySuccess i18n.t 'signin_success', userSlug: data.name
         ReactApp.shellbox.close()
         if window.ga
-          window.ga('send', 'event', 'Account', 'Registered', 'Email',
+          window.ga('send', 'event', 'Account', 'Login',
                     { hitCallback: (() -> window.location.reload(true)) })
         else
           _.defer -> location.reload true

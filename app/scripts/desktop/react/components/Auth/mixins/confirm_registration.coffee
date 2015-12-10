@@ -21,7 +21,11 @@ ConfirmRegistrationMixin =
       success: (data) =>
         NoticeService.notifySuccess i18n.t 'signup_success', userSlug: data.name
         ReactApp.shellbox.close()
-        _.defer -> window.location.href = data.tlog_url
+        if window.ga
+          window.ga('send', 'event', 'Account', 'Registered', 'Email',
+                    { hitCallback: (() -> window.location.href = data.tlog_url) })
+        else
+          _.defer -> window.location.href = data.tlog_url
       error: (data) =>
         if data.responseJSON && data.responseJSON.error_code is USER_EXISTS_MESSAGE
           @returnToEmail()

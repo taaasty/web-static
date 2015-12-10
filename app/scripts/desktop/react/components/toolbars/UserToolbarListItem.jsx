@@ -122,7 +122,7 @@ let UserToolbarListItem = React.createClass({
     e.stopPropagation();
 
     if (typeof this.props.onClick === 'function') {
-      this.props.onClick();
+      this.props.onClick(e);
     } else if (this.state.opened || !this.props.children) {
       // We will make redirect if item has no children, or it has been opened
       window.location = this.props.url;
