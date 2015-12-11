@@ -8,7 +8,7 @@ import PageHeader from '../common/page/PageHeader';
 import PageBody from '../common/page/PageBody';
 
 import HeroFeedLive from '../hero/feedLive';
-import FeedLive from '../components/feed/feedLive';
+import FeedLive from '../feed/feedLive';
 
 class FeedLivePage extends Component {
   componentWillMount() {

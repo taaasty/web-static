@@ -1,6 +1,6 @@
 import EntryMeta from './Meta/Meta';
 import EntryComments from './comments/comments';
-import EntryContent from './content/content';
+import EntryContent from './EntryContent';
 import CurrentUserStore from '../../stores/currentUser';
 import ConnectStoreMixin from '../../../../shared/react/mixins/connectStore';
 import ComponentMixin from '../../mixins/component';

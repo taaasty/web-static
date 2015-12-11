@@ -1,68 +1,77 @@
+import React, { createClass, PropTypes } from 'react';
+
+import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
+
 import EntryMeta from './Meta/Meta';
 import EntryFeedMeta from './Feed/Meta';
 import EntryComments from './comments/comments';
-import EntryContent from './content/content';
+import EntryContent from './EntryContent';
 import CurrentUserStore from '../../stores/currentUser';
 import ConnectStoreMixin from '../../../../shared/react/mixins/connectStore';
 import ComponentMixin from '../../mixins/component';
 import EntryMixin from './mixins/entry';
 
-let EntryFeed = React.createClass({
-  mixins: [ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin],
-
+const EntryFeed = createClass({
   propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    loadPerTime: React.PropTypes.number,
-    commentFormVisible: React.PropTypes.bool
+    commentFormVisible: PropTypes.bool,
+    entry: PropTypes.object.isRequired,
+    loadPerTime: PropTypes.number,
   },
+  mixins: [ ConnectStoreMixin(CurrentUserStore), EntryMixin, ComponentMixin ],
 
   getDefaultProps() {
     return {
-      commentFormVisible: false
-    }
+      commentFormVisible: false,
+    };
   },
 
   getInitialState() {
     return {
-      commentFormVisible: this.props.commentFormVisible
-    }
-  },
-
-  render() {
-    return (
-      <div className={this.getEntryClasses()}>
-        <EntryFeedMeta author={this.props.entry.author} />
-        <EntryContent entry={this.props.entry} />
-        <EntryMeta
-            entry={this.props.entry}
-            commentsCount={this.state.commentsCount}
-            onMetaCommentsClick={this.toggleCommentForm} />
-        <EntryComments
-            user={this.state.user}
-            entry={this.props.entry}
-            comments={this.state.comments}
-            commentsCount={this.state.commentsCount}
-            loading={this.isLoadingState()}
-            loadPerTime={this.props.loadPerTime}
-            formVisible={this.state.commentFormVisible}
-            onCommentsLoadMore={this.loadMoreComments}
-            onCommentCreate={this.createComment}
-            onCommentEdit={this.editComment}
-            onCommentDelete={this.deleteComment}
-            onCommentReport={this.reportComment} />
-      </div>
-    );
+      commentFormVisible: this.props.commentFormVisible,
+    };
   },
 
   toggleCommentForm() {
-    this.setState({commentFormVisible: !this.state.commentFormVisible});
+    this.setState({ commentFormVisible: !this.state.commentFormVisible });
   },
 
   getStateFromStore() {
     return {
-      user: CurrentUserStore.getUser()
-    }
-  }
+      user: CurrentUserStore.getUser(),
+    };
+  },
+
+  render() {
+    const { entry, loadPerTime } = this.props;
+    const { comments, commentsCount, commentFormVisible, user } = this.state;
+    const isAnonymous = entry.type === TLOG_ENTRY_TYPE_ANONYMOUS;
+
+    return (
+      <div className={this.getEntryClasses()}>
+        {!isAnonymous && <EntryFeedMeta author={entry.author} />}
+        <EntryContent entry={entry} />
+        <EntryMeta
+          commentsCount={commentsCount}
+          entry={entry}
+          onMetaCommentsClick={this.toggleCommentForm}
+        />
+        <EntryComments
+          comments={comments}
+          commentsCount={commentsCount}
+          entry={entry}
+          formVisible={commentFormVisible}
+          loadPerTime={loadPerTime}
+          loading={this.isLoadingState()}
+          onCommentCreate={this.createComment}
+          onCommentDelete={this.deleteComment}
+          onCommentEdit={this.editComment}
+          onCommentReport={this.reportComment}
+          onCommentsLoadMore={this.loadMoreComments}
+          user={user}
+        />
+      </div>
+    );
+  },
 });
 
 export default EntryFeed;
