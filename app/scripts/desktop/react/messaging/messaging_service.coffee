@@ -113,6 +113,8 @@ class window.MessagingService
     @requester.postMessage(conversationId, content, files, uuid)
       .done (message) ->
         MessagingDispatcher.messageReceived message
+        if window.ga
+          window.ga('send', 'event', 'UX', 'SendMessage')
       .fail (errMsg) ->
         MessagingDispatcher.handleServerAction {
           type: 'messageSendingError'

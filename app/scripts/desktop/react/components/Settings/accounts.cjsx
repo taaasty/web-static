@@ -5,6 +5,17 @@ SettingsAccounts = React.createClass
     user:     React.PropTypes.object.isRequired
     accounts: React.PropTypes.array.isRequired
 
+  onClickLogout: (ev) ->
+    ev.preventDefault()
+    href = ev.target.href
+
+    if window.ga
+      window.ga('send', 'event', 'Account', 'Logout', {
+        hitCallback: () -> window.location.href = href
+      })
+    else
+      window.location.href = href
+
   render: ->
     anotherAccounts = null
 
@@ -12,12 +23,14 @@ SettingsAccounts = React.createClass
       <div className="accounts">
         <div className="account state--active">
           <div className="account__actions">
-            <a href={ Routes.logout_path() } data-method='delete'>
-              <button className="button button--outline">
-                <span className="button__text">
-                  { i18n.t('settings_accounts_logout_button') }
-                </span>
-              </button>
+            <a
+              className="button button--outline"
+              href={Routes.logout_path()}
+              onClick={this.onClickLogout}
+            >
+              <span className="button__text">
+                { i18n.t('settings_accounts_logout_button') }
+              </span>
             </a>
           </div>
           <div className="account__info">

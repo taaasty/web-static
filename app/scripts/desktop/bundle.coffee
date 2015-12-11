@@ -144,7 +144,6 @@ global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolb
 
 require './react/components/shellboxes/confirm_registration'
 
-require './react/components/voting'
 require './react/components/shellbox_layer'
 require './react/components/buttons/load_more'
 
@@ -178,7 +177,6 @@ global.FlowManager = require './react/components/FlowPopups/FlowManager'
 global.LiveLoadButtonContainer = require('./react/components/FeedPage/LiveLoadButtonContainer')
 global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadButtonContainer')
 global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
-
 global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
 global.TlogPageBody = require './react/components/TlogPage/TlogPageBody';
 global.TlogPageContainer = require './react/components/TlogPage';
@@ -245,19 +243,15 @@ require './react/components/entry_comment_box/load_more'
 
 global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
 global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
-
 global.HeroProfile = require './react/components/HeroProfile'
-
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
-
 global.Spinner = require '../shared/react/components/common/Spinner'
-
 global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
 global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
-
 global.EntryPageContainer = require './react/components/EntryPage';
 global.SocialShare = require './react/components/common/SocialShare';
+global.Voting = require './react/components/common/Voting';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'

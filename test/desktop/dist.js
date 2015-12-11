@@ -84,7 +84,11 @@ const components = {
       state: '',
     },
   },
-  Voting: {},
+  Voting: {
+    rating: {
+      reasons: [],
+    },
+  },
   UserToolbarContainer: {},
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},

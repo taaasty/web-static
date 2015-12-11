@@ -6,6 +6,11 @@ import NoticeService from '../services/Notice';
 let EntryActionCreators = {
   vote(entryID) {
     return Api.entry.vote(entryID)
+      .then(() => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'Like');
+        }
+      })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Голосование за запись', {
           method: 'EntryActionCreators.vote(entryID)',
@@ -16,6 +21,11 @@ let EntryActionCreators = {
   },
   addToFavorites(entryID) {
     return Api.entry.addToFavorites(entryID)
+      .then(() => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'AddToFavorite');
+        }
+      })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);
         ErrorService.notifyErrorResponse('Добавление записи в избранное', {
