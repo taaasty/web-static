@@ -6,11 +6,15 @@ if (gon && gon.user && gon.user.id) {
   ga('set', 'dimension3', 99999);
   ga('set', 'dimension1', 1);
   ga('set', 'dimension4', gon.user.gender === 'm' ? 'Male' : 'Female');
-  ga('set', 'dimension5', gon.user.is_privacy.toString());
+  ga('set', 'dimension5', (!!gon.user.is_privacy).toString());
 }
 ga('send', 'pageview');
 
 if (gon) {
+  if (gon.http_code === 404) {
+    ga('send', 'event', '404Error', document.location.href, document.referrer, { 'nonInteraction': 1 });
+  }
+  
   if (gon.register_provider) {
     ga('send', 'event', 'Account', 'Registered', gon.register_provider);
   } else if (gon.logged_in) {

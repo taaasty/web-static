@@ -7861,7 +7861,11 @@ var components = {
       state: ''
     }
   },
-  Voting: {},
+  Voting: {
+    rating: {
+      reasons: []
+    }
+  },
   UserToolbarContainer: {},
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},
