@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import FeedStore from '../../stores/feed';
 
 import PageWithAuth from '../common/page/PageWithAuth';
@@ -8,15 +7,15 @@ import PageLayout from '../common/page/PageLayout';
 import PageHeader from '../common/page/PageHeader';
 import PageBody from '../common/page/PageBody';
 
-import HeroFlow from './HeroFlow';
-import FeedFlow from './FeedFlow';
+import HeroFeedLive from '../hero/feedLive';
+import FeedLive from '../components/feed/feedLive';
 
-class FlowPage extends Component {
+class FeedLivePage extends Component {
   componentWillMount() {
     FeedStore.initialize(this.props.entries);
   }
-  render () {
-    const { currentUser, entries, flow, locale, relationship } = this.props;
+  render() {
+    const { currentUser, feed: { backgroundUrl, entriesCount }, locale } = this.props;
     
     return (
       <PageWithAuth
@@ -25,16 +24,14 @@ class FlowPage extends Component {
       >
         <PageLayout>
           <PageHeader>
-            <HeroFlow
-              flow={flow}
-              relationship={relationship}
+            <HeroFeedLive
+              backgroundUrl={backgroundUrl}
+              currentUser={currentUser}
+              entriesCount={entriesCount}
             />
           </PageHeader>
           <PageBody>
-            <FeedFlow
-              entries={entries}
-              flow={flow}
-            />
+            <FeedLive />
           </PageBody>
         </PageLayout>
       </PageWithAuth>
@@ -42,16 +39,11 @@ class FlowPage extends Component {
   }
 }
 
-FlowPage.propTypes = {
-  currentUser: PropTypes.object, //elaborate
+FeedLivePage.propTypes = {
+  currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
-  flow: ProjectTypes.flow.isRequired,
+  feed: PropTypes.object.isRequired,
   locale: PropTypes.string.isRequired,
-  relationship: ProjectTypes.relationship,
 };
 
-FlowPage.defaultProps = {
-  entries: [],
-};
-
-export default FlowPage;
+export default FeedLivePage;
