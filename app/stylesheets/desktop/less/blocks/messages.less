@@ -641,6 +641,10 @@
 
   .messages__dialog {
     cursor: default;
+
+    &.messages__dialog--discussion {
+      cursor: pointer;
+    }
   }
 }
 
@@ -672,7 +676,7 @@
 }
 
 .message-form {
-  padding: 20px 15px 7px 60px;
+  padding: 20px 15px 7px 15px;
   position: relative;
 }
 
@@ -728,6 +732,15 @@
   bottom: 8px; right: 12px;
   width: 24px;
   height: 24px;
+}
+
+.message-form__users {
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 15px;
+  font-size: 13px;
+  color: @grey;
 }
 
 .message-form__upload-button {
@@ -837,7 +850,7 @@
 }
 
 .message--from {
-  padding: 0 60px 0 44px;
+  padding: 0 20px 0 44px;
 
   .messages__user-avatar {
     right: 15px;
@@ -849,6 +862,7 @@
     background-color: #f1f1f1;
 
     &:before {
+      right: -25px;
       border-color: #f1f1f1;
     }
 

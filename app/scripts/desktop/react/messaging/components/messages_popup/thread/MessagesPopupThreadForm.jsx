@@ -1,23 +1,21 @@
 /*global i18n */
 import React, { findDOMNode, Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import UserAvatar from '../../../../components/avatars/UserAvatar';
-import Spinner from '../../../../../../shared/react/components/common/Spinner';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 
 class MessagesPopupThreadForm extends Component {
-  componentDidMount() {
-    this.form = findDOMNode(this.refs.messageForm);
-    if (this.form instanceof HTMLElement) {
-      this.form.focus();
-    }
-  }
   state = {
     user: window.CurrentUserStore.getUser(),
     hasText: false,
     files: [],
     isLoading: false,
+  }
+  componentDidMount() {
+    this.form = findDOMNode(this.refs.messageForm);
+    if (this.form instanceof HTMLElement) {
+      this.form.focus();
+    }
   }
   onKeyDown(ev) {
     if (ev.key === 'Enter' && !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
@@ -62,6 +60,8 @@ class MessagesPopupThreadForm extends Component {
     }
   }
   render() {
+    const { userCount } = this.props;
+
     const buttonClasses = classNames({
       'message-form__button-send': true,
       '--disabled': !this.msgReadyToSend(),
@@ -69,13 +69,6 @@ class MessagesPopupThreadForm extends Component {
 
     return (
       <div className="message-form">
-        <span className="messages__user-avatar">
-          {
-            this.state.isLoading
-              ? <Spinner size={30} />
-              : <UserAvatar size={35} user={this.state.user} />
-          }
-        </span>
         <div className="message-form__controls">
           <div className="message-form__textarea-container">
             <textarea
@@ -98,6 +91,9 @@ class MessagesPopupThreadForm extends Component {
             >
               {i18n.t('buttons.messenger.send')}
             </button>
+            <span className="message-form__users">
+              {userCount > 1 && i18n.t('messages_public_users', { count: userCount })}
+            </span>
           </div>
         </div>
       </div>
@@ -107,6 +103,11 @@ class MessagesPopupThreadForm extends Component {
 
 MessagesPopupThreadForm.propTypes = {
   conversationId: PropTypes.number.isRequired,
+  userCount: PropTypes.number,
+};
+
+MessagesPopupThreadForm.defaultProps = {
+  userCount: 0,
 };
 
 export default MessagesPopupThreadForm;

@@ -99,7 +99,6 @@ require './react/messaging/components/messages_popup/create_new_conversation/cho
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
 require './react/messaging/components/messages_popup/thread/message_list/message_list'
-require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
 require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
 require './react/messaging/components/messages_popup/thread/message_list/empty'
 require './react/messaging/components/notifications_popup/notifications_popup'
