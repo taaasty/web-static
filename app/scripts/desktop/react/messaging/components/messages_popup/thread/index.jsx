@@ -5,6 +5,10 @@ import ConversationsListItemEntry from '../conversations/list/ConversationsListI
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread {
+  onClickHeader(url, ev) {
+    ev.preventDefault();
+    window.location.href = url;
+  }
   render() {
     const id = this.props.conversationId;
     const conversation = ConversationsStore.getConversation(id);
@@ -12,6 +16,9 @@ class MessagesPopupThread {
       ? conversation.entry.author.design.backgroundImageUrl
       : conversation.recipient.design.backgroundImageUrl;
     const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
+    const userCount = conversation.type === PUBLIC_CONVERSATION
+      ? conversation.users.length
+      : 0;
 
     return (
       <div className="messages__section messages__section--thread">
@@ -19,7 +26,8 @@ class MessagesPopupThread {
           <ConversationsListItemEntry
             conversation={conversation}
             hasUnread={conversation.unread_messages_count}
-            showUsers={false}
+            onClick={this.onClickHeader.bind(this, conversation.entry.url)}
+            showFooter={false}
           />
         }
         <div className="messages__body" style={threadStyles}>
@@ -27,7 +35,7 @@ class MessagesPopupThread {
           <MessagesPopup_ThreadMessageList conversationId={id} />
         </div>
         <footer className="messages__footer">
-          <MessagesPopupThreadForm conversationId={id} />
+          <MessagesPopupThreadForm conversationId={id} userCount={userCount} />
         </footer>
       </div>
     );

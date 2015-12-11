@@ -17,6 +17,8 @@
   "messages_popup_title": "My messages",
   "messages_thread_title": "Talk with__slug__",
   "messages_entry_title": "Post discussion",
+  "messages_public_users": "__count__ user",
+  "messages_public_users_plural": "__count__ users",
   "notifications_empty_list": "You have no new notifications",
   "notifications_loading_error": "Loading notifications error",
   "auth_select_signin_method": "Choose way to log in",

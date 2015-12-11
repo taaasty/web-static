@@ -1,3 +1,5 @@
+MessagesPopupThreadMessageListItem = require './MessagesPopupThreadMessageListItem';
+
 ERROR_STATE   = 'error'
 SENT_STATE    = 'sent'
 READ_STATE    = 'read'
@@ -54,7 +56,7 @@ window.MessagesPopup_ThreadMessageListItemManager = React.createClass
     messagingService.removeReconnectListener @resendMessage
 
   render: ->
-    <MessagesPopup_ThreadMessageListItem message={ this.props.message }
+    <MessagesPopupThreadMessageListItem message={ this.props.message }
                                          messageInfo={ this.state.messageInfo }
                                          deliveryStatus={ this.state.currentState }
                                          onResendMessage={ this.resendMessage } />
