@@ -38,7 +38,7 @@ FeedToolbarList = React.createClass
         />
         <ToolbarItem
           title={ i18n.t('feed.anonymous') }
-          href={ Routes.anonymous_feed_path() }
+          href={ Routes.live_anonymous_feed_path() }
           icon="icon--anonymous"
           key="anonymous"
         />
