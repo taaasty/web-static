@@ -399,7 +399,7 @@ module.exports={
   },
   "messenger": {
     "conversation_header": "__userSlug__",
-    "conversations_header": "Диалоги",
+    "conversations_header": "Сообщения",
     "create_conversation_header": "Выбор получателя",
     "messages_loading_error": "Ошибка загрузки",
     "messages_empty_list": "Здесь будут отображаться сообщения",
@@ -452,7 +452,7 @@ module.exports={
     "settings_email_declare": "Установить",
     "notifications_mark_all_as_read": "Отметить как прочитанные",
     "notifications_load_more": "Загрузить еще",
-    "messenger_create_conversation": "Cоздать переписку",
+    "messenger_create_conversation": "Написать сообщение",
     "messenger_create_message": "Отпр",
     "comments_load_more": "Загрузить ещё __count__ комментарий",
     "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
