@@ -28,10 +28,10 @@ class SocialShare extends Component {
     ev.preventDefault();
     if (window.ga) {
       window.ga('send', 'event', 'UX', 'ShareSocial', type, {
-        hitCallback: () => window.open(url),
+        hitCallback: () => window.open(url, 'social', 'resizeable,status'),
       });
     } else {
-      window.open(url);
+      window.open(url, 'social', 'resizable,status');
     }
   }
   render() {
