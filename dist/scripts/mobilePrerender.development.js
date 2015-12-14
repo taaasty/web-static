@@ -132,7 +132,7 @@ module.exports={
         "empty_list": "Notification list is empty"
     },
     "messenger": {
-        "conversation_header": "Conversation with __userSlug__",
+        "conversation_header": "__userSlug__",
         "conversations_header": "Conversations",
         "create_conversation_header": "Select recipient",
         "messages_loading_error": "Loading error",
@@ -398,8 +398,8 @@ module.exports={
     "empty_list": "Список уведомлений пуст"
   },
   "messenger": {
-    "conversation_header": "Переписка с __userSlug__",
-    "conversations_header": "Сообщения",
+    "conversation_header": "__userSlug__",
+    "conversations_header": "Диалоги",
     "create_conversation_header": "Выбор получателя",
     "messages_loading_error": "Ошибка загрузки",
     "messages_empty_list": "Здесь будут отображаться сообщения",
@@ -452,7 +452,7 @@ module.exports={
     "settings_email_declare": "Установить",
     "notifications_mark_all_as_read": "Отметить как прочитанные",
     "notifications_load_more": "Загрузить еще",
-    "messenger_create_conversation": "Написать сообщение",
+    "messenger_create_conversation": "Cоздать переписку",
     "messenger_create_message": "Отпр",
     "comments_load_more": "Загрузить ещё __count__ комментарий",
     "comments_load_more_plural_2": "Загрузить ещё __count__ комментария",
@@ -9231,33 +9231,19 @@ MessageListItem = React.createClass({
     deliveryStatus: PropTypes.string.isRequired,
     onResendMessage: PropTypes.func.isRequired
   },
-  render: function() {
-    var itemClasses;
-    itemClasses = classnames('message', {
-      'message--to': this.isIncoming(),
-      'message--from': this.isOutgoing(),
-      'message--error': this.isErrorStatus()
-    });
-    return React.createElement("div", {
-      "className": itemClasses,
-      "onClick": this.handleClick
-    }, React.createElement("div", {
-      "className": "message__user-avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.itemInfo.user,
-      "size": 42.
-    })), React.createElement("div", {
-      "className": "message__bubble"
-    }, this.renderSlug(), React.createElement("span", {
-      "className": "message__text",
-      "dangerouslySetInnerHTML": {
-        __html: this.props.item.content_html || ''
-      }
-    }), React.createElement("div", {
-      "className": "message__img-container"
-    }, this.renderAttachments())), React.createElement("div", {
-      "className": "message__meta"
-    }, this.renderMessageDate(), this.renderDeliveryStatus()));
+  isErrorStatus: function() {
+    return this.props.deliveryStatus === ERROR_STATE;
+  },
+  isOutgoing: function() {
+    return this.props.itemInfo.type === 'outgoing';
+  },
+  isIncoming: function() {
+    return this.props.itemInfo.type === 'incoming';
+  },
+  handleClick: function() {
+    if (this.isErrorStatus()) {
+      return this.props.onResendMessage();
+    }
   },
   renderSlug: function() {
     if (this.isIncoming()) {
@@ -9267,10 +9253,6 @@ MessageListItem = React.createClass({
         "href": this.props.itemInfo.user.tlog_url,
         "target": "_blank"
       }, this.props.itemInfo.user.slug));
-    } else {
-      return React.createElement("span", {
-        "className": "message__user-name"
-      }, this.props.itemInfo.user.slug);
     }
   },
   renderAttachments: function() {
@@ -9321,19 +9303,40 @@ MessageListItem = React.createClass({
       }));
     }
   },
-  isErrorStatus: function() {
-    return this.props.deliveryStatus === ERROR_STATE;
-  },
-  isOutgoing: function() {
-    return this.props.itemInfo.type === 'outgoing';
-  },
-  isIncoming: function() {
-    return this.props.itemInfo.type === 'incoming';
-  },
-  handleClick: function() {
-    if (this.isErrorStatus()) {
-      return this.props.onResendMessage();
+  renderAvatar: function() {
+    if (this.isIncoming()) {
+      return React.createElement("a", {
+        "href": this.props.itemInfo.user.tlog_url
+      }, React.createElement("div", {
+        "className": "message__user-avatar"
+      }, React.createElement(UserAvatar, {
+        "size": 42.,
+        "user": this.props.itemInfo.user
+      })));
     }
+  },
+  render: function() {
+    var itemClasses;
+    itemClasses = classnames('message', {
+      'message--to': this.isIncoming(),
+      'message--from': this.isOutgoing(),
+      'message--error': this.isErrorStatus()
+    });
+    return React.createElement("div", {
+      "className": itemClasses,
+      "onClick": this.handleClick
+    }, this.renderAvatar(), React.createElement("div", {
+      "className": "message__bubble"
+    }, this.renderSlug(), React.createElement("span", {
+      "className": "message__text",
+      "dangerouslySetInnerHTML": {
+        __html: this.props.item.content_html || ''
+      }
+    }), React.createElement("div", {
+      "className": "message__img-container"
+    }, this.renderAttachments())), React.createElement("div", {
+      "className": "message__meta"
+    }, this.renderMessageDate(), this.renderDeliveryStatus()));
   }
 });
 

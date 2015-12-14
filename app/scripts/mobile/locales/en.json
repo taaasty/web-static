@@ -94,7 +94,7 @@
         "empty_list": "Notification list is empty"
     },
     "messenger": {
-        "conversation_header": "Conversation with __userSlug__",
+        "conversation_header": "__userSlug__",
         "conversations_header": "Conversations",
         "create_conversation_header": "Select recipient",
         "messages_loading_error": "Loading error",

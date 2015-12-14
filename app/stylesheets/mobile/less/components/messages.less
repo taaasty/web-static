@@ -422,7 +422,7 @@
 }
 
 .message--from {
-  padding: 0 (@messages-avatar-size + @indent-base*2) 0 50px;
+  padding: 0 @indent-base*2 0 50px;
 
   .message__user-avatar {
     right: @indent-base;
@@ -435,6 +435,7 @@
 
     &:before {
       border-color: @message-from-bubble-bg;
+      right: -21px;
     }
   }
 
