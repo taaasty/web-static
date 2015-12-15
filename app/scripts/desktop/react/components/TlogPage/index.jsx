@@ -46,6 +46,7 @@ class TlogPageContainer extends Component {
               nextPageParamName={nextPageParamName}
               nextPageUrl={nextPageUrl}
               prevPageUrl={prevPageUrl}
+              relationship={relationship}
               user={user}
             />
           </div>
