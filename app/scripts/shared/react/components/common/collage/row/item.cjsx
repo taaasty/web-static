@@ -57,28 +57,20 @@ CollageRowItem = React.createClass
   getUrl: ->
     { width, height } = @state
 
-    if @props.imageUrl and @props.imagePath
+    if this.props.imageUrl and this.props.imagePath
       # Картинка есть на сервере
-      ThumborService.imageUrl
-        url:  @props.imageUrl
-        path: @props.imagePath
-        size: width + 'x' + height
+      ThumborService.newImageUrl(this.props.imageUrl, { width, height })
     else
       # Картинка выводится из blob
-      @props.imageUrl
+      this.props.imageUrl
 
   getRetinaUrl: ->
     { width, height } = @state
 
-    if @props.imageUrl and @props.imagePath
-      # Картинка есть на сервере
-      ThumborService.retinaImageUrl({
-        url: @props.imageUrl,
-        path: @props.imagePath,
-        size: { width, height }
-      });
+    if this.props.imageUrl and this.props.imagePath
+      ThumborService.newRetinaImageUrl(this.props.imageUrl, { width, height });
     else
       # Картинка выводится из blob
-      @props.imageUrl
+      this.props.imageUrl
 
 module.exports = CollageRowItem
