@@ -13363,10 +13363,9 @@ CollageRowItem = React.createClass({
     var height, ref, width;
     ref = this.state, width = ref.width, height = ref.height;
     if (this.props.imageUrl && this.props.imagePath) {
-      return ThumborService.imageUrl({
-        url: this.props.imageUrl,
-        path: this.props.imagePath,
-        size: width + 'x' + height
+      return ThumborService.newImageUrl(this.props.imageUrl, {
+        width: width,
+        height: height
       });
     } else {
       return this.props.imageUrl;
@@ -13376,13 +13375,9 @@ CollageRowItem = React.createClass({
     var height, ref, width;
     ref = this.state, width = ref.width, height = ref.height;
     if (this.props.imageUrl && this.props.imagePath) {
-      return ThumborService.retinaImageUrl({
-        url: this.props.imageUrl,
-        path: this.props.imagePath,
-        size: {
-          width: width,
-          height: height
-        }
+      return ThumborService.newRetinaImageUrl(this.props.imageUrl, {
+        width: width,
+        height: height
       });
     } else {
       return this.props.imageUrl;

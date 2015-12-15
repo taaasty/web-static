@@ -9,9 +9,9 @@ import EntryTlogComments from './EntryTlogComments';
 
 export default class EntryTlogImageType {
   static propTypes = {
-    entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
+    entry: PropTypes.object.isRequired,
+    hasModeration: PropTypes.bool.isRequired,
   }
   render() {
     const { image_attachments, is_private, title } = this.props.entry;
