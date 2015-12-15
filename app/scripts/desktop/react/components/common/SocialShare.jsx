@@ -25,13 +25,18 @@ class SocialShare extends Component {
     return el.innerText || el.text || el.textContent;
   }
   open(type, url, ev) {
+    function openShare(url) {
+      window.open(url, 'share', 'toolbar=0,status=0,scrollbars=1,width=626,height=436');
+      return false;
+    }
+
     ev.preventDefault();
     if (window.ga) {
       window.ga('send', 'event', 'UX', 'ShareSocial', type, {
-        hitCallback: () => window.open(url, 'social', 'resizeable,status'),
+        hitCallback: openShare.bind(null, url),
       });
     } else {
-      window.open(url, 'social', 'resizable,status');
+      openShare(url);
     }
   }
   render() {
