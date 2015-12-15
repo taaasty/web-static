@@ -3,18 +3,25 @@ import classNames from 'classnames';
 import moment from 'moment';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import ConversationsListItemEntryContent from './ConversationsListItemEntryContent';
-import ConversationsListItemEntryUsers from './ConversationsListItemEntryUsers';
 
 class ConversationsListItemEntry {
   renderFooter() {
-    const { created_at, last_message, users } = this.props.conversation;
+    const { author, content_html, created_at } = this.props.conversation.last_message;
 
-    return (
-      <div>
-        <span className="messages__date">
-          {moment(last_message ? last_message.created_at : created_at).format('D MMMM HH:mm')}
-        </span>
-        <ConversationsListItemEntryUsers users={users} />
+    return (content_html &&
+      <div className="discussion-last-message">
+        <div className="messages__dialog">
+          <UserAvatar size={35} user={author} />
+          <div className="messages__dialog-text">
+            <span className="messages__user-name">
+              {author.slug}
+            </span>
+            <span dangerouslySetInnerHTML={{ __html: content_html}} />
+          </div>
+          <span className="messages__date">
+            {moment(created_at).format('D MMMM HH:mm')}
+          </span>
+        </div>
       </div>
     );
   }
@@ -65,6 +72,13 @@ ConversationsListItemEntry.propTypes = {
 
 ConversationsListItemEntry.defaultProps = {
   showFooter: true,
+  conversation: {
+    last_message: {
+      author: {
+        userpic: {},
+      },
+    },
+  },
 };
 
 export default ConversationsListItemEntry;
