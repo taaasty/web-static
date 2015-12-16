@@ -252,6 +252,7 @@ global.LandingPageBody = require './react/components/LandingPage/LandingPageBody
 global.EntryPageContainer = require './react/components/EntryPage';
 global.SocialShare = require './react/components/common/SocialShare';
 global.Voting = require './react/components/common/Voting';
+global.FlowPageContainer = require './react/components/FlowPage';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'

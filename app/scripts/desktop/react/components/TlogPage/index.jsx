@@ -9,6 +9,13 @@ import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
 
+import {
+  TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_FLOW,
+  TLOG_SECTION_PRIVATE,
+  TLOG_SECTION_TLOG,
+} from '../../../../shared/constants/Tlog';
+
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageContainer extends Component {
@@ -20,7 +27,7 @@ class TlogPageContainer extends Component {
   render() {
     const { bgImage, bgStyle, currentUserId, entries_info, isLogged, loadUrl,
             locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
-            relationship, stats, user } = this.props;
+            relationship, section, stats, user } = this.props;
 
     return (
       <div className="page">
@@ -46,6 +53,8 @@ class TlogPageContainer extends Component {
               nextPageParamName={nextPageParamName}
               nextPageUrl={nextPageUrl}
               prevPageUrl={prevPageUrl}
+              relationship={relationship}
+              section={section}
               user={user}
             />
           </div>
@@ -78,11 +87,18 @@ TlogPageContainer.propTypes = {
   nextPageUrl: PropTypes.string,
   prevPageUrl: PropTypes.string,
   relationship: PropTypes.object,
+  section: PropTypes.oneOf([
+    TLOG_SECTION_FAVORITE,
+    TLOG_SECTION_FLOW,
+    TLOG_SECTION_PRIVATE,
+    TLOG_SECTION_TLOG,
+  ]).isRequired,
   stats: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 TlogPageContainer.defaultProps = {
+  section: TLOG_SECTION_TLOG,
 };
 
 export default connectToStores(
