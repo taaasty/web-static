@@ -10,6 +10,7 @@ import TlogPageAuthorEmpty from './TlogPageAuthorEmpty';
 
 import { ERROR_INVALID_DATE } from '../../../../shared/constants/ErrorConstants';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
+import { TLOG_SECTION_FAVORITE } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
   state = {
@@ -33,7 +34,7 @@ class TlogPageBody extends Component {
   }
   renderContents() {
     const { currentUserId, entries_info: { items }, error, relationship: { state },
-            user } = this.props;
+            section, user } = this.props;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
@@ -42,7 +43,9 @@ class TlogPageBody extends Component {
     } else if (items.length > 0) {
       return this.renderTlog();
     } else if (user.id && currentUserId === user.id) {
-      return <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+      return section === TLOG_SECTION_FAVORITE
+        ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
+        : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
     } else {
       return <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
     }
@@ -75,6 +78,7 @@ TlogPageBody.propTypes = {
   nextPageUrl: PropTypes.string,
   prevPageUrl: PropTypes.string,
   relationship: PropTypes.object,
+  section: PropTypes.string.isRequired,
   user: PropTypes.object,
 };
 
