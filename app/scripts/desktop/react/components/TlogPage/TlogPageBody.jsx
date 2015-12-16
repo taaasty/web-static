@@ -38,16 +38,26 @@ class TlogPageBody extends Component {
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
-    } else if (user.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
-      return <TlogPagePrivate />;
-    } else if (items.length > 0) {
-      return this.renderTlog();
-    } else if (user.id && currentUserId === user.id) {
-      return section === TLOG_SECTION_FAVORITE
-        ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
-        : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
     } else {
-      return <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
+      if (user.id && currentUserId === user.id) { //owner
+        if (items.length > 0) {
+          return this.renderTlog();
+        } else {
+          return section === TLOG_SECTION_FAVORITE
+            ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
+            : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+        }
+      } else { //guest
+        if (user.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
+          return <TlogPagePrivate />;
+        }
+
+        if (items.length > 0) {
+          return this.renderTlog();
+        } else {
+          return <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
+        }
+      }
     }
   }
   render() {
