@@ -11,7 +11,9 @@ class ConversationsListItemEntry {
     return (content_html &&
       <div className="discussion-last-message">
         <div className="messages__dialog">
-          <UserAvatar size={35} user={author} />
+          <span className="messages__user-avatar">
+            <UserAvatar size={35} user={author} />
+          </span>
           <div className="messages__dialog-text">
             <span className="messages__user-name">
               {author.slug}
@@ -37,8 +39,7 @@ class ConversationsListItemEntry {
     );
   }
   render() {
-    const { conversation: { entry, online },
-            hasUnread, onClick, showFooter } = this.props;
+    const { children, conversation, hasUnread, isInList, onClick } = this.props;
 
     const listItemClasses = classNames({
       'messages__dialog': true,
@@ -50,13 +51,14 @@ class ConversationsListItemEntry {
       <div className={listItemClasses} onClick={onClick}>
         {false && this.renderNotificationButton()}
         <span className="messages__user-avatar">
-          <UserAvatar size={35} user={entry.author} />
-          {online && <span className="messages__user-online" />}
+          <UserAvatar size={35} user={conversation.entry.author} />
+          {conversation.online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-content">
-          <ConversationsListItemEntryContent entry={entry} />
+          <ConversationsListItemEntryContent entry={conversation.entry} />
         </div>
-        {showFooter && this.renderFooter()}
+        {isInList && this.renderFooter()}
+        {children}
       </div>
     );
   }
@@ -66,12 +68,12 @@ ConversationsListItemEntry.propTypes = {
   conversation: PropTypes.object.isRequired,
   hasUnread: PropTypes.bool,
   hasUnreceived: PropTypes.bool,
+  isInList: PropTypes.bool,
   onClick: PropTypes.func,
-  showFooter: PropTypes.bool,
 };
 
 ConversationsListItemEntry.defaultProps = {
-  showFooter: true,
+  isInList: true,
   conversation: {
     last_message: {
       author: {

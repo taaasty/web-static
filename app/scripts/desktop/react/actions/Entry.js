@@ -21,10 +21,11 @@ let EntryActionCreators = {
   },
   addToFavorites(entryID) {
     return Api.entry.addToFavorites(entryID)
-      .then(() => {
+      .then((data) => {
         if (window.ga) {
           window.ga('send', 'event', 'UX', 'AddToFavorite');
         }
+        return data;
       })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);

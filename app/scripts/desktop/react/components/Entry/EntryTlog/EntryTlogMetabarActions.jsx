@@ -1,139 +1,51 @@
-import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
+/*global i18n */
+import React, { PropTypes } from 'react';
+import DropdownActions from '../../common/DropdownActions';
+import DropdownAction from '../../common/DropdownAction';
 
-const MARGIN_BETWEEN_TOGGLER_AND_MENU = 20;
-
-export default class EntryTlogMetabarActions extends Component {
-  static propTypes = {
-    entry: PropTypes.object.isRequired
-  }
-  state = {
-    open: false,
-    marginTop: MARGIN_BETWEEN_TOGGLER_AND_MENU
-  }
-  componentDidMount() {
-    if (this.state.open) this.calculateTopPosition();
-  }
-  componentWillUpdate(nextProps, nextState) {
-    if (this.state.open !== nextState.open) {
-      this.calculateTopPosition();
-    }
-  }
+class EntryTlogMetabarActions {
   render() {
-    const menuClasses = classNames('meta-item__dropdown', {
-      'state--open': this.state.open,
-      'position-top': this.state.marginTop != MARGIN_BETWEEN_TOGGLER_AND_MENU / 2
-    });
-    const menuStyles = {
-      marginTop: this.state.marginTop
-    };
-
+    const { can_delete, can_edit, can_favorite, can_report, can_watch,
+            edit_url, is_favorited, is_watching, url } = this.props.entry;
     return (
-      <span className="meta-item meta-item--actions">
-        <span className="meta-item__content"
-              onMouseEnter={() => this.setState({open: true})}
-              onMouseLeave={() => this.setState({open: false})}>
-          <i className="meta-item__common icon icon--dots" />
-          <span ref="menu" className={menuClasses} style={menuStyles}>
-            {
-              this.props.entry.can_edit && (
-                <EntryTlogMetabarAction
-                    url={this.props.entry.edit_url}
-                    title={i18n.t('edit_entry_item')}
-                    icon="icon--pencil" />
-              )
-            }
-            <EntryTlogMetabarAction
-                url={this.props.entry.url}
-                title={i18n.t('link_entry_item')}
-                icon="icon--hyperlink" />
-            {
-              this.props.entry.can_favorite && (
-                <EntryTlogMetabarFavorite {...this.props}
-                    isFavorited={this.props.entry.is_favorited} />
-              )
-            }
-            {
-              this.props.entry.can_watch && (
-                <EntryTlogMetabarWatch {...this.props}
-                    isWatching={this.props.entry.is_watching} />
-              )
-            }
-            {
-              this.props.entry.can_report && (
-                <EntryTlogMetabarReport {...this.props} />
-              )
-            }
-            {
-              this.props.entry.can_delete && (
-                <EntryTlogMetabarDelete {...this.props} />
-              )
-            }
-          </span>
-        </span>
-      </span>
+      <DropdownActions>
+        {can_edit &&
+         <DropdownAction
+           icon="icon--pencil"
+           title={i18n.t('edit_entry_item')}
+           url={edit_url}
+         />}
+        <DropdownAction
+          icon="icon--hyperlink"
+          title={i18n.t('link_entry_item')}
+          url={url}
+        />
+        {can_favorite &&
+         <EntryTlogMetabarFavorite {...this.props}
+           isFavorited={is_favorited}
+         />}
+        {can_watch &&
+         <EntryTlogMetabarWatch {...this.props}
+           isWatching={is_watching}
+         />}
+        {can_report &&
+         <EntryTlogMetabarReport {...this.props} />}
+        {can_delete &&
+         <EntryTlogMetabarDelete {...this.props} />}
+      </DropdownActions>
     );
-  }
-  calculateTopPosition() {
-    const wHeight = $(window).height(),
-          wScrollTop = $(window).scrollTop(),
-          $menu = $(React.findDOMNode(this.refs.menu)),
-          menuHeight = $menu.innerHeight(),
-          menuOffset = $menu.offset();
-
-    let menuScrollTopWindow = menuOffset.top - wScrollTop,
-        marginTop = MARGIN_BETWEEN_TOGGLER_AND_MENU / 2;
-
-    if (this.state.marginTop != marginTop) {
-      menuScrollTopWindow -= this.state.marginTop;
-    }
-
-    if (menuScrollTopWindow + menuHeight > wHeight) {
-      marginTop = (menuHeight + MARGIN_BETWEEN_TOGGLER_AND_MENU) / -1;
-    }
-
-    this.setState({ marginTop });
   }
 }
 
-class EntryTlogMetabarAction extends Component {
-  static propTypes = {
-    url: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    hoverTitle: PropTypes.string,
-    icon: PropTypes.oneOfType([
-      PropTypes.string, PropTypes.array
-    ]).isRequired,
-    onClick: PropTypes.func
-  }
-  state = {
-    hover: false
-  }
-  render() {
-    const iconClasses = classNames('icon', this.props.icon);
-
-    return (
-      <a href={this.props.url}
-         className="meta-item__dropdown-item"
-         onClick={this.props.onClick}
-         onMouseEnter={() => this.setState({hover: true})}
-         onMouseLeave={() => this.setState({hover: false})}>
-        <i className={iconClasses} />
-        {this.getTitle()}
-      </a>
-    );
-  }
-  getTitle() {
-    const { title, hoverTitle } = this.props;
-    return this.state.hover && hoverTitle ? hoverTitle : title;
-  }
-}
+EntryTlogMetabarActions.propTypes = {
+  entry: PropTypes.object.isRequired,
+};
 
 class EntryTlogMetabarFavorite {
   static propTypes = {
     isFavorited: PropTypes.bool,
     onAddToFavorites: PropTypes.func.isRequired,
-    onRemoveFromFavorites: PropTypes.func.isRequired
+    onRemoveFromFavorites: PropTypes.func.isRequired,
   }
   render() {
     let icon, title, hoverTitle;
@@ -148,15 +60,16 @@ class EntryTlogMetabarFavorite {
     }
 
     return (
-      <EntryTlogMetabarAction
-          icon={icon}
-          title={title}
-          hoverTitle={hoverTitle}
-          onClick={this.handleClick()} />
+      <DropdownAction
+        hoverTitle={hoverTitle}
+        icon={icon}
+        onClick={this.handleClick()}
+        title={title}
+      />
     );
   }
   handleClick() {
-    return this.props.isFavorited ? this.props.onRemoveFromFavorites : this.props.onAddToFavorites
+    return this.props.isFavorited ? this.props.onRemoveFromFavorites : this.props.onAddToFavorites;
   }
 }
 
@@ -164,7 +77,7 @@ class EntryTlogMetabarWatch {
   static propTypes = {
     isWatching: PropTypes.bool,
     onAddToWatching: PropTypes.func.isRequired,
-    onRemoveFromWatching: PropTypes.func.isRequired
+    onRemoveFromWatching: PropTypes.func.isRequired,
   }
   render() {
     let title, hoverTitle;
@@ -177,35 +90,37 @@ class EntryTlogMetabarWatch {
     }
 
     return (
-      <EntryTlogMetabarAction
-          icon="icon--comments-subscribe"
-          title={title}
-          hoverTitle={hoverTitle}
-          onClick={this.handleClick()} />
+      <DropdownAction
+        hoverTitle={hoverTitle}
+        icon="icon--comments-subscribe"
+        onClick={this.handleClick()}
+        title={title}
+      />
     );
   }
   handleClick() {
-    return this.props.isWatching ? this.props.onRemoveFromWatching : this.props.onAddToWatching
+    return this.props.isWatching ? this.props.onRemoveFromWatching : this.props.onAddToWatching;
   }
 }
 
 class EntryTlogMetabarReport {
   static propTypes = {
-    onReport: PropTypes.func.isRequired
+    onReport: PropTypes.func.isRequired,
   }
   render() {
     return (
-      <EntryTlogMetabarAction
-          icon="icon--exclamation-mark"
-          title={i18n.t('report_entry_item')}
-          onClick={this.props.onReport} />
+      <DropdownAction
+        icon="icon--exclamation-mark"
+        onClick={this.props.onReport}
+        title={i18n.t('report_entry_item')}
+      />
     );
   }
 }
 
 class EntryTlogMetabarDelete {
   static propTypes = {
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
   }
   render() {
     let title, hoverTitle;
@@ -218,11 +133,14 @@ class EntryTlogMetabarDelete {
     }
 
     return (
-      <EntryTlogMetabarAction
-          icon="icon--basket"
-          title={i18n.t('delete_entry_item')}
-          hoverTitle={hoverTitle}
-          onClick={this.props.onDelete} />
+      <DropdownAction
+        hoverTitle={hoverTitle}
+        icon="icon--basket"
+        onClick={this.props.onDelete}
+        title={i18n.t('delete_entry_item')}
+      />
     );
   }
 }
+
+export default EntryTlogMetabarActions;
