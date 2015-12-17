@@ -10,7 +10,10 @@ import TlogPageAuthorEmpty from './TlogPageAuthorEmpty';
 
 import { ERROR_INVALID_DATE } from '../../../../shared/constants/ErrorConstants';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
-import { TLOG_SECTION_FAVORITE } from '../../../../shared/constants/Tlog';
+import {
+  TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_TLOG,
+} from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
   state = {
@@ -22,8 +25,8 @@ class TlogPageBody extends Component {
   }
   renderTlog() {
     const { entries_info: { has_more }, nextPageUrl,
-            prevPageUrl, user: { is_daylog } } = this.props;
-    const isPaged = is_daylog && has_more;
+            prevPageUrl, section, user: { is_daylog } } = this.props;
+    const isPaged = is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>

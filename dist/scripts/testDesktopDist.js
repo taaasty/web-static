@@ -7907,6 +7907,9 @@ var components = {
         default_colors: {}
       }
     },
+    entries_info: {
+      items: []
+    },
     stats: {},
     commentator: {
       userpic: {
