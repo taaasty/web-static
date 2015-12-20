@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react';
 import MessagesPopupThreadForm from './MessagesPopupThreadForm';
 import ConversationsListItemEntry from '../conversations/list/ConversationsListItemEntry';
+import PublicConversationActions from './PublicConversationActions';
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread {
@@ -26,9 +27,11 @@ class MessagesPopupThread {
           <ConversationsListItemEntry
             conversation={conversation}
             hasUnread={conversation.unread_messages_count}
+            isInList={false}
             onClick={this.onClickHeader.bind(this, conversation.entry.url)}
-            showFooter={false}
-          />
+          >
+            <PublicConversationActions conversation={conversation} />
+          </ConversationsListItemEntry>
         }
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />

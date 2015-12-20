@@ -1,3 +1,5 @@
+_ = require 'lodash';
+
 CHANGE_EVENT = 'change'
 
 _conversations = []
@@ -61,6 +63,9 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
 
     false
 
+  updateConversationEntry: (conversationId, update) ->
+    conversation = this.getConversation(conversationId)
+    _.extend(conversation.entry, update)
 }
 
 ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
@@ -86,5 +91,9 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register (payload) ->
         # ConversationsStore.preloadConversationsImages [action.conversation]
 
       ConversationsStore.sortByDesc()
+      ConversationsStore.emitChange()
+      break
+    when 'updateConversationEntry'
+      ConversationsStore.updateConversationEntry(action.id, action.update)
       ConversationsStore.emitChange()
       break

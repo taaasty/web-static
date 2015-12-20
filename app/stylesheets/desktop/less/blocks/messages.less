@@ -1,6 +1,6 @@
 .messages {
   height: @messages-height;
-  overflow: hidden;
+  //overflow: hidden;
   position: relative;
 
   .scroller {
@@ -254,7 +254,7 @@
   .discussion-last-message {
     .messages__dialog {
       padding: 0 0 0 45px;
-      bordor-bottom: none;
+      border-bottom: none;
     }
 
     .messages__dialog-text {
@@ -264,6 +264,20 @@
     .messages__user-avatar {
       top: 0;
       left: 0;
+    }
+  }
+
+  .meta-item--actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    a.meta-item__dropdown-item {
+      color: @white;
+
+      &:hover {
+        color: @black;
+      }
     }
   }
 }
