@@ -15,7 +15,6 @@ import {
   TLOG_SECTION_PRIVATE,
   TLOG_SECTION_TLOG,
 } from '../../../../shared/constants/Tlog';
-import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
@@ -25,20 +24,12 @@ class TlogPageContainer extends Component {
       ? user.userpic.original_url
       : defaultUserpic;
   }
-  showCalendar() {
-    const { currentUserId, relationship, section, user } = this.props;
-    const privateAccess = user.id && currentUserId === user.id ||
-            relationship && relationship.state == RELATIONSHIP_STATE_FRIEND;
-
-    return user.total_entries_count > 0 &&
-      (section !== TLOG_SECTION_PRIVATE || privateAccess);
-  }
   render() {
     const { bgImage, bgStyle, currentUserId, entries_info, isLogged, loadUrl,
             locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
             relationship, section, stats, user } = this.props;
-    const firstEntry = entries_info && entries_info.items &&
-            entries_info.items.length && entries_info.items[0].entry;
+    const firstEntry = (entries_info && entries_info.items &&
+                        entries_info.items.length && entries_info.items[0].entry) || {};
 
     return (
       <div className="page">
@@ -76,13 +67,12 @@ class TlogPageContainer extends Component {
           title={user.slug}
           url={user.tlog_url}
         />  
-        {this.showCalendar() &&
-         <Calendar
-           entryCreatedAt={firstEntry.created_at}
-           entryId={firstEntry.id}
-           locale={locale}
-           tlogId={user.id}
-         />}
+        <Calendar
+          entryCreatedAt={firstEntry.created_at || (new Date()).toISOString()}
+          entryId={firstEntry.id}
+          locale={locale}
+          tlogId={user.id}
+         />
       </div>
     );
   }

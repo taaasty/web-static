@@ -12,6 +12,7 @@ import { ERROR_INVALID_DATE } from '../../../../shared/constants/ErrorConstants'
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 import {
   TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_PRIVATE,
   TLOG_SECTION_TLOG,
 } from '../../../../shared/constants/Tlog';
 
@@ -51,14 +52,17 @@ class TlogPageBody extends Component {
             : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
         }
       } else { //guest
-        if (user.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
+        if ((user.is_privacy || section === TLOG_SECTION_PRIVATE)
+            && state !== RELATIONSHIP_STATE_FRIEND) {
           return <TlogPagePrivate />;
         }
 
         if (items.length > 0) {
           return this.renderTlog();
         } else {
-          return <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
+          return section === TLOG_SECTION_FAVORITE
+            ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
+            : <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
         }
       }
     }
