@@ -48,7 +48,7 @@ const ConversationActions = {
       });
   },
 
-  conversationEtnryRemoveFromFavorites(id) {
+  conversationEntryRemoveFromFavorites(id) {
     return updateConversationEntry(id, EntryActionCreators.removeFromFavorites)
       .then((data) => {
         MessagingDispatcher.handleServerAction({
