@@ -142,6 +142,10 @@ const Calendar = createClass({
     });
     const { calendar, headerDate, selectedEntryId, visibleMarkers } = this.state;
     const periodsCount = calendar && calendar.periods && calendar.periods.length;
+
+    if (!calendar || !(calendar && calendar.periods && calendar.periods.length)) {
+      return null;
+    }
     
     return (
       <nav
