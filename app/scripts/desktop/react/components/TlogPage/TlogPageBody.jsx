@@ -37,8 +37,10 @@ class TlogPageBody extends Component {
     );
   }
   renderContents() {
-    const { currentUserId, entries_info: { items }, error, relationship: { state },
+    const { currentUserId, entries_info, error, relationship,
             section, user } = this.props;
+    const items = (entries_info && entries_info.items) || [];
+    const state = (relationship && relationship.state);
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
