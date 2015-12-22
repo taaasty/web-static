@@ -49,9 +49,14 @@ class TlogPageBody extends Component {
         if (items.length > 0) {
           return this.renderTlog();
         } else {
-          return section === TLOG_SECTION_FAVORITE
-            ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
-            : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+          switch (section) {
+          case TLOG_SECTION_FAVORITE:
+            return <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />;
+          case TLOG_SECTION_PRIVATE:
+            return <TlogPageText text={i18n.t('tlog.no_posts')} />;
+          default:
+            return <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+          }
         }
       } else { //guest
         if ((user.is_privacy || section === TLOG_SECTION_PRIVATE)
@@ -62,9 +67,10 @@ class TlogPageBody extends Component {
         if (items.length > 0) {
           return this.renderTlog();
         } else {
-          return section === TLOG_SECTION_FAVORITE
-            ? <TlogPageText text={i18n.t('tlog.no_posts_favorite')} />
-            : <TlogPageText text={i18n.t(user.is_daylog ? 'tlog.no_posts_daylog' : 'tlog.no_posts')} />;
+          const msgText = user.is_daylog && section !== TLOG_SECTION_FAVORITE
+            ? i18n.t('tlog.no_posts_daylog')
+            : i18n.t('tlog.no_posts');
+          return <TlogPageText text={msgText} />;
         }
       }
     }
