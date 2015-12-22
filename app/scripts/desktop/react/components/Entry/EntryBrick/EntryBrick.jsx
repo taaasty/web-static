@@ -47,7 +47,7 @@ let EntryBrick = React.createClass({
     if (this.state.visible) {
       return (
         <article className={this.getBrickClasses()} data-id={entry.id}>
-          {this.renderFlowHeader()}
+          {false && this.renderFlowHeader()}
           {this.renderPinHeader()}
           <EntryBrickContent
             entry={entry}
