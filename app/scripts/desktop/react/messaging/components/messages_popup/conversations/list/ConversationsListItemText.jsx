@@ -1,44 +1,33 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
-import moment from 'moment';
+import ConversationsListItem from './ConversationsListItem';
 
 class ConversationsListItemText {
-  renderIndicator() {
-    const { conversation: { unread_messages_count }, hasUnread, hasUnreceived } = this.props;
-
-    if (hasUnread) {
-      return <div className="unread-messages__counter">{unread_messages_count}</div>;
-    } else if (hasUnreceived) {
-      return <div className="unreceived-messages__counter" />;
-    }
-  }
   render() {
-    const { conversation: { created_at, last_message, recipient, online }, hasUnread, onClick } = this.props;
-
-    const listItemClasses = classNames({
-      'messages__dialog': true,
-      'state--read': !hasUnread,
-    });
+    const { conversation: { created_at, last_message, recipient, online, unread_messages_count },
+            hasUnread, hasUnreceived, onClick } = this.props;
     const lastMessageText = last_message ? last_message.content_html : '';
+    const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
-      <div className={listItemClasses} onClick={onClick}>
-        {this.renderIndicator()}
+      <ConversationsListItem
+        hasUnread={hasUnread}
+        hasUnreceived={hasUnreceived}
+        lastMessageAt={lastMessageAt}
+        onClick={onClick}
+        unreadCount={unread_messages_count}
+      >
         <span className="messages__user-avatar">
-          <UserAvatar user={recipient} size={35} />
+          <UserAvatar size={35} user={recipient} />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-text">
-          <span className="messages__user-name">
+          <div className="messages__user-name">
             {recipient.slug}
-          </span>
-          {lastMessageText && <span dangerouslySetInnerHTML={{ __html: lastMessageText }} />}
+          </div>
+          {lastMessageText && <div dangerouslySetInnerHTML={{ __html: lastMessageText }} />}
         </div>
-        <span className="messages__date">
-          {moment(last_message ? last_message.created_at : created_at).format('D MMMM HH:mm')}
-        </span>
-      </div>
+      </ConversationsListItem>
     );
   }
 }

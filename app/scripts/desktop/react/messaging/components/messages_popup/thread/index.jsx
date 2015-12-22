@@ -1,8 +1,7 @@
 /*global ConversationsStore */
 import React, { Component, PropTypes } from 'react';
 import MessagesPopupThreadForm from './MessagesPopupThreadForm';
-import ConversationsListItemEntry from '../conversations/list/ConversationsListItemEntry';
-import PublicConversationActions from './PublicConversationActions';
+import PublicConversationHeader from './PublicConversationHeader';
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread extends Component {
@@ -40,15 +39,10 @@ class MessagesPopupThread extends Component {
     return (
       <div className="messages__section messages__section--thread">
         {conversation.type === PUBLIC_CONVERSATION &&
-          <ConversationsListItemEntry
+          <PublicConversationHeader
             conversation={conversation}
-            hasUnread={conversation.unread_messages_count}
-            isInList={false}
             onClick={this.onClickHeader.bind(this, conversation.entry.url)}
-          >
-            <PublicConversationActions conversation={conversation} />
-          </ConversationsListItemEntry>
-        }
+          />}
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />
           <MessagesPopup_ThreadMessageList conversationId={id} />

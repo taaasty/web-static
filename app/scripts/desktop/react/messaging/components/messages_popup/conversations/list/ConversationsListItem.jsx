@@ -1,0 +1,47 @@
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
+import moment from 'moment';
+
+class ConversationsListItem {
+  renderIndicator() {
+    const { hasUnread, hasUnreceived, unreadCount } = this.props;
+
+    if (hasUnread) {
+      return <div className="unread-messages__counter">{unreadCount}</div>;
+    } else if (hasUnreceived) {
+      return <div className="unreceived-messages__counter" />;
+    }
+  }
+  render() {
+    const { children, hasUnread, lastMessageAt, onClick } = this.props;
+
+    const listItemClasses = classNames({
+      'messages__dialog': true,
+      'state--read': !hasUnread,
+    });
+
+    return (
+      <div className={listItemClasses} onClick={onClick}>
+        {this.renderIndicator()}
+        {children}
+        <span className="messages__date">
+          {moment(lastMessageAt).fromNow()}
+        </span>
+      </div>
+    );
+  }
+}
+
+ConversationsListItem.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]).isRequired,
+  hasUnread: PropTypes.bool,
+  hasUnreceived: PropTypes.bool,
+  lastMessageAt: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  unreadCount: PropTypes.number,
+};
+
+export default ConversationsListItem;
