@@ -25,7 +25,7 @@ class TlogPageContainer extends Component {
       : defaultUserpic;
   }
   render() {
-    const { bgImage, bgStyle, currentUserId, entries_info, isLogged, loadUrl,
+    const { bgImage, bgStyle, currentUserId, entries_info, error, isLogged, loadUrl,
             locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
             relationship, section, stats, user } = this.props;
     const firstEntry = (entries_info && entries_info.items &&
@@ -48,6 +48,7 @@ class TlogPageContainer extends Component {
               bgStyle={bgStyle}
               currentUserId={currentUserId}
               entries_info={entries_info}
+              error={error}
               hostTlogUrl={user.tlog_url}
               loadUrl={loadUrl}
               locale={locale}
@@ -83,6 +84,7 @@ TlogPageContainer.propTypes = {
   bgStyle: PropTypes.object,
   currentUserId: PropTypes.number,
   entries_info: PropTypes.object,
+  error: PropTypes.string,
   isLogged: PropTypes.bool,
   loadUrl: PropTypes.string,
   locale: PropTypes.string.isRequired,
