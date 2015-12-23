@@ -59,12 +59,13 @@ class TlogPageBody extends Component {
           }
         }
       } else { //guest
-        if ((user.is_privacy || section === TLOG_SECTION_PRIVATE)
-            && state !== RELATIONSHIP_STATE_FRIEND) {
-          return <TlogPagePrivate />;
+        if (user.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
+          return <TlogPagePrivate text={i18n.t('tlog.private')} />;
         }
 
-        if (items.length > 0) {
+        if (section === TLOG_SECTION_PRIVATE) {
+          return <TlogPagePrivate text={i18n.t('tlog.section_private')} />;
+        } else if (items.length > 0) {
           return this.renderTlog();
         } else {
           const msgText = user.is_daylog && section !== TLOG_SECTION_FAVORITE

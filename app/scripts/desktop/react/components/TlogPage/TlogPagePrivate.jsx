@@ -1,5 +1,4 @@
-/*global i18n */
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class TlogPagePrivate {
   render() {
@@ -9,11 +8,15 @@ class TlogPagePrivate {
           <i className="icon icon--lock" />
         </div>
         <p className="content-info__text">
-          {i18n.t('tlog.private')}
+          {this.props.text}
         </p>
       </div>
     );
   }
 }
+
+TlogPagePrivate.propTypes = {
+  text: PropTypes.string.isRequired,
+};
 
 export default TlogPagePrivate;
