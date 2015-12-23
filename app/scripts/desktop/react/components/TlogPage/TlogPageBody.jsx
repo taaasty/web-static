@@ -26,19 +26,19 @@ class TlogPageBody extends Component {
   }
   renderTlog() {
     const { entries_info: { has_more }, nextPageUrl,
-            prevPageUrl, section, user: { is_daylog } } = this.props;
+            prevPageUrl, section, user: { id: tlogId, is_daylog } } = this.props;
     const isPaged = is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
-        <EntryTlogsContainer {...this.props} />
+        <EntryTlogsContainer {...this.props} host_tlog_id={tlogId} />
         {isPaged && <TlogPagePagination nextPageUrl={nextPageUrl} prevPageUrl={prevPageUrl} />}
       </div>
     );
   }
   renderContents() {
-    const { currentUserId, entries_info, error, relationship,
-            section, user } = this.props;
+    const { currentUserId, entries_info, error, queryString,
+            relationship, section, user } = this.props;
     const items = (entries_info && entries_info.items) || [];
     const state = (relationship && relationship.state);
 
@@ -55,7 +55,9 @@ class TlogPageBody extends Component {
           case TLOG_SECTION_PRIVATE:
             return <TlogPageText text={i18n.t('tlog.no_posts')} />;
           default:
-            return <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+            return queryString
+              ? <TlogPageText text={i18n.t('tlog.no_posts_query', { query: queryString })} />
+              : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
           }
         }
       } else { //guest
@@ -68,9 +70,11 @@ class TlogPageBody extends Component {
         } else if (items.length > 0) {
           return this.renderTlog();
         } else {
-          const msgText = user.is_daylog && section !== TLOG_SECTION_FAVORITE
-            ? i18n.t('tlog.no_posts_daylog')
-            : i18n.t('tlog.no_posts');
+          const msgText = queryString
+            ? <TlogPageText text={i18n.t('tlog.no_posts_query', { query: queryString })} />
+            : user.is_daylog && section !== TLOG_SECTION_FAVORITE
+              ? i18n.t('tlog.no_posts_daylog')
+              : i18n.t('tlog.no_posts');
           return <TlogPageText text={msgText} />;
         }
       }
@@ -100,9 +104,9 @@ TlogPageBody.propTypes = {
   entries_info: PropTypes.object,
   error: PropTypes.string,
   hostTlogUrl: PropTypes.string,
-  host_tlog_id: PropTypes.number,
   nextPageUrl: PropTypes.string,
   prevPageUrl: PropTypes.string,
+  queryString: PropTypes.string,
   relationship: PropTypes.object,
   section: PropTypes.string.isRequired,
   user: PropTypes.object,
