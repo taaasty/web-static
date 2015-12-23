@@ -7,7 +7,7 @@ import PageLayout from '../common/page/PageLayout';
 import PageHeader from '../common/page/PageHeader';
 import PageBody from '../common/page/PageBody';
 
-import HeroFeedLive from '../hero/feedLive';
+import HeroFeedLive from './HeroFeedLive';
 import FeedLive from '../feed/feedLive';
 
 class FeedLivePage extends Component {
@@ -15,7 +15,7 @@ class FeedLivePage extends Component {
     FeedStore.initialize(this.props.entries);
   }
   render() {
-    const { currentUser, feed: { backgroundUrl, entriesCount }, locale } = this.props;
+    const { currentUser, feed: { backgroundUrl, entriesCount }, feedType, locale } = this.props;
     
     return (
       <PageWithAuth
@@ -28,6 +28,7 @@ class FeedLivePage extends Component {
               backgroundUrl={backgroundUrl}
               currentUser={currentUser}
               entriesCount={entriesCount}
+              feedType={feedType}
             />
           </PageHeader>
           <PageBody>
@@ -43,6 +44,7 @@ FeedLivePage.propTypes = {
   currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
   feed: PropTypes.object.isRequired,
+  feedType: PropTypes.string.isRequired,
   locale: PropTypes.string.isRequired,
 };
 
