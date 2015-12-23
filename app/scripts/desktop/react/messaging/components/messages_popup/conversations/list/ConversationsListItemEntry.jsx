@@ -1,65 +1,61 @@
-import React, { PropTypes } from 'react';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import moment from 'moment';
+import ConversationsListItem from './ConversationsListItem';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
-import ConversationsListItemEntryContent from './ConversationsListItemEntryContent';
+import Image from '../../../../../../../shared/react/components/common/Image';
 
-class ConversationsListItemEntry {
-  renderFooter() {
-    const { author, content_html, created_at } = this.props.conversation.last_message;
-
-    return (content_html &&
-      <div className="discussion-last-message">
-        <div className="messages__dialog">
-          <span className="messages__user-avatar">
-            <UserAvatar size={35} user={author} />
-          </span>
-          <div className="messages__dialog-text">
-            <span className="messages__user-name">
-              {author.slug}
-            </span>
-            <span dangerouslySetInnerHTML={{ __html: content_html}} />
-          </div>
-          <span className="messages__date">
-            {moment(created_at).format('D MMMM HH:mm')}
-          </span>
-        </div>
-      </div>
-    );
-  }
-  renderNotificationButton() {
-    const notifyButtonClasses = classNames({
-      'messages__notification-button': true,
-      '__active': this.props.conversation.notify,
+class ConversationsListItemEntry extends Component {
+  renderPreviewImage(image) {
+    const { width, height } = image.geometry;
+    const imgHorizontal = width > height;
+    const containerClasses = classNames({
+      'messages__preview-image': true,
+      'image-horizontal': imgHorizontal,
+      'image-vertical': !imgHorizontal,
     });
+
     return (
-      <button className={notifyButtonClasses}>
-        <i className="icon icon--bell" />
-      </button>
+      <div className={containerClasses}>
+        <Image
+          image={image}
+          maxHeight={imgHorizontal ? 35 : Infinity}
+          maxWidth={imgHorizontal ? Infinity : 35}
+        />
+      </div>
     );
   }
   render() {
-    const { children, conversation, hasUnread, isInList, onClick } = this.props;
-
-    const listItemClasses = classNames({
-      'messages__dialog': true,
-      'messages__dialog--discussion': true,
-      'state--read': !hasUnread,
-    });
+    const { conversation: { created_at, entry, last_message, unread_messages_count },
+            hasUnread, hasUnreceived, onClick } = this.props;
+    const previewImage = entry && entry.preview_image;
+    const title = entry && entry.title || i18n.t('messages_public_conversation_title');
+    const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
-      <div className={listItemClasses} onClick={onClick}>
-        {false && this.renderNotificationButton()}
+      <ConversationsListItem
+          hasUnread={hasUnread}
+          hasUnreceived={hasUnreceived}
+          lastMessageAt={lastMessageAt}
+          onClick={onClick}
+          unreadCount={unread_messages_count}
+      >
         <span className="messages__user-avatar">
-          <UserAvatar size={35} user={conversation.entry.author} />
-          {conversation.online && <span className="messages__user-online" />}
+          {previewImage
+           ? this.renderPreviewImage(previewImage)
+           : <UserAvatar size={35} user={entry.author} />
+          }
         </span>
-        <div className="messages__dialog-content">
-          <ConversationsListItemEntryContent entry={conversation.entry} />
+        <div className="messages__dialog-text">
+          <div className="messages__user-name">
+            {title}
+          </div>
+          <div className="messages__last-message">
+            <UserAvatar size={20} user={last_message.author} />
+            <span dangerouslySetInnerHTML={{ __html: last_message.content_html }} />
+          </div>
         </div>
-        {isInList && this.renderFooter()}
-        {children}
-      </div>
+      </ConversationsListItem>
     );
   }
 }
@@ -68,19 +64,7 @@ ConversationsListItemEntry.propTypes = {
   conversation: PropTypes.object.isRequired,
   hasUnread: PropTypes.bool,
   hasUnreceived: PropTypes.bool,
-  isInList: PropTypes.bool,
   onClick: PropTypes.func,
-};
-
-ConversationsListItemEntry.defaultProps = {
-  isInList: true,
-  conversation: {
-    last_message: {
-      author: {
-        userpic: {},
-      },
-    },
-  },
 };
 
 export default ConversationsListItemEntry;
