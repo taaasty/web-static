@@ -27,7 +27,7 @@ class TlogPageContainer extends Component {
   render() {
     const { bgImage, bgStyle, currentUserId, entries_info, error, isLogged, loadUrl,
             locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
-            relationship, section, stats, user } = this.props;
+            queryString, relationship, section, stats, user } = this.props;
     const firstEntry = (entries_info && entries_info.items &&
                         entries_info.items.length && entries_info.items[0].entry) || {};
 
@@ -56,6 +56,7 @@ class TlogPageContainer extends Component {
               nextPageParamName={nextPageParamName}
               nextPageUrl={nextPageUrl}
               prevPageUrl={prevPageUrl}
+              queryString={queryString}
               relationship={relationship}
               section={section}
               user={user}
@@ -92,6 +93,7 @@ TlogPageContainer.propTypes = {
   nextPageParamName: PropTypes.string,
   nextPageUrl: PropTypes.string,
   prevPageUrl: PropTypes.string,
+  queryString: PropTypes.string,
   relationship: PropTypes.object,
   section: PropTypes.oneOf([
     TLOG_SECTION_FAVORITE,
