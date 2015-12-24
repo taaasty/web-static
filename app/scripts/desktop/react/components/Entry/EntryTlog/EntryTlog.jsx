@@ -38,34 +38,6 @@ class EntryTlog extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.state.hasModeration !== nextState.hasModeration;
   }
-  render() {
-    const { commentator: _commentator, entry, host_tlog_id } = this.props;
-    const commentator = _commentator || anonCommentator;
-
-    return (
-      <article
-        className={this.getEntryClasses()}
-        data-id={entry.id}
-        data-time={entry.created_at}
-      >
-        <EntryTlogContent
-          commentator={commentator}
-          entry={entry}
-          hasModeration={this.state.hasModeration}
-          hideCommentForm={this.props.hideCommentForm}
-          host_tlog_id={host_tlog_id}
-          onAccept={this.accept.bind(this)}
-          onAddToFavorites={this.addToFavorites.bind(this)}
-          onAddToWatching={this.addToWatching.bind(this)}
-          onDecline={this.decline.bind(this)}
-          onDelete={this.delete.bind(this)}
-          onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
-          onRemoveFromWatching={this.removeFromWatching.bind(this)}
-          onReport={this.report.bind(this)}
-        />
-      </article>
-    );
-  }
   addToFavorites() {
     EntryActionCreators.addToFavorites(this.props.entry.id)
       .then(() => {
@@ -163,6 +135,34 @@ class EntryTlog extends Component {
     let typeClass = ENTRY_TYPES.indexOf(type) != -1 ? type : 'text';
 
     return `post post--${typeClass}`;
+  }
+  render() {
+    const { commentator: _commentator, entry, host_tlog_id } = this.props;
+    const commentator = _commentator || anonCommentator;
+
+    return (
+      <article
+        className={this.getEntryClasses()}
+        data-id={entry.id}
+        data-time={entry.created_at}
+      >
+        <EntryTlogContent
+          commentator={commentator}
+          entry={entry}
+          hasModeration={this.state.hasModeration}
+          hideCommentForm={this.props.hideCommentForm}
+          host_tlog_id={host_tlog_id}
+          onAccept={this.accept.bind(this)}
+          onAddToFavorites={this.addToFavorites.bind(this)}
+          onAddToWatching={this.addToWatching.bind(this)}
+          onDecline={this.decline.bind(this)}
+          onDelete={this.delete.bind(this)}
+          onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
+          onRemoveFromWatching={this.removeFromWatching.bind(this)}
+          onReport={this.report.bind(this)}
+        />
+      </article>
+    );
   }
 }
 

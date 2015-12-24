@@ -6,32 +6,9 @@ import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
-export default class EntryTlogTextType {
-  static propTypes = {
-    commentator: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    hasModeration: PropTypes.bool.isRequired,
-  }
-  render() {
-    const { is_private, text } = this.props.entry;
-
-    return (
-      <span>
-        <header className="post__header">
-          {this.renderVoting()}
-          {is_private && <PrivacyBadge />}
-          {this.renderTitle()}
-        </header>
-        <div className="post__content">
-          <Text value={text} withHTML={true} />
-        </div>
-        <div className="post__meta">
-          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
-        </div>
-        {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
-      </span>
-    );
+class EntryTlogTextType {
+  startComment() {
+    this.refs.comments.startComment();
   }
   renderVoting() {
     if (this.props.entry.is_voteable) {
@@ -52,7 +29,35 @@ export default class EntryTlogTextType {
       return <EntryTlogActions {...this.props} />;
     }
   }
-  startComment() {
-    this.refs.comments.startComment();
+  render() {
+    const { is_private, text, url } = this.props.entry;
+
+    return (
+      <span>
+        <header className="post__header">
+          {this.renderVoting()}
+          {is_private && <PrivacyBadge />}
+          {this.renderTitle()}
+        </header>
+        <a href={url}>
+          <div className="post__content">
+            <Text value={text} withHTML />
+          </div>
+        </a>
+        <div className="post__meta">
+          <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
+        </div>
+        {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
+      </span>
+    );
   }
 }
+
+EntryTlogTextType.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+};
+
+export default EntryTlogTextType;

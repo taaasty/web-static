@@ -6,46 +6,25 @@ import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
-export default class EntryTlogCodeType {
-  static propTypes = {
-    entry: PropTypes.object.isRequired,
-    commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
-  }
-  render() {
-    const { is_private, text } = this.props.entry;
-
-    return (
-      <span>
-        <header className="post__header">
-          {this.renderVoting()}
-          {is_private && <PrivacyBadge />}
-          {this.renderTitle()}
-        </header>
-        <div className="post__content">
-          <pre>
-            <Text value={text} withHTML={true} />
-          </pre>
-        </div>
-        <div className="post__meta">
-          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
-        </div>
-        {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
-      </span>
-    );
+class EntryTlogCodeType {
+  startComment() {
+    this.refs.comments.startComment();
   }
   renderVoting() {
-    if (this.props.entry.is_voteable) {
+    const { id, is_voteable, rating } = this.props.entry;
+
+    if (is_voteable) {
       return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
+        <Voting entryID={id} rating={rating} />
       );
     }
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const { title } = this.props.entry;
+
+    if (title) {
       return (
-        <h1 className="post__title">{this.props.entry.title}</h1>
+        <h1 className="post__title">{title}</h1>
       );
     }
   }
@@ -54,7 +33,37 @@ export default class EntryTlogCodeType {
       return <EntryTlogActions {...this.props} />;
     }
   }
-  startComment() {
-    this.refs.comments.startComment();
+  render() {
+    const { is_private, text, url } = this.props.entry;
+
+    return (
+      <span>
+        <header className="post__header">
+          {this.renderVoting()}
+          {is_private && <PrivacyBadge />}
+          {this.renderTitle()}
+        </header>
+        <a href={url}>
+          <div className="post__content">
+            <pre>
+              <Text value={text} withHTML />
+            </pre>
+          </div>
+        </a>
+        <div className="post__meta">
+          <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
+        </div>
+        {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
+      </span>
+    );
   }
 }
+
+EntryTlogCodeType.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+};
+
+export default EntryTlogCodeType;
