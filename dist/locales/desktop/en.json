@@ -20,6 +20,7 @@
   "messages_public_users": "__count__ user",
   "messages_public_users_plural": "__count__ users",
   "messages_public_conversation_title": "Post discussion",
+  "messages_date_yesterday": "yesterday",
   "notifications_empty_list": "You have no new notifications",
   "notifications_loading_error": "Loading notifications error",
   "auth_select_signin_method": "Choose way to log in",

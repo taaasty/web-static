@@ -4,6 +4,9 @@ import DropdownAction from '../../../../components/common/DropdownAction';
 import ConversationActions from '../../../actions/ConversationActions';
 
 class PublicConversationActions extends Component {
+  onClickContainer(ev) {
+    ev.stopPropagation();
+  }
   onClickFavorite(ev) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -36,24 +39,26 @@ class PublicConversationActions extends Component {
     }
 
     return (
-      <DropdownActions>
-        {can_favorite &&
-        <DropdownAction
-          hoverTitle={is_favorited && i18n.t('remove_from_favorites_entry_item')}
-          icon={`icon--star${is_favorited ? ' icon--star-fill' : ''}`}
-          key="fav"
-          onClick={this.onClickFavorite.bind(this)}
-          title={i18n.t(is_favorited ? 'entry_in_favorites' : 'add_to_favorites_entry_item')}
-        />}
-        {can_watch &&
-        <DropdownAction
-          hoverTitle={is_watching && i18n.t('stop_watch_entry_item')}
-          icon="icon--comments-subscribe"
-          key="watch"
-          onClick={this.onClickWatch.bind(this)}
-          title={i18n.t(is_watching ? 'watching_entry_item' : 'start_watch_entry_item')}
-        />}
-      </DropdownActions>
+      <div className="meta-item-container" onClick={this.onClickContainer}>
+        <DropdownActions>
+          {can_favorite &&
+          <DropdownAction
+            hoverTitle={is_favorited && i18n.t('remove_from_favorites_entry_item')}
+            icon={`icon--star${is_favorited ? ' icon--star-fill' : ''}`}
+            key="fav"
+            onClick={this.onClickFavorite.bind(this)}
+            title={i18n.t(is_favorited ? 'entry_in_favorites' : 'add_to_favorites_entry_item')}
+          />}
+          {can_watch &&
+          <DropdownAction
+            hoverTitle={is_watching && i18n.t('stop_watch_entry_item')}
+            icon="icon--comments-subscribe"
+            key="watch"
+            onClick={this.onClickWatch.bind(this)}
+            title={i18n.t(is_watching ? 'watching_entry_item' : 'start_watch_entry_item')}
+          />}
+        </DropdownActions>
+      </div>
     );
   }
 }

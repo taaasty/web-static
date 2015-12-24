@@ -22,6 +22,7 @@
   "messages_public_users_plural_2": "__count__ участника",
   "messages_public_users_plural_5": "__count__ участников",
   "messages_public_conversation_title": "Обсуждение записи",
+  "messages_date_yesterday": "вчера",
   "notifications_empty_list": "Нет непросмотренных уведомлений",
   "notifications_loading_error": "Ошибка загрузки уведомлений",
   "auth_select_signin_method": "Выберите способ входа/регистрации",
