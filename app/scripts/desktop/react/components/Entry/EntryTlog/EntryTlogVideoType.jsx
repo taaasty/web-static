@@ -6,36 +6,9 @@ import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
-export default class EntryTlogVideoType {
-  static propTypes = {
-    entry: PropTypes.object.isRequired,
-    commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
-  }
-  render() {
-    const { iframely, is_private, title } = this.props.entry;
-
-    return (
-      <span>
-        <div className="post__content">
-          <EmbedComponent
-              autoplay={false}
-              frameWidth={712}
-              frameHeight={400}
-              embedHtml={iframely.html} />
-          <div className="video_comment">
-            {this.renderVoting()}
-            {is_private && <PrivacyBadge />}
-            <Text value={title} withHTML={true} />
-          </div>
-        </div>
-        <div className="post__meta">
-          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
-        </div>
-        {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
-      </span>
-    );
+class EntryTlogVideoType {
+  startComment() {
+    this.refs.comments.startComment();
   }
   renderVoting() {
     if (this.props.entry.is_voteable) {
@@ -49,7 +22,38 @@ export default class EntryTlogVideoType {
       return <EntryTlogActions {...this.props} />;
     }
   }
-  startComment() {
-    this.refs.comments.startComment();
+  render() {
+    const { iframely, is_private, title } = this.props.entry;
+
+    return (
+      <span>
+        <div className="post__content">
+          <EmbedComponent
+            autoplay={false}
+            frameWidth={712}
+            frameHeight={400}
+            embedHtml={iframely.html}
+          />
+          <div className="video_comment">
+            {this.renderVoting()}
+            {is_private && <PrivacyBadge />}
+            <Text value={title} withHTML={true} />
+          </div>
+        </div>
+        <div className="post__meta">
+          <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
+        </div>
+        {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
+      </span>
+    );
   }
 }
+
+EntryTlogVideoType.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+};
+
+export default EntryTlogVideoType;

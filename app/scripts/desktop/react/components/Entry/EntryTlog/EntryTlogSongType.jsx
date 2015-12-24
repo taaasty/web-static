@@ -1,34 +1,13 @@
 import React, { PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
-import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
-export default class EntryTlogSongType {
-  static propTypes = {
-    entry: PropTypes.object.isRequired,
-    commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
-  }
-  render() {
-    const { is_private } = this.props.entry;
-
-    return (
-      <span>
-        <header className="post__header">
-          {this.renderVoting()}
-          {is_private && <PrivacyBadge />}
-          {this.renderTitle()}
-        </header>
-        <div className="post__meta">
-          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
-        </div>
-        {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
-      </span>
-    );
+class EntryTlogSongType {
+  startComment() {
+    this.refs.comments.startComment();
   }
   renderVoting() {
     if (this.props.entry.is_voteable) {
@@ -53,7 +32,30 @@ export default class EntryTlogSongType {
       return <EntryTlogActions {...this.props} />;
     }
   }
-  startComment() {
-    this.refs.comments.startComment();
+  render() {
+    const { is_private } = this.props.entry;
+
+    return (
+      <span>
+        <header className="post__header">
+          {this.renderVoting()}
+          {is_private && <PrivacyBadge />}
+          {this.renderTitle()}
+        </header>
+        <div className="post__meta">
+          <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
+        </div>
+        {this.renderActions()}
+        <EntryTlogComments {...this.props} ref="comments" />
+      </span>
+    );
   }
 }
+
+EntryTlogSongType.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+};
+
+export default EntryTlogSongType;
