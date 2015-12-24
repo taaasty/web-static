@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -19,13 +20,21 @@ class ConversationsListItem {
       'messages__dialog': true,
       'state--read': !hasUnread,
     });
+    const lf = moment.localeData().longDateFormat('L');
+    const shortYearLf = lf.replace(/YYYY/g, 'YY');
+    const lastMessageAtStr = moment(lastMessageAt).calendar(null, {
+      sameDay: 'LT',
+      lastDay: `[${i18n.t('messages_date_yesterday')}]`,
+      lastWeek: shortYearLf,
+      sameElse: shortYearLf,
+    });
 
     return (
       <div className={listItemClasses} onClick={onClick}>
         {this.renderIndicator()}
         {children}
         <span className="messages__date">
-          {moment(lastMessageAt).fromNow()}
+          {lastMessageAtStr}
         </span>
       </div>
     );
