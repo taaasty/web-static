@@ -15,3 +15,9 @@ export default keyMirror({
   FEED_LIVE_FLOW_NEW_ENTRY: null,
   FEED_LIVE_FLOW_RESET: null,
 });
+
+export const FEED_TYPE_ANONYMOUS = 'anonymous';
+export const FEED_TYPE_LIVE = 'live';
+export const FEED_TYPE_FRIENDS = 'friends';
+export const FEED_TYPE_BEST = 'best';
+export const FEED_TYPE_LIVE_FLOW = 'live_flow_entries';

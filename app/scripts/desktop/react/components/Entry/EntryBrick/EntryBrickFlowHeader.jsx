@@ -1,3 +1,4 @@
+/*global ThumborService */
 import React from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import LazyLoadImage from '../../../../../shared/react/components/common/LazyLoadImage';
@@ -38,10 +39,12 @@ class EntryBrickFlowHeader {
                   <i className="icon icon--friends" />
                   <span>{flow.followers_count || 0}</span>
                 </div>
-                <div className="brick__data-item">
-                  <i className="icon icon--text-circle" />
-                  <span>{flow.public_tlog_entries_count || 0}</span>
-                </div>
+                {false &&
+                  <div className="brick__data-item">
+                    <i className="icon icon--text-circle" />
+                    <span>{flow.public_tlog_entries_count || 0}</span>
+                  </div>
+                }
               </div>
             </span>
           </div>

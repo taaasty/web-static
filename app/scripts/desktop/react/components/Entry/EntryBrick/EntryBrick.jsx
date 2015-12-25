@@ -6,10 +6,12 @@ import EntryBrickFlowHeader from './EntryBrickFlowHeader';
 import EntryBrickPinHeader from './EntryBrickPinHeader';
 
 import { ENTRY_TYPES, ENTRY_PINNED_STATE } from '../../../constants/EntryConstants';
+import { FEED_TYPE_LIVE_FLOW } from '../../../constants/FeedConstants';
 
 let EntryBrick = React.createClass({
   propTypes: {
     entry: ProjectTypes.tlogEntry.isRequired,
+    feedType: PropTypes.string,
     host_tlog_id: PropTypes.number,
     moderation: PropTypes.object,
   },
@@ -42,12 +44,12 @@ let EntryBrick = React.createClass({
   },
 
   render() {
-    const { entry } = this.props;
+    const { entry, feedType } = this.props;
 
     if (this.state.visible) {
       return (
         <article className={this.getBrickClasses()} data-id={entry.id}>
-          {false && this.renderFlowHeader()}
+          {feedType !== FEED_TYPE_LIVE_FLOW && this.renderFlowHeader()}
           {this.renderPinHeader()}
           <EntryBrickContent
             entry={entry}
