@@ -9,6 +9,7 @@ let RelationshipActionCreators = {
         if (window.ga && data.user && data.user.is_flow) {
           window.ga('send', 'event', 'UX', 'UnFollowFlow', data.user.name);
         }
+        return data;
       })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Отписка от тлога', {
@@ -36,6 +37,7 @@ let RelationshipActionCreators = {
         if (window.ga && data.user && data.user.is_flow) {
           window.ga('send', 'event', 'UX', 'FollowFlow', data.user.name);
         }
+        return data;
       })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Подписка на тлог', {
