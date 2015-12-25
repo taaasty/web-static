@@ -6,10 +6,11 @@ import NoticeService from '../services/Notice';
 let EntryActionCreators = {
   vote(entryID) {
     return Api.entry.vote(entryID)
-      .then(() => {
+      .then((data) => {
         if (window.ga) {
           window.ga('send', 'event', 'UX', 'Like');
         }
+        return data;
       })
       .fail((xhr) => {
         ErrorService.notifyErrorResponse('Голосование за запись', {
