@@ -203,14 +203,16 @@ let EditorActionCreators = {
     this.changeImageUrl(null);
   },
 
-  deleteImageAttachments() {
+  deleteImageAttachments(deleteFromServer) {
     let attachments = EditorStore.getEntryValue('imageAttachments') || [];
 
-    _.forEach(attachments, (item) => {
-      if (!item.entry_id && item.id) {
-        Api.editor.deleteImageAttachment(item.id);
-      }
-    });
+    if (deleteFromServer) {
+      _.forEach(attachments, (item) => {
+        if (!item.entry_id && item.id) {
+          Api.editor.deleteImageAttachment(item.id);
+        }
+      });
+    }
 
     this.updateField('imageAttachments', []);
   },

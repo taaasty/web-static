@@ -112,7 +112,7 @@ EditorTypeImage = React.createClass
       WELCOME_STATE
 
   handleDeleteLoadedImages: ->
-    EditorActionCreators.deleteImageAttachments()
+    EditorActionCreators.deleteImageAttachments(!this.props.entry) # edit mode if entry exists
     EditorActionCreators.deleteImageUrl()
     @activateWelcomeState()
 
