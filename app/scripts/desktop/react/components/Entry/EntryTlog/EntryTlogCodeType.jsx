@@ -5,6 +5,7 @@ import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
+import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogCodeType {
   startComment() {
@@ -34,7 +35,7 @@ class EntryTlogCodeType {
     }
   }
   render() {
-    const { is_private, text, url } = this.props.entry;
+    const { isInList, entry: { is_private, text, url } } = this.props;
 
     return (
       <span>
@@ -43,13 +44,13 @@ class EntryTlogCodeType {
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <a href={url}>
+        <EntryTlogContentLink show={isInList} url={url}>
           <div className="post__content">
             <pre>
               <Text value={text} withHTML />
             </pre>
           </div>
-        </a>
+        </EntryTlogContentLink>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
@@ -64,6 +65,7 @@ EntryTlogCodeType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isInList: PropTypes.bool,
 };
 
 export default EntryTlogCodeType;

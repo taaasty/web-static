@@ -5,6 +5,7 @@ import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
+import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogTextType {
   startComment() {
@@ -30,7 +31,7 @@ class EntryTlogTextType {
     }
   }
   render() {
-    const { is_private, text, url } = this.props.entry;
+    const { entry: { is_private, text, url }, isInList } = this.props;
 
     return (
       <span>
@@ -39,11 +40,11 @@ class EntryTlogTextType {
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <a href={url}>
+        <EntryTlogContentLink show={isInList} url={url}>
           <div className="post__content">
             <Text value={text} withHTML />
           </div>
-        </a>
+        </EntryTlogContentLink>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>

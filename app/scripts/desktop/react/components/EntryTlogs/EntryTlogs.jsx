@@ -39,6 +39,7 @@ class EntryTlogs {
                entry={item.entry}
                hideCommentForm={entries.length > 1}
                host_tlog_id={host_tlog_id}
+               isInList
                key={item.entry.id}
                moderation={item.moderation}
                onDelete={onDelete}

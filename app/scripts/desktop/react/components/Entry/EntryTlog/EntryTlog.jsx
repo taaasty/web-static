@@ -137,7 +137,7 @@ class EntryTlog extends Component {
     return `post post--${typeClass}`;
   }
   render() {
-    const { commentator: _commentator, entry, host_tlog_id } = this.props;
+    const { commentator: _commentator, entry, host_tlog_id, isInList } = this.props;
     const commentator = _commentator || anonCommentator;
 
     return (
@@ -152,6 +152,7 @@ class EntryTlog extends Component {
           hasModeration={this.state.hasModeration}
           hideCommentForm={this.props.hideCommentForm}
           host_tlog_id={host_tlog_id}
+          isInList={isInList}
           onAccept={this.accept.bind(this)}
           onAddToFavorites={this.addToFavorites.bind(this)}
           onAddToWatching={this.addToWatching.bind(this)}
@@ -171,6 +172,7 @@ EntryTlog.propTypes = {
   entry: PropTypes.object.isRequired,
   hideCommentForm: PropTypes.bool,
   host_tlog_id: PropTypes.number,
+  isInList: PropTypes.bool,
   moderation: PropTypes.object,
   onDelete: PropTypes.func,
   successDeleteUrl: PropTypes.string,
