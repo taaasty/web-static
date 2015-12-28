@@ -106,14 +106,14 @@
   .messages__counter;
   width: 18px;
   height: 18px;
-  top: 40px;
+  top: 30px;
 }
 
 .unreceived-messages__counter {
   .messages__counter;
   width: 9px;
   height: 9px;
-  top: 40px;
+  top: 35px;
 }
 
 // Message Dialogs
@@ -127,6 +127,7 @@
   border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .05);
   background-color: @white;
   cursor: pointer;
+  min-height: 35px;
   // Рельсовый sass этого не понимает
   // https://www.honeybadger.io/inspector/p/36627/6074214
   // .transition(~".background-color .3s ease");
@@ -293,10 +294,6 @@
 }
 
 .messages__dialog--discussion {
-  .messages__dialog-text {
-    min-height: 35px;
-  }
-
   .meta-item-container {
     position: absolute;
     top: 0;
