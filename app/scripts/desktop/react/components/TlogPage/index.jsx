@@ -16,6 +16,8 @@ import {
   TLOG_SECTION_TLOG,
 } from '../../../../shared/constants/Tlog';
 
+import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
+
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageContainer extends Component {
@@ -69,12 +71,13 @@ class TlogPageContainer extends Component {
           title={user.slug}
           url={user.tlog_url}
         />  
-        <Calendar
-          entryCreatedAt={firstEntry.created_at || (new Date()).toISOString()}
-          entryId={firstEntry.id}
-          locale={locale}
-          tlogId={user.id}
-         />
+        {(!user.is_privacy || (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
+          <Calendar
+            entryCreatedAt={firstEntry.created_at || (new Date()).toISOString()}
+            entryId={firstEntry.id}
+            locale={locale}
+            tlogId={user.id}
+          />}
       </div>
     );
   }
