@@ -6,6 +6,7 @@ import ImageAttachmentsCollage from '../../../../../shared/react/components/comm
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
+import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogImageType {
   startComment() {
@@ -24,22 +25,22 @@ class EntryTlogImageType {
     }
   }
   render() {
-    const { image_attachments, is_private, title, url } = this.props.entry;
+    const { entry: { image_attachments, is_private, title, url }, isInList } = this.props;
 
     return (
       <span>
         <div className="post__content">
-          <a href={url}>
+          <EntryTlogContentLink show={isInList} url={url}>
             <ImageAttachmentsCollage
               imageAttachments={image_attachments}
               width={712}
             />
-          </a>
+          </EntryTlogContentLink>
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
-          <a href={url}>
+          <EntryTlogContentLink show={isInList} url={url}>
             <Text value={title} withHTML />
-          </a>
+          </EntryTlogContentLink>
         </div>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
@@ -55,6 +56,7 @@ EntryTlogImageType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isInList: PropTypes.bool,
 };
 
 export default EntryTlogImageType;

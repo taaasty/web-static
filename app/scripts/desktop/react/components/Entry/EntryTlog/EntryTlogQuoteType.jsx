@@ -4,6 +4,7 @@ import PrivacyBadge from '../../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
+import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogQuoteType {
   startComment() {
@@ -22,7 +23,7 @@ class EntryTlogQuoteType {
     }
   }
   render() {
-    const { is_private, source, text, url } = this.props.entry;
+    const { entry: { is_private, source, text, url }, isInList } = this.props;
 
     return (
       <span>
@@ -30,7 +31,7 @@ class EntryTlogQuoteType {
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
         </header>
-        <a href={url}>
+        <EntryTlogContentLink show={isInList} url={url}>
           <div className="post__content">
             <blockquote className="blockquote">
               <span className="laquo">«</span>{text}<span className="raquo">»</span>
@@ -41,7 +42,7 @@ class EntryTlogQuoteType {
               }
             </blockquote>
           </div>
-        </a>
+        </EntryTlogContentLink>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
@@ -56,6 +57,7 @@ EntryTlogQuoteType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isInList: PropTypes.bool,
 };
 
 export default EntryTlogQuoteType;
