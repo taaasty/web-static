@@ -1,7 +1,9 @@
+MESSENGER_VERSION_PREFIX = 'v2'
+
 ApiRoutes =
   omniauth_url:    (provider) -> gon.host + '/auth/' + provider
   iframely_url:               -> gon.api_host + '/v1/embeding/iframely.json'
-  pusher_auth_url:            -> gon.api_host + '/v1/messenger/auth'
+  pusher_auth_url:            -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/auth"
 
   calendar_url:               (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/calendar'
   votes_url:                 (entryId) -> gon.api_host + '/v1/entries/' + entryId + '/votes'
@@ -81,17 +83,21 @@ ApiRoutes =
     gon.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state
 
   # Messenger
-  messenger_ready_url:                     -> gon.api_host + '/v1/messenger/ready'
-  messengerConversationsByUserId: (userId) -> gon.api_host + '/v1/messenger/conversations/by_user_id/' + userId
-
-  messenger_new_message_url:      (conversationId) -> gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages'
-  messenger_load_messages_url:    (conversationId) -> gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages'
-  messenger_read_messages_url:    (conversationId) -> gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read'
+  messenger_ready_url: ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/ready"
+  messengerConversationsByUserId: (userId) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_id/#{userId}"
+  messenger_new_message_url: (conversationId) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{conversationId}/messages"
+  messenger_load_messages_url: (conversationId) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{conversationId}/messages"
+  messenger_read_messages_url: (conversationId) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{conversationId}/messages/read"
 
   # Notifications
-  notificationsUrl:             -> gon.api_host + '/v1/messenger/notifications'
-  notificationsReadAllUrl:      -> gon.api_host + '/v1/messenger/notifications/read'
-  notifications_read_url:  (id) -> gon.api_host + '/v1/messenger/notifications/' + id + '/read'
+  notificationsUrl:             -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/notifications"
+  notificationsReadAllUrl:      -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/notifications/read"
+  notifications_read_url:  (id) -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/notifications/#{id}/read"
 
   suggestions_vkontakte: -> gon.api_host + '/v1/relationships/suggestions/vkontakte'
   suggestions_facebook:  -> gon.api_host + '/v1/relationships/suggestions/facebook'

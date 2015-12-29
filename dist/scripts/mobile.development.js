@@ -13884,7 +13884,9 @@ exports['default'] = AppStorage;
 module.exports = exports['default'];
 
 },{}],264:[function(require,module,exports){
-var ApiRoutes;
+var ApiRoutes, MESSENGER_VERSION_PREFIX;
+
+MESSENGER_VERSION_PREFIX = 'v2';
 
 ApiRoutes = {
   omniauth_url: function(provider) {
@@ -13894,7 +13896,7 @@ ApiRoutes = {
     return gon.api_host + '/v1/embeding/iframely.json';
   },
   pusher_auth_url: function() {
-    return gon.api_host + '/v1/messenger/auth';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/auth";
   },
   calendar_url: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/calendar';
@@ -14041,28 +14043,28 @@ ApiRoutes = {
     return gon.api_host + '/v1/relationships/to/tlog/' + tlogId + '/' + state;
   },
   messenger_ready_url: function() {
-    return gon.api_host + '/v1/messenger/ready';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/ready";
   },
   messengerConversationsByUserId: function(userId) {
-    return gon.api_host + '/v1/messenger/conversations/by_user_id/' + userId;
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_id/" + userId;
   },
   messenger_new_message_url: function(conversationId) {
-    return gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages";
   },
   messenger_load_messages_url: function(conversationId) {
-    return gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages";
   },
   messenger_read_messages_url: function(conversationId) {
-    return gon.api_host + '/v1/messenger/conversations/by_id/' + conversationId + '/messages/read';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages/read";
   },
   notificationsUrl: function() {
-    return gon.api_host + '/v1/messenger/notifications';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";
   },
   notificationsReadAllUrl: function() {
-    return gon.api_host + '/v1/messenger/notifications/read';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications/read";
   },
   notifications_read_url: function(id) {
-    return gon.api_host + '/v1/messenger/notifications/' + id + '/read';
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications/" + id + "/read";
   },
   suggestions_vkontakte: function() {
     return gon.api_host + '/v1/relationships/suggestions/vkontakte';
