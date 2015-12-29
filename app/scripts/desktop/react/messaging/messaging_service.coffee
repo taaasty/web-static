@@ -1,5 +1,7 @@
 MessagesPopup = require './components/messages_popup';
 
+PUBLIC_CONVERSATION_PREFIX = 'public_';
+
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
@@ -31,13 +33,25 @@ class window.MessagingService
       NoticeService.notify 'error', i18n.t 'pusher_subscription_error'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
-    @channel.bind @EVENT_STATUS,              MessagingDispatcher.updateMessagingStatus
+    @channel.bind_all((_type='', data) =>
+      type = _type.replace(/^public_/, '')
+      switch type
+        when @EVENT_STATUS then MessagingDispatcher.updateMessagingStatus(data)
+        when @EVENT_UPDATE_CONVERSATION then MessagingDispatcher.updateConversation(data)
+        when @EVENT_PUSH_MESSAGE then MessagingDispatcher.messageReceived(data)
+        when @EVENT_UPDATE_MESSAGES then MessagingDispatcher.messagesUpdated(data)
+        when @EVENT_PUSH_NOTIFICATION then MessagingDispatcher.notificationReceived(data)
+        when @EVENT_UPDATE_NOTIFICATIONS then MessagingDispatcher.notificationsUpdated(data)
+    )
+
+    #@channel.bind @EVENT_STATUS, MessagingDispatcher.updateMessagingStatus
+    #@channel.bind @EVENT_UPDATE_CONVERSATION, MessagingDispatcher.updateConversation
+    #@channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
+    #@channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
+    #@channel.bind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
+    #@channel.bind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
+
     # @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
-    @channel.bind @EVENT_UPDATE_CONVERSATION, MessagingDispatcher.updateConversation
-    @bindPushMessages()
-    @bindUpdateMessages()
-    @bindPushNotifications()
-    @bindUpdateNotifications()
 
     @messagesContainer      = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
     @notificationsContainer = $('<\div>', {'popup-notifications-container': ''}).appendTo('body')[0]
@@ -168,26 +182,14 @@ class window.MessagingService
   removeReconnectListener: (callback) ->
     @off @RECONNECT_EVENT, callback
 
-  bindPushMessages: ->
-    @channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
-
   unbindPushMessages: ->
     @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
-
-  bindUpdateMessages: ->
-    @channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
 
   unbindUpdateMessages: ->
     @channel.unbind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
 
-  bindPushNotifications: ->
-    @channel.bind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
-
   unbindPushNotifications: ->
     @channel.unbind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
-
-  bindUpdateNotifications: ->
-    @channel.bind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
 
   unbindUpdateNotifications: ->
     @channel.unbind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
