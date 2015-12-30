@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import ConversationsListItem from './ConversationsListItem';
+import { CONVERSATION_PIC_SIZE } from './MessagesPopupConversationsListItem';
 
 class ConversationsListItemText {
   render() {
@@ -18,7 +19,7 @@ class ConversationsListItemText {
         unreadCount={unread_messages_count}
       >
         <span className="messages__user-avatar">
-          <UserAvatar size={35} user={recipient} />
+          <UserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-text">

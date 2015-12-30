@@ -75,6 +75,7 @@
 
 .messages__user-name {
   margin-right: 3px;
+  margin-bottom: 7px;
   font-weight: bold;
   color: #888;
 }
@@ -106,7 +107,7 @@
   .messages__counter;
   width: 18px;
   height: 18px;
-  top: 30px;
+  top: 34px;
 }
 
 .unreceived-messages__counter {
@@ -119,6 +120,15 @@
 // Message Dialogs
 .messages__dialogs {
   user-select: none;
+
+  .messages__user-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .messages__dialog {
+    padding-left: 65px;
+  }
 }
 
 .messages__dialog {
@@ -127,7 +137,7 @@
   border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .05);
   background-color: @white;
   cursor: pointer;
-  min-height: 35px;
+  min-height: 40px;
   // Рельсовый sass этого не понимает
   // https://www.honeybadger.io/inspector/p/36627/6074214
   // .transition(~".background-color .3s ease");
@@ -145,7 +155,7 @@
   .messages__date {
     position: absolute;
     top: 12px;
-    right: 12px;
+    right: 14px;
     width: 50px;
     line-height: 12px;
     text-align: right;
@@ -179,6 +189,7 @@
 
 .messages__dialog-text {
   font-size: 13px;
+  line-height: 13px;
   margin-bottom: 2px;
   overflow: hidden;
   word-wrap: break-word;
