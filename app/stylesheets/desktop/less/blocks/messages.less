@@ -162,22 +162,19 @@
   }
 
   .messages__preview-image {
+    position: relative;
     overflow: hidden;
     border-radius: 100%;
     height: 100%;
     width: 100%;
 
     .imageloader {
-      position: relative;
-      display: inline-block;
-    }
-
-    &.image-horizontal .imageloader {
-      margin-left: -50%;
-    }
-
-    &.image-vertical .imageloader {
-      margin-top: -50%;
+      position: absolute;
+      top: -100%;
+      bottom: -100%;
+      right: -100%;
+      left: -100%;
+      margin: auto;
     }
   }
 }
