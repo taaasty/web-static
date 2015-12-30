@@ -1,9 +1,10 @@
-/*global i18n */
 import React, { PropTypes } from 'react';
 import ConversationActions from '../../../../actions/ConversationActions';
 import ConversationsListItemText from './ConversationsListItemText';
 import ConversationsListItemEntry from './ConversationsListItemEntry';
 import { PUBLIC_CONVERSATION } from '../../../../constants/ConversationConstants';
+
+export const CONVERSATION_PIC_SIZE = 40;
 
 class MessagesPopupConversationsListItem {
   hasUnread() {

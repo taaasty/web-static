@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import ConversationsListItem from './ConversationsListItem';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
+import { CONVERSATION_PIC_SIZE } from './MessagesPopupConversationsListItem';
 
 class ConversationsListItemEntry extends Component {
   renderPreviewImage(image) {
@@ -19,8 +20,8 @@ class ConversationsListItemEntry extends Component {
       <div className={containerClasses}>
         <Image
           image={image}
-          maxHeight={imgHorizontal ? 35 : Infinity}
-          maxWidth={imgHorizontal ? Infinity : 35}
+          maxHeight={imgHorizontal ? CONVERSATION_PIC_SIZE : Infinity}
+          maxWidth={imgHorizontal ? Infinity : CONVERSATION_PIC_SIZE}
         />
       </div>
     );
@@ -43,7 +44,7 @@ class ConversationsListItemEntry extends Component {
         <span className="messages__user-avatar">
           {previewImage
            ? this.renderPreviewImage(previewImage)
-           : <UserAvatar size={35} user={entry.author} />
+           : <UserAvatar size={CONVERSATION_PIC_SIZE} user={entry.author} />
           }
         </span>
         <div className="messages__dialog-text">
