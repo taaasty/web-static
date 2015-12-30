@@ -1,3 +1,4 @@
+/*global Avatar */
 import React, { Component, PropTypes } from 'react';
 
 class UserAvatar extends Component {
@@ -7,6 +8,11 @@ class UserAvatar extends Component {
   componentDidMount() {
     this.updateUserpic = this._updateUserpic.bind(this);
     TastyEvents.on(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this.updateUserpic);
+  }
+  componentWillUpdate({ user }) {
+    if (user !== this.props.user) {
+      this.setState({ user });
+    }
   }
   componentWillUnmount() {
     TastyEvents.off(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this.updateUserpic);
@@ -28,8 +34,8 @@ class UserAvatar extends Component {
 }
 
 UserAvatar.propTypes = {
-  user: PropTypes.object.isRequired,
   size: PropTypes.number,
+  user: PropTypes.object.isRequired,
 };
   
 export default UserAvatar;
