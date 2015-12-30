@@ -40,6 +40,8 @@ window.MessagesStore = _.extend {}, EventEmitter.prototype, {
 
     for message in messages
       if message.uuid is data.uuid
+        if !data.read_at #FIXME temporal fix for race condition
+          delete data.read_at
         _.extend message, data
         break
 
