@@ -1,6 +1,5 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import ConversationsListItem from './ConversationsListItem';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
@@ -10,14 +9,9 @@ class ConversationsListItemEntry extends Component {
   renderPreviewImage(image) {
     const { width, height } = image.geometry;
     const imgHorizontal = width > height;
-    const containerClasses = classNames({
-      'messages__preview-image': true,
-      'image-horizontal': imgHorizontal,
-      'image-vertical': !imgHorizontal,
-    });
 
     return (
-      <div className={containerClasses}>
+      <div className="messages__preview-image">
         <Image
           image={image}
           maxHeight={imgHorizontal ? CONVERSATION_PIC_SIZE : Infinity}
