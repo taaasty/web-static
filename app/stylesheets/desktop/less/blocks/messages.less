@@ -74,6 +74,10 @@
 }
 
 .messages__user-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
   margin-right: 3px;
   margin-bottom: 7px;
   font-weight: bold;
@@ -120,19 +124,10 @@
 // Message Dialogs
 .messages__dialogs {
   user-select: none;
-
-  .messages__user-avatar {
-    width: 40px;
-    height: 40px;
-  }
-
-  .messages__dialog {
-    padding-left: 65px;
-  }
 }
 
 .messages__dialog {
-  padding: 12px 60px;
+  padding: 12px 60px 12px 65px;
   position: relative;
   border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .05);
   background-color: @white;
@@ -150,6 +145,42 @@
     .messages__dialog-text {
       color: #888;
     }
+  }
+
+  .messages__dialog-text.--public-header {
+    height: 40px;
+    margin-bottom: 0;
+    white-space: nowrap;
+    width: 100%;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    .messages__entry-data-container {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .messages__user-name {
+      margin-bottom: 0;
+      line-height: 20px;
+    }
+
+    .messages__entry-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 20px;
+    }
+  }
+
+  .messages__user-avatar {
+    width: 40px;
+    height: 40px;
   }
 
   .messages__date {
@@ -287,6 +318,10 @@
     vertical-align: middle;
   }
   
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
   .avatar {
     display: inline-block;
     margin-right: 5px;
