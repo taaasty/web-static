@@ -1,29 +1,13 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import ConversationsListItem from './ConversationsListItem';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
-import Image from '../../../../../../../shared/react/components/common/Image';
-import { CONVERSATION_PIC_SIZE } from './MessagesPopupConversationsListItem';
+import ConversationsListItem from './ConversationsListItem';
+import ConversationsListItemEntryPic from './ConversationsListItemEntryPic';
 
 class ConversationsListItemEntry extends Component {
-  renderPreviewImage(image) {
-    const { width, height } = image.geometry;
-    const imgHorizontal = width > height;
-
-    return (
-      <div className="messages__preview-image">
-        <Image
-          image={image}
-          maxHeight={imgHorizontal ? CONVERSATION_PIC_SIZE : Infinity}
-          maxWidth={imgHorizontal ? Infinity : CONVERSATION_PIC_SIZE}
-        />
-      </div>
-    );
-  }
   render() {
     const { conversation: { created_at, entry, last_message, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
-    const previewImage = entry && entry.preview_image;
     const title = entry && entry.title || i18n.t('messages_public_conversation_title');
     const lastMessageAt = last_message ? last_message.created_at : created_at;
 
@@ -36,10 +20,7 @@ class ConversationsListItemEntry extends Component {
           unreadCount={unread_messages_count}
       >
         <span className="messages__user-avatar">
-          {previewImage
-           ? this.renderPreviewImage(previewImage)
-           : <UserAvatar size={CONVERSATION_PIC_SIZE} user={entry.author} />
-          }
+          <ConversationsListItemEntryPic entry={entry} />
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">

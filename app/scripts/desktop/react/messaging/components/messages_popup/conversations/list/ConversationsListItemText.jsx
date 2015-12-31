@@ -26,7 +26,11 @@ class ConversationsListItemText {
           <div className="messages__user-name">
             {recipient.slug}
           </div>
-          {lastMessageText && <div dangerouslySetInnerHTML={{ __html: lastMessageText }} />}
+          {lastMessageText &&
+           <div
+             className="messages__last-message"
+             dangerouslySetInnerHTML={{ __html: lastMessageText }}
+           />}
         </div>
       </ConversationsListItem>
     );
