@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import MessagesPopupThreadForm from './MessagesPopupThreadForm';
 import PublicConversationHeader from './PublicConversationHeader';
+import MessagesPopupThreadMessageList from './MessagesPopupThreadMessageList';
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread extends Component {
@@ -45,7 +46,7 @@ class MessagesPopupThread extends Component {
           />}
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />
-          <MessagesPopup_ThreadMessageList conversationId={id} />
+          <MessagesPopupThreadMessageList conversationId={id} />
         </div>
         <footer className="messages__footer">
           <MessagesPopupThreadForm conversationId={id} userCount={userCount} />
