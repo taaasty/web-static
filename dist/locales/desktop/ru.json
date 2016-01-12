@@ -116,6 +116,7 @@
   "comment_form_submit": "Отправить",
   "comment_more_link": "Прокомментировать",
   "comment_form_placeholder": "Комментарий. SHIFT + ENTER новая строка",
+  "comment_reply": "Ответить",
   "shared_comment_doesnt_exist": "К сожалению, данного комментария больше нет",
   "delete_comment_button": "Удалить комментарий",
   "report_comment_button": "Пожаловаться",
@@ -445,7 +446,10 @@
     "meta": {
       "repost_from": "Репост из <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
       "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написала в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>",
-      "author_posted_in_m": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написал в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>"
+      "author_posted_in_m": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> написал в <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>",
+      "pin_entry": "Закрепить пост в прямом эфире",
+      "awaiting_paiment": "Пост ожидает оплаты для закрепления",
+      "pinned": "Пост закреплен"
     },
     "repost": {
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"__flowsLink__\">потоки</a> чтобы добавлять туда посты"

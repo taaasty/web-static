@@ -2,8 +2,15 @@
 import React, { PropTypes } from 'react';
 import DropdownActions from '../../common/DropdownActions';
 import DropdownAction from '../../common/DropdownAction';
+import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
 class EntryTlogMetabarActions {
+  canPin() {
+    const { commentator, entry: { author, is_private } } = this.props;
+
+    return commentator && author &&
+      commentator.id === author.id && !is_private;
+  }
   render() {
     const { can_delete, can_edit, can_favorite, can_report, can_watch,
             edit_url, is_favorited, is_watching, url } = this.props.entry;
@@ -20,6 +27,9 @@ class EntryTlogMetabarActions {
           title={i18n.t('link_entry_item')}
           url={url}
         />
+        {this.canPin() &&
+         <EntryTlogMetabarPin entry={this.props.entry} />
+        }
         {can_favorite &&
          <EntryTlogMetabarFavorite {...this.props}
            isFavorited={is_favorited}

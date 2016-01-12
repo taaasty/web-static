@@ -114,6 +114,7 @@
   "comment_form_submit": "Send",
   "comment_more_link": "Comment",
   "comment_form_placeholder": "Comment.SHIFT + ENTER new line",
+  "comment_reply": "Reply",
   "shared_comment_doesnt_exist": "Unfortunately, this comment was deleted",
   "delete_comment_button": "Delete the comment",
   "report_comment_button": "Report inappropriate",
@@ -439,7 +440,10 @@
     "privacy_badge": "This is a private post,<br />nobody sees it but you",
     "meta": {
       "repost_from": "Repost from <a class=\"meta-item__link\" href=\"__url__\">__tag__</a>",
-      "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> posted in <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>"
+      "author_posted_in": "<a class=\"meta-item__link\" href=\"__authorUrl__\">__author__</a> posted in <a class=\"meta-item__link\" href=\"__tlogUrl__\">__tlog__</a>",
+      "pin_entry": "Pin the post on live feed",
+      "awaiting_paiment": "The post is awaitong payment to be pinned up",
+      "pinned": "The post is pinned up"
     },
     "repost": {
       "no_flows": "Follow or create new <a class=\"popup__link\" href=\"__flowsLink__\">flows</a> to share your thoughts there"
