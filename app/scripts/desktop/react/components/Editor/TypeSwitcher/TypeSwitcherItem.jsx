@@ -5,28 +5,30 @@ let EditorTypeSwitcherItem = React.createClass({
     title: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
     active: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
   },
 
   componentDidMount() {
-    $(this.getDOMNode()).tooltip();
+    $(this.refs.button).tooltip();
   },
 
   componentWillUnmount() {
-    $(this.getDOMNode()).tooltip('destroy');
+    $(this.refs.button).tooltip('destroy');
   },
 
   render() {
     let itemClasses = classnames('button', 'button--circle', {
       'state--disable': this.props.loading,
-      'state--active' : this.props.active
+      'state--active' : this.props.active,
     });
 
     return (
       <button
-          title={this.props.title}
-          className={itemClasses}
-          onClick={this.handleClick}>
+        className={itemClasses}
+        onClick={this.handleClick}
+        ref="button"
+        title={this.props.title}
+      >
         <i className={`icon ${this.props.icon}`} />
       </button>
     );

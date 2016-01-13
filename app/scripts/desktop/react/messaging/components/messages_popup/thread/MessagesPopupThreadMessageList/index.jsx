@@ -1,6 +1,7 @@
 /*global ScrollerMixin, MessagesStore, messagingService, MessageActions, 
  TastyEvents, MessagesPopup_ThreadMessageListItemManager */
-import React, { createClass, findDOMNode, PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import MessagesPopupThreadMessageListEmpty from './MessagesPopupThreadMessageListEmpty';
 
 let savedScrollHeight = null;
@@ -28,8 +29,7 @@ const MessagesPopupThreadMessageList = createClass({
     if (messages[0] != null && nextState.messages[0] != null) {
       if (messages[0].uuid !== nextState.messages[0].uuid) {
         // Добавятся сообщения из истории
-        const scrollerNode = findDOMNode(this.refs.scrollerPane);
-        savedScrollHeight = scrollerNode.scrollHeight;
+        savedScrollHeight = this.refs.scrollerPane.scrollHeight;
       }
     }
   },
@@ -58,7 +58,7 @@ const MessagesPopupThreadMessageList = createClass({
 
   handleScroll() {
     const { isAllMessagesLoaded, messages } = this.state;
-    const scrollerPaneNode = findDOMNode(this.refs.scrollerPane);
+    const scrollerPaneNode = this.refs.scrollerPane;
 
     if (scrollerPaneNode.scrollTop === 0 && !isAllMessagesLoaded) {
       MessageActions.loadMoreMessages({
@@ -84,13 +84,11 @@ const MessagesPopupThreadMessageList = createClass({
   },
 
   _scrollToBottom() {
-    const scrollerNode = findDOMNode(this.refs.scrollerPane);
-    this.scrollList(scrollerNode.scrollHeight);
+    this.scrollList(this.refs.scrollerPane.scrollHeight);
   },
 
   scrollList(offset) {
-    const scrollerNode = findDOMNode(this.refs.scrollerPane);
-    scrollerNode.scrollTop = offset;
+    this.refs.scrollerPane.scrollTop = offset;
   },
 
   scrollToUnread() {
@@ -113,8 +111,7 @@ const MessagesPopupThreadMessageList = createClass({
   },
   
   _holdScroll() {
-    const scrollerNode = findDOMNode(this.refs.scrollerPane);
-    this.scrollList(scrollerNode.scrollHeight - savedScrollHeight);
+    this.scrollList(this.refs.scrollerPane.scrollHeight - savedScrollHeight);
     savedScrollHeight = null;
   },
 

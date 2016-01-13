@@ -5,7 +5,7 @@ let Notice = React.createClass({
     text: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     timeout: React.PropTypes.number.isRequired,
-    onClose: React.PropTypes.func.isRequired
+    onClose: React.PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -19,10 +19,13 @@ let Notice = React.createClass({
 
   render() {
     return (
-      <div className={`notice notice--${this.props.type}`}
-           onClick={this.close}
-           onMouseEnter={this.pause}
-           onMouseLeave={this.resume}>
+      <div
+        className={`notice notice--${this.props.type}`}
+        onClick={this.close}
+        onMouseEnter={this.pause}
+        onMouseLeave={this.resume}
+        ref="container"
+      >
         <div className="notice__inner">
           {this.props.text}
         </div>
@@ -31,12 +34,12 @@ let Notice = React.createClass({
   },
 
   calculateStyles() {
-    let node = this.getDOMNode();
+    let node = this.refs.container;
     node.style.marginLeft = `${node.offsetWidth / -2}px`;
   },
 
   close() {
-    let $node = $(this.getDOMNode());
+    let $node = $(this.refs.container);
     $node.fadeOut('fast', this.props.onClose);
   },
 
@@ -46,7 +49,7 @@ let Notice = React.createClass({
 
   resume() {
     this.timer.resume();
-  }
+  },
 });
 
 export default Notice;

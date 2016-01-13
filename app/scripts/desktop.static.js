@@ -1,5 +1,9 @@
-global.AppStorage = require('./shared/resources/AppStorage');
-global.gon = require('./desktop/resources/gon');
+import AppStorage from './shared/resources/AppStorage';
+import gon from './desktop/resources/gon';
+
+global.AppStorage = AppStorage;
+global.gon = gon;
+
 require('./desktop/bundle');
 
 if (AppStorage.getItem('userLogged') == 'true') {

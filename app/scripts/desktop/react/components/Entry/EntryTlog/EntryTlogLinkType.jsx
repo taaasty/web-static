@@ -10,8 +10,8 @@ export default class EntryTlogLinkType {
   static propTypes = {
     entry: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    hasModeration: PropTypes.bool.isRequired
-  }
+    hasModeration: PropTypes.bool.isRequired,
+  };
   render() {
     const { is_private, text } = this.props.entry;
 
@@ -26,7 +26,7 @@ export default class EntryTlogLinkType {
           <Text value={text} withHTML={true} />
         </div>
         <div className="post__meta">
-          <EntryTlogMetabar {...this.props} onComment={::this.startComment} />
+          <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
         <EntryTlogComments {...this.props} ref="comments" />

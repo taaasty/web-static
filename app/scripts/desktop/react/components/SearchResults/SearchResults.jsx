@@ -1,7 +1,7 @@
 import SearchActions from '../../actions/search';
 import SearchResultsTlog from './SearchResultsTlog';
 import SearchResultsFeed from './SearchResultsFeed';
-import URI from 'URIjs';
+import URI from 'urijs';
 
 let SearchResults = React.createClass({
   propTypes: {

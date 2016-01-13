@@ -16,12 +16,12 @@ let SelectBox = React.createClass({
 
   componentDidMount() {
     let initOptions = this.getInitOptions(),
-        $select = $(this.getDOMNode()).select2(initOptions);
+        $select = $(this.refs.container).select2(initOptions);
     $select.on('select2:select', this.handleSelect);
   },
 
   componentWillUnmount() {
-    let $select = $(this.getDOMNode());
+    let $select = $(this.refs.container);
     $select.off('select2:select', this.handleSelect);
     $select.select2('destroy');
   },
@@ -34,7 +34,7 @@ let SelectBox = React.createClass({
     );
 
     return (
-      <select value={this.props.value}>
+      <select value={this.props.value} ref="container">
         {optionList}
       </select>
     );

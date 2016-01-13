@@ -8,7 +8,7 @@ import Settings from  './settings';
 export default class SettingsPage extends Component {
   static propTypes = {
     currentUser: PropTypes.object.isRequired,
-  }
+  };
   render() {
     const { currentUser, locale } = this.props;
 

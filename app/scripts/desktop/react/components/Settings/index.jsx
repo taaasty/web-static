@@ -8,7 +8,7 @@ import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
 import SettingsAccounts from './accounts';
 import SettingsMixin from './mixins/settings';
-import LinkedStateMixin from 'react/lib/LinkedStateMixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
 
 const Settings = createClass({

@@ -5,7 +5,7 @@ export default class EntryRepostTargetItem {
   static propTypes = {
     target: PropTypes.object.isRequired,
     onSelect: PropTypes.func.isRequired,
-  }
+  };
   render() {
     return (
       <article className="user__item">

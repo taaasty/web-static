@@ -1,4 +1,4 @@
-keyMirror = require 'react/lib/keyMirror'
+keyMirror = require 'keymirror'
 
 ApiConstants = keyMirror
   FOLLOW_USER:                null

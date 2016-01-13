@@ -1,4 +1,4 @@
-cloneWithProps = require 'react/lib/cloneWithProps'
+cloneWithProps = require 'react-addons-clone-with-props'
 
 window.ShellBox = React.createClass
   mixins: [ReactUnmountMixin]

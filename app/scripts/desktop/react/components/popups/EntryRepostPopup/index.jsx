@@ -11,7 +11,7 @@ import EntryRepostTargetSearch from './EntryRepostTargetSearch';
 export default class EntryRepostPopup extends Component {
   static propTypes = {
     entryID: PropTypes.number.isRequired,
-  }
+  };
   state = {
     targetList: [CurrentUserStore.getUser()],
     visibleList: [CurrentUserStore.getUser()],
@@ -20,7 +20,7 @@ export default class EntryRepostPopup extends Component {
     isLoading: true,
     isLoadingMore: false,
     isError: false,
-  }
+  };
   componentDidMount() {
     this.loadTargets.call(this);
   }

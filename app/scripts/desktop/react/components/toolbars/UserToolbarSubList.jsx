@@ -8,7 +8,7 @@ let UserToolbarSubList = React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    let $subNav = $(this.getDOMNode());
+    let $subNav = $(this.refs.container);
     // Mousewheel events for Pads arrows recalculation
     if (this.props.opened) {
       $subNav.stop().slideDown(300, function() {
@@ -23,7 +23,7 @@ let UserToolbarSubList = React.createClass({
 
   render() {
     return (
-      <ul className="toolbar__subnav">
+      <ul className="toolbar__subnav" ref="container">
         {this.props.children}
       </ul>
     );

@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 export default class EntryTlogMetabarDate {
   static propTypes = {
     url: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired
-  }
+    date: PropTypes.string.isRequired,
+  };
   render() {
     let now = moment(),
         createdAt = moment(this.props.date);

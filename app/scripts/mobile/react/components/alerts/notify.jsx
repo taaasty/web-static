@@ -9,11 +9,11 @@ export default class Notify {
     type: PropTypes.string,
     timeout: PropTypes.number,
     onClose: PropTypes.func.isRequired,
-  }
+  };
   defaultProps = {
     type: TYPE,
     timeout: TIMEOUT,
-  }
+  };
   componentDidMount() {
     this.timeout = setTimeout(this.props.onClose, this.props.timeout);
   }

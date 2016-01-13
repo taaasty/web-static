@@ -1,7 +1,8 @@
+/*global global */
 import { expect } from 'chai';
 
 const React = global.React;
-const { isCompositeComponent, renderIntoDocument } = React.addons.TestUtils;
+const { isCompositeComponent, renderIntoDocument } = global.ReactTestUtils;
 
 // Components
 const components = {

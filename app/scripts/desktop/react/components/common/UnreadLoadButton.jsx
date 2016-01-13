@@ -1,5 +1,5 @@
 /*global i18n */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
@@ -12,9 +12,9 @@ const propTypes = {
 class UnreadLoadButton extends Component {
   state = {
     offScreen: false,
-  }
+  };
   componentDidMount() {
-    this.container = findDOMNode(this.refs.container);
+    this.container = this.refs.container;
     if (this.container) {
       this.onScrollFn = this.updateOffScreenState.bind(this);
       this.offsetTop = this.container.getBoundingClientRect().top;
@@ -34,11 +34,11 @@ class UnreadLoadButton extends Component {
     });
   }
   onClick(ev) {
-    const { onClick } = this.props;
+    const { onClick: propsOnClick } = this.props; //FIXME: check later for babel fix
 
-    if (onClick) {
+    if (propsOnClick) {
       ev.preventDefault();
-      return onClick();
+      return propsOnClick();
     }
   }
   render() {

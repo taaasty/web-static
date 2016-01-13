@@ -1,3 +1,4 @@
+React = require 'react';
 CurrentUserStore   = require '../stores/currentUser'
 PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'

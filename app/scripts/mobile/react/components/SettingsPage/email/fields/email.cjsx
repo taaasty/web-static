@@ -23,6 +23,6 @@ SettingsEmailField = React.createClass
     </div>
 
   getValue: ->
-    _.trim @refs.input.getDOMNode().value
+    _.trim(this.refs.input.value)
 
 module.exports = SettingsEmailField

@@ -6,10 +6,10 @@ export default class EntryTlogMetabarRepost extends Component {
   static propTypes = {
     commentator: PropTypes.object,
     entryID: PropTypes.number.isRequired,
-  }
+  };
   state = {
-    isPopupOpened: false
-  }
+    isPopupOpened: false,
+  };
   render() {
     if (this.props.commentator) {
       return (

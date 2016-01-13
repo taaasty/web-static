@@ -1,4 +1,4 @@
-LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+LinkedStateMixin = require 'react-addons-linked-state-mixin';
 
 window.MessagesPopup_ChooserDropdown = React.createClass
   mixins: [LinkedStateMixin]

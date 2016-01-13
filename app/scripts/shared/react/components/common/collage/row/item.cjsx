@@ -1,4 +1,4 @@
-LazyLoad = require('react-lazy-load');
+LazyLoad = require('react-lazy-load').default;
 ImageLoader = require('react-imageloader');
 FitSpinner = require('../../FitSpinner');
 { PropTypes } = React

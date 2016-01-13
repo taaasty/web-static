@@ -1,5 +1,0 @@
-global.$ = global.jQuery = require 'jquery'
-global.React = require 'react'
-global.EventEmitter = require 'eventEmitter'
-global.Pusher = require 'pusher'
-global.moment = require 'moment'

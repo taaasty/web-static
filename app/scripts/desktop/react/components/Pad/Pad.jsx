@@ -24,7 +24,7 @@ let Pad = React.createClass({
     ));
 
     return (
-      <div className="popup popup--notifications popup--dark front-layer">
+      <div className="popup popup--notifications popup--dark front-layer" ref="container">
         <div ref="arrow"
              className={`popup__arrow popup__arrow--${this.props.placement}`} />
         <div className="popup__content">
@@ -39,8 +39,8 @@ let Pad = React.createClass({
   calculatePositions() {
     // TODO: Придумать альтернативный вариант позиционирования
     let actNode = document.querySelector(this.props.actSelector),
-        padNode = this.getDOMNode(),
-        arrowNode = this.refs.arrow.getDOMNode(),
+        padNode = this.refs.container,
+        arrowNode = this.refs.arrow,
         actRect = actNode.getBoundingClientRect(),
         padRect = padNode.getBoundingClientRect(),
         arrowRect = arrowNode.getBoundingClientRect(),

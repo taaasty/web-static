@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 export default class EntryRepostTargetSearch {
   static propTypes = {
     value: PropTypes.string,
-    onChange: PropTypes.func.isRequired
-  }
+    onChange: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <input

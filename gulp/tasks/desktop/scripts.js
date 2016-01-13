@@ -9,9 +9,7 @@ import handleErrors from '../../util/handleErrors';
 const config = require('../../config').desktop.scripts;
 
 const babelifyOpts = {
-  stage: 0,
   ignore: /(node_modules|bower_components|shims)/,
-  optional: ['runtime'],
 };
 
 // External dependencies we do not want to rebundle while developing,
@@ -29,10 +27,12 @@ const dependencies = {
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
   'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
-  'react': './node_modules/react/addons',
+  'react': './node_modules/react',
+  'react-dom': './node_modules/react-dom',
   'react-mixin-manager': './app/bower_components/react-mixin-manager/react-mixin-manager',
-  'reactUjs': './app/scripts/shared/libs/react_ujs',
-  'react-color-picker': './node_modules/react-color-picker/dist/react-color-picker',
+  'reactUjs': './app/scripts/shared/libs/ReactUjs',
+  'react-portal': './node_modules/react-portal',
+  'react-color-picker': './node_modules/react-color-picker',
   'baron': './app/bower_components/baron/baron',
   'mousetrap': './app/bower_components/mousetrap/mousetrap',
   'bowser': './node_modules/bowser',
@@ -50,7 +50,7 @@ const dependencies = {
   'medium-editor': './node_modules/medium-editor/dist/js/medium-editor',
   'aviator': './app/bower_components/aviator/src/main',
   'nanobar': './app/bower_components/nanobar/index',
-  'URIjs': './node_modules/URIjs/src/URI',
+  'urijs': './node_modules/urijs',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',
   'numeral': './node_modules/numeral',
   'react-tap-event-plugin': './node_modules/react-tap-event-plugin',

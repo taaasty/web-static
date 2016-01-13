@@ -1,4 +1,6 @@
-global.AppStorage = require('./shared/resources/AppStorage');
+import AppStorage from './shared/resources/AppStorage';
+global.AppStorage = AppStorage;
+
 require('./desktop/bundle');
 
 gon.env = 'production';

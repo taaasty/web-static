@@ -2,15 +2,16 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import LazyLoadImage from './LazyLoadImage';
 
-class Avatar {
-  getAvatarClasses() {
+const Avatar = (props) => {
+  function getAvatarClasses() {
     return classnames({
       'avatar': true,
-      'anonymous_char': this.props.userpic.kind === 'anonymous',
+      'anonymous_char': props.userpic.kind === 'anonymous',
     });
   }
-  renderImage() {
-    const { userpic: { original_url: url }, size } = this.props;
+
+  function renderImage() {
+    const { userpic: { original_url: url }, size } = props;
     const image = {
       url,
       geometry: {
@@ -20,29 +21,29 @@ class Avatar {
     };
 
     return (
-      <span className={this.getAvatarClasses()}>
+      <span className={getAvatarClasses()}>
         <LazyLoadImage className="avatar__img" image={image} />
       </span>
     );
   }
-  renderSymbol() {
-    const { default_colors: { background, name }, symbol } = this.props.userpic;
+
+  function renderSymbol() {
+    const { default_colors: { background, name }, symbol } = props.userpic;
     const avatarStyles = {
       backgroundColor: background,
       color: name,
     };
 
     return (
-      <span className={this.getAvatarClasses()} style={avatarStyles}>
+      <span className={getAvatarClasses()} style={avatarStyles}>
         <span className="avatar__text">
           {symbol}
         </span>
       </span>
     );
   }
-  render() {
-    return (this.props.userpic.original_url != null) ? this.renderImage() : this.renderSymbol();
-  }
+
+  return (props.userpic.original_url != null) ? renderImage() : renderSymbol();
 }
 
 Avatar.propTypes = {

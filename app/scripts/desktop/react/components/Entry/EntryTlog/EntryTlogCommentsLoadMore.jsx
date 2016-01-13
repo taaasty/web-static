@@ -5,8 +5,8 @@ export default class EntryTlogCommentsLoadMore {
     totalCount: PropTypes.number.isRequired,
     loadedCount: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
-    limit: PropTypes.number.isRequired
-  }
+    limit: PropTypes.number.isRequired,
+  };
   render() {
     return (
       <div className="comments__more" onClick={this.props.onLoadMore}>

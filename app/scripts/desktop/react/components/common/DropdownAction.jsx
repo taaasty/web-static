@@ -4,7 +4,7 @@ import classnames from 'classnames';
 class DropdownAction extends Component {
   state = {
     hover: false,
-  }
+  };
   getTitle() {
     const { title, hoverTitle } = this.props;
     return this.state.hover && hoverTitle ? hoverTitle : title;

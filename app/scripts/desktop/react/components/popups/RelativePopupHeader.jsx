@@ -5,7 +5,7 @@ export default class RelativePopupHeader {
     title: PropTypes.string.isRequired,
     hasActivities: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
-  }
+  };
   render() {
     return (
       <div className="popup__header">

@@ -1,20 +1,22 @@
 /*global $ */
-import React, { findDOMNode, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 
-class Tooltip {
+class Tooltip extends Component {
   componentDidMount() {
-    $(findDOMNode(this)).tooltip({
-      container: this.props.container,
-      placement: this.props.placement,
-    });
+    const { container, placement } = this.props;
+
+    $(findDOMNode(this)).tooltip({ container, placement });
   }
   componentWillUnmount() {
     $(findDOMNode(this)).tooltip('destroy');
   }
   render() {
+    const { children, title } = this.props;
+
     return (
-      <span title={this.props.title}>
-        {this.props.children}
+      <span title={title}>
+        {children}
       </span>
     );
   }

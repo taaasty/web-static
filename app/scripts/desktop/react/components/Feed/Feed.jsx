@@ -1,12 +1,12 @@
 import EntryActionCreators from '../../actions/Entry';
 import FeedBricks from './FeedBricks';
 import FeedTlog from './FeedTlog';
-import URI from 'URIjs';
+import URI from 'urijs';
 
 let Feed = React.createClass({
   propTypes: {
+    feedUrl: React.PropTypes.string,
     style: React.PropTypes.string.isRequired,
-    feedUrl: React.PropTypes.string
   },
 
   getDefaultProps() {

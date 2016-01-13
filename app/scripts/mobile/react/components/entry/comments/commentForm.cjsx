@@ -1,4 +1,4 @@
-{ findDOMNode, PropTypes } = React
+{ PropTypes } = React
 
 CommentForm = React.createClass
   displayName: 'CommentForm'
@@ -22,7 +22,7 @@ CommentForm = React.createClass
     this.formFocus()
 
   formFocus: ->
-    textField = findDOMNode(this.refs.textField)
+    textField = this.refs.textField;
     if textField and this.props.formFocus
       textField.focus()
 
@@ -52,11 +52,11 @@ CommentForm = React.createClass
       </button>
 
   clearForm: ->
-    findDOMNode(@refs.textField).value = ''
+    this.refs.textField.value = '';
 
   handleSubmit: (e) ->
     e.preventDefault()
-    value = findDOMNode(@refs.textField).value.trim()
+    value = this.refs.textField.value.trim();
 
     @props.onSubmit(value) unless @props.disabled
 

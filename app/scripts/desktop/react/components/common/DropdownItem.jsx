@@ -6,8 +6,8 @@ export default class DropdownItem {
     item: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     active: PropTypes.bool,
-    onClick: PropTypes.func
-  }
+    onClick: PropTypes.func,
+  };
   render() {
     let itemClasses = classnames('person__dropdown-item', {
       'state--active': this.props.active

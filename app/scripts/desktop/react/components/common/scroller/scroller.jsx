@@ -12,8 +12,8 @@ let Scroller = React.createClass({
   },
 
   componentDidMount() {
-    let scroller = this.getDOMNode();
-    let scrollerPane = this.refs.scrollerPane.getDOMNode();
+    let scroller = this.refs.scroller;
+    let scrollerPane = this.refs.scrollerPane;
 
     $(scrollerPane).on('DOMMouseScroll mousewheel', this.handleMouseWheel);
 
@@ -35,7 +35,7 @@ let Scroller = React.createClass({
   },
 
   componentWillUnmount() {
-    let scrollerPane = this.refs.scrollerPane.getDOMNode();
+    let scrollerPane = this.refs.scrollerPane;
 
     $(scrollerPane).off('DOMMouseScroll mousewheel', this.handleMouseWheel);
 
@@ -49,7 +49,7 @@ let Scroller = React.createClass({
     let scrollerClasses = ['scroller', 'scroller--dark', this.props.className].join(' ');
 
     return (
-      <div className={scrollerClasses} onScroll={this.handleScroll}>
+      <div className={scrollerClasses} onScroll={this.handleScroll} ref="scroller">
         <div ref="scrollerPane" className="scroller__pane">
           {this.props.children}
         </div>

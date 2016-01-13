@@ -1,3 +1,5 @@
+{ findDOMNode } = require 'react-dom';
+
 REVERSE_MARGIN = 5
 
 getSize = (elem) ->
@@ -21,7 +23,7 @@ DropdownMenuMixin =
 
   componentWillReceiveProps: (nextProps) ->
     if @props.visible isnt nextProps.visible
-      menu = @getDOMNode()
+      menu = findDOMNode(this)
       menuOffsets = menu.getBoundingClientRect()
       viewportWH = getViewportWH()
 

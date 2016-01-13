@@ -7,8 +7,8 @@ export default class FlowFormRadio {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
-  }
+    onChange: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div>

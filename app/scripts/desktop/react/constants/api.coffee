@@ -1,4 +1,4 @@
-keyMirror = require 'react/lib/keyMirror'
+keyMirror = require 'keymirror'
 
 ApiConstants = keyMirror
   SEARCH_LOAD_NEXT_PAGE: null

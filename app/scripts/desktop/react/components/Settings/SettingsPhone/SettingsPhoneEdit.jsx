@@ -1,17 +1,14 @@
 /*global i18n */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
 class SettingsPhoneEdit extends Component {
   state = {
     isUpdatable: false,
-  }
-  componentDidMount() {
-    this.phoneInput = findDOMNode(this.refs.phone);
-  }
+  };
   isUpdatable() {
-    return (this.phoneInput.value.length &&
-            this.phoneInput.value !== this.props.phone);
+    return (this.refs.phone.value.length &&
+            this.refs.phone.value !== this.props.phone);
   }
   onChange() {
     this.setState({ isUpdatable: this.isUpdatable() });
@@ -21,7 +18,7 @@ class SettingsPhoneEdit extends Component {
 
     ev.preventDefault();
     if (this.state.isUpdatable) {
-      onUpdate(this.phoneInput.value);
+      onUpdate(this.refs.phone.value);
     } else {
       onEditCancel();
     }

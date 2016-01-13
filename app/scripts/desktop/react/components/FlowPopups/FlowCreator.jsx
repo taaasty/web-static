@@ -6,17 +6,17 @@ import FlowActionCreators from '../../actions/Flow';
 
 export default class FlowCreator extends Component {
   static propTypes = {
-    staffsLimit: PropTypes.number
-  }
+    staffsLimit: PropTypes.number,
+  };
   static defaultProps = {
-    staffsLimit: 5
-  }
+    staffsLimit: 5,
+  };
   state = {
     name: '',
     title: '',
     picFile: null,
-    staffs: []
-  }
+    staffs: [],
+  };
   render() {
     let flowpic = {
       original_url: 'http://taaasty.com/images/hero-cover.jpg'
@@ -32,7 +32,7 @@ export default class FlowCreator extends Component {
               onNameChange={this.updateValue.bind(this, 'name')}
               onTitleChange={this.updateValue.bind(this, 'title')}
               onPicFileChange={this.updateValue.bind(this, 'picFile')}
-              onFlowCreate={::this.createFlow} />
+              onFlowCreate={this.createFlow.bind(this)} />
         </div>
         <div className="flow-form__body">
           <div className="flow-form__item">

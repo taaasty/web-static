@@ -1,4 +1,4 @@
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import DesignSettingsDropZone from './DropZone/DropZone';
 import DesignSettingsGroups from './Groups/Groups';
@@ -7,9 +7,9 @@ import DesignSettingsSaveButton from './buttons/Save';
 class DesignSettings extends Component {
   state = {
     dragActive: false,
-  }
+  };
   handleDragLeave(e) {
-    const rect = findDOMNode(this).getBoundingClientRect();
+    const rect = this.refs.container.getBoundingClientRect();
 
     if (e.clientX > rect.left + rect.width || e.clientX < rect.left ||
         e.clientY > rect.top + rect.height || e.clientY < rect.top) {
@@ -62,6 +62,7 @@ class DesignSettings extends Component {
         onDragLeave={this.handleDragLeave.bind(this)}
         onDragOver={this.handleDragOver.bind(this)}
         onDrop={this.handleDrop.bind(this)}
+        ref="container"
       >
         <DesignSettingsDropZone />
         <div className="design-settings__options">

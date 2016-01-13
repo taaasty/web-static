@@ -17,18 +17,17 @@ const defaultProps = {
   size: 8,
 };
 
-class Spinner {
-  getSize(size) {
+const Spinner = ({ size }) => {
+  function getSize(size) {
     return `${size}x${size}`;
   }
-  render() {
-    return (
-      <span className={`spinner spinner--${this.getSize(this.props.size)}`}>
-        <span className="spinner__icon" />
-      </span>
-    );
-  }
-}
+
+  return (
+    <span className={`spinner spinner--${getSize(size)}`}>
+      <span className="spinner__icon" />
+    </span>
+  );
+};
 
 Spinner.propTypes = propTypes;
 Spinner.defaultProps = defaultProps;

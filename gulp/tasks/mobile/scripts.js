@@ -9,17 +9,16 @@ import handleErrors from '../../util/handleErrors';
 const config = require('../../config').mobile.scripts;
 
 const babelifyOpts = {
-  stage: 0,
   ignore: /(node_modules|bower_components|shims)/,
-  optional: ['runtime'],
 };
 
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
 const dependencies = {
-  react: './node_modules/react/addons',
+  react: './node_modules/react',
+  'react-dom': './node_modules/react-dom',
   lodash: './node_modules/lodash',
-  reactUjs: './app/scripts/shared/libs/react_ujs',
+  reactUjs: './app/scripts/shared/libs/ReactUjs',
   eventEmitter: './app/bower_components/eventEmitter/EventEmitter',
   i18next: './app/bower_components/i18next/i18next',
   pusher: './app/bower_components/pusher/dist/pusher',

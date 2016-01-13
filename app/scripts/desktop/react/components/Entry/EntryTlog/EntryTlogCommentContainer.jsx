@@ -6,12 +6,12 @@ export default class EntryTlogCommentContainer extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
     commentator: PropTypes.object,
-    entryUrl: PropTypes.string.isRequired
-  }
+    entryUrl: PropTypes.string.isRequired,
+  };
   state = {
     edit: false,
-    processEdit: false
-  }
+    processEdit: false,
+  };
   componentWillReceiveProps(nextProps) {
     if (this.state.processEdit) {
       this.setState({ processEdit: false });
@@ -24,15 +24,16 @@ export default class EntryTlogCommentContainer extends Component {
     if (this.state.edit) {
       return (
         <EntryTlogCommentEditForm
-            comment={this.props.comment}
-            commentator={this.props.commentator}
-            process={this.state.processEdit}
-            onCommentUpdate={::this.updateComment}
-            onCancel={::this.show} />
+          comment={this.props.comment}
+          commentator={this.props.commentator}
+          onCommentUpdate={this.updateComment.bind(this)}
+          onCancel={this.show.bind(this)}
+          process={this.state.processEdit}
+        />
       );
     } else {
       return (
-        <EntryTlogComment {...this.props} onCommentEdit={::this.edit} />
+          <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />
       );
     }
   }

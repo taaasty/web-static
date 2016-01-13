@@ -1,5 +1,6 @@
 /*global $, TastyEvents, Mousetrap, CurrentUserStore */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
@@ -16,7 +17,7 @@ const transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
 class HeroProfile extends Component {
   state = {
     currentState: HERO_CLOSED,
-  }
+  };
   componentWillMount() {
     this.open = this._open.bind(this);
     this.close = this._close.bind(this);
@@ -92,7 +93,7 @@ class HeroProfile extends Component {
     return this.state.currentState != HERO_CLOSED;
   }
   _scrollFade() {
-    const $heroBox = $(findDOMNode(this.refs.heroBox));
+    const $heroBox = $(this.refs.heroBox);
     const height = $heroBox.outerHeight() / 1.5;
     let scrollTop = $(window).scrollTop();
 

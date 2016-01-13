@@ -1,3 +1,5 @@
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Pad from './Pad';
 
 function closest(el, target) {
@@ -8,11 +10,11 @@ function closest(el, target) {
   return false;
 }
 
-let PadContainer = React.createClass({
+let PadContainer = createClass({
   propTypes: {
-    placement: React.PropTypes.string,
-    actSelector: React.PropTypes.string.isRequired,
-    onClose: React.PropTypes.func.isRequired
+    actSelector: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    placement: PropTypes.string,
   },
 
   getDefaultProps() {
@@ -36,7 +38,7 @@ let PadContainer = React.createClass({
   },
 
   onDocumentClick(e) {
-    let isClickInside = closest(this.getDOMNode(), e.target);
+    let isClickInside = closest(findDOMNode(this), e.target);
     if (!isClickInside) this.props.onClose();
   },
 

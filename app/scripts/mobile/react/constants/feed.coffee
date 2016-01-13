@@ -1,4 +1,4 @@
-keyMirror = require 'react/lib/keyMirror'
+keyMirror = require 'keymirror'
 
 FeedConstants = keyMirror
   INITIALIZE_FEED: null

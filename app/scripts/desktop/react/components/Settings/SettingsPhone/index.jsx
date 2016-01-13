@@ -8,7 +8,7 @@ const EDIT_STATE = 'edit';
 class SettingsPhone extends Component {
   state = {
     state: SHOW_STATE,
-  }
+  };
   onEditCancel() {
     this.setState({ state: SHOW_STATE });
   }

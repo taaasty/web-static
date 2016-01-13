@@ -5,8 +5,8 @@ import UnfollowButton from '../common/UnfollowButton';
 export default class FlowManagerFollowers {
   static propTypes = {
     flow: PropTypes.object.isRequired,
-    onCountUpdate: PropTypes.func
-  }
+    onCountUpdate: PropTypes.func,
+  };
   render() {
     let objectID = this.props.flow.id;
 

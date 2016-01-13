@@ -1,3 +1,5 @@
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import bowser from 'bowser';
 
 // These browsers trigger change event on autofill (http://stackoverflow.com/a/11710295)
@@ -12,10 +14,10 @@ const MINIMAL_BROWSER_VERSION = {
   'Internet Explorer': 9
 };
 
-let Field = React.createClass({
+let Field = createClass({
   propTypes: {
-    defaultValue: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
   },
 
   getDefaultProps() {
@@ -49,7 +51,7 @@ let Field = React.createClass({
   },
 
   checkAndTriggerChangeEvent() {
-    let currentValue = this.getDOMNode().value;
+    let currentValue = findDOMNode(this).value;
 
     if (this.value != currentValue) {
       this.value = currentValue;
@@ -58,7 +60,7 @@ let Field = React.createClass({
   },
 
   handleChange() {
-    let currentValue = this.getDOMNode().value;
+    let currentValue = findDOMNode(this).value;
     if (!this.canBrowserTriggerChangeEvent()) this.value = currentValue;
     this.props.onChange(currentValue);
   }

@@ -1,7 +1,7 @@
 window.i18n = require 'i18next'
 ReactUjs = require 'reactUjs'
 PopupActions = require './actions/popup'
-DesignActionCreators = require './actions/design'
+DesignActionCreators = require('./actions/design')
 AppDispatcher = require './dispatchers/dispatcher'
 GuideController = require './controllers/guide'
 LayoutStatesController = require './controllers/layoutStates'
@@ -9,7 +9,7 @@ PopupController = require './controllers/popuup'
 PadController = require './controllers/pad'
 numeral = require 'numeral'
 injectTapEventPlugin = require 'react-tap-event-plugin'
-FeedsUpdateService = require './services/FeedsUpdateService';
+FeedsUpdateService = require('./services/FeedsUpdateService');
 EditorActionCreators = require './actions/editor';
 EntryConstants = require './constants/EntryConstants';
 PostAuthService = require './services/PostAuthService';

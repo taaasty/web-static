@@ -4,8 +4,8 @@ export default class EntryTlogMetabarComments {
   static propTypes = {
     url: PropTypes.string.isRequired,
     commentator: PropTypes.object,
-    commentsCount: PropTypes.number.isRequired
-  }
+    commentsCount: PropTypes.number.isRequired,
+  };
   render() {
     let content;
 

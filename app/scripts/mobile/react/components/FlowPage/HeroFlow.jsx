@@ -10,8 +10,8 @@ export default class HeroFlow extends Component {
   static propTypes = {
     flow: ProjectTypes.flow.isRequired,
     relationship: ProjectTypes.relationship,
-  }
-  state = { flow: this.props.flow }
+  };
+  state = { flow: this.props.flow };
   writeButton() {
     function redirect() {
       window.location.href = Routes.new_entry_url(this.state.flow.slug);

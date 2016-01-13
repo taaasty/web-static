@@ -15,10 +15,10 @@ export default class RelationButton extends Component {
     relState: PropTypes.string,
     subjectID: PropTypes.number,
     subjectPrivacy: PropTypes.bool,
-  }
+  };
   state = {
     relState: this.props.relState,
-  }
+  };
   onStateChange(newRelState) {
     this.setState({ relState: newRelState });
     if (this.props.onChange) {

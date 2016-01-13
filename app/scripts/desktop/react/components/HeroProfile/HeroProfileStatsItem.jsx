@@ -1,16 +1,16 @@
+/*global $ */
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-class HeroProfileStatsItem {
-  handleClick(ev) {
-    if (this.props.onClick) {
+function HeroProfileStatsItem({ count, href, onClick, title }) {
+  function handleClick(ev) {
+    if (onClick) {
       ev.preventDefault();
-      this.props.onClick($(ev.currentTarget));
+      onClick($(ev.currentTarget));
     }
   }
-  renderLink() {
-    const { count, href, title } = this.props;
 
+  function renderLink() {
     return (
       <a
         className="hero__stats-link"
@@ -23,11 +23,9 @@ class HeroProfileStatsItem {
         {title}
       </a>
     );
-    
   }
-  renderButton() {
-    const { count, title } = this.props;
 
+  function renderButton() {
     return (
       <span>
         <strong>
@@ -37,22 +35,20 @@ class HeroProfileStatsItem {
       </span>
     );
   }
-  render() {
-    const { href, onClick } = this.props;
-    const statsItemClasses = classnames({
-      'hero__stats-item': true,
-      'hero__stats-item-handler': onClick,
-    });
 
-    return (
-      <div
-        className={statsItemClasses}
-        onClick={this.handleClick.bind(this)}
-      >
-        {href ? this.renderLink() : this.renderButton()}
-      </div>
-    );
-  }
+  const statsItemClasses = classnames({
+    'hero__stats-item': true,
+    'hero__stats-item-handler': onClick,
+  });
+
+  return (
+    <div
+      className={statsItemClasses}
+      onClick={handleClick}
+    >
+      {href ? renderLink() : renderButton()}
+    </div>
+  );
 }
 
 HeroProfileStatsItem.propTypes = {

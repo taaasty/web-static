@@ -1,5 +1,5 @@
 /*global i18n */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
 import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
@@ -7,16 +7,16 @@ import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
 class ComposeToolbar extends Component {
   state = {
     dropdownVisible: false,
-  }
+  };
   componentDidMount() {
-    $(findDOMNode(this.refs.button)).tooltip({
+    $(this.refs.button).tooltip({
       title: i18n.t('toolbar_new_entry_item'),
       placement: 'left',
       container: '.toolbar--compose'
     });
   }
   componentWillUnmount() {
-    $(findDOMNode(this.refs.button)).tooltip('destroy');
+    $(this.refs.button).tooltip('destroy');
   }
   onMouseEnter(ev) {
     this.setState({ dropdownVisible: true });

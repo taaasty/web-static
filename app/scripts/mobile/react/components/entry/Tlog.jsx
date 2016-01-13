@@ -37,7 +37,7 @@ let EntryTlog = React.createClass({
         <EntryMeta
           entry={this.props.entry}
           commentsCount={this.state.commentsCount}
-          onDelete={this.onDelete.bind(this)}
+          onDelete={this.onDelete}
           onMetaCommentsClick={this.toggleCommentForm}
         />
         <EntryComments

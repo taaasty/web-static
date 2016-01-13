@@ -1,6 +1,6 @@
 autosize = require 'autosize'
 classnames = require 'classnames'
-LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+LinkedStateMixin = require 'react-addons-linked-state-mixin';
 
 KEYCODE_ENTER = 13
 

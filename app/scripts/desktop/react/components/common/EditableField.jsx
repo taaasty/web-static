@@ -1,19 +1,21 @@
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Textarea from 'react-textarea-autosize';
 
-let EditableField = React.createClass({
+let EditableField = createClass({
   propTypes: {
-    maxLength: React.PropTypes.number,
-    value: React.PropTypes.string,
-    defaultValue: React.PropTypes.string,
-    returnFor: React.PropTypes.oneOf(['blur', 'nextLine']),
-    onChange: React.PropTypes.func
+    defaultValue: PropTypes.string,
+    maxLength: PropTypes.number,
+    onChange: PropTypes.func,
+    returnFor: PropTypes.oneOf(['blur', 'nextLine']),
+    value: PropTypes.string,
   },
 
   getDefaultProps() {
     return {
       maxLength: 140,
-      returnFor: 'nextLine'
+      returnFor: 'nextLine',
     };
   },
 
@@ -27,7 +29,7 @@ let EditableField = React.createClass({
   componentDidUpdate(prevProps, prevState) {
     if (this.state.focused && prevState.focused != this.state.focused) {
       // Ставим курсор в конец
-      let field = React.findDOMNode(this.refs.field);
+      let field = findDOMNode(this.refs.field);
       if (field.setSelectionRange) {
         let len = field.value.length * 2;
         field.setSelectionRange(len, len);
@@ -88,7 +90,7 @@ let EditableField = React.createClass({
   handleKeyDown(e) {
     if (e.key === 'Enter' && this.props.returnFor === 'blur') {
       e.preventDefault();
-      React.findDOMNode(this.refs.field).blur();
+      findDOMNode(this.refs.field).blur();
       if (this.props.onChange) this.props.onChange(e.target.value);
     }
   }

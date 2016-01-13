@@ -1,4 +1,5 @@
 Collage = require './collage'
+{ findDOMNode } = require 'react-dom';
 { PropTypes } = React
 
 MARGIN         = 0
@@ -40,7 +41,7 @@ CollageManager = React.createClass
 
   updateWidthState: ->
     #For now we will use width of parent
-    parentWidth = @getDOMNode().parentNode.offsetWidth
+    parentWidth = findDOMNode(this).parentNode.offsetWidth
 
     @setState(width: parentWidth + @props.margin * 2)
 

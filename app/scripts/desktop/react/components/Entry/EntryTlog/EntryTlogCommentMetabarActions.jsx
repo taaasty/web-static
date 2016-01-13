@@ -6,12 +6,12 @@ const MARGIN_BETWEEN_TOGGLER_AND_MENU = 20;
 export default class EntryTlogCommentMetabarActions extends Component {
   static propTypes = {
     url: PropTypes.string.isRequired,
-    comment: PropTypes.object.isRequired
-  }
+    comment: PropTypes.object.isRequired,
+  };
   state = {
     open: false,
-    marginTop: MARGIN_BETWEEN_TOGGLER_AND_MENU
-  }
+    marginTop: MARGIN_BETWEEN_TOGGLER_AND_MENU,
+  };
   componentDidMount() {
     if (this.state.open) this.calculateTopPosition();
   }
@@ -70,7 +70,7 @@ export default class EntryTlogCommentMetabarActions extends Component {
   calculateTopPosition() {
     const wHeight = $(window).height(),
           wScrollTop = $(window).scrollTop(),
-          $menu = $(React.findDOMNode(this.refs.menu)),
+          $menu = $(this.refs.menu),
           menuHeight = $menu.innerHeight(),
           menuOffset = $menu.offset();
 
@@ -97,11 +97,11 @@ class EntryTlogCommentMetabarAction extends Component {
     icon: PropTypes.oneOfType([
       PropTypes.string, PropTypes.array
     ]).isRequired,
-    onClick: PropTypes.func
-  }
+    onClick: PropTypes.func,
+  };
   state = {
-    hover: false
-  }
+    hover: false,
+  };
   render() {
     const iconClasses = classNames('icon', this.props.icon);
 

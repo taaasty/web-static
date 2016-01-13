@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { cloneElement, Children, PropTypes } from 'react';
 import classNames from 'classnames';
 
 const MAX_BADGE_COUNT = 99;
@@ -6,13 +6,13 @@ const MAX_BADGE_PRESENTATION = `${MAX_BADGE_COUNT}+`;
 
 let UserToolbarListItem = React.createClass({
   propTypes: {
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    url: React.PropTypes.string,
-    badgeCount: React.PropTypes.number,
-    badgeClassName: React.PropTypes.string,
-    stayOpen: React.PropTypes.bool,
-    onClick: React.PropTypes.func
+    badgeCount: PropTypes.number,
+    badgeClassName: PropTypes.string,
+    icon: PropTypes.string,
+    onClick: PropTypes.func,
+    stayOpen: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string,
   },
 
   getInitialState() {
@@ -22,7 +22,7 @@ let UserToolbarListItem = React.createClass({
   },
 
   componentDidMount() {
-    $(this.refs.link.getDOMNode()).tooltip({
+    $(this.refs.link).tooltip({
       title: this.props.title,
       placement: 'right',
       container: '.toolbar--main',
@@ -36,7 +36,7 @@ let UserToolbarListItem = React.createClass({
   },
 
   componentWillUnmount() {
-    $(this.refs.link.getDOMNode()).tooltip('destroy');
+    $(this.refs.link).tooltip('destroy');
   },
 
   renderIcon() {
@@ -57,8 +57,8 @@ let UserToolbarListItem = React.createClass({
   render() {
     const { children, icon } = this.props;
     const { opened } = this.state;
-    const tChildren = React.Children.map(children, (child) => {
-      return React.cloneElement(child, { opened });
+    const tChildren = Children.map(children, (child) => {
+      return cloneElement(child, { opened });
     });
 
     const itemClasses = classNames('toolbar__nav-item', {

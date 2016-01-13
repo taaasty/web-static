@@ -1,5 +1,6 @@
 /*global i18n, $ */
-import React, { findDOMNode, PropTypes } from 'react';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
 
 class PrivacyBadge {
   componentDidMount() {

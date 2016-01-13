@@ -1,4 +1,4 @@
-import React, { findDOMNode, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import MediumEditor from 'medium-editor';
 import StringHelpers from '../../../../../shared/helpers/string';
@@ -52,12 +52,12 @@ let EditorTextField = React.createClass({
   },
 
   shouldComponentUpdate(nextProps) {
-    let fieldContent = findDOMNode(this.refs.fieldContent);
+    let fieldContent = this.refs.fieldContent;
     return fieldContent.innerHTML !== nextProps.text;
   },
 
   componentDidMount() {
-    const fieldContent = findDOMNode(this.refs.fieldContent);
+    const fieldContent = this.refs.fieldContent;
     const modeOptions = FIELD_MODE_OPTIONS[this.props.mode];
     const options = {
       ...modeOptions,

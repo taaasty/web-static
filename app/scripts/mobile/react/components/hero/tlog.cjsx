@@ -6,7 +6,8 @@ HeroTlogHead        = require './tlog/head'
 HeroTlogActions     = require './tlog/actions'
 HeroTlogStats       = require './tlog/stats'
 HeroTlogCloseButton = require './tlog/buttons/close'
-{ PropTypes } = React
+React = require 'react';
+{ createClass, PropTypes } = React;
 
 CLOSE_STATE = 'close'
 OPEN_STATE  = 'open'
@@ -15,7 +16,7 @@ _screenOrientation = null
 _initialHeroHeight = null
 _openHeroHeight    = null
 
-HeroTlog = React.createClass
+HeroTlog = createClass
   displayName: 'HeroTlog'
   mixins: [ConnectStoreMixin(CurrentUserStore)]
 
@@ -26,7 +27,7 @@ HeroTlog = React.createClass
     currentState: CLOSE_STATE
 
   componentDidMount: ->
-    _initialHeroHeight = @getDOMNode().offsetHeight
+    _initialHeroHeight = this.refs.container.offsetHeight
 
     window.addEventListener 'resize', @onResize
 
@@ -34,8 +35,11 @@ HeroTlog = React.createClass
     window.removeEventListener 'resize', @onResize
 
   render: ->
-    <div style={ @getHeroStyles() }
-         className="hero">
+    <div
+      className="hero"
+      ref="container"
+      style={ @getHeroStyles() }
+    >
       <HeroTlogCloseButton onClick={ @close } />
       <div className="hero__overlay" />
       <div className="hero__gradient" />

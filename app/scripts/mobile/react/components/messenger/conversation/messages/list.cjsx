@@ -51,19 +51,19 @@ MessageList = React.createClass
   saveScrollPosition: ->
     return unless @refs.scroller?
 
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
     @savedScrollPosition = scroller.scrollHeight - scroller.scrollTop
 
   restoreScrollPosition: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
     scroller.scrollTop = scroller.scrollHeight - @savedScrollPosition
 
   scrollToBottom: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
     scroller.scrollTop = scroller.scrollHeight
 
   handleScroll: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
 
     if @props.canLoad
       # Подгружаем сообщения если нам осталось проскроллить <= 30% списка сообщений

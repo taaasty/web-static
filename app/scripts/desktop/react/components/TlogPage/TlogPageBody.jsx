@@ -19,7 +19,7 @@ import {
 class TlogPageBody extends Component {
   state = {
     prevButtonVisible: false,
-  }
+  };
   componentWillMount() {
     const queryHash = queryString.parse(window.location.search);
     this.setState({ prevButtonVisible: queryHash.since_entry_id });
