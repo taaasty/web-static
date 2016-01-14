@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 export default class EntryTlogActions {
   static propTypes = {
     onAccept: PropTypes.func.isRequired,
-    onDecline: PropTypes.func.isRequired
-  }
+    onDecline: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div className="post__actions">

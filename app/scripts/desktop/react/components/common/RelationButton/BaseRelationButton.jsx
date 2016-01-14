@@ -10,10 +10,10 @@ export default class BaseRelationButton extends Component {
     relState: PropTypes.string,
     subjectID: PropTypes.number,
     subjectPrivacy: PropTypes.bool,
-  }
+  };
   state = {
     buttonState: constants.BUTTON_SHOW_STATE,
-  }
+  };
   componentWillUnmount() {
     if (this.errorTimeout) window.clearTimeout(this.errorTimeout);
   }

@@ -8,11 +8,11 @@ export default class FlowManagerStaffs {
     flowID: PropTypes.number.isRequired,
     staffs: PropTypes.array.isRequired,
     staffsLimit: PropTypes.number,
-    onUpdate: PropTypes.func.isRequired
-  }
+    onUpdate: PropTypes.func.isRequired,
+  };
   static defaultProps = {
-    staffsLimit: 5
-  }
+    staffsLimit: 5,
+  };
   render() {
     return (
       <div>

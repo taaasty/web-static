@@ -13,16 +13,16 @@ export default class EntryTlogComments extends Component {
     entry: PropTypes.object.isRequired,
     hideCommentForm: PropTypes.bool,
     limit: PropTypes.number,
-  }
+  };
   static defaultProps = {
     limit: LOAD_COMMENTS_LIMIT,
-  }
+  };
   state = {
     comments: this.props.entry.comments || [],
     totalCount: this.props.entry.comments_count,
     processCreate: false,
     loadingMore: false,
-  }
+  };
   render() {
     return (
       <section className="comments">

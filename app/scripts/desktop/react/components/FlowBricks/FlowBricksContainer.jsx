@@ -8,16 +8,16 @@ export default class FlowBricksContainer extends Component {
       items: PropTypes.array.isRequired,
       limit: PropTypes.number.isRequired,
       has_more: PropTypes.bool.isRequired,
-      next_page: PropTypes.number.isRequired
+      next_page: PropTypes.number.isRequired,
     }).isRequired,
-    loadUrl: PropTypes.string.isRequired
-  }
+    loadUrl: PropTypes.string.isRequired,
+  };
   state = {
     flows: this.props.flows_info.items,
     hasMore: this.props.flows_info.has_more,
     nextPage: this.props.flows_info.next_page,
-    isLoading: false
-  }
+    isLoading: false,
+  };
   render() {
     return (
       <FlowBricks

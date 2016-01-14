@@ -24,7 +24,7 @@ let EmbedComponentNoCover = React.createClass({
   },
 
   componentDidMount() {
-    let $container = $(this.getDOMNode()),
+    let $container = $(this.refs.container),
         $iframe = $container.find('iframe');
     $container.height($iframe.height());
   },
@@ -34,9 +34,11 @@ let EmbedComponentNoCover = React.createClass({
 
     return (
       <figure
-          className="video video-without-cover"
-          style={{width, height}}
-          dangerouslySetInnerHTML={{__html: embedHtml || ''}} />
+        className="video video-without-cover"
+        dangerouslySetInnerHTML={{__html: embedHtml || ''}}
+        style={{width, height}}
+        ref="container"
+      />
     );
   }
 });
@@ -54,7 +56,7 @@ let EmbedComponentWithCover = React.createClass({
     let coverStyle = {backgroundImage: `url('${this.props.coverImageUrl}')`};
 
     return (
-      <figure className="video" style={{width, height}}>
+      <figure className="video" style={{width, height}} ref="container">
         <div className="video__cover" style={coverStyle}>
           <div className="video__overlay" onClick={this.play} />
           <div className="video__embed" ref="embedContainer" />
@@ -64,8 +66,8 @@ let EmbedComponentWithCover = React.createClass({
   },
 
   play() {
-    let $embed = $(this.refs.embedContainer.getDOMNode()),
-        $container = $(this.getDOMNode());
+    let $embed = $(this.refs.embedContainer),
+        $container = $(this.refs.container);
 
     $embed.show().append(this.props.embedHtml);
     $embed.width('100%');

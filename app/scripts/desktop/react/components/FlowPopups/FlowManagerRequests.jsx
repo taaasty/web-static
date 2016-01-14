@@ -5,8 +5,8 @@ import RequestButton from '../common/RequestButton';
 export default class FlowManagerRequests {
   static propTypes = {
     flow: PropTypes.object.isRequired,
-    onCountUpdate: PropTypes.func
-  }
+    onCountUpdate: PropTypes.func,
+  };
   render() {
     let objectID = this.props.flow.id;
 

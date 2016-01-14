@@ -10,7 +10,7 @@ export default class PageWithToolbars {
   static propTypes = {
     ...Page.propTypes,
     currentUser: PropTypes.object,
-  }
+  };
   componentWillMount() {
     // Temporarily initialize CurrentUserStore here. Later on it will be set at
     // root App component

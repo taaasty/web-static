@@ -6,10 +6,10 @@ export default class SettingsSlug extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     slug: PropTypes.string.isRequired,
-  }
+  };
   state = {
     slug: this.props.slug,
-  }
+  };
   handleEditEnd(slug) {
     if (slug) {
       if (slug !== this.state.slug) {

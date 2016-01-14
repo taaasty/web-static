@@ -10,10 +10,10 @@ export default class DumbRelationButton extends Component {
     onTouchTap: PropTypes.func.isRequired,
     relState: PropTypes.string,
     subjectPrivacy: PropTypes.bool,
-  }
+  };
   state = {
     hover: false,
-  }
+  };
   onMouseEnter() {
     this.setState({ hover: true });
   }

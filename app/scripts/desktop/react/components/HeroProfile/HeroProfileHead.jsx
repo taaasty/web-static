@@ -5,7 +5,7 @@ import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 class HeroProfileHead extends Component {
   state = {
     user: this.props.user,
-  }
+  };
   componentDidMount() {
     TastyEvents.on(TastyEvents.keys.user_property_changed('title', this.state.user.id), this._updateTitle);
     TastyEvents.on(TastyEvents.keys.user_property_changed('slug', this.state.user.id), this._updateSlug);

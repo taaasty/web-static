@@ -21,7 +21,7 @@ class EntryTlog extends Component {
   state = {
     entry: this.props.entry,
     hasModeration: !!this.props.moderation
-  }
+  };
   componentWillMount() {
     const { entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
     if (can_delete && !host_tlog_id) {

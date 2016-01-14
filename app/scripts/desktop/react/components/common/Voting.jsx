@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, findDOMNode } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import EntryActionCreators from '../../actions/Entry';
 import Spinner from '../../../../shared/react/components/common/Spinner';
@@ -14,7 +15,7 @@ export default class Voting extends Component {
       is_voted: PropTypes.bool.isRequired,
       is_voteable: PropTypes.bool.isRequired,
     }).isRequired,
-  }
+  };
   state = {
     votes: this.props.rating.votes,
     rating: this.props.rating.rating,
@@ -22,7 +23,7 @@ export default class Voting extends Component {
     canVote: this.props.rating.is_voteable,
     isVoted: this.props.rating.is_voted,
     isProcess: false,
-  }
+  };
   componentDidMount() {
     $(findDOMNode(this)).tooltip({
       html: true,

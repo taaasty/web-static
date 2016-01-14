@@ -7,8 +7,8 @@ export default class HeroFlows extends Component {
     flowsCount: PropTypes.number,
     backgroundUrl: PropTypes.string.isRequired,
     canCreate: PropTypes.bool,
-    text: PropTypes.string
-  }
+    text: PropTypes.string,
+  };
   render() {
     return (
       <Hero backgroundUrl={this.props.backgroundUrl}

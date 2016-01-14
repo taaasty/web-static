@@ -1,18 +1,19 @@
-import managePositions from '../../../../shared/react/components/higherOrder/managePositions'
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
+import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
 import PopupHeader from './PopupHeader';
 
-let Popup = React.createClass({
-  mixins: ['ReactActivitiesMixin'],
-
+let Popup = createClass({
   propTypes: {
-    title: React.PropTypes.string.isRequired,
-    position: React.PropTypes.object.isRequired,
-    className: React.PropTypes.string,
-    draggable: React.PropTypes.bool,
-    onClose: React.PropTypes.func.isRequired,
-    onPositionChange: React.PropTypes.func.isRequired,
-    children: React.PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    className: PropTypes.string,
+    draggable: PropTypes.bool,
+    onClose: PropTypes.func.isRequired,
+    onPositionChange: PropTypes.func.isRequired,
+    position: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
   },
+  mixins: ['ReactActivitiesMixin'],
 
   componentDidMount() {
     if (this.props.draggable) {
@@ -23,7 +24,7 @@ let Popup = React.createClass({
   componentWillReceiveProps(nextProps) {
     // FIXME: Почему-то стили которые указаны в style не применяются при перерендере
     // Устанавливаем их принудительно при обновлении
-    $(this.getDOMNode()).css(nextProps.position);
+    $(findDOMNode(this)).css(nextProps.position);
   },
 
   render() {
@@ -51,8 +52,8 @@ let Popup = React.createClass({
   },
 
   makeDraggable() {
-    let $popup = $(this.getDOMNode()),
-        $header = $(this.refs.header.getDOMNode());
+    let $popup = $(findDOMNode(this)),
+        $header = $(findDOMNode(this.refs.header));
 
     $popup.draggable({
       handle: $header,
@@ -66,7 +67,7 @@ let Popup = React.createClass({
 
   handleClick(e) {
     let popups = [].slice.call(document.querySelectorAll('.popup')),
-        currentNode = this.getDOMNode();
+        currentNode = findDOMNode(this);
 
     Object.keys(popups).forEach((key) => {
       let node = popups[key];

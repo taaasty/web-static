@@ -1,3 +1,5 @@
+React = require 'react';
+{ render, unmountComponentAtNode } = require 'react-dom';
 Notify = require '../components/alerts/notify'
 
 _pendingNotification = null
@@ -15,7 +17,7 @@ getContainer = ->
 closeNotification = ->
   container = getContainer()
 
-  React.unmountComponentAtNode container
+  unmountComponentAtNode container
   _pendingNotification = null
 
 isPageLoadingCanceled = (xhr) ->
@@ -31,7 +33,7 @@ NotifyController =
 
     closeNotification()
 
-    notification = React.render (
+    notification = render (
       <Notify
           type={ type }
           text={ text }

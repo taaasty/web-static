@@ -1,3 +1,4 @@
+{ findDOMNode } = require 'react-dom';
 classnames = require 'classnames'
 
 NO_TRANSITION_CLASS = "no--transition"
@@ -51,8 +52,8 @@ window.Popup = React.createClass
            </div>
 
   makeDraggable: ->
-    $popupNode = $(@getDOMNode())
-    headboxNode = @refs.header.getDOMNode()
+    $popupNode = $(findDOMNode(this))
+    headboxNode = findDOMNode(this.refs.header)
 
     $popupNode.draggable
       handle: headboxNode
@@ -67,7 +68,7 @@ window.Popup = React.createClass
 
   handleClick: (e) ->
     popups = [].slice.call(document.querySelectorAll('.popup'))
-    currentNode = this.getDOMNode()
+    currentNode = findDOMNode(this)
 
     Object.keys(popups).forEach (key) ->
       node = popups[key]

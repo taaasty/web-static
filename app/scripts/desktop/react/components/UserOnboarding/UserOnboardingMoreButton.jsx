@@ -4,9 +4,9 @@ import Spinner from '../../../../shared/react/components/common/Spinner';
 
 class UserOnboardingMoreButton {
   showMore() {
-    const { isLoading, showMore } = this.props;
+    const { isLoading, showMore: propsShowMore } = this.props; //FIXME: https://github.com/babel/babel/pull/3256
 
-    !isLoading && showMore();
+    !isLoading && propsShowMore();
   }
   render() {
     const { isLoading } = this.props;

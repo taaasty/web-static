@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 class UserAvatar extends Component {
   state = {
     user: this.props.user,
-  }
+  };
   componentDidMount() {
     this.updateUserpic = this._updateUserpic.bind(this);
     TastyEvents.on(TastyEvents.keys.user_property_changed('avatar', this.props.user.id), this.updateUserpic);

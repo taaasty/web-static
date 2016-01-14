@@ -1,12 +1,14 @@
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import PositionsService from '../../services/positions';
 
 const REPOSITION_TIMEOUT = 500;
 
 function managePositions(Component) {
-  const PositionManager = React.createClass({
+  const PositionManager = createClass({
     propTypes: {
-      clue: React.PropTypes.string.isRequired,
-      position: React.PropTypes.object
+      clue: PropTypes.string.isRequired,
+      position: PropTypes.object,
     },
 
     getDefaultProps() {
@@ -49,7 +51,7 @@ function managePositions(Component) {
     },
 
     moveIfOutside() {
-      let currentPosition = $(this.getDOMNode()).position(),
+      let currentPosition = $(findDOMNode(this)).position(),
           smartPosition = PositionsService.smartPosition(currentPosition);
 
       if (smartPosition.left != currentPosition.left || smartPosition.top != currentPosition.top) {

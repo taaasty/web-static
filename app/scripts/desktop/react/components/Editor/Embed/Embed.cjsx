@@ -1,4 +1,4 @@
-cloneWithProps = require 'react/lib/cloneWithProps'
+cloneWithProps = require 'react-addons-clone-with-props'
 EditorActionCreators = require '../../../actions/editor'
 EditorEmbedUrlInsert = require './EmbedUrlInsert'
 EditorEmbedLoading = require './EmbedLoading'

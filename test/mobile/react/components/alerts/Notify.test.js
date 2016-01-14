@@ -1,8 +1,8 @@
-import React, { addons, PropTypes } from 'react';
+import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Notify from '../../../../../app/scripts/mobile/react/components/alerts/notify';
-const { renderIntoDocument } = addons.TestUtils;
+import { renderIntoDocument } from 'react-addons-test-utils';
 
 describe('[Component] Notify', () => {
   it('should render without errors', () => {

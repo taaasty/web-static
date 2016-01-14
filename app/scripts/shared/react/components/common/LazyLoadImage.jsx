@@ -2,24 +2,22 @@ import LazyLoad from 'react-lazy-load';
 import React, { PropTypes } from 'react';
 import Image from './Image';
 
-class LazyLoadImage {
-  render() {
-    const { image: { geometry }, maxWidth, maxHeight } = this.props;
-    const style = Image.getSize({
-      ...geometry,
-      maxWidth,
-      maxHeight,
-    });
+function LazyLoadImage(props) {
+  const { image: { geometry }, maxWidth, maxHeight } = props;
+  const style = Image.getSize({
+    ...geometry,
+    maxWidth,
+    maxHeight,
+  });
 
-    return (
-      <LazyLoad
-        height={style.height}
-        threshold={parseInt(window.innerHeight, 10)}
-      >
-        <Image {...this.props} />
-      </LazyLoad>
-    );
-  }
+  return (
+    <LazyLoad
+      height={style.height}
+      threshold={parseInt(window.innerHeight, 10)}
+    >
+      <Image {...props} />
+    </LazyLoad>
+  );
 }
 
 LazyLoadImage.propTypes = {

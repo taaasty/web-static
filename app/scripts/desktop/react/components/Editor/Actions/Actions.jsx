@@ -18,7 +18,7 @@ const TLOG_TYPE_ANONYMOUS = 'anonymous';
 class EditorActions extends Component {
   state = {
     preview: false,
-  }
+  };
   componentWillUpdate(nextProps, nextState) {
     //TODO: Применятор для показа превью
     if (this.state.preview !== nextState.preview) {

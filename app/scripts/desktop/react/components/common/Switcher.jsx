@@ -8,16 +8,18 @@ export default class Switcher extends Component {
     checked: PropTypes.bool.isRequired,
     labelOn: PropTypes.string,
     labelOff: PropTypes.string,
-    onChange: PropTypes.func.isRequired
-  }
+    onChange: PropTypes.func.isRequired,
+  };
   render() {
     return (
       <div className="switcher">
-        <input type="checkbox"
-               checked={this.props.checked}
-               id={this.props.id}
-               className="switcher__input"
-               onChange={::this.handleChange} />
+        <input
+          type="checkbox"
+          checked={this.props.checked}
+          id={this.props.id}
+          className="switcher__input"
+          onChange={this.handleChange.bind(this)}
+        />
         <label htmlFor={this.props.id} className="switcher__label">
           <span className="switcher__btn switcher__btn--on">
             {this.props.labelOn || i18n.t('switcher.label_on')}

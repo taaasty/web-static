@@ -8,7 +8,7 @@ import * as UserOnboardingActions from '../../actions/UserOnboardingActions';
 const RELS_PER_PAGE = 6;
 
 class UserOnboarding extends Component {
-  state = Object.assign({}, this.getStoreState(), { page: 0 })
+  state = Object.assign({}, this.getStoreState(), { page: 0 });
   componentWillMount() {
     const { isLoading, relationships: rels } = this.state;
     this.sync = this._syncWithStore.bind(this);

@@ -1,5 +1,5 @@
 /*global i18n */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
@@ -10,9 +10,9 @@ class MessagesPopupThreadForm extends Component {
     hasText: false,
     files: [],
     isLoading: false,
-  }
+  };
   componentDidMount() {
-    this.form = findDOMNode(this.refs.messageForm);
+    this.form = this.refs.messageForm;
     if (this.form instanceof HTMLElement) {
       this.form.focus();
     }

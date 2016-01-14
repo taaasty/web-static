@@ -1,4 +1,4 @@
-import keyMirror from 'react/lib/keyMirror';
+import keyMirror from 'keymirror';
 
 let DesignConstants = keyMirror({
   INIT_CURRENT: null,

@@ -14,7 +14,7 @@ export default class EntryTlogMetabar {
     entry: PropTypes.object.isRequired,
     host_tlog_id: PropTypes.number,
     onComment: PropTypes.func,
-  }
+  };
   render() {
     const { commentator, entry, onComment } = this.props;
 

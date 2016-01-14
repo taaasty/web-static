@@ -18,13 +18,13 @@ export default class FlowManager extends Component {
       tlog_url: PropTypes.string.isRequired
     }).isRequired,
     onUpdate: PropTypes.func.isRequired
-  }
+  };
   state = {
     flow: this.props.flow,
     staffsCount: this.props.flow.staffs.length,
     followersCount: null,
     ignoredCount: null
-  }
+  };
   render() {
     return (
       <TabbedArea>

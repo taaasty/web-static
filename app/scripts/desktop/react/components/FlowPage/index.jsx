@@ -6,7 +6,7 @@ import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
 class FlowPageContainer extends Component {
   state = {
     
-  }
+  };
   render() {
     return (
       <div className="page">

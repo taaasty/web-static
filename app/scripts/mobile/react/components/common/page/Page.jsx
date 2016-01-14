@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 export default class Page {
   static propTypes = {
     locale: PropTypes.string.isRequired,
-  }
+  };
   componentWillMount() {
     const { locale } = this.props;
     

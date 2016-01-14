@@ -7,7 +7,7 @@ const defaultImg = 'http://taaasty.com/favicons/mstile-310x310.png';
 class SocialShare extends Component {
   state = {
     title: '',
-  }
+  };
   componentWillMount() {
     this.titleEl = document.createElement('div');
     this.setState({ title: this.parseTitle(this.props.title) });

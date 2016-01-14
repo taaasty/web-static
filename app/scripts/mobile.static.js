@@ -1,5 +1,9 @@
-global.AppStorage = require('./shared/resources/AppStorage');
-global.gon = require('./mobile/resources/gon');
+import AppStorage from './shared/resources/AppStorage';
+import gon from './mobile/resources/gon';
+
+global.AppStorage = AppStorage;
+global.gon = gon;
+
 require('./mobile/bundle');
 
 ReactApp.start({

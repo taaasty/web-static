@@ -1,4 +1,4 @@
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Color from 'color';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import HeroProfileActions from './HeroProfileActions';
@@ -7,9 +7,9 @@ import HeroProfileSelfActions from './HeroProfileSelfActions';
 class HeroProfileActionsContainer extends Component {
   state = {
     extraStyles: '',
-  }
+  };
   componentDidMount() {
-    const container = findDOMNode(this.refs.container);
+    const container = this.refs.container;
     if (container) {
       // #fff is a fallback color to pass headless browser tests
       const currentColor = window.getComputedStyle(container).getPropertyValue('color') || '#fff';

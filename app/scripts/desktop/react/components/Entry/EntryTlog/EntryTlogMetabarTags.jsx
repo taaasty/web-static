@@ -3,13 +3,13 @@ import React, { PropTypes } from 'react';
 export default class EntryTlogMetabarTags {
   static propTypes = {
     tags: PropTypes.array.isRequired,
-    userSlug: PropTypes.string.isRequired
-  }
+    userSlug: PropTypes.string.isRequired,
+  };
   render() {
     return (
       <span className="meta-item meta-item--tags">
         <span className="meta-item__content">
-          {this.props.tags.map(::this.renderTag)}
+          {this.props.tags.map(this.renderTag.bind(this))}
         </span>
       </span>
     );

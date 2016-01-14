@@ -1,3 +1,5 @@
+{ findDOMNode } = require 'react-dom'
+
 CLASS_PREFIX_STATE = 'state--'
 
 STATE_NONE      = 'none'
@@ -16,7 +18,7 @@ window.FollowStatus = React.createClass
     onClick: React.PropTypes.func
 
   componentDidMount: ->
-    $followStatus = $( @getDOMNode() )
+    $followStatus = $(findDOMNode(this))
     $followStatus.tooltip
       placement: 'bottom'
       trigger:   'click hover'

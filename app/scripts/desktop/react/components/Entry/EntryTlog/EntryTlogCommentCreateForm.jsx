@@ -11,7 +11,7 @@ class EntryTlogCommentCreateForm extends Component {
     currentState: this.props.hideCommentForm
       ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
       : FORM_SHOW_STATE,
-  }
+  };
   clear() {
     if (this.state.currentState === FORM_SHOW_STATE) {
       this.refs.form.clear();

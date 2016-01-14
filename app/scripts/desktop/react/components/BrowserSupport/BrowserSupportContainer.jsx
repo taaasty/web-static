@@ -25,7 +25,7 @@ class BrowserSupportContainer extends Component {
     version: null,
     updateUrl: null,
     incompatable: null,
-  }
+  };
   componentDidMount() {
     // Показываем через секунду, чтобы страница успела прогрузиться и показалась
     // анимация и тд.

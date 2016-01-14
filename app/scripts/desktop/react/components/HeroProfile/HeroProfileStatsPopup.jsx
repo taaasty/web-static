@@ -1,5 +1,6 @@
 /*global $, PopupHeader, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
-import React, { createClass, findDOMNode, PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 
 const MARGIN = 10;
 const FADE_DURATION = 300;

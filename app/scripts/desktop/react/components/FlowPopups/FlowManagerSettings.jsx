@@ -17,7 +17,7 @@ export default class FlowManagerSettings extends Component {
       flowpic: PropTypes.object.isRequired
     }).isRequired,
     onUpdate: PropTypes.func.isRequired
-  }
+  };
   state = {
     name: this.props.flow.name,
     slug: this.props.flow.slug,
@@ -26,7 +26,7 @@ export default class FlowManagerSettings extends Component {
     is_privacy: this.props.flow.is_privacy,
     has_premoderation: this.props.flow.has_premoderation,
     picFile: null
-  }
+  };
   render() {
     let formClasses = classnames('flow-form', {
       '__has-unsaved-fields': this.hasUnsavedFields()
@@ -75,8 +75,10 @@ export default class FlowManagerSettings extends Component {
   renderSaveButton() {
     if (this.hasUnsavedFields()) {
       return (
-        <button className="flow-form__save-button"
-                onClick={::this.saveFlow}>
+        <button
+          className="flow-form__save-button"
+          onClick={this.saveFlow.bind(this)}
+        >
           Сохранить
         </button>
       );

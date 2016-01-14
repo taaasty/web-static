@@ -1,4 +1,4 @@
-LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+LinkedStateMixin = require 'react-addons-linked-state-mixin';
 
 window.PopupBox = React.createClass
   mixins: [ReactUnmountMixin, LinkedStateMixin, 'ReactActivitiesMixin']

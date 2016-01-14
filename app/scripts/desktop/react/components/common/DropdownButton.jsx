@@ -6,12 +6,12 @@ export default class DropdownButton extends Component {
     activeItem: PropTypes.string,
     iconClassName: PropTypes.string,
     buttonClassName: PropTypes.string,
-    onChange: PropTypes.func.isRequired
-  }
+    onChange: PropTypes.func.isRequired,
+  };
   state = {
     activeItem: this.props.activeItem || '',
-    open: false
-  }
+    open: false,
+  };
   componentWillReceiveProps(nextProps) {
     if (this.props.activeItem !== nextProps.activeItem) {
       this.setState({activeItem: nextProps.activeItem});

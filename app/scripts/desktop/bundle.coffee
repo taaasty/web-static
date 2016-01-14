@@ -1,7 +1,7 @@
 # /*==========  Shims  ==========*/
 require '../shared/shims/console'
 
-require './resources/libs'
+require './resources/Libs'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'

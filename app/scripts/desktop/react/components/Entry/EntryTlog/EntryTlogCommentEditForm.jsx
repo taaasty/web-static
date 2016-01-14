@@ -5,8 +5,8 @@ export default class EntryTlogCommentEditForm {
   static propTypes = {
     comment: PropTypes.object.isRequired,
     commentator: PropTypes.object.isRequired,
-    process: PropTypes.bool
-  }
+    process: PropTypes.bool,
+  };
   render() {
     return (
       <EntryTlogCommentForm

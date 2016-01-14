@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Textarea from 'react-textarea-autosize';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
 import Spinner from '../../../../../shared/react/components/common/Spinner';
@@ -9,10 +10,10 @@ const REPLIES_LIMIT = 5;
 class EntryTlogCommentForm extends Component {
   state = {
     text: this.props.text || '',
-  }
+  };
   componentDidMount() {
     // Ставим курсор в конец
-    const field = React.findDOMNode(this.refs.field);
+    const field = findDOMNode(this.refs.field);
 
     if (field.setSelectionRange) {
       const len = field.value.length * 2;

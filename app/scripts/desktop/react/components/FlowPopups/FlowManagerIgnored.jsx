@@ -5,8 +5,8 @@ import IgnoreButton from '../common/IgnoreButton';
 export default class FlowManagerIgnored {
   static propTypes = {
     flow: PropTypes.object.isRequired,
-    onCountUpdate: PropTypes.func
-  }
+    onCountUpdate: PropTypes.func,
+  };
   render() {
     let objectID = this.props.flow.id;
 

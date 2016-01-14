@@ -1,5 +1,5 @@
 /*global $ */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 
 const MARGIN_BETWEEN_TOGGLE_AND_MENU = 20;
@@ -8,7 +8,7 @@ class DropdownActions extends Component {
   state = {
     marginTop: MARGIN_BETWEEN_TOGGLE_AND_MENU,
     open: false,
-  }
+  };
   componentDidMount() {
     if (this.state.open) {
       this.calculateTopPosition();
@@ -22,7 +22,7 @@ class DropdownActions extends Component {
   calculateTopPosition() {
     const wHeight = $(window).height();
     const wScrollTop = $(window).scrollTop();
-    const $menu = $(findDOMNode(this.refs.menu));
+    const $menu = $(this.refs.menu);
     const menuHeight = $menu.innerHeight();
     const menuOffset = $menu.offset();
 

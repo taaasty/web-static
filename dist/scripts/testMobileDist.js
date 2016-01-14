@@ -5,9 +5,15 @@ module.exports = { "default": require("core-js/library/fn/object/keys"), __esMod
 },{"core-js/library/fn/object/keys":5}],3:[function(require,module,exports){
 "use strict";
 
-var _Object$assign = require("babel-runtime/core-js/object/assign")["default"];
+exports.__esModule = true;
 
-exports["default"] = _Object$assign || function (target) {
+var _assign = require("../core-js/object/assign");
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _assign2.default || function (target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i];
 
@@ -20,78 +26,101 @@ exports["default"] = _Object$assign || function (target) {
 
   return target;
 };
-
-exports.__esModule = true;
-},{"babel-runtime/core-js/object/assign":1}],4:[function(require,module,exports){
+},{"../core-js/object/assign":1}],4:[function(require,module,exports){
 require('../../modules/es6.object.assign');
 module.exports = require('../../modules/$.core').Object.assign;
-},{"../../modules/$.core":7,"../../modules/es6.object.assign":17}],5:[function(require,module,exports){
+},{"../../modules/$.core":8,"../../modules/es6.object.assign":19}],5:[function(require,module,exports){
 require('../../modules/es6.object.keys');
 module.exports = require('../../modules/$.core').Object.keys;
-},{"../../modules/$.core":7,"../../modules/es6.object.keys":18}],6:[function(require,module,exports){
+},{"../../modules/$.core":8,"../../modules/es6.object.keys":20}],6:[function(require,module,exports){
+module.exports = function(it){
+  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+  return it;
+};
+},{}],7:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],7:[function(require,module,exports){
-var core = module.exports = {version: '1.2.5'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 },{}],8:[function(require,module,exports){
-var global    = require('./$.global')
-  , core      = require('./$.core')
-  , PROTOTYPE = 'prototype';
-var ctx = function(fn, that){
-  return function(){
+var core = module.exports = {version: '1.2.6'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+},{}],9:[function(require,module,exports){
+// optional / simple context binding
+var aFunction = require('./$.a-function');
+module.exports = function(fn, that, length){
+  aFunction(fn);
+  if(that === undefined)return fn;
+  switch(length){
+    case 1: return function(a){
+      return fn.call(that, a);
+    };
+    case 2: return function(a, b){
+      return fn.call(that, a, b);
+    };
+    case 3: return function(a, b, c){
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function(/* ...args */){
     return fn.apply(that, arguments);
   };
 };
-var $def = function(type, name, source){
-  var key, own, out, exp
-    , isGlobal = type & $def.G
-    , isProto  = type & $def.P
-    , target   = isGlobal ? global : type & $def.S
-        ? global[name] : (global[name] || {})[PROTOTYPE]
-    , exports  = isGlobal ? core : core[name] || (core[name] = {});
-  if(isGlobal)source = name;
-  for(key in source){
-    // contains in native
-    own = !(type & $def.F) && target && key in target;
-    if(own && key in exports)continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    if(isGlobal && typeof target[key] != 'function')exp = source[key];
-    // bind timers to global for call from export context
-    else if(type & $def.B && own)exp = ctx(out, global);
-    // wrap global constructors for prevent change them in library
-    else if(type & $def.W && target[key] == out)!function(C){
-      exp = function(param){
-        return this instanceof C ? new C(param) : C(param);
-      };
-      exp[PROTOTYPE] = C[PROTOTYPE];
-    }(out);
-    else exp = isProto && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export
-    exports[key] = exp;
-    if(isProto)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
-  }
-};
-// type bitmap
-$def.F = 1;  // forced
-$def.G = 2;  // global
-$def.S = 4;  // static
-$def.P = 8;  // proto
-$def.B = 16; // bind
-$def.W = 32; // wrap
-module.exports = $def;
-},{"./$.core":7,"./$.global":11}],9:[function(require,module,exports){
+},{"./$.a-function":6}],10:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+var global    = require('./$.global')
+  , core      = require('./$.core')
+  , ctx       = require('./$.ctx')
+  , PROTOTYPE = 'prototype';
+
+var $export = function(type, name, source){
+  var IS_FORCED = type & $export.F
+    , IS_GLOBAL = type & $export.G
+    , IS_STATIC = type & $export.S
+    , IS_PROTO  = type & $export.P
+    , IS_BIND   = type & $export.B
+    , IS_WRAP   = type & $export.W
+    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+    , key, own, out;
+  if(IS_GLOBAL)source = name;
+  for(key in source){
+    // contains in native
+    own = !IS_FORCED && target && key in target;
+    if(own && key in exports)continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function(C){
+      var F = function(param){
+        return this instanceof C ? new C(param) : C(param);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    if(IS_PROTO)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+  }
+};
+// type bitmap
+$export.F = 1;  // forced
+$export.G = 2;  // global
+$export.S = 4;  // static
+$export.P = 8;  // proto
+$export.B = 16; // bind
+$export.W = 32; // wrap
+module.exports = $export;
+},{"./$.core":8,"./$.ctx":9,"./$.global":13}],12:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -99,18 +128,18 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = require('./$.cof');
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./$.cof":6}],13:[function(require,module,exports){
+},{"./$.cof":7}],15:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -124,7 +153,7 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // 19.1.2.1 Object.assign(target, source, ...)
 var $        = require('./$')
   , toObject = require('./$.to-object')
@@ -158,30 +187,29 @@ module.exports = require('./$.fails')(function(){
   }
   return T;
 } : Object.assign;
-},{"./$":13,"./$.fails":10,"./$.iobject":12,"./$.to-object":16}],15:[function(require,module,exports){
+},{"./$":15,"./$.fails":12,"./$.iobject":14,"./$.to-object":18}],17:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
-var $def  = require('./$.def')
-  , core  = require('./$.core')
-  , fails = require('./$.fails');
+var $export = require('./$.export')
+  , core    = require('./$.core')
+  , fails   = require('./$.fails');
 module.exports = function(KEY, exec){
-  var $def = require('./$.def')
-    , fn   = (core.Object || {})[KEY] || Object[KEY]
-    , exp  = {};
+  var fn  = (core.Object || {})[KEY] || Object[KEY]
+    , exp = {};
   exp[KEY] = exec(fn);
-  $def($def.S + $def.F * fails(function(){ fn(1); }), 'Object', exp);
+  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":7,"./$.def":8,"./$.fails":10}],16:[function(require,module,exports){
+},{"./$.core":8,"./$.export":11,"./$.fails":12}],18:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./$.defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":9}],17:[function(require,module,exports){
+},{"./$.defined":10}],19:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
-var $def = require('./$.def');
+var $export = require('./$.export');
 
-$def($def.S + $def.F, 'Object', {assign: require('./$.object-assign')});
-},{"./$.def":8,"./$.object-assign":14}],18:[function(require,module,exports){
+$export($export.S + $export.F, 'Object', {assign: require('./$.object-assign')});
+},{"./$.export":11,"./$.object-assign":16}],20:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./$.to-object');
 
@@ -190,7 +218,7 @@ require('./$.object-sap')('keys', function($keys){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":15,"./$.to-object":16}],19:[function(require,module,exports){
+},{"./$.object-sap":17,"./$.to-object":18}],21:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -200,9 +228,11 @@ require('./$.object-sap')('keys', function($keys){
  */
 /* eslint-disable no-proto */
 
+'use strict'
+
 var base64 = require('base64-js')
 var ieee754 = require('ieee754')
-var isArray = require('is-array')
+var isArray = require('isarray')
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -282,8 +312,10 @@ function Buffer (arg) {
     return new Buffer(arg)
   }
 
-  this.length = 0
-  this.parent = undefined
+  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+    this.length = 0
+    this.parent = undefined
+  }
 
   // Common case.
   if (typeof arg === 'number') {
@@ -414,6 +446,10 @@ function fromJsonObject (that, object) {
 if (Buffer.TYPED_ARRAY_SUPPORT) {
   Buffer.prototype.__proto__ = Uint8Array.prototype
   Buffer.__proto__ = Uint8Array
+} else {
+  // pre-set for values that may exist in the future
+  Buffer.prototype.length = undefined
+  Buffer.prototype.parent = undefined
 }
 
 function allocate (that, length) {
@@ -563,10 +599,6 @@ function byteLength (string, encoding) {
   }
 }
 Buffer.byteLength = byteLength
-
-// pre-set for values that may exist in the future
-Buffer.prototype.length = undefined
-Buffer.prototype.parent = undefined
 
 function slowToString (encoding, start, end) {
   var loweredCase = false
@@ -1659,7 +1691,7 @@ function utf8ToBytes (string, units) {
       }
 
       // valid surrogate pair
-      codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
       if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
@@ -1738,7 +1770,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":20,"ieee754":21,"is-array":22}],20:[function(require,module,exports){
+},{"base64-js":22,"ieee754":23,"isarray":24}],22:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -1864,7 +1896,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -1950,45 +1982,17 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
+var toString = {}.toString;
 
-/**
- * isArray
- */
-
-var isArray = Array.isArray;
-
-/**
- * toString
- */
-
-var str = Object.prototype.toString;
-
-/**
- * Whether or not the given `val`
- * is an array.
- *
- * example:
- *
- *        isArray([]);
- *        // > true
- *        isArray(arguments);
- *        // > false
- *        isArray('');
- *        // > false
- *
- * @param {mixed} val
- * @return {bool}
- */
-
-module.exports = isArray || function (val) {
-  return !! val && '[object Array]' == str.call(val);
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
 };
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = require('./lib/chai');
 
-},{"./lib/chai":24}],24:[function(require,module,exports){
+},{"./lib/chai":26}],26:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -2002,7 +2006,7 @@ var used = []
  * Chai version
  */
 
-exports.version = '3.4.0';
+exports.version = '3.4.1';
 
 /*!
  * Assertion Error
@@ -2083,7 +2087,7 @@ exports.use(should);
 var assert = require('./chai/interface/assert');
 exports.use(assert);
 
-},{"./chai/assertion":25,"./chai/config":26,"./chai/core/assertions":27,"./chai/interface/assert":28,"./chai/interface/expect":29,"./chai/interface/should":30,"./chai/utils":44,"assertion-error":52}],25:[function(require,module,exports){
+},{"./chai/assertion":27,"./chai/config":28,"./chai/core/assertions":29,"./chai/interface/assert":30,"./chai/interface/expect":31,"./chai/interface/should":32,"./chai/utils":46,"assertion-error":54}],27:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -2174,8 +2178,8 @@ module.exports = function (_chai, util) {
    *
    * @name assert
    * @param {Philosophical} expression to be tested
-   * @param {String or Function} message or function that returns message to display if expression fails
-   * @param {String or Function} negatedMessage or function that returns negatedMessage to display if negated expression fails
+   * @param {String|Function} message or function that returns message to display if expression fails
+   * @param {String|Function} negatedMessage or function that returns negatedMessage to display if negated expression fails
    * @param {Mixed} expected value (remember to check for negation)
    * @param {Mixed} actual (optional) will default to `this.obj`
    * @param {Boolean} showDiff (optional) when set to `true`, assert will display a diff in addition to the message if expression fails
@@ -2216,7 +2220,7 @@ module.exports = function (_chai, util) {
   });
 };
 
-},{"./config":26}],26:[function(require,module,exports){
+},{"./config":28}],28:[function(require,module,exports){
 module.exports = {
 
   /**
@@ -2273,7 +2277,7 @@ module.exports = {
 
 };
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -3387,7 +3391,7 @@ module.exports = function (chai, _) {
    *
    * @name keys
    * @alias key
-   * @param {String...|Array|Object} keys
+   * @param {...String|Array|Object} keys
    * @api public
    */
 
@@ -3490,7 +3494,6 @@ module.exports = function (chai, _) {
    *     expect(fn).to.not.throw('good function');
    *     expect(fn).to.throw(ReferenceError, /bad function/);
    *     expect(fn).to.throw(err);
-   *     expect(fn).to.not.throw(new RangeError('Out of range.'));
    *
    * Please note that when a throw expectation is negated, it will check each
    * parameter independently, starting with error constructor type. The appropriate way
@@ -4091,7 +4094,7 @@ module.exports = function (chai, _) {
   });
 };
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5642,7 +5645,7 @@ module.exports = function (chai, util) {
   ('isNotFrozen', 'notFrozen');
 };
 
-},{}],29:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5677,7 +5680,7 @@ module.exports = function (chai, util) {
   };
 };
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5777,7 +5780,7 @@ module.exports = function (chai, util) {
   chai.Should = loadShould;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /*!
  * Chai - addChainingMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5890,7 +5893,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   });
 };
 
-},{"../config":26,"./flag":35,"./transferFlags":51}],32:[function(require,module,exports){
+},{"../config":28,"./flag":37,"./transferFlags":53}],34:[function(require,module,exports){
 /*!
  * Chai - addMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5935,7 +5938,7 @@ module.exports = function (ctx, name, method) {
   };
 };
 
-},{"../config":26,"./flag":35}],33:[function(require,module,exports){
+},{"../config":28,"./flag":37}],35:[function(require,module,exports){
 /*!
  * Chai - addProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5984,7 +5987,7 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{"../config":26,"./flag":35}],34:[function(require,module,exports){
+},{"../config":28,"./flag":37}],36:[function(require,module,exports){
 /*!
  * Chai - expectTypes utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6027,7 +6030,7 @@ module.exports = function (obj, types) {
   }
 };
 
-},{"./flag":35,"assertion-error":52,"type-detect":57}],35:[function(require,module,exports){
+},{"./flag":37,"assertion-error":54,"type-detect":59}],37:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6061,7 +6064,7 @@ module.exports = function (obj, key, value) {
   }
 };
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*!
  * Chai - getActual utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6081,7 +6084,7 @@ module.exports = function (obj, args) {
   return args.length > 4 ? args[4] : obj._obj;
 };
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*!
  * Chai - getEnumerableProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6108,7 +6111,7 @@ module.exports = function getEnumerableProperties(object) {
   return result;
 };
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*!
  * Chai - message composition utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6160,7 +6163,7 @@ module.exports = function (obj, args) {
   return flagMsg ? flagMsg + ': ' + msg : msg;
 };
 
-},{"./flag":35,"./getActual":36,"./inspect":45,"./objDisplay":46}],39:[function(require,module,exports){
+},{"./flag":37,"./getActual":38,"./inspect":47,"./objDisplay":48}],41:[function(require,module,exports){
 /*!
  * Chai - getName utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6182,7 +6185,7 @@ module.exports = function (func) {
   return match && match[1] ? match[1] : "";
 };
 
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /*!
  * Chai - getPathInfo utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6294,7 +6297,7 @@ function _getPathValue (parsed, obj, index) {
   return res;
 }
 
-},{"./hasProperty":43}],41:[function(require,module,exports){
+},{"./hasProperty":45}],43:[function(require,module,exports){
 /*!
  * Chai - getPathValue utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6338,7 +6341,7 @@ module.exports = function(path, obj) {
   return info.value;
 }; 
 
-},{"./getPathInfo":40}],42:[function(require,module,exports){
+},{"./getPathInfo":42}],44:[function(require,module,exports){
 /*!
  * Chai - getProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6375,7 +6378,7 @@ module.exports = function getProperties(object) {
   return result;
 };
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 /*!
  * Chai - hasProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6440,7 +6443,7 @@ module.exports = function hasProperty(name, obj) {
   return name in obj;
 };
 
-},{"type-detect":57}],44:[function(require,module,exports){
+},{"type-detect":59}],46:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011 Jake Luer <jake@alogicalparadox.com>
@@ -6572,7 +6575,7 @@ exports.addChainableMethod = require('./addChainableMethod');
 
 exports.overwriteChainableMethod = require('./overwriteChainableMethod');
 
-},{"./addChainableMethod":31,"./addMethod":32,"./addProperty":33,"./expectTypes":34,"./flag":35,"./getActual":36,"./getMessage":38,"./getName":39,"./getPathInfo":40,"./getPathValue":41,"./hasProperty":43,"./inspect":45,"./objDisplay":46,"./overwriteChainableMethod":47,"./overwriteMethod":48,"./overwriteProperty":49,"./test":50,"./transferFlags":51,"deep-eql":53,"type-detect":57}],45:[function(require,module,exports){
+},{"./addChainableMethod":33,"./addMethod":34,"./addProperty":35,"./expectTypes":36,"./flag":37,"./getActual":38,"./getMessage":40,"./getName":41,"./getPathInfo":42,"./getPathValue":43,"./hasProperty":45,"./inspect":47,"./objDisplay":48,"./overwriteChainableMethod":49,"./overwriteMethod":50,"./overwriteProperty":51,"./test":52,"./transferFlags":53,"deep-eql":55,"type-detect":59}],47:[function(require,module,exports){
 // This is (almost) directly from Node.js utils
 // https://github.com/joyent/node/blob/f8c335d0caf47f16d31413f89aa28eda3878e3aa/lib/util.js
 
@@ -6907,7 +6910,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-},{"./getEnumerableProperties":37,"./getName":39,"./getProperties":42}],46:[function(require,module,exports){
+},{"./getEnumerableProperties":39,"./getName":41,"./getProperties":44}],48:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6958,7 +6961,7 @@ module.exports = function (obj) {
   }
 };
 
-},{"../config":26,"./inspect":45}],47:[function(require,module,exports){
+},{"../config":28,"./inspect":47}],49:[function(require,module,exports){
 /*!
  * Chai - overwriteChainableMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7013,7 +7016,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   };
 };
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*!
  * Chai - overwriteMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7066,7 +7069,7 @@ module.exports = function (ctx, name, method) {
   }
 };
 
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 /*!
  * Chai - overwriteProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7122,7 +7125,7 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /*!
  * Chai - test utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7150,7 +7153,7 @@ module.exports = function (obj, args) {
   return negate ? !expr : expr;
 };
 
-},{"./flag":35}],51:[function(require,module,exports){
+},{"./flag":37}],53:[function(require,module,exports){
 /*!
  * Chai - transferFlags utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7196,7 +7199,7 @@ module.exports = function (assertion, object, includeAll) {
   }
 };
 
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 /*!
  * assertion-error
  * Copyright(c) 2013 Jake Luer <jake@qualiancy.com>
@@ -7310,10 +7313,10 @@ AssertionError.prototype.toJSON = function (stack) {
   return props;
 };
 
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = require('./lib/eql');
 
-},{"./lib/eql":54}],54:[function(require,module,exports){
+},{"./lib/eql":56}],56:[function(require,module,exports){
 /*!
  * deep-eql
  * Copyright(c) 2013 Jake Luer <jake@alogicalparadox.com>
@@ -7572,10 +7575,10 @@ function objectEqual(a, b, m) {
   return true;
 }
 
-},{"buffer":19,"type-detect":55}],55:[function(require,module,exports){
+},{"buffer":21,"type-detect":57}],57:[function(require,module,exports){
 module.exports = require('./lib/type');
 
-},{"./lib/type":56}],56:[function(require,module,exports){
+},{"./lib/type":58}],58:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7719,9 +7722,9 @@ Library.prototype.test = function (obj, type) {
   }
 };
 
-},{}],57:[function(require,module,exports){
-arguments[4][55][0].apply(exports,arguments)
-},{"./lib/type":58,"dup":55}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
+arguments[4][57][0].apply(exports,arguments)
+},{"./lib/type":60,"dup":57}],60:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7857,20 +7860,27 @@ Library.prototype.test = function(obj, type) {
   }
 };
 
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 (function (global){
 'use strict';
 
-var _extends = require('babel-runtime/helpers/extends')['default'];
+var _keys = require('babel-runtime/core-js/object/keys');
 
-var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
+var _keys2 = _interopRequireDefault(_keys);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _chai = require('chai');
 
-var React = global.React;
-var _React$addons$TestUtils = React.addons.TestUtils;
-var isCompositeComponent = _React$addons$TestUtils.isCompositeComponent;
-var renderIntoDocument = _React$addons$TestUtils.renderIntoDocument;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = global.React; /*global global */
+
+var _global$ReactTestUtil = global.ReactTestUtils;
+var isCompositeComponent = _global$ReactTestUtil.isCompositeComponent;
+var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 
 var user = {
   userpic: {
@@ -7892,7 +7902,7 @@ var tlog = {
   }
 };
 
-var currentUser = _extends({}, user, { api_key: {} });
+var currentUser = (0, _extends3.default)({}, user, { api_key: {} });
 
 // Components
 var components = {
@@ -7938,17 +7948,17 @@ var components = {
   }
 };
 
-_Object$keys(components).forEach(function (componentName) {
+(0, _keys2.default)(components).forEach(function (componentName) {
   var props = components[componentName];
   var Component = global[componentName];
   describe('[Mobile][Component] ' + componentName, function () {
     it('should render into valid element', function () {
       var component = renderIntoDocument(React.createElement(Component, props));
 
-      (0, _chai.expect)(isCompositeComponent(component)).to.be['true'];
+      (0, _chai.expect)(isCompositeComponent(component)).to.be.true;
     });
   });
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"babel-runtime/core-js/object/keys":2,"babel-runtime/helpers/extends":3,"chai":23}]},{},[59]);
+},{"babel-runtime/core-js/object/keys":2,"babel-runtime/helpers/extends":3,"chai":25}]},{},[61]);

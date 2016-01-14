@@ -22,10 +22,10 @@ ConversationMessageFormField = React.createClass
     @getValue().length == 0
 
   clear: ->
-    @refs.textarea.getDOMNode().value = ''
+    this.refs.textarea.value = ''
 
   getValue: ->
-    _.trim @refs.textarea.getDOMNode().value
+    _.trim this.refs.textarea.value
 
   getPlaceholder: ->
     if @props.disabled

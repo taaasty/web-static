@@ -1,11 +1,11 @@
-import React, { findDOMNode, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import BrowserHelpers from '../../../../../../shared/helpers/browser';
 
 class ImgFromFile {
   componentDidMount() {
     this.image = new Image();
     this.image.onload = (ev) => {
-      const container = findDOMNode(this.refs.container);
+      const container = this.refs.container;
       if (container instanceof HTMLElement) {
         this.image.style.width = `${ev.target.width}px`;
         this.image.style.height = `${ev.target.height}px`;

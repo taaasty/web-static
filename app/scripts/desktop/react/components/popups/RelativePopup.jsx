@@ -1,4 +1,5 @@
-import React, { PropTypes, findDOMNode } from 'react';
+import React, { PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Portal from 'react-portal';
 import Tether from 'tether';
 import classNames from 'classnames';
@@ -23,10 +24,10 @@ class RelativePopup {
     hasActivities: PropTypes.bool,
     closeOnOutsideClick: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
-  }
+  };
   static defaultProps = {
-    closeOnOutsideClick: true
-  }
+    closeOnOutsideClick: true,
+  };
   constructor() {
     this.handleOutsideMouseClick = this.handleOutsideMouseClick.bind(this);
   }
@@ -77,7 +78,7 @@ export default class RelativePopupContainer {
   static propTypes = {
     isOpened: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-  }
+  };
   render() {
     return (
       <Portal {...this.props}>

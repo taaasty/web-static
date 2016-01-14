@@ -56,7 +56,7 @@ class EntryTlogMetabarFavorite {
     isFavorited: PropTypes.bool,
     onAddToFavorites: PropTypes.func.isRequired,
     onRemoveFromFavorites: PropTypes.func.isRequired,
-  }
+  };
   render() {
     let icon, title, hoverTitle;
 
@@ -88,7 +88,7 @@ class EntryTlogMetabarWatch {
     isWatching: PropTypes.bool,
     onAddToWatching: PropTypes.func.isRequired,
     onRemoveFromWatching: PropTypes.func.isRequired,
-  }
+  };
   render() {
     let title, hoverTitle;
 
@@ -116,7 +116,7 @@ class EntryTlogMetabarWatch {
 class EntryTlogMetabarReport {
   static propTypes = {
     onReport: PropTypes.func.isRequired,
-  }
+  };
   render() {
     return (
       <DropdownAction
@@ -131,7 +131,7 @@ class EntryTlogMetabarReport {
 class EntryTlogMetabarDelete {
   static propTypes = {
     onDelete: PropTypes.func.isRequired,
-  }
+  };
   render() {
     let title, hoverTitle;
 

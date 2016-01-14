@@ -5,8 +5,8 @@ export default class EntryTlogCommentList {
   static propTypes = {
     comments: PropTypes.array.isRequired,
     commentator: PropTypes.object,
-    entryUrl: PropTypes.string.isRequired
-  }
+    entryUrl: PropTypes.string.isRequired,
+  };
   render() {
     let commentList = this.props.comments.map((comment) => (
       <EntryTlogCommentContainer

@@ -4,36 +4,35 @@ import EntryMetaActions from './MetaActions';
 import EntryMetaComments from './MetaComments';
 import EntryMetaDate from './MetaDate';
 
-class EntryMeta {
-  renderVoting() {
-    const { id, is_voteable, rating } = this.props.entry;
+function EntryMeta(props) {
+  function renderVoting() {
+    const { id, is_voteable, rating } = props.entry;
 
     if (is_voteable) {
       return <EntryMetaVoting entryId={id} rating={rating} />;
     }
   }
-  render() {
-    const { commentsCount, entry, onDelete, onMetaCommentsClick } = this.props;
+  
+  const { commentsCount, entry, onDelete, onMetaCommentsClick } = props;
 
-    return(
-      <div className="post__meta">
-        <EntryMetaActions
-          entry={entry}
-          onDelete={onDelete}
-        />
-        {this.renderVoting()}
-        {entry.is_private && <div className="meta-private" />}
-        <EntryMetaComments
-          commentsCount={commentsCount}
-          onClick={onMetaCommentsClick}
-        />
-        <EntryMetaDate
-          date={entry.created_at}
-          entryUrl={entry.entry_url}
-        />
-      </div>
-    );
-  }
+  return(
+    <div className="post__meta">
+      <EntryMetaActions
+        entry={entry}
+        onDelete={onDelete}
+      />
+      {renderVoting()}
+      {entry.is_private && <div className="meta-private" />}
+      <EntryMetaComments
+        commentsCount={commentsCount}
+        onClick={onMetaCommentsClick}
+      />
+      <EntryMetaDate
+        date={entry.created_at}
+        entryUrl={entry.entry_url}
+      />
+    </div>
+  );
 }
 
 EntryMeta.propTypes = {

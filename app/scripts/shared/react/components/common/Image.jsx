@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import ImageLoader from 'react-imageloader';
 import FitSpinner from './FitSpinner';
 
-class Image {
-  renderPreloader() {
-    const style = this.getSize();
+const Image = (props) => {
+  function renderPreloader() {
+    const style = getSize();
     const { width, height } = style;
 
     // 28 - 4 = 24 maximum spinner size for loader
@@ -14,40 +14,40 @@ class Image {
       </div>
     );
   }
-  getSize() {
-    const { image: { geometry }, maxWidth, maxHeight } = this.props;
+
+  function getSize() {
+    const { image: { geometry }, maxWidth, maxHeight } = props;
     return Image.getSize({
       ...geometry,
       maxWidth,
       maxHeight,
     });
   }
-  getUrl() {
-    let size = this.getSize();
-    return ThumborService.newImageUrl(this.props.image.url, size);
-  }
-  getRetinaUrl() {
-    let size = this.getSize();
-    return ThumborService.newRetinaImageUrl(this.props.image.url, size);
-  }
-  render() {
-    const { className, image: { url }, isRawUrl } = this.props;
-    const style = this.getSize();
-    const imgProps = {
-      className,
-      style,
-      srcSet: isRawUrl ? void 0 : this.getRetinaUrl(),
-    };
 
-    return (
-      <ImageLoader
-        imgProps={imgProps}
-        preloader={this.renderPreloader.bind(this)}
-        src={isRawUrl ? url : this.getUrl()}
-        style={style}
-      />
-    );
+  function getUrl() {
+    return ThumborService.newImageUrl(props.image.url, getSize());
   }
+
+  function getRetinaUrl() {
+    return ThumborService.newRetinaImageUrl(props.image.url, getSize());
+  }
+
+  const { className, image: { url }, isRawUrl } = props;
+  const style = getSize();
+  const imgProps = {
+    className,
+    style,
+    srcSet: isRawUrl ? void 0 : getRetinaUrl(),
+  };
+
+  return (
+    <ImageLoader
+      imgProps={imgProps}
+      preloader={renderPreloader}
+      src={isRawUrl ? url : getUrl()}
+      style={style}
+    />
+  );
 }
 
 Image.propTypes = {
