@@ -40,7 +40,7 @@ class TlogPageBody extends Component {
     const { currentUserId, entries_info, error, queryString,
             relationship, section, user } = this.props;
     const items = (entries_info && entries_info.items) || [];
-    const state = (relationship && relationship.state);
+    const state = relationship;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
@@ -107,7 +107,7 @@ TlogPageBody.propTypes = {
   nextPageUrl: PropTypes.string,
   prevPageUrl: PropTypes.string,
   queryString: PropTypes.string,
-  relationship: PropTypes.object,
+  relationship: PropTypes.string,
   section: PropTypes.string.isRequired,
   user: PropTypes.object,
 };
@@ -118,7 +118,7 @@ TlogPageBody.defaultProps = {
     items: [],
   },
   hostTlogUrl: '',
-  relationship: {},
+  relationship: null,
   user: {
     id: null,
     is_daylog: false,

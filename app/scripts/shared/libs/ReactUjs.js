@@ -1,8 +1,13 @@
 import { createElement } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
+import props2redux from './props2redux';
+
+window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
 const CLASS_NAME_ATTR = 'data-react-class';
 const PROPS_ATTR = 'data-react-props';
+
+const routedComponents = ['TlogPageContainer', 'EntryPageContainer'];
 
 function findReactDOMNodes() {
   const SELECTOR = `[${CLASS_NAME_ATTR}]`;
@@ -12,7 +17,7 @@ function findReactDOMNodes() {
     : document.querySelectorAll(SELECTOR);
 }
 
-function mountReactComponents() {
+function mountReactComponents(router) {
   const nodes = findReactDOMNodes();
   let className, component, node, props, propsJson;
 
@@ -25,7 +30,12 @@ function mountReactComponents() {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      render(createElement(component, props), node);
+      if (router && routedComponents.indexOf(className) > -1) {
+        window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, props2redux(className, props));
+        render(createElement(router, null, createElement(component, props)), node);
+      } else {
+        render(createElement(component, props), node);
+      }
     }
   }
 }
@@ -38,8 +48,8 @@ function unmountReactComponents() {
   }
 }
 
-export function initialize() {
-  mountReactComponents();
+export function initialize(router) {
+  mountReactComponents(router);
   if (window.jQuery) {
     window.jQuery(document).on('page:change', mountReactComponents);
   }

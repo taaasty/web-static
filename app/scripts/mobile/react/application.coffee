@@ -1,14 +1,19 @@
 global.i18n      = require 'i18next'
+i18xhr = require 'i18next-xhr-backend';
 ReactUjs         = require 'reactUjs'
 MessagingService = require './services/messaging'
 
 initLocales = (locale, callback) ->
-  i18n.init({
-    lng: locale,
-    fallbackLng: 'ru',
-    cache: true,
-    resGetPath: Routes.locale()
-  }, callback)
+  i18n
+    .use(i18xhr)
+    .init({
+      compatibilityJSON: 'v1',
+      lng: locale,
+      fallbackLng: 'ru',
+      backend: {
+        loadPath: Routes.locale()
+      }
+    }, callback)
 
 window.ReactApp =
   messagingService: null
