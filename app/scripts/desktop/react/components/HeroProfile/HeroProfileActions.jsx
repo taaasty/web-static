@@ -20,7 +20,7 @@ class HeroProfileActions {
            />,
            <HeroProfileDropdownMenu
              key="ellipsis-button"
-             status={relationship.state}
+             status={relationship}
              userId={user.id}
            /> ]
         }

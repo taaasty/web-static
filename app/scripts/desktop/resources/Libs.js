@@ -25,8 +25,6 @@ global.Modernizr = Modernizr;
 global.Undo = Undo;
 global.introJs = introJs;
 
-require('aviator');
-
 require('es5-shim');
 require('jquery.mousewheel')(global.jQuery);
 require('jquery.scrollto');

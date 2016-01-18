@@ -139,7 +139,7 @@ class HeroProfile extends Component {
           />
           {followButtonVisible &&
            <SmartFollowStatus
-             status={relationship.state}
+             status={relationship}
              tlogId={user.id}
            />
           }

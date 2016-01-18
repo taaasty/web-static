@@ -8,8 +8,8 @@ export default class Page {
   componentWillMount() {
     const { locale } = this.props;
     
-    if (locale !== i18n.lng()) {
-      i18n.setLng(locale);
+    if (locale !== i18n.language) {
+      i18n.changeLanguage(locale);
     }
     moment.locale(locale);
   }

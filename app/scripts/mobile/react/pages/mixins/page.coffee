@@ -6,7 +6,7 @@ PageMixin =
     locale: PropTypes.string.isRequired
 
   componentWillMount: ->
-    i18n.setLng @props.locale unless @props.locale is i18n.lng()
+    i18n.changeLanguage(this.props.locale) unless @props.locale is i18n.language
     moment.locale @props.locale
 
 module.exports = PageMixin
