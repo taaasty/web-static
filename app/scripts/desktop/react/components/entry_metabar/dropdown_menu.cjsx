@@ -27,7 +27,7 @@ window.EntryMetabarDropdownMenu = React.createClass
     currentState: DROPDOWN_CLOSED
 
   componentDidMount: ->
-    @$dropdownMenu = $( @refs.dropdownMenu.getDOMNode() )
+    @$dropdownMenu = $( this.refs.dropdownMenu )
 
   componentWillUnmount: ->
     clearTimeout @timeout if @timeout

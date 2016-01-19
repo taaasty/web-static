@@ -1,4 +1,3 @@
-cloneWithProps = require 'react-addons-clone-with-props'
 EditorActionCreators = require '../../../actions/editor'
 EditorEmbedUrlInsert = require './EmbedUrlInsert'
 EditorEmbedLoading = require './EmbedLoading'
@@ -31,7 +30,7 @@ EditorEmbed = React.createClass
     switch @state.currentState
       when WELCOME_STATE
         children = React.Children.map @props.children, (child) =>
-          cloneWithProps child, onClickInsertState: @activateInsertState
+          React.cloneElement child, onClickInsertState: @activateInsertState
 
         <div>{ children }</div>
       when LOADED_STATE
