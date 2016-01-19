@@ -2,9 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
+import EntryTlogPrivate from './EntryTlogPrivate';
 import ErrorService from '../../../../../shared/react/services/Error';
 
 import { ENTRY_TYPES } from '../../../constants/EntryConstants';
+import { ERROR_PRIVATE_ENTRY } from '../../../../../shared/constants/ErrorConstants';
 
 const anonCommentator = {
   userpic: {
@@ -20,7 +22,7 @@ const anonCommentator = {
 class EntryTlog extends Component {
   state = {
     entry: this.props.entry,
-    hasModeration: !!this.props.moderation
+    hasModeration: !!this.props.moderation,
   };
   componentWillMount() {
     const { entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
@@ -137,7 +139,7 @@ class EntryTlog extends Component {
     return `post post--${typeClass}`;
   }
   render() {
-    const { commentator: _commentator, entry, host_tlog_id, isInList } = this.props;
+    const { commentator: _commentator, entry, error, host_tlog_id, isInList } = this.props;
     const commentator = _commentator || anonCommentator;
 
     return (
@@ -146,22 +148,24 @@ class EntryTlog extends Component {
         data-id={entry.id}
         data-time={entry.created_at}
       >
-        <EntryTlogContent
-          commentator={commentator}
-          entry={entry}
-          hasModeration={this.state.hasModeration}
-          hideCommentForm={this.props.hideCommentForm}
-          host_tlog_id={host_tlog_id}
-          isInList={isInList}
-          onAccept={this.accept.bind(this)}
-          onAddToFavorites={this.addToFavorites.bind(this)}
-          onAddToWatching={this.addToWatching.bind(this)}
-          onDecline={this.decline.bind(this)}
-          onDelete={this.delete.bind(this)}
-          onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
-          onRemoveFromWatching={this.removeFromWatching.bind(this)}
-          onReport={this.report.bind(this)}
-        />
+        {error === ERROR_PRIVATE_ENTRY
+         ? <EntryTlogPrivate />
+         : <EntryTlogContent
+             commentator={commentator}
+             entry={entry}
+             hasModeration={this.state.hasModeration}
+             hideCommentForm={this.props.hideCommentForm}
+             host_tlog_id={host_tlog_id}
+             isInList={isInList}
+             onAccept={this.accept.bind(this)}
+             onAddToFavorites={this.addToFavorites.bind(this)}
+             onAddToWatching={this.addToWatching.bind(this)}
+             onDecline={this.decline.bind(this)}
+             onDelete={this.delete.bind(this)}
+             onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
+             onRemoveFromWatching={this.removeFromWatching.bind(this)}
+             onReport={this.report.bind(this)}
+           />}
       </article>
     );
   }
