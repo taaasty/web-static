@@ -92,7 +92,10 @@ window.ReactApp =
 
     FeedsUpdateService(user);
 
-    initLocales(locale, ->
+    initLocales(locale, =>
+      # Есть только у анонимов
+      $('[invite-button]').click => @shellbox.show Auth
+
       console.log 'Locales loaded'
       ReactUjs.initialize()
       initRoutes()
@@ -116,9 +119,6 @@ window.ReactApp =
 
     PostAuthService.init(this, 'taaasty');
     PostAuthService.restore();
-
-    # Есть только у анонимов
-    $('[invite-button]').click => @shellbox.show Auth
 
     # Тултип для шаринга
     $("[tooltip]").tooltip()
