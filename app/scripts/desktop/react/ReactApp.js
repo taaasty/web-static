@@ -150,6 +150,9 @@ const ReactApp = {
     FeedsUpdateService(user);
 
     initLocales(locale, () => {
+      // Есть только у анонимов
+      $('[invite-button]').click(() => this.shellbox.show(Auth));
+
       console.log('Locales loaded');
       ReactUjs.initialize(AppRouting);
       initRoutes();
@@ -174,9 +177,6 @@ const ReactApp = {
 
     PostAuthService.init(this, 'taaasty');
     PostAuthService.restore();
-
-    // Есть только у анонимов
-    $('[invite-button]').click(() => this.shellbox.show(Auth));
 
     // Тултип для шаринга
     $('[tooltip]').tooltip();

@@ -19,7 +19,7 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgStyle, commentator, currentUserId, entry,
+    const { bgStyle, commentator, currentUserId, entry, error,
             locale, relationship, stats, successDeleteUrl, user } = this.props;
     const entry = this.props.entry || {};
     
@@ -42,6 +42,7 @@ class EntryPageContainer extends Component {
                 <EntryTlog
                   commentator={commentator}
                   entry={entry}
+                  error={error}
                   host_tlog_id={user.id}
                   locale={locale}
                   successDeleteUrl={successDeleteUrl}
@@ -74,6 +75,7 @@ EntryPageContainer.propTypes = {
   commentator: PropTypes.object,
   currentUserId: PropTypes.number,
   entry: PropTypes.object.isRequired,
+  error: PropTypes.string,
   isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
   relationship: PropTypes.object,
