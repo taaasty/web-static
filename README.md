@@ -1,7 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/BrandyMint/mmm-tasty-static.png?label=ready&title=Ready)](http://waffle.io/BrandyMint/mmm-tasty-static)
 [![Build Status](https://travis-ci.org/taaasty/web-static.svg?branch=develop)](https://travis-ci.org/taaasty/web-static)
 Старая верстка  
---------------
+-------------- 
 
 * http://test.genue.ru/tlogs/!/app/
 
