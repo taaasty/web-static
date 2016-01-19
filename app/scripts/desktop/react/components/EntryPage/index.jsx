@@ -20,7 +20,7 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgImage, bgStyle, commentator, currentUserId, entry, isLogged,
+    const { bgImage, bgStyle, commentator, currentUserId, entry, error, isLogged,
             locale, relationship, stats, successDeleteUrl, user } = this.props;
 
     return (
@@ -53,6 +53,7 @@ class EntryPageContainer extends Component {
                     <EntryTlog
                       commentator={commentator}
                       entry={entry}
+                      error={error}
                       host_tlog_id={user.id}
                       locale={locale}
                       successDeleteUrl={successDeleteUrl}
@@ -91,6 +92,7 @@ EntryPageContainer.propTypes = {
   commentator: PropTypes.object,
   currentUserId: PropTypes.number,
   entry: PropTypes.object.isRequired,
+  error: PropTypes.string,
   isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
   relationship: PropTypes.object,
