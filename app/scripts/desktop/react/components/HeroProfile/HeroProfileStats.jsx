@@ -1,5 +1,6 @@
 /*global $, i18n, ReactGrammarMixin */
 import React, { createClass, PropTypes } from 'react';
+import { render } from 'react-dom';
 import Routes from '../../../../shared/routes/routes';
 import HeroProfileStatsItem from './HeroProfileStatsItem';
 import HeroProfileStatsPopup from './HeroProfileStatsPopup';
@@ -27,7 +28,7 @@ const HeroProfileStats = createClass({
   },
 
   handleFollowersClick($el) {
-    React.render((
+    render((
       <HeroProfileStatsPopup
         title={i18n.t('followers')}
         toggle={$el}
@@ -38,7 +39,7 @@ const HeroProfileStats = createClass({
   },
   
   handleFollowingsClick($el) {
-    React.render((
+    render((
       <HeroProfileStatsPopup
         title={i18n.t('followings')}
         toggle={$el}
@@ -49,7 +50,7 @@ const HeroProfileStats = createClass({
   },
 
   handleTagsClick($el) {
-    React.render((
+    render((
       <HeroProfileStatsPopup
         title={i18n.t('tags')}
         toggle={$el}

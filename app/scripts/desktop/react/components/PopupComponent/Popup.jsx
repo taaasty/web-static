@@ -1,4 +1,5 @@
-import React, { createClass, PropTypes } from 'react';
+/*global $ */
+import React, { cloneElement, createClass, Children, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
 import PopupHeader from './PopupHeader';
@@ -27,33 +28,9 @@ let Popup = createClass({
     $(findDOMNode(this)).css(nextProps.position);
   },
 
-  render() {
-    let popupClasses = ['popup', this.props.className].join(' ');
-    let children = React.Children.map(this.props.children, ((child) =>
-      React.cloneElement(child, {activitiesHandler: this.activitiesHandler})
-    ));
-
-    return (
-      <div className={popupClasses}
-           style={this.props.position}
-           onMouseDown={this.handleClick}
-           onTouchStart={this.handleClick}>
-        <PopupHeader
-            ref="header"
-            title={this.props.title}
-            hasActivities={this.hasActivities()}
-            draggable={this.props.draggable}
-            onClose={this.props.onClose} />
-        <div className="popup__body">
-          {children}
-        </div>
-      </div>
-    );
-  },
-
   makeDraggable() {
-    let $popup = $(findDOMNode(this)),
-        $header = $(findDOMNode(this.refs.header));
+    const $popup = $(findDOMNode(this));
+    const $header = $(findDOMNode(this.refs.header));
 
     $popup.draggable({
       handle: $header,
@@ -61,7 +38,7 @@ let Popup = createClass({
       stop: (event, ui) => {
         this.props.onPositionChange(ui.position);
         $popup.removeClass('no--transition');
-      }
+      },
     });
   },
 
@@ -80,7 +57,34 @@ let Popup = createClass({
         node.classList.remove('front-layer');
       }
     });
-  }
+  },
+
+  render() {
+    let popupClasses = ['popup', this.props.className].join(' ');
+    let children = Children.map(this.props.children, ((child) =>
+      cloneElement(child, { activitiesHandler: this.activitiesHandler })
+    ));
+
+    return (
+      <div
+        className={popupClasses}
+        onMouseDown={this.handleClick}
+        onTouchStart={this.handleClick}
+        style={this.props.position}
+      >
+        <PopupHeader
+          draggable={this.props.draggable}
+          hasActivities={this.hasActivities()}
+          onClose={this.props.onClose}
+          ref="header"
+          title={this.props.title}
+        />
+        <div className="popup__body">
+          {children}
+        </div>
+      </div>
+    );
+  },
 });
 
 Popup = managePositions(Popup);

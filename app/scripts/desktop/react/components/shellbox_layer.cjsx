@@ -1,5 +1,3 @@
-cloneWithProps = require 'react-addons-clone-with-props'
-
 window.ShellBox = React.createClass
   mixins: [ReactUnmountMixin]
 
@@ -33,7 +31,7 @@ window.ShellBox = React.createClass
 
   render: ->
     children = React.Children.map @props.children, (child) =>
-      cloneWithProps child, {
+      React.cloneElement child, {
         disableShellbox: @disableShellbox
         enableShellbox: @enableShellbox
       }

@@ -9,7 +9,7 @@ SettingsAvatar = React.createClass
     activitiesHandler: PropTypes.object.isRequired
 
   componentDidMount: ->
-    $(@refs.avatarInput.getDOMNode()).fileupload
+    $(this.refs.avatarInput).fileupload
       url: ApiRoutes.userpic_url()
       replaceFileInput: false
       start: => @incrementActivities()
@@ -22,7 +22,7 @@ SettingsAvatar = React.createClass
       always: => @decrementActivities()
 
   componentWillUnmount: ->
-    $(@refs.avatarInput.getDOMNode()).fileupload 'destroy'
+    $(this.refs.avatarInput).fileupload 'destroy'
 
   render: ->
     <div className="settings__hero__avatar">

@@ -1,5 +1,5 @@
 /*global $, PopupHeader, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
-import React, { createClass, PropTypes } from 'react';
+import React, { cloneElement, createClass, Children, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
 const MARGIN = 10;
@@ -63,8 +63,8 @@ const HeroProfileStatsPopup = createClass({
   render() {
     const { children, isDraggable, title } = this.props;
 
-    React.Children.map(children, (context) => (
-      context.props.activitiesHandler = this.activitiesHandler
+    const newChildren = Children.map(children, (context) => (
+      cloneElement(context, { activitiesHandler: this.activitiesHandler })
     ));
 
     return (
@@ -77,7 +77,7 @@ const HeroProfileStatsPopup = createClass({
           title={title}
         />
         <div className="popup__body">
-          {children}
+          {newChildren}
         </div>
       </div>
     );
