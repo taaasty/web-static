@@ -34,6 +34,9 @@ window.MessagingDispatcher = _.extend new Dispatcher(),
     if message.user_id != CurrentUserStore.getUser().id
       BeepService.play()
 
+    if message.conversation
+      MessagingDispatcher.updateConversation(message.conversation)
+
     MessagingDispatcher.handleServerAction {
       type: 'messageReceived'
       conversationId: message.conversation_id
