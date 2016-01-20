@@ -10,6 +10,8 @@ import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
 
+import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
+
 class EntryPageContainer extends Component {
   getEntryImg(entry={}) {
     return (entry.image_attachments && entry.image_attachments.length)
@@ -20,9 +22,10 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgImage, bgStyle, commentator, currentUserId, entry, error, isLogged,
+    const { bgImage, bgStyle, commentator, currentUserId, error, isLogged,
             locale, relationship, stats, successDeleteUrl, user } = this.props;
-
+    const entry = this.props.entry || {};
+    
     return (
       <div className="page">
         <div className="page__inner">
@@ -40,7 +43,7 @@ class EntryPageContainer extends Component {
               <div className="content-area">
                 <div className="content-area__bg" style={bgStyle} />
                 <div className="content-area__inner">
-                  {currentUserId && entry.author &&
+                  {currentUserId  && entry.author &&
                    currentUserId === entry.author.id && !entry.is_private &&
                    <PinPostButton
                      entryId={entry.id}
@@ -70,17 +73,21 @@ class EntryPageContainer extends Component {
           </div>
         </div>
         {!isLogged && <Auth fixed={true} locale={locale} />}
-        <SocialShare
-          img={this.getEntryImg(entry)}
-          title={entry.title}
-          url={entry.url}
-        />
-        <Calendar
-          entryCreatedAt={entry.created_at}
-          entryId={entry.id}
-          locale={locale}
-          tlogId={user.id}
-        />
+        {entry.id &&
+         <SocialShare
+           img={this.getEntryImg(entry)}
+           title={entry.title}
+           url={entry.url}
+          />}
+        {(!user.is_privacy ||
+          currentUserId === user.id ||
+          (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
+         <Calendar
+           entryCreatedAt={entry.created_at || (new Date()).toISOString()}
+           entryId={entry.id}
+           locale={locale}
+           tlogId={user.id}
+         />}
       </div>
     );
   }

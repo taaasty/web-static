@@ -71,7 +71,9 @@ class TlogPageContainer extends Component {
           title={user.slug}
           url={user.tlog_url}
         />  
-        {(!user.is_privacy || (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
+        {(!user.is_privacy ||
+          currentUserId === user.id ||
+          (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
           <Calendar
             entryCreatedAt={firstEntry.created_at || (new Date()).toISOString()}
             entryId={firstEntry.id}
