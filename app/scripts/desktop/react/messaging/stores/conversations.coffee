@@ -47,7 +47,7 @@ window.ConversationsStore = _.extend {}, EventEmitter.prototype, {
     for conversation in _conversations
       return conversation if conversation.recipient?.id is recipientId
 
-  getActiveConversations: -> _conversations
+  getConversations: -> _conversations
 
   sortByDesc: ->
     clonedConversations = _conversations.slice(0)

@@ -4,7 +4,6 @@ PUBLIC_CONVERSATION_PREFIX = 'public_';
 
 class window.MessagingService
   EVENT_STATUS: 'status'
-  EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
   EVENT_PUSH_MESSAGE:         'push_message'
   EVENT_PUSH_NOTIFICATION:    'push_notification'
@@ -50,8 +49,6 @@ class window.MessagingService
     #@channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
     #@channel.bind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
     #@channel.bind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
-
-    # @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
 
     @messagesContainer      = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
     @notificationsContainer = $('<\div>', {'popup-notifications-container': ''}).appendTo('body')[0]
