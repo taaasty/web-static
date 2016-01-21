@@ -1,7 +1,7 @@
+BaseStore = require '../../stores/BaseStore';
 MessagingDispatcher = require '../MessagingDispatcher';
 ConversationsStore = require './ConversationsStore';
 
-CHANGE_EVENT = 'change'
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'
 THREAD_STATE                  = 'thread'
@@ -9,11 +9,8 @@ THREAD_STATE                  = 'thread'
 currentState   = CONVERSATIONS_STATE
 conversationId = null
 
-window.MessagesPopupStateStore = _.extend {}, EventEmitter.prototype, {
+window.MessagesPopupStateStore = _.extend(new BaseStore(), {
 
-  emitChange:                    -> @emit CHANGE_EVENT
-  addChangeListener:             (callback) -> @on  CHANGE_EVENT, callback
-  removeChangeListener:          (callback) -> @off CHANGE_EVENT, callback
   getCurrentState:               -> currentState
   getCurrentConversationId:      -> conversationId
   setCurrentConversationId:      (id) -> conversationId = id
@@ -21,7 +18,7 @@ window.MessagesPopupStateStore = _.extend {}, EventEmitter.prototype, {
   setCreateNewConversationState: -> currentState = CREATE_NEW_CONVERSATION_STATE
   setConversationsState:         -> currentState = CONVERSATIONS_STATE
 
-}
+})
 
 MessagesPopupStateStore.dispatchToken = MessagingDispatcher.register (payload) ->
   action = payload.action

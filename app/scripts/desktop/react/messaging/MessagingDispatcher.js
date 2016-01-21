@@ -1,7 +1,7 @@
 /*global Dispatcher, BeepService, CurrentUserStore, require */
 import _ from 'lodash';
 
-const MessagingDispatcher = _.extend(
+const MessagingDispatcher = Object.assign(
   new Dispatcher(),
   {
     handleViewAction(action) {

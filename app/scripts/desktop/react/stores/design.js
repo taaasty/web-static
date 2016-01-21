@@ -1,5 +1,5 @@
 import assign from 'react/lib/Object.assign';
-import BaseStore from './_base';
+import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatchers/dispatcher';
 import DesignConstants from '../constants/design';
 import DesignOptions from '../models/designOptions';

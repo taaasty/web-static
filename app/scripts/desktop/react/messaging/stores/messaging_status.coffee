@@ -1,6 +1,6 @@
+_ = require 'lodash';
 MessagingDispatcher = require '../MessagingDispatcher';
-_         = require 'lodash'
-BaseStore = require './_base'
+BaseStore = require '../../stores/BaseStore';
 
 _messagingStatus =
   activeConversationsCount: 0

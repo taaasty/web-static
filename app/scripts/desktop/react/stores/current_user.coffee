@@ -1,4 +1,4 @@
-BaseStore = require './_base'
+BaseStore = require './BaseStore'
 { CROSSPOST_NONE } = require('../constants/CrosspostConstants');
 
 currentUser = null

@@ -1,6 +1,5 @@
-import assign from 'react/lib/Object.assign';
 import Constants from '../constants/constants';
-import BaseStore from './_base';
+import BaseStore from './BaseStore';
 import EntryNormalizationService from '../services/entryNormalization';
 import EntryKeeperService from '../services/entryKeeper';
 import NormalizedEntry from '../entities/normalizedEntry';
@@ -8,7 +7,7 @@ import AppDispatcher from '../dispatchers/dispatcher';
 
 const PRIVACY_TYPES = {
   private: ['public', 'private'],
-  public: ['live', 'public', 'private']
+  public: ['live', 'public', 'private'],
 };
 
 let _loading = false,
@@ -16,7 +15,7 @@ let _loading = false,
     _tlog = null,
     _entry = new NormalizedEntry({
       type: 'text',
-      privacy: 'public'
+      privacy: 'public',
     });
 
 function getPrivacyByTlogType(tlogType) {
@@ -34,7 +33,7 @@ function getPrivacyByTlogType(tlogType) {
   }
 }
 
-let EditorStore = assign(new BaseStore(), {
+let EditorStore = Object.assign(new BaseStore(), {
   getTlog() {
     return _tlog;
   },

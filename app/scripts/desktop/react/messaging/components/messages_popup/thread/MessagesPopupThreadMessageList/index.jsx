@@ -1,8 +1,9 @@
-/*global ScrollerMixin, MessagesStore, messagingService, MessageActions, 
+/*global ScrollerMixin, messagingService, MessageActions, 
  TastyEvents, MessagesPopup_ThreadMessageListItemManager */
 import React, { createClass, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import MessagesPopupThreadMessageListEmpty from './MessagesPopupThreadMessageListEmpty';
+import MessagesStore from '../../../../stores/MessagesStore';
 
 let savedScrollHeight = null;
 

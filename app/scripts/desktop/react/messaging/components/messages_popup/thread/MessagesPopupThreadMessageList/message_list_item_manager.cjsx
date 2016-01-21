@@ -1,3 +1,4 @@
+MessagesStore = require '../../../../stores/MessagesStore';
 MessagesPopupThreadMessageListItem = require './MessagesPopupThreadMessageListItem';
 
 ERROR_STATE   = 'error'

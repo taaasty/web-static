@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import assign from 'react/lib/Object.assign';
-import BaseStore from './_base';
+import BaseStore from './BaseStore';
 import NotificationConstants from '../constants/notification';
 import AppDispatcher from '../dispatchers/dispatcher';
 
@@ -10,7 +9,7 @@ let _notifications = {},
     _loadingMore = false,
     _error = false;
 
-let NotificationStore = assign(new BaseStore(), {
+let NotificationStore = Object.assign(new BaseStore(), {
   getAll() {
     return _notifications;
   },

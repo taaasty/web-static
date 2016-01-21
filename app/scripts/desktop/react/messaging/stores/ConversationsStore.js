@@ -1,26 +1,11 @@
-/*global EventEmitter */
-import _ from 'lodash';
+import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
 
-const CHANGE_EVENT = 'change';
 let _conversations = [];
 
-const ConversationsStore = _.extend(
-  {},
-  EventEmitter.prototype,
+const ConversationsStore = Object.assign(
+  new BaseStore(),
   {
-    emitChange() {
-      return this.emit(CHANGE_EVENT);
-    },
-
-    addChangeListener(callback) {
-      return this.on(CHANGE_EVENT, callback);
-    },
-
-    removeChangeListener(callback) {
-      return this.off(CHANGE_EVENT, callback);
-    },
-
     unshiftConversations(conversations) {
       const clonedConversations = _conversations.slice(0);
 

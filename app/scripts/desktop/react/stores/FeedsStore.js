@@ -1,4 +1,4 @@
-import BaseStore from './_base';
+import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatchers/dispatcher';
 import FeedConstants from '../constants/FeedConstants';
 
