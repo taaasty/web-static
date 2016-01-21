@@ -1,8 +1,7 @@
-/*global MessagingDispatcher */
 import React from 'react';
 import MessagesPopupConversationsList from './list';
 import MessagesPopupUICreateNewConversationButton from './MessagesPopupUICreateNewConversationButton';
-//import MessagingDispatcher from '../../../dispatchers/messaging';
+import MessagingDispatcher from '../../../MessagingDispatcher';
 
 class MessagesPopupConversations {
   handleCreateNewConversation() {

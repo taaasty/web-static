@@ -1,3 +1,5 @@
+MessagingDispatcher = require '../MessagingDispatcher';
+ConversationsStore = require '../stores/ConversationsStore';
 { PUBLIC_CONVERSATION } = require '../constants/ConversationConstants';
 CHANGE_EVENT = 'change'
 

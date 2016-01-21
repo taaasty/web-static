@@ -1,3 +1,5 @@
+MessagingDispatcher = require '../MessagingDispatcher';
+
 window.PopupActions = 
 
   closeMessagesPopup: ->

@@ -1,3 +1,6 @@
+MessagingDispatcher = require '../MessagingDispatcher';
+ConversationsStore = require './ConversationsStore';
+
 CHANGE_EVENT = 'change'
 CONVERSATIONS_STATE           = 'conversations'
 CREATE_NEW_CONVERSATION_STATE = 'createNewConversation'

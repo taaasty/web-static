@@ -1,8 +1,8 @@
-/*global ConversationsStore */
 import React, { Component, PropTypes } from 'react';
 import MessagesPopupThreadForm from './MessagesPopupThreadForm';
 import PublicConversationHeader from './PublicConversationHeader';
 import MessagesPopupThreadMessageList from './MessagesPopupThreadMessageList';
+import ConversationsStore from '../../../stores/ConversationsStore';
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class MessagesPopupThread extends Component {

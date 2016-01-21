@@ -1,3 +1,5 @@
+MessagingDispatcher = require '../MessagingDispatcher';
+
 window.MessageActions = 
 
   newMessage: ({ conversationId, content, files }) ->

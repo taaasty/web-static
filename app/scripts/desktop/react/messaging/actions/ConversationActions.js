@@ -1,3 +1,6 @@
+/*global messagingService, TastyEvents */
+import MessagingDispatcher from '../MessagingDispatcher';
+import ConversationsStore from '../stores/ConversationsStore';
 import EntryActionCreators from '../../actions/Entry';
 
 function updateConversationEntry(id, func) {

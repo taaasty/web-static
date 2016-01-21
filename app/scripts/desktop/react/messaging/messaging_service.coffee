@@ -1,3 +1,4 @@
+MessagingDispatcher = require './MessagingDispatcher';
 MessagesPopup = require './components/messages_popup';
 
 PUBLIC_CONVERSATION_PREFIX = 'public_';

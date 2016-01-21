@@ -59,16 +59,11 @@ require './react/components/transition/timeout_transition_group'
 # =            Messaging resourses            =
 # ============================================*/
 
-# /*==========  Dispatchers  ==========*/
-
-require './react/messaging/dispatchers/messaging'
-
 # /*==========  Stores  ==========*/
 
 global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
 require './react/messaging/stores/connection_state'
 require './react/messaging/stores/messages_popup_state'
-require './react/messaging/stores/conversations'
 require './react/messaging/stores/messages'
 require './react/messaging/stores/notifications'
 

@@ -1,3 +1,4 @@
+MessagingDispatcher = require '../MessagingDispatcher';
 _         = require 'lodash'
 BaseStore = require './_base'
 

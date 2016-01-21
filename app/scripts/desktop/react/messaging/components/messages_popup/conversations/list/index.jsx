@@ -1,8 +1,7 @@
-/*global ConversationsStore */
 import _ from 'lodash';
 import moment from 'moment';
 import React, { createClass } from 'react';
-//import ConversationsStore from '../../../../stores/conversations';
+import ConversationsStore from '../../../../stores/ConversationsStore';
 import ScrollerMixin from '../../../../../mixins/scroller';
 import MessagesPopupConversationsListEmpty from './MessagesPopupConversationsListEmpty';
 import MessagesPopupConversationsListItem from './MessagesPopupConversationsListItem';

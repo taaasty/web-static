@@ -1,8 +1,10 @@
-/*global i18n, MessagesPopupStateStore, ConversationsStore, PopupActions, 
-  MessagingDispatcher, RequesterMixin, ReactUnmountMixin */
+/*global i18n, MessagesPopupStateStore, PopupActions, 
+  RequesterMixin, ReactUnmountMixin */
 import React, { createClass, PropTypes } from 'react';
 import MessagesPopupConversations from './conversations';
 import MessagesPopupThread from './thread';
+import ConversationsStore from '../../stores/ConversationsStore';
+import MessagingDispatcher from '../../MessagingDispatcher';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
 
 const CONVERSATIONS_STATE = 'conversations';

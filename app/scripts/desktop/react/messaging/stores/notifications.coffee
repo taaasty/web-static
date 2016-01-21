@@ -1,3 +1,5 @@
+MessagingDispatcher = require '../MessagingDispatcher';
+
 CHANGE_EVENT = 'change'
 
 _notifications = []
