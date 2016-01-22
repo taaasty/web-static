@@ -63,7 +63,6 @@ require './react/components/transition/timeout_transition_group'
 
 global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
 require './react/messaging/stores/connection_state'
-require './react/messaging/stores/messages_popup_state'
 require './react/messaging/stores/notifications'
 
 # /*==========  Control structures  ==========*/
@@ -74,7 +73,6 @@ require './react/messaging/messaging_testing'
 
 # /*==========  Actions  ==========*/
 
-require './react/messaging/actions/popup'
 global.ConversationActions = require './react/messaging/actions/ConversationActions'
 require './react/messaging/actions/message'
 require './react/messaging/actions/notification'

@@ -1,15 +1,18 @@
-/*global i18n, MessagesPopupStateStore, PopupActions, 
-  RequesterMixin, ReactUnmountMixin */
+/*global i18n, RequesterMixin, ReactUnmountMixin */
 import React, { createClass, PropTypes } from 'react';
 import MessagesPopupConversations from './conversations';
 import MessagesPopupThread from './thread';
 import ConversationsStore from '../../stores/ConversationsStore';
+import MessagesPopupStore, {
+  CONVERSATIONS_STATE,
+  CREATE_NEW_CONVERSATION_STATE,
+  THREAD_STATE,
+} from '../../stores/MessagesPopupStore';
 import MessagingDispatcher from '../../MessagingDispatcher';
+import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import TitleConversationActions from './TitleConversationActions';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
 
-const CONVERSATIONS_STATE = 'conversations';
-const CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
-const THREAD_STATE = 'thread';
 const ENTER_TIMEOUT = 300;
 const LEAVE_TIMEOUT = 300;
 
@@ -20,11 +23,11 @@ const MessagesPopup = createClass({
   },
 
   componentDidMount() {
-    MessagesPopupStateStore.addChangeListener(this._onStoreChange);
+    MessagesPopupStore.addChangeListener(this._onStoreChange);
   },
 
   componentWillUnmount() {
-    MessagesPopupStateStore.removeChangeListener(this._onStoreChange);
+    MessagesPopupStore.removeChangeListener(this._onStoreChange);
   },
 
   isConversationsState() {
@@ -41,8 +44,9 @@ const MessagesPopup = createClass({
 
   getStateFromStore() {
     return {
-      currentState: MessagesPopupStateStore.getCurrentState(),
-      currentConversationId: MessagesPopupStateStore.getCurrentConversationId(),
+      currentState: MessagesPopupStore.getCurrentState(),
+      currentConversationId: MessagesPopupStore.getCurrentConversationId(),
+      selectState: MessagesPopupStore.getSelectState(),
     };
   },
 
@@ -50,9 +54,13 @@ const MessagesPopup = createClass({
     if (this.isThreadState()) {
       const conversation = ConversationsStore.getConversation(this.state.currentConversationId);
       if (conversation.type === PUBLIC_CONVERSATION) {
-        return i18n.t('messages_entry_title');
+        return <TitleConversationActions title={i18n.t('messages_entry_title')} />;
       } else {
-        return i18n.t('messages_thread_title', { slug: conversation.recipient.slug });
+        return (
+          <TitleConversationActions
+            title={i18n.t('messages_thread_title', { slug: conversation.recipient.slug })}
+          />
+        );
       }
     } else {
       return i18n.t('messages_popup_title');
@@ -94,8 +102,8 @@ const MessagesPopup = createClass({
         className="popup--messages"
         colorScheme="light"
         hasActivities={this.hasActivities()}
-        isDraggable={true}
-        onClose={PopupActions.closeMessagesPopup}
+        isDraggable
+        onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
         title={title}
         type="messages"

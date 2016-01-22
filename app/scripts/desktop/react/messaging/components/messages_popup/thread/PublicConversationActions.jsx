@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../../components/common/DropdownActions';
 import DropdownAction from '../../../../components/common/DropdownAction';

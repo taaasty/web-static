@@ -753,6 +753,37 @@
       cursor: pointer;
     }
   }
+
+  &.messages__section--select {
+    padding-bottom: 54px;
+
+    .messages__footer {
+      min-height: 54px;
+    }
+
+    .message-form {
+      padding-top: 7px;
+    }
+
+    .message-form__button-container {
+      text-align: right;
+    }
+
+    .message-form__button {
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+
+    .message {
+      &.message--to {
+        
+      }
+
+      &.message--from {
+        
+      }
+    }
+  }
 }
 
 // Message
@@ -820,6 +851,20 @@
   position: relative;
   height: @button-small-height;
   text-align: left;
+}
+
+.message-form__button {
+  display: inline-block;
+  margin-left: 7px;
+  &:extend(.button, .button--small);
+
+  &.--red {
+    &:extend(.button--red);
+  }
+
+  &.--white {
+    &:extend(.button--white);
+  }
 }
 
 .message-form__button-send {
