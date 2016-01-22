@@ -36,6 +36,22 @@ const ConversationActions = {
     return TastyEvents.emit(TastyEvents.keys.command_hero_close());
   },
 
+  deleteConversation(id) {
+    return messagingService.deleteConversation(id)
+      .done((data) => {
+        MessagingDispatcher.handleServerAction({
+          id,
+          type: 'deleteConversation',
+        });
+
+        return data;
+      });
+  },
+
+  disturb() {
+    return null;
+  },
+
   postNewConversation({recipientId, error}) {
     return messagingService.postNewConversation({ recipientId, error });
   },

@@ -38,7 +38,7 @@ let FeedBricks = React.createClass({
   },
 
   initGridManager() {
-    let container = this.refs.container.getDOMNode();
+    let container = this.refs.container;
     this.msnry = new Masonry(container, {
       itemSelector: '.brick',
       transitionDuration: '0.4s',
@@ -56,7 +56,7 @@ let FeedBricks = React.createClass({
   },
 
   handleScrollLoad() {
-    let $container = $(this.refs.container.getDOMNode());
+    let $container = $(this.refs.container);
     let lastEntryID = $container.children().last().data('id');
 
     this.props.onLoadNextEntries(lastEntryID);

@@ -90,7 +90,6 @@ require './react/messaging/components/messages_popup/create_new_conversation/cho
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
 require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
-require './react/messaging/components/messages_popup/thread/MessagesPopupThreadMessageList/message_list_item_manager'
 require './react/messaging/components/notifications_popup/notifications_popup'
 require './react/messaging/components/notifications_popup/notifications/notifications'
 require './react/messaging/components/notifications_popup/notifications/notification'

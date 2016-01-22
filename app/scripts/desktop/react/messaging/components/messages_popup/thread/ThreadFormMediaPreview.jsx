@@ -1,32 +1,31 @@
 import React, { PropTypes } from 'react';
 import ImgFromFile from './ImgFromFile';
 
-class ThreadFormMediaPreview {
-  onTouchTap(idx) {
-    this.props.onFileRemove(idx);
+function ThreadFormMediaPreview(props) {
+  function onTouchTap(idx) {
+    props.onFileRemove(idx);
   }
-  render() {
-    return (
-      <div className="message-form__media-preview">
-        {
-          this.props.files.map((file, idx) => (
+
+  return (
+    <div className="message-form__media-preview">
+      {
+        props.files.map((file, idx) => (
+          <div
+            className="message-form__media-preview__item"
+            key={`file-${idx}-${file.name}-${file.size}`}
+          >
             <div
-              className="message-form__media-preview__item"
-              key={`file-${idx}-${file.name}-${file.size}`}
+              className="message-form__media-preview__item-remove"
+              onTouchTap={onTouchTap.bind(null, idx)}
             >
-              <div
-                className="message-form__media-preview__item-remove"
-                onTouchTap={this.onTouchTap.bind(this, idx)}
-              >
-                <i className="icon icon--cross" />
-              </div>
-              <ImgFromFile file={file} />
+              <i className="icon icon--cross" />
             </div>
-          ))
-        }
-      </div>
-    );
-  }
+            <ImgFromFile file={file} />
+          </div>
+        ))
+      }
+    </div>
+  );
 }
 
 ThreadFormMediaPreview.propTypes = {

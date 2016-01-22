@@ -515,5 +515,13 @@
   "switcher": {
     "label_on": "Yes",
     "label_off": "No"
+  },
+  "messenger": {
+    "title_actions": {
+      "disturb": "Disturb",
+      "dont_disturb": "Don't disturb",
+      "start_select_mode": "Select messages",
+      "delete_conversation": "Delete conversation"
+    }
   }
 }

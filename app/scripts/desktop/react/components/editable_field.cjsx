@@ -25,7 +25,7 @@ window.EditableField = React.createClass
     @setState(value: nextProps.defaultValue)
 
   componentDidMount: ->
-    field = @refs.textarea.getDOMNode()
+    field = @refs.textarea
     autosize(field, {append: ''})
 
   render: ->
@@ -63,7 +63,7 @@ window.EditableField = React.createClass
     _.defer =>
       textareaValue = @getValue()
 
-      field = @refs.textarea.getDOMNode()
+      field = @refs.textarea
       field.value = ''
       field.focus()
       field.value = textareaValue
@@ -81,11 +81,11 @@ window.EditableField = React.createClass
       e.preventDefault()
 
     _.defer =>
-      value = @refs.value.getDOMNode()
+      value = @refs.value
 
       $(value).text @getValue()
 
-      field = @refs.textarea.getDOMNode()
+      field = @refs.textarea
       evt = document.createEvent('Event')
       evt.initEvent('autosize:update', true, false)
       field.dispatchEvent(evt)
@@ -97,6 +97,6 @@ window.EditableField = React.createClass
     @props.defaultValue.trim() == ''
 
   getValue: ->
-    textarea = @refs.textarea.getDOMNode()
+    textarea = @refs.textarea
     textareaValue = textarea.value.replace /\n/g, ''
     textareaValue.trim()

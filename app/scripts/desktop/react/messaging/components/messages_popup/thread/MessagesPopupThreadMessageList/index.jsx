@@ -1,8 +1,7 @@
-/*global ScrollerMixin, messagingService, MessageActions, 
- TastyEvents, MessagesPopup_ThreadMessageListItemManager */
+/*global ScrollerMixin, messagingService, MessageActions, TastyEvents */
 import React, { createClass, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import MessagesPopupThreadMessageListEmpty from './MessagesPopupThreadMessageListEmpty';
+import MessagesPopupThreadMessageListItemManager from './MessagesPopupThreadMessageListItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
 
 let savedScrollHeight = null;
@@ -10,6 +9,7 @@ let savedScrollHeight = null;
 const MessagesPopupThreadMessageList = createClass({
   propTypes: {
     conversationId: PropTypes.number.isRequired,
+    selectState: PropTypes.bool.isRequired,
   },
   mixins: [ ScrollerMixin ],
 
@@ -104,7 +104,7 @@ const MessagesPopupThreadMessageList = createClass({
     });
 
     if (unread.length) {
-      const unreadMsgNode = findDOMNode(this.refs[this.messageKey(unread[0])]);
+      const unreadMsgNode = this.refs[this.messageKey(unread[0])];
       this.scrollList(unreadMsgNode.offsetTop);
     } else {
       this._scrollToBottom();
@@ -126,11 +126,12 @@ const MessagesPopupThreadMessageList = createClass({
     return this.isEmpty()
       ? <MessagesPopupThreadMessageListEmpty />
       : messages.map((message) => (
-          <MessagesPopup_ThreadMessageListItemManager
+          <MessagesPopupThreadMessageListItemManager
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.length}
             ref={this.messageKey(message)}
+            selectState={this.props.selectState}
           />));
   },
 

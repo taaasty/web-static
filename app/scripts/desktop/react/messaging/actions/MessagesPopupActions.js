@@ -29,6 +29,12 @@ const MessagesPopupActions = {
     messagingService.toggleNotificationsPopup();
   },
 
+  openConversationList() {
+    MessagingDispatcher.handleViewAction({
+      type: 'openConversationList',
+    });
+  },
+
   startSelect() {
     MessagingDispatcher.handleViewAction({
       type: 'startSelect',

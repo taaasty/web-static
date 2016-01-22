@@ -28,7 +28,7 @@ let FeedTlog = React.createClass({
   },
 
   handleScrollLoad() {
-    let $container = $(this.refs.container.getDOMNode());
+    let $container = $(this.refs.container);
     let lastEntryID = $container.children().last().data('id');
 
     this.props.onLoadNextEntries(lastEntryID);

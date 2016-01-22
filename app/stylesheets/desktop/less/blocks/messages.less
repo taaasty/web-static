@@ -13,6 +13,49 @@
   }
 }
 
+.messages__popup-title {
+  position: relative;
+  width: 100%;
+
+  .messages__popup-title-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.--with-actions {
+      padding-right: 27px;
+    }
+  }
+
+  .messages__popup-title-actions {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-transform: none;
+
+    .meta-item__common.icon {
+      font-size: 17px;
+      color: black;
+    }
+
+    a.meta-item__dropdown-item {
+      color: @white;
+      &:hover {
+        color: @black;
+      }
+
+      .icon {
+        &:extend(.meta-item .icon, .meta-item__dropdown .icon);
+        margin: 0 12px 0 0;
+        left: initial;
+        color: inherit;
+      }
+    }
+  }
+}
+
 // Message Body
 .messages__body {
   height: 100%;
@@ -786,11 +829,56 @@
   }
 }
 
+.message--container {
+  position: relative;
+  padding: 12px 0;
+
+  &.message--selected {
+    background-color: rgba(0, 0, 0, 0.2);
+    
+    .message__selector {
+      background-color: @green;
+    }
+  }
+
+  &.message--select-mode {
+    cursor: pointer;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .message__selector {
+      visibility: visible;
+    }
+  }
+
+}
+
 // Message
 .message {
-  margin: 12px 0;
+  //margin: 12px 0;
   padding: 0 44px 0 60px;
   position: relative;
+
+  .message__selector {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: @white;
+    background-color: @white;
+    border-radius: 50%;
+  }
 
   .messages__date {
     color: #fff;
@@ -973,13 +1061,16 @@
 .message--to {
   padding: 0 44px 0 60px;
 
+  .message__selector {
+    right: 12px;
+  }
+
   .messages__user-avatar {
     left: 15px;
   }
 
   .messages__user-name {
     color: @white;
-
   }
 
   .messages__bubble {
@@ -1003,6 +1094,10 @@
 
 .message--from {
   padding: 0 20px 0 44px;
+
+  .message__selector {
+    left: 12px;
+  }
 
   .messages__user-avatar {
     right: 15px;

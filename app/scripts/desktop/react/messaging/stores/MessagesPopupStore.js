@@ -66,7 +66,7 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     MessagesPopupStore.setCreateNewConversationState();
     MessagesPopupStore.emitChange();
     break;
-  case 'clickBackButton':
+  case 'openConversationList':
     MessagesPopupStore.setConversationsState();
     MessagesPopupStore.emitChange();
     break;
@@ -79,11 +79,11 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     MessagesPopupStore.setConversationsState();
     MessagesPopupStore.emitChange();
     break;
-  case 'startSelectMode':
+  case 'startSelect':
     MessagesPopupStore.startSelect();
     MessagesPopupStore.emitChange();
     break;
-  case 'stopSelectMode':
+  case 'stopSelect':
     MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;

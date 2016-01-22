@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import ConversationsListItem from './ConversationsListItem';
 import { CONVERSATION_PIC_SIZE } from './MessagesPopupConversationsListItem';
 
-class ConversationsListItemText {
+class ConversationsListItemText extends Component {
   render() {
     const { conversation: { created_at, last_message, recipient, online, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;

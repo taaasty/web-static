@@ -14041,17 +14041,23 @@ ApiRoutes = {
   messenger_ready_url: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/ready";
   },
+  messengerConversationById: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id;
+  },
   messengerConversationsByUserId: function(userId) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_id/" + userId;
   },
-  messenger_new_message_url: function(conversationId) {
-    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages";
+  messengerMessagesDelete: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages/delete_by_ids";
   },
-  messenger_load_messages_url: function(conversationId) {
-    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages";
+  messenger_new_message_url: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages";
   },
-  messenger_read_messages_url: function(conversationId) {
-    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + conversationId + "/messages/read";
+  messenger_load_messages_url: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages";
+  },
+  messenger_read_messages_url: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages/read";
   },
   notificationsUrl: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";

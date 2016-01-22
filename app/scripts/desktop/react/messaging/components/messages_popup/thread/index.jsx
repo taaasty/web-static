@@ -29,9 +29,6 @@ class MessagesPopupThread extends Component {
       selectState: MessagesPopupStore.getSelectState(),
     };
   }
-  startSelect() {
-    MessagesPopupActions.startSelect();
-  }
   stopSelect() {
     MessagesPopupActions.stopSelect();
   }
@@ -40,7 +37,11 @@ class MessagesPopupThread extends Component {
     window.location.href = url;
   }
   render() {
-    const { conversation, select } = this.state;
+    const { conversation, selectState } = this.state;
+    if (!conversation) {
+      return null;
+    }
+
     const id = conversation.id;
     const backgroundUrl = conversation.type === PUBLIC_CONVERSATION
       ? conversation.entry.author.design.backgroundImageUrl
@@ -52,7 +53,7 @@ class MessagesPopupThread extends Component {
     const containerClasses = classNames({
       'messages__section': true,
       'messages__section--thread': true,
-      'messages__section--select': select,
+      'messages__section--select': selectState,
     });
     
     return (
@@ -61,14 +62,13 @@ class MessagesPopupThread extends Component {
           <PublicConversationHeader
             conversation={conversation}
             onClick={this.onClickHeader.bind(this, conversation.entry.url)}
-            startSelect={this.startSelect}
           />}
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />
-          <MessagesPopupThreadMessageList conversationId={id} />
+          <MessagesPopupThreadMessageList conversationId={id} selectState={selectState}/>
         </div>
         <footer className="messages__footer">
-          {select
+          {selectState
              ? <MessagesPopupSelectFooter stopSelect={this.stopSelect} />
              : <MessagesPopupThreadForm conversationId={id} userCount={userCount} />
           }

@@ -17,6 +17,9 @@ const MessagesPopupThreadMessageListItem = createClass({
     message: PropTypes.object.isRequired,
     messageInfo: PropTypes.object.isRequired,
     onResendMessage: PropTypes.func.isRequired,
+    selectState: PropTypes.bool.isRequired,
+    selected: PropTypes.bool,
+    toggleSelection: PropTypes.func.isRequired,
   },
   mixins: [ ReactGrammarMixin ],
 
@@ -30,6 +33,14 @@ const MessagesPopupThreadMessageListItem = createClass({
   
   isIncoming() {
     return this.props.messageInfo.type === 'incoming';
+  },
+
+  toggleSelection() {
+    const { selectState, toggleSelection } = this.props;
+
+    if (selectState) {
+      toggleSelection();
+    }
   },
 
   renderDeliveryStatus() {
@@ -103,14 +114,20 @@ const MessagesPopupThreadMessageListItem = createClass({
   },
 
   render() {
-    const { message: { content_html } } = this.props;
+    const { message: { content_html }, selected, selectState } = this.props;
     const messageClasses = classnames({
       'message': true,
       'message--from': this.isOutgoing(),
       'message--to': this.isIncoming(),
     });
+    const containerClasses = classnames({
+      'message--container': true,
+      'message--select-mode': selectState,
+      'message--selected': selected,
+    });
 
     return (
+      <div className={containerClasses} onClick={this.toggleSelection}>
       <div className={messageClasses}>
         {this.renderUserAvatar()}
         <div className="messages__bubble">
@@ -127,6 +144,10 @@ const MessagesPopupThreadMessageListItem = createClass({
           {this.renderMessageCreatedAt()}
           {this.renderDeliveryStatus()}
         </span>
+        <div className="message__selector">
+          {selected && <i className="icon icon--tick" />}
+        </div>
+      </div>
       </div>
     );
   },

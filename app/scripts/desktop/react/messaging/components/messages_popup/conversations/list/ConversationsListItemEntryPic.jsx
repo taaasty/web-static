@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { CONVERSATION_PIC_SIZE } from './MessagesPopupConversationsListItem';
 
-class ConversationsListItemEntryPic {
+class ConversationsListItemEntryPic extends Component {
   renderPreviewImage(image) {
     const { width, height } = image.geometry;
     const imgHorizontal = width > height;

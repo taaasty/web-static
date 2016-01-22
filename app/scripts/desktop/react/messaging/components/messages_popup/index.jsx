@@ -8,7 +8,6 @@ import MessagesPopupStore, {
   CREATE_NEW_CONVERSATION_STATE,
   THREAD_STATE,
 } from '../../stores/MessagesPopupStore';
-import MessagingDispatcher from '../../MessagingDispatcher';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import TitleConversationActions from './TitleConversationActions';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
@@ -51,24 +50,43 @@ const MessagesPopup = createClass({
   },
 
   getTitle() {
+    const { currentConversationId } = this.state;
+
     if (this.isThreadState()) {
-      const conversation = ConversationsStore.getConversation(this.state.currentConversationId);
+      const conversation = ConversationsStore.getConversation(currentConversationId);
+
       if (conversation.type === PUBLIC_CONVERSATION) {
-        return <TitleConversationActions title={i18n.t('messages_entry_title')} />;
+        return (
+          <div className="messages__popup-title">
+            <div className="messages__popup-title-text --with-actions">
+              {i18n.t('messages_entry_title')}
+            </div>
+            <TitleConversationActions conversation={conversation} />
+          </div>
+        );
       } else {
         return (
-          <TitleConversationActions
-            title={i18n.t('messages_thread_title', { slug: conversation.recipient.slug })}
-          />
+          <div className="messages__popup-title">
+            <div className="messages__popup-title-text --with-actions">
+              {i18n.t('messages_thread_title', { slug: conversation.recipient.slug })}
+            </div>
+            <TitleConversationActions conversation={conversation} />
+          </div>
         );
       }
     } else {
-      return i18n.t('messages_popup_title');
+      return (
+        <div className="messages__popup-title">
+          <div className="messages__popup-title-text">
+            {i18n.t('messages_popup_title')}
+          </div>
+        </div>
+      );
     }
   },
 
   handleBackButtonClick() {
-    MessagingDispatcher.handleViewAction({ type: 'clickBackButton' });
+    MessagesPopupActions.openConversationList();
   },
 
   _onStoreChange() {

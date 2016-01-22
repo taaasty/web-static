@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import BrowserHelpers from '../../../../../../shared/helpers/browser';
 
-class ImgFromFile {
+class ImgFromFile extends Component {
   componentDidMount() {
     this.image = new Image();
     this.image.onload = (ev) => {

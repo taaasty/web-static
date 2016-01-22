@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-class ThreadFormUploadButton {
+class ThreadFormUploadButton extends Component {
   onChange(ev) {
     this.props.onChange(ev);
     ev.target.value = null;
@@ -13,7 +13,7 @@ class ThreadFormUploadButton {
           <input
             accept="image/png,image/jpeg,image/gif"
             className="message-form__upload-input"
-            multiple={true}
+            multiple
             onChange={this.onChange.bind(this)}
             ref="files"
             size="28"

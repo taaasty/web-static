@@ -97,6 +97,18 @@ class window.MessagingService
         error?()
         NoticeService.errorResponse errMsg
 
+  deleteConversation: (conversationId) ->
+    this.requester.deleteConversation(conversationId)
+      .done((data) ->
+        MessagingDispatcher.handleServerAction({
+          type: 'deleteConversation',
+          id: conversationId,
+        });
+
+        return data;
+      )
+      .fail((err) -> NoticeService.errorResponse(err))
+
   openConversation: (conversationId) ->
     @loadMessages conversationId
 

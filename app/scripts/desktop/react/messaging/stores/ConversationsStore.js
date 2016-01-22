@@ -18,6 +18,10 @@ const ConversationsStore = Object.assign(
       _conversations = clonedConversations;
     },
 
+    deleteConversation(id) {
+      _conversations = _conversations.filter((conv) => conv.id !== id);
+    },
+
     updateConversation(data) {
       const clonedConversations = _conversations.slice(0);
 
@@ -100,6 +104,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'updateConversationEntry':
     ConversationsStore.updateConversationEntry(action.id, action.update);
+    ConversationsStore.emitChange();
+    break;
+  case 'deleteConversation':
+    ConversationsStore.deleteConversation(action.id);
     ConversationsStore.emitChange();
     break;
   }

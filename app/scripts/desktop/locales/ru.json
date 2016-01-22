@@ -522,5 +522,13 @@
   "switcher": {
     "label_on": "Да",
     "label_off": "Нет"
+  },
+  "messenger": {
+    "title_actions": {
+      "disturb": "Беспокоить",
+      "dont_disturb": "Не беспокоить",
+      "start_select_mode": "Выбрать сообщения",
+      "delete_conversation": "Удалить переписку"
+    }
   }
 }

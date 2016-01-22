@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ConversationActions from '../../../../actions/ConversationActions';
 import ConversationsListItemText from './ConversationsListItemText';
 import ConversationsListItemEntry from './ConversationsListItemEntry';
@@ -6,7 +6,7 @@ import { PUBLIC_CONVERSATION } from '../../../../constants/ConversationConstants
 
 export const CONVERSATION_PIC_SIZE = 40;
 
-class MessagesPopupConversationsListItem {
+class MessagesPopupConversationsListItem extends Component {
   hasUnread() {
     return (this.props.conversation.unread_messages_count > 0);
   }

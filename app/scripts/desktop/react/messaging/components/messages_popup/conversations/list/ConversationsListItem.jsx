@@ -1,9 +1,9 @@
 /*global i18n */
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 
-class ConversationsListItem {
+class ConversationsListItem extends Component {
   renderIndicator() {
     const { hasUnread, hasUnreceived, unreadCount } = this.props;
 
