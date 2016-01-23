@@ -26,6 +26,7 @@ const HeroProfileStatsPopup = createClass({
   },
 
   componentWillUnmount() {
+    TastyEvents.off(TastyEvents.keys.hero_closed(), this.close);
     $(window).off('resize', this.close);
   },
   

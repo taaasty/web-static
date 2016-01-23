@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
 
-export default class Text {
-  static propTypes = {
-    value: PropTypes.string.isRequired,
-    withHTML: PropTypes.bool,
-  };
-  static defaultProps = {
-    withHTML: false,
-  };
-  render() {
-    if (this.props.withHTML) {
-      return <span dangerouslySetInnerHTML={{__html: this.props.value}} />;
-    } else {
-      return <span>{this.props.value}</span>;
-    }
-  }
+function Text({ value, withHTML }) {
+  return withHTML
+    ? <span dangerouslySetInnerHTML={{__html: value}} />
+    : <span>{value}</span>;
 }
+
+Text.propTypes = {
+  value: PropTypes.string.isRequired,
+  withHTML: PropTypes.bool,
+};
+
+Text.defaultProps = {
+  withHTML: false,
+};
+
+export default Text;

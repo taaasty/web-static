@@ -14,7 +14,7 @@ window.ScrollerMixin =
     @$scroller = @scroller = null
 
   initScroll: ->
-    @$scroller = $( @refs.scroller.getDOMNode() )
+    @$scroller = $( @refs.scroller )
 
     @scroller = @$scroller.baron
       scroller: '.js-scroller-pane'

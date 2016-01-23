@@ -1,12 +1,13 @@
+import React, { createClass, PropTypes } from 'react';
 import Masonry from 'masonry-layout';
-import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/InfiniteScroll';
 
-let FeedBricks = React.createClass({
+let FeedBricks = createClass({
   propTypes: {
-    html: React.PropTypes.string.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextEntries: React.PropTypes.func.isRequired
+    canLoad: PropTypes.bool.isRequired,
+    html: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onLoadNextEntries: PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -46,12 +47,12 @@ let FeedBricks = React.createClass({
       gutter: 20,
       hiddenStyle: {
         opacity: 0,
-        transform: 'opacity(0.001)'
+        transform: 'opacity(0.001)',
       },
       visibleStyle: {
         opacity: 1,
-        transform: 'opacity(1)'
-      }
+        transform: 'opacity(1)',
+      },
     });
   },
 
@@ -60,7 +61,7 @@ let FeedBricks = React.createClass({
     let lastEntryID = $container.children().last().data('id');
 
     this.props.onLoadNextEntries(lastEntryID);
-  }
+  },
 });
 
 export default FeedBricks;

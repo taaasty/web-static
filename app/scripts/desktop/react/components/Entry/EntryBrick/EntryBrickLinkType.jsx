@@ -1,47 +1,47 @@
 import React, { PropTypes } from 'react';
-import Text from '../../../../../shared/react/components/common/Text';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 
-let EntryBrickLinkType = React.createClass({
-  propTypes: {
-    entry: ProjectTypes.tlogEntry.isRequired,
-    hasModeration: PropTypes.bool.isRequired,
-    host_tlog_id: PropTypes.number,
-    onEntryAccept: PropTypes.func.isRequired,
-    onEntryDecline: PropTypes.func.isRequired,
-  },
-
-  render() {
+function EntryBrickLinkType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+  function renderBrickTitle() {
     return (
-      <span>
-        <div className="brick__body">
-          {this.renderBrickTitle()}
-        </div>
-        <div className="brick__meta">
-          <EntryBrickMetabar
-            entry={this.props.entry}
-            host_tlog_id={this.props.host_tlog_id}
-          />
-        </div>
-        <EntryBrickActions
-            hasModeration={this.props.hasModeration}
-            onAccept={this.props.onEntryAccept}
-            onDecline={this.props.onEntryDecline} />
-      </span>
+      <a
+        className="brick__link"
+        href={entry.url}
+        title={entry.title}
+      >
+        <h2 className="brick__title">{entry.title}</h2>
+      </a>
     );
-  },
-
-  renderBrickTitle() {
-    if(this.props.entry.title) {
-      return (
-        <a href={this.props.entry.url} title={this.props.entry.title} className="brick__link">
-          <h2 className="brick__title">{this.props.entry.title}</h2>
-        </a>
-      );
-    }
   }
-});
+
+  return (
+    <span>
+      <div className="brick__body">
+        {entry.title && renderBrickTitle()}
+      </div>
+      <div className="brick__meta">
+        <EntryBrickMetabar
+          entry={entry}
+          host_tlog_id={host_tlog_id}
+        />
+      </div>
+      <EntryBrickActions
+        hasModeration={hasModeration}
+        onAccept={onEntryAccept}
+        onDecline={onEntryDecline}
+      />
+    </span>
+  );
+}
+
+EntryBrickLinkType.propTypes = {
+  entry: ProjectTypes.tlogEntry.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+  host_tlog_id: PropTypes.number,
+  onEntryAccept: PropTypes.func.isRequired,
+  onEntryDecline: PropTypes.func.isRequired,
+};
 
 export default EntryBrickLinkType;

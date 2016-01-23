@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import WaypointService from '../../services/CustomWaypointService';
-import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/InfiniteScroll';
 
 class EntryTlogs {
   componentDidMount() {

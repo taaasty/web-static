@@ -16,7 +16,7 @@ window.RecoveryShellbox = React.createClass
 
     return if @state.inProcess
 
-    slug = @refs.slug.getDOMNode().value
+    slug = @refs.slug.value
 
     if slug.length < 1
       @shake()
@@ -34,7 +34,7 @@ window.RecoveryShellbox = React.createClass
         ReactApp.shellbox.close()
       error: (data) =>
         @shake()
-        @refs.slug.getDOMNode().focus()
+        @refs.slug.focus()
         NoticeService.errorResponse data
       complete: => @safeUpdateState inProcess: false
 

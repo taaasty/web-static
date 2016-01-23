@@ -7,7 +7,7 @@ let UserToolbarSubListItem = React.createClass({
   },
 
   componentDidMount() {
-    $(this.refs.link.getDOMNode()).tooltip({
+    $(this.refs.link).tooltip({
       title: this.props.title,
       placement: 'right',
       container: '.toolbar--main'
@@ -15,7 +15,7 @@ let UserToolbarSubListItem = React.createClass({
   },
 
   componentWillUnmount() {
-    $(this.refs.link.getDOMNode()).tooltip('destroy');
+    $(this.refs.link).tooltip('destroy');
   },
 
   render() {

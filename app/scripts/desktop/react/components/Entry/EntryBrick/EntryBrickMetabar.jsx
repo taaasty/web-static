@@ -5,43 +5,40 @@ import Avatar from '../../../../../shared/react/components/common/Avatar';
 import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
 import Voting from '../../common/Voting';
 
-class EntryBrickMetabar {
-  renderMetaVote() {
-    const { id, is_voteable, rating } = this.props.entry;
+function EntryBrickMetabar({ entry, host_tlog_id }) {
+  function renderMetaVote() {
+    const { id, rating } = entry;
 
-    if (is_voteable) {
-      return (
-        <span className="meta-item meta-item--vote">
-          <span className="meta-item__content">
-            <Voting entryID={id} rating={rating} />
-          </span>
+    return (
+      <span className="meta-item meta-item--vote">
+        <span className="meta-item__content">
+          <Voting entryID={id} rating={rating} />
         </span>
-      );
-    }
+      </span>
+    );
   }
-  renderMetaComments() {
-    const { comments_count: commentsCount, url } = this.props.entry;
 
-    if (commentsCount) {
-      let title = i18n.t('comments_count', {count: commentsCount});
+  function renderMetaComments() {
+    const { comments_count: commentsCount, url } = entry;
+    const title = i18n.t('comments_count', {count: commentsCount});
 
-      return (
-        <span className="meta-item meta-item--comments">
-          <span className="meta-item__content">
-            <a
-              className="meta-item__link"
-              href={url + '#comments'}
-              title={title}
-            >
-              {title}
-            </a>
-          </span>
+    return (
+      <span className="meta-item meta-item--comments">
+        <span className="meta-item__content">
+          <a
+            className="meta-item__link"
+            href={url + '#comments'}
+            title={title}
+          >
+            {title}
+          </a>
         </span>
-      );
-    }
+      </span>
+    );
   }
-  renderMetaTlog() {
-    const { entry: { author, tlog }, host_tlog_id } = this.props;
+
+  function renderMetaTlog() {
+    const { author, tlog } = entry;
     const authorMeta = metabarAuthor({ host_tlog_id, tlog, author });
 
     if (authorMeta) {
@@ -66,15 +63,14 @@ class EntryBrickMetabar {
       );
     }
   }
-  render() {
-    return (
-      <span className="meta-bar">
-        {this.renderMetaVote()}
-        {this.renderMetaComments()}
-        {this.renderMetaTlog()}
-      </span>
-    );
-  }
+
+  return (
+    <span className="meta-bar">
+      {entry.is_voteable && renderMetaVote()}
+      {entry.comments_count && renderMetaComments()}
+      {renderMetaTlog()}
+    </span>
+  );
 }
 
 EntryBrickMetabar.propTypes = {

@@ -11,7 +11,7 @@ window.MessagesPopup_ChooserDropdown = React.createClass
     query: ''
 
   componentDidMount: ->
-    @refs.chooserInput.getDOMNode()
+    @refs.chooserInput
 
   render: ->
     if @state.query

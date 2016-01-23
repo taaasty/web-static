@@ -1,5 +1,5 @@
 import FlowBrick from '../Flow/FlowBrick';
-import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/InfiniteScroll';
 import MasonryMixin from 'react-masonry-mixin';
 
 const masonryOptions = {

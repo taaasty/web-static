@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ErrorService from '../../../../../shared/react/services/Error';
 import EntryBrickTextType from './EntryBrickTextType';
 import EntryBrickImageType from './EntryBrickImageType';
@@ -20,7 +20,7 @@ import {
   ENTRY_TYPE_CODE,
 } from '../../../constants/EntryConstants';
 
-class EntryBrickContent {
+class EntryBrickContent extends Component {
   render() {
     const { id, type } = this.props.entry;
 
@@ -46,7 +46,7 @@ class EntryBrickContent {
           componentName: this.constructor.displayName,
           method: 'render',
           entryID: id,
-          entryType: type
+          entryType: type,
         });
 
         return <EntryBrickUnknownType {...this.props} />;
@@ -58,7 +58,7 @@ EntryBrickContent.propTypes = {
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   onEntryAccept: PropTypes.func.isRequired,
-  onEntryDecline: PropTypes.func.isRequired
+  onEntryDecline: PropTypes.func.isRequired,
 };
 
 export default EntryBrickContent;

@@ -6,62 +6,57 @@ import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { brickWidth } from './constants';
 
-let EntryBrickVideoType = React.createClass({
-  propTypes: {
-    entry: ProjectTypes.tlogEntry.isRequired,
-    hasModeration: PropTypes.bool.isRequired,
-    host_tlog_id: PropTypes.number,
-    onEntryAccept: PropTypes.func.isRequired,
-    onEntryDecline: PropTypes.func.isRequired,
-  },
-
-  render() {
+function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+  function renderBrickBody() {
     return (
-      <span>
-        <div className="brick__media">
-          <figure className="video">
-            <a href={this.props.entry.url}>
-              <div className="video__cover">
-                <LazyLoadImage image={this.props.entry.preview_image} maxWidth={brickWidth} />
-                {this.renderVideoOverlay()}
-              </div>
-            </a>
-          </figure>
+      <div className="brick__body">
+        <div className="brick__text">
+          <a
+            className="brick__link"
+            href={entry.url}
+            title={entry.title_truncated}
+          >
+            <Text value={entry.title_truncated} withHTML />
+          </a>
         </div>
-        {this.renderBrickBody()}
-        <div className="brick__meta">
-          <EntryBrickMetabar
-            entry={this.props.entry}
-            host_tlog_id={this.props.host_tlog_id}
-          />
-        </div>
-        <EntryBrickActions
-            hasModeration={this.props.hasModeration}
-            onAccept={this.props.onEntryAccept}
-            onDecline={this.props.onEntryDecline} />
-      </span>
+      </div>
     );
-  },
-
-  renderBrickBody() {
-    if (this.props.entry.title_truncated) {
-      return (
-        <div className="brick__body">
-          <div className="brick__text">
-            <a href={this.props.entry.url} title={this.props.entry.title_truncated} className="brick__link">
-              <Text value={this.props.entry.title_truncated} withHTML={true} />
-            </a>
-          </div>
-        </div>
-      );
-    }
-  },
-
-  renderVideoOverlay() {
-    if (this.props.entry.is_playable) {
-      return <div className="video__overlay" />;
-    }
   }
-});
+
+  return (
+    <span>
+      <div className="brick__media">
+        <figure className="video">
+          <a href={entry.url}>
+            <div className="video__cover">
+              <LazyLoadImage image={entry.preview_image} maxWidth={brickWidth} />
+              {entry.is_playable && <div className="video__overlay" />}
+            </div>
+          </a>
+        </figure>
+      </div>
+      {entry.titly_truncated && renderBrickBody()}
+      <div className="brick__meta">
+        <EntryBrickMetabar
+          entry={entry}
+          host_tlog_id={host_tlog_id}
+        />
+      </div>
+      <EntryBrickActions
+        hasModeration={hasModeration}
+        onAccept={onEntryAccept}
+        onDecline={onEntryDecline}
+      />
+    </span>
+  );
+}
+
+EntryBrickVideoType.propTypes = {
+  entry: ProjectTypes.tlogEntry.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+  host_tlog_id: PropTypes.number,
+  onEntryAccept: PropTypes.func.isRequired,
+  onEntryDecline: PropTypes.func.isRequired,
+};
 
 export default EntryBrickVideoType;

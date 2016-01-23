@@ -46,9 +46,8 @@ let EntryBrick = React.createClass({
   render() {
     const { entry, feedType } = this.props;
 
-    if (this.state.visible) {
-      return (
-        <article className={this.getBrickClasses()} data-id={entry.id}>
+    return this.state.visible
+      ? <article className={this.getBrickClasses()} data-id={entry.id}>
           {feedType !== FEED_TYPE_LIVE_FLOW && this.renderFlowHeader()}
           {this.renderPinHeader()}
           <EntryBrickContent
@@ -59,10 +58,7 @@ let EntryBrick = React.createClass({
             onEntryDecline={this.declineEntry}
           />
         </article>
-      );
-    } else {
-      return null;
-    }
+      : null;
   },
 
   getBrickClasses() {
@@ -106,7 +102,7 @@ let EntryBrick = React.createClass({
           }
         }
       });
-  }
+  },
 });
 
 export default EntryBrick;

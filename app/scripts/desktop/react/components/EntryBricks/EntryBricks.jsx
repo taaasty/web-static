@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import WaypointService from '../../services/CustomWaypointService';
 import EntryBrick from '../Entry/EntryBrick/EntryBrick';
-import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/InfiniteScroll';
 import MasonryMixin from 'react-masonry-mixin';
 
 const masonryOptions = {
@@ -14,9 +14,7 @@ const masonryOptions = {
   stamp: '.navs-line',
 };
 
-let EntryBricks = React.createClass({
-  mixins: [MasonryMixin('masonryContainer', masonryOptions)],
-
+let EntryBricks = createClass({
   propTypes: {
     canLoad: PropTypes.bool.isRequired,
     entries: PropTypes.array.isRequired,
@@ -24,6 +22,7 @@ let EntryBricks = React.createClass({
     loading: PropTypes.bool.isRequired,
     onLoadMoreEntries: PropTypes.func.isRequired,
   },
+  mixins: [MasonryMixin('masonryContainer', masonryOptions)],
 
   componentDidMount() {
     if (this.masonry) {
