@@ -26,7 +26,7 @@ class TitleConversationActions extends Component {
       <div className="messages__popup-title-actions">
         <DropdownActions>
           {false && <DropdownAction
-            hoverTitle={disturb && i18n.t('messenger.title_actions')}
+            hoverTitle={disturb && i18n.t('messenger.title_actions') || null}
             icon="icon--bell"
             key="dont-disturb"
             onClick={this.disturb.bind(this, !disturb)}

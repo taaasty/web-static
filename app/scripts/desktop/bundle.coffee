@@ -73,8 +73,6 @@ require './react/messaging/messaging_testing'
 
 # /*==========  Actions  ==========*/
 
-global.ConversationActions = require './react/messaging/actions/ConversationActions'
-require './react/messaging/actions/message'
 require './react/messaging/actions/notification'
 
 # /*==========  Components  ==========*/
@@ -82,14 +80,6 @@ require './react/messaging/actions/notification'
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
 require './react/messaging/components/toolbars/indicators/notifications'
-require './react/messaging/components/messages_popup/ui/back_button'
-require './react/messaging/components/messages_popup/loading_message'
-require './react/messaging/components/messages_popup/create_new_conversation/create_new_conversation'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
 require './react/messaging/components/notifications_popup/notifications_popup'
 require './react/messaging/components/notifications_popup/notifications/notifications'
 require './react/messaging/components/notifications_popup/notifications/notification'

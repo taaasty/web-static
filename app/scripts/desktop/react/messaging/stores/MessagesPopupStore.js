@@ -31,17 +31,14 @@ const MessagesPopupStore = Object.assign(
 
     setThreadState() {
       currentState = THREAD_STATE;
-      selectState = false;
     },
 
     setCreateNewConversationState() {
       currentState = CREATE_NEW_CONVERSATION_STATE;
-      selectState = false;
     },
 
     setConversationsState() {
       currentState = CONVERSATIONS_STATE;
-      selectState = false;
     },
 
     startSelect() {
@@ -60,23 +57,28 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     MessagingDispatcher.waitFor([ ConversationsStore.dispatchToken ]);
     MessagesPopupStore.setCurrentConversationId(action.conversation.id);
     MessagesPopupStore.setThreadState();
+    MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;
   case 'clickNewConversation':
     MessagesPopupStore.setCreateNewConversationState();
+    MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;
   case 'openConversationList':
     MessagesPopupStore.setConversationsState();
+    MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;
   case 'openConversation':
     MessagesPopupStore.setCurrentConversationId(action.conversationId);
     MessagesPopupStore.setThreadState();
+    MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;
   case 'closeMessagesPopup':
     MessagesPopupStore.setConversationsState();
+    MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;
   case 'startSelect':

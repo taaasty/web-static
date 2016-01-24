@@ -1,7 +1,6 @@
 /*global i18n, RequesterMixin, ReactUnmountMixin */
 import React, { createClass, PropTypes } from 'react';
-import MessagesPopupConversations from './conversations';
-import MessagesPopupThread from './thread';
+import Thread from './Thread';
 import ConversationsStore from '../../stores/ConversationsStore';
 import MessagesPopupStore, {
   CONVERSATIONS_STATE,
@@ -9,6 +8,9 @@ import MessagesPopupStore, {
   THREAD_STATE,
 } from '../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import BackButton from './BackButton';
+import CreateNewConversation from './CreateNewConversation';
+import Conversations from './Conversations';
 import TitleConversationActions from './TitleConversationActions';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
 
@@ -99,16 +101,16 @@ const MessagesPopup = createClass({
 
     switch(this.state.currentState) {
     case CONVERSATIONS_STATE:
-      content = <MessagesPopupConversations key="conversations" />;
+      content = <Conversations key="conversations" />;
       transitionName = 'conversations';
       break;
     case CREATE_NEW_CONVERSATION_STATE:
-      content = <MessagesPopup_CreateNewConversation key="newConversation" />;
+      content = <CreateNewConversation key="newConversation" />;
       transitionName = 'new-conversation';
       break;
     case THREAD_STATE:
-      content = <MessagesPopupThread
-                  conversationId={ this.state.currentConversationId }
+      content = <Thread
+                  conversationId={this.state.currentConversationId}
                   key="thread"
                 />;
       transitionName = 'thread';
@@ -127,7 +129,7 @@ const MessagesPopup = createClass({
         type="messages"
       >
         <div className="messages">
-          {!this.isConversationsState() && <MessagesPopup_UIBackButton onClick={this.handleBackButtonClick} />}
+          {!this.isConversationsState() && <BackButton onClick={this.handleBackButtonClick} />}
           {content}
         </div>
       </Popup>

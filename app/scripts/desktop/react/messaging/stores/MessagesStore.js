@@ -6,6 +6,7 @@ import { PUBLIC_CONVERSATION } from '../constants/ConversationConstants';
 
 const _messages = {};
 const _allMessagesLoaded = {};
+let _selectedIds = [];
 
 const MessagesStore = Object.assign(
   new BaseStore(),
@@ -86,6 +87,41 @@ const MessagesStore = Object.assign(
 
       _messages[conversationId] = clonedMessages;
     },
+
+    addToSelection(id) {
+      if (_selectedIds.indexOf(id) < 0) {
+        _selectedIds.push(id);
+      }
+    },
+
+    removeFromSelection(id) {
+      const idx = _selectedIds.indexOf(id);
+      if (idx > -1) {
+        _selectedIds.splice(idx, 1);
+      }
+    },
+
+    toggleSelection(id) {
+      const idx = _selectedIds.indexOf(id);
+
+      if (idx > -1) {
+        this.removeFromSelection(id);
+      } else {
+        this.addToSelection(id);
+      }
+    },
+
+    resetSelection() {
+      _selectedIds = [];
+    },
+
+    getSelection() {
+      return _selectedIds;
+    },
+
+    isSelected(id) {
+      return (_selectedIds.indexOf(id) > -1);
+    },
   }
 );
 
@@ -132,6 +168,18 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     });
     MessagesStore.emitChange();
     break;
+  case 'messagesToggleSelection':
+    MessagesStore.addToSelection(action.id);
+    MessagesStore.emitChange();
+    break;
+  case 'closeMessagesPopup':
+  case 'startSelect':
+  case 'stopSelect':
+  case 'openConversation':
+  case 'openConversationList':
+  case 'messagesResetSelection':
+    MessagesStore.resetSelection();
+    MessagesStore.emitChange();
   };
 });
 

@@ -833,14 +833,6 @@
   position: relative;
   padding: 12px 0;
 
-  &.message--selected {
-    background-color: rgba(0, 0, 0, 0.2);
-    
-    .message__selector {
-      background-color: @green;
-    }
-  }
-
   &.message--select-mode {
     cursor: pointer;
     &:before {
@@ -852,6 +844,14 @@
       left: 0;
       right: 0;
       z-index: 100;
+    }
+
+    &.message--selected {
+      background-color: rgba(0, 0, 0, 0.2);
+      
+      .message__selector {
+        background-color: @green;
+      }
     }
 
     .message__selector {
@@ -878,6 +878,11 @@
     color: @white;
     background-color: @white;
     border-radius: 50%;
+
+    .icon {
+      position: relative;
+      top: 2px;
+    }
   }
 
   .messages__date {

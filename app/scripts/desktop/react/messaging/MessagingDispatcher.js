@@ -98,6 +98,19 @@ const MessagingDispatcher = Object.assign(
         type: 'messageSubmitted',
       });
     },
+
+    toggleSelection(id) {
+      MessagingDispatcher.handleViewAction({
+        id,
+        type: 'messagesToggleSelection',
+      });
+    },
+
+    resetSelection() {
+      MessagingDispatcher.handleViewAction({
+        type: 'messagesResetSelection',
+      });
+    },
   }
 );
 
