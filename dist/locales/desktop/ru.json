@@ -488,7 +488,12 @@
       "mark_all_read": "отметить все как прочитанные"
     },
     "messenger": {
-      "send": "Отправить"
+      "send": "Отправить",
+      "select_form": {
+        "delete": "Удалить",
+        "delete_everywhere": "Удалить для всех",
+        "cancel": "Отмена"
+      }
     },
     "unread_load": {
       "unread_entries_count": "__count__ новая публикация. ",
@@ -529,6 +534,9 @@
       "dont_disturb": "Не беспокоить",
       "start_select_mode": "Выбрать сообщения",
       "delete_conversation": "Удалить переписку"
+    },
+    "request": {
+      "conversation_delete_success": "Переписка удалена"
     }
   }
 }

@@ -111,6 +111,22 @@ const MessagingDispatcher = Object.assign(
         type: 'messagesResetSelection',
       });
     },
+
+    deleteMessages({ conversation_id, messages }) {
+      return MessagingDispatcher.handleServerAction({
+        messages,
+        conversationId: conversation_id,
+        type: 'deleteMessages',
+      });
+    },
+
+    deleteUserMessages({ conversation_id, messages }) {
+      return MessagingDispatcher.handleServerAction({
+        messages,
+        conversationId: conversation_id,
+        type: 'deleteUserMessages',
+      });
+    },
   }
 );
 

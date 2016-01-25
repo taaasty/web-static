@@ -49,6 +49,12 @@ const MessagesStore = Object.assign(
       return _messages[conversationId] || [];
     },
 
+    getMessageById(id, conversationId) {
+      const messages = _messages[conversationId] || [];
+
+      return messages.filter((msg) => msg.id === id)[0];
+    },
+
     getMessageInfo(message, conversationId) {
       const conversation = ConversationsStore.getConversation(conversationId);
       const currentUser  = CurrentUserStore.getUser();
@@ -122,6 +128,45 @@ const MessagesStore = Object.assign(
     isSelected(id) {
       return (_selectedIds.indexOf(id) > -1);
     },
+
+    canDelete() {
+      return _selectedIds.length > 0;
+    },
+
+    canDeleteEverywhere(conversationId) {
+      let msg;
+
+      return (_selectedIds.filter((id) => {
+        if ((msg = this.getMessageById(id, conversationId))) {
+          const msgInfo = this.getMessageInfo(msg, conversationId);
+
+          return msgInfo.type === 'incoming';
+        } else {
+          return false;
+        }
+      })).length === 0 && this.canDelete();
+    },
+
+    deleteMessages(conversationId, deleted) {
+      const messages = _messages[conversationId] || [];
+
+      _selectedIds = _selectedIds.filter((id) => deleted.indexOf(id) < 0);
+      _messages[conversationId] = messages.filter((msg) => deleted.indexOf(msg.id) < 0);
+    },
+
+    deleteUserMessages(conversationId, deleted) {
+      const messages = _messages[conversationId] || [];
+      const deletedHash = deleted.reduce((acc, { id, content }) => acc[id] = content, {});
+      const deletedIds = Object.keys(deletedHash);
+
+      _selectedIds = _selectedIds.filter((id) => deletedIds.indexOf(id) < 0);
+      messages.forEach((msg) => {
+        let content_html = deletedHash[msg.id];
+        if (content_html) {
+          Object.assign(msg, { content_html });
+        }
+      });
+    },
   }
 );
 
@@ -169,7 +214,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     MessagesStore.emitChange();
     break;
   case 'messagesToggleSelection':
-    MessagesStore.addToSelection(action.id);
+    MessagesStore.toggleSelection(action.id);
     MessagesStore.emitChange();
     break;
   case 'closeMessagesPopup':
@@ -180,6 +225,15 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
   case 'messagesResetSelection':
     MessagesStore.resetSelection();
     MessagesStore.emitChange();
+    break;
+  case 'deleteMessages':
+    MessagesStore.deleteMessages(action.conversationId, action.messages);
+    MessagesStore.emitChange();
+    break;
+  case 'deleteUserMessages':
+    MessagesStore.deleteUserMessages(action.conversationId, action.messages);
+    MessagesStore.emitChange();
+    break;
   };
 });
 

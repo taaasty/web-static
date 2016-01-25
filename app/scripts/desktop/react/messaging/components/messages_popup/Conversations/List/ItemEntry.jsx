@@ -26,10 +26,12 @@ class ItemEntry extends Component {
           <div className="messages__user-name">
             {title}
           </div>
-          <div className="messages__last-message">
-            <UserAvatar size={20} user={last_message.author} />
-            <span dangerouslySetInnerHTML={{ __html: last_message.content_html }} />
-          </div>
+          {last_message &&
+           <div className="messages__last-message">
+             <UserAvatar size={20} user={last_message.author} />
+             <span dangerouslySetInnerHTML={{ __html: last_message.content_html }} />
+           </div>
+          }
         </div>
       </ItemMain>
     );

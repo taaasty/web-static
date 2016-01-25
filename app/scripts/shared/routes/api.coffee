@@ -89,7 +89,7 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}"
   messengerConversationsByUserId: (userId) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_id/#{userId}"
-  messengerMessagesDelete: (id) ->
+  messengerDeleteMessages: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/delete_by_ids"
   messenger_new_message_url: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages"

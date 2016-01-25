@@ -1,9 +1,11 @@
+/*global messagingService */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import MessagesPopupThreadForm from './MessagesPopupThreadForm';
-import MessagesPopupSelectFooter from './MessagesPopupSelectFooter';
+import ThreadForm from './ThreadForm';
+import SelectForm from './SelectForm';
 import PublicConversationHeader from './PublicConversationHeader';
-import MessagesPopupThreadMessageList from './MessagesPopupThreadMessageList';
+import MessageList from './MessageList';
+import MessagesStore from '../../../stores/MessagesStore';
 import ConversationsStore from '../../../stores/ConversationsStore';
 import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
@@ -15,29 +17,43 @@ class Thread extends Component {
     this.listener = this.syncStateWithStore.bind(this);
     ConversationsStore.addChangeListener(this.listener);
     MessagesPopupStore.addChangeListener(this.listener);
+    MessagesStore.addChangeListener(this.listener);
   }
   componentWillUnmount() {
     ConversationsStore.removeChangeListener(this.listener);
     MessagesPopupStore.removeChangeListener(this.listener);
+    MessagesStore.removeChangeListener(this.listener);
   }
   syncStateWithStore() {
     this.setState(this.getStateFromStore());
   }
   getStateFromStore() {
+    const { conversationId } = this.props;
+
     return {
-      conversation: ConversationsStore.getConversation(this.props.conversationId),
+      conversation: ConversationsStore.getConversation(conversationId),
       selectState: MessagesPopupStore.getSelectState(),
+      selectedIds: MessagesStore.getSelection(),
+      canDelete: MessagesStore.canDelete(),
+      canDeleteEverywhere: MessagesStore.canDeleteEverywhere(conversationId),
     };
   }
   stopSelect() {
     MessagesPopupActions.stopSelect();
+  }
+  deleteMessages(all) {
+    messagingService.deleteMessages(
+      this.props.conversationId,
+      this.state.selectedIds,
+      all
+    );
   }
   onClickHeader(url, ev) {
     ev.preventDefault();
     window.location.href = url;
   }
   render() {
-    const { conversation, selectState } = this.state;
+    const { canDelete, canDeleteEverywhere, conversation, selectState } = this.state;
     if (!conversation) {
       return null;
     }
@@ -65,12 +81,18 @@ class Thread extends Component {
           />}
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />
-          <MessagesPopupThreadMessageList conversationId={id} selectState={selectState}/>
+          <MessageList conversationId={id} selectState={selectState} />
         </div>
         <footer className="messages__footer">
           {selectState
-             ? <MessagesPopupSelectFooter stopSelect={this.stopSelect} />
-             : <MessagesPopupThreadForm conversationId={id} userCount={userCount} />
+           ? <SelectForm
+               canDelete={canDelete}
+               canDeleteEverywhere={canDeleteEverywhere}
+               deleteEverywhereFn={this.deleteMessages.bind(this, true)}
+               deleteFn={this.deleteMessages.bind(this, false)}
+               stopSelect={this.stopSelect}
+             />
+           : <ThreadForm conversationId={id} userCount={userCount} />
           }
         </footer>
       </div>

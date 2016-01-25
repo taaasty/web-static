@@ -13820,7 +13820,7 @@ ApiRoutes = {
   messengerConversationsByUserId: function(userId) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_id/" + userId;
   },
-  messengerMessagesDelete: function(id) {
+  messengerDeleteMessages: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages/delete_by_ids";
   },
   messenger_new_message_url: function(id) {
