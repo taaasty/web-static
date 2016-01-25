@@ -1,5 +1,5 @@
 import Masonry from 'masonry-layout';
-import InfiniteScroll from '../common/infiniteScroll/index';
+import InfiniteScroll from '../common/InfiniteScroll';
 
 let SearchResultsFeed = React.createClass({
   propTypes: {

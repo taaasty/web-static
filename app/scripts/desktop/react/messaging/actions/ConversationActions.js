@@ -1,3 +1,6 @@
+/*global messagingService, TastyEvents */
+import MessagingDispatcher from '../MessagingDispatcher';
+import ConversationsStore from '../stores/ConversationsStore';
 import EntryActionCreators from '../../actions/Entry';
 
 function updateConversationEntry(id, func) {
@@ -31,6 +34,22 @@ const ConversationActions = {
 
     messagingService.openMessagesPopup();
     return TastyEvents.emit(TastyEvents.keys.command_hero_close());
+  },
+
+  deleteConversation(id) {
+    return messagingService.deleteConversation(id)
+      .done((data) => {
+        MessagingDispatcher.handleServerAction({
+          id,
+          type: 'deleteConversation',
+        });
+
+        return data;
+      });
+  },
+
+  disturb() {
+    return null;
   },
 
   postNewConversation({recipientId, error}) {

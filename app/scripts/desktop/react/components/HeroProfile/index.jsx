@@ -55,7 +55,7 @@ class HeroProfile extends Component {
 
     this.$hero.on(transitionEnd, () => {
       this.setState({ currentState: HERO_OPENED });
-      $(window).on('scroll.hero', this.close.bind(this));
+      $(window).on('scroll.hero', this.close);
       this.$hero.off(transitionEnd);
     });
   }
@@ -66,7 +66,7 @@ class HeroProfile extends Component {
       $(window).off('scroll.hero');
 
       this.restoreInitialHeroHeight();
-      window.setTimeout(this.unsetHeroHeight, 1500);
+      window.setTimeout(this.unsetHeroHeight.bind(this), 1500);
       $('body').removeClass(HERO_OPENED_CLASS);
       TastyEvents.trigger(TastyEvents.keys.hero_closed());
     }

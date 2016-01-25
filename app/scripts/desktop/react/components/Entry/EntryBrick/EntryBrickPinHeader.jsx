@@ -1,13 +1,12 @@
-import React, { PropTypes } from 'react';
+/*global i18n */
+import React from 'react';
 
-class EntryBrickPinHeader {
-  render() {
-    return (
-      <div className="brick__notice brick__notice--info">
-        {i18n.t('entry.pinned_header')}
-      </div>
-    );
-  }
+function EntryBrickPinHeader() {
+  return (
+    <div className="brick__notice brick__notice--info">
+      {i18n.t('entry.pinned_header')}
+    </div>
+  );
 }
 
 EntryBrickPinHeader.propTypes = {

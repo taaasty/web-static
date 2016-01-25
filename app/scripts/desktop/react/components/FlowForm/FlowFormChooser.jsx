@@ -27,7 +27,7 @@ let FlowFormChooser = React.createClass({
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.open && prevState.open != this.state.open) {
-      this.refs.field.getDOMNode().focus();
+      this.refs.field.focus();
     }
   },
 

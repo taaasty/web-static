@@ -1,38 +1,44 @@
-import InfiniteScroll from '../common/infiniteScroll/index';
+/*global $ */
+import React, { Component, PropTypes } from 'react';
+import InfiniteScroll from '../common/InfiniteScroll';
 
-let FeedTlog = React.createClass({
-  propTypes: {
-    html: React.PropTypes.string.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextEntries: React.PropTypes.func.isRequired
-  },
+class FeedTlog extends Component {
+  handleScrollLoad() {
+    const $container = $(this.refs.container);
+    const lastEntryID = $container.children().last().data('id');
 
+    this.props.onLoadNextEntries(lastEntryID);
+  }
   render() {
+    const { html, canLoad, loading } = this.props;
+
     return (
       <div className="content-area">
         <div className="content-area__bg" />
         <div className="content-area__inner">
           <InfiniteScroll
-              loading={this.props.loading}
-              canLoad={this.props.canLoad}
-              onLoad={this.handleScrollLoad}>
+            canLoad={canLoad}
+            loading={loading}
+            onLoad={this.handleScrollLoad.bind(this)}
+          >
             <section
-                ref="container"
-                className="posts"
-                dangerouslySetInnerHTML={{__html: this.props.html || ''}} />
+              className="posts"
+              dangerouslySetInnerHTML={{__html: html || ''}}
+              ref="container"
+            />
           </InfiniteScroll>
         </div>
       </div>
-    )
-  },
-
-  handleScrollLoad() {
-    let $container = $(this.refs.container.getDOMNode());
-    let lastEntryID = $container.children().last().data('id');
-
-    this.props.onLoadNextEntries(lastEntryID);
+    );
   }
-});
+}
+
+
+FeedTlog.propTypes = {
+  html: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  canLoad: PropTypes.bool.isRequired,
+  onLoadNextEntries: PropTypes.func.isRequired,
+};
 
 export default FeedTlog;

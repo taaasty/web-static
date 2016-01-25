@@ -1,30 +1,30 @@
-let EntryBrickActions = React.createClass({
-  propTypes: {
-    hasModeration: React.PropTypes.bool.isRequired,
-    onAccept: React.PropTypes.func.isRequired,
-    onDecline: React.PropTypes.func.isRequired
-  },
+import React, { PropTypes } from 'react';
 
-  render() {
-    if (this.props.hasModeration) {
-      return (
-        <div className="brick__actions">
-          <div className="moderator-actions">
-            <div className="moderator-action moderator-action--accept"
-                 onClick={this.props.onAccept}>
-              <i className="icon icon--tick" />
-            </div>
-            <div className="moderator-action moderator-action--reject"
-                 onClick={this.props.onDecline}>
-              <i className="icon icon--cross" />
-            </div>
+function EntryBrickActions({ hasModeration, onAccept, onDecline }) {
+  return hasModeration
+    ? <div className="brick__actions">
+        <div className="moderator-actions">
+          <div
+            className="moderator-action moderator-action--accept"
+            onClick={onAccept}
+          >
+            <i className="icon icon--tick" />
+          </div>
+          <div
+            className="moderator-action moderator-action--reject"
+            onClick={onDecline}
+          >
+            <i className="icon icon--cross" />
           </div>
         </div>
-      );
-    } else {
-      return null;
-    }
-  }
-});
+      </div>
+    : <noscript />; //FIXME reploce with null as 0.15 come alive
+}
+
+EntryBrickActions.propTypes = {
+  hasModeration: PropTypes.bool.isRequired,
+  onAccept: PropTypes.func.isRequired,
+  onDecline: PropTypes.func.isRequired,
+};
 
 export default EntryBrickActions;

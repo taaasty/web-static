@@ -482,7 +482,12 @@
       "mark_all_read": "mark all as read"
     },
     "messenger": {
-      "send": "Send"
+      "send": "Send",
+      "select_form": {
+        "delete": "Delete",
+        "delete_everywhere": "Delete everywhere",
+        "cancel": "Cancel"
+      }
     },
     "unread_load": {
       "unread_entries_count": "__count__ new post. ",
@@ -515,5 +520,16 @@
   "switcher": {
     "label_on": "Yes",
     "label_off": "No"
+  },
+  "messenger": {
+    "title_actions": {
+      "disturb": "Disturb",
+      "dont_disturb": "Don't disturb",
+      "start_select_mode": "Select messages",
+      "delete_conversation": "Delete conversation"
+    },
+    "request": {
+      "conversation_delete_success": "Conversation successfully deleted"
+    }
   }
 }

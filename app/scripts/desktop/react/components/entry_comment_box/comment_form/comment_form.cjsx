@@ -16,17 +16,17 @@ window.EntryCommentBox_CommentForm = React.createClass
   getDefaultProps: -> disabled: false
 
   componentDidMount: ->
-    field = @refs.commentFormField.getDOMNode()
+    field = @refs.commentFormField
     autosize(field, {append: ''})
 
   componentDidUpdate: ->
-    field = @refs.commentFormField.getDOMNode()
+    field = @refs.commentFormField
     evt = document.createEvent('Event')
     evt.initEvent('autosize:update', true, false)
     field.dispatchEvent(evt)
 
   componentWillUnmount: ->
-    field = @refs.commentFormField.getDOMNode()
+    field = @refs.commentFormField
     evt = document.createEvent('Event')
     evt.initEvent('autosize:destroy', true, false)
     field.dispatchEvent(evt)
@@ -59,7 +59,7 @@ window.EntryCommentBox_CommentForm = React.createClass
              </div>
            </div>
 
-  getValue: -> @refs.commentFormField.getDOMNode().value
+  getValue: -> @refs.commentFormField.value
 
   isEmpty: -> @getValue().trim() is ''
 
@@ -72,7 +72,7 @@ window.EntryCommentBox_CommentForm = React.createClass
     newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
     newText = name + postfix + newText unless RegExp(name).exec newText
 
-    field = @refs.commentFormField.getDOMNode()
+    field = @refs.commentFormField
     field.value = newText
     field.focus()
 
@@ -94,7 +94,7 @@ window.EntryCommentBox_CommentForm = React.createClass
 
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
-    field = @refs.commentFormField.getDOMNode()
+    field = @refs.commentFormField
     valueLength = field.value.length
 
     if field.setSelectionRange != undefined

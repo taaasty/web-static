@@ -1,4 +1,5 @@
 classnames = require 'classnames'
+MessagesPopupActions = require '../../../actions/MessagesPopupActions';
 
 window.IndicatorsToolbar_Notifications = React.createClass
 
@@ -12,7 +13,7 @@ window.IndicatorsToolbar_Notifications = React.createClass
 
   componentDidUpdate: (prevProps, prevState) ->
     if prevState.unreadNotificationsCount > 0 && !@hasUnreadNotifications()
-      PopupActions.closeNotificationsPopup()
+      MessagesPopupActions.closeNotificationsPopup()
 
   componentWillUnmount: ->
     MessagingStatusStore.removeChangeListener @_onStoreChange

@@ -1,7 +1,9 @@
-import _ from 'lodash';
+/*global i18n */
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
 import Notice from '../components/alerts/Notice';
 
-let NoticeService = {
+const NoticeService = {
   _ID: 1,
   _queue: [],
   _activeID: null,
@@ -28,26 +30,26 @@ let NoticeService = {
   },
 
   getTimeoutForText(text = '') {
-    let multiplier = text.length < 30 ? 200 : 100;
+    const multiplier = text.length < 30 ? 200 : 100;
     return text.length * multiplier;
   },
 
   register(type, text, timeout) {
-    let ID = this.getID();
+    const ID = this.getID();
     this._notices[ID] = {type, text, timeout};
     return ID;
   },
 
   addToQueue(ID) {
     if (!this._notices.hasOwnProperty(ID)) {
-      return false;
+      return;
     }
     this._queue.push(ID);
   },
 
   notify(type, text, timeout) {
     timeout = timeout || this.getTimeoutForText(text);
-    let ID = this.register(type, text, timeout);
+    const ID = this.register(type, text, timeout);
     this.addToQueue(ID);
     this.render();
   },
@@ -69,7 +71,7 @@ let NoticeService = {
     }
 
     if (isPageLoadingCanceled(response) || response.statusText === 'abort') {
-      return false;
+      return;
     }
 
     let message = '';
@@ -86,35 +88,35 @@ let NoticeService = {
 
   render() {
     if (this._queue.length < 1) {
-      return false;
+      return;
     }
 
     this._activeID = this._queue[this._queue.length - 1];
-    let container = this.getContainer(),
-        data = this.getActive();
+    const container = this.getContainer();
+    const data = this.getActive();
 
-    React.unmountComponentAtNode(container);
-    React.render(<Notice {...data} onClose={this.close.bind(this)} />, container);
+    unmountComponentAtNode(container);
+    render(<Notice {...data} onClose={this.close.bind(this)} />, container);
   },
 
   close() {
-    let container = this.getContainer(),
-        ID = this._queue.pop();
+    const container = this.getContainer();
+    const ID = this._queue.pop();
 
-    React.unmountComponentAtNode(container);
+    unmountComponentAtNode(container);
     delete this._notices[ID];
     this._activeID = null;
     this.render();
   },
 
   closeAll() {
-    let container = this.getContainer();
+    const container = this.getContainer();
 
-    React.unmountComponentAtNode(container);
+    unmountComponentAtNode(container);
     this._queue = [];
     this._activeID = null;
     this._notices = {};
-  }
+  },
 };
 
 export default NoticeService;

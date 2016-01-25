@@ -1,11 +1,12 @@
-import InfiniteScroll from '../common/infiniteScroll/index';
+import React, { createClass, PropTypes } from 'react';
+import InfiniteScroll from '../common/InfiniteScroll';
 
-let SearchResultsTlog = React.createClass({
+let SearchResultsTlog = createClass({
   propTypes: {
-    html: React.PropTypes.string.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextPage: React.PropTypes.func.isRequired
+    canLoad: PropTypes.bool.isRequired,
+    html: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onLoadNextPage: PropTypes.func.isRequired,
   },
 
   render() {

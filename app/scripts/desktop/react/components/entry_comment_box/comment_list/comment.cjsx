@@ -1,4 +1,5 @@
 classnames = require 'classnames'
+{ findDOMNode } = require 'react-dom';
 
 window.EntryCommentBox_Comment = React.createClass
 
@@ -44,12 +45,12 @@ window.EntryCommentBox_Comment = React.createClass
            </article>
 
   _scrollToComment: ->
-    $comment = $( @getDOMNode() )
+    comment = findDOMNode(this);
 
     # Предотвращаем запоминание положения scrollTop в Chrome и Safari
-    $(window).one 'load', => TastyUtils.scrollToElement @getDOMNode()
+    $(window).one 'load', => TastyUtils.scrollToElement comment
 
     # Принудительно скроллим к зашаренному комменту, если загрузка страницы
     # закончилась раньше чем мы зарегистрировали callback
-    if $(window).scrollTop() != $comment.offset().top
-      TastyUtils.scrollToElement @getDOMNode()
+    if $(window).scrollTop() != $(comment).offset().top
+      TastyUtils.scrollToElement comment

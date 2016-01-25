@@ -19,6 +19,24 @@ class window.MessagingRequester
         socket_id: @socket_id
         content: content
 
+  deleteConversation: (id) ->
+    $.ajax({
+      url: ApiRoutes.messengerConversationById(id),
+      method: 'DELETE',
+      data: { socked_id: this.socket_id },
+    })
+
+  deleteMessages: (conversationId, ids=[], all) ->
+    $.ajax({
+      url: ApiRoutes.messengerDeleteMessages(conversationId),
+      method: 'DELETE',
+      data: {
+        socket_id: this.socket_id,
+        ids: ids.join(','),
+        all: all,
+      }
+    })
+
   loadMessages: (conversationId) ->
     $.ajax
       url: ApiRoutes.messenger_load_messages_url conversationId

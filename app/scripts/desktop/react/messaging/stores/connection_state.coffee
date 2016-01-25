@@ -1,3 +1,4 @@
+MessagingDispatcher = require '../MessagingDispatcher';
 CONNECTION_EVENT = 'connectionStateUpdated'
 
 _connectionState = null
