@@ -454,7 +454,11 @@
     "header": "Create flow"
   },
   "manage_flow": {
-    "header": "Flow management"
+    "header": "Flow management",
+    "private_description": "Only approved members can view and submit posts.",
+    "private_title": "Private flow?",
+    "premoderate_description": "Posts appear in the flow only after approval",
+    "premoderate_title": "Pre-moderation",
   },
   "tlog_alert": {
     "owner_private_tlog": "Tlog is visible only to the followers and to requesters after approval. And of course for you.",
