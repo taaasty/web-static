@@ -156,7 +156,9 @@ const MessagesStore = Object.assign(
 
     deleteUserMessages(conversationId, deleted) {
       const messages = _messages[conversationId] || [];
-      const deletedHash = deleted.reduce((acc, { id, content }) => acc[id] = content, {});
+      const deletedHash = deleted.reduce((acc, { id, content }) => {
+        return acc[id] = content, acc;
+      }, {});
       const deletedIds = Object.keys(deletedHash);
 
       _selectedIds = _selectedIds.filter((id) => deletedIds.indexOf(id) < 0);
