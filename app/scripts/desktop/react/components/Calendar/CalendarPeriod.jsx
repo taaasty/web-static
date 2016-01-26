@@ -2,10 +2,8 @@ import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import CalendarMarker from './CalendarMarker';
 
-class CalendarPeriod {
-  renderNodes() {
-    const { period, selectedEntryId, visibleMarkers } = this.props;
-
+function CalendarPeriod({ period, selectedEntryId, visibleMarkers }) {
+  function renderNodes() {
     return period.markers.map((marker, i) => {
       const selected = selectedEntryId === marker.entry_id;
       const highlighted = (_.indexOf(visibleMarkers, marker.entry_id) > -1);
@@ -20,18 +18,17 @@ class CalendarPeriod {
       );
     });
   }
-  render() {
-    return (
-      <li className="calendar__period">
-        <div className="calendar__period-date">
-          {this.props.period.title}
-        </div>
-        <ul className="calendar__period-line">
-          {this.renderNodes()}
-        </ul>
-      </li>
-    );
-  }
+
+  return (
+    <li className="calendar__period">
+      <div className="calendar__period-date">
+        {period.title}
+      </div>
+      <ul className="calendar__period-line">
+        {renderNodes()}
+      </ul>
+    </li>
+  );
 }
 
 CalendarPeriod.propTypes = {

@@ -18,7 +18,8 @@ export default connect(
     currentUserId: state.currentUser.data.id,
     isLogged: !!state.currentUser.data.id,
     tlog: state.tlog,
-    tlogEntries: {},
+    tlogEntries: state.tlogEntries,
     tlogEntry: state.tlogEntry,
+    calendar: state.calendar,
   })
 )(TlogPageRootContainer);

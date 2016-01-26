@@ -1,4 +1,14 @@
-const initialState = {};
+const initialState = {
+  author: {},
+  design: {
+    backgroundImageUrl: '',
+    feedOpacity: '',
+  },
+  slug: '',
+  tlog_url: '',
+  my_relationship: '',
+  stats: {},
+};
 
 const actionMap = {
   

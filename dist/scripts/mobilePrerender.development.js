@@ -12727,7 +12727,9 @@ function prop2redux(component, props) {
         tlog_url: props.user && props.user.tlog_url,
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats
-      }
+      },
+      tlogEntry: {},
+      tlogEntries: props.entries_info || {}
     };
   }
 }
