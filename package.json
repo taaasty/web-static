@@ -36,7 +36,7 @@
     "react-dom": "^0.14.6",
     "react-imageloader": "^2.1.0",
     "react-lazy-load": "^2.0.2",
-    "react-masonry-mixin": "^0.5.7",
+    "react-masonry-component": "^3.0.0",
     "react-portal": "^1.4.1",
     "react-tap-event-plugin": "^0.2.1",
     "react-textarea-autosize": "^3.3.0",

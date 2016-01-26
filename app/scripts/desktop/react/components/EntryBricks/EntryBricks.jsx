@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React, { createClass, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import WaypointService from '../../services/CustomWaypointService';
 import EntryBrick from '../Entry/EntryBrick/EntryBrick';
 import InfiniteScroll from '../common/InfiniteScroll';
-import MasonryMixin from 'react-masonry-mixin';
+import Masonry from 'react-masonry-component';
 
 const masonryOptions = {
   itemSelector: '.brick',
@@ -14,43 +14,29 @@ const masonryOptions = {
   stamp: '.navs-line',
 };
 
-let EntryBricks = createClass({
-  propTypes: {
-    canLoad: PropTypes.bool.isRequired,
-    entries: PropTypes.array.isRequired,
-    host_tlog_id: PropTypes.number,
-    loading: PropTypes.bool.isRequired,
-    onLoadMoreEntries: PropTypes.func.isRequired,
-  },
-  mixins: [MasonryMixin('masonryContainer', masonryOptions)],
-
+class EntryBricks extends Component {
   componentDidMount() {
     if (this.masonry) {
       this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
       this.waypointService.attach();
-      this.waypointRefresh = _.debounce(this.waypointService.refresh, 100);
       this.masonry.on('layoutComplete', _.debounce(this.waypointService.refresh, 100));
     }
-    this.onResize = _.debounce(this.restamp, 100);
+    this.onResize = _.debounce(this.restamp.bind(this), 100);
     window.addEventListener('resize', this.onResize, false);
-  },
-
+  }
   componentWillUnmount() {
     if (this.masonry && this.waypointService) {
       this.waypointService.detach();
       this.masonry.off('layoutComplete');
     }
-    window.removeEventListener('resize', this.onRsize, false);
-  },
-
+    window.removeEventListener('resize', this.onResize, false);
+  }
   restamp() {
     this.forceUpdate();
-  },
-
+  }
   onWaypointTrigger(data) {
     setQuery({ since_entry_id: data.id });
-  },
-
+  }
   render() {
     const { canLoad, children, entries, host_tlog_id, loading, onLoadMoreEntries } = this.props;
 
@@ -61,7 +47,12 @@ let EntryBricks = createClass({
           loading={loading}
           onLoad={onLoadMoreEntries}
         >
-          <section className="bricks" ref="masonryContainer">
+          <Masonry
+            className="bricks"
+            elementType="section"
+            options={masonryOptions}
+            ref={(c) => {if (c) { this.masonry = c.masonry; }}}
+          >
             {children}
             {entries.map((item) =>
                <EntryBrick
@@ -71,11 +62,19 @@ let EntryBricks = createClass({
                  moderation={item.moderation}
                />)
             }
-          </section>
+          </Masonry>
         </InfiniteScroll>
       </div>
     );
   }
-});
+}
+
+EntryBricks.propTypes = {
+  canLoad: PropTypes.bool.isRequired,
+  entries: PropTypes.array.isRequired,
+  host_tlog_id: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
+  onLoadMoreEntries: PropTypes.func.isRequired,
+};
 
 export default EntryBricks;

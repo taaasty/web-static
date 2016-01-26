@@ -1,5 +1,6 @@
 /*global ReactGrammarMixin, messagingService, TastyEvents */
-import React, { createClass, findDOMNode, PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import MessageActions from '../../../../actions/MessageActions';
 import MessagesStore from '../../../../stores/MessagesStore';
 import Item from './Item';

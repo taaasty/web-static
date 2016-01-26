@@ -1,5 +1,6 @@
 /*global $ */
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const windowHeight = $(window).height();
