@@ -1,4 +1,5 @@
-const initialState = {};
+const initialState = {
+};
 
 const actionMap = {
   

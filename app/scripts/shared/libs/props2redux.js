@@ -12,6 +12,8 @@ export default function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats,
       },
+      tlogEntry: {},
+      tlogEntries: props.entries_info || void 0,
     };
   }
 }

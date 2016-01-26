@@ -5,9 +5,6 @@ import CurrentUserStore from '../../stores/current_user';
 
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
-import Calendar from '../Calendar';
-
-import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 
 class EntryPageContainer extends Component {
   getEntryImg(entry={}) {
@@ -19,52 +16,41 @@ class EntryPageContainer extends Component {
         
   }
   render() {
-    const { bgStyle, commentator, currentUserId, entry, error,
-            locale, relationship, stats, successDeleteUrl, user } = this.props;
+    const { bgStyle, commentator, currentUserId, error,
+            locale, successDeleteUrl, user } = this.props;
     const entry = this.props.entry || {};
     
     return (
-      <div>
-        <div className="page-body">
-          <div className="content-area">
-            <div className="content-area__bg" style={bgStyle} />
-            <div className="content-area__inner">
-              {currentUserId && entry.author &&
-               currentUserId === entry.author.id && !entry.is_private &&
-               <PinPostButton
-                 entryId={entry.id}
-                 orderId={entry.fixed_order_id}
-                 status={entry.fixed_state}
-                 till={entry.fixed_up_at}
-               />
-              }
-              <div>
-                <EntryTlog
-                  commentator={commentator}
-                  entry={entry}
-                  error={error}
-                  host_tlog_id={user.id}
-                  locale={locale}
-                  successDeleteUrl={successDeleteUrl}
-                />
-              </div>
-              <nav className="pagination">
-                <a className="pagination__item" href={user.tlog_url}>
-                  {i18n.t('buttons.pagination.tlog_root')}
-                </a>
-              </nav>
+      <div className="page-body">
+        <div className="content-area">
+          <div className="content-area__bg" style={bgStyle} />
+          <div className="content-area__inner">
+            {currentUserId && entry.author &&
+             currentUserId === entry.author.id && !entry.is_private &&
+             <PinPostButton
+               entryId={entry.id}
+               orderId={entry.fixed_order_id}
+               status={entry.fixed_state}
+               till={entry.fixed_up_at}
+             />
+            }
+            <div>
+              <EntryTlog
+                commentator={commentator}
+                entry={entry}
+                error={error}
+                host_tlog_id={user.id}
+                locale={locale}
+                successDeleteUrl={successDeleteUrl}
+              />
             </div>
+            <nav className="pagination">
+              <a className="pagination__item" href={user.tlog_url}>
+                {i18n.t('buttons.pagination.tlog_root')}
+              </a>
+            </nav>
           </div>
         </div>
-        {(!user.is_privacy ||
-          currentUserId === user.id ||
-          (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
-         <Calendar
-           entryCreatedAt={entry.created_at || (new Date()).toISOString()}
-           entryId={entry.id}
-           locale={locale}
-           tlogId={user.id}
-         />}
       </div>
     );
   }
