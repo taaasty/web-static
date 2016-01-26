@@ -1,3 +1,4 @@
+import React, { createClass, PropTypes } from 'react';
 import FlowBrick from '../Flow/FlowBrick';
 import InfiniteScroll from '../common/InfiniteScroll';
 import MasonryMixin from 'react-masonry-mixin';
@@ -6,42 +7,44 @@ const masonryOptions = {
   itemSelector: '.brick',
   transitionDuration: 0,
   isFitWidth: true,
-  gutter: 20
+  gutter: 20,
 };
 
-let Bricks = React.createClass({
+const Bricks = createClass({
+  propTypes: {
+    canLoad: PropTypes.bool.isRequired,
+    flows: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onLoadMoreFlows: PropTypes.func.isRequired,
+  },
   mixins: [MasonryMixin('masonryContainer', masonryOptions)],
 
-  propTypes: {
-    flows: React.PropTypes.array.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadMoreFlows: React.PropTypes.func.isRequired
-  },
-
   render() {
-    let entryList = this.props.flows.map((item) => {
+    const { canLoad, flows, loading, onLoadMoreFlows } = this.props;
+    const entryList = flows.map((item) => {
       return (
         <FlowBrick
-            flow={item.flow}
-            relationship={item.relationship}
-            key={item.flow.id} />
+          flow={item.flow}
+          key={item.flow.id}
+          relationship={item.relationship}
+        />
       );
     });
 
     return (
       <div className="bricks-wrapper">
         <InfiniteScroll
-            loading={this.props.loading}
-            canLoad={this.props.canLoad}
-            onLoad={this.props.onLoadMoreFlows}>
-          <section ref="masonryContainer" className="bricks">
+          canLoad={canLoad}
+          loading={loading}
+          onLoad={onLoadMoreFlows}
+        >
+          <section className="bricks" ref="masonryContainer">
             {entryList}
           </section>
         </InfiniteScroll>
       </div>
     );
-  }
+  },
 });
 
 export default Bricks;
