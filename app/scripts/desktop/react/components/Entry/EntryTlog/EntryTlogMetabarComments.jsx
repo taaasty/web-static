@@ -1,40 +1,37 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 
-export default class EntryTlogMetabarComments {
-  static propTypes = {
-    url: PropTypes.string.isRequired,
-    commentator: PropTypes.object,
-    commentsCount: PropTypes.number.isRequired,
-  };
-  render() {
-    let content;
+function EntryTlogMetabarComments({ commentator, commentsCount, onComment, url }) {
+  function numberOfComments() {
+    return commentsCount
+      ? i18n.t('comments_count', {count: commentsCount})
+      : i18n.t('no_comments');
+  }
 
-    if (this.props.commentator) {
-      content = (
-        <a className="meta-item__common meta__link"
-           onClick={this.props.onComment}>
-          {i18n.t('entry_meta_comment_link')}
-        </a>
-      );
-    } else {
-      content = (
-        <a href={this.props.url} className="meta-item__common meta__link">
-          {this.getNumberOfComments()}
-        </a>
-      );
-    }
-
-    return (
-      <span className="meta-item meta-item_comments">
-        <span className="meta__content">{content}</span>
+  return (
+    <span className="meta-item meta-item_comments">
+      <span className="meta__content">
+        {commentator
+         ? <a
+             className="meta-item__common meta__link"
+             onClick={onComment}
+           >
+             {i18n.t('entry_meta_comment_link')}
+           </a>
+         : <a className="meta-item__common meta__link" href={url}>
+             {numberOfComments()}
+           </a>
+        }
       </span>
-    );
-  }
-  getNumberOfComments() {
-    if (this.props.commentsCount) {
-      return i18n.t('comments_count', {count: this.props.commentsCount});
-    } else {
-      return i18n.t('no_comments');
-    }
-  }
+    </span>
+  );
 }
+
+EntryTlogMetabarComments.propTypes = {
+  commentator: PropTypes.object,
+  commentsCount: PropTypes.number.isRequired,
+  onComment: PropTypes.func,
+  url: PropTypes.string.isRequired,
+};
+
+export default EntryTlogMetabarComments;

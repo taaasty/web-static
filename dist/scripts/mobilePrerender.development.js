@@ -12729,7 +12729,7 @@ function prop2redux(component, props) {
         stats: props.stats
       },
       tlogEntry: {},
-      tlogEntries: props.entries_info || {}
+      tlogEntries: props.entries_info || void 0
     };
   }
 }

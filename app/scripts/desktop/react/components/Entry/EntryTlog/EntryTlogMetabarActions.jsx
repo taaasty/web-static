@@ -1,10 +1,10 @@
 /*global i18n */
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../common/DropdownActions';
 import DropdownAction from '../../common/DropdownAction';
 import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
-class EntryTlogMetabarActions {
+class EntryTlogMetabarActions extends Component {
   canPin() {
     const { commentator, entry: { author, is_private } } = this.props;
 
@@ -51,7 +51,7 @@ EntryTlogMetabarActions.propTypes = {
   entry: PropTypes.object.isRequired,
 };
 
-class EntryTlogMetabarFavorite {
+class EntryTlogMetabarFavorite extends Component {
   static propTypes = {
     isFavorited: PropTypes.bool,
     onAddToFavorites: PropTypes.func.isRequired,
@@ -83,7 +83,7 @@ class EntryTlogMetabarFavorite {
   }
 }
 
-class EntryTlogMetabarWatch {
+class EntryTlogMetabarWatch extends Component {
   static propTypes = {
     isWatching: PropTypes.bool,
     onAddToWatching: PropTypes.func.isRequired,
@@ -113,7 +113,7 @@ class EntryTlogMetabarWatch {
   }
 }
 
-class EntryTlogMetabarReport {
+class EntryTlogMetabarReport extends Component {
   static propTypes = {
     onReport: PropTypes.func.isRequired,
   };
@@ -128,7 +128,7 @@ class EntryTlogMetabarReport {
   }
 }
 
-class EntryTlogMetabarDelete {
+class EntryTlogMetabarDelete extends Component {
   static propTypes = {
     onDelete: PropTypes.func.isRequired,
   };
