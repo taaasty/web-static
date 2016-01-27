@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
@@ -7,7 +7,7 @@ import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
-class EntryTlogTextType {
+class EntryTlogTextType extends Component {
   startComment() {
     this.refs.comments.startComment();
   }

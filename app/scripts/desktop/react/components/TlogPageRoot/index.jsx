@@ -12,9 +12,9 @@ const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageRoot extends Component {
   componentDidMount() {
-    this.getCalendar();
+    this.getCalendarData();
   }
-  getCalendar() {
+  getCalendarData() {
     const { currentUserId, dispatch, tlog: { author, my_relationship } } = this.props;
     
     if (author && (!author.is_privacy ||

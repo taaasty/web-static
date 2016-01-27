@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
@@ -6,7 +6,7 @@ import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
-class EntryTlogQuoteType {
+class EntryTlogQuoteType extends Component {
   startComment() {
     this.refs.comments.startComment();
   }

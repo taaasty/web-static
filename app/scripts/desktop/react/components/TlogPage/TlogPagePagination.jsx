@@ -1,31 +1,27 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 
-class TlogPagePagination {
-  render() {
-    const { nextPageUrl, prevPageUrl } = this.props;
-
-    return (
-      <nav className="pagination">
-        {prevPageUrl &&
-         <a
-           className="pagination__item pagination__item--prev"
-           href={prevPageUrl}
-         >
-           {i18n.t('tlog.earlier')}
-         </a>
-        }
-        {nextPageUrl &&
-         <a
-           className="pagination__item pagination__item--next"
-           href={nextPageUrl}
-         >
-           {i18n.t('tlog.later')}
-         </a>
-        }
-      </nav>
-    );
-  }
+function TlogPagePagination({ nextPageUrl, prevPageUrl }) {
+  return (
+    <nav className="pagination">
+      {prevPageUrl &&
+       <a
+         className="pagination__item pagination__item--prev"
+         href={prevPageUrl}
+       >
+         {i18n.t('tlog.earlier')}
+       </a>
+      }
+      {nextPageUrl &&
+       <a
+         className="pagination__item pagination__item--next"
+         href={nextPageUrl}
+       >
+         {i18n.t('tlog.later')}
+       </a>
+      }
+    </nav>
+  );
 }
 
 TlogPagePagination.propTypes = {

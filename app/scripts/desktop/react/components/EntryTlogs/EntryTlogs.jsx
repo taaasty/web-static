@@ -1,12 +1,12 @@
 /*global $ */
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import WaypointService from '../../services/CustomWaypointService';
 import InfiniteScroll from '../common/InfiniteScroll';
 
-class EntryTlogs {
+class EntryTlogs extends Component {
   componentDidMount() {
     this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
     this.waypointService.attach();

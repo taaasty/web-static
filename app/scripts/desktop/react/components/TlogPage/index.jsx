@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
 import TlogPageBody from './TlogPageBody';
-
 import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_FLOW,
@@ -12,7 +10,7 @@ import {
 class TlogPageContainer extends Component {
   render() {
     const { author, design: { feedOpacity }, my_relationship, tlog_url } = this.props.tlog;
-    const { currentUserId, entries_info, error, loadUrl,
+    const { currentUserId, tlogEntries, error, loadUrl,
             locale, nextPageFieldName, nextPageParamName, nextPageUrl, prevPageUrl,
             queryString, section } = this.props;
 
@@ -20,7 +18,7 @@ class TlogPageContainer extends Component {
       <TlogPageBody
         bgStyle={{ opacity: feedOpacity }}
         currentUserId={currentUserId}
-        entries_info={entries_info}
+        entries_info={tlogEntries}
         error={error}
         hostTlogUrl={tlog_url}
         loadUrl={loadUrl}

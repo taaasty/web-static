@@ -1,29 +1,33 @@
 import React, { PropTypes } from 'react';
+import moment from 'moment';
 
-export default class EntryTlogCommentMetabarDate {
-  static propTypes = {
-    url: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  };
-  render() {
-    let now = moment(),
-        createdAt = moment(this.props.date);
+function EntryTlogCommentMetabarDate({ date, url }) {
+  const now = moment();
+  const createdAt = moment(date);
 
-    let date;
-    if (now.diff(createdAt, 'seconds') < 5) {
-      date = createdAt.subtract(5, 's').fromNow();
-    } else if (now.diff(createdAt, 'minutes') < 180) {
-      date = createdAt.fromNow()
-    } else if (now.diff(createdAt, 'days') < 1) {
-      date = createdAt.calendar()
-    } else {
-      date = createdAt.format(now.year() !== createdAt.year() ? 'D MMMM YYYY' : 'D MMMM');
-    }
-
-    return (
-      <a className="comment__date-link" href={this.props.url}>
-        <span className="comment__date">{date}</span>
-      </a>
-    );
+  let formatDate;
+  if (now.diff(createdAt, 'seconds') < 5) {
+    formatDate = createdAt.subtract(5, 's').fromNow();
+  } else if (now.diff(createdAt, 'minutes') < 180) {
+    formatDate = createdAt.fromNow();
+  } else if (now.diff(createdAt, 'days') < 1) {
+    formatDate = createdAt.calendar();
+  } else {
+    formatDate = createdAt.format(now.year() !== createdAt.year() ? 'D MMMM YYYY' : 'D MMMM');
   }
+
+  return (
+    <a className="comment__date-link" href={url}>
+      <span className="comment__date">
+        {formatDate}
+      </span>
+    </a>
+  );
 }
+
+EntryTlogCommentMetabarDate.propTypes = {
+  date: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
+export default EntryTlogCommentMetabarDate;
