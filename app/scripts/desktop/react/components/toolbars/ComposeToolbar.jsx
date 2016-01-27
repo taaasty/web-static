@@ -1,4 +1,4 @@
-/*global i18n */
+/*global $, i18n */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
@@ -12,16 +12,16 @@ class ComposeToolbar extends Component {
     $(this.refs.button).tooltip({
       title: i18n.t('toolbar_new_entry_item'),
       placement: 'left',
-      container: '.toolbar--compose'
+      container: '.toolbar--compose',
     });
   }
   componentWillUnmount() {
     $(this.refs.button).tooltip('destroy');
   }
-  onMouseEnter(ev) {
+  onMouseEnter() {
     this.setState({ dropdownVisible: true });
   }
-  onMouseLeave(ev) {
+  onMouseLeave() {
     this.setState({ dropdownVisible: false });
   }
   render() {

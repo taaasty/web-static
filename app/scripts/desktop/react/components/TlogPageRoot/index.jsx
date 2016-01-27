@@ -41,7 +41,7 @@ class TlogPageRoot extends Component {
       children,
       (child) => cloneElement(child, { currentUserId, tlog, tlogEntries, tlogEntry })
     );
-
+    
     return (
       <div className="page">
         <div className="page__inner">

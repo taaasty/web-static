@@ -12,7 +12,7 @@ class SocialShare extends Component {
     this.titleEl = document.createElement('div');
     this.setState({ title: this.parseTitle(this.props.title) });
   }
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({ title: this.parseTitle(nextProps.title) });
   }
   parseTitle(title) {

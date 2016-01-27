@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
   items: [],
   has_more: null,
   next_since_entry_id: null,

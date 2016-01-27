@@ -1,20 +1,19 @@
 import React, { PropTypes } from 'react';
 import ConversationActions from '../../messaging/actions/ConversationActions';
 
-class WriteMessageButton {
-  handleClick() {
-    ConversationActions.openConversation(this.props.user.id);
+function WriteMessageButton({ user }) {
+  function handleClick() {
+    ConversationActions.openConversation(user.id);
   }
-  render() {
-    return (
-      <button
-        className="write-message-button"
-        onClick={this.handleClick.bind(this)}
-      >
-        <i className="icon icon--messages" />
-      </button>
-    );
-  }
+
+  return (
+    <button
+      className="write-message-button"
+      onClick={handleClick}
+    >
+      <i className="icon icon--messages" />
+    </button>
+  );
 }
 
 WriteMessageButton.propTypes = {

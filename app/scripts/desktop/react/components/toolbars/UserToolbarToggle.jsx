@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
 
-let UserToolbarToggle = React.createClass({
+const UserToolbarToggle = createClass({
   propTypes: {
     hasConversations: PropTypes.bool.isRequired,
     hasNotifications: PropTypes.bool.isRequired,
@@ -8,17 +8,12 @@ let UserToolbarToggle = React.createClass({
     onMouseEnter: PropTypes.func.isRequired,
   },
 
-  render() {
-    return (
-      <div
-        className="toolbar__toggle"
-        onMouseEnter={this.onMouseEnter}
-        onTouchTap={this.onClick}
-      >
-        {this.renderIndicators()}
-        <i className="icon icon--menu" />
-      </div>
-    );
+  onClick() {
+    this.props.onClick();
+  },
+
+  onMouseEnter() {
+    this.props.onMouseEnter();
   },
 
   renderIndicators() {
@@ -40,12 +35,17 @@ let UserToolbarToggle = React.createClass({
     );
   },
 
-  onClick() {
-    this.props.onClick();
-  },
-
-  onMouseEnter() {
-    this.props.onMouseEnter();
+  render() {
+    return (
+      <div
+        className="toolbar__toggle"
+        onMouseEnter={this.onMouseEnter}
+        onTouchTap={this.onClick}
+      >
+        {this.renderIndicators()}
+        <i className="icon icon--menu" />
+      </div>
+    );
   },
 });
 
