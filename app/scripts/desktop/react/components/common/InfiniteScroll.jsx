@@ -66,13 +66,14 @@ class InfiniteScroll extends Component {
 }
 
 InfiniteScroll.propTypes = {
+  canLoad: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
-    PropTypes.element, PropTypes.array
+    PropTypes.element,
+    PropTypes.array,
   ]).isRequired,
   loading: PropTypes.bool.isRequired,
-  canLoad: PropTypes.bool.isRequired,
-  onLoad: PropTypes.func.isRequired,
   onAfterLoad: PropTypes.func,
+  onLoad: PropTypes.func.isRequired,
 };
 
 export default InfiniteScroll;

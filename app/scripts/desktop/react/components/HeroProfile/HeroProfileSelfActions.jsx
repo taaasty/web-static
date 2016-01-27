@@ -3,20 +3,15 @@ import React from 'react';
 import HeroProfileSettingsButton from './HeroProfileSettingsButton';
 import PopupActions from '../../actions/popup';
 
-class HeroProfileSelfActions {
-  showSettings() {
-    PopupActions.showSettings();
-  }
-  render() {
-    return (
-      <div className="hero__actions">
-        <button className="button button--small button--outline">
-          {i18n.t('buttons.actions.thats_you')}
-        </button>
-        <HeroProfileSettingsButton onClick={this.showSettings} />
-      </div>
-    );
-  }
+function  HeroProfileSelfActions() {
+  return (
+    <div className="hero__actions">
+      <button className="button button--small button--outline">
+        {i18n.t('buttons.actions.thats_you')}
+      </button>
+      <HeroProfileSettingsButton onClick={PopupActions.showSettings} />
+    </div>
+  );
 }
 
 HeroProfileSelfActions.propTypes = {

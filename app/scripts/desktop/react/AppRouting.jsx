@@ -13,6 +13,8 @@ const AppRouting = function() {
       <Route path="/" component={App}>
         <Route path="~:slug" component={TlogPageRootContainer}>
           <IndexRoute component={TlogPage} />
+          <Route path="privates" component={TlogPage} />
+          <Route path="favorites" component={TlogPage} />
           <Route path=":year/:month/:day" component={TlogPage} />
           <Route path=":entryPath" component={EntryPage} />
         </Route>

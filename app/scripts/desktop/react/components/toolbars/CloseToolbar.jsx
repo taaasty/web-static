@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-class CloseToolbar {
+class CloseToolbar extends Component {
   componentWillMount() {
     if (window.isMobile()) {
       this.onMouseEnter = () => {};

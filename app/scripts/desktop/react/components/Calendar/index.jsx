@@ -27,7 +27,7 @@ class Calendar extends Component {
     // Следим за скроллингом, только если находимся на странице списка постов
     if ($post.closest(TARGET_POST_PARENT_CLASS)) {
       $(document).on('waypoint.trigger', (ev, { id, time }) => (
-        this.updateSelectedEntry(id, time)
+        this.updateSelectedEntry(parseInt(id, 10), time)
       ));
     }
   }

@@ -1,3 +1,4 @@
+import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import Scroller from '../common/scroller/scroller';
 import UserToolbarToggle from './UserToolbarToggle';
@@ -6,61 +7,35 @@ import UserToolbarPrimaryList from './UserToolbarPrimaryList';
 import UserToolbarAdditionalList from './UserToolbarAdditionalList';
 import UserToolbarGuestList from './UserToolbarGuestList';
 
-let UserToolbar = React.createClass({
+const UserToolbar = createClass({
   propTypes: {
-    hovered: React.PropTypes.bool.isRequired,
-    userLogged: React.PropTypes.bool.isRequired,
-    unreadAnonymousCount: React.PropTypes.number.isRequired,
-    unreadBestCount: React.PropTypes.number.isRequired,
-    unreadConversationsCount: React.PropTypes.number.isRequired,
-    unreadFriendsCount: React.PropTypes.number.isRequired,
-    unreadLiveCount: React.PropTypes.number.isRequired,
-    unreadLiveFlowCount: React.PropTypes.number.isRequired,
-    unreadNotificationsCount: React.PropTypes.number.isRequired,
-    searchUrl: React.PropTypes.string.isRequired,
-    searchTitleI18nKey: React.PropTypes.string.isRequired,
-    onMouseEnter: React.PropTypes.func.isRequired,
-    onMouseLeave: React.PropTypes.func.isRequired,
-    onToggleClick: React.PropTypes.func.isRequired,
-    onLineHover: React.PropTypes.func.isRequired,
-    onMessagesClick: React.PropTypes.func.isRequired,
-    onNotificationsClick: React.PropTypes.func.isRequired,
-    onFriendsClick: React.PropTypes.func.isRequired,
-    onDesignSettingsClick: React.PropTypes.func.isRequired,
-    onSettingsClick: React.PropTypes.func.isRequired,
-    onSearchClick: React.PropTypes.func.isRequired,
-  },
-
-  render() {
-    let navbarClasses = classnames('toolbar__navbar', {
-      'toolbar__navbar--complex': this.props.userLogged
-    });
-
-    return (
-      <div className="toolbar toolbar--main"
-           onMouseEnter={this.props.onMouseEnter}
-           onMouseLeave={this.props.onMouseLeave}>
-        <UserToolbarHoverLine onMouseEnter={this.props.onLineHover} />
-        <UserToolbarToggle
-          hasConversations={!!this.props.unreadConversationsCount}
-          hasNotifications={!!this.props.unreadNotificationsCount}
-          onClick={this.props.onToggleClick}
-          onMouseEnter={this.props.onLineHover}
-        />
-        <div className={navbarClasses}>
-          <Scroller>
-            {this.renderPrimaryList()}
-          </Scroller>
-          {this.renderAdditionalList()}
-        </div>
-      </div>
-    );
+    hovered: PropTypes.bool.isRequired,
+    onDesignSettingsClick: PropTypes.func.isRequired,
+    onFriendsClick: PropTypes.func.isRequired,
+    onLineHover: PropTypes.func.isRequired,
+    onMessagesClick: PropTypes.func.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired,
+    onNotificationsClick: PropTypes.func.isRequired,
+    onSearchClick: PropTypes.func.isRequired,
+    onSettingsClick: PropTypes.func.isRequired,
+    onToggleClick: PropTypes.func.isRequired,
+    searchTitleI18nKey: PropTypes.string.isRequired,
+    searchUrl: PropTypes.string.isRequired,
+    unreadAnonymousCount: PropTypes.number.isRequired,
+    unreadBestCount: PropTypes.number.isRequired,
+    unreadConversationsCount: PropTypes.number.isRequired,
+    unreadFriendsCount: PropTypes.number.isRequired,
+    unreadLiveCount: PropTypes.number.isRequired,
+    unreadLiveFlowCount: PropTypes.number.isRequired,
+    unreadNotificationsCount: PropTypes.number.isRequired,
+    user: PropTypes.object,
+    userLogged: PropTypes.bool.isRequired,
   },
 
   renderPrimaryList() {
-    if (this.props.userLogged) {
-      return (
-        <UserToolbarPrimaryList
+    return this.props.userLogged
+      ? <UserToolbarPrimaryList
           onDesignSettingsClick={this.props.onDesignSettingsClick}
           onFriendsClick={this.props.onFriendsClick}
           onMessagesClick={this.props.onMessagesClick}
@@ -75,26 +50,51 @@ let UserToolbar = React.createClass({
           unreadNotificationsCount={this.props.unreadNotificationsCount}
           user={this.props.user}
         />
-      );
-    } else {
-      return <UserToolbarGuestList
-               unreadBestCount={this.props.unreadBestCount}
-               unreadLiveCount={this.props.unreadLiveCount}
-             />;
-    }
+      : <UserToolbarGuestList
+          unreadBestCount={this.props.unreadBestCount}
+          unreadLiveCount={this.props.unreadLiveCount}
+        />;
   },
 
   renderAdditionalList() {
-    if (this.props.userLogged) {
-      return (
-        <UserToolbarAdditionalList
-            user={this.props.user}
-            searchTitleI18nKey={this.props.searchTitleI18nKey}
-            onSettingsClick={this.props.onSettingsClick}
-            onSearchClick={this.props.onSearchClick} />
-      );
-    }
-  }
+    return (
+      <UserToolbarAdditionalList
+        onSearchClick={this.props.onSearchClick}
+        onSettingsClick={this.props.onSettingsClick}
+        searchTitleI18nKey={this.props.searchTitleI18nKey}
+        user={this.props.user}
+      />
+    );
+  },
+
+  render() {
+    const navbarClasses = classnames({
+      'toolbar__navbar': true,
+      'toolbar__navbar--complex': this.props.userLogged,
+    });
+
+    return (
+      <div
+        className="toolbar toolbar--main"
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
+      >
+        <UserToolbarHoverLine onMouseEnter={this.props.onLineHover} />
+        <UserToolbarToggle
+          hasConversations={!!this.props.unreadConversationsCount}
+          hasNotifications={!!this.props.unreadNotificationsCount}
+          onClick={this.props.onToggleClick}
+          onMouseEnter={this.props.onLineHover}
+        />
+        <div className={navbarClasses}>
+          <Scroller>
+            {this.renderPrimaryList()}
+          </Scroller>
+          {this.props.userLogged && this.renderAdditionalList()}
+        </div>
+      </div>
+    );
+  },
 });
 
 export default UserToolbar;

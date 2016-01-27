@@ -1,13 +1,16 @@
-let UserToolbarSubList = React.createClass({
+/*global $ */
+import React, { createClass, PropTypes } from 'react';
+
+const UserToolbarSubList = createClass({
   propTypes: {
-    opened: React.PropTypes.bool
+    opened: PropTypes.bool,
   },
 
   shouldComponentUpdate(nextProps) {
     return this.opened !== nextProps.opened ? true : false;
   },
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     let $subNav = $(this.refs.container);
     // Mousewheel events for Pads arrows recalculation
     if (this.props.opened) {
@@ -27,7 +30,7 @@ let UserToolbarSubList = React.createClass({
         {this.props.children}
       </ul>
     );
-  }
+  },
 });
 
 export default UserToolbarSubList;

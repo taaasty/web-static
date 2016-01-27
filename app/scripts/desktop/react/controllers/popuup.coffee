@@ -1,4 +1,5 @@
 _ = require 'lodash'
+{ render, unmountComponentAtNode } = require 'react-dom';
 Popup = require '../components/PopupComponent/Popup'
 PopupArea = require '../components/PopupComponent/PopupArea'
 
@@ -24,7 +25,7 @@ class PopupController
     container = @addContainer containerAttribute
     popupProps.onClose = @handleClose.bind(@, containerAttribute)
 
-    React.render (
+    render (
       <Popup {...popupProps}>
         <Component {...props} />
       </Popup>
@@ -40,7 +41,7 @@ class PopupController
       _.defer =>
         @handleCloseWithBackground(containerAttribute)
 
-    React.render (
+    render (
       <PopupArea onClose={onClose}>
         <Popup {...popupProps} withBackground={true} onClose={onClose}>
           <Component {...props} />
@@ -57,12 +58,12 @@ class PopupController
         props.onClose()
         @handleClose containerAttribute
 
-    React.render <PopupComponent {...props} onClose={ onClose } />, container
+    render <PopupComponent {...props} onClose={ onClose } />, container
 
   close: (containerAttribute = @containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"
 
-    React.unmountComponentAtNode container
+    unmountComponentAtNode container
     @removeContainer container
 
   handleClose: (containerAttribute) ->

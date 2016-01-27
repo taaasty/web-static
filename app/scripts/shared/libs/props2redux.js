@@ -1,3 +1,5 @@
+import { initialState as tlogEntriesInitialState } from '../../desktop/react/reducers/tlogEntries'; //FIXME desktop only store
+
 export default function prop2redux(component, props) {
   if (component === 'TlogPageContainer') {
     return {
@@ -13,7 +15,7 @@ export default function prop2redux(component, props) {
         stats: props.stats,
       },
       tlogEntry: {},
-      tlogEntries: props.entries_info || void 0,
+      tlogEntries: { ...props.entries_info, loadUrl: props.loadUrl } || tlogEntriesInitialState,
     };
   }
 }

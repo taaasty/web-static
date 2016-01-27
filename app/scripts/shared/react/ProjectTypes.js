@@ -32,12 +32,6 @@ export const relationship = shape({
 
 const gender = oneOf(['f', 'm']);
 
-const userpicData = shape({
-  kind: string.isRequired,
-  original_url: string,
-  symbol: string,
-});
-
 export const heroUser = shape({
   gender,
   created_at: string.isRequired,
@@ -63,24 +57,30 @@ export const heroUser = shape({
   tlog_url: string.isRequired,
   total_entries_count: number.isRequired,
   updated_at: string.isRequired,
-  userpic: {
+  userpic: shape({
     default_colors: shape({
       background: string,
       name: string,
     }),
-    ...userpicData,
+    kind: string.isRequired,
     large_url: string,
+    original_url: string,
+    symbol: string,
     thumb128_url: string,
     thumb64_url: string,
     thumbor_path: string.isRequired,
-  },
+  }),
 });
 
 export const tlogData = shape({
   id: number.isRequired,
   tag: string.isRequired,
   url: string.isRequired,
-  userpic: userpicData.isRequired,
+  userpic: shape({
+    kind: string.isRequired,
+    original_url: string,
+    symbol: string,
+  }).isRequired,
 });
 
 export const tlogEntry = shape({
