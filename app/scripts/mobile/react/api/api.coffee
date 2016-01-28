@@ -300,7 +300,7 @@ Api =
 
   tlog:
     loadTlogEntries: (tlogId, sinceEntryId, limit) ->
-      url = ApiRoutes.tlogEntries(tlogId)
+      url = ApiRoutes._tlogEntries(tlogId)
       key = Constants.api.LOAD_TLOG_ENTRIES
       data =
         since_entry_id: sinceEntryId

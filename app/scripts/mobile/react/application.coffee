@@ -7,7 +7,6 @@ initLocales = (locale, callback) ->
   i18n
     .use(i18xhr)
     .init({
-      compatibilityJSON: 'v1',
       lng: locale,
       fallbackLng: 'ru',
       backend: {

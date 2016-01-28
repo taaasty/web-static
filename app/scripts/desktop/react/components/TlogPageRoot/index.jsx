@@ -6,8 +6,6 @@ import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
 
-import { getCalendar } from '../../actions/CalendarActions';
-
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageRoot extends Component {
@@ -15,12 +13,12 @@ class TlogPageRoot extends Component {
     this.getCalendarData();
   }
   getCalendarData() {
-    const { currentUserId, dispatch, tlog: { author, my_relationship } } = this.props;
+    const { currentUserId, tlog: { author, my_relationship }, CalendarActions } = this.props;
     
     if (author && (!author.is_privacy ||
                    author.id === currentUserId ||
                    my_relationship === RELATIONSHIP_STATE_FRIEND)) {
-      dispatch(getCalendar(author.id));
+      CalendarActions.getCalendar(author.id);
     }
     
   }
@@ -31,7 +29,8 @@ class TlogPageRoot extends Component {
   }
   render() {
     const { calendar, children, currentUserId, isLogged, queryString, locale,
-            params, section, tlog, tlogEntries, tlogEntry } = this.props;
+            params, section, tlog, tlogEntries, tlogEntry,
+            CalendarActions, TlogEntriesActions } = this.props;
     const { author, design: { backgroundImageUrl },
             my_relationship, slug, stats, tlog_url } = tlog;
     const calendarEntry = (params.entryPath
@@ -39,7 +38,15 @@ class TlogPageRoot extends Component {
       : tlogEntries.items.length && tlogEntries.items[0].entry) || {};
     const childrenWithProps = Children.map(
       children,
-      (child) => cloneElement(child, { currentUserId, tlog, tlogEntries, tlogEntry })
+      (child) => cloneElement(
+        child, {
+          currentUserId,
+          tlog,
+          tlogEntries,
+          tlogEntry,
+          CalendarActions,
+          TlogEntriesActions,
+        })
     );
     
     return (

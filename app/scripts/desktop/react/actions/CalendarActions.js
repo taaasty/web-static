@@ -13,14 +13,14 @@ function requestCalendar() {
 function errorCalendar(error) {
   return {
     type: CALENDAR_ERROR,
-    payload: { error },
+    payload: error,
   };
 }
 
 function receiveCalendar(calendar) {
   return {
     type: CALENDAR_RECEIVE,
-    payload: { calendar },
+    payload: calendar,
   };
 }
 
@@ -41,9 +41,9 @@ function shouldFetchCalendar(state, tlogId) {
     tlogId !== state.calendar.tlog_id;
 }
 
-export function getCalendar(tlogId) {
+export function getCalendar(tlogId, force) {
   return (dispatch, getState) => {
-    if (shouldFetchCalendar(getState(), tlogId)) {
+    if (force || shouldFetchCalendar(getState(), tlogId)) {
       return dispatch(fetchCalendar(tlogId));
     }
   };

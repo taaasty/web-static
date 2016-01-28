@@ -63,7 +63,8 @@ ApiRoutes =
   tlogRelationshipsByTlog: (objectID, subjectID) ->
     gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID
 
-  tlogEntries:                          (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries'
+  _tlogEntries:                          (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries'
+  tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v1/tlog/#{tlogId}/#{section}/#{type}"
   tlogEntriesTlogs:                     (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries/tlogs'
   tlogEntriesBricks:                    (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/enrties/bricks'
 
