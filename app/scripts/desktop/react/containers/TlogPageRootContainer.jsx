@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TlogPageRoot from '../components/TlogPageRoot';
+
+import * as TlogEntriesActions from '../actions/TlogEntriesActions';
+import * as CalendarActions from '../actions/CalendarActions';
 
 class TlogPageRootContainer extends Component {
   componentWillUpdate({ tlog: nextTlog }) {
@@ -21,5 +25,9 @@ export default connect(
     tlogEntries: state.tlogEntries,
     tlogEntry: state.tlogEntry,
     calendar: state.calendar,
+  }),
+  (dispatch) => ({
+    CalendarActions: bindActionCreators(CalendarActions, dispatch),
+    TlogEntriesActions: bindActionCreators(TlogEntriesActions, dispatch),
   })
 )(TlogPageRootContainer);

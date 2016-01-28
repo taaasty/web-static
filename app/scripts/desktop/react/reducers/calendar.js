@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const actionMap = {
-  [CALENDAR_RECEIVE](state, { calendar }) {
+  [CALENDAR_RECEIVE](state, calendar) {
     return {
       isFetching: false,
       error: null,
@@ -24,7 +24,7 @@ const actionMap = {
     };
   },
 
-  [CALENDAR_ERROR](state, { error }) {
+  [CALENDAR_ERROR](state, error) {
     return {
       ...state,
       error,

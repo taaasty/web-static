@@ -13,6 +13,7 @@ function UserToolbarPrimaryList(props) {
   return (
     <ul className="toolbar__nav">
       <UserToolbarListItem
+        routeName={window.SPA && 'tlog'}
         title={i18n.t('avatar_toolbar_tooltip')}
         url={tlog_url}
       >
@@ -74,11 +75,13 @@ function UserToolbarPrimaryList(props) {
       />
       <UserToolbarListItem
         icon="icon--star"
+        routeName={window.SPA && 'favorites'}
         title={i18n.t('toolbar_favorites_item')}
         url={Routes.favorites_url(slug)}
       />
       <UserToolbarListItem
         icon="icon--lock"
+        routeName={window.SPA && 'privates'}
         title={i18n.t('toolbar_privates_item')}
         url={Routes.private_entries_url(slug)}
       />

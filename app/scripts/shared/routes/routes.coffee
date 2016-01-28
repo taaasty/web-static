@@ -1,10 +1,10 @@
 Routes =
-  locale: ->
+  locale: () ->
     # Необходим только для i18next, возвращаем маску урла
     { localesPath, localesVersion } = gon
 
     vParam = if localesVersion? then '?v=' + localesVersion else ''
-    localesPath + '/__lng__.json' + vParam
+    "#{localesPath}/{{lng}}.json#{vParam}"
 
   ## TODO Это не path, это url!
   logout_path: -> '/logout'
