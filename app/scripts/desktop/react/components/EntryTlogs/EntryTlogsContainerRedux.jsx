@@ -10,7 +10,8 @@ class EntryTlogsContainer extends Component {
     this.props.CalendarActions.getCalendar(this.props.tlog.author.id, true);
   }
   render() {
-    const { tlog: { author }, tlogEntries: { isFetching, items, has_more } } = this.props;
+    const { tlog: { author },
+            tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
 
     return (
       <EntryTlogs
@@ -31,10 +32,12 @@ EntryTlogsContainer.propTypes = {
   section: PropTypes.string.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.shape({
-    items: PropTypes.array.isRequired,
-    has_more: PropTypes.bool,
-    next_since_entry_id: PropTypes.number,
-    isFetching: PropTypes.bool,
+    data: PropTypes.shape({
+      items: PropTypes.array.isRequired,
+      has_more: PropTypes.bool,
+      next_since_entry_id: PropTypes.number,
+    }).isRequired,
+    isFetching: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

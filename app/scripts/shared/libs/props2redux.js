@@ -12,7 +12,7 @@ export default function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats,
       },
-      tlogEntries: { ...props.entries_info, isFetching: false } || void 0,
+      tlogEntries: { data: props.entries_info, isFetching: false } || void 0,
     };
   } else if (component === 'EntryPageContainer') {
     return {
@@ -27,11 +27,8 @@ export default function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats,
       },
-      tlogEntries: {
-        items: [{ entry: { id: props.entry.id }, commentator: props.commentator }],
-        isFetching: false,
-      }, // to match commentator
-      tlogEntry: { ...props.entry, isFetching: false } || void 0,
+      tlogEntries: { data: { items: [] }, isFetching: false },
+      tlogEntry: { data: { ...props.entry, commentator: props.commentator }, isFetching: false } || void 0,
     }
   }
 }

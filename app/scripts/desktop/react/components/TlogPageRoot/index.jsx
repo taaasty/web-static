@@ -34,8 +34,8 @@ class TlogPageRoot extends Component {
     const { author, design: { backgroundImageUrl },
             my_relationship, slug, stats, tlog_url } = tlog;
     const calendarEntry = (params.entryPath
-      ? tlogEntry
-      : tlogEntries.items.length && tlogEntries.items[0].entry) || {};
+      ? tlogEntry.data
+      : tlogEntries.data.items.length && tlogEntries.data.items[0].entry) || {};
     const childrenWithProps = Children.map(
       children,
       (child) => cloneElement(
@@ -80,7 +80,6 @@ class TlogPageRoot extends Component {
           title={slug}
           url={tlog_url}
         />
-        <UserToolbarContainerRedux />
       </div>
     );
   }

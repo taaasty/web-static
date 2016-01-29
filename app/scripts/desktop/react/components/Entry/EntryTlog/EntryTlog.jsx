@@ -4,6 +4,7 @@ import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
 import EntryTlogPrivate from './EntryTlogPrivate';
 import ErrorService from '../../../../../shared/react/services/Error';
+import Spinnner from '../../../../../shared/react/components/common/Spinner';
 
 import { ENTRY_TYPES } from '../../../constants/EntryConstants';
 import { ERROR_PRIVATE_ENTRY } from '../../../../../shared/constants/ErrorConstants';
@@ -139,32 +140,32 @@ class EntryTlog extends Component {
     const { commentator: _commentator, entry, error, host_tlog_id, isInList } = this.props;
     const commentator = _commentator || anonCommentator;
 
-    return (
-      <article
-        className={this.getEntryClasses()}
-        data-id={entry.id}
-        data-time={entry.created_at}
-      >
-        {error === ERROR_PRIVATE_ENTRY
-         ? <EntryTlogPrivate />
-         : <EntryTlogContent
-             commentator={commentator}
-             entry={entry}
-             hasModeration={this.state.hasModeration}
-             hideCommentForm={this.props.hideCommentForm}
-             host_tlog_id={host_tlog_id}
-             isInList={isInList}
-             onAccept={this.accept.bind(this)}
-             onAddToFavorites={this.addToFavorites.bind(this)}
-             onAddToWatching={this.addToWatching.bind(this)}
-             onDecline={this.decline.bind(this)}
-             onDelete={this.delete.bind(this)}
-             onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
-             onRemoveFromWatching={this.removeFromWatching.bind(this)}
-             onReport={this.report.bind(this)}
-           />}
-      </article>
-    );
+    return entry.type && !entry.isFetching
+      ? <article
+          className={this.getEntryClasses()}
+          data-id={entry.id}
+          data-time={entry.created_at}
+        >
+          {error === ERROR_PRIVATE_ENTRY
+           ? <EntryTlogPrivate />
+           : <EntryTlogContent
+               commentator={commentator}
+               entry={entry}
+               hasModeration={this.state.hasModeration}
+               hideCommentForm={this.props.hideCommentForm}
+               host_tlog_id={host_tlog_id}
+               isInList={isInList}
+               onAccept={this.accept.bind(this)}
+               onAddToFavorites={this.addToFavorites.bind(this)}
+               onAddToWatching={this.addToWatching.bind(this)}
+               onDecline={this.decline.bind(this)}
+               onDelete={this.delete.bind(this)}
+               onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
+               onRemoveFromWatching={this.removeFromWatching.bind(this)}
+               onReport={this.report.bind(this)}
+             />}
+        </article>
+      : <article className="post post--loading"><Spinner size={30} /></article>;
   }
 }
 

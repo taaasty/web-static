@@ -36,8 +36,6 @@ function fetchTlogEntries(url, data) {
         methodArguments: {url, data},
         response: xhr.responseJSON,
       });
-
-      throw xhr;
     });
 }
 
@@ -55,12 +53,12 @@ export function getTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
 export function appendTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
   return (dispatch, getState) => {
     const url = ApiRoutes.tlogEntries(getState().tlog.author.id, section, type);
-    const params = { since_entry_id: getState().tlogEntries.next_since_entry_id };
+    const params = { since_entry_id: getState().tlogEntries.data.next_since_entry_id };
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url, params)
       .then((data) => {
-        const prevItems = getState().tlogEntries.items;
+        const prevItems = getState().tlogEntries.data.items;
         dispatch(tlogEntriesReceive({ ...data, items: prevItems.concat(data.items) }));
         return data;
       })
@@ -76,7 +74,7 @@ export function prependTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs', till
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url, params)
       .then((data) => {
-        const prevItems = getState().tlogEntries.items;
+        const prevItems = getState().tlogEntries.data.items;
         dispatch(tlogEntriesReceive({ ...data, items: data.items.concat(prevItems) }));
         return data;
       })

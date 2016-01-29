@@ -26,7 +26,7 @@ class TlogPageBody extends Component {
   }
   renderTlog() {
     const { nextPageUrl, prevPageUrl, section,
-            tlog: { author: { id: tlogId, is_daylog } } } = this.props;
+            tlog: { author: { is_daylog } } } = this.props;
     const isPaged = is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
@@ -38,7 +38,8 @@ class TlogPageBody extends Component {
   }
   renderContents() {
     const { currentUserId, error, queryString, section,
-            tlogEntries: { items }, tlog: { author, my_relationship: state } } = this.props;
+            tlogEntries: { data: { items } },
+            tlog: { author, my_relationship: state } } = this.props;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
@@ -117,8 +118,11 @@ TlogPageBody.defaultProps = {
     tlog_url: '',
   },
   tlogEntries: {
-    items: [],
+    data: {
+      items: [],
+    },
   },
+  section: TLOG_SECTION_TLOG,
 };
 
 export default TlogPageBody;
