@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import TlogPageRoot from '../components/TlogPageRoot';
 
 import * as TlogEntriesActions from '../actions/TlogEntriesActions';
+import * as TlogEntryActions from '../actions/TlogEntryActions';
 import * as CalendarActions from '../actions/CalendarActions';
 
 class TlogPageRootContainer extends Component {
@@ -29,5 +30,6 @@ export default connect(
   (dispatch) => ({
     CalendarActions: bindActionCreators(CalendarActions, dispatch),
     TlogEntriesActions: bindActionCreators(TlogEntriesActions, dispatch),
+    TlogEntryActions: bindActionCreators(TlogEntryActions, dispatch),
   })
 )(TlogPageRootContainer);

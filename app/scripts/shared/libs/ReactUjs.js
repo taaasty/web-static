@@ -19,14 +19,23 @@ function findReactDOMNodes() {
 
 function mountReactComponents(router) {
   const nodes = findReactDOMNodes();
+  let spa = false;
   let className, component, node, props, propsJson;
+
+  for(let i = 0; i < nodes.length; i++) {
+    let node = nodes[i];
+    className = node.getAttribute(CLASS_NAME_ATTR);
+    if (routedComponents.indexOf(className) > -1) {
+      spa = true;
+    }
+  }
 
   for(let i = 0; i < nodes.length; i++) {
     node = nodes[i];
     className = node.getAttribute(CLASS_NAME_ATTR);
 
     component = window[className] || eval.call(window, className);
-    if (component) {
+    if (component && !(className === 'UserToolbarContainer' && spa)) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 

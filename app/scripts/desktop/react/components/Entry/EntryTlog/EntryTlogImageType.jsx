@@ -25,12 +25,12 @@ class EntryTlogImageType extends Component {
     }
   }
   render() {
-    const { entry: { image_attachments, is_private, title, url }, isInList } = this.props;
+    const { entry: { id, image_attachments, is_private, title, url }, isInList } = this.props;
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink show={isInList} url={url}>
+          <EntryTlogContentLink id={id} show={isInList} url={url}>
             <ImageAttachmentsCollage
               imageAttachments={image_attachments}
               width={712}

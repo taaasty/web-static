@@ -35,7 +35,7 @@ class EntryTlogCodeType extends Component {
     }
   }
   render() {
-    const { isInList, entry: { is_private, text, url } } = this.props;
+    const { isInList, entry: { id, is_private, text, url } } = this.props;
 
     return (
       <span>
@@ -44,7 +44,7 @@ class EntryTlogCodeType extends Component {
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <EntryTlogContentLink show={isInList} url={url}>
+        <EntryTlogContentLink id={id} show={isInList} url={url}>
           <div className="post__content">
             <pre>
               <Text value={text} withHTML />

@@ -37,9 +37,6 @@ class EntryTlog extends Component {
       });
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.hasModeration !== nextState.hasModeration;
-  }
   addToFavorites() {
     EntryActionCreators.addToFavorites(this.props.entry.id)
       .then(() => {

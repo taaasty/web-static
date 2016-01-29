@@ -1,4 +1,4 @@
-import React, { cloneElement, Children, Component } from 'react';
+import React, { cloneElement, Children, Component, PropTypes } from 'react';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 
 import HeroProfile from '../HeroProfile';
@@ -28,9 +28,9 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUserId, isLogged, queryString, locale,
-            params, section, tlog, tlogEntries, tlogEntry,
-            CalendarActions, TlogEntriesActions } = this.props;
+    const { calendar, children, currentUserId, isLogged, locale,
+            params, tlog, tlogEntries, tlogEntry,
+            CalendarActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
             my_relationship, slug, stats, tlog_url } = tlog;
     const calendarEntry = (params.entryPath
@@ -46,6 +46,7 @@ class TlogPageRoot extends Component {
           tlogEntry,
           CalendarActions,
           TlogEntriesActions,
+          TlogEntryActions,
         })
     );
     
@@ -78,10 +79,31 @@ class TlogPageRoot extends Component {
           img={this.shareImg(author)}
           title={slug}
           url={tlog_url}
-        />  
+        />
+        <UserToolbarContainerRedux />
       </div>
     );
   }
 }
+
+TlogPageRoot.propTypes = {
+  CalendarActions: PropTypes.object.isRequired,
+  TlogEntriesActions: PropTypes.object.isRequired,
+  TlogEntryActions: PropTypes.object.isRequired,
+  calendar: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  currentUserId: PropTypes.number,
+  isLogged: PropTypes.bool.isRequired,
+  locale: PropTypes.string.isRequired,
+  params: PropTypes.object.isRequired,
+  queryString: PropTypes.string,
+  section: PropTypes.string.isRequired,
+  tlog: PropTypes.object.isRequired,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntry: PropTypes.object.isRequired,
+};
 
 export default TlogPageRoot;

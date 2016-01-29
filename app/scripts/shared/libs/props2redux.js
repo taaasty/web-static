@@ -27,6 +27,10 @@ export default function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats,
       },
+      tlogEntries: {
+        items: [{ entry: { id: props.entry.id }, commentator: props.commentator }],
+        isFetching: false,
+      }, // to match commentator
       tlogEntry: { ...props.entry, isFetching: false } || void 0,
     }
   }

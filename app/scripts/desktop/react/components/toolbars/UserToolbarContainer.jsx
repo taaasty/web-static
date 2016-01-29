@@ -10,7 +10,7 @@ import UserToolbar from './UserToolbar';
 const STORAGE_KEY = 'states:mainToolbarOpened';
 const SEARCH_TITLE_I18N_KEYS = [
   'live', 'best', 'friends', 'anonymous', 'mytlog',
-  'tlog', 'favorites', 'privates', 'people',
+  'tlog', 'favorites', 'privates', 'people', 'flow',
 ];
 
 let UserToolbarContainer = createClass({

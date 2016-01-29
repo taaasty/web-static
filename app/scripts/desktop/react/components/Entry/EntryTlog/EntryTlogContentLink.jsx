@@ -1,8 +1,14 @@
 import React, { PropTypes } from 'react';
+import uri from 'urijs';
+import { Link } from 'react-router';
 
-function EntryTlogContentLink({ children, show, url }) {
+function EntryTlogContentLink({ children, id, show, url }) {
   return show
-    ? <a href={url}>{children}</a>
+    ? window.SPA //FIXME
+      ? <Link to={{ pathname: uri(url).path(), state: { id } }}>
+          {children}
+        </Link>
+      : <a href={url}>{children}</a>
     : children;
 }
 

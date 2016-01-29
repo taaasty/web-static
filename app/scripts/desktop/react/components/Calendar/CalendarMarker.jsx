@@ -1,5 +1,7 @@
 /*global i18n, ReactGrammarMixin */
 import React, { createClass, PropTypes } from 'react';
+import { Link } from 'react-router';
+import uri from 'urijs';
 import classnames from 'classnames';
 import moment from 'moment';
 
@@ -43,13 +45,13 @@ const CalendarMarker = createClass({
 
     return (
       <li>
-        <a
+        <Link
           className={markerClasses}
           data-marker-date={createdAt}
           data-marker-rows={records}
           data-target={`#${entry_id}`}
-          href={entry_url}
           style={{ left: leftIndent }}
+          to={{ pathname: uri(entry_url).path(), state: { id: entry_id } }}
         />
       </li>
     );

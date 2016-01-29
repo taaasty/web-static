@@ -12818,6 +12818,10 @@ function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats
       },
+      tlogEntries: {
+        items: [{ entry: { id: props.entry.id }, commentator: props.commentator }],
+        isFetching: false
+      }, // to match commentator
       tlogEntry: (0, _extends3.default)({}, props.entry, { isFetching: false }) || void 0
     };
   }
@@ -65761,6 +65765,7 @@ function findReactDOMNodes() {
 
 function mountReactComponents(router) {
   var nodes = findReactDOMNodes();
+  var spa = false;
   var className = undefined,
       component = undefined,
       node = undefined,
@@ -65768,11 +65773,19 @@ function mountReactComponents(router) {
       propsJson = undefined;
 
   for (var i = 0; i < nodes.length; i++) {
+    var _node = nodes[i];
+    className = _node.getAttribute(CLASS_NAME_ATTR);
+    if (routedComponents.indexOf(className) > -1) {
+      spa = true;
+    }
+  }
+
+  for (var i = 0; i < nodes.length; i++) {
     node = nodes[i];
     className = node.getAttribute(CLASS_NAME_ATTR);
 
     component = window[className] || eval.call(window, className);
-    if (component) {
+    if (component && !(className === 'UserToolbarContainer' && spa)) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
