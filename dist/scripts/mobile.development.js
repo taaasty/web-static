@@ -12803,8 +12803,22 @@ function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats
       },
-      tlogEntry: {},
       tlogEntries: (0, _extends3.default)({}, props.entries_info, { isFetching: false }) || void 0
+    };
+  } else if (component === 'EntryPageContainer') {
+    return {
+      tlog: {
+        author: props.user,
+        design: {
+          backgroundImageUrl: props.bgImage,
+          feedOpacity: props.bgStyle && props.bgStyle.opacity
+        },
+        slug: props.user && props.user.slug,
+        tlog_url: props.user && props.user.tlog_url,
+        my_relationship: props.relationship && props.relationship.state,
+        stats: props.stats
+      },
+      tlogEntry: (0, _extends3.default)({}, props.entry, { isFetching: false }) || void 0
     };
   }
 }

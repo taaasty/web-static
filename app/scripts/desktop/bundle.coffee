@@ -90,8 +90,6 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 require './react/components/common/adaptive_input'
 
 global.EmbedComponent = require './react/components/embed'
-
-require './react/components/avatars/avatar'
 global.UserAvatar = require './react/components/avatars/UserAvatar';
 
 # /*===============================================

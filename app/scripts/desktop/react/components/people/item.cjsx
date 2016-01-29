@@ -16,7 +16,7 @@ window.PeopleItem = React.createClass
              <div className="people-item__inner">
                <a className="people-item__link" href={ this.props.user.tlog_url }>
                  <div className="people-item__avatar">
-                   <UserAvatar user={ this.props.user } />
+                   <UserAvatar size={110} user={ this.props.user } />
                    { followStatus }
                  </div>
                  <h3 className="people-item__name">{ this.props.user.slug }</h3>

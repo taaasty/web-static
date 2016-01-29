@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import LazyLoadImage from './LazyLoadImage';
 
-const Avatar = (props) => {
+function Avatar(props) {
   function getAvatarClasses() {
     return classnames({
       'avatar': true,
@@ -11,7 +11,7 @@ const Avatar = (props) => {
   }
 
   function renderImage() {
-    const { userpic: { original_url: url }, size } = props;
+    const { name, userpic: { original_url: url }, size } = props;
     const image = {
       url,
       geometry: {
@@ -22,7 +22,11 @@ const Avatar = (props) => {
 
     return (
       <span className={getAvatarClasses()}>
-        <LazyLoadImage className="avatar__img" image={image} />
+        <LazyLoadImage
+      alt={name}
+      className="avatar__img"
+      image={image}
+        />
       </span>
     );
   }
@@ -47,6 +51,7 @@ const Avatar = (props) => {
 }
 
 Avatar.propTypes = {
+  name: PropTypes.string,
   size: PropTypes.number.isRequired,
   userpic: PropTypes.object.isRequired,
 };

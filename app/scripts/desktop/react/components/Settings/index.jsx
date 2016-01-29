@@ -6,7 +6,7 @@ import SettingsPhone from './SettingsPhone';
 import SettingsEmail from './email/email';
 import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
-import SettingsAccounts from './accounts';
+import SettingsAccounts from './SettingsAccounts';
 import SettingsMixin from './mixins/settings';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
