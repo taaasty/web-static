@@ -8,12 +8,20 @@ import PostAuthService from '../../../services/PostAuthService';
 const LOAD_COMMENTS_LIMIT = 50;
 
 class EntryTlogComments extends Component {
-  state = {
-    comments: this.props.entry.comments || [],
-    totalCount: this.props.entry.comments_count,
-    processCreate: false,
-    loadingMore: false,
-  };
+  state = this.initState(this.props);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.entry.id !== nextProps.entry.id) {
+      this.setState(this.initState(nextProps));
+    }
+  }
+  initState(props) {
+    return {
+      comments: props.entry.comments || [],
+      totalCount: props.entry.comments_count,
+      processCreate: false,
+      loadingMore: false,
+    };
+  }
   renderLoadMoreButton() {
     if (this.state.totalCount > this.state.comments.length) {
       return (

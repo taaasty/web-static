@@ -12803,7 +12803,7 @@ function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats
       },
-      tlogEntries: (0, _extends3.default)({}, props.entries_info, { isFetching: false }) || void 0
+      tlogEntries: { data: props.entries_info, isFetching: false } || void 0
     };
   } else if (component === 'EntryPageContainer') {
     return {
@@ -12818,11 +12818,8 @@ function prop2redux(component, props) {
         my_relationship: props.relationship && props.relationship.state,
         stats: props.stats
       },
-      tlogEntries: {
-        items: [{ entry: { id: props.entry.id }, commentator: props.commentator }],
-        isFetching: false
-      }, // to match commentator
-      tlogEntry: (0, _extends3.default)({}, props.entry, { isFetching: false }) || void 0
+      tlogEntries: { data: { items: [] }, isFetching: false },
+      tlogEntry: { data: (0, _extends3.default)({}, props.entry, { commentator: props.commentator }), isFetching: false } || void 0
     };
   }
 }
@@ -65785,11 +65782,13 @@ function mountReactComponents(router) {
     className = node.getAttribute(CLASS_NAME_ATTR);
 
     component = window[className] || eval.call(window, className);
-    if (component && !(className === 'UserToolbarContainer' && spa)) {
+    if (component) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      if (router && routedComponents.indexOf(className) > -1) {
+      if (className === 'UserToolbarContainer' && spa) {
+        window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props });
+      } else if (router && routedComponents.indexOf(className) > -1) {
         window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(className, props));
         (0, _reactDom.render)((0, _react.createElement)(router, null, (0, _react.createElement)(component, props)), node);
       } else {

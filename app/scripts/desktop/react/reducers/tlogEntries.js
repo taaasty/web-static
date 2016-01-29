@@ -7,10 +7,12 @@ import {
 import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
 
 export const initialState = {
-  items: [],
-  limit: null,
-  has_more: null,
-  next_since_entry_id: null,
+  data: {
+    items: [],
+    limit: null,
+    has_more: null,
+    next_since_entry_id: null,
+  },
   isFetching: false,
   error: null,
 };
@@ -44,22 +46,26 @@ function prepareData(data) {
 const actionMap = {
   [TLOG_ENTRIES_REQUEST](state) {
     return {
-      ...state,
+        ...state,
       isFetching: true,
       error: null,
     };
   },
 
   [TLOG_ENTRIES_RECEIVE](state, data) {
-    return Object.assign({}, state, data, { isFetching: false, error: null });
+    return {
+      data,
+      isFetching: false,
+      error: null,
+    };
   },
 
   [TLOG_ENTRIES_DELETE_ENTRY](state, entryId) {
-    const items = state.items.filter((item) => item.entry.id !== entryId);
+    const items = state.data.items.filter((item) => item.entry.id !== entryId);
 
     return {
       ...state,
-      items,
+      data: { ...state.data, items },
     };
   },
 

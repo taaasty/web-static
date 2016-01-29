@@ -1,13 +1,15 @@
+import calendar from './calendar';
 import currentUser from './currentUser';
 import tlog from './tlog';
-import tlogEntry from './tlogEntry';
 import tlogEntries from './tlogEntries';
-import calendar from './calendar';
+import tlogEntry from './tlogEntry';
+import userToolbar from './userToolbar';
 
 export default {
   calendar,
   currentUser,
   tlog,
-  tlogEntry,
   tlogEntries,
+  tlogEntry,
+  userToolbar,
 };

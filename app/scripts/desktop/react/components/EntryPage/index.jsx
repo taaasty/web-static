@@ -2,34 +2,39 @@
 import React, { Component, PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
-import Spinnner from '../../../../shared/react/components/common/Spinner';
 
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
 
 class EntryPageContainer extends Component {
   componentWillMount() {
-    this.fetchData(this.props.location.state.id);
+    const { state } = this.props.location;
+    state && this.fetchData(state.id);
   }
   componentWillReceiveProps(nextProps) {
-    this.fetchData(nextProps.location.state.id);
-  }
-  fetchData(newId) {
-    const { TlogEntryActions, tlogEntries: { items }, tlogEntry } = this.props;
-
-    if (!tlogEntry.id || newId !== tlogEntry.id) {
-      const entries = items.filter((item) => item.entry.id === newId);
-
-      if (entries.length) {
-        TlogEntryActions.tlogEntrySet(entries[0].entry);
-      }
+    const { state } = nextProps.location;
+    if (state && !nextProps.tlogEntry.isFetching) {
+      this.fetchData(state.id);
     }
   }
-  commentator() {
-    const { tlogEntries, tlogEntry } = this.props;
-    const entries = tlogEntries.items.filter((e) => e.entry.id === tlogEntry.id);
+  fetchData(newId) {
+    if (!newId) {
+      return;
+    }
 
-    return !!entries.length && entries[0].commentator;
+    const { TlogEntryActions, tlogEntries: { data: { items } },
+            tlogEntry } = this.props;
+
+    if (!tlogEntry.data.id || newId !== tlogEntry.data.id) {
+      const entries = items.filter((item) => item.entry.id === newId);
+      const entry = entries[0];
+
+      if (entry) {
+        TlogEntryActions.setTlogEntry({ ...entry.entry, commentator: entry.commentator });
+      } else {
+        TlogEntryActions.getTlogEntry(newId);
+      }
+    }
   }
   render() {
     const { bgStyle, currentUserId, error, locale, tlog, tlogEntry } = this.props;
@@ -39,27 +44,24 @@ class EntryPageContainer extends Component {
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
-            {currentUserId && tlogEntry.author &&
-             currentUserId === tlogEntry.author.id && !tlogEntry.is_private &&
+            {currentUserId && tlogEntry.data.author &&
+             currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
              <PinPostButton
-               entryId={tlogEntry.id}
-               orderId={tlogEntry.fixed_order_id}
-               status={tlogEntry.fixed_state}
-               till={tlogEntry.fixed_up_at}
+               entryId={tlogEntry.data.id}
+               orderId={tlogEntry.data.fixed_order_id}
+               status={tlogEntry.data.fixed_state}
+               till={tlogEntry.data.fixed_up_at}
              />
             }
             <div>
-              {tlogEntry.type && !tlogEntry.isFetching
-               ? <EntryTlog
-                   commentator={this.commentator()}
-                   entry={tlogEntry}
-                   error={error}
-                   host_tlog_id={tlog.author.id}
-                   locale={locale}
-                   successDeleteUrl={tlog.author && tlog.author.tlog_url}
-                 />
-               : <Spinner size={35} />
-              }
+              <EntryTlog
+                commentator={tlogEntry.data.commentator}
+                entry={tlogEntry.data}
+                error={error}
+                host_tlog_id={tlog.author.id}
+                locale={locale}
+                successDeleteUrl={tlog.author && tlog.author.tlog_url}
+              />
             </div>
             <nav className="pagination">
               <Link className="pagination__item" to={uri(tlog.author.tlog_url).path()}>
