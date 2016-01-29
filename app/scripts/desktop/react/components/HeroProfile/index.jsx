@@ -134,6 +134,7 @@ class HeroProfile extends Component {
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
           <HeroProfileAvatar
+            isOpen={this.isOpen()}
             onClick={this.handleAvatarClick.bind(this)}
             user={user}
           />
