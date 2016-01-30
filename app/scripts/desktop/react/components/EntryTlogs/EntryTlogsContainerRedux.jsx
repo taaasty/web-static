@@ -7,10 +7,10 @@ class EntryTlogsContainer extends Component {
   }
   deleteEntry(entryId) {
     this.props.TlogEntriesActions.deleteEntry(entryId);
-    this.props.CalendarActions.getCalendar(this.props.tlog.author.id, true);
+    this.props.CalendarActions.getCalendar(this.props.tlog.data.author.id, true);
   }
   render() {
-    const { tlog: { author },
+    const { tlog: { data: { author } },
             tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
 
     return (

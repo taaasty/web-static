@@ -13,19 +13,13 @@ class EntryPageContainer extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { state } = nextProps.location;
-    if (state && !nextProps.tlogEntry.isFetching) {
-      this.fetchData(state.id);
-    }
+    state && this.fetchData(state.id);
   }
   fetchData(newId) {
-    if (!newId) {
-      return;
-    }
-
     const { TlogEntryActions, tlogEntries: { data: { items } },
             tlogEntry } = this.props;
 
-    if (!tlogEntry.data.id || newId !== tlogEntry.data.id) {
+    if (newId && (!tlogEntry.data.id || newId !== tlogEntry.data.id)) {
       const entries = items.filter((item) => item.entry.id === newId);
       const entry = entries[0];
 
@@ -58,13 +52,14 @@ class EntryPageContainer extends Component {
                 commentator={tlogEntry.data.commentator}
                 entry={tlogEntry.data}
                 error={error}
-                host_tlog_id={tlog.author.id}
+                host_tlog_id={tlog.data.author.id}
+                isFetching={tlogEntry.isFetching || tlog.isFetching}
                 locale={locale}
-                successDeleteUrl={tlog.author && tlog.author.tlog_url}
+                successDeleteUrl={tlog.data.author && tlog.data.author.tlog_url}
               />
             </div>
             <nav className="pagination">
-              <Link className="pagination__item" to={uri(tlog.author.tlog_url).path()}>
+              <Link className="pagination__item" to={uri(tlog.data.author.tlog_url).path()}>
                 {i18n.t('buttons.pagination.tlog_root')}
               </Link>
             </nav>

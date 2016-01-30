@@ -5,15 +5,24 @@ import HeroProfile from '../HeroProfile';
 import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
+import DesignPreviewService from '../../services/designPreview';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageRoot extends Component {
   componentDidMount() {
-    this.getCalendarData();
+    this.getCalendarData(this.props);
   }
-  getCalendarData() {
-    const { currentUserId, tlog: { author, my_relationship }, CalendarActions } = this.props;
+  componentWillReceiveProps(nextProps) {
+    this.getCalendarData(nextProps);
+    this.props.TlogActions.getTlog(nextProps.routeParams.slug);
+
+    if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
+      DesignPreviewService.apply(nextProps.tlog.data.design);
+    }
+  }
+  getCalendarData(props) {
+    const { currentUserId, tlog: { data: { author, my_relationship } }, CalendarActions } = props;
     
     if (author && (!author.is_privacy ||
                    author.id === currentUserId ||
@@ -30,9 +39,9 @@ class TlogPageRoot extends Component {
   render() {
     const { calendar, children, currentUserId, isLogged, locale,
             params, tlog, tlogEntries, tlogEntry,
-            CalendarActions, TlogEntriesActions, TlogEntryActions } = this.props;
+            CalendarActions, TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
-            my_relationship, slug, stats, tlog_url } = tlog;
+            my_relationship, slug, stats, tlog_url } = tlog.data;
     const calendarEntry = (params.entryPath
       ? tlogEntry.data
       : tlogEntries.data.items.length && tlogEntries.data.items[0].entry) || {};
@@ -45,6 +54,7 @@ class TlogPageRoot extends Component {
           tlogEntries,
           tlogEntry,
           CalendarActions,
+          TlogActions,
           TlogEntriesActions,
           TlogEntryActions,
         })
@@ -87,6 +97,7 @@ class TlogPageRoot extends Component {
 
 TlogPageRoot.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  TlogActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
   TlogEntryActions: PropTypes.object.isRequired,
   calendar: PropTypes.object.isRequired,

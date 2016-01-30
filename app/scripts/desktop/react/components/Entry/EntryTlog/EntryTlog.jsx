@@ -137,10 +137,11 @@ class EntryTlog extends Component {
     return `post post--${typeClass}`;
   }
   render() {
-    const { commentator: _commentator, entry, error, host_tlog_id, isInList } = this.props;
+    const { commentator: _commentator, entry, error,
+            host_tlog_id, isFetching, isInList } = this.props;
     const commentator = _commentator || anonCommentator;
 
-    return entry.type && !entry.isFetching
+    return entry.type && !isFetching
       ? <article
           className={this.getEntryClasses()}
           data-id={entry.id}
@@ -174,6 +175,7 @@ EntryTlog.propTypes = {
   entry: PropTypes.object.isRequired,
   hideCommentForm: PropTypes.bool,
   host_tlog_id: PropTypes.number,
+  isFetching: PropTypes.bool,
   isInList: PropTypes.bool,
   moderation: PropTypes.object,
   onDelete: PropTypes.func,

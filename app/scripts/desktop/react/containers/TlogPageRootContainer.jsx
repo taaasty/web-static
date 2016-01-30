@@ -3,16 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TlogPageRoot from '../components/TlogPageRoot';
 
+import * as CalendarActions from '../actions/CalendarActions';
+import * as TlogActions from '../actions/TlogActions';
 import * as TlogEntriesActions from '../actions/TlogEntriesActions';
 import * as TlogEntryActions from '../actions/TlogEntryActions';
-import * as CalendarActions from '../actions/CalendarActions';
 
 class TlogPageRootContainer extends Component {
-  componentWillUpdate({ tlog: nextTlog }) {
-    if (nextTlog.slug !== this.props.tlog.slug) {
-      console.log('update tlog data');
-    }
-  }
   render() {
     return <TlogPageRoot {...this.props} />;
   }
@@ -29,6 +25,7 @@ export default connect(
   }),
   (dispatch) => ({
     CalendarActions: bindActionCreators(CalendarActions, dispatch),
+    TlogActions: bindActionCreators(TlogActions, dispatch),
     TlogEntriesActions: bindActionCreators(TlogEntriesActions, dispatch),
     TlogEntryActions: bindActionCreators(TlogEntryActions, dispatch),
   })
