@@ -5,7 +5,7 @@ import { TLOG_SECTION_TLOG, TLOG_SECTION_FLOW } from '../../../../shared/constan
 function TlogPageContainer(props) {
   const { currentUserId, error, locale, queryString, route, tlog, tlogEntries,
           CalendarActions, TlogEntriesActions } = props;
-  const { author } = tlog;
+  const { data: { author } } = tlog;
   const section = (author && author.is_flow)
           ? TLOG_SECTION_FLOW
           : route.path || TLOG_SECTION_TLOG;
@@ -14,7 +14,7 @@ function TlogPageContainer(props) {
     <TlogPageBody
       CalendarActions={CalendarActions}
       TlogEntriesActions={TlogEntriesActions}
-      bgStyle={{ opacity: tlog.design.feedOpacity }}
+      bgStyle={{ opacity: tlog.data.design.feedOpacity }}
       currentUserId={currentUserId}
       error={error}
       locale={locale}

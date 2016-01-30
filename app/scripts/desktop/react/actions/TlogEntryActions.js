@@ -29,14 +29,27 @@ export function setTlogEntry(data) {
   return tlogEntryReceive(data);
 }
 
-export function getTlogEntry(id) {
+function shouldFetchTlogEntry(state, id) {
+  return (!state.tlogEntry.isFetching &&
+          (!state.tlogEntry.data.id || state.tlogEntry.data.id !== id));
+}
+
+function fetchTlogEntry(id) {
   return (dispatch) => {
     dispatch(tlogEntryRequest());
-    return $.ajax({ url: ApiRoutes.entry_url(id) })
+    return $.ajax({ url: ApiRoutes.entry_url(id), data: { include_comments: true } })
       .done((data) => dispatch(tlogEntryReceive(data)))
       .fail((err) => {
         NoticeService.errorResponse(err);
         return dispatch(tlogEntryError(err));
       });
   };
+}
+
+export function getTlogEntry(id) {
+  return (dispatch, getState) => {
+    if (shouldFetchTlogEntry(getState(), id)) {
+      return dispatch(fetchTlogEntry(id));
+    }
+  }
 }

@@ -41,7 +41,7 @@ function fetchTlogEntries(url, data) {
 
 export function getTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.author.id, section, type);
+    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url)
@@ -52,7 +52,7 @@ export function getTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
 
 export function appendTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.author.id, section, type);
+    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
     const params = { since_entry_id: getState().tlogEntries.data.next_since_entry_id };
 
     dispatch(tlogEntriesRequest());
@@ -68,7 +68,7 @@ export function appendTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
 
 export function prependTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs', tillEntryId, count) {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.author.id, section, type);
+    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
     const params = { till_entry_id: tillEntryId, limit: count };
 
     dispatch(tlogEntriesRequest());

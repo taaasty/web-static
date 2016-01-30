@@ -25,9 +25,8 @@ class TlogPageBody extends Component {
     this.setState({ prevButtonVisible: queryHash.since_entry_id });
   }
   renderTlog() {
-    const { nextPageUrl, prevPageUrl, section,
-            tlog: { author: { is_daylog } } } = this.props;
-    const isPaged = is_daylog && section === TLOG_SECTION_TLOG;
+    const { nextPageUrl, prevPageUrl, section, tlog } = this.props;
+    const isPaged = tlog.data.author.is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
@@ -39,7 +38,7 @@ class TlogPageBody extends Component {
   renderContents() {
     const { currentUserId, error, queryString, section,
             tlogEntries: { data: { items } },
-            tlog: { author, my_relationship: state } } = this.props;
+            tlog: { data: { author, my_relationship: state } } } = this.props;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
@@ -80,7 +79,7 @@ class TlogPageBody extends Component {
     }
   }
   render() {
-    const { bgStyle, tlog: { author, tlog_url } } = this.props;
+    const { bgStyle, tlog: { data: { author, tlog_url } } } = this.props;
     const { prevButtonVisible } = this.state;
 
     return (
@@ -110,12 +109,14 @@ TlogPageBody.propTypes = {
 TlogPageBody.defaultProps = {
   bgStyle: { opacity: '1.0' },
   tlog: {
-    author: {
-      id: null,
-      is_daylog: false,
-      is_privacy: false,
+    data: {
+      author: {
+        id: null,
+        is_daylog: false,
+        is_privacy: false,
+      },
+      tlog_url: '',
     },
-    tlog_url: '',
   },
   tlogEntries: {
     data: {

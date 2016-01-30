@@ -12793,30 +12793,36 @@ function prop2redux(component, props) {
   if (component === 'TlogPageContainer') {
     return {
       tlog: {
-        author: props.user,
-        design: {
-          backgroundImageUrl: props.bgImage,
-          feedOpacity: props.bgStyle && props.bgStyle.opacity
-        },
-        slug: props.user && props.user.slug,
-        tlog_url: props.user && props.user.tlog_url,
-        my_relationship: props.relationship && props.relationship.state,
-        stats: props.stats
+        data: {
+          author: props.user,
+          design: {
+            backgroundImageUrl: props.bgImage,
+            feedOpacity: props.bgStyle && props.bgStyle.opacity
+          },
+          id: props.user.id,
+          my_relationship: props.relationship && props.relationship.state,
+          slug: props.user && props.user.slug,
+          stats: props.stats,
+          tlog_url: props.user && props.user.tlog_url
+        }
       },
       tlogEntries: { data: props.entries_info, isFetching: false } || void 0
     };
   } else if (component === 'EntryPageContainer') {
     return {
       tlog: {
-        author: props.user,
-        design: {
-          backgroundImageUrl: props.bgImage,
-          feedOpacity: props.bgStyle && props.bgStyle.opacity
-        },
-        slug: props.user && props.user.slug,
-        tlog_url: props.user && props.user.tlog_url,
-        my_relationship: props.relationship && props.relationship.state,
-        stats: props.stats
+        data: {
+          author: props.user,
+          design: {
+            backgroundImageUrl: props.bgImage,
+            feedOpacity: props.bgStyle && props.bgStyle.opacity
+          },
+          id: props.user.id,
+          my_relationship: props.relationship && props.relationship.state,
+          slug: props.user && props.user.slug,
+          stats: props.stats,
+          tlog_url: props.user && props.user.tlog_url
+        }
       },
       tlogEntries: { data: { items: [] }, isFetching: false },
       tlogEntry: { data: (0, _extends3.default)({}, props.entry, { commentator: props.commentator }), isFetching: false } || void 0
@@ -14049,11 +14055,14 @@ ApiRoutes = {
   tlogRelationshipsByTlog: function(objectID, subjectID) {
     return gon.api_host + '/v1/tlog_relationships/' + objectID + '/by/tlog/' + subjectID;
   },
+  tlog: function(tlogId) {
+    return gon.api_host + "/v1/tlog/" + tlogId + ".json";
+  },
   _tlogEntries: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/entries';
   },
   tlogEntries: function(tlogId, section, type) {
-    return gon.api_host + "/v1/tlog/" + tlogId + "/" + section + "/" + type;
+    return gon.api_host + "/v1/tlog/" + tlogId + "/" + section + "/" + type + ".json";
   },
   tlogEntriesTlogs: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/entries/tlogs';

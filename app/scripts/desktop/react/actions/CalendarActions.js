@@ -37,8 +37,9 @@ function fetchCalendar(tlogId) {
 }
 
 function shouldFetchCalendar(state, tlogId) {
-  return state.calendar.periods.length === 0 ||
-    tlogId !== state.calendar.tlog_id;
+  return ((state.calendar.periods.length === 0 ||
+           tlogId !== state.calendar.tlog_id) &&
+          !state.calendar.isFetching);
 }
 
 export function getCalendar(tlogId, force) {
