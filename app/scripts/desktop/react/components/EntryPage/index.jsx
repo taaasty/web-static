@@ -15,6 +15,9 @@ class EntryPageContainer extends Component {
     const { state } = nextProps.location;
     state && this.fetchData(state.id);
   }
+  componentWillUnmount() {
+    //TODO update tlogEntries entry if exists
+  }
   fetchData(newId) {
     const { TlogEntryActions, tlogEntries: { data: { items } },
             tlogEntry } = this.props;

@@ -14,7 +14,7 @@ function tlogEntryRequest() {
 function tlogEntryReceive(data) {
   return {
     type: TLOG_ENTRY_RECEIVE,
-    payload: data,
+    payload: { ...data, url: data.url || data.entry_url },   //FIXME inconsistent data /entries|/tlogs
   };
 }
 

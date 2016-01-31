@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../common/DropdownActions';
 import DropdownAction from '../../common/DropdownAction';
+import DropdownActionSPA from '../../common/DropdownActionSPA';
 import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
 class EntryTlogMetabarActions extends Component {
@@ -14,6 +15,8 @@ class EntryTlogMetabarActions extends Component {
   render() {
     const { can_delete, can_edit, can_favorite, can_report, can_watch,
             edit_url, is_favorited, is_watching, url } = this.props.entry;
+    const DropdownLinkComponent = window.SPA ? DropdownActionSPA : DropdownAction;
+
     return (
       <DropdownActions>
         {can_edit &&
@@ -22,7 +25,7 @@ class EntryTlogMetabarActions extends Component {
            title={i18n.t('edit_entry_item')}
            url={edit_url}
          />}
-        <DropdownAction
+        <DropdownLinkComponent
           icon="icon--hyperlink"
           title={i18n.t('link_entry_item')}
           url={url}
