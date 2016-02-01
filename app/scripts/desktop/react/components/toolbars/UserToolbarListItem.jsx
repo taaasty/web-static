@@ -1,6 +1,7 @@
 /*global $ */
 import React, { Children, Component, PropTypes, cloneElement } from 'react';
 import { Link } from 'react-router';
+import uri from 'urijs';
 import classNames from 'classnames';
 
 const MAX_BADGE_COUNT = 99;
@@ -97,9 +98,14 @@ class UserToolbarListItem extends Component {
         onMouseEnter={this.handleMouseEnter.bind(this)}
         onMouseLeave={this.handleMouseLeave.bind(this)}
       >
-        {false && routeName //FIXME when toolbar included into routing
-         ? <Link className="toolbar__nav-link" ref="link" to={url}>
-             {icon ? this.renderIcon() : tChildren}
+        {routeName //FIXME when toolbar included into routing
+         ? <Link
+             className="toolbar__nav-link"
+             to={uri(url).path()}
+           >
+             <div ref="link">
+               {icon ? this.renderIcon() : tChildren}
+             </div>
            </Link>
          : <a
              className="toolbar__nav-link"
