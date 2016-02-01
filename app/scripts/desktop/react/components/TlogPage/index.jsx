@@ -6,12 +6,17 @@ class TlogPageContainer extends Component {
   componentWillMount() {
     const { TlogEntriesActions, params: { slug } } = this.props;
 
-    TlogEntriesActions.getTlogEntriesIfNeeded(slug, this.section(this.props));
+    TlogEntriesActions.getTlogEntriesIfNeeded(
+      slug,
+      this.section(this.props),
+      this.date(this.props)
+    );
   }
   componentWillReceiveProps(nextProps) {
     this.props.TlogEntriesActions.getTlogEntriesIfNeeded(
       nextProps.params.slug,
-      this.section(nextProps)
+      this.section(nextProps),
+      this.date(nextProps.params)
     );
   }
   section(props) {
@@ -19,7 +24,14 @@ class TlogPageContainer extends Component {
     
     return (author && author.is_flow)
       ? TLOG_SECTION_FLOW
-      : path || TLOG_SECTION_TLOG;
+      : this.date(props.params)
+        ? TLOG_SECTION_TLOG
+        : path || TLOG_SECTION_TLOG;
+  }
+  date(params = {}) {
+    const { year, month, day } = params;
+
+    return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
     const { currentUserId, error, locale, queryString, tlog, tlogEntries,

@@ -15,7 +15,7 @@ const AppRouting = function() {
           <IndexRoute component={TlogPage} />
           <Route path="privates" component={TlogPage} />
           <Route path="favorites" component={TlogPage} />
-          <Route path=":year/:month/:day" component={TlogPage} />
+          <Route path=":year/:month/:day" name="daylog" component={TlogPage} />
           <Route path=":entrySlug" name="tlogEntry" component={EntryPage} />
         </Route>
         <Redirect from="@:slug" to="~:slug" />

@@ -24,27 +24,35 @@ class TlogPageBody extends Component {
     const queryHash = queryString.parse(window.location.search);
     this.setState({ prevButtonVisible: queryHash.since_entry_id });
   }
+  date2path(slug, date=''){
+    return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
+  }
   renderTlog() {
-    const { nextPageUrl, prevPageUrl, section, tlog } = this.props;
-    const isPaged = tlog.data.author.is_daylog && section === TLOG_SECTION_TLOG;
+    const { section, tlog: { data: { author } },
+            tlogEntries: { data: { next_date, prev_date } } } = this.props;
+    const isPaged = author.is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
         <EntryTlogsContainer {...this.props} />
-        {isPaged && <TlogPagePagination nextPageUrl={nextPageUrl} prevPageUrl={prevPageUrl} />}
+        {isPaged &&
+         <TlogPagePagination
+           nextPagePath={this.date2path(author.slug, next_date)}
+           prevPagePath={this.date2path(author.slug, prev_date)}
+         />}
       </div>
     );
   }
   renderContents() {
-    const { currentUserId, error, queryString, section,
-            tlogEntries: { data: { items } },
+    const { currentUserId, error, queryString, section, tlogEntries,
             tlog: { data: { author, my_relationship: state } } } = this.props;
+    const { isFetching: isFetchingEntries, data: { items } } = tlogEntries;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
     } else {
       if (author.id && currentUserId === author.id) { //owner
-        if (items.length > 0) {
+        if (items.length > 0 || isFetchingEntries) {
           return this.renderTlog();
         } else {
           switch (section) {
@@ -65,7 +73,7 @@ class TlogPageBody extends Component {
 
         if (section === TLOG_SECTION_PRIVATE) {
           return <TlogPagePrivate text={i18n.t('tlog.section_private')} />;
-        } else if (items.length > 0) {
+        } else if (items.length > 0 || isFetchingEntries) {
           return this.renderTlog();
         } else {
           const msgText = queryString

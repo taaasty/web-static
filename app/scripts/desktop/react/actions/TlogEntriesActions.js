@@ -5,6 +5,7 @@ import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
 
 export const TLOG_ENTRIES_REQUEST = 'ENTRIES_REQUEST';
 export const TLOG_ENTRIES_RECEIVE = 'ENTRIES_RECEIVE';
+export const TLOG_ENTRIES_RESET = 'ENTRIES_RESET';
 export const TLOG_ENTRIES_DELETE_ENTRY = 'ENTRIES_DELETE_ENTRY';
 export const TLOG_ENTRIES_ERROR = 'ENTRIES_ERROR';
 
@@ -18,6 +19,12 @@ function tlogEntriesReceive(data) {
 function tlogEntriesRequest() {
   return {
     type: TLOG_ENTRIES_REQUEST,
+  };
+}
+
+function tlogEntriesReset() {
+  return {
+    type: TLOG_ENTRIES_RESET,
   };
 }
 
@@ -39,27 +46,29 @@ function fetchTlogEntries(url, data) {
     });
 }
 
-function shouldFetchTlogEntries(state, slug, section, type='tlogs') {
-  const { data, isFetching, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
+function shouldFetchTlogEntries(state, slug, section, date='', type='tlogs') {
+  const { data, isFetching, date: cDate, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
 
-  return !isFetching && (data.items.length === 0 || slug !== cSlug || section !== cSection || type !== cType);
+  return !isFetching && (data.items.length === 0 || slug !== cSlug || date !== cDate ||
+                         section !== cSection || type !== cType);
 }
 
-function getTlogEntries(slug, section, type) {
-  return (dispatch, getState) => {
+function getTlogEntries(slug, section, date, type) {
+  return (dispatch) => {
     const url = ApiRoutes.tlogEntries(slug, section, type);
 
     dispatch(tlogEntriesRequest());
-    return fetchTlogEntries(url)
-      .then((data) => dispatch(tlogEntriesReceive({ data, section, slug, type })))
+    dispatch(tlogEntriesReset());
+    return fetchTlogEntries(url, { date })
+      .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type })))
       .fail((err) => dispatch(tlogEntriesError(err)));
   };
 }
 
-export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, type='tlogs') {
+export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, date='', type='tlogs') {
   return (dispatch, getState) => {
-    if (shouldFetchTlogEntries(getState(), slug, section, type)) {
-      return dispatch(getTlogEntries(slug, section, type));
+    if (shouldFetchTlogEntries(getState(), slug, section, date, type)) {
+      return dispatch(getTlogEntries(slug, section, date, type));
     }
   };
 }

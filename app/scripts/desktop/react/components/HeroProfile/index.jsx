@@ -124,7 +124,7 @@ class HeroProfile extends Component {
     const { relationship, stats, user } = this.props;
     const relState = this.props.relState ||
             (relationship && relationship.state); //FIXME legacy when invoked from rails
-    const followButtonVisible = !this.isCurrentUser() && relState !== null;
+    const followButtonVisible = !this.isCurrentUser() && relState != null;
     
     return (
       <div className="hero hero-profile">
@@ -152,7 +152,7 @@ class HeroProfile extends Component {
         </div>
         <HeroProfileStats
           stats={stats}
-          user={ user}
+          user={user}
         />
       </div>
     );
@@ -160,6 +160,7 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
+  isFetching: PropTypes.bool,
   relState: PropTypes.string,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
