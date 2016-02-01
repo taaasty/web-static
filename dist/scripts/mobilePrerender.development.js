@@ -65049,7 +65049,7 @@ function mountReactComponents(router) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      if (className === 'UserToolbarContainer' && spa) {
+      if (false && className === 'UserToolbarContainer' && spa) {
         window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props });
       } else if (router && routedComponents.indexOf(className) > -1) {
         window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(className, props));

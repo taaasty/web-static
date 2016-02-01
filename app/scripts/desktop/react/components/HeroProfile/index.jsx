@@ -1,4 +1,4 @@
-/*global $, TastyEvents, Mousetrap, CurrentUserStore */
+/*global $, TastyEvents, Mousetrap, CurrentUserStore, SmartFollowStatus */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
@@ -122,7 +122,9 @@ class HeroProfile extends Component {
   }
   render() {
     const { relationship, stats, user } = this.props;
-    const followButtonVisible = !this.isCurrentUser() && this.props.relationship != null;
+    const relState = this.props.relState ||
+            (relationship && relationship.state); //FIXME legacy when invoked from rails
+    const followButtonVisible = !this.isCurrentUser() && relState !== null;
     
     return (
       <div className="hero hero-profile">
@@ -137,20 +139,20 @@ class HeroProfile extends Component {
           />
           {followButtonVisible &&
            <SmartFollowStatus
-             status={relationship}
+             status={relState}
              tlogId={user.id}
            />
           }
            <HeroProfileHead user={this.props.user} />
            <HeroProfileActionsContainer
              isCurrentUser={this.isCurrentUser()}
-             relationship={relationship}
+             relationship={relState}
              user={user}
            />
         </div>
         <HeroProfileStats
-          user={ user}
           stats={stats}
+          user={ user}
         />
       </div>
     );
@@ -158,6 +160,7 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
+  relState: PropTypes.string,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,

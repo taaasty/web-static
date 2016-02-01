@@ -68,7 +68,7 @@ class TlogPageRoot extends Component {
             <header className="page-header">
               <HeroProfile
                 locale={locale}
-                relationship={my_relationship}
+                relState={my_relationship}
                 stats={stats}
                 user={author}
               />
@@ -110,7 +110,6 @@ TlogPageRoot.propTypes = {
   locale: PropTypes.string.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
-  section: PropTypes.string.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,
   tlogEntry: PropTypes.object.isRequired,

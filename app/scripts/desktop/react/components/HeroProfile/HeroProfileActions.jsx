@@ -1,7 +1,7 @@
-/*global FollowButton */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
+import RelationButton from '../common/RelationButton';
 
 import HeroProfileDropdownMenu from './HeroProfileDropdownMenu';
 import WriteMessageButton from './WriteMessageButton';
@@ -11,7 +11,12 @@ function HeroProfileActions({ relationship, user }) {
 
   return (
     <div className="hero__actions hero__actions--visible">
-      <FollowButton relationship={relationship} />
+      <RelationButton
+        objectID={CurrentUserStore.getUserID()}
+        relState={relationship}
+        subjectID={user.id}
+        subjectPrivacy={user.is_privacy}
+      />
       {!isAnonymousTlog &&
        [ <WriteMessageButton
            key="write-message-button"
@@ -28,7 +33,7 @@ function HeroProfileActions({ relationship, user }) {
 }
 
 HeroProfileActions.propTypes = {
-  relationship: ProjectTypes.relationship,
+  relationship: PropTypes.string,
   user: ProjectTypes.heroUser,
 };
 
