@@ -12,15 +12,16 @@ class DropdownAction extends Component {
     return this.state.hover && hoverTitle ? hoverTitle : title;
   }
   render() {
-    const iconClasses = classnames('icon', this.props.icon);
+    const { id, icon, onClick, url } = this.props;
+    const iconClasses = classnames('icon', icon);
 
     return (
       <Link
         className="meta-item__dropdown-item"
-        onClick={this.props.onClick}
-        onMouseEnter={() => this.setState({hover: true})}
-        onMouseLeave={() => this.setState({hover: false})}
-        to={uri(this.props.url).path()}
+        onClick={onClick}
+        onMouseEnter={() => this.setState({ hover: true })}
+        onMouseLeave={() => this.setState({ hover: false })}
+        to={{pathname: uri(url).path(), state: { id }}}
       >
         <i className={iconClasses} />
         {this.getTitle()}
