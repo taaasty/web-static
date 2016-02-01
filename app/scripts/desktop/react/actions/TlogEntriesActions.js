@@ -39,43 +39,59 @@ function fetchTlogEntries(url, data) {
     });
 }
 
-export function getTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
+function shouldFetchTlogEntries(state, slug, section, type='tlogs') {
+  const { data, isFetching, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
+
+  return !isFetching && (data.items.length === 0 || slug !== cSlug || section !== cSection || type !== cType);
+}
+
+function getTlogEntries(slug, section, type) {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
+    const url = ApiRoutes.tlogEntries(slug, section, type);
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url)
-      .then((data) => dispatch(tlogEntriesReceive(data)))
+      .then((data) => dispatch(tlogEntriesReceive({ data, section, slug, type })))
       .fail((err) => dispatch(tlogEntriesError(err)));
   };
 }
 
-export function appendTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs') {
+export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, type='tlogs') {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
-    const params = { since_entry_id: getState().tlogEntries.data.next_since_entry_id };
+    if (shouldFetchTlogEntries(getState(), slug, section, type)) {
+      return dispatch(getTlogEntries(slug, section, type));
+    }
+  };
+}
+
+export function appendTlogEntries() {
+  return (dispatch, getState) => {
+    const { section, slug, type, data: { next_since_entry_id } } = getState().tlogEntries;
+    const url = ApiRoutes.tlogEntries(slug, section, type);
+    const params = { since_entry_id: next_since_entry_id };
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url, params)
       .then((data) => {
         const prevItems = getState().tlogEntries.data.items;
-        dispatch(tlogEntriesReceive({ ...data, items: prevItems.concat(data.items) }));
+        dispatch(tlogEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
         return data;
       })
       .fail((err) => dispatch(tlogEntriesError(err)));
   };
 }
 
-export function prependTlogEntries(section=TLOG_SECTION_TLOG, type='tlogs', tillEntryId, count) {
+export function prependTlogEntries(tillEntryId, count) {
   return (dispatch, getState) => {
-    const url = ApiRoutes.tlogEntries(getState().tlog.data.author.id, section, type);
+    const { section, slug, type } = getState().tlogEntries;
+    const url = ApiRoutes.tlogEntries(slug, section, type);
     const params = { till_entry_id: tillEntryId, limit: count };
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url, params)
       .then((data) => {
         const prevItems = getState().tlogEntries.data.items;
-        dispatch(tlogEntriesReceive({ ...data, items: data.items.concat(prevItems) }));
+        dispatch(tlogEntriesReceive({ data: { ...data, items: data.items.concat(prevItems) } }));
         return data;
       })
       .fail((err) => dispatch(tlogEntriesError(err)));
