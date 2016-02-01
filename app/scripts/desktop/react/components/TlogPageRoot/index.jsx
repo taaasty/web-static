@@ -6,6 +6,7 @@ import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';
+import UserToolbarContainer from '../toolbars/UserToolbarContainer';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
@@ -90,6 +91,7 @@ class TlogPageRoot extends Component {
           title={slug}
           url={tlog_url}
         />
+        <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
       </div>
     );
   }
