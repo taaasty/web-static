@@ -58,6 +58,7 @@ const actionMap = {
 
   [TLOG_ENTRIES_RECEIVE](state, data) {
     return {
+      ...state,
       ...data,
       isFetching: false,
       error: null,
