@@ -49,7 +49,7 @@ function fetchTlogEntries(url, data) {
 function shouldFetchTlogEntries(state, slug, section, date, type='tlogs') {
   const { data, isFetching, date: cDate, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
 
-  return !isFetching && (data.items.length === 0 || slug !== cSlug || date !== cDate ||
+  return !isFetching && (slug !== cSlug || date !== cDate ||
                          section !== cSection || type !== cType);
 }
 
@@ -75,7 +75,12 @@ export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, date, ty
 
 export function appendTlogEntries() {
   return (dispatch, getState) => {
-    const { section, slug, type, data: { next_since_entry_id } } = getState().tlogEntries;
+    const { isFetching, section, slug, type, data: { next_since_entry_id } } = getState().tlogEntries;
+
+    if (isFetching) {
+      return;
+    }
+
     const url = ApiRoutes.tlogEntries(slug, section, type);
     const params = { since_entry_id: next_since_entry_id };
 
