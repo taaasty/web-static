@@ -4,15 +4,26 @@ import { TLOG_SECTION_TLOG, TLOG_SECTION_FLOW } from '../../../../shared/constan
 
 class TlogPageContainer extends Component {
   componentWillMount() {
+    const { TlogEntriesActions, params: { slug } } = this.props;
+
+    TlogEntriesActions.getTlogEntriesIfNeeded(slug, this.section(this.props));
+  }
+  componentWillReceiveProps(nextProps) {
+    this.props.TlogEntriesActions.getTlogEntriesIfNeeded(
+      nextProps.params.slug,
+      this.section(nextProps)
+    );
+  }
+  section(props) {
+    const { tlog: { data: { author } }, route: { path } } = props;
     
+    return (author && author.is_flow)
+      ? TLOG_SECTION_FLOW
+      : path || TLOG_SECTION_TLOG;
   }
   render() {
-    const { currentUserId, error, locale, queryString, route, tlog, tlogEntries,
+    const { currentUserId, error, locale, queryString, tlog, tlogEntries,
             CalendarActions, TlogEntriesActions } = this.props;
-    const { data: { author } } = tlog;
-    const section = (author && author.is_flow)
-            ? TLOG_SECTION_FLOW
-            : route.path || TLOG_SECTION_TLOG;
 
     return (
       <TlogPageBody
@@ -23,7 +34,7 @@ class TlogPageContainer extends Component {
         error={error}
         locale={locale}
         queryString={queryString}
-        section={section}
+        section={this.section(this.props)}
         tlog={tlog}
         tlogEntries={tlogEntries}
       />
@@ -39,6 +50,7 @@ TlogPageContainer.propTypes = {
   isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
   nextPageUrl: PropTypes.string,
+  params: PropTypes.object.isRequired,
   prevPageUrl: PropTypes.string,
   queryString: PropTypes.string,
   route: PropTypes.object,

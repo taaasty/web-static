@@ -3,7 +3,7 @@ import EntryTlogs from './EntryTlogs';
 
 class EntryTlogsContainer extends Component {
   loadMoreEntries() {
-    this.props.TlogEntriesActions.appendTlogEntries(this.props.section, 'tlogs');
+    this.props.TlogEntriesActions.appendTlogEntries();
   }
   deleteEntry(entryId) {
     this.props.TlogEntriesActions.deleteEntry(entryId);

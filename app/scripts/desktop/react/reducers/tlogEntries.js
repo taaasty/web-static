@@ -13,6 +13,9 @@ export const initialState = {
     has_more: null,
     next_since_entry_id: null,
   },
+  id: null,
+  section: '',
+  type: '',
   isFetching: false,
   error: null,
 };
@@ -46,7 +49,7 @@ function prepareData(data) {
 const actionMap = {
   [TLOG_ENTRIES_REQUEST](state) {
     return {
-        ...state,
+      ...state,
       isFetching: true,
       error: null,
     };
@@ -54,7 +57,7 @@ const actionMap = {
 
   [TLOG_ENTRIES_RECEIVE](state, data) {
     return {
-      data,
+      ...data,
       isFetching: false,
       error: null,
     };
