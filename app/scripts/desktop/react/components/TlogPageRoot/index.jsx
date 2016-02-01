@@ -43,6 +43,7 @@ class TlogPageRoot extends Component {
             CalendarActions, TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
             my_relationship, slug, stats, tlog_url } = tlog.data;
+    const { isFetching: isFetchingTlog } = tlog;
     const calendarEntry = (params.entryPath
       ? tlogEntry.data
       : tlogEntries.data.items.length && tlogEntries.data.items[0].entry) || {};
@@ -68,6 +69,7 @@ class TlogPageRoot extends Component {
             <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
             <header className="page-header">
               <HeroProfile
+                isFetching={isFetchingTlog}
                 locale={locale}
                 relState={my_relationship}
                 stats={stats}

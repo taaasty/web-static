@@ -3,6 +3,7 @@ import {
   TLOG_ENTRIES_RECEIVE,
   TLOG_ENTRIES_DELETE_ENTRY,
   TLOG_ENTRIES_ERROR,
+  TLOG_ENTRIES_RESET,
 } from '../actions/TlogEntriesActions';
 import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
 
@@ -60,6 +61,13 @@ const actionMap = {
       ...data,
       isFetching: false,
       error: null,
+    };
+  },
+
+  [TLOG_ENTRIES_RESET](state) {
+    return {
+      ...state,
+      data: initialState.data,
     };
   },
 

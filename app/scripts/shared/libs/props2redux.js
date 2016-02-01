@@ -1,3 +1,4 @@
+import uri from 'urijs';
 import {
   TLOG_SECTION_TLOG,
   TLOG_SECTION_FAVORITE,
@@ -12,7 +13,16 @@ const mapSection = {
   'flow': TLOG_SECTION_FLOW,
 };
 
+function parseUrl2Date(url) {
+  const path = uri(url).path();
+  const matches = path.match(/^\/\~[^\/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+
+  return (matches.length === 4) && `${matches[1]}-${matches[2]}-${matches[3]}`;
+}
+
 export default function prop2redux(component, props) {
+  const slug = props.user && props.user.slug;
+
   if (component === 'TlogPageContainer') {
     return {
       tlog: {
@@ -24,15 +34,19 @@ export default function prop2redux(component, props) {
           },
           id: props.user.id,
           my_relationship: props.relationship && props.relationship.state,
-          slug: props.user && props.user.slug,
+          slug: slug,
           stats: props.stats,
           tlog_url: props.user && props.user.tlog_url,
         },
       },
       tlogEntries: {
-        data: props.entries_info,
+        data: {
+          ...props.entries_info,
+          next_date: props.nextPageUrl && parseUrl2Date(props.nextPageUrl),
+          prev_date: props.prevPageUrl && parseUrl2Date(props.prevPageUrl),
+        },
         isFetching: false,
-        slug: props.user && props.user.slug,
+        slug: slug,
         section: mapSection[props.section],
         type: 'tlogs',
       } || void 0,
@@ -48,7 +62,7 @@ export default function prop2redux(component, props) {
           },
           id: props.user.id,
           my_relationship: props.relationship && props.relationship.state,
-          slug: props.user && props.user.slug,
+          slug: slug,
           stats: props.stats,
           tlog_url: props.user && props.user.tlog_url,
         },
