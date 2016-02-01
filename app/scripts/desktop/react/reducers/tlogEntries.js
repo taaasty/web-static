@@ -83,8 +83,8 @@ const actionMap = {
   [TLOG_ENTRIES_ERROR](state, error) {
     return {
       ...state,
+      ...error,
       isFetching: false,
-      error,
     };
   },
 };

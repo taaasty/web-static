@@ -46,7 +46,7 @@ function fetchTlogEntries(url, data) {
     });
 }
 
-function shouldFetchTlogEntries(state, slug, section, date='', type='tlogs') {
+function shouldFetchTlogEntries(state, slug, section, date, type='tlogs') {
   const { data, isFetching, date: cDate, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
 
   return !isFetching && (data.items.length === 0 || slug !== cSlug || date !== cDate ||
@@ -61,11 +61,11 @@ function getTlogEntries(slug, section, date, type) {
     dispatch(tlogEntriesReset());
     return fetchTlogEntries(url, { date })
       .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type })))
-      .fail((err) => dispatch(tlogEntriesError(err)));
+      .fail((error) => dispatch(tlogEntriesError({ error, date, section, slug, type })));
   };
 }
 
-export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, date='', type='tlogs') {
+export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, date, type='tlogs') {
   return (dispatch, getState) => {
     if (shouldFetchTlogEntries(getState(), slug, section, date, type)) {
       return dispatch(getTlogEntries(slug, section, date, type));
@@ -86,7 +86,7 @@ export function appendTlogEntries() {
         dispatch(tlogEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
         return data;
       })
-      .fail((err) => dispatch(tlogEntriesError(err)));
+      .fail((error) => dispatch(tlogEntriesError({ error })));
   };
 }
 
