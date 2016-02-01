@@ -51,6 +51,7 @@ function EntryTlogMetabar(props) {
       />
       <EntryTlogMetabarDate
         date={entry.created_at}
+        id={entry.id}
         url={entry.url}
       />
       {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
