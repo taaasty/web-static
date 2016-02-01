@@ -34,7 +34,8 @@ class EntryPageContainer extends Component {
     }
   }
   render() {
-    const { bgStyle, currentUserId, error, locale, tlog, tlogEntry } = this.props;
+    const { currentUserId, error, locale, tlog, tlogEntry } = this.props;
+    const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
       <div className="page-body">
@@ -75,7 +76,6 @@ class EntryPageContainer extends Component {
 
 EntryPageContainer.propTypes = {
   TlogEntryActions: PropTypes.object.isRequired,
-  bgStyle: PropTypes.object,
   currentUserId: PropTypes.number,
   error: PropTypes.string,
   isLogged: PropTypes.bool,
