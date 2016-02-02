@@ -8,41 +8,9 @@ import EntryTlogMetabarTags from './EntryTlogMetabarTags';
 import EntryTlogMetabarActions from './EntryTlogMetabarActions';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../../shared/constants/TlogEntry';
 
-export default class EntryTlogMetabar {
-  static propTypes = {
-    commentator: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    host_tlog_id: PropTypes.number,
-    onComment: PropTypes.func,
-  };
-  render() {
-    const { commentator, entry, onComment } = this.props;
-
-    return (
-      <span className="meta-bar">
-        {this.renderAuthor()}
-        <EntryTlogMetabarComments
-          commentator={commentator}
-          commentsCount={entry.comments_count}
-          onComment={onComment}
-          url={entry.url}
-        />
-        <EntryTlogMetabarDate
-          date={entry.created_at}
-          url={entry.url}
-        />
-        {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
-         <EntryTlogMetabarRepost
-          commentator={commentator}
-          entryID={entry.id}
-         />}
-        {this.renderTags()}
-        <EntryTlogMetabarActions {...this.props} />
-      </span>
-    );
-  }
-  renderAuthor() {
-    const { entry: { author, tlog }, host_tlog_id } = this.props;
+function EntryTlogMetabar(props) {
+  function renderAuthor() {
+    const { entry: { author, tlog }, host_tlog_id } = props;
     const authorMeta = metabarAuthor({ host_tlog_id, author, tlog });
 
     if (authorMeta) {
@@ -60,13 +28,44 @@ export default class EntryTlogMetabar {
       );
     }
   }
-  renderTags() {
-    if (this.props.entry.tags && this.props.entry.tags.length) {
-      return (
-        <EntryTlogMetabarTags
-            tags={this.props.entry.tags}
-            userSlug={this.props.entry.tlog.slug} />
-      );
-    }
+
+  function renderTags() {
+    return (
+      <EntryTlogMetabarTags
+        tags={props.entry.tags}
+        userSlug={props.entry.tlog.slug}
+      />
+    );
   }
+
+  const { commentator, entry, onComment } = props;
+
+  return (
+    <span className="meta-bar">
+      {renderAuthor()}
+      <EntryTlogMetabarComments
+        commentator={commentator}
+        commentsCount={entry.comments_count}
+        onComment={onComment}
+        url={entry.url}
+      />
+      <EntryTlogMetabarDate entry={entry} />
+      {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
+       <EntryTlogMetabarRepost
+        commentator={commentator}
+        entryID={entry.id}
+       />}
+      {entry.tags && entry.tags.length && renderTags()}
+      <EntryTlogMetabarActions {...props} />
+    </span>
+  );
 }
+
+EntryTlogMetabar.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  host_tlog_id: PropTypes.number,
+  onComment: PropTypes.func,
+};
+
+export default EntryTlogMetabar;

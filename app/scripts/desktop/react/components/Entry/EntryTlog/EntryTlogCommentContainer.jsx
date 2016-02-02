@@ -2,12 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import EntryTlogCommentEditForm from './EntryTlogCommentEditForm';
 import EntryTlogComment from './EntryTlogComment';
 
-export default class EntryTlogCommentContainer extends Component {
-  static propTypes = {
-    comment: PropTypes.object.isRequired,
-    commentator: PropTypes.object,
-    entryUrl: PropTypes.string.isRequired,
-  };
+class EntryTlogCommentContainer extends Component {
   state = {
     edit: false,
     processEdit: false,
@@ -18,23 +13,6 @@ export default class EntryTlogCommentContainer extends Component {
     }
     if (this.props.comment.comment_html !== nextProps.comment.comment_html) {
       this.setState({ edit: false });
-    }
-  }
-  render() {
-    if (this.state.edit) {
-      return (
-        <EntryTlogCommentEditForm
-          comment={this.props.comment}
-          commentator={this.props.commentator}
-          onCommentUpdate={this.updateComment.bind(this)}
-          onCancel={this.show.bind(this)}
-          process={this.state.processEdit}
-        />
-      );
-    } else {
-      return (
-          <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />
-      );
     }
   }
   updateComment(text) {
@@ -48,4 +26,26 @@ export default class EntryTlogCommentContainer extends Component {
   show() {
     this.setState({ edit: false });
   }
+  render() {
+    const { comment, commentator } = this.props;
+    const { edit, processEdit } = this.state;
+
+    return edit
+      ? <EntryTlogCommentEditForm
+          comment={comment}
+          commentator={commentator}
+          onCancel={this.show.bind(this)}
+          onCommentUpdate={this.updateComment.bind(this)}
+          process={processEdit}
+        />
+      : <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />;
+  }
 }
+
+EntryTlogCommentContainer.propTypes = {
+  comment: PropTypes.object.isRequired,
+  commentator: PropTypes.object,
+  entryUrl: PropTypes.string.isRequired,
+};
+
+export default EntryTlogCommentContainer;

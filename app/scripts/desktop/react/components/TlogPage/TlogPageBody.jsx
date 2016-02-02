@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import queryString from 'query-string';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
+import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
 import TlogPagePrivate from './TlogPagePrivate';
@@ -24,29 +24,35 @@ class TlogPageBody extends Component {
     const queryHash = queryString.parse(window.location.search);
     this.setState({ prevButtonVisible: queryHash.since_entry_id });
   }
+  date2path(slug, date=''){
+    return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
+  }
   renderTlog() {
-    const { entries_info: { has_more }, nextPageUrl,
-            prevPageUrl, section, user: { id: tlogId, is_daylog } } = this.props;
-    const isPaged = is_daylog && section === TLOG_SECTION_TLOG;
+    const { section, tlog: { data: { author } },
+            tlogEntries: { data: { next_date, prev_date } } } = this.props;
+    const isPaged = author.is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
-        <EntryTlogsContainer {...this.props} host_tlog_id={tlogId} />
-        {isPaged && <TlogPagePagination nextPageUrl={nextPageUrl} prevPageUrl={prevPageUrl} />}
+        <EntryTlogsContainer {...this.props} />
+        {isPaged &&
+         <TlogPagePagination
+           nextPagePath={this.date2path(author.slug, next_date)}
+           prevPagePath={this.date2path(author.slug, prev_date)}
+         />}
       </div>
     );
   }
   renderContents() {
-    const { currentUserId, entries_info, error, queryString,
-            relationship, section, user } = this.props;
-    const items = (entries_info && entries_info.items) || [];
-    const state = (relationship && relationship.state);
+    const { currentUserId, error, queryString, section, tlogEntries,
+            tlog: { data: { author, my_relationship: state } } } = this.props;
+    const { isFetching: isFetchingEntries, data: { items } } = tlogEntries;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
     } else {
-      if (user.id && currentUserId === user.id) { //owner
-        if (items.length > 0) {
+      if (author.id && currentUserId === author.id) { //owner
+        if (items.length > 0 || isFetchingEntries) {
           return this.renderTlog();
         } else {
           switch (section) {
@@ -57,22 +63,22 @@ class TlogPageBody extends Component {
           default:
             return queryString
               ? <TlogPageText text={i18n.t('tlog.no_posts_query', { query: queryString })} />
-              : <TlogPageAuthorEmpty name={user.name} slug={user.slug} />;
+              : <TlogPageAuthorEmpty name={author.name} slug={author.slug} />;
           }
         }
       } else { //guest
-        if (user.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
+        if (author.is_privacy && state !== RELATIONSHIP_STATE_FRIEND) {
           return <TlogPagePrivate text={i18n.t('tlog.private')} />;
         }
 
         if (section === TLOG_SECTION_PRIVATE) {
           return <TlogPagePrivate text={i18n.t('tlog.section_private')} />;
-        } else if (items.length > 0) {
+        } else if (items.length > 0 || isFetchingEntries) {
           return this.renderTlog();
         } else {
           const msgText = queryString
             ? <TlogPageText text={i18n.t('tlog.no_posts_query', { query: queryString })} />
-            : user.is_daylog && section !== TLOG_SECTION_FAVORITE
+            : author.is_daylog && section !== TLOG_SECTION_FAVORITE
               ? i18n.t('tlog.no_posts_daylog')
               : i18n.t('tlog.no_posts');
           return <TlogPageText text={msgText} />;
@@ -81,12 +87,12 @@ class TlogPageBody extends Component {
     }
   }
   render() {
-    const { bgStyle, host_tlog_id, hostTlogUrl } = this.props;
+    const { bgStyle, tlog: { data: { author, tlog_url } } } = this.props;
     const { prevButtonVisible } = this.state;
 
     return (
       <div className="page-body">
-        {host_tlog_id && prevButtonVisible && <PreviousEntriesButton href={hostTlogUrl} />}
+        {author.id && prevButtonVisible && <PreviousEntriesButton href={tlog_url} />}
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
@@ -101,29 +107,31 @@ class TlogPageBody extends Component {
 TlogPageBody.propTypes = {
   bgStyle: PropTypes.object,
   currentUserId: PropTypes.number,
-  entries_info: PropTypes.object,
   error: PropTypes.string,
-  hostTlogUrl: PropTypes.string,
-  nextPageUrl: PropTypes.string,
-  prevPageUrl: PropTypes.string,
   queryString: PropTypes.string,
-  relationship: PropTypes.object,
   section: PropTypes.string.isRequired,
-  user: PropTypes.object,
+  tlog: PropTypes.object,
+  tlogEntries: PropTypes.object,
 };
 
 TlogPageBody.defaultProps = {
   bgStyle: { opacity: '1.0' },
-  entries_info: {
-    items: [],
+  tlog: {
+    data: {
+      author: {
+        id: null,
+        is_daylog: false,
+        is_privacy: false,
+      },
+      tlog_url: '',
+    },
   },
-  hostTlogUrl: '',
-  relationship: {},
-  user: {
-    id: null,
-    is_daylog: false,
-    is_privacy: false,
+  tlogEntries: {
+    data: {
+      items: [],
+    },
   },
+  section: TLOG_SECTION_TLOG,
 };
 
 export default TlogPageBody;

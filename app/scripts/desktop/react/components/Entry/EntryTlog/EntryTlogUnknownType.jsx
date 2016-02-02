@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
-class EntryTlogUnknownType {
+class EntryTlogUnknownType extends Component {
   renderVoting() {
     if (this.props.entry.is_voteable) {
       return (

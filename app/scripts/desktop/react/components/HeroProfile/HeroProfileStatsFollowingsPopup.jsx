@@ -57,7 +57,7 @@ const HeroProfileStatsFollowingsPopup = createClass({
           title={name}
         >
           <span className="user__avatar">
-            <UserAvatar size={64} user={user} />
+            <UserAvatar size={40} user={user} />
           </span>
           <span className="user__desc">
             <span className="user__name">

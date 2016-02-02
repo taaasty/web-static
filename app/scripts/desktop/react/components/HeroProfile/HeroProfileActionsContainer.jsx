@@ -55,7 +55,7 @@ class HeroProfileActionsContainer extends Component {
 
 HeroProfileActionsContainer.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
-  relationship: ProjectTypes.relationship,
+  relationship: PropTypes.string,
   user: ProjectTypes.heroUser,
 };
 

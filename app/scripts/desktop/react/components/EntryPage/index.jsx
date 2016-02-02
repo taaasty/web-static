@@ -1,118 +1,89 @@
-/*global i18n, Calendar */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
-import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import CurrentUserStore from '../../stores/current_user';
+import uri from 'urijs';
+import { Link } from 'react-router';
 
-import HeroProfile from '../HeroProfile';
 import EntryTlog from '../Entry/EntryTlog/EntryTlog';
 import PinPostButton from './PinPostButton';
-import SocialShare from '../common/SocialShare';
-import Auth from '../Auth';
-import Calendar from '../Calendar';
-
-import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 
 class EntryPageContainer extends Component {
-  getEntryImg(entry={}) {
-    return (entry.image_attachments && entry.image_attachments.length)
-      ? entry.image_attachments[0].image.url
-      : entry.author && entry.author.userpic.original_url
-        ? entry.author.userpic.original_url
-        : null;
-        
+  componentWillMount() {
+    const { state } = this.props.location;
+    state && this.fetchData(state.id);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { state } = nextProps.location;
+    state && this.fetchData(state.id);
+  }
+  componentWillUnmount() {
+    //TODO update tlogEntries entry if exists
+  }
+  fetchData(newId) {
+    const { TlogEntryActions, tlogEntries: { data: { items } },
+            tlogEntry } = this.props;
+
+    if (newId && (!tlogEntry.data.id || newId !== tlogEntry.data.id)) {
+      const entries = items.filter((item) => item.entry.id === newId);
+      const entry = entries[0];
+
+      if (entry) {
+        TlogEntryActions.setTlogEntry({ ...entry.entry, commentator: entry.commentator });
+      } else {
+        TlogEntryActions.getTlogEntry(newId);
+      }
+    }
   }
   render() {
-    const { bgImage, bgStyle, commentator, currentUserId, error, isLogged,
-            locale, relationship, stats, successDeleteUrl, user } = this.props;
-    const entry = this.props.entry || {};
-    
+    const { currentUserId, error, locale, tlog, tlogEntry } = this.props;
+    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+
     return (
-      <div className="page">
-        <div className="page__inner">
-          <div className="page__paper">
-            <div className="page-cover js-cover" style={{ backgroundImage: `url('${bgImage}')` }} />
-            <header className="page-header">
-              <HeroProfile
+      <div className="page-body">
+        <div className="content-area">
+          <div className="content-area__bg" style={bgStyle} />
+          <div className="content-area__inner">
+            {currentUserId && tlogEntry.data.author &&
+             currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
+             <PinPostButton
+               entryId={tlogEntry.data.id}
+               orderId={tlogEntry.data.fixed_order_id}
+               status={tlogEntry.data.fixed_state}
+               till={tlogEntry.data.fixed_up_at}
+             />
+            }
+            <div>
+              <EntryTlog
+                commentator={tlogEntry.data.commentator}
+                entry={tlogEntry.data}
+                error={error}
+                host_tlog_id={tlog.data.author.id}
+                isFetching={tlogEntry.isFetching || tlog.isFetching}
                 locale={locale}
-                relationship={relationship}
-                stats={stats}
-                user={user}
+                successDeleteUrl={tlog.data.author && tlog.data.author.tlog_url}
               />
-            </header>
-            <div className="page-body">
-              <div className="content-area">
-                <div className="content-area__bg" style={bgStyle} />
-                <div className="content-area__inner">
-                  {currentUserId  && entry.author &&
-                   currentUserId === entry.author.id && !entry.is_private &&
-                   <PinPostButton
-                     entryId={entry.id}
-                     orderId={entry.fixed_order_id}
-                     status={entry.fixed_state}
-                     till={entry.fixed_up_at}
-                   />
-                  }
-                  <div>
-                    <EntryTlog
-                      commentator={commentator}
-                      entry={entry}
-                      error={error}
-                      host_tlog_id={user.id}
-                      locale={locale}
-                      successDeleteUrl={successDeleteUrl}
-                    />
-                  </div>
-                  <nav className="pagination">
-                    <a className="pagination__item" href={user.tlog_url}>
-                      {i18n.t('buttons.pagination.tlog_root')}
-                    </a>
-                  </nav>
-                </div>
-              </div>
             </div>
+            <nav className="pagination">
+              <Link className="pagination__item" to={uri(tlog.data.author.tlog_url).path()}>
+                {i18n.t('buttons.pagination.tlog_root')}
+              </Link>
+            </nav>
           </div>
         </div>
-        {!isLogged && <Auth fixed={true} locale={locale} />}
-        {entry.id &&
-         <SocialShare
-           img={this.getEntryImg(entry)}
-           title={entry.title}
-           url={entry.url}
-          />}
-        {(!user.is_privacy ||
-          currentUserId === user.id ||
-          (relationship && relationship.state === RELATIONSHIP_STATE_FRIEND)) &&
-         <Calendar
-           entryCreatedAt={entry.created_at || (new Date()).toISOString()}
-           entryId={entry.id}
-           locale={locale}
-           tlogId={user.id}
-         />}
       </div>
     );
   }
 }
 
 EntryPageContainer.propTypes = {
-  bgImage: PropTypes.string.isRequired,
-  bgStyle: PropTypes.object,
-  commentator: PropTypes.object,
+  TlogEntryActions: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
-  entry: PropTypes.object.isRequired,
   error: PropTypes.string,
   isLogged: PropTypes.bool,
   locale: PropTypes.string.isRequired,
-  relationship: PropTypes.object,
-  stats: PropTypes.object.isRequired,
-  successDeleteUrl: PropTypes.string,
-  user: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  tlog: PropTypes.object.isRequired,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntry: PropTypes.object.isRequired,
 };
 
-export default connectToStores(
-  EntryPageContainer,
-  [ CurrentUserStore ],
-  () => ({
-    currentUserId: CurrentUserStore.getUserID(),
-    isLogged: CurrentUserStore.isLogged(),
-  })
-);
+export default EntryPageContainer;

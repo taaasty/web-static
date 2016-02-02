@@ -79,7 +79,6 @@ const components = {
       },
     },
   },
-  Calendar: {},
   FollowButton: {
     relationship: {
       state: '',
@@ -95,6 +94,11 @@ const components = {
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
   FeedPageBody: {},
+  TlogPageBody: {
+    
+  },
+  /*
+  Calendar: {},
   EntryPageContainer: {
     user: {
       tag: '',
@@ -119,9 +123,6 @@ const components = {
       rating: {},
     },
   },
-  TlogPageBody: {
-    
-  },
   TlogPageContainer: {
     relationship: {
       state: '',
@@ -143,6 +144,7 @@ const components = {
       },
     },
   },
+  */
 };
 
 Object.keys(components).forEach((componentName) => {

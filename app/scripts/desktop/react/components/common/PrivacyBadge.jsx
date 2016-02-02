@@ -1,10 +1,9 @@
 /*global i18n, $ */
-import React from 'react';
-import { findDOMNode } from 'react-dom';
+import React, { Component } from 'react';
 
-class PrivacyBadge {
+class PrivacyBadge extends Component {
   componentDidMount() {
-    $(findDOMNode(this)).tooltip({
+    $(this.refs.container).tooltip({
       container: 'body',
       html: true,
       placement: 'bottom',
@@ -12,11 +11,11 @@ class PrivacyBadge {
     });
   }
   componentWillUnmount() {
-    $(findDOMNode(this)).tooltip('destroy');
+    $(this.refs.container).tooltip('destroy');
   }
   render() {
     return (
-      <span className="privacy-badge">
+      <span className="privacy-badge" ref="container">
         <i className="icon icon--locks" />
       </span>
     );

@@ -1,35 +1,40 @@
 import React, { PropTypes } from 'react';
+import Routes from '../../../../../shared/routes/routes';
 
-export default class EntryTlogMetabarTags {
-  static propTypes = {
-    tags: PropTypes.array.isRequired,
-    userSlug: PropTypes.string.isRequired,
-  };
-  render() {
-    return (
-      <span className="meta-item meta-item--tags">
-        <span className="meta-item__content">
-          {this.props.tags.map(this.renderTag.bind(this))}
-        </span>
-      </span>
-    );
-  }
-  renderTag(tag, idx) {
+function EntryTlogMetabarTags({ tags, userSlug }) {
+  function renderTag(tag, idx) {
     let separator;
 
-    if (idx < this.props.tags.length - 1) {
+    if (idx < tags.length - 1) {
       separator = <span className="meta-item__common">, </span>;
     }
 
     return (
       <span key={`tag-${idx}`}>
-        <a href={Routes.userTag(this.props.userSlug, tag)}
-           target="_blank"
-           className="meta-item__common meta-item__link">
+        <a
+          className="meta-item__common meta-item__link"
+          href={Routes.userTag(userSlug, tag)}
+          target="_blank"
+        >
           #{tag}
         </a>
         {separator}
       </span>
     );
   }
+
+  return (
+    <span className="meta-item meta-item--tags">
+      <span className="meta-item__content">
+        {tags.map(renderTag)}
+      </span>
+    </span>
+  );
 }
+
+EntryTlogMetabarTags.propTypes = {
+  tags: PropTypes.array.isRequired,
+  userSlug: PropTypes.string.isRequired,
+};
+
+export default EntryTlogMetabarTags;

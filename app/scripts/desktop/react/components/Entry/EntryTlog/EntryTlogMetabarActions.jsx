@@ -1,10 +1,11 @@
 /*global i18n */
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../common/DropdownActions';
 import DropdownAction from '../../common/DropdownAction';
+import DropdownActionSPA from '../../common/DropdownActionSPA';
 import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
-class EntryTlogMetabarActions {
+class EntryTlogMetabarActions extends Component {
   canPin() {
     const { commentator, entry: { author, is_private } } = this.props;
 
@@ -12,8 +13,12 @@ class EntryTlogMetabarActions {
       commentator.id === author.id && !is_private;
   }
   render() {
-    const { can_delete, can_edit, can_favorite, can_report, can_watch,
-            edit_url, is_favorited, is_watching, url } = this.props.entry;
+    const { id, can_delete, can_edit, can_favorite, can_report, can_watch,
+            edit_url, is_favorited, is_watching, tlog, url } = this.props.entry;
+    const DropdownLinkComponent = window.SPA && !tlog.is_flow
+            ? DropdownActionSPA
+            : DropdownAction;
+
     return (
       <DropdownActions>
         {can_edit &&
@@ -22,8 +27,9 @@ class EntryTlogMetabarActions {
            title={i18n.t('edit_entry_item')}
            url={edit_url}
          />}
-        <DropdownAction
+        <DropdownLinkComponent
           icon="icon--hyperlink"
+          id={id}
           title={i18n.t('link_entry_item')}
           url={url}
         />
@@ -51,7 +57,7 @@ EntryTlogMetabarActions.propTypes = {
   entry: PropTypes.object.isRequired,
 };
 
-class EntryTlogMetabarFavorite {
+class EntryTlogMetabarFavorite extends Component {
   static propTypes = {
     isFavorited: PropTypes.bool,
     onAddToFavorites: PropTypes.func.isRequired,
@@ -83,7 +89,7 @@ class EntryTlogMetabarFavorite {
   }
 }
 
-class EntryTlogMetabarWatch {
+class EntryTlogMetabarWatch extends Component {
   static propTypes = {
     isWatching: PropTypes.bool,
     onAddToWatching: PropTypes.func.isRequired,
@@ -113,7 +119,7 @@ class EntryTlogMetabarWatch {
   }
 }
 
-class EntryTlogMetabarReport {
+class EntryTlogMetabarReport extends Component {
   static propTypes = {
     onReport: PropTypes.func.isRequired,
   };
@@ -128,7 +134,7 @@ class EntryTlogMetabarReport {
   }
 }
 
-class EntryTlogMetabarDelete {
+class EntryTlogMetabarDelete extends Component {
   static propTypes = {
     onDelete: PropTypes.func.isRequired,
   };

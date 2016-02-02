@@ -2,19 +2,20 @@
 import React, { Component, PropTypes } from 'react';
 import EntryRepostPopup from '../../popups/EntryRepostPopup';
 
-export default class EntryTlogMetabarRepost extends Component {
-  static propTypes = {
-    commentator: PropTypes.object,
-    entryID: PropTypes.number.isRequired,
-  };
+class EntryTlogMetabarRepost extends Component {
   state = {
     isPopupOpened: false,
   };
+  closePopup() {
+    this.setState({ isPopupOpened: false });
+  }
+  togglePopup() {
+    this.setState({ isPopupOpened: !this.state.isPopupOpened });
+  }
   render() {
-    if (this.props.commentator) {
-      return (
-        <span className="meta-item meta-item--repost">
-          <span ref="toggle" className="meta-item__content">
+    return this.props.commentator
+      ? <span className="meta-item meta-item--repost">
+          <span className="meta-item__content" ref="toggle">
             <a onClick={this.togglePopup.bind(this)}>
               <span className="meta-item__common">{i18n.t('entry_meta_repost_link')}</span>
             </a>
@@ -22,21 +23,19 @@ export default class EntryTlogMetabarRepost extends Component {
           {this.state.isPopupOpened &&
             <EntryRepostPopup
               entryID={this.props.entryID}
-              targetRef={this.refs.toggle}
               isOpened={this.state.isPopupOpened}
               onClose={this.closePopup.bind(this)}
+              targetRef={this.refs.toggle}
             />
           }
         </span>
-      );
-    } else {
-      return null;
-    }
-  }
-  closePopup() {
-    this.setState({ isPopupOpened: false });
-  }
-  togglePopup() {
-    this.setState({ isPopupOpened: !this.state.isPopupOpened });
+      : null;
   }
 }
+
+EntryTlogMetabarRepost.propTypes = {
+  commentator: PropTypes.object,
+  entryID: PropTypes.number.isRequired,
+};
+
+export default EntryTlogMetabarRepost;

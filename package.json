@@ -16,11 +16,15 @@
   },
   "dependencies": {
     "autosize": "^3.0.4",
+    "aviator": "^0.5.0",
     "bowser": "^0.7.2",
     "classnames": "^1.2.0",
     "color": "^0.10.1",
     "flux": "^2.0.3",
     "fuzzy": "^0.1.0",
+    "history": "^1.17.0",
+    "i18next": "^2.0.20",
+    "i18next-xhr-backend": "^0.2.0",
     "jquery": "^2.1.4",
     "keymirror": "^0.1.1",
     "lodash": "^3.1.0",
@@ -38,8 +42,14 @@
     "react-lazy-load": "^2.0.2",
     "react-masonry-component": "^3.0.0",
     "react-portal": "^1.4.1",
+    "react-redux": "^4.0.6",
+    "react-router": "^2.0.0-rc5",
     "react-tap-event-plugin": "^0.2.1",
     "react-textarea-autosize": "^3.3.0",
+    "redux": "^3.0.5",
+    "redux-devtools-dock-monitor": "^1.0.1",
+    "redux-devtools-log-monitor": "^1.0.2",
+    "redux-thunk": "^1.0.3",
     "set-query-string": "^2.1.0",
     "tether": "^1.1.0",
     "urijs": "^1.17.0"
@@ -77,6 +87,7 @@
     "mocha": "^2.2.5",
     "pretty-hrtime": "^1.0.0",
     "react-addons-test-utils": "^0.14.6",
+    "redux-devtools": "^3.0.1",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.0",
     "sinon": "^1.16.1",
@@ -85,6 +96,6 @@
     "watchify": "^3.2.1"
   },
   "engines": {
-    "node": ">=4.2.0"
+    "node": "^4.2.1"
   }
 }

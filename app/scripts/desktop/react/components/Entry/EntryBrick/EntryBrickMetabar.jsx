@@ -67,7 +67,7 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
   return (
     <span className="meta-bar">
       {entry.is_voteable && renderMetaVote()}
-      {entry.comments_count && renderMetaComments()}
+      {!!entry.comments_count && renderMetaComments()}
       {renderMetaTlog()}
     </span>
   );

@@ -7860,7 +7860,6 @@ var components = {
       }
     }
   },
-  Calendar: {},
   FollowButton: {
     relationship: {
       state: ''
@@ -7876,54 +7875,57 @@ var components = {
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
   FeedPageBody: {},
-  EntryPageContainer: {
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {}
-      }
-    },
-    stats: {},
-    commentator: {
-      userpic: {
-        default_colors: {}
-      }
-    },
-    entry: {
-      author: {
-        userpic: {}
-      },
-      tlog: {
-        userpic: {}
-      },
-      rating: {}
-    }
-  },
-  TlogPageBody: {},
-  TlogPageContainer: {
-    relationship: {
-      state: ''
-    },
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {}
-      }
-    },
-    entries_info: {
-      items: []
-    },
-    stats: {},
-    commentator: {
-      userpic: {
-        default_colors: {}
-      }
-    }
-  }
+  TlogPageBody: {}
 };
 
+/*
+Calendar: {},
+EntryPageContainer: {
+  user: {
+    tag: '',
+    name: '',
+    userpic: {
+      default_colors: {},
+    },
+  },
+  stats: {},
+  commentator: {
+    userpic: {
+      default_colors: {},
+    },
+  },
+  entry: {
+    author: {
+      userpic: {},
+    },
+    tlog: {
+      userpic: {},
+    },
+    rating: {},
+  },
+},
+TlogPageContainer: {
+  relationship: {
+    state: '',
+  },
+  user: {
+    tag: '',
+    name: '',
+    userpic: {
+      default_colors: {},
+    },
+  },
+  entries_info: {
+    items: [],
+  },
+  stats: {},
+  commentator: {
+    userpic: {
+      default_colors: {},
+    },
+  },
+},
+*/
 (0, _keys2.default)(components).forEach(function (componentName) {
   var props = components[componentName];
   var Component = global[componentName];

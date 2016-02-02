@@ -7,30 +7,20 @@ import PostAuthService from '../../../services/PostAuthService';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
-export default class EntryTlogComments extends Component {
-  static propTypes = {
-    commentator: PropTypes.object,
-    entry: PropTypes.object.isRequired,
-    hideCommentForm: PropTypes.bool,
-    limit: PropTypes.number,
-  };
-  static defaultProps = {
-    limit: LOAD_COMMENTS_LIMIT,
-  };
-  state = {
-    comments: this.props.entry.comments || [],
-    totalCount: this.props.entry.comments_count,
-    processCreate: false,
-    loadingMore: false,
-  };
-  render() {
-    return (
-      <section className="comments">
-        {this.renderLoadMoreButton()}
-        {this.renderCommentList()}
-        {this.renderCommentForm()}
-      </section>
-    );
+class EntryTlogComments extends Component {
+  state = this.initState(this.props);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.entry.id !== nextProps.entry.id) {
+      this.setState(this.initState(nextProps));
+    }
+  }
+  initState(props) {
+    return {
+      comments: props.entry.comments || [],
+      totalCount: props.entry.comments_count,
+      processCreate: false,
+      loadingMore: false,
+    };
   }
   renderLoadMoreButton() {
     if (this.state.totalCount > this.state.comments.length) {
@@ -166,4 +156,26 @@ export default class EntryTlogComments extends Component {
         this.setState({ loadingMore: false });
       });
   }
+  render() {
+    return (
+      <section className="comments">
+        {this.renderLoadMoreButton()}
+        {this.renderCommentList()}
+        {this.renderCommentForm()}
+      </section>
+    );
+  }
 }
+
+EntryTlogComments.propTypes = {
+  commentator: PropTypes.object,
+  entry: PropTypes.object.isRequired,
+  hideCommentForm: PropTypes.bool,
+  limit: PropTypes.number,
+};
+
+EntryTlogComments.defaultProps = {
+  limit: LOAD_COMMENTS_LIMIT,
+};
+
+export default EntryTlogComments;

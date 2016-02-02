@@ -1,27 +1,32 @@
 import React, { PropTypes } from 'react';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
-export default class EntryTlogCommentList {
-  static propTypes = {
-    comments: PropTypes.array.isRequired,
-    commentator: PropTypes.object,
-    entryUrl: PropTypes.string.isRequired,
-  };
-  render() {
-    let commentList = this.props.comments.map((comment) => (
-      <EntryTlogCommentContainer
-          comment={comment}
-          commentator={this.props.commentator}
-          entryUrl={this.props.entryUrl}
-          onCommentReply={this.props.onCommentReply.bind(null, comment.user.name)}
-          onCommentUpdate={this.props.onCommentUpdate.bind(null, comment.id)}
-          onCommentReport={this.props.onCommentReport.bind(null, comment.id)}
-          onCommentDelete={this.props.onCommentDelete.bind(null, comment.id)}
-          key={comment.id} />
-    ));
-
-    return (
-      <div className="comments__list">{commentList}</div>
-    );
-  }
+function EntryTlogCommentList({ commentator, comments, entryUrl,
+                                onCommentReply, onCommentUpdate,
+                                onCommentReport, onCommentDelete }) {
+  return (
+      <div className="comments__list">{
+        comments.map((comment) => (
+          <EntryTlogCommentContainer
+            comment={comment}
+            commentator={commentator}
+            entryUrl={entryUrl}
+            key={comment.id}
+            onCommentDelete={onCommentDelete.bind(null, comment.id)}
+            onCommentReply={onCommentReply.bind(null, comment.user.name)}
+            onCommentReport={onCommentReport.bind(null, comment.id)}
+            onCommentUpdate={onCommentUpdate.bind(null, comment.id)}
+          />
+        ))
+      }
+    </div>
+  );
 }
+
+EntryTlogCommentList.propTypes = {
+  commentator: PropTypes.object,
+  comments: PropTypes.array.isRequired,
+  entryUrl: PropTypes.string.isRequired,
+};
+
+export default EntryTlogCommentList;

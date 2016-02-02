@@ -1,4 +1,4 @@
-/*global $, TastyEvents, Mousetrap, CurrentUserStore */
+/*global $, TastyEvents, Mousetrap, CurrentUserStore, SmartFollowStatus */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
@@ -33,9 +33,6 @@ class HeroProfile extends Component {
 
     TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
     TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.currentState != nextState.currentState;
   }
   componentWillUnmount() {
     $(window).off('resize', this.onResize);
@@ -125,7 +122,9 @@ class HeroProfile extends Component {
   }
   render() {
     const { relationship, stats, user } = this.props;
-    const followButtonVisible = !this.isCurrentUser() && this.props.relationship != null;
+    const relState = this.props.relState ||
+            (relationship && relationship.state); //FIXME legacy when invoked from rails
+    const followButtonVisible = !this.isCurrentUser() && relState != null;
     
     return (
       <div className="hero hero-profile">
@@ -134,25 +133,26 @@ class HeroProfile extends Component {
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
           <HeroProfileAvatar
+            isOpen={this.isOpen()}
             onClick={this.handleAvatarClick.bind(this)}
             user={user}
           />
           {followButtonVisible &&
            <SmartFollowStatus
-             status={relationship.state}
+             status={relState}
              tlogId={user.id}
            />
           }
            <HeroProfileHead user={this.props.user} />
            <HeroProfileActionsContainer
              isCurrentUser={this.isCurrentUser()}
-             relationship={relationship}
+             relationship={relState}
              user={user}
            />
         </div>
         <HeroProfileStats
-          user={ user}
           stats={stats}
+          user={user}
         />
       </div>
     );
@@ -160,6 +160,8 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
+  isFetching: PropTypes.bool,
+  relState: PropTypes.string,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,

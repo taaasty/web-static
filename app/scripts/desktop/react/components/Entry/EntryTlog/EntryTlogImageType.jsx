@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
@@ -8,7 +8,7 @@ import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
-class EntryTlogImageType {
+class EntryTlogImageType extends Component {
   startComment() {
     this.refs.comments.startComment();
   }
@@ -25,12 +25,13 @@ class EntryTlogImageType {
     }
   }
   render() {
-    const { entry: { image_attachments, is_private, title, url }, isInList } = this.props;
+    const { entry, isInList } = this.props;
+    const { image_attachments, is_private, title } = entry;
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink show={isInList} url={url}>
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <ImageAttachmentsCollage
               imageAttachments={image_attachments}
               width={712}
@@ -38,7 +39,7 @@ class EntryTlogImageType {
           </EntryTlogContentLink>
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
-          <EntryTlogContentLink show={isInList} url={url}>
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <Text value={title} withHTML />
           </EntryTlogContentLink>
         </div>

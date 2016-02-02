@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import Text from '../../../../../shared/react/components/common/Text';
@@ -7,7 +7,7 @@ import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
-class EntryTlogTextType {
+class EntryTlogTextType extends Component {
   startComment() {
     this.refs.comments.startComment();
   }
@@ -31,7 +31,8 @@ class EntryTlogTextType {
     }
   }
   render() {
-    const { entry: { is_private, text, url }, isInList } = this.props;
+    const { entry, isInList } = this.props;
+    const { is_private, text } = entry;
 
     return (
       <span>
@@ -40,7 +41,7 @@ class EntryTlogTextType {
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <EntryTlogContentLink show={isInList} url={url}>
+        <EntryTlogContentLink entry={entry} show={isInList}>
           <div className="post__content">
             <Text value={text} withHTML />
           </div>
@@ -59,6 +60,7 @@ EntryTlogTextType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isInList: PropTypes.bool,
 };
 
 export default EntryTlogTextType;

@@ -1,5 +1,5 @@
-/*global Avatar */
 import React, { Component, PropTypes } from 'react';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 
 class UserAvatar extends Component {
   state = {

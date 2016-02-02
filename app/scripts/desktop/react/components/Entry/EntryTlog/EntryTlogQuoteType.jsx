@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Voting from '../../common/Voting';
 import PrivacyBadge from '../../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
@@ -6,7 +6,7 @@ import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
-class EntryTlogQuoteType {
+class EntryTlogQuoteType extends Component {
   startComment() {
     this.refs.comments.startComment();
   }
@@ -23,7 +23,8 @@ class EntryTlogQuoteType {
     }
   }
   render() {
-    const { entry: { is_private, source, text, url }, isInList } = this.props;
+    const { entry, isInList } = this.props;
+    const { is_private, source, text } = entry;
 
     return (
       <span>
@@ -31,7 +32,7 @@ class EntryTlogQuoteType {
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
         </header>
-        <EntryTlogContentLink show={isInList} url={url}>
+        <EntryTlogContentLink entry={entry} show={isInList}>
           <div className="post__content">
             <blockquote className="blockquote">
               <span className="laquo">«</span>{text}<span className="raquo">»</span>
