@@ -1,4 +1,5 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
+MessagesPopupActions = require '../../../actions/MessagesPopupActions';
 
 window.IndicatorsToolbar_Notifications = React.createClass
 
@@ -12,16 +13,15 @@ window.IndicatorsToolbar_Notifications = React.createClass
 
   componentDidUpdate: (prevProps, prevState) ->
     if prevState.unreadNotificationsCount > 0 && !@hasUnreadNotifications()
-      PopupActions.closeNotificationsPopup()
+      MessagesPopupActions.closeNotificationsPopup()
 
   componentWillUnmount: ->
     MessagingStatusStore.removeChangeListener @_onStoreChange
 
   render: ->
-    indicatorClasses = cx
-      'toolbar__indicator': true
-      'toolbar__indicator--notifications': true
+    indicatorClasses = classnames('toolbar__indicator', 'toolbar__indicator--notifications', {
       'state--empty': @state.unreadNotificationsCount == 0
+    })
 
     if @hasUnreadNotifications()
       return <div className={ indicatorClasses }

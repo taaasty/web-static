@@ -1,4 +1,4 @@
-keyMirror = require 'react/lib/keyMirror'
+keyMirror = require 'keymirror'
 
 CurrentUserConstants = keyMirror
   UPDATE:                    null

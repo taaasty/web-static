@@ -1,0 +1,29 @@
+.previous-entries-button-container {
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  position: relative;
+  width: 100%;
+  text-align: center;
+
+  .navs-line & {
+    &:extend(.unread-load-button-container);
+  }
+}
+
+.previous-entries-button {
+  &:extend(.unread-load-button);
+  margin-top: 16px;
+
+  .navs-line & {
+    margin-top: 0;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

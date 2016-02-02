@@ -1,8 +1,9 @@
 language: node_js
 node_js:
   - "0.12.0"
-install: 
+install:
   - npm install
+  - npm install bower@1.7.0
   - ./node_modules/bower/bin/bower -v
   - ./node_modules/bower/bin/bower install
 script: ./test.sh

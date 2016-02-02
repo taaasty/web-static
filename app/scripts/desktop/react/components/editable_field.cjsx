@@ -1,5 +1,6 @@
-cx               = require 'react/lib/cx'
-LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+autosize = require 'autosize'
+classnames = require 'classnames'
+LinkedStateMixin = require 'react-addons-linked-state-mixin';
 
 KEYCODE_ENTER = 13
 
@@ -14,6 +15,7 @@ window.EditableField = React.createClass
 
   getDefaultProps: ->
     maxLength: 140
+    defaultValue: ''
 
   getInitialState: ->
     value: @props.defaultValue
@@ -23,27 +25,24 @@ window.EditableField = React.createClass
     @setState(value: nextProps.defaultValue)
 
   componentDidMount: ->
-    @$textarea = $( @refs.textarea.getDOMNode() )
-
-    # require jquery.autosize.min.js
-    if $.fn.autosize
-      @$textarea.autosize(append: '') # По-умолчанию в конец строки добавляет \n. Отключаем, чтобы при инициализации правильно высчитывалась высота
+    field = @refs.textarea
+    autosize(field, {append: ''})
 
   render: ->
-    editableFieldClasses = cx
-      'editable-field': true
-      'state--empty':   @isEmpty()
-      'state--focus':   @state.isFocus
+    editableFieldClasses = classnames('editable-field', {
+      'state--empty': @isEmpty()
+      'state--focus': @state.isFocus
+    })
 
     return <div className={ editableFieldClasses }>
              <div className="editable-field__control-wrap">
-               <textarea ref="textarea"
-                         maxLength={ this.props.maxLength }
-                         valueLink={ @linkState('value') }
-                         className="editable-field__control"
-                         onBlur={ this.onBlur }
-                         onKeyDown={ this.onChange }
-                         onPaste={ this.onChange } />
+               <input ref="textarea"
+                      maxLength={ this.props.maxLength }
+                      valueLink={ @linkState('value') }
+                      className="editable-field__control"
+                      onBlur={ this.onBlur }
+                      onKeyDown={ this.onChange }
+                      onPaste={ this.onChange } />
              </div>
              <div className="editable-field__content">
                <span className="editable-field__placeholder">{ this.props.placeholder }</span>
@@ -64,23 +63,32 @@ window.EditableField = React.createClass
     _.defer =>
       textareaValue = @getValue()
 
-      @$textarea.val('').focus().val textareaValue
+      field = @refs.textarea
+      field.value = ''
+      field.focus()
+      field.value = textareaValue
 
   onBlur: ->
-    @props.onEditEnd @getValue()
-    @setState isFocus: false
+    @setState
+      value: @props.defaultValue
+      isFocus: false
 
   onChange: (e) ->
     # По нажатию на enter выходим из редактирования (либо организуем сохранение на сервер)
     if e.which == KEYCODE_ENTER
-      $(e.target).trigger 'blur'
+      @props.onEditEnd @getValue()
+      e.target.blur()
       e.preventDefault()
 
     _.defer =>
-      value = @refs.value.getDOMNode()
+      value = @refs.value
 
       $(value).text @getValue()
-      @$textarea.trigger 'autosize.resize'
+
+      field = @refs.textarea
+      evt = document.createEvent('Event')
+      evt.initEvent('autosize:update', true, false)
+      field.dispatchEvent(evt)
 
   isEmpty: ->
     # При сохранении данных в настройках, обновляется моделька user,
@@ -89,6 +97,6 @@ window.EditableField = React.createClass
     @props.defaultValue.trim() == ''
 
   getValue: ->
-    textarea = @refs.textarea.getDOMNode()
+    textarea = @refs.textarea
     textareaValue = textarea.value.replace /\n/g, ''
     textareaValue.trim()

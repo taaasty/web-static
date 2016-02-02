@@ -8,10 +8,10 @@ class window.ReactShellBox
 
     @shellboxContainer = container
 
-  show: (reactClass, args) ->
+  show: (Component, args) ->
     React.render (
       <ShellBox>
-        <reactClass {...args} />
+        <Component {...args} />
       </ShellBox>
     ), @shellboxContainer
 

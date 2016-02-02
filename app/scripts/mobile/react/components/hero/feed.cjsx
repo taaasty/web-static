@@ -6,7 +6,7 @@ HeroFeed = React.createClass
   propTypes:
     title:         PropTypes.string.isRequired
     backgroundUrl: PropTypes.string.isRequired
-    entriesCount:  PropTypes.number.isRequired
+    entriesCount:  PropTypes.number
 
   render: ->
     <div style={ @getHeroStyles() }
@@ -17,9 +17,12 @@ HeroFeed = React.createClass
           <div className="hero__title">
             <span>{ @props.title }</span>
           </div>
-          <div className="hero__smalltext">
-            <span>{ i18n.t('hero.feed_entries_count', {count: @props.entriesCount}) }</span>
-          </div>
+          { @props.entriesCount != null &&
+            <div className="hero__smalltext">
+              <span>{ i18n.t('hero.feed_entries_count', {count: @props.entriesCount}) }</span>
+            </div>
+          }
+          {@props.children}
         </div>
       </div>
     </div>

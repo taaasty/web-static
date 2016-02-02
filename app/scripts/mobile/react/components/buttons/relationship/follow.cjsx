@@ -1,4 +1,4 @@
-cx                      = require 'react/lib/cx'
+classnames              = require 'classnames'
 RelationshipsStore      = require '../../../stores/relationships'
 RelationshipButtonMixin = require './mixins/relationship'
 ComponentMixin          = require '../../../mixins/component'
@@ -27,9 +27,9 @@ FollowButton = React.createClass
     currentState: SHOW_STATE
 
   render: ->
-    buttonClasses = cx
-      'follow-button': true
+    buttonClasses = classnames('follow-button', {
       '__active': @isFollowStatus() && @isShowState()
+    })
 
     if @state.status?
       # Inline-block need to prevent AdBlock social buttons hiding

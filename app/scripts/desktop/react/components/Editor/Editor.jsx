@@ -1,53 +1,69 @@
+import React, { PropTypes } from 'react';
 import EditorLayout from './Layout/Layout';
 import EditorActions from './Actions/Actions';
 import EditorTypeSwitcher from './TypeSwitcher/TypeSwitcher';
-import EditorArea from './Area/Area';
+import EditorArea from './EditorArea';
+import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 
-let Editor = React.createClass({
-  propTypes: {
-    entry: React.PropTypes.object.isRequired,
-    entryType: React.PropTypes.string.isRequired,
-    entryPrivacy: React.PropTypes.string.isRequired,
-    tlogType: React.PropTypes.string.isRequired,
-    backUrl: React.PropTypes.string,
-    loading: React.PropTypes.bool.isRequired,
-    creatingAttachments: React.PropTypes.bool.isRequired,
-    canChangeType: React.PropTypes.bool.isRequired,
-    onSaveEntry: React.PropTypes.func.isRequired,
-    onChangePrivacy: React.PropTypes.func.isRequired,
-    onChangeType: React.PropTypes.func.isRequired
-  },
-
-  render() {
-    return (
-      <EditorLayout loading={this.props.loading} backUrl={this.props.backUrl}>
-        <EditorActions
-            entryPrivacy={this.props.entryPrivacy}
-            tlogType={this.props.tlogType}
-            loading={this.props.loading}
-            creatingAttachments={this.props.creatingAttachments}
-            onSaveEntry={this.props.onSaveEntry}
-            onChangePrivacy={this.props.onChangePrivacy} />
-        <EditorArea
-            entry={this.props.entry}
-            entryType={this.props.entryType}
-            entryPrivacy={this.props.entryPrivacy} />
-        {this.renderTypeSwitcher()}
-      </EditorLayout>
-    )
-  },
-
+class Editor {
   renderTypeSwitcher() {
-    if (this.props.tlogType !== 'anonymous') {
+    const { canChangeType, entryType, loading, onChangeType, tlogType } = this.props;
+    if (tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) {
       return (
         <EditorTypeSwitcher
-            entryType={this.props.entryType}
-            canChangeType={this.props.canChangeType}
-            loading={this.props.loading}
-            onChangeType={this.props.onChangeType} />
+          canChangeType={canChangeType}
+          entryType={entryType}
+          loading={loading}
+          onChangeType={onChangeType}
+        />
       );
     }
   }
-});
+  render() {
+    const { backUrl, entry, entryPrivacy, entryType, loading, onChangePrivacy,
+            onPinEntry, onSaveEntry, tlog, tlogType, user: { id, features } } = this.props;
+    return (
+      <EditorLayout backUrl={backUrl} loading={loading}>
+        <EditorActions
+          canPinEntry={features.fixup}
+          entryPrivacy={entryPrivacy}
+          loading={loading}
+          onChangePrivacy={onChangePrivacy}
+          onPinEntry={onPinEntry}
+          onSaveEntry={onSaveEntry}
+          pinOrderUrl={entry.pinOrderUrl}
+          pinState={entry.pinState}
+          pinnedTill={entry.pinnedTill}
+          tlog={tlog}
+          tlogType={tlogType}
+          userID={id}
+        />
+        <EditorArea
+          entry={entry}
+          entryPrivacy={entryPrivacy}
+          entryType={entryType}
+          loading={loading}
+        />
+        {this.renderTypeSwitcher()}
+      </EditorLayout>
+    );
+  }
+}
+
+Editor.propTypes = {
+  backUrl: PropTypes.string,
+  canChangeType: PropTypes.bool.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryPrivacy: PropTypes.string.isRequired,
+  entryType: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  onChangePrivacy: PropTypes.func.isRequired,
+  onChangeType: PropTypes.func.isRequired,
+  onPinEntry: PropTypes.func.isRequired,
+  onSaveEntry: PropTypes.func.isRequired,
+  tlog: PropTypes.object,
+  tlogType: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
 export default Editor;

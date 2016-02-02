@@ -65,6 +65,26 @@
   color: @person-gray-color;
 }
 
+// Dropdown
+.person__dropdown-container {
+  &:extend(.dropdown-container all);
+}
+
+.person__dropdown {
+  .make-popover();
+
+  &.state--open {
+    visibility: visible;
+    opacity: 1;
+    .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
+  }
+
+  .person__dropdown-item {
+    &:hover {
+      color: @black;
+    }
+  }
+}
 
 // Persons Headline
 .persons-headline {

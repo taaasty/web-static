@@ -1,6 +1,9 @@
+EntryMetabarTags = require './tags'
+
 window.EntryMetabar = React.createClass
 
   propTypes:
+    userSlug:                 React.PropTypes.string.isRequired
     entryId:                  React.PropTypes.number.isRequired
     author:                   React.PropTypes.object
     isFavorited:              React.PropTypes.bool.isRequired
@@ -43,7 +46,7 @@ window.EntryMetabar = React.createClass
              <EntryMetabarDate time={ this.props.createdAt }
                                entryUrl={ this.props.entryUrl } />
 
-             <EntryMetabarTags tags={ this.props.tags } />
+             <EntryMetabarTags tags={this.props.tags} userSlug={this.props.userSlug} />
 
              <EntryMetabarDropdownMenu entryId={ this.props.entryId }
                                        isFavorited={ this.props.isFavorited}

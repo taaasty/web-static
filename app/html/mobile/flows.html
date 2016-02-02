@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <!-- Feed Toolbar -->
+    <nav class="toolbar toolbar--feed">
+      <div class="toolbar__toggle"><i class="icon icon--ribbon"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Подписки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--wave"></i>Прямой эфир</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--fire"></i>Лучшее</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Анонимки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Люди</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end Feed Toolbar -->
+
+    <!-- User Toolbar -->
+    <nav class="toolbar toolbar--user">
+      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--drawing"></i>Дизайн дневника</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--cogwheel"></i>Настройки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end User Toolbar -->
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Layout Header -->
+      <div class="layout__header">
+        <!-- Hero -->
+        <div class="hero hero--static" style="background-image: url(../images/bg.jpg);">
+          <div class="hero__close"><i class="icon icon--cross"></i></div>
+          <div class="hero__overlay"></div>
+          <div class="hero__gradient"></div>
+          <div class="hero__content">
+            <div class="hero__head">
+              <div class="hero__title"><span>Потоки</span></div>
+              <div class="hero__smalltext"><span>Мы запустили потоки в тестовом режиме, через пару недель возможность создавать потоки будет доступна всем, а пока – пишите в специальный поток “Идеи потоков”, если вам не хватает существующих тем и вы хотите новую</span></div>
+              <div class="hero__actions hero__actions--visible">
+                <button class="button button--extra-small button--green">Создать поток</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end Hero -->
+      </div>
+      <!-- end Layout Header -->
+      <!-- Layout Body -->
+      <div class="layout__body">
+        <!-- Flows -->
+        <div class="flows">
+          <div class="tabs">
+            <ul class="tabs__list">
+              <li class="tabs__item __active">
+                <a class="tabs__link" href="#" title="Все">Все</a>
+              </li><li class="tabs__item">
+                <a class="tabs__link" href="#" title="Мои">Мои <span class="tabs__counter">1</span></a>
+              </li>
+            </ul>
+          </div>
+          <div class="tabs-panes">
+            <div class="tabs-panes__pane">
+              <div class="flows__list">
+                <div class="flow">
+                  <div class="flow__image">
+                    <a href="#">
+                      <div class="media-image">
+                        <img src="http://thumbor4.tasty0.ru/unsafe/362x180/filters:no_upscale()/http://taaasty.com/assets/userpic/27/c5/286798_original.jpg" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="flow__content">
+                    <div class="flow__content-right">
+                      <button class="follow-button">Подписаться</button>
+                      <div class="flow__data">
+                        <div class="flow__data-item">
+                          <i class="icon icon--friends"></i><span>79</span>
+                        </div><div class="flow__data-item">
+                          <i class="icon icon--text-circle"></i><span>39</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flow__content-left">
+                      <a href="#">
+                        <h2 class="flow__title">Идеи потоков</h2>
+                        <p class="flow__caption">Расскажите какие потоки вы хотели бы создать</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="flow">
+                  <div class="flow__image">
+                    <a href="#">
+                      <div class="media-image">
+                        <img src="http://thumbor4.tasty0.ru/unsafe/362x180/filters:no_upscale()/http://taaasty.com/assets/userpic/cd/d8/283608_original.jpeg" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="flow__content">
+                    <div class="flow__content-right">
+                      <button class="follow-button __active">Подписаться</button>
+                      <div class="flow__data">
+                        <div class="flow__data-item">
+                          <i class="icon icon--friends"></i><span>14</span>
+                        </div><div class="flow__data-item">
+                          <i class="icon icon--text-circle"></i><span>4</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flow__content-left">
+                      <a href="#">
+                        <h2 class="flow__title">Лодки</h2>
+                        <p class="flow__caption">Клуб любителей лодок</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="flow">
+                  <div class="flow__image">
+                    <a href="#">
+                      <div class="media-image">
+                        <img src="http://thumbor4.tasty0.ru/unsafe/362x180/filters:no_upscale()/http://taaasty.com/assets/userpic/b9/53/283594_original.jpg" />
+                      </div>
+                    </a>
+                  </div>
+                  <div class="flow__content">
+                    <div class="flow__content-right">
+                      <button class="follow-button">Подписаться</button>
+                      <div class="flow__data">
+                        <div class="flow__data-item">
+                          <i class="icon icon--friends"></i><span>13</span>
+                        </div><div class="flow__data-item">
+                          <i class="icon icon--text-circle"></i><span>5</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flow__content-left">
+                      <a href="#">
+                        <h2 class="flow__title">Тачки</h2>
+                        <p class="flow__caption">Супер тачки:)</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end Flows -->
+        <!-- Load More Button -->
+        <button class="load-more-button">Загрузить еще <!-- Можно так показывать поцесс загрузки: <span class="spinner spinner--14x14"><span class="spinner__icon"></span></span>--></button>
+        <!-- end Load More Button -->
+        <!-- Loader -->
+        <div class="loader __hidden">
+          <span class="spinner spinner--30x30">
+            <span class="spinner__icon"></span>
+          </span>
+        </div>
+        <!-- end Loader -->
+      </div>
+      <!-- end Layout Body -->
+    </div>
+    <!-- end Layout -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>

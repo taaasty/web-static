@@ -1,29 +1,29 @@
-EditorStore = require '../../../stores/editor'
+EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 { PropTypes } = React
 
 EditorTypeQuote = React.createClass
   displayName: 'EditorTypeQuote'
-  mixins: [ConnectStoreMixin(EditorStore)]
 
-  propTypes:
-    entry: PropTypes.object.isRequired
-    entryType: PropTypes.string.isRequired
+  getInitialState: ->
+    this.getStateFromStore();
+
+  componentWillReceiveProps: ->
+    this.setState(this.getStateFromStore());
 
   render: ->
     <article className="post post--quote post--edit">
       <div className="post__content">
         <blockquote className="blockquote">
           <EditorTextField 
-              text={ @state.text }
+              text={this.state.text}
               placeholder={ i18n.t('editor_quote_text_placeholder') }
               onChange={ @handleTextChange } />
           <div className="blockquote__caption">
             <span className="blockquote__dash">—</span>  
             <EditorTextField
-                text={ @state.source }
+                text={this.state.source}
                 placeholder={ i18n.t('editor_quote_source_placeholder') }
                 onChange={ @handleSourceChange } />
           </div>

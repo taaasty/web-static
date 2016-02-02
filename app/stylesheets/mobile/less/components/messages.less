@@ -376,6 +376,16 @@
     }
   }
 
+  .message__img {
+    overflow: hidden;
+    margin-top: 6px;
+    max-width: 100%;
+    img {
+      max-width: 100%;
+      height: auto!important;
+    }
+  }
+
   .message__meta {
     color: @white;
   }
@@ -405,10 +415,14 @@
       border-bottom: 1px solid rgba(255, 255, 255, .2);
     }
   }
+
+  .message__img-container {
+    text-align: left;
+  }
 }
 
 .message--from {
-  padding: 0 (@messages-avatar-size + @indent-base*2) 0 50px;
+  padding: 0 @indent-base*2 0 50px;
 
   .message__user-avatar {
     right: @indent-base;
@@ -421,10 +435,15 @@
 
     &:before {
       border-color: @message-from-bubble-bg;
+      right: -21px;
     }
   }
 
   .message__meta {
+    text-align: right;
+  }
+
+  .message__img-container {
     text-align: right;
   }
 }

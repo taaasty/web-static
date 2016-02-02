@@ -1,4 +1,4 @@
-Spinner                     = require '../common/spinner/spinner'
+Spinner                     = require '../../../../shared/react/components/common/Spinner'
 NotificationsLoadMoreButton = require './buttons/loadMore'
 { PropTypes }  = React
 
@@ -13,7 +13,7 @@ NotificationsLoadMore = React.createClass
     if @props.loading
       <div className="loader">
         <Spinner size={ 30 } />
-      </div>  
+      </div>
     else
       <NotificationsLoadMoreButton onClick={ @props.onClick } />
 

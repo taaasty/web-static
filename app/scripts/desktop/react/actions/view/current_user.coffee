@@ -45,6 +45,14 @@ CurrentUserViewActions =
     }
     @update options
 
+  updatePhone: (options = {}) ->
+    _.extend(options, {
+      data: {
+        phone: options.phone
+      }
+    })
+    this.update(options)
+
   updateEmail: (options = {}) ->
     _.extend options, {
       data:
@@ -58,6 +66,24 @@ CurrentUserViewActions =
         password: options.password
     }
     @update options
+
+  updateLanguage: (language) ->
+    data = locale: language
+    @update {data}
+
+  stopFbCrosspost: (options = {}) ->
+    oldSuccess = options.success
+    options.success = ->
+      CurrentUserServerActions.stopFbCrosspost()
+      oldSuccess?()
+    CurrentUserResource.stopFbCrosspost(options);
+
+  stopTwitterCrosspost: (options = {}) ->
+    oldSuccess = options.success
+    options.success = ->
+      CurrentUserServerActions.stopTwitterCrosspost()
+      oldSuccess?()
+    CurrentUserResource.stopTwitterCrosspost(options);
 
   cancelEmailConfirmation: ({beforeSend, success, error, complete}) ->
     CurrentUserResource.cancelEmailConfirmation
@@ -83,7 +109,7 @@ CurrentUserViewActions =
         CurrentUserServerActions.updateUser user
         success?(user)
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
         error?(data)
       complete: complete
 

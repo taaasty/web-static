@@ -6,8 +6,8 @@ CLASSNAME_ACTIVE = '__active'
 
 DELAY_SLIDESHOW  = 8000
 
-window.ScreenViewer = React.createClass
-
+module.exports = React.createClass
+  displayName: 'ScreenViewer'
   propTypes:
     title:        React.PropTypes.string
     sourceImages: React.PropTypes.array.isRequired
@@ -135,4 +135,4 @@ ScreenViewer_Title = React.createClass
 
   render: ->
     <div className='screen-viewer__title'
-         dangerouslySetInnerHTML={{ __html: this.props.title }} />
+         dangerouslySetInnerHTML={{__html: this.props.title || ''}} />

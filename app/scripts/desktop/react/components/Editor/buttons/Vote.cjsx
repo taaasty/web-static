@@ -1,4 +1,4 @@
-classSet = require 'react/lib/cx'
+classnames = require 'classnames'
 { PropTypes } = React
 
 EditorVoteButton = React.createClass
@@ -12,17 +12,23 @@ EditorVoteButton = React.createClass
     $button = $( @getDOMNode() )
     $button.tooltip placement: 'bottom'
 
+  componentDidUpdate: (prevProps) ->
+    if prevProps.enabled != @props.enabled
+      $button = $( @getDOMNode() )
+      $button
+        .tooltip('hide')
+        .tooltip('show')
+
   componentWillUnmount: ->
     $button = $( @getDOMNode() )
     $button.tooltip 'destroy'
 
   render: ->
-    iconClasses = classSet
-      'icon': true
-      'post-settings-voting': true
+    iconClasses = classnames('icon', 'post-settings-voting', {
       'post-settings-voted': @props.enabled
+    })
 
-    return <button title={ @getTitle() }
+    return <button data-original-title={ @getTitle() }
                    className="button button--outline-grey post-settings-button"
                    onClick={ @handleClick }>
              <span className={ iconClasses } />
@@ -32,8 +38,6 @@ EditorVoteButton = React.createClass
     if @props.enabled then i18n.t 'editor_disable_voting' else i18n.t 'editor_enable_voting'
 
   handleClick: ->
-    $button = $( @getDOMNode() )
-    $button.tooltip 'hide'
     @props.onClick()
 
 module.exports = EditorVoteButton

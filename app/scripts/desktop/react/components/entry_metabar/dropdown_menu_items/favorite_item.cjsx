@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
   mixins: [RequesterMixin, DOMManipulationsMixin, ComponentManipulationsMixin]
@@ -13,10 +13,9 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
     isHover:     false
 
   render: ->
-    iconClasses = cx
-      'icon': true
-      'icon--star': true
+    iconClasses = classnames('icon', 'icon--star', {
       'icon--star-fill': @state.isFavorited
+    })
 
     return <a onClick={ this.onClick }
               onMouseEnter={ this.onMouseEnter }
@@ -51,7 +50,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
         @safeUpdateState isFavorited: true
         console.info "Пост #{@props.entryId} добавлен в избранное"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   removeFromFavorites: ->
     @createRequest
@@ -67,7 +66,7 @@ window.EntryMetabarDropdownMenuFavoriteItem = React.createClass
           @safeUpdateState isFavorited: false
         console.info "Пост #{@props.entryId} удалён из избранного"
       error: (data) ->
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
   onMouseEnter: -> @setState isHover: true
   onMouseLeave: -> @setState isHover: false

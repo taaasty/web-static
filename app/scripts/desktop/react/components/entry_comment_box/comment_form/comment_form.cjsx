@@ -1,3 +1,4 @@
+autosize = require 'autosize'
 REPLIES_LIMIT = 5
 
 window.EntryCommentBox_CommentForm = React.createClass
@@ -14,11 +15,21 @@ window.EntryCommentBox_CommentForm = React.createClass
 
   getDefaultProps: -> disabled: false
 
-  componentDidMount: -> @_initAutosize()
+  componentDidMount: ->
+    field = @refs.commentFormField
+    autosize(field, {append: ''})
 
-  componentDidUpdate: -> @$commentFormField.trigger 'autosize.resize'
+  componentDidUpdate: ->
+    field = @refs.commentFormField
+    evt = document.createEvent('Event')
+    evt.initEvent('autosize:update', true, false)
+    field.dispatchEvent(evt)
 
-  componentWillUnmount: -> @$commentFormField.trigger 'autosize.destroy'
+  componentWillUnmount: ->
+    field = @refs.commentFormField
+    evt = document.createEvent('Event')
+    evt.initEvent('autosize:destroy', true, false)
+    field.dispatchEvent(evt)
 
   render: ->
     if @props.isLoading
@@ -48,30 +59,32 @@ window.EntryCommentBox_CommentForm = React.createClass
              </div>
            </div>
 
-  getValue: -> @refs.commentFormField.getDOMNode().value
+  getValue: -> @refs.commentFormField.value
 
   isEmpty: -> @getValue().trim() is ''
 
   addReply: (name) ->
     name    = '@' + name
-    postfix = if /^@/.exec @$commentFormField.val() then ', ' else ' '
-    newText = @$commentFormField.val()
+    postfix = if /^@/.exec @getValue() then ', ' else ' '
+    newText = @getValue()
     replies = @_getReplies()
 
     newText = @_removeLastReply() if replies.length > REPLIES_LIMIT
     newText = name + postfix + newText unless RegExp(name).exec newText
 
-    @$commentFormField.val(newText).focus()
+    field = @refs.commentFormField
+    field.value = newText
+    field.focus()
 
   _getReplies: ->
     replies = []
-    text    = @$commentFormField.val()
+    text    = @getValue()
     regExp  = /@[^, ]{1,}/g
 
     replies = ( found[0] while found = regExp.exec(text) )
 
   _removeLastReply: ->
-    text   = @$commentFormField.val()
+    text   = @getValue()
     regExp = /, @\w+(?=\s)/g
 
     text.replace regExp, ''
@@ -81,12 +94,13 @@ window.EntryCommentBox_CommentForm = React.createClass
 
   onFocus: ->
     # После фокуса, переводим курсор в конец строки
-    valueLength = @$commentFormField.val().length
+    field = @refs.commentFormField
+    valueLength = field.value.length
 
-    if @$commentFormField.get(0).setSelectionRange != undefined
-      @$commentFormField.get(0).setSelectionRange valueLength, valueLength
+    if field.setSelectionRange != undefined
+      field.setSelectionRange valueLength, valueLength
     else
-      @$commentFormField.val @$commentFormField.val()
+      field.value = field.value
 
     @setState visibleSubmit: true
 
@@ -95,7 +109,7 @@ window.EntryCommentBox_CommentForm = React.createClass
 
   onKeyDown: (e) ->
     # Нажат Enter, введёный текст содержит какие-то символы, без Shift, Ctrl и Alt
-    if e.which == 13 && @$commentFormField.val().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
+    if e.which == 13 && @getValue().match(/./) && !e.shiftKey && !e.ctrlKey && !e.altKey
       e.preventDefault()
       @_submitComment()
 
@@ -105,7 +119,3 @@ window.EntryCommentBox_CommentForm = React.createClass
   onSubmit: (e) ->
     e.preventDefault()
     @_submitComment()
-
-  _initAutosize: ->
-    @$commentFormField = $( @refs.commentFormField.getDOMNode() )
-    @$commentFormField.autosize append: ''

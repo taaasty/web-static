@@ -1,29 +1,29 @@
-EditorStore = require '../../../stores/editor'
+EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 { PropTypes } = React
 
 EditorTypeText = React.createClass
   displayName: 'EditorTypeText'
-  mixins: [ConnectStoreMixin(EditorStore)]
 
-  propTypes:
-    entry: PropTypes.object.isRequired
-    entryType: PropTypes.string.isRequired
+  getInitialState: ->
+    this.getStateFromStore();
+
+  componentWillReceiveProps: ->
+    this.setState(this.getStateFromStore());
 
   render: ->
     <article className="post post--text post--edit">
       <header className="post__header">
         <EditorTextField 
-            text={ @state.title }
+            text={this.state.title}
             placeholder={ i18n.t('editor_title_placeholder') }
             className="post__title"
             onChange={ @handleTitleChange } />
       </header>
       <EditorTextField
           mode="rich"
-          text={ @state.text }
+          text={this.state.text}
           placeholder={ i18n.t('editor_text_placeholder') }
           className="post__content"
           onChange={ @handleTextChange } />

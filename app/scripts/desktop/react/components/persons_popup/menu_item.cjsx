@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.PersonsPopup_MenuItem = React.createClass
   displayName: 'PersonsPopup_MenuItem'
@@ -9,9 +9,9 @@ window.PersonsPopup_MenuItem = React.createClass
     onClick:  React.PropTypes.func.isRequired
 
   render: ->
-    menuItemClasses = cx
-      'tabs-nav__link': true
-      'state--active':  @props.isActive
+    menuItemClasses = classnames('tabs-nav__link', {
+      'state--active': @props.isActive
+    })
 
     return <li className="tabs-nav__item">
              <a title={ @props.title }

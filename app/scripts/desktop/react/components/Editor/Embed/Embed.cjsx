@@ -1,4 +1,3 @@
-cloneWithProps = require 'react/lib/cloneWithProps'
 EditorActionCreators = require '../../../actions/editor'
 EditorEmbedUrlInsert = require './EmbedUrlInsert'
 EditorEmbedLoading = require './EmbedLoading'
@@ -16,6 +15,7 @@ EditorEmbed = React.createClass
   propTypes:
     embedUrl: PropTypes.string
     embedHtml: PropTypes.string
+    loading: React.PropTypes.bool.isRequired
     onCreate: PropTypes.func.isRequired
     onChaneEmbedUrl: PropTypes.func.isRequired
     onDelete: PropTypes.func.isRequired
@@ -30,12 +30,13 @@ EditorEmbed = React.createClass
     switch @state.currentState
       when WELCOME_STATE
         children = React.Children.map @props.children, (child) =>
-          cloneWithProps child, onClickInsertState: @activateInsertState
+          React.cloneElement child, onClickInsertState: @activateInsertState
 
         <div>{ children }</div>
       when LOADED_STATE
         <EditorEmbedLoaded
             embedHtml={ @props.embedHtml }
+            loading={@props.loading}
             onDelete={ @handleDeleteEmbed } />
       when INSERT_STATE
         <EditorEmbedUrlInsert

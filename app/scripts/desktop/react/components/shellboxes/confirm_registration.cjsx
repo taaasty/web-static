@@ -1,5 +1,5 @@
-EmailConfirmRegistration          = require '../auth/email/confirm_registration'
-SocialNetworksConfirmRegistration = require '../auth/social_networks/confirm_registration'
+EmailConfirmRegistration          = require '../Auth/email/confirm_registration'
+SocialNetworksConfirmRegistration = require '../Auth/social_networks/confirm_registration'
 
 window.ConfirmRegistrationShellbox = React.createClass
 

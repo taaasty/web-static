@@ -1,0 +1,32 @@
+.navs-line {
+  &:extend(.layout-constrain);
+  position: relative;
+
+  .bricks & {
+    width: 100%;
+    margin: 0;
+  }
+  
+  &.navs-centered {
+    text-align: center;
+  }
+
+  &.navs-justify {
+    text-align: justify;
+    font-size: 0;
+    line-height: 0;
+
+    &:after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+      height: 0;
+    }
+
+    & > nav, & > div {
+      display: inline-block;
+      vertical-align: middle;
+      z-index: 1;
+    }
+  }
+}

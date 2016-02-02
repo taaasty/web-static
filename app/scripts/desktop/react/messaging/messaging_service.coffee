@@ -1,11 +1,17 @@
+MessagingDispatcher = require './MessagingDispatcher';
+MessagesPopup = require './components/messages_popup';
+
+PUBLIC_CONVERSATION_PREFIX = 'public_';
+
 class window.MessagingService
   EVENT_STATUS: 'status'
-  EVENT_ACTIVE_CONVERSATIONS: 'active_conversations'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
   EVENT_PUSH_MESSAGE:         'push_message'
   EVENT_PUSH_NOTIFICATION:    'push_notification'
   EVENT_UPDATE_MESSAGES:      'update_messages'
   EVENT_UPDATE_NOTIFICATIONS: 'update_notifications'
+  EVENT_DELETE_MESSAGES:      'delete_messages'
+  EVENT_DELETE_USER_MESSAGES: 'delete_user_messages'
   RECONNECT_EVENT:            'reconnected'
 
   CHANNEL_MAIN: (userId) -> "private-#{ userId }-messaging"
@@ -26,16 +32,28 @@ class window.MessagingService
     @channel = @pusher.subscribe @CHANNEL_MAIN(@user.id)
     @channel.bind 'pusher:subscription_succeeded', @_connected
     @channel.bind 'pusher:subscription_error', (error) ->
-      TastyNotifyController.notify 'error', i18n.t 'pusher_subscription_error'
+      NoticeService.notify 'error', i18n.t 'pusher_subscription_error'
       MessagingDispatcher.changeConnectionState ConnectionStateStore.ERROR_STATE
 
-    @channel.bind @EVENT_STATUS,              MessagingDispatcher.updateMessagingStatus
-    # @channel.bind @EVENT_ACTIVE_CONVERSATIONS, MessagingDispatcher.updateActiveConversations
-    @channel.bind @EVENT_UPDATE_CONVERSATION, MessagingDispatcher.updateConversation
-    @bindPushMessages()
-    @bindUpdateMessages()
-    @bindPushNotifications()
-    @bindUpdateNotifications()
+    @channel.bind_all((_type='', data) =>
+      type = _type.replace(/^(public_|group_)/, '')
+      switch type
+        when @EVENT_STATUS then MessagingDispatcher.updateMessagingStatus(data)
+        when @EVENT_UPDATE_CONVERSATION then MessagingDispatcher.updateConversation(data)
+        when @EVENT_PUSH_MESSAGE then MessagingDispatcher.messageReceived(data)
+        when @EVENT_UPDATE_MESSAGES then MessagingDispatcher.messagesUpdated(data)
+        when @EVENT_PUSH_NOTIFICATION then MessagingDispatcher.notificationReceived(data)
+        when @EVENT_UPDATE_NOTIFICATIONS then MessagingDispatcher.notificationsUpdated(data)
+        when @EVENT_DELETE_MESSAGES then MessagingDispatcher.deleteMessages(data)
+        when @EVENT_DELETE_USER_MESSAGES then MessagingDispatcher.deleteUserMessages(data)
+    )
+
+    #@channel.bind @EVENT_STATUS, MessagingDispatcher.updateMessagingStatus
+    #@channel.bind @EVENT_UPDATE_CONVERSATION, MessagingDispatcher.updateConversation
+    #@channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
+    #@channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
+    #@channel.bind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
+    #@channel.bind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
 
     @messagesContainer      = $('<\div>', {'popup-messages-container': ''}).appendTo('body')[0]
     @notificationsContainer = $('<\div>', {'popup-notifications-container': ''}).appendTo('body')[0]
@@ -81,7 +99,26 @@ class window.MessagingService
           conversation: conversation
       .fail (errMsg) ->
         error?()
-        TastyNotifyController.errorResponse errMsg
+        NoticeService.errorResponse errMsg
+
+  deleteConversation: (conversationId) ->
+    this.requester.deleteConversation(conversationId)
+      .done((data) ->
+        MessagingDispatcher.handleServerAction({
+          type: 'deleteConversation',
+          id: conversationId,
+        });
+        NoticeService.notifySuccess(i18n.t('messenger.request.conversation_delete_success'))
+        return data;
+      )
+      .fail((err) -> NoticeService.errorResponse(err))
+
+  deleteMessages: (conversationId, msgIds, all=false) ->
+    this.requester.deleteMessages(conversationId, msgIds, all)
+      .done((data) ->
+        return data;
+      )
+      .fail((err) -> NoticeService.errorResponse(err))
 
   openConversation: (conversationId) ->
     @loadMessages conversationId
@@ -107,17 +144,19 @@ class window.MessagingService
       .fail (error) ->
         console.error 'Проблема при загрузке сообщений для переписки', error
 
-  postMessage: ({ conversationId, content, uuid }) ->
-    @requester.postMessage(conversationId, content, uuid)
+  postMessage: ({ conversationId, content, files, uuid }) ->
+    @requester.postMessage(conversationId, content, files, uuid)
       .done (message) ->
         MessagingDispatcher.messageReceived message
+        if window.ga
+          window.ga('send', 'event', 'UX', 'SendMessage')
       .fail (errMsg) ->
         MessagingDispatcher.handleServerAction {
           type: 'messageSendingError'
           conversationId: conversationId
           uuid: uuid
         }
-        TastyNotifyController.errorResponse errMsg
+        NoticeService.errorResponse errMsg
 
   markAsReadMessage: (conversationId, messageId) ->
     @requester.markAsReadMessage(conversationId, messageId)
@@ -129,24 +168,28 @@ class window.MessagingService
       .fail (errMsg) ->
         console.error 'Проблема при прочтении уведомления', errMsg
 
-  isMessagesPopupShown:      -> @messagesPopup?._lifeCycleState is 'MOUNTED'
-  isNotificationsPopupShown: -> @notificationsPopup?._lifeCycleState is 'MOUNTED'
+  isMessagesPopupShown:      -> @messagesPopup?.isMounted()
+  isNotificationsPopupShown: -> @notificationsPopup?.isMounted()
 
   closeMessagesPopup: ->
     if @isMessagesPopupShown()
       React.unmountComponentAtNode @messagesContainer
+    return
 
   closeNotificationsPopup: ->
     if @isNotificationsPopupShown()
       React.unmountComponentAtNode @notificationsContainer
+    return
 
   openMessagesPopup: ->
     unless @isMessagesPopupShown()
       @messagesPopup = React.render <MessagesPopup />, @messagesContainer
+    return
 
   openNotificationsPopup: ->
     unless @isNotificationsPopupShown()
       @notificationsPopup = React.render <NotificationsPopup />, @notificationsContainer
+    return
 
   toggleMessagesPopup: ->
     if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()
@@ -160,26 +203,14 @@ class window.MessagingService
   removeReconnectListener: (callback) ->
     @off @RECONNECT_EVENT, callback
 
-  bindPushMessages: ->
-    @channel.bind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
-
   unbindPushMessages: ->
     @channel.unbind @EVENT_PUSH_MESSAGE, MessagingDispatcher.messageReceived
-
-  bindUpdateMessages: ->
-    @channel.bind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
 
   unbindUpdateMessages: ->
     @channel.unbind @EVENT_UPDATE_MESSAGES, MessagingDispatcher.messagesUpdated
 
-  bindPushNotifications: ->
-    @channel.bind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
-
   unbindPushNotifications: ->
     @channel.unbind @EVENT_PUSH_NOTIFICATION, MessagingDispatcher.notificationReceived
-
-  bindUpdateNotifications: ->
-    @channel.bind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated
 
   unbindUpdateNotifications: ->
     @channel.unbind @EVENT_UPDATE_NOTIFICATIONS, MessagingDispatcher.notificationsUpdated

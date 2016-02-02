@@ -1,10 +1,10 @@
-cx                         = require 'react/lib/cx'
-ScreenController           = require '../../controllers/screen'
-NotifyController           = require '../../controllers/notify'
-SessionsViewActions        = require '../../actions/view/sessions'
-ComponentMixin             = require '../../mixins/component'
-AuthEmailLoginField        = require './fields/emailLogin'
-AuthEmailResetButton       = require './buttons/emailReset'
+classnames = require 'classnames'
+ScreenController = require '../../controllers/screen'
+NotifyController = require '../../controllers/notify'
+SessionsViewActions = require '../../actions/view/sessions'
+ComponentMixin = require '../../mixins/component'
+EmailLoginField = require './fields/EmailLoginField'
+AuthEmailResetButton = require './buttons/emailReset'
 AuthRememberedPasswordLink = require './links/rememberedPassword'
 { PropTypes } = React
 
@@ -19,13 +19,14 @@ AuthEmailRecovery = React.createClass
     fixed: false
 
   getInitialState: ->
+    login: ''
     loading: false
 
   render: ->
-    authClasses = cx
-      'auth': true
+    authClasses = classnames('auth', {
       'auth--fixed': @props.fixed
-    authBgStyles = backgroundImage: 'url("' + TastySettings.authBackgroundUrl + '")'
+    })  
+    authBgStyles = backgroundImage: 'url("http://taaasty.com/images/Polly-73.jpg")'
 
     return <div className={ authClasses }>
              <div className="auth__grid-table">
@@ -40,7 +41,7 @@ AuthEmailRecovery = React.createClass
                    </div>
                    <div className="auth__body">
                      <form onSubmit={ @handleSubmit }>
-                       <AuthEmailLoginField ref="loginField" />
+                       <EmailLoginField value={this.state.login} onChange={this.handleLoginChange} />
                        <div className="auth__buttons">
                          <AuthEmailResetButton loading={ @state.loading } />
                        </div>
@@ -58,7 +59,7 @@ AuthEmailRecovery = React.createClass
   deactivateLoadingState: -> @safeUpdateState(loading: false)
 
   isValid: ->
-    login = @refs.loginField.getValue()
+    login = @state.login
 
     if login.length == 0
       NotifyController.notifyError i18n.t 'messages.auth_empty_login_error'
@@ -66,13 +67,16 @@ AuthEmailRecovery = React.createClass
     else true
 
   recover: ->
-    login = @refs.loginField.getValue()
+    login = @state.login
 
     @activateLoadingState()
 
     SessionsViewActions.recover login
       .then ScreenController.close
       .always @deactivateLoadingState
+
+  handleLoginChange: (login) ->
+    @setState({login})
 
   handleSubmit: (e) ->
     e.preventDefault()

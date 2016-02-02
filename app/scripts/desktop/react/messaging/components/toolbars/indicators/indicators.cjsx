@@ -1,4 +1,5 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
+MessagesPopupActions = require '../../../actions/MessagesPopupActions';
 
 MOUSE_LEAVE_TIMEOUT = 800
 BASIC_STATE    = 'basic'
@@ -28,10 +29,10 @@ window.IndicatorsToolbar = React.createClass
     TastyEvents.off TastyEvents.keys.user_toolbar_opened(), @_onUserToolbarOpen
 
   render: ->
-    indicatorsClasses = cx
-      'toolbar__indicators': true
+    indicatorsClasses = classnames('toolbar__indicators', {
       'state--advanced': @isAdvancedState()
       'state--basic':    @isBasicState()
+    })
 
     if ConnectionStateStore.CONNECTED_STATE
       indicators = <div className={ indicatorsClasses }
@@ -53,10 +54,10 @@ window.IndicatorsToolbar = React.createClass
     connectionState: ConnectionStateStore.getConnectionState()
 
   handleMessagesClick: ->
-    PopupActions.toggleMessagesPopup() if @isAdvancedState()
+    MessagesPopupActions.toggleMessagesPopup() if @isAdvancedState()
 
   handleNotificationsClick: ->
-    PopupActions.toggleNotificationsPopup() if @isAdvancedState()
+    MessagesPopupActions.toggleNotificationsPopup() if @isAdvancedState()
 
   handleMouseEnter: ->
     clearTimeout @timeout if @timeout
@@ -77,7 +78,7 @@ window.IndicatorsToolbar = React.createClass
     clearTimeout @timeout if @timeout
 
     if CurrentUserStore.isLogged()
-      PopupActions.closeNotificationsPopup() if messagingService.isNotificationsPopupShown()
+      MessagesPopupActions.closeNotificationsPopup() if messagingService.isNotificationsPopupShown()
 
     @activateAdvancedState()
 
@@ -87,7 +88,7 @@ window.IndicatorsToolbar = React.createClass
   _onDocumentClick: (e) ->
     if CurrentUserStore.isLogged()
       unless $(e.target).closest('.toolbar__indicators').length && @isAdvancedState()
-        PopupActions.closeNotificationsPopup()
+        MessagesPopupActions.closeNotificationsPopup()
         @activateBasicState()
 
   _onStoreChange: ->

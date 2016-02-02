@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 
 window.IndicatorsToolbar_Messages = React.createClass
 
@@ -14,10 +14,9 @@ window.IndicatorsToolbar_Messages = React.createClass
     MessagingStatusStore.removeChangeListener @_onStoreChange
 
   render: ->
-    indicatorClasses = cx
-      'toolbar__indicator': true
-      'toolbar__indicator--messages': true
+    indicatorClasses = classnames('toolbar__indicator', 'toolbar__indicator--messages', {
       'state--empty': @state.unreadConversationsCount == 0
+    })
 
     if @hasUnreadConversations()
       return <div className={ indicatorClasses }

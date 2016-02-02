@@ -7,7 +7,14 @@
   left: 0;
   background-color: @popup-overlay-bg;
   overflow: auto;
-  z-index: @zindex-popup;
+  z-index: @zindex-popup-with-background;
+
+  .popup {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    display: block;
+  }
 }
 
 .popup-container__main {
@@ -30,6 +37,14 @@
 
   a:hover {
     color: @yellow;
+  }
+
+  &.front-layer {
+    z-index: @zindex-frontlayer;
+  }
+
+  &.back-layer {
+    z-index: @zindex-backlayer;
   }
 }
 
@@ -210,6 +225,10 @@
   text-align: center;
 }
 
+.popup__link {
+  font-weight: bold;
+}
+
 .popup__text--soc {
   width: 244px;
   margin: 0 auto;
@@ -272,11 +291,12 @@
   width: @design-settings-width;
   height: 94%;
   min-height: 300px;
-  max-height: 670px;
+  max-height: 613px;
   position: fixed;
   top: 3%;
   left: @indent-base;
   display: block;
+  transition: top .3s ease, left .3s ease;
 
   .popup__header {
     height: 43px;
@@ -339,6 +359,10 @@
     z-index: (@zindex-messages + 1);
   }
 
+  .popup__title {
+    overflow: visible;
+  }
+
   .popup__body {
     position: static;
     overflow: visible;
@@ -349,21 +373,33 @@
 .popup--notifications {
   width: @notifications-popup-width;
   display: block;
-  top: 90px;
-  left: 80px;
+  left: 72px;
 
   .popup__arrow {
     left: auto;
-    right: 82px;
   }
 
   .popup__arrow--up {
     border-color: transparent transparent @popup-body-bg;
+    border-width: 7px;
+    top: -7px;
+  }
+
+  .popup__arrow--left {
+    border-color: transparent @popup-body-bg transparent transparent;
+    border-width: 7px 7px 7px 0;
+    left: -7px;
   }
 
   .popup__body {
     .border-radius-top-left(@popup-border-radius);
     .border-radius-top-right(@popup-border-radius);
+  }
+}
+
+.popup--repost {
+  .popup__body {
+    height: 345px;
   }
 }
 
@@ -376,6 +412,53 @@
   .popup__body {
     .border-radius-top-left(@popup-border-radius);
     .border-radius-top-right(@popup-border-radius);
+  }
+}
+
+.popup--flows {
+  width: 600px;
+  color: #fff;
+
+  .popup__body {
+    background-color: #27282a;
+    overflow: visible;
+  }
+
+  .tabs-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom-left-radius: 5px;
+
+    & + .tabs-content {
+      margin-left: @tabs-nav-width;
+
+      .flow-form__save-button {
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  .tabs-panel {
+    min-height: 300px;
+    overflow: visible;
+  }
+
+  .scroller--relationships {
+    height: 600px;
+  }
+
+  .loader {
+    padding: 0 0 20px;
+    text-align: center;
+  }
+}
+
+.popup--paid-features {
+  width: 506px;
+
+  .popup__body {
+    background-color: #ececec;
   }
 }
 

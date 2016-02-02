@@ -1,10 +1,14 @@
-BaseStore = require './_base'
+BaseStore = require './BaseStore'
+{ CROSSPOST_NONE } = require('../constants/CrosspostConstants');
 
 currentUser = null
-
 CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
+  isPrivate: -> currentUser?.is_privacy
+
+  hasDesignBundle: ->
+    !!currentUser?.has_design_bundle
 
   hasVkontakteAuth: ->
     authentications = currentUser?.authentications
@@ -25,11 +29,25 @@ CurrentUserStore = _.extend new BaseStore(),
     false
 
   getUser:        -> currentUser
-  getAccessToken: -> currentUser.api_key.access_token
-  getUserpic:     -> currentUser.userpic
+  getUserID:      -> currentUser?.id
+  getAccessToken: -> currentUser?.api_key.access_token
+  getUserpic:     -> currentUser?.userpic
 
   updateUser: (data) ->
     _.extend currentUser, data
+
+  updateAuthenticationCrosspost: (social, type) ->
+    authentications = currentUser?.authentications || []
+    a.crossposting_cd = type for a in authentications when a.provider == social
+
+  getOmniauthEnableUrl: (social) ->
+    authentications = currentUser?.authentications || []
+    authentications.reduce(((acc, el) ->
+      if el.provider == social
+        el.omniauth_enable_url
+      else
+        acc
+    ), null)
 
   _setupUser: (user) ->
     currentUser = user
@@ -53,3 +71,9 @@ CurrentUserStore.dispatchToken = CurrentUserDispatcher.register (payload) ->
     when 'confirmationEmailCanceled'
       CurrentUserStore.updateUser(confirmation_email: null)
       CurrentUserStore.emitChange()
+    when 'stopFbCrosspost'
+      CurrentUserStore.updateAuthenticationCrosspost('facebook', CROSSPOST_NONE);
+      CurrentUserStore.emitChange();
+    when 'stopTwitterCrosspost'
+      CurrentUserStore.updateAuthenticationCrosspost('twitter', CROSSPOST_NONE);
+      CurrentUserStore.emitChange();

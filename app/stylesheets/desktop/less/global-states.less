@@ -29,7 +29,7 @@
     .animation(none) !important;
   }
 
-  .content-area {
+  .page-body {
     font-family: @font-family-sans-serif;
   }
 
@@ -88,7 +88,7 @@
   }
 
   .page {
-    height: 100% !important;
+    height: auto !important;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .45);
 
     // Хак для ie10+
@@ -98,6 +98,13 @@
       text-shadow: none;
     }
   }
+
+  .layout-outer {
+    position: relative;
+    z-index: @zindex-content-area-inner;
+    text-shadow: initial;
+  }
+
 
   .page__inner {
     height: 100%;
@@ -111,14 +118,29 @@
 
   .page-header {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
     z-index: @zindex-landing-page-header;
   }
 
   .page-body {
     height: 100%;
+  }
+
+  .page-footer a {
+    color: #fff;
+  }
+
+  .page-cover {
+    position: fixed;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  .home-title {
+    color: #fff;
+    text-align: center;
   }
 
   .auth-button {
@@ -132,12 +154,63 @@
   }
 }
 
+.layout--home {
+  background-color: #5d5d5d;
+  user-select: none;
+
+  .layout-constrain {
+    width: auto;
+    padding: 50px 5%;
+    .clearfix();
+  }
+
+  .logo {
+    margin-right: 20px;
+    float: left;
+  }
+
+  .home-title {
+    color: #fff;
+    text-align: center;
+  }
+
+  .menu--right {
+    margin-right: 0;
+  }
+
+  .page-cover {
+    position: fixed;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  .page-header {
+    min-height: 0;
+    z-index: @zindex-landing-page-header;
+  }
+
+  .page-body {
+    font-family: @font-family-sans-serif;
+  }
+
+  .auth-button {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+
+  @media screen and (max-width: 1024px) { // Убираем фикс для обложки hero, чтобы правильно тянулось на планшетах и телефонах
+    .hero--cover {
+      background-attachment: scroll;
+    }
+  }
+}
+
 // Шаблоны только с определённым контентом (восстановление пароля)
 .layout--tech {
-  text-align: center;
-
   .page {
     height: 100% !important;
+    text-align: center;
   }
 
   .page__inner {
@@ -397,6 +470,7 @@
   .toolbar--back,
   .toolbar--nav,
   .toolbar--avatar,
+  .toolbar--compose,
   .post-actions,
   .back-button,
   .toolbar__indicators {

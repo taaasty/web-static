@@ -1,5 +1,7 @@
-require './resources/libs'
-require './resources/locales'
+# /*==========  Shims  ==========*/
+require '../shared/shims/console'
+
+require './resources/Libs'
 require './resources/is_mobile'
 require './resources/fileReceiver'
 require './resources/tasty'
@@ -7,11 +9,15 @@ require './resources/tasty_utils'
 window.Routes    = require '../shared/routes/routes'
 window.ApiRoutes = require '../shared/routes/api'
 
+# /*==========  Locales  ==========*/
+require './locales/numeral/ru'
+require './locales/moment/ru'
+require './locales/moment/en'
+
 require './react/services/positions'
-global.DesignSettingsService = require './react/services/designSettings'
-global.DesignStatesService = require './react/services/designStates'
-global.DesignPresenterService = require './react/services/designPresenter'
-window.ThumborService = require '../shared/react/services/thumbor'
+global.NoticeService = require './react/services/Notice'
+global.BeepService = require '../shared/react/services/Beep'
+global.ThumborService = require '../shared/react/services/thumbor'
 require './react/services/uuid'
 
 # /*===============================
@@ -36,14 +42,15 @@ require './react/mixins/error_timer'
 require './react/mixins/activities'
 require './react/mixins/requester'
 require './react/mixins/scroller'
-require './react/mixins/touch'
+#require './react/mixins/touch'
 
 # /*-----  End of Mixins  ------*/
 
 require './react/dispatchers/current_user'
 require './react/dispatchers/relationships'
 global.CurrentUserStore = require './react/stores/current_user'
-require './react/stores/editor'
+DesignStore = require './react/stores/design'
+require './react/stores/EditorStore'
 require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
@@ -52,17 +59,10 @@ require './react/components/transition/timeout_transition_group'
 # =            Messaging resourses            =
 # ============================================*/
 
-# /*==========  Dispatchers  ==========*/
-
-require './react/messaging/dispatchers/messaging'
-
 # /*==========  Stores  ==========*/
 
 global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
 require './react/messaging/stores/connection_state'
-require './react/messaging/stores/messages_popup_state'
-require './react/messaging/stores/conversations'
-require './react/messaging/stores/messages'
 require './react/messaging/stores/notifications'
 
 # /*==========  Control structures  ==========*/
@@ -73,37 +73,13 @@ require './react/messaging/messaging_testing'
 
 # /*==========  Actions  ==========*/
 
-require './react/messaging/actions/popup'
-require './react/messaging/actions/conversation'
-require './react/messaging/actions/message'
 require './react/messaging/actions/notification'
 
 # /*==========  Components  ==========*/
 
-require './react/messaging/components/buttons/write_message'
 require './react/messaging/components/toolbars/indicators/indicators'
 require './react/messaging/components/toolbars/indicators/messages'
 require './react/messaging/components/toolbars/indicators/notifications'
-require './react/messaging/components/messages_popup/ui/back_button'
-require './react/messaging/components/messages_popup/ui/create_new_conversation_button'
-require './react/messaging/components/messages_popup/messages_popup'
-require './react/messaging/components/messages_popup/loading_message'
-require './react/messaging/components/messages_popup/conversations/conversations'
-require './react/messaging/components/messages_popup/conversations/list/list'
-require './react/messaging/components/messages_popup/conversations/list/list_item'
-require './react/messaging/components/messages_popup/conversations/list/empty'
-require './react/messaging/components/messages_popup/create_new_conversation/create_new_conversation'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_button'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_dropdown'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results'
-require './react/messaging/components/messages_popup/create_new_conversation/chooser/chooser_results_item'
-require './react/messaging/components/messages_popup/thread/thread'
-require './react/messaging/components/messages_popup/thread/message_form/message_form'
-require './react/messaging/components/messages_popup/thread/message_list/message_list'
-require './react/messaging/components/messages_popup/thread/message_list/message_list_item'
-require './react/messaging/components/messages_popup/thread/message_list/message_list_item_manager'
-require './react/messaging/components/messages_popup/thread/message_list/empty'
 require './react/messaging/components/notifications_popup/notifications_popup'
 require './react/messaging/components/notifications_popup/notifications/notifications'
 require './react/messaging/components/notifications_popup/notifications/notification'
@@ -113,39 +89,40 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 
 require './react/components/common/adaptive_input'
 
-require './react/components/embed'
-require './react/components/tlog_alert'
+global.EmbedComponent = require './react/components/embed'
 
 require './react/components/avatars/avatar'
-require './react/components/avatars/user_avatar'
+global.UserAvatar = require './react/components/avatars/UserAvatar';
 
 # /*===============================================
 # =            Authorization resources            =
 # ===============================================*/
 
-require './react/components/auth/auth'
-require './react/components/auth/authorization/authorization'
-require './react/components/auth/authorization/vk'
-require './react/components/auth/authorization/facebook'
+global.Auth = require './react/components/Auth'
+require './react/components/Auth/authorization/authorization'
+require './react/components/Auth/authorization/vk'
+require './react/components/Auth/authorization/facebook'
 
-require './react/components/auth/buttons/vk_auth_button'
-require './react/components/auth/buttons/facebook_auth_button'
+require './react/components/Auth/buttons/vk_auth_button'
+require './react/components/Auth/buttons/facebook_auth_button'
 
-require './react/components/auth/email/email'
-require './react/components/auth/recovery'
+require './react/components/Auth/email/email'
+require './react/components/Auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 
-require './react/components/settings/settings'
+global.Settings = require './react/components/Settings'
 
+global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
+global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
-global.UserToolbar   = require './react/components/toolbars/user'
-global.AvatarToolbar = require './react/components/toolbars/avatar'
-require './react/components/toolbars/close/close'
+global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
+global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
+global.ComposeToolbarContainer = require './react/components/toolbars/ComposeToolbarContainer'
+global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 
 require './react/components/shellboxes/confirm_registration'
 
-require './react/components/voting'
 require './react/components/shellbox_layer'
 require './react/components/buttons/load_more'
 
@@ -167,36 +144,29 @@ require './react/components/popup/layout'
 require './react/components/popup/spinner'
 require './react/components/popup/header'
 
-require './react/components/calendar/calendar'
-require './react/components/calendar/calendar_timeline'
-require './react/components/calendar/calendar_header'
-require './react/components/calendar/calendar_period'
-require './react/components/calendar/calendar_marker'
-
-require './react/components/feed/mixins/base'
-require './react/components/feed/feed'
-require './react/components/feed/tlog'
-require './react/components/feed/bricks'
-
+global.Calendar = require './react/components/Calendar';
+global.Feed = require './react/components/Feed/Feed'
+global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
+global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
+global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
+global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
+global.FlowCreator = require './react/components/FlowPopups/FlowCreator'
+global.FlowManager = require './react/components/FlowPopups/FlowManager'
+global.LiveLoadButtonContainer = require('./react/components/FeedPage/LiveLoadButtonContainer')
+global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadButtonContainer')
+global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
+global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
+global.TlogPageBody = require './react/components/TlogPage/TlogPageBody';
+global.TlogPageContainer = require './react/components/TlogPage';
 
 require './react/components/search/search'
 require './react/components/search/button'
 require './react/components/search/field'
 
-require './react/components/design_settings_popup/design_settings_popup'
-require './react/components/design_settings_popup/controls'
-require './react/components/design_settings_popup/controls_items/background_item'
-require './react/components/design_settings_popup/controls_items/align_item'
-require './react/components/design_settings_popup/controls_items/header_color_item'
-require './react/components/design_settings_popup/controls_items/feed_color_item'
-require './react/components/design_settings_popup/controls_items/font_type_item'
-require './react/components/design_settings_popup/controls_items/opacity_item'
-require './react/components/design_settings_popup/controls_items/_radiobutton'
-require './react/components/design_settings_popup/controls_items/_progressbar'
-# для демонстрации
-global.ColorPicker       = require './react/components/design_settings_popup/color_picker'
-global.ColorPicker_Popup = require './react/components/design_settings_popup/color_picker_popup'
+global.DesignSettingsContainer = require './react/components/DesignSettings/DesignSettingsContainer'
+global.DesignPaymentContainer = require './react/components/DesignPayment/DesignPaymentContainer'
+global.DesignSettingsColorPickerPopup = require './react/components/DesignSettings/common/colorPicker/popup'
 
 require './react/components/persons_popup/mixins/panel_mixin'
 require './react/components/persons_popup/persons_popup'
@@ -224,8 +194,6 @@ require './react/components/entry_metabar/entry_metabar'
 require './react/components/entry_metabar/author'
 require './react/components/entry_metabar/comment'
 require './react/components/entry_metabar/date'
-require './react/components/entry_metabar/tags'
-require './react/components/entry_metabar/tag'
 require './react/components/entry_metabar/dropdown_menu'
 require './react/components/entry_metabar/dropdown_menu_items/item'
 require './react/components/entry_metabar/dropdown_menu_items/favorite_item'
@@ -252,42 +220,26 @@ require './react/components/entry_comment_box/comment_form/comment_edit_form_man
 require './react/components/entry_comment_box/comment_form/buttons/submit'
 require './react/components/entry_comment_box/load_more'
 
-require './react/components/hero/profile/profile'
-require './react/components/hero/profile/profile_avatar'
-require './react/components/hero/profile/profile_head'
-require './react/components/hero/profile/profile_stats'
-require './react/components/hero/profile/profile_stats_item'
-require './react/components/hero/profile/dropdown_menu'
-require './react/components/hero/profile/dropdown_menu_items/ignore'
-require './react/components/hero/profile/dropdown_menu_items/report'
-
-require './react/components/hero/profile/popup/popup'
-require './react/components/hero/profile/popup/followers_popup'
-require './react/components/hero/profile/popup/followings_popup'
-require './react/components/hero/profile/popup/tags_popup'
-require './react/components/hero/profile/popup/items/follower_item'
-require './react/components/hero/profile/popup/items/following_item'
-require './react/components/hero/profile/popup/items/tag_item'
-
+global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
+global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
+global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
+global.Spinner = require '../shared/react/components/common/Spinner'
+global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
+global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
+global.EntryPageContainer = require './react/components/EntryPage';
+global.SocialShare = require './react/components/common/SocialShare';
+global.Voting = require './react/components/common/Voting';
+global.FlowPageContainer = require './react/components/FlowPage';
 
-require './react/components/images_collage'
-
-require './react/components/spinner'
-
-require './react/components/notifications/tasty_notify'
-require './react/components/notifications/tasty_confirm'
-require './react/components/notifications/tasty_alert'
-require './react/components/notifications/tasty_locking_alert'
-
-require './react/components/screen_viewer/screen_viewer'
+require './react/components/alerts/tasty_confirm'
+require './react/components/alerts/tasty_alert'
+require './react/components/alerts/tasty_locking_alert'
 
 require './react/controllers/tasty_events'
-require './react/controllers/tasty_notify'
 require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
-require './react/controllers/tasty_sound'
 require './react/controllers/tasty_locking_alert'
 
 require './react/controllers/shellbox'
@@ -296,3 +248,5 @@ require './react/controllers/popup'
 require './react/mediators/comments'
 
 require './react/application'
+
+global._popupActions = require './react/actions/popup';

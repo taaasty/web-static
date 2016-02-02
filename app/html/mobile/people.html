@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=1, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <!-- Feed Toolbar -->
+    <nav class="toolbar toolbar--feed">
+      <div class="toolbar__toggle"><i class="icon icon--ribbon"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Подписки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--wave"></i>Прямой эфир</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--fire"></i>Лучшее</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Анонимки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Люди</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end Feed Toolbar -->
+
+    <!-- User Toolbar -->
+    <nav class="toolbar toolbar--user">
+      <div class="toolbar__toggle"><i class="icon icon--menu"></i></div>
+      <div class="toolbar__popup">
+        <ul class="toolbar__popup-list">
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--plus"></i>Новая запись</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--anonymous"></i>Новая анонимка</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--messages"></i>Сообщения</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--friends"></i>Друзья</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--drawing"></i>Дизайн дневника</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--cogwheel"></i>Настройки</a>
+          </li>
+          <li class="toolbar__popup-item">
+            <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end User Toolbar -->
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Layout Header -->
+      <div class="layout__header">
+        <!-- Hero -->
+        <div class="hero hero--static" style="background-image: url(http://taaasty.com/images/hero-cover.jpg);">
+          <div class="hero__close"><i class="icon icon--cross"></i></div>
+          <div class="hero__overlay"></div>
+          <div class="hero__gradient"></div>
+          <div class="hero__content">
+            <div class="hero__head">
+              <div class="hero__title"><span>Люди</span></div>
+              <div class="hero__smalltext"><span>3 000 000 человек</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- end Hero -->
+      </div>
+      <!-- end Layout Header -->
+      <!-- Layout Body -->
+      <div class="layout__body">
+        <nav class="tabs">
+          <ul class="tabs__list">
+            <li class="tabs__item __active">
+              <a class="tabs__link" title="Классно пишут">Классно пишут <span class="tabs__badge">31</span></a>
+            </li><li class="tabs__item">
+              <a class="tabs__link" title="Часто пишут">Часто пишут <span class="tabs__badge">15</span></a>
+            </li><li class="tabs__item">
+              <a class="tabs__link" title="Профессиональные блоггеры">Профессиональные блоггеры</a>
+            </li><li class="tabs__item">
+              <a class="tabs__link" title="Ужас">Ужас</a>
+            </li>
+          </ul>
+        </nav>
+        <section class="user-cards">
+          <article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/e1/39/49393_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/e1/39/49393_original.jpg" alt="still-got-tonight" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">still-got-tonight</h3>
+                <p class="user-card__text">Закрой глаза, вдохни немного воздуха</p>
+              </a>
+            </div>
+          </article><article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="follow-status __friend">
+                    <i class="follow-status__icon"></i>
+                  </span>
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/5e/76/190027_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/5e/76/190027_original.jpg" alt="tuylenparanoik" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">tuylenparanoik</h3>
+                <p class="user-card__text">Все началось тогда, когда белая медведица повстречала бурую</p>
+              </a>
+            </div>
+          </article><article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/c8/b8/228596_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/c8/b8/228596_original.jpg" alt="alkogolYana" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">alkogolYana</h3>
+                <p class="user-card__text">Вечнохудеющий алкоголик, ищущий того единственного, но "закоренелый холостяк"</p>
+              </a>
+            </div>
+          </article><article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/e1/39/49393_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/e1/39/49393_original.jpg" alt="still-got-tonight" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">still-got-tonight</h3>
+                <p class="user-card__text">Закрой глаза, вдохни немного воздуха</p>
+              </a>
+            </div>
+          </article><article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="follow-status __friend">
+                    <i class="follow-status__icon"></i>
+                  </span>
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/5e/76/190027_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/5e/76/190027_original.jpg" alt="tuylenparanoik" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">tuylenparanoik</h3>
+                <p class="user-card__text">Все началось тогда, когда белая медведица повстречала бурую</p>
+              </a>
+            </div>
+          </article><article class="user-card">
+            <div class="user-card__inner">
+              <a class="user-card__link" href="#">
+                <div class="user-card__avatar">
+                  <span class="avatar" style="background-image: url(http://thumbor0.tasty0.ru/unsafe/220x220/userpic/c8/b8/228596_original.jpg);">
+                    <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/220x220/userpic/c8/b8/228596_original.jpg" alt="alkogolYana" />
+                  </span>
+                </div>
+                <h3 class="user-card__name">alkogolYana</h3>
+                <p class="user-card__text">Вечнохудеющий алкоголик, ищущий того единственного, но "закоренелый холостяк"</p>
+              </a>
+            </div>
+          </article>
+        </section>
+      </div>
+      <!-- end Layout Body -->
+    </div>
+    <!-- end Layout -->
+
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/client.js"></script>
+  </body>
+</html>

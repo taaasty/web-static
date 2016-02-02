@@ -13,6 +13,62 @@
   }
 }
 
+.post__fixbar {
+  padding: 20px @content-area-padding-horizontal;
+  margin-right: -@content-area-padding-horizontal;
+  margin-left: -@content-area-padding-horizontal;
+  background-color: #fff;
+  color: #222;
+  text-align: center;
+
+  .button {
+    margin: 8px;
+    &,
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .post:first-child & {
+    border-top-right-radius: @content-area-border-radius;
+    border-top-left-radius: @content-area-border-radius;
+  }
+
+  & + .post__content {
+    .image,
+    .video {
+      border-radius: 0 !important;
+    }
+  }
+}
+
+.post__fixbar-text {
+  margin: .5em 0;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  font-family: @font-family-base;
+}
+
+.post__fixbar-input {
+  .placeholder(#cecece);
+  width: 50px;
+  margin: 0 5px;
+  padding: 6px 6px 5px;
+  border: 0;
+  background-color: #f1f1f1;
+  font-size: 16px;
+  line-height: 22px;
+  font-family: @font-family-base-light;
+  text-align: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.post__fixbar-sum {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
 .post__header {
   position: relative;
 }
@@ -20,7 +76,7 @@
 .post__title {
   margin-bottom: 20px;
   font-size: 35px;
-  line-height: 38px;
+  line-height: 35px;
   font-weight: normal;
 
   a {
@@ -38,8 +94,11 @@
 
 // Содержимое поста
 .post__content {
-  margin-bottom: 27px;
   word-wrap: break-word;
+
+  &.private {
+    text-align: center;
+  }
 
   a {
     border-bottom: 1px solid;
@@ -47,7 +106,7 @@
     &:hover {
       border-bottom-color: transparent;
     }
-    
+
     &.fancybox {
       border-bottom: none;
     }
@@ -57,7 +116,9 @@
     margin-bottom: 15px;
 
     img {
-      width: 100%; // Для постов со старого тейсти
+      // Нельзя делать width: 100 потому что  этом случае картикни которые по ширине меньше ширины
+      // поста растягиваются, например: http://taaasty.com/~test/19320729-http-cs14115-vk-me-c540104-v540104681-1935f-hppy44b58is-jpg-kartinka-s-vnes
+      // width: 100%; // Для постов со старого тейсти
     }
   }
 
@@ -103,9 +164,8 @@
 
   // Цитата в посте
   .blockquote {
-    margin-bottom: .769em;
     font-size: 26px;
-    line-height: 33px;
+    line-height: 26px;
 
     .meta-bar {
       display: block;
@@ -150,6 +210,15 @@
   ol ol ol ol {
     list-style: lower-alpha;
   }
+}
+
+.post__actions {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.post__meta {
+  margin-bottom: 20px;
 }
 
 // Типы постов

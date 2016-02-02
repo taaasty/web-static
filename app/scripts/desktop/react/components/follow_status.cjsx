@@ -1,3 +1,5 @@
+{ findDOMNode } = require 'react-dom'
+
 CLASS_PREFIX_STATE = 'state--'
 
 STATE_NONE      = 'none'
@@ -16,7 +18,7 @@ window.FollowStatus = React.createClass
     onClick: React.PropTypes.func
 
   componentDidMount: ->
-    $followStatus = $( @getDOMNode() )
+    $followStatus = $(findDOMNode(this))
     $followStatus.tooltip
       placement: 'bottom'
       trigger:   'click hover'
@@ -35,7 +37,7 @@ window.FollowStatus = React.createClass
       else console.warn 'Неизвестный статус', @props.status
 
     content = <i className='icon'></i>
-    content = <Spinner size={ 15 } /> if @props.process
+    content = <Spinner size={ 14 } /> if @props.process
 
     stateClass = @props.status
     stateClass = STATE_ERROR   if @props.error

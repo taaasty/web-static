@@ -56,7 +56,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
 
   openForm: ->
     @setState currentState: FORM_STATE
-    _.defer => @refs.commentForm.refs.commentFormField.getDOMNode().focus()
+    _.defer => @refs.commentForm.refs.commentFormField.focus()
 
   closeForm: ->
     if @props.totalCommentsCount == 0
@@ -65,7 +65,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
       @setState currentState: LINK_STATE
 
   clearForm: ->
-    @refs.commentForm.refs.commentFormField.getDOMNode().value = ''
+    @refs.commentForm.refs.commentFormField.value = ''
 
   onClick: ->
     window.commentsMediator.doCommentClicked @props.entryId
@@ -88,7 +88,7 @@ window.EntryCommentBox_CommentCreateFormManager = React.createClass
           window.commentsMediator.doFormClosed @
       error: (data) =>
         @safeUpdateState isPostError: true
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
       complete: =>
         @safeUpdateState isPostLoading: false
 

@@ -7,16 +7,19 @@ CommentCreateForm = React.createClass
 
   propTypes:
     entryId:         PropTypes.number.isRequired
+    formFocus:       PropTypes.bool.isRequired,
     loading:         PropTypes.bool.isRequired
     onCommentCreate: PropTypes.func.isRequired
 
   render: ->
     <CommentForm
-        ref="commentForm"
-        buttonTitle={ i18n.t('buttons.comment_create') }
-        placeholder={ i18n.t('placeholders.comment_create') }
-        disabled={ @props.loading }
-        onSubmit={ @createComment } />
+      ref="commentForm"
+      formFocus={this.props.formFocus}
+      buttonTitle={ i18n.t('buttons.comment_create') }
+      placeholder={ i18n.t('placeholders.comment_create') }
+      disabled={ @props.loading }
+      onSubmit={ @createComment }
+    />
 
   isValid: (text) -> !!text.match /./
 

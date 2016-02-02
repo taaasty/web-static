@@ -1,4 +1,5 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
+{ findDOMNode } = require 'react-dom';
 
 window.EntryCommentBox_Comment = React.createClass
 
@@ -12,9 +13,9 @@ window.EntryCommentBox_Comment = React.createClass
   componentDidMount: -> @_scrollToComment() if @props.isShared
 
   render: ->
-    commentClasses = cx
-      'comment': true
+    commentClasses = classnames('comment', {
       'state--highlighted': @props.isShared
+    })
 
     return <article className={ commentClasses }>
              <div className="comment__table">
@@ -29,7 +30,7 @@ window.EntryCommentBox_Comment = React.createClass
                    </span>
                    <span className="comment__username comment__username--bold">{ this.props.comment.user.name } </span>
                  </a>
-                 <span dangerouslySetInnerHTML={{ __html: this.props.comment.comment_html }} />
+                 <span dangerouslySetInnerHTML={{__html: this.props.comment.comment_html || ''}} />
                  <EntryCommentBox_CommentMetaBar name={ this.props.comment.user.name }
                                                  commentId={ this.props.comment.id }
                                                  commentCreatedAt={ this.props.comment.created_at }
@@ -44,12 +45,12 @@ window.EntryCommentBox_Comment = React.createClass
            </article>
 
   _scrollToComment: ->
-    $comment = $( @getDOMNode() )
+    comment = findDOMNode(this);
 
     # Предотвращаем запоминание положения scrollTop в Chrome и Safari
-    $(window).one 'load', => TastyUtils.scrollToElement @getDOMNode()
+    $(window).one 'load', => TastyUtils.scrollToElement comment
 
     # Принудительно скроллим к зашаренному комменту, если загрузка страницы
     # закончилась раньше чем мы зарегистрировали callback
-    if $(window).scrollTop() != $comment.offset().top
-      TastyUtils.scrollToElement @getDOMNode()
+    if $(window).scrollTop() != $(comment).offset().top
+      TastyUtils.scrollToElement comment

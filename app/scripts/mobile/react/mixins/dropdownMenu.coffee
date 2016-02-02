@@ -1,3 +1,5 @@
+{ findDOMNode } = require 'react-dom';
+
 REVERSE_MARGIN = 5
 
 getSize = (elem) ->
@@ -15,30 +17,32 @@ getViewportWH = ->
 
 DropdownMenuMixin =
 
-  getPopupClasses: (baseClasses = '') ->
-    popupClasses = baseClasses
+  getInitialState: ->
+    top: false
+    right: false
 
-    if @isMounted() && @props.visible
-      menu        = @getDOMNode()
+  componentWillReceiveProps: (nextProps) ->
+    if @props.visible isnt nextProps.visible
+      menu = findDOMNode(this)
       menuOffsets = menu.getBoundingClientRect()
-      viewportWH  = getViewportWH()
+      viewportWH = getViewportWH()
 
       isNotEnoughBottomSpace = =>
-        menuSize       = getSize menu
-        menuOffsetTop  = menuOffsets.top
+        menuSize = getSize menu
+        menuOffsetTop = menuOffsets.top
         viewportHeight = viewportWH[1]
 
         if viewportHeight - REVERSE_MARGIN < menuOffsetTop + menuSize[1] then true else false
 
       isNotEnoughRightSpace = =>
         menuOffsetRight = menuOffsets.right
-        viewportWidth   = viewportWH[0]
+        viewportWidth = viewportWH[0]
 
         if viewportWidth - REVERSE_MARGIN < menuOffsetRight then true else false
 
-      popupClasses += ' __top'   if isNotEnoughBottomSpace()
-      popupClasses += ' __right' if isNotEnoughRightSpace()
-
-    popupClasses
+      @setState({
+        top: isNotEnoughBottomSpace(),
+        right: isNotEnoughRightSpace()
+      })
 
 module.exports = DropdownMenuMixin

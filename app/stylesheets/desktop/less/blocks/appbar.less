@@ -1,0 +1,76 @@
+.appbar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff;
+  white-space: nowrap;
+  z-index: @zindex-appbar;
+  user-select: none;
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 142px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACOCAYAAADw82KEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE4QUJFOUUyMEI2MzExRTVCQUNDQTMxNUExMzdGNzdEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjE4QUJFOUUzMEI2MzExRTVCQUNDQTMxNUExMzdGNzdEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MThBQkU5RTAwQjYzMTFFNUJBQ0NBMzE1QTEzN0Y3N0QiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MThBQkU5RTEwQjYzMTFFNUJBQ0NBMzE1QTEzN0Y3N0QiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6EjoV/AAAAVElEQVR42qyROw7AMAhDbdL737hpoy6RI4hA6fLkDwsAALQBnIK/zLGc0SkYzZVgqjw70SLbFF42cW3bEixSCSzr0zmsJb/6qO1aLOiqErg/9QowAGnzE5jKOh4OAAAAAElFTkSuQmCC);
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    pointer-events: none;
+  }
+}
+
+.appbar__close {
+  height: 100%;
+  width: 1em;
+  padding: 0 @indent-base;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 1.125em;
+  line-height: 0;
+  cursor: pointer;
+
+  .icon {
+    margin: -.5em 0 0 -.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+}
+
+.appbar__content {
+  padding: 24px (60px + @indent-base);
+}
+
+.appbar__link {
+  color: inherit;
+}
+
+.appbar__logo {
+  width: @appbar-logo-size;
+  height: @appbar-logo-size;
+  margin-top: -@appbar-logo-size / 2;
+  position: absolute;
+  top: 50%;
+  left: @indent-base;
+  background-color: @appbar-logo-bg;
+  line-height: @appbar-logo-size;
+  text-align: center;
+  border-radius: 50%;
+
+  .icon {
+    font-size: 32px;
+    line-height: inherit;
+  }
+}
+
+.appbar__text {
+  .text-overflow();
+  position: relative;
+}

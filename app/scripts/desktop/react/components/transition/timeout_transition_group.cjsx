@@ -1,4 +1,5 @@
-ReactTransitionGroup = require 'react/lib/ReactTransitionGroup'
+bowser = require 'bowser'
+ReactTransitionGroup = require 'react-addons-transition-group'
 
 TICK = 17
 

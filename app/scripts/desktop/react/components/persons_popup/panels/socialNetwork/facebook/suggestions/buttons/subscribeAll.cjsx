@@ -16,8 +16,8 @@ FacebookSubscribeAllButton = React.createClass
           type: 'suggestionsSubscribed'
           source: 'facebook'
 
-        TastyNotifyController.notifySuccess i18n.t 'facebook_subscribe_all_success'
+        NoticeService.notifySuccess i18n.t 'facebook_subscribe_all_success'
       error: (data) =>
-        TastyNotifyController.errorResponse data
+        NoticeService.errorResponse data
 
 module.exports = FacebookSubscribeAllButton

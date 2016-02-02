@@ -1,8 +1,10 @@
 _ = require 'lodash'
-# Popup = require '../components/popupComponent/index'
+Popup = require '../components/PopupComponent/Popup'
+PopupArea = require '../components/PopupComponent/PopupArea'
 
 class PopupController
   containerAttribute: 'popup-container'
+  popupBGContainerAttribute: 'popup-bg-container'
 
   addContainer: (containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"
@@ -17,18 +19,45 @@ class PopupController
   removeContainer: (container) ->
     container.parentNode?.removeChild container
 
-  open: (Component, props, containerAttribute = @containerAttribute) ->
+  open: ({Component, props, popupProps, containerAttribute}) ->
+    containerAttribute ?= @containerAttribute
+    container = @addContainer containerAttribute
+    popupProps.onClose = @handleClose.bind(@, containerAttribute)
+
+    React.render (
+      <Popup {...popupProps}>
+        <Component {...props} />
+      </Popup>
+    ), container
+
+  openWithBackground: ({Component, props, popupProps, containerAttribute}) ->
+    containerAttribute ?= @popupBGContainerAttribute
     container = @addContainer containerAttribute
 
-    React.render <Popup onClose={ @handleClose.bind(@, containerAttribute) }>
-                   <Component {...props} />
-                 </Popup>, container
+    $('body').addClass 'popup-enabled'
+
+    onClose = =>
+      _.defer =>
+        @handleCloseWithBackground(containerAttribute)
+
+    React.render (
+      <PopupArea onClose={onClose}>
+        <Popup {...popupProps} withBackground={true} onClose={onClose}>
+          <Component {...props} />
+        </Popup>
+      </PopupArea>
+    ), container
 
   openPopup: (PopupComponent, props, containerAttribute = @containerAttribute) ->
     container = @addContainer containerAttribute
+    onClose = @handleClose.bind @, containerAttribute
 
-    React.render <PopupComponent {...props}
-                     onClose={ @handleClose.bind(@, containerAttribute) } />, container
+    if props?.onClose
+      onClose = =>
+        props.onClose()
+        @handleClose containerAttribute
+
+    React.render <PopupComponent {...props} onClose={ onClose } />, container
 
   close: (containerAttribute = @containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"
@@ -37,6 +66,10 @@ class PopupController
     @removeContainer container
 
   handleClose: (containerAttribute) ->
+    @close containerAttribute
+
+  handleCloseWithBackground: (containerAttribute) ->
+    $('body').removeClass 'popup-enabled'
     @close containerAttribute
 
 module.exports = PopupController

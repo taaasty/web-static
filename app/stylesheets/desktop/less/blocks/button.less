@@ -78,16 +78,18 @@
 
 .button-hero-style() {
   &:extend(.button all, .button--small all);
-  color: @hero-button-color;
+  //color: @hero-button-color;
 
   &:before {
-    border: 1px solid @hero-button-border-color;
+    opacity: @hero-button-border-opacity;
+    border: 1px solid; // @hero-button-border-color;
   }
 
   &:hover {
     &:before {
-      border-color: @hero-button-border-color-hover;
-      color: @hero-button-color-hover;
+      opacity: @hero-button-border-opacity-hover;
+      //border-color: @hero-button-border-color-hover;
+      //color: @hero-button-color-hover;
     }
   }
 }
@@ -96,10 +98,12 @@
   .button-hero-style();
   width: 46px;
   padding: 0;
-  color: rgba(255, 255, 255, .6);
+  opacity: 0.6;
+  //color: rgba(255, 255, 255, .6);
 
   &:hover {
-    color: @white;
+    //color: @white;
+    opacity: 1.0;
   }
 }
 
@@ -289,6 +293,20 @@
 /*-- outline --*/
 .button--outline {
   .button-outline-style(@white);
+
+  &.button--gray {
+    background-color: @white;
+    border: 1px solid #b2b2b2;
+    color: #b2b2b2 !important;
+
+    &:before {
+      display: none;
+    }
+
+    .icon {
+      opacity: 1;
+    }
+  }
 }
 
 .button--outline-light-white {
@@ -353,6 +371,7 @@
   .icon {
     margin: 2px;
     font-size: 38px;
+    line-height: 1;
   }
 
   &:hover,
@@ -364,6 +383,20 @@
   &.state--disable {
     background-color: @grey;
     color: @white;
+  }
+
+  .icon--hash {
+    font-size: 26px;
+  }
+}
+
+.button--emerald {
+  background-color: @emerald;
+  color: #fff !important;
+
+  &:hover {
+    background-color: lighten(@emerald, 8%);
+    color: #fff !important;
   }
 }
 
@@ -393,6 +426,18 @@
   transition: all .3s ease;
   &:extend(.icon);
   .ico-cross();
+}
+
+.post-flows-button {
+  &.button--outline-grey {
+    background-color: @white;
+    border: 1px solid #b2b2b2;
+    color: #b2b2b2;
+
+    .icon {
+      opacity: 1;
+    }
+  }
 }
 
 // Button Post Settings
@@ -428,13 +473,34 @@
       transition: color .4s ease;
     }
 
-    &.post-settings-voted,
-    &:hover {
+    &.post-settings-voted {
       &:before {
         color: @yellow;
       }
 
       .ico-fire-fill-reg; // :before - иконка заполненного огня
+    }
+  }
+
+  &.post-settings-promotion-button {
+    padding-right: 22px;
+    padding-left: 22px;
+    background-color: @white;
+    border: 1px solid rgba(red(@green), green(@green), blue(@green), .5);
+    font-size: 15px;
+    line-height: 38px;
+    letter-spacing: 0;
+    color: @green;
+    text-transform: none;
+
+    &:hover {
+      border-color: rgba(red(@green), green(@green), blue(@green), .8);
+    }
+
+    &.__promoted {
+      background-color: @green;
+      border-color: transparent;
+      color: #fff;
     }
   }
 }
@@ -481,6 +547,10 @@
 
 // Hero Buttons
 .action-menu-button {
+  .button-hero-icon-style();
+}
+
+.hero-settings-button, .hero-subscriptions-button, .hero-design-settings-button {
   .button-hero-icon-style();
 }
 

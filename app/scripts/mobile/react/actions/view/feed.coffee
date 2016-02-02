@@ -28,4 +28,11 @@ FeedViewActions =
       .fail (xhr) ->
         NotifyController.errorResponse xhr
 
+  loadTlogEntries: (tlogId, sinceEntryId, limit) ->
+    Api.tlog.loadTlogEntries(tlogId, sinceEntryId, limit)
+      .then((response) ->
+        FeedServerActions.loadEntries response.entries )
+      .fail((xhr) ->
+        NotifyController.errorResponse xhr )
+
 module.exports = FeedViewActions

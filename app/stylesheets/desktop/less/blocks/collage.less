@@ -11,6 +11,17 @@
   opacity: 1 !important;
 }
 
+.collage__item-spinner {
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &:extend(.image-loader-spinner);
+}
+
 .post__content {
 	.collage__item-img {
 	  width: auto;

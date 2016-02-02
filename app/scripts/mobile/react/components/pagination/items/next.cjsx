@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 { PropTypes } = React
 
 PaginationNext = React.createClass
@@ -12,9 +12,9 @@ PaginationNext = React.createClass
     single: false
 
   render: ->
-    nextClasses = cx
-      'pagination__item': true
+    nextClasses = classnames('pagination__item', {
       'pagination__item--next': !@props.single
+    })
 
     return <a className={ nextClasses }
               href={ @props.href }>

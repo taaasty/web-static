@@ -9,13 +9,14 @@ AppDispatcher     = require '../dispatcher/dispatcher'
 _messages = {}      # Key is message id
 _localMessages = {} # Key is message uuid
 
-addLocalMessage = (convID, messageText, uuid) ->
+addLocalMessage = (convID, messageText, messageFiles, uuid) ->
   conversation = ConversationStore.get convID
   currentUser  = CurrentUserStore.getUser()
   recipient    = conversation.recipient
   localMessage =
     content: messageText
     content_html: _.escape messageText
+    files: messageFiles
     created_at: new Date().toISOString()
     conversation_id: convID
     recipient_id: recipient.id

@@ -1,0 +1,108 @@
+import React, { PropTypes } from 'react';
+import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
+import EntryActionCreators from '../../../actions/Entry';
+import EntryBrickContent from './EntryBrickContent';
+import EntryBrickFlowHeader from './EntryBrickFlowHeader';
+import EntryBrickPinHeader from './EntryBrickPinHeader';
+
+import { ENTRY_TYPES, ENTRY_PINNED_STATE } from '../../../constants/EntryConstants';
+import { FEED_TYPE_LIVE_FLOW } from '../../../constants/FeedConstants';
+
+let EntryBrick = React.createClass({
+  propTypes: {
+    entry: ProjectTypes.tlogEntry.isRequired,
+    feedType: PropTypes.string,
+    host_tlog_id: PropTypes.number,
+    moderation: PropTypes.object,
+  },
+
+  getInitialState() {
+    return {
+      visible: true,
+      hasModeration: !!this.props.moderation,
+    };
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.state.hasModeration != nextState.hasModeration ||
+      this.state.visible != nextState.visible
+    );
+  },
+
+  renderFlowHeader() {
+    const { entry: { author, tlog }, host_tlog_id } = this.props;
+    if (host_tlog_id == null && author && tlog && author.id !== tlog.id) {
+      return <EntryBrickFlowHeader flow={tlog} />;
+    }
+  },
+
+  renderPinHeader() {
+    if (this.props.entry.fixed_state === ENTRY_PINNED_STATE) {
+      return <EntryBrickPinHeader />;
+    }
+  },
+
+  render() {
+    const { entry, feedType } = this.props;
+
+    return this.state.visible
+      ? <article className={this.getBrickClasses()} data-id={entry.id}>
+          {feedType !== FEED_TYPE_LIVE_FLOW && this.renderFlowHeader()}
+          {this.renderPinHeader()}
+          <EntryBrickContent
+            entry={entry}
+            hasModeration={this.state.hasModeration}
+            host_tlog_id={this.props.host_tlog_id}
+            onEntryAccept={this.acceptEntry}
+            onEntryDecline={this.declineEntry}
+          />
+        </article>
+      : null;
+  },
+
+  getBrickClasses() {
+    let { type } = this.props.entry;
+    let typeClass = ENTRY_TYPES.indexOf(type) != -1 ? type : 'text';
+
+    return `brick brick--${typeClass}`;
+  },
+
+  acceptEntry() {
+    EntryActionCreators.accept(this.props.moderation.accept_url)
+      .then(() => {
+        let { accept_action } = this.props.moderation;
+
+        if (this.isMounted()) {
+          switch(accept_action) {
+            case 'delete':
+              this.setState({visible: false, hasModeration: false});
+              break;
+            case 'nothing':
+              this.setState({hasModeration: false});
+              break;
+          }
+        }
+      });
+  },
+
+  declineEntry() {
+    EntryActionCreators.decline(this.props.moderation.decline_url)
+      .then(() => {
+        let { decline_action } = this.props.moderation;
+
+        if (this.isMounted()) {
+          switch(decline_action) {
+            case 'delete':
+              this.setState({visible: false, hasModeration: false});
+              break;
+            case 'nothing':
+              this.setState({hasModeration: false});
+              break;
+          }
+        }
+      });
+  },
+});
+
+export default EntryBrick;

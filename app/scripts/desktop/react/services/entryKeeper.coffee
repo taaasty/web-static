@@ -1,7 +1,8 @@
 NormalizedEntry = require '../entities/normalizedEntry'
 
 STORAGE_PREFIX = 'entries'
-storage = localStorage
+LAST_PRIVACY_KEY = 'editor:lastEntryPrivacy'
+storage = AppStorage
 
 key = (normalizedEntry) ->
   switch
@@ -39,9 +40,16 @@ EntryKeeper =
   restoreExistingAnonymousEntry: ->
     @restore keyAnonymous()
 
+  restoreLastEntryPrivacy: ->
+    storage.getItem(LAST_PRIVACY_KEY) || null
+
   store: (normalizedEntry) ->
     storageKey = key normalizedEntry
     storage.setItem storageKey, JSON.stringify(normalizedEntry)
+
+  storeLastEntryPrivacy: (entryPrivacy) ->
+    storageKey = LAST_PRIVACY_KEY
+    storage.setItem storageKey, entryPrivacy
 
   remove: (normalizedEntry) ->
     storageKey = key normalizedEntry

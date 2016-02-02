@@ -1,4 +1,4 @@
-LinkedStateMixin = require 'react/lib/LinkedStateMixin'
+LinkedStateMixin = require 'react-addons-linked-state-mixin';
 
 window.PopupBox = React.createClass
   mixins: [ReactUnmountMixin, LinkedStateMixin, 'ReactActivitiesMixin']
@@ -10,8 +10,8 @@ window.PopupBox = React.createClass
   componentWillUnmount: -> Mousetrap.unbind 'esc', @unmount
 
   render: ->
-    React.Children.map @props.children, (context) =>
-      context.props.activitiesHandler = @activitiesHandler
+    newChildren = React.Children.map @props.children, (context) =>
+      React.cloneElement(context, { activitiesHandler: this.activitiesHandler })
 
     # TODO Устнанавливать title из children-а
     <div className='popup-container'>
@@ -21,7 +21,7 @@ window.PopupBox = React.createClass
             <PopupHeader title={ this.props.title }
                          hasActivities={ this.hasActivities() }
                          onClickClose={ this.close } />
-             <div className="popup__body">{ this.props.children }</div>
+             <div className="popup__body">{ newChildren }</div>
           </div>
         </div>
       </div>

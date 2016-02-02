@@ -121,6 +121,50 @@
         </div>
         <!-- end Toolbar - Experiment -->
 
+        <!-- Toolbar - Compose -->
+        <div class="toolbar toolbar--compose">
+            <div class="toolbar__toggle" data-original-title="Новый пост" data-placement="left" tooltip>
+                <i class="icon icon--plus"></i>
+            </div>
+            <div class="toolbar__drops">
+                <div class="toolbar__drop">
+                    <a class="button button--circle button--emerald" href="#" data-original-title="Текст в дневник" data-placement="left" tooltip>
+                        <i class="icon icon--text-circle"></i>
+                    </a>
+                </div>
+                <div class="toolbar__drop">
+                    <a class="button button--circle button--emerald" href="#" data-original-title="Картинка в дневник" data-placement="left" tooltip>
+                        <i class="icon icon--image-circle"></i>
+                    </a>
+                </div>
+                <div class="toolbar__drop">
+                    <a class="button button--circle button--emerald" href="#" data-original-title="Анонимка" data-placement="left" tooltip>
+                        <i class="icon icon--question-mark"></i>
+                    </a>
+                </div>
+                <div class="toolbar__drop">
+                    <a class="button button--circle button--emerald" href="#" data-original-title="Создать поток" data-placement="left" tooltip>
+                        <i class="icon icon--hash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- end Toolbar - Compose -->
+
+        <script>
+            var toolbarCompose = document.querySelector('.toolbar--compose')
+
+            console.log(toolbarCompose)
+
+            toolbarCompose.onmouseenter = function(){
+                toolbarCompose.classList.add('state--open');
+            }
+
+            toolbarCompose.onmouseleave = function(){
+                toolbarCompose.classList.remove('state--open');
+            }
+        </script>
+
         <!-- Page -->
         <div class="page js-preview-design">
             <div class="page__inner">

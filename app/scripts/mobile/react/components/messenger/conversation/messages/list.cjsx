@@ -33,7 +33,7 @@ MessageList = React.createClass
 
   renderListItems: ->
     listItems = _.map @props.items, (item) ->
-      <MessageListItemManager item={ item } key={ item.uuid } />
+      <MessageListItemManager item={ item } key={ "#{item.id}-#{item.uuid}" } />
 
     return <div ref="scroller"
                 className="messages__scroll"
@@ -49,19 +49,21 @@ MessageList = React.createClass
     @props.items.length == 0
 
   saveScrollPosition: ->
-    scroller = @refs.scroller.getDOMNode()
+    return unless @refs.scroller?
+
+    scroller = @refs.scroller
     @savedScrollPosition = scroller.scrollHeight - scroller.scrollTop
 
   restoreScrollPosition: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
     scroller.scrollTop = scroller.scrollHeight - @savedScrollPosition
 
   scrollToBottom: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
     scroller.scrollTop = scroller.scrollHeight
 
   handleScroll: ->
-    scroller = @refs.scroller.getDOMNode()
+    scroller = @refs.scroller
 
     if @props.canLoad
       # Подгружаем сообщения если нам осталось проскроллить <= 30% списка сообщений

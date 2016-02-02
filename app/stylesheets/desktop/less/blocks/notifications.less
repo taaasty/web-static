@@ -1,5 +1,39 @@
 .notifications {
   padding: 15px 0;
+
+  .loader {
+    text-align: center;
+  }
+}
+
+.notifications__mark-all-read {
+  &:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    margin-left: -0.25em;
+    vertical-align: middle;
+  }
+  padding: 0 0 5px;
+  font-size: 13px;
+  border-bottom: solid 1px;
+  opacity: 0.6;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  & > span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .icon {
+    font-size: 1.4em;
+    margin-right: 0.3em;
+  }
 }
 
 .notification {

@@ -1,17 +1,9 @@
-CHANGE_EVENT = 'change'
+BaseStore = require '../../stores/BaseStore';
+MessagingDispatcher = require '../MessagingDispatcher';
 
 _notifications = []
 
-window.NotificationsStore = _.extend {}, EventEmitter.prototype, {
-
-  emitChange: ->
-    @emit CHANGE_EVENT
-
-  addChangeListener: (callback) ->
-    @on CHANGE_EVENT, callback
-
-  removeChangeListener: (callback) ->
-    @off CHANGE_EVENT, callback
+window.NotificationsStore = _.extend new BaseStore(), {
 
   getNotifications: -> _notifications
 

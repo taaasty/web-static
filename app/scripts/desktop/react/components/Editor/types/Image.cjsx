@@ -1,8 +1,7 @@
 _ = require 'lodash'
-classSet = require 'react/lib/cx'
-EditorStore = require '../../../stores/editor'
+classnames = require 'classnames'
+EditorStore = require '../../../stores/EditorStore'
 EditorActionCreators = require '../../../actions/editor'
-ConnectStoreMixin = require '../../../../../shared/react/mixins/connectStore'
 EditorTextField = require '../fields/Text'
 EditorMediaBox = require '../MediaBox/MediaBox'
 EditorMediaBoxProgress = require '../MediaBox/MediaBoxProgress'
@@ -12,6 +11,7 @@ EditorTypeImageLoaded = require './Image/Loaded'
 EditorTypeImageLoadingUrl = require './Image/LoadingUrl'
 { PropTypes } = React
 
+MAX_ATTACHMENTS = 8
 WELCOME_STATE = 'welcome'
 INSERT_STATE = 'insert'
 LOADING_URL_STATE = 'loading'
@@ -19,23 +19,25 @@ LOADED_STATE = 'loaded'
 
 EditorTypeImage = React.createClass
   displayName: 'EditorTypeImage'
-  mixins: [ConnectStoreMixin(EditorStore)]
 
   propTypes:
-    entry: PropTypes.object.isRequired
     entryType: PropTypes.string.isRequired
+    loading: React.PropTypes.bool.isRequired
 
   getInitialState: ->
-    currentState: @getInitialCurrentState()
-    dragging: false
-    uploadingProgress: null
+    _.extend {}, this.getStateFromStore(), {
+      currentState: this.getInitialCurrentState(),
+      dragging: false,
+      uploadingProgress: null
+    }
+
+  componentWillReceiveProps: ->
+    this.setState(this.getStateFromStore());
 
   render: ->
-    editorClasses = classSet
-      'post': true
-      'post--image': true
-      'post--edit': true
+    editorClasses = classnames('post', 'post--image', 'post--edit', {
       'state--insert': @isInsertState()
+    })
 
     return <article className={ editorClasses }>
              <div className="post__content">
@@ -47,7 +49,7 @@ EditorTypeImage = React.createClass
                </EditorMediaBox>
                <EditorTextField
                    mode="rich"
-                   text={ @state.title }
+                   text={this.state.title}
                    placeholder={ i18n.t('editor_description_placeholder') }
                    className="post__content"
                    onChange={ @handleChangeTitle } />
@@ -69,11 +71,12 @@ EditorTypeImage = React.createClass
             onCancel={ @activateWelcomeState } />
       when LOADED_STATE
         <EditorTypeImageLoaded
-            imageUrl={ @state.imageUrl }
-            imageAttachments={ @state.imageAttachments }
+            imageUrl={this.state.imageUrl}
+            imageAttachments={this.state.imageAttachments}
+            loading={@props.loading}
             onDelete={ @handleDeleteLoadedImages } />
       when LOADING_URL_STATE
-        <EditorTypeImageLoadingUrl imageUrl={@state.imageUrl} />
+        <EditorTypeImageLoadingUrl imageUrl={this.state.imageUrl} />
       else null
 
   renderProgress: ->
@@ -109,7 +112,7 @@ EditorTypeImage = React.createClass
       WELCOME_STATE
 
   handleDeleteLoadedImages: ->
-    EditorActionCreators.deleteImageAttachments()
+    EditorActionCreators.deleteImageAttachments(!this.props.entry) # edit mode if entry exists
     EditorActionCreators.deleteImageUrl()
     @activateWelcomeState()
 
@@ -123,7 +126,7 @@ EditorTypeImage = React.createClass
       @activateLoadedState()
       EditorActionCreators.changeImageUrl imageUrl
     image.onerror = =>
-      TastyNotifyController.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
+      NoticeService.notifyError i18n.t 'editor_image_doesnt_exist', {imageUrl}
       @activateWelcomeState()
 
     image.src = imageUrl
@@ -133,11 +136,19 @@ EditorTypeImage = React.createClass
       file.type.match /(\.|\/)(gif|jpe?g|png)$/i
 
     unless imageFiles.length
-      return TastyNotifyController.notifyError i18n.t 'editor_files_without_images'
+      return NoticeService.notifyError i18n.t 'editor_files_without_images'
 
-    EditorActionCreators.createImageAttachments files
+    if imageFiles.length > MAX_ATTACHMENTS
+      imageFiles = imageFiles.slice(0, MAX_ATTACHMENTS)
+      NoticeService.notifyError i18n.t('editor_files_limit_reached', count: MAX_ATTACHMENTS)
+
+    EditorActionCreators.createImageAttachments imageFiles
       .progress (soFar) =>
-        @setState uploadingProgress: soFar * 100
+        # Если пользователь локально удалил картинки, не показываем прогресс-бар
+        if @state.imageAttachments.length
+          @setState(uploadingProgress: soFar * 100)
+        else
+          @setState(uploadingProgress: 0)
       .always =>
         if @isMounted()
           if @state.imageAttachments.length then @activateLoadedState() else @activateWelcomeState()

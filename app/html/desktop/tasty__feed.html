@@ -9,188 +9,18 @@
         <meta name="keywords" content="" />
         <meta name="description" content="" />
 
-        <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+        <!-- Demo CSRF-token -->
+        <meta content="i8XNjC4b8KVok4uw5RftR38Wgp2BFwql" name="csrf-token" />
 
-        <!-- Fonts -->
-        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
-        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700italic,400italic,700&amp;subset=latin,cyrillic" />
-        <!-- end Fonts -->
+        <link rel="Shortcut Icon" type="image/x-icon" href="favicons/favicon.ico" />
 
         <!-- Styles -->
-        <link rel="stylesheet" href="stylesheets/main.css" />
+        <link rel="stylesheet" href="../stylesheets/main.css" />
         <!-- end Styles -->
-
-        <!-- Scripts -->
-        <script src="scripts/shared/modernizr.js"></script>
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/pusher/dist/pusher.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.core.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.widget.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.mouse.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.draggable.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.effect.min.js"></script>
-        <script src="javascripts/old/libs/jquery/jquery.ui.effect-slide.min.js"></script>
-        <script src="javascripts/old/libs/jquery.autosize.min.js"></script>
-        <script src="javascripts/old/libs/jquery.caretposition.js"></script>
-        <script src="javascripts/old/libs/jquery.sew.js"></script>
-        <script src="javascripts/old/libs/jquery.timeago.js"></script>
-        <script src="javascripts/old/libs/jquery.timeago.ru.js"></script>
-        <script src="javascripts/old/libs/jsrender.min.js"></script>
-        <script src="javascripts/old/libs/uploaderObject.js"></script>
-        <script src="javascripts/old/libs/cookie.js"></script>
-        <script src="javascripts/old/libs/baron.js"></script>
-        <script src="javascripts/old/libs/jquery.custom-select.js"></script>
-        <script src="javascripts/old/plugins/jquery.collage.js"></script>
-        <script src="javascripts/old/libs/jquery.mousewheel.js"></script>
-        <script src="javascripts/old/libs/jquery.fancybox.pack.js"></script>
-        <script src="javascripts/old/libs/jquery.autosize.input.js"></script>
-        <script src="javascripts/old/libs/jquery.plugin.js"></script>
-        <script src="javascripts/old/libs/jquery.maxlength.js"></script>
-
-        <script src="javascripts/old/plugins/jquery.formradio.js"></script>
-        <script src="javascripts/old/plugins/jquery.dropdown.js"></script>
-        <script src="javascripts/old/plugins/jquery.expander.js"></script>
-        <script src="javascripts/old/plugins/jquery.togglevalue.js"></script>
-        <!-- end Scripts -->
     </head>
     <body class="layout--feed not-logged">
-        <!-- Toolbar - Logo -->
-        <!--<div class="toolbar toolbar--nav js-userbar-dropdown">
-            <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icon icon--ribbon"></i>
-            </div>
-            <div class="toolbar__popup js-isotope-filter" data-element="dropdown-menu" data-target-name="bricks">
-                <ul class="toolbar__popup-list">
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/friends.html" title="Подписки"><i class="icon icon--friends"></i>Подписки</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/live.html" title="Прямой эфир"><i class="icon icon--wave"></i>Прямой эфир</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-isotope-filter-item" href="api/feed/best.html" title="Лучшее"><i class="icon icon--rating"></i>Лучшее</a>
-                    </li>
-                </ul>
-            </div>
-        </div>-->
-        <!-- end Toolbar - Logo -->
-
-        <!-- Toolbar - Userbar -->
-        <!--<div class="toolbar toolbar--right toolbar--nav state--open-indicators">
-            <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icon icon--menu"></i>
-            </div>
-            <div class="toolbar__indicators">
-                <div class="toolbar__indicator toolbar__indicator--messages">
-                    <span class="messages-badge">4</span>
-                    <i class="icon icon--messages"></i>
-                </div><div class="toolbar__indicator toolbar__indicator--notifications">
-                    <span class="notifications-badge">13</span>
-                    <i class="icon icon--bell"></i>
-                </div>
-            </div>
-            <div class="toolbar__popup" data-element="dropdown-menu">
-                <ul class="toolbar__popup-list">
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link state--single" href="#"><i class="icon icon--plus"></i>Новая запись</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--diary"></i>Мой дневник</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--profile"></i>Профиль</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--star"></i>Избранное</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--lock"></i>Скрытые записи</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-messages-toggle" href="#" data-popup-selector=".js-messages"><i class="icon icon--messages"></i>Сообщения</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-friends-toggle" href="#" data-popup-selector=".js-friends"><i class="icon icon--friends"></i>Друзья</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-design-toggle" href="#" data-popup-selector=".js-settings-design"><i class="icon icon--drawing"></i>Дизайн дневника</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link js-settings-toggle" href="#" data-popup-selector=".js-settings"><i class="icon icon--cogwheel"></i>Настройки</a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#"><i class="icon icon--logout"></i>Выйти</a>
-                    </li>
-                </ul>
-            </div>
-        </div>-->
-        <!-- end Toolbar - Userbar -->
-
-         <!-- Toolbar - Experiment -->
-        <div class="toolbar toolbar--main">
-            <div class="toolbar__toggle" data-element="dropdown-toggle">
-                <i class="icon icon--menu"></i>
-            </div>
-            <div class="toolbar__popup">
-                <div class="scroller scroller--dark">
-                    <div class="scroller__pane">
-                        <ul class="toolbar__popup-list">
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Новая&nbsp;запись" data-placement="right" data-container="body" tooltip><i class="icon icon--plus"></i><span class="toolbar__popup-text">Новая запись</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Мой&nbsp;дневник" data-placement="right" data-container="body" tooltip><i class="icon icon--diary"></i><span class="toolbar__popup-text">Мой дневник</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Подписки" data-placement="right" data-container="body" tooltip><i class="icon icon--friends"></i><span class="toolbar__popup-text">Подписки</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Прямой эфир" data-placement="right" data-container="body" tooltip><i class="icon icon--wave"></i><span class="toolbar__popup-text">Прямой эфир</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Лучшее" data-placement="right" data-container="body" tooltip><i class="icon icon--rating"></i><span class="toolbar__popup-text">Лучшее</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Анонимки" data-placement="right" data-container="body" tooltip><i class="icon icon--anonymous"></i><span class="toolbar__popup-text">Анонимки</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Люди" data-placement="right" data-container="body" tooltip><i class="icon icon--people"></i><span class="toolbar__popup-text">Люди</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Профиль" data-placement="right" data-container="body" tooltip><i class="icon icon--profile"></i><span class="toolbar__popup-text">Профиль</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Избранное" data-placement="right" data-container="body" tooltip><i class="icon icon--star"></i><span class="toolbar__popup-text">Избранное</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Скрытые&nbsp;записи" data-placement="right" data-container="body" tooltip><i class="icon icon--lock"></i><span class="toolbar__popup-text">Скрытые записи</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Сообщения" data-placement="right" data-container="body" tooltip><i class="icon icon--messages"></i><span class="toolbar__popup-text">Сообщения</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Друзья" data-placement="right" data-container="body" tooltip><i class="icon icon--friends"></i><span class="toolbar__popup-text">Друзья</span></a>
-                            </li>
-                            <li class="toolbar__popup-item">
-                                <a class="toolbar__popup-link" href="#" data-original-title="Дизайн&nbsp;дневника" data-placement="right" data-container="body" tooltip><i class="icon icon--drawing"></i><span class="toolbar__popup-text">Дизайн дневника</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="scroller__track">
-                        <div class="scroller__bar"></div>
-                    </div>
-                </div>
-                <ul class="toolbar__popup-list toolbar__popup-list--bottom">
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#" data-original-title="Настройки" data-placement="right" data-container="body" tooltip><i class="icon icon--cogwheel"></i><span class="toolbar__popup-text">Настройки</span></a>
-                    </li>
-                    <li class="toolbar__popup-item">
-                        <a class="toolbar__popup-link" href="#" data-original-title="Выйти" data-placement="right" data-container="body" tooltip><i class="icon icon--logout"></i><span class="toolbar__popup-text">Выйти</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- end Toolbar - Experiment -->
+        <div data-react-class="UserToolbarContainer" data-react-props='{"searchUrl":"http://taaasty.com/live","searchTitleI18nKey":"live","locale":"ru"}'></div>
+        <div data-react-class="AvatarToolbarContainer" data-react-props='{"locale":"ru"}'></div>
 
         <!-- Page -->
         <div class="page js-preview-design">
@@ -265,7 +95,7 @@
                                     </li>
                                 </ul>
                             </nav>
-                            <div data-react-class="Feed" data-react-props='{"style": "tlog"}'></div>
+                            <div data-react-class="Feed" data-react-props='{"style": "feed"}'></div>
                         </div>
                     </div>
                     <!-- end Page Body -->

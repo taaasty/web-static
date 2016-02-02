@@ -34,6 +34,9 @@ EntryNormalizationService =
       id: entry.id
       type: entry.type
       privacy: entry.privacy
+      pinOrderUrl: entry.order_url
+      pinState: entry.fixed_state
+      pinnedTill: entry.fixed_up_at
       updatedAt: new Date(entry.updated_at).getTime()
 
     switch entry.type

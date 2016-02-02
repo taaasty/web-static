@@ -36,4 +36,12 @@ BrowserHelpers =
     else
       null
 
+  revokeObjectURL: (str) ->
+    if window.URL && window.URL.revokeObjectURL
+      window.URL.revokeObjectURL str
+    else if window.webkitURL
+      window.webkitURL.revokeObjectURL str
+    else
+      null
+
 module.exports = BrowserHelpers

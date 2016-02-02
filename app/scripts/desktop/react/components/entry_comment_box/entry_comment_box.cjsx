@@ -39,7 +39,7 @@ window.EntryCommentBox = React.createClass
       if @state.isLoadError || @state.isLoadMoreError || @state.isPostError
         commentList = <div>{ i18n.t('load_comments_error') }</div>
       else if @state.isLoadLoading || @state.isLoadMoreLoading
-        commentList = <Spinner size={ 15 } />
+        commentList = <Spinner size={ 14 } />
 
     return <section className="comments">
              { loadMoreButton }

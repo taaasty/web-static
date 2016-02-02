@@ -1,7 +1,7 @@
 import SearchActions from '../../actions/search';
 import SearchResultsTlog from './SearchResultsTlog';
 import SearchResultsFeed from './SearchResultsFeed';
-import URI from 'URIjs';
+import URI from 'urijs';
 
 let SearchResults = React.createClass({
   propTypes: {
@@ -12,9 +12,9 @@ let SearchResults = React.createClass({
 
   getDefaultProps() {
     return {
-      searchUrl: location.href
-      // searchUrl: 'http://3000.vkontraste.ru/live' 
-    }
+      searchUrl: window.location.href
+      // searchUrl: 'http://taaasty.com/live' 
+    };
   },
 
   getInitialState() {
@@ -90,9 +90,8 @@ let SearchResults = React.createClass({
         // Mount new components from html
         $(document).trigger('page:change');
       })
-      .always(() => {
-        this.setState({loading: false});
-      });
+      .fail(() => this.setState({everythingLoaded: true}))
+      .always(() => this.setState({loading: false}));
   },
   
   loadNextPage() {

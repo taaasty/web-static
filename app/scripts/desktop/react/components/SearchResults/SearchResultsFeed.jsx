@@ -1,44 +1,51 @@
-import InfiniteScroll from '../common/infiniteScroll/index';
+import React, { Component, PropTypes } from 'react';
+import Masonry from 'masonry-layout';
+import InfiniteScroll from '../common/InfiniteScroll';
 
-let SearchResultsFeed = React.createClass({
-  propTypes: {
-    html: React.PropTypes.string.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadNextPage: React.PropTypes.func.isRequired
-  },
-
+class SearchResultsFeed extends Component {
+  initGridManager() {
+    new Masonry(this.refs.container, {
+      itemSelector: '.brick',
+      transitionDuration: '0.4s',
+      isFitWidth: true,
+      gutter: 20,
+      hiddenStyle: {
+        opacity: 0,
+        transform: 'opacity(0.001)',
+      },
+      visibleStyle: {
+        opacity: 1,
+        transform: 'opacity(1)',
+      },
+    });
+  }
   render() {
+    const { canLoad, html, loading, onLoadNextPage } = this.props;
+
     return (
       <div className="bricks-wrapper">
         <InfiniteScroll
-            loading={this.props.loading}
-            canLoad={this.props.canLoad}
-            onLoad={this.props.onLoadNextPage}
-            onAfterLoad={this.initGridManager}>
+          canLoad={canLoad}
+          loading={loading}
+          onAfterLoad={this.initGridManager.bind(this)}
+          onLoad={onLoadNextPage}
+        >
           <section
-              ref="container"
-              className="bricks"
-              dangerouslySetInnerHTML={{__html: this.props.html}} />
+            className="bricks"
+            dangerouslySetInnerHTML={{__html: html || ''}}
+            ref="container"
+          />
         </InfiniteScroll>
       </div>
     );
-  },
-
-  initGridManager() {
-    var $container = $(this.refs.container.getDOMNode());
-
-    $container.shapeshift({
-      selector: '.brick',
-      colWidth: 302,
-      enableDrag: false,
-      enableCrossDrop: false,
-      gutterX: 20,
-      gutterY: 20,
-      paddingX: 0,
-      paddingY: 0
-    });
   }
-});
+}
+
+SearchResultsFeed.propTypes = {
+  canLoad: PropTypes.bool.isRequired,
+  html: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  onLoadNextPage: PropTypes.func.isRequired,
+};
 
 export default SearchResultsFeed;

@@ -1,9 +1,10 @@
+React = require 'react';
 CurrentUserStore   = require '../stores/currentUser'
 PageMixin          = require './mixins/page'
 FeedToolbarManager = require '../components/toolbars/feedManager'
 UserToolbarManager = require '../components/toolbars/userManager'
 HeroTlog           = require '../components/hero/tlog'
-EntryTlog          = require '../components/entry/tlog'
+EntryTlog          = require '../components/entry/Tlog'
 EntryPagination    = require '../components/pagination/entry'
 AuthManager        = require '../components/auth/authManager'
 AuthButtonManager  = require '../components/buttons/auth/authManager'
@@ -35,8 +36,9 @@ EntryPage = React.createClass
         </div>
         <div className="layout__body">
           <EntryTlog
-              entry={ @props.entry }
-              commentFormVisible={ true } />
+            commentFormVisible={true}
+            entry={ @props.entry }
+          />
           <EntryPagination tlogUrl={ @props.tlog.tlog_url } />
         </div>
       </div>

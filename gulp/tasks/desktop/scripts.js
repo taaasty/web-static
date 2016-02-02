@@ -1,143 +1,269 @@
-var gulp = require('gulp'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
-    source = require('vinyl-source-stream'),
-    uglify = require('gulp-uglify'),
-    streamify = require('gulp-streamify'),
-    rename = require('gulp-rename'),
-    bundleLogger = require('../../util/bundleLogger'),
-    handleErrors = require('../../util/handleErrors'),
-    configLocal = require('../../config').desktop.local.scripts,
-    configProduction = require('../../config').desktop.production.scripts;
+import gulp from 'gulp';
+import browserify from 'browserify';
+import watchify from 'watchify';
+import source from 'vinyl-source-stream';
+import uglify from 'gulp-uglify';
+import streamify from 'gulp-streamify';
+import bundleLogger from '../../util/bundleLogger';
+import handleErrors from '../../util/handleErrors';
+const config = require('../../config').desktop.scripts;
+
+const babelifyOpts = {
+  ignore: /(node_modules|bower_components|shims)/,
+};
 
 // External dependencies we do not want to rebundle while developing,
 // but include in our dist bundle
-var dependencies = {
+const dependencies = {
   'jquery': './node_modules/jquery/dist/jquery',
   'jquery.ui.core': './app/bower_components/jquery-ui/ui/core',
   'jquery.ui.slider': './app/bower_components/jquery-ui/ui/slider',
   'jquery.ui.draggable': './app/bower_components/jquery-ui/ui/draggable',
   'jquery.ui.mouse': './app/bower_components/jquery-ui/ui/mouse',
   'jquery.ui.widget': './app/bower_components/jquery-ui/ui/widget',
-  'jquery.autosize': './app/bower_components/jquery-autosize/jquery.autosize',
-  'jquery.waypoints': './app/bower_components/jquery-waypoints/waypoints',
-  'jquery.autosize.input': './app/scripts/desktop/plugins/jquery.autosize.input',
+  'jquery.ui.touch-punch': './app/bower_components/jqueryui-touch-punch/jquery.ui.touch-punch',
   'jquery.collage': './app/scripts/desktop/plugins/jquery.collage',
+  'jquery.connection': './app/scripts/desktop/plugins/jquery.connection',
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
-  'jquery.shapeshift': './app/bower_components/jquery.shapeshift/core/jquery.shapeshift',
+  'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
   'react': './node_modules/react',
-  'React': './node_modules/react', // Некоторые библиотеки делают require('React')
+  'react-dom': './node_modules/react-dom',
   'react-mixin-manager': './app/bower_components/react-mixin-manager/react-mixin-manager',
-  'reactUjs': './app/scripts/shared/libs/react_ujs',
-  'react-color-picker': './app/bower_components/react-color-picker/dist/react-color-picker',
+  'reactUjs': './app/scripts/shared/libs/ReactUjs',
+  'react-portal': './node_modules/react-portal',
+  'react-color-picker': './node_modules/react-color-picker',
   'baron': './app/bower_components/baron/baron',
   'mousetrap': './app/bower_components/mousetrap/mousetrap',
-  'bowser': './app/bower_components/bowser/bowser',
+  'bowser': './node_modules/bowser',
+  'autosize': './node_modules/autosize/dist/autosize',
   'eventEmitter': './app/bower_components/eventEmitter/EventEmitter',
   'pusher': './app/bower_components/pusher/dist/pusher',
   'i18next': './app/bower_components/i18next/i18next',
   'bootstrap.tooltip': './app/bower_components/bootstrap/js/tooltip',
   'Modernizr': './app/scripts/desktop/shims/modernizr',
-  'swfobject': './app/scripts/desktop/shims/swf/swfobject',
   'introJs': './app/bower_components/intro.js/intro',
   'es5-shim': './app/bower_components/es5-shim/es5-shim',
   'jquery.mousewheel': './app/bower_components/jquery.mousewheel/jquery.mousewheel',
   'jquery.scrollto': './app/bower_components/jquery.scrollto/jquery.scrollTo',
   'undo': './app/bower_components/undo/undo',
-  'medium-editor': './app/bower_components/medium-editor/dist/js/medium-editor',
+  'medium-editor': './node_modules/medium-editor/dist/js/medium-editor',
   'aviator': './app/bower_components/aviator/src/main',
   'nanobar': './app/bower_components/nanobar/index',
-  'URIjs': './node_modules/URIjs/src/URI'
-}
+  'urijs': './node_modules/urijs',
+  'jquery.select2': './app/bower_components/select2/dist/js/select2',
+  'numeral': './node_modules/numeral',
+  'react-tap-event-plugin': './node_modules/react-tap-event-plugin',
+  'color': './node_modules/color',
+  'react-lazy-load': './node_modules/react-lazy-load',
+  'react-imageloader': './node_modules/react-imageloader',
+  'set-query-string': './node_modules/set-query-string',
+};
 
-gulp.task('[D][L] Scripts', function(cb) {
-
-  /*==========  Client scripts  ==========*/
-
-  var bundleQueue = 1;
-  var clientBundler = browserify({
+gulp.task('[D][S] Client scripts', () => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.client.entries,
-    extensions: configLocal.client.extensions
+    entries: config.static.client.entries,
+    extensions: config.static.client.extensions,
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    clientBundler.external(key);
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.external(dep);
   });
 
-  var rebundle = function() {
-    bundleLogger.start(configLocal.client.outputName);
+  function rebundle() {
+    bundleLogger.start(config.static.client.outputName);
 
-    clientBundler.bundle()
+    bundler.bundle()
       .on('error', handleErrors)
-      .pipe( source(configLocal.client.outputName) )
-      .pipe( gulp.dest(configLocal.client.dest) )
-      .on('end', function() {
-        bundleLogger.end(configLocal.client.outputName);
-        bundleQueue--;
-        if (bundleQueue === 0) { cb(); }
+      .pipe(source(config.static.client.outputName))
+      .pipe(gulp.dest(config.static.client.dest))
+      .on('end', () => {
+        bundleLogger.end(config.static.client.outputName);
       });
   };
 
-  clientBundler = watchify(clientBundler
-    .transform('coffee-reactify')
-    .transform('babelify')
-  );
-  clientBundler.on('update', rebundle);
+  if (global.isWatching) {
+    bundler = watchify(bundler
+      .transform('babelify', babelifyOpts)
+      .transform('browserify-shim')
+      .transform('coffee-reactify')
+    );
+    bundler.on('update', rebundle);
+  } else {
+    bundler
+      .transform('babelify', babelifyOpts)
+      .transform('browserify-shim')
+      .transform('coffee-reactify');
+  }
+
   rebundle();
+});
 
-  /*==========  Vendor scripts  ==========*/
-
-  var vendorBundler = browserify({
+gulp.task('[D][S] Vendor scripts', (cb) => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configLocal.vendor.entries,
-    extensions: configLocal.vendor.extensions
+    entries: config.static.vendor.entries,
+    extensions: config.static.vendor.extensions,
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    vendorBundler.require(dependencies[key], {expose: key});
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
   });
 
-  bundleLogger.start(configLocal.vendor.outputName);
+  bundleLogger.start(config.static.vendor.outputName);
 
-  vendorBundler
+  bundler
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configLocal.vendor.outputName) )
-    .pipe( gulp.dest(configLocal.vendor.dest) )
-    .on('end', function() {
-      bundleLogger.end(configLocal.vendor.outputName);
+    .pipe(source(config.static.vendor.outputName))
+    .pipe(gulp.dest(config.static.vendor.dest))
+    .on('end', () => {
+      bundleLogger.end(config.static.vendor.outputName);
+      cb();
     });
 });
 
-gulp.task('[D][P] Scripts', function() {
-  var appBundler = browserify({
+gulp.task('[D][S] Test scripts', () => {
+  let bundler = browserify({
     cache: {}, packageCache: {},
-    entries: configProduction.bundle.entries,
-    extensions: configProduction.bundle.extensions
+    entries: config.static.test.entries,
+    extensions: config.static.test.extensions,
   });
 
-  Object.keys(dependencies).forEach(function(key) {
-    appBundler.require(dependencies[key], {expose: key});
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.external(dep);
   });
 
-  bundleLogger.start(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+  function rebundle() {
+    bundleLogger.start(config.static.test.outputName);
 
-  appBundler
-    .transform('babelify', {ignore: /(node_modules|bower_components|shims)/})
+    return bundler.bundle()
+      .on('error', handleErrors)
+      .pipe(source(config.static.test.outputName))
+      .pipe(gulp.dest(config.static.test.dest))
+      .on('end', () => {
+        bundleLogger.end(config.static.test.outputName);
+      });
+  };
+
+  if (global.isWatching) {
+    bundler = watchify(bundler
+      .transform('babelify', babelifyOpts)
+      .transform('browserify-shim')
+      .transform('coffee-reactify')
+    );
+    bundler.on('update', rebundle);
+  } else {
+    bundler
+      .transform('babelify', babelifyOpts)
+      .transform('browserify-shim')
+      .transform('coffee-reactify');
+  }
+
+  return rebundle();
+});
+
+gulp.task('[D][D] Scripts', () => {
+  let bundler = browserify({
+    cache: {}, packageCache: {},
+    entries: config.development.entries,
+    extensions: config.development.extensions,
+  });
+
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
+  });
+
+  bundleLogger.start(config.development.outputName);
+
+  return bundler
+    .transform('babelify', babelifyOpts)
     .transform('browserify-shim')
     .transform('coffee-reactify')
     .bundle()
     .on('error', handleErrors)
-    .pipe( source(configProduction.bundle.outputName) )
-    .pipe( gulp.dest(configProduction.bundle.dest) )
-    .pipe( streamify(uglify()) )
-    .pipe( rename(configProduction.min.outputName) )
-    .pipe( gulp.dest(configProduction.min.dest) )
-    .on('end', function() {
-      bundleLogger.end(configProduction.bundle.outputName + ' & ' + configProduction.min.outputName);
+    .pipe(source(config.development.outputName))
+    .pipe(gulp.dest(config.development.dest))
+    .on('end', () => {
+      bundleLogger.end(config.development.outputName);
+    });
+});
+
+gulp.task('[D][P] Test scripts', () => {
+  const { dest, entries, extensions, outputName } = config.production.test;
+
+  bundleLogger.start(outputName);
+  
+  return browserify({
+    entries,
+    extensions,
+    cache: {},
+    packageCache: {},
+  })
+    .transform('babelify', babelifyOpts)
+    .transform('browserify-shim')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(outputName))
+    .pipe(gulp.dest(dest))
+    .on('end', () => {
+      bundleLogger.end(outputName);
+    });
+});
+
+gulp.task('[D][P] Scripts', () => {
+  const { dest, entries, extensions, outputName } = config.production.bundle;
+
+  let bundler = browserify({
+    cache: {},
+    packageCache: {},
+    entries: entries,
+    extensions: extensions,
+  });
+
+  Object.keys(dependencies).forEach((dep) => {
+    bundler.require(dependencies[dep], { expose: dep });
+  });
+
+  bundleLogger.start(outputName);
+
+  return bundler
+    .transform('babelify', babelifyOpts)
+    .transform('browserify-shim')
+    .transform('coffee-reactify')
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(outputName))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(dest))
+    .on('end', () => {
+      bundleLogger.end(outputName);
+    });
+});
+
+gulp.task('[D][P] GA', () => {
+  const { dest, entries, extensions, outputName } = config.production.ga;
+
+  const bundler = browserify({
+    cache: {},
+    packageCache: {},
+    entries: entries,
+    extensions: extensions,
+  });
+
+  bundleLogger.start(outputName);
+
+  return bundler
+    .transform('babelify', babelifyOpts)
+    .bundle()
+    .on('error', handleErrors)
+    .pipe(source(outputName))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest(dest))
+    .on('end', () => {
+      bundleLogger.end(outputName);
     });
 });

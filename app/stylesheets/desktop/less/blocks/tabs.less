@@ -51,3 +51,16 @@
   height: 100%;
   overflow: hidden;
 }
+
+// Новый формат с обёрткой
+.tabs-content {
+  height: 100%;
+
+  .tabs-panel {
+    display: none;
+
+    &.state--active {
+      display: block;
+    }
+  }
+}

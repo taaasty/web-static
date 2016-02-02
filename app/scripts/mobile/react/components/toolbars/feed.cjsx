@@ -1,4 +1,4 @@
-cx              = require 'react/lib/cx'
+classnames = require 'classnames'
 FeedToolbarList = require './feed/list'
 ToolbarMixin    = require './mixins/toolbar'
 { PropTypes } = React
@@ -11,9 +11,9 @@ FeedToolbar = React.createClass
     user: PropTypes.object
 
   render: ->
-    toolbarClasses = cx
-      'toolbar__popup': true
+    toolbarClasses = classnames('toolbar__popup', {
       '__visible': @isOpenState()
+    })
 
     return <nav className="toolbar toolbar--feed">
              <div className="toolbar__toggle"

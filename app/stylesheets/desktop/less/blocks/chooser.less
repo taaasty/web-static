@@ -1,0 +1,89 @@
+.chooser {
+  position: relative;
+
+  &.state--open {
+    .chooser__button {
+      display: none;
+    }
+
+    .chooser__dropdown {
+      position: relative;
+      display: block;
+    }
+  }
+}
+
+.chooser__button {
+  padding: @chooser-padding;
+  font-size: @chooser-font-size;
+  line-height: @chooser-line-height;
+  cursor: text;
+  border-radius: @chooser-border-radius;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid;
+    opacity: .1;
+    border-radius: @chooser-border-radius;
+  }
+}
+
+.chooser__button-text {
+  opacity: .2;
+}
+
+.chooser__dropdown {
+  width: 100%;
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  background-color: @chooser-dropdown-bg;
+  font-size: @chooser-font-size;
+  line-height: @chooser-line-height;
+  color: #fff;
+  border-radius: @chooser-border-radius;
+}
+
+.chooser__input {
+  width: 100%;
+  padding: @chooser-padding;
+  border: none;
+  background: none;
+  font-size: @chooser-font-size;
+  line-height: @chooser-line-height;
+  font-family: @font-family-base;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.chooser__loading {
+  padding: @chooser-padding;
+  border-top: 1px solid @chooser-border-color;
+  text-align: center;
+}
+
+.chooser__empty {
+  padding: @chooser-padding;
+  border-top: 1px solid @chooser-border-color;
+  font-size: 14px;
+  text-align: center;
+}
+
+.chooser__result {
+  padding: @chooser-padding;
+  border-top: 1px solid @chooser-border-color;
+  cursor: pointer;
+
+  &:hover,
+  &.state--active {
+    .messages__person-name {
+      opacity: 1;
+    }
+  }
+}

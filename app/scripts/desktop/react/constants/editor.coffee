@@ -1,4 +1,4 @@
-keyMirror = require 'react/lib/keyMirror'
+keyMirror = require 'keymirror'
 
 EditorConstants = keyMirror
   INIT: null
@@ -10,5 +10,6 @@ EditorConstants = keyMirror
   ENTRY_SAVE_ERROR: null
   ENTRY_CREATING_ATTACHMENTS_START: null
   ENTRY_CREATING_ATTACHMENTS_END: null
+  ENTRY_PIN: null
 
 module.exports = EditorConstants

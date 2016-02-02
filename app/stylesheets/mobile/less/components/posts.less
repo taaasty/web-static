@@ -37,6 +37,18 @@
       float: left;
     }
 
+    .collage__item-spinner {
+      &:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      text-align: center;
+      opacity: 0.5;
+    }
+
     &:after {
       clear: both;
     }
@@ -53,6 +65,12 @@
   &:extend(.meta all);
   margin-top: -8px;
 
+  &:first-child {
+    margin-top: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
   .meta-actions {
     margin-right: 0;
     float: right;
@@ -67,6 +85,14 @@
   }
 }
 
+.post__actions {
+  padding: 4px 0;
+
+  .moderator-action {
+    margin: 4px 4px 4px 0;
+  }
+}
+
 .post__comments {
   margin-top: 16px;
 }
@@ -74,6 +100,14 @@
 // Типы постов
 .post--image {
   &:first-child {
+    .post__meta {
+      & ~ .post__content {
+        .media-image {
+          margin-top: 0;
+        }
+      }
+    }
+
     .media-image {
       margin-top: -@indent-base;
     }
@@ -82,6 +116,14 @@
 
 .post--video {
   &:first-child {
+    .post__meta {
+      & ~ .post__content {
+        .media-video {
+          margin-top: 0;
+        }
+      }
+    }
+
     .media-video {
       margin-top: -@indent-base;
     }

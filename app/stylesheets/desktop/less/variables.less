@@ -90,7 +90,9 @@
 @zindex-screen-viewer-text: 6;
 @zindex-screen-viewer-loader: @zindex-screen-viewer-text; // 6
 @zindex-search: 10;
+@zindex-moderator: 10;
 @zindex-bubble-latest-news: 10;
+@zindex-unread-load-button-container: 10;
 @zindex-landing-page-header: 10;
 @zindex-form-field: 12;
 @zindex-post-actions: 110;
@@ -118,10 +120,16 @@
 @zindex-guide-popup: 5000;
 @zindex-messages: @zindex-popup;
 @zindex-messages-hero: 5001;
+@zindex-select2-dropdown: 5500;
 @zindex-form-select: 5500;
 @zindex-tooltip: 5500;
-@zindex-color-picker-popup: 5500;
-@zindex-notice: 6000;
+@zindex-backlayer: 9000;
+@zindex-frontlayer: 10000;
+@zindex-popup-with-background: 11000;
+@zindex-small-popup: 11005;
+@zindex-confirmation: 11500;
+@zindex-appbar: 11505;
+@zindex-notice: 12000;
 
 // Components
 @border-radius-base:  4px;
@@ -169,8 +177,10 @@
 @social-share-button-tw-bg: #55acee;
 
 // Hero Button
-@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), .3);
-@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), .6);
+@hero-button-border-opacity: .3;
+@hero-button-border-opacity-hover: .6;
+@hero-button-border-color: rgba(red(@white), green(@white), blue(@white), @hero-button-border-opacity);
+@hero-button-border-color-hover: rgba(red(@white), green(@white), blue(@white), @hero-button-border-opacity-hover);
 
 @hero-button-color: @white;
 @hero-button-color-hover: @white;
@@ -182,6 +192,8 @@
 
 // Toolbar
 @toolbar-size: 56px;
+@toolbar-size-lg: 70px;
+
 @toolbar-indent: @indent-base;
 
 @toolbar-bg-base: #252525;
@@ -192,6 +204,12 @@
 @toolbar-popup-width: 220px;
 
 @toolbar-item-highlight-bg: #f5f5f5;
+
+@toolbar-label-font-size: 9px;
+@toolbar-label-line-height: 11px;
+
+@toolbar-label-new-bg: #fff;
+@toolbar-label-new-color: #111;
 
 // Progressbars (old)
 @design-settings-progressbar-color: #24df88;
@@ -221,7 +239,7 @@
 @dropdown-height-item: 40px;
 
 // Tabs Nav
-@tabs-nav-width: 164px;
+@tabs-nav-width: 170px;
 
 @tabs-nav-bg: #303133;
 @tabs-nav-linear-gradient: linear-gradient(to right, rgba(51,51,51,0) 0%, rgba(51,51,51,0.93) 100%);
@@ -252,7 +270,6 @@
 @brick-padding-vertical: 15px;
 @brick-padding-horizontal: 20px;
 
-@brick-video-height: 200px;
 @brick-video-overlay-bg-base: #3e3e3e;
 @brick-video-overlay-bg: rgba(red(@brick-video-overlay-bg-base), green(@brick-video-overlay-bg-base), blue(@brick-video-overlay-bg-base), .5);
 
@@ -559,6 +576,10 @@
 @filter-nav-link-color: #adadad;
 @filter-nav-link-active-color: #3a3a3a;
 
+// Unread load button
+@unread-load-button-color: @white;
+@unread-load-button-bg-color: #3f3f3f;
+
 // People
 @people-item-width: 182px;
 @people-item-margin-bottom: 37px;
@@ -644,3 +665,31 @@
 
 // Searchbox
 @searchbox-overlay-bg: @popup-overlay-bg;
+
+// Moderator
+@moderator-avatar-size: 42px;
+
+@moderator-avatar-color: rgba(255, 255, 255, .6);
+@moderator-avatar-color-hover: rgba(255, 255, 255, .8);
+
+// Moderator Actions
+@moderator-action-width: 35px;
+@moderator-action-height: 24px;
+
+@moderator-action-accept-bg: @emerald;
+@moderator-action-reject-bg: #f53952;
+
+// Chooser
+@chooser-padding: 10px;
+
+@chooser-font-size: 16px;
+@chooser-line-height: 22px;
+
+@chooser-border-color: rgba(255, 255, 255, .1);
+@chooser-border-radius: 5px;
+
+@chooser-dropdown-bg: @popover-bg;
+
+// Appbar
+@appbar-logo-size: 40px;
+@appbar-logo-bg: #00bc77;

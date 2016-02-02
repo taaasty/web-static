@@ -8,6 +8,8 @@
 
         <meta name="keywords" content="" />
         <meta name="description" content="" />
+        <!-- Demo CSRF-token -->
+        <meta content="i8XNjC4b8KVok4uw5RftR38Wgp2BFwql" name="csrf-token" />
 
         <link rel="Shortcut Icon" type="image/x-icon" href="favicons/favicon.ico" />
 
@@ -15,13 +17,9 @@
         <link rel="stylesheet" href="stylesheets/main.css" />
         <!-- end Styles -->
     </head>
-    <body class="layout--tlog not-logged designtlog-headerfont-comfortaa designtlog-headercolor-madison designtlog-bgcolor-bluegray designtlog-bgimage-none designtlog-bgalignment-justify designtlog-feedbgcolor-silversand designtlog-feedfont-philosopher designtlog-feedcolor-madison">
+    <body class="layout--tlog not-logged designtlog-headerfont-comfortaa designtlog-headercolor-madison designtlog-bgcolor-bluegray designtlog-bgimage-none designtlog-bgalignment-justify designtlog-feedbgcolor-silversand designtlog-feedfont-philosopher designtlog-feedcolor-madison main-toolbar-open">
 
-        <!-- Browserbar -->
-<!--        <div class="browserbar">
-            <div class="browserbar__inner">Мы не поддерживаем ваш браузер, обновите его до <a href="#" title="последней версии">последней версии</a></div>
-        </div> -->
-        <!-- end Browserbar -->
+        <div data-react-class="BrowserSupportContainer"></div>
 
         <!-- Toolbar - Back -->
         <a class="toolbar toolbar--back" href="#" style="display: none">
@@ -98,7 +96,7 @@
         }'></div>-->
         <!-- end Toolbar - Indicators -->
         <!-- Toolbar - Userbar -->
-        <div data-react-class="UserToolbar"></div>
+        <div data-react-class="UserToolbarContainer" data-react-props='{"searchUrl":"http://taaasty.com/live","searchTitleI18nKey":"live","locale":"ru"}'></div>
         <!-- end Toolbar - Userbar -->
 
         <!-- Auth Button -->
@@ -182,8 +180,20 @@
             </div>
         </div> -->
 
-        <div data-react-class="AvatarToolbar"></div>
+        <div data-react-class="AvatarToolbarContainer"></div>
         <!-- end Toolbar - Experiment -->
+
+        <!-- Appbar -->
+        <div class="appbar">
+            <div class="appbar__close"><i class="icon icon--cross"></i></div>
+            <a class="appbar__link" href="#">
+                <div class="appbar__content">
+                    <div class="appbar__logo"><i class="icon icon--ribbon"></i></div>
+                    <div class="appbar__text">Открыть в приложении</div>
+                </div>
+            </a>
+        </div>
+        <!-- end Appbar -->
 
         <!-- Page -->
         <div class="page js-preview-design">
@@ -195,7 +205,7 @@
                     <!-- Page Header -->
                     <header class="page-header">
                         <!-- Hero -->
-                        <div data-react-class="HeroProfile" data-react-props='{"user":{"id":212831,"name":"dapi","slug":"dapi","title":"Асса!","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.ru/~dapi","created_at":"2013-10-30T18:35:12.000+04:00","updated_at":"2014-12-08T17:55:28.000+03:00","total_entries_count":30,"private_entries_count":3,"public_entries_count":26,"is_privacy":false,"userpic":{"original_url":"http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG","large_url":"http://taaasty.ru/assets/userpic/ad/48/212831_large.JPG","thumb128_url":"http://taaasty.ru/assets/userpic/ad/48/212831_thumb128.JPG","thumb64_url":"http://taaasty.ru/assets/userpic/ad/48/212831_thumb64.JPG","thumbor_path":"userpic/ad/48/212831_original.JPG","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":true,"notification":false}},"stats":{"followers_count":4,"followings_count":52,"favorites_count":7,"entries_count":26,"days_count":420,"comments_count":57,"private_entries_count":3,"tags_count":1},"relationship":{"id":null,"user_id":212831,"reader_id":232992,"position":null,"state":"none","user":{"id":212831,"name":"dapi","slug":"dapi","title":"Асса!","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.ru/~dapi","created_at":"2013-10-30T18:35:12.000+04:00","updated_at":"2014-12-08T17:55:28.000+03:00","total_entries_count":30,"private_entries_count":3,"public_entries_count":26,"is_privacy":false,"userpic":{"original_url":"http://taaasty.ru/assets/userpic/ad/48/212831_original.JPG","large_url":"http://taaasty.ru/assets/userpic/ad/48/212831_large.JPG","thumb128_url":"http://taaasty.ru/assets/userpic/ad/48/212831_thumb128.JPG","thumb64_url":"http://taaasty.ru/assets/userpic/ad/48/212831_thumb64.JPG","thumbor_path":"userpic/ad/48/212831_original.JPG","symbol":"d","kind":"user","default_colors":{"background":"#44d068","name":"#ffffff"}},"features":{"search":true,"notification":false}}}}'></div>
+                        <div data-react-class="HeroProfile" data-react-props='{"user":{"id":232992,"locale":"ru","name":"sergeylaptev","slug":"sergeylaptev","title":null,"is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~sergeylaptev","created_at":"2014-06-18T14:27:22.000+04:00","updated_at":"2015-05-04T21:07:42.000+03:00","is_premium":true,"has_design_bundle":true,"total_entries_count":61,"private_entries_count":53,"public_entries_count":8,"is_privacy":true,"userpic":{"original_url":"http://taaasty.com/assets/userpic/6d/ec/232992_original.jpeg","large_url":"http://taaasty.com/assets/userpic/6d/ec/232992_large.jpeg","thumb128_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb128.jpeg","thumb64_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb64.jpeg","thumbor_path":"userpic/6d/ec/232992_original.jpeg","symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":true,"notification":false}},"stats":{"followers_count":10,"followings_count":33,"favorites_count":2,"entries_count":8,"days_count":321,"comments_count":126,"private_entries_count":53,"tags_count":1},"locale":"ru"}'></div>
                         <!-- end Hero -->
                     </header>
                     <!-- end Page Header -->
@@ -205,71 +215,17 @@
                         <div class="content-area">
                             <div class="content-area__bg"></div>
                             <div class="content-area__inner">
-                                <!-- Alert -->
-                                <div class="alert js-alert">
-                                    <div class="alert__close js-alert-close">
-                                        <i class="icon icon--cross"></i>
-                                    </div>
-                                    <div class="alert__text js-alert-text">Здесь отображены ваши скрытые записи. Эта страница доступна только вам.</div>
-                                </div>
-                                <!-- end Alert -->
+                                <div data-react-class="TlogAlertContainer" data-react-props='{"type": "owner_private_tlog"}'></div>
                                 <!-- Posts -->
                                 <section class="posts">
-                                    <article class="post post--text" data-id="19475429" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19003612">
+                                    <article class="post post--text" data-id="19925586" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19925586">
                                         <div class="post__content">
                                             <span class="privacy-badge"><i class="icon icon--lock"></i></span>
                                             <p><b><span>Features:</span><br></b></p><p></p><ul><li><span>emoji</span><br></li><li><span>при авторизации через вконтакт вытаскивается имя и аватарка (если еще не установлена)</span><br></li><li><span>в текстовой или анонимной статье обязательно должен быть или заголовок или текст</span><br></li><li><span>переключалка видов фидов</span><br></li><li><span>API: количество кадров в картинка (frames_count)</span><br></li><li><span>API: отмена подтверждения</span><br></li><li><span>front: подробный интерфейс подтверждения емайла</span><br></li><li><span>Рассылка: возможность отписаться от рассылки (ссылка в футере письма)</span><br></li><li><span>Рассылка: уведомление о новом комменте, об упоминании в комментарии</span><br></li><li><span>Рассылка: при регистрации, подтверждение смены емайла, восстановление пароля</span><br></li><li><span>возможность восстановить пароль (контроллер и форма)</span><br></li></ul><p></p><p><b>Improvements</b></p><p></p><ul><li><span>распределение поступающих ошибок на пользовательские (показываются на экране и не журналируются) и системные (попадают в honeybadger)</span><br></li><li><span>коллаж кешируется</span><br></li><li><span>динамические и статические технические старинцы. Номер ошибки на странице (автоматически генерируются при деплое)</span><br></li><li><span>ежесуточной фоновое обновление счетчиков комментариев и статей у пользователей</span><br></li><li><span>емайлы отправляются в фоновой очереди</span><br></li><li><span>картинки аттачатся в емайлы (лучше прохождение антиспамов)</span><br></li><li><span>решена пробелма с редиректами url-ов картинок</span><br></li><li><span>улучшено определение проблем при эмбединге (FetchingError)</span><br></li><li><span>улучена подстановка fallback картинки для нерабочих эмбедов</span><br></li><li><span>улучен alert на фронте</span><br></li><li><span>посты и картинки с ошибками помечаются и повторно не обрабатываются</span><br></li></ul><p></p><p><b>Fixes:</b></p><p></p><ul><li><span>обработка ссылок в постах</span><br></li><li><span>дефолтный фон зависил от имени дневника</span><br></li><li><span>проблема с кодировкой в постах с урлами (из-за кривого обрезания урлов)</span><br></li><li><span>исправил валидацию пользователей</span><br></li><li><span>исправлены редкие ошибки при авторизации через oauth (vkontakte)</span><br></li><li><span>жаловаться на контент могут только зарегистрированные и подтвержденные</span><br></li><li><span>можно публиковать тексты с расширенным utf8 (emoji)</span><br></li><li><span>огонек голосования не показывался в статьях без заголовка</span><br></li></ul><p></p><p><b>Other:</b></p><p></p><ul><li><span>Журнал отправленных писем</span><br></li><li><span>Перед постингов в базу подчищаем кодировку текста</span><br></li><li><span>Отдельный журнал для ошибок в JavaScript-е</span><br></li></ul><p></p>
                                             <div data-react-class="EntryMetabar" data-react-props='
-                                            {
-                                                "entryId": 19475429,
-                                                "author": {
-                                                    "id": 232992,
-                                                    "name": "sergeylaptev",
-                                                    "slug": "sergeylaptev",
-                                                    "title": "Мой прекрасный тайтл",
-                                                    "is_female": false,
-                                                    "is_daylog": false,
-                                                    "tlog_url": "http://taaasty.ru/@sergeylaptev",
-                                                    "created_at": "2014-06-18T14:27:22.000+04:00",
-                                                    "updated_at": "2014-08-11T21:20:43.000+04:00",
-                                                    "total_entries_count": 1,
-                                                    "private_entries_count": 0,
-                                                    "public_entries_count": 1,
-                                                    "is_privacy": true,
-                                                    "email": "imperm3r.main@gmail.com",
-                                                    "is_confirmed": true,
-                                                    "available_notifications":false,
-                                                    "userpic": {
-                                                        "original_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_original.jpg",
-                                                        "large_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_large.jpg",
-                                                        "thumb128_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb128.jpg",
-                                                        "thumb64_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb64.jpg",
-                                                        "thumbor_path": "userpic/ae/d5/232992_thumb64.jpg",
-                                                        "default_colors": {
-                                                            "background": "#b5c31e",
-                                                            "name": "#ffffff"
-                                                        }
-                                                    }
-                                                },
-                                                "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
-                                                "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit",
-                                                "successDeleteUrl": "http://taaasty.ru/@lazy-cat",
-                                                "totalCommentsCount": 0,
-                                                "isLogged": true,
-                                                "isEntryPage": false,
-                                                "isFavorited": true,
-                                                "isWatching": true,
-                                                "canEdit": true,
-                                                "canFavorite": true,
-                                                "canWatch": true,
-                                                "canReport": true,
-                                                "canDelete": true,
-                                                "createdAt": "2014-08-11T21:01:56.000+04:00",
-                                                "entryCommentsUrl": "http://taaasty.ru/@sergeylaptev/19219138-hello-world#comments",
-                                                "shouldRemoveFavoriteNode": false
-                                            }'></div>
+                                            {"userSlug": "lina10", "entryId":20010417,"isEntryPage":true,"totalCommentsCount":0,"isLogged":true,"entryCommentsUrl":"http://taaasty.com/~lina10/20010417-obo-vsyom-i-ne-o-chyom#comments","entryUrl":"http://taaasty.com/~lina10/20010417-obo-vsyom-i-ne-o-chyom","tags":["Твоя","Я","Душа-не"],"createdAt":"2015-04-24T17:59:34.000+03:00","isFavorited":false,"isWatching":false,"canWatch":true,"canFavorite":true,"shouldRemoveFavoriteNode":false,"canReport":true,"locale":"ru"}'></div>
                                         </div>
-                                        <div data-react-class="EntryCommentBox" data-react-props='{"entryId":19586050,"entryUrl":"http://taaasty.com/~talk-to-tasty/19586050-ischem-redaktorov","user":{"id":232992,"name":"sergeylaptev","slug":"sergeylaptev","title":"","is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~sergeylaptev","created_at":"2014-06-18T14:27:22.000+04:00","updated_at":"2015-01-19T19:16:55.000+03:00","total_entries_count":25,"private_entries_count":18,"public_entries_count":7,"is_privacy":false,"userpic":{"original_url":"http://taaasty.com/assets/userpic/be/41/232992_original.jpeg","large_url":"http://taaasty.com/assets/userpic/be/41/232992_large.jpeg","thumb128_url":"http://taaasty.com/assets/userpic/be/41/232992_thumb128.jpeg","thumb64_url":"http://taaasty.com/assets/userpic/be/41/232992_thumb64.jpeg","thumbor_path":"userpic/be/41/232992_original.jpeg","symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":true,"notification":false}},"totalCommentsCount":45,"isEntryPage":false}'></div>
+                                        <div data-react-class="EntryCommentBox" data-react-props='{"entryId":19876788,"entryUrl":"http://taaasty.com/~sergeylaptev/19876788-mobilnaya-versiya-sayta","user":{"id":232992,"locale":"ru","name":"sergeylaptev","slug":"sergeylaptev","title":null,"is_female":false,"is_daylog":false,"tlog_url":"http://taaasty.com/~sergeylaptev","is_flow":false,"created_at":"2014-06-18T14:27:22.000+04:00","updated_at":"2015-05-14T18:20:34.000+03:00","tag":"~sergeylaptev","is_premium":true,"has_design_bundle":true,"total_entries_count":61,"private_entries_count":53,"public_entries_count":8,"is_privacy":false,"userpic":{"original_url":"http://taaasty.com/assets/userpic/6d/ec/232992_original.jpeg","large_url":"http://taaasty.com/assets/userpic/6d/ec/232992_large.jpeg","thumb128_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb128.jpeg","thumb64_url":"http://taaasty.com/assets/userpic/6d/ec/232992_thumb64.jpeg","thumbor_path":"userpic/6d/ec/232992_original.jpeg","symbol":"s","kind":"user","default_colors":{"background":"#b5c31e","name":"#ffffff"}},"features":{"search":true,"notification":false}},"totalCommentsCount":2,"isEntryPage":false,"locale":"ru"}'></div>
                                     </article>
 
                                     <article class="post post--text" data-id="19188650" data-time="2014-07-16T21:24:02+04:00" data-type="text" id="entry-19003612">
@@ -279,6 +235,7 @@
                                             <br>Еще 20 минут назад мне хотелось на стенку лезть от обиды и скуки, а сейчас: на часах 2:30, за окном метель, сугробы, -3 градуса, а я собираюсь в магазин за печеньками. Даже не знаю, норма это или нет. </p>
                                             <div data-react-class="EntryMetabar" data-react-props='
                                             {
+                                                "userSlug": "sergeylaptev",
                                                 "entryId": 19242996,
                                                 "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
                                                 "editUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta/edit",
@@ -298,42 +255,6 @@
                                                 "shouldRemoveFavoriteNode": false
                                             }'></div>
                                         </div>
-                                        <div data-react-class="EntryCommentBox" data-react-props='
-                                        {
-                                            "entryId": 19475429,
-                                            "entryUrl": "http://taaasty.ru/@lazy-cat/19188650-ya-na-otdyhe-no-bez-normalnogo-ineta",
-                                            "isEntryPage": false,
-                                            "totalCommentsCount": 10,
-                                            "user": {
-                                                "id": 232992,
-                                                "name": "sergeylaptev",
-                                                "slug": "sergeylaptev",
-                                                "title": "Мой прекрасный тайтл",
-                                                "is_female": false,
-                                                "is_daylog": false,
-                                                "tlog_url": "http://taaasty.ru/@sergeylaptev",
-                                                "created_at": "2014-06-18T14:27:22.000+04:00",
-                                                "updated_at": "2014-08-11T21:20:43.000+04:00",
-                                                "total_entries_count": 1,
-                                                "private_entries_count": 0,
-                                                "public_entries_count": 1,
-                                                "is_privacy": true,
-                                                "email": "imperm3r.main@gmail.com",
-                                                "is_confirmed": true,
-                                                "available_notifications":false,
-                                                "userpic": {
-                                                    "original_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_original.jpg",
-                                                    "large_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_large.jpg",
-                                                    "thumb128_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb128.jpg",
-                                                    "thumb64_url": "http://taaasty.ru/assets/userpic/ae/d5/232992_thumb64.jpg",
-                                                    "thumbor_path": "userpic/ae/d5/232992_thumb64.jpg",
-                                                    "default_colors": {
-                                                        "background": "#b5c31e",
-                                                        "name": "#ffffff"
-                                                    }
-                                                }
-                                            }
-                                        }'></div>
                                     </article>
 
                                     <article class="post post--text js-post" data-id="19179371" data-time="2014-07-12T21:27:06+04:00">
@@ -777,921 +698,445 @@
         <div id="js-shellbox-container"></div>
         <div popup-container></div>
 
-        <!-- Design Settings -->
-        <div class="popup popup--design-settings">
+        <div class="popup popup--center popup--messages popup--light ui-draggable" style="top: 30px; left:50px;">
             <div class="popup__header">
-                <div class="popup__headbox">
-                    <h3 class="popup__title">Управление дизайном</h3>
+                <div class="popup__headbox cursor--move">
+                    <h3 class="popup__title">Мои переписки</h3>
                 </div>
                 <div class="popup__close">
-                    <i class="icon icon--cross"></i>
+                    <div class="icon icon--cross"></div>
                 </div>
             </div>
             <div class="popup__body">
-                <div class="design-settings">
-                    <div class="design-settings__dragzone">
-                        <div class="design-settings__dragzone-table">
-                            <div class="design-settings__dragzone-cell">
-                                <div class="design-settings__dragzone-text">Отпустите картинку и она начнет загружаться</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="design-settings__options">
-                        <!--<div class="design-settings__alert">
-                            <div class="design-settings__alert-in">
-                                <div class="design-settings__alert-clear">Сбросить</div>
-                                <div class="design-settings__alert-text">Настройки не сохранены, так как вы выбрали одну<br /> или несколько супервозможностей</div>
-                                <a class="design-settings__alert-button" href="#" title="Узнать как сохранить настройки">Узнать как сохранить настройки</a>
-                            </div>
-                        </div>-->
-                        <div class="design-settings__presets">
-                            <div class="slider">
-                                <div class="slider__main">
-                                    <div class="slider__list">
-                                        <div class="slider__table">
-                                            <div class="slider__table-cell">
-                                                <section class="presets">
-                                                    <button class="save-preset-button">
-                                                        <span class="save-preset-button__text">Сохранить пресет</span>
-                                                    </button>
-                                                    <article class="preset preset-headerfont-proximanova preset-bgcolor-cinnabar">
-                                                        <header class="preset__header">Aa</header>
-                                                    </article><article class="preset preset-headerfont-veles preset-bgcolor-white">
-                                                        <header class="preset__header">Aa</header>
-                                                    </article><article class="preset preset-headerfont-yessireebob preset-bgcolor-silversand preset-bgimage-custom __active" style="background-image:url(http://taaasty.ru/assets/backgrounds/45/33/1842083_37623_42ce40fdba0cfe3e0cc15f68.jpg);">
-                                                        <header class="preset__header">Aa</header>
-                                                    </article><article class="preset preset-headerfont-poetsen preset-bgcolor-black">
-                                                        <header class="preset__header">Aa</header>
-                                                    </article><article class="preset preset-headerfont-ospdin preset-bgcolor-bluegray">
-                                                        <header class="preset__header">Aa</header>
-                                                    </article>
-                                                </section>
+                <div class="messages">
+                    <div class="messages__section messages__section--dialogs">
+                        <div class="messages__body">
+                            <div class="scroller scroller--dark">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__dialogs">
+                                        <div class="messages__dialog messages__dialog--discussion">
+                                            <button class="messages__notification-button __active"><i class="icon icon--bell"></i></button>
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                                                    <span class="avatar__text">p</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-content">
+                                                <div class="messages__dialog-media">
+                                                    <img src="http://thumbor0.tasty0.ru/unsafe/1424x1424/att/d7/47/17410707_bc81401c-4ac3-40a5-aa3b-748a1e0f290c.jpg" alt="" />
+                                                </div>
+                                                <div class="messages__dialog-text">
+                                                    Запись <div class="messages__dialog-type">Картинка</div>
+                                                </div>
                                             </div>
+                                            <span class="messages__date">2 November 10:43</span>
+                                            <div class="messages__dialog-users __short">
+                                                <div class="messages__dialog-users-cell">
+                                                    <div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/a1/7a/1391286_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/31/16/112282_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/f4/d4/99691_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/31/16/112282_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/f4/d4/99691_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="messages__dialog-users-cell">
+                                                    <p>Обсуждаете вы и еще <span class="messages__dialog-users-more">12 человек</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="messages__dialog state--read">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                                                    <span class="avatar__text">p</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text">
+                                                <span class="messages__user-name">pica</span>Давай завтра в 9.00 у выхода из метро. Ок?
+                                            </div>
+                                            <span class="messages__date">30 October 20:43</span>
+                                        </div>
+                                        <div class="messages__dialog state--read">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #ffca00; color: #222222;">
+                                                    <span class="avatar__text">b</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text">
+                                                <span class="messages__user-name">bobrova</span>Просыпайся!!!
+                                            </div>
+                                            <span class="messages__date">28 October 00:43</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="design-settings__groups">
-                            <div class="scroller scroller--dark scroller--design">
-                                <div class="scroller__pane js-scroller-pane">
-                                    <section class="design-settings__group">
-                                        <header class="design-settings__group-header">Заголовок</header>
-                                        <div class="design-settings__group-content">
-                                            <div class="design-settings__option design-settings__option--headerfont">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Шрифт</span>
-                                                    <span class="design-settings__state design-settings__state--font ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i">Aa</span>
-                                                    </span>
-                                                    <div class="slider ds-fadein-down">
-                                                        <div class="slider__main">
-                                                            <div class="slider__list">
-                                                                <div class="slider__table">
-                                                                    <div class="slider__table-cell">
-                                                                        <span class="form-radiogroup form-radiogroup--font">
-                                                                            <span class="form-radiobtn form-radiobtn--proximanova" data-original-title="Proxima Nova" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-proximanova" type="radio" name="designTlog-headerFont" value="proximanova" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-proximanova">
-                                                                                    <span class="free">free</span>
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--notoserif" data-original-title="Noto Serif" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-notoserif" type="radio" name="designTlog-headerFont" value="notoserif" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-notoserif">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--comfortaa" data-original-title="Comfortaa" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-comfortaa" type="radio" name="designTlog-headerFont" value="comfortaa" checked="checked" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-comfortaa">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--airbornepilot" data-original-title="Airborne Pilot" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-airbornepilot" type="radio" name="designTlog-headerFont" value="airbornepilot" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-airbornepilot">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--amaranth" data-original-title="Amaranth" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-amaranth" type="radio" name="designTlog-headerFont" value="amaranth" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-amaranth">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--beermoney" data-original-title="Beer Money" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-beermoney" type="radio" name="designTlog-headerFont" value="beermoney" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-beermoney">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--dancingscript" data-original-title="Dancing Script" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-dancingscript" type="radio" name="designTlog-headerFont" value="dancingscript" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-dancingscript">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--greatvibes" data-original-title="Great Vibes" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-greatvibes" type="radio" name="designTlog-headerFont" value="greatvibes" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-greatvibes">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--veles" data-original-title="Veles" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-veles" type="radio" name="designTlog-headerFont" value="veles" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-veles">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--zion" data-original-title="ZionTrain" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-zion" type="radio" name="designTlog-headerFont" value="zion" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-zion">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--nautilus" data-original-title="Nautilus Pompilius" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-nautilus" type="radio" name="designTlog-headerFont" value="nautilus" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-nautilus">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--ospdin" data-original-title="OSP-DIN" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-ospdin" type="radio" name="designTlog-headerFont" value="ospdin" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-ospdin">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--pecita" data-original-title="Pecita" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-pecita" type="radio" name="designTlog-headerFont" value="pecita" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-pecita">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--poetsen" data-original-title="PoetsenOne" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-poetsen" type="radio" name="designTlog-headerFont" value="poetsen" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-poetsen">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--yessireebob" data-original-title="Yes Siree Bob" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-headerFont-yessireebob" type="radio" name="designTlog-headerFont" value="yessireebob" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-headerFont-yessireebob">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--headersize">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Размер</span>
-                                                    <span class="form-radiogroup form-radiogroup--dotted ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--middle">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerSize-middle" type="radio" name="designTlog-headerSize" value="middle" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerSize-middle">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">средний</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--small">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerSize-small" type="radio" name="designTlog-headerSize" value="small" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerSize-small">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">маленький</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--large">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerSize-large" type="radio" name="designTlog-headerSize" value="large" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerSize-large">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">большой</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--headercolor">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Цвет</span>
-                                                    <span class="design-settings__state design-settings__state--circlebtn ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i"></span>
-                                                    </span>
-                                                    <span class="form-radiogroup form-radiogroup--circlebtns ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--white">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-white" type="radio" name="designTlog-headerColor" value="white" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-white">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Белый</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--black">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-black" type="radio" name="designTlog-headerColor" value="black" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-black">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Чёрный</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--custom">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-custom" type="radio" name="designTlog-headerColor" value="custom" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-custom">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Любой</span>
-                                                                </span>
-                                                                <span data-react-class="ColorPicker"></span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--shamrock">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-shamrock" type="radio" name="designTlog-headerColor" value="shamrock" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-shamrock">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Трилистник</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--cinnabar">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-cinnabar" type="radio" name="designTlog-headerColor" value="cinnabar" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-cinnabar">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Синнобар</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--bluegray">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-bluegray" type="radio" name="designTlog-headerColor" value="bluegray" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-bluegray">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серо-голубой</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--madison">
-                                                            <input class="form-radiobtn__input" id="designTlog-headerColor-madison" type="radio" name="designTlog-headerColor" value="madison" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-headerColor-madison">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Мэдисон</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section class="design-settings__group">
-                                        <header class="design-settings__group-header">Фон</header>
-                                        <div class="design-settings__group-content">
-                                            <div class="design-settings__option design-settings__option--bgcolor">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Цвет</span>
-                                                    <span class="design-settings__state design-settings__state--circlebtn ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i"></span>
-                                                    </span>
-                                                    <span class="form-radiogroup form-radiogroup--circlebtns ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--white">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-white" type="radio" name="designTlog-bgColor" value="white" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-white">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Белый</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--black">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-black" type="radio" name="designTlog-bgColor" value="black" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-black">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Чёрный</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--custom">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-custom" type="radio" name="designTlog-bgColor" value="custom" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-custom">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Любой</span>
-                                                                </span>
-                                                                <span data-react-class="ColorPicker"></span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--cinnabar">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-cinnabar" type="radio" name="designTlog-bgColor" value="cinnabar" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-cinnabar">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Синнобар</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--silversand">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-silversand" type="radio" name="designTlog-bgColor" value="silversand" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-silversand">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серебряный песок</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--bluegray">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgColor-bluegray" type="radio" name="designTlog-bgColor" value="bluegray" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgColor-bluegray">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серо-голубой</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--bgimage">
-                                                <div class="progressbar __hidden"><div class="progressbar__bg"></div></div>
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Картинка<span class="free">free</span></span>
-                                                    <span class="design-settings__text ds-absolute-left ds-fadein-down">
-                                                        Перетащите или<span class="form-upload form-upload--cover">
-                                                            <span class="form-upload__text">загрузите</span>
-                                                            <input class="form-upload__input" type="file" name="designTlog-bgImage" />
-                                                        </span>
-                                                    </span>
-                                                    <span class="design-settings__cover ds-absolute-right ds-fadeout-right" style="background-image:url(http://taaasty.ru/assets/backgrounds/67/9d/1814095_079F4585-797D-4509-85C4-DDC462567EAB.jpg);"></span>
-                                                    <span class="design-settings__text ds-absolute-right ds-fadein-left">
-                                                        <span class="form-checkbox">
-                                                            <input class="form-checkbox__input" id="designTlog-bgImage-visibility" type="checkbox" name="designTlog-bgImage" value="none" />
-                                                            <label for="designTlog-bgImage-visibility" class="form-checkbox__label">
-                                                                <span class="form-checkbox__box"><i class="form-checkbox__icon"></i></span>Вкл
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--bgalignment">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Выравнивание<span class="free">free</span></span>
-                                                    <span class="form-radiogroup form-radiogroup--dotted ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--justify">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgAlignment-justify" type="radio" name="designTlog-bgAlignment" value="justify" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgAlignment-justify">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">по ширине</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--center">
-                                                            <input class="form-radiobtn__input" id="designTlog-bgAlignment-center" type="radio" name="designTlog-bgAlignment" value="center" />
-                                                            <label class="form-radiobtn__label" for="designTlog-bgAlignment-center">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">по центру</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section class="design-settings__group">
-                                        <header class="design-settings__group-header">Лента</header>
-                                        <div class="design-settings__group-content">
-                                            <div class="design-settings__option design-settings__option--feedbgcolor">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Цвет фона</span>
-                                                    <span class="design-settings__state design-settings__state--circlebtn ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i"></span>
-                                                    </span>
-                                                    <span class="form-radiogroup form-radiogroup--circlebtns ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--white">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-white" type="radio" name="designTlog-feedBgColor" value="white" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-white">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Белый</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--black">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-black" type="radio" name="designTlog-feedBgColor" value="black" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-black">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Чёрный</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--custom">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-custom" type="radio" name="designTlog-feedBgColor" value="custom" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-custom">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Любой</span>
-                                                                </span>
-                                                                <span data-react-class="ColorPicker"></span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--cinnabar">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-cinnabar" type="radio" name="designTlog-feedBgColor" value="cinnabar" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-cinnabar">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Синнобар</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--silversand">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-silversand" type="radio" name="designTlog-feedBgColor" value="silversand" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-silversand">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серебряный песок</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--bluegray">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedBgColor-bluegray" type="radio" name="designTlog-feedBgColor" value="bluegray" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedBgColor-bluegray">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серо-голубой</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--feedfont">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Шрифт текста</span>
-                                                    <span class="design-settings__state design-settings__state--font ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i">Aa</span>
-                                                    </span>
-                                                    <div class="slider ds-fadein-down">
-                                                        <div class="slider__main">
-                                                            <div class="slider__list">
-                                                                <div class="slider__table">
-                                                                    <div class="slider__table-cell">
-                                                                        <span class="form-radiogroup form-radiogroup--font">
-                                                                            <span class="form-radiobtn form-radiobtn--ptsans" data-original-title="PT Sans" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-ptsans" type="radio" name="designTlog-feedFont" value="ptsans" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-ptsans">
-                                                                                    <span class="free">free</span>
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--ptserif" data-original-title="PT Serif" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-ptserif" type="radio" name="designTlog-feedFont" value="ptserif" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-ptserif">
-                                                                                    <span class="free">free</span>
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--roboto" data-original-title="Roboto" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-roboto" type="radio" name="designTlog-feedFont" value="roboto" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-roboto">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--lora" data-original-title="Lora" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-lora" type="radio" name="designTlog-feedFont" value="lora" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-lora">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--philosopher" data-original-title="Philosopher" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-philosopher" type="radio" name="designTlog-feedFont" value="philosopher" checked="checked" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-philosopher">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--ptmono" data-original-title="PT Mono" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-ptmono" type="radio" name="designTlog-feedFont" value="ptmono" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-ptmono">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--berenisadfpro" data-original-title="Berenis ADF Pro" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-berenisadfpro" type="radio" name="designTlog-feedFont" value="berenisadfpro" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-berenisadfpro">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--djserif" data-original-title="DejaVu Serif Condensed" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-djserif" type="radio" name="designTlog-feedFont" value="djserif" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-djserif">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--heuristica" data-original-title="Heuristica" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-heuristica" type="radio" name="designTlog-feedFont" value="heuristica" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-heuristica">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--permian" data-original-title="Permian Slab Serif" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-permian" type="radio" name="designTlog-feedFont" value="permian" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-permian">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--robotoslab" data-original-title="Roboto Slab" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-robotoslab" type="radio" name="designTlog-feedFont" value="robotoslab" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-robotoslab">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span><span class="form-radiobtn form-radiobtn--clearsans" data-original-title="Clear Sans" data-container="body" design-settings-tooltip>
-                                                                                <input class="form-radiobtn__input" id="designTlog-feedFont-clearsans" type="radio" name="designTlog-feedFont" value="clearsans" />
-                                                                                <label class="form-radiobtn__label" for="designTlog-feedFont-clearsans">
-                                                                                    <span class="form-radiobtn__inner">
-                                                                                        <span class="form-radiobtn__text">Aa</span>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--feedcolor">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Цвет текста</span>
-                                                    <span class="design-settings__state design-settings__state--circlebtn ds-absolute-right ds-fadeout-right">
-                                                        <span class="design-settings__state-i"></span>
-                                                    </span>
-                                                    <span class="form-radiogroup form-radiogroup--circlebtns ds-absolute-left ds-fadein-down">
-                                                        <span class="form-radiobtn form-radiobtn--white">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedColor-white" type="radio" name="designTlog-feedColor" value="white" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedColor-white">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Белый</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--black">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedColor-black" type="radio" name="designTlog-feedColor" value="black" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedColor-black">
-                                                                <span class="free">free</span>
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Чёрный</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--silversand">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedColor-silversand" type="radio" name="designTlog-feedColor" value="silversand" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedColor-silversand">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серебряный песок</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--bluegray">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedColor-bluegray" type="radio" name="designTlog-feedColor" value="bluegray" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedColor-bluegray">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Серо-голубой</span>
-                                                                </span>
-                                                            </label>
-                                                        </span><span class="form-radiobtn form-radiobtn--madison">
-                                                            <input class="form-radiobtn__input" id="designTlog-feedColor-madison" type="radio" name="designTlog-feedColor" value="madison" checked="checked" />
-                                                            <label class="form-radiobtn__label" for="designTlog-feedColor-madison">
-                                                                <span class="form-radiobtn__inner">
-                                                                    <span class="form-radiobtn__text">Мэдисон</span>
-                                                                </span>
-                                                            </label>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="design-settings__option design-settings__option--opacity">
-                                                <div class="design-settings__option-content">
-                                                    <span class="design-settings__text ds-absolute-left ds-fadeout-down">Прозрачность<span class="free">free</span></span>
-                                                    <span class="form-range ds-absolute-left ds-fadein-down">
-                                                        <input class="form-range__input" type="text" name="designTlog-feedOpacity" />
-                                                        <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 59.5959595959596%;"></div>
-                                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5959595959596%;"></span>
-                                                    </span>
-                                                    <span class="form-range-value">59%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="scroller__track js-scroller-track">
-                                    <div class="scroller__bar js-scroller-bar"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="design-settings__save-button">Сохранить</button>
+                        <footer class="messages__footer">
+                            <span class="button button--green">
+                                <span class="button__inner">
+                                    <span class="button__text">Создать переписку</span>
+                                </span>
+                            </span>
+                        </footer>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end Design Settings
 
-        <!-- Payment -->
-<!--         <div class="popup-container">
-            <div class="popup-container__main">
-                <div class="popup-container__cell">
-                    <div class="popup popup--payment">
-                        <div class="popup__header">
-                            <div class="popup__headbox">
-                                <h3 class="popup__title">Что вы получаете?</h3>
-                            </div>
-                            <div class="popup__close">
-                                <i class="icon icon--cross"></i>
-                            </div>
-                        </div>
-                        <div class="popup__body">
-                            <div class="payment">
-                                <section class="payment__section payment__section--list">
-                                    <ul class="payment__list">
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">14 новых шрифтов заголовков</div>
-                                            <div class="payment__item-content">
-                                                <div class="slider">
-                                                    <div class="slider__main">
-                                                        <div class="slider__list">
-                                                            <div class="slider__table">
-                                                                <div class="slider__table-cell">
-                                                                    <span class="form-radiogroup form-radiogroup--font">
-                                                                        <span class="form-radiobtn form-radiobtn--notoserif" data-original-title="Noto Serif" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--comfortaa" data-original-title="Comfortaa" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--airbornepilot" data-original-title="Airborne Pilot" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--amaranth" data-original-title="Amaranth" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--beermoney" data-original-title="Beer Money" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--dancingscript" data-original-title="Dancing Script" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--greatvibes" data-original-title="Great Vibes" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--veles" data-original-title="Veles" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--zion" data-original-title="ZionTrain" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--nautilus" data-original-title="Nautilus Pompilius" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--ospdin" data-original-title="OSP-DIN" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--pecita" data-original-title="Pecita" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--poetsen" data-original-title="PoetsenOne" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--yessireebob" data-original-title="Yes Siree Bob" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">12 новых шрифтов тлога</div>
-                                            <div class="payment__item-content">
-                                                <div class="slider">
-                                                    <div class="slider__main">
-                                                        <div class="slider__list">
-                                                            <div class="slider__table">
-                                                                <div class="slider__table-cell">
-                                                                    <span class="form-radiogroup form-radiogroup--font">
-                                                                        <span class="form-radiobtn form-radiobtn--roboto" data-original-title="Roboto" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--lora" data-original-title="Lora" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--philosopher" data-original-title="Philosopher" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--ptmono" data-original-title="PT Mono" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--berenisadfpro" data-original-title="Berenis ADF Pro" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--djserif" data-original-title="DejaVu Serif Condensed" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--heuristica" data-original-title="Heuristica" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--permian" data-original-title="Permian Slab Serif" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--robotoslab" data-original-title="Roboto Slab" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span><span class="form-radiobtn form-radiobtn--clearsans" data-original-title="Clear Sans" data-container="body" tooltip>
-                                                                            <label class="form-radiobtn__label">
-                                                                                <span class="form-radiobtn__inner">
-                                                                                    <span class="form-radiobtn__text">Aa</span>
-                                                                                </span>
-                                                                            </label>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">Любые цвета ленты, шрифта, заголовка</div>
-                                            <div class="payment__item-content">
-                                                <span class="form-radiogroup form-radiogroup--circlebtns">
-                                                    <span class="form-radiobtn form-radiobtn--custom">
-                                                        <label class="form-radiobtn__label">
-                                                            <span class="form-radiobtn__inner">
-                                                                <span class="form-radiobtn__text">Любой</span>
-                                                            </span>
-                                                            <span data-react-class="ColorPicker" data-react-props='{"disabled": true}'></span>
-                                                        </label>
-                                                    </span><span class="form-radiobtn form-radiobtn--cinnabar">
-                                                        <label class="form-radiobtn__label">
-                                                            <span class="form-radiobtn__inner">
-                                                                <span class="form-radiobtn__text">Синнобар</span>
-                                                            </span>
-                                                        </label>
-                                                    </span><span class="form-radiobtn form-radiobtn--silversand">
-                                                        <label class="form-radiobtn__label">
-                                                            <span class="form-radiobtn__inner">
-                                                                <span class="form-radiobtn__text">Серебряный песок</span>
-                                                            </span>
-                                                        </label>
-                                                    </span><span class="form-radiobtn form-radiobtn--bluegray">
-                                                        <label class="form-radiobtn__label">
-                                                            <span class="form-radiobtn__inner">
-                                                                <span class="form-radiobtn__text">Серо-голубой</span>
-                                                            </span>
-                                                        </label>
-                                                    </span>
+        <div class="popup popup--center popup--messages popup--light ui-draggable" style="top: 30px; left:425px;">
+            <div class="popup__header">
+                <div class="popup__headbox cursor--move">
+                    <h3 class="popup__title">Мои переписки</h3>
+                </div>
+                <div class="popup__close">
+                    <div class="icon icon--cross"></div>
+                </div>
+            </div>
+            <div class="popup__body">
+                <div class="messages">
+                    <div class="messages__section messages__section--dialogs">
+                        <div class="messages__body">
+                            <div class="scroller scroller--dark">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__dialogs">
+                                        <div class="messages__dialog messages__dialog--discussion">
+                                            <button class="messages__notification-button __active"><i class="icon icon--bell"></i></button>
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                                                    <span class="avatar__text">p</span>
                                                 </span>
-                                            </div>
-                                        </li>
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">Условия</div>
-                                            <div class="payment__item-content">Вы платите всего один раз и возможности настройки дизайна остаются с Вами навсегда</div>
-                                        </li>
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">Стоимость</div>
-                                            <div class="payment__item-content">299 рублей</div>
-                                        </li>
-                                        <li class="payment__item">
-                                            <div class="payment__item-title">Способы оплаты<br /> (без комиссии)</div>
-                                            <div class="payment__item-content">Со счета мобильного телефона, банковской картой, через терминалы, салоны связи, яндекс.деньги, веб-мани</div>
-                                        </li>
-                                    </ul>
-                                    <button class="payment__button">Перейти к оплате</button>
-                                </section>
-                                <section class="payment__section payment__section--success" style="display: none;">
-                                    <div class="payment__message">
-                                        <div class="payment__table">
-                                            <div class="payment__table-cell">
-                                                <div class="payment__message-icon">:)</div>
-                                                <p class="payment__message-text">Поздравляем, теперь Вы можете использовать любые настройки дизайна</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="payment__button">Вернуться в тлог</button>
-                                </section>
-                                <section class="payment__section payment__section--process" style="display: none;">
-                                    <div class="payment__message">
-                                        <div class="payment__table">
-                                            <div class="payment__table-cell">
-                                                <div class="payment__message-icon">
-                                                    <span class="spinner spinner--31x31">
-                                                        <span class="spinner__icon"></span>
-                                                    </span>
+                                            </span>
+                                            <div class="messages__dialog-content">
+                                                <div class="messages__dialog-text">
+                                                    Запись: эта поездка была самая крутая за последние несколько дней, погода была...
                                                 </div>
-                                                <p class="payment__message-text">Идет обработка платежа</p>
+                                            </div>
+                                            <span class="messages__date">2 November 10:43</span>
+                                            <div class="messages__dialog-users __short">
+                                                <div class="messages__dialog-users-cell">
+                                                    <div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/a1/7a/1391286_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/31/16/112282_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/f4/d4/99691_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                        <div class="messages__dropdown state--open">
+                                                            <a class="messages__dropdown-item" href="#" title="Перейти в профиль">Перейти в профиль</a>
+                                                            <a class="messages__dropdown-item" href="#" title="Написать в личку">Написать в личку</a>
+                                                        </div>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/31/16/112282_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/f4/d4/99691_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div><div class="messages__dialog-user __extra">
+                                                        <span class="avatar">
+                                                            <img class="avatar__img" src="http://thumbor4.tasty0.ru/unsafe/40x40/http://taaasty.com/assets/userpic/fc/33/2_original.jpg" alt="" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="messages__dialog-users-cell">
+                                                    <p>Обсуждаете вы и еще <span class="messages__dialog-users-more">12 человек</span></p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </section>
-                                <section class="payment__section payment__section--error" style="display: none;">
-                                    <div class="payment__message">
-                                        <div class="payment__table">
-                                            <div class="payment__table-cell">
-                                                <div class="payment__message-icon">:(</div>
-                                                <p class="payment__message-text">Ошибка платежа, попробуйте еще раз</p>
+                                        <div class="messages__dialog state--read">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                                                    <span class="avatar__text">p</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text">
+                                                <span class="messages__user-name">pica</span>Давай завтра в 9.00 у выхода из метро. Ок?
                                             </div>
+                                            <span class="messages__date">30 October 20:43</span>
+                                        </div>
+                                        <div class="messages__dialog state--read">
+                                            <span class="messages__user-avatar">
+                                                <span class="avatar" style="background-color: #ffca00; color: #222222;">
+                                                    <span class="avatar__text">b</span>
+                                                </span>
+                                            </span>
+                                            <div class="messages__dialog-text">
+                                                <span class="messages__user-name">bobrova</span>Просыпайся!!!
+                                            </div>
+                                            <span class="messages__date">28 October 00:43</span>
                                         </div>
                                     </div>
-                                    <button class="payment__button">Вернуться в тлог</button>
-                                </section>
+                                </div>
                             </div>
                         </div>
+                        <footer class="messages__footer">
+                            <span class="button button--green">
+                                <span class="button__inner">
+                                    <span class="button__text">Создать переписку</span>
+                                </span>
+                            </span>
+                        </footer>
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!-- end Payment -->
+        </div>
+
+        <div class="popup popup--center popup--messages popup--light ui-draggable front-layer" style="top: 30px; left: 800px;">
+            <div class="popup__header ui-draggable-handle">
+                <div class="popup__headbox cursor--move">
+                    <h3 class="popup__title">Обсуждение записи</h3>
+                </div>
+                <div class="popup__close">
+                    <div class="icon icon--cross"></div>
+                </div>
+            </div>
+            <div class="popup__body">
+                <div class="messages">
+                    <div class="messages__back js-messages-back">
+                        <div class="icon icon--arrow-left"></div>
+                    </div>
+                    <div class="messages__section messages__section--thread">
+                        <div class="messages__dialog messages__dialog--discussion">
+                            <button class="messages__notification-button __active"><i class="icon icon--bell"></i></button>
+                            <span class="messages__user-avatar">
+                                <span class="avatar" style="background-color: #eb4656; color: #ffffff;">
+                                    <span class="avatar__text">p</span>
+                                </span>
+                            </span>
+                            <div class="messages__dialog-content">
+                                <div class="messages__dialog-text">
+                                    Запись: эта поездка была самая крутая за последние несколько дней, погода была...
+                                </div>
+                            </div>
+                            <span class="messages__date">2 November 10:43</span>
+                        </div>
+                        <div class="messages__body" style="background-image:url(http://taaasty.com/assets/bgs/ac/27/43985_original.jpg);">
+                            <div class="messages__thread-overlay"></div>
+                            <div class="scroller scroller--dark scroller--messages scroller--tracked">
+                                <div class="scroller__pane js-scroller-pane">
+                                    <div class="messages__list">
+                                        <div class="messages__list-cell">
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--from">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/1d/3d/189424_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/1d/3d/189424_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                            <div class="message message--to">
+                                                <span class="messages__user-avatar">
+                                                    <span style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg');" class="avatar">
+                                                        <img src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/fc/33/2_original.jpg" alt="~genue" class="avatar__img" />
+                                                    </span>
+                                                </span>
+                                                <div class="messages__bubble">
+                                                    <span class="messages__user-name">
+                                                        <a href="http://taaasty.com/~genue" target="_blank">genue</a>
+                                                    </span>
+                                                    <span class="messages__text">test</span>
+                                                </div>
+                                                <span class="messages__date">3 October 09:34</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scroller__track js-scroller-track">
+                                    <div class="scroller__bar js-scroller-bar" style="height: 53px; top: 0px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="messages__footer">
+                            <div class="message-form">
+                                <span class="messages__user-avatar">
+                                    <span class="avatar" style="background-image:url('http://thumbor0.tasty0.ru/unsafe/35x35/userpic/1d/3d/189424_original.jpg');">
+                                        <img class="avatar__img" src="http://thumbor0.tasty0.ru/unsafe/35x35/userpic/1d/3d/189424_original.jpg" alt="~volosojui" />
+                                    </span>
+                                </span>
+                                <div class="message-form__controls">
+                                    <div class="message-form__textarea-container">
+                                        <textarea class="message-form__textarea" placeholder="Your message"></textarea>
+                                    </div>
+                                    <div class="message-form__media-preview"></div>
+                                    <div class="message-form__button-container">
+                                        <div class="message-form__upload-button-container">
+                                            <div class="message-form__upload-button">
+                                                <i class="icon icon--image-circle"></i>
+                                                <input class="message-form__upload-input" accept="image/png,image/jpeg,image/gif" multiplу size="28" type="file" />
+                                            </div>
+                                        </div>
+                                        <button class="message-form__button-send --disabled">Отправить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <script src="scripts/vendor.js"></script>
         <script src="scripts/client.js"></script>

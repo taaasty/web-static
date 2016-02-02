@@ -1,4 +1,4 @@
-cx                         = require 'react/lib/cx'
+classnames                 = require 'classnames'
 ClickOutsideMixin          = require '../../../../../mixins/clickOutside'
 CommentActionsButton       = require './actions/buttons/button'
 CommentActionsDropdownMenu = require './actions/dropdownMenu'
@@ -23,9 +23,9 @@ CommentActions = React.createClass
     currentState: CLOSE_STATE
 
   render: ->
-    actionsClasses = cx
-      'comment__actions': true
+    actionsClasses = classnames('comment__actions', {
       '__open': @isOpenState()
+    })
 
     <div className={ actionsClasses }>
       <CommentActionsButton onClick={ @toggleOpenState } />

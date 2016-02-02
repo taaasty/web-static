@@ -1,4 +1,5 @@
-cx = require 'react/lib/cx'
+{ findDOMNode } = require 'react-dom';
+classnames = require 'classnames'
 
 NO_TRANSITION_CLASS = "no--transition"
 
@@ -32,18 +33,15 @@ window.Popup = React.createClass
     Mousetrap.unbind 'esc', @close
 
   render: ->
-    classes =
-      'popup':         true
-      'popup--dark':   @props.colorScheme is 'dark'
-      'popup--light':  @props.colorScheme is 'light'
-      'popup--center': true
+    popupClasses = classnames('popup', 'popup--center', @props.className, {
+      'popup--dark': @props.colorScheme is 'dark'
+      'popup--light': @props.colorScheme is 'light'
+    })
 
-    classes[@props.className] = true if @props.className?
-
-    popupClasses = cx classes
-
-    return <div className={ popupClasses }
-                style={ this.initialPositionStyle() }>
+    return <div className={popupClasses}
+                style={this.initialPositionStyle()}
+                onMouseDown={this.handleClick}
+                onTouchStart={this.handleClick}>
              <PopupHeader title={ this.props.title } ref="header"
                           isDraggable= { this.props.isDraggable }
                           hasActivities={ this.props.hasActivities }
@@ -54,8 +52,8 @@ window.Popup = React.createClass
            </div>
 
   makeDraggable: ->
-    $popupNode = $(@getDOMNode())
-    headboxNode = @refs.header.getDOMNode()
+    $popupNode = $(findDOMNode(this))
+    headboxNode = findDOMNode(this.refs.header)
 
     $popupNode.draggable
       handle: headboxNode
@@ -67,3 +65,17 @@ window.Popup = React.createClass
 
   close: ->
     if @props.onClose? then @props.onClose() else @unmount()
+
+  handleClick: (e) ->
+    popups = [].slice.call(document.querySelectorAll('.popup'))
+    currentNode = findDOMNode(this)
+
+    Object.keys(popups).forEach (key) ->
+      node = popups[key]
+
+      if node == currentNode
+        currentNode.classList.add 'front-layer'
+        currentNode.classList.remove 'back-layer'
+      else
+        node.classList.add 'back-layer'
+        node.classList.remove 'front-layer'

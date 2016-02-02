@@ -1,0 +1,235 @@
+.flow-form__hero {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  font-size: 0;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    height: 286px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #151515;
+    opacity: .67;
+  }
+
+  .form-upload--icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 40px;
+    line-height: 1;
+  }
+}
+
+.flow-form__hero-box {
+  width: 80%;
+  padding: 20px 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.flow-form__hero-title {
+  font-size: 30px;
+  line-height: 34px;
+
+  .editable-field {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .editable-field__control-wrap {
+    line-height: inherit;
+  }
+
+  .editable-field__control,
+  .editable-field__placeholder {
+    opacity: 1;
+  }
+
+  .editable-field__button {
+    margin-top: 5px;
+  }
+
+  .editable-field__value, .editable-field__control {
+    opacity: 1;
+  }
+}
+
+.flow-form__hero-text {
+  font-size: 30px;
+  line-height: 34px;
+  margin-bottom: 10px;
+}
+
+.flow-form__item {
+  .clearfix();
+  padding: 20px 0;
+  margin: 0 20px;
+  font-size: 14px;
+
+  & + & {
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  .persons {
+    margin-right: -20px;
+    margin-left: -20px;
+  }
+
+  .switcher {
+    background-color: #303133;
+  }
+}
+
+.flow-form__title {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  font-family: @font-family-base-light;
+}
+
+.flow-form__desc {
+  opacity: .23;
+}
+
+.flow-form__subtitle {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  font-family: @font-family-base-light;
+}
+
+.flow-form__right {
+  margin-left: 20px;
+  float: right;
+}
+
+.flow-form__left {
+  overflow: hidden;
+}
+
+// Chooser
+.flow-form__chooser {
+  &:extend(.chooser);
+}
+
+.flow-form__chooser-results {
+  max-height: 280px;
+}
+
+.flow-form__chooser.state--disabled {
+  .flow-form__chooser-button {
+    cursor: default;
+  }
+}
+
+.flow-form__chooser.state--open {
+  .flow-form__chooser-button {
+    &:extend(.chooser.state--open .chooser__button all);
+  }
+
+  .flow-form__chooser-dropdown {
+    &:extend(.chooser.state--open .chooser__dropdown all);
+  }
+}
+
+.flow-form__chooser-button {
+  &:extend(.chooser__button all);
+}
+
+.flow-form__chooser-button-text {
+  &:extend(.chooser__button-text all);
+}
+
+.flow-form__chooser-dropdown {
+  &:extend(.chooser__dropdown all);
+}
+
+.flow-form__chooser-input {
+  &:extend(.chooser__input all);
+}
+
+.flow-form__chooser-loading {
+  &:extend(.chooser__loading all);
+}
+
+.flow-form__chooser-empty {
+  &:extend(.chooser__empty all);
+}
+
+.flow-form__chooser-result {
+  &:extend(.chooser__result all);
+
+  &:hover,
+  &.state--active {
+    .flow-form__user-name {
+      opacity: 1;
+    }
+  }
+}
+
+// User
+.flow-form__user {
+  .clearfix();
+}
+
+.flow-form__user-avatar {
+  width: 35px;
+  height: 35px;
+  margin-right: 8px;
+  float: left;
+}
+
+.flow-form__user-name {
+  margin-top: 7px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  opacity: .6;
+  transition: opacity .3s ease;
+}
+
+// Persons
+.flow-form__persons {
+  .flow-form__subtitle {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+
+  .persons {
+    padding: 10px 0 0;
+  }
+
+  .person {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+// Save Button
+.flow-form__save-button {
+  &:extend(.button all, .button--rectangle, .button--block);
+  .button-common-style(@emerald);
+  height: 50px;
+  position: relative;
+  line-height: 50px;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}

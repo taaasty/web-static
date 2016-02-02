@@ -1,4 +1,4 @@
-cx = require 'react/lib/cx'
+classnames = require 'classnames'
 { PropTypes } = React
 
 Avatar = React.createClass
@@ -25,9 +25,9 @@ Avatar = React.createClass
   render: ->
     avatarUrl     = @props.userpic.original_url || @props.userpic.large_url
     avatarSymbol  = @props.userpic.symbol
-    avatarClasses = cx
-      'avatar': true
+    avatarClasses = classnames('avatar', {
       'anonymous_char': @isAnonymous()
+    })
 
     if avatarUrl?
       avatarUrl    = ThumborService.imageUrl

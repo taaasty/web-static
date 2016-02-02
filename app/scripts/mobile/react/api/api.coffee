@@ -1,3 +1,4 @@
+_                = require 'lodash'
 assign           = require 'react/lib/Object.assign'
 Constants        = require '../constants/constants'
 CurrentUserStore = require '../stores/currentUser'
@@ -13,13 +14,19 @@ abortPendingRequests = (key) ->
 userToken = ->
   CurrentUserStore.getAccessToken()
 
+csrfToken = ->
+  tokenNode = document.querySelector '[name="csrf-token"]'
+
+  if tokenNode? then tokenNode.getAttribute('content') else null
+
 request = (_method, url, data = {}) ->
   headers =
     'X-Requested-With': 'XMLHttpRequest'
     'X-Tasty-Client-Name': 'web_mobile'
-    'X-Tasty-Client-Version': TastySettings.version
+    'X-Tasty-Client-Version': gon.version
 
   headers['X-User-Token'] = userToken() if userToken()
+  headers['X-CSRF-Token'] = csrfToken() if csrfToken()
 
   method = switch _method
     when 'GET'                   then 'GET'
@@ -27,21 +34,25 @@ request = (_method, url, data = {}) ->
     else 'GET'
 
   if data instanceof FormData
-    dataType    = 'multipart/form-data'
+    contentType = false
     processData = false
+    data.append('_method', _method)
   else
-    dataType    = 'json'
+    contentType = 'application/x-www-form-urlencoded'
     processData = true
-    assign data, {_method}
+    data = _.extend {}, data, {_method}
 
-  reqwest
+  $.ajax
     url: url
     method: method
     data: data
-    dataType: dataType
+    contentType: contentType
     processData: processData
-    timeout: TIMEOUT
     headers: headers
+    # timeout: TIMEOUT
+    xhrFields:
+      withCredentials: true
+      crossDomain:     true
 
 getRequest =    (url, data) -> request 'GET', url, data
 postRequest =   (url, data) -> request 'POST', url, data
@@ -51,7 +62,7 @@ deleteRequest = (url, data) -> request 'DELETE', url, data
 Api =
   locales:
     load: (locale) ->
-      url = TastySettings.localesPath + '/' + locale + '.json'
+      url = gon.localesPath + '/' + locale + '.json'
       getRequest url
 
   currentUser:
@@ -286,6 +297,27 @@ Api =
 
       abortPendingRequests key
       _pendingRequests[key] = putRequest url, data
+
+  tlog:
+    loadTlogEntries: (tlogId, sinceEntryId, limit) ->
+      url = ApiRoutes.tlogEntries(tlogId)
+      key = Constants.api.LOAD_TLOG_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
+
+    loadTlogEntriesTlogs: (tlogId, sinceEntryId, limit) ->
+      url = ApiRoutes.tlogEntriesTlogs(tlogId)
+      key = Constants.api.LOAD_TLOG_ENTRIES
+      data =
+        since_entry_id: sinceEntryId
+        limit:          limit
+
+      abortPendingRequests key
+      _pendingRequests[key] = getRequest url, data
 
   feed:
     loadLiveEntries: (sinceEntryId, limit) ->

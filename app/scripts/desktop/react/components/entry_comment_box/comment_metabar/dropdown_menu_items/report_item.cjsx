@@ -25,5 +25,5 @@ window.EntryCommentBox_CommentMetaBarDropdownMenuReportItem = React.createClass
     @createRequest
       url: ApiRoutes.comments_report_url @props.commentId
       method: 'POST'
-      success: => TastyNotifyController.notifySuccess i18n.t 'report_comment_success'
-      error: (data) -> TastyNotifyController.errorResponse data
+      success: => NoticeService.notifySuccess i18n.t 'report_comment_success'
+      error: (data) -> NoticeService.errorResponse data

@@ -1,0 +1,29 @@
+/*global messagingService, UuidService */
+import MessagingDispatcher from '../MessagingDispatcher';
+
+const MessageActions = {
+  newMessage({ conversationId, content, files }) {
+    const uuid = UuidService.generate();
+
+    MessagingDispatcher.messageSubmitted({ conversationId, content, files, uuid });
+    messagingService.postMessage({ conversationId, content, files, uuid });
+  },
+  
+  readMessage(conversationId, messageId) {
+    messagingService.markAsReadMessage(conversationId, messageId);
+  },
+
+  resendMessage({ conversationId, content, files, uuid }) {
+    messagingService.postMessage({ conversationId, content, files, uuid });
+  },
+
+  loadMoreMessages({ conversationId, toMessageId }) {
+    messagingService.loadMoreMessages(conversationId, toMessageId);
+  },
+
+  toggleSelection(id) {
+    MessagingDispatcher.toggleSelection(id);
+  },
+};
+
+export default MessageActions;
