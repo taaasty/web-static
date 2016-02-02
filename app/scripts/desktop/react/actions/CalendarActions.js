@@ -37,14 +37,14 @@ function fetchCalendar(tlogId) {
 }
 
 function shouldFetchCalendar(state, tlogId) {
-  return ((state.calendar.periods.length === 0 ||
-           tlogId !== state.calendar.tlog_id) &&
-          !state.calendar.isFetching);
+  return (!state.calendar.isFetching &&
+          (state.calendar.periods.length === 0 ||
+           tlogId !== state.calendar.tlog_id));
 }
 
 export function getCalendar(tlogId, force) {
   return (dispatch, getState) => {
-    if (force || shouldFetchCalendar(getState(), tlogId)) {
+    if (tlogId && (force || shouldFetchCalendar(getState(), tlogId))) {
       return dispatch(fetchCalendar(tlogId));
     }
   };

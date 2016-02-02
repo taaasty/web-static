@@ -23,8 +23,8 @@ class TlogPageRoot extends Component {
       DesignPreviewService.apply(nextProps.tlog.data.design);
     }
   }
-  slug({ routeParams }) {
-    return routeParams.slug || (routeParams.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+  slug({ params }) {
+    return params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
   }
   getCalendarData(props) {
     const { currentUserId, tlog: { data: { author, my_relationship } }, CalendarActions } = props;
@@ -43,9 +43,9 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUserId, isLogged, locale,
-            params, tlog, tlogEntries, tlogEntry,
-            CalendarActions, TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
+    const { calendar, children, currentUserId, isLogged, locale, location,
+            params, tlog, tlogEntries, tlogEntry, CalendarActions, TlogActions,
+            TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
             my_relationship, slug, stats, tlog_url } = tlog.data;
     const { isFetching: isFetchingTlog } = tlog;
@@ -64,6 +64,7 @@ class TlogPageRoot extends Component {
           TlogActions,
           TlogEntriesActions,
           TlogEntryActions,
+          sinceId: location.query.since_entry_id,
         })
     );
     
@@ -117,6 +118,7 @@ TlogPageRoot.propTypes = {
   currentUserId: PropTypes.number,
   isLogged: PropTypes.bool.isRequired,
   locale: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   tlog: PropTypes.object.isRequired,

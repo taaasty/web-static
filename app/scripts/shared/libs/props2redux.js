@@ -51,6 +51,7 @@ export default function prop2redux(component, props) {
         slug: slug,
         section: mapSection[props.section],
         type: 'tlogs',
+        sinceId: uri().search(true).since_entry_id,
       } || void 0,
     };
   } else if (component === 'EntryPageContainer') {
@@ -73,7 +74,7 @@ export default function prop2redux(component, props) {
         data: { items: [] },
         isFetching: false,
       },
-      tlogEntry: { data: { ...props.entry, commentator: props.commentator }, isFetching: false } || void 0,
+      tlogEntry: { data: { tlog: {}, ...props.entry, commentator: props.commentator }, isFetching: false } || void 0,
     }
   }
 }
