@@ -9,7 +9,7 @@ class TlogPageContainer extends Component {
     TlogEntriesActions.getTlogEntriesIfNeeded(
       slug,
       this.section(this.props),
-      this.date(this.props)
+      this.date(this.props.params)
     );
   }
   componentWillReceiveProps(nextProps) {
