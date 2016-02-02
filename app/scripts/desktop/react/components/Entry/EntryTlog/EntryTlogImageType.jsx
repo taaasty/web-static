@@ -25,12 +25,13 @@ class EntryTlogImageType extends Component {
     }
   }
   render() {
-    const { entry: { id, image_attachments, is_private, title, url }, isInList } = this.props;
+    const { entry, isInList } = this.props;
+    const { image_attachments, is_private, title } = entry;
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink id={id} show={isInList} url={url}>
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <ImageAttachmentsCollage
               imageAttachments={image_attachments}
               width={712}
@@ -38,7 +39,7 @@ class EntryTlogImageType extends Component {
           </EntryTlogContentLink>
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
-          <EntryTlogContentLink show={isInList} url={url}>
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <Text value={title} withHTML />
           </EntryTlogContentLink>
         </div>

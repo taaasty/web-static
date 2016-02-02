@@ -63,14 +63,11 @@ module.exports={
         "ignore_tlog_item": "Block the user",
         "report_tlog_item": "Report inappropriate",
         "feed_entries_count": "{{count}} entry in the last 24 hours",
-        "feed_entries_count_2": "{{count}} entry in the last 24 hours",
-        "feed_entries_count_5": "{{count}} entries in the last 24 hours",
+        "feed_entries_count_plural": "{{count}} entries in the last 24 hours",
         "stats_entries_count": "An entry",
-        "stats_entries_count_2": "post",
-        "stats_entries_count_5": "entries",
+        "stats_entries_count_plural": "entries",
         "stats_followings_count": "subscription",
-        "stats_followings_count_2": "followings",
-        "stats_followings_count_5": "followers",
+        "stats_followings_count_plural": "followers",
         "stats_followers_count": "follower",
         "stats_followers_count_plural": "followers",
         "stats_days_count": "day on taaasty",
@@ -12770,7 +12767,10 @@ function prop2redux(component, props) {
         }
       },
       tlogEntries: {
-        data: (0, _extends3.default)({}, props.entries_info, {
+        data: (0, _extends3.default)({
+          items: [],
+          has_more: false
+        }, props.entries_info, {
           next_date: props.nextPageUrl && parseUrl2Date(props.nextPageUrl),
           prev_date: props.prevPageUrl && parseUrl2Date(props.prevPageUrl)
         }),

@@ -6,9 +6,10 @@ function TlogPagePrivate({ text }) {
       <div className="content-info__icon">
         <i className="icon icon--lock" />
       </div>
-      <p className="content-info__text">
-        {text}
-      </p>
+      <p
+        className="content-info__text"
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     </div>
   );
 }

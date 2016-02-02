@@ -14,8 +14,10 @@ class EntryTlogMetabarActions extends Component {
   }
   render() {
     const { id, can_delete, can_edit, can_favorite, can_report, can_watch,
-            edit_url, is_favorited, is_watching, url } = this.props.entry;
-    const DropdownLinkComponent = window.SPA ? DropdownActionSPA : DropdownAction;
+            edit_url, is_favorited, is_watching, tlog, url } = this.props.entry;
+    const DropdownLinkComponent = window.SPA && !tlog.is_flow
+            ? DropdownActionSPA
+            : DropdownAction;
 
     return (
       <DropdownActions>
