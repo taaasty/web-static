@@ -4,20 +4,22 @@ import { TLOG_SECTION_TLOG, TLOG_SECTION_FLOW } from '../../../../shared/constan
 
 class TlogPageContainer extends Component {
   componentWillMount() {
-    const { TlogEntriesActions, params: { slug } } = this.props;
+    const { TlogEntriesActions, params: { slug }, sinceId } = this.props;
 
-    TlogEntriesActions.getTlogEntriesIfNeeded(
+    TlogEntriesActions.getTlogEntriesIfNeeded({
       slug,
-      this.section(this.props),
-      this.date(this.props.params)
-    );
+      section: this.section(this.props),
+      date: this.date(this.props.params),
+      sinceId: sinceId,
+    });
   }
   componentWillReceiveProps(nextProps) {
-    this.props.TlogEntriesActions.getTlogEntriesIfNeeded(
-      nextProps.params.slug,
-      this.section(nextProps),
-      this.date(nextProps.params)
-    );
+    this.props.TlogEntriesActions.getTlogEntriesIfNeeded({
+      slug: nextProps.params.slug,
+      section: this.section(nextProps),
+      date: this.date(nextProps.params),
+      sinceId: nextProps.sinceId,
+    });
   }
   section(props) {
     const { tlog: { data: { author } }, route: { path } } = props;
@@ -34,8 +36,8 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUserId, error, locale, queryString, tlog, tlogEntries,
-            CalendarActions, TlogEntriesActions } = this.props;
+    const { currentUserId, error, locale, queryString, sinceId, tlog,
+            tlogEntries, CalendarActions, TlogEntriesActions } = this.props;
 
     return (
       <TlogPageBody
@@ -47,6 +49,7 @@ class TlogPageContainer extends Component {
         locale={locale}
         queryString={queryString}
         section={this.section(this.props)}
+        sinceId={sinceId}
         tlog={tlog}
         tlogEntries={tlogEntries}
       />
@@ -66,6 +69,7 @@ TlogPageContainer.propTypes = {
   prevPageUrl: PropTypes.string,
   queryString: PropTypes.string,
   route: PropTypes.object,
+  sinceId: PropTypes.string,
   tlog: PropTypes.object,
   tlogEntries: PropTypes.object,
 };

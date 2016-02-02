@@ -1,6 +1,5 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import queryString from 'query-string';
 import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
@@ -17,13 +16,6 @@ import {
 } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
-  state = {
-    prevButtonVisible: false,
-  };
-  componentWillMount() {
-    const queryHash = queryString.parse(window.location.search);
-    this.setState({ prevButtonVisible: queryHash.since_entry_id });
-  }
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
@@ -44,15 +36,15 @@ class TlogPageBody extends Component {
     );
   }
   renderContents() {
-    const { currentUserId, error, queryString, section, tlogEntries,
-            tlog: { data: { author, my_relationship: state } } } = this.props;
+    const { currentUserId, error, queryString, section, tlogEntries, tlog } = this.props;
     const { isFetching: isFetchingEntries, data: { items } } = tlogEntries;
+    const { isFetching: isFetchingTlog, data: { author, my_relationship: state } } = tlog;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
     } else {
       if (author.id && currentUserId === author.id) { //owner
-        if (items.length > 0 || isFetchingEntries) {
+        if (items.length > 0 || isFetchingEntries || isFetchingTlog) {
           return this.renderTlog();
         } else {
           switch (section) {
@@ -73,7 +65,7 @@ class TlogPageBody extends Component {
 
         if (section === TLOG_SECTION_PRIVATE) {
           return <TlogPagePrivate text={i18n.t('tlog.section_private')} />;
-        } else if (items.length > 0 || isFetchingEntries) {
+        } else if (items.length > 0 || isFetchingEntries || isFetchingTlog) {
           return this.renderTlog();
         } else {
           const msgText = queryString
@@ -87,12 +79,11 @@ class TlogPageBody extends Component {
     }
   }
   render() {
-    const { bgStyle, tlog: { data: { author, tlog_url } } } = this.props;
-    const { prevButtonVisible } = this.state;
+    const { bgStyle, sinceId, tlog: { data: { author, tlog_url } } } = this.props;
 
     return (
       <div className="page-body">
-        {author.id && prevButtonVisible && <PreviousEntriesButton href={tlog_url} />}
+        {author.id && !!sinceId && <PreviousEntriesButton href={tlog_url} />}
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
@@ -110,6 +101,7 @@ TlogPageBody.propTypes = {
   error: PropTypes.string,
   queryString: PropTypes.string,
   section: PropTypes.string.isRequired,
+  sinceId: PropTypes.string,
   tlog: PropTypes.object,
   tlogEntries: PropTypes.object,
 };

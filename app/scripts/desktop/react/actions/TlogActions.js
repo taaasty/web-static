@@ -45,7 +45,7 @@ function fetchTlog(slug) {
 
 export function getTlog(slug) {
   return (dispatch, getState) => {
-    if (shouldFetchTlog(getState(), slug)) {
+    if (slug && shouldFetchTlog(getState(), slug)) {
       return dispatch(fetchTlog(slug));
     }
   };

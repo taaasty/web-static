@@ -46,29 +46,31 @@ function fetchTlogEntries(url, data) {
     });
 }
 
-function shouldFetchTlogEntries(state, slug, section, date, type='tlogs') {
-  const { data, isFetching, date: cDate, section: cSection, slug: cSlug, type: cType } = state.tlogEntries;
+function shouldFetchTlogEntries(state, { slug, section, date, type='tlogs', sinceId }) {
+  const { isFetching, date: cDate, section: cSection,
+          sinceId: cSinceId, slug: cSlug, type: cType } = state.tlogEntries;
 
-  return !isFetching && (slug !== cSlug || date !== cDate ||
-                         section !== cSection || type !== cType);
+  return !isFetching &&
+    (slug !== cSlug || date !== cDate || section !== cSection || type !== cType ||
+     (cSinceId && sinceId == null)); // update only if reset sinceId
 }
 
-function getTlogEntries(slug, section, date, type) {
+function getTlogEntries({ slug, section, date, type, sinceId }) {
   return (dispatch) => {
-    const url = ApiRoutes.tlogEntries(slug, section, type);
+    const url = ApiRoutes.tlogEntries(slug, section, type, sinceId);
 
     dispatch(tlogEntriesRequest());
     dispatch(tlogEntriesReset());
-    return fetchTlogEntries(url, { date })
-      .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type })))
-      .fail((error) => dispatch(tlogEntriesError({ error, date, section, slug, type })));
+    return fetchTlogEntries(url, { date, since_entry_id: sinceId })
+      .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type, sinceId })))
+      .fail((error) => dispatch(tlogEntriesError({ error, date, section, slug, type, sinceId })));
   };
 }
 
-export function getTlogEntriesIfNeeded(slug, section=TLOG_SECTION_TLOG, date, type='tlogs') {
+export function getTlogEntriesIfNeeded({slug, section=TLOG_SECTION_TLOG, date, type='tlogs', sinceId }) {
   return (dispatch, getState) => {
-    if (shouldFetchTlogEntries(getState(), slug, section, date, type)) {
-      return dispatch(getTlogEntries(slug, section, date, type));
+    if (shouldFetchTlogEntries(getState(), { slug, section, date, type, sinceId })) {
+      return dispatch(getTlogEntries({ slug, section, date, type, sinceId }));
     }
   };
 }
