@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
 
-function EntryTlogContentLink({ children, id, show, url }) {
+function EntryTlogContentLink({ children, entry: { id, tlog, url },  show }) {
   return show
-    ? window.SPA //FIXME
+    ? window.SPA && !tlog.is_flow //FIXME
       ? <Link to={{ pathname: uri(url).path(), state: { id } }}>
           {children}
         </Link>
@@ -17,8 +17,8 @@ EntryTlogContentLink.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
-  show: PropTypes.bool.isRequired,
-  url: PropTypes.string.isRequired,
+  entry: PropTypes.object.isRequired,
+  show: PropTypes.bool,
 };
 
 export default EntryTlogContentLink;

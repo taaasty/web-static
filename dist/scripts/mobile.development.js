@@ -12842,7 +12842,10 @@ function prop2redux(component, props) {
         }
       },
       tlogEntries: {
-        data: (0, _extends3.default)({}, props.entries_info, {
+        data: (0, _extends3.default)({
+          items: [],
+          has_more: false
+        }, props.entries_info, {
           next_date: props.nextPageUrl && parseUrl2Date(props.nextPageUrl),
           prev_date: props.prevPageUrl && parseUrl2Date(props.prevPageUrl)
         }),

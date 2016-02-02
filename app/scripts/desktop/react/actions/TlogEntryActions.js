@@ -4,6 +4,7 @@ import ApiRoutes from '../../../shared/routes/api';
 export const TLOG_ENTRY_REQUEST = 'TLOG_ENTRY_REQUEST';
 export const TLOG_ENTRY_RECEIVE = 'TLOG_ENTRY_RECEIVE';
 export const TLOG_ENTRY_ERROR = 'TLOG_ENTRY_ERROR';
+export const TLOG_ENTRY_RESET = 'TLOG_ENTRY_RESET';
 
 function tlogEntryRequest() {
   return {
@@ -22,6 +23,12 @@ function tlogEntryError(error) {
   return {
     type: TLOG_ENTRY_ERROR,
     payload: error,
+  };
+}
+
+export function resetTlogEntry() {
+  return {
+    type: TLOG_ENTRY_RESET,
   };
 }
 
@@ -51,5 +58,5 @@ export function getTlogEntry(id) {
     if (shouldFetchTlogEntry(getState(), id)) {
       return dispatch(fetchTlogEntry(id));
     }
-  }
+  };
 }

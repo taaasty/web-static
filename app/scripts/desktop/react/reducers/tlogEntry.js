@@ -2,6 +2,7 @@ import {
   TLOG_ENTRY_REQUEST,
   TLOG_ENTRY_RECEIVE,
   TLOG_ENTRY_ERROR,
+  TLOG_ENTRY_RESET,
 } from '../actions/TlogEntryActions';
 
 const initialState = {
@@ -29,6 +30,13 @@ const actionMap = {
       isFetching: false,
       error: null,
     };
+  },
+
+  [TLOG_ENTRY_RESET](state) {
+    return {
+      ...state,
+      data: initialState.data,
+    }
   },
 
   [TLOG_ENTRY_ERROR](state, error) {

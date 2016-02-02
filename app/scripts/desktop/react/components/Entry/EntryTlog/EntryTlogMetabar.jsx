@@ -49,11 +49,7 @@ function EntryTlogMetabar(props) {
         onComment={onComment}
         url={entry.url}
       />
-      <EntryTlogMetabarDate
-        date={entry.created_at}
-        id={entry.id}
-        url={entry.url}
-      />
+      <EntryTlogMetabarDate entry={entry} />
       {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
        <EntryTlogMetabarRepost
         commentator={commentator}

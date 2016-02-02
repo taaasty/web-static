@@ -23,7 +23,8 @@ class EntryTlogQuoteType extends Component {
     }
   }
   render() {
-    const { entry: { id, is_private, source, text, url }, isInList } = this.props;
+    const { entry, isInList } = this.props;
+    const { is_private, source, text } = entry;
 
     return (
       <span>
@@ -31,7 +32,7 @@ class EntryTlogQuoteType extends Component {
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
         </header>
-        <EntryTlogContentLink id={id} show={isInList} url={url}>
+        <EntryTlogContentLink entry={entry} show={isInList}>
           <div className="post__content">
             <blockquote className="blockquote">
               <span className="laquo">«</span>{text}<span className="raquo">»</span>

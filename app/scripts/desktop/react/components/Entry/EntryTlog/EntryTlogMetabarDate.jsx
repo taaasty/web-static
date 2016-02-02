@@ -3,9 +3,9 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogMetabarDate({ date, id, url }) {
+function EntryTlogMetabarDate({ entry: { created_ad: date, id, tlog, url } }) {
   function renderLink(text) {
-    return window.SPA
+    return window.SPA && !tlog.is_flow
       ? <Link to={{ pathname: uri(url).path(), state: { id } }}>
           <span className="meta-item__common">
             {text}
@@ -38,9 +38,7 @@ function EntryTlogMetabarDate({ date, id, url }) {
 }
 
 EntryTlogMetabarDate.propTypes = {
-  date: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  url: PropTypes.string.isRequired,
+  entry: PropTypes.object.isRequired,
 };
 
 export default EntryTlogMetabarDate;
