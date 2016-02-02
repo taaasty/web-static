@@ -2,11 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import NoticeService from '../../services/Notice';
 
-export default class SettingsSlug extends Component {
-  static propTypes = {
-    onChange: PropTypes.func.isRequired,
-    slug: PropTypes.string.isRequired,
-  };
+class SettingsSlug extends Component {
   state = {
     slug: this.props.slug,
   };
@@ -35,3 +31,10 @@ export default class SettingsSlug extends Component {
     );
   }
 }
+
+SettingsSlug.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  slug: PropTypes.string.isRequired,
+};
+
+export default SettingsSlug;

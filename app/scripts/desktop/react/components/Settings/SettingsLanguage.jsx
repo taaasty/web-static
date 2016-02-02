@@ -1,35 +1,35 @@
+import React, { PropTypes } from 'react';
 import SelectBox from '../common/SelectBox/SelectBox';
 
-let SettingsLanguage = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    languages: React.PropTypes.array.isRequired,
-    onChange: React.PropTypes.func.isRequired
-  },
-
-  render() {
-    return (
-      <div className="settings__item">
-        <div className="settings__right">
-          <SelectBox
-              value={this.props.value}
-              options={this.props.languages}
-              withSearchBox={false}
-              onSelect={this.handleChange} />
-        </div>
-        <div className="settings__left">
-          <h3 className="settings__title">
-            {this.props.title}
-          </h3>
-        </div>
-      </div>
-    );
-  },
-
-  handleChange(language) {
-    this.props.onChange(language);
+function SettingsLanguage({ languages, onChange, title, value }) {
+  function handleChange(language) {
+    onChange(language);
   }
-});
+
+  return (
+    <div className="settings__item">
+      <div className="settings__right">
+        <SelectBox
+          onSelect={handleChange}
+          options={languages}
+          value={value}
+          withSearchBox={false}
+        />
+      </div>
+      <div className="settings__left">
+        <h3 className="settings__title">
+          {title}
+        </h3>
+      </div>
+    </div>
+  );
+}
+
+SettingsLanguage.propTypes = {
+  languages: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+};
 
 export default SettingsLanguage;

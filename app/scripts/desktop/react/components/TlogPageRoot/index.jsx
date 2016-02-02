@@ -1,5 +1,6 @@
 import React, { cloneElement, Children, Component, PropTypes } from 'react';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
+import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
 import HeroProfile from '../HeroProfile';
 import SocialShare from '../common/SocialShare';
@@ -16,18 +17,22 @@ class TlogPageRoot extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.getCalendarData(nextProps);
-    this.props.TlogActions.getTlog(nextProps.routeParams.slug);
+    this.props.TlogActions.getTlog(this.slug(nextProps));
 
     if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
       DesignPreviewService.apply(nextProps.tlog.data.design);
     }
   }
+  slug({ routeParams }) {
+    return routeParams.slug || (routeParams.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+  }
   getCalendarData(props) {
     const { currentUserId, tlog: { data: { author, my_relationship } }, CalendarActions } = props;
     
-    if (author && (!author.is_privacy ||
-                   author.id === currentUserId ||
-                   my_relationship === RELATIONSHIP_STATE_FRIEND)) {
+    if (author && author.slug !== TLOG_SLUG_ANONYMOUS &&
+        (!author.is_privacy ||
+         author.id === currentUserId ||
+         my_relationship === RELATIONSHIP_STATE_FRIEND)) {
       CalendarActions.getCalendar(author.id);
     }
     
