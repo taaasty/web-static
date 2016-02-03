@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogMetabarDate({ entry: { created_ad: date, id, tlog, url } }) {
+function EntryTlogMetabarDate({ entry: { created_at: date, id, tlog, url } }) {
   function renderLink(text) {
     return window.SPA && !tlog.is_flow
       ? <Link to={{ pathname: uri(url).path(), state: { id } }}>

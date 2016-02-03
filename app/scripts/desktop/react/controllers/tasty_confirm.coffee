@@ -1,3 +1,5 @@
+{ render } = require 'react-dom';
+
 window.TastyConfirmController =
 
   show: ({message, acceptButtonText, rejectButtonText, acceptButtonColor, onAccept}) ->
@@ -13,7 +15,7 @@ window.TastyConfirmController =
       unless container
         container = $('<\div>', {'tasty-confirm-container': ''}).appendTo('body')[0]
 
-      React.render (
+      render (
         <TastyConfirm
             message={ message }
             acceptButtonText={ acceptButtonText }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
-function EntryTlogCommentList({ commentator, comments, entryUrl,
+function EntryTlogCommentList({ commentator, comments, entryId, entryUrl,
                                 onCommentReply, onCommentUpdate,
                                 onCommentReport, onCommentDelete }) {
   return (
@@ -10,6 +10,7 @@ function EntryTlogCommentList({ commentator, comments, entryUrl,
           <EntryTlogCommentContainer
             comment={comment}
             commentator={commentator}
+            entryId={entryId}
             entryUrl={entryUrl}
             key={comment.id}
             onCommentDelete={onCommentDelete.bind(null, comment.id)}
@@ -26,6 +27,7 @@ function EntryTlogCommentList({ commentator, comments, entryUrl,
 EntryTlogCommentList.propTypes = {
   commentator: PropTypes.object,
   comments: PropTypes.array.isRequired,
+  entryId: PropTypes.number.isRequired,
   entryUrl: PropTypes.string.isRequired,
 };
 

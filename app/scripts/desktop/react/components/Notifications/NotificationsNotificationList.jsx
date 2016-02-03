@@ -1,32 +1,28 @@
+import React, { PropTypes } from 'react';
 import NotificationsNotificationListItem from './NotificationsNotificationListItem';
+import NotificationsNotificationListItemSPA from './NotificationsNotificationListItemSPA';
 import NotificationsNotificationListEmpty from './NotificationsNotificationListEmpty';
 
-let NotificationsNotificationList = React.createClass({
-  propTypes: {
-    notifications: React.PropTypes.array.isRequired,
-    onNotificationRead: React.PropTypes.func.isRequired
-  },
+function  NotificationsNotificationList({ notifications, onNotificationRead }) {
+  const ListItem = window.SPA ? NotificationsNotificationListItemSPA : NotificationsNotificationListItem;
 
-  render() {
-    if (this.props.notifications.length) {
-      let notifications = this.props.notifications.map((item) => {
-        return (
-          <NotificationsNotificationListItem
-              notification={item}
-              onNotificationRead={this.props.onNotificationRead.bind(null, item.id)}
-              key={item.id} />
-        );
-      });
+  return notifications.length
+    ? <ul className="notifications__list">
+        {notifications.map((item) => (
+          <ListItem
+            key={item.id}
+            notification={item}
+            onNotificationRead={onNotificationRead.bind(null, item.id)}
+          />
+         ))
+        }
+      </ul>
+    : <NotificationsNotificationListEmpty />;
+}
 
-      return (
-        <ul className="notifications__list">
-          {notifications}
-        </ul>
-      );
-    } else {
-      return <NotificationsNotificationListEmpty />;
-    }
-  }
-});
+NotificationsNotificationList.propTypes = {
+  notifications: PropTypes.array.isRequired,
+  onNotificationRead: PropTypes.func.isRequired,
+};
 
 export default NotificationsNotificationList;

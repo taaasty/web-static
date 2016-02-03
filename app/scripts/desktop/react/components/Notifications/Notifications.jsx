@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import Scroller from '../common/scroller/scroller';
 import NotificationsNotificationList from './NotificationsNotificationList';
@@ -5,9 +6,10 @@ import NotificationsLoadingMessage from './NotificationsLoadingMessage';
 import NotificationsErrorMessage from './NotificationsErrorMessage';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
-class Notifications {
-  handleScroll(ev) {
-    const { everythingLoaded, loadingMore, onLoadMore } = this.props;
+function Notifications(props) {
+  function handleScroll(ev) {
+    const { everythingLoaded, loadingMore, onLoadMore } = props;
+
     if (everythingLoaded || loadingMore) {
       return;
     }
@@ -17,11 +19,13 @@ class Notifications {
       onLoadMore();
     }
   }
-  onClickMarkAllButton() {
-    this.props.markAllAsRead();
+
+  function onClickMarkAllButton() {
+    props.markAllAsRead();
   }
-  renderContent() {
-    const { loading, notifications, error, onNotificationRead } = this.props;
+
+  function renderContent() {
+    const { loading, loadingMore, notifications, error, onNotificationRead } = props;
 
     if (loading && notifications.length == 0) {
       return <NotificationsLoadingMessage />;
@@ -34,41 +38,40 @@ class Notifications {
             notifications={notifications}
             onNotificationRead={onNotificationRead}
           />
-          {this.renderSpinner()}
+          {loadingMore && renderSpinner()}
         </div>
       );
     }
   }
-  renderSpinner() {
-    if (this.props.loadingMore) {
-      return (
-        <div className="loader">
-          <Spinner size={14} />
-        </div>
-      );
-    }
-  }
-  renderMarkAllButton() {
-    return this.props.notifications.some((el) => el.read_at === null)
-      ? <div className="notifications__mark-all-read" onClick={this.onClickMarkAllButton.bind(this)}>
-          <span className="icon icon--double-tick" />
-          {i18n.t('buttons.notifications.mark_all_read')}
-        </div>
-      : null;
-  }
-  render() {
+
+  function renderSpinner() {
     return (
-      <div className="notifications">
-        {this.renderMarkAllButton()}
-        <Scroller
-          className="scroller--notifications"
-          onScroll={this.handleScroll.bind(this)}
-        >
-          {this.renderContent()}
-        </Scroller>
+      <div className="loader">
+        <Spinner size={14} />
       </div>
     );
   }
+
+  function renderMarkAllButton() {
+    return props.notifications.some((el) => el.read_at === null)
+      ? <div className="notifications__mark-all-read" onClick={onClickMarkAllButton}>
+          <span className="icon icon--double-tick" />
+          {i18n.t('buttons.notifications.mark_all_read')}
+        </div>
+      : <noscript />;
+  }
+
+  return (
+    <div className="notifications">
+      {renderMarkAllButton()}
+      <Scroller
+        className="scroller--notifications"
+        onScroll={handleScroll}
+      >
+        {renderContent()}
+      </Scroller>
+    </div>
+  );
 }
 
 Notifications.propTypes = {

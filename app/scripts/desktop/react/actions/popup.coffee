@@ -1,3 +1,4 @@
+{ render } = require 'react-dom';
 PinEntryPopup = require('../components/Editor/PinEntryPopup');
 UserOnboarding = require '../components/UserOnboarding';
 CurrentUserStore = require '../stores/current_user'
@@ -67,7 +68,7 @@ PopupActions =
       container.setAttribute 'popup-persons-container', ''
       document.body.appendChild container
 
-    React.render (
+    render (
       <PersonsPopup panelName={ panelName } userId={ userId } />
     ), container
 

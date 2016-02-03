@@ -31,6 +31,14 @@ class Calendar extends Component {
       ));
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.entryId !== nextProps.entryId) {
+      this.updateSelectedEntry(
+        nextProps.entryId,
+        nextProps.entryCreatedAt
+      );
+    }
+  }
   componentWillUnmount() {
     if (this.timeout) {
       window.clearTimeout(this.timeout);

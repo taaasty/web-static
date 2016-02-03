@@ -12,10 +12,13 @@ function tlogEntryRequest() {
   };
 }
 
-function tlogEntryReceive(data) {
+function tlogEntryReceive({ data, id }) {
   return {
     type: TLOG_ENTRY_RECEIVE,
-    payload: { ...data, url: data.url || data.entry_url },   //FIXME inconsistent data /entries|/tlogs
+    payload: {
+      id,
+      data: { ...data, url: data.url || data.entry_url },   //FIXME inconsistent data /entries|/tlogs
+    },
   };
 }
 
@@ -33,22 +36,22 @@ export function resetTlogEntry() {
 }
 
 export function setTlogEntry(data) {
-  return tlogEntryReceive(data);
+  return tlogEntryReceive({ data, id: data.id });
 }
 
 function shouldFetchTlogEntry(state, id) {
   return (!state.tlogEntry.isFetching &&
-          (!state.tlogEntry.data.id || state.tlogEntry.data.id !== id));
+          (!state.tlogEntry.id || state.tlogEntry.id !== id));
 }
 
 function fetchTlogEntry(id) {
   return (dispatch) => {
     dispatch(tlogEntryRequest());
     return $.ajax({ url: ApiRoutes.entry_url(id), data: { include_comments: true } })
-      .done((data) => dispatch(tlogEntryReceive(data)))
-      .fail((err) => {
-        NoticeService.errorResponse(err);
-        return dispatch(tlogEntryError(err));
+      .done((data) => dispatch(tlogEntryReceive({ data, id })))
+      .fail((error) => {
+        NoticeService.errorResponse(error);
+        return dispatch(tlogEntryError({ error: error.responseJSON, id }));
       });
   };
 }

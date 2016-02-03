@@ -1,3 +1,5 @@
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
 import PadContainer from '../components/Pad/PadContainer';
 
 class PadController {
@@ -18,9 +20,9 @@ class PadController {
   }
 
   open(Component, props) {
-    let container = this.getContainer();
+    const container = this.getContainer();
 
-    React.render(
+    render(
       <PadContainer {...props} onClose={this.close.bind(this)}>
         <Component />
       </PadContainer>
@@ -29,7 +31,7 @@ class PadController {
 
   close() {
     let container = this.getContainer();
-    React.unmountComponentAtNode(container);
+    unmountComponentAtNode(container);
     container.parentNode.removeChild(container);
   }
 }

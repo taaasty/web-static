@@ -36,12 +36,14 @@ class TlogPageBody extends Component {
     );
   }
   renderContents() {
-    const { currentUser, currentUserId, error, queryString, tlogEntries, tlog } = this.props;
-    const { isFetching: isFetchingEntries, data: { items }, section } = tlogEntries;
+    const { currentUser, queryString, tlogEntries, tlog } = this.props;
+    const { isFetching: isFetchingEntries, data: { items }, error, section } = tlogEntries;
     const { isFetching: isFetchingTlog, data: { author, my_relationship: state } } = tlog;
 
-    if (error === ERROR_INVALID_DATE) {
-      return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
+    if (error && error.error_code === ERROR_INVALID_DATE) {
+      return <TlogPageError text={i18n.t('tlog.error_invalid_date')} />;
+    } else if (error && error.response_code === 404) {
+      return <TlogPageError text={error.error} />;
     } else {
       if (author.slug && currentUser.data.slug === author.slug) { //owner
         if (items.length > 0 || isFetchingEntries || isFetchingTlog) {
@@ -97,6 +99,7 @@ class TlogPageBody extends Component {
 
 TlogPageBody.propTypes = {
   bgStyle: PropTypes.object,
+  currentUser: PropTypes.object,
   currentUserId: PropTypes.number,
   error: PropTypes.string,
   queryString: PropTypes.string,

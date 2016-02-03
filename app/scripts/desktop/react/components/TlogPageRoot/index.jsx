@@ -34,6 +34,8 @@ class TlogPageRoot extends Component {
          author.id === currentUserId ||
          my_relationship === RELATIONSHIP_STATE_FRIEND)) {
       CalendarActions.getCalendar(author.id);
+    } else {
+      CalendarActions.resetCalendar();
     }
     
   }
@@ -43,7 +45,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUser, currentUserId, isLogged, locale, location,
+    const { calendar, children, currentUser, currentUserId, isLogged, location,
             params, tlog, tlogEntries, tlogEntry, CalendarActions, TlogActions,
             TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
@@ -77,7 +79,6 @@ class TlogPageRoot extends Component {
             <header className="page-header">
               <HeroProfile
                 isFetching={isFetchingTlog}
-                locale={locale}
                 relState={my_relationship}
                 stats={stats}
                 user={author}
@@ -87,12 +88,11 @@ class TlogPageRoot extends Component {
           </div>
         </div>
         {!isLogged && <Auth fixed locale={locale} />}
-        {!!calendar.periods.length &&
+        {!!calendar.data.periods.length &&
          <Calendar
-            calendar={calendar}
+            calendar={calendar.data}
             entryCreatedAt={calendarEntry.created_at || (new Date()).toISOString()}
             entryId={calendarEntry.id}
-            locale={locale}
             tlogId={author.id}
          />}
         <SocialShare
@@ -119,7 +119,6 @@ TlogPageRoot.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   isLogged: PropTypes.bool.isRequired,
-  locale: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,

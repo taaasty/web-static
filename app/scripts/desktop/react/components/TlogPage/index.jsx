@@ -36,7 +36,7 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, currentUserId, error, locale, queryString, sinceId,
+    const { currentUser, currentUserId, queryString, sinceId,
             tlog, tlogEntries, CalendarActions, TlogEntriesActions } = this.props;
 
     return (
@@ -44,10 +44,8 @@ class TlogPageContainer extends Component {
         CalendarActions={CalendarActions}
         TlogEntriesActions={TlogEntriesActions}
         bgStyle={{ opacity: tlog.data.design.feedOpacity }}
-        currentUserId={currentUserId}
         currentUser={currentUser}
-        error={error}
-        locale={locale}
+        currentUserId={currentUserId}
         queryString={queryString}
         section={this.section(this.props)}
         sinceId={sinceId}
@@ -63,9 +61,7 @@ TlogPageContainer.propTypes = {
   TlogEntriesActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
   currentUserId: PropTypes.number,
-  error: PropTypes.string,
   isLogged: PropTypes.bool,
-  locale: PropTypes.string.isRequired,
   nextPageUrl: PropTypes.string,
   params: PropTypes.object.isRequired,
   prevPageUrl: PropTypes.string,

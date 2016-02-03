@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import EntryTlogCommentEditForm from './EntryTlogCommentEditForm';
 import EntryTlogComment from './EntryTlogComment';
+import EntryTlogCommentSPA from './EntryTlogCommentSPA';
 
 class EntryTlogCommentContainer extends Component {
   state = {
@@ -29,6 +30,7 @@ class EntryTlogCommentContainer extends Component {
   render() {
     const { comment, commentator } = this.props;
     const { edit, processEdit } = this.state;
+    const Comment = window.SPA ? EntryTlogCommentSPA : EntryTlogComment;
 
     return edit
       ? <EntryTlogCommentEditForm
@@ -38,7 +40,7 @@ class EntryTlogCommentContainer extends Component {
           onCommentUpdate={this.updateComment.bind(this)}
           process={processEdit}
         />
-      : <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />;
+      : <Comment {...this.props} onCommentEdit={this.edit.bind(this)} />;
   }
 }
 

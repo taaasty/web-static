@@ -1,3 +1,5 @@
+{ render } = require 'react-dom';
+
 window.TastyLockingAlertController =
 
   show: ({title, message, action}) ->
@@ -14,7 +16,7 @@ window.TastyLockingAlertController =
       unless container
         container = $('<\div>', {'tasty-alert-container': ''}).appendTo('body')[0]
 
-      React.render (
+      render (
         <TastyLockingAlert
             title={ title }
             message={ message }
