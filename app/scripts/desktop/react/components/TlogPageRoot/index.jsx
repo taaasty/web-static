@@ -43,7 +43,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUserId, isLogged, locale, location,
+    const { calendar, children, currentUser, currentUserId, isLogged, locale, location,
             params, tlog, tlogEntries, tlogEntry, CalendarActions, TlogActions,
             TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl },
@@ -57,6 +57,7 @@ class TlogPageRoot extends Component {
       (child) => cloneElement(
         child, {
           currentUserId,
+          currentUser,
           tlog,
           tlogEntries,
           tlogEntry,
@@ -115,6 +116,7 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   isLogged: PropTypes.bool.isRequired,
   locale: PropTypes.string.isRequired,

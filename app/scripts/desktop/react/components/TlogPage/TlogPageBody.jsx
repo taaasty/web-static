@@ -36,14 +36,14 @@ class TlogPageBody extends Component {
     );
   }
   renderContents() {
-    const { currentUserId, error, queryString, section, tlogEntries, tlog } = this.props;
-    const { isFetching: isFetchingEntries, data: { items } } = tlogEntries;
+    const { currentUser, currentUserId, error, queryString, tlogEntries, tlog } = this.props;
+    const { isFetching: isFetchingEntries, data: { items }, section } = tlogEntries;
     const { isFetching: isFetchingTlog, data: { author, my_relationship: state } } = tlog;
 
     if (error === ERROR_INVALID_DATE) {
       return <TlogPageText text={i18n.t('tlog.error_invalid_date')} />;
     } else {
-      if (author.id && currentUserId === author.id) { //owner
+      if (author.slug && currentUser.data.slug === author.slug) { //owner
         if (items.length > 0 || isFetchingEntries || isFetchingTlog) {
           return this.renderTlog();
         } else {
