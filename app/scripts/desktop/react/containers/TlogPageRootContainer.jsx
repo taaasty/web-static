@@ -18,6 +18,7 @@ export default connect(
   (state) => ({
     currentUserId: state.currentUser.data.id,
     isLogged: !!state.currentUser.data.id,
+    currentUser: state.currentUser,
     tlog: state.tlog,
     tlogEntries: state.tlogEntries,
     tlogEntry: state.tlogEntry,
