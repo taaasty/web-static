@@ -5,6 +5,8 @@ import moment from 'moment';
 import ImgFromFile from '../ImgFromFile';
 import UserAvatar from '../../../../../components/avatars/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 const ERROR_STATE = 'error';
 const SENT_STATE = 'sent';
@@ -40,6 +42,15 @@ const Item = createClass({
 
     if (selectState) {
       toggleSelection();
+    }
+  },
+
+  handleClickUser(ev) {
+    const { user } = this.props.messageInfo;
+
+    if (window.SPA) {
+      ev.preventDefault();
+      browserHistory.push({ pathname: uri(user.tlog_url).path() });
     }
   },
 
@@ -94,7 +105,11 @@ const Item = createClass({
 
     return this.isIncoming()
       ? <span className="messages__user-name">
-          <a href={tlog_url} target="_blank">
+          <a
+            href={tlog_url}
+            onClick={this.handleClickUser.bind(this)}
+            target="_blank"
+          >
             {slug}
           </a>
         </span>
@@ -105,7 +120,11 @@ const Item = createClass({
     const { user } = this.props.messageInfo;
 
     return this.isIncoming()
-      ? <a href={user.tlog_url} target="_blank">
+      ? <a
+          href={user.tlog_url}
+          onClick={this.handleClickUser.bind(this)}
+          target="_blank"
+        >
           <span className="messages__user-avatar">
             <UserAvatar size={35} user={user} />
           </span>

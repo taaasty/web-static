@@ -41,6 +41,7 @@ class EntryTlogComments extends Component {
         <EntryTlogCommentList
           commentator={this.props.commentator}
           comments={this.state.comments}
+          entryId={this.props.entry.id}
           entryUrl={this.props.entry.url}
           onCommentDelete={this.deleteComment.bind(this)}
           onCommentReply={this.replyComment.bind(this)}

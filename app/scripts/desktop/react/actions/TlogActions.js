@@ -18,16 +18,16 @@ function tlogError(error) {
   }
 }
 
-function tlogReceive(tlog) {
+function tlogReceive(data) {
   return {
     type: TLOG_RECEIVE,
-    payload: tlog,
+    payload: data,
   };
 }
 
 function shouldFetchTlog(state, slug) {
   return (!state.tlog.isFetching &&
-          (!state.tlog.data.slug || state.tlog.data.slug !== slug));
+          (!state.tlog.slug || state.tlog.slug !== slug));
 }
 
 
@@ -35,10 +35,10 @@ function fetchTlog(slug) {
   return (dispatch) => {
     dispatch(tlogRequest());
     return $.ajax({ url: ApiRoutes.tlog(slug) })
-      .done((data) => dispatch(tlogReceive(data)))
-      .fail((err) => {
-        NoticeService.errorResponse(err);
-        return dispatch(tlogError(err));
+      .done((data) => dispatch(tlogReceive({ data, slug })))
+      .fail((error) => {
+        NoticeService.errorResponse(error);
+        return dispatch(tlogError({ error: error.responseJSON, slug }));
       });
   };
 }

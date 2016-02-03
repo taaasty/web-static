@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
-function EntryTlogCommentMetabarDate({ date, url }) {
+function EntryTlogCommentMetabarDate({ date, entryId, url }) {
   const now = moment();
   const createdAt = moment(date);
 
@@ -16,17 +18,22 @@ function EntryTlogCommentMetabarDate({ date, url }) {
     formatDate = createdAt.format(now.year() !== createdAt.year() ? 'D MMMM YYYY' : 'D MMMM');
   }
 
-  return (
-    <a className="comment__date-link" href={url}>
-      <span className="comment__date">
-        {formatDate}
-      </span>
-    </a>
-  );
+  return window.SPA
+    ? <Link className="comment__date-link" to={{ pathname: uri(url).path(), state: { id: entryId } }}>
+        <span className="comment__date">
+          {formatDate}
+        </span>
+      </Link>
+    : <a className="comment__date-link" href={url}>
+        <span className="comment__date">
+          {formatDate}
+        </span>
+      </a>;
 }
 
 EntryTlogCommentMetabarDate.propTypes = {
   date: PropTypes.string.isRequired,
+  entryId: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
 };
 

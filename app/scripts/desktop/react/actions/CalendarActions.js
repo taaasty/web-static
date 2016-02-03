@@ -3,6 +3,7 @@ import ApiRoutes from '../../../shared/routes/api';
 export const CALENDAR_REQUEST = 'CALENDAR_REQUEST';
 export const CALENDAR_RECEIVE = 'CALENDAR_RECEIVE';
 export const CALENDAR_ERROR = 'CALENDAR_ERROR';
+export const CALENDAR_RESET = 'CALENDAR_RESET';
 
 function requestCalendar() {
   return {
@@ -28,18 +29,17 @@ function fetchCalendar(tlogId) {
   return (dispatch) => {
     dispatch(requestCalendar());
     return $.ajax({ url: ApiRoutes.calendar_url(tlogId) })
-      .done((data) => dispatch(receiveCalendar(data)))
-      .fail((err) => {
-        NoticeService.errorResponse(err);
-        return dispatch(errorCalendar(err));
+      .done((data) => dispatch(receiveCalendar({ data, tlogId })))
+      .fail((error) => {
+        NoticeService.errorResponse(error);
+        return dispatch(errorCalendar({ error: error.respanseJSON, tlogId }));
       });
   };
 }
 
 function shouldFetchCalendar(state, tlogId) {
   return (!state.calendar.isFetching &&
-          (state.calendar.periods.length === 0 ||
-           tlogId !== state.calendar.tlog_id));
+          tlogId !== state.calendar.tlogId);
 }
 
 export function getCalendar(tlogId, force) {
@@ -47,5 +47,11 @@ export function getCalendar(tlogId, force) {
     if (tlogId && (force || shouldFetchCalendar(getState(), tlogId))) {
       return dispatch(fetchCalendar(tlogId));
     }
+  };
+}
+
+export function resetCalendar() {
+  return {
+    type: CALENDAR_RESET,
   };
 }

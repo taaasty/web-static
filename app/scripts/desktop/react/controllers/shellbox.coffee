@@ -1,3 +1,6 @@
+React = require 'react';
+{ render, unmountComponentAtNode } = require 'react-dom';
+
 class window.ReactShellBox
 
   constructor: ->
@@ -9,7 +12,7 @@ class window.ReactShellBox
     @shellboxContainer = container
 
   show: (Component, args) ->
-    React.render (
+    render (
       <ShellBox>
         <Component {...args} />
       </ShellBox>
@@ -17,4 +20,4 @@ class window.ReactShellBox
 
   close: ->
     _.defer =>
-      React.unmountComponentAtNode @shellboxContainer
+      unmountComponentAtNode @shellboxContainer

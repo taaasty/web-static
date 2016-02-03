@@ -8,6 +8,7 @@ import {
 const initialState = {
   isFetching: false,
   error: null,
+  id: null,
   data: {
     commentator: {},
     author: {},
@@ -26,24 +27,21 @@ const actionMap = {
 
   [TLOG_ENTRY_RECEIVE](state, data) {
     return {
-      data,
+      ...data,
       isFetching: false,
       error: null,
     };
   },
 
   [TLOG_ENTRY_RESET](state) {
-    return {
-      ...state,
-      data: initialState.data,
-    }
+    return initialState;
   },
 
   [TLOG_ENTRY_ERROR](state, error) {
     return {
       ...state,
+      ...error,
       isFetching: false,
-      error,
     };
   },
 };

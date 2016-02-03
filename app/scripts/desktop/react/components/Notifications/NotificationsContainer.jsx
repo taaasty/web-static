@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import NotificationStore from '../../stores/NotificationStore';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import NotificationActionCreators from '../../actions/Notification';
 import Notifications from './Notifications';
 
-class NotificationsContainer {
+class NotificationsContainer extends Component {
   componentDidMount() {
     NotificationActionCreators.load();
   }

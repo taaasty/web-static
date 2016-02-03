@@ -1,3 +1,5 @@
+{ findDOMNode } = require 'react-dom';
+
 REPOSITION_TIMEOUT = 500
 COMPONENT_WIDTH = 400
 
@@ -25,7 +27,7 @@ window.ReactPositionsMixin =
       clearTimeout @_repositionTimeout
       @_repositionTimeout = setTimeout reposition, REPOSITION_TIMEOUT
     
-  currentPosition: -> $(@getDOMNode()).position()
+  currentPosition: -> $(findDOMNode(this)).position()
   defaultPosition: -> @props.position || {top: 100, left: Math.round($(window).width()/2-COMPONENT_WIDTH/2) }
 
   restorePosition: ->
@@ -45,5 +47,5 @@ window.ReactPositionsMixin =
 
   setPosition: (position) ->
     if position?
-      $node = $ @getDOMNode()
+      $node = $(findDOMNode(this))
       $node.css position

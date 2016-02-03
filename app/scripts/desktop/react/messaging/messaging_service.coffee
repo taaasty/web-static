@@ -1,3 +1,6 @@
+React = require 'react';
+{ render, unmountComponentAtNode } = require 'react-dom';
+
 MessagingDispatcher = require './MessagingDispatcher';
 MessagesPopup = require './components/messages_popup';
 
@@ -173,22 +176,22 @@ class window.MessagingService
 
   closeMessagesPopup: ->
     if @isMessagesPopupShown()
-      React.unmountComponentAtNode @messagesContainer
+      unmountComponentAtNode @messagesContainer
     return
 
   closeNotificationsPopup: ->
     if @isNotificationsPopupShown()
-      React.unmountComponentAtNode @notificationsContainer
+      unmountComponentAtNode @notificationsContainer
     return
 
   openMessagesPopup: ->
     unless @isMessagesPopupShown()
-      @messagesPopup = React.render <MessagesPopup />, @messagesContainer
+      @messagesPopup = render <MessagesPopup />, @messagesContainer
     return
 
   openNotificationsPopup: ->
     unless @isNotificationsPopupShown()
-      @notificationsPopup = React.render <NotificationsPopup />, @notificationsContainer
+      @notificationsPopup = render <NotificationsPopup />, @notificationsContainer
     return
 
   toggleMessagesPopup: ->

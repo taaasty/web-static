@@ -16,25 +16,13 @@ let HeroFlow = createClass({
   getInitialState() {
     return {
       flow: this.props.flow,
-    }
+    };
   },
 
   getText(count) {
     return count
       ?  i18n.t('hero.flow_entries_count', { count })
       :  null;
-  },
-
-  render() {
-    const { flowpic: { original_url }, name, public_tlog_entries_count, tlog_url } = this.state.flow;
-    return (
-      <Hero
-        actions={this.getActions()}
-        backgroundUrl={original_url}
-        text={this.getText(public_tlog_entries_count)}
-        title={<a href={tlog_url}>{`#${name}`}</a>}
-      />
-    );
   },
 
   getActions() {
@@ -65,7 +53,8 @@ let HeroFlow = createClass({
             subjectID={this.state.flow.id}
             subjectPrivacy={this.state.flow.is_privacy}
             relState={this.props.relationship.state}
-            key="relationButton" />
+        key="relationButton"
+        />
       );
     }
   },
@@ -84,7 +73,19 @@ let HeroFlow = createClass({
 
   updateFlow(flow) {
     this.setState({flow});
-  }
+  },
+
+  render() {
+    const { flowpic: { original_url }, name, public_tlog_entries_count, tlog_url } = this.state.flow;
+    return (
+      <Hero
+        actions={this.getActions()}
+        backgroundUrl={original_url}
+        text={this.getText(public_tlog_entries_count)}
+        title={<a href={tlog_url}>{`#${name}`}</a>}
+      />
+    );
+  },
 });
 
 export default HeroFlow;

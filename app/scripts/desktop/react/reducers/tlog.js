@@ -16,6 +16,7 @@ const initialState = {
     my_relationship: '',
     stats: {},
   },
+  slug: null,
   isFetching: false,
   error: null,
 };
@@ -29,9 +30,9 @@ const actionMap = {
     };
   },
 
-  [TLOG_RECEIVE](state, tlog) {
+  [TLOG_RECEIVE](state, data) {
     return {
-      data: tlog,
+      ...data,
       isFetching: false,
       error: null,
     };
@@ -40,7 +41,7 @@ const actionMap = {
   [TLOG_ERROR](state, error) {
     return {
       ...state,
-      error,
+      ...error,
       isFetching: false,
     };
   },

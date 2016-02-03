@@ -1,3 +1,5 @@
+{ render } = require 'react-dom';
+
 window.TastyAlertController =
 
   show: ({title, message, buttonText, buttonColor, onAccept}) ->
@@ -14,7 +16,7 @@ window.TastyAlertController =
       unless container
         container = $('<\div>', {'tasty-alert-container': ''}).appendTo('body')[0]
 
-      React.render (
+      render (
         <TastyAlert
             title={ title }
             message={ message }

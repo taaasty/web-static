@@ -9,6 +9,8 @@ import MessagesStore from '../../../stores/MessagesStore';
 import ConversationsStore from '../../../stores/ConversationsStore';
 import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class Thread extends Component {
@@ -48,9 +50,11 @@ class Thread extends Component {
       all
     );
   }
-  onClickHeader(url, ev) {
+  onClickHeader(entry, ev) {
     ev.preventDefault();
-    window.location.href = url;
+    window.SPA
+      ? browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } })
+      : window.location.href = entry.url;
   }
   render() {
     const { canDelete, canDeleteEverywhere, conversation, selectState } = this.state;
@@ -77,7 +81,8 @@ class Thread extends Component {
         {conversation.type === PUBLIC_CONVERSATION &&
           <PublicConversationHeader
             conversation={conversation}
-            onClick={this.onClickHeader.bind(this, conversation.entry.url)}
+            onClick={this.onClickHeader.bind(this, conversation.entry)}
+            url={conversation.entry.url}
           />}
         <div className="messages__body" style={threadStyles}>
           <div className="messages__thread-overlay" />

@@ -1,10 +1,18 @@
-import { CALENDAR_REQUEST, CALENDAR_RECEIVE, CALENDAR_ERROR } from '../actions/CalendarActions';
+import {
+  CALENDAR_REQUEST,
+  CALENDAR_RECEIVE,
+  CALENDAR_ERROR,
+  CALENDAR_RESET,
+} from '../actions/CalendarActions';
 
 const initialState = {
   isFetching: false,
-  tlog_id: void 0,
-  periods: [],
   error: null,
+  tlogId: null,
+  data: {
+    tlog_id: void 0,
+    periods: [],
+  },
 };
 
 const actionMap = {
@@ -14,6 +22,10 @@ const actionMap = {
       error: null,
       ...calendar,
     };
+  },
+
+  [CALENDAR_RESET](state) {
+    return initialState;
   },
 
   [CALENDAR_REQUEST](state) {
@@ -27,9 +39,10 @@ const actionMap = {
   [CALENDAR_ERROR](state, error) {
     return {
       ...state,
-      error,
+      ...error,
+      isFetching: false,
     };
-  }
+  },
 };
 
 export default function calendar(state=initialState, { type, payload }) {

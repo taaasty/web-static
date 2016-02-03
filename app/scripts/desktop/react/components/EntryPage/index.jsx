@@ -34,7 +34,7 @@ class EntryPageContainer extends Component {
     }
   }
   render() {
-    const { currentUserId, error, locale, tlog, tlogEntry } = this.props;
+    const { currentUserId, error, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
@@ -58,7 +58,6 @@ class EntryPageContainer extends Component {
                 error={error}
                 host_tlog_id={tlog.data.author.id}
                 isFetching={tlogEntry.isFetching || tlog.isFetching}
-                locale={locale}
                 successDeleteUrl={tlog.data.author && tlog.data.author.tlog_url}
               />
             </div>
@@ -79,7 +78,6 @@ EntryPageContainer.propTypes = {
   currentUserId: PropTypes.number,
   error: PropTypes.string,
   isLogged: PropTypes.bool,
-  locale: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,

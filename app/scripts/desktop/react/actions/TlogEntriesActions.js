@@ -9,6 +9,8 @@ export const TLOG_ENTRIES_RESET = 'ENTRIES_RESET';
 export const TLOG_ENTRIES_DELETE_ENTRY = 'ENTRIES_DELETE_ENTRY';
 export const TLOG_ENTRIES_ERROR = 'ENTRIES_ERROR';
 
+const INITIAL_LOAD_LIMIT = 10;
+
 function tlogEntriesReceive(data) {
   return {
     type: TLOG_ENTRIES_RECEIVE,
@@ -61,9 +63,9 @@ function getTlogEntries({ slug, section, date, type, sinceId }) {
 
     dispatch(tlogEntriesRequest());
     dispatch(tlogEntriesReset());
-    return fetchTlogEntries(url, { date, since_entry_id: sinceId })
+    return fetchTlogEntries(url, { date, limit: INITIAL_LOAD_LIMIT, since_entry_id: sinceId })
       .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type, sinceId })))
-      .fail((error) => dispatch(tlogEntriesError({ error, date, section, slug, type, sinceId })));
+      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON, date, section, slug, type, sinceId })));
   };
 }
 
@@ -93,7 +95,7 @@ export function appendTlogEntries() {
         dispatch(tlogEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
         return data;
       })
-      .fail((error) => dispatch(tlogEntriesError({ error })));
+      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
   };
 }
 
@@ -110,7 +112,7 @@ export function prependTlogEntries(tillEntryId, count) {
         dispatch(tlogEntriesReceive({ data: { ...data, items: data.items.concat(prevItems) } }));
         return data;
       })
-      .fail((err) => dispatch(tlogEntriesError(err)));
+      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
   };
 }
 

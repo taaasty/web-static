@@ -8,49 +8,36 @@ import UnfollowButton from './UnfollowButton';
 import CancelButton from './CancelButton';
 import BaseRelationButton from './BaseRelationButton';
 
-export default class RelationButton extends Component {
-  static propTypes = {
-    objectID: PropTypes.number.isRequired,
-    onChange: PropTypes.func,
-    relState: PropTypes.string,
-    subjectID: PropTypes.number,
-    subjectPrivacy: PropTypes.bool,
-  };
-  state = {
-    relState: this.props.relState,
-  };
-  onStateChange(newRelState) {
-    this.setState({ relState: newRelState });
-    if (this.props.onChange) {
-      this.props.onChange(newRelState);
-    }
-  }
+class RelationButton extends Component {
   render() {
-    const { objectID, subjectID, subjectPrivacy } = this.props;
-    const props = {
-      objectID,
-      subjectID,
-      subjectPrivacy,
-      onStateChange: this.onStateChange.bind(this),
-      relState: this.state.relState,
-    };
+    const { relState } = this.props;
 
-    switch(this.state.relState) {
+    switch(relState) {
     case constants.REL_FRIEND_STATE:
-      return <UnfollowButton {...props} />;
+      return <UnfollowButton {...this.props} />;
     case constants.REL_REQUESTED_STATE:
     case constants.REL_IGNORED_STATE:
-      return <CancelButton {...props} />;
+      return <CancelButton {...this.props} />;
     case constants.REL_GUESSED_STATE:
     case constants.REL_NONE_STATE:
-      return <FollowButton {...props} />;
+      return <FollowButton {...this.props} />;
     default:
       ErrorService.notifyError('Неизвестное состояние отношений', {
         componentName: this.constructor.displayName,
         method: 'handleClick',
-        relState: this.state.relState,
+        relState: relState,
       });
-      return <BaseRelationButton { ...props} />;
+      return <BaseRelationButton { ...this.props} />;
     }
   }
 }
+
+RelationButton.propTypes = {
+  objectID: PropTypes.number.isRequired,
+  onStateChange: PropTypes.func.isRequired,
+  relState: PropTypes.string,
+  subjectID: PropTypes.number,
+  subjectPrivacy: PropTypes.bool,
+};
+
+export default RelationButton;

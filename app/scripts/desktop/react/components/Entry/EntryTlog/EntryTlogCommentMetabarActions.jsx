@@ -1,13 +1,12 @@
+/*global $, i18n */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
+import EntryTlogCommentMetabarAction from './EntryTlogCommentMetabarAction';
+import EntryTlogCommentMetabarActionLink from './EntryTlogCommentMetabarActionLink';
 
 const MARGIN_BETWEEN_TOGGLER_AND_MENU = 20;
 
-export default class EntryTlogCommentMetabarActions extends Component {
-  static propTypes = {
-    url: PropTypes.string.isRequired,
-    comment: PropTypes.object.isRequired,
-  };
+class EntryTlogCommentMetabarActions extends Component {
   state = {
     open: false,
     marginTop: MARGIN_BETWEEN_TOGGLER_AND_MENU,
@@ -20,62 +19,15 @@ export default class EntryTlogCommentMetabarActions extends Component {
       this.calculateTopPosition();
     }
   }
-  render() {
-    const menuClasses = classNames('meta-item__dropdown', {
-      'state--open': this.state.open,
-      'position-top': this.state.marginTop != MARGIN_BETWEEN_TOGGLER_AND_MENU / 2
-    });
-    const menuStyles = {
-      marginTop: this.state.marginTop
-    };
-
-    return (
-      <span className="comment__actions"
-            onMouseEnter={() => this.setState({ open: true })}
-            onMouseLeave={() => this.setState({ open: false })}>
-        <i className="icon icon--dots" />
-        <span ref="menu" className={menuClasses} style={menuStyles}>
-          <EntryTlogCommentMetabarAction
-              url={this.props.url}
-              title={i18n.t('link_comment_item')}
-              icon="icon--hyperlink" />
-          {
-            this.props.comment.can_report && (
-              <EntryTlogCommentMetabarAction
-                  icon="icon--exclamation-mark"
-                  title={i18n.t('report_comment_item')}
-                  onClick={this.props.onCommentReport} />
-            )
-          }
-          {
-            this.props.comment.can_edit && (
-              <EntryTlogCommentMetabarAction
-                  icon="icon--pencil"
-                  title={i18n.t('edit_comment_item')}
-                  onClick={this.props.onCommentEdit} />
-            )
-          }
-          {
-            this.props.comment.can_delete && (
-              <EntryTlogCommentMetabarAction
-                  icon="icon--basket"
-                  title={i18n.t('delete_comment_item')}
-                  onClick={this.props.onCommentDelete} />
-            )
-          }
-        </span>
-      </span>
-    );
-  }
   calculateTopPosition() {
-    const wHeight = $(window).height(),
-          wScrollTop = $(window).scrollTop(),
-          $menu = $(this.refs.menu),
-          menuHeight = $menu.innerHeight(),
-          menuOffset = $menu.offset();
+    const wHeight = $(window).height();
+    const wScrollTop = $(window).scrollTop();
+    const $menu = $(this.refs.menu);
+    const menuHeight = $menu.innerHeight();
+    const menuOffset = $menu.offset();
 
-    let menuScrollTopWindow = menuOffset.top - wScrollTop,
-        marginTop = MARGIN_BETWEEN_TOGGLER_AND_MENU / 2;
+    let menuScrollTopWindow = menuOffset.top - wScrollTop;
+    let marginTop = MARGIN_BETWEEN_TOGGLER_AND_MENU / 2;
 
     if (this.state.marginTop != marginTop) {
       menuScrollTopWindow -= this.state.marginTop;
@@ -87,37 +39,75 @@ export default class EntryTlogCommentMetabarActions extends Component {
 
     this.setState({ marginTop });
   }
-}
-
-class EntryTlogCommentMetabarAction extends Component {
-  static propTypes = {
-    url: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    hoverTitle: PropTypes.string,
-    icon: PropTypes.oneOfType([
-      PropTypes.string, PropTypes.array
-    ]).isRequired,
-    onClick: PropTypes.func,
-  };
-  state = {
-    hover: false,
-  };
   render() {
-    const iconClasses = classNames('icon', this.props.icon);
+    const { marginTop, open } = this.state;
+    const { comment, entryId, onCommentReport,
+            onCommentEdit, onCommentDelete, url } = this.props;
+    const menuClasses = classNames({
+      'meta-item__dropdown': true,
+      'state--open': open,
+      'position-top': marginTop != MARGIN_BETWEEN_TOGGLER_AND_MENU / 2,
+    });
+    const menuStyles = { marginTop };
 
     return (
-      <a href={this.props.url}
-         className="comment__dropdown-item"
-         onClick={this.props.onClick}
-         onMouseEnter={() => this.setState({hover: true})}
-         onMouseLeave={() => this.setState({hover: false})}>
-        <i className={iconClasses} />
-        {this.getTitle()}
-      </a>
+      <span
+        className="comment__actions"
+        onMouseEnter={() => this.setState({ open: true })}
+        onMouseLeave={() => this.setState({ open: false })}
+      >
+        <i className="icon icon--dots" />
+        <span
+          className={menuClasses}
+          ref="menu"
+          style={menuStyles}
+        >
+          <EntryTlogCommentMetabarActionLink
+            entryId={entryId}
+            icon="icon--hyperlink"
+            title={i18n.t('link_comment_item')}
+            url={url}
+          />
+          {
+            comment.can_report && (
+              <EntryTlogCommentMetabarAction
+                icon="icon--exclamation-mark"
+                onClick={onCommentReport}
+                title={i18n.t('report_comment_item')}
+              />
+            )
+          }
+          {
+            comment.can_edit && (
+              <EntryTlogCommentMetabarAction
+                icon="icon--pencil"
+                onClick={onCommentEdit}
+                title={i18n.t('edit_comment_item')}
+              />
+            )
+          }
+          {
+            comment.can_delete && (
+              <EntryTlogCommentMetabarAction
+                icon="icon--basket"
+                onClick={onCommentDelete}
+                title={i18n.t('delete_comment_item')}
+              />
+            )
+          }
+        </span>
+      </span>
     );
   }
-  getTitle() {
-    const { title, hoverTitle } = this.props;
-    return this.state.hover && hoverTitle ? hoverTitle : title;
-  }
 }
+
+EntryTlogCommentMetabarActions. propTypes = {
+  comment: PropTypes.object.isRequired,
+  entryId: PropTypes.number.isRequired,
+  onCommentDelete: PropTypes.func,
+  onCommentEdit: PropTypes.func,
+  onCommentReport: PropTypes.func,
+  url: PropTypes.string.isRequired,
+};
+
+export default EntryTlogCommentMetabarActions;
