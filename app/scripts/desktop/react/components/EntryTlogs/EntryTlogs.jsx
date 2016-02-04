@@ -24,7 +24,8 @@ class EntryTlogs extends Component {
     setQuery({ since_entry_id: data.id });
   }
   render() {
-    const { canLoad, entries, host_tlog_id, loading, onDelete, onLoadMoreEntries } = this.props;
+    const { canLoad, currentUser, entries, host_tlog_id,
+            loading, onDelete, onLoadMoreEntries } = this.props;
 
     return (
       <InfiniteScroll
@@ -35,7 +36,7 @@ class EntryTlogs extends Component {
         <section className="posts">
           {entries.map((item) => (
              <EntryTlog
-               commentator={item.commentator}
+               commentator={item.commentator || currentUser}
                entry={item.entry}
                hideCommentForm={entries.length > 1}
                host_tlog_id={host_tlog_id}
@@ -53,6 +54,7 @@ class EntryTlogs extends Component {
 
 EntryTlogs.propTypes = {
   canLoad: PropTypes.bool.isRequired,
+  currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
   host_tlog_id: PropTypes.number,
   loading: PropTypes.bool.isRequired,

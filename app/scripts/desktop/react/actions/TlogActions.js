@@ -4,6 +4,7 @@ import ApiRoutes from '../../../shared/routes/api';
 export const TLOG_REQUEST = 'TLOG_REQUEST';
 export const TLOG_RECEIVE = 'TLOG_RECEIVE';
 export const TLOG_ERROR = 'TLOG_ERROR';
+export const TLOG_UPDATE = 'TLOG_UPDATE';
 
 function tlogRequest() {
   return {
@@ -48,5 +49,12 @@ export function getTlog(slug) {
     if (slug && shouldFetchTlog(getState(), slug)) {
       return dispatch(fetchTlog(slug));
     }
+  };
+}
+
+export function updateMyRelationship(relState) {
+  return {
+    type: TLOG_UPDATE,
+    payload: { my_relationship: relState },
   };
 }

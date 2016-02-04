@@ -7,6 +7,7 @@ import * as CalendarActions from '../actions/CalendarActions';
 import * as TlogActions from '../actions/TlogActions';
 import * as TlogEntriesActions from '../actions/TlogEntriesActions';
 import * as TlogEntryActions from '../actions/TlogEntryActions';
+import * as RelationshipActions from '../actions/RelationshipActions';
 
 class TlogPageRootContainer extends Component {
   render() {
@@ -26,6 +27,7 @@ export default connect(
   }),
   (dispatch) => ({
     CalendarActions: bindActionCreators(CalendarActions, dispatch),
+    RelationshipActions: bindActionCreators(RelationshipActions, dispatch),
     TlogActions: bindActionCreators(TlogActions, dispatch),
     TlogEntriesActions: bindActionCreators(TlogEntriesActions, dispatch),
     TlogEntryActions: bindActionCreators(TlogEntryActions, dispatch),

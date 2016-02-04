@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { createClass } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import PopupActionCreators from '../../actions/popup';
@@ -13,9 +14,24 @@ let HeroFlow = createClass({
     relationship: ProjectTypes.relationship,
   },
 
+  showSettings() {
+    PopupActionCreators.manageFlow(this.state.flow, this.updateFlow);
+  },
+
+  updateFlow(flow) {
+    this.setState({ flow });
+  },
+
+  updateRelState(relState) {
+    this.setState({ relState });
+  },
+
   getInitialState() {
+    const { flow, relationship } = this.props;
+
     return {
-      flow: this.props.flow,
+      flow: flow,
+      relState: relationship && relationship.state,
     };
   },
 
@@ -36,9 +52,11 @@ let HeroFlow = createClass({
   renderWriteButton() {
     if (this.state.flow.can_write) {
       return (
-        <a href={Routes.new_entry_url(this.state.flow.slug)}
-           className="button button--small button--green"
-           key="createEntryButton">
+        <a
+          className="button button--small button--green"
+          href={Routes.new_entry_url(this.state.flow.slug)}
+          key="createEntryButton"
+        >
           {i18n.t('buttons.hero_create_entry')}
         </a>
       );
@@ -49,11 +67,12 @@ let HeroFlow = createClass({
     if (this.props.relationship) {
       return (
         <RelationButton
-            objectID={CurrentUserStore.getUserID()}
-            subjectID={this.state.flow.id}
-            subjectPrivacy={this.state.flow.is_privacy}
-            relState={this.props.relationship.state}
-        key="relationButton"
+          key="relationButton"
+          objectID={CurrentUserStore.getUserID()}
+          onStateChange={this.updateRelState}
+          relState={this.state.relState}
+          subjectID={this.state.flow.id}
+          subjectPrivacy={this.state.flow.is_privacy}
         />
       );
     }
@@ -65,14 +84,6 @@ let HeroFlow = createClass({
         <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
       );
     }
-  },
-
-  showSettings() {
-    PopupActionCreators.manageFlow(this.state.flow, this.updateFlow);
-  },
-
-  updateFlow(flow) {
-    this.setState({flow});
   },
 
   render() {

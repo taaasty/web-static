@@ -12839,7 +12839,8 @@ function prop2redux(component, props) {
           slug: slug,
           stats: props.stats,
           tlog_url: props.user && props.user.tlog_url
-        }
+        },
+        slug: slug
       },
       tlogEntries: {
         data: (0, _extends3.default)({
@@ -12853,7 +12854,8 @@ function prop2redux(component, props) {
         slug: slug,
         section: mapSection[props.section],
         type: 'tlogs',
-        sinceId: (0, _urijs2.default)().search(true).since_entry_id
+        sinceId: (0, _urijs2.default)().search(true).since_entry_id,
+        error: props.error ? { error_code: props.error } : void 0
       } || void 0
     };
   } else if (component === 'EntryPageContainer') {
@@ -12870,13 +12872,19 @@ function prop2redux(component, props) {
           slug: slug,
           stats: props.stats,
           tlog_url: props.user && props.user.tlog_url
-        }
+        },
+        slug: slug
       },
       tlogEntries: {
         data: { items: [] },
         isFetching: false
       },
-      tlogEntry: { data: (0, _extends3.default)({ tlog: {} }, props.entry, { commentator: props.commentator }), isFetching: false } || void 0
+      tlogEntry: {
+        data: (0, _extends3.default)({ tlog: {} }, props.entry, { commentator: props.commentator }),
+        id: props.entry.id,
+        isFetching: false,
+        error: props.error ? { error_code: props.error } : void 0
+      } || void 0
     };
   }
 }

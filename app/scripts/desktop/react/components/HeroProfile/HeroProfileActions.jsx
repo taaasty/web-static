@@ -6,13 +6,14 @@ import RelationButton from '../common/RelationButton';
 import HeroProfileDropdownMenu from './HeroProfileDropdownMenu';
 import WriteMessageButton from './WriteMessageButton';
 
-function HeroProfileActions({ relationship, user }) {
+function HeroProfileActions({ currentUserId, onRelStateChange, relationship, user }) {
   const isAnonymousTlog = user.slug === TLOG_SLUG_ANONYMOUS;
 
   return (
     <div className="hero__actions hero__actions--visible">
       <RelationButton
-        objectID={CurrentUserStore.getUserID()}
+        objectID={currentUserId}
+        onStateChange={onRelStateChange}
         relState={relationship}
         subjectID={user.id}
         subjectPrivacy={user.is_privacy}
@@ -33,6 +34,8 @@ function HeroProfileActions({ relationship, user }) {
 }
 
 HeroProfileActions.propTypes = {
+  currentUserId: PropTypes.number,
+  onRelStateChange: PropTypes.func.isRequired,
   relationship: PropTypes.string,
   user: ProjectTypes.heroUser,
 };

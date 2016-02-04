@@ -14,12 +14,32 @@ let FlowBrick = React.createClass({
 
   getInitialState() {
     return {
-      relState: this.props.relationship ? this.props.relationship.state : null
+      relState: this.props.relationship ? this.props.relationship.state : null,
     };
   },
 
   shouldComponentUpdate(nextProps, nextState) {
     return this.state.relState != nextState.relState;
+  },
+
+  handleRelStateChange(relState) {
+    this.setState({ relState });
+  },
+
+  renderFollowButton() {
+    if (this.state.relState &&
+        this.state.relState === REL_NONE_STATE ||
+        this.state.relState === REL_GUESSED_STATE) {
+      return (
+        <FollowButton
+          objectID={CurrentUserStore.getUserID()}
+          onStateChange={this.handleRelStateChange}
+          relState={this.state.relState}
+          subjectID={this.props.flow.id}
+          subjectPrivacy={this.props.flow.is_privacy}
+        />
+      );
+    }
   },
 
   render() {
@@ -57,26 +77,6 @@ let FlowBrick = React.createClass({
         </a>
       </article>
     );
-  },
-
-  renderFollowButton() {
-    if (this.state.relState &&
-        this.state.relState === REL_NONE_STATE ||
-        this.state.relState === REL_GUESSED_STATE) {
-      return (
-        <FollowButton
-          objectID={CurrentUserStore.getUserID()}
-          onStateChange={this.handleRelStateChange}
-          relState={this.state.relState}
-          subjectID={this.props.flow.id}
-          subjectPrivacy={this.props.flow.is_privacy}
-        />
-      );
-    }
-  },
-
-  handleRelStateChange(relState) {
-    this.setState({relState});
   },
 });
 

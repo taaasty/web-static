@@ -33,7 +33,8 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { isCurrentUser, relationship, user } = this.props;
+    const { currentUserId, isCurrentUser, onRelStateChange,
+            relationship, user } = this.props;
 
     return (
       <div ref="container">
@@ -44,6 +45,8 @@ class HeroProfileActionsContainer extends Component {
            ? <HeroProfileSelfActions />
            : relationship &&
              <HeroProfileActions
+               currentUserId={currentUserId}
+               onRelStateChange={onRelStateChange}
                relationship={relationship}
                user={user}
              />
@@ -54,7 +57,9 @@ class HeroProfileActionsContainer extends Component {
 }
 
 HeroProfileActionsContainer.propTypes = {
+  currentUserId: PropTypes.number,
   isCurrentUser: PropTypes.bool.isRequired,
+  onRelStateChange: PropTypes.func.isRequired,
   relationship: PropTypes.string,
   user: ProjectTypes.heroUser,
 };

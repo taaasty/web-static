@@ -27,14 +27,14 @@ class EntryPageContainer extends Component {
       const entry = entries[0];
 
       if (entry) {
-        TlogEntryActions.setTlogEntry({ ...entry.entry, commentator: entry.commentator });
+        TlogEntryActions.setTlogEntry(entry.entry);
       } else {
         TlogEntryActions.getTlogEntry(newId);
       }
     }
   }
   render() {
-    const { currentUserId, error, tlog, tlogEntry } = this.props;
+    const { currentUser, currentUserId, error, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
@@ -53,9 +53,9 @@ class EntryPageContainer extends Component {
             }
             <div>
               <EntryTlog
-                commentator={tlogEntry.data.commentator}
+                commentator={tlogEntry.data.commentator || currentUser.data}
                 entry={tlogEntry.data}
-                error={error}
+                error={tlogEntry.error}
                 host_tlog_id={tlog.data.author.id}
                 isFetching={tlogEntry.isFetching || tlog.isFetching}
                 successDeleteUrl={tlog.data.author && tlog.data.author.tlog_url}
@@ -75,8 +75,8 @@ class EntryPageContainer extends Component {
 
 EntryPageContainer.propTypes = {
   TlogEntryActions: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
-  error: PropTypes.string,
   isLogged: PropTypes.bool,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,

@@ -1,3 +1,5 @@
+FollowStatus = require '../common/FollowStatus';
+
 window.PeopleItem = React.createClass
 
   propTypes:
