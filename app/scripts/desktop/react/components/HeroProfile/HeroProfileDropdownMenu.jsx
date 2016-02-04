@@ -10,21 +10,16 @@ const DROPDOWN_CLOSED = 'closed';
 const DROPDOWN_OPENED = 'opened';
 
 const HeroProfileDropdownMenu = createClass({
-  mixins: [ ComponentManipulationsMixin ],
   propTypes: {
-    userId: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
+    userId: PropTypes.number.isRequired,
   },
+  mixins: [ ComponentManipulationsMixin ],
 
   getInitialState() {
     return ({
       currentState: DROPDOWN_CLOSED,
-      status: this.props.status,
     });
-  },
-
-  componentDidMount() {
-    TastyEvents.on(TastyEvents.keys.follow_status_changed(this.props.userId), this.updateFollowStatus);
   },
 
   componentWillUnmount() {
@@ -47,10 +42,6 @@ const HeroProfileDropdownMenu = createClass({
   
   isOpenedState() {
     return this.state.currentState === DROPDOWN_OPENED;
-  },
-
-  updateFollowStatus(newStatus) {
-    this.safeUpdateState({ status: newStatus });
   },
 
   handleMouseEnter() {
@@ -86,7 +77,7 @@ const HeroProfileDropdownMenu = createClass({
           <i className="icon icon--dots" />
         </button>
         <span className={dropdownMenuClasses}>
-          {this.state.status !== 'ignored' &&
+          {this.props.status !== 'ignored' &&
            <HeroProfileDropdownMenuIgnoreItem
              onRequestEnd={this.activateClosedState}
              userId={this.props.userId}

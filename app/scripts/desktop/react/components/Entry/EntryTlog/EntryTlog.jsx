@@ -3,8 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
 import EntryTlogPrivate from './EntryTlogPrivate';
+import EntryTlogError from './EntryTlogError';
 import ErrorService from '../../../../../shared/react/services/Error';
-import Spinnner from '../../../../../shared/react/components/common/Spinner';
+import Spinner from '../../../../../shared/react/components/common/Spinner';
 
 import { ENTRY_TYPES } from '../../../constants/EntryConstants';
 import { ERROR_PRIVATE_ENTRY } from '../../../../../shared/constants/ErrorConstants';
@@ -136,19 +137,31 @@ class EntryTlog extends Component {
 
     return `post post--${typeClass}`;
   }
+  renderError() {
+    const { error, error_code, response_code } = this.props.error;
+
+    if (error_code === ERROR_PRIVATE_ENTRY) {
+      return <EntryTlogPrivate />;
+    } else if (response_code === 404) {
+      return <EntryTlogError error={error} />;
+    }
+  }
   render() {
     const { commentator: _commentator, entry, error,
             host_tlog_id, isFetching, isInList } = this.props;
     const commentator = _commentator || anonCommentator;
 
-    return entry.type && !isFetching
-      ? <article
+    return !error && (isFetching || !entry.type)
+      ? <article className="post post--loading">
+          <Spinner size={30} />
+        </article>
+      : <article
           className={this.getEntryClasses()}
           data-id={entry.id}
           data-time={entry.created_at}
         >
-          {error === ERROR_PRIVATE_ENTRY
-           ? <EntryTlogPrivate />
+          {error
+           ? this.renderError()
            : <EntryTlogContent
                commentator={commentator}
                entry={entry}
@@ -165,14 +178,14 @@ class EntryTlog extends Component {
                onRemoveFromWatching={this.removeFromWatching.bind(this)}
                onReport={this.report.bind(this)}
              />}
-        </article>
-      : <article className="post post--loading"><Spinner size={30} /></article>;
+        </article>;
   }
 }
 
 EntryTlog.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
+  error: PropTypes.object,
   hideCommentForm: PropTypes.bool,
   host_tlog_id: PropTypes.number,
   isFetching: PropTypes.bool,

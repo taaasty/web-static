@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import EntriesStore from '../../stores/EntriesStore';
+import CurrentUserStore from '../../stores/current_user';
 import EntriesActions from '../../actions/EntriesActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import EntryTlogs from './EntryTlogs';
@@ -15,11 +16,12 @@ class EntryTlogsContainer extends Component {
     EntriesActions.deleteEntry(entryId);
   }
   render() {
-    const { entries, hasMore, host_tlog_id, isLoading } = this.props;
+    const { currentUser, entries, hasMore, host_tlog_id, isLoading } = this.props;
 
     return (
       <EntryTlogs
         canLoad={!isLoading && hasMore}
+        currentUser={currentUser}
         entries={entries}
         host_tlog_id={host_tlog_id}
         loading={isLoading}
@@ -46,8 +48,9 @@ EntryTlogsContainer.propTypes = {
 
 export default connectToStores(
   EntryTlogsContainer,
-  [ EntriesStore ],
+  [ CurrentUserStore, EntriesStore ],
   () => ({
+    currentUser: CurrentUserStore.getUser(),
     entries: EntriesStore.getEntries(),
     hasMore: EntriesStore.hasMore(),
     isLoading: EntriesStore.isLoading(),

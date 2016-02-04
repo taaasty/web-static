@@ -1,3 +1,5 @@
+FollowStatus = require './common/FollowStatus';
+
 STATE_NONE    = 'none'
 STATE_GUESSED = 'guessed'
 

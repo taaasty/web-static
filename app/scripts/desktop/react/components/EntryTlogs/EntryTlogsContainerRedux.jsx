@@ -10,12 +10,13 @@ class EntryTlogsContainer extends Component {
     this.props.CalendarActions.getCalendar(this.props.tlog.data.author.id, true);
   }
   render() {
-    const { tlog: { data: { author } },
+    const { currentUser, tlog: { data: { author } },
             tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
 
     return (
       <EntryTlogs
         canLoad={!isFetching && has_more}
+        currentUser={currentUser.data}
         entries={items}
         host_tlog_id={author.id}
         loading={isFetching}
@@ -29,6 +30,7 @@ class EntryTlogsContainer extends Component {
 EntryTlogsContainer.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
   section: PropTypes.string.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.shape({

@@ -131,7 +131,6 @@ require './react/components/relationship_buttons/ignore_button'
 require './react/components/relationship_buttons/request_button'
 require './react/components/relationship_buttons/guess_button'
 
-require './react/components/follow_status'
 require './react/components/smart_follow_status'
 
 require './react/components/editable_field'

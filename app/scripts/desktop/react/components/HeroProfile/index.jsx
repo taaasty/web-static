@@ -1,4 +1,4 @@
-/*global $, TastyEvents, Mousetrap, CurrentUserStore, SmartFollowStatus */
+/*global $, TastyEvents, Mousetrap, CurrentUserStore */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
@@ -17,6 +17,7 @@ const transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
 class HeroProfile extends Component {
   state = {
     currentState: HERO_CLOSED,
+    relState: this.props.relationship && this.props.relationship.state,
   };
   componentWillMount() {
     this.open = this._open.bind(this);
@@ -40,10 +41,6 @@ class HeroProfile extends Component {
 
     TastyEvents.off(TastyEvents.keys.command_hero_open(), this.open);
     TastyEvents.off(TastyEvents.keys.command_hero_close(), this.close);
-  }
-  isCurrentUser() {
-    return CurrentUserStore.isLogged() &&
-      CurrentUserStore.getUser().id == this.props.user.id;
   }
   _open() {
     Mousetrap.bind('esc', this.close);
@@ -113,6 +110,9 @@ class HeroProfile extends Component {
       this.setHeroWindowHeight();
     }
   }
+  updateRelState(relState) {
+    this.setState({ relState });
+  }
   handleAvatarClick(ev) {
     if (!this.isOpen()) {
       this.setInitialHeroHeight();
@@ -121,10 +121,12 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { relationship, stats, user } = this.props;
-    const relState = this.props.relState ||
-            (relationship && relationship.state); //FIXME legacy when invoked from rails
-    const followButtonVisible = !this.isCurrentUser() && relState != null;
+    const { stats, user } = this.props;
+    const relState = this.state.relState; //FIXME legacy when invoked from rails
+    const currentUser = CurrentUserStore.getUser();
+    const currentUserId = currentUser && currentUser.id;
+    const isCurrentUser = currentUserId && currentUserId === user.id;
+    const followButtonVisible = !isCurrentUser && relState != null;
     
     return (
       <div className="hero hero-profile">
@@ -143,9 +145,11 @@ class HeroProfile extends Component {
              tlogId={user.id}
            />
           }
-           <HeroProfileHead user={this.props.user} />
+           <HeroProfileHead user={user} />
            <HeroProfileActionsContainer
-             isCurrentUser={this.isCurrentUser()}
+             currentUserId={currentUserId}
+             isCurrentUser={isCurrentUser}
+             onRelStateChange={this.updateRelState.bind(this)}
              relationship={relState}
              user={user}
            />
@@ -160,8 +164,6 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
-  isFetching: PropTypes.bool,
-  relState: PropTypes.string,
   relationship: PropTypes.object,
   stats: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,

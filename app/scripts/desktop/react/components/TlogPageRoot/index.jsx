@@ -2,7 +2,7 @@ import React, { cloneElement, Children, Component, PropTypes } from 'react';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
-import HeroProfile from '../HeroProfile';
+import HeroProfile from '../HeroProfile/indexSPA';
 import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
@@ -46,11 +46,9 @@ class TlogPageRoot extends Component {
   }
   render() {
     const { calendar, children, currentUser, currentUserId, isLogged, location,
-            params, tlog, tlogEntries, tlogEntry, CalendarActions, TlogActions,
-            TlogEntriesActions, TlogEntryActions } = this.props;
-    const { author, design: { backgroundImageUrl },
-            my_relationship, slug, stats, tlog_url } = tlog.data;
-    const { isFetching: isFetchingTlog } = tlog;
+            params, tlog, tlogEntries, tlogEntry, CalendarActions, RelationshipActions,
+            TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
+    const { author, design: { backgroundImageUrl }, slug, stats, tlog_url } = tlog.data;
     const calendarEntry = (params.entryPath
       ? tlogEntry.data
       : tlogEntries.data.items.length && tlogEntries.data.items[0].entry) || {};
@@ -78,10 +76,10 @@ class TlogPageRoot extends Component {
             <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
             <header className="page-header">
               <HeroProfile
-                isFetching={isFetchingTlog}
-                relState={my_relationship}
+                RelationshipActions={RelationshipActions}
+                currentUser={currentUser.data}
                 stats={stats}
-                user={author}
+                tlog={tlog}
               />
             </header>
             {childrenWithProps}
@@ -108,6 +106,7 @@ class TlogPageRoot extends Component {
 
 TlogPageRoot.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  RelationshipActions: PropTypes.object.isRequired,
   TlogActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
   TlogEntryActions: PropTypes.object.isRequired,
