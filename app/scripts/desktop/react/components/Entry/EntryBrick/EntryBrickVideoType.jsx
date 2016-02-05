@@ -35,7 +35,7 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept
           </a>
         </figure>
       </div>
-      {entry.titly_truncated && renderBrickBody()}
+      {entry.title_truncated && renderBrickBody()}
       <div className="brick__meta">
         <EntryBrickMetabar
           entry={entry}
