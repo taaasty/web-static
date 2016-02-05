@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import TlogPageBody from './TlogPageBody';
-import { TLOG_SECTION_TLOG, TLOG_SECTION_FLOW } from '../../../../shared/constants/Tlog';
+import {
+  TLOG_SECTION_TLOG,
+  TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_PRIVATE,
+} from '../../../../shared/constants/Tlog';
 
 class TlogPageContainer extends Component {
   componentWillMount() {
@@ -22,13 +26,15 @@ class TlogPageContainer extends Component {
     });
   }
   section(props) {
-    const { tlog: { data: { author } }, route: { path } } = props;
+    const { path } = props.route;
     
-    return (author && author.is_flow)
-      ? TLOG_SECTION_FLOW
-      : this.date(props.params)
-        ? TLOG_SECTION_TLOG
-        : path || TLOG_SECTION_TLOG;
+    if (this.date(props.params)) {
+      return TLOG_SECTION_TLOG;
+    } else if (path === TLOG_SECTION_PRIVATE || path === TLOG_SECTION_FAVORITE) {
+      return path;
+    } else {
+      return TLOG_SECTION_TLOG;
+    }
   }
   date(params = {}) {
     const { year, month, day } = params;

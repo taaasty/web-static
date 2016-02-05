@@ -15,6 +15,8 @@ const AppRouting = function() {
         <Route path="~anonymous" component={AppRedirect} />
         <Route path="~:slug" component={TlogPageRootContainer}>
           <IndexRoute component={TlogPage} />
+          <Route path="design_settings" component={TlogPage} />
+          <Route path="settings" component={TlogPage} />
           <Route path="privates" component={TlogPage} />
           <Route path="favorites" component={TlogPage} />
           <Route path=":year/:month/:day" component={TlogPage} />

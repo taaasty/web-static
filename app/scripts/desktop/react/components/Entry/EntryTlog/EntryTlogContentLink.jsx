@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
 
-function EntryTlogContentLink({ children, entry: { id, tlog, url },  show }) {
+function EntryTlogContentLink({ children, entry: { id, tlog: { is_flow }, url },  show }) {
   return show
-    ? window.SPA && !tlog.is_flow //FIXME
-      ? <Link to={{ pathname: uri(url).path(), state: { id } }}>
+    ? window.SPA //FIXME
+      ? <Link to={{ pathname: uri(url).path(), state: { id, isFlow: is_flow } }}>
           {children}
         </Link>
       : <a href={url}>{children}</a>

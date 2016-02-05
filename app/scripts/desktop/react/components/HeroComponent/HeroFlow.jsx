@@ -14,6 +14,15 @@ let HeroFlow = createClass({
     relationship: ProjectTypes.relationship,
   },
 
+  getInitialState() {
+    const { flow, relationship } = this.props;
+
+    return {
+      flow: flow,
+      relState: relationship && relationship.state,
+    };
+  },
+
   showSettings() {
     PopupActionCreators.manageFlow(this.state.flow, this.updateFlow);
   },
@@ -24,15 +33,6 @@ let HeroFlow = createClass({
 
   updateRelState(relState) {
     this.setState({ relState });
-  },
-
-  getInitialState() {
-    const { flow, relationship } = this.props;
-
-    return {
-      flow: flow,
-      relState: relationship && relationship.state,
-    };
   },
 
   getText(count) {
