@@ -37,7 +37,7 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
           {renderBrickImage()}
         </a>
       </div>
-      {entry.titly_truncated && renderBrickBody()}
+      {entry.title_truncated && renderBrickBody()}
       <div className="brick__meta">
         <EntryBrickMetabar
           entry={entry}
