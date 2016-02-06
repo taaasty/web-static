@@ -3,12 +3,16 @@ import {
   FLOW_RECEIVE,
   FLOW_ERROR,
   FLOW_UPDATE,
+  FLOW_STAFF_ADD,
+  FLOW_STAFF_REMOVE,
+  FLOW_STAFF_ROLE,
 } from '../actions/FlowActions';
 
 const initialState = {
   data: {
     id: null,
     flowpic: {},
+    staffs: [],
     slug: '',
     tlog_url: '',
   },
@@ -22,13 +26,46 @@ const actionMap = {
     return { ...state, isFetching: true, error: null };
   },
   [FLOW_RECEIVE](state, data) {
-    return { ...data, isFetching: false, error: null };
+    return { ...state, ...data, isFetching: false, error: null };
   },
   [FLOW_ERROR](state, error) {
     return { ...state, ...error, isFetching: false };
   },
   [FLOW_UPDATE](state, data) {
     return { ...state, data: { ...state.data, ...data } };
+  },
+  [FLOW_STAFF_ADD](state, staff) {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        staffs: [ ...state.data.staffs, staff ],
+      },
+      isFetching: false,
+      error: null,
+    };
+  },
+  [FLOW_STAFF_REMOVE](state, staff) {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        staffs: state.data.staffs.filter((s) => s.user.id !== staff.user.id),
+      },
+      isFetching: false,
+      error: null,
+    };
+  },
+  [FLOW_STAFF_ROLE](state, { staff, role }) {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        staffs: state.data.staffs.map((s) => s.user.id === staff.user.id ? { ...s, role } : s),
+      },
+      isFetching: false,
+      error: null,
+    };
   },
 };
 

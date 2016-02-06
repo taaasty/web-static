@@ -12,7 +12,7 @@ import * as TlogEntryActions from '../actions/TlogEntryActions';
 
 class TlogPageRootContainer extends Component {
   render() {
-    const { CalendarActions, RelationshipActions, TlogActions, TlogEntriesActions, TlogEntryActions,
+    const { CalendarActions, FlowActions, RelationshipActions, TlogActions, TlogEntriesActions, TlogEntryActions,
             calendar, children, currentUser, flow, location, params, tlog, tlogEntries, tlogEntry } = this.props;
     const currentUserId = currentUser.data.id;
     const isLogged = !!currentUser.data.id;
@@ -20,6 +20,7 @@ class TlogPageRootContainer extends Component {
     return (
       <TlogPageRoot
         CalendarActions={CalendarActions}
+        FlowActions={FlowActions}
         RelationshipActions={RelationshipActions}
         TlogActions={TlogActions}
         TlogEntriesActions={TlogEntriesActions}
@@ -42,6 +43,7 @@ class TlogPageRootContainer extends Component {
 
 TlogPageRootContainer.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  FlowActions: PropTypes.object.isRequired,
   RelationshipActions: PropTypes.object.isRequired,
   TlogActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,

@@ -2,7 +2,8 @@ import React, { cloneElement, Children, Component, PropTypes } from 'react';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
-import HeroProfile from '../HeroProfile/indexSPA';
+import HeroProfile from '../HeroProfileSPA';
+import HeroFlow from '../HeroComponent/HeroFlowSPA';
 import SocialShare from '../common/SocialShare';
 import Auth from '../Auth';
 import Calendar from '../Calendar';
@@ -19,9 +20,14 @@ class TlogPageRoot extends Component {
   componentWillReceiveProps(nextProps) {
     this.getCalendarData(nextProps);
     this.props.TlogActions.getTlog(this.slug(nextProps));
-
-    if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
-      DesignPreviewService.apply(nextProps.tlog.data.design);
+    if (this.isFlow(nextProps)) {
+      this.props.FlowActions.getFlow(nextProps.tlog.data.id);
+      document.body.className = 'layout--feed';
+    } else {
+      if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
+        document.body.className = 'layout--tlog';
+        DesignPreviewService.apply(nextProps.tlog.data.design);
+      }
     }
   }
   isFlow(props) {
@@ -47,7 +53,7 @@ class TlogPageRoot extends Component {
   }
   render() {
     const { calendar, children, currentUser, currentUserId, flow, isLogged, location,
-            params, tlog, tlogEntries, tlogEntry, CalendarActions, RelationshipActions,
+            params, tlog, tlogEntries, tlogEntry, CalendarActions, FlowActions, RelationshipActions,
             TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl }, slug, stats, tlog_url } = tlog.data;
     const isFlow = this.isFlow(this.props);
@@ -78,11 +84,12 @@ class TlogPageRoot extends Component {
           <div className="page__paper">
             <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
             <header className="page-header">
-              {isFlow
+              {isFlow && flow.data.id && !flow.isFetching
                ? <HeroFlow
-                     RelationshipActions={RelationshipActions}
-                     flow={flow}
-                  tlog={tlog}
+                   FlowActions={FlowActions}
+                   RelationshipActions={RelationshipActions}
+                   flow={flow}
+                   tlog={tlog}
                  />
                : <HeroProfile
                    RelationshipActions={RelationshipActions}
@@ -118,6 +125,7 @@ class TlogPageRoot extends Component {
 
 TlogPageRoot.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  FlowActions: PropTypes.object.isRequired,
   RelationshipActions: PropTypes.object.isRequired,
   TlogActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
