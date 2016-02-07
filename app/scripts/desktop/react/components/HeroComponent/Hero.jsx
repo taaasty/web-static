@@ -13,7 +13,7 @@ class Hero extends Component {
     return null;
   }
   render() {
-    const { backgroundUrl, text, title } = this.props;
+    const { backgroundUrl, isFetching, text, title } = this.props;
     const heroStyles = {
       backgroundImage: `url(${backgroundUrl})`,
     };

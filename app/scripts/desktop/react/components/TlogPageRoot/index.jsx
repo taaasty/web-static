@@ -20,14 +20,10 @@ class TlogPageRoot extends Component {
   componentWillReceiveProps(nextProps) {
     this.getCalendarData(nextProps);
     this.props.TlogActions.getTlog(this.slug(nextProps));
-    if (this.isFlow(nextProps)) {
-      this.props.FlowActions.getFlow(nextProps.tlog.data.id);
-      document.body.className = 'layout--feed';
-    } else {
-      if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
-        document.body.className = 'layout--tlog';
-        DesignPreviewService.apply(nextProps.tlog.data.design);
-      }
+    
+    if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
+      document.body.className = 'layout--tlog';
+      DesignPreviewService.apply(nextProps.tlog.data.design);
     }
   }
   isFlow(props) {
@@ -84,7 +80,7 @@ class TlogPageRoot extends Component {
           <div className="page__paper">
             <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
             <header className="page-header">
-              {isFlow && flow.data.id && !flow.isFetching
+              {isFlow
                ? <HeroFlow
                    FlowActions={FlowActions}
                    RelationshipActions={RelationshipActions}

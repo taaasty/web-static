@@ -23,7 +23,7 @@ function flowError(error) {
   };
 }
 
-function flowReceive(data) {
+export function flowReceive(data) {
   return {
     type: FLOW_RECEIVE,
     payload: data,
@@ -60,8 +60,6 @@ export function update({ name, slug, title, picFile, is_privacy, is_premoderate 
     name, slug, title, is_privacy, is_premoderate, flowpic: picFile,
   });
 
-  formData.append('_method', 'PUT');
-  
   return (dispatch, getState) => {
     const id = getState().flow.id;
 
@@ -70,7 +68,7 @@ export function update({ name, slug, title, picFile, is_privacy, is_premoderate 
       url: ApiRoutes.flow(id),
       processData: false,
       contentType: false,
-      data: formData,
+      data: (formData.append('_method', 'PUT'), formData),
       method: 'POST',
     })
       .done((data) => {

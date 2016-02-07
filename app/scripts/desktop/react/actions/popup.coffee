@@ -4,8 +4,6 @@ UserOnboarding = require '../components/UserOnboarding';
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/Searchbox/Searchbox'
 
-FlowManagerSPA = require '../components/FlowManagerSPA';
-
 PopupActions =
   showSettings: ->
     ReactApp.popupController.openWithBackground({
@@ -87,16 +85,6 @@ PopupActions =
     ReactApp.popupController.openWithBackground({
       Component: FlowManager
       props: {flow, onUpdate}
-      popupProps:
-        title: i18n.t('manage_flow.header')
-        className: 'popup--dark popup--flows'
-        clue: 'manage-flow'
-    })
-
-  manageFlowSPA: (flow, FlowActions) ->
-    ReactApp.popupController.openWithBackground({
-      Component: FlowManagerSPA
-      props: {flow, FlowActions}
       popupProps:
         title: i18n.t('manage_flow.header')
         className: 'popup--dark popup--flows'

@@ -1,15 +1,30 @@
-/*global i18n, PopupActionCreators */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import Hero from './Hero';
-import PopupActionCreators from '../../actions/popup';
 import RelationButton from '../common/RelationButtonSPA';
 import HeroSettingsButton from './HeroSettingsButton';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 import Routes from '../../../../shared/routes/routes';
+import FlowManager from '../FlowManagerSPA';
+import Popup from '../PopupComponent/Popup';
+import PopupArea from '../PopupComponent/PopupArea';
 
 class HeroFlow extends Component {
+  state = { popup: false };
+  componentWillMount() {
+    document.body.className = 'layout--feed';
+    this.props.FlowActions.getFlow(this.props.tlog.data.id);
+  }
+  componentWillReceiveProps(nextProps) {
+    nextProps.FlowActions.getFlow(nextProps.tlog.data.id);
+  }
   showSettings() {
-    const { FlowActions, flow } = this.props;
-    PopupActionCreators.manageFlowSPA(flow, FlowActions);
+    this.setState({ popup: true });
+    document.body.classList.add('popup-enabled');
+  }
+  hideSettings() {
+    this.setState({ popup: false });
+    document.body.classList.remove('popup-enabled');
   }
   renderWriteButton() {
     return (
@@ -66,15 +81,36 @@ class HeroFlow extends Component {
     );
   }
   render() {
-    const { flowpic: { original_url }, name, public_tlog_entries_count, tlog_url } = this.props.flow.data;
+    const { popup } = this.state;
+    const { FlowActions, flow, tlog } = this.props;
+    const isFetching = flow.isFetching || !flow.data.id;
+    const { design: { backgroundImageUrl }, slug, tlog_url } = tlog.data;
+    const { flowpic: { original_url }, name, public_tlog_entries_count } = flow.data;
 
     return (
-      <Hero
-        actions={this.renderActions()}
-        backgroundUrl={original_url}
-        text={this.text(public_tlog_entries_count)}
-        title={<a href={tlog_url}>{`#${name}`}</a>}
-      />
+      <div>
+        <Hero
+          actions={isFetching ? <Spinner size={24} /> : this.renderActions()}
+          backgroundUrl={original_url || backgroundImageUrl}
+          text={this.text(public_tlog_entries_count)}
+          title={<a href={tlog_url}>{`#${name || slug}`}</a>}
+        />
+        {popup &&
+         <div className="popup-container">
+           <PopupArea onClose={this.hideSettings.bind(this)}>
+             <Popup
+               className="popup--dark popup--flows"
+               clue="manage-flow"
+               onClose={this.hideSettings.bind(this)}
+               title={i18n.t('manage_flow.header')}
+               withBackground
+             >
+               <FlowManager FlowActions={FlowActions} flow={flow} />
+             </Popup>
+           </PopupArea>
+         </div>
+        }
+      </div>
     );
   }
 }
@@ -83,7 +119,6 @@ HeroFlow.propTypes = {
   FlowActions: PropTypes.object.isRequired,
   RelationshipActions: PropTypes.object.isRequired,
   flow: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool,
   tlog: PropTypes.object.isRequired,
 };
 
