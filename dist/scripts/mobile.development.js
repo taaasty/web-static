@@ -68962,14 +68962,16 @@ function mountReactComponents(router) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      if (className === 'UserToolbarContainer' && spa) {
+      if (spa && className === 'UserToolbarContainer') {
         window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props });
+      } else if (spa && className === 'ComposeToolbarContainer') {
+        // noop;
       } else if (router && routedComponents.indexOf(className) > -1) {
-        window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(className, props));
-        (0, _reactDom.render)((0, _react.createElement)(router, null, (0, _react.createElement)(component, props)), node);
-      } else {
-        (0, _reactDom.render)((0, _react.createElement)(component, props), node);
-      }
+          window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(className, props));
+          (0, _reactDom.render)((0, _react.createElement)(router, null, (0, _react.createElement)(component, props)), node);
+        } else {
+          (0, _reactDom.render)((0, _react.createElement)(component, props), node);
+        }
     }
   }
 }

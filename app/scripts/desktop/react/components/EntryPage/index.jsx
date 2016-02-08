@@ -12,7 +12,7 @@ class EntryPageContainer extends Component {
     state && this.fetchData(state.id);
   }
   componentWillReceiveProps(nextProps) {
-    const { state } = nextProps.location;
+    const { params, location: { state } } = nextProps;
     state && this.fetchData(state.id);
   }
   componentWillUnmount() {
@@ -33,7 +33,33 @@ class EntryPageContainer extends Component {
       }
     }
   }
-  render() {
+  renderFlowEntry() {
+    const { currentUser, currentUserId, error, tlog, tlogEntry } = this.props;
+    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+
+    return (
+      <div className="page-body">
+        <div className="layout-outer">
+          <div className="content-area">
+            <div className="content-area__bg" style={bgStyle} />
+            <div className="content-area__inner">
+              <div>
+                <EntryTlog
+                  commentator={tlogEntry.data.commentator || currentUser.data}
+                  entry={tlogEntry.data}
+                  error={tlogEntry.error}
+                  host_tlog_id={tlog.data.author.id}
+                  isFetching={tlogEntry.isFetching || tlog.isFetching}
+                  successDeleteUrl={tlog.data.author && tlog.data.author.tlog_url}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  renderTlogEntry() {
     const { currentUser, currentUserId, error, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
@@ -42,8 +68,8 @@ class EntryPageContainer extends Component {
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
-            {currentUserId && tlogEntry.data.author &&
-             currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
+             {currentUserId && tlogEntry.data.author &&
+              currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
              <PinPostButton
                entryId={tlogEntry.data.id}
                orderId={tlogEntry.data.fixed_order_id}
@@ -71,12 +97,16 @@ class EntryPageContainer extends Component {
       </div>
     );
   }
+  render() {
+    return this.props.isFlow ? this.renderFlowEntry() : this.renderTlogEntry();
+  }
 }
 
 EntryPageContainer.propTypes = {
   TlogEntryActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
+  isFlow: PropTypes.bool,
   isLogged: PropTypes.bool,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,

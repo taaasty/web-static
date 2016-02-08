@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Color from 'color';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import HeroProfileActions from './HeroProfileActionsSPA';
+import HeroProfileActions from './HeroProfileActions';
 import HeroProfileSelfActions from './HeroProfileSelfActions';
 
 class HeroProfileActionsContainer extends Component {

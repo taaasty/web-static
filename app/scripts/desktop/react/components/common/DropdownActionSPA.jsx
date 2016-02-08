@@ -12,7 +12,7 @@ class DropdownAction extends Component {
     return this.state.hover && hoverTitle ? hoverTitle : title;
   }
   render() {
-    const { id, icon, onClick, url } = this.props;
+    const { icon, onClick, state, url } = this.props;
     const iconClasses = classnames('icon', icon);
 
     return (
@@ -21,7 +21,7 @@ class DropdownAction extends Component {
         onClick={onClick}
         onMouseEnter={() => this.setState({ hover: true })}
         onMouseLeave={() => this.setState({ hover: false })}
-        to={{pathname: uri(url).path(), state: { id }}}
+        to={{pathname: uri(url).path(), state }}
       >
         <i className={iconClasses} />
         {this.getTitle()}
@@ -36,6 +36,7 @@ DropdownAction.propTypes = {
     PropTypes.string, PropTypes.array,
   ]).isRequired,
   onClick: PropTypes.func,
+  state: PropTypes.object,
   title: PropTypes.string.isRequired,
   url: PropTypes.string,
 };

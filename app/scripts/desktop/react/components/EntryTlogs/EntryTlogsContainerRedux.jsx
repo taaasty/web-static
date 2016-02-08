@@ -31,7 +31,6 @@ EntryTlogsContainer.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  section: PropTypes.string.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.shape({
     data: PropTypes.shape({
@@ -39,7 +38,7 @@ EntryTlogsContainer.propTypes = {
       has_more: PropTypes.bool,
       next_since_entry_id: PropTypes.number,
     }).isRequired,
-    isFetching: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool,
   }).isRequired,
 };
 

@@ -14,8 +14,8 @@ class EntryTlogMetabarActions extends Component {
   }
   render() {
     const { id, can_delete, can_edit, can_favorite, can_report, can_watch,
-            edit_url, is_favorited, is_watching, tlog, url } = this.props.entry;
-    const DropdownLinkComponent = window.SPA && !tlog.is_flow
+            edit_url, is_favorited, is_watching, tlog: { is_flow }, url } = this.props.entry;
+    const DropdownLinkComponent = window.SPA
             ? DropdownActionSPA
             : DropdownAction;
 
@@ -29,7 +29,7 @@ class EntryTlogMetabarActions extends Component {
          />}
         <DropdownLinkComponent
           icon="icon--hyperlink"
-          id={id}
+          state={{ id: id, isFlow: is_flow }}
           title={i18n.t('link_entry_item')}
           url={url}
         />

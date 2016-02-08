@@ -1,3 +1,4 @@
+/*eslint react/jsx-sort-props:0 */
 import React from 'react';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 
@@ -15,6 +16,8 @@ const AppRouting = function() {
         <Route path="~anonymous" component={AppRedirect} />
         <Route path="~:slug" component={TlogPageRootContainer}>
           <IndexRoute component={TlogPage} />
+          <Route path="design_settings" component={TlogPage} />
+          <Route path="settings" component={TlogPage} />
           <Route path="privates" component={TlogPage} />
           <Route path="favorites" component={TlogPage} />
           <Route path=":year/:month/:day" component={TlogPage} />
@@ -26,6 +29,6 @@ const AppRouting = function() {
       </Route>
     </Router>
   );
-}
+};
 
 export default AppRouting;

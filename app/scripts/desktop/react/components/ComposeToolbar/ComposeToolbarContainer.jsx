@@ -1,19 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import CurrentUserStore from '../../stores/current_user';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import ComposeToolbar from './ComposeToolbar';
+import ComposeToolbar from './index';
 
 class _ComposeToolbarContainer extends Component {
   render() {
-    const { user, userLogged } = this.props;
+    const { user, isLogged } = this.props;
 
-    return  userLogged ? <ComposeToolbar user={user} /> : null;
+    return  isLogged ? <ComposeToolbar user={user} /> : null;
   }
 }
 
 _ComposeToolbarContainer.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
-  userLogged: PropTypes.bool.isRequired,
 };
 
 const ComposeToolbarContainer = connectToStores(
@@ -21,7 +21,7 @@ const ComposeToolbarContainer = connectToStores(
   [ CurrentUserStore ],
   () => ({
     user: CurrentUserStore.getUser(),
-    userLogged: CurrentUserStore.isLogged(),
+    isLogged: CurrentUserStore.isLogged(),
   })
 );
 

@@ -26,9 +26,11 @@ class Calendar extends Component {
 
     // Следим за скроллингом, только если находимся на странице списка постов
     if ($post.closest(TARGET_POST_PARENT_CLASS)) {
-      $(document).on('waypoint.trigger', (ev, { id, time }) => (
+      this.scrollHandler = (ev, { id, time }) => (
         this.updateSelectedEntry(parseInt(id, 10), time)
-      ));
+      );
+
+      $(document).on('waypoint.trigger', this.scrollHandler);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -42,6 +44,9 @@ class Calendar extends Component {
   componentWillUnmount() {
     if (this.timeout) {
       window.clearTimeout(this.timeout);
+    }
+    if (this.scrollHandler) {
+      $(document).off('waypoint.trigger', this.scrollHandler);
     }
   }
   updateSelectedEntry(id, time) {

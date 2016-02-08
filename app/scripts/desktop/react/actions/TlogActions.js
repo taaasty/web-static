@@ -16,7 +16,7 @@ function tlogError(error) {
   return {
     type: TLOG_ERROR,
     payload: error,
-  }
+  };
 }
 
 function tlogReceive(data) {
@@ -49,12 +49,5 @@ export function getTlog(slug) {
     if (slug && shouldFetchTlog(getState(), slug)) {
       return dispatch(fetchTlog(slug));
     }
-  };
-}
-
-export function updateMyRelationship(relState) {
-  return {
-    type: TLOG_UPDATE,
-    payload: { my_relationship: relState },
   };
 }

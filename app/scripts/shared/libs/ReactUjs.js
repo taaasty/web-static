@@ -39,8 +39,10 @@ function mountReactComponents(router) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      if (className === 'UserToolbarContainer' && spa) {
+      if (spa && className === 'UserToolbarContainer') {
         window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, { userToolbar: props });
+      } else if (spa && className === 'ComposeToolbarContainer') {
+        // noop;
       } else if (router && routedComponents.indexOf(className) > -1) {
         window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, props2redux(className, props));
         render(createElement(router, null, createElement(component, props)), node);

@@ -116,7 +116,7 @@ global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertConta
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
 global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
-global.ComposeToolbarContainer = require './react/components/toolbars/ComposeToolbarContainer'
+global.ComposeToolbarContainer = require './react/components/ComposeToolbar/ComposeToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 
 require './react/components/shellboxes/confirm_registration'
@@ -228,7 +228,6 @@ global.LandingPageBody = require './react/components/LandingPage/LandingPageBody
 global.EntryPageContainer = require './react/components/EntryPage';
 global.SocialShare = require './react/components/common/SocialShare';
 global.Voting = require './react/components/common/Voting';
-global.FlowPageContainer = require './react/components/FlowPage';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'

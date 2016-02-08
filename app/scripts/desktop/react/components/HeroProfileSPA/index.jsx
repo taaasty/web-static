@@ -1,8 +1,7 @@
-/*SPA*/
 /*global $, TastyEvents, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import HeroProfileActionsContainer from './HeroProfileActionsContainerSPA';
+import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';

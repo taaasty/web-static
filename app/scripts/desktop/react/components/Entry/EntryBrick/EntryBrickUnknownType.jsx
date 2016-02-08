@@ -3,20 +3,48 @@ import React, { PropTypes } from 'react';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
   function renderBrickTitle() {
-    return (
-      <a
-        className="brick__link"
-        href={entry.entry_url}
-        title={entry.title}
-      >
-        <h2 className="brick__title">
-          {entry.title}
-        </h2>
-      </a>
-    );
+    return window.SPA
+      ? <Link
+          className="brick__link"
+          title={entry.title}
+          to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        >
+          <h2 className="brick__title">
+            {entry.title}
+          </h2>
+        </Link>
+      : <a
+          className="brick__link"
+          href={entry.entry_url}
+          title={entry.title}
+        >
+          <h2 className="brick__title">
+            {entry.title}
+          </h2>
+        </a>;
+  }
+
+  function renderContents() {
+    return window.SPA
+      ? <Link
+          className="brick__link"
+          title={entry.title}
+          to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        >
+          {i18n.t('entry.unknown_type')}
+        </Link>
+      : <a
+          className="brick__link"
+          href={entry.url}
+          title={entry.title}
+        >
+          {i18n.t('entry.unknown_type')}
+        </a>;
   }
 
   return (
@@ -24,13 +52,7 @@ function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, onEntryAcce
       <div className="brick__body">
         {entry.title && renderBrickTitle()}
         <div className="brick__text">
-          <a
-            className="brick__link"
-            href={entry.url}
-            title={entry.title}
-          >
-            {i18n.t('entry.unknown_type')}
-          </a>
+          {renderContents()}
         </div>
       </div>
       <div className="brick__meta">

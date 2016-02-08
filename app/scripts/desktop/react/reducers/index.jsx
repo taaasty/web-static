@@ -1,5 +1,6 @@
 import calendar from './calendar';
 import currentUser from './currentUser';
+import flow from './flow';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
 import tlogEntry from './tlogEntry';
@@ -8,6 +9,7 @@ import userToolbar from './userToolbar';
 export default {
   calendar,
   currentUser,
+  flow,
   tlog,
   tlogEntries,
   tlogEntry,
