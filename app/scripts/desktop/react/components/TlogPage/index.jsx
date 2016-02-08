@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TlogPageBody from './TlogPageBody';
+import FlowPageBody from './FlowPageBody';
 import {
   TLOG_SECTION_TLOG,
   TLOG_SECTION_FAVORITE,
@@ -42,35 +43,46 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, currentUserId, queryString, sinceId,
-            tlog, tlogEntries, CalendarActions, TlogEntriesActions } = this.props;
+    const { currentUser, currentUserId, flow, isFlow, queryString, sinceId,
+            tlog, tlogEntries, CalendarActions, FlowActions, TlogEntriesActions } = this.props;
 
-    return (
-      <TlogPageBody
-        CalendarActions={CalendarActions}
-        TlogEntriesActions={TlogEntriesActions}
-        bgStyle={{ opacity: tlog.data.design.feedOpacity }}
-        currentUser={currentUser}
-        currentUserId={currentUserId}
-        queryString={queryString}
-        section={this.section(this.props)}
-        sinceId={sinceId}
-        tlog={tlog}
-        tlogEntries={tlogEntries}
-      />
-    );
+    return isFlow
+      ? <FlowPageBody
+          FlowActions={FlowActions}
+          TlogEntriesActions={TlogEntriesActions}
+          bgStyle={{ opacity: tlog.data.design.feedOpacity }}
+          currentUser={currentUser}
+          currentUserId={currentUserId}
+          flow={flow}
+          queryString={queryString}
+          sinceId={sinceId}
+          tlog={tlog}
+          tlogEntries={tlogEntries}
+        />
+      : <TlogPageBody
+          CalendarActions={CalendarActions}
+          TlogEntriesActions={TlogEntriesActions}
+          bgStyle={{ opacity: tlog.data.design.feedOpacity }}
+          currentUser={currentUser}
+          currentUserId={currentUserId}
+          queryString={queryString}
+          section={this.section(this.props)}
+          sinceId={sinceId}
+          tlog={tlog}
+          tlogEntries={tlogEntries}
+        />;
   }
 }
 
 TlogPageContainer.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  FlowActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
   currentUserId: PropTypes.number,
-  isLogged: PropTypes.bool,
-  nextPageUrl: PropTypes.string,
+  flow: PropTypes.object.isRequired,
+  isFlow: PropTypes.bool,
   params: PropTypes.object.isRequired,
-  prevPageUrl: PropTypes.string,
   queryString: PropTypes.string,
   route: PropTypes.object,
   sinceId: PropTypes.string,

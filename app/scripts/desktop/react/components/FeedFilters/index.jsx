@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import NavFilters from './NavFilters';
 import NavViewMode from './NavViewMode';
+import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
 function FeedFilters(props) {
   const { children, navFilters, navViewMode, viewMode } = props;
@@ -25,7 +26,17 @@ function FeedFilters(props) {
 FeedFilters.propTypes = {
   navFilters: PropTypes.object.isRequired,
   navViewMode: PropTypes.bool.isRequired,
-  viewMode: PropTypes.oneOf(['tlog', 'feed']).isRequired,
+  viewMode: PropTypes.oneOf([
+    VIEW_STYLE_TLOG,
+    VIEW_STYLE_BRICKS,
+  ]).isRequired,
+};
+
+FeedFilters.defaultProps = {
+  navFilters: {
+    items: [],
+  },
+  navViewMode: false,
 };
 
 export default FeedFilters;

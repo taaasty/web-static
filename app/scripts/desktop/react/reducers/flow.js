@@ -7,6 +7,9 @@ import {
   FLOW_STAFF_REMOVE,
   FLOW_STAFF_ROLE,
 } from '../actions/FlowActions';
+import {
+  VIEW_STYLE_TLOG,
+} from '../constants/ViewStyleConstants';
 
 const initialState = {
   data: {
@@ -19,6 +22,7 @@ const initialState = {
   id: null,
   isFetching: false,
   error: null,
+  viewStyle: VIEW_STYLE_TLOG,
 };
 
 const actionMap = {

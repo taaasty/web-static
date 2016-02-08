@@ -1,3 +1,4 @@
+/*eslint react/jsx-sort-props:0 */
 import React from 'react';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 
@@ -28,6 +29,6 @@ const AppRouting = function() {
       </Route>
     </Router>
   );
-}
+};
 
 export default AppRouting;

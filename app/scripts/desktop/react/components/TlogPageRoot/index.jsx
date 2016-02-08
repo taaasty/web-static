@@ -63,10 +63,13 @@ class TlogPageRoot extends Component {
         {
           currentUserId,
           currentUser,
+          flow,
+          isFlow,
           tlog,
           tlogEntries,
           tlogEntry,
           CalendarActions,
+          FlowActions,
           TlogActions,
           TlogEntriesActions,
           TlogEntryActions,
@@ -78,7 +81,9 @@ class TlogPageRoot extends Component {
       <div className="page">
         <div className="page__inner">
           <div className="page__paper">
+            {!isFlow &&
             <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
+            }
             <header className="page-header">
               {isFlow
                ? <HeroFlow

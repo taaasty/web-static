@@ -8,6 +8,8 @@ import Routes from '../../../../shared/routes/routes';
 import FlowManager from '../FlowManagerSPA';
 import Popup from '../PopupComponent/Popup';
 import PopupArea from '../PopupComponent/PopupArea';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 class HeroFlow extends Component {
   state = { popup: false };
@@ -93,7 +95,7 @@ class HeroFlow extends Component {
           actions={isFetching ? <Spinner size={24} /> : this.renderActions()}
           backgroundUrl={original_url || backgroundImageUrl}
           text={this.text(public_tlog_entries_count)}
-          title={<a href={tlog_url}>{`#${name || slug}`}</a>}
+          title={<Link to={uri(tlog_url).path()}>{`#${name || slug}`}</Link>}
         />
         {popup &&
          <div className="popup-container">
