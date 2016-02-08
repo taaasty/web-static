@@ -445,9 +445,9 @@
     "privacy_badge": "Это приватный пост,<br />его не увидит никто кроме вас",
     "private": "Извините, но доступ к этой записи ограничен владельцем.",
     "meta": {
-      "repost_from": "Репост из <a class=\"meta-item__link\" href=\"{{url}}\">{{tag}}</a>",
-      "author_posted_in": "<a class=\"meta-item__link\" href=\"{{authorUrl}}\">{{author}}</a> написала в <a class=\"meta-item__link\" href=\"{{tlogUrl}}\">{{tlog}}</a>",
-      "author_posted_in_m": "<a class=\"meta-item__link\" href=\"{{authorUrl}}\">{{author}}</a> написал в <a class=\"meta-item__link\" href=\"{{tlogUrl}}\">{{tlog}}</a>",
+      "repost_from": "Репост из",
+      "author_posted_in": "написала в",
+      "author_posted_in_m": "написал в",
       "pin_entry": "Закрепить пост в прямом эфире",
       "awaiting_paiment": "Пост ожидает оплаты для закрепления",
       "pinned": "Пост закреплен"

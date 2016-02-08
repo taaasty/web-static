@@ -10,6 +10,7 @@ import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';
 import UserToolbarContainer from '../toolbars/UserToolbarContainer';
 import ComposeToolbar from '../ComposeToolbar';
+import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
@@ -119,6 +120,7 @@ class TlogPageRoot extends Component {
            url={tlog_url}
          />}
         <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
+        <BrowserSupportContainer />
       </div>
     );
   }
