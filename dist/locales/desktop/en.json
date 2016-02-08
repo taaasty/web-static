@@ -424,8 +424,8 @@
     "privacy_badge": "This is a private post,<br />nobody sees it but you",
     "private": "Sorry, access to this entry is restricted by the owner.",
     "meta": {
-      "repost_from": "Repost from <a class=\"meta-item__link\" href=\"{{url}}\">{{tag}}</a>",
-      "author_posted_in": "<a class=\"meta-item__link\" href=\"{{authorUrl}}\">{{author}}</a> posted in <a class=\"meta-item__link\" href=\"{{tlogUrl}}\">{{tlog}}</a>",
+      "repost_from": "Repost from",
+      "author_posted_in": "posted in",
       "pin_entry": "Pin the post on live feed",
       "awaiting_paiment": "The post is awaitong payment to be pinned up",
       "pinned": "The post is pinned up"

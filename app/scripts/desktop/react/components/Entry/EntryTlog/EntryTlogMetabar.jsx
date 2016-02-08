@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../../shared/react/components/common/Avatar';
-import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
+import MetabarAuthor from '../../common/MetabarAuthor';
 import EntryTlogMetabarComments from './EntryTlogMetabarComments';
 import EntryTlogMetabarDate from './EntryTlogMetabarDate';
 import EntryTlogMetabarRepost from './EntryTlogMetabarRepost';
@@ -9,26 +8,6 @@ import EntryTlogMetabarActions from './EntryTlogMetabarActions';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../../shared/constants/TlogEntry';
 
 function EntryTlogMetabar(props) {
-  function renderAuthor() {
-    const { entry: { author, tlog }, host_tlog_id } = props;
-    const authorMeta = metabarAuthor({ host_tlog_id, author, tlog });
-
-    if (authorMeta) {
-      return (
-        <span className="meta-item meta-item--user">
-          <span className="meta-item__content">
-            <a href={tlog.url} className="meta-item__link">
-              <span className="meta-item__ava">
-                <Avatar userpic={tlog.userpic || tlog.author.userpic} size={20} />
-              </span>
-            </a>
-            <span dangerouslySetInnerHTML={{ __html: authorMeta }} />
-          </span>
-        </span>
-      );
-    }
-  }
-
   function renderTags() {
     return (
       <EntryTlogMetabarTags
@@ -38,11 +17,15 @@ function EntryTlogMetabar(props) {
     );
   }
 
-  const { commentator, entry, onComment } = props;
+  const { commentator, entry, host_tlog_id, onComment } = props;
 
   return (
     <span className="meta-bar">
-      {renderAuthor()}
+      <MetabarAuthor
+        author={entry.author}
+        hostTlogId={host_tlog_id}
+        tlog={entry.tlog}
+      />
       <EntryTlogMetabarComments
         commentator={commentator}
         commentsCount={entry.comments_count}
