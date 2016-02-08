@@ -21,7 +21,7 @@ import Auth from './components/Auth';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
-import AppRouting from './AppRouting';
+import AppRoot from './AppRoot';
 
 function initLocales(locale, callback) {
   numeral.language(locale);
@@ -153,7 +153,7 @@ const ReactApp = {
       $('[invite-button]').click(() => this.shellbox.show(Auth));
 
       console.log('Locales loaded');
-      ReactUjs.initialize(AppRouting);
+      ReactUjs.initialize(AppRoot);
       initRoutes();
 
       if (window.gon.showUserOnboarding) {

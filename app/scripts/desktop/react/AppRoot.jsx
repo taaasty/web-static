@@ -9,7 +9,7 @@ import TlogPageRootContainer from './containers/TlogPageRootContainer';
 import TlogPage from './components/TlogPage';
 import EntryPage from './components/EntryPage';
 
-const AppRouting = function() {
+const AppRoot = function() {
   return (
     <Router history={browserHistory}>
       <Route path="/" component={App}>
@@ -31,4 +31,4 @@ const AppRouting = function() {
   );
 };
 
-export default AppRouting;
+export default AppRoot;

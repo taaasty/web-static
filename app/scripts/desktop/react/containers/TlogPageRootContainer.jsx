@@ -54,6 +54,7 @@ TlogPageRootContainer.propTypes = {
     PropTypes.array,
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
+  flow: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,

@@ -3,86 +3,46 @@ import {
   TLOG_SECTION_TLOG,
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
-  TLOG_SECTION_FLOW,
 } from '../constants/Tlog';
+import { VIEW_STYLE_TLOG } from '../../desktop/react/constants/ViewStyleConstants';
+import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
 
 const mapSection = {
-  'tlog': TLOG_SECTION_TLOG,
-  'favorite': TLOG_SECTION_FAVORITE,
-  'private': TLOG_SECTION_PRIVATE,
-  'flow': TLOG_SECTION_FLOW,
+  'favorites': TLOG_SECTION_FAVORITE,
+  'privates': TLOG_SECTION_PRIVATE,
 };
 
-function parseUrl2Date(url) {
-  const path = uri(url).path();
-  const matches = path.match(/^\/\~[^\/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
-
-  return (matches.length === 4) && `${matches[1]}-${matches[2]}-${matches[3]}`;
+function section() {
+  const matches = uri().path().match(/\~[^\/]+\/(favorites|privates)/);
+  return matches ? mapSection[matches[1]] : TLOG_SECTION_TLOG;
 }
 
-export default function prop2redux(component, props) {
-  const slug = props.user && props.user.slug;
-
-  if (component === 'TlogPageContainer') {
-    return {
-      tlog: {
-        data: {
-          author: props.user,
-          design: {
-            backgroundImageUrl: props.bgImage,
-            feedOpacity: props.bgStyle && props.bgStyle.opacity,
-          },
-          id: props.user.id,
-          my_relationship: props.relationship && props.relationship.state,
-          slug: slug,
-          stats: props.stats,
-          tlog_url: props.user && props.user.tlog_url,
-        },
-        slug,
-      },
-      tlogEntries: {
-        data: {
-          items: [],
-          has_more: false,
-          ...props.entries_info,
-          next_date: props.nextPageUrl && parseUrl2Date(props.nextPageUrl),
-          prev_date: props.prevPageUrl && parseUrl2Date(props.prevPageUrl),
-        },
-        isFetching: false,
-        slug: slug,
-        section: mapSection[props.section],
-        type: 'tlogs',
-        sinceId: uri().search(true).since_entry_id,
-        error: props.error ? { error_code: props.error } : void 0,
-      } || void 0,
-    };
-  } else if (component === 'EntryPageContainer') {
-    return {
-      tlog: {
-        data: {
-          author: props.user,
-          design: {
-            backgroundImageUrl: props.bgImage,
-            feedOpacity: props.bgStyle && props.bgStyle.opacity,
-          },
-          id: props.user.id,
-          my_relationship: props.relationship && props.relationship.state,
-          slug: slug,
-          stats: props.stats,
-          tlog_url: props.user && props.user.tlog_url,
-        },
-        slug,
-      },
-      tlogEntries: {
-        data: { items: [] },
-        isFetching: false,
-      },
-      tlogEntry: {
-        data: { tlog: {}, ...props.entry, commentator: props.commentator },
-        id: props.entry.id,
-        isFetching: false,
-        error: props.error ? { error_code: props.error } : void 0,
-      } || void 0,
-    }
-  }
+export default function prop2redux(props) {
+  return {
+    tlog: {
+      data: props.tlog || { author: {}, design: {}, stats: {} },
+      slug: props.tlog.slug,
+    },
+    tlogEntries: {
+      data: props.tlogEntries || { items: [] },
+      isFetching: false,
+      slug: props.tlogEntries && props.tlog.slug,
+      section: section(),
+      type: 'tlogs',
+      sinceId: uri().search(true).since_entry_id,
+      error: props.error ? { error_code: props.error } : void 0,
+    },
+    tlogEntry: {
+      data: props.tlogEntry ? { ...props.tlogEntry, url: props.tlogEntry.entry_url } : { author: {}, tlog: {}, commentator: null },
+      id: props.tlogEntry && props.tlogEntry.id,
+      isFetching: false,
+      error: props.error ? { error_code: props.error } : void 0,
+    },
+    flow: {
+      data: props.flow || { flowpic: {}, staffs: [] },
+      id: props.flow && props.flow.id,
+      isFetching: false,
+      viewStyle: window.localStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
+    },
+  };
 }

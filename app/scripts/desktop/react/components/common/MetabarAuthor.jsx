@@ -5,26 +5,32 @@ import { Link } from 'react-router';
 import uri from 'urijs';
 
 function MetabarAuthor({ author, tlog, hostTlogId }) {
+  // inconsistency in list|item api responses
+  const authorUrl = author.url || author.tlog_url;
+  const tlogUrl = tlog.url || tlog.tlog_url;
+  const tlogUserpic = tlog.userpic || tlog.author.userpic;
+
+  
   function renderAvatar() {
     return window.SPA
-      ? <Link className="meta-item__link" to={uri(tlog.url).path()}>
+      ? <Link className="meta-item__link" to={uri(tlogUrl).path()}>
           <span className="meta-item__ava">
-            <Avatar size={20} userpic={tlog.userpic || tlog.author.userpic} />
+            <Avatar size={20} userpic={tlogUserpic} />
           </span>
         </Link>
-      : <a className="meta-item__link" href={tlog.url}>
+      : <a className="meta-item__link" href={tlogUrl}>
           <span className="meta-item__ava">
-            <Avatar size={20} userpic={tlog.userpic || tlog.author.userpic} />
+            <Avatar size={20} userpic={tlogUserpic} />
           </span>
         </a>;
   }
 
   function authorLink() {
     return window.SPA
-      ? <Link className="meta-item__link" to={uri(author.url).path()}>
+      ? <Link className="meta-item__link" to={uri(authorUrl).path()}>
           {author.tag}
         </Link>
-      : <a className="meta-item__link" href={author.url}>
+      : <a className="meta-item__link" href={authorUrl}>
           {author.tag}
         </a>;
   }
@@ -32,20 +38,20 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
   function authorPostedIn() {
     return window.SPA
       ? <span>
-          <Link className="meta-item__link" to={uri(author.url).path()}>
+          <Link className="meta-item__link" to={uri(authorUrl).path()}>
             {author.tag}
           </Link>
           {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
-          <Link className="meta-item__link" to={uri(tlog.url).path()}>
+          <Link className="meta-item__link" to={uri(tlogUrl).path()}>
             {tlog.tag}
           </Link>
         </span>
       : <span>
-          <a className="meta-item__link" href={author.url}>
+          <a className="meta-item__link" href={authorUrl}>
             {author.tag}
           </a>
           {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
-          <a className="meta-item__link" href={tlog.url}>
+          <a className="meta-item__link" href={tlogUrl}>
             {tlog.tag}
           </a>
         </span>;
@@ -55,13 +61,13 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
     return window.SPA
       ? <span>
           {i18n.t('entry.meta.repost_from') + ' '}
-          <Link className="meta-item__link" to={uri(tlog.url).path()}>
+          <Link className="meta-item__link" to={uri(tlogUrl).path()}>
             {tlog.tag}
           </Link>
         </span>
       : <span>
           {i18n.t('entry.meta.repost_from')}
-          <a className="meta-item__link" href={tlog.url}>
+          <a className="meta-item__link" href={tlogUrl}>
             {tlog.tag}
           </a>
         </span>;

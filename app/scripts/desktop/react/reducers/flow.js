@@ -12,7 +12,7 @@ import {
   VIEW_STYLE_TLOG,
 } from '../constants/ViewStyleConstants';
 
-const FLOW_VIEW_STYLE_LS_KEY = 'flowViewStyle';
+export const FLOW_VIEW_STYLE_LS_KEY = 'flowViewStyle';
 
 const initialState = {
   data: {
@@ -25,7 +25,7 @@ const initialState = {
   id: null,
   isFetching: false,
   error: null,
-  viewStyle: window.localStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
+  viewStyle: VIEW_STYLE_TLOG,
 };
 
 const actionMap = {

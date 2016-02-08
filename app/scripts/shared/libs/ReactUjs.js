@@ -7,8 +7,6 @@ window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 const CLASS_NAME_ATTR = 'data-react-class';
 const PROPS_ATTR = 'data-react-props';
 
-const routedComponents = ['TlogPageContainer', 'EntryPageContainer'];
-
 function findReactDOMNodes() {
   const SELECTOR = `[${CLASS_NAME_ATTR}]`;
 
@@ -17,16 +15,22 @@ function findReactDOMNodes() {
     : document.querySelectorAll(SELECTOR);
 }
 
-function mountReactComponents(router) {
+function mountReactComponents(root) {
   const nodes = findReactDOMNodes();
-  let spa = false;
   let className, component, node, props, propsJson;
 
   for(let i = 0; i < nodes.length; i++) {
     let node = nodes[i];
     className = node.getAttribute(CLASS_NAME_ATTR);
-    if (routedComponents.indexOf(className) > -1) {
-      spa = true;
+    if (className === root.name) {
+      propsJson = node.getAttribute(PROPS_ATTR);
+      props = propsJson && JSON.parse(propsJson);
+
+      window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, { userToolbar: props.userToolbar });
+      window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, props2redux(props));
+
+      render(createElement(root, null), node);
+      return;
     }
   }
 
@@ -39,16 +43,7 @@ function mountReactComponents(router) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
-      if (spa && className === 'UserToolbarContainer') {
-        window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, { userToolbar: props });
-      } else if (spa && className === 'ComposeToolbarContainer') {
-        // noop;
-      } else if (router && routedComponents.indexOf(className) > -1) {
-        window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, props2redux(className, props));
-        render(createElement(router, null, createElement(component, props)), node);
-      } else {
-        render(createElement(component, props), node);
-      }
+      render(createElement(component, props), node);
     }
   }
 }
@@ -61,8 +56,8 @@ function unmountReactComponents() {
   }
 }
 
-export function initialize(router) {
-  mountReactComponents(router);
+export function initialize(root) {
+  mountReactComponents(root);
   if (window.jQuery) {
     window.jQuery(document).on('page:change', mountReactComponents);
   }
