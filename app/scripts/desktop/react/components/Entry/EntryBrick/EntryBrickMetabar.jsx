@@ -4,6 +4,8 @@ import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
 import { metabarAuthor } from '../../../helpers/EntryMetabarHelpers';
 import Voting from '../../common/Voting';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickMetabar({ entry, host_tlog_id }) {
   function renderMetaVote() {
@@ -22,19 +24,53 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
     const { comments_count: commentsCount, url } = entry;
     const title = i18n.t('comments_count', {count: commentsCount});
 
-    return (
-      <span className="meta-item meta-item--comments">
-        <span className="meta-item__content">
-          <a
-            className="meta-item__link"
-            href={url + '#comments'}
-            title={title}
-          >
-            {title}
-          </a>
+    return window.SPA
+      ? <span className="meta-item meta-item--comments">
+          <span className="meta-item__content">
+            <Link
+              className="meta-item__link"
+              title={title}
+              to={{ pathname: uri(url).path() + '#comments', state: { id: entry.id } }}
+            >
+              {title}
+            </Link>
+          </span>
         </span>
-      </span>
-    );
+      : <span className="meta-item meta-item--comments">
+          <span className="meta-item__content">
+            <a
+              className="meta-item__link"
+              href={url + '#comments'}
+              title={title}
+            >
+              {title}
+            </a>
+          </span>
+        </span>;
+  }
+
+  function renderAvatar() {
+    const { tlog } = entry;
+
+    return window.SPA
+      ? <Link
+          className="meta-item__link"
+          title={tlog.tag}
+          to={uri(tlog.url).path()}
+        >
+          <span className="meta-item__ava">
+            <Avatar size={20} userpic={tlog.userpic || tlog.author.userpic} />
+          </span>
+        </Link>
+      : <a
+          className="meta-item__link"
+          href={tlog.url}
+          title={tlog.tag}
+        >
+          <span className="meta-item__ava">
+            <Avatar size={20} userpic={tlog.userpic || tlog.author.userpic} />
+          </span>
+        </a>;
   }
 
   function renderMetaTlog() {
@@ -45,15 +81,7 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
       return (
         <span className="meta-item meta-item--user">
           <span className="meta-item__content">
-            <a
-              className="meta-item__link"
-              href={tlog.url}
-              title={tlog.tag}
-            >
-              <span className="meta-item__ava">
-                <Avatar size={20} userpic={tlog.userpic} />
-              </span>
-            </a>
+            {renderAvatar()}
             <span
               className="meta-item__author"
               dangerouslySetInnerHTML={{ __html: authorMeta }}

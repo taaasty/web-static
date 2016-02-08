@@ -12,7 +12,7 @@ class EntryPageContainer extends Component {
     state && this.fetchData(state.id);
   }
   componentWillReceiveProps(nextProps) {
-    const { state } = nextProps.location;
+    const { params, location: { state } } = nextProps;
     state && this.fetchData(state.id);
   }
   componentWillUnmount() {
@@ -68,8 +68,8 @@ class EntryPageContainer extends Component {
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
-            {currentUserId && tlogEntry.data.author &&
-             currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
+             {currentUserId && tlogEntry.data.author &&
+              currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
              <PinPostButton
                entryId={tlogEntry.data.id}
                orderId={tlogEntry.data.fixed_order_id}

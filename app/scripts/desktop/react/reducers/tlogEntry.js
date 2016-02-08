@@ -20,6 +20,7 @@ const actionMap = {
   [TLOG_ENTRY_REQUEST](state) {
     return {
       ...state,
+      data: initialState.data,
       isFetching: true,
       error: null,
     };

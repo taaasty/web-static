@@ -6,7 +6,7 @@ class EntryBricksContainer extends Component {
     this.props.TlogEntriesActions.appendTlogEntries();
   }
   render() {
-    const { tlog: { data: { author } },
+    const { children, tlog: { data: { author } },
             tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
 
     return (
@@ -25,6 +25,10 @@ class EntryBricksContainer extends Component {
 
 EntryBricksContainer.propTypes = {
   TlogEntriesActions: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
   currentUser: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.shape({

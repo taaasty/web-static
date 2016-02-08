@@ -9,6 +9,7 @@ export const FLOW_UPDATE = 'FLOW_UPDATE';
 export const FLOW_STAFF_ADD = 'FLOW_STAFF_ADD';
 export const FLOW_STAFF_REMOVE = 'FLOW_STAFF_REMOVE';
 export const FLOW_STAFF_ROLE = 'FLOW_STAFF_ROLE';
+export const FLOW_VIEW_STYLE = 'FLOW_VIEW_STYLE';
 
 function flowRequest() {
   return {
@@ -27,6 +28,13 @@ export function flowReceive(data) {
   return {
     type: FLOW_RECEIVE,
     payload: data,
+  };
+}
+
+export function flowViewStyle(style) {
+  return {
+    type: FLOW_VIEW_STYLE,
+    payload: style,
   };
 }
 

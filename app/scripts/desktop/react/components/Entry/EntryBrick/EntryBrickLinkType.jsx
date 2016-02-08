@@ -2,18 +2,26 @@ import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickLinkType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
   function renderBrickTitle() {
-    return (
-      <a
-        className="brick__link"
-        href={entry.url}
-        title={entry.title}
-      >
-        <h2 className="brick__title">{entry.title}</h2>
-      </a>
-    );
+    return window.SPA
+      ? <Link
+          className="brick__link"
+          title={entry.title}
+          to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        >
+          <h2 className="brick__title">{entry.title}</h2>
+        </Link>
+      : <a
+          className="brick__link"
+          href={entry.url}
+          title={entry.title}
+        >
+          <h2 className="brick__title">{entry.title}</h2>
+        </a>;
   }
 
   return (

@@ -43,7 +43,7 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, currentUserId, flow, isFlow, queryString, sinceId,
+    const { currentUser, currentUserId, flow, isFlow, location, params, queryString, sinceId,
             tlog, tlogEntries, CalendarActions, FlowActions, TlogEntriesActions } = this.props;
 
     return isFlow
@@ -54,6 +54,7 @@ class TlogPageContainer extends Component {
           currentUser={currentUser}
           currentUserId={currentUserId}
           flow={flow}
+          location={location}
           queryString={queryString}
           sinceId={sinceId}
           tlog={tlog}
@@ -82,6 +83,7 @@ TlogPageContainer.propTypes = {
   currentUserId: PropTypes.number,
   flow: PropTypes.object.isRequired,
   isFlow: PropTypes.bool,
+  location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   route: PropTypes.object,

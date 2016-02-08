@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
   function renderQuoteSource() {
@@ -14,17 +16,30 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
     );
   }
 
-  return (
-    <span>
-      <div className="brick__body">
-        <a className="brick__link" href={entry.url}>
+  function renderContents() {
+    return window.SPA
+      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id} }}>
           <blockquote className="blockquote">
             <span className="laquo">«</span>
             {entry.text_truncated}
             <span className="raquo">»</span>
             {entry.source_truncated && renderQuoteSource()}
           </blockquote>
-        </a>
+        </Link>
+      : <a className="brick__link" href={entry.url}>
+          <blockquote className="blockquote">
+            <span className="laquo">«</span>
+            {entry.text_truncated}
+            <span className="raquo">»</span>
+            {entry.source_truncated && renderQuoteSource()}
+          </blockquote>
+        </a>;
+  }
+
+  return (
+    <span>
+      <div className="brick__body">
+        {renderContents()}
       </div>
       <div className="brick__meta">
         <EntryBrickMetabar

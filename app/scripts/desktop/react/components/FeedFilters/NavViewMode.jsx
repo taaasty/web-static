@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router';
 import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
-function NavViewMode({ viewMode }) {
+function NavViewMode({ location, viewMode }) {
   const feedClasses = classNames({
     'nav-view-mode__item': true,
     'state--active': viewMode === VIEW_STYLE_BRICKS,
@@ -21,7 +21,7 @@ function NavViewMode({ viewMode }) {
             <Link
               className="nav-view-mode__link"
               title={i18n.t('filters.show_feed')}
-              to={`?style=${VIEW_STYLE_BRICKS}`}
+              to={{ pathname: location.pathname, query: { style: VIEW_STYLE_BRICKS } }}
             >
               <i className="icon icon--tiles" />
             </Link>
@@ -30,7 +30,7 @@ function NavViewMode({ viewMode }) {
             <Link
               className="nav-view-mode__link"
               title={i18n.t('filters.view_tlog')}
-              to={`?style=${VIEW_STYLE_TLOG}`}
+              to={{ pathname: location.pathname, query: { style: VIEW_STYLE_TLOG } }}
             >
               <i className="icon icon--menu" />
             </Link>
@@ -62,6 +62,7 @@ function NavViewMode({ viewMode }) {
 }
 
 NavViewMode.propTypes = {
+  location: PropTypes.object,
   viewMode: PropTypes.oneOf(['tlog', 'feed']).isRequired,
 };
 

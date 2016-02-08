@@ -6,10 +6,13 @@ import {
   FLOW_STAFF_ADD,
   FLOW_STAFF_REMOVE,
   FLOW_STAFF_ROLE,
+  FLOW_VIEW_STYLE,
 } from '../actions/FlowActions';
 import {
   VIEW_STYLE_TLOG,
 } from '../constants/ViewStyleConstants';
+
+const FLOW_VIEW_STYLE_LS_KEY = 'flowViewStyle';
 
 const initialState = {
   data: {
@@ -22,7 +25,7 @@ const initialState = {
   id: null,
   isFetching: false,
   error: null,
-  viewStyle: VIEW_STYLE_TLOG,
+  viewStyle: window.localStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
 };
 
 const actionMap = {
@@ -70,6 +73,13 @@ const actionMap = {
       isFetching: false,
       error: null,
     };
+  },
+  [FLOW_VIEW_STYLE](state, style) {
+    window.localStorage.setItem(FLOW_VIEW_STYLE_LS_KEY, style);
+    return {
+      ...state,
+      viewStyle: style,
+    }
   },
 };
 

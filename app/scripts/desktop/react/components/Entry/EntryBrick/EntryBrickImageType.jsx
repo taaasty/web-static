@@ -6,6 +6,8 @@ import * as ProjectTypes from '../../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { brickWidth } from './constants';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
   function renderBrickImage() {
@@ -14,28 +16,46 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
       :  <span>{i18n.t('entry.has_no_images')}</span>;
   }
 
+  function renderBrickImageContainer() {
+    return window.SPA
+      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
+          {renderBrickImage()}
+        </Link>
+      : <a className="brick__link" href={entry.url}>
+          {renderBrickImage()}
+        </a>;
+  }
+
   function renderBrickBody() {
-    return (
-      <div className="brick__body">
-        <div className="brick__text">
-          <a
-            className="brick__link"
-            href={entry.url}
-            title={entry.title_truncated}
-          >
-            <Text value={entry.title_truncated} withHTML />
-          </a>
+    return window.SPA
+      ? <div className="brick__body">
+          <div className="brick__text">
+            <Link
+              className="brick__link"
+              title={entry.title_truncated}
+              to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+            >
+              <Text value={entry.title_truncated} withHTML />
+            </Link>
+          </div>
         </div>
-      </div>
-    );
+      : <div className="brick__body">
+          <div className="brick__text">
+            <a
+              className="brick__link"
+              href={entry.url}
+              title={entry.title_truncated}
+            >
+              <Text value={entry.title_truncated} withHTML />
+            </a>
+          </div>
+        </div>;
   }
 
   return (
     <span>
       <div className="brick__media">
-        <a className="brick__link" href={entry.url}>
-          {renderBrickImage()}
-        </a>
+        {renderBrickImageContainer()}
       </div>
       {entry.title_truncated && renderBrickBody()}
       <div className="brick__meta">

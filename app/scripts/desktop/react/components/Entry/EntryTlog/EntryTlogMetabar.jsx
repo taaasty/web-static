@@ -19,7 +19,7 @@ function EntryTlogMetabar(props) {
           <span className="meta-item__content">
             <a href={tlog.url} className="meta-item__link">
               <span className="meta-item__ava">
-                <Avatar userpic={tlog.userpic} size={20} />
+                <Avatar userpic={tlog.userpic || tlog.author.userpic} size={20} />
               </span>
             </a>
             <span dangerouslySetInnerHTML={{ __html: authorMeta }} />
