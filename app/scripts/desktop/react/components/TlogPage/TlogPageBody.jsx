@@ -5,6 +5,7 @@ import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
 import TlogPagePrivate from './TlogPagePrivate';
 import TlogPageText from './TlogPageText';
+import TlogPageError from './TlogPageError';
 import TlogPageAuthorEmpty from './TlogPageAuthorEmpty';
 
 import { ERROR_INVALID_DATE } from '../../../../shared/constants/ErrorConstants';
@@ -40,7 +41,7 @@ class TlogPageBody extends Component {
     const { isFetching: isFetchingEntries, data: { items }, error, section } = tlogEntries;
     const { isFetching: isFetchingTlog, data: { author, my_relationship: state } } = tlog;
 
-    if (error && error.error_code === ERROR_INVALID_DATE) {
+    if (error && error.error === ERROR_INVALID_DATE) {
       return <TlogPageError text={i18n.t('tlog.error_invalid_date')} />;
     } else if (error && error.response_code === 404) {
       return <TlogPageError text={error.error} />;
