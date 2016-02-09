@@ -5,6 +5,11 @@ import { Link } from 'react-router';
 import uri from 'urijs';
 
 function MetabarAuthor({ author, tlog, hostTlogId }) {
+
+  if (!author || !tlog) {
+    return <noscript />;
+  }
+
   // inconsistency in list|item api responses
   const authorUrl = author.url || author.tlog_url;
   const tlogUrl = tlog.url || tlog.tlog_url;
@@ -74,27 +79,23 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
   }
 
   function renderContents() {
-    if (tlog != null && author != null) {
-      if (hostTlogId == null) {
-        if (author.id === tlog.id) {
-          return authorLink();
-        } else {
-          return authorPostedIn();
-        }
-      } else if (hostTlogId === tlog.id) {
-        if (author.id !== tlog.id) {
-          return authorPostedIn();
-        } else {
-          return null;
-        }
-      } else if (hostTlogId !== tlog.id) {
-        if (author.id === tlog.id) {
-          return repostFrom();
-        } else {
-          return authorPostedIn();
-        }
+    if (hostTlogId == null) {
+      if (author.id === tlog.id) {
+        return authorLink();
+      } else {
+        return authorPostedIn();
+      }
+    } else if (hostTlogId === tlog.id) {
+      if (author.id !== tlog.id) {
+        return authorPostedIn();
       } else {
         return null;
+      }
+    } else if (hostTlogId !== tlog.id) {
+      if (author.id === tlog.id) {
+        return repostFrom();
+      } else {
+        return authorPostedIn();
       }
     } else {
       return null;

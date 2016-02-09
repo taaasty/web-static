@@ -13142,7 +13142,7 @@ function prop2redux(_ref) {
       section: section(),
       type: 'tlogs',
       sinceId: (0, _urijs2.default)().search(true).since_entry_id,
-      error: tlogEntries && tlogEntries.error ? { error_code: tlogEntries.error } : void 0
+      error: tlogEntries && tlogEntries.error ? { error: tlogEntries.error } : void 0
     },
     tlogEntry: {
       data: (0, _extends3.default)({
@@ -68568,7 +68568,7 @@ function mountReactComponents(root) {
   for (var i = 0; i < nodes.length; i++) {
     var _node = nodes[i];
     className = _node.getAttribute(CLASS_NAME_ATTR);
-    if (className === root.name) {
+    if (className === root.displayName) {
       propsJson = _node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
