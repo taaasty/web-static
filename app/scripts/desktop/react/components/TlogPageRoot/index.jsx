@@ -104,7 +104,7 @@ class TlogPageRoot extends Component {
             {childrenWithProps}
           </div>
         </div>
-        {!isLogged && <Auth fixed locale={locale} />}
+        {!isLogged && <Auth fixed />}
         {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
         {!!calendar.data.periods.length &&
          <Calendar

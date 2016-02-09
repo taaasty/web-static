@@ -2,7 +2,7 @@
  ScrollerMixin, ComponentManipulationsMixin */
 import React, { createClass, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
-import UserAvatar from '../avatars/UserAvatar';
+import UserAvatar from '../UserAvatar';
 
 const HeroProfileStatsFollowingsPopup = createClass({
   propTypes: {

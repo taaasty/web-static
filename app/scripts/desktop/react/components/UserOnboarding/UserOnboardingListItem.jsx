@@ -1,5 +1,6 @@
 /*global FollowButton */
 import React, { PropTypes } from 'react';
+import UserAvatar from '../UserAvatar';
 
 class UserOnboardingListItem {
   render() {

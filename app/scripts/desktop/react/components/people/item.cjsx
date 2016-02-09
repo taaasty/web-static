@@ -1,3 +1,4 @@
+UserAvatar = require '../UserAvatar';
 FollowStatus = require '../common/FollowStatus';
 
 window.PeopleItem = React.createClass

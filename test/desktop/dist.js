@@ -6,15 +6,6 @@ const { isCompositeComponent, renderIntoDocument } = global.ReactTestUtils;
 
 // Components
 const components = {
-  HeroFlow: {
-    flow: {
-      flowpic: {
-        original_url: '',
-      },
-      title: '',
-      name: '',
-    },
-  },
   FlowBricksContainer: {
     limit: 1,
     loadUrl: '',
@@ -70,15 +61,6 @@ const components = {
     },
   },
   TlogAlertContainer: {},
-  UserAvatar: {
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {},
-      },
-    },
-  },
   FollowButton: {
     relationship: {
       state: '',
@@ -94,9 +76,6 @@ const components = {
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
   FeedPageBody: {},
-  TlogPageBody: {
-    
-  },
   /*
   Calendar: {},
   EntryPageContainer: {

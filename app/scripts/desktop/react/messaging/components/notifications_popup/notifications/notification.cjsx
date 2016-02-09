@@ -1,3 +1,4 @@
+UserAvatar = require '../../../../components/UserAvatar';
 classnames = require 'classnames'
 
 IMAGE_SIZE = 50

@@ -5,7 +5,7 @@ import RelationButton from '../common/RelationButtonSPA';
 import HeroSettingsButton from './HeroSettingsButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import Routes from '../../../../shared/routes/routes';
-import FlowManager from '../FlowManagerSPA';
+import FlowManager from '../FlowManager';
 import Popup from '../PopupComponent/Popup';
 import PopupArea from '../PopupComponent/PopupArea';
 import { Link } from 'react-router';

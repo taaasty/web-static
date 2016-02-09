@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import UserAvatar from '../../../../../components/avatars/UserAvatar';
+import UserAvatar from '../../../../../components/UserAvatar';
 
 function ResultsItem({ onClick, predictedUser, selected }) {
   const itemClasses = classnames({

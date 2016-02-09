@@ -149,7 +149,7 @@ class EntryTlog extends Component {
   render() {
     const { commentator: _commentator, entry, error,
             host_tlog_id, isFetching, isInList } = this.props;
-    const commentator = _commentator || anonCommentator;
+    const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
 
     return !error && (isFetching || !entry.type)
       ? <article className="post post--loading">
