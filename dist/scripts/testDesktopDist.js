@@ -7787,15 +7787,6 @@ var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 // Components
 
 var components = {
-  HeroFlow: {
-    flow: {
-      flowpic: {
-        original_url: ''
-      },
-      title: '',
-      name: ''
-    }
-  },
   FlowBricksContainer: {
     limit: 1,
     loadUrl: '',
@@ -7851,15 +7842,6 @@ var components = {
     }
   },
   TlogAlertContainer: {},
-  UserAvatar: {
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {}
-      }
-    }
-  },
   FollowButton: {
     relationship: {
       state: ''
@@ -7874,8 +7856,7 @@ var components = {
   LiveLoadButtonContainer: {},
   BestLoadButtonContainer: {},
   FriendsLoadButtonContainer: {},
-  FeedPageBody: {},
-  TlogPageBody: {}
+  FeedPageBody: {}
 };
 
 /*
