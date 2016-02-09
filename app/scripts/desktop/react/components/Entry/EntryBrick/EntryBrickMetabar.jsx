@@ -29,7 +29,7 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
             <Link
               className="meta-item__link"
               title={title}
-              to={{ pathname: uri(url).path() + '#comments', state: { id: entry.id } }}
+              to={{ pathname: uri(url).path(), hash: '#comments', state: { id: entry.id } }}
             >
               {title}
             </Link>

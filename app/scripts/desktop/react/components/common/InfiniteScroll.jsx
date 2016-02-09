@@ -8,14 +8,14 @@ const THRESHOLD = windowHeight * 2;
 
 class InfiniteScroll extends Component {
   componentDidMount() {
-    this._prefill();
+    this.prefill();
     this.scrollHandler = this.handleScroll.bind(this);
     $(window).on('scroll', this.scrollHandler);
   }
   componentDidUpdate() {
     const { onAfterLoad } = this.props;
 
-    this._prefill();
+    this.prefill();
     $(document).trigger('domChanged');
     if (typeof onAfterLoad === 'function') {
       onAfterLoad();
@@ -24,21 +24,15 @@ class InfiniteScroll extends Component {
   componentWillUnmount() {
     $(window).off('scroll', this.scrollHandler);
   }
-  _prefill() {
+  prefill() {
     const { canLoad, onLoad } = this.props;
-    const $node = $(findDOMNode(this));
     const $window = $(window);
+    const $node = $(findDOMNode(this));
 
-    function prefill() {
-      if (canLoad && $node.height() <= $window.height()) {
-        onLoad();
-      }
+    if (canLoad && $node.height() <= $window.height()) {
+      onLoad();
     }
-
-    prefill();
-    this._prefill = prefill;
   }
-
   handleScroll() {
     const { canLoad, onLoad } = this.props;
 

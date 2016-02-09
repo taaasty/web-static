@@ -20,7 +20,7 @@ class EntryTlogCommentMetabarActionLink extends Component {
           className="comment__dropdown-item"
           onMouseEnter={() => this.setState({ hover: true })}
           onMouseLeave={() => this.setState({ hover: false })}
-          to={{ pathname: uri(url).path(), state: { id: entryId } }}
+          to={{ pathname: uri(url).path(), hash: uri(url).hash(), state: { id: entryId } }}
         >
           <i className={iconClasses} />
           {this.getTitle()}
