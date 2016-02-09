@@ -13124,30 +13124,41 @@ function section() {
   return matches ? mapSection[matches[1]] : _Tlog.TLOG_SECTION_TLOG;
 }
 
-function prop2redux(props) {
+function prop2redux(_ref) {
+  var tlog = _ref.tlog;
+  var tlogEntry = _ref.tlogEntry;
+  var tlogEntries = _ref.tlogEntries;
+  var flow = _ref.flow;
+
   return {
     tlog: {
-      data: props.tlog || { author: {}, design: {}, stats: {} },
-      slug: props.tlog.slug
+      data: (0, _extends3.default)({ author: {}, design: {}, stats: {} }, tlog),
+      slug: tlog.slug
     },
     tlogEntries: {
-      data: props.tlogEntries || { items: [] },
+      data: (0, _extends3.default)({ items: [] }, tlogEntries),
       isFetching: false,
-      slug: props.tlogEntries && props.tlog.slug,
+      slug: tlogEntries && tlog.slug,
       section: section(),
       type: 'tlogs',
       sinceId: (0, _urijs2.default)().search(true).since_entry_id,
-      error: props.error ? { error_code: props.error } : void 0
+      error: tlogEntries && tlogEntries.error ? { error_code: tlogEntries.error } : void 0
     },
     tlogEntry: {
-      data: props.tlogEntry ? (0, _extends3.default)({}, props.tlogEntry, { url: props.tlogEntry.entry_url }) : { author: {}, tlog: {}, commentator: null },
-      id: props.tlogEntry && props.tlogEntry.id,
+      data: (0, _extends3.default)({
+        author: {},
+        tlog: {},
+        commentator: null
+      }, tlogEntry, {
+        url: tlogEntry && tlogEntry.entry_url
+      }),
+      id: tlogEntry && tlogEntry.id,
       isFetching: false,
-      error: props.error ? { error_code: props.error } : void 0
+      error: tlogEntry && tlogEntry.error ? { error_code: tlogEntry.error } : void 0
     },
     flow: {
-      data: props.flow || { flowpic: {}, staffs: [] },
-      id: props.flow && props.flow.id,
+      data: (0, _extends3.default)({ flowpic: {}, staffs: [] }, flow),
+      id: flow && flow.id,
       isFetching: false,
       viewStyle: window.localStorage.getItem(_flow.FLOW_VIEW_STYLE_LS_KEY) || _ViewStyleConstants.VIEW_STYLE_TLOG
     }
