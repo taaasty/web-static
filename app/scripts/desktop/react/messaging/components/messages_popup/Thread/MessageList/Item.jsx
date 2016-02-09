@@ -3,7 +3,7 @@ import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import ImgFromFile from '../ImgFromFile';
-import UserAvatar from '../../../../../components/avatars/UserAvatar';
+import UserAvatar from '../../../../../components/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';

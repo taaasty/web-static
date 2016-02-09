@@ -3,6 +3,7 @@ PinEntryPopup = require('../components/Editor/PinEntryPopup');
 UserOnboarding = require '../components/UserOnboarding';
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/Searchbox/Searchbox'
+FlowCreator = require '../components/FlowCreator';
 
 PopupActions =
   showSettings: ->
@@ -79,16 +80,6 @@ PopupActions =
         title: i18n.t('create_flow.header')
         className: 'popup--dark popup--flows'
         clue: 'create-flow'
-    })
-
-  manageFlow: (flow, onUpdate) ->
-    ReactApp.popupController.openWithBackground({
-      Component: FlowManager
-      props: {flow, onUpdate}
-      popupProps:
-        title: i18n.t('manage_flow.header')
-        className: 'popup--dark popup--flows'
-        clue: 'manage-flow'
     })
 
   toggleFriends: ->

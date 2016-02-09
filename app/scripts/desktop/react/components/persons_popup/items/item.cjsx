@@ -1,3 +1,5 @@
+UserAvatar = require '../../UserAvatar';
+
 window.PersonsPopup_PersonItem = React.createClass
 
   propTypes:

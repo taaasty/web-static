@@ -1,3 +1,4 @@
+UserAvatar = require '../UserAvatar';
 CurrentUserServerActions = require '../../actions/server/current_user'
 { PropTypes } = React
 

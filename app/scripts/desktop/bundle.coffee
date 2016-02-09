@@ -90,7 +90,6 @@ require './react/messaging/components/notifications_popup/notifications/empty'
 require './react/components/common/adaptive_input'
 
 global.EmbedComponent = require './react/components/embed'
-global.UserAvatar = require './react/components/avatars/UserAvatar';
 
 # /*===============================================
 # =            Authorization resources            =
@@ -141,21 +140,16 @@ require './react/components/popup/layout'
 require './react/components/popup/spinner'
 require './react/components/popup/header'
 
-global.Calendar = require './react/components/Calendar';
 global.Feed = require './react/components/Feed/Feed'
 global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
 global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
 global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
-global.FlowCreator = require './react/components/FlowPopups/FlowCreator'
-global.FlowManager = require './react/components/FlowPopups/FlowManager'
 global.LiveLoadButtonContainer = require('./react/components/FeedPage/LiveLoadButtonContainer')
 global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadButtonContainer')
 global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
 global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
-global.TlogPageBody = require './react/components/TlogPage/TlogPageBody';
-global.TlogPageContainer = require './react/components/TlogPage';
 
 require './react/components/search/search'
 require './react/components/search/button'
@@ -187,37 +181,6 @@ require './react/components/persons_popup/panels/socialNetwork/facebook'
 
 require './react/components/people/item'
 
-require './react/components/entry_metabar/entry_metabar'
-require './react/components/entry_metabar/author'
-require './react/components/entry_metabar/comment'
-require './react/components/entry_metabar/date'
-require './react/components/entry_metabar/dropdown_menu'
-require './react/components/entry_metabar/dropdown_menu_items/item'
-require './react/components/entry_metabar/dropdown_menu_items/favorite_item'
-require './react/components/entry_metabar/dropdown_menu_items/watch_item'
-require './react/components/entry_metabar/dropdown_menu_items/report_item'
-require './react/components/entry_metabar/dropdown_menu_items/delete_item'
-
-require './react/components/entry_comment_box/mixins/comments'
-require './react/components/entry_comment_box/entry_comment_box'
-require './react/components/entry_comment_box/comment_list/comment_list'
-require './react/components/entry_comment_box/comment_list/comment_manager'
-require './react/components/entry_comment_box/comment_list/comment'
-require './react/components/entry_comment_box/comment_metabar/comment_metabar'
-require './react/components/entry_comment_box/comment_metabar/date'
-require './react/components/entry_comment_box/comment_metabar/dropdown_menu'
-require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/link_item'
-require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/report_item'
-require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/edit_item'
-require './react/components/entry_comment_box/comment_metabar/dropdown_menu_items/delete_item'
-require './react/components/entry_comment_box/comment_metabar/reply'
-require './react/components/entry_comment_box/comment_form/comment_form'
-require './react/components/entry_comment_box/comment_form/comment_create_form_manager'
-require './react/components/entry_comment_box/comment_form/comment_edit_form_manager'
-require './react/components/entry_comment_box/comment_form/buttons/submit'
-require './react/components/entry_comment_box/load_more'
-
-global.HeroFlow = require './react/components/HeroComponent/HeroFlow'
 global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
 global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
@@ -225,7 +188,6 @@ global.EditorEdit = require './react/components/Editor/EditorEdit'
 global.Spinner = require '../shared/react/components/common/Spinner'
 global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
 global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
-global.EntryPageContainer = require './react/components/EntryPage';
 global.SocialShare = require './react/components/common/SocialShare';
 global.Voting = require './react/components/common/Voting';
 

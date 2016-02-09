@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import UserAvatar from '../avatars/UserAvatar';
+import UserAvatar from '../UserAvatar';
 
 const HERO_AVATAR_SIZE = 110;
 const HERO_AVATAR_SIZE_OPEN = 200;

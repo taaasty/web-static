@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import Image from '../../../../shared/react/components/common/Image';
-import UserAvatar from '../avatars/UserAvatar';
+import UserAvatar from '../UserAvatar';
 import { browserHistory, Link } from 'react-router';
 import uri from 'urijs';
 

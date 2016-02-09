@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/avatars/UserAvatar';
+import UserAvatar from '../../../../../components/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
