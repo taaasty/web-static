@@ -3,10 +3,10 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogMetabarDate({ entry: { created_at: date, id, tlog: { is_flow }, url } }) {
+function EntryTlogMetabarDate({ entry: { created_at: date, id, url } }) {
   function renderLink(text) {
     return window.SPA
-      ? <Link to={{ pathname: uri(url).path(), state: { id, isFlow: is_flow } }}>
+      ? <Link to={{ pathname: uri(url).path(), state: { id } }}>
           <span className="meta-item__common">
             {text}
           </span>
