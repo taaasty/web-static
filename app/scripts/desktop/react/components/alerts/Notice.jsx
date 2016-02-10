@@ -1,55 +1,52 @@
+/*global $ */
+import React, { Component, PropTypes } from 'react';
 import Timer from '../../entities/Timer';
 
-let Notice = React.createClass({
-  propTypes: {
-    text: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    timeout: React.PropTypes.number.isRequired,
-    onClose: React.PropTypes.func.isRequired,
-  },
-
+class Notice extends Component {
   componentDidMount() {
     this.calculateStyles();
-    this.timer = new Timer(this.close, this.props.timeout);
-  },
-
+    this.timer = new Timer(this.close.bind(this), this.props.timeout);
+  }
   componentWillUnmount() {
     this.pause();
-  },
-
-  render() {
-    return (
-      <div
-        className={`notice notice--${this.props.type}`}
-        onClick={this.close}
-        onMouseEnter={this.pause}
-        onMouseLeave={this.resume}
-        ref="container"
-      >
-        <div className="notice__inner">
-          {this.props.text}
-        </div>
-      </div>
-    );
-  },
-
+  }
   calculateStyles() {
-    let node = this.refs.container;
+    const node = this.refs.container;
     node.style.marginLeft = `${node.offsetWidth / -2}px`;
-  },
-
+  }
   close() {
     let $node = $(this.refs.container);
     $node.fadeOut('fast', this.props.onClose);
-  },
-
+  }
   pause() {
     this.timer.pause();
-  },
-
+  }
   resume() {
     this.timer.resume();
-  },
-});
+  }
+  render() {
+    const { text, type } = this.props;
+    return (
+      <div
+        className={`notice notice--${type}`}
+        onClick={this.close.bind(this)}
+        onMouseEnter={this.pause.bind(this)}
+        onMouseLeave={this.resume.bind(this)}
+        ref="container"
+      >
+        <div className="notice__inner">
+          {text}
+        </div>
+      </div>
+    );
+  }
+}
+
+Notice.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  timeout: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default Notice;

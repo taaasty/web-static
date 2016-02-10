@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import setQuery from 'set-query-string';
 import WaypointService from '../../services/CustomWaypointService';
-import EntryBrick from '../Entry/EntryBrick/EntryBrick';
+import EntryBrick from '../EntryBrick';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Masonry from 'react-masonry-component';
 

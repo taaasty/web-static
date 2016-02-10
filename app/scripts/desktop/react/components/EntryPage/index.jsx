@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
 
-import EntryTlog from '../Entry/EntryTlog/EntryTlog';
+import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
 
 class EntryPageContainer extends Component {

@@ -1,8 +1,9 @@
-/*global ga, TastyLockingAlertController */
+/*global ga */
 import Api from '../api/api';
 import ApiHelpers from '../../../shared/helpers/api';
 import ErrorService from '../../../shared/react/services/Error';
 import NoticeService from '../services/Notice';
+import TastyLockingAlertController from '../controllers/TastyLockingAlertController';
 
 let FlowActionCreators = {
   create({name, title, picFile, staffs}) {

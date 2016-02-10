@@ -121,7 +121,6 @@ global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolb
 require './react/components/shellboxes/confirm_registration'
 
 require './react/components/shellbox_layer'
-require './react/components/buttons/load_more'
 
 require './react/components/relationship_buttons/mixins/relationship'
 require './react/components/relationship_buttons/follow_button'
@@ -141,7 +140,7 @@ require './react/components/popup/spinner'
 require './react/components/popup/header'
 
 global.Feed = require './react/components/Feed/Feed'
-global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
+global.EntryTlog = require './react/components/EntryTlog'
 global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
 global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
@@ -193,12 +192,10 @@ global.Voting = require './react/components/common/Voting';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
-require './react/components/alerts/tasty_locking_alert'
 
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
-require './react/controllers/tasty_locking_alert'
 
 require './react/controllers/shellbox'
 require './react/controllers/popup'
