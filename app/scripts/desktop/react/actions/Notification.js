@@ -1,13 +1,14 @@
+/*global NoticeService */
 import Api from '../api/api';
 import NotificationConstants from '../constants/notification';
 import AppDispatcher from '../dispatchers/dispatcher';
 
-let NotificationActionCreators = {
+const NotificationActionCreators = {
   load() {
     // async setState workaround
-    setTimeout(function() {
+    window.setTimeout(function() {
       AppDispatcher.handleViewAction({
-        type: NotificationConstants.LOAD
+        type: NotificationConstants.LOAD,
       });
     }, 0);
 
@@ -16,13 +17,13 @@ let NotificationActionCreators = {
         let { notifications, total_count: totalCount } = response;
         AppDispatcher.handleServerAction({
           notifications, totalCount,
-          type: NotificationConstants.LOAD_SUCCESS
+          type: NotificationConstants.LOAD_SUCCESS,
         });
       })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);
         AppDispatcher.handleServerAction({
-          type: NotificationConstants.LOAD_ERROR
+          type: NotificationConstants.LOAD_ERROR,
         });
       });
   },
@@ -32,7 +33,7 @@ let NotificationActionCreators = {
       .then((notification) => {
         AppDispatcher.handleServerAction({
           notification,
-          type: NotificationConstants.MARK_AS_READ_SUCCESS
+          type: NotificationConstants.MARK_AS_READ_SUCCESS,
         });
       })
       .fail((xhr) => {
@@ -42,7 +43,7 @@ let NotificationActionCreators = {
 
   loadMore(sinceID) {
     AppDispatcher.handleViewAction({
-      type: NotificationConstants.LOAD_MORE
+      type: NotificationConstants.LOAD_MORE,
     });
 
     Api.notifications.load(sinceID)
@@ -50,16 +51,16 @@ let NotificationActionCreators = {
         let { notifications, total_count: totalCount } = response;
         AppDispatcher.handleServerAction({
           notifications, totalCount,
-          type: NotificationConstants.LOAD_MORE_SUCCESS
+          type: NotificationConstants.LOAD_MORE_SUCCESS,
         });
       })
       .fail((xhr) => {
         NoticeService.errorResponse(xhr);
         AppDispatcher.handleServerAction({
-          type: NotificationConstants.LOAD_MORE_ERROR
+          type: NotificationConstants.LOAD_MORE_ERROR,
         });
       });
-  }
+  },
 };
 
 export default NotificationActionCreators;

@@ -9,24 +9,12 @@ const MessagesPopupActions = {
     });
   },
   
-  closeNotificationsPopup() {
-    messagingService.closeNotificationsPopup();
-  },
-
   openMessagesPopup() {
     messagingService.openMessagesPopup();
   },
 
-  openNotificationsPopup() {
-    messagingService.openNotificationsPopup();
-  },
-
   toggleMessagesPopup() {
     messagingService.toggleMessagesPopup();
-  },
-
-  toggleNotificationsPopup() {
-    messagingService.toggleNotificationsPopup();
   },
 
   openConversationList() {
