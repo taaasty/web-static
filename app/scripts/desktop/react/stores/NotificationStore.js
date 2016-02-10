@@ -3,13 +3,13 @@ import BaseStore from './BaseStore';
 import NotificationConstants from '../constants/notification';
 import AppDispatcher from '../dispatchers/dispatcher';
 
-let _notifications = {},
-    _everythingLoaded = false,
-    _loading = false,
-    _loadingMore = false,
-    _error = false;
+let _notifications = {};
+let _everythingLoaded = false;
+let _loading = false;
+let _loadingMore = false;
+let _error = false;
 
-let NotificationStore = Object.assign(new BaseStore(), {
+const NotificationStore = Object.assign(new BaseStore(), {
   getAll() {
     return _notifications;
   },
@@ -37,11 +37,11 @@ let NotificationStore = Object.assign(new BaseStore(), {
 
   isError() {
     return _error;
-  }
+  },
 });
 
 NotificationStore.dispatchToken = AppDispatcher.register((payload) => {
-  let { action } = payload;
+  const { action } = payload;
 
   switch(action.type) {
     case NotificationConstants.LOAD:

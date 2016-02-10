@@ -1,6 +1,7 @@
 ErrorService = require '../../../../../shared/react/services/Error';
 NoticeService = require '../../..//services/Notice';
 CurrentUserViewActions = require '../../../actions/view/current_user'
+TastyLockingAlertController = require '../../../controllers/TastyLockingAlertController';
 
 SettingsMixin =
 

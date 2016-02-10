@@ -1,3 +1,4 @@
+/*global NoticeService, i18n, ga */
 import _ from 'lodash';
 import Api from '../api/api';
 import EditorConstants from '../constants/editor';
@@ -6,6 +7,7 @@ import AppDispatcher from '../dispatchers/dispatcher';
 import UuidService from '../../../shared/react/services/uuid';
 import ApiHelpers from '../../../shared/helpers/api';
 import BrowserHelpers from '../../../shared/helpers/browser';
+import TastyLockingAlertController from '../controllers/TastyLockingAlertController';
 
 function createBlobAttachment(image, uuid) {
   return {

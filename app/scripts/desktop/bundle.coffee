@@ -63,27 +63,12 @@ require './react/components/transition/timeout_transition_group'
 
 global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
 require './react/messaging/stores/connection_state'
-require './react/messaging/stores/notifications'
 
 # /*==========  Control structures  ==========*/
 
 require './react/messaging/messaging_service'
 require './react/messaging/messaging_requester'
 require './react/messaging/messaging_testing'
-
-# /*==========  Actions  ==========*/
-
-require './react/messaging/actions/notification'
-
-# /*==========  Components  ==========*/
-
-require './react/messaging/components/toolbars/indicators/indicators'
-require './react/messaging/components/toolbars/indicators/messages'
-require './react/messaging/components/toolbars/indicators/notifications'
-require './react/messaging/components/notifications_popup/notifications_popup'
-require './react/messaging/components/notifications_popup/notifications/notifications'
-require './react/messaging/components/notifications_popup/notifications/notification'
-require './react/messaging/components/notifications_popup/notifications/empty'
 
 # /*-----  End of Messaging resources  ------*/
 
@@ -121,7 +106,6 @@ global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolb
 require './react/components/shellboxes/confirm_registration'
 
 require './react/components/shellbox_layer'
-require './react/components/buttons/load_more'
 
 require './react/components/relationship_buttons/mixins/relationship'
 require './react/components/relationship_buttons/follow_button'
@@ -141,7 +125,7 @@ require './react/components/popup/spinner'
 require './react/components/popup/header'
 
 global.Feed = require './react/components/Feed/Feed'
-global.EntryTlog = require './react/components/Entry/EntryTlog/EntryTlog'
+global.EntryTlog = require './react/components/EntryTlog'
 global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
 global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
 global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
@@ -193,12 +177,10 @@ global.Voting = require './react/components/common/Voting';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
-require './react/components/alerts/tasty_locking_alert'
 
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
-require './react/controllers/tasty_locking_alert'
 
 require './react/controllers/shellbox'
 require './react/controllers/popup'

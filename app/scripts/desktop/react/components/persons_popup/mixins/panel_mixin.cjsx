@@ -41,7 +41,14 @@ window.PersonsPopup_PanelMixin =
                      </div>
 
     unless @isAllRelationshipsLoaded()
-      loadMoreButton = <LoadMoreButton onClick={ this.loadMoreData } />
+      loadMoreButton = <div className="popup__more">
+                         <button
+                           className="more-button"
+                           onClick={this.loadMoreData}
+                         >
+                           {i18n.t('load_more_button')}
+                         </button>
+                       </div>
 
     return <div className="tabs-panel">
              <div className="scroller scroller--persons" ref="scroller">

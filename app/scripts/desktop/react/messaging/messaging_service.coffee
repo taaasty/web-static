@@ -2,7 +2,7 @@ React = require 'react';
 { render, unmountComponentAtNode } = require 'react-dom';
 
 MessagingDispatcher = require './MessagingDispatcher';
-MessagesPopup = require './components/messages_popup';
+MessagesPopup = require './components/MessagesPopup';
 
 PUBLIC_CONVERSATION_PREFIX = 'public_';
 
@@ -172,16 +172,10 @@ class window.MessagingService
         console.error 'Проблема при прочтении уведомления', errMsg
 
   isMessagesPopupShown:      -> @messagesPopup?.isMounted()
-  isNotificationsPopupShown: -> @notificationsPopup?.isMounted()
 
   closeMessagesPopup: ->
     if @isMessagesPopupShown()
       unmountComponentAtNode @messagesContainer
-    return
-
-  closeNotificationsPopup: ->
-    if @isNotificationsPopupShown()
-      unmountComponentAtNode @notificationsContainer
     return
 
   openMessagesPopup: ->
@@ -189,16 +183,8 @@ class window.MessagingService
       @messagesPopup = render <MessagesPopup />, @messagesContainer
     return
 
-  openNotificationsPopup: ->
-    unless @isNotificationsPopupShown()
-      @notificationsPopup = render <NotificationsPopup />, @notificationsContainer
-    return
-
   toggleMessagesPopup: ->
     if @isMessagesPopupShown() then @closeMessagesPopup() else @openMessagesPopup()
-
-  toggleNotificationsPopup: ->
-    if @isNotificationsPopupShown() then @closeNotificationsPopup() else @openNotificationsPopup()
 
   addReconnectListener: (callback) ->
     @on @RECONNECT_EVENT, callback
