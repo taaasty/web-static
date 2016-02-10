@@ -1,5 +1,5 @@
-/*global i18n, RequesterMixin, ReactUnmountMixin */
-import React, { createClass, PropTypes } from 'react';
+/*global i18n, Popup, RequesterMixin, ReactUnmountMixin */
+import React, { createClass } from 'react';
 import Thread from './Thread';
 import ConversationsStore from '../../stores/ConversationsStore';
 import MessagesPopupStore, {
@@ -14,8 +14,8 @@ import Conversations from './Conversations';
 import TitleConversationActions from './TitleConversationActions';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
 
-const ENTER_TIMEOUT = 300;
-const LEAVE_TIMEOUT = 300;
+//const ENTER_TIMEOUT = 300;
+//const LEAVE_TIMEOUT = 300;
 
 const MessagesPopup = createClass({
   mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
@@ -31,18 +31,6 @@ const MessagesPopup = createClass({
     MessagesPopupStore.removeChangeListener(this._onStoreChange);
   },
 
-  isConversationsState() {
-    return this.state.currentState === CONVERSATIONS_STATE;
-  },
-  
-  isCreateNewConversationState() {
-    return this.state.currentState === CREATE_NEW_CONVERSATION_STATE;
-  },
-  
-  isThreadState() {
-    return this.state.currentState === THREAD_STATE;
-  },
-
   getStateFromStore() {
     return {
       currentState: MessagesPopupStore.getCurrentState(),
@@ -51,10 +39,10 @@ const MessagesPopup = createClass({
     };
   },
 
-  getTitle() {
-    const { currentConversationId } = this.state;
+  title() {
+    const { currentState, currentConversationId } = this.state;
 
-    if (this.isThreadState()) {
+    if (currentState === THREAD_STATE) {
       const conversation = ConversationsStore.getConversation(currentConversationId);
 
       if (conversation.type === PUBLIC_CONVERSATION) {
@@ -95,27 +83,21 @@ const MessagesPopup = createClass({
     this.setState(this.getStateFromStore());
   },
 
-  render() {
-    const title = this.getTitle();
-    let content, transitionName;
+  renderContents() {
+    const { currentState, currentConversationId } = this.state;
 
-    switch(this.state.currentState) {
+    switch(currentState) {
     case CONVERSATIONS_STATE:
-      content = <Conversations key="conversations" />;
-      transitionName = 'conversations';
-      break;
+      return <Conversations key="conversations" />;
     case CREATE_NEW_CONVERSATION_STATE:
-      content = <CreateNewConversation key="newConversation" />;
-      transitionName = 'new-conversation';
-      break;
+      return <CreateNewConversation key="newConversation" />;
     case THREAD_STATE:
-      content = <Thread
-                  conversationId={this.state.currentConversationId}
-                  key="thread"
-                />;
-      transitionName = 'thread';
-      break;
+      return <Thread conversationId={currentConversationId} key="thread"/>;
     }
+  },
+
+  render() {
+    const { currentState } = this.state;
 
     return (
       <Popup
@@ -125,12 +107,14 @@ const MessagesPopup = createClass({
         isDraggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
-        title={title}
+        title={this.title()}
         type="messages"
       >
         <div className="messages">
-          {!this.isConversationsState() && <BackButton onClick={this.handleBackButtonClick} />}
-          {content}
+          {currentState !== CONVERSATIONS_STATE &&
+           <BackButton onClick={this.handleBackButtonClick} />
+          }
+          {this.renderContents()}
         </div>
       </Popup>
     );

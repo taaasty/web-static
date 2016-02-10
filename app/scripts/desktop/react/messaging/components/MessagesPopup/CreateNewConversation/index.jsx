@@ -9,6 +9,9 @@ const CHOOSER_STATE = 'chooser';
 
 class CreateNewConversation extends Component {
   state = { currentState: CHOOSER_STATE };
+  componentWillMount() {
+    
+  }
   activateProcessState() {
     this.setState({ currentState: PROCESS_STATE });
   }

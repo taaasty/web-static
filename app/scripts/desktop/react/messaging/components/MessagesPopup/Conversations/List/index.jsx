@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { createClass } from 'react';
 import ConversationsStore from '../../../../stores/ConversationsStore';
-import ScrollerMixin from '../../../../../mixins/scroller';
+import Scroller from '../../../../../components/common/Scroller';
 import Empty from './Empty';
 import Item from './Item';
 import { PRIVATE_CONVERSATION } from '../../../../constants/ConversationConstants';
@@ -9,7 +9,6 @@ import { PRIVATE_CONVERSATION } from '../../../../constants/ConversationConstant
 const READ_MESSAGES_DAYS_DIVIDER = 5;
 
 const ConversationList = createClass({
-  mixins: [ ScrollerMixin ],
   getInitialState() {
     return this.getStateFromStore();
   },
@@ -59,27 +58,19 @@ const ConversationList = createClass({
     const sortedConversations = this.sortConversations(this.state.conversations);
     return (
       <div className="messages__body">
-        <div
-          className="scroller scroller--dark"
-          ref="scroller"
-        >
-          <div className="scroller__pane js-scroller-pane">
-            <div className="messages__dialogs">
-              {this.isEmpty()
-                 ? <Empty />
-                 : sortedConversations.map((conversation) => (
-                     <Item
-                       conversation={conversation}
-                       key={conversation.id}
-                     />
+        <Scroller>
+          <div className="messages__dialogs">
+            {this.isEmpty()
+               ? <Empty />
+               : sortedConversations.map((conversation) => (
+                   <Item
+                     conversation={conversation}
+                     key={conversation.id}
+                   />
                  ))
-              }
-            </div>
+            }
           </div>
-          <div className="scroller__track js-scroller-track">
-            <div className="scroller__bar js-scroller-bar" />
-          </div>
-        </div>
+        </Scroller>
       </div>
     );
   },

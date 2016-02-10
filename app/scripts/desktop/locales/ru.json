@@ -9,7 +9,7 @@
   "conversation_entry_user_profile": "Перейти в профиль",
   "conversation_entry_user_private": "Написать в личку",
   "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
-  "new_thread_placeholder": "Введите имя",
+  "new_thread_placeholder": "Начните вводить логин",
   "new_thread_button": "Написать сообщение",
   "new_thread_unknown_user": "К сожалению, мы не можем найти данного пользователя",
   "new_thread_process": "Создаю беседу…",
@@ -505,7 +505,10 @@
         "delete": "Удалить",
         "delete_everywhere": "Удалить для всех",
         "cancel": "Отмена"
-      }
+      },
+      "new_group_chat": "Создать группу",
+      "new_group_next": "Далее",
+      "new_group_done": "Готово"
     },
     "unread_load": {
       "unread_entries_count": "{{count}} новая публикация. ",

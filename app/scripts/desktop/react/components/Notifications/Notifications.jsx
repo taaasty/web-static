@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import Scroller from '../common/scroller/scroller';
+import Scroller from '../common/Scroller';
 import NotificationsNotificationList from './NotificationsNotificationList';
 import NotificationsLoadingMessage from './NotificationsLoadingMessage';
 import NotificationsErrorMessage from './NotificationsErrorMessage';
