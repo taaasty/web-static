@@ -480,7 +480,10 @@
         "delete": "Delete",
         "delete_everywhere": "Delete everywhere",
         "cancel": "Cancel"
-      }
+      },
+      "new_group_chat": "Create group chat",
+      "new_group_next": "Next",
+      "new_group_done": "Done"
     },
     "unread_load": {
       "unread_entries_count": "{{count}} new post. ",

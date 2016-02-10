@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import UserOnboardingListItem from './UserOnboardingListItem';
 import Spinner from '../../../../shared/react/components/common/Spinner';
-import Scroller from '../common/scroller/scroller';
+import Scroller from '../common/Scroller';
 
 class UserOnboardingList {
   render() {

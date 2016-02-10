@@ -164,6 +164,30 @@
   top: 35px;
 }
 
+.messages__friends-container {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 78px;
+
+  & .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+  }
+  
+  & .messages__user-name {
+    margin: 0;
+    line-height: 40px;
+  }
+
+  & .messages__dialog-text {
+    margin-bottom: 0;
+  }
+}
+
 // Message Dialogs
 .messages__dialogs {
   user-select: none;
@@ -597,6 +621,10 @@
 // Message Box
 .messages__box {
   padding: 18px 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 // Message Field
@@ -607,7 +635,7 @@
 
 // Message Chooser
 .messages__chooser {
-  margin-bottom: 13px;
+  //margin-bottom: 13px;
   position: relative;
 
   &.state--open {
@@ -742,7 +770,8 @@
   box-sizing: border-box;
 }
 
-.messages__section--dialogs {
+.messages__section--dialogs,
+.messages__section--recipients {
   padding: 43px 0 46px;
   display: block;
 }
