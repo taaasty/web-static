@@ -1,6 +1,6 @@
 import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
-import Scroller from '../common/scroller/scroller';
+import Scroller from '../common/Scroller';
 import UserToolbarToggle from './UserToolbarToggle';
 import UserToolbarHoverLine from './UserToolbarHoverLine';
 import UserToolbarPrimaryList from './UserToolbarPrimaryList';
