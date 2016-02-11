@@ -1,77 +1,47 @@
-let Scroller = React.createClass({
-  propTypes: {
-    customScroller: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    onScroll: React.PropTypes.func
-  },
+/*global $ */
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 
-  getDefaultProps() {
-    return {
-      customScroller: true
-    };
-  },
-
+class Scroller extends Component {
   componentDidMount() {
-    let scroller = this.refs.scroller;
-    let scrollerPane = this.refs.scrollerPane;
-
-    $(scrollerPane).on('DOMMouseScroll mousewheel', this.handleMouseWheel);
+    this.wheelHandler = this.handleMouseWheel.bind(this);
+    $(this.refs.scrollerPane).on('DOMMouseScroll mousewheel', this.wheelHandler);
 
     if (this.props.customScroller) {
-      this.scroller = $(scroller).baron({
+      this.scroller = $(this.refs.scroller).baron({
         scroller: '.scroller__pane',
         bar: '.scroller__bar',
         track: '.scroller__track',
         barOnCls: 'scroller--tracked',
-        pause: 0
+        pause: 0,
       });
     }
-  },
-
+  }
   componentDidUpdate() {
     if (this.scroller) {
       this.scroller.update();
     }
-  },
-
+  }
   componentWillUnmount() {
-    let scrollerPane = this.refs.scrollerPane;
-
-    $(scrollerPane).off('DOMMouseScroll mousewheel', this.handleMouseWheel);
+    $(this.refs.scrollerPane).off('DOMMouseScroll mousewheel', this.wheelHandler);
 
     if (this.scroller) {
       this.scroller.dispose();
       this.scroller = null;
     }
-  },
-
-  render() {
-    let scrollerClasses = ['scroller', 'scroller--dark', this.props.className].join(' ');
-
-    return (
-      <div className={scrollerClasses} onScroll={this.handleScroll} ref="scroller">
-        <div ref="scrollerPane" className="scroller__pane">
-          {this.props.children}
-        </div>
-        <div className="scroller__track">
-          <div className="scroller__bar" />
-        </div>
-      </div>
-    );
-  },
-
-  handleMouseWheel(e) {
-    let el = e.currentTarget,
-        scrollTop = el.scrollTop,
-        scrollHeight = el.scrollHeight,
-        height = $(el).height(),
-        delta = (e.type === 'DOMMouseScroll' ? e.originalEvent.detail * -40 : e.originalEvent.wheelDelta),
-        up = delta > 0;
+  }
+  handleMouseWheel(ev) {
+    const el = ev.currentTarget;
+    const scrollTop = el.scrollTop;
+    const scrollHeight = el.scrollHeight;
+    const height = $(el).height();
+    const delta = (ev.type === 'DOMMouseScroll' ? ev.originalEvent.detail * -40 : ev.originalEvent.wheelDelta);
+    const up = delta > 0;
 
     function prevent() {
-      e.stopPropagation();
-      e.preventDefault();
-      e.returnValue = false;
+      ev.stopPropagation();
+      ev.preventDefault();
+      ev.returnValue = false;
       return false;
     }
 
@@ -82,13 +52,45 @@ let Scroller = React.createClass({
       $(el).scrollTop(0);
       return prevent();
     }
-  },
-
-  handleScroll(e) {
+  }
+  handleScroll(ev) {
     if (this.props.onScroll) {
-      this.props.onScroll(e);
+      this.props.onScroll(ev);
     }
   }
-});
+  render() {
+    const { children, className } = this.props;
+    const scrollerClasses = classNames('scroller', 'scroller--dark', className);
+
+    return (
+        <div
+          className={scrollerClasses}
+          onScroll={this.handleScroll.bind(this)}
+          ref="scroller"
+        >
+        <div className="scroller__pane" ref="scrollerPane">
+          {children}
+        </div>
+        <div className="scroller__track">
+          <div className="scroller__bar" />
+        </div>
+      </div>
+    );
+  }
+}
+
+Scroller.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  className: PropTypes.string,
+  customScroller: PropTypes.bool,
+  onScroll: PropTypes.func,
+};
+
+Scroller.defaultProps = {
+  customScroller: true,
+};
 
 export default Scroller;

@@ -75,6 +75,10 @@ class Thread extends Component {
       'messages__section--thread': true,
       'messages__section--select': selectState,
     });
+    const listClasses = classNames({
+      'messages__body': true,
+      'message--select-mode': selectState,
+    });
     
     return (
       <div className={containerClasses}>
@@ -84,7 +88,7 @@ class Thread extends Component {
             onClick={this.onClickHeader.bind(this, conversation.entry)}
             url={conversation.entry.url}
           />}
-        <div className="messages__body" style={threadStyles}>
+        <div className={listClasses} style={threadStyles}>
           <div className="messages__thread-overlay" />
           <MessageList conversationId={id} selectState={selectState} />
         </div>

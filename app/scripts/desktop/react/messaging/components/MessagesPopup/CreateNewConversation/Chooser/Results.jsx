@@ -68,8 +68,8 @@ const Results = createClass({
     });
   },
 
-  getSelectedUserId() {
-    return this.state.predictedUsers[this.state.selectedUserIndex].id;
+  getSelectedUser() {
+    return this.state.predictedUsers[this.state.selectedUserIndex];
   },
 
   _moveHighlight(delta) {
