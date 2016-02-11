@@ -39,7 +39,18 @@ class Chooser extends Component {
   activateCloseState() {
     this.setState({ currentState: CLOSE_STATE });
   }
-  handleSubmit(id) {
+  handleSubmit(user) {
+    const { selectState, users } = this.state;
+
+    if (selectState) {
+      if (!users.filter((u) => u.id === user.id).length) {
+        this.setState({ users: [ ...users, user ]});
+      }
+    } else {
+      this.props.onSubmit(user.id);
+    }
+  }
+  handleClickUser(id) {
     const { selectState, selectedIds } = this.state;
 
     if (selectState) {
@@ -56,7 +67,7 @@ class Chooser extends Component {
     const { selectState } = this.state;
 
     if (selectState) {
-      console.log('create chat');
+      console.log('create chat'); //TODO
       this.setState({ selectState: false });
     } else {
       this.setState({ selectState: true });
@@ -70,7 +81,7 @@ class Chooser extends Component {
     });
     const friendsClasses = classNames({
       'messages__friends-container': true,
-      '--select-state': selectState,
+      'message--select-mode': selectState,
     });
 
     return (
@@ -89,7 +100,7 @@ class Chooser extends Component {
         <div className={friendsClasses}>
           <UserList
             loading={loading}
-            onClick={this.handleSubmit.bind(this)}
+            onClick={this.handleClickUser.bind(this)}
             selectState={selectState}
             selectedIds={selectedIds}
             users={users}
