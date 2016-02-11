@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { createClass, PropTypes } from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Results from './Results';
@@ -7,7 +8,7 @@ const Dropdown = createClass({
     onCancel: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
   },
-  mixins: [LinkedStateMixin],
+  mixins: [ LinkedStateMixin ],
 
   getInitialState() {
     return { query: '' };
@@ -17,15 +18,21 @@ const Dropdown = createClass({
     this.refs.chooserInput.focus();
   },
 
+  handleSubmit(data) {
+    this.setState({ query: '' });
+    this.props.onSubmit(data);
+    this.refs.chooserInput.focus();
+  },
+
   handleKeyDown(e) {
-    const { onCancel, onSubmit } = this.props;
+    const { onCancel } = this.props;
     const chooserResults = this.refs.chooserResults;
 
     switch (e.key) {
     case 'Enter':
       e.preventDefault();
       if (chooserResults) {
-        onSubmit(chooserResults.getSelectedUserId());
+        this.handleSubmit(chooserResults.getSelectedUser());
       }
       break;
     case 'Escape':
@@ -51,13 +58,14 @@ const Dropdown = createClass({
         <input
           className="messages__chooser-input"
           onKeyDown={this.handleKeyDown}
+          placeholder={i18n.t('new_thread_placeholder')}
           ref="chooserInput"
           type="text"
           valueLink={this.linkState('query')}
         />
         {query && 
          <Results
-           onSubmit={this.props.onSubmit}
+           onSubmit={this.handleSubmit}
            query={query}
            ref="chooserResults"
          />
