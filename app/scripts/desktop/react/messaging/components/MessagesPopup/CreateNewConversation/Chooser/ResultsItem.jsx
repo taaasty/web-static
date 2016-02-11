@@ -11,7 +11,7 @@ function ResultsItem({ onClick, predictedUser, selected }) {
   function handleClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    onClick(predictedUser.id);
+    onClick(predictedUser);
   }
 
   return (

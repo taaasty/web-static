@@ -164,6 +164,8 @@
   top: 35px;
 }
 
+
+// group chat
 .messages__friends-container {
   position: relative;
   height: 100%;
@@ -186,7 +188,33 @@
   & .messages__dialog-text {
     margin-bottom: 0;
   }
+
+
+  & .message--container {
+    padding: 0;
+    border-bottom: 1px solid rgba(red(@black), green(@black), blue(@black), .05);
+
+    & .messages__dialog {
+      border-bottom: none;
+    }
+
+    & .message__selector {
+      top: 50%;
+      margin-top: -12px;
+      left: 15px;
+      background-color: rgba(red(@black), green(@black), blue(@black), .1);
+    }
+  }
+
+  &.message--select-mode .message--container {
+    padding-left: 40px;
+
+    &.message--selected {
+      background-color: initial;
+    }
+  }
 }
+
 
 // Message Dialogs
 .messages__dialogs {
@@ -863,7 +891,7 @@
   position: relative;
   padding: 12px 0;
 
-  &.message--select-mode {
+  .message--select-mode & {
     cursor: pointer;
     &:before {
       content: '';
@@ -897,24 +925,6 @@
   padding: 0 44px 0 60px;
   position: relative;
 
-  .message__selector {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    text-align: center;
-    color: @white;
-    background-color: @white;
-    border-radius: 50%;
-
-    .icon {
-      position: relative;
-      top: 2px;
-    }
-  }
-
   .messages__date {
     color: #fff;
   }
@@ -935,6 +945,25 @@
     }
   }
 }
+
+.message__selector {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: @white;
+  background-color: @white;
+  border-radius: 50%;
+
+  .icon {
+    position: relative;
+    top: 2px;
+  }
+}
+
 
 .message-form {
   padding: 20px 15px 7px 15px;

@@ -5,8 +5,8 @@ import { CONVERSATION_PIC_SIZE } from '../../Conversations/List/Item';
 
 function UserListItem({ onClick, selected, user }) {
   const containerClasses = classNames({
-    'messages__friend': true,
-    '--selected': selected,
+    'message--container': true,
+    'message--selected': selected,
   });
 
   return (

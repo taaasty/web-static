@@ -107,7 +107,7 @@ const Item = createClass({
       ? <span className="messages__user-name">
           <a
             href={tlog_url}
-            onClick={this.handleClickUser.bind(this)}
+            onClick={this.handleClickUser}
             target="_blank"
           >
             {slug}
@@ -122,7 +122,7 @@ const Item = createClass({
     return this.isIncoming()
       ? <a
           href={user.tlog_url}
-          onClick={this.handleClickUser.bind(this)}
+          onClick={this.handleClickUser}
           target="_blank"
         >
           <span className="messages__user-avatar">
@@ -141,7 +141,6 @@ const Item = createClass({
     });
     const containerClasses = classnames({
       'message--container': true,
-      'message--select-mode': selectState,
       'message--selected': selected,
     });
 
