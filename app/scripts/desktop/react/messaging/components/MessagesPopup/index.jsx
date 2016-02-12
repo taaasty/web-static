@@ -6,11 +6,15 @@ import MessagesPopupStore, {
   CONVERSATIONS_STATE,
   CREATE_NEW_CONVERSATION_STATE,
   THREAD_STATE,
+  GROUP_SETTINGS_STATE,
+  GROUP_CHOOSER_STATE,
 } from '../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
 import CreateNewConversation from './CreateNewConversation';
 import Conversations from './Conversations';
+import GroupSettings from './GroupSettings';
+import GroupChooser from './GroupChooser';
 import TitleConversationActions from './TitleConversationActions';
 import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
 
@@ -76,7 +80,7 @@ const MessagesPopup = createClass({
   },
 
   handleBackButtonClick() {
-    MessagesPopupActions.openConversationList();
+    MessagesPopupActions.backButtonClick();
   },
 
   _onStoreChange() {
@@ -93,6 +97,10 @@ const MessagesPopup = createClass({
       return <CreateNewConversation key="newConversation" />;
     case THREAD_STATE:
       return <Thread conversationId={currentConversationId} key="thread"/>;
+    case GROUP_SETTINGS_STATE:
+      return <GroupSettings key="groupSettings" />;
+    case GROUP_CHOOSER_STATE:
+      return <GroupChooser key="groupChooser" />;
     }
   },
 
