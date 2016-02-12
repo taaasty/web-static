@@ -54,7 +54,6 @@ class CreateNewConversation extends Component {
     
     return (
       <div className="messages__section messages__section--recipients">
-        <div className="messages__body">
           {currentState === PROCESS_STATE
            ? <LoadingMessage content={i18n.t('new_thread_process')} />
            : <Chooser
@@ -69,7 +68,6 @@ class CreateNewConversation extends Component {
             onClick={this.newGroupChat.bind(this)}
             text={i18n.t('buttons.messenger.new_group_chat')}
           />
-        </div>
       </div>
     );
   }

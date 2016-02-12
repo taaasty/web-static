@@ -28,21 +28,19 @@ class GroupChooser extends Component {
     const { selectedIds, settings: { users } } = this.state;
 
     return (
-      <div className="messages__section messages__section--group-settings">
-        <div className="messages__body">
-          <Chooser
-            onClickUser={this.handleClickUser}
-            onSubmit={this.handleSubmit}
-            selectState
-            selectedIds={selectedIds}
-            users={users}
-          />
+      <div className="messages__section messages__section--group-chooser">
+        <Chooser
+          onClickUser={this.handleClickUser}
+          onSubmit={this.handleSubmit}
+          selectState
+          selectedIds={selectedIds}
+          users={users}
+        />
         <FooterButton
-            disabled={!selectedIds.length}
-            onClick={this.handleClickChooserButton}
-            text={i18n.t('buttons.messenger.new_group_next')}
-          />
-        </div>
+          disabled={!selectedIds.length}
+          onClick={this.handleClickChooserButton}
+          text={i18n.t('buttons.messenger.new_group_next')}
+        />
       </div>
     );
   }

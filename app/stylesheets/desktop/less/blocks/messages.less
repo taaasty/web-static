@@ -169,8 +169,6 @@
 .messages__friends-container {
   position: relative;
   height: 100%;
-  box-sizing: border-box;
-  padding-top: 78px;
 
   & .spinner {
     position: absolute;
@@ -800,9 +798,88 @@
 
 .messages__section--dialogs,
 .messages__section--recipients,
-.messages__section--group-settings {
+.messages__section--group-chooser {
   padding: 43px 0 46px;
   display: block;
+}
+
+.messages__section--recipients,
+.messages__section--group-chooser {
+  .messages__chooser-container {
+    position: relative;
+    height: 100%;
+
+    .messages__body {
+      padding-top: 78px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.messages__section--group-settings {
+  position: relative;
+  padding: 43px 0 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  .messages__body {
+    height: initial;
+    flex: 1;
+
+    .messages__friends-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .messages__dialog {
+    padding: 12px 15px 12px 65px;
+    cursor: initial;
+  }
+  
+  .messages__user-avatar .icon {
+    font-size: 40px;
+  }
+
+  .messages__group-avatar-input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    opacity: .01;
+    cursor: pointer;
+  }
+
+  .messages__dialog-text.--group-header {
+    position: relative;
+    line-height: 40px;
+    z-index: 10;
+
+    input {
+      width: 100%;
+      border: none;
+    }
+  }
+}
+
+.messages__group-list-container {
+  position: relative;
+  padding: 15px;
+  line-height: 40px;
+
+  .messages__group-list-header {
+    display: inline-block;
+    padding-right: 100px;
+  }
+
+  .button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
 }
 
 .messages__section--thread {
