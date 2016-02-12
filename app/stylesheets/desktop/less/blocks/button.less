@@ -294,10 +294,10 @@
 .button--outline {
   .button-outline-style(@white);
 
-  &.button--gray {
+  &.button--gray,
+  &.button--black {
     background-color: @white;
     border: 1px solid #b2b2b2;
-    color: #b2b2b2 !important;
 
     &:before {
       display: none;
@@ -306,6 +306,14 @@
     .icon {
       opacity: 1;
     }
+  }
+
+  &.button--gray {
+    color: #b2b2b2 !important;
+  }
+
+  &.button--black {
+    color: @black !important;
   }
 }
 

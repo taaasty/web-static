@@ -1,12 +1,13 @@
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
 
-let settings = {
+const initSettings = {
   users: [],
-  avatar_url: null,
-  topic: null,
+  avatar: null,
+  topic: '',
   admin: {},
 };
+let settings = initSettings;
 let isFetching = false;
 let selectedIds = [];
 
@@ -25,11 +26,11 @@ const GroupSettingsStore = Object.assign(
       const isNew = !data.id;
       selectedIds = isNew ? [] : data.users.map((u) => u.id);
       isFetching = false;
-      settings = data;
+      settings = { ...initSettings, ...data };
     },
 
-    setSettings(data) {
-      settings = data;
+    updateSettings(data) {
+      settings = { ...settings, ...data };
     },
 
     addUser(user) {
@@ -58,8 +59,8 @@ GroupSettingsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     GroupSettingsStore.setCurrentState(action.payload);
     GroupSettingsStore.emitChange();
     break;
-  case 'groupSettingsSetSettings':
-    GroupSettingsStore.setSettings(action.payload);
+  case 'groupSettingsUpdateSettings':
+    GroupSettingsStore.updateSettings(action.payload);
     GroupSettingsStore.emitChange();
     break;
   case 'groupSettingsToggleSelectedId':

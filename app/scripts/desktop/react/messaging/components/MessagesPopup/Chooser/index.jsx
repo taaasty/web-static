@@ -29,7 +29,7 @@ class Chooser extends Component {
     });
 
     return (
-      <div className="messages__body">
+      <div className="messages__chooser-container">
         <div className="messages__box">
           <div className={chooserClasses}>
             {currentState === CLOSE_STATE
@@ -41,14 +41,16 @@ class Chooser extends Component {
             }
           </div>
         </div>
-        <div className={friendsClasses}>
-          <UserList
-            loading={loading}
-            onClick={onClickUser}
-            selectState={selectState}
-            selectedIds={selectedIds}
-            users={users}
-          />
+        <div className="messages__body">
+          <div className={friendsClasses}>
+            <UserList
+              loading={loading}
+              onClick={onClickUser}
+              selectState={selectState}
+              selectedIds={selectedIds}
+              users={users}
+            />
+          </div>
         </div>
       </div>
     );
