@@ -23,6 +23,12 @@ const MessagesPopupActions = {
     });
   },
 
+  backButtonClick() {
+    MessagingDispatcher.handleViewAction({
+      type: 'backButtonClick',
+    });
+  },
+
   startSelect() {
     MessagingDispatcher.handleViewAction({
       type: 'startSelect',
@@ -32,6 +38,34 @@ const MessagesPopupActions = {
   stopSelect() {
     MessagingDispatcher.handleViewAction({
       type: 'stopSelect',
+    });
+  },
+
+  openGroupSettings(data) {
+    MessagingDispatcher.handleViewAction({
+      type: 'groupSettingsInit',
+      payload: data,
+    });
+    this.showGroupSettings();
+  },
+
+  openGroupChooser(data) {
+    MessagingDispatcher.handleViewAction({
+      type: 'groupSettingsInit',
+      payload: data,
+    });
+    this.showGroupChooser();
+  },
+
+  showGroupSettings() {
+    MessagingDispatcher.handleViewAction({
+      type: 'showGroupSettings',
+    });
+  },
+
+  showGroupChooser() {
+    MessagingDispatcher.handleViewAction({
+      type: 'showGroupChooser',
     });
   },
 };
