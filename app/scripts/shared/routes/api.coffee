@@ -88,8 +88,10 @@ ApiRoutes =
   # Messenger
   messenger_ready_url: ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/ready"
-  messengerConversationById: (id) ->
+  messengerConversationsById: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}"
+  messengerConversationsByIdLeave: (id) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/leave.json"
   messengerConversationsByUserId: (userId) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_id/#{userId}"
   messengerDeleteMessages: (id) ->
@@ -100,6 +102,8 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages"
   messenger_read_messages_url: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/read"
+  messengerConversationsByUserIds: () ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_ids.json"
 
   # Notifications
   notificationsUrl:             -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/notifications"

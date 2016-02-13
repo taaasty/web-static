@@ -27,7 +27,11 @@ class CreateNewConversation extends Component {
         }
       })
       .fail((error) => NoticeService.errorResponse(error))
-      .then(() => this.setState({ loading: false }));
+      .then(() => {
+        if (this.mounted) {
+          this.setState({ loading: false });
+        }
+      });
   }
   componentWillUnmount() {
     this.mounted = false;

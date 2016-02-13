@@ -17,6 +17,7 @@
   "messages_popup_title": "My messages",
   "messages_thread_title": "Talk with{{slug}}",
   "messages_entry_title": "Post discussion",
+  "messages_group_title": "Group chat",
   "messages_public_users": "{{count}} user",
   "messages_public_users_plural": "{{count}} users",
   "messages_public_conversation_title": "Post discussion",
@@ -522,10 +523,21 @@
       "disturb": "Disturb",
       "dont_disturb": "Don't disturb",
       "start_select_mode": "Select messages",
-      "delete_conversation": "Delete conversation"
+      "delete_conversation": "Delete conversation",
+      "leave_conversation": "Leave conversation",
+      "leave_group": "Leave group chat",
+      "group_settings": "Settings"
     },
     "request": {
-      "conversation_delete_success": "Conversation successfully deleted"
+      "conversation_delete_success": "Conversation successfully deleted",
+      "conversation_leave_success": "Conversation successfully left"
+    },
+    "group": {
+      "users": "Single user",
+      "users_plural": "{{count}} users",
+      "topic_placeholder": "Group chat topic",
+      "user_list": "User list",
+      "users_edit": "Edit"
     }
   }
 }

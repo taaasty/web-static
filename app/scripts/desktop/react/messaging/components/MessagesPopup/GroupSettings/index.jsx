@@ -18,8 +18,15 @@ class GroupSettings extends Component {
     GroupSettingsStore.removeChangeListener(this.syncStateWithStore);
   }
   handleSaveSettings() {
-    if (!this.state.isFetching) {
-      GroupSettingsActions.saveSettings(this.state.settings);
+    const { isFetching, selectedIds, settings: { avatar, id, topic } } = this.state;
+
+    if (!isFetching) {
+      GroupSettingsActions.saveSettings({
+        id,
+        topic,
+        avatar: avatar && avatar.file,
+        ids: selectedIds.join(','),
+      });
     }
   }
   handleClickEditUsers() {
@@ -35,13 +42,13 @@ class GroupSettings extends Component {
         <GroupHeaderForm avatar={settings.avatar} topic={settings.topic} />
         <div className="messages__group-list-container">
           <div className="messages__group-list-header">
-            {i18n.t('Список участников')}
+            {i18n.t('messenger.group.user_list')}
           </div>
           <span
             className="button button--outline button--black"
             onClick={this.handleClickEditUsers}
           >
-            {i18n.t('Изменить')}
+            {i18n.t('messenger.group.users_edit')}
           </span>
         </div>
         <div className="messages__body">

@@ -116,6 +116,18 @@ class window.MessagingService
       )
       .fail((err) -> NoticeService.errorResponse(err))
 
+  leaveConversation: (conversationId) ->
+    this.requester.leaveConversation(conversationId)
+      .done((data) ->
+        MessagingDispatcher.handleServerAction({
+          type: 'deleteConversation',
+          id: conversationId,
+        });
+        NoticeService.notifySuccess(i18n.t('messenger.request.conversation_leave_success'))
+        return data;
+      )
+      .fail((err) -> NoticeService.errorResponse(err))
+
   deleteMessages: (conversationId, msgIds, all=false) ->
     this.requester.deleteMessages(conversationId, msgIds, all)
       .done((data) ->

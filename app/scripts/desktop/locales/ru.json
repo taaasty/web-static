@@ -18,6 +18,7 @@
   "messages_popup_title": "Сообщения",
   "messages_thread_title": "Переписка с {{slug}}",
   "messages_entry_title": "Обсуждение записи",
+  "messages_group_title": "Групповой чат",
   "messages_public_users": "{{count}} участник",
   "messages_public_users_2": "{{count}} участника",
   "messages_public_users_5": "{{count}} участников",
@@ -548,10 +549,22 @@
       "disturb": "Беспокоить",
       "dont_disturb": "Не беспокоить",
       "start_select_mode": "Выбрать сообщения",
-      "delete_conversation": "Удалить переписку"
+      "delete_conversation": "Удалить переписку",
+      "leave_conversation": "Покинуть обсуждение",
+      "leave_group": "Покинуть обсуждение",
+      "group_settings": "Настройки группового чата"
     },
     "request": {
-      "conversation_delete_success": "Переписка удалена"
+      "conversation_delete_success": "Переписка удалена",
+      "conversation_leave_success": "Вы покинули обсуждение"
+    },
+    "group": {
+      "users": "{{count}} участник",
+      "users_2": "{{count}} участника",
+      "users_5": "{{count}} участников",
+      "topic_placeholder": "Название групповой беседы",
+      "user_list": "Список участников",
+      "users_edit": "Изменить"
     }
   }
 }
