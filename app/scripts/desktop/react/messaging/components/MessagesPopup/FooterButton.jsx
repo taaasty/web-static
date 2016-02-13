@@ -33,7 +33,10 @@ function FooterButton({ disabled, onClick, text }) {
 FooterButton.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default FooterButton;

@@ -29,8 +29,16 @@ const GroupSettingsStore = Object.assign(
       settings = { ...initSettings, ...data };
     },
 
+    reset() {
+      settings = initSettings;
+    },
+
     updateSettings(data) {
       settings = { ...settings, ...data };
+    },
+
+    fetching(flag) {
+      isFetching = flag;
     },
 
     addUser(user) {
@@ -69,6 +77,14 @@ GroupSettingsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'groupSettingsAddUser':
     GroupSettingsStore.addUser(action.payload);
+    GroupSettingsStore.emitChange();
+    break;
+  case 'groupSettingsRequest':
+    GroupSettingsStore.fetching(action.payload);
+    GroupSettingsStore.emitChange();
+    break;
+  case 'closeGroupSettings':
+    GroupSettingsStore.reset();
     GroupSettingsStore.emitChange();
     break;
   }

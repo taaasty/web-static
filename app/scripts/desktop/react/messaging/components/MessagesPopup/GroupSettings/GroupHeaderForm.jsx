@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
 import GroupSettingsActions from '../../../actions/GroupSettingsActions';
@@ -5,11 +6,14 @@ import GroupSettingsActions from '../../../actions/GroupSettingsActions';
 class GroupHeaderForm extends Component {
   handleAvatarChange(ev) {
     const reader = new window.FileReader();
+    const file = ev.target.files[0];
+
     reader.onload = (ev) => {
       const img = new window.Image();
       img.onload = () => {
         GroupSettingsActions.updateSettings({
           avatar: {
+            file,
             isFile: true,
             url: ev.target.result,
             geometry: {
@@ -21,7 +25,8 @@ class GroupHeaderForm extends Component {
       };
       img.src = ev.target.result;
     };
-    reader.readAsDataURL(ev.target.files[0]);
+
+    reader.readAsDataURL(file);
   }
   handleTopicChange(ev) {
     GroupSettingsActions.updateSettings({ topic: ev.target.value });
@@ -49,7 +54,7 @@ class GroupHeaderForm extends Component {
             <div className="messages__topic-name">
               <input
                 onChange={this.handleTopicChange}
-                placeholder={"Название групповой беседы"}
+                placeholder={i18n.t('messenger.group.topic_placeholder')}
                 type="text"
                 value={topic}
               />

@@ -1,7 +1,6 @@
-/*global i18n, Popup, RequesterMixin, ReactUnmountMixin */
+/*global Popup, RequesterMixin, ReactUnmountMixin */
 import React, { createClass } from 'react';
 import Thread from './Thread';
-import ConversationsStore from '../../stores/ConversationsStore';
 import MessagesPopupStore, {
   CONVERSATIONS_STATE,
   CREATE_NEW_CONVERSATION_STATE,
@@ -15,8 +14,7 @@ import CreateNewConversation from './CreateNewConversation';
 import Conversations from './Conversations';
 import GroupSettings from './GroupSettings';
 import GroupChooser from './GroupChooser';
-import TitleConversationActions from './TitleConversationActions';
-import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
+import PopupTitle from './PopupTitle';
 
 //const ENTER_TIMEOUT = 300;
 //const LEAVE_TIMEOUT = 300;
@@ -41,42 +39,6 @@ const MessagesPopup = createClass({
       currentConversationId: MessagesPopupStore.getCurrentConversationId(),
       selectState: MessagesPopupStore.getSelectState(),
     };
-  },
-
-  title() {
-    const { currentState, currentConversationId } = this.state;
-
-    if (currentState === THREAD_STATE) {
-      const conversation = ConversationsStore.getConversation(currentConversationId);
-
-      if (conversation.type === PUBLIC_CONVERSATION) {
-        return (
-          <div className="messages__popup-title">
-            <div className="messages__popup-title-text --with-actions">
-              {i18n.t('messages_entry_title')}
-            </div>
-            <TitleConversationActions conversation={conversation} />
-          </div>
-        );
-      } else {
-        return (
-          <div className="messages__popup-title">
-            <div className="messages__popup-title-text --with-actions">
-              {i18n.t('messages_thread_title', { slug: conversation.recipient.slug })}
-            </div>
-            <TitleConversationActions conversation={conversation} />
-          </div>
-        );
-      }
-    } else {
-      return (
-        <div className="messages__popup-title">
-          <div className="messages__popup-title-text">
-            {i18n.t('messages_popup_title')}
-          </div>
-        </div>
-      );
-    }
   },
 
   handleBackButtonClick() {
@@ -105,7 +67,7 @@ const MessagesPopup = createClass({
   },
 
   render() {
-    const { currentState } = this.state;
+    const { currentConversationId, currentState } = this.state;
 
     return (
       <Popup
@@ -115,7 +77,7 @@ const MessagesPopup = createClass({
         isDraggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
-        title={this.title()}
+        title={<PopupTitle id={currentConversationId} state={currentState} />}
         type="messages"
       >
         <div className="messages">
