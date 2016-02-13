@@ -57,11 +57,33 @@ const MessagesPopupStore = Object.assign(
     },
 
     showGroupSettings() {
-      _history.push(GROUP_SETTINGS_STATE);
+      const prev = _history[_history.length - 2];
+
+      //prevent multiple cycles of chooser/settings navigation
+      if (prev === GROUP_SETTINGS_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_SETTINGS_STATE);
+      }
     },
 
     showGroupChooser() {
-      _history.push(GROUP_CHOOSER_STATE);
+      const prev = _history[_history.length -2];
+
+      if (prev === GROUP_CHOOSER_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_CHOOSER_STATE);
+      }
+    },
+
+    closeGroupSettings() {
+      _history.pop();
+      const last = _history[_history.length - 1];
+
+      if ([ GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE ].indexOf(last) > -1) {
+        _history.pop();
+      }
     },
   }
 );
@@ -112,6 +134,10 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
   case 'showGroupChooser':
     MessagesPopupStore.showGroupChooser();
     MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'closeGroupSettings':
+    MessagesPopupStore.closeGroupSettings();
     MessagesPopupStore.emitChange();
     break;
   case 'backButtonClick':
