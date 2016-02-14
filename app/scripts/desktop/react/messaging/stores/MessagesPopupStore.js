@@ -78,12 +78,7 @@ const MessagesPopupStore = Object.assign(
     },
 
     closeGroupSettings() {
-      _history.pop();
-      const last = _history[_history.length - 1];
-
-      if ([ GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE ].indexOf(last) > -1) {
-        _history.pop();
-      }
+      _history = _history.filter((e) => [ GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE ].indexOf(e) < 0);
     },
   }
 );
