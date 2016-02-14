@@ -86,7 +86,8 @@ class Thread extends Component {
     }
 
     const id = conversation.id;
-    const threadStyles  = { backgroundImage: `url(${this.backgroundUrl()})` };
+    const backgroundUrl = this.backgroundUrl();
+    const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
     const userCount = conversation.type === PUBLIC_CONVERSATION
       ? conversation.users.length
       : 0;
