@@ -46,7 +46,10 @@ class GroupSettings extends Component {
         <GroupHeaderForm avatar={settings.avatar} topic={settings.topic} />
         <div className="messages__group-list-container">
           <div className="messages__group-list-header">
-            {i18n.t('messenger.group.user_list')}
+            {settings.id
+               ? i18n.t('messenger.group.user_count', { count: users.count })
+               : i18n.t('messenger.group.user_list')
+            }
           </div>
           {isAdmin &&
            <span

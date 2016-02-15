@@ -562,6 +562,7 @@
       "users": "{{count}} участник",
       "users_2": "{{count}} участника",
       "users_5": "{{count}} участников",
+      "user_count": "Участники: {{count}}",
       "topic_placeholder": "Название групповой беседы",
       "user_list": "Список участников",
       "users_edit": "Изменить"
