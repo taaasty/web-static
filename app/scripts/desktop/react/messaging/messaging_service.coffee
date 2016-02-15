@@ -4,8 +4,6 @@ React = require 'react';
 MessagingDispatcher = require './MessagingDispatcher';
 MessagesPopup = require './components/MessagesPopup';
 
-PUBLIC_CONVERSATION_PREFIX = 'public_';
-
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'

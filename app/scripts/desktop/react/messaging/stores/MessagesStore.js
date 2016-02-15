@@ -2,7 +2,7 @@
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
 import ConversationsStore from '../stores/ConversationsStore';
-import { PUBLIC_CONVERSATION } from '../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../constants/ConversationConstants';
 
 const _messages = {};
 const _allMessagesLoaded = {};
@@ -58,7 +58,7 @@ const MessagesStore = Object.assign(
     getMessageInfo(message, conversationId) {
       const conversation = ConversationsStore.getConversation(conversationId);
       const currentUser  = CurrentUserStore.getUser();
-      if (conversation.type == PUBLIC_CONVERSATION) {
+      if ([ PUBLIC_CONVERSATION, GROUP_CONVERSATION ].indexOf(conversation.type) > -1) {
         const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[0];
 
         return ({
