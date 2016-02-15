@@ -133,7 +133,7 @@ const Item = createClass({
   },
 
   render() {
-    const { message: { content_html }, selected, selectState } = this.props;
+    const { message: { content_html }, selected } = this.props;
     const messageClasses = classnames({
       'message': true,
       'message--from': this.isOutgoing(),
