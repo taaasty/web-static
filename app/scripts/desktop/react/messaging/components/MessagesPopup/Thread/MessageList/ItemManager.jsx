@@ -4,11 +4,14 @@ import { findDOMNode } from 'react-dom';
 import MessageActions from '../../../../actions/MessageActions';
 import MessagesStore from '../../../../stores/MessagesStore';
 import Item from './Item';
+import SystemMessage from './SystemMessage';
 
 const ERROR_STATE = 'error';
 const SENT_STATE = 'sent';
 const READ_STATE = 'read';
 const SENDING_STATE = 'sending';
+
+const SYSTEM_MSG = 'SystemMessage';
 
 function isElementInViewport(el, parent) {
   const position = getElementPosition(el, parent);
@@ -131,18 +134,19 @@ const ItemManager = createClass({
   render() {
     const { message, selectState } = this.props;
     const { currentState, messageInfo, selected } = this.state;
+    const { type } = message;
 
-    return (
-      <Item
-        deliveryStatus={currentState}
-        message={message}
-        messageInfo={messageInfo}
-        onResendMessage={this.resendMessage}
-        selectState={selectState}
-        selected={selected}
-        toggleSelection={this.toggleSelection}
-      />
-    );
+    return type !== SYSTEM_MSG
+      ? <Item
+          deliveryStatus={currentState}
+          message={message}
+          messageInfo={messageInfo}
+          onResendMessage={this.resendMessage}
+          selectState={selectState}
+          selected={selected}
+          toggleSelection={this.toggleSelection}
+        />
+      : <SystemMessage message={message} />;
   },
 });
 
