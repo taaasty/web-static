@@ -14512,8 +14512,11 @@ ApiRoutes = {
   messenger_ready_url: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/ready";
   },
-  messengerConversationById: function(id) {
+  messengerConversationsById: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id;
+  },
+  messengerConversationsByIdLeave: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/leave.json";
   },
   messengerConversationsByUserId: function(userId) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_id/" + userId;
@@ -14529,6 +14532,9 @@ ApiRoutes = {
   },
   messenger_read_messages_url: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/messages/read";
+  },
+  messengerConversationsByUserIds: function() {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_ids.json";
   },
   notificationsUrl: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";
