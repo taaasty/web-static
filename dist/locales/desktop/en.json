@@ -535,6 +535,7 @@
     "group": {
       "users": "Single user",
       "users_plural": "{{count}} users",
+      "user_count": "Users: {{count}}",
       "topic_placeholder": "Group chat topic",
       "user_list": "User list",
       "users_edit": "Edit"

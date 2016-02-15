@@ -5,7 +5,7 @@ import DropdownAction from '../../../components/common/DropdownAction';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 
-class TitleConversationActions extends Component {
+class TitlePrivateConversationActions extends Component {
   disturb(flag) {
     ConversationActions.disturb(this.props.conversation.id, flag);
   }
@@ -39,7 +39,7 @@ class TitleConversationActions extends Component {
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
           <DropdownAction
-            icon="icon--not-allowed"
+            icon="icon--basket"
             key="delete-conversation"
             onClick={this.deleteConversation.bind(this)}
             title={i18n.t('messenger.title_actions.delete_conversation')}
@@ -50,8 +50,8 @@ class TitleConversationActions extends Component {
   }
 }
 
-TitleConversationActions.propTypes = {
+TitlePrivateConversationActions.propTypes = {
   conversation: PropTypes.object.isRequired,
 };
 
-export default TitleConversationActions;
+export default TitlePrivateConversationActions;
