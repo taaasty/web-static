@@ -6,6 +6,7 @@ import FooterButton from '../FooterButton';
 import GroupSettingsActions from '../../../actions/GroupSettingsActions';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import GroupSettingsStore from '../../../stores/GroupSettingsStore';
+import CurrentUserStore from '../../../../stores/current_user';
 import Spinner from '../../../../../../shared/react/components/common/Spinner';
 
 class GroupSettings extends Component {
@@ -35,6 +36,9 @@ class GroupSettings extends Component {
   render() {
     const { isFetching, selectedIds, settings } = this.state;
     const users = settings.users.filter((u) => selectedIds.indexOf(u.id) > -1);
+    const isAdmin = settings.id
+            ? settings.admin && settings.admin.id === CurrentUserStore.getUserID()
+            : true;
     const validParams = settings.topic.length && users.length;
 
     return (
@@ -44,12 +48,14 @@ class GroupSettings extends Component {
           <div className="messages__group-list-header">
             {i18n.t('messenger.group.user_list')}
           </div>
-          <span
-            className="button button--outline button--black"
-            onClick={this.handleClickEditUsers}
-          >
-            {i18n.t('messenger.group.users_edit')}
-          </span>
+          {isAdmin &&
+           <span
+             className="button button--outline button--black"
+             onClick={this.handleClickEditUsers}
+           >
+             {i18n.t('messenger.group.users_edit')}
+           </span>
+          }
         </div>
         <div className="messages__body">
           <div className="messages__friends-container">
