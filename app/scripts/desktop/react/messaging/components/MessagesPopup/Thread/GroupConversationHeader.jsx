@@ -9,7 +9,7 @@ function GroupConversationHeader({ conversation }) {
       <div className="messages__user-avatar">
         {avatar && avatar.url
          ? <ItemEntryPreviewImage image={avatar} />
-         : <i className="icon icon--instagram-circle" />
+         : <i className="icon icon--instagram-circle --group-default" />
         }
       </div>
       <div className="messages__dialog-text --group-header">

@@ -551,7 +551,7 @@
       "start_select_mode": "Выбрать сообщения",
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",
-      "leave_group": "Покинуть обсуждение",
+      "leave_group": "Покинуть группу",
       "group_settings": "Настройки группового чата"
     },
     "request": {

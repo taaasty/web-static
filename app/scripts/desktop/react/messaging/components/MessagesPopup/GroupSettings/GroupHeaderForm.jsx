@@ -39,7 +39,7 @@ class GroupHeaderForm extends Component {
         <div className="messages__user-avatar">
           {avatar && avatar.url
            ? <ItemEntryPreviewImage image={avatar} isRawUrl={avatar.isFile} />
-           : <i className="icon icon--instagram-circle" />
+           : <i className="icon icon--instagram-circle --group-default" />
           }
           <input
             accept="image/png,image/jpeg,image/gif"

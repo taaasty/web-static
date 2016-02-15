@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/UserAvatar';
 import ItemMain from './ItemMain';
-import ItemEntryPreviewImage from './ItemEntryPic';
+import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 
 class ItemGroup extends Component {
   render() {
@@ -20,7 +20,7 @@ class ItemGroup extends Component {
         <span className="messages__user-avatar">
           {avatar && avatar.url
            ? <ItemEntryPreviewImage image={avatar} />
-           : <i className="icon icon--instagram-circle" />
+           : <i className="icon icon--instagram-circle --group-default" />
           }
         </span>
         <div className="messages__dialog-text">
