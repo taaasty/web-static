@@ -24,7 +24,9 @@ const GroupSettingsStore = Object.assign(
 
     init(data) {
       const isNew = !data.id;
-      selectedIds = isNew ? [] : data.users.map((u) => u.id);
+      selectedIds = isNew
+        ? []
+        : data.users.filter((u) => data.users_left.indexOf(u.id) < 0);
       isFetching = false;
       settings = { ...initSettings, ...data };
     },

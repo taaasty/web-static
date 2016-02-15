@@ -48,7 +48,7 @@ class TitleGroupConversationActions extends Component {
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
           <DropdownAction
-            icon="icon--arrow-left"
+            icon="icon--basket"
             key="delete-conversation"
             onClick={this.leaveConversation.bind(this)}
             title={i18n.t('messenger.title_actions.leave_group')}

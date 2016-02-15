@@ -117,10 +117,6 @@ class window.MessagingService
   leaveConversation: (conversationId) ->
     this.requester.leaveConversation(conversationId)
       .done((data) ->
-        MessagingDispatcher.handleServerAction({
-          type: 'deleteConversation',
-          id: conversationId,
-        });
         NoticeService.notifySuccess(i18n.t('messenger.request.conversation_leave_success'))
         return data;
       )
