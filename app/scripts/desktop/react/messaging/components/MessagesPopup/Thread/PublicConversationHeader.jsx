@@ -1,15 +1,14 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import ConversationsListItemEntryPic from '../Conversations/List/ItemEntryPic';
-import PublicConversationActions from './PublicConversationActions';
 
 function PublicConversationHeader(props) {
   const { conversation, onClick, url } = props;
   const { title, text } = conversation.entry;
 
   return (
-    <div className="messages__dialog messages__dialog--discussion">
-      <a href={url} onClick={onClick}>
+    <a href={url} onClick={onClick}>
+      <div className="messages__dialog messages__dialog--discussion">
         <span className="messages__user-avatar">
           <ConversationsListItemEntryPic entry={conversation.entry} />
         </span>
@@ -25,9 +24,8 @@ function PublicConversationHeader(props) {
             />}
           </div>
         </div>
-      </a>
-      <PublicConversationActions conversation={conversation} />
-    </div>
+      </div>
+    </a>
   );
 }
 
