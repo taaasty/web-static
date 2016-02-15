@@ -33,6 +33,11 @@ const MessagesPopupStore = Object.assign(
     },
 
     setThreadState() {
+      _history = _history.filter((e) => [
+        CREATE_NEW_CONVERSATION_STATE,
+        GROUP_CHOOSER_STATE,
+        GROUP_SETTINGS_STATE,
+      ].indexOf(e) < 0); // remove all "selection" states before thread state
       _history.push(THREAD_STATE);
     },
 

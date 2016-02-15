@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
 
 function GroupConversationHeader({ conversation }) {
-  const { avatar, topic, users } = conversation;
+  const { avatar, topic, users, users_left } = conversation;
+  const activeUsers = users.filter((u) => users_left.indexOf(u.id) < 0)
 
   return (
     <div className="messages__dialog messages__dialog--discussion">
@@ -18,7 +19,7 @@ function GroupConversationHeader({ conversation }) {
             {topic}
           </div>
           <div className="messages__entry-text">
-            {i18n.t('messenger.group.users', { count: users.length })}
+            {i18n.t('messenger.group.users', { count: activeUsers.length })}
           </div>
         </div>
       </div>
