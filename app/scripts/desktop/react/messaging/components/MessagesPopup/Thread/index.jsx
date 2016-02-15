@@ -63,7 +63,7 @@ class Thread extends Component {
     return conversation.type === PUBLIC_CONVERSATION
       ? conversation.entry.author.design.backgroundImageUrl
       : conversation.type === GROUP_CONVERSATION
-        ? conversation.background_image.url
+        ? conversation.background_image && conversation.background_image.url
         : conversation.recipient.design.backgroundImageUrl;
   }
   renderHeader() {
