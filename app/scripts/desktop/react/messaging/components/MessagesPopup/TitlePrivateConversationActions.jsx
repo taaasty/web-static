@@ -10,6 +10,7 @@ class TitlePrivateConversationActions extends Component {
     ConversationActions.disturb(this.props.conversation.id, flag);
   }
   startSelect() {
+    this.refs.dropdown.setClose();
     MessagesPopupActions.startSelect();
   }
   deleteConversation() {
@@ -24,7 +25,7 @@ class TitlePrivateConversationActions extends Component {
 
     return (
       <div className="messages__popup-title-actions">
-        <DropdownActions>
+        <DropdownActions ref="dropdown">
           {false && <DropdownAction
             hoverTitle={disturb && i18n.t('messenger.title_actions') || null}
             icon="icon--bell"
@@ -35,7 +36,7 @@ class TitlePrivateConversationActions extends Component {
           <DropdownAction
             icon="icon--double-tick"
             key="select-mode"
-            onClick={this.startSelect}
+            onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
           <DropdownAction
