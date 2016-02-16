@@ -32,7 +32,7 @@ class GroupHeaderForm extends Component {
     GroupSettingsActions.updateSettings({ topic: ev.target.value });
   }
   render() {
-    const { avatar, topic } = this.props;
+    const { avatar, disabled, topic } = this.props;
 
     return (
       <div className="messages__dialog messages__dialog--discussion">
@@ -44,6 +44,7 @@ class GroupHeaderForm extends Component {
           <input
             accept="image/png,image/jpeg,image/gif"
             className="messages__group-avatar-input"
+            disabled={disabled}
             onChange={this.handleAvatarChange.bind(this)}
             size="10"
             type="file"
@@ -53,6 +54,7 @@ class GroupHeaderForm extends Component {
           <div className="messages__entry-data-container">
             <div className="messages__topic-name">
               <input
+                disabled={disabled}
                 onChange={this.handleTopicChange}
                 placeholder={i18n.t('messenger.group.topic_placeholder')}
                 type="text"
@@ -68,6 +70,7 @@ class GroupHeaderForm extends Component {
 
 GroupHeaderForm.propTypes = {
   avatar: PropTypes.object,
+  disabled: PropTypes.bool.isRequired,
   topic: PropTypes.string,
 };
 

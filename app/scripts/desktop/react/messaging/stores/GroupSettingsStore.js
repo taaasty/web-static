@@ -26,7 +26,9 @@ const GroupSettingsStore = Object.assign(
       const isNew = !data.id;
       selectedIds = isNew
         ? []
-        : data.users.filter((u) => data.users_left.indexOf(u.id) < 0);
+        : data.users
+            .filter((u) => data.users_left.indexOf(u.id) < 0)
+            .map((u) => u.id);
       isFetching = false;
       settings = { ...initSettings, ...data };
     },
@@ -47,6 +49,16 @@ const GroupSettingsStore = Object.assign(
       if (!settings.users.filter((u) => u.id === user.id).length) {
         settings.users = [ ...settings.users, user ];
       }
+    },
+
+    selectId(id) {
+      if (selectedIds.indexOf(id) < 0) {
+        selectedIds = [ ...selectedIds, id ];
+      }
+    },
+
+    unselectId(id) {
+      selectedIds = selectedIds.filter((e) => e !== id);
     },
 
     toggleSelectedId(id) {
@@ -75,6 +87,14 @@ GroupSettingsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'groupSettingsToggleSelectedId':
     GroupSettingsStore.toggleSelectedId(action.payload);
+    GroupSettingsStore.emitChange();
+    break;
+  case 'groupSettingsSelectId':
+    GroupSettingsStore.selectId(action.payload);
+    GroupSettingsStore.emitChange();
+    break;
+  case 'groupSettingsUnselectId':
+    GroupSettingsStore.unselectId(action.payload);
     GroupSettingsStore.emitChange();
     break;
   case 'groupSettingsAddUser':

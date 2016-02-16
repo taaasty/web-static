@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component } from 'react';
 import GroupHeaderForm from './GroupHeaderForm';
-import UserList from '../Chooser/UserList';
+import UserList from './UserList';
 import FooterButton from '../FooterButton';
 import GroupSettingsActions from '../../../actions/GroupSettingsActions';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
@@ -36,18 +36,23 @@ class GroupSettings extends Component {
   render() {
     const { isFetching, selectedIds, settings } = this.state;
     const users = settings.users.filter((u) => selectedIds.indexOf(u.id) > -1);
+    const adminId = settings.admin && settings.admin.id;
     const isAdmin = settings.id
-            ? settings.admin && settings.admin.id === CurrentUserStore.getUserID()
+            ? adminId === CurrentUserStore.getUserID()
             : true;
     const validParams = settings.topic.length && users.length;
 
     return (
       <div className="messages__section messages__section--group-settings">
-        <GroupHeaderForm avatar={settings.avatar} topic={settings.topic} />
+        <GroupHeaderForm
+          avatar={settings.avatar}
+          disabled={!isAdmin}
+          topic={settings.topic}
+        />
         <div className="messages__group-list-container">
           <div className="messages__group-list-header">
             {settings.id
-               ? i18n.t('messenger.group.user_count', { count: users.count })
+               ? i18n.t('messenger.group.user_count', { count: users.length })
                : i18n.t('messenger.group.user_list')
             }
           </div>
@@ -62,11 +67,15 @@ class GroupSettings extends Component {
         </div>
         <div className="messages__body">
           <div className="messages__friends-container">
-            <UserList users={users} />
+            <UserList
+              adminId={adminId}
+              isAdmin={isAdmin}
+              users={users}
+            />
           </div>
         </div>
         <FooterButton
-          disabled={!validParams}
+          disabled={!isAdmin || !validParams}
           onClick={this.handleSaveSettings.bind(this)}
           text={isFetching ? <Spinner size={24} /> : i18n.t('buttons.messenger.new_group_done')}
         />
