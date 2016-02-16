@@ -66,6 +66,9 @@ class Thread extends Component {
         ? conversation.background_image && conversation.background_image.url
         : conversation.recipient.design.backgroundImageUrl;
   }
+  handleClickGroupHeader() {
+    MessagesPopupActions.openGroupSettings(this.state.conversation);
+  }
   renderHeader() {
     const { conversation } = this.state;
 
@@ -76,7 +79,10 @@ class Thread extends Component {
           url={conversation.entry.url}
         />
       : conversation.type === GROUP_CONVERSATION
-        ? <GroupConversationHeader conversation={conversation} />
+        ? <GroupConversationHeader
+            conversation={conversation}
+            onClick={this.handleClickGroupHeader.bind(this)}
+          />
         : null;
   }
   render() {
