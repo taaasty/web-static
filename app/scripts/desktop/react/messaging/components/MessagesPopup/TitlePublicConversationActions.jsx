@@ -44,6 +44,10 @@ class TitlePublicConversationActions extends Component {
     }
   }
   render() {
+    if (!this.state.conversation) {
+      return <noscript />;
+    }
+
     const { can_watch, is_watching } = this.state.conversation.entry;
     const disturb = false;
 
