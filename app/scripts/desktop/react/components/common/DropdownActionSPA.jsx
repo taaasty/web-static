@@ -23,7 +23,7 @@ class DropdownAction extends Component {
         onMouseLeave={() => this.setState({ hover: false })}
         to={{pathname: uri(url).path(), state }}
       >
-        <i className={iconClasses} />
+        {!!icon && <i className={iconClasses} />}
         {this.getTitle()}
       </Link>
     );
