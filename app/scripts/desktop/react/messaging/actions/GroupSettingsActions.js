@@ -21,6 +21,20 @@ const GroupSettingsActions = {
     });
   },
 
+  selectId(id) {
+    MessagingDispatcher.handleViewAction({
+      type: 'groupSettingsSelectId',
+      payload: id,
+    });
+  },
+
+  unselectId(id) {
+    MessagingDispatcher.handleViewAction({
+      type: 'groupSettingsUnselectId',
+      payload: id,
+    });
+  },
+
   addUser(user) {
     MessagingDispatcher.handleViewAction({
       type: 'groupSettingsAddUser',

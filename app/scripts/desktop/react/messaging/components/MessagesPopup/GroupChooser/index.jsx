@@ -17,6 +17,7 @@ class GroupChooser extends Component {
   }
   handleSubmit(user) {
     GroupSettingsActions.addUser(user);
+    GroupSettingsActions.selectId(user.id);
   }
   handleClickUser({ id }) {
     GroupSettingsActions.toggleSelectedId(id);

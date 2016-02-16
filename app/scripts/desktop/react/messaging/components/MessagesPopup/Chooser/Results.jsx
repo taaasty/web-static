@@ -49,7 +49,12 @@ const Results = createClass({
   },
 
   loadPredictions(query) {
-    this.createRequest({
+    if (this.req) {
+      this.removeActiveRequest(this.req);
+      this.req.abort();
+    }
+
+    this.req = this.createRequest({
       url: ApiRoutes.users_predict(),
       method: 'GET',
       data: { query },
