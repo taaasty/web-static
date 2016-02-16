@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -13,7 +13,7 @@ class DropdownAction extends Component {
   }
   render() {
     const { icon, onClick, state, url } = this.props;
-    const iconClasses = classnames('icon', icon);
+    const iconClasses = classNames('icon', icon);
 
     return (
       <Link

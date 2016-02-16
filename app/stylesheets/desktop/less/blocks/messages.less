@@ -225,6 +225,10 @@
   user-select: none;
 }
 
+.messages__group-settings-list .messages__dialog {
+  padding: 12px
+}
+
 .messages__dialog {
   padding: 12px 60px 12px 65px;
   position: relative;
@@ -818,6 +822,39 @@
   .messages__dialog {
     padding: 12px 15px 12px 65px;
     cursor: initial;
+
+    input:disabled {
+      background-color: @white;
+    }
+    
+    &:hover {
+      background-color: inherit;
+    }
+
+    &.--with-actions {
+      padding: 12px 50px 12px 65px;
+    }
+  }
+
+  .messages__group-user-actions {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -10px;
+
+    .meta-item__dropdown {
+      margin-left: -233px;
+      &:after {
+        left: 233px;
+      }
+    }
+
+    .meta-item__dropdown-item {
+      color: @white;
+      &:hover {
+        color: @black;
+      }
+    }
   }
   
   .messages__group-avatar-input {
@@ -839,6 +876,12 @@
       width: 100%;
       border: none;
     }
+  }
+
+  .messages__dialog-admin {
+    float: right;
+    font-weight: normal;
+    color: red;
   }
 }
 

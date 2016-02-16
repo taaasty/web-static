@@ -533,12 +533,16 @@
       "conversation_leave_success": "Conversation successfully left"
     },
     "group": {
+      "admin": "admin",
       "users": "Single user",
       "users_plural": "{{count}} users",
       "user_count": "Users: {{count}}",
       "topic_placeholder": "Group chat topic",
       "user_list": "User list",
-      "users_edit": "Edit"
+      "users_edit": "Edit",
+      "to_tlog": "User tlog",
+      "conversation": "Send a message",
+      "remove_user": "Remove"
     }
   }
 }

@@ -4,10 +4,12 @@ import classNames from 'classnames';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 import MessageActions from '../../../actions/MessageActions';
+import CurrentUserStore from '../../../../stores/current_user';
+import { GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class ThreadForm extends Component {
   state = {
-    user: window.CurrentUserStore.getUser(),
+    user: CurrentUserStore.getUser(),
     hasText: false,
     files: [],
     isLoading: false,
@@ -47,14 +49,23 @@ class ThreadForm extends Component {
     this.setState({ hasText: false, files: [] });
   }
   msgReadyToSend() {
-    return (this.state.hasText || this.state.files.length);
+    const { files, hasText } = this.state;
+
+    return (hasText || files.length) && !this.shouldDisableForm();
+  }
+  shouldDisableForm() {
+    const { type, users_left=[], users_kicked=[] } = this.props.conversation;
+    const { user: { id } } = this.state;
+
+    return type === GROUP_CONVERSATION &&
+      (users_left.indexOf(id) > -1 || users_kicked.indexOf(id) > -1);
   }
   sendMessage() {
     if (this.msgReadyToSend()) {
       MessageActions.newMessage({
         content: this.form.value,
         files: this.state.files,
-        conversationId: this.props.conversationId,
+        conversationId: this.props.conversation.id,
       });
 
       this.clearForm();
@@ -62,6 +73,7 @@ class ThreadForm extends Component {
   }
   render() {
     const { userCount } = this.props;
+    const disabledInputs = this.shouldDisableForm();
 
     const buttonClasses = classNames({
       'message-form__button-send': true,
@@ -73,11 +85,12 @@ class ThreadForm extends Component {
         <div className="message-form__controls">
           <div className="message-form__textarea-container">
             <textarea
-                className="message-form__textarea"
-                onChange={this.updateFormState.bind(this)}
-                onKeyDown={this.onKeyDown.bind(this)}
-                placeholder={i18n.t('new_message_placeholder')}
-                ref="messageForm"
+              className="message-form__textarea"
+              disabled={disabledInputs}
+              onChange={this.updateFormState.bind(this)}
+              onKeyDown={this.onKeyDown.bind(this)}
+              placeholder={i18n.t('new_message_placeholder')}
+              ref="messageForm"
             />
           </div>
           <ThreadFormMediaPreview
@@ -85,7 +98,10 @@ class ThreadForm extends Component {
             onFileRemove={this.onFileRemove.bind(this)}
           />
           <div className="message-form__button-container">
-            <ThreadFormUploadButton onChange={this.onFileInputChange.bind(this)}/>
+            <ThreadFormUploadButton
+              disabled={disabledInputs}
+              onChange={this.onFileInputChange.bind(this)}
+            />
             <button
               className={buttonClasses}
               onTouchTap={this.sendMessage.bind(this)}  
@@ -103,7 +119,7 @@ class ThreadForm extends Component {
 }
 
 ThreadForm.propTypes = {
-  conversationId: PropTypes.number.isRequired,
+  conversation: PropTypes.object.isRequired,
   userCount: PropTypes.number,
 };
 
