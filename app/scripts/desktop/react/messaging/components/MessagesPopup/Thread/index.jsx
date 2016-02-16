@@ -117,7 +117,7 @@ class Thread extends Component {
                deleteFn={this.deleteMessages.bind(this, false)}
                stopSelect={this.stopSelect}
              />
-           : <ThreadForm conversationId={id} userCount={userCount} />
+           : <ThreadForm conversation={conversation} userCount={userCount} />
           }
         </footer>
       </div>
