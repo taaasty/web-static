@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
 
-function GroupConversationHeader({ conversation }) {
+function GroupConversationHeader({ conversation, onClick }) {
   const { avatar, topic, users, users_left } = conversation;
   const activeUsers = users.filter((u) => users_left.indexOf(u.id) < 0)
 
   return (
-    <div className="messages__dialog messages__dialog--discussion">
+    <div className="messages__dialog messages__dialog--discussion" onClick={onClick}>
       <div className="messages__user-avatar">
         {avatar && avatar.url
          ? <ItemEntryPreviewImage image={avatar} />
@@ -31,6 +31,7 @@ GroupConversationHeader.displayName = 'GroupConversationHeader';
 
 GroupConversationHeader.propTypes = {
   conversation: PropTypes.object.isRequired,
+  onClick: PropTypes.object.isRequired,
 };
 
 export default GroupConversationHeader;
