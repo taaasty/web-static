@@ -31,7 +31,7 @@ GroupConversationHeader.displayName = 'GroupConversationHeader';
 
 GroupConversationHeader.propTypes = {
   conversation: PropTypes.object.isRequired,
-  onClick: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default GroupConversationHeader;
