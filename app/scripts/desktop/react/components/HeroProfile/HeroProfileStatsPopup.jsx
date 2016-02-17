@@ -73,9 +73,9 @@ const HeroProfileStatsPopup = createClass({
       <div className="popup popup--dark">
         <div className="popup__arrow popup__arrow--down" />
         <PopupHeader
+          draggable={isDraggable}
           hasActivities={this.hasActivities()}
-          isDraggable={isDraggable}
-          onClickClose={this.close}
+          onClose={this.close}
           title={title}
         />
         <div className="popup__body">

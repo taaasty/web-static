@@ -172,7 +172,6 @@ const ReactApp = {
     this.padController = new PadController();
 
     this.shellbox = new ReactShellBox();
-    this.popup    = new ReactPopup();
 
     PostAuthService.init(this, 'taaasty');
     PostAuthService.restore();
