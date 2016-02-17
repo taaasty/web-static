@@ -22,7 +22,7 @@ function mountReactComponents(root) {
   for(let i = 0; i < nodes.length; i++) {
     let node = nodes[i];
     className = node.getAttribute(CLASS_NAME_ATTR);
-    if (className === root.displayName) {
+    if (root && className === root.displayName) {
       propsJson = node.getAttribute(PROPS_ATTR);
       props = propsJson && JSON.parse(propsJson);
 
