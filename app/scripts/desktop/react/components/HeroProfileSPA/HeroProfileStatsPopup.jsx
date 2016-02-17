@@ -1,5 +1,6 @@
-/*global $, PopupHeader, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
+/*global $, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
 import React, { cloneElement, createClass, Children, PropTypes } from 'react';
+import PopupHeader from '../Popup/Header';
 import { findDOMNode } from 'react-dom';
 
 const MARGIN = 10;
