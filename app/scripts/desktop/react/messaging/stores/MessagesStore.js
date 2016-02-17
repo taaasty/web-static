@@ -156,16 +156,15 @@ const MessagesStore = Object.assign(
 
     deleteUserMessages(conversationId, deleted) {
       const messages = _messages[conversationId] || [];
-      const deletedHash = deleted.reduce((acc, { id, content }) => {
-        return acc[id] = content, acc;
+      const deletedHash = deleted.reduce((acc, { id, content, ...rest }) => {
+        return acc[id] = { ...rest, content_html: content }, acc;
       }, {});
-      const deletedIds = Object.keys(deletedHash);
+      const deletedIds = Object.keys(deletedHash).map((id) => parseInt(id, 10));
 
       _selectedIds = _selectedIds.filter((id) => deletedIds.indexOf(id) < 0);
       messages.forEach((msg) => {
-        let content_html = deletedHash[msg.id];
-        if (content_html) {
-          Object.assign(msg, { content_html });
+        if (deletedHash[msg.id]) {
+          Object.assign(msg, deletedHash[msg.id]);
         }
       });
     },
