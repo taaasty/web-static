@@ -118,12 +118,6 @@ require './react/components/smart_follow_status'
 
 require './react/components/editable_field'
 
-require './react/components/popup_box'
-require './react/components/popup/popup'
-require './react/components/popup/layout'
-require './react/components/popup/spinner'
-require './react/components/popup/header'
-
 global.Feed = require './react/components/Feed/Feed'
 global.EntryTlog = require './react/components/EntryTlog'
 global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';

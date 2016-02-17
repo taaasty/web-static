@@ -1,7 +1,7 @@
 _ = require 'lodash'
 { render, unmountComponentAtNode } = require 'react-dom';
-Popup = require '../components/PopupComponent/Popup'
-PopupArea = require '../components/PopupComponent/PopupArea'
+Popup = require '../components/Popup'
+PopupArea = require '../components/Popup/Area'
 
 class PopupController
   containerAttribute: 'popup-container'
@@ -49,7 +49,7 @@ class PopupController
       </PopupArea>
     ), container
 
-  openPopup: (PopupComponent, props, containerAttribute = @containerAttribute) ->
+  openPopup: (Popup, props, containerAttribute = @containerAttribute) ->
     container = @addContainer containerAttribute
     onClose = @handleClose.bind @, containerAttribute
 
@@ -58,7 +58,7 @@ class PopupController
         props.onClose()
         @handleClose containerAttribute
 
-    render <PopupComponent {...props} onClose={ onClose } />, container
+    render <Popup {...props} onClose={ onClose } />, container
 
   close: (containerAttribute = @containerAttribute) ->
     container = document.querySelector "[#{containerAttribute}]"

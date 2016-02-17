@@ -1,40 +1,36 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Spinner from './Spinner';
 
-function Header({ hasActivities, isDraggable, onClickClose, title }) {
-  const headBoxClasses = classNames({
-    'popup__headbox': true,
-    'cursor--move': isDraggable,
-  });
+class Header extends Component {
+  render() {
+    const { draggable, hasActivities, onClose, title } = this.props;
+    const headerClasses = classNames({
+      'popup__header': true,
+      'cursor--move': draggable,
+    });
 
-  return (
-    <div className="popup__header">
-      <div className={headBoxClasses}>
-        <h3 className="popup__title">
-          {title}
-        </h3>
+    return (
+      <div className={headerClasses}>
+        <div className="popup__headbox">
+          <h3 className="popup__title">
+            {title}
+          </h3>
+        </div>
+        {hasActivities && <Spinner />}
+        <div className="popup__close" onClick={onClose}>
+          <i className="icon icon--cross" />
+        </div>
       </div>
-      <Spinner hasActivities={hasActivities} />
-      <div className="popup__close" onClick={onClickClose}>
-        <div className="icon icon--cross" />
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
-Header.displayName = 'Header';
-
 Header.propTypes = {
-  hasActivities: PropTypes.bool,
-  isDraggable: PropTypes.bool,
-  onClickClose: PropTypes.func.isRequired,
+  draggable: PropTypes.bool,
+  hasActivities: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-};
-
-Header.defaultProps = {
-  hasActivities: false,
-  isDraggable: false,
 };
 
 export default Header;
