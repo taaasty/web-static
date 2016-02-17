@@ -1,70 +1,48 @@
-/*global $, ReactUnmountMixin, ReactPositionsMixin, Mousetrap */
-import React, { PropTypes, createClass } from 'react';
+/*global $ */
+import React, { cloneElement, createClass, Children, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
 import Header from './Header';
 
-const NO_TRANSITION_CLASS = 'no--transition';
-
-const Popup = createClass({
+const _Popup = createClass({
   propTypes: {
-    children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.array,
-    ]),
+    children: PropTypes.element.isRequired,
     className: PropTypes.string,
-    colorScheme: PropTypes.oneOf([ 'dark', 'light' ]),
-    hasActivities: PropTypes.bool,
-    isDraggable: PropTypes.bool,
-    onClose: PropTypes.func,
-    position: PropTypes.object,
+    draggable: PropTypes.bool,
+    onClose: PropTypes.func.isRequired,
+    onPositionChange: PropTypes.func.isRequired,
+    position: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.string,
   },
-  mixins: [ ReactUnmountMixin, ReactPositionsMixin ],
-
-  getDefaultProps() {
-    return {
-      hasActivities: false,
-      isDark: false,
-      isDraggable: false,
-      isLight: false,
-    };
-  },
+  mixins: [ 'ReactActivitiesMixin' ],
 
   componentDidMount() {
-    if (this.props.isDraggable) {
+    if (this.props.draggable) {
       this.makeDraggable();
     }
-
-    Mousetrap.bind('esc', this.close);
   },
 
-
-  componentWillUnmount() {
-    Mousetrap.unbind('esc', this.close);
+  componentWillReceiveProps(nextProps) {
+    // FIXME: Почему-то стили которые указаны в style не применяются при перерендере
+    // Устанавливаем их принудительно при обновлении
+    $(this.refs.container).css(nextProps.position);
   },
 
   makeDraggable() {
-    const $popupNode = $(this.refs.container);
-    const headboxNode = this.refs.header;
+    const $popup = $(this.refs.container);
+    const $header = $(findDOMNode(this.refs.header));
 
-    $popupNode.draggable({
-      handle: headboxNode,
-      drag() {
-        $popupNode.addClass(NO_TRANSITION_CLASS);
-      },
+    $popup.draggable({
+      handle: $header,
+      drag: () => $popup.addClass('no--transition'),
       stop: (event, ui) => {
-        this.checkPosition();
-        this.savePosition(ui.position);
-        $popupNode.removeClass(NO_TRANSITION_CLASS);
+        this.props.onPositionChange(ui.position);
+        $popup.removeClass('no--transition');
       },
     });
   },
 
-  close() {
-    this.props.onClose ? this.props.onClose() : this.unmount();
-  },
-  
   handleClick() {
     const popups = [].slice.call(document.querySelectorAll('.popup'));
     const currentNode = this.refs.container;
@@ -72,9 +50,9 @@ const Popup = createClass({
     Object.keys(popups).forEach((key) => {
       const node = popups[key];
 
-      if (node === currentNode) {
-        currentNode.classList.add('front-layer');
-        currentNode.classList.remove('back-layer');
+      if (node == currentNode) {
+        node.classList.add('front-layer');
+        node.classList.remove('back-layer');
       } else {
         node.classList.add('back-layer');
         node.classList.remove('front-layer');
@@ -83,15 +61,11 @@ const Popup = createClass({
   },
 
   render() {
-    const { children, className, colorScheme, hasActivities,
-            isDraggable, title } = this.props;
-    const popupClasses = classNames({
-      'popup': true,
-      'popup--center': true,
-      [className]: true,
-      'popup--dark': colorScheme === 'dark',
-      'popup--light': colorScheme === 'light',
-    });
+    const { className, draggable, onClose, position, title } = this.props;
+    const popupClasses = classNames('popup', className);
+    const children = Children.map(this.props.children, ((child) =>
+      cloneElement(child, { activitiesHandler: this.activitiesHandler })
+    ));
 
     return (
       <div
@@ -99,12 +73,12 @@ const Popup = createClass({
         onMouseDown={this.handleClick}
         onTouchStart={this.handleClick}
         ref="container"
-        style={this.initialPositionStyle()}
+        style={position}
       >
         <Header
-          hasActivities={hasActivities}
-          isDraggable= {isDraggable}
-          onClickClose={this.close}
+          draggable={draggable}
+          hasActivities={this.hasActivities()}
+          onClose={onClose}
           ref="header"
           title={title}
         />
@@ -115,5 +89,7 @@ const Popup = createClass({
     );
   },
 });
+
+const Popup = managePositions(_Popup);
 
 export default Popup;

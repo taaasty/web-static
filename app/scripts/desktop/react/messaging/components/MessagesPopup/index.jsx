@@ -15,12 +15,13 @@ import Conversations from './Conversations';
 import GroupSettings from './GroupSettings';
 import GroupChooser from './GroupChooser';
 import PopupTitle from './PopupTitle';
+import Popup from '../../../components/Popup';
 
 //const ENTER_TIMEOUT = 300;
 //const LEAVE_TIMEOUT = 300;
 
 const MessagesPopup = createClass({
-  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
+  mixins: [ ReactUnmountMixin, RequesterMixin ],
   getInitialState() {
     return this.getStateFromStore();
   },
@@ -71,14 +72,11 @@ const MessagesPopup = createClass({
 
     return (
       <Popup
-        className="popup--messages"
-        colorScheme="light"
-        hasActivities={this.hasActivities()}
-        isDraggable
+        className="popup--messages popup--light"
+        draggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
         title={<PopupTitle id={currentConversationId} state={currentState} />}
-        type="messages"
       >
         <div className="messages">
           {currentState !== CONVERSATIONS_STATE &&

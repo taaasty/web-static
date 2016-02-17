@@ -11,6 +11,15 @@ let settings = initSettings;
 let isFetching = false;
 let selectedIds = [];
 
+function sortUsers(users, selectedIds) {
+  return users.sort((a, b) => {
+    const aSelected = selectedIds.indexOf(a.id) > -1 ? 1 : 2;
+    const bSelected = selectedIds.indexOf(b.id) > -1 ? 1 : 2;
+
+    return aSelected - bSelected;
+  });
+}
+
 const GroupSettingsStore = Object.assign(
   new BaseStore(),
   {
@@ -31,6 +40,7 @@ const GroupSettingsStore = Object.assign(
             .map((u) => u.id);
       isFetching = false;
       settings = { ...initSettings, ...data };
+      settings = { ...settings, users: sortUsers(settings.users, selectedIds) };
     },
 
     reset() {
