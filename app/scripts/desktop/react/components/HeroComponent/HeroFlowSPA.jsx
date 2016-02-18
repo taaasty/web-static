@@ -6,8 +6,8 @@ import HeroSettingsButton from './HeroSettingsButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import Routes from '../../../../shared/routes/routes';
 import FlowManager from '../FlowManager';
-import Popup from '../PopupComponent/Popup';
-import PopupArea from '../PopupComponent/PopupArea';
+import Popup from '../Popup';
+import PopupArea from '../Popup/Area';
 import { Link } from 'react-router';
 import uri from 'urijs';
 

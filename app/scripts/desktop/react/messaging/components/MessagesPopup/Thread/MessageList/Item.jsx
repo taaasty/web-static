@@ -107,7 +107,7 @@ const Item = createClass({
       ? <span className="messages__user-name">
           <a
             href={tlog_url}
-            onClick={this.handleClickUser.bind(this)}
+            onClick={this.handleClickUser}
             target="_blank"
           >
             {slug}
@@ -122,7 +122,7 @@ const Item = createClass({
     return this.isIncoming()
       ? <a
           href={user.tlog_url}
-          onClick={this.handleClickUser.bind(this)}
+          onClick={this.handleClickUser}
           target="_blank"
         >
           <span className="messages__user-avatar">
@@ -133,7 +133,7 @@ const Item = createClass({
   },
 
   render() {
-    const { message: { content_html }, selected, selectState } = this.props;
+    const { message: { content_html }, selected } = this.props;
     const messageClasses = classnames({
       'message': true,
       'message--from': this.isOutgoing(),
@@ -141,32 +141,31 @@ const Item = createClass({
     });
     const containerClasses = classnames({
       'message--container': true,
-      'message--select-mode': selectState,
       'message--selected': selected,
     });
 
     return (
       <div className={containerClasses} onClick={this.toggleSelection}>
-      <div className={messageClasses}>
-        {this.renderUserAvatar()}
-        <div className="messages__bubble">
-          {this.renderUserSlug()}
-          <span
-            className="messages__text"
-            dangerouslySetInnerHTML={{__html: content_html || ''}}
-          />
-          <div className="messages__img-container">
-            {this.renderAttachments()}
+        <div className={messageClasses}>
+          {this.renderUserAvatar()}
+          <div className="messages__bubble">
+            {this.renderUserSlug()}
+            <span
+              className="messages__text"
+              dangerouslySetInnerHTML={{__html: content_html || ''}}
+            />
+            <div className="messages__img-container">
+              {this.renderAttachments()}
+            </div>
+          </div>
+          <span className="messages__date">
+            {this.renderMessageCreatedAt()}
+            {this.renderDeliveryStatus()}
+          </span>
+          <div className="message__selector">
+            {selected && <i className="icon icon--tick" />}
           </div>
         </div>
-        <span className="messages__date">
-          {this.renderMessageCreatedAt()}
-          {this.renderDeliveryStatus()}
-        </span>
-        <div className="message__selector">
-          {selected && <i className="icon icon--tick" />}
-        </div>
-      </div>
       </div>
     );
   },

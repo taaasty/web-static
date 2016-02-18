@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import ThreadForm from './ThreadForm';
 import SelectForm from './SelectForm';
 import PublicConversationHeader from './PublicConversationHeader';
+import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
 import ConversationsStore from '../../../stores/ConversationsStore';
@@ -11,7 +12,7 @@ import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
-import { PUBLIC_CONVERSATION } from '../../../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
 
 class Thread extends Component {
   state = this.getStateFromStore();
@@ -56,6 +57,34 @@ class Thread extends Component {
       ? browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } })
       : window.location.href = entry.url;
   }
+  backgroundUrl() {
+    const { conversation } = this.state;
+
+    return conversation.type === PUBLIC_CONVERSATION
+      ? conversation.entry.author.design.backgroundImageUrl
+      : conversation.type === GROUP_CONVERSATION
+        ? conversation.background_image && conversation.background_image.url
+        : conversation.recipient.design.backgroundImageUrl;
+  }
+  handleClickGroupHeader() {
+    MessagesPopupActions.openGroupSettings(this.state.conversation);
+  }
+  renderHeader() {
+    const { conversation } = this.state;
+
+    return conversation.type === PUBLIC_CONVERSATION
+      ? <PublicConversationHeader
+          conversation={conversation}
+          onClick={this.onClickHeader.bind(this, conversation.entry)}
+          url={conversation.entry.url}
+        />
+      : conversation.type === GROUP_CONVERSATION
+        ? <GroupConversationHeader
+            conversation={conversation}
+            onClick={this.handleClickGroupHeader.bind(this)}
+          />
+        : null;
+  }
   render() {
     const { canDelete, canDeleteEverywhere, conversation, selectState } = this.state;
     if (!conversation) {
@@ -63,10 +92,8 @@ class Thread extends Component {
     }
 
     const id = conversation.id;
-    const backgroundUrl = conversation.type === PUBLIC_CONVERSATION
-      ? conversation.entry.author.design.backgroundImageUrl
-      : conversation.recipient.design.backgroundImageUrl;
-    const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
+    const backgroundUrl = this.backgroundUrl();
+    const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
     const userCount = conversation.type === PUBLIC_CONVERSATION
       ? conversation.users.length
       : 0;
@@ -75,16 +102,15 @@ class Thread extends Component {
       'messages__section--thread': true,
       'messages__section--select': selectState,
     });
+    const listClasses = classNames({
+      'messages__body': true,
+      'message--select-mode': selectState,
+    });
     
     return (
       <div className={containerClasses}>
-        {conversation.type === PUBLIC_CONVERSATION &&
-          <PublicConversationHeader
-            conversation={conversation}
-            onClick={this.onClickHeader.bind(this, conversation.entry)}
-            url={conversation.entry.url}
-          />}
-        <div className="messages__body" style={threadStyles}>
+        {this.renderHeader()}
+        <div className={listClasses} style={threadStyles}>
           <div className="messages__thread-overlay" />
           <MessageList conversationId={id} selectState={selectState} />
         </div>
@@ -97,7 +123,7 @@ class Thread extends Component {
                deleteFn={this.deleteMessages.bind(this, false)}
                stopSelect={this.stopSelect}
              />
-           : <ThreadForm conversationId={id} userCount={userCount} />
+           : <ThreadForm conversation={conversation} userCount={userCount} />
           }
         </footer>
       </div>

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import UserAvatar from '../../../../../components/UserAvatar';
+import UserAvatar from '../../../../components/UserAvatar';
 
 function ResultsItem({ onClick, predictedUser, selected }) {
   const itemClasses = classnames({
@@ -11,7 +11,7 @@ function ResultsItem({ onClick, predictedUser, selected }) {
   function handleClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    onClick(predictedUser.id);
+    onClick(predictedUser);
   }
 
   return (

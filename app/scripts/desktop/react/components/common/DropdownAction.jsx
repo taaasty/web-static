@@ -10,17 +10,18 @@ class DropdownAction extends Component {
     return this.state.hover && hoverTitle ? hoverTitle : title;
   }
   render() {
-    const iconClasses = classnames('icon', this.props.icon);
+    const { icon, onClick, url } = this.props;
+    const iconClasses = classnames('icon', icon);
 
     return (
       <a
         className="meta-item__dropdown-item"
-        href={this.props.url}
-        onClick={this.props.onClick}
-        onMouseEnter={() => this.setState({hover: true})}
-         onMouseLeave={() => this.setState({hover: false})}
+        href={url}
+        onClick={onClick}
+        onMouseEnter={() => this.setState({ hover: true })}
+        onMouseLeave={() => this.setState({ hover: false })}
       >
-        <i className={iconClasses} />
+        {!!icon && <i className={iconClasses} />}
         {this.getTitle()}
       </a>
     );

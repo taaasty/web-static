@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ConversationActions from '../../../../actions/ConversationActions';
 import ItemText from './ItemText';
 import ItemEntry from './ItemEntry';
-import { PUBLIC_CONVERSATION } from '../../../../constants/ConversationConstants';
+import ItemGroup from './ItemGroup';
+import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../../../constants/ConversationConstants';
 
 export const CONVERSATION_PIC_SIZE = 40;
 
@@ -28,7 +29,9 @@ class Item extends Component {
 
     return conversation.type === PUBLIC_CONVERSATION
       ? <ItemEntry {...props} />
-      : <ItemText {...props} />;
+      : conversation.type === GROUP_CONVERSATION
+        ? <ItemGroup {...props} />
+        : <ItemText {...props} />;
   }
 }
 

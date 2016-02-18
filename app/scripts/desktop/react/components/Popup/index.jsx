@@ -1,10 +1,11 @@
 /*global $ */
 import React, { cloneElement, createClass, Children, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import classNames from 'classnames';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
-import PopupHeader from './PopupHeader';
+import Header from './Header';
 
-let Popup = createClass({
+const _Popup = createClass({
   propTypes: {
     children: PropTypes.element.isRequired,
     className: PropTypes.string,
@@ -14,7 +15,7 @@ let Popup = createClass({
     position: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
   },
-  mixins: ['ReactActivitiesMixin'],
+  mixins: [ 'ReactActivitiesMixin' ],
 
   componentDidMount() {
     if (this.props.draggable) {
@@ -25,11 +26,11 @@ let Popup = createClass({
   componentWillReceiveProps(nextProps) {
     // FIXME: Почему-то стили которые указаны в style не применяются при перерендере
     // Устанавливаем их принудительно при обновлении
-    $(findDOMNode(this)).css(nextProps.position);
+    $(this.refs.container).css(nextProps.position);
   },
 
   makeDraggable() {
-    const $popup = $(findDOMNode(this));
+    const $popup = $(this.refs.container);
     const $header = $(findDOMNode(this.refs.header));
 
     $popup.draggable({
@@ -42,12 +43,12 @@ let Popup = createClass({
     });
   },
 
-  handleClick(e) {
-    let popups = [].slice.call(document.querySelectorAll('.popup')),
-        currentNode = findDOMNode(this);
+  handleClick() {
+    const popups = [].slice.call(document.querySelectorAll('.popup'));
+    const currentNode = this.refs.container;
 
     Object.keys(popups).forEach((key) => {
-      let node = popups[key];
+      const node = popups[key];
 
       if (node == currentNode) {
         node.classList.add('front-layer');
@@ -60,8 +61,9 @@ let Popup = createClass({
   },
 
   render() {
-    let popupClasses = ['popup', this.props.className].join(' ');
-    let children = Children.map(this.props.children, ((child) =>
+    const { className, draggable, onClose, position, title } = this.props;
+    const popupClasses = classNames('popup', className);
+    const children = Children.map(this.props.children, ((child) =>
       cloneElement(child, { activitiesHandler: this.activitiesHandler })
     ));
 
@@ -70,14 +72,15 @@ let Popup = createClass({
         className={popupClasses}
         onMouseDown={this.handleClick}
         onTouchStart={this.handleClick}
-        style={this.props.position}
+        ref="container"
+        style={position}
       >
-        <PopupHeader
-          draggable={this.props.draggable}
+        <Header
+          draggable={draggable}
           hasActivities={this.hasActivities()}
-          onClose={this.props.onClose}
+          onClose={onClose}
           ref="header"
-          title={this.props.title}
+          title={title}
         />
         <div className="popup__body">
           {children}
@@ -87,6 +90,6 @@ let Popup = createClass({
   },
 });
 
-Popup = managePositions(Popup);
+const Popup = managePositions(_Popup);
 
 export default Popup;

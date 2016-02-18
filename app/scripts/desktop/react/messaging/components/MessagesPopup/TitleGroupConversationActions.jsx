@@ -5,16 +5,20 @@ import DropdownAction from '../../../components/common/DropdownAction';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 
-class TitleConversationActions extends Component {
+class TitleGroupConversationActions extends Component {
   disturb(flag) {
     ConversationActions.disturb(this.props.conversation.id, flag);
   }
   startSelect() {
+    this.refs.dropdown.setClose();
     MessagesPopupActions.startSelect();
   }
-  deleteConversation() {
+  openSettings() {
+    MessagesPopupActions.openGroupSettings(this.props.conversation);
+  }
+  leaveConversation() {
     ConversationActions
-      .deleteConversation(this.props.conversation.id)
+      .leaveConversation(this.props.conversation.id)
       .then(() => {
         return MessagesPopupActions.openConversationList();
       });
@@ -24,7 +28,13 @@ class TitleConversationActions extends Component {
 
     return (
       <div className="messages__popup-title-actions">
-        <DropdownActions>
+        <DropdownActions ref="dropdown">
+          <DropdownAction
+            icon="icon--cogwheel"
+            key="settings"
+            onClick={this.openSettings.bind(this)}
+            title={i18n.t('messenger.title_actions.group_settings')}
+          />
           {false && <DropdownAction
             hoverTitle={disturb && i18n.t('messenger.title_actions') || null}
             icon="icon--bell"
@@ -35,14 +45,14 @@ class TitleConversationActions extends Component {
           <DropdownAction
             icon="icon--double-tick"
             key="select-mode"
-            onClick={this.startSelect}
+            onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
           <DropdownAction
-            icon="icon--not-allowed"
+            icon="icon--basket"
             key="delete-conversation"
-            onClick={this.deleteConversation.bind(this)}
-            title={i18n.t('messenger.title_actions.delete_conversation')}
+            onClick={this.leaveConversation.bind(this)}
+            title={i18n.t('messenger.title_actions.leave_group')}
           />
         </DropdownActions>
       </div>
@@ -50,8 +60,8 @@ class TitleConversationActions extends Component {
   }
 }
 
-TitleConversationActions.propTypes = {
+TitleGroupConversationActions.propTypes = {
   conversation: PropTypes.object.isRequired,
 };
 
-export default TitleConversationActions;
+export default TitleGroupConversationActions;

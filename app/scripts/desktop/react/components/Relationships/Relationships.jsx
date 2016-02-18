@@ -1,17 +1,18 @@
-import Scroller from '../common/scroller/scroller';
+import React, { PropTypes, createClass } from 'react';
+import Scroller from '../common/Scroller';
 import RelationshipsList from './RelationshipsList';
 
-const ERROR_STATE = 'error',
-      LOADED_STATE = 'loaded',
-      LOADING_STATE = 'loading';
+const ERROR_STATE = 'error';
+const LOADED_STATE = 'loaded';
+const LOADING_STATE = 'loading';
 
-let Relationships = React.createClass({
+let Relationships = createClass({
   propTypes: {
-    relationships: React.PropTypes.array.isRequired,
-    actions: React.PropTypes.array,
-    state: React.PropTypes.string.isRequired,
-    canLoad: React.PropTypes.bool.isRequired,
-    onLoadMore: React.PropTypes.func.isRequired
+    actions: PropTypes.array,
+    canLoad: PropTypes.bool.isRequired,
+    onLoadMore: PropTypes.func.isRequired,
+    relationships: PropTypes.array.isRequired,
+    state: PropTypes.string.isRequired,
   },
 
   render() {
@@ -69,7 +70,7 @@ let Relationships = React.createClass({
     if (el.scrollTop + el.offsetHeight > el.scrollHeight * .9) {
       this.props.onLoadMore();
     }
-  }
+  },
 });
 
 export default Relationships;

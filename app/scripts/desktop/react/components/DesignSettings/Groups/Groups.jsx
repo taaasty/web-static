@@ -1,4 +1,4 @@
-import Scroller from '../../common/scroller/scroller';
+import Scroller from '../../common/Scroller';
 import DesignSettingsHeaderGroup from './HeaderGroup';
 import DesignSettingsBackgroundGroup from './BackgroundGroup';
 import DesignSettingsFeedGroup from './FeedGroup';

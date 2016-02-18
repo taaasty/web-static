@@ -1,15 +1,14 @@
 import moment from 'moment';
 import React, { createClass } from 'react';
 import ConversationsStore from '../../../../stores/ConversationsStore';
-import ScrollerMixin from '../../../../../mixins/scroller';
+import Scroller from '../../../../../components/common/Scroller';
 import Empty from './Empty';
 import Item from './Item';
-import { PRIVATE_CONVERSATION } from '../../../../constants/ConversationConstants';
+import { PRIVATE_CONVERSATION, GROUP_CONVERSATION } from '../../../../constants/ConversationConstants';
 
 const READ_MESSAGES_DAYS_DIVIDER = 5;
 
 const ConversationList = createClass({
-  mixins: [ ScrollerMixin ],
   getInitialState() {
     return this.getStateFromStore();
   },
@@ -39,18 +38,22 @@ const ConversationList = createClass({
   sortConversations(conversations) {
     function calcWeight(conv) {
       const weight = 0
-              + (conv.type === PRIVATE_CONVERSATION ||
-                 conv.entry && conv.entry.is_watching ? 100 : 0)
-              + (conv.unread_messages_count > 0 ? 50 : 0)
+              + (conv.type === PRIVATE_CONVERSATION || conv.type === GROUP_CONVERSATION ||
+                 conv.entry && conv.entry.is_watching ? 1e6 : 0)
+              + (conv.unread_messages_count > 0 ? 5 * 1e5 : 0)
               + (conv.unread_messages_count === 0 &&
-                 moment(conv.updated_at).isAfter(moment().subtract(READ_MESSAGES_DAYS_DIVIDER, 'days')) ? 20 : 0)
-              + (conv.type === PRIVATE_CONVERSATION ? 10 : 0);
+                 moment(conv.updated_at).isAfter(moment().subtract(READ_MESSAGES_DAYS_DIVIDER, 'days')) ? 1e5 : 0)
+              + (conv.type === PRIVATE_CONVERSATION
+                   ? 5 * 1e4
+                   : conv.type === GROUP_CONVERSATION
+                     ? 3 * 1e4
+                     : 0)
+              + (moment(conv.updated_at).valueOf() / 1e9)
 
       return { ...conv, weight };
     }
 
     return conversations
-      .sort((a, b) => moment(b.updated_at).valueOf() - moment(a.updated_at).valueOf())
       .map(calcWeight)
       .sort((a, b) => b.weight - a.weight); // more weight -> lower index
   },
@@ -59,27 +62,19 @@ const ConversationList = createClass({
     const sortedConversations = this.sortConversations(this.state.conversations);
     return (
       <div className="messages__body">
-        <div
-          className="scroller scroller--dark"
-          ref="scroller"
-        >
-          <div className="scroller__pane js-scroller-pane">
-            <div className="messages__dialogs">
-              {this.isEmpty()
-                 ? <Empty />
-                 : sortedConversations.map((conversation) => (
-                     <Item
-                       conversation={conversation}
-                       key={conversation.id}
-                     />
+        <Scroller>
+          <div className="messages__dialogs">
+            {this.isEmpty()
+               ? <Empty />
+               : sortedConversations.map((conversation) => (
+                   <Item
+                     conversation={conversation}
+                     key={conversation.id}
+                   />
                  ))
-              }
-            </div>
+            }
           </div>
-          <div className="scroller__track js-scroller-track">
-            <div className="scroller__bar js-scroller-bar" />
-          </div>
-        </div>
+        </Scroller>
       </div>
     );
   },

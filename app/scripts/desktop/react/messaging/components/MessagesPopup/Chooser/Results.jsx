@@ -1,6 +1,6 @@
 /*global i18n, RequesterMixin, NoticeService */
 import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../../../../shared/routes/api';
+import ApiRoutes from '../../../../../../shared/routes/api';
 import ResultsItem from './ResultsItem';
 
 const LOADING_STATE = 'loadingState';
@@ -49,7 +49,12 @@ const Results = createClass({
   },
 
   loadPredictions(query) {
-    this.createRequest({
+    if (this.req) {
+      this.removeActiveRequest(this.req);
+      this.req.abort();
+    }
+
+    this.req = this.createRequest({
       url: ApiRoutes.users_predict(),
       method: 'GET',
       data: { query },
@@ -68,8 +73,8 @@ const Results = createClass({
     });
   },
 
-  getSelectedUserId() {
-    return this.state.predictedUsers[this.state.selectedUserIndex].id;
+  getSelectedUser() {
+    return this.state.predictedUsers[this.state.selectedUserIndex];
   },
 
   _moveHighlight(delta) {

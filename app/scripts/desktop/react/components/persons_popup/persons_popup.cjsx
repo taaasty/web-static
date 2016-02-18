@@ -1,8 +1,10 @@
+{ findDOMNode, unmountComponentAtNode } = require 'react-dom';
+Popup = require '../Popup';
 DEFAULT_PANEL = 'followings'
 
 window.PersonsPopup = React.createClass
   displayName: 'PersonsPopup'
-  mixins: ['ReactActivitiesMixin', RequesterMixin]
+  mixins: [ RequesterMixin ]
 
   propTypes:
     panelName: React.PropTypes.string
@@ -21,13 +23,16 @@ window.PersonsPopup = React.createClass
     CurrentUserStore.removeChangeListener @onStoresChange
     RelationshipsStore.removeChangeListener @onStoresChange
 
+  close: ->
+    unmountComponentAtNode(findDOMNode(this).parentNode);
+
   render: ->
     <Popup
-        hasActivities={ @hasActivities() }
-        title={ i18n.t('persons_popup_header') }
-        isDraggable={ true }
-        colorScheme="dark"
-        className="popup--persons">
+      draggable
+      className="popup--persons popup--dark"
+      onClose={this.close}
+      title={ i18n.t('persons_popup_header') }
+    >
 
       <PersonsPopup_Menu
           user={ @state.user }
@@ -48,12 +53,11 @@ window.PersonsPopup = React.createClass
       when 'facebook'   then PersonsPopup_FacebookPanel
       else console.debug? 'Unknown type of current tab', @state.currentTab
 
-    return <CurrentPanel activitiesHandler={ this.activitiesHandler } />
+    return <CurrentPanel />
 
 # Temporarily exclude guessed tab
 # <PersonsPopup_GuessesPanel isActive={ this.state.currentTab == 'guesses' }
 #                            total_count={ this.state.relationships.guesses.total_count }
-#                            activitiesHandler={ this.activitiesHandler }
 #                            onLoad={ onLoad.bind(this, 'guesses') } />
 
   isProfilePrivate: ->
