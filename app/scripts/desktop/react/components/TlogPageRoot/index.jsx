@@ -5,12 +5,8 @@ import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import HeroProfile from '../HeroProfileSPA';
 import HeroFlow from '../HeroComponent/HeroFlowSPA';
 import SocialShare from '../common/SocialShare';
-import Auth from '../Auth';
 import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';
-import UserToolbarContainer from '../toolbars/UserToolbarContainer';
-import ComposeToolbar from '../ComposeToolbar';
-import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
@@ -49,7 +45,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUser, currentUserId, flow, isLogged, location,
+    const { calendar, children, currentUser, currentUserId, flow, location,
             params, tlog, tlogEntries, tlogEntry, CalendarActions, FlowActions, RelationshipActions,
             TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const { author, design: { backgroundImageUrl }, slug, stats, tlog_url } = tlog.data;
@@ -62,6 +58,11 @@ class TlogPageRoot extends Component {
       (child) => cloneElement(
         child,
         {
+          CalendarActions,
+          FlowActions,
+          TlogActions,
+          TlogEntriesActions,
+          TlogEntryActions,
           currentUserId,
           currentUser,
           flow,
@@ -69,58 +70,47 @@ class TlogPageRoot extends Component {
           tlog,
           tlogEntries,
           tlogEntry,
-          CalendarActions,
-          FlowActions,
-          TlogActions,
-          TlogEntriesActions,
-          TlogEntryActions,
           sinceId: location.query.since_entry_id,
         })
     );
     
     return (
-      <div className="page">
-        <div className="page__inner">
-          <div className="page__paper">
-            {!isFlow &&
-            <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
-            }
-            <header className="page-header">
-              {isFlow
-               ? <HeroFlow
-                   FlowActions={FlowActions}
-                   RelationshipActions={RelationshipActions}
-                   flow={flow}
-                   tlog={tlog}
-                 />
-               : <HeroProfile
-                   RelationshipActions={RelationshipActions}
-                   currentUser={currentUser.data}
-                   stats={stats}
-                   tlog={tlog}
-                 />
-              }
-            </header>
-            {childrenWithProps}
-          </div>
+      <div className="page__inner">
+        <div className="page__paper">
+          {!isFlow &&
+           <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
+          }
+           <header className="page-header">
+             {isFlow
+              ? <HeroFlow
+                  FlowActions={FlowActions}
+                  RelationshipActions={RelationshipActions}
+                  flow={flow}
+                  tlog={tlog}
+                />
+              : <HeroProfile
+                  RelationshipActions={RelationshipActions}
+                  currentUser={currentUser.data}
+                  stats={stats}
+                  tlog={tlog}
+                />
+             }
+           </header>
+           {childrenWithProps}
         </div>
-        {!isLogged && <Auth fixed />}
-        {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
         {!!calendar.data.periods.length &&
          <Calendar
-            calendar={calendar.data}
-            entryCreatedAt={calendarEntry.created_at || (new Date()).toISOString()}
-            entryId={calendarEntry.id}
-            tlogId={author.id}
+           calendar={calendar.data}
+           entryCreatedAt={calendarEntry.created_at || (new Date()).toISOString()}
+           entryId={calendarEntry.id}
+           tlogId={author.id}
          />}
-        {!isFlow &&
-         <SocialShare
-           img={this.shareImg(author)}
-           title={slug}
-           url={tlog_url}
-         />}
-        <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
-        <BrowserSupportContainer />
+         {!isFlow &&
+          <SocialShare
+            img={this.shareImg(author)}
+            title={slug}
+            url={tlog_url}
+          />}
       </div>
     );
   }
@@ -141,7 +131,6 @@ TlogPageRoot.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   flow: PropTypes.object.isRequired,
-  isLogged: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
