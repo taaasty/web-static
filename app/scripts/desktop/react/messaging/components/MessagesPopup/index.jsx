@@ -73,6 +73,7 @@ const MessagesPopup = createClass({
     return (
       <Popup
         className="popup--messages popup--light"
+        clue="messages"
         draggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
