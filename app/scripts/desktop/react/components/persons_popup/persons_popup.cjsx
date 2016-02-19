@@ -30,6 +30,7 @@ window.PersonsPopup = React.createClass
     <Popup
       draggable
       className="popup--persons popup--dark"
+      clue="persons_popup"
       onClose={this.close}
       title={ i18n.t('persons_popup_header') }
     >
