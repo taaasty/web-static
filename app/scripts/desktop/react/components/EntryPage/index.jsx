@@ -109,7 +109,6 @@ EntryPageContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   isFlow: PropTypes.bool,
-  isLogged: PropTypes.bool,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,
