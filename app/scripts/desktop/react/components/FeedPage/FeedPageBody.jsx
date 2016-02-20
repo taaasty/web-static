@@ -91,7 +91,6 @@ FeedPageBody.propTypes = {
     FEED_TYPE_BEST,
     FEED_TYPE_LIVE_FLOW,
   ]).isRequired,
-  locale: PropTypes.string,
   navFilters: PropTypes.object,
   navViewMode: PropTypes.bool.isRequired,
   viewMode: PropTypes.oneOf(['feed', 'tlog']).isRequired,

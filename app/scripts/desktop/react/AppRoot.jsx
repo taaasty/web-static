@@ -4,18 +4,20 @@ import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-route
 
 import App from './containers/App';
 //import AppRedirect from './AppRedirect';
-import TlogPageRootContainer from './containers/TlogPageRootContainer';
 
+import TlogPageRoot from './components/TlogPage/TlogPageRoot';
 import TlogPage from './components/TlogPage';
 import EntryPage from './components/EntryPage';
+
 import FeedPage from './components/FeedPage';
 
 function AppRoot() {
   return (
     <Router history={browserHistory}>
       <Route path="/" component={App}>
+
         <Redirect from="~anonymous" to="live/anonymous" />
-        <Route path="~:slug" component={TlogPageRootContainer}>
+        <Route path="~:slug" component={TlogPageRoot}>
           <IndexRoute component={TlogPage} />
           <Route path="design_settings" component={TlogPage} />
           <Route path="settings" component={TlogPage} />
@@ -32,6 +34,7 @@ function AppRoot() {
         <Route path="live/:section" component={FeedPage} />
         <Route path="live" component={FeedPage} />
         <Route path="friends" component={FeedPage} />
+        <Route path="friends/media" component={FeedPage} />
         <Route path="best" component={FeedPage} />
         <Route path="media" component={FeedPage} />
       </Route>

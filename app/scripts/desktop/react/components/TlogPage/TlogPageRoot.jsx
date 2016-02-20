@@ -30,10 +30,10 @@ class TlogPageRoot extends Component {
     return params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
   }
   getCalendarData(props) {
-    const { currentUserId, tlog: { data: { author, my_relationship } }, CalendarActions } = props;
+    const { currentUser: { data: { id } }, tlog: { data: { author, my_relationship } }, CalendarActions } = props;
     
     if (!this.isFlow(props) && author && author.slug !== TLOG_SLUG_ANONYMOUS &&
-        (!author.is_privacy || author.id === currentUserId || my_relationship === RELATIONSHIP_STATE_FRIEND)) {
+        (!author.is_privacy || author.id === id || my_relationship === RELATIONSHIP_STATE_FRIEND)) {
       CalendarActions.getCalendar(author.id);
     } else {
       CalendarActions.resetCalendar();
@@ -45,9 +45,10 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUser, currentUserId, flow, location,
-            params, tlog, tlogEntries, tlogEntry, CalendarActions, FlowActions, RelationshipActions,
+    const { calendar, children, currentUser, flow, location, params, tlog, tlogEntries,
+            tlogEntry, CalendarActions, FlowActions, RelationshipActions,
             TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
+    const currentUserId = currentUser.data.id;
     const { author, design: { backgroundImageUrl }, slug, stats, tlog_url } = tlog.data;
     const isFlow = this.isFlow(this.props);
     const calendarEntry = (params.entryPath
@@ -129,7 +130,6 @@ TlogPageRoot.propTypes = {
     PropTypes.array,
   ]),
   currentUser: PropTypes.object.isRequired,
-  currentUserId: PropTypes.number,
   flow: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
