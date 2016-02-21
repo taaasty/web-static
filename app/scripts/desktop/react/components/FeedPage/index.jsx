@@ -1,21 +1,22 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 
 const navFilters = {
   live: [
-    { title: 'Все', href: '/live' },
-    { title: 'Медиа', href: '/media' },
-    { title: 'Потоки', href: '/live/flows' },
-    { title: 'Анонимки', href: '/live/anonymous' },
+    { title: 'nav_filters.live.all', href: '/live' },
+    { title: 'nav_filters.live.media', href: '/media' },
+    { title: 'nav_filters.live.flows', href: '/live/flows' },
+    { title: 'nav_filters.live.anonymous', href: '/live/anonymous' },
   ],
   friends: [
-    { title: 'Все', href: '/friends/live' },
-    { title: 'Медиа', href: '/friends/media' },
+    { title: 'nav_filters.friends.all', href: '/friends/live' },
+    { title: 'nav_filters.friends.media', href: '/friends/media' },
   ],
   best: [
-    { title: '+100', href: '/best?rating=best' },
-    { title: '+50', href: '/best?rating=excellent' },
-    { title: '+20', href: '/best?rating=well' },
-    { title: '+10', href: '/best?rating=good' },
+    { title: 'nav_filters.best.best', href: '/best?rating=best' },
+    { title: 'nav_filters.best.excellent', href: '/best?rating=excellent' },
+    { title: 'nav_filters.best.well', href: '/best?rating=well' },
+    { title: 'nav_filters.best.good', href: '/best?rating=good' },
   ],
 };
 
@@ -25,7 +26,11 @@ function feedType() {
 
 class FeedPage extends Component {
   render() {
-    return <div />;
+    return (
+      <div>
+        
+      </div>
+    );
   }
 }
 
