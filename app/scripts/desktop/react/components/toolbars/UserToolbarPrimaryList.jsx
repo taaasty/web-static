@@ -23,6 +23,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadFriendsCount}
         icon="icon--friends"
+        routeName={window.SPA && 'friends'}
         title={i18n.t('feed_friends')}
         url={Routes.friends_feed_path()}
       />
@@ -37,6 +38,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadLiveCount}
         icon="icon--wave"
+        routeName={window.SPA && 'live'}
         title={i18n.t('feed_live')}
         url={Routes.live_feed_path()}
       />
