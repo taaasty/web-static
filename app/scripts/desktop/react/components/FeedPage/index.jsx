@@ -1,5 +1,7 @@
 /*global i18n */
+import uri from 'urijs';
 import React, { Component, PropTypes } from 'react';
+import FeedPageHeader from './FeedPageHeader';
 
 const navFilters = {
   live: [
@@ -9,7 +11,7 @@ const navFilters = {
     { title: 'nav_filters.live.anonymous', href: '/live/anonymous' },
   ],
   friends: [
-    { title: 'nav_filters.friends.all', href: '/friends/live' },
+    { title: 'nav_filters.friends.all', href: '/friends' },
     { title: 'nav_filters.friends.media', href: '/friends/media' },
   ],
   best: [
@@ -20,15 +22,21 @@ const navFilters = {
   ],
 };
 
-function feedType() {
-  
-}
+const typeMap = Object.keys(navFilters)
+        .reduce((acc, section) => (navFilters[section].forEach((l) => (acc[uri(l.href).path()] = section)), acc), {});
 
 class FeedPage extends Component {
   render() {
+    const type = typeMap[uri(this.props.location.pathname).path()];
+
     return (
-      <div>
-        
+      <div className="page__inner">
+        <div className="page__paper">
+          <FeedPageHeader
+            
+          />
+          {type}
+        </div>
       </div>
     );
   }
