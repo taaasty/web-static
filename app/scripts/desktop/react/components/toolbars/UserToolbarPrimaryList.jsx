@@ -13,7 +13,7 @@ function UserToolbarPrimaryList(props) {
   return (
     <ul className="toolbar__nav">
       <UserToolbarListItem
-        routeName={window.SPA && 'tlog'}
+        spa={window.SPA}
         title={i18n.t('avatar_toolbar_tooltip')}
         url={tlog_url}
       >
@@ -23,7 +23,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadFriendsCount}
         icon="icon--friends"
-        routeName={window.SPA && 'friends'}
+        spa={window.SPA}
         title={i18n.t('feed_friends')}
         url={Routes.friends_feed_path()}
       />
@@ -38,7 +38,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadLiveCount}
         icon="icon--wave"
-        routeName={window.SPA && 'live'}
+        spa={window.SPA}
         title={i18n.t('feed_live')}
         url={Routes.live_feed_path()}
       />
@@ -46,6 +46,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadBestCount}
         icon="icon--fire"
+        spa={window.SPA}
         title={i18n.t('feed_best')}
         url={Routes.best_feed_path()}
       />
@@ -58,6 +59,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadAnonymousCount}
         icon="icon--anonymous"
+        spa={window.SPA}
         title={i18n.t('feed_anonymous')}
         url={Routes.anonymous_feed_path()}
       />
@@ -77,13 +79,13 @@ function UserToolbarPrimaryList(props) {
       />
       <UserToolbarListItem
         icon="icon--star"
-        routeName={window.SPA && 'favorites'}
+        spa={window.SPA}
         title={i18n.t('toolbar_favorites_item')}
         url={Routes.favorites_url(slug)}
       />
       <UserToolbarListItem
         icon="icon--lock"
-        routeName={window.SPA && 'privates'}
+        spa={window.SPA}
         title={i18n.t('toolbar_privates_item')}
         url={Routes.private_entries_url(slug)}
       />

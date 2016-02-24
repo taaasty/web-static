@@ -95,18 +95,21 @@ class FeedPage extends Component {
   componentWillMount() {
     
   }
+  componentDidMount() {
+    document.body.className = 'layout--feed';
+  }
   componentWillReceiveProps(nextProps) {
     
   }
   render() {
-    const { currentUser, location: { pathname } } = this.props;
-    const currentPath = uri(pathname).path();
-    const currentRating = uri(pathname).query(true).rating;
-    const { section, type } = typeMap[currentPath];
-    const navFilterItems = navFilters[section].map(({ href, title }) => ({ href, title: i18n.t(title) }));
+    const { currentUser, location } = this.props;
+    const { pathname, query } = location;
+    const rating = query.rating || 'excellent';
+    const { section, type } = typeMap[pathname];
+    const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
     const { idx, title } = type === FEED_TYPE_BEST
-            ? bestTitleMap[currentRating]
-            : titleMap[currentPath];
+            ? bestTitleMap[rating]
+            : titleMap[pathname];
 
     return (
       <div className="page__inner">
@@ -118,6 +121,7 @@ class FeedPage extends Component {
           <FeedPageBody
             entries_info={{}}
             feedType={type}
+            location={location}
             navFilters={{ active: idx, items: navFilterItems }}
             navViewMode
             viewMode={'tlog'}

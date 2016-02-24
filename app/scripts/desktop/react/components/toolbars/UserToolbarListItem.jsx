@@ -82,7 +82,7 @@ class UserToolbarListItem extends Component {
     );
   }
   render() {
-    const { children, icon, routeName, url } = this.props;
+    const { children, icon, spa, url } = this.props;
     const { opened } = this.state;
     const tChildren = Children.map(children, (child) => {
       return cloneElement(child, { opened });
@@ -98,7 +98,7 @@ class UserToolbarListItem extends Component {
         onMouseEnter={this.handleMouseEnter.bind(this)}
         onMouseLeave={this.handleMouseLeave.bind(this)}
       >
-        {routeName //FIXME when toolbar included into routing
+        {spa //FIXME when toolbar included into routing
          ? <Link
              className="toolbar__nav-link"
              to={uri(url).path()}
@@ -132,7 +132,7 @@ UserToolbarListItem.propTypes = {
   label: PropTypes.string,
   labelClassName: PropTypes.string,
   onClick: PropTypes.func,
-  routeName: PropTypes.string,
+  spa: PropTypes.bool,
   stayOpen: PropTypes.bool,
   title: PropTypes.string.isRequired,
   url: PropTypes.string,
