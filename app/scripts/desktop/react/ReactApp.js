@@ -15,7 +15,7 @@ import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import FeedsUpdateService from './services/FeedsUpdateService';
 import EditorActionCreators from './actions/editor';
-import EntryConstants from './constants/EntryConstants';
+import { ENTRY_TYPES } from './constants/EntryConstants';
 import PostAuthService from './services/PostAuthService';
 import Auth from './components/Auth';
 import moment from 'moment';
@@ -100,7 +100,7 @@ function initRoutes() {
       }
       const reqHash = window.location.hash.substr(1);
       
-      if (EntryConstants.ENTRY_TYPES.indexOf(reqHash) > -1) {
+      if (ENTRY_TYPES.indexOf(reqHash) > -1) {
         EditorActionCreators.changeEntryType(reqHash);
       }
     },
