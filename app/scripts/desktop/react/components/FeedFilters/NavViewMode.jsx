@@ -14,56 +14,35 @@ function NavViewMode({ location, viewMode }) {
     'state--active': viewMode === VIEW_STYLE_TLOG,
   });
 
-  return window.SPA
-    ? <nav className="nav-view-mode">
-        <ul className="nav-view-mode__list">
-          <li className={feedClasses}>
-            <Link
-              className="nav-view-mode__link"
-              title={i18n.t('filters.show_feed')}
-              to={{ pathname: location.pathname, query: { style: VIEW_STYLE_BRICKS } }}
-            >
-              <i className="icon icon--tiles" />
-            </Link>
-          </li>
-          <li className={tlogClasses}>
-            <Link
-              className="nav-view-mode__link"
-              title={i18n.t('filters.view_tlog')}
-              to={{ pathname: location.pathname, query: { style: VIEW_STYLE_TLOG } }}
-            >
-              <i className="icon icon--menu" />
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    : <nav className="nav-view-mode">
-        <ul className="nav-view-mode__list">
-          <li className={feedClasses}>
-            <a
-              className="nav-view-mode__link"
-              href={`?style=${VIEW_STYLE_BRICKS}`}
-              title={i18n.t('filters.show_feed')}
-            >
-              <i className="icon icon--tiles" />
-            </a>
-          </li>
-          <li className={tlogClasses}>
-            <a
-              className="nav-view-mode__link"
-              href={`?style=${VIEW_STYLE_TLOG}`}
-              title={i18n.t('filters.view_tlog')}
-            >
-              <i className="icon icon--menu" />
-            </a>
-          </li>
-        </ul>
-      </nav>;
+  return (
+    <nav className="nav-view-mode">
+      <ul className="nav-view-mode__list">
+        <li className={feedClasses}>
+          <Link
+            className="nav-view-mode__link"
+            title={i18n.t('filters.show_feed')}
+            to={{ pathname: location.pathname, query: { style: VIEW_STYLE_BRICKS } }}
+          >
+            <i className="icon icon--tiles" />
+          </Link>
+        </li>
+        <li className={tlogClasses}>
+          <Link
+            className="nav-view-mode__link"
+            title={i18n.t('filters.view_tlog')}
+            to={{ pathname: location.pathname, query: { style: VIEW_STYLE_TLOG } }}
+          >
+            <i className="icon icon--menu" />
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
 }
 
 NavViewMode.propTypes = {
-  location: PropTypes.object,
-  viewMode: PropTypes.oneOf(['tlog', 'feed']).isRequired,
+  location: PropTypes.object.isRequired,
+  viewMode: PropTypes.oneOf([ 'tlog', 'feed' ]).isRequired,
 };
 
 export default NavViewMode;

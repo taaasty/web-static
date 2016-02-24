@@ -29,7 +29,7 @@ const LoadButtons = {
 
 class FeedPageBody extends Component {
   renderFilters() {
-    const { entries_info: { limit }, feedType, locale,
+    const { entries_info: { limit }, feedType, location,
             navFilters, navViewMode, viewMode } = this.props;
     const queryHash = queryString.parse(window.location.search);
 
@@ -42,11 +42,12 @@ class FeedPageBody extends Component {
     const button = UnreadButton
       ? queryHash.since_entry_id
         ? <PreviousEntriesButton href={UnreadButton.href} />
-        : <UnreadButton.component limit={limit} locale={locale} />
+        : <UnreadButton.component limit={limit} />
       :null;
 
     return (
       <FeedFilters
+        location={location}
         navFilters={navFilters}
         navViewMode={navViewMode}
         viewMode={viewMode}
@@ -91,6 +92,7 @@ FeedPageBody.propTypes = {
     FEED_TYPE_BEST,
     FEED_TYPE_LIVE_FLOW,
   ]).isRequired,
+  location: PropTypes.object,
   navFilters: PropTypes.object,
   navViewMode: PropTypes.bool.isRequired,
   viewMode: PropTypes.oneOf(['feed', 'tlog']).isRequired,
