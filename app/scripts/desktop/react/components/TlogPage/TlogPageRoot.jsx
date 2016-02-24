@@ -12,6 +12,8 @@ const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageRoot extends Component {
   componentDidMount() {
+    document.body.className = 'layout--tlog';
+    DesignPreviewService.apply(this.props.tlog.data.design);
     this.getCalendarData(this.props);
   }
   componentWillReceiveProps(nextProps) {
