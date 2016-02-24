@@ -1,3 +1,4 @@
+/*global AppStorage */
 import uri from 'urijs';
 import {
   TLOG_SECTION_TLOG,
@@ -48,7 +49,7 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow }) {
       data: { flowpic: {}, staffs: [], ...flow },
       id: flow && flow.id,
       isFetching: false,
-      viewStyle: window.localStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
+      viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
     },
   };
 }

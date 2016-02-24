@@ -191,7 +191,7 @@ var VIEW_STYLE_BRICKS = exports.VIEW_STYLE_BRICKS = 'feed';
 },{}],3:[function(require,module,exports){
 'use strict';
 
-var _actionMap;
+var _actionMap; /*global AppStorage */
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -273,7 +273,7 @@ var actionMap = (_actionMap = {}, (0, _defineProperty3.default)(_actionMap, _Flo
     error: null
   });
 }), (0, _defineProperty3.default)(_actionMap, _FlowActions.FLOW_VIEW_STYLE, function (state, style) {
-  window.localStorage.setItem(FLOW_VIEW_STYLE_LS_KEY, style);
+  AppStorage.setItem(FLOW_VIEW_STYLE_LS_KEY, style);
   return (0, _extends3.default)({}, state, {
     viewStyle: style
   });
@@ -13189,6 +13189,8 @@ var _flow = require('../../desktop/react/reducers/flow');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/*global AppStorage */
+
 var mapSection = {
   'favorites': _Tlog.TLOG_SECTION_FAVORITE,
   'privates': _Tlog.TLOG_SECTION_PRIVATE
@@ -13235,7 +13237,7 @@ function prop2redux(_ref) {
       data: (0, _extends3.default)({ flowpic: {}, staffs: [] }, flow),
       id: flow && flow.id,
       isFetching: false,
-      viewStyle: window.localStorage.getItem(_flow.FLOW_VIEW_STYLE_LS_KEY) || _ViewStyleConstants.VIEW_STYLE_TLOG
+      viewStyle: AppStorage.getItem(_flow.FLOW_VIEW_STYLE_LS_KEY) || _ViewStyleConstants.VIEW_STYLE_TLOG
     }
   };
 }

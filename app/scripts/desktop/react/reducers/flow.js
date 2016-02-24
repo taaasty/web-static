@@ -1,3 +1,4 @@
+/*global AppStorage */
 import {
   FLOW_REQUEST,
   FLOW_RECEIVE,
@@ -75,7 +76,7 @@ const actionMap = {
     };
   },
   [FLOW_VIEW_STYLE](state, style) {
-    window.localStorage.setItem(FLOW_VIEW_STYLE_LS_KEY, style);
+    AppStorage.setItem(FLOW_VIEW_STYLE_LS_KEY, style);
     return {
       ...state,
       viewStyle: style,
