@@ -19,7 +19,7 @@ export default class Voting extends Component {
   state = {
     votes: this.props.rating.votes,
     rating: this.props.rating.rating,
-    reasons: this.props.rating.reasons,
+    reasons: this.props.rating.reasons || [],
     canVote: this.props.rating.is_voteable,
     isVoted: this.props.rating.is_voted,
     isProcess: false,
