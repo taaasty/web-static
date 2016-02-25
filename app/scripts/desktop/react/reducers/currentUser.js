@@ -1,3 +1,4 @@
+import createReducer from './createReducer';
 import {
   CURRENT_USER_SETUP,
   CURRENT_USER_UPDATE,
@@ -87,11 +88,4 @@ const actionMap = {
   },
 };
 
-export default function currentUser(state=initialState, { type, payload }) {
-  const reduceFn = actionMap[type];
-  if (!reduceFn) {
-    return state;
-  }
-
-  return reduceFn(state, payload);
-}
+export default createReducer(initialState, actionMap);

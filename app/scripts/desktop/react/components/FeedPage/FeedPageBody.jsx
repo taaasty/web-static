@@ -100,6 +100,7 @@ FeedPageBody.propTypes = {
 
 FeedPageBody.defaultProps = {
   entries_info: {},
+  location: {},
   navFilters: { active: null, items: [] },
   navViewMode: true,
   viewMode: 'tlog',

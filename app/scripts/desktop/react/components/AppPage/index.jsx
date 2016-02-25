@@ -7,22 +7,25 @@ import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
 
 class AppPage extends Component {
   render() {
-    const { CalendarActions, FlowActions, RelationshipActions, TlogActions,
-            TlogEntriesActions, TlogEntryActions, calendar, children, currentUser,
-            flow, tlog, tlogEntries, tlogEntry } = this.props;
+    const { CalendarActions, FeedEntriesActions, FlowActions, RelationshipActions,
+            TlogActions, TlogEntriesActions, TlogEntryActions, appStats, calendar, children,
+            currentUser, feedEntries, flow, tlog, tlogEntries, tlogEntry } = this.props;
     const childrenWithProps = Children.map(
       children,
       (child) => cloneElement(
         child,
         {
           CalendarActions,
+          FeedEntriesActions,
           FlowActions,
           RelationshipActions,
           TlogActions,
           TlogEntriesActions,
           TlogEntryActions,
+          appStats,
           calendar,
           currentUser,
+          feedEntries,
           flow,
           tlog,
           tlogEntries,
@@ -46,17 +49,20 @@ class AppPage extends Component {
 
 AppPage.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
+  FeedEntriesActions: PropTypes.object.isRequired,
   FlowActions: PropTypes.object.isRequired,
   RelationshipActions: PropTypes.object.isRequired,
   TlogActions: PropTypes.object.isRequired,
   TlogEntriesActions: PropTypes.object.isRequired,
   TlogEntryActions: PropTypes.object.isRequired,
+  appStats: PropTypes.object.isRequired,
   calendar: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.array,
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
+  feedEntries: PropTypes.object.isRequired,
   flow: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
