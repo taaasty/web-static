@@ -31,6 +31,7 @@ function AppRoot() {
         <Redirect from="u/:slug" to="~:slug" />
 
         <Redirect from="anonymous" to="live/anonymous" />
+        <Redirect from="live/media" to="media" />
         <Route path="live/:section" component={FeedPage} />
         <Route path="live" component={FeedPage} />
         <Route path="friends" component={FeedPage} />

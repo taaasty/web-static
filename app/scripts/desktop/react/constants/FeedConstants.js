@@ -16,8 +16,18 @@ export default keyMirror({
   FEED_LIVE_FLOW_RESET: null,
 });
 
+//pusher channels
 export const FEED_TYPE_ANONYMOUS = 'anonymous';
 export const FEED_TYPE_LIVE = 'live';
 export const FEED_TYPE_FRIENDS = 'friends';
 export const FEED_TYPE_BEST = 'best';
 export const FEED_TYPE_LIVE_FLOW = 'live_flow_entries';
+
+//api routes
+export const FEED_ENTRIES_API_TYPE_LIVE = 'FEED_ENTRIES_API_TYPE_LIVE';
+export const FEED_ENTRIES_API_TYPE_MEDIA = 'FEED_ENTRIES_API_TYPE_MEDIA';
+export const FEED_ENTRIES_API_TYPE_FLOWS = 'FEED_ENTRIES_API_TYPE_FLOWS';
+export const FEED_ENTRIES_API_TYPE_ANONYMOUS = 'FEED_ENTRIES_API_TYPE_ANONYMOUS';
+export const FEED_ENTRIES_API_TYPE_BEST = 'FEED_ENTRIES_API_TYPE_BEST';
+export const FEED_ENTRIES_API_TYPE_FRIENDS = 'FEED_ENTRIES_API_TYPE_FRIENDS';
+export const FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA = 'FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA';

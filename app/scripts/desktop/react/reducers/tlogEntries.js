@@ -1,3 +1,4 @@
+import createReducer from './createReducer';
 import {
   TLOG_ENTRIES_REQUEST,
   TLOG_ENTRIES_RECEIVE,
@@ -90,11 +91,4 @@ const actionMap = {
   },
 };
 
-export default function tlogEntries(state=initialState, { type, payload }) {
-  const reduceFn = actionMap[type];
-  if (!reduceFn) {
-    return state;
-  }
-
-  return reduceFn(state, payload);
-}
+export default createReducer(initialState, actionMap);
