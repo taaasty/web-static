@@ -16,18 +16,38 @@ class FlowPageBody extends Component {
       this.props.FlowActions.flowViewStyle(query.style);
     }
   }
+  handleDeleteEntry(entryId) {
+    this.props.TlogEntriesActions.deleteEntry(entryId);
+  }
   renderTlogs() {
+    const { TlogEntriesActions, currentUser, tlog, tlogEntries } = this.props;
+
     return (
       <div className="content-area">
         <div className="content-area__bg" />
         <div className="content-area__inner">
-          <EntryTlogsContainer {...this.props} />
+          <EntryTlogsContainer
+            currentUser={currentUser}
+            entries={tlogEntries}
+            handleDeleteEntry={this.handleDeleteEntry.bind(this)}
+            hostTlogId={tlog.data.author && tlog.data.author.id}
+            loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+          />
         </div>
       </div>
     );
   }
   renderBricks() {
-    return <EntryBricksContainer {...this.props} />;
+    const { TlogEntriesActions, children, tlog, tlogEntries } = this.props;
+
+    return (
+      <EntryBricksContainer
+        children={children}
+        entries={tlogEntries}
+        hostTlogId={tlog.data.author && tlog.data.author.id}
+        loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+      />
+    );
   }
   render() {
     const { flow: { viewStyle }, location } = this.props;

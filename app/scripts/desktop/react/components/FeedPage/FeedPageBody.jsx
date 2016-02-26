@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import queryString from 'query-string';
 import LiveLoadButtonContainer from './LiveLoadButtonContainer';
 import BestLoadButtonContainer from './BestLoadButtonContainer';
 import FriendsLoadButtonContainer from './FriendsLoadButtonContainer';
 import AnonymousLoadButtonContainer from './AnonymousLoadButtonContainer';
 import LiveFlowLoadButtonContainer from './LiveFlowLoadButtonContainer';
-import EntryBricksContainer from '../EntryBricks/EntryBricksContainer';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
+import EntryBricksContainer from '../EntryBricks/EntryBricksContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
 import FeedFilters from '../FeedFilters';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import Routes from '../../../../shared/routes/routes';
@@ -19,6 +18,7 @@ import {
   FEED_TYPE_BEST,
   FEED_TYPE_LIVE_FLOW,
 } from '../../constants/FeedConstants';
+import { VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
 const LoadButtons = {
   [FEED_TYPE_LIVE]: { component: LiveLoadButtonContainer, href: Routes.live_feed_path() },
@@ -33,9 +33,8 @@ class FeedPageBody extends Component {
     sendCategory(this.props.feedType);
   }
   renderFilters() {
-    const { entries_info: { limit }, feedType, location,
-            navFilters, navViewMode, viewMode } = this.props;
-    const queryHash = queryString.parse(window.location.search);
+    const { feedEntries: { data: { limit }, viewStyle }, feedType, location,
+            navFilters, navViewMode } = this.props;
 
     if (!(navFilters.items.length || navViewMode)) {
       return null;
@@ -44,7 +43,7 @@ class FeedPageBody extends Component {
     let UnreadButton = LoadButtons[feedType];
 
     const button = UnreadButton
-      ? queryHash.since_entry_id
+      ? location.query && location.query.since_entry_id
         ? <PreviousEntriesButton href={UnreadButton.href} />
         : <UnreadButton.component limit={limit} />
       :null;
@@ -54,7 +53,7 @@ class FeedPageBody extends Component {
         location={location}
         navFilters={navFilters}
         navViewMode={navViewMode}
-        viewMode={viewMode}
+        viewMode={viewStyle}
       >
         {button}
       </FeedFilters>
@@ -62,13 +61,16 @@ class FeedPageBody extends Component {
   }
 
   render() {
-    const { viewMode } = this.props;
+    const { FeedEntriesActions, currentUser, feedEntries } = this.props;
 
     return (
       <div className="page-body">
         <div className="layout-outer">
-          {viewMode === 'feed'
-             ? <EntryBricksContainer {...this.props}>
+          {feedEntries.viewStyle === VIEW_STYLE_BRICKS
+             ? <EntryBricksContainer
+                 entries={feedEntries}
+                 loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+               >
                  {this.renderFilters()}
                </EntryBricksContainer>
              : <div>
@@ -76,7 +78,11 @@ class FeedPageBody extends Component {
                  <div className="content-area">
                    <div className="content-area__bg" />
                    <div className="content-area__inner">
-                     <EntryTlogsContainer {...this.props} />
+                     <EntryTlogsContainer
+                       currentUser={currentUser}
+                       entries={feedEntries}
+                       loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+                     />
                    </div>
                  </div>
                </div>
@@ -88,7 +94,9 @@ class FeedPageBody extends Component {
 }
 
 FeedPageBody.propTypes = {
-  entries_info: PropTypes.object,
+  FeedEntriesActions: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  feedEntries: PropTypes.object,
   feedType: PropTypes.oneOf([
     FEED_TYPE_ANONYMOUS,
     FEED_TYPE_LIVE,
@@ -99,15 +107,14 @@ FeedPageBody.propTypes = {
   location: PropTypes.object,
   navFilters: PropTypes.object,
   navViewMode: PropTypes.bool.isRequired,
-  viewMode: PropTypes.oneOf(['feed', 'tlog']).isRequired,
 };
 
 FeedPageBody.defaultProps = {
-  entries_info: {},
+  currentUser: { data: { author: {} } },
+  feedEntries: { data: { items: [] } },
   location: {},
   navFilters: { active: null, items: [] },
   navViewMode: true,
-  viewMode: 'tlog',
 };
 
 export default FeedPageBody;

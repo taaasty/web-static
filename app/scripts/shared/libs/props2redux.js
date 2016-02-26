@@ -27,7 +27,14 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEnt
   return {
     tlog: {
       slug,
-      data: { author: {}, design: {}, stats: {}, ...tlog },
+      data: {
+        author: {
+          userpic: {},
+        },
+        design: {},
+        stats: {},
+        ...tlog,
+      },
     },
     tlogEntries: {
       data: { items: [], ...tlogEntries },

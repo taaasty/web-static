@@ -2,20 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import EntryBricks from './EntryBricks';
 
 class EntryBricksContainer extends Component {
-  loadMoreEntries() {
-    this.props.TlogEntriesActions.appendTlogEntries();
-  }
   render() {
-    const { children, tlog: { data: { author } },
-            tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
+    const { children, entries: { isFetching, data: { items, has_more } },
+            hostTlogId, loadMoreEntries } = this.props;
 
     return (
       <EntryBricks
         canLoad={!isFetching && has_more}
         entries={items}
-        host_tlog_id={author.id}
+        host_tlog_id={hostTlogId}
         loading={isFetching}
-        onLoadMoreEntries={this.loadMoreEntries.bind(this)}
+        onLoadMoreEntries={loadMoreEntries}
       >
         {children}
       </EntryBricks>
@@ -24,14 +21,11 @@ class EntryBricksContainer extends Component {
 }
 
 EntryBricksContainer.propTypes = {
-  TlogEntriesActions: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.array,
   ]),
-  currentUser: PropTypes.object.isRequired,
-  tlog: PropTypes.object.isRequired,
-  tlogEntries: PropTypes.shape({
+  entries: PropTypes.shape({
     data: PropTypes.shape({
       items: PropTypes.array.isRequired,
       has_more: PropTypes.bool,
@@ -39,6 +33,8 @@ EntryBricksContainer.propTypes = {
     }).isRequired,
     isFetching: PropTypes.bool,
   }).isRequired,
+  hostTlogId: PropTypes.number,
+  loadMoreEntries: PropTypes.func.isRequired,
 };
 
 export default EntryBricksContainer;

@@ -7,6 +7,7 @@ import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';
 import HeroProfileStats from './HeroProfileStats';
 import SmartFollowStatus from './SmartFollowStatus';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const HERO_CLOSED = 'closed';
 const HERO_OPENED = 'opened';
@@ -120,7 +121,7 @@ class HeroProfile extends Component {
   render() {
     const { RelationshipActions, currentUser, stats, tlog } = this.props;
     const { data: { author, my_relationship: relState },
-            errorRelationship, isFetchingRelationship } = tlog;
+            errorRelationship, isFetching, isFetchingRelationship } = tlog;
     const currentUserId = currentUser && currentUser.id;
     const isCurrentUser = currentUserId && currentUserId === author.id;
     const followButtonVisible = !isCurrentUser && relState != null;
@@ -131,11 +132,14 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          <HeroProfileAvatar
-            isOpen={this.isOpen()}
-            onClick={this.handleAvatarClick.bind(this)}
-            user={author}
-          />
+          {!author.id || isFetching
+           ? <Spinner size={70} />
+           : <HeroProfileAvatar
+               isOpen={this.isOpen()}
+               onClick={this.handleAvatarClick.bind(this)}
+               user={author}
+             />
+          }
           {followButtonVisible &&
            <SmartFollowStatus
              error={errorRelationship}
@@ -144,7 +148,7 @@ class HeroProfile extends Component {
              relState={relState}
            />
           }
-           <HeroProfileHead user={author} />
+           {author.id && !isFetching && <HeroProfileHead user={author} />}
            <HeroProfileActionsContainer
              RelationshipActions={RelationshipActions}
              isCurrentUser={isCurrentUser}
