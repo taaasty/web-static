@@ -106,43 +106,54 @@ const feedTitleMap = Object.keys(navFilters)
 const feedBestTitleMap = navFilters.best
         .reduce((acc, { href, title }, idx) => (acc[uri(href).query(true).rating] = { title, idx }, acc), {});
 
-
-
 class FeedPage extends Component {
   componentWillMount() {
-    
+    this.setViewStyle(this.props);
   }
   componentDidMount() {
     document.body.className = 'layout--feed';
   }
   componentWillReceiveProps(nextProps) {
-    
+    this.setViewStyle(nextProps);
+  }
+  setViewStyle({ feedEntries: { viewStyle }, location: { query } }) {
+    if (query && query.style && viewStyle !== query.style) {
+      this.props.FeedEntriesActions.feedEntriesViewStyle(query.style);
+    }
   }
   render() {
-    const { currentUser, feedEntries, location } = this.props;
+    const { FeedEntriesActions, appStats, currentUser, feedEntries, location } = this.props;
     const { pathname, query } = location;
     const rating = query.rating || 'excellent';
-    const { section, type } = feedTypeMap[pathname];
+    const { apiType, section, type } = feedTypeMap[pathname];
     const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
             : feedTitleMap[pathname];
-    const { data, isFetching, viewStyle } = feedEntries;
+    const { isFetching } = feedEntries;
+    const { followings_count } = currentUser.data;
+    const posts24h = appStats.data && appStats.data.public_entries_in_day_count;
+    const headerText = apiType === FEED_ENTRIES_API_TYPE_LIVE
+            ? i18n.t('feed.title.posts_24h', { count: posts24h, context: posts24h ? 'some' : 'none' })
+            : type === FEED_TYPE_FRIENDS && followings_count > 0 &&
+               i18n.t('feed.title.friend_posts', { count: followings_count });
 
     return (
       <div className="page__inner">
         <div className="page__paper">
           <FeedPageHeader
             bgImage={currentUser.data && currentUser.data.design.backgroundImageUrl}
+            text={headerText}
             title={i18n.t(title)}
           />
           <FeedPageBody
-            entries_info={data}
+            FeedEntriesActions={FeedEntriesActions}
+            currentUser={currentUser}
+            feedEntries={feedEntries}
             feedType={type}
             location={location}
             navFilters={{ active: idx, items: navFilterItems }}
             navViewMode
-            viewMode={viewStyle}
           />
         </div>
       </div>

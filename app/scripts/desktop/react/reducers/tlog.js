@@ -13,7 +13,9 @@ import {
 
 const initialState = {
   data: {
-    author: {},
+    author: {
+      userpic: {},
+    },
     design: {
       backgroundImageUrl: '',
       feedOpacity: '',

@@ -471,7 +471,14 @@
         "excellent": "Отличное",
         "well": "Хорошее",
         "good": "Неплохо"
-      }
+      },
+      "posts_24h_none": "Нет публикаций за прошедшие сутки",
+      "posts_24h_some_1": "{{count}} публикация за сутки",
+      "posts_24h_some_2": "{{count}} публикации за сутки",
+      "posts_24h_some_5": "{{count}} публикаций за сутки",
+      "friend_posts": "{{count}} друг пишет",
+      "friend_posts_2": "{{count}} друга пишут",
+      "friend_posts_5": "{{count}} друзей пишут"
     }
   },
   "filters": {
