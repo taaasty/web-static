@@ -45,6 +45,13 @@ function feedEntriesError(error) {
   };
 }
 
+export function feedEntriesViewStyle(style) {
+  return {
+    type: FEED_ENTRIES_VIEW_STYLE,
+    payload: style,
+  };
+}
+
 function fetchFeedEntries(url, data) {
   return $.ajax({ url, data })
     .fail((xhr) => {

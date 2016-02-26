@@ -2,37 +2,27 @@ import React, { Component, PropTypes } from 'react';
 import EntryTlogs from './EntryTlogs';
 
 class EntryTlogsContainer extends Component {
-  loadMoreEntries() {
-    this.props.TlogEntriesActions.appendTlogEntries();
-  }
-  deleteEntry(entryId) {
-    this.props.TlogEntriesActions.deleteEntry(entryId);
-    this.props.CalendarActions.getCalendar(this.props.tlog.data.author.id, true);
-  }
   render() {
-    const { currentUser, tlog: { data: { author } },
-            tlogEntries: { isFetching, data: { items, has_more } } } = this.props;
+    const { currentUser, entries: { isFetching, data: { items, has_more } },
+            handleDeleteEntry, hostTlogId, loadMoreEntries } = this.props;
 
     return (
       <EntryTlogs
         canLoad={!isFetching && has_more}
         currentUser={currentUser.data}
         entries={items}
-        host_tlog_id={author.id}
+        host_tlog_id={hostTlogId}
         loading={isFetching}
-        onDelete={this.deleteEntry.bind(this)}
-        onLoadMoreEntries={this.loadMoreEntries.bind(this)}
+        onDelete={handleDeleteEntry}
+        onLoadMoreEntries={loadMoreEntries}
       />
     );
   }
 }
 
 EntryTlogsContainer.propTypes = {
-  CalendarActions: PropTypes.object.isRequired,
-  TlogEntriesActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  tlog: PropTypes.object.isRequired,
-  tlogEntries: PropTypes.shape({
+  entries: PropTypes.shape({
     data: PropTypes.shape({
       items: PropTypes.array.isRequired,
       has_more: PropTypes.bool,
@@ -40,6 +30,9 @@ EntryTlogsContainer.propTypes = {
     }).isRequired,
     isFetching: PropTypes.bool,
   }).isRequired,
+  handleDeleteEntry: PropTypes.func,
+  hostTlogId: PropTypes.number,
+  loadMoreEntries: PropTypes.func,
 };
 
 export default EntryTlogsContainer;

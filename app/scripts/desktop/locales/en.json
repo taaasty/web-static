@@ -450,7 +450,12 @@
         "excellent": "Excellent",
         "well": "Well",
         "good": "Good"
-      }
+      },
+      "posts_24h_none": "No posts in last 24 hours",
+      "posts_24h_some_1": "{{count}} post in last 24 hours",
+      "posts_24h_some_2": "{{count}} posts in last 24 hours",
+      "friend_posts_1": "The only friend postings",
+      "friend_posts_2": "{{count}} friends postings"
     }
   },
   "filters": {

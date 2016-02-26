@@ -20,14 +20,24 @@ class TlogPageBody extends Component {
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
+  handleDeleteEntry(entryId) {
+    this.props.TlogEntriesActions.deleteEntry(entryId);
+    this.props.CalendarActions.getCalendar(this.props.tlog.data.author.id, true);
+  }
   renderTlog() {
-    const { section, tlog: { data: { author } },
-            tlogEntries: { data: { next_date, prev_date } } } = this.props;
+    const { TlogEntriesActions, currentUser, section, tlog: { data: { author } }, tlogEntries } = this.props;
+    const { data: { next_date, prev_date } } = tlogEntries;
     const isPaged = author.is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
-        <EntryTlogsContainer {...this.props} />
+        <EntryTlogsContainer
+          currentUser={currentUser}
+          entries={tlogEntries}
+          handleDeleteEntry={this.handleDeleteEntry.bind(this)}
+          hostTlogId={author.id}
+          loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+        />
         {isPaged &&
          <TlogPagePagination
            nextPagePath={this.date2path(author.slug, next_date)}
@@ -99,9 +109,10 @@ class TlogPageBody extends Component {
 }
 
 TlogPageBody.propTypes = {
+  CalendarActions: PropTypes.object.isRequired,
+  TlogEntriesActions: PropTypes.object.isRequired,
   bgStyle: PropTypes.object,
   currentUser: PropTypes.object,
-  currentUserId: PropTypes.number,
   error: PropTypes.string,
   queryString: PropTypes.string,
   section: PropTypes.string.isRequired,
