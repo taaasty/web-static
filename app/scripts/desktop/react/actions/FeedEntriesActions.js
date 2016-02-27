@@ -9,6 +9,7 @@ import {
   FEED_ENTRIES_API_TYPE_BEST,
   FEED_ENTRIES_API_TYPE_FRIENDS,
   FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA,
+  feedTypeMap,
 } from '../constants/FeedConstants';
 
 export const FEED_ENTRIES_REQUEST = 'FEED_ENTRIES_REQUEST';
@@ -16,6 +17,29 @@ export const FEED_ENTRIES_RECEIVE = 'FEED_ENTRIES_RECEIVE';
 export const FEED_ENTRIES_ERROR = 'FEED_ENTRIES_ERROR';
 export const FEED_ENTRIES_RESET = 'FEED_ENTRIES_RESET';
 export const FEED_ENTRIES_VIEW_STYLE = 'FEED_ENTRIES_VIEW_STYLE';
+
+export function feedDataByUri({ pathname, query }) {
+  const { apiType, section, type } = feedTypeMap[pathname];
+  const rating = apiType === FEED_ENTRIES_API_TYPE_BEST ? (query.rating || 'excellent') : void 0;
+
+  return {
+    apiType,
+    rating,
+    section,
+    type,
+    sinceId: query.since_entry_id,
+  };
+}
+
+export const apiUrlMap = {
+  [FEED_ENTRIES_API_TYPE_LIVE]: ApiRoutes.feedLiveTlogs(),
+  [FEED_ENTRIES_API_TYPE_MEDIA]: ApiRoutes.feedMediaTlogs(),
+  [FEED_ENTRIES_API_TYPE_FLOWS]: ApiRoutes.feedFlowsTlogs(),
+  [FEED_ENTRIES_API_TYPE_ANONYMOUS]: ApiRoutes.feedAnonymousTlogs(),
+  [FEED_ENTRIES_API_TYPE_BEST]: ApiRoutes.feedBestTlogs(),
+  [FEED_ENTRIES_API_TYPE_FRIENDS]: ApiRoutes.feedFriendsTlogs(),
+  [FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA]: ApiRoutes.feedFriendsMediaTlogs(),
+};
 
 const INITIAL_LOAD_LIMIT = 30;
 
@@ -63,9 +87,56 @@ function fetchFeedEntries(url, data) {
     });
 }
 
-function shouldFetchFeedEntries(state, { type, rating, sinceId }) {
-  const { isFetching, type: cType, rating: cRating, sinceId: cSinceId } = state.feedEntries;
+function shouldFetchFeedEntries(state, { apiType, rating, sinceId }) {
+  const { isFetching, apiType: cApiType, rating: cRating, sinceId: cSinceId } = state.feedEntries;
 
   return !isFetching &&
-    (type !== cType || (cType === FEED_BEST && rating !== cRating) || (cSinceId && sinceId == null));
+    (apiType !== cApiType || (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) || (cSinceId && sinceId == null));
+}
+
+function getFeedEntries({ apiType, rating, sinceId }) {
+  return (dispatch) => {
+    const url = apiUrlMap[apiType];
+
+    if (!url) {
+      return;
+    }
+
+    dispatch(feedEntriesRequest());
+    dispatch(feedEntriesReset());
+    return fetchFeedEntries(url, { limit: INITIAL_LOAD_LIMIT, rating, since_entry_id: sinceId })
+      .then((data) => dispatch(feedEntriesReceive({ data, apiType, rating, sinceId })))
+      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON, apiType, rating, sinceId })));
+  };
+}
+
+export function getFeedEntriesIfNeeded(location) {
+  return (dispatch, getState) => {
+    const params = feedDataByUri(location);
+
+    if (shouldFetchFeedEntries(getState(), params)) {
+      return dispatch(getFeedEntries(params));
+    }
+  };
+}
+
+export function appendFeedEntries() {
+  return (dispatch, getState) => {
+    const { isFetching, apiType, rating, data: { next_since_entry_id } } = getState().feedEntries;
+
+    if (isFetching) {
+      return;
+    }
+
+    const url = apiUrlMap[apiType];
+    const params = {
+      
+    };
+
+    dispatch(feedEntriesRequest());
+  };
+}
+
+export function prependFeedEntries() {
+  
 }
