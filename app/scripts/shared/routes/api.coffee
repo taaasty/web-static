@@ -118,6 +118,14 @@ ApiRoutes =
   feedFriends: -> gon.api_host + '/v1/my_feeds/friends'
   feedAnonymous: -> gon.api_host + '/v1/feeds/anonymous'
 
+  feedLiveTlogs: -> "#{gon.api_host}/v1/feeds/live/tlogs.json"
+  feedMediaTlogs: -> "#{gon.api_host}/v1/feeds/media/tlogs.json"
+  feedFlowsTlogs: -> "#{gon.api_host}/v1/feeds/live/tlogs.json"
+  feedAnonymousTlogs: -> "#{gon.api_host}/v1/feeds/anonymous/tlogs.json"
+  feedBestTlogs:    -> "#{gon.api_host}/v1/feeds/best/tlogs.json"
+  feedFriendsTlogs: -> "#{gon.api_host}/v1/my_feeds/friends/tlogs.json"
+  feedFriendsMediaTlogs: -> "#{gon.api_host}/v1/my_feeds/friends_media/tlogs.json"
+
   imageAttachments: -> gon.api_host + '/v1/image_attachments'
   imageAttachmentsWithID: (attachmentID) -> gon.api_host + '/v1/image_attachments/' + attachmentID
 

@@ -19,7 +19,7 @@ const initialState = {
     next_since_entry_id: null,
   },
   isFetching: false,
-  type: '',
+  apiType: '',
   rating: '',
   sinceId: null,
   error: null,
