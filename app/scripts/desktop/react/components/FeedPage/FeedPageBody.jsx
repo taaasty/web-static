@@ -9,7 +9,6 @@ import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
 import FeedFilters from '../FeedFilters';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import Routes from '../../../../shared/routes/routes';
-
 import {
   FEED_TYPE_ANONYMOUS,
   FEED_TYPE_LIVE,
@@ -19,6 +18,7 @@ import {
 } from '../../constants/FeedConstants';
 import { VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
+const PREPEND_LOAD_LIMIT = 30;
 const LoadButtons = {
   [FEED_TYPE_LIVE]: { component: LiveLoadButtonContainer, href: Routes.live_feed_path() },
   [FEED_TYPE_BEST]: { component: BestLoadButtonContainer, href: Routes.best_feed_path() },
@@ -28,8 +28,19 @@ const LoadButtons = {
 };
 
 class FeedPageBody extends Component {
+  handleClickUnreadButton(count) {
+    const { getFeedEntries, prependFeedEntries } = this.props.FeedEntriesActions;
+
+    if (count > 0) {
+      return (count < PREPEND_LOAD_LIMIT)
+        ? prependFeedEntries()
+        : getFeedEntries();
+    } else {
+      return null;
+    }
+  }
   renderFilters() {
-    const { feedEntries: { data: { limit }, viewStyle }, feedType, location,
+    const { feedEntries: { isFetching, viewStyle }, feedType, location,
             navFilters, navViewMode } = this.props;
 
     if (!(navFilters.items.length || navViewMode)) {
@@ -41,7 +52,10 @@ class FeedPageBody extends Component {
     const button = UnreadButton
       ? location.query && location.query.since_entry_id
         ? <PreviousEntriesButton href={UnreadButton.href} />
-        : <UnreadButton.component limit={limit} />
+        : <UnreadButton.component
+            isFetching={isFetching}
+            onClick={this.handleClickUnreadButton.bind(this)}
+          />
       :null;
 
     return (

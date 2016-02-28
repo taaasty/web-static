@@ -7852,14 +7852,11 @@ var components = {
       reasons: []
     }
   },
-  UserToolbarContainer: {},
-  LiveLoadButtonContainer: {},
-  BestLoadButtonContainer: {},
-  FriendsLoadButtonContainer: {},
-  FeedPageBody: {}
+  UserToolbarContainer: {}
 };
 
 /*
+FeedPageBody: {},
 Calendar: {},
 EntryPageContainer: {
   user: {

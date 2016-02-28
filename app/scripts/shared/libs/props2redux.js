@@ -8,6 +8,7 @@ import {
 import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../desktop/react/constants/ViewStyleConstants';
 import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
 import { FEED_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/feedEntries';
+import { feedDataByUri } from '../../desktop/react/actions/FeedEntriesActions.js';
 
 const mapSection = {
   'favorites': TLOG_SECTION_FAVORITE,
@@ -21,8 +22,7 @@ function section() {
 
 export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEntries, appStats }) {
   const slug = tlog && tlog.slug;
-  const feedType = 'live';
-  const bestRating = 'excellent';
+  const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
 
   return {
     tlog: {
@@ -66,8 +66,9 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEnt
     feedEntries: {
       data: { items: [], ...feedEntries },
       isFetching: false,
-      type: feedType,
-      rating: bestRating,
+      apiType: feedData.apiType,
+      rating: feedData.rating,
+      sinceId: feedData.sinceId,
       error: feedEntries && feedEntries.error ? { error: feedEntries.error } : void 0,
       viewStyle: AppStorage.getItem(FEED_VIEW_STYLE_LS_KEY) || VIEW_STYLE_BRICKS,
     },

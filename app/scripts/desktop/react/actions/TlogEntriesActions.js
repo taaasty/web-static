@@ -99,23 +99,6 @@ export function appendTlogEntries() {
   };
 }
 
-export function prependTlogEntries(tillEntryId, count) {
-  return (dispatch, getState) => {
-    const { section, slug, type } = getState().tlogEntries;
-    const url = ApiRoutes.tlogEntries(slug, section, type);
-    const params = { till_entry_id: tillEntryId, limit: count };
-
-    dispatch(tlogEntriesRequest());
-    return fetchTlogEntries(url, params)
-      .then((data) => {
-        const prevItems = getState().tlogEntries.data.items;
-        dispatch(tlogEntriesReceive({ data: { ...data, items: data.items.concat(prevItems) } }));
-        return data;
-      })
-      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
-  };
-}
-
 export function deleteEntry(entryId) {
   return {
     type: TLOG_ENTRIES_DELETE_ENTRY,
