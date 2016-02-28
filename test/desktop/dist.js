@@ -72,11 +72,8 @@ const components = {
     },
   },
   UserToolbarContainer: {},
-  LiveLoadButtonContainer: {},
-  BestLoadButtonContainer: {},
-  FriendsLoadButtonContainer: {},
-  FeedPageBody: {},
   /*
+  FeedPageBody: {},
   Calendar: {},
   EntryPageContainer: {
     user: {

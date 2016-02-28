@@ -3,28 +3,32 @@ import FeedsStatusStore from '../../stores/FeedsStore';
 import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
+import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class BestLoadButtonContainer extends Component {
-  onLoad(promise) {
+  handleClick() {
+    const { onClick, unreadBestCount } = this.props;
+    const promise = onClick(unreadBestCount);
+
     (promise && promise.then(FeedsUpdateActions.resetBestEntries));
   }
   render() {
-    const { limit, unreadBestCount } = this.props;
+    const { isFetching, unreadBestCount } = this.props;
 
     return (
-      <UnreadLoadButtonContainer
+      <UnreadLoadButton
         count={unreadBestCount}
         href={Routes.best_feed_path()}
-        limit={limit}
-        onLoad={this.onLoad}
+        isLoading={isFetching}
+        onClick={this.handleClick.bind(this)}
       />
     );
   }
 }
 
 BestLoadButtonContainer.propTypes = {
-  limit: PropTypes.number,
+  isFetching: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   unreadBestCount: PropTypes.number.isRequired,
 };
 
