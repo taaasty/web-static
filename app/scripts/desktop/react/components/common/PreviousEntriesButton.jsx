@@ -7,14 +7,9 @@ function PreviousEntriesButton({ href }) {
   return (
     <div className="previous-entries-button-container">
       <div className="previous-entries-button">
-        {window.SPA
-         ? <Link to={uri(href).path()}>
-             {i18n.t('buttons.load_previous_entries')}
-           </Link>
-         : <a href={href}>
-             {i18n.t('buttons.load_previous_entries')}
-           </a>
-        }
+        <Link to={uri(href).path()}>
+          {i18n.t('buttons.load_previous_entries')}
+        </Link>
       </div>
     </div>
   );

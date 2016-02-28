@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import * as CalendarActions from '../actions/CalendarActions';
 import * as FeedEntriesActions from '../actions/FeedEntriesActions';
+import * as FeedStatusActions from '../actions/FeedStatusActions';
 import * as FlowActions from '../actions/FlowActions';
 import * as RelationshipActions from '../actions/RelationshipActions';
 import * as TlogActions from '../actions/TlogActions';
@@ -19,19 +20,11 @@ class AppPageContainer extends Component {
 }
 
 export default connect(
-  (state) => ({
-    appStats: state.appStats,
-    calendar: state.calendar,
-    currentUser: state.currentUser,
-    feedEntries: state.feedEntries,
-    flow: state.flow,
-    tlog: state.tlog,
-    tlogEntries: state.tlogEntries,
-    tlogEntry: state.tlogEntry,
-  }),
+  (state) => state,
   (dispatch) => ({
     CalendarActions: bindActionCreators(CalendarActions, dispatch),
     FeedEntriesActions: bindActionCreators(FeedEntriesActions, dispatch),
+    FeedStatusActions: bindActionCreators(FeedStatusActions, dispatch),
     FlowActions: bindActionCreators(FlowActions, dispatch),
     RelationshipActions: bindActionCreators(RelationshipActions, dispatch),
     TlogActions: bindActionCreators(TlogActions, dispatch),

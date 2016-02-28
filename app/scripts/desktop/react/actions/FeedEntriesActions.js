@@ -42,6 +42,7 @@ export const apiUrlMap = {
 };
 
 const INITIAL_LOAD_LIMIT = 30;
+const APPEND_LOAD_LIMIT = 15;
 
 function feedEntriesReceive(data) {
   return {
@@ -94,12 +95,12 @@ function shouldFetchFeedEntries(state, { apiType, rating, sinceId }) {
     (apiType !== cApiType || (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) || (cSinceId && sinceId == null));
 }
 
-function getFeedEntries({ apiType, rating, sinceId }) {
+export function getFeedEntries({ apiType, rating, sinceId }) {
   return (dispatch) => {
     const url = apiUrlMap[apiType];
 
     if (!url) {
-      return;
+      return null;
     }
 
     dispatch(feedEntriesRequest());
@@ -125,18 +126,51 @@ export function appendFeedEntries() {
     const { isFetching, apiType, rating, data: { next_since_entry_id } } = getState().feedEntries;
 
     if (isFetching) {
-      return;
+      return null;
     }
 
     const url = apiUrlMap[apiType];
     const params = {
-      
+      rating,
+      limit: APPEND_LOAD_LIMIT,
+      since_entry_id: next_since_entry_id,
     };
 
     dispatch(feedEntriesRequest());
+    return fetchFeedEntries(url, params)
+      .then((data) => {
+        const prevItems = getState().feedEntries.data.items;
+        dispatch(feedEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
+        return data;
+      })
+      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON })));
   };
 }
 
 export function prependFeedEntries() {
-  
+  return (dispatch, getState) => {
+    const { isFetching, apiType, rating, data: { items  } } = getState().feedEntries;
+    const firstId = items && items[0] && items[0].entry.id;
+
+    if (isFetching || !firstId) {
+      return null;
+    }
+
+
+    const url = apiUrlMap[apiType];
+    const params = {
+      rating,
+      till_entry_id: firstId,
+    };
+
+    dispatch(feedEntriesRequest());
+    return fetchFeedEntries(url, params)
+      .then((data) => {
+        const prevItems = getState().feedEntries.data.items;
+        dispatch(feedEntriesReceive({ data: { ...data, items: data.items.concat(prevItems) } }));
+        return data;
+      })
+      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
+
+  };
 }

@@ -7,31 +7,14 @@ import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
 
 class AppPage extends Component {
   render() {
-    const { CalendarActions, FeedEntriesActions, FlowActions, RelationshipActions,
-            TlogActions, TlogEntriesActions, TlogEntryActions, appStats, calendar, children,
-            currentUser, feedEntries, flow, tlog, tlogEntries, tlogEntry } = this.props;
+    const { children, currentUser, tlog } = this.props;
     const childrenWithProps = Children.map(
       children,
-      (child) => cloneElement(
-        child,
-        {
-          CalendarActions,
-          FeedEntriesActions,
-          FlowActions,
-          RelationshipActions,
-          TlogActions,
-          TlogEntriesActions,
-          TlogEntryActions,
-          appStats,
-          calendar,
-          currentUser,
-          feedEntries,
-          flow,
-          tlog,
-          tlogEntries,
-          tlogEntry,
-        }
-      )
+      (child) => {
+        const props = { ...this.props };
+        delete props.children;
+        return cloneElement(child, props);
+      }
     );
     const isLogged = !!currentUser.data.id;
 
@@ -50,6 +33,7 @@ class AppPage extends Component {
 AppPage.propTypes = {
   CalendarActions: PropTypes.object.isRequired,
   FeedEntriesActions: PropTypes.object.isRequired,
+  FeedStatusActions: PropTypes.object.isRequired,
   FlowActions: PropTypes.object.isRequired,
   RelationshipActions: PropTypes.object.isRequired,
   TlogActions: PropTypes.object.isRequired,
@@ -63,6 +47,7 @@ AppPage.propTypes = {
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
   feedEntries: PropTypes.object.isRequired,
+  feedStatus: PropTypes.object.isRequired,
   flow: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
