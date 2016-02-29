@@ -79,6 +79,7 @@ class FeedPageBody extends Component {
           {feedEntries.viewStyle === VIEW_STYLE_BRICKS
              ? <EntryBricksContainer
                  entries={feedEntries}
+                 isFeed
                  loadMoreEntries={FeedEntriesActions.appendFeedEntries}
                >
                  {this.renderFilters()}
@@ -91,6 +92,7 @@ class FeedPageBody extends Component {
                      <EntryTlogsContainer
                        currentUser={currentUser}
                        entries={feedEntries}
+                       isFeed
                        loadMoreEntries={FeedEntriesActions.appendFeedEntries}
                      />
                    </div>

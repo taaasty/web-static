@@ -35,7 +35,7 @@ class EntryTlogCodeType extends Component {
     }
   }
   render() {
-    const { isInList, entry } = this.props;
+    const { isFeed, isInList, entry } = this.props;
     const { is_private, text } = entry;
 
     return (
@@ -45,7 +45,11 @@ class EntryTlogCodeType extends Component {
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <EntryTlogContentLink entry={entry} show={isInList}>
+        <EntryTlogContentLink
+          entry={entry}
+          isFeed={isFeed}
+          show={isInList}
+        >
           <div className="post__content">
             <pre>
               <Text value={text} withHTML />
@@ -66,6 +70,7 @@ EntryTlogCodeType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 

@@ -6,13 +6,13 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickTextType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickTextType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
   function renderBrickTitle() {
     return window.SPA
       ? <Link
           className="brick__link"
           title={entry.title}
-          to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+          to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
         >
           <h2 className="brick__title">
             {entry.title}
@@ -34,7 +34,7 @@ function EntryBrickTextType({ entry, hasModeration, host_tlog_id, onEntryAccept,
       ? <Link
           className="brick__link"
           title={entry.title}
-          to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+          to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
         >
           <Text value={entry.text_truncated} withHTML />
         </Link>
@@ -59,6 +59,7 @@ function EntryBrickTextType({ entry, hasModeration, host_tlog_id, onEntryAccept,
         <EntryBrickMetabar
           entry={entry}
           host_tlog_id={host_tlog_id}
+          isFeed={isFeed}
         />
       </div>
       <EntryBrickActions
@@ -74,6 +75,7 @@ EntryBrickTextType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

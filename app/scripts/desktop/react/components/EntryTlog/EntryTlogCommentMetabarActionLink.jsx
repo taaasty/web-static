@@ -12,7 +12,7 @@ class EntryTlogCommentMetabarActionLink extends Component {
     return this.state.hover && hoverTitle ? hoverTitle : title;
   }
   render() {
-    const { entryId, icon, url } = this.props;
+    const { entryId, icon, isFeed, url } = this.props;
     const iconClasses = classNames('icon', icon);
 
     return window.SPA
@@ -20,7 +20,7 @@ class EntryTlogCommentMetabarActionLink extends Component {
           className="comment__dropdown-item"
           onMouseEnter={() => this.setState({ hover: true })}
           onMouseLeave={() => this.setState({ hover: false })}
-          to={{ pathname: uri(url).path(), hash: uri(url).hash(), state: { id: entryId } }}
+          to={{ pathname: uri(url).path(), hash: uri(url).hash(), state: { isFeed, id: entryId } }}
         >
           <i className={iconClasses} />
           {this.getTitle()}
@@ -44,6 +44,7 @@ EntryTlogCommentMetabarActionLink.propTypes = {
     PropTypes.string,
     PropTypes.array,
   ]).isRequired,
+  isFeed: PropTypes.bool,
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };

@@ -25,13 +25,17 @@ class EntryTlogImageType extends Component {
     }
   }
   render() {
-    const { entry, isInList } = this.props;
+    const { entry, isFeed, isInList } = this.props;
     const { image_attachments, is_private, title } = entry;
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink entry={entry} show={isInList}>
+          <EntryTlogContentLink
+            entry={entry}
+            isFeed={isFeed}
+            show={isInList}
+          >
             <ImageAttachmentsCollage
               imageAttachments={image_attachments}
               width={712}
@@ -39,7 +43,11 @@ class EntryTlogImageType extends Component {
           </EntryTlogContentLink>
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
-          <EntryTlogContentLink entry={entry} show={isInList}>
+          <EntryTlogContentLink
+            entry={entry}
+            isFeed={isFeed}
+            show={isInList}
+          >
             <Text value={title} withHTML />
           </EntryTlogContentLink>
         </div>
@@ -57,6 +65,7 @@ EntryTlogImageType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 

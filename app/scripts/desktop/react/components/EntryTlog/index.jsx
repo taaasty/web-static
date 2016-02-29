@@ -148,7 +148,7 @@ class EntryTlog extends Component {
   }
   render() {
     const { commentator: _commentator, entry, error,
-            host_tlog_id, isFetching, isInList } = this.props;
+            host_tlog_id, isFeed, isFetching, isInList } = this.props;
     const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
 
     return !error && (isFetching || !entry.type)
@@ -168,6 +168,7 @@ class EntryTlog extends Component {
                hasModeration={this.state.hasModeration}
                hideCommentForm={this.props.hideCommentForm}
                host_tlog_id={host_tlog_id}
+               isFeed={isFeed}
                isInList={isInList}
                onAccept={this.accept.bind(this)}
                onAddToFavorites={this.addToFavorites.bind(this)}
@@ -188,6 +189,7 @@ EntryTlog.propTypes = {
   error: PropTypes.object,
   hideCommentForm: PropTypes.bool,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   isFetching: PropTypes.bool,
   isInList: PropTypes.bool,
   moderation: PropTypes.object,
