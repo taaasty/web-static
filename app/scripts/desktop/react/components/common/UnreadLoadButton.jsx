@@ -16,12 +16,18 @@ class UnreadLoadButton extends Component {
     offScreen: false,
   };
   componentDidMount() {
+    const scrollTop = document.body.scrollTop || // safary, chrome
+          document.documentElement.scrollTop;    // ie, mozilla
+
     this.container = this.refs.container;
     if (this.container) {
       this.onScrollFn = this.updateOffScreenState.bind(this);
-      this.offsetTop = this.container.getBoundingClientRect().top;
+      this.offsetTop = scrollTop + this.container.getBoundingClientRect().top;
       document.addEventListener('scroll', this.onScrollFn, false);
     }
+  }
+  componentWillReceiveProps() {
+    this.updateOffScreenState();
   }
   componentWillUnmount() {
     if (this.onScrollFn) {
@@ -31,6 +37,7 @@ class UnreadLoadButton extends Component {
   updateOffScreenState() {
     const scrollTop = document.body.scrollTop || // safary, chrome
           document.documentElement.scrollTop;    // ie, mozilla
+
     this.setState({
       offScreen: (this.offsetTop && scrollTop > this.offsetTop),
     });
