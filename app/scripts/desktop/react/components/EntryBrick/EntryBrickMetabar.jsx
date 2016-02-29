@@ -6,7 +6,7 @@ import Voting from '../common/Voting';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickMetabar({ entry, host_tlog_id }) {
+function EntryBrickMetabar({ entry, host_tlog_id, isFeed }) {
   function renderMetaVote() {
     const { id, rating } = entry;
 
@@ -29,7 +29,7 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
             <Link
               className="meta-item__link"
               title={title}
-              to={{ pathname: uri(url).path(), hash: '#comments', state: { id: entry.id } }}
+              to={{ pathname: uri(url).path(), hash: '#comments', state: { isFeed, id: entry.id } }}
             >
               {title}
             </Link>
@@ -64,6 +64,7 @@ function EntryBrickMetabar({ entry, host_tlog_id }) {
 EntryBrickMetabar.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
 };
 
 export default EntryBrickMetabar;

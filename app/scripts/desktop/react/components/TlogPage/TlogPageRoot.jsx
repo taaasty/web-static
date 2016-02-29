@@ -12,15 +12,21 @@ const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
 class TlogPageRoot extends Component {
   componentDidMount() {
-    document.body.className = 'layout--tlog';
-    DesignPreviewService.apply(this.props.tlog.data.design);
-    this.getCalendarData(this.props);
+    if (this.isFlow(this.props)) {
+      document.body.className = 'layout--feed';
+    } else {
+      document.body.className = 'layout--tlog';
+      DesignPreviewService.apply(this.props.tlog.data.design);
+      this.getCalendarData(this.props);
+    }
   }
   componentWillReceiveProps(nextProps) {
     this.getCalendarData(nextProps);
     this.props.TlogActions.getTlog(this.slug(nextProps));
-    
-    if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
+
+    if (this.isFlow(nextProps)) {
+      document.body.className = 'layout--feed';
+    } else if (this.props.tlog.data.design !== nextProps.tlog.data.design) {
       document.body.className = 'layout--tlog';
       DesignPreviewService.apply(nextProps.tlog.data.design);
     }
@@ -47,8 +53,8 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { calendar, children, currentUser, flow, location, params, tlog, tlogEntries,
-            tlogEntry, CalendarActions, FlowActions, RelationshipActions,
+    const { calendar, children, currentUser, feedEntries, flow, location, params, tlog,
+            tlogEntries, tlogEntry, CalendarActions, FlowActions, RelationshipActions,
             TlogActions, TlogEntriesActions, TlogEntryActions } = this.props;
     const currentUserId = currentUser.data.id;
     const { author, design: { backgroundImageUrl }, slug, stats, tlog_url } = tlog.data;
@@ -68,6 +74,7 @@ class TlogPageRoot extends Component {
           TlogEntryActions,
           currentUserId,
           currentUser,
+          feedEntries,
           flow,
           isFlow,
           tlog,
@@ -132,6 +139,7 @@ TlogPageRoot.propTypes = {
     PropTypes.array,
   ]),
   currentUser: PropTypes.object.isRequired,
+  feedEntries: PropTypes.object.isRequired,
   flow: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
