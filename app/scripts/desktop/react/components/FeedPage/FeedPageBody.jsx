@@ -29,12 +29,12 @@ const LoadButtons = {
 
 class FeedPageBody extends Component {
   handleClickUnreadButton(count) {
-    const { getFeedEntries, prependFeedEntries } = this.props.FeedEntriesActions;
+    const { getFeedEntriesIfNeeded, prependFeedEntries } = this.props.FeedEntriesActions;
 
     if (count > 0) {
       return (count < PREPEND_LOAD_LIMIT)
         ? prependFeedEntries()
-        : getFeedEntries();
+        : getFeedEntriesIfNeeded(this.props.location, true);
     } else {
       return null;
     }
