@@ -24,7 +24,7 @@ class EntryTlogs extends Component {
     setQuery({ since_entry_id: data.id });
   }
   render() {
-    const { canLoad, currentUser, entries, host_tlog_id,
+    const { canLoad, currentUser, entries, host_tlog_id, isFeed,
             loading, onDelete, onLoadMoreEntries } = this.props;
 
     return (
@@ -40,6 +40,7 @@ class EntryTlogs extends Component {
                entry={item.entry}
                hideCommentForm={entries.length > 1}
                host_tlog_id={host_tlog_id}
+               isFeed={isFeed}
                isInList
                key={item.entry.id}
                moderation={item.moderation}
@@ -57,6 +58,7 @@ EntryTlogs.propTypes = {
   currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
   onLoadMoreEntries: PropTypes.func.isRequired,

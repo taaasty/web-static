@@ -5,7 +5,7 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
   function renderQuoteSource() {
     return (
       <span className="blockquote__caption">—
@@ -18,7 +18,7 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
 
   function renderContents() {
     return window.SPA
-      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id} }}>
+      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id} }}>
           <blockquote className="blockquote">
             <span className="laquo">«</span>
             {entry.text_truncated}
@@ -45,6 +45,7 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
         <EntryBrickMetabar
           entry={entry}
           host_tlog_id={host_tlog_id}
+          isFeed={isFeed}
         />
       </div>
       <EntryBrickActions
@@ -60,6 +61,7 @@ EntryBrickQuoteType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

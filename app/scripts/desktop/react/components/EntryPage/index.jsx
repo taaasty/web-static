@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
-import { SM_TLOG_ENTRY, sendCategory } from '../../services/Sociomantic';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
@@ -10,21 +9,22 @@ import PinPostButton from './PinPostButton';
 class EntryPageContainer extends Component {
   componentWillMount() {
     const { state } = this.props.location;
-    state && this.fetchData(state.id);
-    sendCategory(SM_TLOG_ENTRY);
+    state && this.fetchData(state.id, state.isFeed);
   }
   componentWillReceiveProps(nextProps) {
     const { params, location: { state } } = nextProps;
-    state && this.fetchData(state.id);
+    state && this.fetchData(state.id, state.isFeed);
   }
   componentWillUnmount() {
     this.props.TlogEntryActions.resetTlogEntry();
   }
-  fetchData(newId) {
-    const { TlogEntryActions, tlogEntries: { data: { items } },
+  fetchData(newId, isFeed) {
+    const { TlogEntryActions, feedEntries: { data: { items: feedItems } },
+            tlogEntries: { data: { items: tlogItems } },
             tlogEntry } = this.props;
 
     if (newId && (!tlogEntry.data.id || newId !== tlogEntry.data.id)) {
+      const items = isFeed ? feedItems : tlogItems;
       const entries = items.filter((item) => item.entry.id === newId);
       const entry = entries[0];
 
@@ -36,7 +36,7 @@ class EntryPageContainer extends Component {
     }
   }
   renderFlowEntry() {
-    const { currentUser, currentUserId, error, tlog, tlogEntry } = this.props;
+    const { currentUser, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
@@ -62,7 +62,7 @@ class EntryPageContainer extends Component {
     );
   }
   renderTlogEntry() {
-    const { currentUser, currentUserId, error, tlog, tlogEntry } = this.props;
+    const { currentUser, currentUserId, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
@@ -108,6 +108,7 @@ EntryPageContainer.propTypes = {
   TlogEntryActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
+  feedEntries: PropTypes.object.isRequired,
   isFlow: PropTypes.bool,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,

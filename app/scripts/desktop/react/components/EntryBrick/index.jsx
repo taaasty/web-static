@@ -13,6 +13,7 @@ let EntryBrick = React.createClass({
     entry: ProjectTypes.tlogEntry.isRequired,
     feedType: PropTypes.string,
     host_tlog_id: PropTypes.number,
+    isFeed: PropTypes.bool,
     moderation: PropTypes.object,
   },
 
@@ -44,7 +45,7 @@ let EntryBrick = React.createClass({
   },
 
   render() {
-    const { entry, feedType } = this.props;
+    const { entry, isFeed, feedType } = this.props;
 
     return this.state.visible
       ? <article className={this.getBrickClasses()} data-id={entry.id}>
@@ -54,6 +55,7 @@ let EntryBrick = React.createClass({
             entry={entry}
             hasModeration={this.state.hasModeration}
             host_tlog_id={this.props.host_tlog_id}
+            isFeed={isFeed}
             onEntryAccept={this.acceptEntry}
             onEntryDecline={this.declineEntry}
           />

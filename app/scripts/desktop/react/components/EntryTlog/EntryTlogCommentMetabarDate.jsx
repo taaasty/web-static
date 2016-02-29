@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogCommentMetabarDate({ date, entryId, url }) {
+function EntryTlogCommentMetabarDate({ date, entryId, isFeed, url }) {
   const now = moment();
   const createdAt = moment(date);
 
@@ -19,7 +19,7 @@ function EntryTlogCommentMetabarDate({ date, entryId, url }) {
   }
 
   return window.SPA
-    ? <Link className="comment__date-link" to={{ pathname: uri(url).path(), state: { id: entryId } }}>
+    ? <Link className="comment__date-link" to={{ pathname: uri(url).path(), state: { isFeed, id: entryId } }}>
         <span className="comment__date">
           {formatDate}
         </span>
@@ -34,6 +34,7 @@ function EntryTlogCommentMetabarDate({ date, entryId, url }) {
 EntryTlogCommentMetabarDate.propTypes = {
   date: PropTypes.string.isRequired,
   entryId: PropTypes.number.isRequired,
+  isFeed: PropTypes.bool,
   url: PropTypes.string.isRequired,
 };
 

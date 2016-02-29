@@ -4,7 +4,7 @@ import EntryTlogs from './EntryTlogs';
 class EntryTlogsContainer extends Component {
   render() {
     const { currentUser, entries: { isFetching, data: { items, has_more } },
-            handleDeleteEntry, hostTlogId, loadMoreEntries } = this.props;
+            handleDeleteEntry, hostTlogId, isFeed, loadMoreEntries } = this.props;
 
     return (
       <EntryTlogs
@@ -12,6 +12,7 @@ class EntryTlogsContainer extends Component {
         currentUser={currentUser.data}
         entries={items}
         host_tlog_id={hostTlogId}
+        isFeed={isFeed}
         loading={isFetching}
         onDelete={handleDeleteEntry}
         onLoadMoreEntries={loadMoreEntries}
@@ -32,6 +33,7 @@ EntryTlogsContainer.propTypes = {
   }).isRequired,
   handleDeleteEntry: PropTypes.func,
   hostTlogId: PropTypes.number,
+  isFeed: PropTypes.bool,
   loadMoreEntries: PropTypes.func,
 };
 

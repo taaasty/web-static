@@ -17,7 +17,7 @@ function EntryTlogMetabar(props) {
     );
   }
 
-  const { commentator, entry, host_tlog_id, onComment } = props;
+  const { commentator, entry, host_tlog_id, isFeed, onComment } = props;
 
   return (
     <span className="meta-bar">
@@ -32,7 +32,7 @@ function EntryTlogMetabar(props) {
         onComment={onComment}
         url={entry.url}
       />
-      <EntryTlogMetabarDate entry={entry} />
+      <EntryTlogMetabarDate entry={entry} isFeed={isFeed} />
       {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
        <EntryTlogMetabarRepost
         commentator={commentator}
@@ -48,6 +48,7 @@ EntryTlogMetabar.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   onComment: PropTypes.func,
 };
 
