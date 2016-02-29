@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as AppStatsActions from '../actions/AppStatsActions';
 import * as CalendarActions from '../actions/CalendarActions';
 import * as FeedEntriesActions from '../actions/FeedEntriesActions';
 import * as FeedStatusActions from '../actions/FeedStatusActions';
@@ -22,6 +23,7 @@ class AppPageContainer extends Component {
 export default connect(
   (state) => state,
   (dispatch) => ({
+    AppStatsActions: bindActionCreators(AppStatsActions, dispatch),
     CalendarActions: bindActionCreators(CalendarActions, dispatch),
     FeedEntriesActions: bindActionCreators(FeedEntriesActions, dispatch),
     FeedStatusActions: bindActionCreators(FeedStatusActions, dispatch),

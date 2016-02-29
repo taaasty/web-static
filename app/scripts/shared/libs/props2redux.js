@@ -73,9 +73,10 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEnt
       viewStyle: AppStorage.getItem(FEED_VIEW_STYLE_LS_KEY) || VIEW_STYLE_BRICKS,
     },
     appStats: {
-      data: appStats,
+      data: appStats || {},
       isFetching: false,
       error: appStats && appStats.error,
+      updatedAt: appStats && (new Date()).valueOf(),
     },
   };
 }
