@@ -6,6 +6,12 @@ import ComposeToolbar from '../ComposeToolbar';
 import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
 
 class AppPage extends Component {
+  componentWillMount() {
+    this.props.AppStatsActions.getAppStatsIfNeeded();
+  }
+  componentWillReceiveProps() {
+    this.props.AppStatsActions.getAppStatsIfNeeded();
+  }
   render() {
     const { children, currentUser, tlog } = this.props;
     const childrenWithProps = Children.map(
@@ -31,6 +37,7 @@ class AppPage extends Component {
 }
 
 AppPage.propTypes = {
+  AppStatsActions: PropTypes.object.isRequired,
   CalendarActions: PropTypes.object.isRequired,
   FeedEntriesActions: PropTypes.object.isRequired,
   FeedStatusActions: PropTypes.object.isRequired,

@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.apiUrlMap = exports.FEED_ENTRIES_VIEW_STYLE = exports.FEED_ENTRIES_RESET = exports.FEED_ENTRIES_ERROR = exports.FEED_ENTRIES_RECEIVE = exports.FEED_ENTRIES_REQUEST = undefined;
 exports.feedDataByUri = feedDataByUri;
 exports.feedEntriesViewStyle = feedEntriesViewStyle;
-exports.getFeedEntries = getFeedEntries;
 exports.getFeedEntriesIfNeeded = getFeedEntriesIfNeeded;
 exports.appendFeedEntries = appendFeedEntries;
 exports.prependFeedEntries = prependFeedEntries;
@@ -143,10 +142,12 @@ function getFeedEntries(_ref3) {
 }
 
 function getFeedEntriesIfNeeded(location) {
+  var force = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
   return function (dispatch, getState) {
     var params = feedDataByUri(location);
 
-    if (shouldFetchFeedEntries(getState(), params)) {
+    if (force || shouldFetchFeedEntries(getState(), params)) {
       return dispatch(getFeedEntries(params));
     }
   };
@@ -438,15 +439,13 @@ var _urijs2 = _interopRequireDefault(_urijs);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _keymirror2.default)({
+  FEED_INITIAL_COUNTS: null,
   FEED_LIVE_NEW_ENTRY: null,
   FEED_LIVE_RESET: null,
-  FEED_LIVE_INITIAL_COUNT: null,
   FEED_BEST_NEW_ENTRY: null,
   FEED_BEST_RESET: null,
-  FEED_BEST_INITIAL_COUNT: null,
   FEED_FRIENDS_NEW_ENTRY: null,
   FEED_FRIENDS_RESET: null,
-  FEED_FRIENDS_INITIAL_COUNT: null,
   FEED_ANONYMOUS_NEW_ENTRY: null,
   FEED_ANONYMOUS_RESET: null,
   FEED_LIVE_FLOW_NEW_ENTRY: null,
@@ -13751,9 +13750,10 @@ function prop2redux(_ref) {
       viewStyle: AppStorage.getItem(_feedEntries.FEED_VIEW_STYLE_LS_KEY) || _ViewStyleConstants.VIEW_STYLE_BRICKS
     },
     appStats: {
-      data: appStats,
+      data: appStats || {},
       isFetching: false,
-      error: appStats && appStats.error
+      error: appStats && appStats.error,
+      updatedAt: appStats && new Date().valueOf()
     }
   };
 }
@@ -15166,6 +15166,9 @@ ApiRoutes = {
   },
   backgrounds: function() {
     return gon.api_host + '/v1/backgrounds';
+  },
+  appStats: function() {
+    return gon.api_host + "/v1/app/stats.json";
   },
   flows: function() {
     return gon.api_host + '/v1/flows';

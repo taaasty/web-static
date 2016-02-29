@@ -131,6 +131,8 @@ ApiRoutes =
 
   backgrounds: -> gon.api_host + '/v1/backgrounds'
 
+  appStats: -> "#{gon.api_host}/v1/app/stats.json"
+
   flows: -> gon.api_host + '/v1/flows'
   flowsMine: -> gon.api_host + '/v1/flows/my'
   flowsAvailable: -> gon.api_host + '/v1/flows/available'
