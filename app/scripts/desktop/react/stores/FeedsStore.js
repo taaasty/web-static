@@ -2,7 +2,7 @@ import BaseStore from './BaseStore';
 import AppDispatcher from '../dispatchers/dispatcher';
 import FeedConstants from '../constants/FeedConstants';
 
-const unreadFeeds = {
+let unreadFeeds = {
   live: [],
   liveInitialCount: 0,
   best: [],
@@ -16,16 +16,17 @@ const unreadFeeds = {
 };
 
 const actionMap = {
+  [FeedConstants.FEED_INITIAL_COUNTS](payload) {
+    unreadFeeds = { ...unreadFeeds, ...payload };
+  },
+
   [FeedConstants.FEED_LIVE_NEW_ENTRY](payload) {
     unreadFeeds.live.push(payload);
   },
 
   [FeedConstants.FEED_LIVE_RESET](payload) {
     unreadFeeds.live = [];
-  },
-
-  [FeedConstants.FEED_LIVE_INITIAL_COUNT](payload) {
-    unreadFeeds.liveInitialCount = payload;
+    unreadFeeds.liveInitialCount = 0;
   },
 
   [FeedConstants.FEED_BEST_NEW_ENTRY](payload) {
@@ -34,10 +35,7 @@ const actionMap = {
 
   [FeedConstants.FEED_BEST_RESET](payload) {
     unreadFeeds.best = [];
-  },
-
-  [FeedConstants.FEED_BEST_INITIAL_COUNT](payload) {
-    unreadFeeds.bestInitialCount = payload;
+    unreadFeeds.bestInitialCount = 0;
   },
 
   [FeedConstants.FEED_FRIENDS_NEW_ENTRY](payload) {
@@ -46,10 +44,7 @@ const actionMap = {
 
   [FeedConstants.FEED_FRIENDS_RESET](payload) {
     unreadFeeds.friends = [];
-  },
-
-  [FeedConstants.FEED_FRIENDS_INITIAL_COUNT](payload) {
-    unreadFeeds.friendsInitialCount = payload;
+    unreadFeeds.friendsInitialCount = 0;
   },
 
   [FeedConstants.FEED_ANONYMOUS_NEW_ENTRY](payload) {
@@ -58,6 +53,7 @@ const actionMap = {
 
   [FeedConstants.FEED_ANONYMOUS_RESET](payload) {
     unreadFeeds.anonymous = [];
+    unreadFeeds.anonymousInitialCount = 0;
   },
 
   [FeedConstants.FEED_LIVE_FLOW_NEW_ENTRY](payload) {
@@ -66,6 +62,7 @@ const actionMap = {
 
   [FeedConstants.FEED_LIVE_FLOW_RESET](payload) {
     unreadFeeds.liveFlow = [];
+    unreadFeeds.liveFlowInitialCount = 0;
   },
 };
 

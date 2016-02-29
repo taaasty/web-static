@@ -1,6 +1,13 @@
 import AppDispatcher from '../dispatchers/dispatcher';
 import FeedConstants from '../constants/FeedConstants';
 
+export function initialCounts(counts) {
+  AppDispatcher.handleViewAction({
+    type: FeedConstants.FEED_INITIAL_COUNTS,
+    payload: counts,
+  });
+}
+
 export function addLiveEntry(entry) {
   AppDispatcher.handleServerAction({
     payload: entry,
@@ -40,9 +47,10 @@ export function resetFriendsEntries() {
   });
 }
 
-export function addAnonymousEntry() {
+export function addAnonymousEntry(entry) {
   AppDispatcher.handleViewAction({
     type: FeedConstants.FEED_ANONYMOUS_NEW_ENTRY,
+    payload: entry,
   });
 }
 
@@ -52,9 +60,10 @@ export function resetAnonymousEntries() {
   });
 }
 
-export function addLiveFlowEntry() {
+export function addLiveFlowEntry(entry) {
   AppDispatcher.handleViewAction({
     type: FeedConstants.FEED_LIVE_FLOW_NEW_ENTRY,
+    payload: entry,
   });
 }
 

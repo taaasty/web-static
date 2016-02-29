@@ -7,6 +7,13 @@ const initialState = {
 };
 
 const actionMap = {
+  [APP_STATS_RECEIVE](state, data) {
+    
+  },
+
+  [APP_STATS_REQUEST](state) {
+    
+  },
   
 };
 

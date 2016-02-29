@@ -4,6 +4,7 @@ import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import FeedsStatusStore from '../../stores/FeedsStore';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import ToolbarActionCreators from '../../actions/Toolbar';
+import { initialCounts } from '../../actions/FeedsUpdateActions';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
 
@@ -36,7 +37,17 @@ let UserToolbarContainer = createClass({
   },
 
   componentWillMount() {
+    const { unreadAnonymousCount, unreadBestCount, unreadFriendsCount,
+            unreadLiveCount, unreadLiveFlowCount } = this.props.originalProps;
+
     ToolbarActionCreators.initVisibility(this.state.opened);
+    initialCounts({
+      liveInitialCount: unreadLiveCount || 0,
+      bestInitialCount: unreadBestCount || 0,
+      friendsInitialCount: unreadFriendsCount || 0,
+      anonymousInitialCount: unreadAnonymousCount || 0,
+      liveFlowInitialCount: unreadLiveFlowCount || 0,
+    });
   },
 
   componentDidMount() {
@@ -159,13 +170,14 @@ UserToolbarContainer = connectToStores(
   UserToolbarContainer,
   [CurrentUserStore, FeedsStatusStore, MessagingStatusStore],
   (props) => ({
+    originalProps: props,
     user: CurrentUserStore.getUser(),
     userLogged: CurrentUserStore.isLogged(),
-    unreadAnonymousCount: (props.unreadAnonymousCount || 0) + FeedsStatusStore.getUnreadAnonymousCount(),
-    unreadBestCount: (props.unreadBestCount || 0) + FeedsStatusStore.getUnreadBestCount(),
-    unreadFriendsCount: (props.unreadFriendsCount || 0) + FeedsStatusStore.getUnreadFriendsCount(),
-    unreadLiveCount: (props.unreadLiveCount || 0) + FeedsStatusStore.getUnreadLiveCount(),
-    unreadLiveFlowCount: (props.unreadLiveFlowCount || 0) + FeedsStatusStore.getUnreadLiveFlowCount(),
+    unreadAnonymousCount: FeedsStatusStore.getUnreadAnonymousCount(),
+    unreadBestCount: FeedsStatusStore.getUnreadBestCount(),
+    unreadFriendsCount: FeedsStatusStore.getUnreadFriendsCount(),
+    unreadLiveCount: FeedsStatusStore.getUnreadLiveCount(),
+    unreadLiveFlowCount: FeedsStatusStore.getUnreadLiveFlowCount(),
     unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
     unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),
   })
