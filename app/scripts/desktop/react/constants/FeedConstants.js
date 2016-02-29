@@ -2,15 +2,13 @@ import keyMirror from 'keymirror';
 import uri from 'urijs';
 
 export default keyMirror({
+  FEED_INITIAL_COUNTS: null,
   FEED_LIVE_NEW_ENTRY: null,
   FEED_LIVE_RESET: null,
-  FEED_LIVE_INITIAL_COUNT: null,
   FEED_BEST_NEW_ENTRY: null,
   FEED_BEST_RESET: null,
-  FEED_BEST_INITIAL_COUNT: null,
   FEED_FRIENDS_NEW_ENTRY: null,
   FEED_FRIENDS_RESET: null,
-  FEED_FRIENDS_INITIAL_COUNT: null,
   FEED_ANONYMOUS_NEW_ENTRY: null,
   FEED_ANONYMOUS_RESET: null,
   FEED_LIVE_FLOW_NEW_ENTRY: null,

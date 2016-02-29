@@ -6,6 +6,9 @@ import Routes from '../../../../shared/routes/routes';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class FriendsLoadButtonContainer extends Component {
+  componentWillMount() {
+    FeedsUpdateActions.resetFriendsEntries();
+  }
   handleClick() {
     const { onClick, unreadFriendsCount } = this.props;
     const promise = onClick(unreadFriendsCount);

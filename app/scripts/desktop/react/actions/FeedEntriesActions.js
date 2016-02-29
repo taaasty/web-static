@@ -95,7 +95,7 @@ function shouldFetchFeedEntries(state, { apiType, rating, sinceId }) {
     (apiType !== cApiType || (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) || (cSinceId && sinceId == null));
 }
 
-export function getFeedEntries({ apiType, rating, sinceId }) {
+function getFeedEntries({ apiType, rating, sinceId }) {
   return (dispatch) => {
     const url = apiUrlMap[apiType];
 
@@ -111,11 +111,11 @@ export function getFeedEntries({ apiType, rating, sinceId }) {
   };
 }
 
-export function getFeedEntriesIfNeeded(location) {
+export function getFeedEntriesIfNeeded(location, force=false) {
   return (dispatch, getState) => {
     const params = feedDataByUri(location);
 
-    if (shouldFetchFeedEntries(getState(), params)) {
+    if (force || shouldFetchFeedEntries(getState(), params)) {
       return dispatch(getFeedEntries(params));
     }
   };

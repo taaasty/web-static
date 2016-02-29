@@ -6,6 +6,9 @@ import Routes from '../../../../shared/routes/routes';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class LiveLoadButtonContainer extends Component {
+  componentWillMount() {
+    FeedsUpdateActions.resetLiveEntries();
+  }
   handleClick() {
     const { onClick, unreadLiveCount } = this.props;
     const promise = onClick(unreadLiveCount);
