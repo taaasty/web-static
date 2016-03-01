@@ -49,8 +49,25 @@ class FlowPageBody extends Component {
       />
     );
   }
+  renderEmpty() {
+    return (
+      <div className="content-area">
+        <div className="content-area__bg" />
+        <div className="content-area__inner">
+          <div className="posts">
+            <article className="post post--text">
+              <div className="post__content">
+                {i18n.t('flow.empty')}
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    );
+  }
   render() {
-    const { flow: { viewStyle }, location } = this.props;
+    const { flow: { viewStyle }, location,
+            tlogEntries: { data: { items }, isFetching } } = this.props;
 
     return (
       <div className="page-body">
@@ -60,7 +77,12 @@ class FlowPageBody extends Component {
             navViewMode
             viewMode={viewStyle}
           />
-          {viewStyle === VIEW_STYLE_TLOG ? this.renderTlogs() : this.renderBricks()}
+          {!isFetching && items.length === 0
+            ? this.renderEmpty()
+            : viewStyle === VIEW_STYLE_TLOG
+              ? this.renderTlogs()
+              : this.renderBricks()
+          }
         </div>
       </div>
     );

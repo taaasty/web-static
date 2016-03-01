@@ -428,6 +428,9 @@
       "good": "+10"
     }
   },
+  "flow": {
+    "empty": "This flow has no posts yet"
+  },
   "feed": {
     "header": {
       "install": "Install application for iOS or Android",
@@ -456,7 +459,8 @@
       "posts_24h_some_2": "{{count}} posts in last 24 hours",
       "friend_posts_1": "The only friend postings",
       "friend_posts_2": "{{count}} friends postings"
-    }
+    },
+    "empty": "This feed is empty yet"
   },
   "filters": {
     "view_feed": "Show as bricks",
