@@ -42,10 +42,12 @@ var FEED_ENTRIES_VIEW_STYLE = exports.FEED_ENTRIES_VIEW_STYLE = 'FEED_ENTRIES_VI
 function feedDataByUri(_ref) {
   var pathname = _ref.pathname;
   var query = _ref.query;
-  var _feedTypeMap$pathname = _FeedConstants.feedTypeMap[pathname];
-  var apiType = _feedTypeMap$pathname.apiType;
-  var section = _feedTypeMap$pathname.section;
-  var type = _feedTypeMap$pathname.type;
+
+  var _ref2 = _FeedConstants.feedTypeMap[pathname] || {};
+
+  var apiType = _ref2.apiType;
+  var section = _ref2.section;
+  var type = _ref2.type;
 
   var rating = apiType === _FeedConstants.FEED_ENTRIES_API_TYPE_BEST ? query.rating || 'excellent' : void 0;
 
@@ -106,10 +108,10 @@ function fetchFeedEntries(url, data) {
   });
 }
 
-function shouldFetchFeedEntries(state, _ref2) {
-  var apiType = _ref2.apiType;
-  var rating = _ref2.rating;
-  var sinceId = _ref2.sinceId;
+function shouldFetchFeedEntries(state, _ref3) {
+  var apiType = _ref3.apiType;
+  var rating = _ref3.rating;
+  var sinceId = _ref3.sinceId;
   var _state$feedEntries = state.feedEntries;
   var isFetching = _state$feedEntries.isFetching;
   var cApiType = _state$feedEntries.apiType;
@@ -119,10 +121,10 @@ function shouldFetchFeedEntries(state, _ref2) {
   return !isFetching && (apiType !== cApiType || cApiType === _FeedConstants.FEED_ENTRIES_API_TYPE_BEST && rating !== cRating || cSinceId && sinceId == null);
 }
 
-function getFeedEntries(_ref3) {
-  var apiType = _ref3.apiType;
-  var rating = _ref3.rating;
-  var sinceId = _ref3.sinceId;
+function getFeedEntries(_ref4) {
+  var apiType = _ref4.apiType;
+  var rating = _ref4.rating;
+  var sinceId = _ref4.sinceId;
 
   return function (dispatch) {
     var url = apiUrlMap[apiType];

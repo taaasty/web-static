@@ -69,35 +69,68 @@ class FeedPageBody extends Component {
       </FeedFilters>
     );
   }
-
-  render() {
+  renderBricks() {
+    const { FeedEntriesActions, feedEntries } = this.props;
+    return (
+      <EntryBricksContainer
+        entries={feedEntries}
+        isFeed
+        loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+      >
+        {this.renderFilters()}
+      </EntryBricksContainer>
+    );
+  }
+  renderTlogs() {
     const { FeedEntriesActions, currentUser, feedEntries } = this.props;
+
+    return (
+      <div>
+        {this.renderFilters()}
+        <div className="content-area">
+          <div className="content-area__bg" />
+          <div className="content-area__inner">
+            <EntryTlogsContainer
+              currentUser={currentUser}
+              entries={feedEntries}
+              isFeed
+              loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  renderEmpty() {
+    return (
+      <div>
+        {this.renderFilters()}
+        <div className="content-area">
+          <div className="content-area__bg" />
+          <div className="content-area__inner">
+            <div className="posts">
+              <article className="post post--text">
+                <div className="post__content">
+                  {i18n.t('feed.empty')}
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  render() {
+    const { feedEntries: { data: { items }, isFetching, viewStyle } } = this.props;
 
     return (
       <div className="page-body">
         <div className="layout-outer">
-          {feedEntries.viewStyle === VIEW_STYLE_BRICKS
-             ? <EntryBricksContainer
-                 entries={feedEntries}
-                 isFeed
-                 loadMoreEntries={FeedEntriesActions.appendFeedEntries}
-               >
-                 {this.renderFilters()}
-               </EntryBricksContainer>
-             : <div>
-                 {this.renderFilters()}
-                 <div className="content-area">
-                   <div className="content-area__bg" />
-                   <div className="content-area__inner">
-                     <EntryTlogsContainer
-                       currentUser={currentUser}
-                       entries={feedEntries}
-                       isFeed
-                       loadMoreEntries={FeedEntriesActions.appendFeedEntries}
-                     />
-                   </div>
-                 </div>
-               </div>
+          {!isFetching && items.length === 0
+             ? this.renderEmpty()
+             : viewStyle === VIEW_STYLE_BRICKS
+               ? this.renderBricks()
+               : this.renderTlogs()
           }
         </div>
       </div>
