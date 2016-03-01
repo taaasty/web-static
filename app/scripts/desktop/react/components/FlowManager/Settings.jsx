@@ -92,7 +92,7 @@ class Settings extends Component {
               title={i18n.t('manage_flow.private_title')}
             />
           </div>
-          <div className="flow-form__item">
+          {false && <div className="flow-form__item">
             <FlowFormRadio
               checked={is_premoderate}
               description={i18n.t('manage_flow.premoderate_description')}
@@ -100,7 +100,7 @@ class Settings extends Component {
               onChange={this.updateValue.bind(this, 'is_premoderate')}
               title={i18n.t('manage_flow.premoderate_title')}
             />
-          </div>
+          </div>}
         </div>
         <div className="flow-form__footer">
           {this.hasUnsavedFields() && this.renderSaveButton()}
