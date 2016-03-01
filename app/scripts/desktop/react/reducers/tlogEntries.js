@@ -1,3 +1,4 @@
+import createReducer from './createReducer';
 import {
   TLOG_ENTRIES_REQUEST,
   TLOG_ENTRIES_RECEIVE,
@@ -5,7 +6,6 @@ import {
   TLOG_ENTRIES_ERROR,
   TLOG_ENTRIES_RESET,
 } from '../actions/TlogEntriesActions';
-import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
 
 export const initialState = {
   data: {
@@ -20,32 +20,6 @@ export const initialState = {
   isFetching: false,
   error: null,
 };
-
-// keep only uniques and hoist pinned entries, fix hoisting
-function prepareData(data) {
-  const ids = [];
-  const items = data.items
-          .reduce((acc, item) => {
-            if (!item || ids.indexOf(item.entry.id) > -1) {
-              return acc;
-            } else {
-              ids.push(item.entry.id);
-              acc.push(item);
-              return acc;
-            }
-          }, [])
-          .sort((a, b) => {
-            const aPinned = a.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-            const bPinned = b.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-
-            return aPinned - bPinned;
-          });
-  
-  return {
-    ...data,
-    items,
-  };
-}
 
 const actionMap = {
   [TLOG_ENTRIES_REQUEST](state) {
@@ -90,11 +64,4 @@ const actionMap = {
   },
 };
 
-export default function tlogEntries(state=initialState, { type, payload }) {
-  const reduceFn = actionMap[type];
-  if (!reduceFn) {
-    return state;
-  }
-
-  return reduceFn(state, payload);
-}
+export default createReducer(initialState, actionMap);

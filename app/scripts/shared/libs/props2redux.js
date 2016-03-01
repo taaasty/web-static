@@ -5,8 +5,10 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../constants/Tlog';
-import { VIEW_STYLE_TLOG } from '../../desktop/react/constants/ViewStyleConstants';
+import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../desktop/react/constants/ViewStyleConstants';
 import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
+import { FEED_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/feedEntries';
+import { feedDataByUri } from '../../desktop/react/actions/FeedEntriesActions.js';
 
 const mapSection = {
   'favorites': TLOG_SECTION_FAVORITE,
@@ -18,16 +20,26 @@ function section() {
   return matches ? mapSection[matches[1]] : TLOG_SECTION_TLOG;
 }
 
-export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow }) {
+export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEntries, appStats }) {
+  const slug = tlog && tlog.slug;
+  const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
+
   return {
     tlog: {
-      data: { author: {}, design: {}, stats: {}, ...tlog },
-      slug: tlog.slug,
+      slug,
+      data: {
+        author: {
+          userpic: {},
+        },
+        design: {},
+        stats: {},
+        ...tlog,
+      },
     },
     tlogEntries: {
       data: { items: [], ...tlogEntries },
       isFetching: false,
-      slug: tlogEntries && tlog.slug,
+      slug: tlogEntries && slug,
       section: section(),
       type: 'tlogs',
       sinceId: uri().search(true).since_entry_id,
@@ -50,6 +62,21 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow }) {
       id: flow && flow.id,
       isFetching: false,
       viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
+    },
+    feedEntries: {
+      data: { items: [], ...feedEntries },
+      isFetching: false,
+      apiType: feedData.apiType,
+      rating: feedData.rating,
+      sinceId: feedData.sinceId,
+      error: feedEntries && feedEntries.error ? { error: feedEntries.error } : void 0,
+      viewStyle: AppStorage.getItem(FEED_VIEW_STYLE_LS_KEY) || VIEW_STYLE_BRICKS,
+    },
+    appStats: {
+      data: appStats || {},
+      isFetching: false,
+      error: appStats && appStats.error,
+      updatedAt: appStats && (new Date()).valueOf(),
     },
   };
 }

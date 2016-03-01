@@ -14,7 +14,6 @@ import uri from 'urijs';
 class HeroFlow extends Component {
   state = { popup: false };
   componentWillMount() {
-    document.body.className = 'layout--feed';
     this.props.FlowActions.getFlow(this.props.tlog.data.id);
   }
   componentWillReceiveProps(nextProps) {

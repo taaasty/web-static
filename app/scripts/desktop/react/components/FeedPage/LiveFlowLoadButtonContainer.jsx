@@ -3,28 +3,35 @@ import FeedsStatusStore from '../../stores/FeedsStore';
 import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
+import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class LiveFlowLoadButtonContainer extends Component {
-  onLoad(promise) {
+  componentWillMount() {
+    FeedsUpdateActions.resetLiveFlowEntries();
+  }
+  handleClick() {
+    const { onClick, unreadLiveFlowCount } = this.props;
+    const promise = onClick(unreadLiveFlowCount);
+
     (promise && promise.then(FeedsUpdateActions.resetLiveFlowEntries));
   }
   render() {
-    const { limit, unreadLiveFlowCount } = this.props;
+    const { isFetching, unreadLiveFlowCount } = this.props;
 
     return (
-      <UnreadLoadButtonContainer
+      <UnreadLoadButton
         count={unreadLiveFlowCount}
         href={Routes.live_flows_feed_path()}
-        limit={limit}
-        onLoad={this.onLoad}
+        isLoading={isFetching}
+        onClick={this.handleClick.bind(this)}
       />
     );
   }
 }
 
 LiveFlowLoadButtonContainer.propTypes = {
-  limit: PropTypes.number,
+  isFetching: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   unreadLiveFlowCount: PropTypes.number.isRequired,
 };
 

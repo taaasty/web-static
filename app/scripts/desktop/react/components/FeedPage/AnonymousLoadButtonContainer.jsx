@@ -3,28 +3,35 @@ import FeedsStatusStore from '../../stores/FeedsStore';
 import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
+import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class AnonymousLoadButtonContainer extends Component {
-  onLoad(promise) {
+  componentWillMount() {
+    FeedsUpdateActions.resetAnonymousEntries();
+  }
+  handleClick() {
+    const { onClick, unreadAnonymousCount } = this.props;
+    const promise = onClick(unreadAnonymousCount);
+
     (promise && promise.then(FeedsUpdateActions.resetAnonymousEntries));
   }
   render() {
-    const { limit, unreadAnonymousCount } = this.props;
+    const { isFetching, unreadAnonymousCount } = this.props;
 
     return (
-      <UnreadLoadButtonContainer
+      <UnreadLoadButton
         count={unreadAnonymousCount}
         href={Routes.live_anonymous_feed_path()}
-        limit={limit}
-        onLoad={this.onLoad}
+        isLoading={isFetching}
+        onClick={this.handleClick.bind(this)}
       />
     );
   }
 }
 
 AnonymousLoadButtonContainer.propTypes = {
-  limit: PropTypes.number,
+  isFetching: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   unreadAnonymousCount: PropTypes.number.isRequired,
 };
 

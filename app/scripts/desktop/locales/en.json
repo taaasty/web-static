@@ -410,6 +410,58 @@
     "private": "Sorry, access to this TLog and <br>its entries is restricted by its owner.",
     "section_private": "Private posts are visible to the author only"
   },
+  "nav_filters" : {
+    "live": {
+      "all": "All",
+      "media": "Media",
+      "flows": "Flows",
+      "anonymous": "Anonymous"
+    },
+    "friends": {
+      "all": "All",
+      "media": "Media"
+    },
+    "best": {
+      "best": "+100",
+      "excellent": "+50",
+      "well": "+20",
+      "good": "+10"
+    }
+  },
+  "flow": {
+    "empty": "This flow has no posts yet"
+  },
+  "feed": {
+    "header": {
+      "install": "Install application for iOS or Android",
+      "app_ios": "Application for iOS",
+      "app_android": "Application for Android"
+    },
+    "title" : {
+      "live": {
+        "all": "Live feed",
+        "media": "Media feed live",
+        "flows": "Flows live",
+        "anonymous": "Anonymous live"
+      },
+      "friends": {
+        "all": "Friends",
+        "media": "Friends media"
+      },
+      "best": {
+        "best": "The best",
+        "excellent": "Excellent",
+        "well": "Well",
+        "good": "Good"
+      },
+      "posts_24h_none": "No posts in last 24 hours",
+      "posts_24h_some_1": "{{count}} post in last 24 hours",
+      "posts_24h_some_2": "{{count}} posts in last 24 hours",
+      "friend_posts_1": "The only friend postings",
+      "friend_posts_2": "{{count}} friends postings"
+    },
+    "empty": "This feed is empty yet"
+  },
   "filters": {
     "view_feed": "Show as bricks",
     "view_tlog": "Show as a list"

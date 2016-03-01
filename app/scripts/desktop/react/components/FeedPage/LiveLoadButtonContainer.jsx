@@ -3,28 +3,35 @@ import FeedsStatusStore from '../../stores/FeedsStore';
 import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
+import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class LiveLoadButtonContainer extends Component {
-  onLoad(promise) {
+  componentWillMount() {
+    FeedsUpdateActions.resetLiveEntries();
+  }
+  handleClick() {
+    const { onClick, unreadLiveCount } = this.props;
+    const promise = onClick(unreadLiveCount);
+
     (promise && promise.then(FeedsUpdateActions.resetLiveEntries));
   }
   render() {
-    const { limit, unreadLiveCount } = this.props;
+    const { isFetching, unreadLiveCount } = this.props;
 
     return (
-      <UnreadLoadButtonContainer
+      <UnreadLoadButton
         count={unreadLiveCount}
         href={Routes.live_feed_path()}
-        limit={limit}
-        onLoad={this.onLoad}
+        isLoading={isFetching}
+        onClick={this.handleClick.bind(this)}
       />
     );
   }
 }
 
 LiveLoadButtonContainer.propTypes = {
-  limit: PropTypes.number,
+  isFetching: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   unreadLiveCount: PropTypes.number.isRequired,
 };
 

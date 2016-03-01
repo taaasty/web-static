@@ -16,21 +16,58 @@ class FlowPageBody extends Component {
       this.props.FlowActions.flowViewStyle(query.style);
     }
   }
+  handleDeleteEntry(entryId) {
+    this.props.TlogEntriesActions.deleteEntry(entryId);
+  }
   renderTlogs() {
+    const { TlogEntriesActions, currentUser, tlog, tlogEntries } = this.props;
+
     return (
       <div className="content-area">
         <div className="content-area__bg" />
         <div className="content-area__inner">
-          <EntryTlogsContainer {...this.props} />
+          <EntryTlogsContainer
+            currentUser={currentUser}
+            entries={tlogEntries}
+            handleDeleteEntry={this.handleDeleteEntry.bind(this)}
+            hostTlogId={tlog.data.author && tlog.data.author.id}
+            loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+          />
         </div>
       </div>
     );
   }
   renderBricks() {
-    return <EntryBricksContainer {...this.props} />;
+    const { TlogEntriesActions, children, tlog, tlogEntries } = this.props;
+
+    return (
+      <EntryBricksContainer
+        children={children}
+        entries={tlogEntries}
+        hostTlogId={tlog.data.author && tlog.data.author.id}
+        loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+      />
+    );
+  }
+  renderEmpty() {
+    return (
+      <div className="content-area">
+        <div className="content-area__bg" />
+        <div className="content-area__inner">
+          <div className="posts">
+            <article className="post post--text">
+              <div className="post__content">
+                {i18n.t('flow.empty')}
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    );
   }
   render() {
-    const { flow: { viewStyle }, location } = this.props;
+    const { flow: { viewStyle }, location,
+            tlogEntries: { data: { items }, isFetching } } = this.props;
 
     return (
       <div className="page-body">
@@ -40,7 +77,12 @@ class FlowPageBody extends Component {
             navViewMode
             viewMode={viewStyle}
           />
-          {viewStyle === VIEW_STYLE_TLOG ? this.renderTlogs() : this.renderBricks()}
+          {!isFetching && items.length === 0
+            ? this.renderEmpty()
+            : viewStyle === VIEW_STYLE_TLOG
+              ? this.renderTlogs()
+              : this.renderBricks()
+          }
         </div>
       </div>
     );

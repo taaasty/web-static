@@ -1,3 +1,4 @@
+import createReducer from './createReducer';
 import {
   CALENDAR_REQUEST,
   CALENDAR_RECEIVE,
@@ -45,11 +46,4 @@ const actionMap = {
   },
 };
 
-export default function calendar(state=initialState, { type, payload }) {
-  const reduceFn = actionMap[type];
-  if (!reduceFn) {
-    return state;
-  }
-
-  return reduceFn(state, payload);
-}
+export default createReducer(initialState, actionMap);

@@ -3,28 +3,35 @@ import FeedsStatusStore from '../../stores/FeedsStore';
 import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Routes from '../../../../shared/routes/routes';
-import UnreadLoadButtonContainer from '../common/UnreadLoadButtonContainer';
+import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class FriendsLoadButtonContainer extends Component {
-  onLoad(promise) {
+  componentWillMount() {
+    FeedsUpdateActions.resetFriendsEntries();
+  }
+  handleClick() {
+    const { onClick, unreadFriendsCount } = this.props;
+    const promise = onClick(unreadFriendsCount);
+
     (promise && promise.then(FeedsUpdateActions.resetFriendsEntries));
   }
   render() {
-    const { limit, unreadFriendsCount } = this.props;
+    const { isFetching, unreadFriendsCount } = this.props;
 
     return (
-      <UnreadLoadButtonContainer
+      <UnreadLoadButton
         count={unreadFriendsCount}
         href={Routes.friends_feed_path()}
-        limit={limit}
-        onLoad={this.onLoad}
+        isLoading={isFetching}
+        onClick={this.handleClick.bind(this)}
       />
     );
   }
 }
 
 FriendsLoadButtonContainer.propTypes = {
-  limit: PropTypes.number,
+  isFetching: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
 };
 

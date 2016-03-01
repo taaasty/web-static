@@ -23,7 +23,7 @@ class EntryTlogQuoteType extends Component {
     }
   }
   render() {
-    const { entry, isInList } = this.props;
+    const { entry, isFeed, isInList } = this.props;
     const { is_private, source, text } = entry;
 
     return (
@@ -32,7 +32,11 @@ class EntryTlogQuoteType extends Component {
           {this.renderVoting()}
           {is_private && <PrivacyBadge />}
         </header>
-        <EntryTlogContentLink entry={entry} show={isInList}>
+        <EntryTlogContentLink
+          entry={entry}
+          isFeed={isFeed}
+          show={isInList}
+        >
           <div className="post__content">
             <blockquote className="blockquote">
               <span className="laquo">«</span>{text}<span className="raquo">»</span>
@@ -58,6 +62,7 @@ EntryTlogQuoteType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 

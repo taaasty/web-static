@@ -3,6 +3,8 @@ import React from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
 import { brickWidth, flowAvatarSize } from './constants';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryBrickFlowHeader({ flow }) {
   const bgUrl = ThumborService.newImageUrl(
@@ -21,7 +23,7 @@ function EntryBrickFlowHeader({ flow }) {
 
   return(
     <div className="brick__flow-header-container" style={bgStyle}>
-      <a href={flow.url}>
+      <Link to={uri(flow.url).path()}>
         <div className="brick__flow-header">
           <span className="brick__flow-header-avatar-container">
             <div className="brick__flow-header-avatar">
@@ -46,7 +48,7 @@ function EntryBrickFlowHeader({ flow }) {
             </div>
           </span>
         </div>
-      </a>
+      </Link>
     </div>  
   );
 }
