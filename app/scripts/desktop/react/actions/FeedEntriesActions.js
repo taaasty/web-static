@@ -19,7 +19,7 @@ export const FEED_ENTRIES_RESET = 'FEED_ENTRIES_RESET';
 export const FEED_ENTRIES_VIEW_STYLE = 'FEED_ENTRIES_VIEW_STYLE';
 
 export function feedDataByUri({ pathname, query }) {
-  const { apiType, section, type } = feedTypeMap[pathname];
+  const { apiType, section, type } = feedTypeMap[pathname] || {};
   const rating = apiType === FEED_ENTRIES_API_TYPE_BEST ? (query.rating || 'excellent') : void 0;
 
   return {
