@@ -117,16 +117,8 @@ require './react/components/smart_follow_status'
 
 require './react/components/editable_field'
 
-global.Feed = require './react/components/Feed/Feed'
 global.EntryTlog = require './react/components/EntryTlog'
-global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
-global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
-global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
-global.LiveLoadButtonContainer = require('./react/components/FeedPage/LiveLoadButtonContainer')
-global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadButtonContainer')
-global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
-global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
 
 require './react/components/search/search'
 require './react/components/search/button'
@@ -158,7 +150,6 @@ require './react/components/persons_popup/panels/socialNetwork/facebook'
 
 require './react/components/people/item'
 
-global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
 global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'

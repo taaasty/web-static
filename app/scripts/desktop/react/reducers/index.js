@@ -4,6 +4,7 @@ import currentUser from './currentUser';
 import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
+import flows from './flows';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
 import tlogEntry from './tlogEntry';
@@ -16,6 +17,7 @@ export default {
   feedEntries,
   feedStatus,
   flow,
+  flows,
   tlog,
   tlogEntries,
   tlogEntry,
