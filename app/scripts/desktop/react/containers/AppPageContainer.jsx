@@ -7,6 +7,7 @@ import * as CalendarActions from '../actions/CalendarActions';
 import * as FeedEntriesActions from '../actions/FeedEntriesActions';
 import * as FeedStatusActions from '../actions/FeedStatusActions';
 import * as FlowActions from '../actions/FlowActions';
+import * as FlowsActions from '../actions/FlowsActions';
 import * as RelationshipActions from '../actions/RelationshipActions';
 import * as TlogActions from '../actions/TlogActions';
 import * as TlogEntriesActions from '../actions/TlogEntriesActions';
@@ -28,6 +29,7 @@ export default connect(
     FeedEntriesActions: bindActionCreators(FeedEntriesActions, dispatch),
     FeedStatusActions: bindActionCreators(FeedStatusActions, dispatch),
     FlowActions: bindActionCreators(FlowActions, dispatch),
+    FlowsActions: bindActionCreators(FlowsActions, dispatch),
     RelationshipActions: bindActionCreators(RelationshipActions, dispatch),
     TlogActions: bindActionCreators(TlogActions, dispatch),
     TlogEntriesActions: bindActionCreators(TlogEntriesActions, dispatch),

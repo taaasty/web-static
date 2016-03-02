@@ -7787,19 +7787,6 @@ var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 // Components
 
 var components = {
-  FlowBricksContainer: {
-    limit: 1,
-    loadUrl: '',
-    canLoad: false,
-    flows_info: {
-      items: []
-    }
-  },
-  HeroFlows: {
-    backgroundUrl: '',
-    title: '',
-    text: ''
-  },
   ImageAttachmentsCollage: {
     imageAttachments: []
   },
@@ -7820,7 +7807,6 @@ var components = {
     }
   },
   Auth: {},
-  AvatarToolbarContainer: {},
   EditorNew: {},
   EditorEdit: {
     entry: {}

@@ -8,8 +8,8 @@ import App from './containers/App';
 import TlogPageRoot from './components/TlogPage/TlogPageRoot';
 import TlogPage from './components/TlogPage';
 import EntryPage from './components/EntryPage';
-
 import FeedPage from './components/FeedPage';
+import FlowsPage from './components/FlowsPage';
 
 function AppRoot() {
   return (
@@ -38,6 +38,8 @@ function AppRoot() {
         <Route path="friends/media" component={FeedPage} />
         <Route path="best" component={FeedPage} />
         <Route path="media" component={FeedPage} />
+
+        <Route path="flows" component={FlowsPage} />
       </Route>
     </Router>
   );
