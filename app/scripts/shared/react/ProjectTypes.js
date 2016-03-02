@@ -68,7 +68,7 @@ export const heroUser = shape({
     symbol: string,
     thumb128_url: string,
     thumb64_url: string,
-    thumbor_path: string.isRequired,
+    thumbor_path: string,
   }),
 });
 

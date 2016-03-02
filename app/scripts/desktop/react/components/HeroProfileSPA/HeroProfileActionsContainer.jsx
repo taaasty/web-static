@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Color from 'color';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import HeroProfileActions from './HeroProfileActions';
 import HeroProfileSelfActions from './HeroProfileSelfActions';
 
@@ -33,7 +32,7 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { RelationshipActions, isCurrentUser, relState, tlog } = this.props;
+    const { isCurrentUser, relState, tlog } = this.props;
 
     return (
       <div ref="container">
@@ -44,7 +43,6 @@ class HeroProfileActionsContainer extends Component {
            ? <HeroProfileSelfActions />
            : relState &&
              <HeroProfileActions
-               RelationshipActions={RelationshipActions}
                relState={relState}
                tlog={tlog}
              />
@@ -55,7 +53,6 @@ class HeroProfileActionsContainer extends Component {
 }
 
 HeroProfileActionsContainer.propTypes = {
-  RelationshipActions: PropTypes.object.isRequired,
   isCurrentUser: PropTypes.bool.isRequired,
   relState: PropTypes.string,
   tlog: PropTypes.object.isRequired,

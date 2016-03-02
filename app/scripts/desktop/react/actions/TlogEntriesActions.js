@@ -38,7 +38,7 @@ function tlogEntriesError(error) {
 }
 
 function fetchTlogEntries(url, data) {
-  return Api.entry.load(url,data)
+  return Api.entry.load(url, data)
     .fail((xhr) => {
       ErrorService.notifyErrorResponse('Загрузка записей', {
         method: 'EntryActionCreators.load(url, data)',
@@ -63,7 +63,7 @@ function getTlogEntries({ slug, section, date, type, sinceId }) {
 
     dispatch(tlogEntriesRequest());
     dispatch(tlogEntriesReset());
-    return fetchTlogEntries(url, { date, limit: INITIAL_LOAD_LIMIT, since_entry_id: sinceId })
+    return fetchTlogEntries(url, { date, limit: date ? void 0 : INITIAL_LOAD_LIMIT, since_entry_id: sinceId })
       .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, type, sinceId })))
       .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON, date, section, slug, type, sinceId })));
   };
@@ -82,7 +82,7 @@ export function appendTlogEntries() {
     const { isFetching, section, slug, type, data: { next_since_entry_id } } = getState().tlogEntries;
 
     if (isFetching) {
-      return;
+      return null;
     }
 
     const url = ApiRoutes.tlogEntries(slug, section, type);

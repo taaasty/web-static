@@ -1,6 +1,8 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { cancel, follow, resetError, unfollow } from '../../actions/RelationshipActions';
 
 const REL_FRIEND_STATE = 'friend';
 const REL_REQUESTED_STATE = 'requested';
@@ -19,24 +21,25 @@ class RelationButton extends Component {
     this.setState({ hover: false });
   }
   onTouchTap(ev) {
-    const { RelationshipActions, error, isFetching, subjectId, relState } = this.props;
+    const { cancel, follow, unfollow, resetError, error,
+            isFetching, subjectId, relState } = this.props;
 
     ev.stopPropagation();
     if (!error && !isFetching ) {
       switch(relState) {
       case REL_FRIEND_STATE:
-        RelationshipActions.unfollow(subjectId)
-          .fail(() => window.setTimeout(() => RelationshipActions.resetError(subjectId), 1000));
+        unfollow(subjectId)
+          .fail(() => window.setTimeout(() => resetError(subjectId), 1000));
         break;
       case REL_REQUESTED_STATE:
       case REL_IGNORED_STATE:
-        RelationshipActions.cancel(subjectId)
-          .fail(() => window.setTimeout(() => RelationshipActions.resetError(subjectId), 1000));
+        cancel(subjectId)
+          .fail(() => window.setTimeout(() => resetError(subjectId), 1000));
         break;
       case REL_GUESSED_STATE:
       case REL_NONE_STATE:
-        RelationshipActions.follow(subjectId)
-          .fail(() => window.setTimeout(() => RelationshipActions.resetError(subjectId), 1000));
+        follow(subjectId)
+          .fail(() => window.setTimeout(() => resetError(subjectId), 1000));
         break;
       }
     }
@@ -97,12 +100,18 @@ class RelationButton extends Component {
 }
 
 RelationButton.propTypes = {
-  RelationshipActions: PropTypes.object.isRequired,
+  cancel: PropTypes.func.isRequired,
   error: PropTypes.object,
+  follow: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
   relState: PropTypes.string,
+  resetError: PropTypes.func.isRequired,
   subjectId: PropTypes.number.isRequired,
   subjectPrivacy: PropTypes.bool,
+  unfollow: PropTypes.func.isRequired,
 };
 
-export default RelationButton;
+export default connect(
+  null,
+  { cancel, follow, resetError, unfollow }
+)(RelationButton);

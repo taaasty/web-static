@@ -1,5 +1,8 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as FlowActions from '../../actions/FlowActions';
 import TabbedArea from '../Tabs/TabbedArea';
 import TabPane from '../Tabs/TabPane';
 import Staffs from './Staffs';
@@ -61,4 +64,7 @@ FlowManager.propTypes = {
   }).isRequired,
 };
 
-export default FlowManager;
+export default connect(
+  null,
+  (dispatch) => ({ FlowActions: bindActionCreators(FlowActions, dispatch) })
+)(FlowManager);

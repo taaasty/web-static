@@ -29,7 +29,7 @@ const LoadButtons = {
 
 class FeedPageBody extends Component {
   handleClickUnreadButton(count) {
-    const { getFeedEntriesIfNeeded, prependFeedEntries } = this.props.FeedEntriesActions;
+    const { getFeedEntriesIfNeeded, prependFeedEntries } = this.props;
 
     if (count > 0) {
       return (count < PREPEND_LOAD_LIMIT)
@@ -70,19 +70,19 @@ class FeedPageBody extends Component {
     );
   }
   renderBricks() {
-    const { FeedEntriesActions, feedEntries } = this.props;
+    const { appendFeedEntries, feedEntries } = this.props;
     return (
       <EntryBricksContainer
         entries={feedEntries}
         isFeed
-        loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+        loadMoreEntries={appendFeedEntries}
       >
         {this.renderFilters()}
       </EntryBricksContainer>
     );
   }
   renderTlogs() {
-    const { FeedEntriesActions, currentUser, feedEntries } = this.props;
+    const { appendFeedEntries, currentUser, feedEntries } = this.props;
 
     return (
       <div>
@@ -94,7 +94,7 @@ class FeedPageBody extends Component {
               currentUser={currentUser}
               entries={feedEntries}
               isFeed
-              loadMoreEntries={FeedEntriesActions.appendFeedEntries}
+              loadMoreEntries={appendFeedEntries}
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ class FeedPageBody extends Component {
 }
 
 FeedPageBody.propTypes = {
-  FeedEntriesActions: PropTypes.object.isRequired,
+  appendFeedEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   feedEntries: PropTypes.object,
   feedType: PropTypes.oneOf([
@@ -149,9 +149,11 @@ FeedPageBody.propTypes = {
     FEED_TYPE_BEST,
     FEED_TYPE_LIVE_FLOW,
   ]).isRequired,
+  getFeedEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object,
   navFilters: PropTypes.object,
   navViewMode: PropTypes.bool.isRequired,
+  prependFeedEntries: PropTypes.func.isRequired,
 };
 
 FeedPageBody.defaultProps = {

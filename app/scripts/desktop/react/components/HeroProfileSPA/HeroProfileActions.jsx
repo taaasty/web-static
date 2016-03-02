@@ -6,14 +6,13 @@ import HeroProfileDropdownMenu from './HeroProfileDropdownMenu';
 import WriteMessageButton from './WriteMessageButton';
 
 function HeroProfileActions(props) {
-  const { RelationshipActions, relState, tlog } = props;
+  const { relState, tlog } = props;
   const { errorRelationship, isFetchingRelationship, data: { author } } = tlog;
   const isAnonymousTlog = author.slug === TLOG_SLUG_ANONYMOUS;
 
   return (
     <div className="hero__actions hero__actions--visible">
       <RelationButton
-        RelationshipActions={RelationshipActions}
         error={errorRelationship}
         isFetching={isFetchingRelationship}
         relState={relState}
@@ -36,7 +35,6 @@ function HeroProfileActions(props) {
 }
 
 HeroProfileActions.propTypes = {
-  RelationshipActions: PropTypes.object.isRequired,
   relState: PropTypes.string,
   tlog: PropTypes.object.isRequired,
 };
