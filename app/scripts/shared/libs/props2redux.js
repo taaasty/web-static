@@ -18,7 +18,15 @@ const mapSection = {
 
 function section() {
   const matches = uri().path().match(/\~[^\/]+\/(favorites|privates)/);
-  return matches ? mapSection[matches[1]] : TLOG_SECTION_TLOG;
+  return matches
+    ? mapSection[matches[1]]
+    : TLOG_SECTION_TLOG;
+}
+
+function date() {
+  const m = uri().path().match(/\~[^\/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : void 0;
 }
 
 export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats }) {
@@ -40,6 +48,7 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, 
     },
     tlogEntries: {
       data: { items: [], ...tlogEntries },
+      date: date(),
       isFetching: false,
       slug: tlogEntries && slug,
       section: section(),
