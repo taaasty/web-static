@@ -31,6 +31,7 @@ function UserToolbarPrimaryList(props) {
         badgeClassName="messages-badge"
         badgeCount={unreadLiveFlowCount}
         icon="icon--hash"
+        spa={window.SPA}
         title={i18n.t('toolbar_flows_item')}
         url={Routes.flows()}
       />

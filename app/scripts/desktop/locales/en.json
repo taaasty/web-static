@@ -426,6 +426,11 @@
       "excellent": "+50",
       "well": "+20",
       "good": "+10"
+    },
+    "flows": {
+      "popular": "Popular",
+      "newest": "New",
+      "my": "My"
     }
   },
   "flow": {
