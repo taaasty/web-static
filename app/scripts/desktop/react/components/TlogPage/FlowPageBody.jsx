@@ -13,14 +13,14 @@ class FlowPageBody extends Component {
   }
   setViewStyle({ flow, location: { query } }) {
     if (query && query.style && flow.viewStyle !== query.style) {
-      this.props.FlowActions.flowViewStyle(query.style);
+      this.props.flowViewStyle(query.style);
     }
   }
   handleDeleteEntry(entryId) {
-    this.props.TlogEntriesActions.deleteEntry(entryId);
+    this.props.deleteEntry(entryId);
   }
   renderTlogs() {
-    const { TlogEntriesActions, currentUser, tlog, tlogEntries } = this.props;
+    const { appendTlogEntries, currentUser, tlog, tlogEntries } = this.props;
 
     return (
       <div className="content-area">
@@ -31,21 +31,21 @@ class FlowPageBody extends Component {
             entries={tlogEntries}
             handleDeleteEntry={this.handleDeleteEntry.bind(this)}
             hostTlogId={tlog.data.author && tlog.data.author.id}
-            loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+            loadMoreEntries={appendTlogEntries}
           />
         </div>
       </div>
     );
   }
   renderBricks() {
-    const { TlogEntriesActions, children, tlog, tlogEntries } = this.props;
+    const { appendTlogEntries, children, tlog, tlogEntries } = this.props;
 
     return (
       <EntryBricksContainer
         children={children}
         entries={tlogEntries}
         hostTlogId={tlog.data.author && tlog.data.author.id}
-        loadMoreEntries={TlogEntriesActions.appendTlogEntries}
+        loadMoreEntries={appendTlogEntries}
       />
     );
   }
@@ -90,11 +90,12 @@ class FlowPageBody extends Component {
 }
 
 FlowPageBody.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
-  TlogEntriesActions: PropTypes.object.isRequired,
+  appendTlogEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
+  deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
   flow: PropTypes.object.isRequired,
+  flowViewStyle: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   sinceId: PropTypes.string,

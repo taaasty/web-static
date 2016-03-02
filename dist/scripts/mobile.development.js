@@ -13830,6 +13830,12 @@ function section() {
   return matches ? mapSection[matches[1]] : _Tlog.TLOG_SECTION_TLOG;
 }
 
+function date() {
+  var m = (0, _urijs2.default)().path().match(/\~[^\/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+
+  return m ? m[1] + '-' + m[2] + '-' + m[3] : void 0;
+}
+
 function prop2redux(_ref) {
   var tlog = _ref.tlog;
   var tlogEntry = _ref.tlogEntry;
@@ -13856,6 +13862,7 @@ function prop2redux(_ref) {
     },
     tlogEntries: {
       data: (0, _extends3.default)({ items: [] }, tlogEntries),
+      date: date(),
       isFetching: false,
       slug: tlogEntries && slug,
       section: section(),
@@ -13989,7 +13996,7 @@ var heroUser = exports.heroUser = shape({
     symbol: string,
     thumb128_url: string,
     thumb64_url: string,
-    thumbor_path: string.isRequired
+    thumbor_path: string
   })
 });
 

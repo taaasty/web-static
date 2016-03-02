@@ -1,6 +1,9 @@
 /*global $, TastyEvents, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+
+import { follow } from '../../actions/RelationshipActions';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
@@ -119,8 +122,8 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { RelationshipActions, currentUser, stats, tlog } = this.props;
-    const { data: { author, my_relationship: relState },
+    const { currentUser, tlog } = this.props;
+    const { data: { author, my_relationship: relState, stats },
             errorRelationship, isFetching, isFetchingRelationship } = tlog;
     const currentUserId = currentUser && currentUser.id;
     const isCurrentUser = currentUserId && currentUserId === author.id;
@@ -143,14 +146,13 @@ class HeroProfile extends Component {
           {followButtonVisible &&
            <SmartFollowStatus
              error={errorRelationship}
-             follow={RelationshipActions.follow.bind(null, author.id)}
+             follow={follow.bind(null, author.id)}
              isFetching={isFetchingRelationship}
              relState={relState}
            />
           }
            {author.id && !isFetching && <HeroProfileHead user={author} />}
            <HeroProfileActionsContainer
-             RelationshipActions={RelationshipActions}
              isCurrentUser={isCurrentUser}
              relState={relState}
              tlog={tlog}
@@ -163,10 +165,15 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
-  RelationshipActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
-  stats: PropTypes.object.isRequired,
+  follow: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
 };
 
-export default HeroProfile;
+export default connect(
+  (state) => ({
+    currentUser: state.currentUser.data,
+    tlog: state.tlog,
+  }),
+  { follow }
+)(HeroProfile);
