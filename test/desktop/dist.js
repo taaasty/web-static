@@ -6,19 +6,6 @@ const { isCompositeComponent, renderIntoDocument } = global.ReactTestUtils;
 
 // Components
 const components = {
-  FlowBricksContainer: {
-    limit: 1,
-    loadUrl: '',
-    canLoad: false,
-    flows_info: {
-      items: [],
-    },
-  },
-  HeroFlows: {
-    backgroundUrl: '',
-    title: '',
-    text: '',
-  },
   ImageAttachmentsCollage: {
     imageAttachments: [],
   },
@@ -39,7 +26,6 @@ const components = {
     },
   },
   Auth: {},
-  AvatarToolbarContainer: {},
   EditorNew: {},
   EditorEdit: {
     entry: {},

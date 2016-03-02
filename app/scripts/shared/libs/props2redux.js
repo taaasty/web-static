@@ -8,7 +8,8 @@ import {
 import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../desktop/react/constants/ViewStyleConstants';
 import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
 import { FEED_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/feedEntries';
-import { feedDataByUri } from '../../desktop/react/actions/FeedEntriesActions.js';
+import { feedDataByUri } from '../../desktop/react/actions/FeedEntriesActions';
+import { flowsData as fData } from '../../desktop/react/actions/FlowsActions';
 
 const mapSection = {
   'favorites': TLOG_SECTION_FAVORITE,
@@ -20,9 +21,10 @@ function section() {
   return matches ? mapSection[matches[1]] : TLOG_SECTION_TLOG;
 }
 
-export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEntries, appStats }) {
+export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats }) {
   const slug = tlog && tlog.slug;
   const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
+  const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
 
   return {
     tlog: {
@@ -62,6 +64,12 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, feedEnt
       id: flow && flow.id,
       isFetching: false,
       viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
+    },
+    flows: {
+      data: { items: [], ...flows },
+      isFetching: false,
+      filter: flowsData && flowsData.filter,
+      error: flows && flows.error,
     },
     feedEntries: {
       data: { items: [], ...feedEntries },
