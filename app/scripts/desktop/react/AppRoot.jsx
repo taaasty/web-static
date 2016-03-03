@@ -56,7 +56,7 @@ class AppRoot extends Component {
             <Route path="flows" component={FlowsPage} />
 
             <Route path="people" component={PeoplePage} />
-            <Route path="people/:filter" component={PeoplePage} />
+            <Route path="people/:sort" component={PeoplePage} />
           </Route>
         </Router>
       </Provider>

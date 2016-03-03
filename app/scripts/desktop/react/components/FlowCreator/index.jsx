@@ -19,7 +19,7 @@ export default class FlowCreator extends Component {
   };
   render() {
     let flowpic = {
-      original_url: 'http://taaasty.com/images/hero-cover.jpg'
+      original_url: '//taaasty.com/images/hero-cover.jpg',
     };
 
     return (
