@@ -18,6 +18,9 @@ class PeoplePage extends Component {
   componentWillMount() {
     this.props.getPeopleIfNeeded(getParams(this.props.routeParams));
   }
+  componentDidMount() {
+    document.body.className = 'layout--feed';
+  }
   componentWillReceiveProps(nextProps) {
     this.props.getPeopleIfNeeded(getParams(nextProps.routeParams));
   }
