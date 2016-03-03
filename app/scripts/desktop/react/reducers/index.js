@@ -5,6 +5,7 @@ import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
 import flows from './flows';
+import people from './people';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
 import tlogEntry from './tlogEntry';
@@ -18,6 +19,7 @@ export default {
   feedStatus,
   flow,
   flows,
+  people,
   tlog,
   tlogEntries,
   tlogEntry,

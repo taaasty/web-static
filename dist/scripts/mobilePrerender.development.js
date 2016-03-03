@@ -13761,6 +13761,12 @@ function date() {
   return m ? m[1] + '-' + m[2] + '-' + m[3] : void 0;
 }
 
+function peopleSort() {
+  var m = (0, _urijs2.default)().path().match(/\/people\/?(posts|followers|interested|worst|comments|new|bad)/);
+
+  return m ? m[1] : void 0;
+}
+
 function prop2redux(_ref) {
   var tlog = _ref.tlog;
   var tlogEntry = _ref.tlogEntry;
@@ -13769,6 +13775,7 @@ function prop2redux(_ref) {
   var flows = _ref.flows;
   var feedEntries = _ref.feedEntries;
   var appStats = _ref.appStats;
+  var people = _ref.people;
 
   var slug = tlog && tlog.slug;
   var feedData = feedEntries && (0, _FeedEntriesActions.feedDataByUri)({ pathname: (0, _urijs2.default)().path(), query: (0, _urijs2.default)().query(true) }) || {};
@@ -13833,6 +13840,12 @@ function prop2redux(_ref) {
       isFetching: false,
       error: appStats && appStats.error,
       updatedAt: appStats && new Date().valueOf()
+    },
+    people: {
+      data: people || [],
+      isFetching: false,
+      sort: people && (peopleSort() || 'posts'),
+      error: null
     }
   };
 }
@@ -14873,6 +14886,9 @@ ApiRoutes = {
   },
   onboarding_url: function() {
     return gon.api_host + "/v1/onboarding/users";
+  },
+  users: function() {
+    return gon.api_host + "/v1/users";
   },
   signup_url: function() {
     return gon.api_host + '/v1/users';
