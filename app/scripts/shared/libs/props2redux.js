@@ -29,7 +29,13 @@ function date() {
   return m ? `${m[1]}-${m[2]}-${m[3]}` : void 0;
 }
 
-export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats }) {
+function peopleSort() {
+  const m = uri().path().match(/\/people\/?(posts|followers|interested|worst|comments|new|bad)/);
+
+  return m ? m[1] : void 0;
+}
+
+export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats, people }) {
   const slug = tlog && tlog.slug;
   const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
   const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
@@ -94,6 +100,12 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, 
       isFetching: false,
       error: appStats && appStats.error,
       updatedAt: appStats && (new Date()).valueOf(),
+    },
+    people: {
+      data: people || [],
+      isFetching: false,
+      sort: people && (peopleSort() || 'posts'),
+      error: null,
     },
   };
 }

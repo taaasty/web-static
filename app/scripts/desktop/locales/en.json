@@ -467,6 +467,43 @@
     },
     "empty": "This feed is empty yet"
   },
+  "people": {
+    "posts": {
+      "title": "Most active in posting",
+      "text": "People in decreasing order of postings",
+      "nav": "Most active in posting"
+    },
+    "followers": {
+      "title": "Most frequently read",
+      "text": "People with the most followers",
+      "nav": "Most frequently read"
+    },
+    "interested": {
+      "title": "Interesting",
+      "text": "People by decreasing order of rating of postings",
+      "nav": "Interesting"
+    },
+    "worst": {
+      "title": "The worst posters",
+      "text": "People with the lowest posting rating",
+      "nav": "The worst posters"
+    },
+    "comments": {
+      "title": "Most active in commenting",
+      "text": "People in decreasing order of number of comments",
+      "nav": "Most active in commenting"
+    },
+    "new": {
+      "title": "New",
+      "text": "People who signed up recently and made at least three postings",
+      "nav": "New"
+    },
+    "bad": {
+      "title": "Ill-behaved",
+      "text": "People banned for misbehavior",
+      "nav": "Ill-behaved"
+    }
+  },
   "filters": {
     "view_feed": "Show as bricks",
     "view_tlog": "Show as a list"

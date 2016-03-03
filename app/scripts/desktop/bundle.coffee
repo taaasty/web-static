@@ -148,8 +148,6 @@ require './react/components/persons_popup/panels/ignored_panel'
 require './react/components/persons_popup/panels/socialNetwork/vkontakte'
 require './react/components/persons_popup/panels/socialNetwork/facebook'
 
-require './react/components/people/item'
-
 global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
