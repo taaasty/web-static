@@ -1,21 +1,22 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import FlowsNav from './FlowsNav';
 import FlowBricks from './FlowBricks';
 import HeroFlows from './HeroFlows';
-import { flowsData } from '../../actions/FlowsActions';
+import { appendFlows, flowsData, getFlowsIfNeeded } from '../../actions/FlowsActions';
 
 class FlowsPage extends Component {
   componentWillMount() {
-    const { FlowsActions, location } = this.props;
+    const { getFlowsIfNeeded, location } = this.props;
 
     document.body.className = 'layout--feed';
-    FlowsActions.getFlowsIfNeeded(flowsData(location));
+    getFlowsIfNeeded(flowsData(location));
   }
   componentWillReceiveProps(nextProps) {
-    this.props.FlowsActions.getFlowsIfNeeded(flowsData(nextProps.location));
+    this.props.getFlowsIfNeeded(flowsData(nextProps.location));
   }
   render() {
-    const { FlowsActions, currentUser, flows: { data: { items, has_more }, isFetching }, location } = this.props;
+    const { appendFlows, currentUser, flows: { data: { items, has_more }, isFetching }, location } = this.props;
     const { filterIdx } = flowsData(location);
 
     return (
@@ -28,11 +29,11 @@ class FlowsPage extends Component {
             <div className="layout-outer">
               <FlowsNav active={filterIdx} />
               <FlowBricks
-                canLoad={!isFetching && has_more}
-                currentUser={currentUser.data}
+                canLoad={!isFetching && !!has_more}
+                currentUser={currentUser}
                 flows={items}
                 loading={isFetching}
-                onLoadMoreFlows={FlowsActions.appendFlows}
+                onLoadMoreFlows={appendFlows}
               />
             </div>
           </div>
@@ -45,16 +46,23 @@ class FlowsPage extends Component {
 FlowsPage.displayName = 'FlowsPage';
 
 FlowsPage.propTypes = {
-  FlowsActions: PropTypes.object.isRequired,
+  appendFlows: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   flows: PropTypes.object.isRequired,
+  getFlowsIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
 };
 
 FlowsPage.defaultProps = {
-  currentUser: { data: {} },
+  currentUser: {},
   flows: { items: [] },
   location: {},
 };
 
-export default FlowsPage;
+export default connect(
+  (state) => ({
+    currentUser: state.currentUser.data,
+    flows: state.flows,
+  }),
+  { appendFlows, getFlowsIfNeeded }
+)(FlowsPage);

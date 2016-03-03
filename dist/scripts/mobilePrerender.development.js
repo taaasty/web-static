@@ -13755,6 +13755,12 @@ function section() {
   return matches ? mapSection[matches[1]] : _Tlog.TLOG_SECTION_TLOG;
 }
 
+function date() {
+  var m = (0, _urijs2.default)().path().match(/\~[^\/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})/);
+
+  return m ? m[1] + '-' + m[2] + '-' + m[3] : void 0;
+}
+
 function prop2redux(_ref) {
   var tlog = _ref.tlog;
   var tlogEntry = _ref.tlogEntry;
@@ -13781,6 +13787,7 @@ function prop2redux(_ref) {
     },
     tlogEntries: {
       data: (0, _extends3.default)({ items: [] }, tlogEntries),
+      date: date(),
       isFetching: false,
       slug: tlogEntries && slug,
       section: section(),
@@ -13888,11 +13895,11 @@ var heroUser = exports.heroUser = shape({
   }),
   has_design_bundle: bool.isRequired,
   id: number.isRequired,
-  is_daylog: bool.isRequired,
+  is_daylog: bool,
   is_female: bool.isRequired,
   is_flow: bool.isRequired,
   is_premium: bool.isRequired,
-  is_privacy: bool.isRequired,
+  is_privacy: bool,
   locale: string.isRequired,
   name: string.isRequired,
   private_entries_count: number.isRequired,
@@ -13914,7 +13921,7 @@ var heroUser = exports.heroUser = shape({
     symbol: string,
     thumb128_url: string,
     thumb64_url: string,
-    thumbor_path: string.isRequired
+    thumbor_path: string
   })
 });
 
@@ -13949,7 +13956,7 @@ var tlogEntry = exports.tlogEntry = shape({
       width: number.isRequired
     }),
     url: string.isRequired
-  }).isRequired,
+  }),
   rating: object.isRequired,
   title_truncated: string.isRequired,
   tlog: tlogData.isRequired,

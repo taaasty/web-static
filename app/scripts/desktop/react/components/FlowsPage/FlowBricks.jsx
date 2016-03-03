@@ -10,7 +10,7 @@ const masonryOptions = {
   gutter: 20,
 };
 
-class Bricks extends Component {
+class FlowBricks extends Component {
   render() {
     const { canLoad, currentUser, flows, loading, onLoadMoreFlows } = this.props;
 
@@ -41,7 +41,9 @@ class Bricks extends Component {
   }
 }
 
-Bricks.propTypes = {
+FlowBricks.displayName = 'FlowBricks';
+
+FlowBricks.propTypes = {
   canLoad: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
   flows: PropTypes.array.isRequired,
@@ -49,4 +51,4 @@ Bricks.propTypes = {
   onLoadMoreFlows: PropTypes.func.isRequired,
 };
 
-export default Bricks;
+export default FlowBricks;
