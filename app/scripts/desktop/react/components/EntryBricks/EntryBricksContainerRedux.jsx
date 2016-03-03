@@ -8,7 +8,7 @@ class EntryBricksContainer extends Component {
 
     return (
       <EntryBricks
-        canLoad={!isFetching && has_more}
+        canLoad={!isFetching && !!has_more}
         entries={items}
         host_tlog_id={hostTlogId}
         isFeed={isFeed}

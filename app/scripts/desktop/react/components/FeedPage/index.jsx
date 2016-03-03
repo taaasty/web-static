@@ -48,8 +48,9 @@ class FeedPage extends Component {
     const posts24h = appStats && appStats.public_entries_in_day_count;
     const headerText = apiType === FEED_ENTRIES_API_TYPE_LIVE
             ? i18n.t('feed.title.posts_24h', { count: posts24h, context: posts24h ? 'some' : 'none' })
-            : type === FEED_TYPE_FRIENDS && followings_count > 0 &&
-               i18n.t('feed.title.friend_posts', { count: followings_count });
+            : (type === FEED_TYPE_FRIENDS && followings_count > 0)
+              ? i18n.t('feed.title.friend_posts', { count: followings_count })
+              : '';
 
     return (
       <div className="page__inner">

@@ -13895,11 +13895,11 @@ var heroUser = exports.heroUser = shape({
   }),
   has_design_bundle: bool.isRequired,
   id: number.isRequired,
-  is_daylog: bool.isRequired,
+  is_daylog: bool,
   is_female: bool.isRequired,
   is_flow: bool.isRequired,
   is_premium: bool.isRequired,
-  is_privacy: bool.isRequired,
+  is_privacy: bool,
   locale: string.isRequired,
   name: string.isRequired,
   private_entries_count: number.isRequired,
@@ -13956,7 +13956,7 @@ var tlogEntry = exports.tlogEntry = shape({
       width: number.isRequired
     }),
     url: string.isRequired
-  }).isRequired,
+  }),
   rating: object.isRequired,
   title_truncated: string.isRequired,
   tlog: tlogData.isRequired,

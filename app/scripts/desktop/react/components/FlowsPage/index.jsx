@@ -29,7 +29,7 @@ class FlowsPage extends Component {
             <div className="layout-outer">
               <FlowsNav active={filterIdx} />
               <FlowBricks
-                canLoad={!isFetching && has_more}
+                canLoad={!isFetching && !!has_more}
                 currentUser={currentUser}
                 flows={items}
                 loading={isFetching}
