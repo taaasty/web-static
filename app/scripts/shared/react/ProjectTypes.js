@@ -84,7 +84,7 @@ export const tlogData = shape({
 });
 
 export const tlogEntry = shape({
-  author: tlogData.isRequired,
+  author: tlogData,
   can_delete: bool,
   can_edit: bool,
   can_favorite: bool,
@@ -106,7 +106,7 @@ export const tlogEntry = shape({
   }),
   rating: object.isRequired,
   title_truncated: string.isRequired,
-  tlog: tlogData.isRequired,
+  tlog: tlogData,
   type: string.isRequired,
   url: string.isRequired,
 });

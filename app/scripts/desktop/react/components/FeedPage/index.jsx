@@ -56,7 +56,7 @@ class FeedPage extends Component {
       <div className="page__inner">
         <div className="page__paper">
           <FeedHeader
-            bgImage={currentUser.data && currentUser.data.design.backgroundImageUrl}
+            bgImage={currentUser.data.design && currentUser.data.design.backgroundImageUrl}
             text={headerText}
             title={i18n.t(title)}
           />

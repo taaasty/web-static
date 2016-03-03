@@ -53,9 +53,7 @@ class Thread extends Component {
   }
   onClickHeader(entry, ev) {
     ev.preventDefault();
-    window.SPA
-      ? browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } })
-      : window.location.href = entry.url;
+    browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } });
   }
   backgroundUrl() {
     const { conversation } = this.state;

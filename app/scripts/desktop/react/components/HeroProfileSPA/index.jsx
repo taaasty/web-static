@@ -153,7 +153,7 @@ class HeroProfile extends Component {
           }
            {author.id && !isFetching && <HeroProfileHead user={author} />}
            <HeroProfileActionsContainer
-             isCurrentUser={isCurrentUser}
+             isCurrentUser={!!isCurrentUser}
              relState={relState}
              tlog={tlog}
            />
