@@ -7,16 +7,19 @@ function PeopleNav({ active, sorts }) {
     <nav className="filter-nav">
       <ul className="filter-nav__list">
         {sorts.map((sort, idx) => (
-          <li className={classNames('filter-nav__item', { 'state--active': idx === active })}>
-            <Link
-              className="filter-nav__link"
-              title={i18n.t(`people.${sort}.nav`)}
-              to={sort === 'posts' ? '/people' : `/people/${sort}`}
-            >
-              {i18n.t(`people.${sort}.nav`)}
-            </Link>
-          </li>
-        ))}
+           <li
+             className={classNames('filter-nav__item', { 'state--active': idx === active })}
+             key={`nav-people-${idx}`}
+           >
+             <Link
+               className="filter-nav__link"
+               title={i18n.t(`people.${sort}.nav`)}
+               to={sort === 'posts' ? '/people' : `/people/${sort}`}
+             >
+               {i18n.t(`people.${sort}.nav`)}
+             </Link>
+           </li>
+         ))}
       </ul>
     </nav>
   );

@@ -7,7 +7,12 @@ function PeopleList({ isFetching, people }) {
    <section className="people">
      {isFetching
       ? <Spinner size={30} />
-      : people.map(({ title, user }) => <PeopleItem title={title} user={user} />)}
+      : people.map(({ title, user }, idx) => (
+          <PeopleItem
+            key={`user-${idx}`}
+            title={title}
+            user={user}
+          />))}
    </section>
   );
 }

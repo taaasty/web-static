@@ -13950,7 +13950,7 @@ var tlogData = exports.tlogData = shape({
 });
 
 var tlogEntry = exports.tlogEntry = shape({
-  author: tlogData.isRequired,
+  author: tlogData,
   can_delete: bool,
   can_edit: bool,
   can_favorite: bool,
@@ -13972,7 +13972,7 @@ var tlogEntry = exports.tlogEntry = shape({
   }),
   rating: object.isRequired,
   title_truncated: string.isRequired,
-  tlog: tlogData.isRequired,
+  tlog: tlogData,
   type: string.isRequired,
   url: string.isRequired
 });
