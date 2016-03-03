@@ -36,7 +36,7 @@ function UserToolbarAdditionalList({ onSearchClick, onSettingsClick, searchTitle
         icon="icon--logout"
         onClick={onClickLogout}
         title={i18n.t('toolbar_logout_item')}
-        url={Routes.logout_path(slug)}
+        url={Routes.logout_path()}
       />
     </ul>
   );

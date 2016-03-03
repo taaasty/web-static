@@ -99,11 +99,13 @@ let UserToolbarContainer = createClass({
     });
   },
 
-  toggleMessages() {
+  toggleMessages(ev) {
+    ev.preventDefault();
     PopupActionCreators.toggleMessages();
   },
 
-  showNotifications() {
+  showNotifications(ev) {
+    ev.preventDefault();
     PopupActionCreators.showNotifications();
     // Если тулбар был открыт временно, при этом открыли уведомления, то не позволяем
     // закрыться тулбару
@@ -113,19 +115,22 @@ let UserToolbarContainer = createClass({
     });
   },
 
-  toggleFriends() {
+  toggleFriends(ev) {
+    ev.preventDefault();
     PopupActionCreators.toggleFriends();
   },
 
-  toggleDesignSettings() {
-    PopupActionCreators.toggleDesignSettings();
+  toggleDesignSettings(ev) {
+    PopupActionCreators.toggleDesignSettings(ev);
   },
 
-  showSettings() {
+  showSettings(ev) {
+    ev.preventDefault();
     PopupActionCreators.showSettings();
   },
 
-  showSearch() {
+  showSearch(ev) {
+    ev.preventDefault();
     PopupActionCreators.showSearch({
       searchUrl: this.props.searchUrl,
       searchTitleI18nKey: this.props.searchTitleI18nKey,

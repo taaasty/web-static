@@ -22,13 +22,14 @@ class PeoplePage extends Component {
     this.props.getPeopleIfNeeded(getParams(nextProps.routeParams));
   }
   render() {
-    const { currentUser, people: { data: items, isFetching }, routeParams: { sort } } = this.props;
+    const { currentUser, people: { data: items, isFetching }, routeParams } = this.props;
+    const { sort } = getParams(routeParams);
 
     return (
       <div className="page__inner">
         <div className="page__pager">
           <FeedHeader
-            bgImage={currentUser && currentUser.design.backgroundImageUrl}
+            bgImage={currentUser.design && currentUser.design.backgroundImageUrl}
             text={i18n.t(`people.${sort}.text`)}
             title={i18n.t(`people.${sort}.title`)}
           />

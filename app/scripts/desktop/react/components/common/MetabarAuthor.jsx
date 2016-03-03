@@ -117,7 +117,12 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
 MetabarAuthor.propTypes = {
   author: PropTypes.object,
   hostTlogId: PropTypes.number,
-  tlog: PropTypes.object.isRequired,
+  tlog: PropTypes.object,
+};
+
+MetabarAuthor.defaultProps = {
+  author: {},
+  tlog: {},
 };
 
 export default MetabarAuthor;
