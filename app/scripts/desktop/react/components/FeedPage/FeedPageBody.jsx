@@ -17,6 +17,7 @@ import {
   FEED_TYPE_LIVE_FLOW,
 } from '../../constants/FeedConstants';
 import { VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
+import * as FeedsUpdateActions from '../../actions/FeedsUpdateActions';
 
 const PREPEND_LOAD_LIMIT = 30;
 const LoadButtons = {
@@ -26,8 +27,32 @@ const LoadButtons = {
   [FEED_TYPE_ANONYMOUS]: { component: AnonymousLoadButtonContainer, href: Routes.live_anonymous_feed_path() },
   [FEED_TYPE_LIVE_FLOW]: { component: LiveFlowLoadButtonContainer, href: Routes.live_flows_feed_path() },
 };
+const resetMap = {
+  [FEED_TYPE_LIVE]: FeedsUpdateActions.resetLiveEntries,
+  [FEED_TYPE_BEST]: FeedsUpdateActions.resetBestEntries,
+  [FEED_TYPE_FRIENDS]: FeedsUpdateActions.resetFriendsEntries,
+  [FEED_TYPE_ANONYMOUS]: FeedsUpdateActions.resetAnonymousEntries,
+  [FEED_TYPE_LIVE_FLOW]: FeedsUpdateActions.resetLiveFlowEntries,
+};
 
 class FeedPageBody extends Component {
+  componentWillMount() {
+    const resetFn = resetMap[this.props.feedType];
+
+    if (typeof resetFn === 'function') {
+      resetFn();
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+
+    if (this.props.feedType !== nextProps.feedType) {
+      const resetFn = resetMap[nextProps.feedType]; 
+
+      if (typeof resetFn === 'function') {
+        resetFn();
+      }
+    }
+  }
   handleClickUnreadButton(count) {
     const { getFeedEntriesIfNeeded, prependFeedEntries } = this.props;
 
