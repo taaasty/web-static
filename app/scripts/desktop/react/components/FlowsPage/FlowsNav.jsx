@@ -2,13 +2,15 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router';
-import { navFilters } from '../../actions/FlowsActions';
+import { navFilters, navFiltersUnauth } from '../../actions/FlowsActions';
 
-function FlowsNav({ active }) {
+function FlowsNav({ active, isLogged }) {
+  const filters = isLogged ? navFilters : navFiltersUnauth;
+
   return (
     <nav className="filter-nav">
       <ul className="filter-nav__list">
-        {navFilters.map((section, idx) => (
+        {filters.map((section, idx) => (
           <li className={classNames('filter-nav__item', { 'state--active': active === idx })} key={`nav-${idx}`}>
             <Link
               className="filter-nav__link"
@@ -29,6 +31,7 @@ FlowsNav.displayName = 'FlowsNav';
 
 FlowsNav.propTypes = {
   active: PropTypes.number.isRequired,
+  isLogged: PropTypes.bool.isRequired,
 };
 
 export default FlowsNav;

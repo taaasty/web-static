@@ -1,3 +1,4 @@
+/*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux';
@@ -15,16 +16,24 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   render() {
-    const { children, currentUser, tlog } = this.props;
+    const { children, currentUser, params, tlog } = this.props;
     const isLogged = !!currentUser.data.id;
 
     return (
       <div className="page">
         {children}
-        {!isLogged && <Auth fixed />}
-        {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
-        <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
-        <BrowserSupportContainer />
+        {!isLogged && params.entrySlug && <Auth fixed />}
+        {!isLogged &&
+         <button
+           className="auth-button"
+           onClick={() => ReactApp.shellbox.show(Auth)}
+         >
+           {i18n.t('auth_button')}
+         </button>
+        }
+         {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
+         <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
+         <BrowserSupportContainer />
       </div>
     );
   }
@@ -39,6 +48,7 @@ AppPage.propTypes = {
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
   getAppStatsIfNeeded: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
 };
 
