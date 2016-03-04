@@ -6,9 +6,6 @@ import Routes from '../../../../shared/routes/routes';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class BestLoadButtonContainer extends Component {
-  componentWillMount() {
-    FeedsUpdateActions.resetBestEntries();
-  }
   handleClick() {
     const { onClick, unreadBestCount } = this.props;
     const promise = onClick(unreadBestCount);

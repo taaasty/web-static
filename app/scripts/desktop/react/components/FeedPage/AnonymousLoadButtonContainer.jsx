@@ -6,9 +6,6 @@ import Routes from '../../../../shared/routes/routes';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 
 class AnonymousLoadButtonContainer extends Component {
-  componentWillMount() {
-    FeedsUpdateActions.resetAnonymousEntries();
-  }
   handleClick() {
     const { onClick, unreadAnonymousCount } = this.props;
     const promise = onClick(unreadAnonymousCount);

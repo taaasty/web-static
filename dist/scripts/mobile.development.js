@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.apiUrlMap = exports.FEED_ENTRIES_VIEW_STYLE = exports.FEED_ENTRIES_RESET = exports.FEED_ENTRIES_ERROR = exports.FEED_ENTRIES_RECEIVE = exports.FEED_ENTRIES_REQUEST = undefined;
 exports.feedDataByUri = feedDataByUri;
+exports.filterFeedItems = filterFeedItems;
 exports.feedEntriesViewStyle = feedEntriesViewStyle;
 exports.getFeedEntriesIfNeeded = getFeedEntriesIfNeeded;
 exports.appendFeedEntries = appendFeedEntries;
@@ -30,6 +31,8 @@ var _Error = require('../../../shared/react/services/Error');
 var _Error2 = _interopRequireDefault(_Error);
 
 var _FeedConstants = require('../constants/FeedConstants');
+
+var _EntryConstants = require('../constants/EntryConstants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65,7 +68,37 @@ var apiUrlMap = exports.apiUrlMap = (_apiUrlMap = {}, (0, _defineProperty3.defau
 var INITIAL_LOAD_LIMIT = 30;
 var APPEND_LOAD_LIMIT = 15;
 
+function filterFeedItems() {
+  var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+  var ids = [];
+  var promos = [];
+  var tmp = items.reduce(function (acc, el) {
+    if (!el || !el.entry) {
+      return acc;
+    }
+
+    if (ids.indexOf(el.entry.id) > -1) {
+      return acc;
+    } else {
+      ids.push(el.entry.id);
+    }
+
+    if (el.entry.fixed_state === _EntryConstants.ENTRY_PINNED_STATE) {
+      return promos.push(el), acc;
+    }
+
+    return acc.push(el), acc;
+  }, []);
+
+  return promos.concat(tmp);
+}
+
 function feedEntriesReceive(data) {
+  if (data.data && data.data.items && Array.isArray(data.data.items)) {
+    data.data.items = filterFeedItems(data.data.items);
+  }
+
   return {
     type: FEED_ENTRIES_RECEIVE,
     payload: data
@@ -216,7 +249,7 @@ function prependFeedEntries() {
   };
 }
 
-},{"../../../shared/react/services/Error":273,"../../../shared/routes/api":277,"../constants/FeedConstants":5,"babel-runtime/helpers/defineProperty":291,"babel-runtime/helpers/extends":292}],2:[function(require,module,exports){
+},{"../../../shared/react/services/Error":273,"../../../shared/routes/api":277,"../constants/EntryConstants":4,"../constants/FeedConstants":5,"babel-runtime/helpers/defineProperty":291,"babel-runtime/helpers/extends":292}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13903,7 +13936,7 @@ function prop2redux(_ref) {
       error: flows && flows.error
     },
     feedEntries: {
-      data: (0, _extends3.default)({ items: [] }, feedEntries),
+      data: (0, _extends3.default)({}, feedEntries, { items: feedEntries && feedEntries.items && (0, _FeedEntriesActions.filterFeedItems)(feedEntries.items) || [] }),
       isFetching: false,
       apiType: feedData.apiType,
       rating: feedData.rating,
