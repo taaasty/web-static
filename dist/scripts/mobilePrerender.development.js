@@ -15111,7 +15111,7 @@ ApiRoutes = {
     return gon.api_host + "/v1/feeds/media/tlogs.json";
   },
   feedFlowsTlogs: function() {
-    return gon.api_host + "/v1/feeds/live/tlogs.json";
+    return gon.api_host + "/v1/feeds/live_flows/tlogs.json";
   },
   feedAnonymousTlogs: function() {
     return gon.api_host + "/v1/feeds/anonymous/tlogs.json";
