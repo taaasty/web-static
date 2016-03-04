@@ -27,7 +27,7 @@ class FlowsPage extends Component {
           </header>
           <div className="page-body">
             <div className="layout-outer">
-              <FlowsNav active={filterIdx} />
+              <FlowsNav active={filterIdx} isLogged={!!currentUser.id} />
               <FlowBricks
                 canLoad={!isFetching && !!has_more}
                 currentUser={currentUser}

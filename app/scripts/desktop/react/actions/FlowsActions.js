@@ -8,6 +8,7 @@ export const FLOWS_ERROR = 'FLOWS_ERROR';
 export const FLOWS_RESET = 'FLOWS_RESET';
 
 export const navFilters = [ 'popular', 'newest', 'my' ];
+export const navFiltersUnauth = [ 'popular', 'newest' ]; // should be a subset of navFilters
 const PAGE_SIZE_LIMIT = 30;
 
 export function flowsData({ query }) {

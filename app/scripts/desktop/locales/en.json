@@ -348,6 +348,7 @@
   "delete_comment_success": "This comment was deleted successfully ",
   "recovery_mail_sent": "Recovery link was sent on your email",
   "auth": "This diary tempting you to write in it every day",
+  "auth_button": "Log in or register",
   "email_recovery_header": "Did you forget your password?",
   "empty_login_error": "Please enter your login",
   "empty_password_error": "Please enter your password",

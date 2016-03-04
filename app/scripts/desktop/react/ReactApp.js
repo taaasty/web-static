@@ -1,5 +1,5 @@
 /*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher,
- MessagingService, ReactShellBox, ReactPopup */
+ MessagingService, ReactShellBox */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
@@ -153,9 +153,6 @@ const ReactApp = {
     FeedsUpdateService(user);
 
     initLocales(locale, () => {
-      // Есть только у анонимов
-      $('[invite-button]').click(() => this.shellbox.show(Auth));
-
       console.log('Locales loaded');
       ReactUjs.initialize(AppRoot);
       initRoutes();
