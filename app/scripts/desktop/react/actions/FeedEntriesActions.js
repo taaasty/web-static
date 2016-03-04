@@ -11,6 +11,7 @@ import {
   FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA,
   feedTypeMap,
 } from '../constants/FeedConstants';
+import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
 
 export const FEED_ENTRIES_REQUEST = 'FEED_ENTRIES_REQUEST';
 export const FEED_ENTRIES_RECEIVE = 'FEED_ENTRIES_RECEIVE';
@@ -44,7 +45,35 @@ export const apiUrlMap = {
 const INITIAL_LOAD_LIMIT = 30;
 const APPEND_LOAD_LIMIT = 15;
 
+export function filterFeedItems(items=[]) {
+  const ids = [];
+  const promos = [];
+  const tmp = items.reduce((acc, el) => {
+    if (!el || !el.entry) {
+      return acc;
+    }
+
+    if (ids.indexOf(el.entry.id) > -1) {
+      return acc;
+    } else {
+      ids.push(el.entry.id);
+    }
+
+    if (el.entry.fixed_state === ENTRY_PINNED_STATE) {
+      return (promos.push(el), acc);
+    }
+
+    return (acc.push(el), acc);
+  }, []);
+
+  return promos.concat(tmp);
+}
+
 function feedEntriesReceive(data) {
+  if (data.data && data.data.items && Array.isArray(data.data.items)) {
+    data.data.items = filterFeedItems(data.data.items);
+  }
+
   return {
     type: FEED_ENTRIES_RECEIVE,
     payload: data,

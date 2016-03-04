@@ -14,7 +14,7 @@ const SEARCH_TITLE_I18N_KEYS = [
   'tlog', 'favorites', 'privates', 'people', 'flow',
 ];
 
-let UserToolbarContainer = createClass({
+const UserToolbarContainer = createClass({
   propTypes: {
     searchTitleI18nKey: PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired,
     searchUrl: PropTypes.string.isRequired,
@@ -56,23 +56,6 @@ let UserToolbarContainer = createClass({
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onDocumentScroll);
-  },
-
-  render() {
-    let actions = {
-      onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: this.handleMouseLeave,
-      onToggleClick: this.toggleOpenness,
-      onLineHover: this.handleLineHover,
-      onMessagesClick: this.toggleMessages,
-      onNotificationsClick: this.showNotifications,
-      onFriendsClick: this.toggleFriends,
-      onDesignSettingsClick: this.toggleDesignSettings,
-      onSettingsClick: this.showSettings,
-      onSearchClick: this.showSearch,
-    };
-
-    return <UserToolbar {...this.props} {...this.state} {...actions} />;
   },
 
   toggleOpenness() {
@@ -169,11 +152,28 @@ let UserToolbarContainer = createClass({
       this.close();
     }
   },
+
+  render() {
+    const actions = {
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave,
+      onToggleClick: this.toggleOpenness,
+      onLineHover: this.handleLineHover,
+      onMessagesClick: this.toggleMessages,
+      onNotificationsClick: this.showNotifications,
+      onFriendsClick: this.toggleFriends,
+      onDesignSettingsClick: this.toggleDesignSettings,
+      onSettingsClick: this.showSettings,
+      onSearchClick: this.showSearch,
+    };
+
+    return <UserToolbar {...this.props} {...this.state} {...actions} />;
+  },
 });
 
-UserToolbarContainer = connectToStores(
+export default connectToStores(
   UserToolbarContainer,
-  [CurrentUserStore, FeedsStatusStore, MessagingStatusStore],
+  [ CurrentUserStore, FeedsStatusStore, MessagingStatusStore ],
   (props) => ({
     originalProps: props,
     user: CurrentUserStore.getUser(),
@@ -187,5 +187,3 @@ UserToolbarContainer = connectToStores(
     unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),
   })
 );
-
-export default UserToolbarContainer;
