@@ -17,14 +17,6 @@ const components = {
     postUrl: '',
     proposetSlug: '',
   },
-  PeopleItem: {
-    user: {
-      title: '',
-      userpic: {
-        default_colors: {},
-      },
-    },
-  },
   Auth: {},
   EditorNew: {},
   EditorEdit: {

@@ -110,7 +110,7 @@ class Auth extends Component {
 
 Auth.propTypes = {
   fixed: PropTypes.bool,
-  text: PropTypes.text,
+  text: PropTypes.string,
 };
 
 export default Auth;

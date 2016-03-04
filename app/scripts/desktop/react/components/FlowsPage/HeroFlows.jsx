@@ -5,7 +5,7 @@ import Hero from '../HeroComponent/Hero';
 function HeroFlows() {
   return (
     <Hero
-      backgroundUrl="http://taaasty.com/images/hero-cover.jpg"
+      backgroundUrl="//taaasty.com/images/hero-cover.jpg"
       title={i18n.t('hero.flows')}
     />
   );

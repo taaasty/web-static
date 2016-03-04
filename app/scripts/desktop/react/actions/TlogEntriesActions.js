@@ -41,7 +41,7 @@ function fetchTlogEntries(url, data) {
   return Api.entry.load(url, data)
     .fail((xhr) => {
       ErrorService.notifyErrorResponse('Загрузка записей', {
-        method: 'EntryActionCreators.load(url, data)',
+        method: 'fetchTlogEntries(url, data)',
         methodArguments: {url, data},
         response: xhr.responseJSON,
       });
@@ -69,7 +69,7 @@ function getTlogEntries({ slug, section, date, type, sinceId }) {
   };
 }
 
-export function getTlogEntriesIfNeeded({slug, section=TLOG_SECTION_TLOG, date, type='tlogs', sinceId }) {
+export function getTlogEntriesIfNeeded({ slug, section=TLOG_SECTION_TLOG, date, type='tlogs', sinceId }) {
   return (dispatch, getState) => {
     if (shouldFetchTlogEntries(getState(), { slug, section, date, type, sinceId })) {
       return dispatch(getTlogEntries({ slug, section, date, type, sinceId }));

@@ -14,6 +14,8 @@ import FeedPage from './components/FeedPage';
 import FlowsPage from './components/FlowsPage';
 import PeoplePage from './components/PeoplePage';
 
+import PopupActions from './actions/popup';
+
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware
 )(createStore);
@@ -33,7 +35,12 @@ class AppRoot extends Component {
             <Redirect from="~anonymous" to="live/anonymous" />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />
-              <Route path="design_settings" component={TlogPage} />
+              <Route
+                  path="design_settings"
+                  component={TlogPage}
+                  onEnter={PopupActions.showDesignSettings}
+                  onLeave={PopupActions.closeDesignSettings}
+              />
               <Route path="settings" component={TlogPage} />
               <Route path="privates" component={TlogPage} />
               <Route path="favorites" component={TlogPage} />
@@ -56,7 +63,7 @@ class AppRoot extends Component {
             <Route path="flows" component={FlowsPage} />
 
             <Route path="people" component={PeoplePage} />
-            <Route path="people/:filter" component={PeoplePage} />
+            <Route path="people/:sort" component={PeoplePage} />
           </Route>
         </Router>
       </Provider>

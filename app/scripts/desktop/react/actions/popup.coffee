@@ -4,6 +4,7 @@ UserOnboarding = require '../components/UserOnboarding';
 CurrentUserStore = require '../stores/current_user'
 Searchbox = require '../components/Searchbox/Searchbox'
 FlowCreator = require '../components/FlowCreator';
+uri = require 'urijs';
 
 PopupActions =
   showSettings: ->
@@ -25,25 +26,16 @@ PopupActions =
     })
 
   showDesignSettings: ->
-    url = location.href
-    user = CurrentUserStore.getUser()
-
-    if url.indexOf(user.tlog_url.toLowerCase()) == -1
-      TastyConfirmController.show
-        message: i18n.t 'design_settings_page_confirm'
-        acceptButtonText: i18n.t 'design_settings_page_confirm_approve'
-        acceptButtonColor: 'green'
-        onAccept: ->
-          window.location.href = Routes.userDesignSettings user.slug
-    else
-      ReactApp.popupController.open
-        Component: DesignSettingsContainer
-        popupProps:
-          title: i18n.t('design_settings_header')
-          className: 'popup--design-settings'
-          clue: 'designSettings'
-          draggable: true
-        containerAttribute: 'design-settings-container'
+    ReactApp.popupController.open({
+      Component: DesignSettingsContainer,
+      popupProps: {
+        title: i18n.t('design_settings_header'),
+        className: 'popup--design-settings',
+        clue: 'designSettings',
+        draggable: true,
+      },
+      containerAttribute: 'design-settings-container',
+    });
 
   showDesignSettingsPayment: ->
     ReactApp.popupController.openWithBackground
@@ -90,13 +82,23 @@ PopupActions =
     else
       @showFriends()
 
-  toggleDesignSettings: ->
+  closeDesignSettings: ->
     container = document.querySelector '[design-settings-container]'
 
     if container?
       ReactApp.popupController.close 'design-settings-container'
-    else
-      @showDesignSettings()
+
+  toggleDesignSettings: (ev) ->
+    user = CurrentUserStore.getUser()
+
+    if uri().path() == "/~#{user.slug}/design_settings"
+      container = document.querySelector '[design-settings-container]'
+
+      ev.preventDefault();
+      if container?
+        ReactApp.popupController.close 'design-settings-container'
+      else
+        @showDesignSettings()
 
   toggleMessages: ->
     messagingService.toggleMessagesPopup()

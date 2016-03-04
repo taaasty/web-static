@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import FeedPageHeader from './FeedPageHeader';
+import FeedHeader from '../common/FeedHeader';
 import FeedPageBody from './FeedPageBody';
 import {
   FEED_TYPE_BEST,
@@ -55,8 +55,8 @@ class FeedPage extends Component {
     return (
       <div className="page__inner">
         <div className="page__paper">
-          <FeedPageHeader
-            bgImage={currentUser.data && currentUser.data.design.backgroundImageUrl}
+          <FeedHeader
+            bgImage={currentUser.data.design && currentUser.data.design.backgroundImageUrl}
             text={headerText}
             title={i18n.t(title)}
           />

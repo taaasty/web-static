@@ -16,7 +16,8 @@ ApiRoutes =
   onboarding_url:                      -> "#{gon.api_host}/v1/onboarding/users"
 
   # Users
-  signup_url:          -> gon.api_host + '/v1/users'
+  users: -> "#{gon.api_host}/v1/users" # method get
+  signup_url:          -> gon.api_host + '/v1/users' # method post
   update_profile_url:  -> gon.api_host + '/v1/users' # method put
   recovery_url:        -> gon.api_host + '/v1/users/password/recovery'
   request_confirm_url: -> gon.api_host + '/v1/users/confirmation'
