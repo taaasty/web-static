@@ -403,7 +403,7 @@ function changeStaffRole(userId, role) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.navFilters = exports.FLOWS_RESET = exports.FLOWS_ERROR = exports.FLOWS_RECEIVE = exports.FLOWS_REQUEST = undefined;
+exports.navFiltersUnauth = exports.navFilters = exports.FLOWS_RESET = exports.FLOWS_ERROR = exports.FLOWS_RECEIVE = exports.FLOWS_REQUEST = undefined;
 exports.flowsData = flowsData;
 exports.getFlowsIfNeeded = getFlowsIfNeeded;
 exports.appendFlows = appendFlows;
@@ -429,6 +429,7 @@ var FLOWS_ERROR = exports.FLOWS_ERROR = 'FLOWS_ERROR';
 var FLOWS_RESET = exports.FLOWS_RESET = 'FLOWS_RESET';
 
 var navFilters = exports.navFilters = ['popular', 'newest', 'my'];
+var navFiltersUnauth = exports.navFiltersUnauth = ['popular', 'newest']; // should be a subset of navFilters
 var PAGE_SIZE_LIMIT = 30;
 
 function flowsData(_ref) {
