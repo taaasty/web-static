@@ -7790,9 +7790,6 @@ var components = {
   ImageAttachmentsCollage: {
     imageAttachments: []
   },
-  ScreenViewer: {
-    sourceImages: []
-  },
   ConfirmRegistrationShellbox: {
     type: 'email',
     postUrl: '',
@@ -7829,11 +7826,11 @@ var components = {
     rating: {
       reasons: []
     }
-  },
-  UserToolbarContainer: {}
+  }
 };
 
 /*
+UserToolbarContainer: {},
 FeedPageBody: {},
 Calendar: {},
 EntryPageContainer: {

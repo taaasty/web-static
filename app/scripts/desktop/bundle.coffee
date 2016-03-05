@@ -94,10 +94,10 @@ require './react/components/Auth/recovery'
 
 global.Settings = require './react/components/Settings'
 
-global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
+global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
-global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
+global.UserToolbarContainer = require './react/components/UserToolbar'
 global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
 global.ComposeToolbarContainer = require './react/components/ComposeToolbar/ComposeToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
@@ -152,8 +152,6 @@ global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
 global.Spinner = require '../shared/react/components/common/Spinner'
-global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
-global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
 global.SocialShare = require './react/components/common/SocialShare';
 global.Voting = require './react/components/common/Voting';
 

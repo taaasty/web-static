@@ -9,16 +9,13 @@ import { sendUser, sendRegister } from './services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
 import PopupActions from './actions/popup';
 import DesignActionCreators from './actions/design';
-import LayoutStatesController from './controllers/layoutStates';
 import PopupController from './controllers/popuup';
 import PadController from './controllers/pad';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import FeedsUpdateService from './services/FeedsUpdateService';
 import EditorActionCreators from './actions/editor';
 import { ENTRY_TYPES } from './constants/EntryConstants';
 import PostAuthService from './services/PostAuthService';
-import Auth from './components/Auth';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
@@ -150,8 +147,6 @@ const ReactApp = {
       }
     }
 
-    FeedsUpdateService(user);
-
     initLocales(locale, () => {
       console.log('Locales loaded');
       ReactUjs.initialize(AppRoot);
@@ -168,7 +163,6 @@ const ReactApp = {
     // https://github.com/zilverline/react-tap-event-plugin
     injectTapEventPlugin();
 
-    this.layoutStatesController = new LayoutStatesController();
     this.popupController = new PopupController();
     this.padController = new PadController();
 
