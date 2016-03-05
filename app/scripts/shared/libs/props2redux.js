@@ -10,6 +10,7 @@ import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
 import { FEED_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/feedEntries';
 import { feedDataByUri, filterFeedItems } from '../../desktop/react/actions/FeedEntriesActions';
 import { flowsData as fData } from '../../desktop/react/actions/FlowsActions';
+import { initialState as feedStatusInitialState } from '../../desktop/react/reducers/feedStatus';
 
 const mapSection = {
   'favorites': TLOG_SECTION_FAVORITE,
@@ -35,7 +36,9 @@ function peopleSort() {
   return m ? m[1] : void 0;
 }
 
-export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats, people }) {
+export default function prop2redux({
+  tlog, tlogEntry, tlogEntries, flow, flows, feedEntries, appStats, people, userToolbar
+}) {
   const slug = tlog && tlog.slug;
   const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
   const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
@@ -107,5 +110,9 @@ export default function prop2redux({ tlog, tlogEntry, tlogEntries, flow, flows, 
       sort: people && (peopleSort() || 'posts'),
       error: null,
     },
+    feedStatus: {
+      ...feedStatusInitialState,
+      ...userToolbar,
+    }
   };
 }

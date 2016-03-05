@@ -9,9 +9,6 @@ const components = {
   ImageAttachmentsCollage: {
     imageAttachments: [],
   },
-  ScreenViewer: {
-    sourceImages: [],
-  },
   ConfirmRegistrationShellbox: {
     type: 'email',
     postUrl: '',
@@ -49,8 +46,8 @@ const components = {
       reasons: [],
     },
   },
-  UserToolbarContainer: {},
   /*
+  UserToolbarContainer: {},
   FeedPageBody: {},
   Calendar: {},
   EntryPageContainer: {

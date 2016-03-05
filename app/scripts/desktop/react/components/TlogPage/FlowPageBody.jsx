@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
-import EntryBricksContainer from '../EntryBricks/EntryBricksContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs';
+import EntryBricksContainer from '../EntryBricks';
 import FeedFilters from '../FeedFilters';
 import { VIEW_STYLE_TLOG } from '../../constants/ViewStyleConstants';
 
