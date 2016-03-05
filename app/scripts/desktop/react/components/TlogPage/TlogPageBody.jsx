@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
 import TlogPagePrivate from './TlogPagePrivate';
