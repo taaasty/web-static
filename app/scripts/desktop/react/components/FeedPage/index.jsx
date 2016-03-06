@@ -90,7 +90,7 @@ class FeedPage extends Component {
     }
   }
   render() {
-    const { appStats, currentUser, feedEntries, feedStatus, location } = this.props;
+    const { appStats, appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
     const { isFetching, viewStyle } = feedEntries;
     const { apiType, section, type, rating } = feedDataByUri(location);
     const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
