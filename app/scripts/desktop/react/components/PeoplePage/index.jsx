@@ -2,9 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getPeopleIfNeeded } from '../../actions/PeopleActions';
+import { appStateSetSearchKey } from '../../actions/AppStateActions';
 import FeedHeader from '../common/FeedHeader';
 import PeopleNav from './PeopleNav';
 import PeopleList from './PeopleList';
+import { SEARCH_KEY_PEOPLE } from '../../constants/SearchConstants';
 
 export const sorts = [ 'posts', 'followers', 'interested', 'worst', 'comments', 'new', 'bad' ];
 
@@ -16,13 +18,19 @@ function getParams({ sort }) {
 
 class PeoplePage extends Component {
   componentWillMount() {
-    this.props.getPeopleIfNeeded(getParams(this.props.routeParams));
+    const { appStateSetSearchKey, getPeopleIfNeeded, routeParams } = this.props;
+
+    getPeopleIfNeeded(getParams(routeParams));
+    appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   componentDidMount() {
     document.body.className = 'layout--feed';
   }
   componentWillReceiveProps(nextProps) {
-    this.props.getPeopleIfNeeded(getParams(nextProps.routeParams));
+    const {appStateSetSearchKey, getPeopleIfNeeded } = this.props;
+
+    getPeopleIfNeeded(getParams(nextProps.routeParams));
+    appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   render() {
     const { currentUser, people: { data: items, isFetching }, routeParams } = this.props;
@@ -57,6 +65,7 @@ class PeoplePage extends Component {
 PeoplePage.displayName = 'PeoplePage';
 
 PeoplePage.propTypes = {
+  appStateSetSearchKey: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   getPeopleIfNeeded: PropTypes.func.isRequired,
   people: PropTypes.object.isRequired,
@@ -68,5 +77,5 @@ export default connect(
     currentUser: state.currentUser.data,
     people: state.people,
   }),
-  { getPeopleIfNeeded }
+  { appStateSetSearchKey, getPeopleIfNeeded }
 )(PeoplePage);
