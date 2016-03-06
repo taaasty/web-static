@@ -17,6 +17,12 @@ import {
 } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
+  componentWillMount() {
+    
+  }
+  componentWillReceiveProps(nextProps) {
+    
+  }
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }

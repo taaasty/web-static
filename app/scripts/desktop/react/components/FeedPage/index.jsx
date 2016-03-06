@@ -6,6 +6,7 @@ import FeedPageBody from './FeedPageBody';
 import FeedFilters from '../FeedFilters';
 import UnreadLoadButton from '../common/UnreadLoadButton';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
+import Routes from '../../../../shared/routes/routes';
 import {
   FEED_ENTRIES_API_TYPE_LIVE,
   FEED_TYPE_ANONYMOUS,
@@ -31,40 +32,76 @@ import {
   feedLiveFlowReset,  
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
+import { appStateSetSearchKey } from '../../actions/AppStateActions';
+import {
+  SEARCH_KEY_ANONYMOUS,
+  SEARCH_KEY_BEST,
+  SEARCH_KEY_FRIENDS,
+  SEARCH_KEY_LIVE,
+} from '../../constants/SearchConstants';
 
 const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
-  [FEED_TYPE_ANONYMOUS]: { counter: 'unreadAnonymousCount', reset: 'feedAnonymousReset', href: Routes.live_anonymous_feed_path() },
-  [FEED_TYPE_BEST]: { counter: 'unreadBestCount', reset: 'feedBestReset', href: Routes.best_feed_path() },
-  [FEED_TYPE_FRIENDS]: { counter: 'unreadFriendsCount', reset: 'feedFriendsReset', href: Routes.friends_feed_path() },
-  [FEED_TYPE_LIVE_FLOW]: { counter: 'unreadLiveFlowCount', reset: 'feedLiveFlowReset', href: Routes.live_flows_feed_path() },
-  [FEED_TYPE_LIVE]: { counter: 'unreadLiveCount', reset: 'feedLiveReset', href: Routes.live_feed_path() },
+  [FEED_TYPE_ANONYMOUS]: {
+    counter: 'unreadAnonymousCount',
+    reset: 'feedAnonymousReset',
+    href: Routes.live_anonymous_feed_path(),
+    searchKey: SEARCH_KEY_ANONYMOUS,
+  },
+  [FEED_TYPE_BEST]: {
+    counter: 'unreadBestCount',
+    reset: 'feedBestReset',
+    href: Routes.best_feed_path(),
+    searchKey: SEARCH_KEY_BEST,
+  },
+  [FEED_TYPE_FRIENDS]: {
+    counter: 'unreadFriendsCount',
+    reset: 'feedFriendsReset',
+    href: Routes.friends_feed_path(),
+    searchKey: SEARCH_KEY_FRIENDS,
+  },
+  [FEED_TYPE_LIVE_FLOW]: {
+    counter: 'unreadLiveFlowCount',
+    reset: 'feedLiveFlowReset',
+    href: Routes.live_flows_feed_path(),
+    searchKey: SEARCH_KEY_LIVE,
+  },
+  [FEED_TYPE_LIVE]: {
+    counter: 'unreadLiveCount',
+    reset: 'feedLiveReset',
+    href: Routes.live_feed_path(),
+    searchKey: SEARCH_KEY_LIVE,
+  },
 };
 
 class FeedPage extends Component {
   componentWillMount() {
-    const { location } = this.props;
+    const { appStateSetSearchKey, getFeedEntriesIfNeeded, location } = this.props;
     const type = typeMap[this.feedType(location)];
 
     this.setViewStyle(this.props);
-    this.props.getFeedEntriesIfNeeded(location);
+    getFeedEntriesIfNeeded(location);
 
     if (type) {
       this.props[type.reset].call(void 0);
+      appStateSetSearchKey(type.searchKey);
     }
   }
   componentDidMount() {
     document.body.className = 'layout--feed';
   }
   componentWillReceiveProps(nextProps) {
+    const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
+
     this.setViewStyle(nextProps);
-    this.props.getFeedEntriesIfNeeded(nextProps.location);
+    getFeedEntriesIfNeeded(nextProps.location);
 
     if (this.feedType(this.props.location) !== this.feedType(nextProps.location)) {
       const type = typeMap[this.feedType(nextProps.location)]; 
 
       if (type) {
         this.props[type.reset].call(void 0);
+        appStateSetSearchKey(type.searchKey);
       }
     }
   }
@@ -152,6 +189,7 @@ FeedPage.defaultProps = {
 };
 
 FeedPage.propTypes = {
+  appStateSetSearchKey: PropTypes.func.isRequired,
   appStats: PropTypes.object.isRequired,
   appendFeedEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
@@ -176,6 +214,7 @@ export default connect(
     feedStatus: state.feedStatus,
   }),
   {
+    appStateSetSearchKey,
     appendFeedEntries,
     feedAnonymousReset,
     feedBestReset,
