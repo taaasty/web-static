@@ -240,8 +240,8 @@ function prependFeedEntries() {
 
     dispatch(feedEntriesRequest());
     return fetchFeedEntries(url, params).then(function (data) {
-      var prevItems = getState().feedEntries.data.items;
-      dispatch(feedEntriesReceive({ data: (0, _extends3.default)({}, data, { items: data.items.concat(prevItems) }) }));
+      var prevData = getState().feedEntries.data;
+      dispatch(feedEntriesReceive({ data: (0, _extends3.default)({}, prevData, { items: data.items.concat(prevData.items) }) }));
       return data;
     }).fail(function (error) {
       return dispatch(tlogEntriesError({ error: error.responseJSON }));
