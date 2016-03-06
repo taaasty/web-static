@@ -12,17 +12,17 @@ import {
   FEED_LIVE_FLOW_RESET,
 } from '../actions/FeedStatusActions';
 
-const initialState = {
+export const initialState = {
   live: [],
-  liveInitialCount: 0,
+  unreadLiveCount: 0,
   best: [],
-  bestInitialCount: 0,
+  unreadBestCount: 0,
   friends: [],
-  friendsInitialCount: 0,
+  unreadFriendsCount: 0,
   anonymous: [],
-  anonymousInitialCount: 0,
+  unreadAnonymousCount: 0,
   liveFlow: [],
-  liveFlowInitialCount: 0,
+  unreadLiveFlowCount: 0,
 };
 
 const actionMap = {
@@ -30,6 +30,7 @@ const actionMap = {
     return {
       ...state,
       live: [ ...state.live, entry ],
+      unreadLiveCount: state.unreadLiveCount + 1,
     };
   },
 
@@ -37,6 +38,7 @@ const actionMap = {
     return {
       ...state,
       live: [],
+      unreadLiveCount: 0,
     };
   },
 
@@ -44,6 +46,7 @@ const actionMap = {
     return {
       ...state,
       best: [ ...state.best, entry ],
+      unreadBestCount: state.unreadBestCount + 1,
     };
   },
 
@@ -51,6 +54,7 @@ const actionMap = {
     return {
       ...state,
       best: [],
+      unreadBestCount: 0,
     };
   },
 
@@ -58,6 +62,7 @@ const actionMap = {
     return {
       ...state,
       friends: [ ...state.friends, entry ],
+      unreadFriendsCount: state.unreadFriendsCount + 1,
     };
   },
 
@@ -65,6 +70,7 @@ const actionMap = {
     return {
       ...state,
       friends: [],
+      unreadFriendsCount: 0,
     };
   },
 
@@ -72,6 +78,7 @@ const actionMap = {
     return {
       ...state,
       anonymous: [ ...state.anonymous, entry ],
+      unreadAnonymousCount: state.unreadAnonymousCount + 1,
     };
   },
 
@@ -79,6 +86,7 @@ const actionMap = {
     return {
       ...state,
       anonymous: [],
+      unreadAnonymousCount: 0,
     };
   },
 
@@ -86,6 +94,7 @@ const actionMap = {
     return {
       ...state,
       liveFlow: [ ...state.liveFlow, entry ],
+      unreadLiveFlowCount: state.unreadLiveFlowCount + 1,
     };
   },
 
@@ -93,6 +102,7 @@ const actionMap = {
     return {
       ...state,
       liveFlow: [],
+      unreadLiveFlowCount: 0,
     };
   },
 };

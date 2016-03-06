@@ -195,11 +195,10 @@ export function prependFeedEntries() {
     dispatch(feedEntriesRequest());
     return fetchFeedEntries(url, params)
       .then((data) => {
-        const prevItems = getState().feedEntries.data.items;
-        dispatch(feedEntriesReceive({ data: { ...data, items: data.items.concat(prevItems) } }));
+        const prevData = getState().feedEntries.data;
+        dispatch(feedEntriesReceive({ data: { ...prevData, items: data.items.concat(prevData.items) } }));
         return data;
       })
       .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
-
   };
 }

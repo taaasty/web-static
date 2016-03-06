@@ -4,9 +4,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
 import Auth from '../Auth';
-import UserToolbarContainer from '../toolbars/UserToolbarContainer';
+import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
-import BrowserSupportContainer from '../BrowserSupport/BrowserSupportContainer';
+import BrowserSupport from '../BrowserSupport';
 
 class AppPage extends Component {
   componentWillMount() {
@@ -32,8 +32,8 @@ class AppPage extends Component {
          </button>
         }
          {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
-         <UserToolbarContainer {...window.STATE_FROM_SERVER.userToolbar} />
-         <BrowserSupportContainer />
+         <UserToolbar />
+         <BrowserSupport />
       </div>
     );
   }

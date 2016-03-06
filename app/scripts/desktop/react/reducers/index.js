@@ -1,3 +1,4 @@
+import appState from './appState';
 import appStats from './appStats';
 import calendar from './calendar';
 import currentUser from './currentUser';
@@ -12,6 +13,7 @@ import tlogEntry from './tlogEntry';
 import userToolbar from './userToolbar';
 
 export default {
+  appState,
   appStats,
   calendar,
   currentUser,

@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
 import TlogPagePrivate from './TlogPagePrivate';
@@ -17,6 +17,12 @@ import {
 } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
+  componentWillMount() {
+    
+  }
+  componentWillReceiveProps(nextProps) {
+    
+  }
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
