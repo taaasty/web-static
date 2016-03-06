@@ -21,7 +21,7 @@ const UserToolbar = createClass({
     onSearchClick: PropTypes.func.isRequired,
     onSettingsClick: PropTypes.func.isRequired,
     onToggleClick: PropTypes.func.isRequired,
-    searchTitleI18nKey: PropTypes.string.isRequired,
+    searchKey: PropTypes.string.isRequired,
     unreadAnonymousCount: PropTypes.number.isRequired,
     unreadBestCount: PropTypes.number.isRequired,
     unreadConversationsCount: PropTypes.number.isRequired,
@@ -60,13 +60,13 @@ const UserToolbar = createClass({
   },
 
   renderAdditionalList() {
-    const { currentUser: { slug }, onSearchClick, onSettingsClick, searchTitleI18nKey } = this.props;
+    const { currentUser: { slug }, onSearchClick, onSettingsClick, searchKey } = this.props;
 
     return (
       <UserToolbarAdditionalList
         onSearchClick={onSearchClick}
         onSettingsClick={onSettingsClick}
-        searchTitleI18nKey={searchTitleI18nKey}
+        searchKey={searchKey}
         slug={slug}
       />
     );

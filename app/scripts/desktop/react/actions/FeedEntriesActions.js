@@ -200,6 +200,5 @@ export function prependFeedEntries() {
         return data;
       })
       .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
-
   };
 }

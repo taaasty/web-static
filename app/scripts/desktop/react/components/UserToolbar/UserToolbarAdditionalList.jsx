@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import UserToolbarListItem from './UserToolbarListItem';
 import Routes from '../../../../shared/routes/routes';
 
-function UserToolbarAdditionalList({ onSearchClick, onSettingsClick, searchTitleI18nKey, slug }) {
+function UserToolbarAdditionalList({ onSearchClick, onSettingsClick, searchKey, slug }) {
   function onClickLogout(ev) {
     function redirect() {
       window.location.href = Routes.logout_path();
@@ -24,7 +24,7 @@ function UserToolbarAdditionalList({ onSearchClick, onSettingsClick, searchTitle
       <UserToolbarListItem
         icon="icon--magnifier"
         onClick={onSearchClick}
-        title={i18n.t(`searchbox_titles.${searchTitleI18nKey}`)}
+        title={i18n.t(`searchbox_titles.${searchKey}`)}
       />
       <UserToolbarListItem
         icon="icon--cogwheel"
@@ -45,7 +45,7 @@ function UserToolbarAdditionalList({ onSearchClick, onSettingsClick, searchTitle
 UserToolbarAdditionalList.propTypes = {
   onSearchClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
-  searchTitleI18nKey: PropTypes.string.isRequired,
+  searchKey: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
 };
 

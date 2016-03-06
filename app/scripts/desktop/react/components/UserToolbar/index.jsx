@@ -14,15 +14,12 @@ import UserToolbar from './UserToolbar';
 import { connect } from 'react-redux';
 import ApiRoutes from '../../../../shared/routes/api';
 import Pusher from 'pusher';
+import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
 const PUSHER_NEW_ENTRY = 'new_entry';
 const bodyClassName = 'main-toolbar-open';
 
 const STORAGE_KEY = 'states:mainToolbarOpened';
-const SEARCH_TITLE_I18N_KEYS = [
-  'live', 'best', 'friends', 'anonymous', 'mytlog',
-  'tlog', 'favorites', 'privates', 'people', 'flow',
-];
 
 class UserToolbarContainer extends Component {
   state = {
@@ -130,7 +127,7 @@ class UserToolbarContainer extends Component {
     ev.preventDefault();
     PopupActionCreators.showSearch({
       searchUrl: this.searchUrl(),
-      searchTitleI18nKey: this.props.searchTitleI18nKey,
+      searchKey: this.props.searchKey,
     });
   }
   onDocumentScroll() {
@@ -190,7 +187,7 @@ UserToolbarContainer.propTypes = {
   feedFriendsNewEntry: PropTypes.func.isRequired,
   feedLiveFlowNewEntry: PropTypes.func.isRequired,
   feedLiveNewEntry: PropTypes.func.isRequired,
-  searchTitleI18nKey: PropTypes.oneOf(SEARCH_TITLE_I18N_KEYS).isRequired,
+  searchKey: PropTypes.oneOf(SEARCH_KEYS).isRequired,
   unreadAnonymousCount: PropTypes.number.isRequired,
   unreadBestCount: PropTypes.number.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
@@ -213,6 +210,7 @@ export default connectToStores(
         unreadLiveCount,
         unreadLiveFlowCount,
         currentUser: state.currentUser.data,
+        searchKey: state.appState.data.searchKey,
       };
     },
     {
