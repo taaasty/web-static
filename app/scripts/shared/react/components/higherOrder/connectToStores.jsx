@@ -8,6 +8,9 @@ function connectToStores(Component, stores, getStateFromStores) {
         store.addChangeListener(this.handleStoresChanged)
       );
     },
+    componentWillReceiveProps(nextProps) {
+      this.setState(getStateFromStores(nextProps));
+    },
     componentWillUnmount() {
       stores.forEach(store =>
         store.removeChangeListener(this.handleStoresChanged)

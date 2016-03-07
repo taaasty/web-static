@@ -126,7 +126,7 @@ class UserToolbarContainer extends Component {
   showSearch(ev) {
     ev.preventDefault();
     PopupActionCreators.showSearch({
-      searchUrl: this.searchUrl(),
+      location: this.props.location,
       searchKey: this.props.searchKey,
     });
   }
@@ -134,9 +134,6 @@ class UserToolbarContainer extends Component {
     if (this.state.opened) {
       this.close();
     }
-  }
-  searchUrl() {
-    return '';
   }
   handleMouseEnter() {
     this.setState({hovered: true});
@@ -187,6 +184,7 @@ UserToolbarContainer.propTypes = {
   feedFriendsNewEntry: PropTypes.func.isRequired,
   feedLiveFlowNewEntry: PropTypes.func.isRequired,
   feedLiveNewEntry: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
   searchKey: PropTypes.oneOf(SEARCH_KEYS).isRequired,
   unreadAnonymousCount: PropTypes.number.isRequired,
   unreadBestCount: PropTypes.number.isRequired,
@@ -199,11 +197,12 @@ UserToolbarContainer.propTypes = {
 
 export default connectToStores(
   connect(
-    (state) => {
+    (state, { location }) => {
       const { unreadAnonymousCount, unreadBestCount, unreadFriendsCount,
               unreadLiveCount, unreadLiveFlowCount } = state.feedStatus;
 
       return {
+        location,
         unreadAnonymousCount,
         unreadBestCount,
         unreadFriendsCount,
