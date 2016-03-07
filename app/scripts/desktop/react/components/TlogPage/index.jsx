@@ -29,6 +29,7 @@ class TlogPageContainer extends Component {
       slug,
       section: this.section(this.props),
       date: this.date(this.props.params),
+      query: this.query(location),
       sinceId: this.sinceId(location),
     });
     appStateSetSearchKey(this.searchKey(this.props));
@@ -40,9 +41,13 @@ class TlogPageContainer extends Component {
       slug: nextProps.params.slug,
       section: this.section(nextProps),
       date: this.date(nextProps.params),
+      query: this.query(nextProps.location),
       sinceId: this.sinceId(nextProps.location),
     });
     appStateSetSearchKey(this.searchKey(nextProps));
+  }
+  query({ query }) {
+    return query && query.q;
   }
   searchKey(props) {
     const { currentUser: { data: userData }, tlog: { data: tlogData } } = props;
