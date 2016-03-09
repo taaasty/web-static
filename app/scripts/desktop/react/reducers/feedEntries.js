@@ -8,31 +8,8 @@ import {
   FEED_ENTRIES_VIEW_STYLE,
 } from '../actions/FeedEntriesActions';
 import { VIEW_STYLE_BRICKS } from '../constants/ViewStyleConstants';
-import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
 
 export const FEED_VIEW_STYLE_LS_KEY = 'feedViewStyle';
-
-// keep only uniques and hoist pinned entries, fix hoisting
-function prepareItems(items) {
-  const ids = [];
-
-  return items && items
-    .reduce((acc, item) => {
-      if (!item || ids.indexOf(item.entry.id) > -1) {
-        return acc;
-      } else {
-        return ids.push(item.entry.id), acc.push(item), acc;
-      }
-    }, []);
-/*
-    .sort((a, b) => {
-      const aPinned = a.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-      const bPinned = b.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-
-      return aPinned - bPinned;
-    });
-*/
-}
 
 const initialState = {
   data: {
@@ -44,6 +21,7 @@ const initialState = {
   isFetching: false,
   apiType: '',
   rating: '',
+  query: '',
   sinceId: null,
   error: null,
   viewStyle: VIEW_STYLE_BRICKS,
@@ -62,7 +40,7 @@ const actionMap = {
     return {
       ...state,
       ...data,
-      data: { ...data.data, items: prepareItems(data.data && data.data.items) },
+      data: { ...data.data, items: (data.data && data.data.items) || [] },
       error: null,
       isFetching: false,
     };

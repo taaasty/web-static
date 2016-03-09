@@ -23,6 +23,7 @@ class Searchbox extends Component {
     const q = ev.target.elements && ev.target.elements.q && ev.target.elements.q.value;
 
     ev.preventDefault();
+    this.close();
     browserHistory.push({ pathname, query: { ...query, q }});
   }
   render() {

@@ -17,39 +17,27 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
   }
 
   function renderBrickImageContainer() {
-    return window.SPA
-      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
-          {renderBrickImage()}
-        </Link>
-      : <a className="brick__link" href={entry.url}>
-          {renderBrickImage()}
-        </a>;
+    return (
+      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
+        {renderBrickImage()}
+      </Link>
+    );
   }
 
   function renderBrickBody() {
-    return window.SPA
-      ? <div className="brick__body">
-          <div className="brick__text">
-            <Link
-              className="brick__link"
-              title={entry.title_truncated}
-              to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
-            >
-              <Text value={entry.title_truncated} withHTML />
-            </Link>
-          </div>
+    return (
+      <div className="brick__body">
+        <div className="brick__text">
+          <Link
+            className="brick__link"
+            title={entry.title_truncated}
+            to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+          >
+            <Text value={entry.title_truncated} withHTML />
+          </Link>
         </div>
-      : <div className="brick__body">
-          <div className="brick__text">
-            <a
-              className="brick__link"
-              href={entry.url}
-              title={entry.title_truncated}
-            >
-              <Text value={entry.title_truncated} withHTML />
-            </a>
-          </div>
-        </div>;
+      </div>
+    );
   }
 
   return (

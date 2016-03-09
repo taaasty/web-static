@@ -4,18 +4,12 @@ import { Link } from 'react-router';
 import uri from 'urijs';
 
 function HeroProfileHead({ user: { slug, title, tlog_url } }) {
-  function renderSlug() {
-    return window.SPA
-      ? <Link to={uri(tlog_url).path()}>{slug}</Link>
-      : <a href={tlog_url}>{slug}</a>;
-  }
-
   return (
     <div className="hero__head">
       <div className="hero__mask" />
       <div className="hero__title">
         <span>
-          {renderSlug()}
+          <Link to={uri(tlog_url).path()}>{slug}</Link>
         </span>
       </div>
       <div className="hero__text">
