@@ -14000,6 +14000,7 @@ function prop2redux(_ref) {
   var slug = tlog && tlog.slug;
   var feedData = feedEntries && (0, _FeedEntriesActions.feedDataByUri)({ pathname: (0, _urijs2.default)().path(), query: (0, _urijs2.default)().query(true) }) || {};
   var flowsData = flows && (0, _urijs2.default)().path() === '/flows' && (0, _FlowsActions.flowsData)({ query: (0, _urijs2.default)().query(true) });
+  var query = (0, _urijs2.default)().query(true).q;
 
   return {
     tlog: {
@@ -14016,6 +14017,7 @@ function prop2redux(_ref) {
       data: (0, _extends3.default)({ items: [] }, tlogEntries),
       date: date(),
       isFetching: false,
+      query: tlogEntries && query,
       slug: tlogEntries && slug,
       section: section(),
       type: 'tlogs',
@@ -14050,6 +14052,7 @@ function prop2redux(_ref) {
       data: (0, _extends3.default)({}, feedEntries, { items: feedEntries && feedEntries.items && (0, _FeedEntriesActions.filterFeedItems)(feedEntries.items) || [] }),
       isFetching: false,
       apiType: feedData.apiType,
+      query: feedEntries && query,
       rating: feedData.rating,
       sinceId: feedData.sinceId,
       error: feedEntries && feedEntries.error ? { error: feedEntries.error } : void 0,
@@ -14064,6 +14067,7 @@ function prop2redux(_ref) {
     people: {
       data: people || [],
       isFetching: false,
+      query: people && query,
       sort: people && (peopleSort() || 'posts'),
       error: null
     },

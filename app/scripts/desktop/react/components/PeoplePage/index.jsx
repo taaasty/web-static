@@ -35,7 +35,7 @@ class PeoplePage extends Component {
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   render() {
-    const { currentUser, location, people: { data: items, isFetching }, routeParams } = this.props;
+    const { currentUser, location, people: { data: items, isFetching, query }, routeParams } = this.props;
     const { sort } = getParams(location, routeParams);
 
     return (
@@ -55,6 +55,7 @@ class PeoplePage extends Component {
               <PeopleList
                 isFetching={isFetching}
                 people={items}
+                query={query}
               />
             </div>
           </div>

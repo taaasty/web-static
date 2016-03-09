@@ -466,9 +466,12 @@
       "friend_posts_1": "The only friend postings",
       "friend_posts_2": "{{count}} friends postings"
     },
-    "empty": "This feed is empty yet"
+    "empty": "This feed is empty yet",
+    "query_empty": "Nothing found for '{{query}}' search queryt"
   },
   "people": {
+    "empty": "There is nobody here",
+    "query_empty": "Nobody found for '{{query}}' search query",
     "posts": {
       "title": "Most active in posting",
       "text": "People in decreasing order of postings",

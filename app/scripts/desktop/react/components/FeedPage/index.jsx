@@ -99,10 +99,9 @@ class FeedPage extends Component {
 
     this.setViewStyle(nextProps);
     const willGet = getFeedEntriesIfNeeded(nextProps.location);
+    const type = typeMap[this.feedType(nextProps.location)]; 
 
     if (this.feedType(this.props.location) !== this.feedType(nextProps.location)) {
-      const type = typeMap[this.feedType(nextProps.location)]; 
-
       if (type) {
         if (!willGet && nextProps.feedStatus[type.counter] > 0) {
           prependFeedEntries(nextProps.feedStatus[type.counter]);
@@ -110,6 +109,8 @@ class FeedPage extends Component {
         this.props[type.reset].call(void 0);
         appStateSetSearchKey(type.searchKey);
       }
+    } else if (willGet && type) {
+      this.props[type.reset].call(void 0);
     }
   }
   feedType(location) {
@@ -133,10 +134,20 @@ class FeedPage extends Component {
       return null;
     }
   }
+  renderButton({ count, href, isFetching, location }) {
+    return location.query && location.query.since_entry_id
+      ? <PreviousEntriesButton href={href} />
+      : <UnreadLoadButton
+          count={count}
+          href={href}
+          isLoading={isFetching}
+          onClick={this.handleClickUnreadButton.bind(this, count)}
+        />;
+    }
   render() {
     const { appStats, appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
     const { isFetching, viewStyle } = feedEntries;
-    const { apiType, section, type, rating } = feedDataByUri(location);
+    const { apiType, section, type, rating, query } = feedDataByUri(location);
     const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
@@ -172,15 +183,7 @@ class FeedPage extends Component {
               navViewMode
               viewMode={viewStyle}
             >
-              {location.query && location.query.since_entry_id
-               ? <PreviousEntriesButton href={href} />
-               : <UnreadLoadButton
-                   count={count}
-                   href={href}
-                   isLoading={isFetching}
-                   onClick={this.handleClickUnreadButton.bind(this, count)}
-                 />
-              }
+              {!query && this.renderButton({ count, href, isFetching, location })}
             </FeedFilters>
           </FeedPageBody>
         </div>
