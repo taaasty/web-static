@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   data: [],
+  query: void 0,
   isFetching: false,
   error: null,
   sort: null,

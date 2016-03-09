@@ -28,6 +28,7 @@ export function feedDataByUri({ pathname, query }) {
     rating,
     section,
     type,
+    query: query.q,
     sinceId: query.since_entry_id,
   };
 }
@@ -117,14 +118,17 @@ function fetchFeedEntries(url, data) {
     });
 }
 
-function shouldFetchFeedEntries(state, { apiType, rating, sinceId }) {
-  const { isFetching, apiType: cApiType, rating: cRating, sinceId: cSinceId } = state.feedEntries;
+function shouldFetchFeedEntries(state, { apiType, rating, sinceId, query }) {
+  const { isFetching, apiType: cApiType, rating: cRating,
+          sinceId: cSinceId, query: cQuery } = state.feedEntries;
 
   return !isFetching &&
-    (apiType !== cApiType || (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) || (cSinceId && sinceId == null));
+    (apiType !== cApiType || query !== cQuery ||
+     (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) ||
+     (cSinceId && sinceId == null));
 }
 
-function getFeedEntries({ apiType, rating, sinceId }) {
+function getFeedEntries({ apiType, rating, sinceId, query }) {
   return (dispatch) => {
     const url = apiUrlMap[apiType];
 
@@ -134,9 +138,14 @@ function getFeedEntries({ apiType, rating, sinceId }) {
 
     dispatch(feedEntriesRequest());
     dispatch(feedEntriesReset());
-    return fetchFeedEntries(url, { limit: INITIAL_LOAD_LIMIT, rating, since_entry_id: sinceId })
-      .then((data) => dispatch(feedEntriesReceive({ data, apiType, rating, sinceId })))
-      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON, apiType, rating, sinceId })));
+    return fetchFeedEntries(url, {
+      limit: INITIAL_LOAD_LIMIT,
+      rating,
+      since_entry_id: sinceId || void 0,
+      q: query || void 0,
+    })
+      .then((data) => dispatch(feedEntriesReceive({ data, apiType, rating, sinceId, query })))
+      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON, apiType, rating, sinceId, query })));
   };
 }
 
@@ -152,7 +161,7 @@ export function getFeedEntriesIfNeeded(location, force=false) {
 
 export function appendFeedEntries() {
   return (dispatch, getState) => {
-    const { isFetching, apiType, rating, data: { next_since_entry_id } } = getState().feedEntries;
+    const { isFetching, apiType, rating, query, data: { next_since_entry_id } } = getState().feedEntries;
 
     if (isFetching) {
       return null;
@@ -162,7 +171,8 @@ export function appendFeedEntries() {
     const params = {
       rating,
       limit: APPEND_LOAD_LIMIT,
-      since_entry_id: next_since_entry_id,
+      q: query || void 0,
+      since_entry_id: next_since_entry_id || void 0,
     };
 
     dispatch(feedEntriesRequest());

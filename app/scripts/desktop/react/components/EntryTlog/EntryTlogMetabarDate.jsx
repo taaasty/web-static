@@ -5,17 +5,13 @@ import uri from 'urijs';
 
 function EntryTlogMetabarDate({ entry: { created_at: date, id, url }, isFeed }) {
   function renderLink(text) {
-    return window.SPA
-      ? <Link to={{ pathname: uri(url).path(), state: { id, isFeed } }}>
-          <span className="meta-item__common">
-            {text}
-          </span>
-        </Link>
-      : <a href={url}>
-          <span className="meta-item__common">
-            {text}
-          </span>
-        </a>
+    return (
+      <Link to={{ pathname: uri(url).path(), state: { id, isFeed } }}>
+        <span className="meta-item__common">
+          {text}
+        </span>
+      </Link>
+    );
   }
 
   const now = moment();
