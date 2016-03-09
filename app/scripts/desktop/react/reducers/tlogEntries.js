@@ -16,7 +16,7 @@ export const initialState = {
   },
   id: null,
   section: '',
-  type: '',
+  query: '',
   isFetching: false,
   error: null,
 };

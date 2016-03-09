@@ -76,13 +76,17 @@ const typeMap = {
 
 class FeedPage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, getFeedEntriesIfNeeded, location } = this.props;
+    const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded,
+            location, prependFeedEntries } = this.props;
     const type = typeMap[this.feedType(location)];
 
     this.setViewStyle(this.props);
-    getFeedEntriesIfNeeded(location);
+    const willGet = getFeedEntriesIfNeeded(location);
 
     if (type) {
+      if (!willGet && feedStatus[type.counter] > 0) {
+        prependFeedEntries(feedStatus[type.counter]);
+      }
       this.props[type.reset].call(void 0);
       appStateSetSearchKey(type.searchKey);
     }
@@ -94,12 +98,15 @@ class FeedPage extends Component {
     const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
 
     this.setViewStyle(nextProps);
-    getFeedEntriesIfNeeded(nextProps.location);
+    const willGet = getFeedEntriesIfNeeded(nextProps.location);
 
     if (this.feedType(this.props.location) !== this.feedType(nextProps.location)) {
       const type = typeMap[this.feedType(nextProps.location)]; 
 
       if (type) {
+        if (!willGet && nextProps.feedStatus[type.counter] > 0) {
+          prependFeedEntries(nextProps.feedStatus[type.counter]);
+        }
         this.props[type.reset].call(void 0);
         appStateSetSearchKey(type.searchKey);
       }
@@ -119,7 +126,7 @@ class FeedPage extends Component {
 
     if (count > 0) {
       const promise = (count < PREPEND_LOAD_LIMIT)
-        ? prependFeedEntries()
+        ? prependFeedEntries(count)
         : getFeedEntriesIfNeeded(this.props.location, true);
       (promise && type && promise.then(this.props[type.reset]));
     } else {

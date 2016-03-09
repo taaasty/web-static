@@ -176,7 +176,7 @@ export function appendFeedEntries() {
   };
 }
 
-export function prependFeedEntries() {
+export function prependFeedEntries(limit=INITIAL_LOAD_LIMIT) {
   return (dispatch, getState) => {
     const { isFetching, apiType, rating, data: { items  } } = getState().feedEntries;
     const firstId = items && items[0] && items[0].entry.id;
@@ -188,6 +188,7 @@ export function prependFeedEntries() {
 
     const url = apiUrlMap[apiType];
     const params = {
+      limit,
       rating,
       till_entry_id: firstId,
     };

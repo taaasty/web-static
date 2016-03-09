@@ -219,6 +219,8 @@ function appendFeedEntries() {
 }
 
 function prependFeedEntries() {
+  var limit = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_LOAD_LIMIT : arguments[0];
+
   return function (dispatch, getState) {
     var _getState$feedEntries2 = getState().feedEntries;
     var isFetching = _getState$feedEntries2.isFetching;
@@ -234,6 +236,7 @@ function prependFeedEntries() {
 
     var url = apiUrlMap[apiType];
     var params = {
+      limit: limit,
       rating: rating,
       till_entry_id: firstId
     };

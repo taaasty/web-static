@@ -16,7 +16,7 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   render() {
-    const { children, currentUser, params, tlog } = this.props;
+    const { children, currentUser, location, params, tlog } = this.props;
     const isLogged = !!currentUser.data.id;
 
     return (
@@ -32,7 +32,7 @@ class AppPage extends Component {
          </button>
         }
          {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
-         <UserToolbar />
+         <UserToolbar location={location} />
          <BrowserSupport />
       </div>
     );
@@ -48,6 +48,7 @@ AppPage.propTypes = {
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
   getAppStatsIfNeeded: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
 };
