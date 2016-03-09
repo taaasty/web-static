@@ -59,6 +59,7 @@ function feedDataByUri(_ref) {
     rating: rating,
     section: section,
     type: type,
+    query: query.q,
     sinceId: query.since_entry_id
   };
 }
@@ -145,19 +146,22 @@ function shouldFetchFeedEntries(state, _ref3) {
   var apiType = _ref3.apiType;
   var rating = _ref3.rating;
   var sinceId = _ref3.sinceId;
+  var query = _ref3.query;
   var _state$feedEntries = state.feedEntries;
   var isFetching = _state$feedEntries.isFetching;
   var cApiType = _state$feedEntries.apiType;
   var cRating = _state$feedEntries.rating;
   var cSinceId = _state$feedEntries.sinceId;
+  var cQuery = _state$feedEntries.query;
 
-  return !isFetching && (apiType !== cApiType || cApiType === _FeedConstants.FEED_ENTRIES_API_TYPE_BEST && rating !== cRating || cSinceId && sinceId == null);
+  return !isFetching && (apiType !== cApiType || query !== cQuery || cApiType === _FeedConstants.FEED_ENTRIES_API_TYPE_BEST && rating !== cRating || cSinceId && sinceId == null);
 }
 
 function getFeedEntries(_ref4) {
   var apiType = _ref4.apiType;
   var rating = _ref4.rating;
   var sinceId = _ref4.sinceId;
+  var query = _ref4.query;
 
   return function (dispatch) {
     var url = apiUrlMap[apiType];
@@ -168,10 +172,15 @@ function getFeedEntries(_ref4) {
 
     dispatch(feedEntriesRequest());
     dispatch(feedEntriesReset());
-    return fetchFeedEntries(url, { limit: INITIAL_LOAD_LIMIT, rating: rating, since_entry_id: sinceId }).then(function (data) {
-      return dispatch(feedEntriesReceive({ data: data, apiType: apiType, rating: rating, sinceId: sinceId }));
+    return fetchFeedEntries(url, {
+      limit: INITIAL_LOAD_LIMIT,
+      rating: rating,
+      since_entry_id: sinceId || void 0,
+      q: query || void 0
+    }).then(function (data) {
+      return dispatch(feedEntriesReceive({ data: data, apiType: apiType, rating: rating, sinceId: sinceId, query: query }));
     }).fail(function (error) {
-      return dispatch(feedEntriesError({ error: error.responseJSON, apiType: apiType, rating: rating, sinceId: sinceId }));
+      return dispatch(feedEntriesError({ error: error.responseJSON, apiType: apiType, rating: rating, sinceId: sinceId, query: query }));
     });
   };
 }
@@ -194,6 +203,7 @@ function appendFeedEntries() {
     var isFetching = _getState$feedEntries.isFetching;
     var apiType = _getState$feedEntries.apiType;
     var rating = _getState$feedEntries.rating;
+    var query = _getState$feedEntries.query;
     var next_since_entry_id = _getState$feedEntries.data.next_since_entry_id;
 
     if (isFetching) {
@@ -204,7 +214,8 @@ function appendFeedEntries() {
     var params = {
       rating: rating,
       limit: APPEND_LOAD_LIMIT,
-      since_entry_id: next_since_entry_id
+      q: query || void 0,
+      since_entry_id: next_since_entry_id || void 0
     };
 
     dispatch(feedEntriesRequest());
@@ -881,32 +892,9 @@ var _FeedEntriesActions = require('../actions/FeedEntriesActions');
 
 var _ViewStyleConstants = require('../constants/ViewStyleConstants');
 
-var _EntryConstants = require('../constants/EntryConstants');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var FEED_VIEW_STYLE_LS_KEY = exports.FEED_VIEW_STYLE_LS_KEY = 'feedViewStyle';
-
-// keep only uniques and hoist pinned entries, fix hoisting
-function prepareItems(items) {
-  var ids = [];
-
-  return items && items.reduce(function (acc, item) {
-    if (!item || ids.indexOf(item.entry.id) > -1) {
-      return acc;
-    } else {
-      return ids.push(item.entry.id), acc.push(item), acc;
-    }
-  }, []);
-  /*
-      .sort((a, b) => {
-        const aPinned = a.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-        const bPinned = b.entry.fixed_state === ENTRY_PINNED_STATE ? 0 : 1;
-  
-        return aPinned - bPinned;
-      });
-  */
-}
 
 var initialState = {
   data: {
@@ -918,6 +906,7 @@ var initialState = {
   isFetching: false,
   apiType: '',
   rating: '',
+  query: '',
   sinceId: null,
   error: null,
   viewStyle: _ViewStyleConstants.VIEW_STYLE_BRICKS
@@ -930,7 +919,7 @@ var actionMap = (_actionMap = {}, (0, _defineProperty3.default)(_actionMap, _Fee
   });
 }), (0, _defineProperty3.default)(_actionMap, _FeedEntriesActions.FEED_ENTRIES_RECEIVE, function (state, data) {
   return (0, _extends3.default)({}, state, data, {
-    data: (0, _extends3.default)({}, data.data, { items: prepareItems(data.data && data.data.items) }),
+    data: (0, _extends3.default)({}, data.data, { items: data.data && data.data.items || [] }),
     error: null,
     isFetching: false
   });
@@ -951,7 +940,7 @@ var actionMap = (_actionMap = {}, (0, _defineProperty3.default)(_actionMap, _Fee
 
 exports.default = (0, _createReducer2.default)(initialState, actionMap);
 
-},{"../actions/FeedEntriesActions":1,"../constants/EntryConstants":5,"../constants/ViewStyleConstants":7,"./createReducer":8,"babel-runtime/helpers/defineProperty":293,"babel-runtime/helpers/extends":294}],10:[function(require,module,exports){
+},{"../actions/FeedEntriesActions":1,"../constants/ViewStyleConstants":7,"./createReducer":8,"babel-runtime/helpers/defineProperty":293,"babel-runtime/helpers/extends":294}],10:[function(require,module,exports){
 'use strict';
 
 var _actionMap;
@@ -14086,6 +14075,7 @@ function prop2redux(_ref) {
   var slug = tlog && tlog.slug;
   var feedData = feedEntries && (0, _FeedEntriesActions.feedDataByUri)({ pathname: (0, _urijs2.default)().path(), query: (0, _urijs2.default)().query(true) }) || {};
   var flowsData = flows && (0, _urijs2.default)().path() === '/flows' && (0, _FlowsActions.flowsData)({ query: (0, _urijs2.default)().query(true) });
+  var query = (0, _urijs2.default)().query(true).q;
 
   return {
     tlog: {
@@ -14102,6 +14092,7 @@ function prop2redux(_ref) {
       data: (0, _extends3.default)({ items: [] }, tlogEntries),
       date: date(),
       isFetching: false,
+      query: tlogEntries && query,
       slug: tlogEntries && slug,
       section: section(),
       type: 'tlogs',
@@ -14136,6 +14127,7 @@ function prop2redux(_ref) {
       data: (0, _extends3.default)({}, feedEntries, { items: feedEntries && feedEntries.items && (0, _FeedEntriesActions.filterFeedItems)(feedEntries.items) || [] }),
       isFetching: false,
       apiType: feedData.apiType,
+      query: feedEntries && query,
       rating: feedData.rating,
       sinceId: feedData.sinceId,
       error: feedEntries && feedEntries.error ? { error: feedEntries.error } : void 0,
@@ -14150,6 +14142,7 @@ function prop2redux(_ref) {
     people: {
       data: people || [],
       isFetching: false,
+      query: people && query,
       sort: people && (peopleSort() || 'posts'),
       error: null
     },

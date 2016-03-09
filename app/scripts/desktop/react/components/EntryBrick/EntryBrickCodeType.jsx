@@ -8,47 +8,31 @@ import uri from 'urijs';
 
 function EntryBrickCodeType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
   function renderBrickTitle() {
-    return window.SPA
-      ? <Link
-          className="brick__link"
-          title={entry.title}
-          to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
-        >
-          <h2 className="brick__title">
-            {entry.title}
-          </h2>
-        </Link>
-      : <a
-          className="brick__link"
-          href={entry.url}
-          title={entry.title}
-        >
-          <h2 className="brick__title">
-            {entry.title}
-          </h2>
-        </a>;
+    return (
+      <Link
+        className="brick__link"
+        title={entry.title}
+        to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+      >
+        <h2 className="brick__title">
+          {entry.title}
+        </h2>
+      </Link>
+    );
   }
 
   function renderContents() {
-    return window.SPA
-      ? <Link
-          className="brick__link"
-          title={entry.title}
-          to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
-        >
-          <pre>
-            <Text value={entry.text_truncated} withHTML />
-          </pre>
-        </Link>
-      : <a
-          className="brick__link"
-          href={entry.url}
-          title={entry.title}
-        >
-          <pre>
-            <Text value={entry.text_truncated} withHTML />
-          </pre>
-        </a>;
+    return (
+      <Link
+        className="brick__link"
+        title={entry.title}
+        to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+      >
+        <pre>
+          <Text value={entry.text_truncated} withHTML />
+        </pre>
+      </Link>
+    );
   }
 
   return (

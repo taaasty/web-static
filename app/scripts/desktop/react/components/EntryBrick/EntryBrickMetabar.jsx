@@ -23,29 +23,19 @@ function EntryBrickMetabar({ entry, host_tlog_id, isFeed }) {
     const { comments_count: commentsCount, url } = entry;
     const title = i18n.t('comments_count', {count: commentsCount});
 
-    return window.SPA
-      ? <span className="meta-item meta-item--comments">
-          <span className="meta-item__content">
-            <Link
-              className="meta-item__link"
-              title={title}
-              to={{ pathname: uri(url).path(), hash: '#comments', state: { isFeed, id: entry.id } }}
-            >
-              {title}
-            </Link>
-          </span>
+    return (
+      <span className="meta-item meta-item--comments">
+        <span className="meta-item__content">
+          <Link
+            className="meta-item__link"
+            title={title}
+            to={{ pathname: uri(url).path(), hash: '#comments', state: { isFeed, id: entry.id } }}
+          >
+            {title}
+          </Link>
         </span>
-      : <span className="meta-item meta-item--comments">
-          <span className="meta-item__content">
-            <a
-              className="meta-item__link"
-              href={url + '#comments'}
-              title={title}
-            >
-              {title}
-            </a>
-          </span>
-        </span>;
+      </span>
+    );
   }
 
   return (
