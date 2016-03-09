@@ -18,17 +18,13 @@ function EntryTlogCommentMetabarDate({ date, entryId, isFeed, url }) {
     formatDate = createdAt.format(now.year() !== createdAt.year() ? 'D MMMM YYYY' : 'D MMMM');
   }
 
-  return window.SPA
-    ? <Link className="comment__date-link" to={{ pathname: uri(url).path(), state: { isFeed, id: entryId } }}>
-        <span className="comment__date">
-          {formatDate}
-        </span>
-      </Link>
-    : <a className="comment__date-link" href={url}>
-        <span className="comment__date">
-          {formatDate}
-        </span>
-      </a>;
+  return (
+    <Link className="comment__date-link" to={{ pathname: uri(url).path(), state: { isFeed, id: entryId } }}>
+      <span className="comment__date">
+        {formatDate}
+      </span>
+    </Link>
+  );
 }
 
 EntryTlogCommentMetabarDate.propTypes = {

@@ -42,19 +42,19 @@ function fetchPeople(url, data) {
     }));
 }
 
-function shouldFetchPeople(state, { sort }) {
-  const { isFetching, sort: cSort } = state.people;
+function shouldFetchPeople(state, { sort, query }) {
+  const { isFetching, sort: cSort, query: cQuery } = state.people;
 
-  return !isFetching && sort !== cSort;
+  return !isFetching && (sort !== cSort || query !== cQuery);
 }
 
-function getPeople({ sort }) {
+function getPeople({ sort, query }) {
   return (dispatch) => {
     dispatch(peopleRequest());
     dispatch(peopleReset());
-    return fetchPeople(ApiRoutes.users(), { sort })
-      .done((data) => dispatch(peopleReceive({ data, sort })))
-      .fail((error) => dispatch(peopleError({ error: error.responseJSON, sort })));
+    return fetchPeople(ApiRoutes.users(), { sort, q: query })
+      .done((data) => dispatch(peopleReceive({ data, sort, query })))
+      .fail((error) => dispatch(peopleError({ error: error.responseJSON, sort, query })));
   };
 }
 

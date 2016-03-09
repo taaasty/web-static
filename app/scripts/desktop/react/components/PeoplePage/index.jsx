@@ -10,31 +10,33 @@ import { SEARCH_KEY_PEOPLE } from '../../constants/SearchConstants';
 
 export const sorts = [ 'posts', 'followers', 'interested', 'worst', 'comments', 'new', 'bad' ];
 
-function getParams({ sort }) {
+function getParams({ query }, { sort }) {
   return {
+    query: (query && query.q) || void 0,
     sort: sorts.indexOf(sort) > -1 ? sort : 'posts',
   }
 }
 
 class PeoplePage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, getPeopleIfNeeded, routeParams } = this.props;
+    const { appStateSetSearchKey, getPeopleIfNeeded, location, routeParams } = this.props;
 
-    getPeopleIfNeeded(getParams(routeParams));
+    getPeopleIfNeeded(getParams(location, routeParams));
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   componentDidMount() {
     document.body.className = 'layout--feed';
   }
   componentWillReceiveProps(nextProps) {
+    const { location, routeParams } = nextProps;
     const {appStateSetSearchKey, getPeopleIfNeeded } = this.props;
 
-    getPeopleIfNeeded(getParams(nextProps.routeParams));
+    getPeopleIfNeeded(getParams(location, routeParams));
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   render() {
-    const { currentUser, people: { data: items, isFetching }, routeParams } = this.props;
-    const { sort } = getParams(routeParams);
+    const { currentUser, location, people: { data: items, isFetching }, routeParams } = this.props;
+    const { sort } = getParams(location, routeParams);
 
     return (
       <div className="page__inner">
@@ -68,6 +70,7 @@ PeoplePage.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   getPeopleIfNeeded: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
   people: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
 };

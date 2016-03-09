@@ -17,23 +17,16 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
   }
 
   function renderContents() {
-    return window.SPA
-      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id} }}>
-          <blockquote className="blockquote">
-            <span className="laquo">«</span>
-            {entry.text_truncated}
-            <span className="raquo">»</span>
-            {entry.source_truncated && renderQuoteSource()}
-          </blockquote>
-        </Link>
-      : <a className="brick__link" href={entry.url}>
-          <blockquote className="blockquote">
-            <span className="laquo">«</span>
-            {entry.text_truncated}
-            <span className="raquo">»</span>
-            {entry.source_truncated && renderQuoteSource()}
-          </blockquote>
-        </a>;
+    return (
+      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id} }}>
+        <blockquote className="blockquote">
+          <span className="laquo">«</span>
+          {entry.text_truncated}
+          <span className="raquo">»</span>
+          {entry.source_truncated && renderQuoteSource()}
+        </blockquote>
+      </Link>
+    );
   }
 
   return (

@@ -63,7 +63,12 @@ function getTlogEntries({ slug, section, date, query, sinceId }) {
 
     dispatch(tlogEntriesRequest());
     dispatch(tlogEntriesReset());
-    return fetchTlogEntries(url, { date, limit: date ? void 0 : INITIAL_LOAD_LIMIT, since_entry_id: sinceId, q: query })
+    return fetchTlogEntries(url, {
+      date,
+      limit: date ? void 0 : INITIAL_LOAD_LIMIT,
+      since_entry_id: sinceId || void 0,
+      q: query || void 0,
+    })
       .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, query, sinceId })))
       .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON, date, section, slug, query, sinceId })));
   };
@@ -86,7 +91,10 @@ export function appendTlogEntries() {
     }
 
     const url = ApiRoutes.tlogEntries(slug, section, 'tlogs');
-    const params = { since_entry_id: next_since_entry_id, q: query };
+    const params = {
+      since_entry_id: next_since_entry_id || void 0,
+      q: query || void 0,
+    };
 
     dispatch(tlogEntriesRequest());
     return fetchTlogEntries(url, params)
