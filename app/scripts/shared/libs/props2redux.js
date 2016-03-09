@@ -42,6 +42,7 @@ export default function prop2redux({
   const slug = tlog && tlog.slug;
   const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
   const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
+  const query = uri().query(true).q;
 
   return {
     tlog: {
@@ -59,6 +60,7 @@ export default function prop2redux({
       data: { items: [], ...tlogEntries },
       date: date(),
       isFetching: false,
+      query: tlogEntries && query,
       slug: tlogEntries && slug,
       section: section(),
       type: 'tlogs',
@@ -93,6 +95,7 @@ export default function prop2redux({
       data: { ...feedEntries, items: (feedEntries && feedEntries.items && filterFeedItems(feedEntries.items)) || [] },
       isFetching: false,
       apiType: feedData.apiType,
+      query: feedEntries && query,
       rating: feedData.rating,
       sinceId: feedData.sinceId,
       error: feedEntries && feedEntries.error ? { error: feedEntries.error } : void 0,
@@ -107,6 +110,7 @@ export default function prop2redux({
     people: {
       data: people || [],
       isFetching: false,
+      query: people && query,
       sort: people && (peopleSort() || 'posts'),
       error: null,
     },
