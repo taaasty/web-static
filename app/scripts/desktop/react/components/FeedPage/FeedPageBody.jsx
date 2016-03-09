@@ -44,7 +44,7 @@ class FeedPageBody extends Component {
       </div>
     );
   }
-  renderEmpty() {
+  renderMsg(msg) {
     return (
       <div>
         {this.props.children}
@@ -54,7 +54,7 @@ class FeedPageBody extends Component {
             <div className="posts">
               <article className="post post--text">
                 <div className="post__content">
-                  {i18n.t('feed.empty')}
+                  {msg}
                 </div>
               </article>
             </div>
@@ -64,13 +64,13 @@ class FeedPageBody extends Component {
     );
   }
   render() {
-    const { data: { items }, isFetching, viewStyle } = this.props.feedEntries;
+    const { data: { items }, query, isFetching, viewStyle } = this.props.feedEntries;
 
     return (
       <div className="page-body">
         <div className="layout-outer">
           {!isFetching && items.length === 0
-             ? this.renderEmpty()
+             ? this.renderMsg(query ? i18n.t('feed.query_empty', { query }) : i18n.t('feed.empty'))
              : viewStyle === VIEW_STYLE_BRICKS
                ? this.renderBricks()
                : this.renderTlogs()
