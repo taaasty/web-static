@@ -10,6 +10,7 @@ import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
 import FeedFilters from '../FeedFilters';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import Routes from '../../../../shared/routes/routes';
+import { sendCategory } from '../../services/Sociomantic';
 
 import {
   FEED_TYPE_ANONYMOUS,
@@ -28,6 +29,9 @@ const LoadButtons = {
 };
 
 class FeedPageBody extends Component {
+  componentWillMount() {
+    sendCategory(this.props.feedType);
+  }
   renderFilters() {
     const { entries_info: { limit }, feedType, locale,
             navFilters, navViewMode, viewMode } = this.props;

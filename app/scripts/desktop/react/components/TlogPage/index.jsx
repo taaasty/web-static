@@ -6,25 +6,34 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../../../../shared/constants/Tlog';
+import { sendCategory } from '../../services/Sociomantic';
 
 class TlogPageContainer extends Component {
   componentWillMount() {
     const { TlogEntriesActions, params: { slug }, sinceId } = this.props;
+    const section = this.section(this.props);
 
     TlogEntriesActions.getTlogEntriesIfNeeded({
       slug,
-      section: this.section(this.props),
+      section,
       date: this.date(this.props.params),
       sinceId: sinceId,
     });
+    sendCategory(section);
   }
   componentWillReceiveProps(nextProps) {
+    const section = this.section(this.props);
+    const nextSection = this.section(nextProps);
+
     this.props.TlogEntriesActions.getTlogEntriesIfNeeded({
       slug: nextProps.params.slug,
       section: this.section(nextProps),
       date: this.date(nextProps.params),
       sinceId: nextProps.sinceId,
     });
+    if (section !== nextSection) {
+      sendCategory(nextSection);
+    }
   }
   section(props) {
     const { path } = props.route;
