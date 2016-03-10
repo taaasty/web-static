@@ -11,6 +11,7 @@ import {
   SEARCH_KEY_FAVORITES,
   SEARCH_KEY_PRIVATES,
 } from '../../constants/SearchConstants';
+import { sendCategory } from '../../services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
 import FlowPageBody from './FlowPageBody';
@@ -24,27 +25,34 @@ class TlogPageContainer extends Component {
   componentWillMount() {
     const { appStateSetSearchKey, getTlogEntriesIfNeeded,
             params: { slug }, location } = this.props;
+    const section = this.section(this.props);
 
     getTlogEntriesIfNeeded({
       slug,
-      section: this.section(this.props),
+      section,
       date: this.date(this.props.params),
       query: this.query(location),
       sinceId: this.sinceId(location),
     });
     appStateSetSearchKey(this.searchKey(this.props));
+    sendCategory(section);
   }
   componentWillReceiveProps(nextProps) {
     const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
+    const section = this.section(this.props);
+    const nextSection = this.section(nextProps);
 
     getTlogEntriesIfNeeded({
       slug: nextProps.params.slug,
-      section: this.section(nextProps),
+      section: nextSection,
       date: this.date(nextProps.params),
       query: this.query(nextProps.location),
       sinceId: this.sinceId(nextProps.location),
     });
     appStateSetSearchKey(this.searchKey(nextProps));
+    if (section !== nextSection) {
+      sendCategory(nextSection);
+    }
   }
   query({ query }) {
     return query && query.q;
