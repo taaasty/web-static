@@ -51,7 +51,7 @@ class Auth extends Component {
       'inviter--fixed': fixed,
     });
     const boxStyle = {
-      backgroundImage: 'url("http://thumbor0.tasty0.ru/unsafe/712x416/smart/images/inviter_bg.jpg")',
+      backgroundImage: 'url("//thumbor0.tasty0.ru/unsafe/712x416/smart/images/inviter_bg.jpg")',
     };
 
     return (

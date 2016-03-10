@@ -5,6 +5,7 @@ import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
 window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
+import { sendUser, sendRegister } from './services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
 import PopupActions from './actions/popup';
 import DesignActionCreators from './actions/design';
@@ -143,7 +144,10 @@ const ReactApp = {
       });
 
       DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
-
+      sendUser(user);
+      if (window.gon.register_provider) {
+        sendRegister(user.id);
+      }
     }
 
     FeedsUpdateService(user);

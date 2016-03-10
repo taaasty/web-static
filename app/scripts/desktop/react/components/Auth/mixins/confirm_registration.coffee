@@ -1,4 +1,5 @@
 Auth = require '../../Auth';
+{ sendRegister } = require '../../../services/Sociomantic';
 
 USER_EXISTS_MESSAGE = 'user_creator/user_exists'
 
@@ -21,6 +22,7 @@ ConfirmRegistrationMixin =
       success: (data) =>
         NoticeService.notifySuccess i18n.t 'signup_success', userSlug: data.name
         ReactApp.shellbox.close()
+        sendRegister(data.id)
         if window.ga
           window.ga('send', 'event', 'Account', 'Registered', 'Email',
                     { hitCallback: (() -> window.location.href = data.tlog_url) })
