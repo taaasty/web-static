@@ -39,6 +39,7 @@ import {
   SEARCH_KEY_FRIENDS,
   SEARCH_KEY_LIVE,
 } from '../../constants/SearchConstants';
+import { sendCategory } from '../../services/Sociomantic';
 
 const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
@@ -78,7 +79,8 @@ class FeedPage extends Component {
   componentWillMount() {
     const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded,
             location, prependFeedEntries } = this.props;
-    const type = typeMap[this.feedType(location)];
+    const feedType = this.feedType(location);
+    const type = typeMap[feedType];
 
     this.setViewStyle(this.props);
     const willGet = getFeedEntriesIfNeeded(location);
@@ -89,6 +91,7 @@ class FeedPage extends Component {
       }
       this.props[type.reset].call(void 0);
       appStateSetSearchKey(type.searchKey);
+      sendCategory(feedType);
     }
   }
   componentDidMount() {
@@ -99,15 +102,17 @@ class FeedPage extends Component {
 
     this.setViewStyle(nextProps);
     const willGet = getFeedEntriesIfNeeded(nextProps.location);
-    const type = typeMap[this.feedType(nextProps.location)]; 
+    const nextFeedType = this.feedType(nextProps.location);
+    const type = typeMap[nextFeedType]; 
 
-    if (this.feedType(this.props.location) !== this.feedType(nextProps.location)) {
+    if (this.feedType(this.props.location) !== nextFeedType) {
       if (type) {
         if (!willGet && nextProps.feedStatus[type.counter] > 0) {
           prependFeedEntries(nextProps.feedStatus[type.counter]);
         }
         this.props[type.reset].call(void 0);
         appStateSetSearchKey(type.searchKey);
+        sendCategory(nextFeedType);
       }
     } else if (willGet && type) {
       this.props[type.reset].call(void 0);
