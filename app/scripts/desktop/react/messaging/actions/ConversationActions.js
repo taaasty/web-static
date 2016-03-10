@@ -41,7 +41,14 @@ const ConversationActions = {
   },
 
   leaveConversation(id) {
-    return messagingService.leaveConversation(id);
+    return messagingService.leaveConversation(id)
+      .done((data) => {
+        MessagingDispatcher.handleServerAction({
+          type: 'deleteConversation',
+          id: id,
+        });
+        return data;
+      });
   },
 
   disturb() {
