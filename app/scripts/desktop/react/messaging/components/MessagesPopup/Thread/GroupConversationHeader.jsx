@@ -1,16 +1,25 @@
 import React, { PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
+import Avatar from '../../../../../../shared/react/components/common/Avatar';
+import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
 function GroupConversationHeader({ conversation, onClick }) {
   const { avatar, topic, users, users_left } = conversation;
   const activeUsers = users.filter((u) => users_left.indexOf(u.id) < 0)
+  const userpic = {
+    default_colors: {
+      background: '#2ac67e',
+      name: '#fff',
+    },
+    symbol: topic[0],
+  };
 
   return (
     <div className="messages__dialog messages__dialog--discussion" onClick={onClick}>
       <div className="messages__user-avatar">
         {avatar && avatar.url
          ? <ItemEntryPreviewImage image={avatar} />
-         : <i className="icon icon--instagram-circle --group-default" />
+         : <Avatar size={CONVERSATION_PIC_SIZE} userpic={userpic} />
         }
       </div>
       <div className="messages__dialog-text --group-header">

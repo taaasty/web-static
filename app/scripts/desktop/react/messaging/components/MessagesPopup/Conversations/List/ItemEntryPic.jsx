@@ -1,18 +1,23 @@
 import React, { PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import Avatar from '../../../../../../../shared/react/components/common/Avatar';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
-function ItemEntryPic({ entry }) {
+function ItemEntryPic({ entry, title }) {
   const { author, preview_image } = entry;
+  const userpic = {
+    default_colors: author.userpic.default_colors,
+    symbol: title[0],
+  };
 
   return preview_image
     ? <ItemEntryPreviewImage image={preview_image} />
-    : <UserAvatar size={CONVERSATION_PIC_SIZE} user={author} />;
+    : <Avatar size={CONVERSATION_PIC_SIZE} userpic={userpic} />;
 }
 
 ItemEntryPic.propTypes = {
   entry: PropTypes.object.isRequired,
+  title: PropTypes.object.isRequired,
 };
 
 export default ItemEntryPic;
