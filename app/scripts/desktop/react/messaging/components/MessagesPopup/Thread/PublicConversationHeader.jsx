@@ -5,17 +5,18 @@ import ConversationsListItemEntryPic from '../Conversations/List/ItemEntryPic';
 function PublicConversationHeader(props) {
   const { conversation, onClick, url } = props;
   const { title, text } = conversation.entry;
+  const header = title || text || i18n.t('messages_public_conversation_title');
 
   return (
     <a href={url} onClick={onClick}>
       <div className="messages__dialog messages__dialog--discussion">
         <span className="messages__user-avatar">
-          <ConversationsListItemEntryPic entry={conversation.entry} />
+          <ConversationsListItemEntryPic entry={conversation.entry} title={header} />
         </span>
         <div className="messages__dialog-text --public-header">
           <div className="messages__entry-data-container">
             <div className="messages__user-name">
-              {title || text || i18n.t('messages_public_conversation_title')}
+              {header}
             </div>
             {(title && text) &&
             <div
