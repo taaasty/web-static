@@ -1,12 +1,20 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import DropdownActions from '../../../../components/common/DropdownActions';
 import DropdownAction from '../../../../components/common/DropdownAction';
 import ConversationActions from '../../../actions/ConversationActions';
 import GroupSettingsActions from '../../../actions/GroupSettingsActions';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 function UserActions({ adminId, isAdmin, user }) {
   function handleClickConversation() {
     ConversationActions.openConversation(user.id);
+  }
+
+  function redirectToTlog(ev) {
+    ev.preventDefault();
+    browserHistory.push({ pathname: uri(user.tlog_url).path() });
   }
 
   function handleClickRemoveUser() {
@@ -19,6 +27,7 @@ function UserActions({ adminId, isAdmin, user }) {
         <DropdownAction
           icon=""
           key="tlog"
+          onClick={redirectToTlog}
           title={i18n.t('messenger.group.to_tlog')}
           url={user.tlog_url}
         />

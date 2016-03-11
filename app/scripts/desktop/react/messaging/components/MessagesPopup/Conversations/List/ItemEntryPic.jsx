@@ -17,7 +17,7 @@ function ItemEntryPic({ entry, title }) {
 
 ItemEntryPic.propTypes = {
   entry: PropTypes.object.isRequired,
-  title: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default ItemEntryPic;
