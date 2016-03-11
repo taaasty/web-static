@@ -4,7 +4,7 @@ import List from './List';
 import FooterButton from '../FooterButton';
 import MessagingDispatcher from '../../../MessagingDispatcher';
 
-function Conversations(props) {
+function Conversations() {
   function handleCreateNewConversation() {
     MessagingDispatcher.handleViewAction({
       type: 'clickNewConversation',
