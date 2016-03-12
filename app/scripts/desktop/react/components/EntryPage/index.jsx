@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import uri from 'urijs';
 import { Link } from 'react-router';
+import { SM_TLOG_ENTRY, sendCategory } from '../../services/Sociomantic';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
@@ -10,6 +11,7 @@ class EntryPageContainer extends Component {
   componentWillMount() {
     const { state } = this.props.location;
     state && this.fetchData(state.id);
+    sendCategory(SM_TLOG_ENTRY);
   }
   componentWillReceiveProps(nextProps) {
     const { params, location: { state } } = nextProps;

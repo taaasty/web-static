@@ -1,5 +1,7 @@
 import { sha256 } from 'js-sha256';
 
+export const SM_TLOG_ENTRY = 'Пост';
+
 const advToken = 'taaasty-ru';
 
 const x = document.getElementsByTagName('script')[0];
