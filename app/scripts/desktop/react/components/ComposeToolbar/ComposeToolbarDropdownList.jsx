@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import PopupActionCreators from '../../actions/popup';
 import Tooltip from '../common/Tooltip';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
   function createFlow(ev) {
@@ -17,23 +19,32 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
     <div className="toolbar__drops">
       <Tooltip placement="left" title={i18n.t('toolbar_new_text_entry', { context })}>
         <div className="toolbar__drop">
-          <a className="button button--circle button--emerald" href={Routes.new_entry_url(contextSlug, 'text')}>
+          <Link
+            className="button button--circle button--emerald"
+            to={{ pathname: uri(Routes.new_entry_url(contextSlug)).path(), hash: '#text' }}
+          >
             <i className="icon icon--text-circle" />
-          </a>
+          </Link>
         </div>
       </Tooltip>
       <Tooltip placement="left" title={i18n.t('toolbar_new_image_entry', { context })}>
         <div className="toolbar__drop">
-          <a className="button button--circle button--emerald" href={Routes.new_entry_url(contextSlug, 'image')}>
+          <Link
+            className="button button--circle button--emerald"
+            to={{ pathname: uri(Routes.new_entry_url(contextSlug)).path(), hash: '#image' }}
+          >
             <i className="icon icon--image-circle" />
-          </a>
+          </Link>
         </div>
       </Tooltip>
       <Tooltip placement="left" title={i18n.t('toolbar_new_anonymous_entry')}>
         <div className="toolbar__drop">
-          <a className="button button--circle button--emerald" href={Routes.new_anonymous_entry_url(userSlug)}>
+          <Link
+            className="button button--circle button--emerald"
+            to={uri(Routes.new_anonymous_entry_url(userSlug)).path()}
+          >
             <i className="icon icon--question-mark" />
-          </a>
+          </Link>
         </div>
       </Tooltip>
       <Tooltip placement="left" title={i18n.t('toolbar_new_flow')}>
