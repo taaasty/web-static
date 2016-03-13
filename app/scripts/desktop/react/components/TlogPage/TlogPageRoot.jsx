@@ -36,8 +36,10 @@ class TlogPageRoot extends Component {
   isFlow(props) {
     return props.tlog.author && props.tlog.author.is_flow;
   }
-  slug({ params }) {
-    return params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+  slug({ params, location }) {
+    return (/anonymous\/new/).test(location.pathname)
+      ? TLOG_SLUG_ANONYMOUS
+      : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
   }
   shareImg(user) {
     return (user && user.userpic && user.userpic.original_url)

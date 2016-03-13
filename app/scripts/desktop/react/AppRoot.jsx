@@ -14,6 +14,7 @@ import EntryPage from './components/EntryPage';
 import FeedPage from './components/FeedPage';
 import FlowsPage from './components/FlowsPage';
 import PeoplePage from './components/PeoplePage';
+import EditorPage from './components/EditorPage';
 
 import PopupActions from './actions/popup';
 
@@ -38,6 +39,8 @@ class AppRoot extends Component {
             <Redirect from="~anonymous" to="live/anonymous" />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />
+              <Route path="new" component={EditorPage} />
+              <Route path="anonymous/new" component={EditorPage} />
               <Route
                   path="design_settings"
                   component={TlogPage}
