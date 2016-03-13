@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
 import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 class ComposeToolbar extends Component {
   state = {
@@ -38,11 +40,11 @@ class ComposeToolbar extends Component {
         onMouseEnter={this.onMouseEnter.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
-        <a href={Routes.new_entry_url(this.props.user.slug)}>
+        <Link to={uri(Routes.new_entry_url(this.props.user.slug)).path()}>
           <div className="toolbar__toggle" ref="button">
             <i className="icon icon--plus" />
           </div>
-        </a>
+        </Link>
         <ComposeToolbarDropdownList
           isFlow={tlog.is_flow}
           tlogSlug={tlog.slug}
