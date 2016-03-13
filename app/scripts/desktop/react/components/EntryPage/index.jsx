@@ -4,6 +4,7 @@ import uri from 'urijs';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getTlogEntry, resetTlogEntry, setTlogEntry } from '../../actions/TlogEntryActions';
+import { SM_TLOG_ENTRY, sendCategory } from '../../services/Sociomantic';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
@@ -37,6 +38,7 @@ class EntryPageContainer extends Component {
       } else {
         getTlogEntry(newId);
       }
+      sendCategory(SM_TLOG_ENTRY);
     }
   }
   renderFlowEntry() {
