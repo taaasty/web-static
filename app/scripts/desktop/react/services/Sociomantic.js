@@ -63,6 +63,6 @@ export function sendRegister(id) {
   }
 
   window.sociomantic.sonar.adv[advToken].clear();
-  window.lead = { transaction: id };
+  window.lead = id;
   window.sociomantic.sonar.adv[advToken].track();
 }
