@@ -9,7 +9,7 @@ EditorVoteButton = React.createClass
     onClick: PropTypes.func.isRequired
 
   componentDidMount: ->
-    $button = $( @getDOMNode() )
+    $button = $(this.refs.container)
     $button.tooltip placement: 'bottom'
 
   componentDidUpdate: (prevProps) ->
@@ -30,7 +30,9 @@ EditorVoteButton = React.createClass
 
     return <button data-original-title={ @getTitle() }
                    className="button button--outline-grey post-settings-button"
-                   onClick={ @handleClick }>
+                   onClick={ @handleClick }
+                   ref="container"
+                   >
              <span className={ iconClasses } />
            </button>
 

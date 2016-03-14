@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   TLOG_ENTRY_TYPE_TEXT,
   TLOG_ENTRY_TYPE_ANONYMOUS,
@@ -6,7 +6,7 @@ import {
   TLOG_ENTRY_TYPE_INSTAGRAM,
   TLOG_ENTRY_TYPE_MUSIC,
   TLOG_ENTRY_TYPE_VIDEO,
-  TLOG_ENTRY_TYPE_QUOTE
+  TLOG_ENTRY_TYPE_QUOTE,
 } from '../../../../shared/constants/TlogEntry';
 
 import EditorTypeText from './types/Text';
@@ -16,7 +16,7 @@ import EditorTypeMusic from './types/Music';
 import EditorTypeVideo from './types/Video';
 import EditorTypeQuote from './types/Quote';
 
-class EditorArea {
+class EditorArea extends Component {
   renderEditor() {
     const { entry, entryType, loading } = this.props;
     const props = { entry, entryType, loading };

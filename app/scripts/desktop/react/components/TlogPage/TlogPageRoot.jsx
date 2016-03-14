@@ -47,7 +47,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { children, params, tlog } = this.props;
+    const { children, editing, params, tlog } = this.props;
     const { author, design: { backgroundImageUrl }, slug, tlog_url } = tlog;
     const isFlow = this.isFlow(this.props);
     
@@ -62,8 +62,8 @@ class TlogPageRoot extends Component {
            </header>
            {children}
         </div>
-        <Calendar isEntry={!!params.entryPath} />
-        {!isFlow &&
+        {!editing && <Calendar isEntry={!!params.entryPath} />}
+        {(!isFlow && !editing) &&
          <SocialShare
            img={this.shareImg(author)}
            title={slug}
@@ -79,6 +79,7 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  editing: PropTypes.bool.isRequired,
   getTlog: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
@@ -87,6 +88,7 @@ TlogPageRoot.propTypes = {
 
 export default connect(
   (state) => ({
+    editing: state.appState.data.editing,
     tlog: state.tlog.data,
   }),
   { getTlog }

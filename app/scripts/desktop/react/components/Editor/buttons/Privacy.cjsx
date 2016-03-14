@@ -10,7 +10,7 @@ EditorPrivacyButton = React.createClass
     onClick: PropTypes.func.isRequired
 
   componentDidMount: ->
-    this.$button = $( @getDOMNode() )
+    this.$button = $(this.refs.container)
     this.setTooltip()
 
   componentDidUpdate: ->
@@ -29,9 +29,12 @@ EditorPrivacyButton = React.createClass
       'icon--lock': @props.private
     })
 
-    return <button title={ @getTitle() }
-                   className="button button--outline-grey post-settings-button"
-                   onClick={ @handleClick }>
+    return <button
+             title={ @getTitle() }
+             className="button button--outline-grey post-settings-button"
+             onClick={ @handleClick }
+             ref="container"
+           >
              <span className={ iconClasses } />
            </button>
 
