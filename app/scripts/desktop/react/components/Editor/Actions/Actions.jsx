@@ -7,13 +7,11 @@ import EditorPreviewButton from '../buttons/Preview';
 import EditorSaveButton from '../buttons/Save';
 
 import { ENTRY_PINNED_STATE, ENTRY_AWAITING_PAYMENT_STATE } from '../../../constants/EntryConstants';
+import { TLOG_TYPE_PRIVATE, TLOG_TYPE_ANONYMOUS } from '../../EditorPage';
 
 const ENTRY_PRIVACY_PRIVATE = 'private';
 const ENTRY_PRIVACY_PUBLIC = 'public';
 const ENTRY_PRIVACY_LIVE = 'live';
-const TLOG_TYPE_PRIVATE = 'private';
-//const TLOG_TYPE_PUBLIC = 'public';
-const TLOG_TYPE_ANONYMOUS = 'anonymous';
 
 class EditorActions extends Component {
   state = {
