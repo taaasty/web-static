@@ -35,10 +35,10 @@ class AppRoot extends Component {
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
           <Route path="/" component={AppPage}>
-
             <Redirect from="~anonymous" to="live/anonymous" />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />
+              <Route path="edit/:editId" component={EditorPage} />
               <Route path="new" component={EditorPage} />
               <Route path="anonymous/new" component={EditorPage} />
               <Route

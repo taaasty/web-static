@@ -17,14 +17,25 @@ class EditorActions extends Component {
   state = {
     preview: false,
   };
+  componentWillMount() {
+    this.setBodyClasses(false);
+  }
   componentWillUpdate(nextProps, nextState) {
     //TODO: Применятор для показа превью
     if (this.state.preview !== nextState.preview) {
-      if (nextState.preview) {
-        $('body').removeClass('tlog-mode-minimal').addClass('tlog-mode-full');
-      } else {
-        $('body').removeClass('tlog-mode-full').addClass('tlog-mode-minimal');
-      }
+      this.setBodyClasses(nextState.preview);
+    }
+  }
+  componentWillUnmount() {
+    document.body.classList.remove('tlog-mode-minimal', 'tlog-mode-full');
+  }
+  setBodyClasses(preview) {
+    if (preview) {
+      document.body.classList.remove('tlog-mode-minimal');
+      document.body.classList.add('tlog-mode-full');
+    } else {
+      document.body.classList.remove('tlog-mode-full');
+      document.body.classList.add('tlog-mode-minimal');
     }
   }
   handleVoteButtonClick() {

@@ -16,7 +16,7 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   render() {
-    const { children, currentUser, location, params, tlog } = this.props;
+    const { children, currentUser, editing, location, params, tlog } = this.props;
     const isLogged = !!currentUser.data.id;
 
     return (
@@ -31,9 +31,9 @@ class AppPage extends Component {
            {i18n.t('auth_button')}
          </button>
         }
-         {isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
-         <UserToolbar location={location} />
-         <BrowserSupport />
+        {!editing && isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
+        {!editing && <UserToolbar location={location} />}
+        <BrowserSupport />
       </div>
     );
   }
@@ -47,6 +47,7 @@ AppPage.propTypes = {
     PropTypes.array,
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
   getAppStatsIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
@@ -56,6 +57,7 @@ AppPage.propTypes = {
 export default connect(
   (state) => ({
     currentUser: state.currentUser,
+    editing: state.appState.data.editing,
     tlog: state.tlog,
   }),
   { getAppStatsIfNeeded }

@@ -6,39 +6,38 @@ import EditorStore from '../../stores/EditorStore';
 import CurrentUserStore from '../../stores/current_user';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Editor from './Editor';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 import * as orderConstants from '../../constants/OrderConstants';
 
-class _EditorContainer {
-  pinEntry(pinOrderUrl) {
+function _EditorContainer(props) {
+  function pinEntry(pinOrderUrl) {
     EditorActionCreators.pinEntry()
       .then((entry) => {
         //PopupActions.showPinEntryPopup({ entry });
         window.location.href = pinOrderUrl || Routes.newOrder(entry.id, orderConstants.PIN_ENTRY_ORDER);
       });
   }
-  saveEntry() {
+
+  function saveEntry() {
     EditorActionCreators.saveEntry()
       .then((entry) => {
-        window.location.href = entry.entry_url;
+        browserHistory.push({ pathname: uri(entry.entry_url).path() });
       });
   }
-  changePrivacy(privacy) {
+
+  function changePrivacy(privacy) {
     EditorActionCreators.changeEntryPrivacy(privacy);
   }
-  changeType(type) {
-    EditorActionCreators.changeEntryType(type);
-  }
-  render() {
-    return (
-      <Editor {...this.props}
-        onChangePrivacy={this.changePrivacy}
-        onChangeType={this.changeType}
-        onPinEntry={this.pinEntry}
-        onSaveEntry={this.saveEntry}
-      />
-    );
-  }
+
+  return (
+    <Editor {...props}
+      onChangePrivacy={changePrivacy}
+      onPinEntry={pinEntry}
+      onSaveEntry={saveEntry}
+    />
+  );
 }
 
 _EditorContainer.propTypes = {
@@ -56,7 +55,7 @@ _EditorContainer.propTypes = {
 const EditorContainer = connectToStores(
   _EditorContainer,
   [ EditorStore, CurrentUserStore ],
-  (props) => ({
+  () => ({
     entry: EditorStore.getEntry(),
     entryType: EditorStore.getEntryType(),
     entryPrivacy: EditorStore.getEntryPrivacy(),
