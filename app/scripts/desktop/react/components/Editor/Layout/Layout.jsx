@@ -1,26 +1,28 @@
-let EditorLayout = React.createClass({
-  propTypes: {
-    loading: React.PropTypes.bool.isRequired,
-    backUrl: React.PropTypes.string
-  },
+import React, { PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 
-  render() {
-    return (
-      <div>
-        {this.renderBackButton()}
-        {this.props.children}
-      </div>
-    );
-  },
-
-  renderBackButton() {
-    if (this.props.loading) { return; }
-    return <a className="back-button" onClick={this.handleClick} />
-  },
-
-  handleClick() {
-    this.props.backUrl ? location.href = this.props.backUrl : history.back()
+function EditorLayout({ backUrl, children, loading }) {
+  function handleClick() {
+    return backUrl
+      ? browserHistory.push({ pathname: backUrl })
+      : browserHistory.goBack();
   }
-})
+
+  return (
+    <div>
+      {!loading && <a className="back-button" onClick={handleClick} />}
+      {children}
+    </div>
+  );
+}
+
+EditorLayout.propTypes = {
+  backUrl: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  loading: PropTypes.bool.isRequired,
+};
 
 export default EditorLayout;

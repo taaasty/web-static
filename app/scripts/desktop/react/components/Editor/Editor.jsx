@@ -1,20 +1,19 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import EditorLayout from './Layout/Layout';
 import EditorActions from './Actions/Actions';
 import EditorTypeSwitcher from './TypeSwitcher/TypeSwitcher';
 import EditorArea from './EditorArea';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 
-class Editor {
+class Editor extends Component {
   renderTypeSwitcher() {
-    const { canChangeType, entryType, loading, onChangeType, tlogType } = this.props;
+    const { canChangeType, entryType, loading, tlogType } = this.props;
     if (tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) {
       return (
         <EditorTypeSwitcher
           canChangeType={canChangeType}
           entryType={entryType}
           loading={loading}
-          onChangeType={onChangeType}
         />
       );
     }
@@ -58,7 +57,6 @@ Editor.propTypes = {
   entryType: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   onChangePrivacy: PropTypes.func.isRequired,
-  onChangeType: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object,

@@ -1,45 +1,43 @@
-import classnames from 'classnames';
+/*global $ */
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
-let EditorTypeSwitcherItem = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    active: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func,
-  },
-
+class EditorTypeSwitcherItem extends Component {
   componentDidMount() {
     $(this.refs.button).tooltip();
-  },
-
+  }
   componentWillUnmount() {
     $(this.refs.button).tooltip('destroy');
-  },
-
+  }
   render() {
-    let itemClasses = classnames('button', 'button--circle', {
-      'state--disable': this.props.loading,
-      'state--active' : this.props.active,
+    const { active, icon, loading, title, type } = this.props;
+    const itemClasses = classNames('button', 'button--circle', {
+      'state--disable': loading,
+      'state--active': active,
     });
 
     return (
       <button
         className={itemClasses}
-        onClick={this.handleClick}
         ref="button"
-        title={this.props.title}
+        title={title}
       >
-        <i className={`icon ${this.props.icon}`} />
+        <Link to={{ pathname: '', hash: `#${type}` }}>
+          <i className={`icon ${icon}`} />
+        </Link>
       </button>
     );
-  },
-
-  handleClick() {
-    if (this.props.active) { return; }
-    if (this.props.onClick && typeof this.props.onClick === 'function') {
-      this.props.onClick();
-    }
   }
-});
+}
+
+EditorTypeSwitcherItem.propTypes = {
+  active: PropTypes.bool.isRequired,
+  icon: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default EditorTypeSwitcherItem;
