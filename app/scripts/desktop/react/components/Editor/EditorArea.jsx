@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  TLOG_ENTRY_TYPE_TEXT,
-  TLOG_ENTRY_TYPE_ANONYMOUS,
-  TLOG_ENTRY_TYPE_IMAGE,
-  TLOG_ENTRY_TYPE_INSTAGRAM,
-  TLOG_ENTRY_TYPE_MUSIC,
-  TLOG_ENTRY_TYPE_VIDEO,
-  TLOG_ENTRY_TYPE_QUOTE,
-} from '../../../../shared/constants/TlogEntry';
-
+  EDITOR_ENTRY_TYPE_TEXT,
+  EDITOR_ENTRY_TYPE_ANONYMOUS,
+  EDITOR_ENTRY_TYPE_IMAGE,
+  EDITOR_ENTRY_TYPE_INSTAGRAM,
+  EDITOR_ENTRY_TYPE_MUSIC,
+  EDITOR_ENTRY_TYPE_VIDEO,
+  EDITOR_ENTRY_TYPE_QUOTE,
+} from '../../constants/EditorConstants';
 import EditorTypeText from './types/Text';
 import EditorTypeImage from './types/Image';
 import EditorTypeInstagram from './types/Instagram';
@@ -23,23 +22,23 @@ class EditorArea extends Component {
     let Component;
 
     switch(entryType) {
-    case TLOG_ENTRY_TYPE_TEXT:
-    case TLOG_ENTRY_TYPE_ANONYMOUS:
+    case EDITOR_ENTRY_TYPE_TEXT:
+    case EDITOR_ENTRY_TYPE_ANONYMOUS:
       Component = EditorTypeText;
       break;
-    case TLOG_ENTRY_TYPE_IMAGE:
+    case EDITOR_ENTRY_TYPE_IMAGE:
       Component = EditorTypeImage;
       break;
-    case TLOG_ENTRY_TYPE_INSTAGRAM:
+    case EDITOR_ENTRY_TYPE_INSTAGRAM:
       Component = EditorTypeInstagram;
       break;
-    case TLOG_ENTRY_TYPE_MUSIC:
+    case EDITOR_ENTRY_TYPE_MUSIC:
       Component = EditorTypeMusic;
       break;
-    case TLOG_ENTRY_TYPE_VIDEO:
+    case EDITOR_ENTRY_TYPE_VIDEO:
       Component = EditorTypeVideo;
       break;
-    case TLOG_ENTRY_TYPE_QUOTE:
+    case EDITOR_ENTRY_TYPE_QUOTE:
       Component = EditorTypeQuote;
       break;
     default:
