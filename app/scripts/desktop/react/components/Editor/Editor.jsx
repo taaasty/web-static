@@ -7,20 +7,21 @@ import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntr
 
 class Editor extends Component {
   renderTypeSwitcher() {
-    const { canChangeType, entryType, loading, tlogType } = this.props;
+    const { canChangeType, entryType, loading, location, tlogType } = this.props;
     if (tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) {
       return (
         <EditorTypeSwitcher
           canChangeType={canChangeType}
           entryType={entryType}
           loading={loading}
+          location={location}
         />
       );
     }
   }
   render() {
     const { backUrl, entry, entryPrivacy, entryType, loading, onChangePrivacy,
-            onPinEntry, onSaveEntry, tlog, tlogType, user: { id, features } } = this.props;
+            onPinEntry, onSaveEntry, tlog, tlogType, togglePreview, user: { id, features } } = this.props;
     return (
       <EditorLayout backUrl={backUrl} loading={loading}>
         <EditorActions
@@ -35,6 +36,7 @@ class Editor extends Component {
           pinnedTill={entry.pinnedTill}
           tlog={tlog}
           tlogType={tlogType}
+          togglePreview={togglePreview}
           userID={id}
         />
         <EditorArea
@@ -56,11 +58,13 @@ Editor.propTypes = {
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
   onChangePrivacy: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object,
   tlogType: PropTypes.string.isRequired,
+  togglePreview: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 

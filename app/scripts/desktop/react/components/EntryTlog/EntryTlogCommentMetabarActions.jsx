@@ -105,6 +105,7 @@ class EntryTlogCommentMetabarActions extends Component {
 EntryTlogCommentMetabarActions. propTypes = {
   comment: PropTypes.object.isRequired,
   entryId: PropTypes.number.isRequired,
+  isFeed: PropTypes.bool,
   onCommentDelete: PropTypes.func,
   onCommentEdit: PropTypes.func,
   onCommentReport: PropTypes.func,

@@ -46,7 +46,7 @@ class ComposeToolbar extends Component {
           </div>
         </Link>
         <ComposeToolbarDropdownList
-          isFlow={tlog.is_flow}
+          isFlow={tlog.author && tlog.author.is_flow}
           tlogSlug={tlog.slug}
           userSlug={user.slug}
         />

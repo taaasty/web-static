@@ -1,8 +1,7 @@
 /*global $ */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router';
-import uri from 'urijs';
+import { browserHistory } from 'react-router';
 
 class EditorTypeSwitcherItem extends Component {
   componentDidMount() {
@@ -10,6 +9,14 @@ class EditorTypeSwitcherItem extends Component {
   }
   componentWillUnmount() {
     $(this.refs.button).tooltip('destroy');
+  }
+  handleClick(ev) {
+    const { loading, location: { pathname }, type } = this.props;
+
+    ev.preventDefault();
+    if (!loading) {
+      browserHistory.replace({ pathname, hash: !!type && `#${type}` });
+    }
   }
   render() {
     const { active, icon, loading, title, type } = this.props;
@@ -24,9 +31,9 @@ class EditorTypeSwitcherItem extends Component {
         ref="button"
         title={title}
       >
-        <Link to={{ pathname: '', hash: `#${type}` }}>
+        <a href={type ? `#${type}` : ''} onClick={this.handleClick.bind(this)}>
           <i className={`icon ${icon}`} />
-        </Link>
+        </a>
       </button>
     );
   }
@@ -36,8 +43,9 @@ EditorTypeSwitcherItem.propTypes = {
   active: PropTypes.bool.isRequired,
   icon: PropTypes.string.isRequired,
   loading: PropTypes.bool,
+  location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export default EditorTypeSwitcherItem;

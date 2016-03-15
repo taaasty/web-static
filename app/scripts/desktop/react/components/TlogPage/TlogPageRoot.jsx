@@ -16,21 +16,45 @@ class TlogPageRoot extends Component {
     this.props.getTlog(this.slug(this.props));
   }
   componentDidMount() {
+    const { tlog, editing, editPreview } = this.props;
+
     if (this.isFlow(this.props)) {
       document.body.className = 'layout--feed';
     } else {
       document.body.className = 'layout--tlog';
-      DesignPreviewService.apply(this.props.tlog.design);
+      DesignPreviewService.apply(tlog.design);
+      if (editing) {
+        this.setEditorBodyClasses(editPreview);
+      }
     }
   }
   componentWillReceiveProps(nextProps) {
+    const { tlog, editing, editPreview } = nextProps;
     this.props.getTlog(this.slug(nextProps));
 
     if (this.isFlow(nextProps)) {
       document.body.className = 'layout--feed';
-    } else if (this.props.tlog.design !== nextProps.tlog.design) {
-      document.body.className = 'layout--tlog';
-      DesignPreviewService.apply(nextProps.tlog.design);
+    } else {
+      if (this.props.tlog.design !== tlog.design) {
+        document.body.className = 'layout--tlog';
+        DesignPreviewService.apply(tlog.design);
+      }
+
+      if (editing) {
+        this.setEditorBodyClasses(editPreview);
+      } else {
+        document.body.classList.remove('tlog-mode-minimal');
+        document.body.classList.remove('tlog-mode-full');
+      }
+    }
+  }
+  setEditorBodyClasses(preview) {
+    if (preview) {
+      document.body.classList.remove('tlog-mode-minimal');
+      document.body.classList.add('tlog-mode-full');
+    } else {
+      document.body.classList.remove('tlog-mode-full');
+      document.body.classList.add('tlog-mode-minimal');
     }
   }
   isFlow(props) {
@@ -79,6 +103,7 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  editPreview: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
   getTlog: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
@@ -89,6 +114,7 @@ TlogPageRoot.propTypes = {
 export default connect(
   (state) => ({
     editing: state.appState.data.editing,
+    editPreview: state.appState.data.editPreview,
     tlog: state.tlog.data,
   }),
   { getTlog }

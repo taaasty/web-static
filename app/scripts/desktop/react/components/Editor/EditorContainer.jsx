@@ -8,6 +8,11 @@ import connectToStores from '../../../../shared/react/components/higherOrder/con
 import Editor from './Editor';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
+import {
+  TLOG_TYPE_PUBLIC,
+  TLOG_TYPE_PRIVATE,
+  TLOG_TYPE_ANONYMOUS,
+} from '../../constants/EditorConstants';
 
 import * as orderConstants from '../../constants/OrderConstants';
 
@@ -47,8 +52,14 @@ _EditorContainer.propTypes = {
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
   tlog: PropTypes.object,
-  tlogType: PropTypes.oneOf(['public', 'private', 'anonymous']).isRequired,
+  tlogType: PropTypes.oneOf([
+    TLOG_TYPE_PUBLIC,
+    TLOG_TYPE_PRIVATE,
+    TLOG_TYPE_ANONYMOUS,
+  ]).isRequired,
+  togglePreview: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
