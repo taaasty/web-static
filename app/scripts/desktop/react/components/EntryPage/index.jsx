@@ -12,12 +12,21 @@ import Spinner from '../../../../shared/react/components/common/Spinner';
 
 class EntryPageContainer extends Component {
   componentWillMount() {
-    const { state } = this.props.location;
+    const { location: { state }, tlogEntry } = this.props;
+
     state && this.fetchData(state.id, state.isFeed);
+    if (tlogEntry.data.id) {
+      sendCategory(SM_TLOG_ENTRY, tlogEntry.data.id);
+    }
   }
   componentWillReceiveProps(nextProps) {
     const { state } = nextProps.location;
+    const { id: nextId } = nextProps.tlogEntry.data;
+
     state && this.fetchData(state.id, state.isFeed);
+    if (nextId && this.props.tlogEntry.data.id !== nextId) {
+      sendCategory(SM_TLOG_ENTRY, nextId);
+    }
   }
   componentWillUnmount() {
     this.props.resetTlogEntry();
@@ -38,7 +47,6 @@ class EntryPageContainer extends Component {
       } else {
         getTlogEntry(newId);
       }
-      sendCategory(SM_TLOG_ENTRY);
     }
   }
   renderFlowEntry() {
