@@ -1,4 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { getCalendar } from '../../actions/CalendarActions';
+import { flowViewStyle } from '../../actions/FlowActions';
+import { appendTlogEntries, deleteEntry, getTlogEntriesIfNeeded } from '../../actions/TlogEntriesActions';
+import { appStateSetSearchKey } from '../../actions/AppStateActions';
+import {
+  SEARCH_KEY_TLOG,
+  SEARCH_KEY_MYTLOG,
+  SEARCH_KEY_FLOW,
+  SEARCH_KEY_FAVORITES,
+  SEARCH_KEY_PRIVATES,
+} from '../../constants/SearchConstants';
+import { sendCategory } from '../../services/Sociomantic';
+
 import TlogPageBody from './TlogPageBody';
 import FlowPageBody from './FlowPageBody';
 import {
@@ -6,34 +20,66 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../../../../shared/constants/Tlog';
-import { sendCategory } from '../../services/Sociomantic';
 
 class TlogPageContainer extends Component {
   componentWillMount() {
-    const { TlogEntriesActions, params: { slug }, sinceId } = this.props;
+    const { appStateSetSearchKey, getTlogEntriesIfNeeded,
+            params: { slug }, location } = this.props;
     const section = this.section(this.props);
 
-    TlogEntriesActions.getTlogEntriesIfNeeded({
+    getTlogEntriesIfNeeded({
       slug,
       section,
       date: this.date(this.props.params),
-      sinceId: sinceId,
+      query: this.query(location),
+      sinceId: this.sinceId(location),
     });
+    appStateSetSearchKey(this.searchKey(this.props));
     sendCategory(section);
   }
   componentWillReceiveProps(nextProps) {
+    const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
     const section = this.section(this.props);
     const nextSection = this.section(nextProps);
 
-    this.props.TlogEntriesActions.getTlogEntriesIfNeeded({
+    getTlogEntriesIfNeeded({
       slug: nextProps.params.slug,
-      section: this.section(nextProps),
+      section: nextSection,
       date: this.date(nextProps.params),
-      sinceId: nextProps.sinceId,
+      query: this.query(nextProps.location),
+      sinceId: this.sinceId(nextProps.location),
     });
+    appStateSetSearchKey(this.searchKey(nextProps));
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
+  }
+  query({ query }) {
+    return query && query.q;
+  }
+  searchKey(props) {
+    const { currentUser: { data: userData }, tlog: { data: tlogData } } = props;
+
+    const section = this.section(props);
+
+    if (section === TLOG_SECTION_TLOG) {
+      if (tlogData.id === userData.id) {
+        return SEARCH_KEY_MYTLOG;
+      } else {
+        return (tlogData.author && tlogData.author.is_flow)
+          ? SEARCH_KEY_FLOW
+          : SEARCH_KEY_TLOG;
+      }
+    } else if (section === TLOG_SECTION_FAVORITE) {
+      return SEARCH_KEY_FAVORITES;
+    } else if (section === TLOG_SECTION_PRIVATE) {
+      return SEARCH_KEY_PRIVATES;
+    } else {
+      return SEARCH_KEY_TLOG;
+    }
+  }
+  sinceId({ query }) {
+    return query && query.since_entry_id;
   }
   section(props) {
     const { path } = props.route;
@@ -52,17 +98,20 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, currentUserId, flow, isFlow, location, params, queryString, sinceId,
-            tlog, tlogEntries, CalendarActions, FlowActions, TlogEntriesActions } = this.props;
+    const { appendTlogEntries, currentUser, deleteEntry, flow, flowViewStyle,
+            getCalendar, location, queryString, tlog, tlogEntries } = this.props;
+    const sinceId = this.sinceId(location);
+    const currentUserId = currentUser.data.id;
 
-    return isFlow
+    return (tlog.data.author && tlog.data.author.is_flow)
       ? <FlowPageBody
-          FlowActions={FlowActions}
-          TlogEntriesActions={TlogEntriesActions}
+          appendTlogEntries={appendTlogEntries}
           bgStyle={{ opacity: tlog.data.design.feedOpacity }}
           currentUser={currentUser}
           currentUserId={currentUserId}
+          deleteEntry={deleteEntry}
           flow={flow}
+          flowViewStyle={flowViewStyle}
           location={location}
           queryString={queryString}
           sinceId={sinceId}
@@ -70,11 +119,12 @@ class TlogPageContainer extends Component {
           tlogEntries={tlogEntries}
         />
       : <TlogPageBody
-          CalendarActions={CalendarActions}
-          TlogEntriesActions={TlogEntriesActions}
+          appendTlogEntries={appendTlogEntries}
           bgStyle={{ opacity: tlog.data.design.feedOpacity }}
           currentUser={currentUser}
           currentUserId={currentUserId}
+          deleteEntry={deleteEntry}
+          getCalendar={getCalendar}
           queryString={queryString}
           section={this.section(this.props)}
           sinceId={sinceId}
@@ -85,20 +135,35 @@ class TlogPageContainer extends Component {
 }
 
 TlogPageContainer.propTypes = {
-  CalendarActions: PropTypes.object.isRequired,
-  FlowActions: PropTypes.object.isRequired,
-  TlogEntriesActions: PropTypes.object.isRequired,
-  currentUser: PropTypes.object,
-  currentUserId: PropTypes.number,
+  appStateSetSearchKey: PropTypes.func.isRequired,
+  appendTlogEntries: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  deleteEntry: PropTypes.func.isRequired,
   flow: PropTypes.object.isRequired,
-  isFlow: PropTypes.bool,
+  flowViewStyle: PropTypes.func.isRequired,
+  getCalendar: PropTypes.func.isRequired,
+  getTlogEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
-  route: PropTypes.object,
-  sinceId: PropTypes.string,
-  tlog: PropTypes.object,
-  tlogEntries: PropTypes.object,
+  route: PropTypes.object.isRequired,
+  tlog: PropTypes.object.isRequired,
+  tlogEntries: PropTypes.object.isRequired,
 };
 
-export default TlogPageContainer;
+export default connect(
+  (state) => ({
+    currentUser: state.currentUser,
+    flow: state.flow,
+    tlog: state.tlog,
+    tlogEntries: state.tlogEntries,
+  }),
+  {
+    appStateSetSearchKey,
+    appendTlogEntries,
+    deleteEntry,
+    getCalendar,
+    getTlogEntriesIfNeeded,
+    flowViewStyle,
+  }
+)(TlogPageContainer);

@@ -1,12 +1,16 @@
 /*global $, TastyEvents, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+
+import { follow } from '../../actions/RelationshipActions';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';
 import HeroProfileStats from './HeroProfileStats';
 import SmartFollowStatus from './SmartFollowStatus';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const HERO_CLOSED = 'closed';
 const HERO_OPENED = 'opened';
@@ -118,9 +122,9 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { RelationshipActions, currentUser, stats, tlog } = this.props;
-    const { data: { author, my_relationship: relState },
-            errorRelationship, isFetchingRelationship } = tlog;
+    const { currentUser, tlog } = this.props;
+    const { data: { author, my_relationship: relState, stats },
+            errorRelationship, isFetching, isFetchingRelationship } = tlog;
     const currentUserId = currentUser && currentUser.id;
     const isCurrentUser = currentUserId && currentUserId === author.id;
     const followButtonVisible = !isCurrentUser && relState != null;
@@ -131,23 +135,25 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          <HeroProfileAvatar
-            isOpen={this.isOpen()}
-            onClick={this.handleAvatarClick.bind(this)}
-            user={author}
-          />
+          {!author.id || isFetching
+           ? <Spinner size={70} />
+           : <HeroProfileAvatar
+               isOpen={this.isOpen()}
+               onClick={this.handleAvatarClick.bind(this)}
+               user={author}
+             />
+          }
           {followButtonVisible &&
            <SmartFollowStatus
              error={errorRelationship}
-             follow={RelationshipActions.follow.bind(null, author.id)}
+             follow={follow.bind(null, author.id)}
              isFetching={isFetchingRelationship}
              relState={relState}
            />
           }
-           <HeroProfileHead user={author} />
+           {author.id && !isFetching && <HeroProfileHead user={author} />}
            <HeroProfileActionsContainer
-             RelationshipActions={RelationshipActions}
-             isCurrentUser={isCurrentUser}
+             isCurrentUser={!!isCurrentUser}
              relState={relState}
              tlog={tlog}
            />
@@ -159,10 +165,15 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
-  RelationshipActions: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
-  stats: PropTypes.object.isRequired,
+  follow: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
 };
 
-export default HeroProfile;
+export default connect(
+  (state) => ({
+    currentUser: state.currentUser.data,
+    tlog: state.tlog,
+  }),
+  { follow }
+)(HeroProfile);

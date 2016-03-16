@@ -9,11 +9,12 @@ function managePositions(Component) {
     propTypes: {
       clue: PropTypes.string.isRequired,
       position: PropTypes.object,
+      withBackground: PropTypes.bool,
     },
 
     getDefaultProps() {
       return {
-        position: {left: 50, top: 50}
+        position: {left: 50, top: 50},
       };
     },
 
@@ -26,8 +27,8 @@ function managePositions(Component) {
       }
 
       return {
-        position: PositionsService.smartPosition(position)
-      }
+        position: PositionsService.smartPosition(position),
+      };
     },
 
     componentDidMount() {
@@ -38,14 +39,8 @@ function managePositions(Component) {
       $(window).off('resize', this.moveIfOutside);
     },
 
-    render() {
-      return (
-        <Component {...this.props} {...this.state}
-            onPositionChange={this.changePosition} />
-      );
-    },
-
     changePosition(position) {
+      this.setState({ position });
       this.moveIfOutside();
       this.savePosition(position);
     },
@@ -64,7 +59,18 @@ function managePositions(Component) {
 
     savePosition(position) {
       PositionsService.savePosition(this.props.clue, position);
-    }
+    },
+
+    render() {
+      return (
+        <Component
+          {...this.props}
+          {...this.state}
+          onPositionChange={this.changePosition}
+        />
+      );
+    },
+
   });
 
   return PositionManager;

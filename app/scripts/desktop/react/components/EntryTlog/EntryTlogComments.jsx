@@ -1,3 +1,4 @@
+/*global $ */
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../actions/Entry';
 import EntryTlogCommentCreateForm from './EntryTlogCommentCreateForm';
@@ -36,13 +37,16 @@ class EntryTlogComments extends Component {
     }
   }
   renderCommentList() {
+    const { commentator, entry: { id, url }, isFeed } = this.props;
+
     if (this.state.comments.length) {
       return (
         <EntryTlogCommentList
-          commentator={this.props.commentator}
+          commentator={commentator}
           comments={this.state.comments}
-          entryId={this.props.entry.id}
-          entryUrl={this.props.entry.url}
+          entryId={id}
+          entryUrl={url}
+          isFeed={isFeed}
           onCommentDelete={this.deleteComment.bind(this)}
           onCommentReply={this.replyComment.bind(this)}
           onCommentReport={this.reportComment.bind(this)}
@@ -54,12 +58,12 @@ class EntryTlogComments extends Component {
   renderCommentForm() {
     return (
       <EntryTlogCommentCreateForm {...this.props}
-        ref="createForm"
         entryID={this.props.entry.id}
         hideCommentForm={this.props.hideCommentForm}
         onCommentCreate={this.createComment.bind(this)}
-        totalCommentsCount={this.state.totalCount}
         process={this.state.processCreate}
+        ref="createForm"
+        totalCommentsCount={this.state.totalCount}
       />
     );
   }
@@ -172,6 +176,7 @@ EntryTlogComments.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hideCommentForm: PropTypes.bool,
+  isFeed: PropTypes.bool,
   limit: PropTypes.number,
 };
 

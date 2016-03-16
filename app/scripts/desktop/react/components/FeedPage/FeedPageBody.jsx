@@ -1,17 +1,7 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
-import queryString from 'query-string';
-import LiveLoadButtonContainer from './LiveLoadButtonContainer';
-import BestLoadButtonContainer from './BestLoadButtonContainer';
-import FriendsLoadButtonContainer from './FriendsLoadButtonContainer';
-import AnonymousLoadButtonContainer from './AnonymousLoadButtonContainer';
-import LiveFlowLoadButtonContainer from './LiveFlowLoadButtonContainer';
-import EntryBricksContainer from '../EntryBricks/EntryBricksContainer';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainer';
-import FeedFilters from '../FeedFilters';
-import PreviousEntriesButton from '../common/PreviousEntriesButton';
-import Routes from '../../../../shared/routes/routes';
-import { sendCategory } from '../../services/Sociomantic';
-
+import EntryBricksContainer from '../EntryBricks';
+import EntryTlogsContainer from '../EntryTlogs';
 import {
   FEED_TYPE_ANONYMOUS,
   FEED_TYPE_LIVE,
@@ -19,66 +9,71 @@ import {
   FEED_TYPE_BEST,
   FEED_TYPE_LIVE_FLOW,
 } from '../../constants/FeedConstants';
-
-const LoadButtons = {
-  [FEED_TYPE_LIVE]: { component: LiveLoadButtonContainer, href: Routes.live_feed_path() },
-  [FEED_TYPE_BEST]: { component: BestLoadButtonContainer, href: Routes.best_feed_path() },
-  [FEED_TYPE_FRIENDS]: { component: FriendsLoadButtonContainer, href: Routes.friends_feed_path() },
-  [FEED_TYPE_ANONYMOUS]: { component: AnonymousLoadButtonContainer, href: Routes.live_anonymous_feed_path() },
-  [FEED_TYPE_LIVE_FLOW]: { component: LiveFlowLoadButtonContainer, href: Routes.live_flows_feed_path() },
-};
+import { VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
 class FeedPageBody extends Component {
-  componentWillMount() {
-    sendCategory(this.props.feedType);
-  }
-  renderFilters() {
-    const { entries_info: { limit }, feedType, locale,
-            navFilters, navViewMode, viewMode } = this.props;
-    const queryHash = queryString.parse(window.location.search);
-
-    if (!(navFilters.items.length || navViewMode)) {
-      return null;
-    }
-
-    let UnreadButton = LoadButtons[feedType];
-
-    const button = UnreadButton
-      ? queryHash.since_entry_id
-        ? <PreviousEntriesButton href={UnreadButton.href} />
-        : <UnreadButton.component limit={limit} locale={locale} />
-      :null;
-
+  renderBricks() {
+    const { appendFeedEntries, children, feedEntries } = this.props;
     return (
-      <FeedFilters
-        navFilters={navFilters}
-        navViewMode={navViewMode}
-        viewMode={viewMode}
+      <EntryBricksContainer
+        entries={feedEntries}
+        isFeed
+        loadMoreEntries={appendFeedEntries}
       >
-        {button}
-      </FeedFilters>
+        {children}
+      </EntryBricksContainer>
     );
   }
+  renderTlogs() {
+    const { appendFeedEntries, children, currentUser, feedEntries } = this.props;
 
+    return (
+      <div>
+        {children}
+        <div className="content-area">
+          <div className="content-area__bg" />
+          <div className="content-area__inner">
+            <EntryTlogsContainer
+              currentUser={currentUser}
+              entries={feedEntries}
+              isFeed
+              loadMoreEntries={appendFeedEntries}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  renderMsg(msg) {
+    return (
+      <div>
+        {this.props.children}
+        <div className="content-area">
+          <div className="content-area__bg" />
+          <div className="content-area__inner">
+            <div className="posts">
+              <article className="post post--text">
+                <div className="post__content">
+                  {msg}
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   render() {
-    const { viewMode } = this.props;
+    const { data: { items }, query, isFetching, viewStyle } = this.props.feedEntries;
 
     return (
       <div className="page-body">
         <div className="layout-outer">
-          {viewMode === 'feed'
-             ? <EntryBricksContainer {...this.props}>
-                 {this.renderFilters()}
-               </EntryBricksContainer>
-             : <div>
-                 {this.renderFilters()}
-                 <div className="content-area">
-                   <div className="content-area__bg" />
-                   <div className="content-area__inner">
-                     <EntryTlogsContainer {...this.props} />
-                   </div>
-                 </div>
-               </div>
+          {!isFetching && items.length === 0
+             ? this.renderMsg(query ? i18n.t('feed.query_empty', { query }) : i18n.t('feed.empty'))
+             : viewStyle === VIEW_STYLE_BRICKS
+               ? this.renderBricks()
+               : this.renderTlogs()
           }
         </div>
       </div>
@@ -87,7 +82,13 @@ class FeedPageBody extends Component {
 }
 
 FeedPageBody.propTypes = {
-  entries_info: PropTypes.object,
+  appendFeedEntries: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  currentUser: PropTypes.object.isRequired,
+  feedEntries: PropTypes.object,
   feedType: PropTypes.oneOf([
     FEED_TYPE_ANONYMOUS,
     FEED_TYPE_LIVE,
@@ -95,17 +96,13 @@ FeedPageBody.propTypes = {
     FEED_TYPE_BEST,
     FEED_TYPE_LIVE_FLOW,
   ]).isRequired,
-  locale: PropTypes.string,
-  navFilters: PropTypes.object,
-  navViewMode: PropTypes.bool.isRequired,
-  viewMode: PropTypes.oneOf(['feed', 'tlog']).isRequired,
+  location: PropTypes.object,
 };
 
 FeedPageBody.defaultProps = {
-  entries_info: {},
-  navFilters: { active: null, items: [] },
-  navViewMode: true,
-  viewMode: 'tlog',
+  currentUser: { data: { author: {} } },
+  feedEntries: { data: { items: [] } },
+  location: {},
 };
 
 export default FeedPageBody;

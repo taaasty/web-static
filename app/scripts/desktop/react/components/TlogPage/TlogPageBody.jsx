@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
 import TlogPagePrivate from './TlogPagePrivate';
@@ -17,17 +17,33 @@ import {
 } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
+  componentWillMount() {
+    
+  }
+  componentWillReceiveProps(nextProps) {
+    
+  }
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
+  handleDeleteEntry(entryId) {
+    this.props.deleteEntry(entryId);
+    this.props.getCalendar(this.props.tlog.data.author.id, true);
+  }
   renderTlog() {
-    const { section, tlog: { data: { author } },
-            tlogEntries: { data: { next_date, prev_date } } } = this.props;
+    const { appendTlogEntries, currentUser, section, tlog: { data: { author } }, tlogEntries } = this.props;
+    const { data: { next_date, prev_date } } = tlogEntries;
     const isPaged = author.is_daylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
-        <EntryTlogsContainer {...this.props} />
+        <EntryTlogsContainer
+          currentUser={currentUser}
+          entries={tlogEntries}
+          handleDeleteEntry={this.handleDeleteEntry.bind(this)}
+          hostTlogId={author.id}
+          loadMoreEntries={appendTlogEntries}
+        />
         {isPaged &&
          <TlogPagePagination
            nextPagePath={this.date2path(author.slug, next_date)}
@@ -99,10 +115,12 @@ class TlogPageBody extends Component {
 }
 
 TlogPageBody.propTypes = {
+  appendTlogEntries: PropTypes.func.isRequired,
   bgStyle: PropTypes.object,
   currentUser: PropTypes.object,
-  currentUserId: PropTypes.number,
+  deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
+  getCalendar: PropTypes.func.isRequired,
   queryString: PropTypes.string,
   section: PropTypes.string.isRequired,
   sinceId: PropTypes.string,

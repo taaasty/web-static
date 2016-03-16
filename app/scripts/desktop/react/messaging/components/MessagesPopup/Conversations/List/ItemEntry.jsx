@@ -8,7 +8,7 @@ class ItemEntry extends Component {
   render() {
     const { conversation: { created_at, entry, last_message, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
-    const title = entry && entry.title || i18n.t('messages_public_conversation_title');
+    const title = (entry && (entry.title || entry.text)) || i18n.t('messages_public_conversation_title');
     const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
@@ -20,7 +20,7 @@ class ItemEntry extends Component {
           unreadCount={unread_messages_count}
       >
         <span className="messages__user-avatar">
-          <ItemEntryPic entry={entry} />
+          <ItemEntryPic entry={entry} title={title} />
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">

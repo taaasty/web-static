@@ -1,9 +1,10 @@
+/*global i18n */
 import React from 'react';
 import List from './List';
-import NewConversationButton from './NewConversationButton';
+import FooterButton from '../FooterButton';
 import MessagingDispatcher from '../../../MessagingDispatcher';
 
-function Conversations(props) {
+function Conversations() {
   function handleCreateNewConversation() {
     MessagingDispatcher.handleViewAction({
       type: 'clickNewConversation',
@@ -13,9 +14,7 @@ function Conversations(props) {
   return (
     <div className="messages__section messages__section--dialogs">
       <List />
-      <footer className="messages__footer">
-        <NewConversationButton onClick={handleCreateNewConversation} />
-      </footer>
+      <FooterButton onClick={handleCreateNewConversation} text={i18n.t('new_thread_button')} />
     </div>
   );
 }

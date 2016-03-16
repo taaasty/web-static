@@ -1,0 +1,91 @@
+import React, { Component, PropTypes } from 'react';
+import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
+
+import { connect } from 'react-redux';
+import { getTlog } from '../../actions/TlogActions';
+import HeroProfile from '../HeroProfileSPA';
+import HeroFlow from '../HeroComponent/HeroFlowSPA';
+import SocialShare from '../common/SocialShare';
+import Calendar from '../Calendar';
+import DesignPreviewService from '../../services/designPreview';
+
+const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
+
+class TlogPageRoot extends Component {
+  componentWillMount() {
+    this.props.getTlog(this.slug(this.props));
+  }
+  componentDidMount() {
+    if (this.isFlow(this.props)) {
+      document.body.className = 'layout--feed';
+    } else {
+      document.body.className = 'layout--tlog';
+      DesignPreviewService.apply(this.props.tlog.design);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.props.getTlog(this.slug(nextProps));
+
+    if (this.isFlow(nextProps)) {
+      document.body.className = 'layout--feed';
+    } else if (this.props.tlog.design !== nextProps.tlog.design) {
+      document.body.className = 'layout--tlog';
+      DesignPreviewService.apply(nextProps.tlog.design);
+    }
+  }
+  isFlow(props) {
+    return props.tlog.author && props.tlog.author.is_flow;
+  }
+  slug({ params }) {
+    return params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+  }
+  shareImg(user) {
+    return (user && user.userpic && user.userpic.original_url)
+      ? user.userpic.original_url
+      : defaultUserpic;
+  }
+  render() {
+    const { children, params, tlog } = this.props;
+    const { author, design: { backgroundImageUrl }, slug, tlog_url } = tlog;
+    const isFlow = this.isFlow(this.props);
+    
+    return (
+      <div className="page__inner">
+        <div className="page__paper">
+          {!isFlow &&
+           <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
+          }
+           <header className="page-header">
+             {isFlow ? <HeroFlow /> : <HeroProfile />}
+           </header>
+           {children}
+        </div>
+        <Calendar isEntry={!!params.entryPath} />
+        {!isFlow &&
+         <SocialShare
+           img={this.shareImg(author)}
+           title={slug}
+           url={tlog_url}
+         />}
+      </div>
+    );
+  }
+}
+
+TlogPageRoot.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  getTlog: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
+  tlog: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => ({
+    tlog: state.tlog.data,
+  }),
+  { getTlog }
+)(TlogPageRoot);

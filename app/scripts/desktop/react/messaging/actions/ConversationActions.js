@@ -37,13 +37,16 @@ const ConversationActions = {
   },
 
   deleteConversation(id) {
-    return messagingService.deleteConversation(id)
+    return messagingService.deleteConversation(id);
+  },
+
+  leaveConversation(id) {
+    return messagingService.leaveConversation(id)
       .done((data) => {
         MessagingDispatcher.handleServerAction({
-          id,
           type: 'deleteConversation',
+          id: id,
         });
-
         return data;
       });
   },

@@ -17,6 +17,7 @@
   "messages_popup_title": "My messages",
   "messages_thread_title": "Talk with{{slug}}",
   "messages_entry_title": "Post discussion",
+  "messages_group_title": "Group chat",
   "messages_public_users": "{{count}} user",
   "messages_public_users_plural": "{{count}} users",
   "messages_public_conversation_title": "Post discussion",
@@ -122,7 +123,7 @@
   "watching_entry_item": "Follow",
   "entry_meta_comment_link": "Comment",
   "comments_count": "{{count}} comment",
-  "comments_count_plural": "{{count}} comment",
+  "comments_count_plural": "{{count}} comments",
   "no_comments": "No comments",
   "entry_meta_repost_link": "Repost",
   "entry_repost_loading": "Loading...",
@@ -347,6 +348,7 @@
   "delete_comment_success": "This comment was deleted successfully ",
   "recovery_mail_sent": "Recovery link was sent on your email",
   "auth": "This diary tempting you to write in it every day",
+  "auth_button": "Log in or register",
   "email_recovery_header": "Did you forget your password?",
   "empty_login_error": "Please enter your login",
   "empty_password_error": "Please enter your password",
@@ -374,10 +376,10 @@
   "report_user_success": "Your complain will be considered as soon as possible",
   "ignore_tlog_item": "Block the user",
   "report_tlog_item": "Report inapropriate",
-  "load_more_comments": "Show last{{count}} comments",
-  "load_more_comments_plural": "Show last{{count}} comments",
+  "load_more_comments": "Show last {{count}} comment",
+  "load_more_comments_plural": "Show last {{count}} comments",
   "load_more_comments_remaining": "Show last {{count}} comment",
-  "load_more_comments_remaining_plural": "Show last{{count}} comments",
+  "load_more_comments_remaining_plural": "Show last {{count}} comments",
   "stats_entries_count": "post",
   "stats_entries_count_plural": "posts",
   "stats_followings_count": " subscription",
@@ -408,6 +410,103 @@
     "author_no_posts": "<h2>Hello {{name}}</h2><p>Welcome to Tasty</p><p>Your TLog is ready for <a href=\"{{newUrl}}\">a new entry</a>.</p><p>Если же у вас пока нет идеи о чем можно было бы написать, или вы из тех людей кто сначала любит навести порядок, а уже потом приступать к развлечениям, то мы можем предложить вам несколько вещей, которые, в любом случае, будет полезно сделать:<ul><li>You can set up the TLog appearance<a href=\"{{designSettingsUrl}}\">here</a></li><li>You can add your userpic and say something about yourself <a href=\"{{userSettingsUrl}}\">here</a></li><li>Read and set your <a href=\"{{friendsUrl}}\">live broadcast</a>.</li></ul></p><p>If you have any questions, click on the question mark in the lower right-hand corner.</p>",
     "private": "Sorry, access to this TLog and <br>its entries is restricted by its owner.",
     "section_private": "Private posts are visible to the author only"
+  },
+  "nav_filters" : {
+    "live": {
+      "all": "All",
+      "media": "Media",
+      "flows": "Flows",
+      "anonymous": "Anonymous"
+    },
+    "friends": {
+      "all": "All",
+      "media": "Media"
+    },
+    "best": {
+      "best": "+100",
+      "excellent": "+50",
+      "well": "+20",
+      "good": "+10"
+    },
+    "flows": {
+      "popular": "Popular",
+      "newest": "New",
+      "my": "My"
+    }
+  },
+  "flow": {
+    "empty": "This flow has no posts yet"
+  },
+  "feed": {
+    "header": {
+      "install": "Install application for iOS or Android",
+      "app_ios": "Application for iOS",
+      "app_android": "Application for Android"
+    },
+    "title" : {
+      "live": {
+        "all": "Live feed",
+        "media": "Media feed live",
+        "flows": "Flows live",
+        "anonymous": "Anonymous live"
+      },
+      "friends": {
+        "all": "Friends",
+        "media": "Friends media"
+      },
+      "best": {
+        "best": "The best",
+        "excellent": "Excellent",
+        "well": "Well",
+        "good": "Good"
+      },
+      "posts_24h_none": "No posts in last 24 hours",
+      "posts_24h_some_1": "{{count}} post in last 24 hours",
+      "posts_24h_some_2": "{{count}} posts in last 24 hours",
+      "friend_posts_1": "The only friend postings",
+      "friend_posts_2": "{{count}} friends postings"
+    },
+    "empty": "This feed is empty yet",
+    "query_empty": "Nothing found for '{{query}}' search queryt"
+  },
+  "people": {
+    "empty": "There is nobody here",
+    "query_empty": "Nobody found for '{{query}}' search query",
+    "posts": {
+      "title": "Most active in posting",
+      "text": "People in decreasing order of postings",
+      "nav": "Most active in posting"
+    },
+    "followers": {
+      "title": "Most frequently read",
+      "text": "People with the most followers",
+      "nav": "Most frequently read"
+    },
+    "interested": {
+      "title": "Interesting",
+      "text": "People by decreasing order of rating of postings",
+      "nav": "Interesting"
+    },
+    "worst": {
+      "title": "The worst posters",
+      "text": "People with the lowest posting rating",
+      "nav": "The worst posters"
+    },
+    "comments": {
+      "title": "Most active in commenting",
+      "text": "People in decreasing order of number of comments",
+      "nav": "Most active in commenting"
+    },
+    "new": {
+      "title": "New",
+      "text": "People who signed up recently and made at least three postings",
+      "nav": "New"
+    },
+    "bad": {
+      "title": "Ill-behaved",
+      "text": "People banned for misbehavior",
+      "nav": "Ill-behaved"
+    }
   },
   "filters": {
     "view_feed": "Show as bricks",
@@ -480,7 +579,10 @@
         "delete": "Delete",
         "delete_everywhere": "Delete everywhere",
         "cancel": "Cancel"
-      }
+      },
+      "new_group_chat": "Create group chat",
+      "new_group_next": "Next",
+      "new_group_done": "Done"
     },
     "unread_load": {
       "unread_entries_count": "{{count}} new post. ",
@@ -519,10 +621,26 @@
       "disturb": "Disturb",
       "dont_disturb": "Don't disturb",
       "start_select_mode": "Select messages",
-      "delete_conversation": "Delete conversation"
+      "delete_conversation": "Delete conversation",
+      "leave_conversation": "Leave conversation",
+      "leave_group": "Leave group chat",
+      "group_settings": "Settings"
     },
     "request": {
-      "conversation_delete_success": "Conversation successfully deleted"
+      "conversation_delete_success": "Conversation successfully deleted",
+      "conversation_leave_success": "Conversation successfully left"
+    },
+    "group": {
+      "admin": "admin",
+      "users": "Single user",
+      "users_plural": "{{count}} users",
+      "user_count": "Users: {{count}}",
+      "topic_placeholder": "Group chat topic",
+      "user_list": "User list",
+      "users_edit": "Edit",
+      "to_tlog": "User tlog",
+      "conversation": "Send a message",
+      "remove_user": "Remove"
     }
   }
 }

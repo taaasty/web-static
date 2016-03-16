@@ -1,5 +1,6 @@
-/*global $, PopupHeader, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
+/*global $, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
 import React, { cloneElement, createClass, Children, PropTypes } from 'react';
+import PopupHeader from '../Popup/Header';
 import { findDOMNode } from 'react-dom';
 
 const MARGIN = 10;
@@ -72,9 +73,9 @@ const HeroProfileStatsPopup = createClass({
       <div className="popup popup--dark">
         <div className="popup__arrow popup__arrow--down" />
         <PopupHeader
+          draggable={isDraggable}
           hasActivities={this.hasActivities()}
-          isDraggable={isDraggable}
-          onClickClose={this.close}
+          onClose={this.close}
           title={title}
         />
         <div className="popup__body">

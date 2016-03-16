@@ -4,8 +4,6 @@ React = require 'react';
 MessagingDispatcher = require './MessagingDispatcher';
 MessagesPopup = require './components/MessagesPopup';
 
-PUBLIC_CONVERSATION_PREFIX = 'public_';
-
 class window.MessagingService
   EVENT_STATUS: 'status'
   EVENT_UPDATE_CONVERSATION:  'update_conversation'
@@ -112,6 +110,14 @@ class window.MessagingService
           id: conversationId,
         });
         NoticeService.notifySuccess(i18n.t('messenger.request.conversation_delete_success'))
+        return data;
+      )
+      .fail((err) -> NoticeService.errorResponse(err))
+
+  leaveConversation: (conversationId) ->
+    this.requester.leaveConversation(conversationId)
+      .done((data) ->
+        NoticeService.notifySuccess(i18n.t('messenger.request.conversation_leave_success'))
         return data;
       )
       .fail((err) -> NoticeService.errorResponse(err))

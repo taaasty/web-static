@@ -21,8 +21,15 @@ class window.MessagingRequester
 
   deleteConversation: (id) ->
     $.ajax({
-      url: ApiRoutes.messengerConversationById(id),
+      url: ApiRoutes.messengerConversationsById(id),
       method: 'DELETE',
+      data: { socked_id: this.socket_id },
+    })
+
+  leaveConversation: (id) ->
+    $.ajax({
+      url: ApiRoutes.messengerConversationsByIdLeave(id),
+      method: 'PUT',
       data: { socked_id: this.socket_id },
     })
 

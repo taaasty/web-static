@@ -2,7 +2,7 @@
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
 import ConversationsStore from '../stores/ConversationsStore';
-import { PUBLIC_CONVERSATION } from '../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../constants/ConversationConstants';
 
 const _messages = {};
 const _allMessagesLoaded = {};
@@ -58,7 +58,7 @@ const MessagesStore = Object.assign(
     getMessageInfo(message, conversationId) {
       const conversation = ConversationsStore.getConversation(conversationId);
       const currentUser  = CurrentUserStore.getUser();
-      if (conversation.type == PUBLIC_CONVERSATION) {
+      if ([ PUBLIC_CONVERSATION, GROUP_CONVERSATION ].indexOf(conversation.type) > -1) {
         const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[0];
 
         return ({
@@ -156,16 +156,15 @@ const MessagesStore = Object.assign(
 
     deleteUserMessages(conversationId, deleted) {
       const messages = _messages[conversationId] || [];
-      const deletedHash = deleted.reduce((acc, { id, content }) => {
-        return acc[id] = content, acc;
+      const deletedHash = deleted.reduce((acc, { id, content, ...rest }) => {
+        return acc[id] = { ...rest, content_html: content }, acc;
       }, {});
-      const deletedIds = Object.keys(deletedHash);
+      const deletedIds = Object.keys(deletedHash).map((id) => parseInt(id, 10));
 
       _selectedIds = _selectedIds.filter((id) => deletedIds.indexOf(id) < 0);
       messages.forEach((msg) => {
-        let content_html = deletedHash[msg.id];
-        if (content_html) {
-          Object.assign(msg, { content_html });
+        if (deletedHash[msg.id]) {
+          Object.assign(msg, deletedHash[msg.id]);
         }
       });
     },

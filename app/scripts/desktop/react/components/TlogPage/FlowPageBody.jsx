@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import EntryTlogsContainer from '../EntryTlogs/EntryTlogsContainerRedux';
-import EntryBricksContainer from '../EntryBricks/EntryBricksContainerRedux';
+import EntryTlogsContainer from '../EntryTlogs';
+import EntryBricksContainer from '../EntryBricks';
 import FeedFilters from '../FeedFilters';
 import { VIEW_STYLE_TLOG } from '../../constants/ViewStyleConstants';
 
@@ -13,24 +13,61 @@ class FlowPageBody extends Component {
   }
   setViewStyle({ flow, location: { query } }) {
     if (query && query.style && flow.viewStyle !== query.style) {
-      this.props.FlowActions.flowViewStyle(query.style);
+      this.props.flowViewStyle(query.style);
     }
   }
+  handleDeleteEntry(entryId) {
+    this.props.deleteEntry(entryId);
+  }
   renderTlogs() {
+    const { appendTlogEntries, currentUser, tlog, tlogEntries } = this.props;
+
     return (
       <div className="content-area">
         <div className="content-area__bg" />
         <div className="content-area__inner">
-          <EntryTlogsContainer {...this.props} />
+          <EntryTlogsContainer
+            currentUser={currentUser}
+            entries={tlogEntries}
+            handleDeleteEntry={this.handleDeleteEntry.bind(this)}
+            hostTlogId={tlog.data.author && tlog.data.author.id}
+            loadMoreEntries={appendTlogEntries}
+          />
         </div>
       </div>
     );
   }
   renderBricks() {
-    return <EntryBricksContainer {...this.props} />;
+    const { appendTlogEntries, children, tlog, tlogEntries } = this.props;
+
+    return (
+      <EntryBricksContainer
+        children={children}
+        entries={tlogEntries}
+        hostTlogId={tlog.data.author && tlog.data.author.id}
+        loadMoreEntries={appendTlogEntries}
+      />
+    );
+  }
+  renderEmpty() {
+    return (
+      <div className="content-area">
+        <div className="content-area__bg" />
+        <div className="content-area__inner">
+          <div className="posts">
+            <article className="post post--text">
+              <div className="post__content">
+                {i18n.t('flow.empty')}
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    );
   }
   render() {
-    const { flow: { viewStyle }, location } = this.props;
+    const { flow: { viewStyle }, location,
+            tlogEntries: { data: { items }, isFetching } } = this.props;
 
     return (
       <div className="page-body">
@@ -40,7 +77,12 @@ class FlowPageBody extends Component {
             navViewMode
             viewMode={viewStyle}
           />
-          {viewStyle === VIEW_STYLE_TLOG ? this.renderTlogs() : this.renderBricks()}
+          {!isFetching && items.length === 0
+            ? this.renderEmpty()
+            : viewStyle === VIEW_STYLE_TLOG
+              ? this.renderTlogs()
+              : this.renderBricks()
+          }
         </div>
       </div>
     );
@@ -48,11 +90,12 @@ class FlowPageBody extends Component {
 }
 
 FlowPageBody.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
-  TlogEntriesActions: PropTypes.object.isRequired,
+  appendTlogEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
+  deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
   flow: PropTypes.object.isRequired,
+  flowViewStyle: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   sinceId: PropTypes.string,

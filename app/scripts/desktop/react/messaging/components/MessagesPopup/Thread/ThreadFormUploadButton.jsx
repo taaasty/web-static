@@ -13,6 +13,7 @@ class ThreadFormUploadButton extends Component {
           <input
             accept="image/png,image/jpeg,image/gif"
             className="message-form__upload-input"
+            disabled={this.props.disabled}
             multiple
             onChange={this.onChange.bind(this)}
             ref="files"
@@ -26,6 +27,7 @@ class ThreadFormUploadButton extends Component {
 }
 
 ThreadFormUploadButton.propTypes = {
+  disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 }
 

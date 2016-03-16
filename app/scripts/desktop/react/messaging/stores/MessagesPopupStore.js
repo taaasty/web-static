@@ -5,16 +5,19 @@ import ConversationsStore from './ConversationsStore';
 export const CONVERSATIONS_STATE = 'conversations';
 export const CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
 export const THREAD_STATE = 'thread';
+export const GROUP_CHOOSER_STATE = 'groupChooser';
+export const GROUP_SETTINGS_STATE = 'groupSettings';
 
-let currentState = CONVERSATIONS_STATE;
+//let currentState = CONVERSATIONS_STATE;
 let selectState = false;
 let conversationId = null;
+let _history = [ CONVERSATIONS_STATE ];
 
 const MessagesPopupStore = Object.assign(
   new BaseStore(),
   {
     getCurrentState() {
-      return currentState;
+      return _history[_history.length - 1];
     },
 
     getSelectState() {
@@ -30,23 +33,52 @@ const MessagesPopupStore = Object.assign(
     },
 
     setThreadState() {
-      currentState = THREAD_STATE;
+      _history = [ CONVERSATIONS_STATE, THREAD_STATE ];
     },
 
     setCreateNewConversationState() {
-      currentState = CREATE_NEW_CONVERSATION_STATE;
+      _history.push(CREATE_NEW_CONVERSATION_STATE);
     },
 
     setConversationsState() {
-      currentState = CONVERSATIONS_STATE;
+      _history = [ CONVERSATIONS_STATE ];
+    },
+
+    backButtonClick() {
+      _history.pop(); //TODO improve back button logic
     },
 
     startSelect() {
-      selectState = currentState === THREAD_STATE; // set to true only if in thread state
+      selectState = _history[_history.length - 1] === THREAD_STATE; // set to true only if in thread state
     },
 
     stopSelect() {
       selectState = false;
+    },
+
+    showGroupSettings() {
+      const prev = _history[_history.length - 2];
+
+      //prevent multiple cycles of chooser/settings navigation
+      if (prev === GROUP_SETTINGS_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_SETTINGS_STATE);
+      }
+    },
+
+    showGroupChooser() {
+      const prev = _history[_history.length -2];
+
+      if (prev === GROUP_CHOOSER_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_CHOOSER_STATE);
+      }
+    },
+
+    closeGroupSettings() {
+      _history = _history.filter((e) => [ GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE ].indexOf(e) < 0);
     },
   }
 );
@@ -86,6 +118,25 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     MessagesPopupStore.emitChange();
     break;
   case 'stopSelect':
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'showGroupSettings':
+    MessagesPopupStore.showGroupSettings();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'showGroupChooser':
+    MessagesPopupStore.showGroupChooser();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'closeGroupSettings':
+    MessagesPopupStore.closeGroupSettings();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'backButtonClick':
+    MessagesPopupStore.backButtonClick();
     MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
     break;

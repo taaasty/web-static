@@ -35,7 +35,6 @@ require './react/helpers/app'
 require './react/mixins/unmount'
 require './react/mixins/dom_manipulations'
 require './react/mixins/component_manipulations'
-require './react/mixins/positions'
 require './react/mixins/shake'
 require './react/mixins/grammar'
 require './react/mixins/error_timer'
@@ -95,10 +94,10 @@ require './react/components/Auth/recovery'
 
 global.Settings = require './react/components/Settings'
 
-global.BrowserSupportContainer = require './react/components/BrowserSupport/BrowserSupportContainer'
+global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
-global.UserToolbarContainer = require './react/components/toolbars/UserToolbarContainer'
+global.UserToolbarContainer = require './react/components/UserToolbar'
 global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
 global.ComposeToolbarContainer = require './react/components/ComposeToolbar/ComposeToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
@@ -118,22 +117,8 @@ require './react/components/smart_follow_status'
 
 require './react/components/editable_field'
 
-require './react/components/popup_box'
-require './react/components/popup/popup'
-require './react/components/popup/layout'
-require './react/components/popup/spinner'
-require './react/components/popup/header'
-
-global.Feed = require './react/components/Feed/Feed'
 global.EntryTlog = require './react/components/EntryTlog'
-global.EntryTlogsContainer = require './react/components/EntryTlogs/EntryTlogsContainer';
-global.EntryBricksContainer = require './react/components/EntryBricks/EntryBricksContainer';
-global.FlowBricksContainer = require './react/components/FlowBricks/FlowBricksContainer'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
-global.LiveLoadButtonContainer = require('./react/components/FeedPage/LiveLoadButtonContainer')
-global.BestLoadButtonContainer = require('./react/components/FeedPage/BestLoadButtonContainer')
-global.FriendsLoadButtonContainer = require('./react/components/FeedPage/FriendsLoadButtonContainer')
-global.FeedPageBody = require './react/components/FeedPage/FeedPageBody';
 
 require './react/components/search/search'
 require './react/components/search/button'
@@ -163,15 +148,10 @@ require './react/components/persons_popup/panels/ignored_panel'
 require './react/components/persons_popup/panels/socialNetwork/vkontakte'
 require './react/components/persons_popup/panels/socialNetwork/facebook'
 
-require './react/components/people/item'
-
-global.HeroFlows = require './react/components/HeroComponent/HeroFlows'
 global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
 global.Spinner = require '../shared/react/components/common/Spinner'
-global.ScreenViewer = require './react/components/screen_viewer/screen_viewer'
-global.LandingPageBody = require './react/components/LandingPage/LandingPageBody'
 global.SocialShare = require './react/components/common/SocialShare';
 global.Voting = require './react/components/common/Voting';
 

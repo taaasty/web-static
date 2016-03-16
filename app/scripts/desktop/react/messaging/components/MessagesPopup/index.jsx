@@ -1,24 +1,27 @@
-/*global i18n, RequesterMixin, ReactUnmountMixin */
-import React, { createClass, PropTypes } from 'react';
+/*global Popup, RequesterMixin, ReactUnmountMixin */
+import React, { createClass } from 'react';
 import Thread from './Thread';
-import ConversationsStore from '../../stores/ConversationsStore';
 import MessagesPopupStore, {
   CONVERSATIONS_STATE,
   CREATE_NEW_CONVERSATION_STATE,
   THREAD_STATE,
+  GROUP_SETTINGS_STATE,
+  GROUP_CHOOSER_STATE,
 } from '../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
 import CreateNewConversation from './CreateNewConversation';
 import Conversations from './Conversations';
-import TitleConversationActions from './TitleConversationActions';
-import { PUBLIC_CONVERSATION } from '../../constants/ConversationConstants';
+import GroupSettings from './GroupSettings';
+import GroupChooser from './GroupChooser';
+import PopupTitle from './PopupTitle';
+import Popup from '../../../components/Popup';
 
-const ENTER_TIMEOUT = 300;
-const LEAVE_TIMEOUT = 300;
+//const ENTER_TIMEOUT = 300;
+//const LEAVE_TIMEOUT = 300;
 
 const MessagesPopup = createClass({
-  mixins: [ReactUnmountMixin, 'ReactActivitiesMixin', RequesterMixin],
+  mixins: [ ReactUnmountMixin, RequesterMixin ],
   getInitialState() {
     return this.getStateFromStore();
   },
@@ -31,18 +34,6 @@ const MessagesPopup = createClass({
     MessagesPopupStore.removeChangeListener(this._onStoreChange);
   },
 
-  isConversationsState() {
-    return this.state.currentState === CONVERSATIONS_STATE;
-  },
-  
-  isCreateNewConversationState() {
-    return this.state.currentState === CREATE_NEW_CONVERSATION_STATE;
-  },
-  
-  isThreadState() {
-    return this.state.currentState === THREAD_STATE;
-  },
-
   getStateFromStore() {
     return {
       currentState: MessagesPopupStore.getCurrentState(),
@@ -51,86 +42,48 @@ const MessagesPopup = createClass({
     };
   },
 
-  getTitle() {
-    const { currentConversationId } = this.state;
-
-    if (this.isThreadState()) {
-      const conversation = ConversationsStore.getConversation(currentConversationId);
-
-      if (conversation.type === PUBLIC_CONVERSATION) {
-        return (
-          <div className="messages__popup-title">
-            <div className="messages__popup-title-text --with-actions">
-              {i18n.t('messages_entry_title')}
-            </div>
-            <TitleConversationActions conversation={conversation} />
-          </div>
-        );
-      } else {
-        return (
-          <div className="messages__popup-title">
-            <div className="messages__popup-title-text --with-actions">
-              {i18n.t('messages_thread_title', { slug: conversation.recipient.slug })}
-            </div>
-            <TitleConversationActions conversation={conversation} />
-          </div>
-        );
-      }
-    } else {
-      return (
-        <div className="messages__popup-title">
-          <div className="messages__popup-title-text">
-            {i18n.t('messages_popup_title')}
-          </div>
-        </div>
-      );
-    }
-  },
-
   handleBackButtonClick() {
-    MessagesPopupActions.openConversationList();
+    MessagesPopupActions.backButtonClick();
   },
 
   _onStoreChange() {
     this.setState(this.getStateFromStore());
   },
 
-  render() {
-    const title = this.getTitle();
-    let content, transitionName;
+  renderContents() {
+    const { currentState, currentConversationId } = this.state;
 
-    switch(this.state.currentState) {
+    switch(currentState) {
     case CONVERSATIONS_STATE:
-      content = <Conversations key="conversations" />;
-      transitionName = 'conversations';
-      break;
+      return <Conversations key="conversations" />;
     case CREATE_NEW_CONVERSATION_STATE:
-      content = <CreateNewConversation key="newConversation" />;
-      transitionName = 'new-conversation';
-      break;
+      return <CreateNewConversation key="newConversation" />;
     case THREAD_STATE:
-      content = <Thread
-                  conversationId={this.state.currentConversationId}
-                  key="thread"
-                />;
-      transitionName = 'thread';
-      break;
+      return <Thread conversationId={currentConversationId} key="thread"/>;
+    case GROUP_SETTINGS_STATE:
+      return <GroupSettings key="groupSettings" />;
+    case GROUP_CHOOSER_STATE:
+      return <GroupChooser key="groupChooser" />;
     }
+  },
+
+  render() {
+    const { currentConversationId, currentState } = this.state;
 
     return (
       <Popup
-        className="popup--messages"
-        colorScheme="light"
-        hasActivities={this.hasActivities()}
-        isDraggable
+        className="popup--messages popup--light"
+        clue="messages"
+        draggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
-        title={title}
-        type="messages"
+        title={<PopupTitle id={currentConversationId} state={currentState} />}
       >
         <div className="messages">
-          {!this.isConversationsState() && <BackButton onClick={this.handleBackButtonClick} />}
-          {content}
+          {currentState !== CONVERSATIONS_STATE &&
+           <BackButton onClick={this.handleBackButtonClick} />
+          }
+          {this.renderContents()}
         </div>
       </Popup>
     );

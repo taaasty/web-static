@@ -9,7 +9,7 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
   function renderBrickImage() {
     return entry.preview_image
       ?  <LazyLoadImage image={entry.preview_image} maxWidth={brickWidth} />
@@ -17,39 +17,27 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
   }
 
   function renderBrickImageContainer() {
-    return window.SPA
-      ? <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
-          {renderBrickImage()}
-        </Link>
-      : <a className="brick__link" href={entry.url}>
-          {renderBrickImage()}
-        </a>;
+    return (
+      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
+        {renderBrickImage()}
+      </Link>
+    );
   }
 
   function renderBrickBody() {
-    return window.SPA
-      ? <div className="brick__body">
-          <div className="brick__text">
-            <Link
-              className="brick__link"
-              title={entry.title_truncated}
-              to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
-            >
-              <Text value={entry.title_truncated} withHTML />
-            </Link>
-          </div>
+    return (
+      <div className="brick__body">
+        <div className="brick__text">
+          <Link
+            className="brick__link"
+            title={entry.title_truncated}
+            to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+          >
+            <Text value={entry.title_truncated} withHTML />
+          </Link>
         </div>
-      : <div className="brick__body">
-          <div className="brick__text">
-            <a
-              className="brick__link"
-              href={entry.url}
-              title={entry.title_truncated}
-            >
-              <Text value={entry.title_truncated} withHTML />
-            </a>
-          </div>
-        </div>;
+      </div>
+    );
   }
 
   return (
@@ -62,6 +50,7 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
         <EntryBrickMetabar
           entry={entry}
           host_tlog_id={host_tlog_id}
+          isFeed={isFeed}
         />
       </div>
       <EntryBrickActions
@@ -77,6 +66,7 @@ EntryBrickImageType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   host_tlog_id: PropTypes.number,
+  isFeed: PropTypes.bool,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

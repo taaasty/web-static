@@ -6,40 +6,15 @@ const { isCompositeComponent, renderIntoDocument } = global.ReactTestUtils;
 
 // Components
 const components = {
-  FlowBricksContainer: {
-    limit: 1,
-    loadUrl: '',
-    canLoad: false,
-    flows_info: {
-      items: [],
-    },
-  },
-  HeroFlows: {
-    backgroundUrl: '',
-    title: '',
-    text: '',
-  },
   ImageAttachmentsCollage: {
     imageAttachments: [],
-  },
-  ScreenViewer: {
-    sourceImages: [],
   },
   ConfirmRegistrationShellbox: {
     type: 'email',
     postUrl: '',
     proposetSlug: '',
   },
-  PeopleItem: {
-    user: {
-      title: '',
-      userpic: {
-        default_colors: {},
-      },
-    },
-  },
   Auth: {},
-  AvatarToolbarContainer: {},
   EditorNew: {},
   EditorEdit: {
     entry: {},
@@ -71,12 +46,9 @@ const components = {
       reasons: [],
     },
   },
-  UserToolbarContainer: {},
-  LiveLoadButtonContainer: {},
-  BestLoadButtonContainer: {},
-  FriendsLoadButtonContainer: {},
-  FeedPageBody: {},
   /*
+  UserToolbarContainer: {},
+  FeedPageBody: {},
   Calendar: {},
   EntryPageContainer: {
     user: {

@@ -40,7 +40,7 @@ class Hero extends Component {
 Hero.propTypes = {
   actions: PropTypes.oneOfType([
     PropTypes.element, PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  ]),
   backgroundUrl: PropTypes.string.isRequired,
   text: PropTypes.string,
   title: PropTypes.node.isRequired,

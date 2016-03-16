@@ -17,65 +17,46 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
 
   
   function renderAvatar() {
-    return window.SPA
-      ? <Link className="meta-item__link" to={uri(tlogUrl).path()}>
-          <span className="meta-item__ava">
-            <Avatar size={20} userpic={tlogUserpic} />
-          </span>
-        </Link>
-      : <a className="meta-item__link" href={tlogUrl}>
-          <span className="meta-item__ava">
-            <Avatar size={20} userpic={tlogUserpic} />
-          </span>
-        </a>;
+    return (
+      <Link className="meta-item__link" to={uri(tlogUrl).path()}>
+        <span className="meta-item__ava">
+          <Avatar size={20} userpic={tlogUserpic} />
+        </span>
+      </Link>
+    );
   }
 
   function authorLink() {
-    return window.SPA
-      ? <Link className="meta-item__link" to={uri(authorUrl).path()}>
-          {author.tag}
-        </Link>
-      : <a className="meta-item__link" href={authorUrl}>
-          {author.tag}
-        </a>;
+    return (
+      <Link className="meta-item__link" to={uri(authorUrl).path()}>
+        {author.tag}
+      </Link>
+    );
   }
 
   function authorPostedIn() {
-    return window.SPA
-      ? <span>
-          <Link className="meta-item__link" to={uri(authorUrl).path()}>
-            {author.tag}
-          </Link>
-          {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
-          <Link className="meta-item__link" to={uri(tlogUrl).path()}>
-            {tlog.tag}
-          </Link>
-        </span>
-      : <span>
-          <a className="meta-item__link" href={authorUrl}>
-            {author.tag}
-          </a>
-          {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
-          <a className="meta-item__link" href={tlogUrl}>
-            {tlog.tag}
-          </a>
-        </span>;
+    return (
+      <span>
+        <Link className="meta-item__link" to={uri(authorUrl).path()}>
+          {author.tag}
+        </Link>
+        {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
+        <Link className="meta-item__link" to={uri(tlogUrl).path()}>
+          {tlog.tag}
+        </Link>
+      </span>
+    );
   }
 
   function repostFrom() {
-    return window.SPA
-      ? <span>
-          {i18n.t('entry.meta.repost_from') + ' '}
-          <Link className="meta-item__link" to={uri(tlogUrl).path()}>
-            {tlog.tag}
-          </Link>
-        </span>
-      : <span>
-          {i18n.t('entry.meta.repost_from')}
-          <a className="meta-item__link" href={tlogUrl}>
-            {tlog.tag}
-          </a>
-        </span>;
+    return (
+      <span>
+        {i18n.t('entry.meta.repost_from') + ' '}
+        <Link className="meta-item__link" to={uri(tlogUrl).path()}>
+          {tlog.tag}
+        </Link>
+      </span>
+    );
   }
 
   function renderContents() {
@@ -117,7 +98,12 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
 MetabarAuthor.propTypes = {
   author: PropTypes.object,
   hostTlogId: PropTypes.number,
-  tlog: PropTypes.object.isRequired,
+  tlog: PropTypes.object,
+};
+
+MetabarAuthor.defaultProps = {
+  author: {},
+  tlog: {},
 };
 
 export default MetabarAuthor;

@@ -1,34 +1,23 @@
-import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
-import Image from '../../../../../../../shared/react/components/common/Image';
+import React, { PropTypes } from 'react';
+import Avatar from '../../../../../../../shared/react/components/common/Avatar';
+import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
-class ItemEntryPic extends Component {
-  renderPreviewImage(image) {
-    const { width, height } = image.geometry;
-    const imgHorizontal = width > height;
+function ItemEntryPic({ entry, title }) {
+  const { author, preview_image } = entry;
+  const userpic = {
+    default_colors: author.userpic.default_colors,
+    symbol: title[0],
+  };
 
-    return (
-      <div className="messages__preview-image">
-        <Image
-          image={image}
-          maxHeight={imgHorizontal ? CONVERSATION_PIC_SIZE : Infinity}
-          maxWidth={imgHorizontal ? Infinity : CONVERSATION_PIC_SIZE}
-        />
-      </div>
-    );
-  }
-  render() {
-    const { author, preview_image } = this.props.entry;
-
-    return preview_image
-      ? this.renderPreviewImage(preview_image)
-      : <UserAvatar size={CONVERSATION_PIC_SIZE} user={author} />;
-  }
+  return preview_image
+    ? <ItemEntryPreviewImage image={preview_image} />
+    : <Avatar size={CONVERSATION_PIC_SIZE} userpic={userpic} />;
 }
 
 ItemEntryPic.propTypes = {
   entry: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default ItemEntryPic;
