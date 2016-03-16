@@ -42,11 +42,11 @@ export function sendUser(user) {
 
 export function sendRegister(id) {
   if (!window.sociomantic) {
-    window.lead = { transaction: id };
+    window.lead = { transaction: id.toString() };
     return;
   }
 
   window.sociomantic.sonar.adv[advToken].clear();
-  window.lead = { transaction: id };
+  window.lead = { transaction: id.toString() };
   window.sociomantic.sonar.adv[advToken].track();
 }

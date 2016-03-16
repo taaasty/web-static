@@ -20,14 +20,14 @@ ConfirmRegistrationMixin =
         password: password
         slug:     proposedSlug
       success: (data) =>
+        redirect_url = data.tlog_url + '?first_login';
         NoticeService.notifySuccess i18n.t 'signup_success', userSlug: data.name
         ReactApp.shellbox.close()
-        sendRegister(data.id)
         if window.ga
           window.ga('send', 'event', 'Account', 'Registered', 'Email',
-                    { hitCallback: (() -> window.location.href = data.tlog_url) })
+                    { hitCallback: (() -> window.location.href = redirect_url) })
         else
-          _.defer -> window.location.href = data.tlog_url
+          _.defer -> window.location.href = redirect_url
       error: (data) =>
         if data.responseJSON && data.responseJSON.error_code is USER_EXISTS_MESSAGE
           @returnToEmail()
