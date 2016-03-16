@@ -20,6 +20,7 @@ import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
 import AppRoot from './AppRoot';
+import uri from 'urijs';
 
 function initLocales(locale, callback) {
   numeral.language(locale);
@@ -142,7 +143,7 @@ const ReactApp = {
 
       DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
       sendUser(user);
-      if (window.gon.register_provider) {
+      if (window.gon.register_provider || uri().query(true).first_login !== void 0) {
         sendRegister(user.id);
       }
     }
