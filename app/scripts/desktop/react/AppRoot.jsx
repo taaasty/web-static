@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 
+import AppPageEmpty from './components/AppPage/Empty'; // for non-spa components with toolbars
 import AppPage from './components/AppPage';
 import TlogPageRoot from './components/TlogPage/TlogPageRoot';
 import TlogPage from './components/TlogPage';
@@ -30,6 +31,8 @@ class AppRoot extends Component {
     return (
       <Provider store={store}>
         <Router history={browserHistory}>
+          <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
+          <Route path="/orders/:id/:result" component={AppPageEmpty} />
           <Route path="/" component={AppPage}>
 
             <Redirect from="~anonymous" to="live/anonymous" />

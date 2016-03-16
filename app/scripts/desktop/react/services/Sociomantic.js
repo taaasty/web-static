@@ -10,41 +10,25 @@ s.type  = 'text/javascript';
 s.async = true;
 s.src   = ( 'https:' == document.location.protocol ? 'https://' : 'http://') +
   'eu-sonar.sociomantic.com/js/2010-07-01/adpan/taaasty-ru';
-s.onload = runQueue;
 x.parentNode.insertBefore( s, x );
 
-const queue = [];
-
-function addToQueue(fn) {
-  queue.push(fn);
-}
-
-function runQueue() {
-  let fn = void 0;
-
+export function sendCategory(...args) {
   if (!window.sociomantic) {
-    return;
-  }
-  
-  while ((fn = queue.shift())) {
-    fn.call();
-  }
-}
-
-export function sendCategory(name) {
-  if (!window.sociomantic) {
-    addToQueue(sendCategory.bind(void 0, name));
+    window.product = { category: [ ...args ] };
     return;
   }
 
   window.sociomantic.sonar.adv[advToken].clear();
-  window.product = { category: [ name ] };
+  window.product = { category: [ ...args ] };
   window.sociomantic.sonar.adv[advToken].track();
 }
 
 export function sendUser(user) {
   if (!window.sociomantic) {
-    addToQueue(sendUser.bind(void 0, user));
+    window.customer = {
+      identifier: user.id.toString(),
+      mhash: user.email && sha256(user.email),
+    };
     return;
   }
 
@@ -58,7 +42,7 @@ export function sendUser(user) {
 
 export function sendRegister(id) {
   if (!window.sociomantic) {
-    addToQueue(sendRegister.bind(void 0, id));
+    window.lead = { transaction: id };
     return;
   }
 
