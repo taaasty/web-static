@@ -5,6 +5,7 @@ import {
   TLOG_ENTRIES_DELETE_ENTRY,
   TLOG_ENTRIES_ERROR,
   TLOG_ENTRIES_RESET,
+  TLOG_ENTRIES_INVALIDATE,
 } from '../actions/TlogEntriesActions';
 
 export const initialState = {
@@ -19,6 +20,7 @@ export const initialState = {
   query: '',
   isFetching: false,
   error: null,
+  invalid: false,
 };
 
 const actionMap = {
@@ -36,6 +38,7 @@ const actionMap = {
       ...data,
       isFetching: false,
       error: null,
+      invalid: false,
     };
   },
 
@@ -60,6 +63,14 @@ const actionMap = {
       ...state,
       ...error,
       isFetching: false,
+      invalid: false,
+    };
+  },
+
+  [TLOG_ENTRIES_INVALIDATE](state) {
+    return {
+      ...state,
+      invalid: true,
     };
   },
 };

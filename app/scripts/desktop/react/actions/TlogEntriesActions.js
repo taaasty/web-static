@@ -3,11 +3,12 @@ import ApiRoutes from '../../../shared/routes/api';
 import ErrorService from '../../../shared/react/services/Error';
 import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
 
-export const TLOG_ENTRIES_REQUEST = 'ENTRIES_REQUEST';
-export const TLOG_ENTRIES_RECEIVE = 'ENTRIES_RECEIVE';
-export const TLOG_ENTRIES_RESET = 'ENTRIES_RESET';
-export const TLOG_ENTRIES_DELETE_ENTRY = 'ENTRIES_DELETE_ENTRY';
-export const TLOG_ENTRIES_ERROR = 'ENTRIES_ERROR';
+export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
+export const TLOG_ENTRIES_RECEIVE = 'TLOG_ENTRIES_RECEIVE';
+export const TLOG_ENTRIES_RESET = 'TLOG_ENTRIES_RESET';
+export const TLOG_ENTRIES_DELETE_ENTRY = 'TLOG_ENTRIES_DELETE_ENTRY';
+export const TLOG_ENTRIES_ERROR = 'TLOG_ENTRIES_ERROR';
+export const TLOG_ENTRIES_INVALIDATE = 'TLOG_ENTRIES_INVALIDATE';
 
 const INITIAL_LOAD_LIMIT = 10;
 
@@ -50,10 +51,10 @@ function fetchTlogEntries(url, data) {
 
 function shouldFetchTlogEntries(state, { slug, section, date, query, sinceId }) {
   const { isFetching, date: cDate, query: cQuery, section: cSection,
-          sinceId: cSinceId, slug: cSlug } = state.tlogEntries;
+          sinceId: cSinceId, slug: cSlug, invalid } = state.tlogEntries;
 
   return !isFetching &&
-    (slug !== cSlug || date !== cDate || section !== cSection || query !== cQuery ||
+    (invalid || slug !== cSlug || date !== cDate || section !== cSection || query !== cQuery ||
      (cSinceId && sinceId == null)); // update only if reset sinceId
 }
 
@@ -111,5 +112,11 @@ export function deleteEntry(entryId) {
   return {
     type: TLOG_ENTRIES_DELETE_ENTRY,
     payload: entryId,
+  };
+}
+
+export function tlogEntriesInvalidate() {
+  return {
+    type: TLOG_ENTRIES_INVALIDATE,
   };
 }
