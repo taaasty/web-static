@@ -7,7 +7,6 @@ import AppDispatcher from '../dispatchers/dispatcher';
 import UuidService from '../../../shared/react/services/uuid';
 import ApiHelpers from '../../../shared/helpers/api';
 import BrowserHelpers from '../../../shared/helpers/browser';
-import TastyLockingAlertController from '../controllers/TastyLockingAlertController';
 
 function createBlobAttachment(image, uuid) {
   return {
@@ -252,11 +251,7 @@ let EditorActionCreators = {
         NoticeService.closeAll();
 
         function redirect() {
-          TastyLockingAlertController.show({
-            title: i18n.t('editor_alert_header'),
-            message: i18n.t('editor_create_success'),
-            action: () => resolve(entry),
-          });
+          return resolve(entry);
         }
 
         if (window.ga) {
@@ -273,11 +268,7 @@ let EditorActionCreators = {
         AppDispatcher.handleServerAction({
           type: EditorConstants.ENTRY_SAVE_SUCCESS,
         });
-        TastyLockingAlertController.show({
-          title: i18n.t('editor_alert_header'),
-          message: i18n.t('editor_edit_success'),
-          action: () => resolve(entry),
-        });
+        return resolve(entry);
       }
 
       function onFail(xhr) {
@@ -290,11 +281,11 @@ let EditorActionCreators = {
 
       // Если есть незагруженные аттачменты, ждём пока загрузка не завершится,
       // чтобы отправить данные не выводя лишних сообщений.
-      let saveInterval = setInterval(saveWhenPossible, 500);
+      let saveInterval = window.setInterval(saveWhenPossible, 500);
 
       function saveWhenPossible() {
         if (!EditorStore.isCreatingAttachments()) {
-          clearInterval(saveInterval);
+          window.clearInterval(saveInterval);
 
           const entryID = EditorStore.getEntryID();
           const data = prepareEntryData(entryType, pinEntry);

@@ -18,7 +18,7 @@ class EntryTlogMetabarActions extends Component {
 
     return (
       <DropdownActions>
-        {can_edit &&
+        {can_edit && edit_url &&
          <DropdownActionSPA
            icon="icon--pencil"
            title={i18n.t('edit_entry_item')}
@@ -137,18 +137,9 @@ class EntryTlogMetabarDelete extends Component {
     onDelete: PropTypes.func.isRequired,
   };
   render() {
-    let title, hoverTitle;
-
-    if (this.props.isWatching) {
-      title = i18n.t('watching_entry_item');
-      hoverTitle = i18n.t('stop_watch_entry_item');
-    } else {
-      title = i18n.t('start_watch_entry_item');
-    }
 
     return (
       <DropdownAction
-        hoverTitle={hoverTitle}
         icon="icon--basket"
         onClick={this.props.onDelete}
         title={i18n.t('delete_entry_item')}

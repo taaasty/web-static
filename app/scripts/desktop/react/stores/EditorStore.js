@@ -83,7 +83,7 @@ let EditorStore = Object.assign(new BaseStore(), {
 
   isCreatingAttachments() {
     return _creatingAttachments;
-  }
+  },
 });
 
 EditorStore.dispatchToken = AppDispatcher.register((payload) => {
@@ -113,7 +113,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             EntryKeeperService.restoreExistingAnonymousEntry() ||
             new NormalizedEntry({
               type: 'anonymous',
-              privacy: 'public'
+              privacy: 'public',
             })
           );
         } else {
@@ -121,7 +121,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
             EntryKeeperService.restoreExistingNewEntry() ||
             new NormalizedEntry({
               type: 'text',
-              privacy: getPrivacyByTlogType(tlogType)
+              privacy: getPrivacyByTlogType(tlogType),
             })
           );
         }
@@ -155,7 +155,12 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
       break;
 
     case Constants.editor.ENTRY_SAVE_SUCCESS:
+      _loading = false;
       EntryKeeperService.remove(_entry);
+      _entry = new NormalizedEntry({
+        type: 'text',
+        privacy: 'public',
+      });
       break;
 
     case Constants.editor.ENTRY_SAVE_ERROR:

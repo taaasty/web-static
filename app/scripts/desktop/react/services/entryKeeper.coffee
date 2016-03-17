@@ -45,14 +45,14 @@ EntryKeeper =
 
   store: (normalizedEntry) ->
     storageKey = key normalizedEntry
-    storage.setItem storageKey, JSON.stringify(normalizedEntry)
+    storage.setItem(storageKey, JSON.stringify(normalizedEntry));
 
   storeLastEntryPrivacy: (entryPrivacy) ->
     storageKey = LAST_PRIVACY_KEY
-    storage.setItem storageKey, entryPrivacy
+    storage.setItem(storageKey, entryPrivacy);
 
   remove: (normalizedEntry) ->
-    storageKey = key normalizedEntry
-    storage.removeItem storageKey
+    storageKey = key(normalizedEntry);
+    storage.removeItem(storageKey);
 
 module.exports = EntryKeeper

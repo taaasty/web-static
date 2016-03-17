@@ -33,7 +33,10 @@ EntryNormalizationService =
     attrs =
       id: entry.id
       type: entry.type
-      privacy: entry.privacy
+      privacy: if entry.is_private
+       'private'
+      else
+        if  entry.is_voteable then 'live' else 'public'
       pinOrderUrl: entry.order_url
       pinState: entry.fixed_state
       pinnedTill: entry.fixed_up_at

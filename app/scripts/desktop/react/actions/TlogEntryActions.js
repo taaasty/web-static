@@ -56,9 +56,9 @@ function fetchTlogEntry(id) {
   };
 }
 
-export function getTlogEntry(id) {
+export function getTlogEntry(id, force) {
   return (dispatch, getState) => {
-    if (shouldFetchTlogEntry(getState(), id)) {
+    if (force || shouldFetchTlogEntry(getState(), id)) {
       return dispatch(fetchTlogEntry(id));
     }
   };

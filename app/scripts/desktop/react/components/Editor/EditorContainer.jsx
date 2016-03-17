@@ -26,9 +26,18 @@ function _EditorContainer(props) {
   }
 
   function saveEntry() {
+    const { tlogEntries, tlogEntriesInvalidate } = props;
+
     EditorActionCreators.saveEntry()
       .then((entry) => {
-        browserHistory.push({ pathname: uri(entry.entry_url).path() });
+        //FIXME think through better tlogEntries update logic
+        if (entry.tlog && tlogEntries.slug === entry.tlog.slug) {
+          tlogEntriesInvalidate();
+        }
+        browserHistory.push({
+          pathname: uri(entry.entry_url).path(),
+          state: { id: entry.id, refetch: true },
+        });
       });
   }
 
@@ -54,6 +63,8 @@ _EditorContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntriesInvalidate: PropTypes.func.isRequired,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_PUBLIC,
     TLOG_TYPE_PRIVATE,

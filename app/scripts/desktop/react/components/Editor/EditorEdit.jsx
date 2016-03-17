@@ -15,13 +15,16 @@ class EditorEdit extends Component {
     EditorActionCreators.init({entry, tlog, tlogType});
   }
   render() {
-    const { backUrl, location, tlogType, togglePreview } = this.props;
+    const { backUrl, location, tlogEntries, tlogEntriesInvalidate,
+            tlogType, togglePreview } = this.props;
 
     return (
       <EditorContainer
         backUrl={backUrl}
         canChangeType={false}
         location={location}
+        tlogEntries={tlogEntries}
+        tlogEntriesInvalidate={tlogEntriesInvalidate}
         tlogType={tlogType}
         togglePreview={togglePreview}
       />
@@ -34,6 +37,8 @@ EditorEdit.propTypes = {
   entry: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntriesInvalidate: PropTypes.func.isRequired,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_PRIVATE,
     TLOG_TYPE_PUBLIC,
