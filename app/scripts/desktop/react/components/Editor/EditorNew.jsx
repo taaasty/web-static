@@ -18,13 +18,16 @@ class EditorNew extends Component {
     });
   }
   render() {
-    const { backUrl, location, tlogType, togglePreview } = this.props;
+    const { backUrl, location, tlogEntries,
+            tlogEntriesInvalidate, tlogType, togglePreview } = this.props;
 
     return (
       <EditorContainer
         backUrl={backUrl}
         canChangeType
         location={location}
+        tlogEntries={tlogEntries}
+        tlogEntriesInvalidate={tlogEntriesInvalidate}
         tlogType={tlogType}
         togglePreview={togglePreview}
       />
@@ -36,6 +39,8 @@ EditorNew.propTypes = {
   backUrl: PropTypes.string,
   location: PropTypes.object.isRequired,
   tlog: PropTypes.object,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntriesInvalidate: PropTypes.func.isRequired,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_PRIVATE,
     TLOG_TYPE_PUBLIC,

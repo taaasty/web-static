@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import EditorNew from '../Editor/EditorNew';
 import EditorEdit from '../Editor/EditorEdit';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import { appStateSetEditing } from '../../actions/AppStateActions';
 import {
-  appStateSetEditPreview,
-  appStateSetEditing,
-  appStateToggleEditPreview,
-} from '../../actions/AppStateActions';
+  editorResetEntry,
+  editorSetEntry,
+  editorSetPreview,
+  editorTogglePreview,
+} from '../../actions/EditorActions';
+import { tlogEntriesInvalidate } from '../../actions/TlogEntriesActions';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import EditorActionCreators from '../../actions/editor';
 import {
@@ -19,29 +22,55 @@ import {
 
 class EditorPage extends Component {
   componentWillMount() {
-    const { appStateSetEditing, appStateSetEditPreview, location: { hash='' } } = this.props;
+    const { appStateSetEditing, editorSetEntry, editorSetPreview,
+            location: { hash='' }, routeParams: { editId } } = this.props;
     const entryType = hash.substr(1);
 
     appStateSetEditing(true);
-    appStateSetEditPreview(false);
-    if (EDITOR_ENTRY_TYPES.indexOf(entryType) > -1) {
+    editorSetPreview(false);
+    if (editId) {
+      editorSetEntry(this.fetchEntry(editId));
+    } else if (EDITOR_ENTRY_TYPES.indexOf(entryType) > -1) {
       EditorActionCreators.changeEntryType(entryType);
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { hash: nextHash='' } = nextProps.location;
+    const { editorSetEntry, location: { hash='' }, routeParams: { editId } } = this.props;
+    const { location: { hash: nextHash='' }, routeParams: { editId: nextEditId } } = nextProps;
     const nextEntryType = nextHash.substr(1);
+    const entryType = hash.substr(1);
 
-    if (EDITOR_ENTRY_TYPES.indexOf(nextEntryType) > -1) {
+    if (nextEditId && editId !== nextEditId) {
+      editorSetEntry(this.fetchEntry(nextEditId));
+    } else if (entryType !== nextEntryType && EDITOR_ENTRY_TYPES.indexOf(nextEntryType) > -1) {
       EditorActionCreators.changeEntryType(nextEntryType);
     }
   }
   componentWillUnmount() {
-    this.props.appStateSetEditing(false);
+    const { appStateSetEditing, editorResetEntry } = this.props;
+
+    appStateSetEditing(false);
+    editorResetEntry();
+  }
+  fetchEntry(strId) {
+    try {
+      const id = parseInt(strId, 10);
+      const { tlogEntries: { data: { items } }, tlogEntry } = this.props;
+
+      if (tlogEntry && tlogEntry.id === id) {
+        return tlogEntry;
+      } else {
+        const found = items.filter(({ entry }) => entry.id === id);
+
+        return found.length ? found[0].entry : null;
+      }
+    } catch(e) {
+      return null;
+    }
   }
   render() {
-    const { appStateToggleEditPreview, location, routeParams: { editId },
-            tlog: { data: tlog, isFetching }, tlogEntry } = this.props;
+    const { entry, editorTogglePreview, location, routeParams: { editId },
+            tlog: { data: tlog, isFetching }, tlogEntries, tlogEntriesInvalidate } = this.props;
     const tlogType = tlog.slug === TLOG_SLUG_ANONYMOUS
             ? TLOG_TYPE_ANONYMOUS
             : tlog.is_privacy ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
@@ -54,18 +83,24 @@ class EditorPage extends Component {
             {isFetching
              ? <Spinner size={30} />
              : editId
-               ? <EditorEdit
-                   entry={tlogEntry}
-                   location={location}
-                   tlog={tlog}
-                   tlogType={tlogType}
-                   togglePreview={appStateToggleEditPreview}
-                 />
+               ? entry
+                 ? <EditorEdit
+                     entry={entry}
+                     location={location}
+                     tlog={tlog}
+                     tlogEntries={tlogEntries}
+                     tlogEntriesInvalidate={tlogEntriesInvalidate}
+                     tlogType={tlogType}
+                     togglePreview={editorTogglePreview}
+                   />
+                 : <Spinner size={30} />
                : <EditorNew
                    location={location}
                    tlog={tlog}
+                   tlogEntries={tlogEntries}
+                   tlogEntriesInvalidate={tlogEntriesInvalidate}
                    tlogType={tlogType}
-                   togglePreview={appStateToggleEditPreview}
+                   togglePreview={editorTogglePreview}
                  />
             }
           </div>
@@ -78,22 +113,33 @@ class EditorPage extends Component {
 EditorPage.displayName = 'EditorPage';
 
 EditorPage.propTypes = {
-  appStateSetEditPreview: PropTypes.func.isRequired,
   appStateSetEditing: PropTypes.func.isRequired,
-  appStateToggleEditPreview: PropTypes.func.isRequired,
+  editorResetEntry: PropTypes.func.isRequired,
+  editorSetEntry: PropTypes.func.isRequired,
+  editorSetPreview: PropTypes.func.isRequired,
+  editorTogglePreview: PropTypes.func.isRequired,
+  entry: PropTypes.object,
   location: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
-  tlogEntry: PropTypes.object,
+  tlogEntries: PropTypes.object.isRequired,
+  tlogEntriesInvalidate: PropTypes.func.isRequired,
+  tlogEntry: PropTypes.object.isRequired,
 };
 
 export default connect(
   (state) => ({
+    entry: state.editor.entry,
     tlog: state.tlog,
+    tlogEntries: state.tlogEntries,
+    tlogEntry: state.tlogEntry.data,
   }),
   {
     appStateSetEditing,
-    appStateSetEditPreview,
-    appStateToggleEditPreview,
+    editorResetEntry,
+    editorSetEntry,
+    editorSetPreview,
+    editorTogglePreview,
+    tlogEntriesInvalidate,
   }
 )(EditorPage);

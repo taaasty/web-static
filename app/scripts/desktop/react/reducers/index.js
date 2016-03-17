@@ -2,6 +2,7 @@ import appState from './appState';
 import appStats from './appStats';
 import calendar from './calendar';
 import currentUser from './currentUser';
+import editor from './editor';
 import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
@@ -17,6 +18,7 @@ export default {
   appStats,
   calendar,
   currentUser,
+  editor,
   feedEntries,
   feedStatus,
   flow,

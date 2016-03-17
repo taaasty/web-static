@@ -114,7 +114,7 @@ TlogPageRoot.propTypes = {
 export default connect(
   (state) => ({
     editing: state.appState.data.editing,
-    editPreview: state.appState.data.editPreview,
+    editPreview: state.editor.preview,
     tlog: state.tlog.data,
   }),
   { getTlog }
