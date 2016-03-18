@@ -16,6 +16,8 @@ import FlowsPage from './components/FlowsPage';
 import PeoplePage from './components/PeoplePage';
 import EditorPage from './components/EditorPage';
 
+import { feedStatusConnect } from './services/FeedStatusService';
+
 import PopupActions from './actions/popup';
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -27,6 +29,7 @@ class AppRoot extends Component {
   componentWillMount() {
     window.SPA = true;
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
+    feedStatusConnect(store.getState().currentUser.data, store);
   }
   render() {
     return (
