@@ -43,7 +43,7 @@ class EntryPageContainer extends Component {
       const entry = entries[0];
 
       if (entry) {
-        setTlogEntry(entry.entry);
+        setTlogEntry(entry);
       } else {
         getTlogEntry(newId);
       }

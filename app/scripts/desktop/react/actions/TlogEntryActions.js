@@ -35,8 +35,8 @@ export function resetTlogEntry() {
   };
 }
 
-export function setTlogEntry(data) {
-  return tlogEntryReceive({ data, id: data.id });
+export function setTlogEntry({ entry, commentator }) {
+  return tlogEntryReceive({ data: { ...entry, commentator }, id: entry.id });
 }
 
 function shouldFetchTlogEntry(state, id) {
