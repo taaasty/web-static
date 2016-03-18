@@ -1,24 +1,13 @@
-/*global gon, AppStorage */
+/*global AppStorage */
 import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import {
-  feedAnonymousNewEntry,
-  feedBestNewEntry,
-  feedFriendsNewEntry,
-  feedLiveNewEntry,
-  feedLiveFlowNewEntry,
-} from '../../actions/FeedStatusActions';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
 import { connect } from 'react-redux';
-import ApiRoutes from '../../../../shared/routes/api';
-import Pusher from 'pusher';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
-const PUSHER_NEW_ENTRY = 'new_entry';
 const bodyClassName = 'main-toolbar-open';
-
 const STORAGE_KEY = 'states:mainToolbarOpened';
 
 class UserToolbarContainer extends Component {
@@ -29,7 +18,6 @@ class UserToolbarContainer extends Component {
   };
   componentWillMount() {
     document.body.classList[this.state.opened ? 'add' : 'remove'](bodyClassName);
-    this.connectToPusher();
   }
   componentDidMount() {
     this.scrollHandler = this.onDocumentScroll.bind(this);
@@ -37,47 +25,6 @@ class UserToolbarContainer extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.scrollHandler);
-  }
-  connectToPusher() {
-    if (!(gon.pusher && gon.pusher.key)) {
-      return;
-    }
-
-    const { currentUser, feedAnonymousNewEntry, feedBestNewEntry,
-            feedFriendsNewEntry, feedLiveNewEntry, feedLiveFlowNewEntry } = this.props;
-    const userToken = currentUser.api_key && currentUser.api_key.access_token;
-    const authOptions = userToken
-            ? {
-                auth: {
-                  headers: {
-                    'X-User-Token': userToken,
-                  },
-                },
-              }
-            : null;
-
-    const pusher = new Pusher(gon.pusher.key, {
-      authEndpoint: ApiRoutes.pusher_auth_url(),
-      pong_timeout: 6000,
-      unavailable_timeout: 2000,
-      ...authOptions,
-    });
-
-    const channelLive = pusher.subscribe('live');
-    const channelBest = pusher.subscribe('best');
-    const channelAnonymous = pusher.subscribe('anonymous');
-    const channelLiveFlow = pusher.subscribe('live_flow_entries');
-
-    channelLive.bind(PUSHER_NEW_ENTRY, feedLiveNewEntry);
-    channelBest.bind(PUSHER_NEW_ENTRY, feedBestNewEntry);
-    channelAnonymous.bind(PUSHER_NEW_ENTRY, feedAnonymousNewEntry);
-    channelLiveFlow.bind(PUSHER_NEW_ENTRY, feedLiveFlowNewEntry);
-
-    if (userToken && currentUser.id) {
-      const channelFriends = pusher.subscribe(`private-${currentUser.id}-friends`);
-
-      channelFriends.bind(PUSHER_NEW_ENTRY, feedFriendsNewEntry);
-    }
   }
   toggleOpenness() {
     (!this.state.opened ? this.open() : this.close());
@@ -179,11 +126,6 @@ class UserToolbarContainer extends Component {
 
 UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  feedAnonymousNewEntry: PropTypes.func.isRequired,
-  feedBestNewEntry: PropTypes.func.isRequired,
-  feedFriendsNewEntry: PropTypes.func.isRequired,
-  feedLiveFlowNewEntry: PropTypes.func.isRequired,
-  feedLiveNewEntry: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   searchKey: PropTypes.oneOf(SEARCH_KEYS).isRequired,
   unreadAnonymousCount: PropTypes.number.isRequired,
@@ -211,13 +153,6 @@ export default connectToStores(
         currentUser: state.currentUser.data,
         searchKey: state.appState.data.searchKey,
       };
-    },
-    {
-      feedAnonymousNewEntry,
-      feedBestNewEntry,
-      feedFriendsNewEntry,
-      feedLiveNewEntry,
-      feedLiveFlowNewEntry,
     }
   )(UserToolbarContainer),
   [ MessagingStatusStore ],
