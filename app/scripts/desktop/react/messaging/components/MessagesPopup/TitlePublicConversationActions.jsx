@@ -48,27 +48,18 @@ class TitlePublicConversationActions extends Component {
       return <noscript />;
     }
 
-    const { can_watch, is_watching } = this.state.conversation.entry;
     const disturb = false;
 
     return (
       <div className="messages__popup-title-actions">
         <DropdownActions ref="dropdown">
-          {false && <DropdownAction
+          <DropdownAction
             hoverTitle={disturb && i18n.t('messenger.title_actions') || null}
             icon="icon--bell"
             key="dont-disturb"
             onClick={this.disturb.bind(this, !disturb)}
             title={i18n.t('messenger.title_actions.dont_disturb')}
-          />}
-          {can_watch &&
-          <DropdownAction
-            hoverTitle={is_watching && i18n.t('stop_watch_entry_item')}
-            icon="icon--comments-subscribe"
-            key="watch"
-            onClick={this.handleClickWatch.bind(this)}
-            title={i18n.t(is_watching ? 'watching_entry_item' : 'start_watch_entry_item')}
-          />}
+          />
           <DropdownAction
             icon="icon--double-tick"
             key="select-mode"
