@@ -35,7 +35,7 @@ export function sendUser(user) {
   window.sociomantic.sonar.adv[advToken].clear();
   window.customer = {
     identifier: user.id.toString(),
-    mhash: user.email && sha256(user.email),
+    mhash: user.email && sha256(user.email) || void 0,
   };
   window.sociomantic.sonar.adv[advToken].track();
 }
