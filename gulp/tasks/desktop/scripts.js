@@ -268,3 +268,13 @@ gulp.task('[D][P] GA', () => {
       bundleLogger.end(outputName);
     });
 });
+
+gulp.task('[D][P] AdBlock', () => {
+  const { entries, dest } = config.production.adblock;
+
+  bundleLogger.start('AdBlock');
+
+  return gulp.src(entries)
+    .pipe(gulp.dest(dest))
+    .on('end', () => bundleLogger.end('AdBlock'));
+});
