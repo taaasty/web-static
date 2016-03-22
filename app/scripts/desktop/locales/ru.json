@@ -646,8 +646,8 @@
   },
   "messenger": {
     "title_actions": {
-      "disturb": "Беспокоить",
-      "dont_disturb": "Не беспокоить",
+      "disturb": "Включить уведомления",
+      "dont_disturb": "Отключить уведомления",
       "start_select_mode": "Выбрать сообщения",
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",

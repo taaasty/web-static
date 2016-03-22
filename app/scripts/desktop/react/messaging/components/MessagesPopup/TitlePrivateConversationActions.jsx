@@ -2,12 +2,23 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
+import ConversationsStore from '../../stores/ConversationsStore';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 
 class TitlePrivateConversationActions extends Component {
-  disturb(flag) {
-    ConversationActions.disturb(this.props.conversation.id, flag);
+  componentWillMount() {
+    this.syncStateWithStore = () => this.setState({
+      conversation: ConversationsStore.getConversation(this.props.conversation.id),
+    });
+    this.syncStateWithStore();
+    ConversationsStore.addChangeListener(this.syncStateWithStore);
+  }
+  componentWillUnmount() {
+    ConversationsStore.removeChangeListener(this.syncStateWithStore);
+  }
+  dontDisturb(flag) {
+    ConversationActions.dontDisturb(this.props.conversation.id, flag);
   }
   startSelect() {
     this.refs.dropdown.setClose();
@@ -21,18 +32,17 @@ class TitlePrivateConversationActions extends Component {
       });
   }
   render() {
-    const disturb = false;
+    const { not_disturb } = this.state.conversation;
 
     return (
       <div className="messages__popup-title-actions">
         <DropdownActions ref="dropdown">
-          {false && <DropdownAction
-            hoverTitle={disturb && i18n.t('messenger.title_actions') || null}
+          <DropdownAction
             icon="icon--bell"
             key="dont-disturb"
-            onClick={this.disturb.bind(this, !disturb)}
-            title={i18n.t('messenger.title_actions.dont_disturb')}
-          />}
+            onClick={this.dontDisturb.bind(this, !not_disturb)}
+            title={i18n.t(`messenger.title_actions.${not_disturb ? 'disturb' : 'dont_disturb'}`)}
+          />
           <DropdownAction
             icon="icon--double-tick"
             key="select-mode"

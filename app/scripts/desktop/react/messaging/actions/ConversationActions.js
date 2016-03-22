@@ -51,8 +51,8 @@ const ConversationActions = {
       });
   },
 
-  disturb() {
-    return null;
+  dontDisturb(id, flag) {
+    return messagingService.dontDisturb(id, flag);
   },
 
   postNewConversation({recipientId, error}) {

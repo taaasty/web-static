@@ -14,6 +14,7 @@ import PadController from './controllers/pad';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import PostAuthService from './services/PostAuthService';
+import MessagingService from './messaging/MessagingService';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
@@ -110,9 +111,7 @@ const ReactApp = {
       window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser || {};
       window.STATE_FROM_SERVER.currentUser.data = user; //REDUX
       CurrentUserDispatcher.setupUser(user);
-      window.messagingService = new MessagingService({
-        user: CurrentUserStore.getUser(),
-      });
+      window.messagingService = new MessagingService(user);
 
       DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
       sendUser(user);
