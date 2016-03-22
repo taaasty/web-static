@@ -17,8 +17,8 @@ class TitlePrivateConversationActions extends Component {
   componentWillUnmount() {
     ConversationsStore.removeChangeListener(this.syncStateWithStore);
   }
-  disturb(flag) {
-    ConversationActions.disturb(this.props.conversation.id, flag);
+  dontDisturb(flag) {
+    ConversationActions.dontDisturb(this.props.conversation.id, flag);
   }
   startSelect() {
     this.refs.dropdown.setClose();
@@ -32,7 +32,7 @@ class TitlePrivateConversationActions extends Component {
       });
   }
   render() {
-    const { disturb } = this.state.conversation;
+    const { not_disturb } = this.state.conversation;
 
     return (
       <div className="messages__popup-title-actions">
@@ -40,8 +40,8 @@ class TitlePrivateConversationActions extends Component {
           <DropdownAction
             icon="icon--bell"
             key="dont-disturb"
-            onClick={this.disturb.bind(this, !disturb)}
-            title={i18n.t(`messenger.title_actions.${disturb ? 'dont_disturb' : 'disturb'}`)}
+            onClick={this.dontDisturb.bind(this, !not_disturb)}
+            title={i18n.t(`messenger.title_actions.${not_disturb ? 'disturb' : 'dont_disturb'}`)}
           />
           <DropdownAction
             icon="icon--double-tick"

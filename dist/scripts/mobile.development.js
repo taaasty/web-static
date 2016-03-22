@@ -15505,6 +15505,9 @@ ApiRoutes = {
   messengerConversationsByUserIds: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_ids.json";
   },
+  messengerDontDisturb: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/not_disturb";
+  },
   notificationsUrl: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";
   },
