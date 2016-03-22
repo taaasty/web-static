@@ -1,9 +1,17 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import FlowsNav from './FlowsNav';
 import FlowBricks from './FlowBricks';
 import HeroFlows from './HeroFlows';
-import { appendFlows, flowsData, getFlowsIfNeeded } from '../../actions/FlowsActions';
+import {
+  appendFlows,
+  flowsData,
+  getFlowsIfNeeded,
+  navFilters,
+  navFiltersUnauth,
+} from '../../actions/FlowsActions';
 
 class FlowsPage extends Component {
   componentWillMount() {
@@ -18,16 +26,19 @@ class FlowsPage extends Component {
   render() {
     const { appendFlows, currentUser, flows: { data: { items, has_more }, isFetching }, location } = this.props;
     const { filterIdx } = flowsData(location);
+    const filters = !!currentUser.id ? navFilters : navFiltersUnauth;
+    const title = i18n.t('hero.flows') + ' - ' + i18n.t(`nav_filters.flows.${filters[filterIdx]}`);
 
     return (
       <div className="page__inner">
+        <Helmet title={title} />
         <div className="page__paper">
           <header className="page-header">
             <HeroFlows />
           </header>
           <div className="page-body">
             <div className="layout-outer">
-              <FlowsNav active={filterIdx} isLogged={!!currentUser.id} />
+              <FlowsNav active={filterIdx} filters={filters} />
               <FlowBricks
                 canLoad={!isFetching && !!has_more}
                 currentUser={currentUser}

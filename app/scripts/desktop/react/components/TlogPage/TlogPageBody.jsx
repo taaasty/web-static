@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import EntryTlogsContainer from '../EntryTlogs';
 import PreviousEntriesButton from '../common/PreviousEntriesButton';
 import TlogPagePagination from './TlogPagePagination';
@@ -17,12 +18,6 @@ import {
 } from '../../../../shared/constants/Tlog';
 
 class TlogPageBody extends Component {
-  componentWillMount() {
-    
-  }
-  componentWillReceiveProps(nextProps) {
-    
-  }
   date2path(slug, date=''){
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
@@ -98,10 +93,18 @@ class TlogPageBody extends Component {
     }
   }
   render() {
-    const { bgStyle, sinceId, tlog: { data: { author, tlog_url } } } = this.props;
+    const { bgStyle, sinceId, tlog: { data: { author, tlog_url } },
+            tlogEntries: { section } } = this.props;
+    const title = [
+      author.tag,
+      section === TLOG_SECTION_PRIVATE
+        ? ' - ' + i18n.t('tlog.title_private')
+        : section === TLOG_SECTION_FAVORITE ? ' - ' + i18n.t('tlog.title_favorite') : '',
+    ].join('');
 
     return (
       <div className="page-body">
+        <Helmet title={title} />
         {author.id && !!sinceId && <PreviousEntriesButton href={tlog_url} />}
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />

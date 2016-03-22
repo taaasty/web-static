@@ -1,4 +1,6 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import EntryTlogsContainer from '../EntryTlogs';
 import EntryBricksContainer from '../EntryBricks';
 import FeedFilters from '../FeedFilters';
@@ -66,11 +68,12 @@ class FlowPageBody extends Component {
     );
   }
   render() {
-    const { flow: { viewStyle }, location,
+    const { flow: { data: { name }, viewStyle }, location,
             tlogEntries: { data: { items }, isFetching } } = this.props;
 
     return (
       <div className="page-body">
+        <Helmet title={name} />
         <div className="layout-outer">
           <FeedFilters
             location={location}
