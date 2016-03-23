@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import EditorNew from '../Editor/EditorNew';
 import EditorEdit from '../Editor/EditorEdit';
@@ -77,6 +78,7 @@ class EditorPage extends Component {
 
     return (
       <div className="page-body">
+        <Helmet title={i18n.t('editor.title')} />
         <div className="content-area">
           <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
           <div className="content-area__inner">

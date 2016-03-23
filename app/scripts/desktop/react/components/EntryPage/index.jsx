@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import uri from 'urijs';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
@@ -58,12 +59,18 @@ class EntryPageContainer extends Component {
     this.props.deleteEntry(id);
     browserHistory.goBack();
   }
+  title(entry) {
+    return entry.title_truncated ||
+           entry.text_truncated ||
+           (entry.author && entry.author.tag);
+  }
   renderFlowEntry() {
     const { currentUser, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.data.design.feedOpacity };
 
     return (
       <div className="page-body">
+        <Helmet title={this.title(tlogEntry.data)} />
         <div className="layout-outer">
           <div className="content-area">
             <div className="content-area__bg" style={bgStyle} />
@@ -91,6 +98,7 @@ class EntryPageContainer extends Component {
 
     return (
       <div className="page-body">
+        <Helmet title={this.title(tlogEntry.data)} />
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">

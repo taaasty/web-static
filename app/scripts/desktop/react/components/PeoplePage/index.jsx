@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { getPeopleIfNeeded } from '../../actions/PeopleActions';
 import { appStateSetSearchKey } from '../../actions/AppStateActions';
@@ -41,6 +42,7 @@ class PeoplePage extends Component {
     return (
       <div className="page__inner">
         <div className="page__pager">
+          <Helmet title={i18n.t('people.title') + ' - ' + i18n.t(`people.${sort}.title`)} />
           <FeedHeader
             bgImage={currentUser.design && currentUser.design.backgroundImageUrl}
             text={i18n.t(`people.${sort}.text`)}

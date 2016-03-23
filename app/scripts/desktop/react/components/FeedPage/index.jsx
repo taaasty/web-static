@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import FeedHeader from '../common/FeedHeader';
 import FeedPageBody from './FeedPageBody';
@@ -169,6 +170,7 @@ class FeedPage extends Component {
 
     return (
       <div className="page__inner">
+        <Helmet title={i18n.t(title)} />
         <div className="page__paper">
           <FeedHeader
             bgImage={currentUser.data.design && currentUser.data.design.backgroundImageUrl}

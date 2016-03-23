@@ -397,7 +397,12 @@
   "signin_success": "Welcome, {{userSlug}}! Wait, i am restarting...",
   "browser_support_update_to": "You have unsupported version of browser ({{browserName}} {{browserVersion}}), upgrade to",
   "browser_support_last_version": "last version",
+  "editor" : {
+    "title": "Post editor"
+  },
   "tlog": {
+    "title_favorite": "favorite",
+    "title_private": "private",
     "error_invalid_date": "Invalid date",
     "entries_count": "{{count}} entry",
     "entries_count_plural": "{{count}} entries",
@@ -470,6 +475,7 @@
     "query_empty": "Nothing found for '{{query}}' search queryt"
   },
   "people": {
+    "title": "People",
     "empty": "There is nobody here",
     "query_empty": "Nobody found for '{{query}}' search query",
     "posts": {
