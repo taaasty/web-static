@@ -17,7 +17,11 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
 
   return (
     <div className="toolbar__drops">
-      <Tooltip placement="left" title={i18n.t('toolbar_new_text_entry', { context })}>
+      <Tooltip
+        container=".toolbar__drops"
+        placement="left"
+        title={i18n.t('toolbar_new_text_entry', { context })}
+      >
         <div className="toolbar__drop">
           <Link
             className="button button--circle button--emerald"
@@ -27,7 +31,11 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
           </Link>
         </div>
       </Tooltip>
-      <Tooltip placement="left" title={i18n.t('toolbar_new_image_entry', { context })}>
+      <Tooltip
+        container=".toolbar__drops"
+        placement="left"
+        title={i18n.t('toolbar_new_image_entry', { context })}
+      >
         <div className="toolbar__drop">
           <Link
             className="button button--circle button--emerald"
@@ -37,7 +45,11 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
           </Link>
         </div>
       </Tooltip>
-      <Tooltip placement="left" title={i18n.t('toolbar_new_anonymous_entry')}>
+      <Tooltip
+        container=".toolbar__drops"
+        placement="left"
+        title={i18n.t('toolbar_new_anonymous_entry')}
+      >
         <div className="toolbar__drop">
           <Link
             className="button button--circle button--emerald"
@@ -47,7 +59,11 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
           </Link>
         </div>
       </Tooltip>
-      <Tooltip placement="left" title={i18n.t('toolbar_new_flow')}>
+      <Tooltip
+        container=".toolbar__drops"
+        placement="left"
+        title={i18n.t('toolbar_new_flow')}
+      >
         <div className="toolbar__drop">
           <a
             className="button button--circle button--emerald"
