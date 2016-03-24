@@ -5,6 +5,7 @@ import DropdownAction from '../../../components/common/DropdownAction';
 import ConversationsStore from '../../stores/ConversationsStore';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import TastyConfirmController from '../../../controllers/TastyConfirmController';
 
 class TitlePrivateConversationActions extends Component {
   componentWillMount() {
@@ -25,13 +26,23 @@ class TitlePrivateConversationActions extends Component {
     MessagesPopupActions.startSelect();
   }
   deleteConversation() {
-    ConversationActions
-      .deleteConversation(this.props.conversation.id)
-      .then(() => {
-        return MessagesPopupActions.openConversationList();
-      });
+    TastyConfirmController.show({
+      message: i18n.t('messenger.confirm.leave_text'),
+      acceptButtonText: i18n.t('messenger.confirm.leave_button'),
+      onAccept: () => {
+        ConversationActions
+          .deleteConversation(this.props.conversation.id)
+          .then(() => {
+            return MessagesPopupActions.openConversationList();
+          });
+      },
+    });
   }
   render() {
+    if (!this.state.conversation) {
+      return <noscript />;
+    }
+
     const { not_disturb } = this.state.conversation;
 
     return (

@@ -156,7 +156,6 @@ require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
 
 require './react/controllers/tasty_events'
-require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
 
 require './react/controllers/shellbox'
