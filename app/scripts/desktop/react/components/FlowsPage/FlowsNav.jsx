@@ -2,11 +2,8 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router';
-import { navFilters, navFiltersUnauth } from '../../actions/FlowsActions';
 
-function FlowsNav({ active, isLogged }) {
-  const filters = isLogged ? navFilters : navFiltersUnauth;
-
+function FlowsNav({ active, filters }) {
   return (
     <nav className="filter-nav">
       <ul className="filter-nav__list">
@@ -31,7 +28,7 @@ FlowsNav.displayName = 'FlowsNav';
 
 FlowsNav.propTypes = {
   active: PropTypes.number.isRequired,
-  isLogged: PropTypes.bool.isRequired,
+  filters: PropTypes.bool.isRequired,
 };
 
 export default FlowsNav;

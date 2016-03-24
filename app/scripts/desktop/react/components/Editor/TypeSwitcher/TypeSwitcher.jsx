@@ -1,84 +1,82 @@
-import classnames from 'classnames';
+/*global i18n */
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import EditorTypeSwitcherItem from './TypeSwitcherItem';
+import {
+  EDITOR_ENTRY_TYPE_TEXT,
+  EDITOR_ENTRY_TYPE_ANONYMOUS,
+  EDITOR_ENTRY_TYPE_IMAGE,
+  EDITOR_ENTRY_TYPE_INSTAGRAM,
+  EDITOR_ENTRY_TYPE_MUSIC,
+  EDITOR_ENTRY_TYPE_VIDEO,
+  EDITOR_ENTRY_TYPE_QUOTE,
+  EDITOR_ENTRY_TYPES,
+} from '../../../constants/EditorConstants';
 
-let AVAILABLE_TYPES = ['text', 'image', 'instagram', 'music', 'video', 'quote'];
-let ENTRY_TYPES = {
-  text: {
+const typeMap = {
+  [EDITOR_ENTRY_TYPE_TEXT]: {
     title: () => i18n.t('editor_text_type'),
-    icon: 'icon--text-circle'
+    icon: 'icon--text-circle',
   },
-  anonymous: {
+  [EDITOR_ENTRY_TYPE_ANONYMOUS]: {
     title: () => i18n.t('editor_anonymous_type'),
-    icon: 'icon--text-circle'
+    icon: 'icon--text-circle',
   },
-  image: {
+  [EDITOR_ENTRY_TYPE_IMAGE]: {
     title: () => i18n.t('editor_image_type'),
-    icon: 'icon--image-circle'
+    icon: 'icon--image-circle',
   },
-  instagram: {
+  [EDITOR_ENTRY_TYPE_INSTAGRAM]: {
     title: () => i18n.t('editor_instagram_type'),
-    icon: 'icon--instagram-circle'
+    icon: 'icon--instagram-circle',
   },
-  music: {
+  [EDITOR_ENTRY_TYPE_MUSIC]: {
     title: () => i18n.t('editor_music_type'),
-    icon: 'icon--music-circle'
+    icon: 'icon--music-circle',
   },
-  video: {
+  [EDITOR_ENTRY_TYPE_VIDEO]: {
     title: () => i18n.t('editor_video_type'),
-    icon: 'icon--video-circle'
+    icon: 'icon--video-circle',
   },
-  quote: {
+  [EDITOR_ENTRY_TYPE_QUOTE]: {
     title: () => i18n.t('editor_quote_type'),
-    icon: 'icon--quote-circle'
-  }
+    icon: 'icon--quote-circle',
+  },
 };
 
-let EditorTypeSwitcher = React.createClass({
-  propTypes: {
-    entryType: React.PropTypes.string.isRequired,
-    canChangeType: React.PropTypes.bool.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    onChangeType: React.PropTypes.func.isRequired
-  },
+function EditorTypeSwitcher({ canChangeType, entryType, loading, location }) {
+  const switcherClasses = classNames('nav-types', {
+    'state--loading': loading,
+  });
 
-  render() {
-    let switcherClasses = classnames('nav-types', {
-      'state--loading': this.props.loading
-    });
+  return (
+    <nav className={switcherClasses}>
+      {canChangeType
+       ? EDITOR_ENTRY_TYPES.map((type) =>
+         <EditorTypeSwitcherItem
+           active={entryType === type}
+           icon={typeMap[type].icon}
+           key={type}
+           location={location}                  
+           title={typeMap[type].title()}
+           type={type}
+         />)
+       : <EditorTypeSwitcherItem
+           active
+           icon={typeMap[entryType].icon}
+           location={location}
+           title={typeMap[entryType].title()}
+         />
+      }
+    </nav>
+  );
+}
 
-    return (
-      <nav className={switcherClasses}>
-        {this.renderListItems()}
-      </nav>
-    );
-  },
-
-  renderListItems() {
-    let listItems;
-
-    if (this.props.canChangeType) {
-      listItems = AVAILABLE_TYPES.map((type) =>
-        <EditorTypeSwitcherItem
-            title={ENTRY_TYPES[type].title()}
-            icon={ENTRY_TYPES[type].icon}
-            active={this.props.entryType === type}
-            onClick={this.changeType.bind(null, type)}
-            key={type} />
-      );
-    } else {
-      listItems = <EditorTypeSwitcherItem
-          title={ENTRY_TYPES[this.props.entryType].title()}
-          icon={ENTRY_TYPES[this.props.entryType].icon}
-          active={true} />
-    }
-
-    return listItems;
-  },
-
-  changeType(type) {
-    if (this.props.loading) { return; }
-    this.props.onChangeType(type);
-  }
-});
+EditorTypeSwitcher.propTypes = {
+  canChangeType: PropTypes.bool.isRequired,
+  entryType: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+};
 
 export default EditorTypeSwitcher;

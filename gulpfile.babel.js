@@ -10,7 +10,7 @@ gulp.task('dist', (cb) => {
     ['[S] Clean'],
     ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts',
      '[M][P] Scripts', '[M][P] Components scripts', '[M][P] Styles', '[M][P] Locales', '[M][D] Scripts',
-     '[D][P] GA'],
+     '[D][P] GA', '[D][P] AdBlock'],
     ['[D] Dist tests', '[M] Dist tests'],
   cb);
 });

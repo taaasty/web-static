@@ -365,4 +365,9 @@ DesignPreviewService =
 
     sheet.addRules rule(value)
 
+  reset: ->
+    sheet.detach();
+    sheet.attach();
+    sheet.element.setAttribute('design-settings-sheet', '');
+
 module.exports = DesignPreviewService

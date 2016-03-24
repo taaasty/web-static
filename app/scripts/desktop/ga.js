@@ -10,6 +10,10 @@ if (gon && gon.user && gon.user.id) {
 }
 ga('send', 'pageview');
 
+if (!('ablock' in window)) {
+  ga('send', 'event', 'AdBlock', 'Yes', { 'nonInteraction': 1 });
+}
+
 if (gon) {
   if (gon.http_code === 404) {
     ga('send', 'event', '404Error', document.location.href, document.referrer, { 'nonInteraction': 1 });

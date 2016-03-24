@@ -14,6 +14,9 @@ import EntryPage from './components/EntryPage';
 import FeedPage from './components/FeedPage';
 import FlowsPage from './components/FlowsPage';
 import PeoplePage from './components/PeoplePage';
+import EditorPage from './components/EditorPage';
+
+import { feedStatusConnect } from './services/FeedStatusService';
 
 import PopupActions from './actions/popup';
 
@@ -26,6 +29,7 @@ class AppRoot extends Component {
   componentWillMount() {
     window.SPA = true;
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
+    feedStatusConnect(store.getState().currentUser.data, store);
   }
   render() {
     return (
@@ -34,10 +38,12 @@ class AppRoot extends Component {
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
           <Route path="/" component={AppPage}>
-
             <Redirect from="~anonymous" to="live/anonymous" />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />
+              <Route path="edit/:editId" component={EditorPage} />
+              <Route path="new" component={EditorPage} />
+              <Route path="anonymous/new" component={EditorPage} />
               <Route
                   path="design_settings"
                   component={TlogPage}

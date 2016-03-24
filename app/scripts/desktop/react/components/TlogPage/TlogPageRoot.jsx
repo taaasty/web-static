@@ -16,28 +16,57 @@ class TlogPageRoot extends Component {
     this.props.getTlog(this.slug(this.props));
   }
   componentDidMount() {
+    const { tlog, editing, editPreview } = this.props;
+
     if (this.isFlow(this.props)) {
       document.body.className = 'layout--feed';
     } else {
       document.body.className = 'layout--tlog';
-      DesignPreviewService.apply(this.props.tlog.design);
+      DesignPreviewService.apply(tlog.design);
+      if (editing) {
+        this.setEditorBodyClasses(editPreview);
+      }
     }
   }
   componentWillReceiveProps(nextProps) {
+    const { tlog, editing, editPreview } = nextProps;
     this.props.getTlog(this.slug(nextProps));
 
     if (this.isFlow(nextProps)) {
       document.body.className = 'layout--feed';
-    } else if (this.props.tlog.design !== nextProps.tlog.design) {
-      document.body.className = 'layout--tlog';
-      DesignPreviewService.apply(nextProps.tlog.design);
+    } else {
+      if (this.props.tlog.design !== tlog.design) {
+        document.body.className = 'layout--tlog';
+        DesignPreviewService.apply(tlog.design);
+      }
+
+      if (editing) {
+        this.setEditorBodyClasses(editPreview);
+      } else {
+        document.body.classList.remove('tlog-mode-minimal');
+        document.body.classList.remove('tlog-mode-full');
+      }
+    }
+  }
+  componentWillUnmount() {
+    DesignPreviewService.reset();
+  }
+  setEditorBodyClasses(preview) {
+    if (preview) {
+      document.body.classList.remove('tlog-mode-minimal');
+      document.body.classList.add('tlog-mode-full');
+    } else {
+      document.body.classList.remove('tlog-mode-full');
+      document.body.classList.add('tlog-mode-minimal');
     }
   }
   isFlow(props) {
     return props.tlog.author && props.tlog.author.is_flow;
   }
-  slug({ params }) {
-    return params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+  slug({ params, location }) {
+    return (/anonymous\/new/).test(location.pathname)
+      ? TLOG_SLUG_ANONYMOUS
+      : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
   }
   shareImg(user) {
     return (user && user.userpic && user.userpic.original_url)
@@ -45,7 +74,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { children, params, tlog } = this.props;
+    const { children, editing, params, tlog } = this.props;
     const { author, design: { backgroundImageUrl }, slug, tlog_url } = tlog;
     const isFlow = this.isFlow(this.props);
     
@@ -60,8 +89,8 @@ class TlogPageRoot extends Component {
            </header>
            {children}
         </div>
-        <Calendar isEntry={!!params.entryPath} />
-        {!isFlow &&
+        {!editing && <Calendar isEntry={!!params.entryPath} />}
+        {(!isFlow && !editing) &&
          <SocialShare
            img={this.shareImg(author)}
            title={slug}
@@ -77,6 +106,8 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  editPreview: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   getTlog: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
@@ -85,6 +116,8 @@ TlogPageRoot.propTypes = {
 
 export default connect(
   (state) => ({
+    editing: state.appState.data.editing,
+    editPreview: state.editor.preview,
     tlog: state.tlog.data,
   }),
   { getTlog }

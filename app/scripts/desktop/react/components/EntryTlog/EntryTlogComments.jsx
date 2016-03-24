@@ -5,6 +5,7 @@ import EntryTlogCommentCreateForm from './EntryTlogCommentCreateForm';
 import EntryTlogCommentList from './EntryTlogCommentList';
 import EntryTlogCommentsLoadMore from './EntryTlogCommentsLoadMore';
 import PostAuthService from '../../services/PostAuthService';
+import TastyConfirmController from '../../controllers/TastyConfirmController';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
@@ -107,7 +108,7 @@ class EntryTlogComments extends Component {
       acceptButtonText: i18n.t('report_comment_button'),
       onAccept: () => {
         EntryActionCreators.reportComment(commentID);
-      }
+      },
     });
   }
   updateComment(commentID, text) {
@@ -140,7 +141,7 @@ class EntryTlogComments extends Component {
               totalCount: this.state.totalCount - 1
             });
           });
-      }
+      },
     });
   }
   loadMore() {

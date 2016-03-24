@@ -417,7 +417,12 @@
   "signin_success": "Добро пожаловать, {{userSlug}}! Подождите, я перезагружусь..",
   "browser_support_update_to": "Мы не поддерживаем ваш браузер ({{browserName}} {{browserVersion}}), обновите его до",
   "browser_support_last_version": "последней версии",
+  "editor" : {
+    "title": "Редактор поста"
+  },
   "tlog": {
+    "title_favorite": "избранные",
+    "title_private": "скрытые",
     "error_invalid_date": "Неверная дата",
     "entries_count": "{{count}} запись",
     "entries_count_2": "{{count}} записи",
@@ -493,6 +498,7 @@
     "query_empty": "По запросу '{{query}}' ничего не найдено"
   },
   "people": {
+    "title": "Люди",
     "empty": "Тут никого нет",
     "query_empty": "По запросу '{{query}}' никого не найдено",
     "posts": {
@@ -646,8 +652,8 @@
   },
   "messenger": {
     "title_actions": {
-      "disturb": "Беспокоить",
-      "dont_disturb": "Не беспокоить",
+      "disturb": "Включить уведомления",
+      "dont_disturb": "Отключить уведомления",
       "start_select_mode": "Выбрать сообщения",
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",
@@ -657,6 +663,10 @@
     "request": {
       "conversation_delete_success": "Переписка удалена",
       "conversation_leave_success": "Вы покинули обсуждение"
+    },
+    "confirm": {
+      "leave_text": "Это действие нельзя будет отменить.",
+      "leave_button": "Продолжить?"
     },
     "group": {
       "admin": "админ",

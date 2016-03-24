@@ -61,12 +61,9 @@ require './react/components/transition/timeout_transition_group'
 # /*==========  Stores  ==========*/
 
 global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
-require './react/messaging/stores/connection_state'
 
 # /*==========  Control structures  ==========*/
 
-require './react/messaging/messaging_service'
-require './react/messaging/messaging_requester'
 require './react/messaging/messaging_testing'
 
 # /*-----  End of Messaging resources  ------*/
@@ -159,7 +156,6 @@ require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
 
 require './react/controllers/tasty_events'
-require './react/controllers/tasty_confirm'
 require './react/controllers/tasty_alert'
 
 require './react/controllers/shellbox'

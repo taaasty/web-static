@@ -13,9 +13,8 @@ import PopupController from './controllers/popuup';
 import PadController from './controllers/pad';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import EditorActionCreators from './actions/editor';
-import { ENTRY_TYPES } from './constants/EntryConstants';
 import PostAuthService from './services/PostAuthService';
+import MessagingService from './messaging/MessagingService';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
@@ -56,13 +55,6 @@ function initRoutes() {
       PopupActions.showSettings();
     },
 
-    design_settings(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showDesignSettings(req.params.slug);
-    },
-
     showRequestedById(req) {
       if (!hasAccessBySlug(req.params.slug)) {
         return;
@@ -92,29 +84,11 @@ function initRoutes() {
     },
   };
 
-  const EditorTarget = {
-    index(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      const reqHash = window.location.hash.substr(1);
-      
-      if (ENTRY_TYPES.indexOf(reqHash) > -1) {
-        EditorActionCreators.changeEntryType(reqHash);
-      }
-    },
-  };
-
   Aviator.setRoutes({
     '/:slug': {
       target: UserRouteTarget,
       '/profile': 'profile',
       '/settings': 'settings',
-      '/design_settings': 'design_settings',
-      '/new': {
-        target: EditorTarget,
-        '/': 'index',
-      },
       '/friends': {
         '/requested': {
           '/': 'showRequested',
@@ -137,9 +111,7 @@ const ReactApp = {
       window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser || {};
       window.STATE_FROM_SERVER.currentUser.data = user; //REDUX
       CurrentUserDispatcher.setupUser(user);
-      window.messagingService = new MessagingService({
-        user: CurrentUserStore.getUser(),
-      });
+      window.messagingService = new MessagingService(user);
 
       DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
       sendUser(user);

@@ -68,6 +68,10 @@ module.exports = {
           dest: dist + '/scripts/',
           outputName: 'ga.js',
         },
+        adblock: {
+          entries: src + '/scripts/desktop/advert.js',
+          dest: dist + '/scripts/',
+        },
       },
     },
     styles: {
