@@ -6,6 +6,7 @@ import EntryTlogPrivate from './EntryTlogPrivate';
 import EntryTlogError from './EntryTlogError';
 import ErrorService from '../../../../shared/react/services/Error';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import TastyConfirmController from '../../controllers/TastyConfirmController';
 
 import { ENTRY_TYPES } from '../../constants/EntryConstants';
 import { ERROR_PRIVATE_ENTRY } from '../../../../shared/constants/ErrorConstants';

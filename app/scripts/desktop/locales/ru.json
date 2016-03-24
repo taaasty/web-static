@@ -664,6 +664,10 @@
       "conversation_delete_success": "Переписка удалена",
       "conversation_leave_success": "Вы покинули обсуждение"
     },
+    "confirm": {
+      "leave_text": "Это действие нельзя будет отменить.",
+      "leave_button": "Продолжить?"
+    },
     "group": {
       "admin": "админ",
       "users": "{{count}} участник",

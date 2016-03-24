@@ -636,6 +636,10 @@
       "conversation_delete_success": "Conversation successfully deleted",
       "conversation_leave_success": "Conversation successfully left"
     },
+    "confirm": {
+      "leave_text": "This action is irreversible.",
+      "leave_button": "Continue?"
+    },
     "group": {
       "admin": "admin",
       "users": "Single user",
