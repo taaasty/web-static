@@ -14653,9 +14653,7 @@ module.exports = CollageRow;
 
 
 },{"./row/item":264}],264:[function(require,module,exports){
-var CollageRowItem, FitSpinner, ImageLoader, LazyLoad, PropTypes;
-
-LazyLoad = require('react-lazy-load')["default"];
+var CollageRowItem, FitSpinner, ImageLoader, PropTypes;
 
 ImageLoader = require('react-imageloader');
 
@@ -14697,14 +14695,11 @@ CollageRowItem = React.createClass({
     return React.createElement("div", {
       "style": this.getContainerStyles(),
       "className": "collage__item"
-    }, React.createElement(LazyLoad, {
-      "height": this.props.height,
-      "threshold": parseInt(window.innerHeight, 10)
     }, React.createElement(ImageLoader, {
       "imgProps": imgProps,
       "preloader": this.renderPreloader,
       "src": this.getUrl()
-    })));
+    }));
   },
   getContainerStyles: function() {
     var height, margin, ref, width;
@@ -14752,7 +14747,7 @@ CollageRowItem = React.createClass({
 module.exports = CollageRowItem;
 
 
-},{"../../FitSpinner":257,"react-imageloader":"react-image-loader","react-lazy-load":"react-lazy-load"}],265:[function(require,module,exports){
+},{"../../FitSpinner":257,"react-imageloader":"react-image-loader"}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15297,6 +15292,12 @@ ApiRoutes = {
   },
   feedAnonymous: function() {
     return gon.api_host + '/v1/feeds/anonymous';
+  },
+  tagsTlog: function(slug, tags) {
+    return gon.api_host + "/v1/tlog/" + slug + "/entries/tags_tlogs/" + tags + ".json";
+  },
+  tagsFeed: function(tags) {
+    return gon.api_host + "/v1/feeds/tags_tlogs/" + tags + ".json";
   },
   feedLiveTlogs: function() {
     return gon.api_host + "/v1/feeds/live/tlogs.json";

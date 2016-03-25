@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import Text from '../../../../shared/react/components/common/Text';
-import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
+import Image from '../../../../shared/react/components/common/Image';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { brickWidth } from './constants';
@@ -29,7 +29,7 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
     return (
       <Link to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
         <div className="video__cover">
-          <LazyLoadImage image={entry.preview_image} maxWidth={brickWidth} />
+          <Image image={entry.preview_image} maxWidth={brickWidth} />
           {entry.is_playable && <div className="video__overlay" />}
         </div>
       </Link>

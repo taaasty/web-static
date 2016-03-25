@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import LazyLoadImage from './LazyLoadImage';
+import Image from './Image';
 
 function Avatar(props) {
   function getAvatarClasses() {
@@ -22,10 +22,10 @@ function Avatar(props) {
 
     return (
       <span className={getAvatarClasses()}>
-        <LazyLoadImage
-      alt={name}
-      className="avatar__img"
-      image={image}
+        <Image
+          alt={name}
+          className="avatar__img"
+          image={image}
         />
       </span>
     );

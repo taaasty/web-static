@@ -66,7 +66,10 @@ const HeroProfileStatsPopup = createClass({
     const { children, isDraggable, title } = this.props;
 
     const newChildren = Children.map(children, (context) => (
-      cloneElement(context, { activitiesHandler: this.activitiesHandler })
+      cloneElement(context, {
+        activitiesHandler: this.activitiesHandler,
+        close: this.close.bind(this),
+      })
     ));
 
     return (

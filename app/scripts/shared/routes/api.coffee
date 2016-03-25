@@ -121,6 +121,9 @@ ApiRoutes =
   feedFriends: -> gon.api_host + '/v1/my_feeds/friends'
   feedAnonymous: -> gon.api_host + '/v1/feeds/anonymous'
 
+  tagsTlog: (slug, tags) -> "#{gon.api_host}/v1/tlog/#{slug}/entries/tags_tlogs/#{tags}.json"
+  tagsFeed: (tags) -> "#{gon.api_host}/v1/feeds/tags_tlogs/#{tags}.json"
+
   feedLiveTlogs: -> "#{gon.api_host}/v1/feeds/live/tlogs.json"
   feedMediaTlogs: -> "#{gon.api_host}/v1/feeds/media/tlogs.json"
   feedFlowsTlogs: -> "#{gon.api_host}/v1/feeds/live_flows/tlogs.json"

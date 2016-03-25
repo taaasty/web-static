@@ -8,10 +8,12 @@ import InfiniteScroll from '../common/InfiniteScroll';
 
 class EntryTlogs extends Component {
   componentDidMount() {
-    this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
-    this.waypointService.attach();
-    this.waypointRefresh = _.debounce(this.waypointService.refresh, 100);
-    $(document).on('domChanged', this.waypointRefresh);
+    if (!this.props.isFeed) {
+      this.waypointService = WaypointService('.post', { cb: this.onWaypointTrigger.bind(this) });
+      this.waypointService.attach();
+      this.waypointRefresh = _.debounce(this.waypointService.refresh, 100);
+      $(document).on('domChanged', this.waypointRefresh);
+    }
   }
   componentWillUnmount() {
     if (this.waypointService) {
@@ -21,7 +23,6 @@ class EntryTlogs extends Component {
   }
   onWaypointTrigger(data) {
     $(document).trigger('waypoint.trigger', data); //trigger calendar
-    setQuery({ since_entry_id: data.id });
   }
   render() {
     const { canLoad, currentUser, entries, host_tlog_id, isFeed,
