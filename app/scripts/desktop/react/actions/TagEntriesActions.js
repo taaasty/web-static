@@ -85,6 +85,7 @@ export function appendTagEntries() {
       return null;
     }
 
+    dispatch(tagEntriesRequest());
     return fetchTagEntries(url(slug, tags), {
       since_entry_id: next_since_entry_id,
       limit: APPEND_LOAD_LIMIT,
