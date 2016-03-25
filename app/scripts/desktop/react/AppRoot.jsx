@@ -15,6 +15,7 @@ import FeedPage from './components/FeedPage';
 import FlowsPage from './components/FlowsPage';
 import PeoplePage from './components/PeoplePage';
 import EditorPage from './components/EditorPage';
+import TagsPage from './components/TagsPage';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
@@ -38,6 +39,8 @@ class AppRoot extends Component {
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
           <Route path="/" component={AppPage}>
+            <Route path="tags/:tags" component={TagsPage} />
+            <Route path="~:slug/tags/:tags" component={TagsPage} />
             <Redirect from="~anonymous" to="live/anonymous" />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />

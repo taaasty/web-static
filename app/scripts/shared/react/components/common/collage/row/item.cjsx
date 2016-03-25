@@ -1,4 +1,3 @@
-LazyLoad = require('react-lazy-load').default;
 ImageLoader = require('react-imageloader');
 FitSpinner = require('../../FitSpinner');
 { PropTypes } = React
@@ -32,16 +31,11 @@ CollageRowItem = React.createClass
     }
     
     <div style={ @getContainerStyles() } className="collage__item">
-      <LazyLoad
-        height={this.props.height}
-        threshold={parseInt(window.innerHeight, 10)}
-      >
-        <ImageLoader
-          imgProps={imgProps}
-          preloader={this.renderPreloader}
-          src={this.getUrl()}
-        />
-      </LazyLoad>
+      <ImageLoader
+        imgProps={imgProps}
+        preloader={this.renderPreloader}
+        src={this.getUrl()}
+      />
     </div>
 
   getContainerStyles: ->

@@ -39,6 +39,11 @@ class HeroProfile extends Component {
     TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
     TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.tlog.data.author !== nextProps.tlog.data.author) {
+      this._close();
+    }
+  }
   componentWillUnmount() {
     $(window).off('resize', this.onResize);
     $(window).off('scroll', this.scrollFade);

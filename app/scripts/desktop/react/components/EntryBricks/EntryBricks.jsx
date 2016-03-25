@@ -16,26 +16,14 @@ const masonryOptions = {
 
 class EntryBricks extends Component {
   componentDidMount() {
-    if (this.masonry) {
-      this.waypointService = WaypointService('.brick', { cb: this.onWaypointTrigger.bind(this) });
-      this.waypointService.attach();
-      this.masonry.on('layoutComplete', _.debounce(this.waypointService.refresh, 100));
-    }
     this.onResize = _.debounce(this.restamp.bind(this), 100);
     window.addEventListener('resize', this.onResize, false);
   }
   componentWillUnmount() {
-    if (this.masonry && this.waypointService) {
-      this.waypointService.detach();
-      this.masonry.off('layoutComplete');
-    }
     window.removeEventListener('resize', this.onResize, false);
   }
   restamp() {
     this.forceUpdate();
-  }
-  onWaypointTrigger(data) {
-    setQuery({ since_entry_id: data.id });
   }
   render() {
     const { canLoad, children, entries, host_tlog_id, isFeed, loading, onLoadMoreEntries } = this.props;

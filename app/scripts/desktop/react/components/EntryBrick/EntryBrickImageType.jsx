@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Text from '../../../../shared/react/components/common/Text';
-import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
+import Image from '../../../../shared/react/components/common/Image';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
@@ -12,7 +12,7 @@ import uri from 'urijs';
 function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
   function renderBrickImage() {
     return entry.preview_image
-      ?  <LazyLoadImage image={entry.preview_image} maxWidth={brickWidth} />
+      ?  <Image image={entry.preview_image} maxWidth={brickWidth} />
       :  <span>{i18n.t('entry.has_no_images')}</span>;
   }
 

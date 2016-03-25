@@ -8,6 +8,7 @@ import feedStatus from './feedStatus';
 import flow from './flow';
 import flows from './flows';
 import people from './people';
+import tagEntries from './tagEntries';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
 import tlogEntry from './tlogEntry';
@@ -24,6 +25,7 @@ export default {
   flow,
   flows,
   people,
+  tagEntries,
   tlog,
   tlogEntries,
   tlogEntry,
