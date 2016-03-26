@@ -1,4 +1,4 @@
-/*global i18n, TastyConfirmController */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
@@ -28,8 +28,9 @@ class EntryTlog extends Component {
     hasModeration: !!this.props.moderation,
   };
   componentWillMount() {
-    const { entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
-    if (can_delete && !host_tlog_id) {
+    const { commentator, entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
+    if (can_delete && !host_tlog_id &&
+        ((tlog && commentator) ? tlog.id !== commentator.id : true)) { //fix for when we are subscribed to ourself
       ErrorService.notifyWarning('Неконсистентный флаг can_delete', {
         componentName: 'EntryTlog',
         method: 'componentWillMount',

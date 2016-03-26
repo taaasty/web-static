@@ -258,7 +258,7 @@ function prependFeedEntries() {
       dispatch(feedEntriesReceive({ data: (0, _extends3.default)({}, prevData, { items: data.items.concat(prevData.items) }) }));
       return data;
     }).fail(function (error) {
-      return dispatch(tlogEntriesError({ error: error.responseJSON }));
+      return dispatch(feedEntriesError({ error: error.responseJSON }));
     });
   };
 }
