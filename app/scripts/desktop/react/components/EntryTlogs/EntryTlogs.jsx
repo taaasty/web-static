@@ -1,7 +1,6 @@
 /*global $ */
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import setQuery from 'set-query-string';
 import EntryTlog from '../EntryTlog';
 import WaypointService from '../../services/CustomWaypointService';
 import InfiniteScroll from '../common/InfiniteScroll';
