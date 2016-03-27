@@ -28,10 +28,11 @@ class EditorTypeSwitcherItem extends Component {
     return (
       <button
         className={itemClasses}
+        onClick={this.handleClick.bind(this)}
         ref="button"
         title={title}
       >
-        <a href={type ? `#${type}` : ''} onClick={this.handleClick.bind(this)}>
+        <a href={type ? `#${type}` : ''}>
           <i className={`icon ${icon}`} />
         </a>
       </button>
