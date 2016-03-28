@@ -23,9 +23,10 @@ class TlogPageRoot extends Component {
     } else {
       document.body.className = 'layout--tlog';
       DesignPreviewService.apply(tlog.design);
-      if (editing) {
-        this.setEditorBodyClasses(editPreview);
-      }
+    }
+
+    if (editing) {
+      this.setEditorBodyClasses(editPreview);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -39,13 +40,13 @@ class TlogPageRoot extends Component {
         document.body.className = 'layout--tlog';
         DesignPreviewService.apply(tlog.design);
       }
+    }
 
-      if (editing) {
-        this.setEditorBodyClasses(editPreview);
-      } else {
-        document.body.classList.remove('tlog-mode-minimal');
-        document.body.classList.remove('tlog-mode-full');
-      }
+    if (editing) {
+      this.setEditorBodyClasses(editPreview);
+    } else {
+      document.body.classList.remove('tlog-mode-minimal');
+      document.body.classList.remove('tlog-mode-full');
     }
   }
   componentWillUnmount() {

@@ -40,13 +40,13 @@ class HeroFlow extends Component {
   }
   renderWriteButton() {
     return (
-      <a
+      <Link
         className="button button--small button--green"
-        href={Routes.new_entry_url(this.props.flow.data.slug)}
         key="createEntryButton"
+        to={uri(Routes.new_entry_url(this.props.flow.data.slug)).path()}
       >
         {i18n.t('buttons.hero_create_entry')}
-      </a>
+      </Link>
     );
   }
   renderRelationButton() {
