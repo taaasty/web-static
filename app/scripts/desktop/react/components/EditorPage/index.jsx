@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -69,7 +70,7 @@ class EditorPage extends Component {
       return null;
     }
   }
-  render() {
+  renderContents() {
     const { entry, editorTogglePreview, location, routeParams: { editId },
             tlog: { data: tlog, isFetching }, tlogEntries, tlogEntriesInvalidate } = this.props;
     const tlogType = tlog.slug === TLOG_SLUG_ANONYMOUS
@@ -77,36 +78,49 @@ class EditorPage extends Component {
             : tlog.is_privacy ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
 
     return (
+    <div className="content-area">
+      <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
+      <div className="content-area__inner">
+        {isFetching
+         ? <Spinner size={30} />
+         : editId
+           ? entry
+             ? <EditorEdit
+                 entry={entry}
+                 location={location}
+                 tlog={tlog}
+                 tlogEntries={tlogEntries}
+                 tlogEntriesInvalidate={tlogEntriesInvalidate}
+                 tlogType={tlogType}
+                 togglePreview={editorTogglePreview}
+               />
+             : <Spinner size={30} />
+           : <EditorNew
+               location={location}
+               tlog={tlog}
+               tlogEntries={tlogEntries}
+               tlogEntriesInvalidate={tlogEntriesInvalidate}
+               tlogType={tlogType}
+               togglePreview={editorTogglePreview}
+             />
+        }
+      </div>
+    </div>
+    );
+
+  }
+  render() {
+    const { author } = this.props.tlog.data;
+
+    return (
       <div className="page-body">
         <Helmet title={i18n.t('editor.title')} />
-        <div className="content-area">
-          <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
-          <div className="content-area__inner">
-            {isFetching
-             ? <Spinner size={30} />
-             : editId
-               ? entry
-                 ? <EditorEdit
-                     entry={entry}
-                     location={location}
-                     tlog={tlog}
-                     tlogEntries={tlogEntries}
-                     tlogEntriesInvalidate={tlogEntriesInvalidate}
-                     tlogType={tlogType}
-                     togglePreview={editorTogglePreview}
-                   />
-                 : <Spinner size={30} />
-               : <EditorNew
-                   location={location}
-                   tlog={tlog}
-                   tlogEntries={tlogEntries}
-                   tlogEntriesInvalidate={tlogEntriesInvalidate}
-                   tlogType={tlogType}
-                   togglePreview={editorTogglePreview}
-                 />
-            }
-          </div>
-        </div>
+        {author && author.is_flow
+         ? <div className="layout-outer">
+             {this.renderContents()}
+           </div>
+         : this.renderContents()
+        }
       </div>
     );
   }
