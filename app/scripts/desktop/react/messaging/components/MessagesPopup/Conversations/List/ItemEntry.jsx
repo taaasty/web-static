@@ -6,18 +6,19 @@ import ItemEntryPic from './ItemEntryPic';
 
 class ItemEntry extends Component {
   render() {
-    const { conversation: { created_at, entry, last_message, unread_messages_count },
+    const { conversation: { created_at, entry, last_message, not_disturb, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
     const title = (entry && (entry.title || entry.text)) || i18n.t('messages_public_conversation_title');
     const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
       <ItemMain
-          hasUnread={hasUnread}
-          hasUnreceived={hasUnreceived}
-          lastMessageAt={lastMessageAt}
-          onClick={onClick}
-          unreadCount={unread_messages_count}
+        hasUnread={hasUnread}
+        hasUnreceived={hasUnreceived}
+        isMuted={not_disturb}
+        lastMessageAt={lastMessageAt}
+        onClick={onClick}
+        unreadCount={unread_messages_count}
       >
         <span className="messages__user-avatar">
           <ItemEntryPic entry={entry} title={title} />

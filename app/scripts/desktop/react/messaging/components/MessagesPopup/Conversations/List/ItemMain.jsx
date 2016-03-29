@@ -14,11 +14,12 @@ class ItemMain extends Component {
     }
   }
   render() {
-    const { children, hasUnread, lastMessageAt, onClick } = this.props;
+    const { children, hasUnread, isMuted, lastMessageAt, onClick } = this.props;
 
     const listItemClasses = classNames({
       'messages__dialog': true,
       'state--read': !hasUnread,
+      'muted': isMuted,
     });
     const lf = moment.localeData().longDateFormat('L');
     const shortYearLf = lf.replace(/YYYY/g, 'YY');
@@ -33,6 +34,11 @@ class ItemMain extends Component {
       <div className={listItemClasses} onClick={onClick}>
         {this.renderIndicator()}
         {children}
+        {isMuted &&
+         <span className="messages__muted">
+           <i className="icon icon--mute-on" />
+         </span>
+        }
         <span className="messages__date">
           {lastMessageAtStr}
         </span>
@@ -48,6 +54,7 @@ ItemMain.propTypes = {
   ]).isRequired,
   hasUnread: PropTypes.bool,
   hasUnreceived: PropTypes.bool,
+  isMuted: PropTypes.bool,
   lastMessageAt: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   unreadCount: PropTypes.number,
