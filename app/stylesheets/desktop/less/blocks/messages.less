@@ -245,9 +245,14 @@
   }
 
   &.state--read {
-    .messages__dialog-text {
+    .messages__dialog-text,
+    .messages__muted {
       color: #888;
     }
+  }
+
+  &.muted {
+    padding-right: 90px;
   }
 
   .messages__dialog-text.--public-header {
@@ -294,6 +299,13 @@
     width: 50px;
     line-height: 12px;
     text-align: right;
+  }
+
+  .messages__muted {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 67px;
   }
 
   .messages__preview-image {

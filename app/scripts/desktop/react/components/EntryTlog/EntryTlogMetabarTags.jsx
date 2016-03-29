@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function EntryTlogMetabarTags({ tags, userSlug }) {
   function renderTag(tag, idx) {
@@ -11,13 +13,12 @@ function EntryTlogMetabarTags({ tags, userSlug }) {
 
     return (
       <span key={`tag-${idx}`}>
-        <a
+        <Link
           className="meta-item__common meta-item__link"
-          href={Routes.userTag(userSlug, tag)}
-          target="_blank"
+          to={uri(Routes.userTag(userSlug, tag)).path()}
         >
           #{tag}
-        </a>
+        </Link>
         {separator}
       </span>
     );

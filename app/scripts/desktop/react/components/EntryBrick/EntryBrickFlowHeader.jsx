@@ -1,7 +1,7 @@
 /*global ThumborService */
 import React from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
+import Image from '../../../../shared/react/components/common/Image';
 import { brickWidth, flowAvatarSize } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
@@ -27,7 +27,7 @@ function EntryBrickFlowHeader({ flow }) {
         <div className="brick__flow-header">
           <span className="brick__flow-header-avatar-container">
             <div className="brick__flow-header-avatar">
-              <LazyLoadImage image={avatarData} />
+              <Image image={avatarData} />
             </div>
           </span>
           <span className="brick__flow-header-data">

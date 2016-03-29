@@ -7,7 +7,7 @@ import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemGroup extends Component {
   render() {
-    const { conversation: { avatar, created_at, last_message, topic, unread_messages_count },
+    const { conversation: { avatar, created_at, last_message, not_disturb, topic, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
     const lastMessageAt = last_message ? last_message.created_at : created_at;
     const userpic = {
@@ -22,6 +22,7 @@ class ItemGroup extends Component {
       <ItemMain
         hasUnread={hasUnread}
         hasUnreceived={hasUnreceived}
+        isMuted={not_disturb}
         lastMessageAt={lastMessageAt}
         onClick={onClick}
         unreadCount={unread_messages_count}

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import LazyLoadImage from '../../../../shared/react/components/common/LazyLoadImage';
+import Image from '../../../../shared/react/components/common/Image';
 
 function FlowBrickAvatar({ flowpic }) {
   function image() {
@@ -12,7 +12,7 @@ function FlowBrickAvatar({ flowpic }) {
     };
   }
 
-  return <LazyLoadImage image={image()} />;
+  return <Image image={image()} />;
 }
 
 FlowBrickAvatar.propTypes = {

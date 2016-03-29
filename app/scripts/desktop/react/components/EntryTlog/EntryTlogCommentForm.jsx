@@ -26,7 +26,7 @@ class EntryTlogCommentForm extends Component {
     this.refs.field.focus();
   }
   isEmpty() {
-    return !this.state.text.trim();
+    return !this.state.text || !this.state.text.trim();
   }
   clear() {
     this.setState({ text: '' });

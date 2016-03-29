@@ -210,6 +210,6 @@ export function prependFeedEntries(limit=INITIAL_LOAD_LIMIT) {
         dispatch(feedEntriesReceive({ data: { ...prevData, items: data.items.concat(prevData.items) } }));
         return data;
       })
-      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
+      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON })));
   };
 }
