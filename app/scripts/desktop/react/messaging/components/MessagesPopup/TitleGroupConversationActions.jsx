@@ -58,7 +58,7 @@ class TitleGroupConversationActions extends Component {
             title={i18n.t('messenger.title_actions.group_settings')}
           />
           <DropdownAction
-            icon="icon--bell"
+            icon={`icon--mute-${not_disturb ? 'off' : 'on'}`}
             key="dont-disturb"
             onClick={this.dontDisturb.bind(this, !not_disturb)}
             title={i18n.t(`messenger.title_actions.${not_disturb ? 'disturb' : 'dont_disturb'}`)}

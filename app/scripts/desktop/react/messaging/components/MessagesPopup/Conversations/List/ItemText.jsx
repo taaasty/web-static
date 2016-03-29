@@ -5,7 +5,7 @@ import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemText extends Component {
   render() {
-    const { conversation: { created_at, last_message, recipient, online, unread_messages_count },
+    const { conversation: { created_at, last_message, not_disturb, online, recipient, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
     const lastMessageText = last_message ? last_message.content_html : '';
     const lastMessageAt = last_message ? last_message.created_at : created_at;
@@ -14,6 +14,7 @@ class ItemText extends Component {
       <ItemMain
         hasUnread={hasUnread}
         hasUnreceived={hasUnreceived}
+        isMuted={not_disturb}
         lastMessageAt={lastMessageAt}
         onClick={onClick}
         unreadCount={unread_messages_count}
