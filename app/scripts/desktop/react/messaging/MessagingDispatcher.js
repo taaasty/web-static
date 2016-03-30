@@ -133,6 +133,13 @@ const MessagingDispatcher = Object.assign(
         type: 'deleteUserMessages',
       });
     },
+
+    markAsReadMessage(conversationId) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'decreaseUnreadCount',
+        id: conversationId,
+      });
+    },
   }
 );
 
