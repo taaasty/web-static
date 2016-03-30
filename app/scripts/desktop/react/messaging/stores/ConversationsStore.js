@@ -75,6 +75,20 @@ const ConversationsStore = Object.assign(
 
       return Object.assign(conversation.entry, update);
     },
+
+    decreaseUnreadCount(conversationId) {
+      const conversation = this.getConversation(conversationId);
+
+      if (!conversation) {
+        return;
+      }
+
+      const { unread_messages_count: unreadCount } = conversation;
+
+      if (unreadCount && unreadCount > 0) {
+        conversation.unread_messages_count = unreadCount - 1;
+      }
+    },
   }
 );
 
@@ -108,6 +122,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'deleteConversation':
     ConversationsStore.deleteConversation(action.id);
+    ConversationsStore.emitChange();
+    break;
+  case 'decreaseUnreadCount':
+    ConversationsStore.decreaseUnreadCount(action.id);
     ConversationsStore.emitChange();
     break;
   }

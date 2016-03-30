@@ -10,6 +10,7 @@ const MessageActions = {
   },
   
   readMessage(conversationId, messageId) {
+    MessagingDispatcher.markAsReadMessage(conversationId, messageId);
     messagingService.markAsReadMessage(conversationId, messageId);
   },
 
