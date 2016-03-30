@@ -26,6 +26,21 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 let store = void 0;
 
+let firstHit = true;
+
+function handleRouteUpdate() {
+  const { pathname } = this.state.location;
+
+  if (!firstHit) {
+    if (window.ga) {
+      window.ga('set', 'page', pathname);
+      window.ga('send', 'pageview');
+    }
+  } else {
+    firstHit = false;
+  }
+}
+
 class AppRoot extends Component {
   componentWillMount() {
     window.SPA = true;
@@ -35,7 +50,7 @@ class AppRoot extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={browserHistory}>
+        <Router history={browserHistory} onUpdate={handleRouteUpdate}>
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
           <Route path="/" component={AppPage}>
