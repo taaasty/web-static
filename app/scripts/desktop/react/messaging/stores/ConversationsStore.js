@@ -89,6 +89,18 @@ const ConversationsStore = Object.assign(
         conversation.unread_messages_count = unreadCount - 1;
       }
     },
+
+    hasUnread(conversationId) {
+      const conversation = this.getConversation(conversationId);
+
+      return conversation && conversation.unread_messages_count;
+    },
+
+    hasUnreadByUserId(userId) {
+      const conversation = this.getConversationByUserId(userId);
+
+      return conversation && conversation.unread_messages_count;
+    },
   }
 );
 
