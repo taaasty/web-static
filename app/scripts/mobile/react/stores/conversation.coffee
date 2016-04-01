@@ -26,6 +26,14 @@ ConversationStore = assign new BaseStore(),
   get: (id) ->
     _conversations[id]
 
+  getByUserId: (userId) ->
+    conversations = Object.keys(_conversations).filter((id) ->
+      conv = _conversations[id];
+      conv && conv.recipient_id == userId && id
+    );
+
+    conversations.length and _conversations[conversations[0]];
+
   getAll: ->
     _conversations
 
@@ -49,6 +57,12 @@ ConversationStore = assign new BaseStore(),
 
   getCurrent: ->
     @get @getCurrentID()
+
+  unreadCountByUserId: (userId) ->
+    conversation = this.getByUserId(userId);
+
+    conversation && conversation.unread_messages_count
+
 
 module.exports = ConversationStore
 

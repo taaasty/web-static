@@ -25,11 +25,11 @@ TlogDaylogPage      = require('./react/pages/tlogDaylog');
 FeedBestPage        = require('./react/pages/feedBest');
 FeedFriendsPage     = require('./react/pages/feedFriends');
 NotificationsPage   = require('./react/pages/notifications');
-MessengerPage       = require('./react/pages/messenger');
-MessengerThreadPage = require('./react/pages/messengerThread');
 AuthPage            = require('./react/pages/auth');
 
 SettingsPage        = require('./react/components/SettingsPage');
 FlowPage            = require('./react/components/FlowPage');
 TlogRegularPage     = require('./react/components/TlogRegularPage');
 FeedLivePage        = require('./react/components/FeedLivePage');
+MessengerPage       = require('./react/components/MessengerPage');
+MessengerThreadPage = require('./react/components/MessengerThreadPage');

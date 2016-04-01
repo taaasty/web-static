@@ -5,6 +5,7 @@ import CurrentUserStore from '../../../stores/currentUser';
 import Page from './Page';
 import FeedToolbarManager from '../../toolbars/feedManager';
 import UserToolbarManager from '../../toolbars/userManager';
+import SupportLauncher from '../../SupportLauncher';
 
 export default class PageWithToolbars {
   static propTypes = {
@@ -18,12 +19,13 @@ export default class PageWithToolbars {
     CurrentUserStore.initialize(this.props.currentUser);
   }
   render() {
-    const { locale, children } = this.props;
-    
+    const { locale, children, currentUser } = this.props;
+
     return (
       <Page locale={locale}>
         <FeedToolbarManager />
         <UserToolbarManager />
+        {currentUser.id && <SupportLauncher url={currentUser.tlog_url} />}
         {children}
       </Page>
     );

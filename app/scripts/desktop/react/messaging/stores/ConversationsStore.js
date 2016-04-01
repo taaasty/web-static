@@ -69,7 +69,7 @@ const ConversationsStore = Object.assign(
 
       return !!convs.length;
     },
-    
+
     updateConversationEntry(conversationId, update) {
       const conversation = this.getConversation(conversationId);
 
@@ -90,13 +90,13 @@ const ConversationsStore = Object.assign(
       }
     },
 
-    hasUnread(conversationId) {
+    unreadCount(conversationId) {
       const conversation = this.getConversation(conversationId);
 
       return conversation && conversation.unread_messages_count;
     },
 
-    hasUnreadByUserId(userId) {
+    unreadCountByUserId(userId) {
       const conversation = this.getConversationByUserId(userId);
 
       return conversation && conversation.unread_messages_count;

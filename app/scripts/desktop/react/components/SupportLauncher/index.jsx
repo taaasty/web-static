@@ -17,7 +17,7 @@ class SupportLauncherContainer extends Component {
     ConversationsStore.removeChangeListener(this.syncStateWithStore);
   }
   getStateFromStore() {
-    return { hasUnread: ConversationsStore.hasUnreadByUserId(SUPPORT_ID) };
+    return { hasUnread: !!ConversationsStore.unreadCountByUserId(SUPPORT_ID) };
   }
   handleClick() {
     ConversationActions.openConversation(SUPPORT_ID);

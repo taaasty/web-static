@@ -2,9 +2,9 @@
 require '../shared/shims/console'
 
 require './resources/Libs'
-global.Routes    = require '../shared/routes/routes'
+global.Routes = require '../shared/routes/routes'
 global.ApiRoutes = require '../shared/routes/api'
-require './react/application'
+global.ReactApp = require './react/ReactApp';
 
 # /*==========  Locales  ==========*/
 require './locales/moment/ru'
@@ -26,14 +26,14 @@ global.TlogDaylogPage      = require './react/pages/tlogDaylog'
 global.FeedBestPage        = require './react/pages/feedBest'
 global.FeedFriendsPage     = require './react/pages/feedFriends'
 global.NotificationsPage   = require './react/pages/notifications'
-global.MessengerPage       = require './react/pages/messenger'
-global.MessengerThreadPage = require './react/pages/messengerThread'
 global.AuthPage            = require './react/pages/auth'
 
 global.FlowPage            = require './react/components/FlowPage';
 global.SettingsPage        = require './react/components/SettingsPage';
 global.TlogRegularPage     = require './react/components/TlogRegularPage';
 global.FeedLivePage        = require './react/components/FeedLivePage';
+global.MessengerPage       = require './react/components/MessengerPage';
+global.MessengerThreadPage = require './react/components/MessengerThreadPage';
 
 # /*==========  Stores  ==========*/
 

@@ -19,7 +19,7 @@ function SupportLauncher({ hasUnread, onClick }) {
 
 SupportLauncher.propTypes = {
   hasUnread: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default SupportLauncher;
