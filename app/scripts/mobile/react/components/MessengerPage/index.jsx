@@ -4,16 +4,12 @@ import PageWithToolbars from '../common/page/PageWithToolbars';
 import PageLayout from '../common/page/PageLayout';
 import PageBody from  '../common/page/PageBody';
 
-import CurrentUserStore from '../../stores/currentUser';
 import ConversationStore from '../../stores/conversation';
 import Messenger from '../messenger/messenger';
 
 class MessengerPage extends Component {
   componentWillMount() {
-    const { currentUser, conversationsInfo: { items } } = this.props;
-
-    CurrentUserStore.initialize(currentUser);
-    ConversationStore.initPlural(items);
+    ConversationStore.initPlural(this.props.conversationsInfo.items);
   }
   render() {
     const { currentUser, locale } = this.props;

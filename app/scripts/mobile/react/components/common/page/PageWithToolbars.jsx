@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import CurrentUserStore from '../../../stores/currentUser';
 
@@ -7,7 +7,7 @@ import FeedToolbarManager from '../../toolbars/feedManager';
 import UserToolbarManager from '../../toolbars/userManager';
 import SupportLauncher from '../../SupportLauncher';
 
-export default class PageWithToolbars {
+export default class PageWithToolbars extends Component {
   static propTypes = {
     ...Page.propTypes,
     currentUser: PropTypes.object,

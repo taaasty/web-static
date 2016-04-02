@@ -15,6 +15,7 @@ ConversationStore = assign new BaseStore(),
     _conversations = {}
     _currentID = conversation.id
     _conversations[conversation.id] = conversation
+    ConversationStore.emitChange()
 
   initPlural: (conversations) ->
     # При пререндере, стор общий для всех пользователей. Чтобы не показывать чужие беседы
@@ -22,6 +23,7 @@ ConversationStore = assign new BaseStore(),
     _conversations = {}
     _.forEach conversations, (item) ->
       _conversations[item.id] = item
+    ConversationStore.emitChange()
 
   get: (id) ->
     _conversations[id]

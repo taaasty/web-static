@@ -6,9 +6,7 @@ import SupportLauncher from '../../../../shared/react/components/common/SupportL
 const SUPPORT_ID = 3; //prod env
 
 class SupportLauncherContainer extends Component {
-  state = {
-    hasUnread: false,
-  };
+  state = this.getStateFromStore();
   componentWillMount() {
     this.syncStateWithStore = () => this.setState(this.getStateFromStore.bind(this));
     ConversationsStore.addChangeListener(this.syncStateWithStore);

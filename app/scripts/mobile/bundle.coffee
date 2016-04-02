@@ -21,19 +21,18 @@ require './react/components/auth/authEmailSignUp'
 
 # /*==========  Pages  ==========*/
 
-global.EntryPage           = require './react/pages/entry'
-global.TlogDaylogPage      = require './react/pages/tlogDaylog'
-global.FeedBestPage        = require './react/pages/feedBest'
-global.FeedFriendsPage     = require './react/pages/feedFriends'
-global.NotificationsPage   = require './react/pages/notifications'
-global.AuthPage            = require './react/pages/auth'
-
-global.FlowPage            = require './react/components/FlowPage';
-global.SettingsPage        = require './react/components/SettingsPage';
-global.TlogRegularPage     = require './react/components/TlogRegularPage';
-global.FeedLivePage        = require './react/components/FeedLivePage';
-global.MessengerPage       = require './react/components/MessengerPage';
+global.FlowPage = require './react/components/FlowPage';
+global.SettingsPage = require './react/components/SettingsPage';
+global.TlogRegularPage = require './react/components/TlogRegularPage';
+global.FeedLivePage = require './react/components/FeedLivePage';
+global.MessengerPage = require './react/components/MessengerPage';
 global.MessengerThreadPage = require './react/components/MessengerThreadPage';
+global.FeedBestPage = require './react/components/FeedBestPage';
+global.FeedFriendsPage = require './react/components/FeedFriendsPage';
+global.NotificationsPage = require './react/components/NotificationsPage';
+global.TlogDaylogPage = require './react/components/TlogDaylogPage';
+global.EntryPage = require './react/components/EntryPage';
+global.AuthPage = require './react/components/AuthPage';
 
 # /*==========  Stores  ==========*/
 

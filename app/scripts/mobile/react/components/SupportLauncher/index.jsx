@@ -5,9 +5,7 @@ import ConversationStore from '../../stores/conversation';
 const SUPPORT_ID = 3;
 
 class SupportLauncherContainer extends Component {
-  state = {
-    hasUnread: false,
-  };
+  state = this.stateFromStore();
   componentWillMount() {
     this.syncWithStore = () => this.setState(this.stateFromStore());
 

@@ -4,16 +4,14 @@ import PageWithToolbars from '../common/page/PageWithToolbars';
 import PageLayout from '../common/page/PageLayout';
 import PageBody from  '../common/page/PageBody';
 
-import CurrentUserStore from '../../stores/currentUser';
 import ConversationStore from '../../stores/conversation';
-import MessageStore from '../../stores/message'
+import MessageStore from '../../stores/message';
 import Messenger from '../messenger/messenger';
 
 class MessengerThreadPage extends Component {
   componentWillMount() {
-    const { conversation, currentUser, messagesInfo: { items } } = this.props;
+    const { conversation, messagesInfo: { items } } = this.props;
 
-    CurrentUserStore.initialize(currentUser);
     ConversationStore.initSingular(conversation);
     MessageStore.initialize(items);
   }

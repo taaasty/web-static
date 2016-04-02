@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 
 import PaginationPrev from './items/prev';
 import PaginationNext from './items/next';
 
-class TlogPagination {
+class TlogPagination extends Component {
   renderPaginationItems() {
     const { pagination: { currentPage, totalPagesCount, type }, slug } = this.props;
     const paginationItems = [];
