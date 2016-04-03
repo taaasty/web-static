@@ -72,6 +72,9 @@ ConversationStore.dispatchToken = AppDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
+    when Constants.messenger.INIT_CONVERSATIONS
+      ConversationStore.initPlural(action.conversations)
+
     when Constants.messenger.CREATE_CONVERSATION
       _currentID = action.conversation.id
       _conversations[action.conversation.id] = action.conversation

@@ -35,7 +35,11 @@ class MessagingService extends EventEmitter
 
   onConnectionSuccess: =>
     Api.messaging.ready @pusher.connection.socket_id
-      .then ->
+      .then ({ conversations, notifications }) ->
+        AppDispatcher.handleServerAction({
+          type: Constants.messenger.INIT_CONVERSATIONS,
+          conversations: conversations.filter((conv) -> conv.type == 'PrivateConversation'),
+        });
         console.log 'Welcome to the Matrix, Neo'
 
   onConnectionFail: ->

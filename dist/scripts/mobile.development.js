@@ -7358,7 +7358,8 @@ var PageWithToolbars = function (_Component) {
       var _props = this.props;
       var locale = _props.locale;
       var children = _props.children;
-      var currentUser = _props.currentUser;
+      var _props$currentUser = _props.currentUser;
+      var currentUser = _props$currentUser === undefined ? {} : _props$currentUser;
 
       return _react2.default.createElement(
         _Page2.default,
@@ -13393,6 +13394,7 @@ var MessengerConstants, keyMirror;
 keyMirror = require('keymirror');
 
 MessengerConstants = keyMirror({
+  INIT_CONVERSATIONS: null,
   CREATE_CONVERSATION: null,
   LOAD_MESSAGES: null,
   READ_MESSAGES: null,
@@ -13791,7 +13793,15 @@ MessagingService = (function(superClass) {
   };
 
   MessagingService.prototype.onConnectionSuccess = function() {
-    return Api.messaging.ready(this.pusher.connection.socket_id).then(function() {
+    return Api.messaging.ready(this.pusher.connection.socket_id).then(function(arg) {
+      var conversations, notifications;
+      conversations = arg.conversations, notifications = arg.notifications;
+      AppDispatcher.handleServerAction({
+        type: Constants.messenger.INIT_CONVERSATIONS,
+        conversations: conversations.filter(function(conv) {
+          return conv.type === 'PrivateConversation';
+        })
+      });
       return console.log('Welcome to the Matrix, Neo');
     });
   };
@@ -13965,6 +13975,8 @@ ConversationStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action;
   action = payload.action;
   switch (action.type) {
+    case Constants.messenger.INIT_CONVERSATIONS:
+      return ConversationStore.initPlural(action.conversations);
     case Constants.messenger.CREATE_CONVERSATION:
       _currentID = action.conversation.id;
       _conversations[action.conversation.id] = action.conversation;

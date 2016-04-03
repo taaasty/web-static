@@ -19,7 +19,7 @@ export default class PageWithToolbars extends Component {
     CurrentUserStore.initialize(this.props.currentUser);
   }
   render() {
-    const { locale, children, currentUser } = this.props;
+    const { locale, children, currentUser={} } = this.props;
 
     return (
       <Page locale={locale}>
