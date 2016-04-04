@@ -1,10 +1,7 @@
 /*global i18n, moment */
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-export default class Page {
-  static propTypes = {
-    locale: PropTypes.string.isRequired,
-  };
+class Page extends Component {
   componentWillMount() {
     const { locale } = this.props;
     
@@ -21,3 +18,13 @@ export default class Page {
     );
   }
 }
+
+Page.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
+  locale: PropTypes.string.isRequired,
+};
+
+export default Page;

@@ -30,18 +30,18 @@ Avatar = React.createClass
     })
 
     if avatarUrl?
-      avatarUrl    = ThumborService.imageUrl
-        url: avatarUrl
-        path: @props.userpic.thumbor_path
-        size: @props.size + 'x' + @props.size
-      avatarStyles = backgroundImage: "url('#{ avatarUrl }')"
+      imgSrc = ThumborService.newImageUrl(avatarUrl, { width: this.props.size, height: this.props.size })
+      avatarStyles = backgroundImage: "url('#{ imgSrc }')"
 
-      return <span style={ avatarStyles }
-                   className={ avatarClasses }>
-               <img src={ avatarUrl }
-                    alt={ @props.name }
-                    className="avatar__img" />
-             </span>
+      return (
+        <span style={ avatarStyles } className={ avatarClasses }>
+          <img
+            src={ imgSrc }
+            alt={ @props.name }
+            className="avatar__img"
+          />
+        </span>
+      )
     else
       avatarStyles =
         backgroundColor: @props.userpic.default_colors.background
