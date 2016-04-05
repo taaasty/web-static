@@ -50,6 +50,10 @@ MessengerViewActions =
         NotifyController.notifyError i18n.t('messages.messenger_create_message_error')
         MessengerServerActions.createMessageFail uuid
 
+  sendSupportMessage: (email, text) ->
+    Api.messenger.sendSupportMessage(email, text)
+      .then(())
+
   recreateMessage: (convID, messageText, uuid) ->
     Api.messenger.createMessage convID, messageText, uuid
       .then (message) ->

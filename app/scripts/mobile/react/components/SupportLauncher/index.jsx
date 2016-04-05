@@ -23,8 +23,11 @@ class SupportLauncherContainer extends Component {
   handleClick(ev) {
     if (!this.props.user) {
       ev.preventDefault();
-      this.setState({ isEmailFormVisible: true })
+      this.setState({ isEmailFormVisible: true });
     }
+  }
+  handleClose() {
+    this.setState({ isEmailFormVisible: false });
   }
   render() {
     const { user } = this.props;
@@ -33,14 +36,11 @@ class SupportLauncherContainer extends Component {
             ? `${user.tlog_url}/conversations/by_user_id/${SUPPORT_ID}`
             : '#';
 
-    return (
-      <span>
-        <a href={url} onClick={this.handleClick.bind(this)}>
+    return isEmailFormVisible
+      ? <EmailForm onClose={this.handleClose.bind(this)} />
+      : <a href={url} onClick={this.handleClick.bind(this)}>
           <SupportLauncher hasUnread={hasUnread} />
-        </a>
-        {isEmailFormVisible && <EmailForm />}
-      </span>
-    );
+        </a>;
   }
 }
 
