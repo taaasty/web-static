@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import CurrentUserStore from '../../../stores/currentUser';
 
 import Page from './Page';
 import FeedToolbarManager from '../../toolbars/feedManager';
 import UserToolbarManager from '../../toolbars/userManager';
+import SupportLauncher from '../../SupportLauncher';
 
-export default class PageWithToolbars {
+export default class PageWithToolbars extends Component {
   static propTypes = {
     ...Page.propTypes,
     currentUser: PropTypes.object,
@@ -18,12 +19,13 @@ export default class PageWithToolbars {
     CurrentUserStore.initialize(this.props.currentUser);
   }
   render() {
-    const { locale, children } = this.props;
-    
+    const { locale, children, currentUser } = this.props;
+
     return (
       <Page locale={locale}>
         <FeedToolbarManager />
         <UserToolbarManager />
+        {currentUser && currentUser.id && <SupportLauncher url={currentUser.tlog_url} />}
         {children}
       </Page>
     );

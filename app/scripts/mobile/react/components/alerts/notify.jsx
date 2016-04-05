@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 const TYPE = 'success';
 const TIMEOUT = 3000;
 
-export default class Notify {
+export default class Notify extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     type: PropTypes.string,

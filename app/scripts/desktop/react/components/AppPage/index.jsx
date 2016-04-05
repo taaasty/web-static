@@ -7,6 +7,7 @@ import Auth from '../Auth';
 import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
 import BrowserSupport from '../BrowserSupport';
+import SupportLauncher from '../SupportLauncher';
 
 class AppPage extends Component {
   componentWillMount() {
@@ -33,6 +34,7 @@ class AppPage extends Component {
         }
         {!editing && isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
         {!editing && <UserToolbar location={location} />}
+        {!editing && isLogged && <SupportLauncher />} 
         <BrowserSupport />
       </div>
     );

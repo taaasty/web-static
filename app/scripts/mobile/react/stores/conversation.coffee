@@ -15,6 +15,7 @@ ConversationStore = assign new BaseStore(),
     _conversations = {}
     _currentID = conversation.id
     _conversations[conversation.id] = conversation
+    ConversationStore.emitChange()
 
   initPlural: (conversations) ->
     # При пререндере, стор общий для всех пользователей. Чтобы не показывать чужие беседы
@@ -22,9 +23,18 @@ ConversationStore = assign new BaseStore(),
     _conversations = {}
     _.forEach conversations, (item) ->
       _conversations[item.id] = item
+    ConversationStore.emitChange()
 
   get: (id) ->
     _conversations[id]
+
+  getByUserId: (userId) ->
+    conversations = Object.keys(_conversations).filter((id) ->
+      conv = _conversations[id];
+      conv && conv.recipient_id == userId && id
+    );
+
+    conversations.length and _conversations[conversations[0]];
 
   getAll: ->
     _conversations
@@ -50,12 +60,21 @@ ConversationStore = assign new BaseStore(),
   getCurrent: ->
     @get @getCurrentID()
 
+  unreadCountByUserId: (userId) ->
+    conversation = this.getByUserId(userId);
+
+    conversation && conversation.unread_messages_count
+
+
 module.exports = ConversationStore
 
 ConversationStore.dispatchToken = AppDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
+    when Constants.messenger.INIT_CONVERSATIONS
+      ConversationStore.initPlural(action.conversations)
+
     when Constants.messenger.CREATE_CONVERSATION
       _currentID = action.conversation.id
       _conversations[action.conversation.id] = action.conversation

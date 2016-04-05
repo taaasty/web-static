@@ -69,11 +69,37 @@ const ConversationsStore = Object.assign(
 
       return !!convs.length;
     },
-    
+
     updateConversationEntry(conversationId, update) {
       const conversation = this.getConversation(conversationId);
 
       return Object.assign(conversation.entry, update);
+    },
+
+    decreaseUnreadCount(conversationId) {
+      const conversation = this.getConversation(conversationId);
+
+      if (!conversation) {
+        return;
+      }
+
+      const { unread_messages_count: unreadCount } = conversation;
+
+      if (unreadCount && unreadCount > 0) {
+        conversation.unread_messages_count = unreadCount - 1;
+      }
+    },
+
+    unreadCount(conversationId) {
+      const conversation = this.getConversation(conversationId);
+
+      return conversation && conversation.unread_messages_count;
+    },
+
+    unreadCountByUserId(userId) {
+      const conversation = this.getConversationByUserId(userId);
+
+      return conversation && conversation.unread_messages_count;
     },
   }
 );
@@ -108,6 +134,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'deleteConversation':
     ConversationsStore.deleteConversation(action.id);
+    ConversationsStore.emitChange();
+    break;
+  case 'decreaseUnreadCount':
+    ConversationsStore.decreaseUnreadCount(action.id);
     ConversationsStore.emitChange();
     break;
   }

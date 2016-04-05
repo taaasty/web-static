@@ -46,9 +46,6 @@ Image = React.createClass
   getImageUrl: ->
     { width, height } = @getImageProportions()
 
-    url = ThumborService.imageUrl
-      url:  @props.image.url
-      path: @props.image.path
-      size: "#{width}x#{height}"
+    url = ThumborService.newImageUrl(@props.image.url, { width, height });
 
 module.exports = Image

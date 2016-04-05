@@ -1,11 +1,11 @@
  /*global i18n */
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import HeroFeed from  '../hero/feed';
 import Routes from '../../../../shared/routes/routes';
 
 const FEED_TYPE_ANONYMOUS = 'live_anonymous';
 
-class HeroFeedLive {
+class HeroFeedLive extends Component {
   renderWriteButton() {
     const { currentUser: { slug }, feedType } = this.props;
 
