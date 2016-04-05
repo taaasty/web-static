@@ -7358,15 +7358,14 @@ var PageWithToolbars = function (_Component) {
       var _props = this.props;
       var locale = _props.locale;
       var children = _props.children;
-      var _props$currentUser = _props.currentUser;
-      var currentUser = _props$currentUser === undefined ? {} : _props$currentUser;
+      var currentUser = _props.currentUser;
 
       return _react2.default.createElement(
         _Page2.default,
         { locale: locale },
         _react2.default.createElement(_feedManager2.default, null),
         _react2.default.createElement(_userManager2.default, null),
-        currentUser.id && _react2.default.createElement(_SupportLauncher2.default, { url: currentUser.tlog_url }),
+        currentUser && currentUser.id && _react2.default.createElement(_SupportLauncher2.default, { url: currentUser.tlog_url }),
         children
       );
     }
