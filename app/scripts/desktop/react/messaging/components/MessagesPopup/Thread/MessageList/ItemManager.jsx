@@ -34,6 +34,7 @@ function getElementPosition(el, parent) {
 
 const ItemManager = createClass({
   propTypes: {
+    currentUserId: PropTypes.number.isRequired,
     message: PropTypes.object.isRequired,
     messagesCount: PropTypes.number,
     selectState: PropTypes.bool.isRequired,
@@ -132,12 +133,13 @@ const ItemManager = createClass({
   },
   
   render() {
-    const { message, selectState } = this.props;
+    const { currentUserId, message, selectState } = this.props;
     const { currentState, messageInfo, selected } = this.state;
     const { type } = message;
 
     return type !== SYSTEM_MSG
       ? <Item
+          currentUserId={currentUserId}
           deliveryStatus={currentState}
           message={message}
           messageInfo={messageInfo}
