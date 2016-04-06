@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import SupportLauncher from '../../../../shared/react/components/common/SupportLauncher';
 import ConversationStore from '../../stores/conversation';
+import EmailForm from './EmailForm';
 
 const SUPPORT_ID = 3;
 
 class SupportLauncherContainer extends Component {
-  state = this.stateFromStore();
+  state = Object.assign({}, this.stateFromStore(), { isEmailFormVisible: false });
   componentWillMount() {
     this.syncWithStore = () => this.setState(this.stateFromStore());
 
@@ -19,17 +20,32 @@ class SupportLauncherContainer extends Component {
       hasUnread: !!ConversationStore.unreadCountByUserId(SUPPORT_ID),
     };
   }
+  handleClick(ev) {
+    if (!this.props.user) {
+      ev.preventDefault();
+      this.setState({ isEmailFormVisible: true });
+    }
+  }
+  handleClose() {
+    this.setState({ isEmailFormVisible: false });
+  }
   render() {
-    return (
-      <a href={`${this.props.url}/conversations/by_user_id/${SUPPORT_ID}`}>
-        <SupportLauncher hasUnread={this.state.hasUnread} />
-      </a>
-    );
+    const { user } = this.props;
+    const { hasUnread, isEmailFormVisible } = this.state;
+    const url = user && user.tlog_url
+            ? `${user.tlog_url}/conversations/by_user_id/${SUPPORT_ID}`
+            : '#';
+
+    return isEmailFormVisible
+      ? <EmailForm onClose={this.handleClose.bind(this)} />
+      : <a href={url} onClick={this.handleClick.bind(this)}>
+          <SupportLauncher hasUnread={hasUnread} />
+        </a>;
   }
 }
 
 SupportLauncherContainer.propTypes = {
-  url: PropTypes.string,
+  user: PropTypes.object.isRequired,
 };
 
 export default SupportLauncherContainer;
