@@ -1361,7 +1361,8 @@ module.exports={
     "messenger_empty_message_error": "The message can't be empty",
     "messenger_cant_talk_error": "You can not send a message to the user, since he has ignored you",
     "messenger_connection_error": "The connection is not established",
-    "messenger_send_support_message_error": "Failed to deliver your message"
+    "messenger_send_support_message_error": "Failed to deliver your message",
+    "messenger_send_support_message_success": "Thank you for your message. We will contact you shortly."
   },
   "placeholders": {
     "comment_create": "Write a comment",
@@ -1631,7 +1632,8 @@ module.exports={
     "messenger_empty_message_error": "Сообщение не может быть пустым",
     "messenger_cant_talk_error": "Вы не можете отправить сообщение этому пользователю, так как он вас заблокировал",
     "messenger_connection_error": "Соединение не установлено",
-    "messenger_send_support_message_error": "Не получилось отправить сообщение"
+    "messenger_send_support_message_error": "Не получилось отправить сообщение",
+    "messenger_send_support_message_success": "Ваше сообщение отправлено. В скором времени с вами свяжутся."
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",
@@ -2453,6 +2455,17 @@ Api = {
       };
       return _pendingRequests[key] = postRequest(url, data);
     }
+  },
+  sendSupportRequest: function(email, text) {
+    var data, key, url;
+    url = ApiRoutes.supportRequest();
+    key = Constants.api.SUPPORT_REQUEST;
+    data = {
+      email: email,
+      text: text
+    };
+    abortPendingRequests(key);
+    return _pendingRequests[key] = postRequest(url, data);
   },
   relationship: {
     follow: function(userId) {
@@ -5417,9 +5430,11 @@ var _notify = require('../../controllers/notify');
 
 var _notify2 = _interopRequireDefault(_notify);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _api = require('../../api/api');
 
-/*global i18n */
+var _api2 = _interopRequireDefault(_api);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EmailForm = function (_Component) {
   (0, _inherits3.default)(EmailForm, _Component);
@@ -5435,15 +5450,16 @@ var EmailForm = function (_Component) {
       var _this2 = this;
 
       var email = this.refs.email.value;
-      var text = this.refs.msg.value;
+      var text = this.refs.msg.getValue();
 
       ev && ev.preventDefault();
 
-      Api.messenger.sendSupportMessage(email, text).then(function (data) {
+      _api2.default.sendSupportRequest(email, text).then(function (data) {
         _notify2.default.notifySuccess(i18n.t('messages.messenger_send_support_message_success'), 3000);
         _this2.props.onClose();
       }).fail(function (err) {
-        _notify2.default.notifyError(i18n.t('messages.messenger_send_support_message_error'));
+
+        _notify2.default.notifyError(i18n.t('messages.messenger_send_support_message_error') + '. ' + (err && err.error_code && err.error || ''));
       });
     }
   }, {
@@ -5494,7 +5510,8 @@ var EmailForm = function (_Component) {
               ),
               _react2.default.createElement(_field2.default, {
                 onSubmit: handleSubmit,
-                ref: 'msg'
+                ref: 'msg',
+                required: true
               })
             )
           )
@@ -5503,7 +5520,7 @@ var EmailForm = function (_Component) {
     }
   }]);
   return EmailForm;
-}(_react.Component);
+}(_react.Component); /*global i18n */
 
 EmailForm.propTypes = {
   onClose: _react.PropTypes.func.isRequired
@@ -5512,7 +5529,7 @@ EmailForm.propTypes = {
 exports.default = EmailForm;
 module.exports = exports['default'];
 
-},{"../../controllers/notify":236,"../messenger/MessengerHeader":177,"../messenger/conversation/messageForm/field":182,"babel-runtime/core-js/object/get-prototype-of":280,"babel-runtime/helpers/classCallCheck":284,"babel-runtime/helpers/createClass":285,"babel-runtime/helpers/inherits":288,"babel-runtime/helpers/possibleConstructorReturn":289,"react":"react"}],68:[function(require,module,exports){
+},{"../../api/api":29,"../../controllers/notify":236,"../messenger/MessengerHeader":177,"../messenger/conversation/messageForm/field":182,"babel-runtime/core-js/object/get-prototype-of":280,"babel-runtime/helpers/classCallCheck":284,"babel-runtime/helpers/createClass":285,"babel-runtime/helpers/inherits":288,"babel-runtime/helpers/possibleConstructorReturn":289,"react":"react"}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7584,7 +7601,7 @@ var PageWithToolbars = function (_Component) {
         { locale: locale },
         _react2.default.createElement(_feedManager2.default, null),
         _react2.default.createElement(_userManager2.default, null),
-        false && _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
+        _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
         children
       );
     }
@@ -11301,17 +11318,19 @@ ConversationMessageFormField = React.createClass({
   displayName: 'ConversationMessageFormField',
   propTypes: {
     disabled: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    required: PropTypes.bool
   },
   render: function() {
     return React.createElement("div", {
       "className": "message-form__field"
     }, React.createElement("textarea", {
-      "ref": "textarea",
-      "disabled": this.props.disabled,
-      "placeholder": this.getPlaceholder(),
       "className": "message-form__field-textarea",
-      "onKeyDown": this.handleKeyDown
+      "disabled": this.props.disabled,
+      "onKeyDown": this.handleKeyDown,
+      "placeholder": this.getPlaceholder(),
+      "ref": "textarea",
+      "required": this.props.required
     }));
   },
   isEmpty: function() {
@@ -16234,6 +16253,9 @@ ApiRoutes = {
   },
   flowStaffs: function(flowID) {
     return gon.api_host + '/v1/flows/' + flowID + '/staffs';
+  },
+  supportRequest: function() {
+    return gon.api_host + "/v1/support_requests";
   }
 };
 

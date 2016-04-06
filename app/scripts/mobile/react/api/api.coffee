@@ -165,6 +165,17 @@ Api =
       # Мы позволяем отправлять сообщение, не дожидаясь завершения создания предыдущего
       _pendingRequests[key] = postRequest url, data
 
+  sendSupportRequest: (email, text) ->
+    url = ApiRoutes.supportRequest();
+    key = Constants.api.SUPPORT_REQUEST;
+    data = {
+      email,
+      text
+    };
+
+    abortPendingRequests(key);
+    _pendingRequests[key] = postRequest(url, data);
+
   relationship:
     follow: (userId) ->
       url = ApiRoutes.change_my_relationship_url userId, 'follow'

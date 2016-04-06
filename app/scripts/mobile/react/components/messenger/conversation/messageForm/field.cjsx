@@ -7,15 +7,18 @@ ConversationMessageFormField = React.createClass
   propTypes:
     disabled: PropTypes.bool.isRequired
     onSubmit: PropTypes.func.isRequired
+    required: PropTypes.bool
 
   render: ->
     <div className="message-form__field">
       <textarea
-          ref="textarea"
-          disabled={ @props.disabled }
-          placeholder={ @getPlaceholder() }
-          className="message-form__field-textarea"
-          onKeyDown={ @handleKeyDown } />
+        className="message-form__field-textarea"
+        disabled={ @props.disabled }
+        onKeyDown={ @handleKeyDown }
+        placeholder={ @getPlaceholder() }
+        ref="textarea"
+        required={this.props.required}
+      />
     </div>
 
   isEmpty: ->
