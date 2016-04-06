@@ -3,7 +3,7 @@ import ConversationsStore from '../../messaging/stores/ConversationsStore';
 import ConversationActions from '../../messaging/actions/ConversationActions';
 import SupportLauncher from '../../../../shared/react/components/common/SupportLauncher';
 
-const SUPPORT_ID = 3; //prod env
+export const SUPPORT_ID = 3; //prod env
 
 class SupportLauncherContainer extends Component {
   state = this.getStateFromStore();

@@ -1,5 +1,9 @@
 {
   "tasty": "Тейсти",
+  "gender_m": "мужской",
+  "gender_f": "женский",
+  "yes": "да",
+  "no": "нет",
   "network_error": "Ошибка сети: {{text}}",
   "pusher_subscription_error": "Соединение не установлено",
   "conversations_empty_list": "Здесь будут отображаться ваши переписки",
@@ -651,6 +655,7 @@
     "label_off": "Нет"
   },
   "messenger": {
+    "support_info": "<p style=\"text-align:left;\">Id: {{id}}<br>Локаль: {{locale}}<br>Email: {{email}}<br>Пол: {{gender}}<br>Закрытый тлог: {{private}}<br>Премиум: {{premium}}<br>Дизайн бандл: {{design_bundle}}<br>Зарегистрирован: {{registered_at}}<br>Браузер: {{browser}}<br>Платформа: {{platform}}</p>",
     "title_actions": {
       "disturb": "Включить уведомления",
       "dont_disturb": "Отключить уведомления",

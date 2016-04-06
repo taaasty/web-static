@@ -3,6 +3,7 @@ import React, { createClass, PropTypes } from 'react';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
+import CurrentUserStore from '../../../../../stores/current_user';
 import MessageActions from '../../../../actions/MessageActions';
 
 let savedScrollHeight = null;
@@ -22,6 +23,7 @@ const MessageList = createClass({
     this.scrollToUnread();
 
     MessagesStore.addChangeListener(this._onStoreChange);
+    CurrentUserStore.addChangeListener(this._onStoreChange);
     messagingService.openConversation(this.props.conversationId);
   },
   
@@ -52,6 +54,7 @@ const MessageList = createClass({
 
   componentWillUnmount() {
     MessagesStore.removeChangeListener(this._onStoreChange);
+    CurrentUserStore.removeChangeListener(this._onStoreChange);
   },
   
   isEmpty() {
@@ -76,6 +79,7 @@ const MessageList = createClass({
     const { conversationId } = this.props;
 
     return {
+      currentUserId: CurrentUserStore.getUserID(),
       isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(conversationId),
       messages: MessagesStore.getMessages(conversationId),
     };
@@ -122,12 +126,13 @@ const MessageList = createClass({
   },
 
   renderMessages() {
-    const { messages } = this.state;
+    const { currentUserId, messages } = this.state;
 
     return this.isEmpty()
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
+            currentUserId={currentUserId}
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.length}
