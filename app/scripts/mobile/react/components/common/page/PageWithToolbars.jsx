@@ -25,7 +25,7 @@ export default class PageWithToolbars extends Component {
       <Page locale={locale}>
         <FeedToolbarManager />
         <UserToolbarManager />
-        <SupportLauncher user={currentUser} />
+        {false && <SupportLauncher user={currentUser} />}
         {children}
       </Page>
     );

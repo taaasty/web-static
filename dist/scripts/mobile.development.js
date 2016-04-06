@@ -5090,7 +5090,13 @@ var _MessengerHeader = require('../messenger/MessengerHeader');
 
 var _MessengerHeader2 = _interopRequireDefault(_MessengerHeader);
 
+var _notify = require('../../controllers/notify');
+
+var _notify2 = _interopRequireDefault(_notify);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*global i18n */
 
 var EmailForm = function (_Component) {
   (0, _inherits3.default)(EmailForm, _Component);
@@ -5103,11 +5109,25 @@ var EmailForm = function (_Component) {
   (0, _createClass3.default)(EmailForm, [{
     key: 'handleSubmit',
     value: function handleSubmit(ev) {
-      ev.preventDefault();
+      var _this2 = this;
+
+      var email = this.refs.email.value;
+      var text = this.refs.msg.value;
+
+      ev && ev.preventDefault();
+
+      Api.messenger.sendSupportMessage(email, text).then(function (data) {
+        _notify2.default.notifySuccess(i18n.t('messages.messenger_send_support_message_success'), 3000);
+        _this2.props.onClose();
+      }).fail(function (err) {
+        _notify2.default.notifyError(i18n.t('messages.messenger_send_support_message_error'));
+      });
     }
   }, {
     key: 'render',
     value: function render() {
+      var handleSubmit = this.handleSubmit.bind(this);
+
       return _react2.default.createElement(
         'div',
         { className: 'messages messages--fixed messages--email-form' },
@@ -5136,7 +5156,7 @@ var EmailForm = function (_Component) {
             { className: 'messages__footer' },
             _react2.default.createElement(
               'form',
-              { className: 'message-form' },
+              { className: 'message-form', onSubmit: handleSubmit },
               _react2.default.createElement('input', {
                 className: 'message-form__email',
                 placeholder: i18n.t('placeholders.messenger_email'),
@@ -5150,7 +5170,7 @@ var EmailForm = function (_Component) {
                 i18n.t('buttons.messenger_create_message')
               ),
               _react2.default.createElement(_field2.default, {
-                onSubmit: this.handleSubmit.bind(this),
+                onSubmit: handleSubmit,
                 ref: 'msg'
               })
             )
@@ -5160,7 +5180,7 @@ var EmailForm = function (_Component) {
     }
   }]);
   return EmailForm;
-}(_react.Component); /*global i18n */
+}(_react.Component);
 
 EmailForm.propTypes = {
   onClose: _react.PropTypes.func.isRequired
@@ -5169,7 +5189,7 @@ EmailForm.propTypes = {
 exports.default = EmailForm;
 module.exports = exports['default'];
 
-},{"../messenger/MessengerHeader":181,"../messenger/conversation/messageForm/field":186,"babel-runtime/core-js/object/get-prototype-of":289,"babel-runtime/helpers/classCallCheck":293,"babel-runtime/helpers/createClass":294,"babel-runtime/helpers/inherits":297,"babel-runtime/helpers/possibleConstructorReturn":298,"react":"react"}],68:[function(require,module,exports){
+},{"../../controllers/notify":240,"../messenger/MessengerHeader":181,"../messenger/conversation/messageForm/field":186,"babel-runtime/core-js/object/get-prototype-of":289,"babel-runtime/helpers/classCallCheck":293,"babel-runtime/helpers/createClass":294,"babel-runtime/helpers/inherits":297,"babel-runtime/helpers/possibleConstructorReturn":298,"react":"react"}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7511,7 +7531,7 @@ var PageWithToolbars = function (_Component) {
         { locale: locale },
         _react2.default.createElement(_feedManager2.default, null),
         _react2.default.createElement(_userManager2.default, null),
-        _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
+        false && _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
         children
       );
     }
