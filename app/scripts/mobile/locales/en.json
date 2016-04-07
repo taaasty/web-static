@@ -188,7 +188,8 @@
     "messenger_empty_message_error": "The message can't be empty",
     "messenger_cant_talk_error": "You can not send a message to the user, since he has ignored you",
     "messenger_connection_error": "The connection is not established",
-    "messenger_send_support_message_error": "Failed to deliver your message"
+    "messenger_send_support_message_error": "Failed to deliver your message",
+    "messenger_send_support_message_success": "Thank you for your message. We will contact you shortly."
   },
   "placeholders": {
     "comment_create": "Write a comment",

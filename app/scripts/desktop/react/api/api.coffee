@@ -360,6 +360,17 @@ Api =
       abortPendingRequests(key);
       _pendingRequests[key] = getRequest(url, params);
 
+  sendSupportRequest: (email, text) ->
+    url = ApiRoutes.supportRequest()
+    key = Constants.api.SUPPORT_REQUEST
+    data = {
+      email,
+      text
+    }
+
+    abortPendingRequests(key)
+    _pendingRequests[key] = postRequest(url, data)
+
   flow:
     create: (formData) ->
       url = ApiRoutes.flows()

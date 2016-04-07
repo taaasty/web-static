@@ -195,7 +195,8 @@
     "messenger_empty_message_error": "Сообщение не может быть пустым",
     "messenger_cant_talk_error": "Вы не можете отправить сообщение этому пользователю, так как он вас заблокировал",
     "messenger_connection_error": "Соединение не установлено",
-    "messenger_send_support_message_error": "Не получилось отправить сообщение"
+    "messenger_send_support_message_error": "Не получилось отправить сообщение",
+    "messenger_send_support_message_success": "Ваше сообщение отправлено. В скором времени с вами свяжутся."
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",

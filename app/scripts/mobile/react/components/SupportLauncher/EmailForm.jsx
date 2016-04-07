@@ -3,21 +3,23 @@ import React, { Component, PropTypes } from 'react';
 import ConversationMessageFormField from '../messenger/conversation/messageForm/field';
 import MessengerHeader from '../messenger/MessengerHeader';
 import NotifyController from '../../controllers/notify';
+import Api from '../../api/api';
 
 class EmailForm extends Component {
   handleSubmit(ev) {
     const email = this.refs.email.value;
-    const text = this.refs.msg.value;
+    const text = this.refs.msg.getValue();
 
     (ev && ev.preventDefault());
 
-    Api.messenger.sendSupportMessage(email, text)
+    Api.sendSupportRequest(email, text)
       .then((data) => {
         NotifyController.notifySuccess(i18n.t('messages.messenger_send_support_message_success'), 3000);
         this.props.onClose();
       })
       .fail((err) =>  {
-        NotifyController.notifyError(i18n.t('messages.messenger_send_support_message_error'));
+         
+        NotifyController.notifyError(`${i18n.t('messages.messenger_send_support_message_error')}. ${err && err.error_code && err.error || ''}`);
       });
   }
   render() {
@@ -52,6 +54,7 @@ class EmailForm extends Component {
               <ConversationMessageFormField
                 onSubmit={handleSubmit}
                 ref="msg"
+                required
               />
             </form>
           </div>
