@@ -620,13 +620,18 @@
   },
   "messages": {
     "entry_accept_success": "Entry accepted",
-    "entry_decline_success": "Entry rejected"
+    "entry_decline_success": "Entry rejected",
+    "messenger_send_support_message_error": "Failed to deliver your message",
+    "messenger_send_support_message_success": "Thank you for your message. We will contact you shortly."
   },
   "switcher": {
     "label_on": "Yes",
     "label_off": "No"
   },
   "messenger": {
+    "support_header": "Taaasty support",
+    "support_message": "If you have any questions, please feel free to ask.",
+    "support_email_placeholder": "Your email",
     "support_info": "<p style=\"text-align:left\">Id: {{id}}<br>Locale: {{locale}}<br>Email: {{email}}<br>Gender: {{gender}}<br>Private tlog: {{private}}<br>Is premium: {{premium}}<br>Design bundle: {{design_bundle}}<br>Registered at: {{registered_at}}<br>Browser: {{browser}}<br>Platform: {{platform}}</p>",
     "title_actions": {
       "disturb": "Disturb",

@@ -34,7 +34,7 @@ class AppPage extends Component {
         }
         {!editing && isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
         {!editing && <UserToolbar location={location} />}
-        {!editing && isLogged && <SupportLauncher />} 
+        {!editing && <SupportLauncher user={currentUser.data} />} 
         <BrowserSupport />
       </div>
     );

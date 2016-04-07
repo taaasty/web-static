@@ -13548,7 +13548,8 @@ ApiConstants = keyMirror({
   LOAD_MESSAGES: null,
   CREATE_MESSAGE: null,
   READ_MESSAGES: null,
-  READY_TO_MESSAGING: null
+  READY_TO_MESSAGING: null,
+  SUPPORT_REQUEST: null
 });
 
 module.exports = ApiConstants;
