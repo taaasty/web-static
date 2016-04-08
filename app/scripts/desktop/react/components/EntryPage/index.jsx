@@ -30,9 +30,6 @@ class EntryPageContainer extends Component {
       sendCategory(SM_TLOG_ENTRY, nextId);
     }
   }
-  componentWillUnmount() {
-    this.props.resetTlogEntry();
-  }
   fetchData({ id: newId, isFeed }, refetch) {
     const { getTlogEntry, setTlogEntry,
             feedEntries: { items: feedItems },

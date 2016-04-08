@@ -46,6 +46,7 @@ function shouldFetchTlogEntry(state, id) {
 
 function fetchTlogEntry(id) {
   return (dispatch) => {
+    dispatch(resetTlogEntry());
     dispatch(tlogEntryRequest());
     return $.ajax({ url: ApiRoutes.entry_url(id), data: { include_comments: true } })
       .done((data) => dispatch(tlogEntryReceive({ data, id })))
