@@ -3699,7 +3699,8 @@ var MessengerPage = function (_Component) {
         _PageWithToolbars2.default,
         {
           currentUser: currentUser,
-          locale: locale
+          locale: locale,
+          noSupport: true
         },
         _react2.default.createElement(
           _PageLayout2.default,
@@ -3814,7 +3815,8 @@ var MessengerThreadPage = function (_Component) {
         _PageWithToolbars2.default,
         {
           currentUser: currentUser,
-          locale: locale
+          locale: locale,
+          noSupport: true
         },
         _react2.default.createElement(
           _PageLayout2.default,
@@ -7540,13 +7542,14 @@ var PageWithToolbars = function (_Component) {
       var locale = _props.locale;
       var children = _props.children;
       var currentUser = _props.currentUser;
+      var noSupport = _props.noSupport;
 
       return _react2.default.createElement(
         _Page2.default,
         { locale: locale },
         _react2.default.createElement(_feedManager2.default, null),
         _react2.default.createElement(_userManager2.default, null),
-        _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
+        !noSupport && _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
         children
       );
     }
@@ -7555,7 +7558,8 @@ var PageWithToolbars = function (_Component) {
 }(_react.Component);
 
 PageWithToolbars.propTypes = (0, _extends3.default)({}, _Page2.default.propTypes, {
-  currentUser: _react.PropTypes.object
+  currentUser: _react.PropTypes.object,
+  noSupport: _react.PropTypes.bool
 });
 exports.default = PageWithToolbars;
 module.exports = exports['default'];
@@ -14338,7 +14342,7 @@ _messages = {};
 
 _localMessages = {};
 
-addLocalMessage = function(convID, messageText, messageFiles, uuid) {
+addLocalMessage = function(convID, messageText, uuid) {
   var conversation, currentUser, localMessage, recipient;
   conversation = ConversationStore.get(convID);
   currentUser = CurrentUserStore.getUser();
@@ -14346,7 +14350,6 @@ addLocalMessage = function(convID, messageText, messageFiles, uuid) {
   localMessage = {
     content: messageText,
     content_html: _.escape(messageText),
-    files: messageFiles,
     created_at: new Date().toISOString(),
     conversation_id: convID,
     recipient_id: recipient.id,
@@ -14376,22 +14379,25 @@ MessageStore = assign(new BaseStore(), {
     return _messages;
   },
   getAllForThread: function(conversationID) {
-    var convMessages;
-    convMessages = [];
-    _.forEach(_messages, function(item) {
-      if (item.conversation_id === conversationID) {
-        return convMessages.push(item);
-      }
-    });
+    var localMessages, serverMessages, sort;
+    serverMessages = [];
+    localMessages = [];
     _.forEach(_localMessages, function(item) {
       if (item.conversation_id === conversationID) {
-        return convMessages.push(item);
+        return localMessages.push(item);
       }
     });
-    convMessages = _.sortBy(convMessages, function(item) {
-      return new Date(item.created_at).getTime();
+    _.forEach(_messages, function(item) {
+      if (item.conversation_id === conversationID) {
+        return serverMessages.push(item);
+      }
     });
-    return convMessages;
+    sort = function(arr) {
+      return _.sortBy(arr, function(item) {
+        return new Date(item.created_at).getTime();
+      });
+    };
+    return sort(serverMessages).concat(sort(localMessages));
   },
   getAllForCurrentThread: function() {
     return this.getAllForThread(ConversationStore.getCurrentID());

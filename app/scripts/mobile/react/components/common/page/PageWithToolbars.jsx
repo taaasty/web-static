@@ -11,6 +11,7 @@ export default class PageWithToolbars extends Component {
   static propTypes = {
     ...Page.propTypes,
     currentUser: PropTypes.object,
+    noSupport: PropTypes.bool,
   };
   componentWillMount() {
     // Temporarily initialize CurrentUserStore here. Later on it will be set at
@@ -19,13 +20,13 @@ export default class PageWithToolbars extends Component {
     CurrentUserStore.initialize(this.props.currentUser);
   }
   render() {
-    const { locale, children, currentUser } = this.props;
+    const { locale, children, currentUser, noSupport } = this.props;
 
     return (
       <Page locale={locale}>
         <FeedToolbarManager />
         <UserToolbarManager />
-        <SupportLauncher user={currentUser} />
+        {!noSupport && <SupportLauncher user={currentUser} />}
         {children}
       </Page>
     );
