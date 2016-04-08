@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ConversationsStore from '../../messaging/stores/ConversationsStore';
 import ConversationActions from '../../messaging/actions/ConversationActions';
 import SupportLauncher from '../../../../shared/react/components/common/SupportLauncher';
+import EmailForm from './EmailForm';
 
-const SUPPORT_ID = 3; //prod env
+export const SUPPORT_ID = 3; //prod env
 
 class SupportLauncherContainer extends Component {
-  state = this.getStateFromStore();
+  state = Object.assign({}, this.getStateFromStore(), { isEmailFormVisible: false });
   componentWillMount() {
     this.syncStateWithStore = () => this.setState(this.getStateFromStore.bind(this));
     ConversationsStore.addChangeListener(this.syncStateWithStore);
@@ -18,11 +19,24 @@ class SupportLauncherContainer extends Component {
     return { hasUnread: !!ConversationsStore.unreadCountByUserId(SUPPORT_ID) };
   }
   handleClick() {
-    ConversationActions.openConversation(SUPPORT_ID);
+    if (this.props.user.id) {
+      ConversationActions.openConversation(SUPPORT_ID);
+    } else {
+      this.setState({ isEmailFormVisible: true });
+    }
+  }
+  handleClose() {
+    this.setState({ isEmailFormVisible: false });
   }
   render() {
-    return <SupportLauncher hasUnread={this.state.hasUnread} onClick={this.handleClick.bind(this)} />;
+    return this.state.isEmailFormVisible
+      ? <EmailForm onClose={this.handleClose.bind(this)} />
+      : <SupportLauncher hasUnread={this.state.hasUnread} onClick={this.handleClick.bind(this)} />;
   }
 }
+
+SupportLauncherContainer.propTypes = {
+  user: PropTypes.object,
+};
 
 export default SupportLauncherContainer;

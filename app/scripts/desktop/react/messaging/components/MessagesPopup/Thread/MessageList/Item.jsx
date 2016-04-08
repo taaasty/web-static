@@ -7,6 +7,8 @@ import UserAvatar from '../../../../../components/UserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
+import Tooltip from '../../../../../components/common/Tooltip';
+import { SUPPORT_ID } from '../../../../../components/SupportLauncher';
 
 const ERROR_STATE = 'error';
 const SENT_STATE = 'sent';
@@ -15,6 +17,7 @@ const READ_STATE = 'read';
 
 const Item = createClass({
   propTypes: {
+    currentUserId: PropTypes.number.isRequired,
     deliveryStatus: PropTypes.string.isRequired,
     message: PropTypes.object.isRequired,
     messageInfo: PropTypes.object.isRequired,
@@ -35,6 +38,10 @@ const Item = createClass({
   
   isIncoming() {
     return this.props.messageInfo.type === 'incoming';
+  },
+
+  isSupport() {
+    return this.props.currentUserId === SUPPORT_ID;
   },
 
   toggleSelection() {
@@ -116,20 +123,55 @@ const Item = createClass({
       : null;
   },
 
-  renderUserAvatar() {
+  renderUserAvatar(user) {
+    return (
+      <a
+        href={user.tlog_url}
+        onClick={this.handleClickUser}
+        target="_blank"
+      >
+        <span className="messages__user-avatar">
+          <UserAvatar size={35} user={user} />
+        </span>
+      </a>
+    );
+  },
+
+  renderAvatar() {
     const { user } = this.props.messageInfo;
 
-    return this.isIncoming()
-      ? <a
-          href={user.tlog_url}
-          onClick={this.handleClickUser}
-          target="_blank"
-        >
-          <span className="messages__user-avatar">
-            <UserAvatar size={35} user={user} />
-          </span>
-        </a>
-      : null;
+    if (!this.isIncoming()) {
+      return null;
+    } else if (!this.isSupport()) {
+      return this.renderUserAvatar(user);
+    }
+
+    const { browser, platform } = this.props.message;
+    const { gender, locale, id, email, is_privacy, is_premium, has_design_bundle, created_at } = user;
+
+    const support_info = i18n.t('messenger.support_info', {
+      browser,
+      platform,
+      locale,
+      id,
+      email,
+      gender: i18n.t('gender', { context: gender }),
+      private: i18n.t(is_privacy ? 'yes' : 'no'),
+      premium: i18n.t(is_premium ? 'yes' : 'no'),
+      design_bundle: i18n.t(has_design_bundle ? 'yes' : 'no'),
+      registered_at: moment(created_at).format('LL'),
+    });
+
+    return (
+      <Tooltip
+        container=".messages"
+        html
+        placement="top"
+        title={support_info}
+      >
+        {this.renderUserAvatar(user)}
+      </Tooltip>
+    );
   },
 
   render() {
@@ -147,7 +189,7 @@ const Item = createClass({
     return (
       <div className={containerClasses} onClick={this.toggleSelection}>
         <div className={messageClasses}>
-          {this.renderUserAvatar()}
+          {this.renderAvatar()}
           <div className="messages__bubble">
             {this.renderUserSlug()}
             <span

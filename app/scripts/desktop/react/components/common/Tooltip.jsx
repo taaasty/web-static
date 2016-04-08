@@ -3,9 +3,9 @@ import React, { Component, PropTypes } from 'react';
 
 class Tooltip extends Component {
   componentDidMount() {
-    const { container, placement } = this.props;
+    const { container, html, placement } = this.props;
 
-    $(this.refs.tooltip).tooltip({ container, placement });
+    $(this.refs.tooltip).tooltip({ container, html, placement });
   }
   componentWillUnmount() {
     $(this.refs.tooltip).tooltip('destroy');
@@ -23,12 +23,14 @@ class Tooltip extends Component {
 
 Tooltip.propTypes = {
   container: PropTypes.string,
+  html: PropTypes.bool,
   placement: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 
 Tooltip.defaultProps = {
   container: 'body',
+  html: false,
   placement: 'top',
 };
 

@@ -95,13 +95,15 @@
   },
   "messenger": {
     "conversation_header": "{{userSlug}}",
+    "support_header": "Служба поддержки",
     "conversations_header": "Сообщения",
     "create_conversation_header": "Выбор получателя",
     "messages_loading_error": "Ошибка загрузки",
     "messages_empty_list": "Здесь будут отображаться сообщения",
     "conversations_empty_list": "Список диалогов пуст",
     "chooser_hint": "Начните вводить имя друга, которому хотите написать сообщение",
-    "recipients_empty_list": "Список пуст"
+    "recipients_empty_list": "Список пуст",
+    "support_message": "Привет! Если у вас есть вопросы по работе сервиса, можете задать их здесь."
   },
   "settings": {
     "account_active_status": "Активный дневник",
@@ -192,7 +194,9 @@
     "messenger_recreate_message_error": "При повторной отправке сообщения произошла ошибка",
     "messenger_empty_message_error": "Сообщение не может быть пустым",
     "messenger_cant_talk_error": "Вы не можете отправить сообщение этому пользователю, так как он вас заблокировал",
-    "messenger_connection_error": "Соединение не установлено"
+    "messenger_connection_error": "Соединение не установлено",
+    "messenger_send_support_message_error": "Не получилось отправить сообщение",
+    "messenger_send_support_message_success": "Ваше сообщение отправлено. В скором времени с вами свяжутся."
   },
   "placeholders": {
     "comment_create": "Добавить комментарий",
@@ -207,6 +211,7 @@
     "settings_password": "Новый пароль",
     "settings_password_confirm": "Новый пароль еще раз",
     "messenger_create_message": "Ваше сообщение…",
+    "messenger_email": "Ваш e-mail",
     "messenger_cant_talk": "Пользователь вас заблокировал"
   }
 }

@@ -145,4 +145,6 @@ ApiRoutes =
   flow: (flowID) -> gon.api_host + '/v1/flows/' + flowID
   flowStaffs: (flowID) -> gon.api_host + '/v1/flows/' + flowID + '/staffs'
 
+  supportRequest: () -> "#{gon.api_host}/v1/support_requests"
+
 module.exports = ApiRoutes

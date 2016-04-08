@@ -1,4 +1,4 @@
-MessengerHeader = require '../common/header'
+MessengerHeader = require '../MessengerHeader'
 
 ConversationsHeader = React.createClass
   displayName: 'ConversationsHeader'
