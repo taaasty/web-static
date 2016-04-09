@@ -123,6 +123,27 @@
   line-height: 22px;
 }
 
+.settings__header {
+
+  .editable-field__content {
+    position: relative;
+    top: initial;
+    left: initial;
+  }
+
+  .editable-field {
+    .editable-field__control-wrap {
+      display: none;
+    }
+
+    &.state--focus {
+      .editable-field__control-wrap {
+        display: block;
+      }
+    }
+  }
+}
+
 .settings__item {
   margin: 0 32px;
   padding: 20px 0 22px;

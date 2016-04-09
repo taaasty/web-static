@@ -9,14 +9,13 @@ AppDispatcher     = require '../dispatcher/dispatcher'
 _messages = {}      # Key is message id
 _localMessages = {} # Key is message uuid
 
-addLocalMessage = (convID, messageText, messageFiles, uuid) ->
+addLocalMessage = (convID, messageText, uuid) ->
   conversation = ConversationStore.get convID
   currentUser  = CurrentUserStore.getUser()
   recipient    = conversation.recipient
   localMessage =
     content: messageText
     content_html: _.escape messageText
-    files: messageFiles
     created_at: new Date().toISOString()
     conversation_id: convID
     recipient_id: recipient.id
@@ -44,17 +43,18 @@ MessageStore = assign new BaseStore(),
     _messages
 
   getAllForThread: (conversationID) ->
-    convMessages = []
+    serverMessages = []
+    localMessages = []
 
-    _.forEach _messages, (item) ->
-      convMessages.push(item) if item.conversation_id == conversationID
+    _.forEach(_localMessages, (item) ->
+      localMessages.push(item) if item.conversation_id == conversationID)
 
-    _.forEach _localMessages, (item) ->
-      convMessages.push(item) if item.conversation_id == conversationID
+    _.forEach(_messages, (item) ->
+      serverMessages.push(item) if item.conversation_id == conversationID)
 
-    convMessages = _.sortBy convMessages, (item) -> new Date(item.created_at).getTime()
+    sort = (arr) -> _.sortBy(arr, (item) -> new Date(item.created_at).getTime())
 
-    convMessages
+    sort(serverMessages).concat(sort(localMessages))
 
   getAllForCurrentThread: ->
     @getAllForThread ConversationStore.getCurrentID()
