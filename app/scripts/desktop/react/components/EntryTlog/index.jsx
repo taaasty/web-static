@@ -41,32 +41,36 @@ class EntryTlog extends Component {
       });
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.entry !== nextProps.entry) {
+      this.setState({
+        entry: nextProps.entry,
+        moderation: !!nextProps.moderation,
+      });
+    }
+  }
   addToFavorites() {
     EntryActionCreators.addToFavorites(this.props.entry.id)
       .then(() => {
-        this.state.entry.is_favorited = true;
-        this.forceUpdate();
+        this.setState({ entry: { ...this.state.entry, is_favorited: true }});
       });
   }
   removeFromFavorites() {
     EntryActionCreators.removeFromFavorites(this.props.entry.id)
       .then(() => {
-        this.state.entry.is_favorited = false;
-        this.forceUpdate();
+        this.setState({ entry: { ...this.state.entry, is_favorited: false }});
       });
   }
   addToWatching() {
     EntryActionCreators.addToWatching(this.props.entry.id)
       .then(() => {
-        this.state.entry.is_watching = true;
-        this.forceUpdate();
+        this.setState({ entry: { ...this.state.entry, is_watching: true }});
       });
   }
   removeFromWatching() {
     EntryActionCreators.removeFromWatching(this.props.entry.id)
       .then(() => {
-        this.state.entry.is_watching = false;
-        this.forceUpdate();
+        this.setState({ entry: { ...this.state.entry, is_watching: false }});
       });
   }
   report() {
@@ -149,9 +153,10 @@ class EntryTlog extends Component {
     }
   }
   render() {
-    const { commentator: _commentator, entry, error,
+    const { commentator: _commentator, error,
             host_tlog_id, isFeed, isFetching, isInList } = this.props;
     const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
+    const { entry, hasModeration } = this.state;
 
     return !error && (isFetching || !entry.type)
       ? <article className="post post--loading">
@@ -167,7 +172,7 @@ class EntryTlog extends Component {
            : <EntryTlogContent
                commentator={commentator}
                entry={entry}
-               hasModeration={this.state.hasModeration}
+               hasModeration={hasModeration}
                hideCommentForm={this.props.hideCommentForm}
                host_tlog_id={host_tlog_id}
                isFeed={isFeed}
