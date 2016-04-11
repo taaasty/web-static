@@ -87,7 +87,7 @@ global.AuthEmailSignUp = React.createClass
     SessionsViewActions.signUp email, password, nickname
       .then (user) =>
         setTimeout (->
-          window.location.href = user.tlog_url
+          window.location.href = user.tlog_url + '?first_login'
         ), 0
       .always @deactivateLoadingState
 

@@ -9,7 +9,16 @@ import PageLayout from '../common/page/PageLayout';
 import PageHeader from '../common/page/PageHeader';
 import PageBody from '../common/page/PageBody';
 
+import { SM_TLOG_ENTRY, sendCategory } from '../../../../shared/react/services/Sociomantic';
+
 class EntryPage extends Component {
+  componentWillMount() {
+    const { id } = this.props.entry;
+
+    if (id) {
+      sendCategory(SM_TLOG_ENTRY, id);
+    }
+  }
   render() {
     const { currentUser, entry, locale, tlog } = this.props;
     

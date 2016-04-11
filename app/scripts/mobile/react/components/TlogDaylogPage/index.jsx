@@ -11,7 +11,12 @@ import HeroTlog from '../hero/tlog';
 import Daylog from '../Daylog/Daylog';
 import DaylogPagination from '../pagination/daylog';
 
+import { sendCategory } from '../../../../shared/react/services/Sociomantic';
+
 class TlogDaylogPage extends Component {
+  componentWillMount() {
+    sendCategory('tlog');
+  }
   render () {
     const { currentUser, entries, locale,
             pagination: { nextDay, prevDay }, tlog } = this.props;

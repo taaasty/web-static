@@ -6,7 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { getTlogEntry, resetTlogEntry, setTlogEntry } from '../../actions/TlogEntryActions';
 import { deleteEntry } from '../../actions/TlogEntriesActions';
-import { SM_TLOG_ENTRY, sendCategory } from '../../services/Sociomantic';
+import { SM_TLOG_ENTRY, sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
