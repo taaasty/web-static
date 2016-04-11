@@ -4,10 +4,21 @@ import ItemMain from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemText extends Component {
+  renderLastMessage() {
+    const { last_message, user_id } = this.props.conversation;
+    const lastMessageText = last_message ? last_message.content_html : '';
+    const showAvatar = last_message && last_message.author && last_message.author.id === user_id;
+
+    return lastMessageText
+      ? <div className="messages__last-message">
+          {showAvatar && <UserAvatar size={20} user={last_message.author} />}
+          <span dangerouslySetInnerHTML={{ __html: lastMessageText }} />
+        </div>
+      : <noscript />;
+  }
   render() {
     const { conversation: { created_at, last_message, not_disturb, online, recipient, unread_messages_count },
             hasUnread, hasUnreceived, onClick } = this.props;
-    const lastMessageText = last_message ? last_message.content_html : '';
     const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
@@ -27,11 +38,7 @@ class ItemText extends Component {
           <div className="messages__user-name">
             {recipient.slug}
           </div>
-          {lastMessageText &&
-           <div
-             className="messages__last-message"
-             dangerouslySetInnerHTML={{ __html: lastMessageText }}
-           />}
+          {this.renderLastMessage()}
         </div>
       </ItemMain>
     );
