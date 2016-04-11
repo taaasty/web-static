@@ -11,7 +11,7 @@ import {
   SEARCH_KEY_FAVORITES,
   SEARCH_KEY_PRIVATES,
 } from '../../constants/SearchConstants';
-import { sendCategory } from '../../services/Sociomantic';
+import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
 import FlowPageBody from './FlowPageBody';

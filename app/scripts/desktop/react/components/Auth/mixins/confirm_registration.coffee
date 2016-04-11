@@ -1,5 +1,4 @@
 Auth = require '../../Auth';
-{ sendRegister } = require '../../../services/Sociomantic';
 
 USER_EXISTS_MESSAGE = 'user_creator/user_exists'
 

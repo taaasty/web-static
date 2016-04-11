@@ -1,11 +1,10 @@
-/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher,
- MessagingService, ReactShellBox */
+/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher, ReactShellBox */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
 window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
-import { sendUser, sendRegister } from './services/Sociomantic';
+import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
 import PopupActions from './actions/popup';
 import DesignActionCreators from './actions/design';

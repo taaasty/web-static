@@ -10,9 +10,14 @@ import PageBody from '../common/page/PageBody';
 import HeroFeedLive from './HeroFeedLive';
 import FeedLive from '../feed/feedLive';
 
+import { sendCategory } from '../../../../shared/react/services/Sociomantic';
+
 class FeedLivePage extends Component {
   componentWillMount() {
-    FeedStore.initialize(this.props.entries);
+    const { entries, feedType } = this.props;
+
+    FeedStore.initialize(entries);
+    sendCategory(feedType);
   }
   render() {
     const { currentUser, feed: { backgroundUrl, entriesCount }, feedType, locale } = this.props;
