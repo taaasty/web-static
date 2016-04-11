@@ -50,7 +50,7 @@ const ItemManager = createClass({
       if (this.props.messagesCount > 10) {
         TastyEvents.on(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
       } else {
-        this.readMessage();
+        setTimeout(() => this.readMessage(), 0); //fixes Flux issue with nested dispatches
       }
     }
 

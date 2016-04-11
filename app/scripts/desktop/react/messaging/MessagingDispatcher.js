@@ -135,7 +135,7 @@ const MessagingDispatcher = Object.assign(
     },
 
     markAsReadMessage(conversationId) {
-      return MessagingDispatcher.handleServerAction({
+      return MessagingDispatcher.handleViewAction({
         type: 'decreaseUnreadCount',
         id: conversationId,
       });
