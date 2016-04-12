@@ -49,9 +49,13 @@ Routes =
       "/orders"
 
   newOrder: (_entryID, _type) ->
-    entryID = window.encodeURIComponent(_entryID)
-    type = window.encodeURIComponent(_type)
+    entryID = window.encodeURIComponent(_entryID);
+    type = window.encodeURIComponent(_type);
     "/orders/new?entry_id=#{entryID}&type=#{type}"
+  newFlowOrder: (_flowId, _type) ->
+    flowId = window.encodeURIComponent(_flowId);
+    type = window.encodeURIComponent(_type);
+    "/orders/new?flow_id=#{flowId}&type=#{type}"
   flows: -> '/flows'
   editEntry: (userTag, entryID) -> '/' + userTag + '/edit/' + entryID
 
