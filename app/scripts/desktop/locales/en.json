@@ -444,6 +444,7 @@
     }
   },
   "flow": {
+    "pinned_header": "This flow is pinned",
     "empty": "This flow has no posts yet"
   },
   "feed": {
@@ -608,9 +609,14 @@
       "tlog_root": "Read all posts"
     },
     "entry": {
-      "pin_entry": "The post is pinned up on live feed",
-      "pinned": "The post is pinned itll {{date}}",
+      "pin_entry": "Pin the post on live feed",
+      "pinned": "The post is pinned till {{date}}",
       "awaiting_payment": "The post is awaiting payment to be pinned"
+    },
+    "hero_flow": {
+      "pin_flow": "Pin the flow",
+      "pinned": "Pinned till {{date}}",
+      "awaiting_payment": "The order is awaiting payment"
     },
     "share": {
       "vk": "Share on VKontakte",

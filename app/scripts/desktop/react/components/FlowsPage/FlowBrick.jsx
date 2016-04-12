@@ -7,6 +7,7 @@ import Tooltip from '../common/Tooltip';
 import FollowButton from '../common/RelationButton/FollowButton';
 import FlowBrickAvatar from './FlowBrickAvatar';
 import { REL_NONE_STATE, REL_GUESSED_STATE } from '../common/RelationButton/constants';
+import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 
 let FlowBrick = React.createClass({
   propTypes: {
@@ -50,7 +51,7 @@ let FlowBrick = React.createClass({
   },
 
   render() {
-    const { flowpic, followers_count, name, title, tlog_url } = this.props.flow;
+    const { fixed_state, flowpic, followers_count, name, title, tlog_url } = this.props.flow;
     const brickClasses = classNames({
       'brick': true,
       'brick--flow': true,
@@ -60,6 +61,11 @@ let FlowBrick = React.createClass({
     return (
       <article className={brickClasses}>
         <Link to={uri(tlog_url).path()} >
+          {fixed_state === ENTRY_PINNED_STATE &&
+           <div className="brick__notice brick__notice--info">
+             {i18n.t('flow.pinned_header')}
+           </div>
+          }
           <div className="brick__media">
             {this.renderFollowButton()}
             <FlowBrickAvatar flowpic={flowpic} />

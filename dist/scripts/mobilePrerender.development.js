@@ -682,6 +682,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var ENTRY_PINNED_STATE = exports.ENTRY_PINNED_STATE = 'fixed';
 var ENTRY_AWAITING_PAYMENT_STATE = exports.ENTRY_AWAITING_PAYMENT_STATE = 'wait_fixed';
+var ENTRY_NONE_STATE = exports.ENTRY_NONE_STATE = 'none';
 
 var ENTRY_TYPE_TEXT = exports.ENTRY_TYPE_TEXT = 'text';
 var ENTRY_TYPE_IMAGE = exports.ENTRY_TYPE_IMAGE = 'image';
@@ -16514,6 +16515,12 @@ Routes = {
     entryID = window.encodeURIComponent(_entryID);
     type = window.encodeURIComponent(_type);
     return "/orders/new?entry_id=" + entryID + "&type=" + type;
+  },
+  newFlowOrder: function(_flowId, _type) {
+    var flowId, type;
+    flowId = window.encodeURIComponent(_flowId);
+    type = window.encodeURIComponent(_type);
+    return "/orders/new?flow_id=" + flowId + "&type=" + type;
   },
   flows: function() {
     return '/flows';
