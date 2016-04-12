@@ -40,6 +40,11 @@
   vertical-align: middle;
   .transition(~"padding-top .4s ease, padding-bottom .4s ease");
   &:extend(.layout-constrain all);
+
+  .hero__flow & {
+    width: initial;
+    min-width: 540px;
+  }
 }
 
 .hero__avatar {

@@ -124,7 +124,7 @@ class HeroFlow extends Component {
     const { flowpic: { original_url }, name, public_tlog_entries_count } = flow.data;
 
     return (
-      <div>
+      <div className="hero__flow">
         <Hero
           actions={isFetching ? <Spinner size={24} /> : this.renderActions()}
           backgroundUrl={original_url || backgroundImageUrl}
