@@ -11872,9 +11872,9 @@ ConversationStore = require('../../stores/conversation');
 
 ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
 
-ConversationsHeader = require('./conversations/header');
+ConversationsHeader = require('./conversations/ConversationsHeader');
 
-ConversationList = require('./conversations/list');
+ConversationList = require('./conversations/ConversationList');
 
 CreateConversationButton = require('./buttons/createConversation');
 
@@ -11911,174 +11911,236 @@ MessengerConversations = React.createClass({
 module.exports = MessengerConversations;
 
 
-},{"../../../../shared/react/mixins/connectStore":270,"../../stores/conversation":243,"./buttons/createConversation":178,"./conversations/header":189,"./conversations/list":190}],189:[function(require,module,exports){
-var ConversationsHeader, MessengerHeader;
+},{"../../../../shared/react/mixins/connectStore":270,"../../stores/conversation":243,"./buttons/createConversation":178,"./conversations/ConversationList":189,"./conversations/ConversationsHeader":192}],189:[function(require,module,exports){
+'use strict';
 
-MessengerHeader = require('../MessengerHeader');
-
-ConversationsHeader = React.createClass({
-  displayName: 'ConversationsHeader',
-  render: function() {
-    return React.createElement(MessengerHeader, {
-      "title": i18n.t('messenger.conversations_header')
-    });
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-module.exports = ConversationsHeader;
+var _react = require('react');
 
+var _react2 = _interopRequireDefault(_react);
 
-},{"../MessengerHeader":177}],190:[function(require,module,exports){
-var ConversationList, ConversationListEmpty, ConversationListItem, PropTypes, _;
+var _ConversationListItem = require('./ConversationListItem');
 
-_ = require('lodash');
+var _ConversationListItem2 = _interopRequireDefault(_ConversationListItem);
 
-ConversationListItem = require('./list/item');
+var _ConversationListEmpty = require('./ConversationListEmpty');
 
-ConversationListEmpty = require('./list/empty');
+var _ConversationListEmpty2 = _interopRequireDefault(_ConversationListEmpty);
 
-PropTypes = React.PropTypes;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-ConversationList = React.createClass({
-  displayName: 'ConversationList',
-  propTypes: {
-    items: PropTypes.array.isRequired,
-    onItemClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    if (this.isEmpty()) {
-      return React.createElement(ConversationListEmpty, null);
-    } else {
-      return this.renderListItems();
-    }
-  },
-  renderListItems: function() {
-    var listItems;
-    listItems = _.map(this.props.items, (function(_this) {
-      return function(item) {
-        return React.createElement(ConversationListItem, {
-          "item": item,
-          "onClick": _this.props.onItemClick,
-          "key": item.id
+function ConversationList(_ref) {
+  var items = _ref.items;
+  var onItemClick = _ref.onItemClick;
+
+  return items.length === 0 ? _react2.default.createElement(_ConversationListEmpty2.default, null) : _react2.default.createElement(
+    'div',
+    { className: 'messages__scroll' },
+    _react2.default.createElement(
+      'div',
+      { className: 'messages__dialogs' },
+      items.map(function (item) {
+        return _react2.default.createElement(_ConversationListItem2.default, {
+          item: item,
+          key: item.id,
+          onClick: onItemClick
         });
-      };
-    })(this));
-    return React.createElement("div", {
-      "className": "messages__scroll"
-    }, React.createElement("div", {
-      "className": "messages__dialogs"
-    }, listItems));
-  },
-  isEmpty: function() {
-    return this.props.items.length === 0;
-  }
+      })
+    )
+  );
+}
+
+ConversationList.displayName = 'ConversationList';
+
+ConversationList.propTypes = {
+  items: _react.PropTypes.array.isRequired,
+  onItemClick: _react.PropTypes.func.isRequired
+};
+
+exports.default = ConversationList;
+module.exports = exports['default'];
+
+},{"./ConversationListEmpty":190,"./ConversationListItem":191,"react":"react"}],190:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-module.exports = ConversationList;
+var _react = require("react");
 
+var _react2 = _interopRequireDefault(_react);
 
-},{"./list/empty":191,"./list/item":192,"lodash":"lodash"}],191:[function(require,module,exports){
-var ConversationListEmpty;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-ConversationListEmpty = React.createClass({
-  displayName: 'ConversationListEmpty',
-  render: function() {
-    return React.createElement("div", {
-      "className": "messages__scroll"
-    }, React.createElement("p", {
-      "className": "messages__text messages__text--center"
-    }, i18n.t('messenger.conversations_empty_list')));
-  }
+function ConversationListEmpty() {
+  return _react2.default.createElement(
+    "div",
+    { className: "messages__scroll" },
+    _react2.default.createElement(
+      "p",
+      { className: "messages__text messages__text--center" },
+      i18n.t('messenger.conversations_empty_list')
+    )
+  );
+} /*global i18n */
+
+ConversationListEmpty.displayName = 'ConversationListEmpty';
+
+exports.default = ConversationListEmpty;
+module.exports = exports['default'];
+
+},{"react":"react"}],191:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-module.exports = ConversationListEmpty;
+var _react = require('react');
 
+var _react2 = _interopRequireDefault(_react);
 
-},{}],192:[function(require,module,exports){
-var ConversationListItem, PropTypes, UserAvatar, classnames;
+var _moment = require('moment');
 
-classnames = require('classnames');
+var _moment2 = _interopRequireDefault(_moment);
 
-UserAvatar = require('../../../common/avatar/user');
+var _classnames = require('classnames');
 
-PropTypes = React.PropTypes;
+var _classnames2 = _interopRequireDefault(_classnames);
 
-ConversationListItem = React.createClass({
-  displayName: 'ConversationListItem',
-  propTypes: {
-    item: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    var itemClasses;
-    itemClasses = classnames('messages__dialog', {
-      '__read': !this.hasUnreadMessages()
-    });
-    return React.createElement("div", {
-      "className": itemClasses,
-      "onClick": this.handleClick
-    }, React.createElement("div", {
-      "className": "messages__user-avatar"
-    }, React.createElement(UserAvatar, {
-      "user": this.props.item.recipient,
-      "size": 42.
-    })), React.createElement("div", {
-      "className": "messages__dialog-text"
-    }, React.createElement("span", {
-      "className": "messages__user-name"
-    }, this.props.item.recipient.slug), this.renderLastMessageText()), this.renderCounter(), this.renderDate());
-  },
-  renderLastMessageText: function() {
-    var ref, text;
-    text = (ref = this.props.item.last_message) != null ? ref.content_html : void 0;
-    return React.createElement("span", {
-      "dangerouslySetInnerHTML": {
-        __html: text || ''
-      }
-    });
-  },
-  renderDate: function() {
-    var date;
-    date = this.props.item.last_message != null ? this.lastMessageCreatedAt() : this.lastConversationCreatedAt();
-    return React.createElement("span", {
-      "className": "messages__date"
-    }, date);
-  },
-  renderCounter: function() {
-    switch (false) {
-      case !this.hasUnreadMessages():
-        return React.createElement("div", {
-          "className": "unread-messages__counter"
-        }, this.props.item.unread_messages_count);
-      case !this.hasUnreceivedMessages():
-        return React.createElement("div", {
-          "className": "unreceived-messages__counter"
-        });
-      default:
-        return null;
-    }
-  },
-  hasUnreadMessages: function() {
-    return this.props.item.unread_messages_count > 0;
-  },
-  hasUnreceivedMessages: function() {
-    return this.props.item.unreceived_messages_count > 0;
-  },
-  lastMessageCreatedAt: function() {
-    return moment(this.props.item.last_message.created_at).format('D MMMM HH:mm');
-  },
-  lastConversationCreatedAt: function() {
-    return moment(this.props.item.created_at).format('D MMMM HH:mm');
-  },
-  handleClick: function() {
-    return this.props.onClick(this.props.item.id);
+var _user = require('../../common/avatar/user');
+
+var _user2 = _interopRequireDefault(_user);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ConversationListItem(_ref) {
+  var item = _ref.item;
+  var onClick = _ref.onClick;
+
+  function hasUnreadMessages() {
+    return item.unread_messages_count > 0;
   }
+
+  function hasUnreceivedMessages() {
+    return item.unreceived_messages_count > 0;
+  }
+
+  function lastMessageCreatedAt() {
+    return (0, _moment2.default)(item.last_message.created_at).format('D MMMM HH:mm');
+  }
+
+  function lastConversationCreatedAt() {
+    return (0, _moment2.default)(item.created_at).format('D MMMM HH:mm');
+  }
+
+  function handleClick() {
+    onClick(item.id);
+  }
+
+  function renderLastMessage() {
+    var text = item.last_message ? item.last_message.content_html : '';
+    var showAvatar = item.last_message && item.last_message.author && item.last_message.author.id === item.user_id;
+
+    return _react2.default.createElement(
+      'span',
+      null,
+      showAvatar && _react2.default.createElement(
+        'span',
+        { className: 'messages__last-msg-avatar' },
+        _react2.default.createElement(_user2.default, { size: 20, user: item.last_message.author })
+      ),
+      _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: text } })
+    );
+  }
+
+  function renderDate() {
+    return _react2.default.createElement(
+      'span',
+      { className: 'messages__date' },
+      item.last_message ? lastMessageCreatedAt() : lastConversationCreatedAt()
+    );
+  }
+
+  function renderCounter() {
+    return hasUnreadMessages() ? _react2.default.createElement(
+      'div',
+      { className: 'unread-messages__counter' },
+      item.unread_messages_count
+    ) : hasUnreceivedMessages() ? _react2.default.createElement('div', { className: 'unreceived-messages__counter' }) : null;
+  }
+
+  var itemClasses = (0, _classnames2.default)({
+    'messages__dialog': true,
+    '__read': !hasUnreadMessages()
+  });
+
+  return _react2.default.createElement(
+    'div',
+    { className: itemClasses, onClick: handleClick },
+    _react2.default.createElement(
+      'div',
+      { className: 'messages__user-avatar' },
+      _react2.default.createElement(_user2.default, { size: 42, user: item.recipient })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'messages__dialog-text' },
+      _react2.default.createElement(
+        'span',
+        { className: 'messages__user-name' },
+        item.recipient.slug
+      ),
+      renderLastMessage()
+    ),
+    renderCounter(),
+    renderDate()
+  );
+}
+
+ConversationListItem.displayName = 'ConversationListItem';
+
+ConversationListItem.propTypes = {
+  item: _react.PropTypes.object.isRequired,
+  onClick: _react.PropTypes.func.isRequired
+};
+
+exports.default = ConversationListItem;
+module.exports = exports['default'];
+
+},{"../../common/avatar/user":95,"classnames":353,"moment":361,"react":"react"}],192:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-module.exports = ConversationListItem;
+var _react = require('react');
 
+var _react2 = _interopRequireDefault(_react);
 
-},{"../../../common/avatar/user":95,"classnames":353}],193:[function(require,module,exports){
+var _MessengerHeader = require('../MessengerHeader');
+
+var _MessengerHeader2 = _interopRequireDefault(_MessengerHeader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*global i18n */
+
+function ConversationsHeader() {
+  return _react2.default.createElement(_MessengerHeader2.default, { title: i18n.t('messenger.conversations_header') });
+}
+
+ConversationsHeader.displayName = 'ConversationsHeader';
+
+exports.default = ConversationsHeader;
+module.exports = exports['default'];
+
+},{"../MessengerHeader":177,"react":"react"}],193:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');

@@ -1,7 +1,7 @@
 ConversationStore        = require '../../stores/conversation'
 ConnectStoreMixin        = require '../../../../shared/react/mixins/connectStore'
-ConversationsHeader      = require './conversations/header'
-ConversationList         = require './conversations/list'
+ConversationsHeader      = require './conversations/ConversationsHeader'
+ConversationList         = require './conversations/ConversationList'
 CreateConversationButton = require './buttons/createConversation'
 { PropTypes } = React
 
