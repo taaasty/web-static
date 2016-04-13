@@ -19,6 +19,12 @@ FeedToolbarList = React.createClass
           />
         }
         <ToolbarItem
+          title={i18n.t('feed.flows')}
+          href={Routes.flows_path()}
+          icon="icon--hash"
+          key="flows"
+        />
+        <ToolbarItem
           title={ i18n.t('feed.live') }
           href={ Routes.live_feed_path() }
           icon="icon--wave"

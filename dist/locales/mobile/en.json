@@ -2,6 +2,7 @@
   "feed": {
     "best": "Best",
     "friends": "Following",
+    "flows": "Flows",
     "live": "Live broadcast",
     "people": "People",
     "anonymous": "Anonymous entries"
@@ -29,10 +30,10 @@
     "stats_entries_count": "An entry",
     "stats_entries_count_plural": "entries",
     "stats_followings_count": "subscription",
-    "stats_followings_count_plural": "followers",
+    "stats_followings_count_plural": "subscriptions",
     "stats_followers_count": "follower",
     "stats_followers_count_plural": "followers",
-    "stats_days_count": "day on taaasty",
+    "stats_days_count": "day on Taaasty",
     "stats_days_count_plural": "days on Taaasty"
   },
   "entry": {
