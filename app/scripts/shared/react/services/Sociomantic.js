@@ -2,6 +2,7 @@ import { sha256 } from 'js-sha256';
 import isNode from 'detect-node';
 
 export const SM_TLOG_ENTRY = 'Пост';
+export const SM_FLOWS_LIST = 'Потоки';
 
 const advToken = 'taaasty-ru';
 

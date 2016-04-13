@@ -68,6 +68,12 @@ const components = {
       author: user,
     },
   },
+  FlowsPage: {
+    currentUser,
+    flows: {
+      items: [],
+    },
+  },
 };
 
 Object.keys(components).forEach((componentName) => {

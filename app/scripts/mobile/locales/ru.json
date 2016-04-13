@@ -7,6 +7,13 @@
     "people": "Люди",
     "anonymous": "Анонимки"
   },
+  "flows": {
+    "nav": {
+      "popular": "Популярное",
+      "newest": "Новое",
+      "my": "Мои"
+    }
+  },
   "user_toolbar": {
     "new_entry_item": "Новая запись",
     "my_diary_item": "Мой дневник",

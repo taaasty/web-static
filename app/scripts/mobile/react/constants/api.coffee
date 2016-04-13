@@ -34,5 +34,6 @@ ApiConstants = keyMirror
   READ_MESSAGES:              null
   READY_TO_MESSAGING:         null
   SUPPORT_REQUEST:            null
+  FLOWS_GET:                  null
 
 module.exports = ApiConstants

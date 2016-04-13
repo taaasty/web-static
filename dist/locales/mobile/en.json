@@ -7,6 +7,13 @@
     "people": "People",
     "anonymous": "Anonymous entries"
   },
+  "flows": {
+    "nav": {
+      "popular": "Popular",
+      "newest": "New",
+      "my": "My"
+    }
+  },
   "user_toolbar": {
     "new_entry_item": "New entry",
     "my_diary_item": "My diary",

@@ -394,4 +394,16 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = postRequest url, data
 
+  flows:
+    get: (sort, nextPage) ->
+      url = ApiRoutes.flows();
+      key = Constants.api.FLOWS_GET;
+      data = {
+        sort: sort,
+        page: nextPage
+      };
+
+      abortPendingRequests(key);
+      _pendingRequests[key] = getRequest(url, data);
+
 module.exports = Api
