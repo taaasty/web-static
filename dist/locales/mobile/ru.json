@@ -2,9 +2,17 @@
   "feed": {
     "best": "Лучшее",
     "friends": "Подписки",
+    "flows": "Потоки",
     "live": "Прямой эфир",
     "people": "Люди",
     "anonymous": "Анонимки"
+  },
+  "flows": {
+    "nav": {
+      "popular": "Популярное",
+      "newest": "Новое",
+      "my": "Мои"
+    }
   },
   "user_toolbar": {
     "new_entry_item": "Новая запись",

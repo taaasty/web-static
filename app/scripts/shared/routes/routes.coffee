@@ -12,6 +12,7 @@ Routes =
   tlog_favorite_entries_path: (slug) -> '/~' + slug + '/favorites'
 
   friends_feed_path:                  -> '/friends'
+  flows_path: (filter) -> if filter then "/flows?flows_filter=#{filter}" else '/flows'
   live_feed_path:                     -> '/live'
   live_anonymous_feed_path:           -> '/live/anonymous'
   live_flows_feed_path:                -> '/live/flows'

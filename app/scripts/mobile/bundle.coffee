@@ -33,6 +33,7 @@ global.NotificationsPage = require './react/components/NotificationsPage';
 global.TlogDaylogPage = require './react/components/TlogDaylogPage';
 global.EntryPage = require './react/components/EntryPage';
 global.AuthPage = require './react/components/AuthPage';
+global.FlowsPage = require './react/components/FlowsPage';
 
 # /*==========  Stores  ==========*/
 
