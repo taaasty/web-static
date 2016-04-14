@@ -33,3 +33,4 @@ NotificationsPage = require('./react/components/NotificationsPage');
 TlogDaylogPage = require('./react/components/TlogDaylogPage');
 EntryPage = require('./react/components/EntryPage');
 AuthPage = require('./react/components/AuthPage');
+FlowsPage = require('./react/components/FlowsPage');
