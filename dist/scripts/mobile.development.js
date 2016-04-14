@@ -1560,12 +1560,12 @@ var FlowsViewActions = {
       sort: sort
     });
   },
-  loadMore: function loadMore(sort, page) {
+  loadMore: function loadMore(sort, page, limit) {
     _dispatcher2.default.handleViewAction({
       type: _constants2.default.flows.REQUEST
     });
 
-    return _api2.default.flows.get(sort, page).then(_FlowsActions2.default.loadMore).fail(function (err) {
+    return _api2.default.flows.get(sort, page, limit).then(_FlowsActions2.default.loadMore).fail(function (err) {
       _notify2.default.errorResponse(err);
       _dispatcher2.default.handleServerAction({
         type: _constants2.default.flows.ERROR,
@@ -2485,11 +2485,12 @@ Api = {
     }
   },
   flows: {
-    get: function(sort, nextPage) {
+    get: function(sort, nextPage, limit) {
       var data, key, url;
       url = ApiRoutes.flows();
       key = Constants.api.FLOWS_GET;
       data = {
+        limit: limit,
         sort: sort,
         page: nextPage
       };
@@ -3947,10 +3948,11 @@ var FlowsListContainer = function (_Component) {
       var _props$flows = _props.flows;
       var has_more = _props$flows.has_more;
       var next_page = _props$flows.next_page;
+      var limit = _props$flows.limit;
       var sort = _props.sort;
 
       if (has_more) {
-        _FlowsActions2.default.loadMore(sort, next_page);
+        _FlowsActions2.default.loadMore(sort, next_page, limit);
       }
     }
   }, {
@@ -4256,7 +4258,11 @@ var FlowsPage = function (_Component) {
           _react2.default.createElement(
             _PageHeader2.default,
             null,
-            _react2.default.createElement(_feed2.default, { backgroundUrl: bgImageUrl, title: i18n.t('feed.flows') })
+            _react2.default.createElement(_feed2.default, {
+              backgroundUrl: bgImageUrl,
+              entriesCount: null,
+              title: i18n.t('feed.flows')
+            })
           ),
           _react2.default.createElement(
             _PageBody2.default,

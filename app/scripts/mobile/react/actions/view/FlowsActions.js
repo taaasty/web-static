@@ -13,12 +13,12 @@ const FlowsViewActions = {
     });
   },
 
-  loadMore(sort, page) {
+  loadMore(sort, page, limit) {
     AppDispatcher.handleViewAction({
       type: Constants.flows.REQUEST,
     });
 
-    return Api.flows.get(sort, page)
+    return Api.flows.get(sort, page, limit)
       .then(FlowsServerActions.loadMore)
       .fail((err) => {
         NotifyController.errorResponse(err);

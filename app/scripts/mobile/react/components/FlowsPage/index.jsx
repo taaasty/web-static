@@ -28,7 +28,11 @@ class FlowsPage extends Component {
       <PageWithAuth currentUser={currentUser} locale={locale}>
         <PageLayout>
           <PageHeader>
-            <HeroFeed backgroundUrl={bgImageUrl} title={i18n.t('feed.flows')} />
+            <HeroFeed
+              backgroundUrl={bgImageUrl}
+              entriesCount={null}
+              title={i18n.t('feed.flows')}
+            />
           </PageHeader>
           <PageBody>
             <FlowsListContainer />

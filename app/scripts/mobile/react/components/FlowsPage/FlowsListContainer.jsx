@@ -7,10 +7,10 @@ import connectToStores from '../../../../shared/react/components/higherOrder/con
 
 class FlowsListContainer extends Component {
   loadMore() {
-    const { flows: { has_more, next_page }, sort } = this.props;
+    const { flows: { has_more, next_page, limit }, sort } = this.props;
 
     if (has_more) {
-      FlowsActions.loadMore(sort, next_page);
+      FlowsActions.loadMore(sort, next_page, limit);
     }
   }
   render() {

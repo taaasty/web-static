@@ -2729,11 +2729,12 @@ Api = {
     }
   },
   flows: {
-    get: function(sort, nextPage) {
+    get: function(sort, nextPage, limit) {
       var data, key, url;
       url = ApiRoutes.flows();
       key = Constants.api.FLOWS_GET;
       data = {
+        limit: limit,
         sort: sort,
         page: nextPage
       };
