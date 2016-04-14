@@ -40,7 +40,7 @@ import {
   SEARCH_KEY_FRIENDS,
   SEARCH_KEY_LIVE,
 } from '../../constants/SearchConstants';
-import { sendCategory } from '../../services/Sociomantic';
+import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {

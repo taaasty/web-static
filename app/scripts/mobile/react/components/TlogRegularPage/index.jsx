@@ -11,7 +11,12 @@ import HeroTlog from '../hero/tlog';
 import Tlog from '../Tlog/Tlog';
 import TlogPagination from '../pagination/TlogPagination';
 
+import { sendCategory } from '../../../../shared/react/services/Sociomantic';
+
 export default class TlogRegularPage extends Component {
+  componentWillMount() {
+    sendCategory(this.props.pagination.type);
+  }
   render () {
     const { currentUser, entries, locale, pagination, tlog } = this.props;
     

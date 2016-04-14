@@ -2,6 +2,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getFlow }  from '../../actions/FlowActions';
+import classNames from 'classnames';
+import { ENTRY_PINNED_STATE, ENTRY_AWAITING_PAYMENT_STATE } from '../../constants/EntryConstants';
+import { PIN_FLOW_ORDER } from '../../constants/OrderConstants';
+import moment from 'moment';
 
 import Hero from './Hero';
 import RelationButton from '../common/RelationButtonSPA';
@@ -74,6 +78,26 @@ class HeroFlow extends Component {
       />
     );
   }
+  renderPinFlowButton() {
+    const { id, fixed_state, fixed_up_at, fixed_order_id } = this.props.flow.data;
+    const tillStr = fixed_up_at && moment(fixed_up_at).format('H:mm D MMMM');
+    const [ buttonText, buttonUrl, buttonClass ] = fixed_state === ENTRY_PINNED_STATE
+            ? [ i18n.t('buttons.hero_flow.pinned', { date: tillStr }), Routes.orders(fixed_order_id), 'button--green' ]
+            : fixed_state === ENTRY_AWAITING_PAYMENT_STATE
+              ? [ i18n.t('buttons.hero_flow.awaiting_payment'), Routes.orders(fixed_order_id), 'button--yellow' ]
+              : [ i18n.t('buttons.hero_flow.pin_flow'), Routes.newFlowOrder(id, PIN_FLOW_ORDER), 'button--outline' ];
+    const buttonClasses = classNames('button button--smass', buttonClass);
+
+    return (
+      <a
+        className={buttonClasses}
+        href={buttonUrl}
+        key="pinFlowButton"
+      >
+        {buttonText}
+      </a>
+    );
+  }
   text(count) {
     return count
       ?  i18n.t('hero.flow_entries_count', { count })
@@ -88,6 +112,7 @@ class HeroFlow extends Component {
         {can_write && this.renderWriteButton()}
         {relState  && this.renderRelationButton()}
         {can_edit && this.renderSettingsButton()}
+        {can_edit && this.renderPinFlowButton()}
       </div>
     );
   }
@@ -99,7 +124,7 @@ class HeroFlow extends Component {
     const { flowpic: { original_url }, name, public_tlog_entries_count } = flow.data;
 
     return (
-      <div>
+      <div className="hero__flow">
         <Hero
           actions={isFetching ? <Spinner size={24} /> : this.renderActions()}
           backgroundUrl={original_url || backgroundImageUrl}

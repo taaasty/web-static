@@ -18,6 +18,7 @@ class MessengerPage extends Component {
       <PageWithToolbars
         currentUser={currentUser}
         locale={locale}
+        noSupport
       >
         <PageLayout>
           <PageBody>

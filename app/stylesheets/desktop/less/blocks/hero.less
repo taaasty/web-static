@@ -40,6 +40,11 @@
   vertical-align: middle;
   .transition(~"padding-top .4s ease, padding-bottom .4s ease");
   &:extend(.layout-constrain all);
+
+  .hero__flow & {
+    width: initial;
+    min-width: 540px;
+  }
 }
 
 .hero__avatar {
@@ -127,7 +132,7 @@
   .transition(~"max-height .4s ease .2s, padding .4s ease .2s, visibility 0s ease .6s, opacity .3s ease");
 
   a, button {
-    margin: 0 5px;
+    margin: 0 5px 10px;
   }
 }
 
