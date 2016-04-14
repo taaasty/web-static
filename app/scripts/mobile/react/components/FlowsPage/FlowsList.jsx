@@ -12,11 +12,11 @@ class FlowsList extends Component {
     }
   }
   render() {
-    const { flows, hasMore, isFetching, loadMore, sort } = this.props;
+    const { flows, hasMore, isFetching, isLogged, loadMore, sort } = this.props;
 
     return (
       <div className="flows" ref="container">
-        <FlowsNav sort={sort} />
+        <FlowsNav isLogged={isLogged} sort={sort} />
         <div className="flows__list">
           {flows.map((flow, idx) => (
              <FlowsListItem
@@ -38,6 +38,7 @@ FlowsList.propTypes = {
   flows: PropTypes.array.isRequired,
   hasMore: PropTypes.bool,
   isFetching: PropTypes.bool,
+  isLogged: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
   sort: PropTypes.string.isRequired,
 };
