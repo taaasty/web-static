@@ -7945,6 +7945,12 @@ var components = {
       tlog: tlog,
       author: user
     }
+  },
+  FlowsPage: {
+    currentUser: currentUser,
+    flows: {
+      items: []
+    }
   }
 };
 
