@@ -1,17 +1,35 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import FlowsNav from './FlowsNav';
 import FlowsListItem from './FlowsListItem';
 import FeedLoadMore from '../feed/loadMore';
 
-function FlowsList({ flows, hasMore, isFetching, loadMore, sort }) {
-  return (
-    <div className="flows">
-      <FlowsNav sort={sort} />
-      {flows.map((flow, idx) => <FlowsListItem flow={flow} key={`flow-${idx}`} />)}
-      {hasMore && <FeedLoadMore loading={isFetching} onClick={loadMore} />}
-    </div>
-  );
+class FlowsList extends Component {
+  state = { width: 0 };
+  componentDidMount() {
+    if (this.refs.container) {
+      this.setState({ width: this.refs.container.parentNode.offsetWidth });
+    }
+  }
+  render() {
+    const { flows, hasMore, isFetching, loadMore, sort } = this.props;
+
+    return (
+      <div className="flows" ref="container">
+        <FlowsNav sort={sort} />
+        <div className="flows__list">
+          {flows.map((flow, idx) => (
+             <FlowsListItem
+               flow={flow}
+               key={`flow-${idx}`}
+               width={this.state.width}
+             />
+           ))}
+        </div>
+        {hasMore && <FeedLoadMore loading={isFetching} onClick={loadMore} />}
+      </div>
+    );
+  }
 }
 
 FlowsList.displayName = 'FlowsList';
