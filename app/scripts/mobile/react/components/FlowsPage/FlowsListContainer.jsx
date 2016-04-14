@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import FlowsActions from '../../actions/view/FlowsActions';
 import FlowsList from './FlowsList';
 import FlowsStore from '../../stores/FlowsStore';
+import CurrentUserStore from '../../stores/currentUser';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 
 class FlowsListContainer extends Component {
@@ -14,13 +15,14 @@ class FlowsListContainer extends Component {
     }
   }
   render() {
-    const { flows: { has_more, items }, isFetching, sort } = this.props;
+    const { flows: { has_more, items }, isFetching, isLogged, sort } = this.props;
 
     return (
       <FlowsList
         flows={items}
         hasMore={has_more}
         isFetching={isFetching}
+        isLogged={!!isLogged}
         loadMore={this.loadMore.bind(this)}
         sort={sort}
       />
@@ -37,11 +39,12 @@ FlowsListContainer.propTypes = {
     next_page: PropTypes.number,
   }).isRequired,
   isFetching: PropTypes.bool,
+  isLogged: PropTypes.bool,
   sort: PropTypes.string.isRequired,
 };
 
 export default connectToStores(
   FlowsListContainer,
-  [ FlowsStore ],
-  FlowsStore.getStore
+  [ FlowsStore, CurrentUserStore ],
+  () => Object.assign({}, FlowsStore.getStore(), { isLogged: CurrentUserStore.isLogged() })
 );
