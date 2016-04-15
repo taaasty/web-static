@@ -16,14 +16,26 @@
 .messages__popup-title {
   position: relative;
   width: 100%;
+  box-sizing: border-box;
+
+  .popup--messages.--thread & {
+    letter-spacing: .05em;
+  }
+
+  &.--with-actions {
+    padding-right: 27px;
+  }
 
   .messages__popup-title-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    &.--with-actions {
-      padding-right: 27px;
+    &.--status-text {
+      text-transform: none;
+      font-weight: 300;
+      letter-spacing: initial;
+      line-height: 14px;
     }
   }
 
@@ -31,6 +43,7 @@
     position: absolute;
     top: 0;
     right: 2px;
+    line-height: 33px;
     font-weight: normal;
     letter-spacing: normal;
     text-transform: none;

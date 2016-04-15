@@ -639,6 +639,10 @@
     "support_message": "If you have any questions, please feel free to ask.",
     "support_email_placeholder": "Your email",
     "support_info": "<p style=\"text-align:left\">Id: {{id}}<br>Locale: {{locale}}<br>Email: {{email}}<br>Gender: {{gender}}<br>Private tlog: {{private}}<br>Is premium: {{premium}}<br>Design bundle: {{design_bundle}}<br>Registered at: {{registered_at}}<br>Browser: {{browser}}<br>Platform: {{platform}}</p>",
+    "title_status": {
+      "members": "{{count}} member",
+      "members_plural": "{{count}} members"
+    },
     "title_actions": {
       "disturb": "Disturb",
       "dont_disturb": "Don't disturb",

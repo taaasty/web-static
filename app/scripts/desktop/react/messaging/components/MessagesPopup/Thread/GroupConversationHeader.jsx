@@ -4,8 +4,10 @@ import Avatar from '../../../../../../shared/react/components/common/Avatar';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
 function GroupConversationHeader({ conversation, onClick }) {
-  const { avatar, topic, users, users_left } = conversation;
-  const activeUsers = users.filter((u) => users_left.indexOf(u.id) < 0)
+  const { avatar, topic, users, users_left, users_deleted } = conversation;
+  const activeUsers = users
+          .filter((u) => users_left.indexOf(u.id) < 0)
+          .filter((u) => users_deleted.indexOf(u.id) < 0);
   const userpic = {
     default_colors: {
       background: '#2ac67e',
