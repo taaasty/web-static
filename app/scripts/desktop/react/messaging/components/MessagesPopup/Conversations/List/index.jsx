@@ -48,7 +48,7 @@ const ConversationList = createClass({
                    : conv.type === GROUP_CONVERSATION
                      ? 3 * 1e4
                      : 0)
-              + (moment(conv.updated_at).valueOf() / 1e9)
+              + (moment(conv.updated_at).valueOf() / 1e9);
 
       return { ...conv, weight };
     }
