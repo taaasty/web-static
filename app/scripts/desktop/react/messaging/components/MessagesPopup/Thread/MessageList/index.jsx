@@ -1,9 +1,10 @@
 /*global ScrollerMixin, messagingService, TastyEvents */
 import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
-import CurrentUserStore from '../../../../../stores/current_user';
+import ConversationsStore from '../../../../stores/ConversationsStore';
 import MessageActions from '../../../../actions/MessageActions';
 
 let savedScrollHeight = null;
@@ -23,7 +24,7 @@ const MessageList = createClass({
     this.scrollToUnread();
 
     MessagesStore.addChangeListener(this._onStoreChange);
-    CurrentUserStore.addChangeListener(this._onStoreChange);
+    ConversationsStore.addChangeListener(this._onStoreChange);
     messagingService.openConversation(this.props.conversationId);
   },
   
@@ -54,7 +55,7 @@ const MessageList = createClass({
 
   componentWillUnmount() {
     MessagesStore.removeChangeListener(this._onStoreChange);
-    CurrentUserStore.removeChangeListener(this._onStoreChange);
+    ConversationsStore.removeChangeListener(this._onStoreChange);
   },
   
   isEmpty() {
@@ -79,7 +80,7 @@ const MessageList = createClass({
     const { conversationId } = this.props;
 
     return {
-      currentUserId: CurrentUserStore.getUserID(),
+      conversation: ConversationsStore.getConversation(conversationId),
       isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(conversationId),
       messages: MessagesStore.getMessages(conversationId),
     };
@@ -109,8 +110,10 @@ const MessageList = createClass({
     });
 
     if (unread.length) {
-      const unreadMsgNode = this.refs[this.messageKey(unread[0])];
-      this.scrollList(unreadMsgNode.offsetTop);
+      const unreadMsgNode = findDOMNode(this.refs[this.messageKey(unread[0])]);
+      if (unreadMsgNode) {
+        this.scrollList(unreadMsgNode.offsetTop);
+      }
     } else {
       this._scrollToBottom();
     }
@@ -126,13 +129,13 @@ const MessageList = createClass({
   },
 
   renderMessages() {
-    const { currentUserId, messages } = this.state;
+    const { conversation, messages } = this.state;
 
     return this.isEmpty()
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
-            currentUserId={currentUserId}
+            currentUserId={conversation.user_id}
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.length}

@@ -1,4 +1,4 @@
-/*global Dispatcher, BeepService, CurrentUserStore, require */
+/*global Dispatcher, BeepService, require */
 import _ from 'lodash';
 
 const MessagingDispatcher = Object.assign(
@@ -34,9 +34,12 @@ const MessagingDispatcher = Object.assign(
     },
 
     messageReceived(message) {
+      const ConversationsStore = require('./stores/ConversationsStore'); //FIXME circular dep
+      const conversation = ConversationsStore.getConversation(message.conversation_id);
+
       console.info('Получено сообщение', message);
 
-      if (message.user_id !== CurrentUserStore.getUserID()) {
+      if (message.user_id !== conversation.user_id) {
         if (message.conversation) {
           if (!message.conversation.not_disturb) {
             BeepService.play();
@@ -44,10 +47,6 @@ const MessagingDispatcher = Object.assign(
         } else {
           BeepService.play();
         }
-      }
-
-      if (message.conversation) {
-        MessagingDispatcher.updateConversation(message.conversation);
       }
 
       return MessagingDispatcher.handleServerAction({
@@ -86,7 +85,7 @@ const MessagingDispatcher = Object.assign(
     messageSubmitted({ conversationId, content, files, uuid }) {
       const ConversationsStore = require('./stores/ConversationsStore'); //FIXME circular dep
       const conversation = ConversationsStore.getConversation(conversationId);
-      const currentUserId = CurrentUserStore.getUserID();
+      const currentUserId = conversation.user_id;
       const recipient = conversation.recipient;
       const message = {
         content,
