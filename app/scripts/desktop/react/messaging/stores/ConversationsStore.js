@@ -1,5 +1,6 @@
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
+import { PRIVATE_CONVERSATION } from '../constants/ConversationConstants';
 
 let _conversations = [];
 
@@ -101,6 +102,18 @@ const ConversationsStore = Object.assign(
 
       return conversation && conversation.unread_messages_count;
     },
+
+    updateOnlineStatuses(convIds=[], data=[]) {
+      const statusMap = data.reduce((acc, item) => ({ ...acc, [item.user_id]: item }), {});
+
+      convIds.forEach((conversationId) => {
+        const conversation = this.getConversation(conversationId);
+        if (conversation.type === PRIVATE_CONVERSATION) {
+          conversation.recipient.is_online = statusMap[conversation.recipient_id].is_online;
+          conversation.recipient.last_seen_at = statusMap[conversation.recipient_id].last_seen_at;
+        }
+      });
+    },
   }
 );
 
@@ -138,6 +151,10 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     break;
   case 'decreaseUnreadCount':
     ConversationsStore.decreaseUnreadCount(action.id);
+    ConversationsStore.emitChange();
+    break;
+  case 'updateOnlineStatuses':
+    ConversationsStore.updateOnlineStatuses(action.convIds, action.data);
     ConversationsStore.emitChange();
     break;
   }

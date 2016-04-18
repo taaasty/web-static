@@ -17259,6 +17259,9 @@ ApiRoutes = {
   },
   supportRequest: function() {
     return gon.api_host + "/v1/support_requests";
+  },
+  onlineStatuses: function() {
+    return gon.api_host + "/v1/online_statuses";
   }
 };
 

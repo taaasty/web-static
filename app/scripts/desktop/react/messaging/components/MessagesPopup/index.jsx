@@ -1,5 +1,6 @@
 /*global Popup, RequesterMixin, ReactUnmountMixin */
 import React, { createClass } from 'react';
+import classNames from 'classnames';
 import Thread from './Thread';
 import MessagesPopupStore, {
   CONVERSATIONS_STATE,
@@ -69,10 +70,15 @@ const MessagesPopup = createClass({
 
   render() {
     const { currentConversationId, currentState } = this.state;
+    const popupClasses = classNames({
+      'popup--messages': true,
+      'popup--light': true,
+      '--thread': currentState === THREAD_STATE,
+    });
 
     return (
       <Popup
-        className="popup--messages popup--light"
+        className={popupClasses}
         clue="messages"
         draggable
         onClose={MessagesPopupActions.closeMessagesPopup}

@@ -91,9 +91,16 @@
 }
 
 .popup__headbox {
+  box-sizing: border-box;
+  height: 100%;
   padding: 12px 40px;
   background-color: @popup-header-bg;
   border-radius: @popup-border-radius @popup-border-radius 0 0;
+
+  .popup--messages.--thread & {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 }
 
 .popup__title {
