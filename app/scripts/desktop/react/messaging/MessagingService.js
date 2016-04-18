@@ -6,7 +6,9 @@ import MessagingDispatcher from './MessagingDispatcher';
 import MessagesPopup from './components/MessagesPopup';
 import ApiRoutes from '../../../shared/routes/api';
 import ConnectionStateStore from './stores/ConnectionStateStore';
+import ConversationsStore from './stores/ConversationsStore';
 import MessagingRequester from './MessagingRequester';
+import { PRIVATE_CONVERSATION } from './constants/ConversationConstants';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -78,6 +80,7 @@ class MessagingService extends EventEmitter {
   }
 
   _connected() {
+    const updateOnlineStatuses = this.updateOnlineStatuses.bind(this);
     MessagingDispatcher.changeConnectionState(ConnectionStateStore.CONNECTED_STATE);
 
     this.requester = new MessagingRequester({
@@ -98,6 +101,8 @@ class MessagingService extends EventEmitter {
           type: 'notificationsLoaded',
           notifications: data.notifications,
         });
+
+        updateOnlineStatuses();
       },
       error(err) {
         console.error('Error', err);
@@ -110,6 +115,29 @@ class MessagingService extends EventEmitter {
   }
   emitReconnect() {
     return this.emit(RECONNECT_EVENT);
+  }
+  updateOnlineStatuses() {
+    const convMap = ConversationsStore.getConversations()
+            .filter((conversation) => conversation.type === PRIVATE_CONVERSATION)
+            .map(({ id, recipient_id }) => ({
+              conversationId: id,
+              recipientId: recipient_id,
+            }));
+    const userIds = convMap.map((item) => item.recipientId);
+    const convIds = convMap.map((item) => item.conversationId);
+
+    this.requester.getOnlineStatuses(userIds)
+      .done((data) => MessagingDispatcher.handleServerAction({
+        type: 'updateOnlineStatuses',
+        convIds,
+        data,
+      }));
+
+    if (this.osId) {
+      window.clearTimeout(this.osId);
+    }
+
+    this.osId = window.setTimeout(this.updateOnlineStatuses.bind(this), 10*60*1000);
   }
   postNewConversation({ recipientId, error }) {
     return this.requester.postNewConversation(recipientId)

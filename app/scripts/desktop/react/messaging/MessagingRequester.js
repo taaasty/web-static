@@ -117,4 +117,14 @@ export default class MessagingRequester {
       },
     });
   }
+  getOnlineStatuses(ids) {
+    return $.ajax({
+      url: ApiRoutes.onlineStatuses(),
+      method: 'GET',
+      data: {
+        socket_id: this.socket_id,
+        user_ids: ids.join(','),
+      },
+    });
+  }
 }

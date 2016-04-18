@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
 import Avatar from '../../../../../../shared/react/components/common/Avatar';
