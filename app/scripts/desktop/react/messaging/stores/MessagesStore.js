@@ -202,6 +202,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
       MessagesStore.sortByAsc(action.conversationId);
     }
 
+    ConversationsStore.cancelTyping(action.conversationId, message.user_id);
     MessagesStore.emitChange();
     break;
   case 'messageSubmitted':

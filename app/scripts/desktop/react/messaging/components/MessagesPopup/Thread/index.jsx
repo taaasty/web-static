@@ -7,7 +7,6 @@ import PublicConversationHeader from './PublicConversationHeader';
 import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
-import ConversationsStore from '../../../stores/ConversationsStore';
 import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
@@ -18,12 +17,10 @@ class Thread extends Component {
   state = this.getStateFromStore();
   componentDidMount() {
     this.listener = this.syncStateWithStore.bind(this);
-    ConversationsStore.addChangeListener(this.listener);
     MessagesPopupStore.addChangeListener(this.listener);
     MessagesStore.addChangeListener(this.listener);
   }
   componentWillUnmount() {
-    ConversationsStore.removeChangeListener(this.listener);
     MessagesPopupStore.removeChangeListener(this.listener);
     MessagesStore.removeChangeListener(this.listener);
   }
@@ -31,14 +28,13 @@ class Thread extends Component {
     this.setState(this.getStateFromStore());
   }
   getStateFromStore() {
-    const { conversationId } = this.props;
+    const { id } = this.props.conversation;
 
     return {
-      conversation: ConversationsStore.getConversation(conversationId),
       selectState: MessagesPopupStore.getSelectState(),
       selectedIds: MessagesStore.getSelection(),
       canDelete: MessagesStore.canDelete(),
-      canDeleteEverywhere: MessagesStore.canDeleteEverywhere(conversationId),
+      canDeleteEverywhere: MessagesStore.canDeleteEverywhere(id),
     };
   }
   stopSelect() {
@@ -46,7 +42,7 @@ class Thread extends Component {
   }
   deleteMessages(all) {
     messagingService.deleteMessages(
-      this.props.conversationId,
+      this.props.conversation.id,
       this.state.selectedIds,
       all
     );
@@ -56,7 +52,7 @@ class Thread extends Component {
     browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } });
   }
   backgroundUrl() {
-    const { conversation } = this.state;
+    const { conversation } = this.props;
 
     return conversation.type === PUBLIC_CONVERSATION
       ? conversation.entry.author.design.backgroundImageUrl
@@ -68,7 +64,7 @@ class Thread extends Component {
     MessagesPopupActions.openGroupSettings(this.state.conversation);
   }
   renderHeader() {
-    const { conversation } = this.state;
+    const { conversation } = this.props;
 
     return conversation.type === PUBLIC_CONVERSATION
       ? <PublicConversationHeader
@@ -84,12 +80,12 @@ class Thread extends Component {
         : null;
   }
   render() {
-    const { canDelete, canDeleteEverywhere, conversation, selectState } = this.state;
+    const { conversation } = this.props;
+    const { canDelete, canDeleteEverywhere, selectState } = this.state;
     if (!conversation) {
       return null;
     }
 
-    const id = conversation.id;
     const backgroundUrl = this.backgroundUrl();
     const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
     const userCount = conversation.type === PUBLIC_CONVERSATION
@@ -110,7 +106,7 @@ class Thread extends Component {
         {this.renderHeader()}
         <div className={listClasses} style={threadStyles}>
           <div className="messages__thread-overlay" />
-          <MessageList conversationId={id} selectState={selectState} />
+          <MessageList conversation={conversation} selectState={selectState} />
         </div>
         <footer className="messages__footer">
           {selectState
@@ -130,7 +126,7 @@ class Thread extends Component {
 }
 
 Thread.propTypes = {
-  conversationId: PropTypes.number.isRequired,
+  conversation: PropTypes.object.isRequired,
 };
   
 export default Thread;

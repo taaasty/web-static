@@ -635,6 +635,8 @@
     "label_off": "No"
   },
   "messenger": {
+    "typing": "typing...",
+    "is_typing": "{{name}} is typing...",
     "support_header": "Taaasty support",
     "support_message": "If you have any questions, please feel free to ask.",
     "support_email_placeholder": "Your email",

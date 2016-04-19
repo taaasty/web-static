@@ -139,6 +139,14 @@ const MessagingDispatcher = Object.assign(
         id: conversationId,
       });
     },
+
+    typing({ conversation_id, user_id }) {
+      return MessagingDispatcher.handleServerAction({
+        type: 'conversationTyping',
+        id: conversation_id,
+        userId: user_id,
+      });
+    },
   }
 );
 
