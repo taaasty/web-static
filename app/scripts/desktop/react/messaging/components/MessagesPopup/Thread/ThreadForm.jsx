@@ -6,9 +6,7 @@ import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 import MessageActions from '../../../actions/MessageActions';
 import ConversationActions from '../../../actions/ConversationActions';
 import CurrentUserStore from '../../../../stores/current_user';
-import { GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
-
-const TYPING_THROTTLE_INTERVAL = 5 * 1000;
+import { GROUP_CONVERSATION, TYPING_THROTTLE_INTERVAL } from '../../../constants/ConversationConstants';
 
 class ThreadForm extends Component {
   state = {

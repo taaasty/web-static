@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/UserAvatar';
 import Avatar from '../../../../../../../shared/react/components/common/Avatar';
-import ItemMain from './ItemMain';
+import ItemMain, { getLastTyping } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemGroup extends Component {
   render() {
-    const { conversation: { avatar, created_at, last_message, not_disturb, topic, unread_messages_count },
+    const { conversation: { avatar, created_at, last_message, not_disturb,
+                            topic, typing, unread_messages_count, users },
             hasUnread, hasUnreceived, onClick } = this.props;
     const lastMessageAt = last_message ? last_message.created_at : created_at;
     const userpic = {
@@ -17,6 +18,10 @@ class ItemGroup extends Component {
       },
       symbol: topic[0],
     };
+    const lastTyping = getLastTyping(typing, users);
+    const lastMsg = lastTyping
+            ? { user: lastTyping, content: i18n.t('messenger.typing') }
+            : last_message && { user: last_message.author, content: last_message.content_html };
 
     return (
       <ItemMain
@@ -37,10 +42,10 @@ class ItemGroup extends Component {
           <div className="messages__user-name">
             {topic}
           </div>
-          {last_message &&
+          {lastMsg &&
            <div className="messages__last-message">
-             <UserAvatar size={20} user={last_message.author} />
-             <span dangerouslySetInnerHTML={{ __html: last_message.content_html }} />
+             <UserAvatar size={20} user={lastMsg.user} />
+             <span dangerouslySetInnerHTML={{ __html: lastMsg.content }} />
            </div>
           }
         </div>

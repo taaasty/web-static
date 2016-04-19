@@ -1,14 +1,12 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
-import ConversationsStore from '../../stores/ConversationsStore';
 import { THREAD_STATE, GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE } from '../../stores/MessagesPopupStore';
 import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../constants/ConversationConstants';
 import TitlePublicConversation from './TitlePublicConversation';
 import TitleGroupConversation from './TitleGroupConversation';
 import TitlePrivateConversation from './TitlePrivateConversation';
 
-function PopupTitle({ id, state }) {
-  const conversation = ConversationsStore.getConversation(id);
-
+function PopupTitle({ conversation, state }) {
   if (state === THREAD_STATE) {
     if (conversation.type === PUBLIC_CONVERSATION) {
       return <TitlePublicConversation conversation={conversation} />;
@@ -32,7 +30,7 @@ function PopupTitle({ id, state }) {
 }
 
 PopupTitle.propTypes = {
-  id: PropTypes.number,
+  conversation: PropTypes.object,
   state: PropTypes.string.isRequired,
 };
 

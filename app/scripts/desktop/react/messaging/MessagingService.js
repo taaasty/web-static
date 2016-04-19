@@ -18,6 +18,7 @@ const EVENT_UPDATE_MESSAGES = 'update_messages';
 const EVENT_UPDATE_NOTIFICATIONS = 'update_notifications';
 const EVENT_DELETE_MESSAGES = 'delete_messages';
 const EVENT_DELETE_USER_MESSAGES = 'delete_user_messages';
+const EVENT_TYPING = 'typed';
 const RECONNECT_EVENT = 'reconnected';
 
 function channelMain(userId) {
@@ -68,6 +69,8 @@ class MessagingService extends EventEmitter {
         return MessagingDispatcher.deleteMessages(data);
       case EVENT_DELETE_USER_MESSAGES:
         return MessagingDispatcher.deleteUserMessages(data);
+      case EVENT_TYPING:
+        return MessagingDispatcher.typing(data);
       }
     });
 

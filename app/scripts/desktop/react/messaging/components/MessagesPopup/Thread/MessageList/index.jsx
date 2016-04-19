@@ -4,14 +4,13 @@ import { findDOMNode } from 'react-dom';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
-import ConversationsStore from '../../../../stores/ConversationsStore';
 import MessageActions from '../../../../actions/MessageActions';
 
 let savedScrollHeight = null;
 
 const MessageList = createClass({
   propTypes: {
-    conversationId: PropTypes.number.isRequired,
+    conversation: PropTypes.object.isRequired,
     selectState: PropTypes.bool.isRequired,
   },
   mixins: [ ScrollerMixin ],
@@ -24,8 +23,7 @@ const MessageList = createClass({
     this.scrollToUnread();
 
     MessagesStore.addChangeListener(this._onStoreChange);
-    ConversationsStore.addChangeListener(this._onStoreChange);
-    messagingService.openConversation(this.props.conversationId);
+    messagingService.openConversation(this.props.conversation.id);
   },
   
   componentWillUpdate(nextProps, nextState) {
@@ -55,7 +53,6 @@ const MessageList = createClass({
 
   componentWillUnmount() {
     MessagesStore.removeChangeListener(this._onStoreChange);
-    ConversationsStore.removeChangeListener(this._onStoreChange);
   },
   
   isEmpty() {
@@ -68,7 +65,7 @@ const MessageList = createClass({
 
     if (scrollerPaneNode.scrollTop === 0 && !isAllMessagesLoaded) {
       MessageActions.loadMoreMessages({
-        conversationId: this.props.conversationId,
+        conversationId: this.props.conversation.id,
         toMessageId: messages[0].id,
       });
     }
@@ -77,12 +74,11 @@ const MessageList = createClass({
   },
 
   getStateFromStore() {
-    const { conversationId } = this.props;
+    const { id } = this.props.conversation;
 
     return {
-      conversation: ConversationsStore.getConversation(conversationId),
-      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(conversationId),
-      messages: MessagesStore.getMessages(conversationId),
+      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(id),
+      messages: MessagesStore.getMessages(id),
     };
   },
   
@@ -105,7 +101,7 @@ const MessageList = createClass({
         return false;
       }
 
-      const info = MessagesStore.getMessageInfo(msg, this.props.conversationId);
+      const info = MessagesStore.getMessageInfo(msg, this.props.conversation.id);
       return info.type === 'incoming';
     });
 
@@ -129,7 +125,8 @@ const MessageList = createClass({
   },
 
   renderMessages() {
-    const { conversation, messages } = this.state;
+    const { conversation } = this.props;
+    const { messages } = this.state;
 
     return this.isEmpty()
       ? <Empty />

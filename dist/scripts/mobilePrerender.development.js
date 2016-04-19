@@ -17176,6 +17176,9 @@ ApiRoutes = {
   messengerDontDisturb: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/not_disturb";
   },
+  messengerTyping: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/typed.json";
+  },
   notificationsUrl: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";
   },

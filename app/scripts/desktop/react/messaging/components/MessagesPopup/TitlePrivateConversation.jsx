@@ -5,7 +5,9 @@ import TitlePrivateConversationActions from './TitlePrivateConversationActions';
 
 function TitlePrivateConversation({ conversation }) {
   function status() {
-    if (conversation.recipient.is_online) {
+    if (conversation.typing[conversation.recipient_id]) {
+      return i18n.t('messenger.typing');
+    } else if (conversation.recipient.is_online) {
       return i18n.t('messenger.title_status.online');
     } else {
       const at = conversation.recipient.last_seen_at;

@@ -3,6 +3,19 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 
+export function getLastTyping(typing, users) {
+  const [ lastTyping ] = Object.keys(typing)
+          .map((userId) => ({ userId, ...typing[userId] }))
+          .sort((a, b) => (b.eventAt - a.eventAt))
+          .map(({ userId }) => {
+            const [ user ] = users.filter((u) => u.id === parseInt(userId, 10));
+
+            return user;
+          });
+
+  return lastTyping;
+};
+
 class ItemMain extends Component {
   renderIndicator() {
     const { hasUnread, hasUnreceived, unreadCount } = this.props;
