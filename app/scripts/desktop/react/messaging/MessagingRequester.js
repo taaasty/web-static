@@ -127,4 +127,13 @@ export default class MessagingRequester {
       },
     });
   }
+  sendTyping(conversationId) {
+    return $.ajax({
+      url: ApiRoutes.messengerTyping(conversationId),
+      method: 'POST',
+      data: {
+        socket_id: this.socket_id,
+      },
+    });
+  }
 }

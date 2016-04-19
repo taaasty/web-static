@@ -4,8 +4,11 @@ import classNames from 'classnames';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 import MessageActions from '../../../actions/MessageActions';
+import ConversationActions from '../../../actions/ConversationActions';
 import CurrentUserStore from '../../../../stores/current_user';
 import { GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
+
+const TYPING_THROTTLE_INTERVAL = 5 * 1000;
 
 class ThreadForm extends Component {
   state = {
@@ -14,6 +17,13 @@ class ThreadForm extends Component {
     files: [],
     isLoading: false,
   };
+  componentWillMount() {
+    this.typing = _.throttle(
+      ConversationActions.sendTyping.bind(null, this.props.conversation.id),
+      TYPING_THROTTLE_INTERVAL,
+      { leading: true, trailing: false }
+    );
+  }
   componentDidMount() {
     this.form = this.refs.messageForm;
     if (this.form instanceof HTMLElement) {
@@ -23,6 +33,7 @@ class ThreadForm extends Component {
   onKeyDown(ev) {
     if (ev.key === 'Enter' && !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
       ev.preventDefault();
+      this.typing.cancel();
       this.sendMessage();
     }
   }
@@ -43,6 +54,7 @@ class ThreadForm extends Component {
   }
   updateFormState() {
     this.setState({ hasText: this.form && this.form.value !== '' });
+    this.typing();
   }
   clearForm() {
     this.form.value = '';

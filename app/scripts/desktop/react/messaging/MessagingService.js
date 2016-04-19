@@ -139,6 +139,9 @@ class MessagingService extends EventEmitter {
 
     this.osId = window.setTimeout(this.updateOnlineStatuses.bind(this), 10*60*1000);
   }
+  sendTyping(conversationId) {
+    return this.requester.sendTyping(conversationId);
+  }
   postNewConversation({ recipientId, error }) {
     return this.requester.postNewConversation(recipientId)
       .done((conversation) => {
