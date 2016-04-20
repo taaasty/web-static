@@ -63,7 +63,7 @@ const MessagesPopup = createClass({
     case CREATE_NEW_CONVERSATION_STATE:
       return <CreateNewConversation key="newConversation" />;
     case THREAD_STATE:
-      return <Thread conversation={conversation} key="thread"/>;
+      return conversation ? <Thread conversation={conversation} key="thread"/> : null;
     case GROUP_SETTINGS_STATE:
       return <GroupSettings key="groupSettings" />;
     case GROUP_CHOOSER_STATE:
