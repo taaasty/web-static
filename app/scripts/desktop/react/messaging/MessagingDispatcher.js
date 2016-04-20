@@ -35,7 +35,7 @@ const MessagingDispatcher = Object.assign(
 
     messageReceived(message) {
       const ConversationsStore = require('./stores/ConversationsStore'); //FIXME circular dep
-      const conversation = ConversationsStore.getConversation(message.conversation_id);
+      const conversation = message.conversation || ConversationsStore.getConversation(message.conversation_id);
 
       console.info('Получено сообщение', message);
 

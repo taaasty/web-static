@@ -7,7 +7,7 @@ import TitleGroupConversation from './TitleGroupConversation';
 import TitlePrivateConversation from './TitlePrivateConversation';
 
 function PopupTitle({ conversation, state }) {
-  if (state === THREAD_STATE) {
+  if (conversation && state === THREAD_STATE) {
     if (conversation.type === PUBLIC_CONVERSATION) {
       return <TitlePublicConversation conversation={conversation} />;
      } else if (conversation.type === GROUP_CONVERSATION) {
