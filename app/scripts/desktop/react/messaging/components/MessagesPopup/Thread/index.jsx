@@ -88,9 +88,6 @@ class Thread extends Component {
 
     const backgroundUrl = this.backgroundUrl();
     const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
-    const userCount = conversation.type === PUBLIC_CONVERSATION
-      ? conversation.users.length
-      : 0;
     const containerClasses = classNames({
       'messages__section': true,
       'messages__section--thread': true,
@@ -117,7 +114,7 @@ class Thread extends Component {
                deleteFn={this.deleteMessages.bind(this, false)}
                stopSelect={this.stopSelect}
              />
-           : <ThreadForm conversation={conversation} userCount={userCount} />
+           : <ThreadForm conversation={conversation} />
           }
         </footer>
       </div>

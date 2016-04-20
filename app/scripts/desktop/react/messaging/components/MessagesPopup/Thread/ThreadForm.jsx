@@ -82,9 +82,7 @@ class ThreadForm extends Component {
     }
   }
   render() {
-    const { userCount } = this.props;
     const disabledInputs = this.shouldDisableForm();
-
     const buttonClasses = classNames({
       'message-form__button-send': true,
       '--disabled': !this.msgReadyToSend(),
@@ -118,9 +116,6 @@ class ThreadForm extends Component {
             >
               {i18n.t('buttons.messenger.send')}
             </button>
-            <span className="message-form__users">
-              {userCount > 1 && i18n.t('messages_public_users', { count: userCount })}
-            </span>
           </div>
         </div>
       </div>
@@ -130,11 +125,6 @@ class ThreadForm extends Component {
 
 ThreadForm.propTypes = {
   conversation: PropTypes.object.isRequired,
-  userCount: PropTypes.number,
-};
-
-ThreadForm.defaultProps = {
-  userCount: 0,
 };
 
 export default ThreadForm;
