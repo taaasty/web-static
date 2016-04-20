@@ -57,15 +57,16 @@ const MessagesStore = Object.assign(
 
     getMessageInfo(message, conversationId) {
       const conversation = ConversationsStore.getConversation(conversationId);
-      const currentUser  = CurrentUserStore.getUser();
+
       if ([ PUBLIC_CONVERSATION, GROUP_CONVERSATION ].indexOf(conversation.type) > -1) {
         const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[0];
 
         return ({
-          type: message.user_id === currentUser.id ? 'outgoing' : 'incoming',
+          type: message.user_id === conversation.user_id ? 'outgoing' : 'incoming',
           user: msgAuthor,
         });
       } else {
+        const currentUser  = CurrentUserStore.getUser();
         const recipient = conversation.recipient;
 
         if (recipient.id === message.recipient_id) {
@@ -201,6 +202,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
       MessagesStore.sortByAsc(action.conversationId);
     }
 
+    ConversationsStore.cancelTyping(action.conversationId, message.user_id);
     MessagesStore.emitChange();
     break;
   case 'messageSubmitted':

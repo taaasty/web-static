@@ -1560,12 +1560,12 @@ var FlowsViewActions = {
       sort: sort
     });
   },
-  loadMore: function loadMore(sort, page) {
+  loadMore: function loadMore(sort, page, limit) {
     _dispatcher2.default.handleViewAction({
       type: _constants2.default.flows.REQUEST
     });
 
-    return _api2.default.flows.get(sort, page).then(_FlowsActions2.default.loadMore).fail(function (err) {
+    return _api2.default.flows.get(sort, page, limit).then(_FlowsActions2.default.loadMore).fail(function (err) {
       _notify2.default.errorResponse(err);
       _dispatcher2.default.handleServerAction({
         type: _constants2.default.flows.ERROR,
@@ -2485,11 +2485,12 @@ Api = {
     }
   },
   flows: {
-    get: function(sort, nextPage) {
+    get: function(sort, nextPage, limit) {
       var data, key, url;
       url = ApiRoutes.flows();
       key = Constants.api.FLOWS_GET;
       data = {
+        limit: limit,
         sort: sort,
         page: nextPage
       };
@@ -3845,13 +3846,14 @@ var FlowsList = function (_Component) {
       var flows = _props.flows;
       var hasMore = _props.hasMore;
       var isFetching = _props.isFetching;
+      var isLogged = _props.isLogged;
       var loadMore = _props.loadMore;
       var sort = _props.sort;
 
       return _react2.default.createElement(
         'div',
         { className: 'flows', ref: 'container' },
-        _react2.default.createElement(_FlowsNav2.default, { sort: sort }),
+        _react2.default.createElement(_FlowsNav2.default, { isLogged: isLogged, sort: sort }),
         _react2.default.createElement(
           'div',
           { className: 'flows__list' },
@@ -3876,6 +3878,7 @@ FlowsList.propTypes = {
   flows: _react.PropTypes.array.isRequired,
   hasMore: _react.PropTypes.bool,
   isFetching: _react.PropTypes.bool,
+  isLogged: _react.PropTypes.bool.isRequired,
   loadMore: _react.PropTypes.func.isRequired,
   sort: _react.PropTypes.string.isRequired
 };
@@ -3889,6 +3892,10 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -3926,6 +3933,10 @@ var _FlowsStore = require('../../stores/FlowsStore');
 
 var _FlowsStore2 = _interopRequireDefault(_FlowsStore);
 
+var _currentUser = require('../../stores/currentUser');
+
+var _currentUser2 = _interopRequireDefault(_currentUser);
+
 var _connectToStores = require('../../../../shared/react/components/higherOrder/connectToStores');
 
 var _connectToStores2 = _interopRequireDefault(_connectToStores);
@@ -3947,10 +3958,11 @@ var FlowsListContainer = function (_Component) {
       var _props$flows = _props.flows;
       var has_more = _props$flows.has_more;
       var next_page = _props$flows.next_page;
+      var limit = _props$flows.limit;
       var sort = _props.sort;
 
       if (has_more) {
-        _FlowsActions2.default.loadMore(sort, next_page);
+        _FlowsActions2.default.loadMore(sort, next_page, limit);
       }
     }
   }, {
@@ -3961,12 +3973,14 @@ var FlowsListContainer = function (_Component) {
       var has_more = _props2$flows.has_more;
       var items = _props2$flows.items;
       var isFetching = _props2.isFetching;
+      var isLogged = _props2.isLogged;
       var sort = _props2.sort;
 
       return _react2.default.createElement(_FlowsList2.default, {
         flows: items,
         hasMore: has_more,
         isFetching: isFetching,
+        isLogged: !!isLogged,
         loadMore: this.loadMore.bind(this),
         sort: sort
       });
@@ -3984,13 +3998,16 @@ FlowsListContainer.propTypes = {
     next_page: _react.PropTypes.number
   }).isRequired,
   isFetching: _react.PropTypes.bool,
+  isLogged: _react.PropTypes.bool,
   sort: _react.PropTypes.string.isRequired
 };
 
-exports.default = (0, _connectToStores2.default)(FlowsListContainer, [_FlowsStore2.default], _FlowsStore2.default.getStore);
+exports.default = (0, _connectToStores2.default)(FlowsListContainer, [_FlowsStore2.default, _currentUser2.default], function () {
+  return (0, _assign2.default)({}, _FlowsStore2.default.getStore(), { isLogged: _currentUser2.default.isLogged() });
+});
 module.exports = exports['default'];
 
-},{"../../../../shared/react/components/higherOrder/connectToStores":285,"../../actions/view/FlowsActions":22,"../../stores/FlowsStore":255,"./FlowsList":44,"babel-runtime/core-js/object/get-prototype-of":300,"babel-runtime/helpers/classCallCheck":304,"babel-runtime/helpers/createClass":305,"babel-runtime/helpers/inherits":308,"babel-runtime/helpers/possibleConstructorReturn":309,"react":"react"}],46:[function(require,module,exports){
+},{"../../../../shared/react/components/higherOrder/connectToStores":285,"../../actions/view/FlowsActions":22,"../../stores/FlowsStore":255,"../../stores/currentUser":258,"./FlowsList":44,"babel-runtime/core-js/object/assign":297,"babel-runtime/core-js/object/get-prototype-of":300,"babel-runtime/helpers/classCallCheck":304,"babel-runtime/helpers/createClass":305,"babel-runtime/helpers/inherits":308,"babel-runtime/helpers/possibleConstructorReturn":309,"react":"react"}],46:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4032,7 +4049,7 @@ function FlowsListItem(_ref) {
   };
   var containerClasses = (0, _classnames2.default)({
     'flow': true,
-    '__subscribed': relationship.state === SUBSCRIBED_STATE
+    '__subscribed': relationship && relationship.state === SUBSCRIBED_STATE
   });
 
   return _react2.default.createElement(
@@ -4083,7 +4100,7 @@ FlowsListItem.displayName = 'FlowsListItem';
 FlowsListItem.propTypes = {
   flow: _react.PropTypes.shape({
     flow: _react.PropTypes.object.isRequired,
-    relationship: _react.PropTypes.object.isRequired
+    relationship: _react.PropTypes.object
   }).isRequired,
   width: _react.PropTypes.number
 };
@@ -4110,10 +4127,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /*global i18n */
 
-var navs = ['popular', 'newest', 'my'];
+var authNavs = ['popular', 'newest', 'my'];
+var unauthNavs = ['popular', 'newest'];
 
 function FlowsNav(_ref) {
+  var isLogged = _ref.isLogged;
   var sort = _ref.sort;
+
+  var navs = isLogged ? authNavs : unauthNavs;
 
   return _react2.default.createElement(
     'div',
@@ -4150,6 +4171,7 @@ function FlowsNav(_ref) {
 FlowsNav.displayName = 'FlowsNav';
 
 FlowsNav.propTypes = {
+  isLogged: _react.PropTypes.bool.isRequired,
   sort: _react.PropTypes.string.isRequired
 };
 
@@ -4256,7 +4278,11 @@ var FlowsPage = function (_Component) {
           _react2.default.createElement(
             _PageHeader2.default,
             null,
-            _react2.default.createElement(_feed2.default, { backgroundUrl: bgImageUrl, title: i18n.t('feed.flows') })
+            _react2.default.createElement(_feed2.default, {
+              backgroundUrl: bgImageUrl,
+              entriesCount: null,
+              title: i18n.t('feed.flows')
+            })
           ),
           _react2.default.createElement(
             _PageBody2.default,
@@ -17399,6 +17425,9 @@ ApiRoutes = {
   messengerDontDisturb: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/not_disturb";
   },
+  messengerTyping: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/typed.json";
+  },
   notificationsUrl: function() {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/notifications";
   },
@@ -17482,6 +17511,9 @@ ApiRoutes = {
   },
   supportRequest: function() {
     return gon.api_host + "/v1/support_requests";
+  },
+  onlineStatuses: function() {
+    return gon.api_host + "/v1/online_statuses";
   }
 };
 

@@ -2,9 +2,12 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-const navs = [ 'popular', 'newest', 'my' ];
+const authNavs = [ 'popular', 'newest', 'my' ];
+const unauthNavs = [ 'popular', 'newest' ];
 
-function FlowsNav({ sort }) {
+function FlowsNav({ isLogged, sort }) {
+  const navs = isLogged ? authNavs : unauthNavs;
+
   return (
     <div className="tabs">
       <ul className="tabs__list">
@@ -42,6 +45,7 @@ function FlowsNav({ sort }) {
 FlowsNav.displayName = 'FlowsNav';
 
 FlowsNav.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
   sort: PropTypes.string.isRequired,
 };
 

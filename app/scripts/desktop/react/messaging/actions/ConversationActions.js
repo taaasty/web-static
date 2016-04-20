@@ -102,6 +102,10 @@ const ConversationActions = {
         });
       });
   },
+
+  sendTyping(id) {
+    return messagingService.sendTyping(id);
+  },
 };
 
 export default ConversationActions;

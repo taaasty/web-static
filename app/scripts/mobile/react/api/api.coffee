@@ -395,12 +395,13 @@ Api =
       _pendingRequests[key] = postRequest url, data
 
   flows:
-    get: (sort, nextPage) ->
+    get: (sort, nextPage, limit) ->
       url = ApiRoutes.flows();
       key = Constants.api.FLOWS_GET;
       data = {
-        sort: sort,
-        page: nextPage
+        limit,
+        sort,
+        page: nextPage,
       };
 
       abortPendingRequests(key);

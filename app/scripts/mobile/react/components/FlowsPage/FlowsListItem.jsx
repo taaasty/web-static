@@ -18,7 +18,7 @@ function FlowsListItem({ flow: { flow, relationship }, width }) {
   };
   const containerClasses = classNames({
     'flow': true,
-    '__subscribed': relationship.state === SUBSCRIBED_STATE,
+    '__subscribed': relationship && relationship.state === SUBSCRIBED_STATE,
   });
 
   return (
@@ -53,7 +53,7 @@ FlowsListItem.displayName = 'FlowsListItem';
 FlowsListItem.propTypes = {
   flow: PropTypes.shape({
     flow: PropTypes.object.isRequired,
-    relationship: PropTypes.object.isRequired,
+    relationship: PropTypes.object,
   }).isRequired,
   width: PropTypes.number,
 };

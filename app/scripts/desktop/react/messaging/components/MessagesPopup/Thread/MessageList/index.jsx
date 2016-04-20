@@ -1,16 +1,16 @@
 /*global ScrollerMixin, messagingService, TastyEvents */
 import React, { createClass, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
-import CurrentUserStore from '../../../../../stores/current_user';
 import MessageActions from '../../../../actions/MessageActions';
 
 let savedScrollHeight = null;
 
 const MessageList = createClass({
   propTypes: {
-    conversationId: PropTypes.number.isRequired,
+    conversation: PropTypes.object.isRequired,
     selectState: PropTypes.bool.isRequired,
   },
   mixins: [ ScrollerMixin ],
@@ -23,8 +23,7 @@ const MessageList = createClass({
     this.scrollToUnread();
 
     MessagesStore.addChangeListener(this._onStoreChange);
-    CurrentUserStore.addChangeListener(this._onStoreChange);
-    messagingService.openConversation(this.props.conversationId);
+    messagingService.openConversation(this.props.conversation.id);
   },
   
   componentWillUpdate(nextProps, nextState) {
@@ -54,7 +53,6 @@ const MessageList = createClass({
 
   componentWillUnmount() {
     MessagesStore.removeChangeListener(this._onStoreChange);
-    CurrentUserStore.removeChangeListener(this._onStoreChange);
   },
   
   isEmpty() {
@@ -67,7 +65,7 @@ const MessageList = createClass({
 
     if (scrollerPaneNode.scrollTop === 0 && !isAllMessagesLoaded) {
       MessageActions.loadMoreMessages({
-        conversationId: this.props.conversationId,
+        conversationId: this.props.conversation.id,
         toMessageId: messages[0].id,
       });
     }
@@ -76,12 +74,11 @@ const MessageList = createClass({
   },
 
   getStateFromStore() {
-    const { conversationId } = this.props;
+    const { id } = this.props.conversation;
 
     return {
-      currentUserId: CurrentUserStore.getUserID(),
-      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(conversationId),
-      messages: MessagesStore.getMessages(conversationId),
+      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(id),
+      messages: MessagesStore.getMessages(id),
     };
   },
   
@@ -104,13 +101,15 @@ const MessageList = createClass({
         return false;
       }
 
-      const info = MessagesStore.getMessageInfo(msg, this.props.conversationId);
+      const info = MessagesStore.getMessageInfo(msg, this.props.conversation.id);
       return info.type === 'incoming';
     });
 
     if (unread.length) {
-      const unreadMsgNode = this.refs[this.messageKey(unread[0])];
-      this.scrollList(unreadMsgNode.offsetTop);
+      const unreadMsgNode = findDOMNode(this.refs[this.messageKey(unread[0])]);
+      if (unreadMsgNode) {
+        this.scrollList(unreadMsgNode.offsetTop);
+      }
     } else {
       this._scrollToBottom();
     }
@@ -126,13 +125,14 @@ const MessageList = createClass({
   },
 
   renderMessages() {
-    const { currentUserId, messages } = this.state;
+    const { conversation } = this.props;
+    const { messages } = this.state;
 
     return this.isEmpty()
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
-            currentUserId={currentUserId}
+            currentUserId={conversation.user_id}
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.length}

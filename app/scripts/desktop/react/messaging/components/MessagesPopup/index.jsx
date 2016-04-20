@@ -1,5 +1,6 @@
 /*global Popup, RequesterMixin, ReactUnmountMixin */
 import React, { createClass } from 'react';
+import classNames from 'classnames';
 import Thread from './Thread';
 import MessagesPopupStore, {
   CONVERSATIONS_STATE,
@@ -8,6 +9,7 @@ import MessagesPopupStore, {
   GROUP_SETTINGS_STATE,
   GROUP_CHOOSER_STATE,
 } from '../../stores/MessagesPopupStore';
+import ConversationsStore from '../../stores/ConversationsStore';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
 import CreateNewConversation from './CreateNewConversation';
@@ -28,17 +30,19 @@ const MessagesPopup = createClass({
 
   componentDidMount() {
     MessagesPopupStore.addChangeListener(this._onStoreChange);
+    ConversationsStore.addChangeListener(this._onStoreChange);
   },
 
   componentWillUnmount() {
     MessagesPopupStore.removeChangeListener(this._onStoreChange);
+    ConversationsStore.removeChangeListener(this._onStoreChange);
   },
 
   getStateFromStore() {
     return {
       currentState: MessagesPopupStore.getCurrentState(),
-      currentConversationId: MessagesPopupStore.getCurrentConversationId(),
       selectState: MessagesPopupStore.getSelectState(),
+      conversation: ConversationsStore.getConversation(MessagesPopupStore.getCurrentConversationId()),
     };
   },
 
@@ -51,7 +55,7 @@ const MessagesPopup = createClass({
   },
 
   renderContents() {
-    const { currentState, currentConversationId } = this.state;
+    const { conversation, currentState } = this.state;
 
     switch(currentState) {
     case CONVERSATIONS_STATE:
@@ -59,7 +63,7 @@ const MessagesPopup = createClass({
     case CREATE_NEW_CONVERSATION_STATE:
       return <CreateNewConversation key="newConversation" />;
     case THREAD_STATE:
-      return <Thread conversationId={currentConversationId} key="thread"/>;
+      return conversation ? <Thread conversation={conversation} key="thread"/> : null;
     case GROUP_SETTINGS_STATE:
       return <GroupSettings key="groupSettings" />;
     case GROUP_CHOOSER_STATE:
@@ -68,16 +72,21 @@ const MessagesPopup = createClass({
   },
 
   render() {
-    const { currentConversationId, currentState } = this.state;
+    const { conversation, currentState } = this.state;
+    const popupClasses = classNames({
+      'popup--messages': true,
+      'popup--light': true,
+      '--thread': currentState === THREAD_STATE,
+    });
 
     return (
       <Popup
-        className="popup--messages popup--light"
+        className={popupClasses}
         clue="messages"
         draggable
         onClose={MessagesPopupActions.closeMessagesPopup}
         position={{ top: 30, left: 30 }}
-        title={<PopupTitle id={currentConversationId} state={currentState} />}
+        title={<PopupTitle conversation={conversation} state={currentState} />}
       >
         <div className="messages">
           {currentState !== CONVERSATIONS_STATE &&

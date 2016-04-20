@@ -107,6 +107,8 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_ids.json"
   messengerDontDisturb: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/not_disturb"
+  messengerTyping: (id) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/typed.json"
 
   # Notifications
   notificationsUrl:             -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/notifications"
@@ -146,5 +148,6 @@ ApiRoutes =
   flowStaffs: (flowID) -> gon.api_host + '/v1/flows/' + flowID + '/staffs'
 
   supportRequest: () -> "#{gon.api_host}/v1/support_requests"
+  onlineStatuses: () -> "#{gon.api_host}/v1/online_statuses"
 
 module.exports = ApiRoutes

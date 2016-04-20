@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 import MessageActions from '../../../actions/MessageActions';
+import ConversationActions from '../../../actions/ConversationActions';
 import CurrentUserStore from '../../../../stores/current_user';
-import { GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
+import { GROUP_CONVERSATION, TYPING_THROTTLE_INTERVAL } from '../../../constants/ConversationConstants';
 
 class ThreadForm extends Component {
   state = {
@@ -14,6 +15,13 @@ class ThreadForm extends Component {
     files: [],
     isLoading: false,
   };
+  componentWillMount() {
+    this.typing = _.throttle(
+      ConversationActions.sendTyping.bind(null, this.props.conversation.id),
+      TYPING_THROTTLE_INTERVAL,
+      { leading: true, trailing: false }
+    );
+  }
   componentDidMount() {
     this.form = this.refs.messageForm;
     if (this.form instanceof HTMLElement) {
@@ -23,6 +31,7 @@ class ThreadForm extends Component {
   onKeyDown(ev) {
     if (ev.key === 'Enter' && !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
       ev.preventDefault();
+      this.typing.cancel();
       this.sendMessage();
     }
   }
@@ -43,6 +52,7 @@ class ThreadForm extends Component {
   }
   updateFormState() {
     this.setState({ hasText: this.form && this.form.value !== '' });
+    this.typing();
   }
   clearForm() {
     this.form.value = '';
@@ -72,9 +82,7 @@ class ThreadForm extends Component {
     }
   }
   render() {
-    const { userCount } = this.props;
     const disabledInputs = this.shouldDisableForm();
-
     const buttonClasses = classNames({
       'message-form__button-send': true,
       '--disabled': !this.msgReadyToSend(),
@@ -108,9 +116,6 @@ class ThreadForm extends Component {
             >
               {i18n.t('buttons.messenger.send')}
             </button>
-            <span className="message-form__users">
-              {userCount > 1 && i18n.t('messages_public_users', { count: userCount })}
-            </span>
           </div>
         </div>
       </div>
@@ -120,11 +125,6 @@ class ThreadForm extends Component {
 
 ThreadForm.propTypes = {
   conversation: PropTypes.object.isRequired,
-  userCount: PropTypes.number,
-};
-
-ThreadForm.defaultProps = {
-  userCount: 0,
 };
 
 export default ThreadForm;
