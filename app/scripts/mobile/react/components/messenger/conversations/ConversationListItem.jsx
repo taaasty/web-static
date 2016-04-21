@@ -1,7 +1,17 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
 import UserAvatar from '../../common/avatar/user';
+import {
+  PRIVATE_CONVERSATION,
+  PUBLIC_CONVERSATION,
+  GROUP_CONVERSATION,
+} from '../../../constants/MessengerConstants';
+import PublicPic from './PublicPic';
+import GroupPic from './GroupPic';
+
+export const CONVERSATION_PIC_SIZE = 42;
 
 function ConversationListItem({ item, onClick }) {
   function hasUnreadMessages() {
@@ -62,15 +72,37 @@ function ConversationListItem({ item, onClick }) {
         : null;
   }
 
+  function renderContents() {
+    switch (item.type) {
+    case PRIVATE_CONVERSATION:
+      return [
+        <UserAvatar size={CONVERSATION_PIC_SIZE} user={item.recipient} />,
+        item.recipient.slug,
+      ];
+    case PUBLIC_CONVERSATION:
+      return [
+        <PublicPic entry={item.entry} />,
+        (item.entry && (item.entry.title || item.entry.text)) || i18n.t('messenger.public_chat_title'),
+      ];
+    case GROUP_CONVERSATION:
+      return [
+        <GroupPic avatar={item.avatar} topic={item.topic} />,
+        item.topic,
+      ];
+    }
+  }
+
   const itemClasses = classNames({
     'messages__dialog': true,
     '__read': !hasUnreadMessages(),
   });
 
+  const [ avatar, title ] = renderContents();
+
   return (
     <div className={itemClasses} onClick={handleClick}>
       <div className="messages__user-avatar">
-        <UserAvatar size={42} user={item.recipient} />
+        {avatar}
       </div>
       <div className="messages__dialog-text">
         <span className="messages__user-name">

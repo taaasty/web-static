@@ -38,7 +38,7 @@ class MessagingService extends EventEmitter
       .then ({ conversations, notifications }) ->
         AppDispatcher.handleServerAction({
           type: Constants.messenger.INIT_CONVERSATIONS,
-          conversations: conversations.filter((conv) -> conv.type == 'PrivateConversation'),
+          conversations,
         });
         console.log 'Welcome to the Matrix, Neo'
 

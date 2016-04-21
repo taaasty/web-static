@@ -5890,7 +5890,7 @@ EmailForm.propTypes = {
 exports.default = EmailForm;
 module.exports = exports['default'];
 
-},{"../../api/api":31,"../../controllers/notify":248,"../messenger/MessengerHeader":188,"../messenger/conversation/messageForm/field":193,"babel-runtime/core-js/object/get-prototype-of":300,"babel-runtime/helpers/classCallCheck":304,"babel-runtime/helpers/createClass":305,"babel-runtime/helpers/inherits":308,"babel-runtime/helpers/possibleConstructorReturn":309,"react":"react"}],75:[function(require,module,exports){
+},{"../../api/api":31,"../../controllers/notify":248,"../messenger/MessengerHeader":189,"../messenger/conversation/messageForm/field":194,"babel-runtime/core-js/object/get-prototype-of":300,"babel-runtime/helpers/classCallCheck":304,"babel-runtime/helpers/createClass":305,"babel-runtime/helpers/inherits":308,"babel-runtime/helpers/possibleConstructorReturn":309,"react":"react"}],75:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11750,6 +11750,81 @@ module.exports = HeroTlogStatsItem;
 
 
 },{"../../../../../../shared/helpers/number":269,"classnames":373}],188:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _conversation = require('../../stores/conversation');
+
+var _conversation2 = _interopRequireDefault(_conversation);
+
+var _connectStore = require('../../../../shared/react/mixins/connectStore');
+
+var _connectStore2 = _interopRequireDefault(_connectStore);
+
+var _ConversationsHeader = require('./conversations/ConversationsHeader');
+
+var _ConversationsHeader2 = _interopRequireDefault(_ConversationsHeader);
+
+var _ConversationList = require('./conversations/ConversationList');
+
+var _ConversationList2 = _interopRequireDefault(_ConversationList);
+
+var _createConversation = require('./buttons/createConversation');
+
+var _createConversation2 = _interopRequireDefault(_createConversation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MessengerConversations = (0, _react.createClass)({
+  displayName: 'MessengerConversations',
+  propTypes: {
+    onConversationClick: _react.PropTypes.func.isRequired,
+    onCreateButtonClick: _react.PropTypes.func.isRequired
+  },
+  mixins: [(0, _connectStore2.default)(_conversation2.default)],
+
+  getStateFromStore: function getStateFromStore() {
+    return {
+      conversations: _conversation2.default.getAllChrono()
+    };
+  },
+  render: function render() {
+    var _props = this.props;
+    var onConversationClick = _props.onConversationClick;
+    var onCreateButtonClick = _props.onCreateButtonClick;
+
+    return _react2.default.createElement(
+      'div',
+      { className: 'messages__section messages__section--dialogs' },
+      _react2.default.createElement(_ConversationsHeader2.default, null),
+      _react2.default.createElement(
+        'div',
+        { className: 'messages__body' },
+        _react2.default.createElement(_ConversationList2.default, {
+          items: this.state.conversations,
+          onItemClick: onConversationClick
+        })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'messages__footer' },
+        _react2.default.createElement(_createConversation2.default, { onClick: onCreateButtonClick })
+      )
+    );
+  }
+});
+
+exports.default = MessengerConversations;
+module.exports = exports['default'];
+
+},{"../../../../shared/react/mixins/connectStore":286,"../../stores/conversation":257,"./buttons/createConversation":190,"./conversations/ConversationList":200,"./conversations/ConversationsHeader":203,"react":"react"}],189:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11792,7 +11867,7 @@ MessengerHeader.propTypes = {
 exports.default = MessengerHeader;
 module.exports = exports['default'];
 
-},{"react":"react"}],189:[function(require,module,exports){
+},{"react":"react"}],190:[function(require,module,exports){
 var CreateConversationButton, PropTypes;
 
 PropTypes = React.PropTypes;
@@ -11817,7 +11892,7 @@ CreateConversationButton = React.createClass({
 module.exports = CreateConversationButton;
 
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var ConnectStoreMixin, ConversationHeader, ConversationMessageForm, ConversationMessages, ConversationStore, MessengerConversation, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -11867,7 +11942,7 @@ MessengerConversation = React.createClass({
 module.exports = MessengerConversation;
 
 
-},{"../../../../shared/react/mixins/connectStore":286,"../../stores/conversation":257,"./conversation/header":191,"./conversation/messageForm":192,"./conversation/messages":194}],191:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":286,"../../stores/conversation":257,"./conversation/header":192,"./conversation/messageForm":193,"./conversation/messages":195}],192:[function(require,module,exports){
 var ConversationHeader, MessengerHeader, PropTypes;
 
 MessengerHeader = require('../MessengerHeader');
@@ -11891,7 +11966,7 @@ ConversationHeader = React.createClass({
 module.exports = ConversationHeader;
 
 
-},{"../MessengerHeader":188}],192:[function(require,module,exports){
+},{"../MessengerHeader":189}],193:[function(require,module,exports){
 var ConversationMessageForm, ConversationMessageFormField, MessengerViewActions, NotifyController, PropTypes;
 
 NotifyController = require('../../../controllers/notify');
@@ -11954,7 +12029,7 @@ ConversationMessageForm = React.createClass({
 module.exports = ConversationMessageForm;
 
 
-},{"../../../actions/view/messenger":26,"../../../controllers/notify":248,"./messageForm/field":193}],193:[function(require,module,exports){
+},{"../../../actions/view/messenger":26,"../../../controllers/notify":248,"./messageForm/field":194}],194:[function(require,module,exports){
 var ConversationMessageFormField, PropTypes, _;
 
 _ = require('lodash');
@@ -12013,7 +12088,7 @@ ConversationMessageFormField = React.createClass({
 module.exports = ConversationMessageFormField;
 
 
-},{"lodash":"lodash"}],194:[function(require,module,exports){
+},{"lodash":"lodash"}],195:[function(require,module,exports){
 var ComponentMixin, ConnectStoreMixin, ConversationMessages, ConversationStore, ERROR_STATE, LOADED_STATE, LOADING_MORE_STATE, LOADING_STATE, MessageList, MessageStore, MessengerViewActions, Spinner;
 
 MessageStore = require('../../../stores/message');
@@ -12137,7 +12212,7 @@ ConversationMessages = React.createClass({
 module.exports = ConversationMessages;
 
 
-},{"../../../../../shared/react/components/common/Spinner":274,"../../../../../shared/react/mixins/connectStore":286,"../../../actions/view/messenger":26,"../../../mixins/component":252,"../../../stores/conversation":257,"../../../stores/message":260,"./messages/list":195}],195:[function(require,module,exports){
+},{"../../../../../shared/react/components/common/Spinner":274,"../../../../../shared/react/mixins/connectStore":286,"../../../actions/view/messenger":26,"../../../mixins/component":252,"../../../stores/conversation":257,"../../../stores/message":260,"./messages/list":196}],196:[function(require,module,exports){
 var MessageList, MessageListEmpty, MessageListItemManager, PropTypes, _;
 
 _ = require('lodash');
@@ -12235,7 +12310,7 @@ MessageList = React.createClass({
 module.exports = MessageList;
 
 
-},{"./list/empty":196,"./list/itemManager":198,"lodash":"lodash"}],196:[function(require,module,exports){
+},{"./list/empty":197,"./list/itemManager":199,"lodash":"lodash"}],197:[function(require,module,exports){
 var MessageListEmpty;
 
 MessageListEmpty = React.createClass({
@@ -12252,7 +12327,7 @@ MessageListEmpty = React.createClass({
 module.exports = MessageListEmpty;
 
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var ERROR_STATE, Image, MessageListItem, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE, UserAvatar, classnames;
 
 classnames = require('classnames');
@@ -12391,7 +12466,7 @@ MessageListItem = React.createClass({
 module.exports = MessageListItem;
 
 
-},{"../../../../../../../shared/react/components/common/Image":273,"../../../../common/avatar/user":106,"classnames":373}],198:[function(require,module,exports){
+},{"../../../../../../../shared/react/components/common/Image":273,"../../../../common/avatar/user":106,"classnames":373}],199:[function(require,module,exports){
 var ERROR_STATE, MessageListItem, MessageListItemManager, MessageStore, MessengerViewActions, PropTypes, READ_STATE, SENDING_STATE, SENT_STATE;
 
 MessageStore = require('../../../../../stores/message');
@@ -12459,53 +12534,7 @@ MessageListItemManager = React.createClass({
 module.exports = MessageListItemManager;
 
 
-},{"../../../../../actions/view/messenger":26,"../../../../../stores/message":260,"./item":197}],199:[function(require,module,exports){
-var ConnectStoreMixin, ConversationList, ConversationStore, ConversationsHeader, CreateConversationButton, MessengerConversations, PropTypes;
-
-ConversationStore = require('../../stores/conversation');
-
-ConnectStoreMixin = require('../../../../shared/react/mixins/connectStore');
-
-ConversationsHeader = require('./conversations/ConversationsHeader');
-
-ConversationList = require('./conversations/ConversationList');
-
-CreateConversationButton = require('./buttons/createConversation');
-
-PropTypes = React.PropTypes;
-
-MessengerConversations = React.createClass({
-  displayName: 'MessengerConversations',
-  mixins: [ConnectStoreMixin(ConversationStore)],
-  propTypes: {
-    onConversationClick: PropTypes.func.isRequired,
-    onCreateButtonClick: PropTypes.func.isRequired
-  },
-  render: function() {
-    return React.createElement("div", {
-      "className": "messages__section messages__section--dialogs"
-    }, React.createElement(ConversationsHeader, null), React.createElement("div", {
-      "className": "messages__body"
-    }, React.createElement(ConversationList, {
-      "items": this.state.conversations,
-      "onItemClick": this.props.onConversationClick
-    })), React.createElement("div", {
-      "className": "messages__footer"
-    }, React.createElement(CreateConversationButton, {
-      "onClick": this.props.onCreateButtonClick
-    })));
-  },
-  getStateFromStore: function() {
-    return {
-      conversations: ConversationStore.getAllChrono()
-    };
-  }
-});
-
-module.exports = MessengerConversations;
-
-
-},{"../../../../shared/react/mixins/connectStore":286,"../../stores/conversation":257,"./buttons/createConversation":189,"./conversations/ConversationList":200,"./conversations/ConversationsHeader":203}],200:[function(require,module,exports){
+},{"../../../../../actions/view/messenger":26,"../../../../../stores/message":260,"./item":198}],200:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12734,7 +12763,7 @@ ConversationsHeader.displayName = 'ConversationsHeader';
 exports.default = ConversationsHeader;
 module.exports = exports['default'];
 
-},{"../MessengerHeader":188,"react":"react"}],204:[function(require,module,exports){
+},{"../MessengerHeader":189,"react":"react"}],204:[function(require,module,exports){
 var CreateConversationHeader, MessengerChooser, MessengerCreateConversation, PropTypes;
 
 CreateConversationHeader = require('./createConversation/header');
@@ -13023,7 +13052,7 @@ CreateConversationHeader = React.createClass({
 module.exports = CreateConversationHeader;
 
 
-},{"../MessengerHeader":188}],211:[function(require,module,exports){
+},{"../MessengerHeader":189}],211:[function(require,module,exports){
 var CONVERSATION_LIST_STATE, CONVERSATION_STATE, CREATE_CONVERSATION_STATE, ComponentMixin, ConnectStoreMixin, ConversationStore, Messenger, MessengerConversation, MessengerConversations, MessengerCreateConversation, MessengerMixin, PropTypes;
 
 ConversationStore = require('../../stores/conversation');
@@ -13036,7 +13065,7 @@ MessengerMixin = require('./mixins/messenger');
 
 MessengerConversation = require('./conversation');
 
-MessengerConversations = require('./conversations');
+MessengerConversations = require('./MessengerConversations');
 
 MessengerCreateConversation = require('./createConversation');
 
@@ -13107,7 +13136,7 @@ Messenger = React.createClass({
 module.exports = Messenger;
 
 
-},{"../../../../shared/react/mixins/connectStore":286,"../../mixins/component":252,"../../stores/conversation":257,"./conversation":190,"./conversations":199,"./createConversation":204,"./mixins/messenger":212}],212:[function(require,module,exports){
+},{"../../../../shared/react/mixins/connectStore":286,"../../mixins/component":252,"../../stores/conversation":257,"./MessengerConversations":188,"./conversation":191,"./createConversation":204,"./mixins/messenger":212}],212:[function(require,module,exports){
 var MessengerMixin, MessengerViewActions;
 
 MessengerViewActions = require('../../../actions/view/messenger');
@@ -14786,9 +14815,7 @@ MessagingService = (function(superClass) {
       conversations = arg.conversations, notifications = arg.notifications;
       AppDispatcher.handleServerAction({
         type: Constants.messenger.INIT_CONVERSATIONS,
-        conversations: conversations.filter(function(conv) {
-          return conv.type === 'PrivateConversation';
-        })
+        conversations: conversations
       });
       return console.log('Welcome to the Matrix, Neo');
     });

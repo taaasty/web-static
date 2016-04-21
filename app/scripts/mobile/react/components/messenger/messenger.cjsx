@@ -3,7 +3,7 @@ ConnectStoreMixin           = require '../../../../shared/react/mixins/connectSt
 ComponentMixin              = require '../../mixins/component'
 MessengerMixin              = require './mixins/messenger'
 MessengerConversation       = require './conversation'
-MessengerConversations      = require './conversations'
+MessengerConversations      = require './MessengerConversations'
 MessengerCreateConversation = require './createConversation'
 { PropTypes } = React
 

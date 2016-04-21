@@ -5,7 +5,7 @@ FlowsConstants = require './FlowsConstants';
 RelationshipConstants  = require './relationship'
 CurrentUserConstants   = require './currentUser'
 NotificationsConstants = require './notifications'
-MessengerConstants     = require './messenger'
+MessengerConstants = require './MessengerConstants';
 MessagingConstants     = require './messaging'
 
 module.exports =
