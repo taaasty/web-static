@@ -36,9 +36,10 @@ function ConversationListItem({ item, onClick }) {
 
   function renderLastMessage() {
     const text = item.last_message ? item.last_message.content_html : '';
-    const showAvatar = item.last_message &&
-                       item.last_message.author &&
-                       item.last_message.author.id === item.user_id;
+    const showAvatar = item.type !== PRIVATE_CONVERSATION ||
+            (item.last_message &&
+             item.last_message.author &&
+             item.last_message.author.id === item.user_id);
 
     return (
       <span>
@@ -106,7 +107,7 @@ function ConversationListItem({ item, onClick }) {
       </div>
       <div className="messages__dialog-text">
         <span className="messages__user-name">
-          {item.recipient.slug} 
+          {title} 
         </span>
         {renderLastMessage()}
       </div>

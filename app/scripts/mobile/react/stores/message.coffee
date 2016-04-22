@@ -5,6 +5,19 @@ ConversationStore = require './conversation'
 CurrentUserStore  = require './currentUser'
 Constants         = require '../constants/constants'
 AppDispatcher     = require '../dispatcher/dispatcher'
+{
+  LOAD_MESSAGES,
+  CREATE_LOCAL_MESSAGE,
+  CREATE_REMOTE_MESSAGE,
+  CREATE_REMOTE_MESSAGE_FAIL,
+  READ_MESSAGES,
+  PUSH_MESSAGE,
+  UPDATE_MESSAGES,
+  DELETE_MESSAGES,
+  DELETE_USER_MESSAGES,
+  PUBLIC_CONVERSATION,
+  GROUP_CONVERSATION,
+} = require '../constants/MessengerConstants';
 
 _messages = {}      # Key is message id
 _localMessages = {} # Key is message uuid
@@ -12,14 +25,12 @@ _localMessages = {} # Key is message uuid
 addLocalMessage = (convID, messageText, uuid) ->
   conversation = ConversationStore.get convID
   currentUser  = CurrentUserStore.getUser()
-  recipient    = conversation.recipient
   localMessage =
     content: messageText
     content_html: _.escape messageText
     created_at: new Date().toISOString()
     conversation_id: convID
-    recipient_id: recipient.id
-    user_id: currentUser.id
+    user_id: conversation.user_id
     sendingError: false
     uuid: uuid
 
@@ -60,26 +71,34 @@ MessageStore = assign new BaseStore(),
     @getAllForThread ConversationStore.getCurrentID()
 
   getUnreadIDs: (convID) ->
-    conversation = ConversationStore.get convID
-    messages     = @getAllForThread convID
-    recipient    = conversation.recipient
+    conversation = ConversationStore.get(convID);
+    messages     = @getAllForThread(convID);
     unreadIDs    = []
 
-    _.forEach messages, (item) ->
-      if item.read_at is null and recipient.id != item.recipient_id
-        unreadIDs.push item.id
+    _.forEach(messages, (item) ->
+      if item.read_at is null and conversation.user_id != item.user_id
+        unreadIDs.push(item.id));
 
     unreadIDs
 
   getInfo: (message, convID) ->
-    conversation = ConversationStore.get convID
-    currentUser  = CurrentUserStore.getUser()
-    recipient    = conversation.recipient
+    conversation = ConversationStore.get(convID);
 
-    if recipient.id == message.recipient_id
-      messageInfo = type: 'outgoing', user: currentUser
+    if conversation.type == PUBLIC_CONVERSATION or conversation.type == GROUP_CONVERSATION
+      msgAuthor = conversation.users.filter((u) -> u.id == message.user_id)[0];
+
+      messageInfo = {
+        type: if message.user_id == conversation.user_id then 'outgoing' else 'incoming',
+        user: msgAuthor,
+      }
     else
-      messageInfo = type: 'incoming', user: recipient
+      currentUser  = CurrentUserStore.getUser()
+      recipient    = conversation.recipient
+
+      messageInfo = if conversation.user_id == message.user_id
+        { type: 'outgoing', user: currentUser }
+      else
+        { type: 'incoming', user: recipient }
 
     messageInfo
 
@@ -89,33 +108,39 @@ MessageStore.dispatchToken = AppDispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
-    when Constants.messenger.LOAD_MESSAGES
+    when LOAD_MESSAGES
       _.forEach action.messages, (item) -> _messages[item.id] = item
       MessageStore.emitChange()
 
-    when Constants.messenger.CREATE_LOCAL_MESSAGE
+    when CREATE_LOCAL_MESSAGE
       { convID, messageText, uuid } = action
       addLocalMessage convID, messageText, uuid
       MessageStore.emitChange()
 
-    when Constants.messenger.CREATE_REMOTE_MESSAGE
+    when CREATE_REMOTE_MESSAGE
       addRemoteMessage action.message
       MessageStore.emitChange()
 
-    when Constants.messenger.CREATE_REMOTE_MESSAGE_FAIL
+    when CREATE_REMOTE_MESSAGE_FAIL
       _localMessages[action.uuid]?.sendingError = true
       MessageStore.emitChange()
 
-    when Constants.messenger.READ_MESSAGES
+    when READ_MESSAGES
       _.forEach action.ids, (id) ->
         message = _messages[id]
         message.read_at = new Date().toISOString() if message?
       MessageStore.emitChange()
 
-    when Constants.messaging.PUSH_MESSAGE
+    when PUSH_MESSAGE
       addRemoteMessage action.message
       MessageStore.emitChange()
 
-    when Constants.messaging.UPDATE_MESSAGES
+    when UPDATE_MESSAGES
       _.forEach action.messages, (item) -> _.extend _messages[item.id], item
       MessageStore.emitChange()
+
+    when DELETE_MESSAGES
+      _messages = 
+
+    when DELETE_USER_MESSAGES
+      

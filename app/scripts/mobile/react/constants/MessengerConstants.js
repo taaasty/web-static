@@ -1,18 +1,12 @@
-import keyMirror from 'keymirror';
-
-const MessengerConstants = keyMirror({
-  INIT_CONVERSATIONS: null,
-  CREATE_CONVERSATION: null,
-  LOAD_MESSAGES: null,
-  READ_MESSAGES: null,
-  OPEN_CONVERSATION: null,
-  CREATE_LOCAL_MESSAGE: null,
-  CREATE_REMOTE_MESSAGE: null,
-  CREATE_REMOTE_MESSAGE_FAIL: null,
-});
+export const INIT_CONVERSATIONS = 'INIT_CONVERSATIONS';
+export const CREATE_CONVERSATION = 'CREATE_CONVERSATION';
+export const LOAD_MESSAGES = 'LOAD_MESSAGES';
+export const READ_MESSAGES = 'READ_MESSAGES';
+export const OPEN_CONVERSATION = 'OPEN_CONVERSATION';
+export const CREATE_LOCAL_MESSAGE = 'CREATE_LOCAL_MESSAGE';
+export const CREATE_REMOTE_MESSAGE = 'CREATE_REMOTE_MESSAGE';
+export const CREATE_REMOTE_MESSAGE_FAIL = 'CREATE_REMOTE_MESSAGE_FAIL';
 
 export const PUBLIC_CONVERSATION = 'PublicConversation';
 export const PRIVATE_CONVERSATION = 'PrivateConversation';
 export const GROUP_CONVERSATION = 'GroupConversation';
-
-export default MessengerConstants;

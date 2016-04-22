@@ -180,6 +180,24 @@
   left: @indent-base;
 }
 
+.messages__preview-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 100%;
+  perspective: 1px;
+  height: 100%;
+  width: 100%;
+
+  .imageloader {
+    position: absolute;
+    top: -100%;
+    bottom: -100%;
+    right: -100%;
+    left: -100%;
+    margin: auto;
+  }
+}
+
 .messages__user-name {
   margin-right: 3px;
   font-weight: bold;
