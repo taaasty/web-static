@@ -1,6 +1,6 @@
 _                      = require 'lodash'
 MessageListEmpty       = require './list/empty'
-MessageListItemManager = require './list/itemManager'
+MessageListItemManager = require './list/MessageListItemManager'
 { PropTypes } = React
 
 MessageList = React.createClass

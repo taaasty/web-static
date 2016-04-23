@@ -44,10 +44,12 @@ class MessagingService extends EventEmitter
   onConnectionSuccess: =>
     Api.messaging.ready @pusher.connection.socket_id
       .then ({ conversations, notifications }) ->
+        ###
         AppDispatcher.handleServerAction({
           type: Constants.messenger.INIT_CONVERSATIONS,
           conversations,
         });
+        ###
         console.log 'Welcome to the Matrix, Neo'
 
   onConnectionFail: ->

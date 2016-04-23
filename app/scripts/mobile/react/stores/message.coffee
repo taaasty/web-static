@@ -11,13 +11,15 @@ AppDispatcher     = require '../dispatcher/dispatcher'
   CREATE_REMOTE_MESSAGE,
   CREATE_REMOTE_MESSAGE_FAIL,
   READ_MESSAGES,
+  PUBLIC_CONVERSATION,
+  GROUP_CONVERSATION,
+} = require '../constants/MessengerConstants';
+{
   PUSH_MESSAGE,
   UPDATE_MESSAGES,
   DELETE_MESSAGES,
   DELETE_USER_MESSAGES,
-  PUBLIC_CONVERSATION,
-  GROUP_CONVERSATION,
-} = require '../constants/MessengerConstants';
+} = require '../constants/MessagingConstants';
 
 _messages = {}      # Key is message id
 _localMessages = {} # Key is message uuid
@@ -132,15 +134,21 @@ MessageStore.dispatchToken = AppDispatcher.register (payload) ->
       MessageStore.emitChange()
 
     when PUSH_MESSAGE
-      addRemoteMessage action.message
-      MessageStore.emitChange()
+      addRemoteMessage(action.message);
+      MessageStore.emitChange();
 
     when UPDATE_MESSAGES
-      _.forEach action.messages, (item) -> _.extend _messages[item.id], item
-      MessageStore.emitChange()
+      _.forEach(action.messages, (item) -> _.extend(_messages[item.id], item));
+      MessageStore.emitChange();
 
     when DELETE_MESSAGES
-      _messages = 
+      action.messages.forEach((msg) -> delete _messages[msg.id]);
+      MessageStore.emitChange();
 
     when DELETE_USER_MESSAGES
-      
+      action.messages.forEach((deleted) ->
+        { id, content } = deleted;
+
+        if (_messages[id])
+          _.extend(_messages[id], deleted, { content_html: content })
+      )

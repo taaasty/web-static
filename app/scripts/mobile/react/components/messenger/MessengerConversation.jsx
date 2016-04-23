@@ -28,9 +28,11 @@ const MessengerConversation = createClass({
               : conversation.recipient.design.background_url;
 
     const title = type === PUBLIC_CONVERSATION
-            ? 'public'
+            ? ((conversation.entry &&
+                (conversation.entry.title || conversation.entry.text)) ||
+               i18n.t('messenger.public_chat_title'))
             : type === GROUP_CONVERSATION
-              ? 'group'
+              ? conversation.topic
               : conversation.recipient.slug;
     const conversationStyles = { backgroundImage: `url("${backgroundUrl}")` };
     const canTalk = typeof can_talk === 'undefined' || can_talk;

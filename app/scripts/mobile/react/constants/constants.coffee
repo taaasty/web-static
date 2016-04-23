@@ -6,7 +6,7 @@ RelationshipConstants  = require './relationship'
 CurrentUserConstants   = require './currentUser'
 NotificationsConstants = require './notifications'
 MessengerConstants = require './MessengerConstants';
-MessagingConstants     = require './messaging'
+MessagingConstants = require './MessagingConstants';
 
 module.exports =
   api:           ApiConstants
