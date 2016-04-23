@@ -24,22 +24,32 @@ class MessagingService extends EventEmitter
 
   makeSubscriptions: ->
     @channel = @pusher.subscribe "private-#{ @userID }-messaging"
-    @channel.bind Constants.messaging.CONNECT_SUCCESS, @onConnectionSuccess
-    @channel.bind Constants.messaging.CONNECT_FAIL, @onConnectionFail
-    @channel.bind Constants.messaging.UPDATE_STATUS, @onUpdateStatus
-    @channel.bind Constants.messaging.UPDATE_CONVERSATION, @onUpdateConversation
-    @channel.bind Constants.messaging.PUSH_MESSAGE, @onPushMessage
-    @channel.bind Constants.messaging.UPDATE_MESSAGES, @onUpdateMessages
-    @channel.bind Constants.messaging.PUSH_NOTIFICATION, @onPushNotification
-    @channel.bind Constants.messaging.UPDATE_NOTIFICATIONS, @onUpdateNotifications
+
+    this.channel.bind_all((_type='', data) =>
+      type = _type.replace(/^(public_|group_)/, '');
+
+      switch type
+        when Constants.messaging.CONNECT_SUCCESS then @onConnectionSuccess(data)
+        when Constants.messaging.CONNECT_FAIL then @onConnectionFail(data)
+        when Constants.messaging.UPDATE_STATUS then @onUpdateStatus(data)
+        when Constants.messaging.UPDATE_CONVERSATION then @onUpdateConversation(data)
+        when Constants.messaging.PUSH_MESSAGE then @onPushMessage(data)
+        when Constants.messaging.UPDATE_MESSAGES then @onUpdateMessages(data)
+        when Constants.messaging.PUSH_NOTIFICATION then @onPushNotification(data)
+        when Constants.messaging.UPDATE_NOTIFICATIONS then @onUpdateNotifications(data)
+        when Constants.messaging.DELETE_MESSAGES then this.onDeleteMessages(data)
+        when Constants.messaging.DELETE_USER_MESSAGES then this.onDeleteUserMessages(data)
+  )
 
   onConnectionSuccess: =>
     Api.messaging.ready @pusher.connection.socket_id
       .then ({ conversations, notifications }) ->
+        ###
         AppDispatcher.handleServerAction({
           type: Constants.messenger.INIT_CONVERSATIONS,
-          conversations: conversations.filter((conv) -> conv.type == 'PrivateConversation'),
+          conversations,
         });
+        ###
         console.log 'Welcome to the Matrix, Neo'
 
   onConnectionFail: ->
@@ -64,6 +74,18 @@ class MessagingService extends EventEmitter
     AppDispatcher.handleServerAction
       type: Constants.messaging.UPDATE_MESSAGES
       messages: data.messages
+
+  onDeleteMessages: ({ messages }) ->
+    AppDispatcher.handleServerAction({
+      type: Constants.messaging.DELETE_MESSAGES,
+      messages,
+    });
+
+  onDeleteUserMessages: ({ messages }) ->
+    AppDispatcher.handleServerAction({
+      type: Constants.messaging.DELETE_USER_MESSAGES,
+      messages,
+    });
 
   onPushNotification: (notification) ->
     AppDispatcher.handleServerAction

@@ -106,7 +106,8 @@
     "conversations_empty_list": "List of dialogs is empty",
     "chooser_hint": "Start typing the name of a friend whom you want to send a message",
     "recipients_empty_list": "List is empty",
-    "support_message": "If you have any questions, please feel free to ask."
+    "support_message": "If you have any questions, please feel free to ask.",
+    "public_chat_title": "Post discussion"
   },
   "settings": {
     "account_active_status": "Active TLog",
