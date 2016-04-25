@@ -6,6 +6,8 @@ import runSequence from 'run-sequence';
 requireDir('./gulp/tasks', { recurse: true });
 
 gulp.task('dist', (cb) => {
+  process.env.NODE_ENV = 'production';
+
   runSequence(
     ['[S] Clean'],
     ['[D][P] Scripts', '[M][D] Components scripts', '[D][P] Styles', '[D][P] Locales', '[D][D] Scripts',
