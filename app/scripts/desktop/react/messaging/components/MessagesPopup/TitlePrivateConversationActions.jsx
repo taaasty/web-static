@@ -43,7 +43,7 @@ class TitlePrivateConversationActions extends Component {
       return <noscript />;
     }
 
-    const { not_disturb } = this.state.conversation;
+    const { can_delete, not_disturb } = this.state.conversation;
 
     return (
       <div className="messages__popup-title-actions">
@@ -60,12 +60,12 @@ class TitlePrivateConversationActions extends Component {
             onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
-          <DropdownAction
+          {can_delete && <DropdownAction
             icon="icon--basket"
             key="delete-conversation"
             onClick={this.deleteConversation.bind(this)}
             title={i18n.t('messenger.title_actions.delete_conversation')}
-          />
+          />}
         </DropdownActions>
       </div>
     );
