@@ -12,16 +12,18 @@ function TitlePrivateConversation({ conversation }) {
     } else {
       const at = conversation.recipient.last_seen_at;
 
-      return moment(at).calendar(null, {
-        sameDay: function() {
-          return i18n.t('messenger.title_status.last_seen_ago', {
-            ago: moment(at).fromNow(),
-          });
-        },
-        lastDay: i18n.t('messenger.title_status.last_seen_yesterday'),
-        lastWeek: i18n.t('messenger.title_status.last_seen_at'),
-        sameElse: i18n.t('messenger.title_status.last_seen_at'),
-      });
+      return at
+        ? moment(at).calendar(null, {
+          sameDay: function() {
+            return i18n.t('messenger.title_status.last_seen_ago', {
+              ago: moment(at).fromNow(),
+            });
+          },
+          lastDay: i18n.t('messenger.title_status.last_seen_yesterday'),
+          lastWeek: i18n.t('messenger.title_status.last_seen_at'),
+          sameElse: i18n.t('messenger.title_status.last_seen_at'),
+        })
+      : '';
     }
   }
 
