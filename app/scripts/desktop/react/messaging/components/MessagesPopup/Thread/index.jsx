@@ -92,6 +92,7 @@ class Thread extends Component {
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
+      '--no-form': conversation.can_talk === false,
     });
     const listClasses = classNames({
       'messages__body': true,
@@ -114,7 +115,7 @@ class Thread extends Component {
                deleteFn={this.deleteMessages.bind(this, false)}
                stopSelect={this.stopSelect}
              />
-           : <ThreadForm conversation={conversation} />
+           : conversation.can_talk && <ThreadForm conversation={conversation} />
           }
         </footer>
       </div>
