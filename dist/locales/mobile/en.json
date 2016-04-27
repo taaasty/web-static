@@ -97,6 +97,7 @@
     "empty_list": "Notification list is empty"
   },
   "messenger": {
+    "image": "<image>",
     "conversation_header": "{{userSlug}}",
     "support_header": "Tasty support",
     "conversations_header": "Messages",

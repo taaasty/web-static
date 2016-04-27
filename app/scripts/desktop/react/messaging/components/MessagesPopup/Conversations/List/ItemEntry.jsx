@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/UserAvatar';
-import ItemMain, { getLastTyping } from './ItemMain';
+import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
 import ItemEntryPic from './ItemEntryPic';
 
 class ItemEntry extends Component {
@@ -13,7 +13,7 @@ class ItemEntry extends Component {
     const lastTyping = getLastTyping(typing, users);
     const lastMsg = lastTyping
             ? { user: lastTyping, content: i18n.t('messenger.typing') }
-            : last_message && { user: last_message.author, content: last_message.content_html };
+            : last_message && { user: last_message.author, content: getLastMsgTxt(last_message) };
 
     return (
       <ItemMain

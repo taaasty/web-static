@@ -35,7 +35,9 @@ function ConversationListItem({ item, onClick }) {
   }
 
   function renderLastMessage() {
-    const text = item.last_message ? item.last_message.content_html : '';
+    const text = item.last_message
+            ? item.last_message.content_html || i18n.t('messenger.image')
+            : '';
     const showAvatar = item.type !== PRIVATE_CONVERSATION ||
             (item.last_message &&
              item.last_message.author &&

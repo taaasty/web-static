@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/UserAvatar';
 import Avatar from '../../../../../../../shared/react/components/common/Avatar';
-import ItemMain, { getLastTyping } from './ItemMain';
+import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
@@ -21,7 +21,7 @@ class ItemGroup extends Component {
     const lastTyping = getLastTyping(typing, users);
     const lastMsg = lastTyping
             ? { user: lastTyping, content: i18n.t('messenger.typing') }
-            : last_message && { user: last_message.author, content: last_message.content_html };
+            : last_message && { user: last_message.author, content: getLastMsgTxt(last_message) };
 
     return (
       <ItemMain
