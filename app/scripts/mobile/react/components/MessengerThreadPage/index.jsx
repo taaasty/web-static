@@ -26,7 +26,7 @@ class MessengerThreadPage extends Component {
       >
         <PageLayout>
           <PageBody>
-            <Messenger state="conversation"/>
+            <Messenger state="conversation" />
           </PageBody>
         </PageLayout>
       </PageWithToolbars>

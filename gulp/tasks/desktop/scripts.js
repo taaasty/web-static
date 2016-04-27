@@ -4,6 +4,7 @@ import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 import uglify from 'gulp-uglify';
 import streamify from 'gulp-streamify';
+import envify from 'envify/custom';
 import bundleLogger from '../../util/bundleLogger';
 import handleErrors from '../../util/handleErrors';
 const config = require('../../config').desktop.scripts;
@@ -235,6 +236,11 @@ gulp.task('[D][P] Scripts', () => {
     .transform('babelify', babelifyOpts)
     .transform('browserify-shim')
     .transform('coffee-reactify')
+    .transform(envify({
+      'NODE_ENV': 'production',
+    }, {
+      global: true,
+    }))
     .bundle()
     .on('error', handleErrors)
     .pipe(source(outputName))

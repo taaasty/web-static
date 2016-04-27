@@ -82,9 +82,11 @@ let EditorTextField = React.createClass({
 
     return (
       <div className={fieldClasses}>
-        <div ref="fieldContent"
-             className="tasty-editor-content"
-             dangerouslySetInnerHTML={{__html: this.props.text || ''}} />
+        <div
+          className="tasty-editor-content"
+          dangerouslySetInnerHTML={{__html: this.props.text || ''}}
+          ref="fieldContent"
+        />
       </div>
     );
   },

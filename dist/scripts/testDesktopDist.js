@@ -2,18 +2,52 @@
 module.exports = { "default": require("core-js/library/fn/object/keys"), __esModule: true };
 },{"core-js/library/fn/object/keys":2}],2:[function(require,module,exports){
 require('../../modules/es6.object.keys');
-module.exports = require('../../modules/$.core').Object.keys;
-},{"../../modules/$.core":4,"../../modules/es6.object.keys":12}],3:[function(require,module,exports){
+module.exports = require('../../modules/_core').Object.keys;
+},{"../../modules/_core":7,"../../modules/es6.object.keys":35}],3:[function(require,module,exports){
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
 },{}],4:[function(require,module,exports){
-var core = module.exports = {version: '1.2.6'};
+var isObject = require('./_is-object');
+module.exports = function(it){
+  if(!isObject(it))throw TypeError(it + ' is not an object!');
+  return it;
+};
+},{"./_is-object":20}],5:[function(require,module,exports){
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = require('./_to-iobject')
+  , toLength  = require('./_to-length')
+  , toIndex   = require('./_to-index');
+module.exports = function(IS_INCLUDES){
+  return function($this, el, fromIndex){
+    var O      = toIObject($this)
+      , length = toLength(O.length)
+      , index  = toIndex(fromIndex, length)
+      , value;
+    // Array#includes uses SameValueZero equality algorithm
+    if(IS_INCLUDES && el != el)while(length > index){
+      value = O[index++];
+      if(value != value)return true;
+    // Array#toIndex ignores holes, Array#includes - not
+    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+      if(O[index] === el)return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+},{"./_to-index":28,"./_to-iobject":30,"./_to-length":31}],6:[function(require,module,exports){
+var toString = {}.toString;
+
+module.exports = function(it){
+  return toString.call(it).slice(8, -1);
+};
+},{}],7:[function(require,module,exports){
+var core = module.exports = {version: '2.3.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // optional / simple context binding
-var aFunction = require('./$.a-function');
+var aFunction = require('./_a-function');
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -32,16 +66,35 @@ module.exports = function(fn, that, length){
     return fn.apply(that, arguments);
   };
 };
-},{"./$.a-function":3}],6:[function(require,module,exports){
+},{"./_a-function":3}],9:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],7:[function(require,module,exports){
-var global    = require('./$.global')
-  , core      = require('./$.core')
-  , ctx       = require('./$.ctx')
+},{}],10:[function(require,module,exports){
+// Thank's IE8 for his funny defineProperty
+module.exports = !require('./_fails')(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
+},{"./_fails":14}],11:[function(require,module,exports){
+var isObject = require('./_is-object')
+  , document = require('./_global').document
+  // in old IE typeof document.createElement is 'object'
+  , is = isObject(document) && isObject(document.createElement);
+module.exports = function(it){
+  return is ? document.createElement(it) : {};
+};
+},{"./_global":15,"./_is-object":20}],12:[function(require,module,exports){
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+},{}],13:[function(require,module,exports){
+var global    = require('./_global')
+  , core      = require('./_core')
+  , ctx       = require('./_ctx')
+  , hide      = require('./_hide')
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -52,12 +105,13 @@ var $export = function(type, name, source){
     , IS_BIND   = type & $export.B
     , IS_WRAP   = type & $export.W
     , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+    , expProto  = exports[PROTOTYPE]
     , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
     , key, own, out;
   if(IS_GLOBAL)source = name;
   for(key in source){
     // contains in native
-    own = !IS_FORCED && target && key in target;
+    own = !IS_FORCED && target && target[key] !== undefined;
     if(own && key in exports)continue;
     // export native or passed
     out = own ? target[key] : source[key];
@@ -67,25 +121,38 @@ var $export = function(type, name, source){
     : IS_BIND && own ? ctx(out, global)
     // wrap global constructors for prevent change them in library
     : IS_WRAP && target[key] == out ? (function(C){
-      var F = function(param){
-        return this instanceof C ? new C(param) : C(param);
+      var F = function(a, b, c){
+        if(this instanceof C){
+          switch(arguments.length){
+            case 0: return new C;
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
       };
       F[PROTOTYPE] = C[PROTOTYPE];
       return F;
     // make static versions for prototype methods
     })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    if(IS_PROTO)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if(IS_PROTO){
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+    }
   }
 };
 // type bitmap
-$export.F = 1;  // forced
-$export.G = 2;  // global
-$export.S = 4;  // static
-$export.P = 8;  // proto
-$export.B = 16; // bind
-$export.W = 32; // wrap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library` 
 module.exports = $export;
-},{"./$.core":4,"./$.ctx":5,"./$.global":9}],8:[function(require,module,exports){
+},{"./_core":7,"./_ctx":8,"./_global":15,"./_hide":17}],14:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -93,38 +160,180 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],9:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],10:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function(it, key){
+  return hasOwnProperty.call(it, key);
+};
+},{}],17:[function(require,module,exports){
+var dP         = require('./_object-dp')
+  , createDesc = require('./_property-desc');
+module.exports = require('./_descriptors') ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
+},{"./_descriptors":10,"./_object-dp":21,"./_property-desc":25}],18:[function(require,module,exports){
+module.exports = !require('./_descriptors') && !require('./_fails')(function(){
+  return Object.defineProperty(require('./_dom-create')('div'), 'a', {get: function(){ return 7; }}).a != 7;
+});
+},{"./_descriptors":10,"./_dom-create":11,"./_fails":14}],19:[function(require,module,exports){
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = require('./_cof');
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+},{"./_cof":6}],20:[function(require,module,exports){
+module.exports = function(it){
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+},{}],21:[function(require,module,exports){
+var anObject       = require('./_an-object')
+  , IE8_DOM_DEFINE = require('./_ie8-dom-define')
+  , toPrimitive    = require('./_to-primitive')
+  , dP             = Object.defineProperty;
+
+exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes){
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if(IE8_DOM_DEFINE)try {
+    return dP(O, P, Attributes);
+  } catch(e){ /* empty */ }
+  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+  if('value' in Attributes)O[P] = Attributes.value;
+  return O;
+};
+},{"./_an-object":4,"./_descriptors":10,"./_ie8-dom-define":18,"./_to-primitive":33}],22:[function(require,module,exports){
+var has          = require('./_has')
+  , toIObject    = require('./_to-iobject')
+  , arrayIndexOf = require('./_array-includes')(false)
+  , IE_PROTO     = require('./_shared-key')('IE_PROTO');
+
+module.exports = function(object, names){
+  var O      = toIObject(object)
+    , i      = 0
+    , result = []
+    , key;
+  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while(names.length > i)if(has(O, key = names[i++])){
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+},{"./_array-includes":5,"./_has":16,"./_shared-key":26,"./_to-iobject":30}],23:[function(require,module,exports){
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys       = require('./_object-keys-internal')
+  , enumBugKeys = require('./_enum-bug-keys');
+
+module.exports = Object.keys || function keys(O){
+  return $keys(O, enumBugKeys);
+};
+},{"./_enum-bug-keys":12,"./_object-keys-internal":22}],24:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
-var $export = require('./$.export')
-  , core    = require('./$.core')
-  , fails   = require('./$.fails');
+var $export = require('./_export')
+  , core    = require('./_core')
+  , fails   = require('./_fails');
 module.exports = function(KEY, exec){
   var fn  = (core.Object || {})[KEY] || Object[KEY]
     , exp = {};
   exp[KEY] = exec(fn);
   $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":4,"./$.export":7,"./$.fails":8}],11:[function(require,module,exports){
+},{"./_core":7,"./_export":13,"./_fails":14}],25:[function(require,module,exports){
+module.exports = function(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+};
+},{}],26:[function(require,module,exports){
+var shared = require('./_shared')('keys')
+  , uid    = require('./_uid');
+module.exports = function(key){
+  return shared[key] || (shared[key] = uid(key));
+};
+},{"./_shared":27,"./_uid":34}],27:[function(require,module,exports){
+var global = require('./_global')
+  , SHARED = '__core-js_shared__'
+  , store  = global[SHARED] || (global[SHARED] = {});
+module.exports = function(key){
+  return store[key] || (store[key] = {});
+};
+},{"./_global":15}],28:[function(require,module,exports){
+var toInteger = require('./_to-integer')
+  , max       = Math.max
+  , min       = Math.min;
+module.exports = function(index, length){
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+},{"./_to-integer":29}],29:[function(require,module,exports){
+// 7.1.4 ToInteger
+var ceil  = Math.ceil
+  , floor = Math.floor;
+module.exports = function(it){
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+},{}],30:[function(require,module,exports){
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = require('./_iobject')
+  , defined = require('./_defined');
+module.exports = function(it){
+  return IObject(defined(it));
+};
+},{"./_defined":9,"./_iobject":19}],31:[function(require,module,exports){
+// 7.1.15 ToLength
+var toInteger = require('./_to-integer')
+  , min       = Math.min;
+module.exports = function(it){
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+},{"./_to-integer":29}],32:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
-var defined = require('./$.defined');
+var defined = require('./_defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":6}],12:[function(require,module,exports){
+},{"./_defined":9}],33:[function(require,module,exports){
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = require('./_is-object');
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+},{"./_is-object":20}],34:[function(require,module,exports){
+var id = 0
+  , px = Math.random();
+module.exports = function(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+},{}],35:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
-var toObject = require('./$.to-object');
+var toObject = require('./_to-object')
+  , $keys    = require('./_object-keys');
 
-require('./$.object-sap')('keys', function($keys){
+require('./_object-sap')('keys', function(){
   return function keys(it){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":10,"./$.to-object":11}],13:[function(require,module,exports){
+},{"./_object-keys":23,"./_object-sap":24,"./_to-object":32}],36:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1676,7 +1885,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":14,"ieee754":15,"isarray":16}],14:[function(require,module,exports){
+},{"base64-js":37,"ieee754":38,"isarray":39}],37:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -1802,7 +2011,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],15:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -1888,17 +2097,17 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],16:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],17:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = require('./lib/chai');
 
-},{"./lib/chai":18}],18:[function(require,module,exports){
+},{"./lib/chai":41}],41:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -1912,7 +2121,7 @@ var used = []
  * Chai version
  */
 
-exports.version = '3.4.1';
+exports.version = '3.5.0';
 
 /*!
  * Assertion Error
@@ -1993,7 +2202,7 @@ exports.use(should);
 var assert = require('./chai/interface/assert');
 exports.use(assert);
 
-},{"./chai/assertion":19,"./chai/config":20,"./chai/core/assertions":21,"./chai/interface/assert":22,"./chai/interface/expect":23,"./chai/interface/should":24,"./chai/utils":38,"assertion-error":46}],19:[function(require,module,exports){
+},{"./chai/assertion":42,"./chai/config":43,"./chai/core/assertions":44,"./chai/interface/assert":45,"./chai/interface/expect":46,"./chai/interface/should":47,"./chai/utils":61,"assertion-error":69}],42:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -2126,7 +2335,7 @@ module.exports = function (_chai, util) {
   });
 };
 
-},{"./config":20}],20:[function(require,module,exports){
+},{"./config":43}],43:[function(require,module,exports){
 module.exports = {
 
   /**
@@ -2183,7 +2392,7 @@ module.exports = {
 
 };
 
-},{}],21:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 /*!
  * chai
  * http://chaijs.com
@@ -2221,6 +2430,7 @@ module.exports = function (chai, _) {
    * - same
    *
    * @name language chains
+   * @namespace BDD
    * @api public
    */
 
@@ -2244,6 +2454,7 @@ module.exports = function (chai, _) {
    *       .and.not.equal('bar');
    *
    * @name not
+   * @namespace BDD
    * @api public
    */
 
@@ -2268,6 +2479,7 @@ module.exports = function (chai, _) {
    *     expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
    *
    * @name deep
+   * @namespace BDD
    * @api public
    */
 
@@ -2284,6 +2496,7 @@ module.exports = function (chai, _) {
    *     expect(foo).to.have.any.keys('bar', 'baz');
    *
    * @name any
+   * @namespace BDD
    * @api public
    */
 
@@ -2302,6 +2515,7 @@ module.exports = function (chai, _) {
    *     expect(foo).to.have.all.keys('bar', 'baz');
    *
    * @name all
+   * @namespace BDD
    * @api public
    */
 
@@ -2337,6 +2551,7 @@ module.exports = function (chai, _) {
    * @alias an
    * @param {String} type
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2374,6 +2589,7 @@ module.exports = function (chai, _) {
    * @alias contains
    * @param {Object|String|Number} obj
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2429,6 +2645,7 @@ module.exports = function (chai, _) {
    *     expect(null).to.not.be.ok;
    *
    * @name ok
+   * @namespace BDD
    * @api public
    */
 
@@ -2448,6 +2665,7 @@ module.exports = function (chai, _) {
    *     expect(1).to.not.be.true;
    *
    * @name true
+   * @namespace BDD
    * @api public
    */
 
@@ -2469,6 +2687,7 @@ module.exports = function (chai, _) {
    *     expect(0).to.not.be.false;
    *
    * @name false
+   * @namespace BDD
    * @api public
    */
 
@@ -2490,6 +2709,7 @@ module.exports = function (chai, _) {
    *     expect(undefined).to.not.be.null;
    *
    * @name null
+   * @namespace BDD
    * @api public
    */
 
@@ -2510,6 +2730,7 @@ module.exports = function (chai, _) {
    *     expect(null).to.not.be.undefined;
    *
    * @name undefined
+   * @namespace BDD
    * @api public
    */
 
@@ -2529,6 +2750,7 @@ module.exports = function (chai, _) {
    *     expect(4).not.to.be.NaN;
    *
    * @name NaN
+   * @namespace BDD
    * @api public
    */
 
@@ -2554,6 +2776,7 @@ module.exports = function (chai, _) {
    *     expect(baz).to.not.exist;
    *
    * @name exist
+   * @namespace BDD
    * @api public
    */
 
@@ -2578,6 +2801,7 @@ module.exports = function (chai, _) {
    *     expect({}).to.be.empty;
    *
    * @name empty
+   * @namespace BDD
    * @api public
    */
 
@@ -2609,6 +2833,7 @@ module.exports = function (chai, _) {
    *
    * @name arguments
    * @alias Arguments
+   * @namespace BDD
    * @api public
    */
 
@@ -2644,6 +2869,7 @@ module.exports = function (chai, _) {
    * @alias deep.equal
    * @param {Mixed} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2680,6 +2906,7 @@ module.exports = function (chai, _) {
    * @alias eqls
    * @param {Mixed} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2718,6 +2945,7 @@ module.exports = function (chai, _) {
    * @alias greaterThan
    * @param {Number} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2766,6 +2994,7 @@ module.exports = function (chai, _) {
    * @alias gte
    * @param {Number} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2814,6 +3043,7 @@ module.exports = function (chai, _) {
    * @alias lessThan
    * @param {Number} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2862,6 +3092,7 @@ module.exports = function (chai, _) {
    * @alias lte
    * @param {Number} value
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2909,6 +3140,7 @@ module.exports = function (chai, _) {
    * @param {Number} start lowerbound inclusive
    * @param {Number} finish upperbound inclusive
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -2948,6 +3180,7 @@ module.exports = function (chai, _) {
    * @param {Constructor} constructor
    * @param {String} message _optional_
    * @alias instanceOf
+   * @namespace BDD
    * @api public
    */
 
@@ -3032,6 +3265,7 @@ module.exports = function (chai, _) {
    * @param {Mixed} value (optional)
    * @param {String} message _optional_
    * @returns value of property for chaining
+   * @namespace BDD
    * @api public
    */
 
@@ -3087,6 +3321,7 @@ module.exports = function (chai, _) {
    * @alias haveOwnProperty
    * @param {String} name
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3119,6 +3354,7 @@ module.exports = function (chai, _) {
    * @param {String} name
    * @param {Object} descriptor _optional_
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3171,6 +3407,7 @@ module.exports = function (chai, _) {
    * switched to use `lengthOf(value)` instead.
    *
    * @name length
+   * @namespace BDD
    * @api public
    */
 
@@ -3186,6 +3423,7 @@ module.exports = function (chai, _) {
    * @name lengthOf
    * @param {Number} length
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3222,6 +3460,7 @@ module.exports = function (chai, _) {
    * @alias matches
    * @param {RegExp} RegularExpression
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
   function assertMatch(re, msg) {
@@ -3247,6 +3486,7 @@ module.exports = function (chai, _) {
    * @name string
    * @param {String} string
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3298,6 +3538,7 @@ module.exports = function (chai, _) {
    * @name keys
    * @alias key
    * @param {...String|Array|Object} keys
+   * @namespace BDD
    * @api public
    */
 
@@ -3417,6 +3658,7 @@ module.exports = function (chai, _) {
    * @param {String} message _optional_
    * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types
    * @returns error for chaining (null if no error)
+   * @namespace BDD
    * @api public
    */
 
@@ -3560,6 +3802,7 @@ module.exports = function (chai, _) {
    * @alias respondsTo
    * @param {String} method
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3594,6 +3837,7 @@ module.exports = function (chai, _) {
    *     expect(Foo).itself.not.to.respondTo('baz');
    *
    * @name itself
+   * @namespace BDD
    * @api public
    */
 
@@ -3612,6 +3856,7 @@ module.exports = function (chai, _) {
    * @alias satisfies
    * @param {Function} matcher
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3643,6 +3888,7 @@ module.exports = function (chai, _) {
    * @param {Number} expected
    * @param {Number} delta
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3694,6 +3940,7 @@ module.exports = function (chai, _) {
    * @name members
    * @param {Array} set
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3743,6 +3990,7 @@ module.exports = function (chai, _) {
    * @name oneOf
    * @param {Array<*>} list
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3772,7 +4020,7 @@ module.exports = function (chai, _) {
    *     var fn = function() { obj.val += 3 };
    *     var noChangeFn = function() { return 'foo' + 'bar'; }
    *     expect(fn).to.change(obj, 'val');
-   *     expect(noChangFn).to.not.change(obj, 'val')
+   *     expect(noChangeFn).to.not.change(obj, 'val')
    *
    * @name change
    * @alias changes
@@ -3780,6 +4028,7 @@ module.exports = function (chai, _) {
    * @param {String} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3817,6 +4066,7 @@ module.exports = function (chai, _) {
    * @param {String} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3854,6 +4104,7 @@ module.exports = function (chai, _) {
    * @param {String} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace BDD
    * @api public
    */
 
@@ -3892,6 +4143,7 @@ module.exports = function (chai, _) {
    *     expect(frozenObject).to.not.be.extensible;
    *
    * @name extensible
+   * @namespace BDD
    * @api public
    */
 
@@ -3933,6 +4185,7 @@ module.exports = function (chai, _) {
    *     expect({}).to.not.be.sealed;
    *
    * @name sealed
+   * @namespace BDD
    * @api public
    */
 
@@ -3972,6 +4225,7 @@ module.exports = function (chai, _) {
    *     expect({}).to.not.be.frozen;
    *
    * @name frozen
+   * @namespace BDD
    * @api public
    */
 
@@ -4000,7 +4254,7 @@ module.exports = function (chai, _) {
   });
 };
 
-},{}],22:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -4032,6 +4286,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} expression to test for truthiness
    * @param {String} message to display on error
    * @name assert
+   * @namespace Assert
    * @api public
    */
 
@@ -4054,6 +4309,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} expected
    * @param {String} message
    * @param {String} operator
+   * @namespace Assert
    * @api public
    */
 
@@ -4078,6 +4334,7 @@ module.exports = function (chai, util) {
    * @alias ok
    * @param {Mixed} object to test
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4097,6 +4354,7 @@ module.exports = function (chai, util) {
    * @alias notOk
    * @param {Mixed} object to test
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4115,6 +4373,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4141,6 +4400,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4167,6 +4427,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4185,6 +4446,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4203,6 +4465,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4221,6 +4484,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} actual
    * @param {Mixed} expected
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4239,6 +4503,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} valueToCheck
    * @param {Mixed} valueToBeAbove
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4258,6 +4523,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} valueToCheck
    * @param {Mixed} valueToBeAtLeast
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4276,6 +4542,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} valueToCheck
    * @param {Mixed} valueToBeBelow
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4295,6 +4562,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} valueToCheck
    * @param {Mixed} valueToBeAtMost
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4313,6 +4581,7 @@ module.exports = function (chai, util) {
    * @name isTrue
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4331,6 +4600,7 @@ module.exports = function (chai, util) {
    * @name isNotTrue
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4349,6 +4619,7 @@ module.exports = function (chai, util) {
    * @name isFalse
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4367,6 +4638,7 @@ module.exports = function (chai, util) {
    * @name isNotFalse
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4384,6 +4656,7 @@ module.exports = function (chai, util) {
    * @name isNull
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4402,6 +4675,7 @@ module.exports = function (chai, util) {
    * @name isNotNull
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4418,6 +4692,7 @@ module.exports = function (chai, util) {
    * @name isNaN
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4434,6 +4709,7 @@ module.exports = function (chai, util) {
    * @name isNotNaN
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
   assert.isNotNaN = function (val, msg) {
@@ -4451,6 +4727,7 @@ module.exports = function (chai, util) {
    * @name isUndefined
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4469,6 +4746,7 @@ module.exports = function (chai, util) {
    * @name isDefined
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4487,6 +4765,7 @@ module.exports = function (chai, util) {
    * @name isFunction
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4505,6 +4784,7 @@ module.exports = function (chai, util) {
    * @name isNotFunction
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4515,8 +4795,8 @@ module.exports = function (chai, util) {
   /**
    * ### .isObject(value, [message])
    *
-   * Asserts that `value` is an object (as revealed by
-   * `Object.prototype.toString`).
+   * Asserts that `value` is an object of type 'Object' (as revealed by `Object.prototype.toString`).
+   * _The assertion does not match subclassed objects._
    *
    *     var selection = { name: 'Chai', serve: 'with spices' };
    *     assert.isObject(selection, 'tea selection is an object');
@@ -4524,6 +4804,7 @@ module.exports = function (chai, util) {
    * @name isObject
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4534,7 +4815,7 @@ module.exports = function (chai, util) {
   /**
    * ### .isNotObject(value, [message])
    *
-   * Asserts that `value` is _not_ an object.
+   * Asserts that `value` is _not_ an object of type 'Object' (as revealed by `Object.prototype.toString`).
    *
    *     var selection = 'chai'
    *     assert.isNotObject(selection, 'tea selection is not an object');
@@ -4543,6 +4824,7 @@ module.exports = function (chai, util) {
    * @name isNotObject
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4561,6 +4843,7 @@ module.exports = function (chai, util) {
    * @name isArray
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4579,6 +4862,7 @@ module.exports = function (chai, util) {
    * @name isNotArray
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4597,6 +4881,7 @@ module.exports = function (chai, util) {
    * @name isString
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4615,6 +4900,7 @@ module.exports = function (chai, util) {
    * @name isNotString
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4633,6 +4919,7 @@ module.exports = function (chai, util) {
    * @name isNumber
    * @param {Number} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4651,6 +4938,7 @@ module.exports = function (chai, util) {
    * @name isNotNumber
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4672,6 +4960,7 @@ module.exports = function (chai, util) {
    * @name isBoolean
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4693,6 +4982,7 @@ module.exports = function (chai, util) {
    * @name isNotBoolean
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4717,6 +5007,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} value
    * @param {String} name
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4736,6 +5027,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} value
    * @param {String} typeof name
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4757,6 +5049,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {Constructor} constructor
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4778,6 +5071,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {Constructor} constructor
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4798,6 +5092,7 @@ module.exports = function (chai, util) {
    * @param {Array|String} haystack
    * @param {Mixed} needle
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4818,6 +5113,7 @@ module.exports = function (chai, util) {
    * @param {Array|String} haystack
    * @param {Mixed} needle
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4836,6 +5132,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} value
    * @param {RegExp} regexp
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4854,6 +5151,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} value
    * @param {RegExp} regexp
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4872,6 +5170,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4890,6 +5189,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4909,6 +5209,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4928,6 +5229,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4948,6 +5250,7 @@ module.exports = function (chai, util) {
    * @param {String} property
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4968,6 +5271,7 @@ module.exports = function (chai, util) {
    * @param {String} property
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -4989,6 +5293,7 @@ module.exports = function (chai, util) {
    * @param {String} property
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5010,6 +5315,7 @@ module.exports = function (chai, util) {
    * @param {String} property
    * @param {Mixed} value
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5029,6 +5335,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} object
    * @param {Number} length
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5057,6 +5364,7 @@ module.exports = function (chai, util) {
    * @param {RegExp} regexp
    * @param {String} message
    * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types
+   * @namespace Assert
    * @api public
    */
 
@@ -5085,6 +5393,7 @@ module.exports = function (chai, util) {
    * @param {RegExp} regexp
    * @param {String} message
    * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types
+   * @namespace Assert
    * @api public
    */
 
@@ -5110,6 +5419,7 @@ module.exports = function (chai, util) {
    * @param {String} operator
    * @param {Mixed} val2
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5162,6 +5472,7 @@ module.exports = function (chai, util) {
    * @param {Number} expected
    * @param {Number} delta
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5181,6 +5492,7 @@ module.exports = function (chai, util) {
    * @param {Number} expected
    * @param {Number} delta
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5200,6 +5512,7 @@ module.exports = function (chai, util) {
    * @param {Array} set1
    * @param {Array} set2
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5219,6 +5532,7 @@ module.exports = function (chai, util) {
    * @param {Array} set1
    * @param {Array} set2
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5238,11 +5552,33 @@ module.exports = function (chai, util) {
    * @param {Array} superset
    * @param {Array} subset
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
   assert.includeMembers = function (superset, subset, msg) {
     new Assertion(superset, msg).to.include.members(subset);
+  }
+
+  /**
+   * ### .includeDeepMembers(superset, subset, [message])
+   *
+   * Asserts that `subset` is included in `superset` - using deep equality checking.
+   * Order is not taken into account.
+   * Duplicates are ignored.
+   *
+   *     assert.includeDeepMembers([ {a: 1}, {b: 2}, {c: 3} ], [ {b: 2}, {a: 1}, {b: 2} ], 'include deep members');
+   *
+   * @name includeDeepMembers
+   * @param {Array} superset
+   * @param {Array} subset
+   * @param {String} message
+   * @namespace Assert
+   * @api public
+   */
+
+  assert.includeDeepMembers = function (superset, subset, msg) {
+    new Assertion(superset, msg).to.include.deep.members(subset);
   }
 
   /**
@@ -5256,6 +5592,7 @@ module.exports = function (chai, util) {
    * @param {*} inList
    * @param {Array<*>} list
    * @param {String} message
+   * @namespace Assert
    * @api public
    */
 
@@ -5277,6 +5614,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5298,6 +5636,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5319,6 +5658,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5340,6 +5680,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5361,6 +5702,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5382,6 +5724,7 @@ module.exports = function (chai, util) {
    * @param {Object} object
    * @param {String} property name
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5401,6 +5744,7 @@ module.exports = function (chai, util) {
    *
    * @name ifError
    * @param {Object} object
+   * @namespace Assert
    * @api public
    */
 
@@ -5421,6 +5765,7 @@ module.exports = function (chai, util) {
    * @alias extensible
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5445,6 +5790,7 @@ module.exports = function (chai, util) {
    * @alias notExtensible
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5468,6 +5814,7 @@ module.exports = function (chai, util) {
    * @alias sealed
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5486,6 +5833,7 @@ module.exports = function (chai, util) {
    * @alias notSealed
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5506,6 +5854,7 @@ module.exports = function (chai, util) {
    * @alias frozen
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5524,6 +5873,7 @@ module.exports = function (chai, util) {
    * @alias notFrozen
    * @param {Object} object
    * @param {String} message _optional_
+   * @namespace Assert
    * @api public
    */
 
@@ -5551,7 +5901,7 @@ module.exports = function (chai, util) {
   ('isNotFrozen', 'notFrozen');
 };
 
-},{}],23:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5573,6 +5923,7 @@ module.exports = function (chai, util) {
    * @param {Mixed} expected
    * @param {String} message
    * @param {String} operator
+   * @namespace Expect
    * @api public
    */
 
@@ -5586,7 +5937,7 @@ module.exports = function (chai, util) {
   };
 };
 
-},{}],24:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5637,6 +5988,7 @@ module.exports = function (chai, util) {
      * @param {Mixed} expected
      * @param {String} message
      * @param {String} operator
+     * @namespace Should
      * @api public
      */
 
@@ -5649,13 +6001,66 @@ module.exports = function (chai, util) {
       }, should.fail);
     };
 
+    /**
+     * ### .equal(actual, expected, [message])
+     *
+     * Asserts non-strict equality (`==`) of `actual` and `expected`.
+     *
+     *     should.equal(3, '3', '== coerces values to strings');
+     *
+     * @name equal
+     * @param {Mixed} actual
+     * @param {Mixed} expected
+     * @param {String} message
+     * @namespace Should
+     * @api public
+     */
+
     should.equal = function (val1, val2, msg) {
       new Assertion(val1, msg).to.equal(val2);
     };
 
+    /**
+     * ### .throw(function, [constructor/string/regexp], [string/regexp], [message])
+     *
+     * Asserts that `function` will throw an error that is an instance of
+     * `constructor`, or alternately that it will throw an error with message
+     * matching `regexp`.
+     *
+     *     should.throw(fn, 'function throws a reference error');
+     *     should.throw(fn, /function throws a reference error/);
+     *     should.throw(fn, ReferenceError);
+     *     should.throw(fn, ReferenceError, 'function throws a reference error');
+     *     should.throw(fn, ReferenceError, /function throws a reference error/);
+     *
+     * @name throw
+     * @alias Throw
+     * @param {Function} function
+     * @param {ErrorConstructor} constructor
+     * @param {RegExp} regexp
+     * @param {String} message
+     * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types
+     * @namespace Should
+     * @api public
+     */
+
     should.Throw = function (fn, errt, errs, msg) {
       new Assertion(fn, msg).to.Throw(errt, errs);
     };
+
+    /**
+     * ### .exist
+     *
+     * Asserts that the target is neither `null` nor `undefined`.
+     *
+     *     var foo = 'hi';
+     *
+     *     should.exist(foo, 'foo exists');
+     *
+     * @name exist
+     * @namespace Should
+     * @api public
+     */
 
     should.exist = function (val, msg) {
       new Assertion(val, msg).to.exist;
@@ -5664,13 +6069,62 @@ module.exports = function (chai, util) {
     // negation
     should.not = {}
 
+    /**
+     * ### .not.equal(actual, expected, [message])
+     *
+     * Asserts non-strict inequality (`!=`) of `actual` and `expected`.
+     *
+     *     should.not.equal(3, 4, 'these numbers are not equal');
+     *
+     * @name not.equal
+     * @param {Mixed} actual
+     * @param {Mixed} expected
+     * @param {String} message
+     * @namespace Should
+     * @api public
+     */
+
     should.not.equal = function (val1, val2, msg) {
       new Assertion(val1, msg).to.not.equal(val2);
     };
 
+    /**
+     * ### .throw(function, [constructor/regexp], [message])
+     *
+     * Asserts that `function` will _not_ throw an error that is an instance of
+     * `constructor`, or alternately that it will not throw an error with message
+     * matching `regexp`.
+     *
+     *     should.not.throw(fn, Error, 'function does not throw');
+     *
+     * @name not.throw
+     * @alias not.Throw
+     * @param {Function} function
+     * @param {ErrorConstructor} constructor
+     * @param {RegExp} regexp
+     * @param {String} message
+     * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types
+     * @namespace Should
+     * @api public
+     */
+
     should.not.Throw = function (fn, errt, errs, msg) {
       new Assertion(fn, msg).to.not.Throw(errt, errs);
     };
+
+    /**
+     * ### .not.exist
+     *
+     * Asserts that the target is neither `null` nor `undefined`.
+     *
+     *     var bar = null;
+     *
+     *     should.not.exist(bar, 'bar does not exist');
+     *
+     * @name not.exist
+     * @namespace Should
+     * @api public
+     */
 
     should.not.exist = function (val, msg) {
       new Assertion(val, msg).to.not.exist;
@@ -5686,7 +6140,7 @@ module.exports = function (chai, util) {
   chai.Should = loadShould;
 };
 
-},{}],25:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /*!
  * Chai - addChainingMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5741,6 +6195,7 @@ var call  = Function.prototype.call,
  * @param {String} name of method to add
  * @param {Function} method function to be used for `name`, when called
  * @param {Function} chainingBehavior function to be called every time the property is accessed
+ * @namespace Utils
  * @name addChainableMethod
  * @api public
  */
@@ -5799,7 +6254,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   });
 };
 
-},{"../config":20,"./flag":29,"./transferFlags":45}],26:[function(require,module,exports){
+},{"../config":43,"./flag":52,"./transferFlags":68}],49:[function(require,module,exports){
 /*!
  * Chai - addMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5829,6 +6284,7 @@ var config = require('../config');
  * @param {Object} ctx object to which the method is added
  * @param {String} name of method to add
  * @param {Function} method function to be used for name
+ * @namespace Utils
  * @name addMethod
  * @api public
  */
@@ -5844,7 +6300,7 @@ module.exports = function (ctx, name, method) {
   };
 };
 
-},{"../config":20,"./flag":29}],27:[function(require,module,exports){
+},{"../config":43,"./flag":52}],50:[function(require,module,exports){
 /*!
  * Chai - addProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5875,6 +6331,7 @@ var flag = require('./flag');
  * @param {Object} ctx object to which the property is added
  * @param {String} name of property to add
  * @param {Function} getter function to be used for name
+ * @namespace Utils
  * @name addProperty
  * @api public
  */
@@ -5893,7 +6350,7 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{"../config":20,"./flag":29}],28:[function(require,module,exports){
+},{"../config":43,"./flag":52}],51:[function(require,module,exports){
 /*!
  * Chai - expectTypes utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5909,6 +6366,7 @@ module.exports = function (ctx, name, getter) {
  *
  * @param {Mixed} obj constructed Assertion
  * @param {Array} type A list of allowed types for this assertion
+ * @namespace Utils
  * @name expectTypes
  * @api public
  */
@@ -5936,7 +6394,7 @@ module.exports = function (obj, types) {
   }
 };
 
-},{"./flag":29,"assertion-error":46,"type-detect":51}],29:[function(require,module,exports){
+},{"./flag":52,"assertion-error":69,"type-detect":74}],52:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5957,6 +6415,7 @@ module.exports = function (obj, types) {
  * @param {Object} object constructed Assertion
  * @param {String} key
  * @param {Mixed} value (optional)
+ * @namespace Utils
  * @name flag
  * @api private
  */
@@ -5970,7 +6429,7 @@ module.exports = function (obj, key, value) {
   }
 };
 
-},{}],30:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 /*!
  * Chai - getActual utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -5984,13 +6443,15 @@ module.exports = function (obj, key, value) {
  *
  * @param {Object} object (constructed Assertion)
  * @param {Arguments} chai.Assertion.prototype.assert arguments
+ * @namespace Utils
+ * @name getActual
  */
 
 module.exports = function (obj, args) {
   return args.length > 4 ? args[4] : obj._obj;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 /*!
  * Chai - getEnumerableProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6005,6 +6466,7 @@ module.exports = function (obj, args) {
  *
  * @param {Object} object
  * @returns {Array}
+ * @namespace Utils
  * @name getEnumerableProperties
  * @api public
  */
@@ -6017,7 +6479,7 @@ module.exports = function getEnumerableProperties(object) {
   return result;
 };
 
-},{}],32:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 /*!
  * Chai - message composition utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6047,6 +6509,7 @@ var flag = require('./flag')
  *
  * @param {Object} object (constructed Assertion)
  * @param {Arguments} chai.Assertion.prototype.assert arguments
+ * @namespace Utils
  * @name getMessage
  * @api public
  */
@@ -6062,14 +6525,14 @@ module.exports = function (obj, args) {
   if(typeof msg === "function") msg = msg();
   msg = msg || '';
   msg = msg
-    .replace(/#{this}/g, objDisplay(val))
-    .replace(/#{act}/g, objDisplay(actual))
-    .replace(/#{exp}/g, objDisplay(expected));
+    .replace(/#\{this\}/g, function () { return objDisplay(val); })
+    .replace(/#\{act\}/g, function () { return objDisplay(actual); })
+    .replace(/#\{exp\}/g, function () { return objDisplay(expected); });
 
   return flagMsg ? flagMsg + ': ' + msg : msg;
 };
 
-},{"./flag":29,"./getActual":30,"./inspect":39,"./objDisplay":40}],33:[function(require,module,exports){
+},{"./flag":52,"./getActual":53,"./inspect":62,"./objDisplay":63}],56:[function(require,module,exports){
 /*!
  * Chai - getName utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6082,6 +6545,8 @@ module.exports = function (obj, args) {
  * Gets the name of a function, in a cross-browser way.
  *
  * @param {Function} a function (usually a constructor)
+ * @namespace Utils
+ * @name getName
  */
 
 module.exports = function (func) {
@@ -6091,7 +6556,7 @@ module.exports = function (func) {
   return match && match[1] ? match[1] : "";
 };
 
-},{}],34:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 /*!
  * Chai - getPathInfo utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6117,6 +6582,7 @@ var hasProperty = require('./hasProperty');
  * @param {String} path
  * @param {Object} object
  * @returns {Object} info
+ * @namespace Utils
  * @name getPathInfo
  * @api public
  */
@@ -6203,7 +6669,7 @@ function _getPathValue (parsed, obj, index) {
   return res;
 }
 
-},{"./hasProperty":37}],35:[function(require,module,exports){
+},{"./hasProperty":60}],58:[function(require,module,exports){
 /*!
  * Chai - getPathValue utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6239,15 +6705,16 @@ var getPathInfo = require('./getPathInfo');
  * @param {String} path
  * @param {Object} object
  * @returns {Object} value or `undefined`
+ * @namespace Utils
  * @name getPathValue
  * @api public
  */
 module.exports = function(path, obj) {
   var info = getPathInfo(path, obj);
   return info.value;
-}; 
+};
 
-},{"./getPathInfo":34}],36:[function(require,module,exports){
+},{"./getPathInfo":57}],59:[function(require,module,exports){
 /*!
  * Chai - getProperties utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6262,6 +6729,7 @@ module.exports = function(path, obj) {
  *
  * @param {Object} object
  * @returns {Array}
+ * @namespace Utils
  * @name getProperties
  * @api public
  */
@@ -6284,7 +6752,7 @@ module.exports = function getProperties(object) {
   return result;
 };
 
-},{}],37:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 /*!
  * Chai - hasProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6313,7 +6781,7 @@ var type = require('type-detect');
  *     hasProperty('str', obj);  // true
  *     hasProperty('constructor', obj);  // true
  *     hasProperty('bar', obj);  // false
- *     
+ *
  *     hasProperty('length', obj.str); // true
  *     hasProperty(1, obj.str);  // true
  *     hasProperty(5, obj.str);  // false
@@ -6325,6 +6793,7 @@ var type = require('type-detect');
  * @param {Objuect} object
  * @param {String|Number} name
  * @returns {Boolean} whether it exists
+ * @namespace Utils
  * @name getPathInfo
  * @api public
  */
@@ -6349,7 +6818,7 @@ module.exports = function hasProperty(name, obj) {
   return name in obj;
 };
 
-},{"type-detect":51}],38:[function(require,module,exports){
+},{"type-detect":74}],61:[function(require,module,exports){
 /*!
  * chai
  * Copyright(c) 2011 Jake Luer <jake@alogicalparadox.com>
@@ -6481,7 +6950,7 @@ exports.addChainableMethod = require('./addChainableMethod');
 
 exports.overwriteChainableMethod = require('./overwriteChainableMethod');
 
-},{"./addChainableMethod":25,"./addMethod":26,"./addProperty":27,"./expectTypes":28,"./flag":29,"./getActual":30,"./getMessage":32,"./getName":33,"./getPathInfo":34,"./getPathValue":35,"./hasProperty":37,"./inspect":39,"./objDisplay":40,"./overwriteChainableMethod":41,"./overwriteMethod":42,"./overwriteProperty":43,"./test":44,"./transferFlags":45,"deep-eql":47,"type-detect":51}],39:[function(require,module,exports){
+},{"./addChainableMethod":48,"./addMethod":49,"./addProperty":50,"./expectTypes":51,"./flag":52,"./getActual":53,"./getMessage":55,"./getName":56,"./getPathInfo":57,"./getPathValue":58,"./hasProperty":60,"./inspect":62,"./objDisplay":63,"./overwriteChainableMethod":64,"./overwriteMethod":65,"./overwriteProperty":66,"./test":67,"./transferFlags":68,"deep-eql":70,"type-detect":74}],62:[function(require,module,exports){
 // This is (almost) directly from Node.js utils
 // https://github.com/joyent/node/blob/f8c335d0caf47f16d31413f89aa28eda3878e3aa/lib/util.js
 
@@ -6501,6 +6970,8 @@ module.exports = inspect;
  * @param {Number} depth Depth in which to descend in object. Default is 2.
  * @param {Boolean} colors Flag to turn on ANSI escape codes to color the
  *    output. Default is false (no coloring).
+ * @namespace Utils
+ * @name inspect
  */
 function inspect(obj, showHidden, depth, colors) {
   var ctx = {
@@ -6816,7 +7287,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-},{"./getEnumerableProperties":31,"./getName":33,"./getProperties":36}],40:[function(require,module,exports){
+},{"./getEnumerableProperties":54,"./getName":56,"./getProperties":59}],63:[function(require,module,exports){
 /*!
  * Chai - flag utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6839,6 +7310,7 @@ var config = require('../config');
  *
  * @param {Mixed} javascript object to inspect
  * @name objDisplay
+ * @namespace Utils
  * @api public
  */
 
@@ -6867,7 +7339,7 @@ module.exports = function (obj) {
   }
 };
 
-},{"../config":20,"./inspect":39}],41:[function(require,module,exports){
+},{"../config":43,"./inspect":62}],64:[function(require,module,exports){
 /*!
  * Chai - overwriteChainableMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6902,6 +7374,7 @@ module.exports = function (obj) {
  * @param {String} name of method / property to overwrite
  * @param {Function} method function that returns a function to be used for name
  * @param {Function} chainingBehavior function that returns a function to be used for property
+ * @namespace Utils
  * @name overwriteChainableMethod
  * @api public
  */
@@ -6922,7 +7395,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
   };
 };
 
-},{}],42:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 /*!
  * Chai - overwriteMethod utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -6958,6 +7431,7 @@ module.exports = function (ctx, name, method, chainingBehavior) {
  * @param {Object} ctx object whose method is to be overwritten
  * @param {String} name of method to overwrite
  * @param {Function} method function that returns a function to be used for name
+ * @namespace Utils
  * @name overwriteMethod
  * @api public
  */
@@ -6975,7 +7449,7 @@ module.exports = function (ctx, name, method) {
   }
 };
 
-},{}],43:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 /*!
  * Chai - overwriteProperty utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7011,6 +7485,7 @@ module.exports = function (ctx, name, method) {
  * @param {Object} ctx object whose property is to be overwritten
  * @param {String} name of property to overwrite
  * @param {Function} getter function that returns a getter function to be used for name
+ * @namespace Utils
  * @name overwriteProperty
  * @api public
  */
@@ -7031,7 +7506,7 @@ module.exports = function (ctx, name, getter) {
   });
 };
 
-},{}],44:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 /*!
  * Chai - test utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7051,6 +7526,8 @@ var flag = require('./flag');
  *
  * @param {Object} object (constructed Assertion)
  * @param {Arguments} chai.Assertion.prototype.assert arguments
+ * @namespace Utils
+ * @name test
  */
 
 module.exports = function (obj, args) {
@@ -7059,7 +7536,7 @@ module.exports = function (obj, args) {
   return negate ? !expr : expr;
 };
 
-},{"./flag":29}],45:[function(require,module,exports){
+},{"./flag":52}],68:[function(require,module,exports){
 /*!
  * Chai - transferFlags utility
  * Copyright(c) 2012-2014 Jake Luer <jake@alogicalparadox.com>
@@ -7084,6 +7561,7 @@ module.exports = function (obj, args) {
  * @param {Assertion} assertion the assertion to transfer the flags from
  * @param {Object} object the object to transfer the flags to; usually a new assertion
  * @param {Boolean} includeAll
+ * @namespace Utils
  * @name transferFlags
  * @api private
  */
@@ -7105,7 +7583,7 @@ module.exports = function (assertion, object, includeAll) {
   }
 };
 
-},{}],46:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 /*!
  * assertion-error
  * Copyright(c) 2013 Jake Luer <jake@qualiancy.com>
@@ -7219,10 +7697,10 @@ AssertionError.prototype.toJSON = function (stack) {
   return props;
 };
 
-},{}],47:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 module.exports = require('./lib/eql');
 
-},{"./lib/eql":48}],48:[function(require,module,exports){
+},{"./lib/eql":71}],71:[function(require,module,exports){
 /*!
  * deep-eql
  * Copyright(c) 2013 Jake Luer <jake@alogicalparadox.com>
@@ -7481,10 +7959,10 @@ function objectEqual(a, b, m) {
   return true;
 }
 
-},{"buffer":13,"type-detect":49}],49:[function(require,module,exports){
+},{"buffer":36,"type-detect":72}],72:[function(require,module,exports){
 module.exports = require('./lib/type');
 
-},{"./lib/type":50}],50:[function(require,module,exports){
+},{"./lib/type":73}],73:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7628,9 +8106,9 @@ Library.prototype.test = function (obj, type) {
   }
 };
 
-},{}],51:[function(require,module,exports){
-arguments[4][49][0].apply(exports,arguments)
-},{"./lib/type":52,"dup":49}],52:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
+arguments[4][72][0].apply(exports,arguments)
+},{"./lib/type":75,"dup":72}],75:[function(require,module,exports){
 /*!
  * type-detect
  * Copyright(c) 2013 jake luer <jake@alogicalparadox.com>
@@ -7766,7 +8244,7 @@ Library.prototype.test = function(obj, type) {
   }
 };
 
-},{}],53:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7892,4 +8370,4 @@ TlogPageContainer: {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"babel-runtime/core-js/object/keys":1,"chai":17}]},{},[53]);
+},{"babel-runtime/core-js/object/keys":1,"chai":40}]},{},[76]);

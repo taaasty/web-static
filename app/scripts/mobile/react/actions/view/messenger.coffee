@@ -45,7 +45,8 @@ MessengerViewActions =
 
     Api.messenger.createMessage convID, messageText, uuid
       .then (message) ->
-        MessengerServerActions.createMessage message
+        #MessengerServerActions.createMessage message // prevent double creation
+        message
       .fail ->
         NotifyController.notifyError i18n.t('messages.messenger_create_message_error')
         MessengerServerActions.createMessageFail uuid
