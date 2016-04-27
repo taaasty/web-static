@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import ErrorService from '../../../../../../../shared/react/services/Error';
 import classNames from 'classnames';
 import moment from 'moment';
 
@@ -14,6 +15,19 @@ export function getLastTyping(typing, users) {
           });
 
   return lastTyping;
+};
+
+export function getLastMsgTxt(lastMsg={}) {
+  return lastMsg.content_html
+    ? lastMsg.content_html
+    : lastMsg.attachments && lastMsg.attachments.length
+      ? i18n.t('messenger.image')
+      : (ErrorService.notifyError(
+        'last_message в списке чатов. Пустое поле content_html и пустой attathments',
+        {
+          id: lastMsg.id,
+          conversationId: lastMsg.conversation_id,
+        }), i18n.t('messenger.image'));
 };
 
 class ItemMain extends Component {

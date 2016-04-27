@@ -638,6 +638,7 @@
   "messenger": {
     "typing": "typing...",
     "is_typing": "{{name}} is typing...",
+    "image": "image",
     "support_header": "Taaasty support",
     "support_message": "If you have any questions, please feel free to ask.",
     "support_email_placeholder": "Your email",

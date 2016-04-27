@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../../../../../components/UserAvatar';
-import ItemMain from './ItemMain';
+import ItemMain, { getLastMsgTxt } from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemText extends Component {
@@ -9,7 +9,7 @@ class ItemText extends Component {
     const { last_message, recipient_id, user_id, typing } = this.props.conversation;
     const lastMessageText = typing[recipient_id]
             ? i18n.t('messenger.typing')
-            : last_message ? last_message.content_html : '';
+            : last_message ? getLastMsgTxt(last_message) : '';
     const showAvatar =  !typing[recipient_id]
             && last_message
             && last_message.author
