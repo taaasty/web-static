@@ -1281,6 +1281,7 @@ module.exports={
     "empty_list": "Notification list is empty"
   },
   "messenger": {
+    "image": "<image>",
     "conversation_header": "{{userSlug}}",
     "support_header": "Tasty support",
     "conversations_header": "Messages",
@@ -1559,6 +1560,7 @@ module.exports={
     "empty_list": "Список уведомлений пуст"
   },
   "messenger": {
+    "image": "изображение",
     "conversation_header": "{{userSlug}}",
     "support_header": "Служба поддержки",
     "conversations_header": "Сообщения",
@@ -12924,7 +12926,7 @@ function ConversationListItem(_ref) {
   }
 
   function renderLastMessage() {
-    var text = item.last_message ? item.last_message.content_html : '';
+    var text = item.last_message ? item.last_message.content_html || i18n.t('messenger.image') : '';
     var showAvatar = item.type !== _MessengerConstants.PRIVATE_CONVERSATION || item.last_message && item.last_message.author && item.last_message.author.id === item.user_id;
 
     return _react2.default.createElement(

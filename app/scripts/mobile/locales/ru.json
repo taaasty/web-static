@@ -102,6 +102,7 @@
     "empty_list": "Список уведомлений пуст"
   },
   "messenger": {
+    "image": "изображение",
     "conversation_header": "{{userSlug}}",
     "support_header": "Служба поддержки",
     "conversations_header": "Сообщения",

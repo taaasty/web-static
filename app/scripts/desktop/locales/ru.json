@@ -665,6 +665,7 @@
   "messenger": {
     "typing": "печатает...",
     "is_typing": "{{name}} печатает...",
+    "image": "изображение",
     "support_header": "Служба поддержки",
     "support_message": "Привет! Если у вас есть вопросы по работе сервиса, можете задать их здесь.",
     "support_email_placeholder": "Ваш e-mail",
