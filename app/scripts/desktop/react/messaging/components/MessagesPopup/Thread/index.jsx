@@ -88,11 +88,13 @@ class Thread extends Component {
 
     const backgroundUrl = this.backgroundUrl();
     const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
+    const canTalk = typeof conversation.can_talk === 'undefined' ||
+            conversation.can_talk;
     const containerClasses = classNames({
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
-      '--no-form': conversation.can_talk === false,
+      '--no-form': !canTalk,
     });
     const listClasses = classNames({
       'messages__body': true,
@@ -115,7 +117,7 @@ class Thread extends Component {
                deleteFn={this.deleteMessages.bind(this, false)}
                stopSelect={this.stopSelect}
              />
-           : conversation.can_talk && <ThreadForm conversation={conversation} />
+           : canTalk && <ThreadForm conversation={conversation} />
           }
         </footer>
       </div>
