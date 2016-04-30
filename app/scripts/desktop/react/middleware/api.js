@@ -170,7 +170,7 @@ export default (store) => (next) => (action) => {
     return (next(action));
   }
 
-  let { endpoint } = callAPI;
+  let { endpoint, body } = callAPI;
   const { types, schema } = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -179,6 +179,15 @@ export default (store) => (next) => (action) => {
 
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL');
+  }
+
+  if (typeof body === 'function') {
+    body = body(store.getState());
+  }
+
+  if (typeof body !== 'undefined' && (
+      typeof body !== 'string' || !(body instanceof FormData))) {
+    throw new Error('Expected body to be a string or FormData object');
   }
 
   if (!schema) {
