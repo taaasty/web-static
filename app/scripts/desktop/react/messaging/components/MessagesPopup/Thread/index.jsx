@@ -13,6 +13,8 @@ import { browserHistory } from 'react-router';
 import uri from 'urijs';
 import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
 
+const defaultBackgroundUrl = '/images/backgrounds/3.jpg';
+
 class Thread extends Component {
   state = this.getStateFromStore();
   componentDidMount() {
@@ -54,11 +56,11 @@ class Thread extends Component {
   backgroundUrl() {
     const { conversation } = this.props;
 
-    return conversation.type === PUBLIC_CONVERSATION
+    return (conversation.type === PUBLIC_CONVERSATION
       ? conversation.entry.author.design.backgroundImageUrl
       : conversation.type === GROUP_CONVERSATION
         ? conversation.background_image && conversation.background_image.url
-        : conversation.recipient.design.backgroundImageUrl;
+        : conversation.recipient.design.backgroundImageUrl) || defaultBackgroundUrl;
   }
   handleClickGroupHeader() {
     MessagesPopupActions.openGroupSettings(this.state.conversation);
@@ -87,7 +89,7 @@ class Thread extends Component {
     }
 
     const backgroundUrl = this.backgroundUrl();
-    const threadStyles  = backgroundUrl && { backgroundImage: `url(${backgroundUrl})` };
+    const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
     const canTalk = typeof conversation.can_talk === 'undefined' ||
             conversation.can_talk;
     const containerClasses = classNames({
