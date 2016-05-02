@@ -18,22 +18,41 @@ function tlogEntriesReset() {
   };
 }
 
-function endpoint(slug, section=TLOG_SECTION_TLOG) {
-  return ApiRoutes.tlogEntries(slug, section, 'tlogs');
+function identity(v) {
+  return v;
+}
+
+function auth(state) {
+  return state.currentUser.data && {
+    headers: {
+      'X-User-Token': state.currentUser.data.api_key.access_token,
+    },
+  };
+}
+
+function endpoint(slug, section=TLOG_SECTION_TLOG, params) {
+  const paramStr = Object.keys(params)
+          .map((k) => params[k] && `${k}=${encodeURIComponent(params[k])}`)
+          .filter(identity)
+          .join('&');
+  return [
+    ApiRoutes.tlogEntries(slug, section, 'tlogs'),
+    paramStr,
+  ].filter(identity).join('?');
 }
 
 function signature({ slug='', section='', date='', query='' }) {
   return `${slug}-${section}-${date}-${query}`;
 }
 
-function fetchTlogEntries(endpoint, data, signature) {
+function fetchTlogEntries(endpoint, signature) {
   return {
     signature,
     [CALL_API]: {
       endpoint,
       types: [ TLOG_ENTRIES_REQUEST, TLOG_ENTRIES_SUCCESS, TLOG_ENTRIES_FAILURE ],
       schema: Schemas.ENTRY_COLL,
-      body: data,
+      opts: auth,
     },
   };
 }
@@ -50,13 +69,12 @@ function getTlogEntries(params) {
 
     dispatch(tlogEntriesReset());
     return dispatch(fetchTlogEntries(
-      endpoint(slug, section),
-      {
+      endpoint(slug, section, {
         date,
         limit: date ? void 0 : INITIAL_LOAD_LIMIT,
         since_entry_id: sinceId || void 0,
         q: query || void 0,
-      },
+      }),
       signature(params)
     ));
   };

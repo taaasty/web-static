@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
+import apiMiddleware from './middleware/api';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 
@@ -27,7 +28,8 @@ import { feedStatusConnect } from './services/FeedStatusService';
 import PopupActions from './actions/PopupActions';
 
 const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware
+  thunkMiddleware,
+  apiMiddleware
 )(createStore);
 let store = void 0;
 

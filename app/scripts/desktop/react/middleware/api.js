@@ -58,13 +58,11 @@ relSchema.define({
   user: userSchema,
 });
 
-const flowItemSchema = unionOf({
-  flow: flowSchema,
-  relationship: relSchema,
-});
-
 flowCollSchema.define({
-  items: arrayOf(flowItemSchema),
+  items: arrayOf({
+    flow: flowSchema,
+    relationship: relSchema,
+  }),
 });
 
 commentSchema.define({
@@ -78,13 +76,11 @@ entrySchema.define({
   tlog: tlogSchema,
 });
 
-const entryItemSchema = unionOf({
-  entry: entrySchema,
-  commentator: userSchema,
-});
-
 entryCollSchema.define({
-  items: arrayOf(entryItemSchema),
+  items: arrayOf({
+    entry: entrySchema,
+    commentator: userSchema,
+  }),
 });
 
 relCollSchema.define({
@@ -139,16 +135,16 @@ export const Schemas = {
   CONVERSATION_COLL: arrayOf(conversationSchema),
   MESSAGE: messageSchema,
   MESSAGE_COLL: messageCollSchema,
-  MESSENGER_READY: unionOf({
+  MESSENGER_READY: {
     conversations: arrayOf(conversationSchema),
     notifications: arrayOf(notificationSchema),
-  }),
+  },
 };
 
 export const CALL_API = Symbol('Call API');
 
-function callApi(endpoint, schema) {
-  return fetch(endpoint)
+function callApi(endpoint, opts, schema) {
+  return fetch(endpoint, opts)
     .then((response) => response.json().then((json) => ({ json, response })))
     .then(({ json, response }) => {
       if (!response.ok) {
@@ -170,7 +166,7 @@ export default (store) => (next) => (action) => {
     return (next(action));
   }
 
-  let { endpoint, body } = callAPI;
+  let { endpoint, opts } = callAPI;
   const { types, schema } = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -181,13 +177,14 @@ export default (store) => (next) => (action) => {
     throw new Error('Specify a string endpoint URL');
   }
 
-  if (typeof body === 'function') {
-    body = body(store.getState());
+  if (typeof opts === 'function') {
+    opts = opts(store.getState());
   }
 
-  if (typeof body !== 'undefined' && (
-      typeof body !== 'string' || !(body instanceof FormData))) {
-    throw new Error('Expected body to be a string or FormData object');
+  if (typeof opts !== 'undefined' &&
+      typeof opts !== 'string' &&
+      typeof opts !== 'object') {
+    throw new Error('Expected opts to be a string or an object');
   }
 
   if (!schema) {
@@ -211,7 +208,7 @@ export default (store) => (next) => (action) => {
   const [ requestType, successType, failureType ] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema).then(
+  return callApi(endpoint, opts, schema).then(
     (response) => next(actionWith({
       response,
       type: successType,
