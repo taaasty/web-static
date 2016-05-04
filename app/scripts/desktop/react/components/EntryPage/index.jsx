@@ -62,8 +62,9 @@ class EntryPageContainer extends Component {
            (entry.author && entry.author.tag);
   }
   renderFlowEntry() {
-    const { currentUser, tlog, tlogEntry } = this.props;
-    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+    const { currentUser, entities, tlogStore, tlogEntry } = this.props;
+    const tlog = entities.tlog[tlogStore.data] || {};
+    const bgStyle = { opacity: (tlog.design && tlog.design.feedOpacity) || '1.0' };
 
     return (
       <div className="page-body">
@@ -89,9 +90,10 @@ class EntryPageContainer extends Component {
     );
   }
   renderTlogEntry() {
-    const { currentUser, tlog, tlogEntry } = this.props;
+    const { currentUser, entities, tlogStore, tlogEntry } = this.props;
+    const tlog = entities.tlog[tlogStore.data] || {};
     const currentUserId = currentUser.id;
-    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+    const bgStyle = { opacity: (tlog.design && tlog.design.feedOpacity) || '1.0' };
 
     return (
       <div className="page-body">
@@ -102,10 +104,10 @@ class EntryPageContainer extends Component {
              {currentUserId && tlogEntry.data.author &&
               currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
              <PinPostButton
-               entryId={tlogEntry.data.id}
-               orderId={tlogEntry.data.fixed_order_id}
-               status={tlogEntry.data.fixed_state}
-               till={tlogEntry.data.fixed_up_at}
+               entryId={tlogEntry.id}
+               orderId={tlogEntry.fixedOrderId}
+               status={tlogEntry.fixedState}
+               till={tlogEntry.fixedUpAt}
              />
             }
             <div>
@@ -113,8 +115,8 @@ class EntryPageContainer extends Component {
                 commentator={tlogEntry.data.commentator || currentUser}
                 entry={tlogEntry.data}
                 error={tlogEntry.error}
-                host_tlog_id={tlog.data.author.id}
-                isFetching={tlogEntry.isFetching || tlog.isFetching}
+                hostTlogId={tlogStore.data}
+                isFetching={tlogEntry.isFetching || tlogStore.isFetching}
                 onDelete={this.handleDeleteEntry.bind(this)}
               />
             </div>
@@ -141,12 +143,13 @@ class EntryPageContainer extends Component {
 EntryPageContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   deleteEntry: PropTypes.func.isRequired,
+  entities: PropTypes.object.isRequired,
   feedEntries: PropTypes.object.isRequired,
   getTlogEntry: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   resetTlogEntry: PropTypes.func.isRequired,
   setTlogEntry: PropTypes.func.isRequired,
-  tlog: PropTypes.object.isRequired,
+  tlogStore: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,
   tlogEntry: PropTypes.object.isRequired,
 };
@@ -154,10 +157,11 @@ EntryPageContainer.propTypes = {
 export default connect(
   (state) => ({
     currentUser: state.currentUser.data,
+    entities: state.entities,
     feedEntries: state.feedEntries.data,
-    tlog: state.tlog,
     tlogEntries: state.tlogEntries.data,
     tlogEntry: state.tlogEntry,
+    tlogStore: state.tlog,
   }),
   { deleteEntry, getTlogEntry, resetTlogEntry, setTlogEntry }
 )(EntryPageContainer);

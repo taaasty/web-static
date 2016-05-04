@@ -1,12 +1,12 @@
-import _ from 'lodash';
+import { indexOf } from 'lodash';
 import React, { PropTypes } from 'react';
 import CalendarMarker from './CalendarMarker';
 
 function CalendarPeriod({ period, selectedEntryId, visibleMarkers }) {
   function renderNodes() {
     return period.markers.map((marker, i) => {
-      const selected = selectedEntryId === marker.entry_id;
-      const highlighted = (_.indexOf(visibleMarkers, marker.entry_id) > -1);
+      const selected = selectedEntryId === marker.entryId;
+      const highlighted = indexOf(visibleMarkers, marker.entryId) > -1;
 
       return (
         <CalendarMarker

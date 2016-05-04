@@ -20,7 +20,6 @@ import TagsPage from './components/TagsPage';
 import TermsPage from './components/TermsPage';
 import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
-import PolicyPage from './components/PolicyPage';
 import RefsPage from './components/RefsPage';
 
 import { feedStatusConnect } from './services/FeedStatusService';
@@ -50,7 +49,12 @@ function handleRouteUpdate() {
 
 class AppRoot extends Component {
   componentWillMount() {
+    const { tlogEntries } = this.props;
+
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
+    if (tlogEntries) {
+      store.dispatch({})
+    }
     feedStatusConnect(store.getState().currentUser.data, store);
   }
   render() {
@@ -59,12 +63,11 @@ class AppRoot extends Component {
         <Router history={browserHistory} onUpdate={handleRouteUpdate}>
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
-          <Route path="/refs/:token" refUsername={this.props.refUsername} component={RefsPage} />
+          <Route path="/refs/:token" component={RefsPage} />
           <Route path="/" component={AppPage}>
             <Route path="contacts" component={ContactsPage} />
             <Route path="terms" component={TermsPage} />
             <Route path="prices" component={PricesPage} />
-            <Route path="policy" component={PolicyPage} />
             <Route path="tags/:tags" component={TagsPage} />
             <Route path="~:slug/tags/:tags" component={TagsPage} />
             <Redirect from="~anonymous" to="live/anonymous" />

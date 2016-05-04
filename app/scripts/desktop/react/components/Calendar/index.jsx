@@ -52,21 +52,21 @@ class Calendar extends Component {
     }
   }
   getCalendarData(props) {
-    const { currentUser: { id }, tlog: { author, my_relationship },
-            getCalendar, resetCalendar } = props;
-    
-    if (author && !author.is_flow && author.slug !== TLOG_SLUG_ANONYMOUS &&
-        (!author.is_privacy || author.id === id || my_relationship === RELATIONSHIP_STATE_FRIEND)) {
-      getCalendar(author.id);
+    const { currentUser: { id }, entities, tlogId, getCalendar, resetCalendar } = props;
+    const tlog = entities.tlog[tlogId] || {};
+
+    if (tlog && !tlog.isFlow && tlog.slug !== TLOG_SLUG_ANONYMOUS &&
+        (!tlog.isPrivacy || tlogId === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
+      getCalendar(tlogId);
     } else {
       resetCalendar();
     }
   }
   updatePropsEntry(props) {
-    const { isEntry, tlogEntry, tlogEntries } = props;
-    const selectedEntry = (isEntry ? tlogEntry : tlogEntries.items.length && tlogEntries.items[0].entry) || {};
+    const { entities: { entry }, isEntry, tlogEntries } = props;
+    const selectedEntry = (isEntry ? tlogEntry : tlogEntries.items.length && entry[tlogEntries.items[0]]) || {};
 
-    this.updateSelectedEntry(selectedEntry.id, selectedEntry.created_at || (new Date()).toISOString());
+    this.updateSelectedEntry(selectedEntry.id, selectedEntry.createdAt || (new Date()).toISOString());
   }
   updateSelectedEntry(id, time) {
     this.setState({
@@ -115,7 +115,12 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const { calendar } = this.props;
+    const { calendarId, entities: { calendar, calendarPeriod, marker } } = this.props;
+
+    if (!calendarId) {
+      return null;
+    }
+
     const calendarClasses = classnames({
       'calendar': true,
       'calendar--open': this.isOpen(),
@@ -123,11 +128,19 @@ class Calendar extends Component {
       'calendar--opened-by-click': this.isOpenedByClick(),
     });
     const { headerDate, selectedEntryId, visibleMarkers } = this.state;
-    const periodsCount = calendar.periods.length;
+    const periods = calendar[calendarId] && calendar[calendarId].periods;
 
-    if (!periodsCount) {
+    if (!periods) {
       return null;
     }
+
+    const periodsData = periods.map((periodId) => {
+      const { markers, ...rest } = calendarPeriod[periodId];
+
+      return Object.assign({}, rest, {
+        markers: (markers || []).map((markerId) => marker[markerId]),
+      });
+    });
     
     return (
       <nav
@@ -137,15 +150,15 @@ class Calendar extends Component {
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
         {this.isOpen()
-         ? periodsCount && periodsCount > 0
+         ? periods.length > 0
            ? <CalendarTimeline
-               periods={calendar.periods}
+               periods={periodsData}
                selectedEntryId={selectedEntryId}
                visibleMarkers={visibleMarkers}
              />
            : <div className="grid-full text--center">
                <div className="grid-full__middle">
-                 {periodsCount === 0
+                 {periods.length === 0
                   ? <div>{i18n.t('calendar_empty')}</div>
                   : <span className="spinner spinner--24x24">
                       <span className="spinner__icon" />
@@ -161,21 +174,24 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-  calendar: PropTypes.object.isRequired,
+  calendarId: PropTypes.number,
   currentUser: PropTypes.object.isRequired,
+  entities: PropTypes.object.isRequired,
   getCalendar: PropTypes.func.isRequired,
   isEntry: PropTypes.bool.isRequired,
   resetCalendar: PropTypes.func.isRequired,
   tlogEntries: PropTypes.object.isRequired,
   tlogEntry: PropTypes.object.isRequired,
+  tlogId: PropTypes.number,
 };
 
 export default connect(
   (state, { isEntry }) => ({
     isEntry,
-    calendar: state.calendar.data,
+    calendarId: state.calendar.data,
     currentUser: state.currentUser.data,
-    tlog: state.tlog.data,
+    entities: state.entities,
+    tlogId: state.tlog.data,
     tlogEntries: state.tlogEntries.data,
     tlogEntry: state.tlogEntry.data,
   }),

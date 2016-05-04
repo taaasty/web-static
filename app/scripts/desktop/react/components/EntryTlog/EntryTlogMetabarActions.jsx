@@ -7,22 +7,22 @@ import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
 class EntryTlogMetabarActions extends Component {
   canPin() {
-    const { commentator, entry: { author, is_private } } = this.props;
+    const { commentator, entry: { author, isPrivate } } = this.props;
 
     return commentator && author &&
-      commentator.id === author.id && !is_private;
+      commentator.id === author.id && !isPrivate;
   }
   render() {
-    const { id, can_delete, can_edit, can_favorite, can_report, can_watch,
-            edit_url, is_favorited, is_watching, url } = this.props.entry;
+    const { id, canDelete, canEdit, canFavorite, canReport, canWatch,
+            editUrl, isFavorited, isWatching, url } = this.props.entry;
 
     return (
       <DropdownActions>
-        {can_edit && edit_url &&
+        {canEdit && editUrl &&
          <DropdownActionSPA
            icon="icon--pencil"
            title={i18n.t('edit_entry_item')}
-           url={edit_url}
+           url={editUrl}
          />}
         <DropdownActionSPA
           icon="icon--hyperlink"
@@ -33,17 +33,17 @@ class EntryTlogMetabarActions extends Component {
         {this.canPin() &&
          <EntryTlogMetabarPin entry={this.props.entry} />
         }
-        {can_favorite &&
+        {canFavorite &&
          <EntryTlogMetabarFavorite {...this.props}
-           isFavorited={is_favorited}
+           isFavorited={isFavorited}
          />}
-        {can_watch &&
+        {canWatch &&
          <EntryTlogMetabarWatch {...this.props}
-           isWatching={is_watching}
+           isWatching={isWatching}
          />}
-        {can_report &&
+        {canReport &&
          <EntryTlogMetabarReport {...this.props} />}
-        {can_delete &&
+        {canDelete &&
          <EntryTlogMetabarDelete {...this.props} />}
       </DropdownActions>
     );

@@ -24,12 +24,12 @@ class EntryTlogTextType extends Component {
   }
   render() {
     const { entry, isFeed, isInList } = this.props;
-    const { is_private, text } = entry;
+    const { isPrivate, text } = entry;
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <EntryTlogContentLink

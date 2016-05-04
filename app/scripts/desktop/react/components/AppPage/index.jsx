@@ -25,12 +25,12 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   render() {
-    const { children, currentUser, editing, location, params, tlog } = this.props;
+    const { children, currentUser, editing, entities, location, params, tlog } = this.props;
+    const tlogData = entities.tlog[tlog.data] || {};
     const isLogged = !!currentUser.data.id;
 
     return (
       <div className="page">
-        {!editing && <UserToolbar location={location} />}
         {children}
         {(!isLogged && params.entrySlug) &&
          <div className="inviter--fixed__wrapper">
@@ -47,7 +47,8 @@ class AppPage extends Component {
            {i18n.t('auth_button')}
          </button>
         }
-        {!editing && isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
+        {!editing && isLogged && <ComposeToolbar tlog={tlogData} user={currentUser.data} />}
+        {!editing && <UserToolbar location={location} />}
         {!editing && <SupportLauncher user={currentUser.data} />} 
         <BrowserSupport />
       </div>
@@ -64,6 +65,7 @@ AppPage.propTypes = {
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
+  entities: PropTypes.object.isRequired,
   getAppStatsIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
@@ -74,6 +76,7 @@ export default connect(
   (state) => ({
     currentUser: state.currentUser,
     editing: state.appState.data.editing,
+    entities: state.entities,
     tlog: state.tlog,
   }),
   { getAppStatsIfNeeded }

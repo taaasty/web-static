@@ -16,12 +16,12 @@ class EntryTlogUnknownType extends Component {
     }
   }
   render() {
-    const { is_private } = this.props.entry;
+    const { isPrivate } = this.props.entry;
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__content">

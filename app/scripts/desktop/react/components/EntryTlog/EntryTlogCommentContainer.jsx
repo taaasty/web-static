@@ -11,7 +11,7 @@ class EntryTlogCommentContainer extends Component {
     if (this.state.processEdit) {
       this.setState({ processEdit: false });
     }
-    if (this.props.comment.comment_html !== nextProps.comment.comment_html) {
+    if (this.props.comment.commentHtml !== nextProps.comment.commentHtml) {
       this.setState({ edit: false });
     }
   }

@@ -10,7 +10,7 @@ class EntryTlogLinkType extends Component {
     this.refs.comments.startComment();
   }
   renderVoting() {
-    if (this.props.entry.is_voteable) {
+    if (this.props.entry.isVoteable) {
       return (
         <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
       );
@@ -37,13 +37,13 @@ class EntryTlogLinkType extends Component {
     }
   }
   render() {
-    const { is_private, text } = this.props.entry;
+    const { isPrivate, text } = this.props.entry;
 
     return (
       <span>
         <header className="post__header">
           {this.renderVoting()}
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__content">

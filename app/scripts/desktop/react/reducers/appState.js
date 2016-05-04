@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const actionMap = {
-  [APP_STATE_SET_SEARCH_KEY](state, payload) {
+  [APP_STATE_SET_SEARCH_KEY](state, { payload }) {
     return {
       ...state,
       data: {
@@ -22,7 +22,7 @@ const actionMap = {
     };
   },
 
-  [APP_STATE_SET_EDITING](state, payload) {
+  [APP_STATE_SET_EDITING](state, { payload }) {
     return {
       ...state,
       data: {

@@ -24,7 +24,7 @@ const HeroProfileStats = createClass({
   },
   
   _isPrivate() {
-    return this.props.user.is_privacy;
+    return this.props.user.isPrivacy;
   },
 
   handleFollowersClick($el) {
@@ -64,27 +64,27 @@ const HeroProfileStats = createClass({
   },
 
   renderFollowersCount() {
-    const { followers_count } = this.props.stats;
+    const { followersCount } = this.props.stats;
 
     return (
       <HeroProfileStatsItem
-        count={followers_count}
+        count={followersCount}
         key="followers"
         onClick={this.handleFollowersClick}
-        title={i18n.t('stats_followers_count', { count: followers_count })}
+        title={i18n.t('stats_followers_count', { count: followersCount })}
       />
     );
   },
 
   renderFollowingsCount() {
-    const { followings_count } = this.props.stats;
+    const { followingsCount } = this.props.stats;
 
     return (
       <HeroProfileStatsItem
-        count={followings_count}
+        count={followingsCount}
         key="followings"
         onClick={this.handleFollowingsClick}
-        title={i18n.t('stats_followings_count', { count: followings_count })}
+        title={i18n.t('stats_followings_count', { count: followingsCount })}
       />
     );
   },
@@ -94,7 +94,7 @@ const HeroProfileStats = createClass({
 
     return (
       <HeroProfileStatsItem
-        count={this.props.stats.favorites_count}
+        count={this.props.stats.favoritesCount}
         href={url}
         key="favorites"
         title={i18n.t('stats_favorites_count')}
@@ -103,70 +103,70 @@ const HeroProfileStats = createClass({
   },
 
   renderEntriesCount() {
-    const { entries_count } = this.props.stats;
-    const url = this._isPrivate() ? '#' : this.props.user.tlog_url;
+    const { entriesCount } = this.props.stats;
+    const url = this._isPrivate() ? '#' : this.props.user.tlogUrl;
 
     return (
       <HeroProfileStatsItem
-        count={entries_count}
+        count={entriesCount}
         href={url}
         key="entries"
-        title={i18n.t('stats_entries_count', { count: entries_count })}
+        title={i18n.t('stats_entries_count', { count: entriesCount })}
       />
     );
   },
 
   renderCommentsCount() {
-    const { comments_count } = this.props.stats;
+    const { commentsCount } = this.props.stats;
 
     return (
       <HeroProfileStatsItem
-        count={comments_count}
+        count={commentsCount}
         key="comments"
-        title={i18n.t('stats_comments_count', { counts: comments_count })}
+        title={i18n.t('stats_comments_count', { counts: commentsCount })}
       />
     );
   },
 
   renderDaysCount() {
-    const { days_count } = this.props.stats;
+    const { daysCount } = this.props.stats;
 
     return (
       <HeroProfileStatsItem
-        count={days_count}
+        count={daysCount}
         key="days"
-        title={i18n.t('stats_days_count', { count: days_count })}
+        title={i18n.t('stats_days_count', { count: daysCount })}
       />
     );
   },
 
   renderTagsCount() {
-    const { tags_count } = this.props.stats;
+    const { tagsCount } = this.props.stats;
 
     return (
       <HeroProfileStatsItem
-        count={tags_count}
+        count={tagsCount}
         key="tags"
         onClick={this.handleTagsClick}
-        title={i18n.t('stats_tags_count', { count: tags_count })}
+        title={i18n.t('stats_tags_count', { count: tagsCount })}
       />
     );
   },
 
   render() {
-    const { comments_count, days_count, entries_count, favorites_count,
-            followers_count, followings_count, tags_count } = this.props.stats;
+    const { commentsCount, daysCount, entriesCount, favoritesCount,
+            followersCount, followingsCount, tagsCount } = this.props.stats;
 
     return (
       <div className="hero__stats">
         <div className="hero__stats-list">
-          {!!followers_count && this.renderFollowersCount()}
-          {!!followings_count && this.renderFollowingsCount()}
-          {!!favorites_count && this.renderFavoritesCount()}
-          {!!entries_count && this.renderEntriesCount()}
-          {!!comments_count && this.renderCommentsCount()}
-          {!!days_count && this.renderDaysCount()}
-          {!!tags_count && this.renderTagsCount()}
+          {!!followersCount && this.renderFollowersCount()}
+          {!!followingsCount && this.renderFollowingsCount()}
+          {!!favoritesCount && this.renderFavoritesCount()}
+          {!!entriesCount && this.renderEntriesCount()}
+          {!!commentsCount && this.renderCommentsCount()}
+          {!!daysCount && this.renderDaysCount()}
+          {!!tagsCount && this.renderTagsCount()}
         </div>
       </div>
     );

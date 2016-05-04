@@ -40,7 +40,7 @@ class HeroProfile extends Component {
     TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.tlog.data.author !== nextProps.tlog.data.author) {
+    if (this.props.tlogStore.data !== nextProps.tlogStore.data) {
       this._close();
     }
   }
@@ -127,11 +127,12 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { currentUser, tlog } = this.props;
-    const { data: { author, my_relationship: relState, stats },
-            errorRelationship, isFetching, isFetchingRelationship } = tlog;
+    const { currentUser, entities, tlogStore } = this.props;
+    const { data: tlogId, errorRelationship, isFetching, isFetchingRelationship } = tlogStore;
+    const tlog = entities.tlog[tlogId] || { stats: {} };
+    const { myRelationship: relState, stats } = tlog;
     const currentUserId = currentUser && currentUser.id;
-    const isCurrentUser = currentUserId && currentUserId === author.id;
+    const isCurrentUser = currentUserId && currentUserId === tlogId;
     const followButtonVisible = !isCurrentUser && relState != null;
     
     return (
@@ -140,30 +141,30 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          {!author.id || isFetching
+          {!tlog.id || isFetching
            ? <Spinner size={70} />
            : <HeroProfileAvatar
                isOpen={this.isOpen()}
                onClick={this.handleAvatarClick.bind(this)}
-               user={author}
+               user={tlog}
              />
           }
           {followButtonVisible &&
            <SmartFollowStatus
              error={errorRelationship}
-             follow={follow.bind(null, author.id)}
+             follow={follow.bind(null, tlog.id)}
              isFetching={isFetchingRelationship}
              relState={relState}
            />
           }
-           {author.id && !isFetching && <HeroProfileHead user={author} />}
+           {tlog.id && !isFetching && <HeroProfileHead user={tlog} />}
            <HeroProfileActionsContainer
              isCurrentUser={!!isCurrentUser}
              relState={relState}
              tlog={tlog}
            />
         </div>
-        <HeroProfileStats stats={stats} user={author} />
+        <HeroProfileStats stats={stats} user={tlog} />
       </div>
     );
   }
@@ -171,14 +172,16 @@ class HeroProfile extends Component {
 
 HeroProfile.propTypes = {
   currentUser: PropTypes.object,
+  entities: PropTypes.object.isRequired,
   follow: PropTypes.func.isRequired,
-  tlog: PropTypes.object.isRequired,
+  tlogStore: PropTypes.object.isRequired,
 };
 
 export default connect(
   (state) => ({
     currentUser: state.currentUser.data,
-    tlog: state.tlog,
+    entities: state.entities,
+    tlogStore: state.tlog,
   }),
   { follow }
 )(HeroProfile);

@@ -1,6 +1,7 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
 import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
+import { auth } from './CurrentUserActions';
 
 export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
 export const TLOG_ENTRIES_SUCCESS = 'TLOG_ENTRIES_SUCCESS';
@@ -20,14 +21,6 @@ function tlogEntriesReset() {
 
 function identity(v) {
   return v;
-}
-
-function auth(state) {
-  return state.currentUser.data && {
-    headers: {
-      'X-User-Token': state.currentUser.data.api_key.access_token,
-    },
-  };
 }
 
 function endpoint(slug, section=TLOG_SECTION_TLOG, params) {

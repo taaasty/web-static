@@ -13,7 +13,7 @@ import { ERROR_PRIVATE_ENTRY } from '../../../../shared/constants/ErrorConstants
 
 const anonCommentator = {
   userpic: {
-    default_colors: {
+    defaultColors: {
       background: '#42d792',
       name: '#ffffff',
     },
@@ -28,16 +28,16 @@ class EntryTlog extends Component {
     hasModeration: !!this.props.moderation,
   };
   componentWillMount() {
-    const { commentator, entry: { can_delete, id, tlog }, host_tlog_id } = this.props;
-    if (can_delete && !host_tlog_id &&
+    const { commentator, entry: { canDelete, id, tlog }, hostTlogId } = this.props;
+    if (canDelete && !hostTlogId &&
         ((tlog && commentator) ? tlog.id !== commentator.id : true)) { //fix for when we are subscribed to ourself
-      ErrorService.notifyWarning('Неконсистентный флаг can_delete', {
+      ErrorService.notifyWarning('Неконсистентный флаг canDelete', {
         componentName: 'EntryTlog',
         method: 'componentWillMount',
-        canDelete: can_delete,
+        canDelete: canDelete,
         entryID: id,
-        entryTlogID: tlog && tlog.id,
-        hostTlogID: host_tlog_id,
+        entryTlogId: tlog && tlog.id,
+        hostTlogId: hostTlogId,
       });
     }
   }
@@ -52,25 +52,25 @@ class EntryTlog extends Component {
   addToFavorites() {
     EntryActionCreators.addToFavorites(this.props.entry.id)
       .then(() => {
-        this.setState({ entry: { ...this.state.entry, is_favorited: true }});
+        this.setState({ entry: { ...this.state.entry, isFavorited: true }});
       });
   }
   removeFromFavorites() {
     EntryActionCreators.removeFromFavorites(this.props.entry.id)
       .then(() => {
-        this.setState({ entry: { ...this.state.entry, is_favorited: false }});
+        this.setState({ entry: { ...this.state.entry, isFavorited: false }});
       });
   }
   addToWatching() {
     EntryActionCreators.addToWatching(this.props.entry.id)
       .then(() => {
-        this.setState({ entry: { ...this.state.entry, is_watching: true }});
+        this.setState({ entry: { ...this.state.entry, isWatching: true }});
       });
   }
   removeFromWatching() {
     EntryActionCreators.removeFromWatching(this.props.entry.id)
       .then(() => {
-        this.setState({ entry: { ...this.state.entry, is_watching: false }});
+        this.setState({ entry: { ...this.state.entry, isWatching: false }});
       });
   }
   report() {
@@ -85,7 +85,7 @@ class EntryTlog extends Component {
   delete() {
     const {
       entry: { id: entryID },
-      host_tlog_id: tlogID,
+      hostTlogId: tlogID,
       onDelete,
       successDeleteUrl,
     } = this.props;
@@ -154,7 +154,7 @@ class EntryTlog extends Component {
   }
   render() {
     const { commentator: _commentator, error,
-            host_tlog_id, isFeed, isFetching, isInList } = this.props;
+            hostTlogId, isFeed, isFetching, isInList } = this.props;
     const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
     const { entry, hasModeration } = this.state;
 
@@ -165,7 +165,7 @@ class EntryTlog extends Component {
       : <article
           className={this.getEntryClasses()}
           data-id={entry.id}
-          data-time={entry.created_at}
+          data-time={entry.createdAt}
         >
           {error
            ? this.renderError()
@@ -174,7 +174,7 @@ class EntryTlog extends Component {
                entry={entry}
                hasModeration={hasModeration}
                hideCommentForm={this.props.hideCommentForm}
-               host_tlog_id={host_tlog_id}
+               hostTlogId={hostTlogId}
                isFeed={isFeed}
                isInList={isInList}
                onAccept={this.accept.bind(this)}
@@ -195,7 +195,7 @@ EntryTlog.propTypes = {
   entry: PropTypes.object.isRequired,
   error: PropTypes.object,
   hideCommentForm: PropTypes.bool,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   isFeed: PropTypes.bool,
   isFetching: PropTypes.bool,
   isInList: PropTypes.bool,

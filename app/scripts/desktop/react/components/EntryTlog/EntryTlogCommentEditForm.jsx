@@ -8,7 +8,7 @@ function EntryTlogCommentEditForm({ comment, commentator, onCancel, onCommentUpd
       onCancel={onCancel}
       onSubmit={onCommentUpdate}
       process={process}
-      text={comment.comment_html}
+      text={comment.commentHtml}
     />
   );
 }

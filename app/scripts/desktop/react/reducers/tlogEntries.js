@@ -30,8 +30,10 @@ const actionMap = {
     });
   },
 
-  [TLOG_ENTRIES_SUCCESS](state, data) {
-    return Object.assign({}, state, data, {
+  [TLOG_ENTRIES_SUCCESS](state, { response, signature }) {
+    return Object.assign({}, state, {
+      signature,
+      data: response.result,
       isFetching: false,
       error: null,
       invalid: false,

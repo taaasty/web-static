@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import Textarea from 'react-textarea-autosize';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import { COMMENT_AVATAR_SIZE } from './EntryTlogComment';
 

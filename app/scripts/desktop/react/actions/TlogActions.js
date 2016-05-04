@@ -1,46 +1,27 @@
-/*global $, NoticeService */
 import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { auth } from './CurrentUserActions';
 
 export const TLOG_REQUEST = 'TLOG_REQUEST';
-export const TLOG_RECEIVE = 'TLOG_RECEIVE';
-export const TLOG_ERROR = 'TLOG_ERROR';
-export const TLOG_UPDATE = 'TLOG_UPDATE';
-
-function tlogRequest() {
-  return {
-    type: TLOG_REQUEST,
-  };
-}
-
-function tlogError(error) {
-  return {
-    type: TLOG_ERROR,
-    payload: error,
-  };
-}
-
-function tlogReceive(data) {
-  return {
-    type: TLOG_RECEIVE,
-    payload: data,
-  };
-}
+export const TLOG_SUCCESS = 'TLOG_SUCCESS';
+export const TLOG_FAILURE = 'TLOG_FAILURE';
 
 function shouldFetchTlog(state, slug) {
-  return (!state.tlog.isFetching &&
-          (!state.tlog.slug || state.tlog.slug !== slug));
+  const tlog = state.entities.tlog[state.tlog.data];
+
+  return (!state.tlog.isFetching && (!tlog || tlog.slug !== slug));
 }
 
-
 function fetchTlog(slug) {
-  return (dispatch) => {
-    dispatch(tlogRequest());
-    return $.ajax({ url: ApiRoutes.tlog(slug) })
-      .done((data) => dispatch(tlogReceive({ data, slug })))
-      .fail((error) => {
-        NoticeService.errorResponse(error);
-        return dispatch(tlogError({ error: error.responseJSON, slug }));
-      });
+  const endpoint = ApiRoutes.tlog(slug);
+
+  return {
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.TLOG,
+      types: [ TLOG_REQUEST, TLOG_SUCCESS, TLOG_FAILURE ],
+      opts: auth,
+    },
   };
 }
 

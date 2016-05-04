@@ -1,3 +1,5 @@
+import entities from './entities';
+
 import appState from './appState';
 import appStats from './appStats';
 import calendar from './calendar';
@@ -15,6 +17,7 @@ import tlogEntry from './tlogEntry';
 import userToolbar from './userToolbar';
 
 export default {
+  entities,
   appState,
   appStats,
   calendar,

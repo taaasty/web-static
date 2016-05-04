@@ -19,7 +19,7 @@ class EntryTlogComments extends Component {
   initState(props) {
     return {
       comments: props.entry.comments || [],
-      totalCount: props.entry.comments_count,
+      totalCount: props.entry.commentsCount,
       processCreate: false,
       loadingMore: false,
     };
@@ -102,20 +102,20 @@ class EntryTlogComments extends Component {
   startComment() {
     this.refs.createForm.open();
   }
-  reportComment(commentID) {
+  reportComment(commentId) {
     TastyConfirmController.show({
       message: i18n.t('report_comment_confirm'),
       acceptButtonText: i18n.t('report_comment_button'),
       onAccept: () => {
-        EntryActionCreators.reportComment(commentID);
+        EntryActionCreators.reportComment(commentId);
       },
     });
   }
-  updateComment(commentID, text) {
-    EntryActionCreators.editComment(commentID, text)
+  updateComment(commentId, text) {
+    EntryActionCreators.editComment(commentId, text)
       .then((comment) => {
         for (let i = 0; i < this.state.comments.length; i++) {
-          if (this.state.comments[i].id === commentID) {
+          if (this.state.comments[i].id === commentId) {
             this.state.comments.splice(i, 1, comment);
             break;
           }
@@ -125,15 +125,15 @@ class EntryTlogComments extends Component {
         this.forceUpdate();
       });
   }
-  deleteComment(commentID) {
+  deleteComment(commentId) {
     TastyConfirmController.show({
       message: i18n.t('delete_comment_confirm'),
       acceptButtonText: i18n.t('delete_comment_button'),
       onAccept: () => {
-        EntryActionCreators.deleteComment(commentID)
+        EntryActionCreators.deleteComment(commentId)
           .then(() => {
             const newComments = this.state.comments.filter((comment) => (
-              comment.id !== commentID
+              comment.id !== commentId
             ));
 
             this.setState({
@@ -153,7 +153,7 @@ class EntryTlogComments extends Component {
         let newComments = data.comments.concat(this.state.comments);
         this.setState({
           comments: data.comments.concat(this.state.comments),
-          totalCount: data.total_count,
+          totalCount: data.totalCount,
         }, () => {
           $(document).trigger('domChanged');
         });

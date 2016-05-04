@@ -1,6 +1,4 @@
 /*global fetch */
-// shameless plagiarism
-
 import { Schema, arrayOf, unionOf, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import 'isomorphic-fetch'; // provides global.fetch
@@ -11,22 +9,29 @@ import {
 } from '../messaging/constants/ConversationConstants';
 
 const tlogSchema = new Schema('tlog');
-const appStatsSchema = new Schema('appStats');
-const userSchema = new Schema('user');
 const relSchema = new Schema(
   'rel',
   { idAttribute: (e) => `${e.userId}-${e.readerId}` }
 );
-const relCollSchema = new Schema('relColl');
+
+const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
+const periodSchema = new Schema('calendarPeriod', { idAttribute: 'title' });
+const markerSchema = new Schema('marker', { idAttribute: 'entryId' });
 
 const flowSchema = new Schema('flow');
-const flowCollSchema = new Schema('flowColl');
+const flowCollItemSchema = new Schema(
+  'flowCollItem',
+  { idAttribute: (el) => el.flow.id }
+);
 const staffSchema = new Schema('staff');
 
 const commentSchema = new Schema('comment');
 
 const entrySchema = new Schema('entry');
-const entryCollSchema = new Schema('entryColl');
+const entryCollItemSchema = new Schema(
+  'entryCollItem',
+  { idAttribute: (el) => el.entry.id }
+);
 
 const privateConversationSchema = new Schema('privateConversation');
 const publicConversationSchema = new Schema('publicConversation');
@@ -40,14 +45,21 @@ const conversationMap = {
 const notificationSchema = new Schema('notification');
 
 const messageSchema = new Schema('message');
-const messageCollSchema = new Schema('messageColl');
 
 tlogSchema.define({
-  author: userSchema,
+  author: tlogSchema,
+});
+
+periodSchema.define({
+  markers: arrayOf(markerSchema),
+});
+
+calendarSchema.define({
+  periods: arrayOf(periodSchema),
 });
 
 staffSchema.define({
-  user: userSchema,
+  user: tlogSchema,
 });
 
 flowSchema.define({
@@ -55,60 +67,48 @@ flowSchema.define({
 });
 
 relSchema.define({
-  user: userSchema,
+  user: tlogSchema,
 });
 
-flowCollSchema.define({
-  items: arrayOf({
-    flow: flowSchema,
-    relationship: relSchema,
-  }),
+flowCollItemSchema.define({
+  flow: flowSchema,
+  relationship: relSchema,
 });
 
 commentSchema.define({
-  user: userSchema,
+  user: tlogSchema,
 });
 
 entrySchema.define({
-  author: userSchema,
-  commentator: userSchema,
+  author: tlogSchema,
+  commentator: tlogSchema,
   comments: arrayOf(commentSchema),
   tlog: tlogSchema,
 });
 
-entryCollSchema.define({
-  items: arrayOf({
-    entry: entrySchema,
-    commentator: userSchema,
-  }),
-});
-
-relCollSchema.define({
-  relationships: arrayOf(relSchema),
+entryCollItemSchema.define({
+  entry: entrySchema,
+  commentator: tlogSchema,
 });
 
 messageSchema.define({
-  author: userSchema,
-  recipient: userSchema,
-});
-
-messageCollSchema.define({
-  messages: arrayOf(messageSchema),
+  author: tlogSchema,
+  recipient: tlogSchema,
 });
 
 privateConversationSchema.define({
   lastMessage: messageSchema,
-  recipient: userSchema,
+  recipient: tlogSchema,
 });
 
 publicConversationSchema.define({
   lastMessage: messageSchema,
-  users: arrayOf(userSchema),
+  users: arrayOf(tlogSchema),
 });
 
 groupConversationSchema.define({
   lastMessage: messageSchema,
-  users: arrayOf(userSchema),
+  users: arrayOf(tlogSchema),
 });
 
 const conversationSchema = unionOf(
@@ -117,24 +117,24 @@ const conversationSchema = unionOf(
 );
 
 notificationSchema.define({
-  sender: userSchema,
+  sender: tlogSchema,
 });
 
 export const Schemas = {
   TLOG: tlogSchema,
+  TLOG_COLL: arrayOf(tlogSchema),
+  CALENDAR: calendarSchema,
   FLOW: flowSchema,
-  FLOW_COLL: flowCollSchema,
+  FLOW_COLL: { items: arrayOf(flowCollItemSchema) },
   ENTRY: entrySchema,
-  ENTRY_COLL: entryCollSchema,
-  APP_STATS: appStatsSchema,
-  USER: userSchema,
-  USER_COLL: arrayOf(userSchema),
+  ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
+  APP_STATS: {},
   RELATIONSHIP: relSchema,
-  RELATIONSHIP_COLL: relCollSchema,
+  RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   CONVERSATION: conversationSchema,
   CONVERSATION_COLL: arrayOf(conversationSchema),
   MESSAGE: messageSchema,
-  MESSAGE_COLL: messageCollSchema,
+  MESSAGE_COLL: { messages: arrayOf(messageSchema) },
   MESSENGER_READY: {
     conversations: arrayOf(conversationSchema),
     notifications: arrayOf(notificationSchema),
@@ -142,6 +142,13 @@ export const Schemas = {
 };
 
 export const CALL_API = Symbol('Call API');
+
+export function prepareResponse(json, schema) {
+  return Object.assign(
+    {},
+    normalize(camelizeKeys(json), schema)
+  );
+}
 
 function callApi(endpoint, opts, schema) {
   return fetch(endpoint, opts)
@@ -151,14 +158,11 @@ function callApi(endpoint, opts, schema) {
         return Promise.reject(json);
       }
 
-      const camelizedJson = camelizeKeys(json);
-
-      return Object.assign(
-        {},
-        normalize(camelizedJson, schema)
-      );
+      return prepareResponse(json, schema);
     });
 }
+
+// shameless plagiarism
 
 export default (store) => (next) => (action) => {
   const callAPI = action[CALL_API];

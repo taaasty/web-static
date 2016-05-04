@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
@@ -12,8 +12,8 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   }
 
   // inconsistency in list|item api responses
-  const authorUrl = author.url || author.tlog_url;
-  const tlogUrl = tlog.url || tlog.tlog_url;
+  const authorUrl = author.url || author.tlogUrl;
+  const tlogUrl = tlog.url || tlog.tlogUrl;
   const tlogUserpic = tlog.userpic || tlog.author.userpic;
 
   function UserTag(user) {

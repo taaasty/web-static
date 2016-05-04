@@ -12,7 +12,7 @@ class EntryTlogSongType extends Component {
     if (this.props.entry.title) {
       return (
         <h1 className="post__title">
-          <a href={this.props.entry.audio_url} target="_blank" className="post__link">
+          <a href={this.props.entry.audioUrl} target="_blank" className="post__link">
             {this.props.entry.title}
           </a>
         </h1>
@@ -25,12 +25,12 @@ class EntryTlogSongType extends Component {
     }
   }
   render() {
-    const { is_private } = this.props.entry;
+    const { isPrivate } = this.props.entry;
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__meta">

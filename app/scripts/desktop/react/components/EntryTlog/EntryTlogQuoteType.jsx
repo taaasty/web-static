@@ -16,12 +16,12 @@ class EntryTlogQuoteType extends Component {
   }
   render() {
     const { entry, isFeed, isInList } = this.props;
-    const { is_private, source, text } = entry;
+    const { isPrivate, source, text } = entry;
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
         </header>
         <EntryTlogContentLink
           entry={entry}

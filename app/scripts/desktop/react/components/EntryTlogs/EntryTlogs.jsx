@@ -24,7 +24,7 @@ class EntryTlogs extends Component {
     $(document).trigger('waypoint.trigger', data); //trigger calendar
   }
   render() {
-    const { canLoad, currentUser, entries, host_tlog_id, isFeed,
+    const { canLoad, currentUser, entries, hostTlogId, isFeed,
             loading, onDelete, onLoadMoreEntries } = this.props;
 
     return (
@@ -39,7 +39,7 @@ class EntryTlogs extends Component {
                commentator={item.commentator || currentUser}
                entry={item.entry}
                hideCommentForm={entries.length > 1}
-               host_tlog_id={host_tlog_id}
+               hostTlogId={hostTlogId}
                isFeed={isFeed}
                isInList
                key={item.entry.id}
@@ -57,7 +57,7 @@ EntryTlogs.propTypes = {
   canLoad: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   isFeed: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
