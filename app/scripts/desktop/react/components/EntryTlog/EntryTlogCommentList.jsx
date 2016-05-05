@@ -7,7 +7,7 @@ function EntryTlogCommentList({ commentator, comments, entryId, entryUrl, isFeed
                                 onCommentReport, onCommentDelete }) {
 
   const orderedComments = comments.sort((a, b) => (
-    moment(a.updated_at).valueOf() - moment(b.updated_at).valueOf()
+    moment(a.updatedAt).valueOf() - moment(b.updatedAt).valueOf()
   ));
 
   return (

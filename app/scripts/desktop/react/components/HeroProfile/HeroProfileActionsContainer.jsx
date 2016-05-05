@@ -41,11 +41,7 @@ class HeroProfileActionsContainer extends Component {
         </style>
         {isCurrentUser
            ? <HeroProfileSelfActions />
-           : relState &&
-             <HeroProfileActions
-               relState={relState}
-               tlog={tlog}
-             />
+           : relState && <HeroProfileActions relState={relState} tlog={tlog} />
         }
       </div>
     );

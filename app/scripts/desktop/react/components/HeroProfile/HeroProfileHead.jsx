@@ -1,5 +1,4 @@
-import React from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import UserSlug from '../UserSlug';
 import uri from 'urijs';
@@ -25,7 +24,7 @@ function HeroProfileHead({ user }) {
 }
 
 HeroProfileHead.propTypes = {
-  user: ProjectTypes.heroUser.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default HeroProfileHead;

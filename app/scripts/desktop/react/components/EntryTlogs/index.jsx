@@ -40,7 +40,7 @@ class EntryTlogsContainer extends Component {
     return (
       <EntryTlogs
         canLoad={!isFetching && !!hasMore}
-        currentUser={currentUser.data}
+        currentUser={currentUser}
         entries={entryItems}
         hostTlogId={hostTlogId}
         isFeed={isFeed}

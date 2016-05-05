@@ -25,9 +25,17 @@ function fetchTlog(slug) {
   };
 }
 
-export function getTlog(slug) {
+export function getTlog(slug, requiredFields=[]) {
   return (dispatch, getState) => {
     if (slug && shouldFetchTlog(getState(), slug)) {
+      const tlogs = getState().entities.tlog;
+      const [ tlogId ] = Object.keys(tlogs).filter((t) => tlogs[t].slug === slug);
+      const tlog = tlogs[tlogId];
+
+      if (tlog && requiredFields.every((key) => tlog.hasOwnProperty(key))) {
+        return null;
+      }
+
       return dispatch(fetchTlog(slug));
     }
   };

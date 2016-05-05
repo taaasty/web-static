@@ -12,16 +12,16 @@ export default class Voting extends Component {
       votes: PropTypes.number.isRequired,
       rating: PropTypes.number.isRequired,
       reasons: PropTypes.array,
-      is_voted: PropTypes.bool.isRequired,
-      is_voteable: PropTypes.bool.isRequired,
+      isVoted: PropTypes.bool.isRequired,
+      isVoteable: PropTypes.bool.isRequired,
     }).isRequired,
   };
   state = {
     votes: this.props.rating.votes,
     rating: this.props.rating.rating,
     reasons: this.props.rating.reasons || [],
-    canVote: this.props.rating.is_voteable,
-    isVoted: this.props.rating.is_voted,
+    canVote: this.props.rating.isVoteable,
+    isVoted: this.props.rating.isVoted,
     isProcess: false,
   };
   componentDidMount() {
@@ -60,8 +60,8 @@ export default class Voting extends Component {
               votes: rating.votes,
               rating: rating.rating,
               reasons: rating.reasons,
-              isVoted: rating.is_voted,
-              canVote: rating.is_voteable,
+              isVoted: rating.isVoted,
+              canVote: rating.isVoteable,
             });
           })
           .always(() => this.setState({ isProcess: false }));

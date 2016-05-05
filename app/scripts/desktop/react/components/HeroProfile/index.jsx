@@ -1,9 +1,7 @@
 /*global $, TastyEvents, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
 
-import { follow } from '../../actions/RelationshipActions';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
@@ -40,7 +38,7 @@ class HeroProfile extends Component {
     TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.tlogStore.data !== nextProps.tlogStore.data) {
+    if (this.props.tlog !== nextProps.tlog) {
       this._close();
     }
   }
@@ -127,13 +125,11 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { currentUser, entities, tlogStore } = this.props;
-    const { data: tlogId, errorRelationship, isFetching, isFetchingRelationship } = tlogStore;
-    const tlog = entities.tlog[tlogId] || { stats: {} };
-    const { myRelationship: relState, stats } = tlog;
+    const { currentUser, follow, tlog } = this.props;
+    const { myRelationship, stats } = tlog;
     const currentUserId = currentUser && currentUser.id;
-    const isCurrentUser = currentUserId && currentUserId === tlogId;
-    const followButtonVisible = !isCurrentUser && relState != null;
+    const isCurrentUser = currentUserId && currentUserId === tlog.id;
+    const followButtonVisible = !isCurrentUser && myRelationship != null;
     
     return (
       <div className="hero hero-profile">
@@ -141,7 +137,7 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          {!tlog.id || isFetching
+          {!tlog.id
            ? <Spinner size={70} />
            : <HeroProfileAvatar
                isOpen={this.isOpen()}
@@ -151,20 +147,20 @@ class HeroProfile extends Component {
           }
           {followButtonVisible &&
            <SmartFollowStatus
-             error={errorRelationship}
+             error={null}
              follow={follow.bind(null, tlog.id)}
-             isFetching={isFetchingRelationship}
-             relState={relState}
+             isFetching={!myRelationship}
+             relState={myRelationship}
            />
           }
-           {tlog.id && !isFetching && <HeroProfileHead user={tlog} />}
+           {tlog.id && <HeroProfileHead user={tlog} />}
            <HeroProfileActionsContainer
              isCurrentUser={!!isCurrentUser}
-             relState={relState}
+             relState={myRelationship}
              tlog={tlog}
            />
         </div>
-        <HeroProfileStats stats={stats} user={tlog} />
+        {!!stats && <HeroProfileStats stats={stats} user={tlog} />}
       </div>
     );
   }
@@ -172,16 +168,8 @@ class HeroProfile extends Component {
 
 HeroProfile.propTypes = {
   currentUser: PropTypes.object,
-  entities: PropTypes.object.isRequired,
   follow: PropTypes.func.isRequired,
-  tlogStore: PropTypes.object.isRequired,
+  tlog: PropTypes.object.isRequired,
 };
 
-export default connect(
-  (state) => ({
-    currentUser: state.currentUser.data,
-    entities: state.entities,
-    tlogStore: state.tlog,
-  }),
-  { follow }
-)(HeroProfile);
+export default HeroProfile;

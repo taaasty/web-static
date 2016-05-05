@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
+import { getTlog as inferTlog } from './index';
 
 import { connect } from 'react-redux';
 import { getTlog } from '../../actions/TlogActions';
+import { getFlow }  from '../../actions/FlowActions';
+import { follow } from '../../actions/RelationshipActions';
 import HeroProfile from '../HeroProfile';
 import HeroFlow from '../HeroComponent/HeroFlow';
 import SocialShare from '../common/SocialShare';
@@ -11,16 +14,27 @@ import DesignPreviewService from '../../services/designPreview';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
+const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'myRelationship', 'stats' ];
+
+function getSlug({ params, location }) {
+  return (/anonymous\/new/).test(location.pathname)
+    ? TLOG_SLUG_ANONYMOUS
+    : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+}
 
 class TlogPageRoot extends Component {
   componentWillMount() {
-    this.props.getTlog(this.slug(this.props));
+    const { tlog, getFlow, getTlog } = this.props;
+
+    getTlog(getSlug(this.props), tlogRequiredFields);
+    if (tlog.isFlow) {
+      getFlow(tlog.id);
+    }
   }
   componentDidMount() {
-    const { tlogId, entities, editing, editPreview } = this.props;
-    const tlog = entities.tlog[tlogId];
+    const { editing, editPreview, tlog } = this.props;
 
-    if (this.isFlow(this.props)) {
+    if (tlog && tlog.isFlow) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
@@ -37,17 +51,17 @@ class TlogPageRoot extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { tlogId: nextTlogId, entities, editing, editPreview } = nextProps;
-    const tlog = entities.tlog[this.props.tlogId];
-    const nextTlog = entities.tlog[nextTlogId];
+    const { tlog, getFlow, getTlog } = this.props;
+    const { editing, editPreview, tlog: nextTlog } = nextProps;
 
-    this.props.getTlog(this.slug(nextProps));
+    getTlog(getSlug(nextProps), tlogRequiredFields);
 
-    if (this.isFlow(nextProps)) {
+    if (nextTlog && nextTlog.isFlow) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
+      getFlow(nextTlog.id);
     } else {
       if (tlog && tlog.design && nextTlog && nextTlog.design &&
-          nextTlog.design !== tlog.design || this.noDesign) {
+          (nextTlog.design !== tlog.design || this.noDesign)) {
         setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
         DesignPreviewService.apply(nextTlog.design);
         this.noDesign = false;
@@ -75,33 +89,33 @@ class TlogPageRoot extends Component {
       document.body.classList.add('tlog-mode-minimal');
     }
   }
-  isFlow(props) {
-    return props.tlog && (props.entities.tlog[props.tlog] || {}).isFlow;
-  }
-  slug({ params, location }) {
-    return (/anonymous\/new/).test(location.pathname)
-      ? TLOG_SLUG_ANONYMOUS
-      : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
-  }
   shareImg(user) {
     return (user && user.userpic && user.userpic.originalUrl)
       ? user.userpic.originalUrl
       : defaultUserpic;
   }
   render() {
-    const { children, editing, entities, params, tlogId } = this.props;
-    const tlog = entities.tlog[tlogId] || { design: {} };
-    const { design: { backgroundImageUrl }, slug, tlogUrl } = tlog;
-    const isFlow = this.isFlow(this.props);
+    const { children, currentUser, editing, flow, follow, params, tlog } = this.props;
+    const { design, isFlow, slug, tlogUrl } = tlog;
     
     return (
       <div className="page__inner">
         <div className="page__paper">
           {!isFlow &&
-           <div className="page-cover js-cover" style={{ backgroundImage: `url('${backgroundImageUrl}')` }} />
+           <div
+             className="page-cover js-cover"
+             style={{ backgroundImage: design && `url('${design.backgroundImageUrl}')` || '' }}
+           />
           }
            <header className="page-header">
-             {isFlow ? <HeroFlow /> : <HeroProfile />}
+             {isFlow
+              ? <HeroFlow flow={flow} tlog={tlog} />
+              : <HeroProfile
+                  currentUser={currentUser}
+                  follow={follow}
+                  tlog={tlog}
+                />
+             }
            </header>
            {children}
         </div>
@@ -122,21 +136,24 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  currentUser: PropTypes.object.isRequired,
   editPreview: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
-  entities: PropTypes.object.isRequired,
+  flow: PropTypes.object,
+  follow: PropTypes.func.isRequired,
+  getFlow: PropTypes.func.isRequired,
   getTlog: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  tlogId: PropTypes.number,
+  tlog: PropTypes.object,
 };
 
 export default connect(
-  (state) => ({
+  (state, ownProps) => ({
+    currentUser: state.currentUser.data,
     editing: state.appState.data.editing,
     editPreview: state.editor.preview,
-    entities: state.entities,
-    tlogId: state.tlog.data,
+    tlog: inferTlog(state.entities.tlog, getSlug(ownProps)),
   }),
-  { getTlog }
+  { getTlog, getFlow, follow }
 )(TlogPageRoot);

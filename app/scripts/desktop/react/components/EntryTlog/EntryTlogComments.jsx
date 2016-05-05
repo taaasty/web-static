@@ -1,4 +1,4 @@
-/*global $ */
+/*global $, i18n */
 import React, { Component, PropTypes } from 'react';
 import EntryActionCreators from '../../actions/Entry';
 import EntryTlogCommentCreateForm from './EntryTlogCommentCreateForm';

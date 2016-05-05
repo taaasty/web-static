@@ -56,11 +56,10 @@ function shouldFetchTlogEntries(state, params) {
   return !isFetching && (invalid || signature(params) !== cSignature);
 }
 
-function getTlogEntries(params) {
+export function getTlogEntries(params) {
   return (dispatch) => {
     const { slug, section, date, query, sinceId } = params;
 
-    dispatch(tlogEntriesReset());
     return dispatch(fetchTlogEntries(
       endpoint(slug, section, {
         date,
@@ -76,6 +75,7 @@ function getTlogEntries(params) {
 export function getTlogEntriesIfNeeded(params) {
   return (dispatch, getState) => {
     if (shouldFetchTlogEntries(getState(), params)) {
+      dispatch(tlogEntriesReset());
       return dispatch(getTlogEntries(params));
     }
   };

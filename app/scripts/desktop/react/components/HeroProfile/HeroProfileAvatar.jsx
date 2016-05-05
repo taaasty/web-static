@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import UserAvatar from '../UserAvatar';
 
 const HERO_AVATAR_SIZE = 110;
@@ -21,7 +20,7 @@ function HeroProfileAvatar({ onClick, isOpen, user }) {
 HeroProfileAvatar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  user: ProjectTypes.heroUser.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default HeroProfileAvatar;

@@ -1,6 +1,6 @@
 /*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
-
+import { getTlog } from '../TlogPage';
 import { connect } from 'react-redux';
 import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
 import Auth from '../Auth';
@@ -25,9 +25,8 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   render() {
-    const { children, currentUser, editing, entities, location, params, tlog } = this.props;
-    const tlogData = entities.tlog[tlog.data] || {};
-    const isLogged = !!currentUser.data.id;
+    const { children, currentUser, editing, location, params, tlog } = this.props;
+    const isLogged = !!currentUser.id;
 
     return (
       <div className="page">
@@ -47,9 +46,9 @@ class AppPage extends Component {
            {i18n.t('auth_button')}
          </button>
         }
-        {!editing && isLogged && <ComposeToolbar tlog={tlogData} user={currentUser.data} />}
+        {!editing && isLogged && <ComposeToolbar tlog={tlog} user={currentUser} />}
         {!editing && <UserToolbar location={location} />}
-        {!editing && <SupportLauncher user={currentUser.data} />} 
+        {!editing && <SupportLauncher user={currentUser} />} 
         <BrowserSupport />
       </div>
     );
@@ -65,7 +64,6 @@ AppPage.propTypes = {
   ]).isRequired,
   currentUser: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
-  entities: PropTypes.object.isRequired,
   getAppStatsIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
@@ -73,11 +71,10 @@ AppPage.propTypes = {
 };
 
 export default connect(
-  (state) => ({
-    currentUser: state.currentUser,
+  (state, { params }) => ({
+    currentUser: state.currentUser.data,
     editing: state.appState.data.editing,
-    entities: state.entities,
-    tlog: state.tlog,
+    tlog: getTlog(state.entities.tlog, params.slug),
   }),
   { getAppStatsIfNeeded }
 )(AppPage);

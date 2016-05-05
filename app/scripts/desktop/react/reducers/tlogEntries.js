@@ -13,8 +13,8 @@ export const initialState = {
   data: {
     items: [],
     limit: null,
-    has_more: null,
-    next_since_entry_id: null,
+    hasMore: null,
+    nextSinceEntryId: null,
   },
   signature: null,
   isFetching: false,
@@ -31,9 +31,18 @@ const actionMap = {
   },
 
   [TLOG_ENTRIES_SUCCESS](state, { response, signature }) {
+    const data = signature === state.signature
+            ? merge(
+              {},
+              state.data,
+              response.result,
+              { items: state.data.items.concat(response.result.items) }
+            )
+            : response.result;
+
     return Object.assign({}, state, {
+      data,
       signature,
-      data: response.result,
       isFetching: false,
       error: null,
       invalid: false,

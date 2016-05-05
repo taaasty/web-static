@@ -6,11 +6,8 @@ import {
 } from '../actions/TlogActions';
 
 const initialState = {
-  data: null,
   isFetching: false,
-  isFetchingRelationship: false,
   error: null,
-  errorRelationship: null,
 };
 
 const actionMap = {
@@ -20,9 +17,8 @@ const actionMap = {
       error: null,
     });
   },
-  [TLOG_SUCCESS](state, { response }) {
+  [TLOG_SUCCESS](state) {
     return Object.assign({}, state, {
-      data: response.result,
       isFetching: false,
       error: null,
     });

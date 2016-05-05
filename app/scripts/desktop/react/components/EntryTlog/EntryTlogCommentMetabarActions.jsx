@@ -70,7 +70,7 @@ class EntryTlogCommentMetabarActions extends Component {
             url={url}
           />
           {
-            comment.can_report && (
+            comment.canReport && (
               <EntryTlogCommentMetabarAction
                 icon="icon--exclamation-mark"
                 onClick={onCommentReport}
@@ -79,7 +79,7 @@ class EntryTlogCommentMetabarActions extends Component {
             )
           }
           {
-            comment.can_edit && (
+            comment.canEdit && (
               <EntryTlogCommentMetabarAction
                 icon="icon--pencil"
                 onClick={onCommentEdit}
@@ -88,7 +88,7 @@ class EntryTlogCommentMetabarActions extends Component {
             )
           }
           {
-            comment.can_delete && (
+            comment.canDelete && (
               <EntryTlogCommentMetabarAction
                 icon="icon--basket"
                 onClick={onCommentDelete}
