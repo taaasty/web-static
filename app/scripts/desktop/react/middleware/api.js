@@ -121,6 +121,7 @@ notificationSchema.define({
 });
 
 export const Schemas = {
+  NONE: {},
   TLOG: tlogSchema,
   TLOG_COLL: arrayOf(tlogSchema),
   CALENDAR: calendarSchema,
@@ -128,7 +129,6 @@ export const Schemas = {
   FLOW_COLL: { items: arrayOf(flowCollItemSchema) },
   ENTRY: entrySchema,
   ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
-  APP_STATS: {},
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   CONVERSATION: conversationSchema,

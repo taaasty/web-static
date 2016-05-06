@@ -8,7 +8,7 @@ export const CURRENT_USER_STOP_TWITTER_CROSSPOST = 'CURRENT_USER_STOP_TWITTER_CR
 export function auth(state) {
   return state.currentUser.data && {
     headers: {
-      'X-User-Token': state.currentUser.data.api_key.access_token,
+      'X-User-Token': state.currentUser.data.apiKey.accessToken,
     },
   };
 }

@@ -1,64 +1,39 @@
-/*global $ */
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
+import { CALL_API, Schemas } from '../middleware/api';
+import { auth } from './CurrentUserActions';
 
 export const APP_STATS_REQUEST = 'APP_STATS_REQUEST';
-export const APP_STATS_RECEIVE = 'APP_STATS_RECEIVE';
-export const APP_STATS_ERROR = 'APP_STATS_ERROR';
+export const APP_STATS_SUCCESS = 'APP_STATS_SUCCESS';
+export const APP_STATS_FAILURE = 'APP_STATS_FAILURE';
 
 const UPDATE_INTERVAL = 3600 * 1000; // 1 hour
 
-function appStatsRequest() {
-  return {
-    type: APP_STATS_REQUEST,
-  };
-}
+function fetchAppStats() {
+  const endpoint = ApiRoutes.appStats();
 
-function appStatsReceive(data) {
   return {
-    type: APP_STATS_RECEIVE,
-    payload: data,
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.NONE,
+      types: [ APP_STATS_REQUEST, APP_STATS_SUCCESS, APP_STATS_FAILURE ],
+      opts: auth,
+    },
+    updatedAt: (new Date()).valueOf(),
   };
-}
-
-function appStatsError(error) {
-  return {
-    type: APP_STATS_ERROR,
-    payload: error,
-  };
-}
-
-function fetchAppStats(url) {
-  return $.ajax({ url })
-    .fail((xhr) => {
-      ErrorService.notifyErrorResponse('Получение статистики приложения', {
-        method: 'fetchAppStats(url)',
-        methodArguments: { url },
-        response: xhr.responseJSON,
-      });
-    });
 }
 
 function shouldFetchAppStats(state) {
-  const { data: { users_count }, isFetching, updatedAt } = state.appStats;
+  const { data: { usersCount }, isFetching, updatedAt } = state.appStats;
   const now = (new Date()).valueOf();
 
-  return (!isFetching && (typeof users_count === 'undefined' || !updatedAt || now - updatedAt > UPDATE_INTERVAL));
-}
-
-function getAppStats() {
-  return (dispatch) => {
-    dispatch(appStatsRequest());
-    return fetchAppStats(ApiRoutes.appStats())
-      .done((data) => dispatch(appStatsReceive({ data, updatedAt: (new Date()).valueOf() })))
-      .fail((error) => dispatch(appStatsError(error.responseJSON)));
-  };
+  return (!isFetching &&
+          (typeof usersCount === 'undefined' || !updatedAt || now - updatedAt > UPDATE_INTERVAL));
 }
 
 export function getAppStatsIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchAppStats(getState())) {
-      return dispatch(getAppStats());
+      return dispatch(fetchAppStats());
     }
   };
 }
