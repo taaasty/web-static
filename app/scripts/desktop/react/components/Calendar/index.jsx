@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getCalendar, resetCalendar } from '../../actions/CalendarActions';
+import { getCalendar } from '../../actions/CalendarActions';
 import CalendarHeader from './CalendarHeader';
 import CalendarTimeline from './CalendarTimeline';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
@@ -52,19 +52,15 @@ class Calendar extends Component {
     }
   }
   getCalendarData(props) {
-    const { currentUser: { id }, entities, tlogId, getCalendar, resetCalendar } = props;
-    const tlog = entities.tlog[tlogId] || {};
+    const { currentUser: { id }, tlog, getCalendar } = props;
 
-    if (tlog && !tlog.isFlow && tlog.slug !== TLOG_SLUG_ANONYMOUS &&
-        (!tlog.isPrivacy || tlogId === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
-      getCalendar(tlogId);
-    } else {
-      resetCalendar();
+    if (tlog.id && !tlog.isFlow && tlog.slug !== TLOG_SLUG_ANONYMOUS &&
+        (!tlog.isPrivacy || tlog.id === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
+      getCalendar(tlog.id);
     }
   }
   updatePropsEntry(props) {
-    const { entities: { entry }, isEntry, tlogEntries } = props;
-    const selectedEntry = (isEntry ? tlogEntry : tlogEntries.items.length && entry[tlogEntries.items[0]]) || {};
+    const { selectedEntry } = props;
 
     this.updateSelectedEntry(selectedEntry.id, selectedEntry.createdAt || (new Date()).toISOString());
   }
@@ -115,9 +111,9 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const { calendarId, entities: { calendar, calendarPeriod, marker } } = this.props;
+    const { calendar: { periods=[] } } = this.props;
 
-    if (!calendarId) {
+    if (!periods) {
       return null;
     }
 
@@ -128,19 +124,6 @@ class Calendar extends Component {
       'calendar--opened-by-click': this.isOpenedByClick(),
     });
     const { headerDate, selectedEntryId, visibleMarkers } = this.state;
-    const periods = calendar[calendarId] && calendar[calendarId].periods;
-
-    if (!periods) {
-      return null;
-    }
-
-    const periodsData = periods.map((periodId) => {
-      const { markers, ...rest } = calendarPeriod[periodId];
-
-      return Object.assign({}, rest, {
-        markers: (markers || []).map((markerId) => marker[markerId]),
-      });
-    });
     
     return (
       <nav
@@ -152,7 +135,7 @@ class Calendar extends Component {
         {this.isOpen()
          ? periods.length > 0
            ? <CalendarTimeline
-               periods={periodsData}
+               periods={periods}
                selectedEntryId={selectedEntryId}
                visibleMarkers={visibleMarkers}
              />
@@ -174,26 +157,32 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-  calendarId: PropTypes.number,
+  calendar: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
-  entities: PropTypes.object.isRequired,
   getCalendar: PropTypes.func.isRequired,
-  isEntry: PropTypes.bool.isRequired,
-  resetCalendar: PropTypes.func.isRequired,
-  tlogEntries: PropTypes.object.isRequired,
-  tlogEntry: PropTypes.object.isRequired,
-  tlogId: PropTypes.number,
+  selectedEntry: PropTypes.object,
+  tlog: PropTypes.object.isRequired,
 };
 
 export default connect(
-  (state, { isEntry }) => ({
-    isEntry,
-    calendarId: state.calendar.data,
-    currentUser: state.currentUser.data,
-    entities: state.entities,
-    tlogId: state.tlog.data,
-    tlogEntries: state.tlogEntries.data,
-    tlogEntry: state.tlogEntry.data,
-  }),
-  { getCalendar, resetCalendar }
+  (state, { entryId, tlog }) => {
+    const { calendar: calendarStore, calendarPeriod, marker, entry } = state.entities;
+    const calendar = (tlog.id && calendarStore[tlog.id]) || {};
+    const periods = (calendar.periods || []).map((periodId) => {
+      const { markers, ...rest } = calendarPeriod[periodId];
+
+      return Object.assign({}, rest, {
+        markers: (markers || []).map((markerId) => marker[markerId]),
+      });
+    });
+    const [ firstEntryId ] = state.tlogEntries.data.items;
+    const selectedEntry = (entry[entryId || firstEntryId]) || {};
+
+    return {
+      selectedEntry,
+      calendar: Object.assign({}, calendar, { periods }),
+      currentUser: state.currentUser.data,
+    };
+  },
+  { getCalendar }
 )(Calendar);

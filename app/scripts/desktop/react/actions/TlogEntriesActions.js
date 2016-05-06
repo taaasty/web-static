@@ -2,6 +2,7 @@ import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
 import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
 import { auth } from './CurrentUserActions';
+import { makeReqUrl } from './helpers';
 
 export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
 export const TLOG_ENTRIES_SUCCESS = 'TLOG_ENTRIES_SUCCESS';
@@ -19,19 +20,8 @@ function tlogEntriesReset() {
   };
 }
 
-function identity(v) {
-  return v;
-}
-
 function endpoint(slug, section=TLOG_SECTION_TLOG, params) {
-  const paramStr = Object.keys(params)
-          .map((k) => params[k] && `${k}=${encodeURIComponent(params[k])}`)
-          .filter(identity)
-          .join('&');
-  return [
-    ApiRoutes.tlogEntries(slug, section, 'tlogs'),
-    paramStr,
-  ].filter(identity).join('?');
+  return makeReqUrl(ApiRoutes.tlogEntries(slug, section, 'tlogs'), params);
 }
 
 function signature({ slug='', section='', date='', query='' }) {
@@ -81,34 +71,10 @@ export function getTlogEntriesIfNeeded(params) {
   };
 }
 
-export function appendTlogEntries() {
-  return (dispatch, getState) => {
-    const { isFetching, section, slug, query, data: { next_since_entry_id } } = getState().tlogEntries;
-
-    if (isFetching) {
-      return null;
-    }
-
-    const url = ApiRoutes.tlogEntries(slug, section, 'tlogs');
-    const params = {
-      since_entry_id: next_since_entry_id || void 0,
-      q: query || void 0,
-    };
-
-    return fetchTlogEntries(url, params)
-      .then((data) => {
-        const prevItems = getState().tlogEntries.data.items;
-        dispatch(tlogEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
-  };
-}
-
 export function deleteEntry(entryId) {
   return {
     type: TLOG_ENTRIES_DELETE_ENTRY,
-    payload: entryId,
+    entryId,
   };
 }
 

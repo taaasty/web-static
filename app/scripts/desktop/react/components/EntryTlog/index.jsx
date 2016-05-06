@@ -4,7 +4,6 @@ import EntryActionCreators from '../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
 import EntryTlogPrivate from './EntryTlogPrivate';
 import EntryTlogError from './EntryTlogError';
-import ErrorService from '../../../../shared/react/services/Error';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import TastyConfirmController from '../../controllers/TastyConfirmController';
 
@@ -27,20 +26,6 @@ class EntryTlog extends Component {
     entry: this.props.entry,
     hasModeration: !!this.props.moderation,
   };
-  componentWillMount() {
-    const { commentator, entry: { canDelete, id, tlog }, hostTlogId } = this.props;
-    if (canDelete && !hostTlogId &&
-        ((tlog && commentator) ? tlog.id !== commentator.id : true)) { //fix for when we are subscribed to ourself
-      ErrorService.notifyWarning('Неконсистентный флаг canDelete', {
-        componentName: 'EntryTlog',
-        method: 'componentWillMount',
-        canDelete: canDelete,
-        entryID: id,
-        entryTlogId: tlog && tlog.id,
-        hostTlogId: hostTlogId,
-      });
-    }
-  }
   componentWillReceiveProps(nextProps) {
     if (this.props.entry !== nextProps.entry) {
       this.setState({

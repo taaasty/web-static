@@ -29,7 +29,7 @@ class TlogPageBody extends Component {
     }
   }
   renderTlog() {
-    const { appendTlogEntries, currentUser, entities, section, tlog, tlogEntries } = this.props;
+    const { appendTlogEntries, currentUser, section, tlog, tlogEntries } = this.props;
     const { data: { nextDate, prevDate } } = tlogEntries;
     const isPaged = tlog.isDaylog && section === TLOG_SECTION_TLOG;
 
@@ -37,7 +37,6 @@ class TlogPageBody extends Component {
       <div>
         <EntryTlogsContainer
           currentUser={currentUser}
-          entities={entities}
           entries={tlogEntries}
           handleDeleteEntry={this.handleDeleteEntry.bind(this)}
           hostTlogId={tlog.id}
@@ -124,7 +123,6 @@ TlogPageBody.propTypes = {
   bgStyle: PropTypes.object,
   currentUser: PropTypes.object,
   deleteEntry: PropTypes.func.isRequired,
-  entities: PropTypes.object.isRequired,
   error: PropTypes.string,
   getCalendar: PropTypes.func.isRequired,
   queryString: PropTypes.string,

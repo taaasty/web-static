@@ -6,12 +6,6 @@ export const TLOG_REQUEST = 'TLOG_REQUEST';
 export const TLOG_SUCCESS = 'TLOG_SUCCESS';
 export const TLOG_FAILURE = 'TLOG_FAILURE';
 
-function shouldFetchTlog(state, slug) {
-  const tlog = state.entities.tlog[state.tlog.data];
-
-  return (!state.tlog.isFetching && (!tlog || tlog.slug !== slug));
-}
-
 function fetchTlog(slug) {
   const endpoint = ApiRoutes.tlog(slug);
 
@@ -27,7 +21,7 @@ function fetchTlog(slug) {
 
 export function getTlog(slug, requiredFields=[]) {
   return (dispatch, getState) => {
-    if (slug && shouldFetchTlog(getState(), slug)) {
+    if (slug) {
       const tlogs = getState().entities.tlog;
       const [ tlogId ] = Object.keys(tlogs).filter((t) => tlogs[t].slug === slug);
       const tlog = tlogs[tlogId];
@@ -36,7 +30,7 @@ export function getTlog(slug, requiredFields=[]) {
         return null;
       }
 
-      return dispatch(fetchTlog(slug));
+      return !getState().tlog.isFetching && dispatch(fetchTlog(slug));
     }
   };
 }

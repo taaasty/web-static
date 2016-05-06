@@ -107,18 +107,17 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, deleteEntry, entities, flow, flowViewStyle,
+    const { currentUser, deleteEntry, flow, flowViewStyle,
             getCalendar, location, queryString, tlog, tlogEntries } = this.props;
     const currentUserId = currentUser.id;
 
     return tlog.isFlow
       ? <FlowPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
-          bgStyle={{ opacity: (tlog.design && tlog.design.feedOpacity) || '1.0' }}
+          bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
           currentUser={currentUser}
           currentUserId={currentUserId}
           deleteEntry={deleteEntry}
-          entities={entities}
           flow={flow}
           flowViewStyle={flowViewStyle}
           location={location}
@@ -128,11 +127,10 @@ class TlogPageContainer extends Component {
         />
       : <TlogPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
-          bgStyle={{ opacity: (tlog.design && tlog.design.feedOpacity) || '1.0' }}
+          bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
           currentUser={currentUser}
           currentUserId={currentUserId}
           deleteEntry={deleteEntry}
-          entities={entities}
           getCalendar={getCalendar}
           queryString={queryString}
           section={this.section(this.props)}
@@ -146,7 +144,6 @@ TlogPageContainer.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   deleteEntry: PropTypes.func.isRequired,
-  entities: PropTypes.object.isRequired,
   flow: PropTypes.object.isRequired,
   flowViewStyle: PropTypes.func.isRequired,
   getCalendar: PropTypes.func.isRequired,
@@ -161,13 +158,49 @@ TlogPageContainer.propTypes = {
 };
 
 export default connect(
-  (state, { params }) => ({
-    currentUser: state.currentUser.data,
-    entities: state.entities,
-    flow: state.flow,
-    tlog: getTlog(state.entities.tlog, params.slug),
-    tlogEntries: state.tlogEntries,
-  }),
+  (state, { params }) => {
+    const { comment, entry, entryCollItem, tlog } = state.entities;
+
+    function tlogItem(id) {
+      if (!id) {
+        return void 0;
+      }
+
+      const t = tlog[id];
+      const author = tlog[t.author];
+
+      return Object.assign({}, t, { author });
+    }
+
+    const items = state.tlogEntries.data.items.map((entryCollId) => {
+      const { commentator, entry: entryId } = entryCollItem[entryCollId];
+      const entryItem = entry[entryId];
+
+      return {
+        commentator: tlogItem(commentator),
+        entry: Object.assign({}, entryItem, {
+          author: tlog[entryItem.author],
+          commentator: tlogItem(entryItem.commentator),
+          tlog: tlogItem(entryItem.tlog),
+          comments: entryItem.comments.map((commentId) => {
+            const c = comment[commentId];
+
+            return Object.assign({}, c, { user: tlogItem(c.user) });
+          }),
+        }),
+      };
+    });
+    const tlogEntries = Object.assign({}, state.tlogEntries, {
+      data: Object.assign({}, state.tlogEntries.data, { items }),
+    });
+    
+    return {
+      tlogEntries,
+      currentUser: state.currentUser.data,
+      flow: state.flow,
+      tlog: getTlog(tlog, params.slug),
+    };
+  },
   {
     appStateSetSearchKey,
     deleteEntry,

@@ -5,7 +5,6 @@ import { auth } from './CurrentUserActions';
 export const CALENDAR_REQUEST = 'CALENDAR_REQUEST';
 export const CALENDAR_SUCCESS = 'CALENDAR_SUCCESS';
 export const CALENDAR_FAILURE = 'CALENDAR_FAILURE';
-export const CALENDAR_RESET = 'CALENDAR_RESET';
 
 function fetchCalendar(tlogId) {
   const endpoint = ApiRoutes.calendar_url(tlogId);
@@ -20,20 +19,15 @@ function fetchCalendar(tlogId) {
   };
 }
 
-function shouldFetchCalendar(state, tlogId) {
-  return (!state.calendar.isFetching && tlogId !== state.calendar.data);
-}
-
-export function getCalendar(tlogId, force) {
+export function getCalendar(tlogId, force, requiredFields=[]) {
   return (dispatch, getState) => {
-    if (tlogId && (force || shouldFetchCalendar(getState(), tlogId))) {
-      return dispatch(fetchCalendar(tlogId));
-    }
-  };
-}
+    const { entities: { calendar: calendarStore }, calendar: { isFetching } } = getState();
+    const calendar = calendarStore[tlogId];
 
-export function resetCalendar() {
-  return {
-    type: CALENDAR_RESET,
+    if (!force && calendar && requiredFields.every((key) => calendar.hasOwnProperty(key))) {
+      return null;
+    }
+
+    return !isFetching && dispatch(fetchCalendar(tlogId));
   };
 }

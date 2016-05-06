@@ -14,7 +14,7 @@ import DesignPreviewService from '../../services/designPreview';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
-const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'myRelationship', 'stats' ];
+const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'stats' ];
 
 function getSlug({ params, location }) {
   return (/anonymous\/new/).test(location.pathname)
@@ -27,22 +27,19 @@ class TlogPageRoot extends Component {
     const { tlog, getFlow, getTlog } = this.props;
 
     getTlog(getSlug(this.props), tlogRequiredFields);
-    if (tlog.isFlow) {
+    if (tlog.id && tlog.isFlow) {
       getFlow(tlog.id);
     }
   }
   componentDidMount() {
     const { editing, editPreview, tlog } = this.props;
 
-    if (tlog && tlog.isFlow) {
+    if (tlog.isFlow) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
-      if (tlog && tlog.design) {
+      if (tlog.design) {
         DesignPreviewService.apply(tlog.design);
-        this.noDesign = false;
-      } else {
-        this.noDesign = true;
       }
     }
 
@@ -56,15 +53,14 @@ class TlogPageRoot extends Component {
 
     getTlog(getSlug(nextProps), tlogRequiredFields);
 
-    if (nextTlog && nextTlog.isFlow) {
+    if (nextTlog.id && nextTlog.isFlow) {
+      document.body.className = 'layout--feed';
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
       getFlow(nextTlog.id);
     } else {
-      if (tlog && tlog.design && nextTlog && nextTlog.design &&
-          (nextTlog.design !== tlog.design || this.noDesign)) {
+      if (typeof nextTlog.design !== 'undefined' && nextTlog.design !== tlog.design) {
         setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
         DesignPreviewService.apply(nextTlog.design);
-        this.noDesign = false;
       }
     }
 
@@ -95,7 +91,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { children, currentUser, editing, flow, follow, params, tlog } = this.props;
+    const { children, currentUser, editing, flow, follow, location, params, tlog } = this.props;
     const { design, isFlow, slug, tlogUrl } = tlog;
     
     return (
@@ -119,7 +115,12 @@ class TlogPageRoot extends Component {
            </header>
            {children}
         </div>
-        {!editing && <Calendar isEntry={!!params.entryPath} />}
+        {!editing &&
+         <Calendar
+           entryId={params.entrySlug && location.state.id}
+           tlog={tlog}
+         />
+        }
         {(!isFlow && !editing && tlogUrl) &&
          <SocialShare
            img={this.shareImg(tlog)}

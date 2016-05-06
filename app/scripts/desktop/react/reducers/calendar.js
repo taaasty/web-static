@@ -3,7 +3,6 @@ import {
   CALENDAR_REQUEST,
   CALENDAR_SUCCESS,
   CALENDAR_FAILURE,
-  CALENDAR_RESET,
 } from '../actions/CalendarActions';
 
 const initialState = {
@@ -20,11 +19,10 @@ const actionMap = {
     });
   },
 
-  [CALENDAR_SUCCESS](state, { response }) {
+  [CALENDAR_SUCCESS](state) {
     return Object.assign({}, state, {
       isFetching: false,
       error: null,
-      data: response.result,
     });
   },
 
@@ -33,10 +31,6 @@ const actionMap = {
       error,
       isFetching: false,
     });
-  },
-
-  [CALENDAR_RESET]() {
-    return initialState;
   },
 };
 

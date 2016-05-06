@@ -1,65 +1,35 @@
-/*global $, NoticeService */
 import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { auth } from './CurrentUserActions';
+import { makeReqUrl } from './helpers';
 
 export const TLOG_ENTRY_REQUEST = 'TLOG_ENTRY_REQUEST';
-export const TLOG_ENTRY_RECEIVE = 'TLOG_ENTRY_RECEIVE';
-export const TLOG_ENTRY_ERROR = 'TLOG_ENTRY_ERROR';
-export const TLOG_ENTRY_RESET = 'TLOG_ENTRY_RESET';
+export const TLOG_ENTRY_SUCCESS = 'TLOG_ENTRY_SUCCESS';
+export const TLOG_ENTRY_FAILURE = 'TLOG_ENTRY_FAILURE';
 
-function tlogEntryRequest() {
-  return {
-    type: TLOG_ENTRY_REQUEST,
-  };
-}
+function fetchTlogEntry(id) {
+  const endpoint = makeReqUrl(ApiRoutes.entry_url(id), { include_comments: true });
 
-function tlogEntryReceive({ data, id }) {
   return {
-    type: TLOG_ENTRY_RECEIVE,
-    payload: {
-      id,
-      data: { ...data, url: data.url || data.entry_url },   //FIXME inconsistent data /entries|/tlogs
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.ENTRY,
+      types: [ TLOG_ENTRY_REQUEST, TLOG_ENTRY_SUCCESS, TLOG_ENTRY_FAILURE ],
+      opts: auth,
     },
   };
 }
 
-function tlogEntryError(error) {
-  return {
-    type: TLOG_ENTRY_ERROR,
-    payload: error,
-  };
-}
-
-export function resetTlogEntry() {
-  return {
-    type: TLOG_ENTRY_RESET,
-  };
-}
-
-export function setTlogEntry({ entry, commentator }) {
-  return tlogEntryReceive({ data: { ...entry, commentator }, id: entry.id });
-}
-
-function shouldFetchTlogEntry(state, id) {
-  return (!state.tlogEntry.isFetching &&
-          (!state.tlogEntry.id || state.tlogEntry.id !== id));
-}
-
-function fetchTlogEntry(id) {
-  return (dispatch) => {
-    dispatch(resetTlogEntry());
-    dispatch(tlogEntryRequest());
-    return $.ajax({ url: ApiRoutes.entry_url(id), data: { include_comments: true } })
-      .done((data) => dispatch(tlogEntryReceive({ data, id })))
-      .fail((error) => {
-        NoticeService.errorResponse(error);
-        return dispatch(tlogEntryError({ error: error.responseJSON, id }));
-      });
-  };
-}
-
-export function getTlogEntry(id, force) {
+export function getTlogEntry(id, force, requiredFields=[]) {
   return (dispatch, getState) => {
-    if (force || shouldFetchTlogEntry(getState(), id)) {
+    const { entities: { entry: entryColl }, tlogEntry: { isFetching } } = getState();
+    const entry = entryColl[id];
+
+    if (!force && entry && requiredFields.every((key) => entry.hasOwnProperty(key))) {
+      return null;
+    }
+
+    if (!isFetching) {
       return dispatch(fetchTlogEntry(id));
     }
   };

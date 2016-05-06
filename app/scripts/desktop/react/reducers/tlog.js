@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const actionMap = {
-  [TLOG_REQUEST](state) {
+  [TLOG_REQUEST](state, { slug }) {
     return Object.assign({}, state, {
       isFetching: true,
       error: null,

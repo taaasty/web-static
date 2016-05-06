@@ -60,10 +60,10 @@ const actionMap = {
     return Object.assign({}, state, { data: initialState.data });
   },
 
-  [TLOG_ENTRIES_DELETE_ENTRY](state, entryId) {
+  [TLOG_ENTRIES_DELETE_ENTRY](state, { entryId }) {
     const items = state.data.items.filter((id) => id !== entryId);
 
-    return merge({}, state, { data: { items }});
+    return Object.assign({}, state, { data: Object.assign({}, state.data, { items }) });
   },
 
   [TLOG_ENTRIES_INVALIDATE](state) {

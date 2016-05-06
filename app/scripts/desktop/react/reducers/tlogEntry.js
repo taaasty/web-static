@@ -1,50 +1,34 @@
 import createReducer from './createReducer';
 import {
   TLOG_ENTRY_REQUEST,
-  TLOG_ENTRY_RECEIVE,
-  TLOG_ENTRY_ERROR,
-  TLOG_ENTRY_RESET,
+  TLOG_ENTRY_SUCCESS,
+  TLOG_ENTRY_FAILURE,
 } from '../actions/TlogEntryActions';
 
 const initialState = {
   isFetching: false,
   error: null,
-  id: null,
-  data: {
-    commentator: {},
-    author: {},
-    tlog: {},
-  },
 };
 
 const actionMap = {
   [TLOG_ENTRY_REQUEST](state) {
-    return {
-      ...state,
-      data: initialState.data,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [TLOG_ENTRY_RECEIVE](state, data) {
-    return {
-      ...data,
+  [TLOG_ENTRY_SUCCESS](state) {
+    return Object.assign({}, state, {
       isFetching: false,
       error: null,
-    };
+    });
   },
 
-  [TLOG_ENTRY_RESET](state) {
-    return initialState;
-  },
-
-  [TLOG_ENTRY_ERROR](state, error) {
-    return {
-      ...state,
-      ...error,
+  [TLOG_ENTRY_FAILURE](state, error) {
+    return Object.assign({}, error, {
       isFetching: false,
-    };
+    });
   },
 };
 
