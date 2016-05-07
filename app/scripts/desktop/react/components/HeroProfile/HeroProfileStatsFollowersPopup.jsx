@@ -2,7 +2,7 @@
  ScrollerMixin, ComponentManipulationsMixin, */
 import React, { createClass, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
-import UserAvatar from '../UserAvatar';
+import UserAvatar from '../UserAvatar/new';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
 
@@ -57,14 +57,14 @@ const HeroProfileStatsFollowersPopup = createClass({
   },
 
   renderListItem({ reader }, key) {
-    const { name, tlog_url } = reader;
+    const { name, tlogUrl } = reader;
 
     return (
       <article className="user__item" key={key}>
         <a
           className="user__link"
-          href={tlog_url}
-          onClick={this.handleClickItem.bind(null, uri(tlog_url).path())}
+          href={tlogUrl}
+          onClick={this.handleClickItem.bind(null, uri(tlogUrl).path())}
           title={name}
         >
           <span className="user__avatar">

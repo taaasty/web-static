@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import UserAvatar from '../UserAvatar';
+import UserAvatar from '../UserAvatar/new';
 
 const HERO_AVATAR_SIZE = 110;
 const HERO_AVATAR_SIZE_OPEN = 200;

@@ -10,20 +10,6 @@ import TastyConfirmController from '../../controllers/TastyConfirmController';
 const LOAD_COMMENTS_LIMIT = 50;
 
 class EntryTlogComments extends Component {
-  state = this.initState(this.props);
-  componentWillReceiveProps(nextProps) {
-    if (this.props.entry.id !== nextProps.entry.id) {
-      this.setState(this.initState(nextProps));
-    }
-  }
-  initState(props) {
-    return {
-      comments: props.entry.comments || [],
-      totalCount: props.entry.commentsCount,
-      processCreate: false,
-      loadingMore: false,
-    };
-  }
   renderLoadMoreButton() {
     if (this.state.totalCount > this.state.comments.length) {
       return (
@@ -112,18 +98,7 @@ class EntryTlogComments extends Component {
     });
   }
   updateComment(commentId, text) {
-    EntryActionCreators.editComment(commentId, text)
-      .then((comment) => {
-        for (let i = 0; i < this.state.comments.length; i++) {
-          if (this.state.comments[i].id === commentId) {
-            this.state.comments.splice(i, 1, comment);
-            break;
-          }
-        }
-      })
-      .always(() => {
-        this.forceUpdate();
-      });
+    EntryActionCreators.editComment(commentId, text);
   }
   deleteComment(commentId) {
     TastyConfirmController.show({
@@ -131,36 +106,13 @@ class EntryTlogComments extends Component {
       acceptButtonText: i18n.t('delete_comment_button'),
       onAccept: () => {
         EntryActionCreators.deleteComment(commentId)
-          .then(() => {
-            const newComments = this.state.comments.filter((comment) => (
-              comment.id !== commentId
-            ));
-
-            this.setState({
-              comments: newComments,
-              totalCount: this.state.totalCount - 1
-            });
-          });
       },
     });
   }
   loadMore() {
     const toCommentID = this.state.comments[0] ? this.state.comments[0].id : null;
 
-    this.setState({ loadingMore: true });
-    EntryActionCreators.loadComments(this.props.entry.id, toCommentID, this.props.limit)
-      .then((data) => {
-        let newComments = data.comments.concat(this.state.comments);
-        this.setState({
-          comments: data.comments.concat(this.state.comments),
-          totalCount: data.totalCount,
-        }, () => {
-          $(document).trigger('domChanged');
-        });
-      })
-      .always(() => {
-        this.setState({ loadingMore: false });
-      });
+    EntryActionCreators.loadComments(this.props.entry.id, toCommentID, this.props.limit);
   }
   render() {
     return (

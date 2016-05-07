@@ -129,6 +129,8 @@ export const Schemas = {
   FLOW_COLL: { items: arrayOf(flowCollItemSchema) },
   ENTRY: entrySchema,
   ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
+  COMMENT: commentSchema,
+  COMMENT_COLL: { comments: arrayOf(commentSchema) },
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   CONVERSATION: conversationSchema,
