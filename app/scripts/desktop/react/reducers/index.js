@@ -5,6 +5,7 @@ import appStats from './appStats';
 import calendar from './calendar';
 import currentUser from './currentUser';
 import editor from './editor';
+import entryState from './entryState';
 import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
@@ -13,7 +14,6 @@ import people from './people';
 import tagEntries from './tagEntries';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
-import tlogEntry from './tlogEntry';
 import userToolbar from './userToolbar';
 
 export default {
@@ -23,6 +23,7 @@ export default {
   calendar,
   currentUser,
   editor,
+  entryState,
   feedEntries,
   feedStatus,
   flow,
@@ -31,6 +32,5 @@ export default {
   tagEntries,
   tlog,
   tlogEntries,
-  tlogEntry,
   userToolbar,
 };

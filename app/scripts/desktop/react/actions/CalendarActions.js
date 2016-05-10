@@ -1,6 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { auth } from './CurrentUserActions';
+import { headerOpts } from './helpers';
 
 export const CALENDAR_REQUEST = 'CALENDAR_REQUEST';
 export const CALENDAR_SUCCESS = 'CALENDAR_SUCCESS';
@@ -14,7 +14,7 @@ function fetchCalendar(tlogId) {
       endpoint,
       schema: Schemas.CALENDAR,
       types: [ CALENDAR_REQUEST, CALENDAR_SUCCESS, CALENDAR_FAILURE ],
-      opts: auth,
+      opts: headerOpts,
     },
   };
 }

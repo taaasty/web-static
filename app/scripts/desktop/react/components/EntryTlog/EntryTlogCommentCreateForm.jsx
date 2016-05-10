@@ -2,9 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import EntryTlogCommentForm from './EntryTlogCommentForm';
 
-const FORM_SHOW_STATE = 'show',
-      FORM_LINK_STATE = 'link',
-      FORM_HIDDEN_STATE = 'hidden';
+const FORM_SHOW_STATE = 'show';
+const FORM_LINK_STATE = 'link';
+const FORM_HIDDEN_STATE = 'hidden';
 
 class EntryTlogCommentCreateForm extends Component {
   state = {
@@ -15,6 +15,7 @@ class EntryTlogCommentCreateForm extends Component {
   clear() {
     if (this.state.currentState === FORM_SHOW_STATE) {
       this.refs.form.clear();
+      this.refs.form.focus();
     }
   }
   reply(username) {

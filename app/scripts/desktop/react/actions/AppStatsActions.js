@@ -1,6 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { auth } from './CurrentUserActions';
+import { headerOpts } from './helpers';
 
 export const APP_STATS_REQUEST = 'APP_STATS_REQUEST';
 export const APP_STATS_SUCCESS = 'APP_STATS_SUCCESS';
@@ -16,7 +16,7 @@ function fetchAppStats() {
       endpoint,
       schema: Schemas.NONE,
       types: [ APP_STATS_REQUEST, APP_STATS_SUCCESS, APP_STATS_FAILURE ],
-      opts: auth,
+      opts: headerOpts,
     },
     updatedAt: (new Date()).valueOf(),
   };

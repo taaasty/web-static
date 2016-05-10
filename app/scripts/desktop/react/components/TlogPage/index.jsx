@@ -159,7 +159,7 @@ TlogPageContainer.propTypes = {
 
 export default connect(
   (state, { params }) => {
-    const { comment, entry, entryCollItem, tlog } = state.entities;
+    const { entry, entryCollItem, tlog } = state.entities;
 
     function tlogItem(id) {
       if (!id) {
@@ -182,11 +182,6 @@ export default connect(
           author: tlog[entryItem.author],
           commentator: tlogItem(entryItem.commentator),
           tlog: tlogItem(entryItem.tlog),
-          comments: entryItem.comments.map((commentId) => {
-            const c = comment[commentId];
-
-            return Object.assign({}, c, { user: tlogItem(c.user) });
-          }),
         }),
       };
     });

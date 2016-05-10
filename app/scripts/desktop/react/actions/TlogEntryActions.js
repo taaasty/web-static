@@ -1,7 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { auth } from './CurrentUserActions';
-import { makeReqUrl } from './helpers';
+import { makeReqUrl, headerOpts } from './helpers';
 
 export const TLOG_ENTRY_REQUEST = 'TLOG_ENTRY_REQUEST';
 export const TLOG_ENTRY_SUCCESS = 'TLOG_ENTRY_SUCCESS';
@@ -15,14 +14,16 @@ function fetchTlogEntry(id) {
       endpoint,
       schema: Schemas.ENTRY,
       types: [ TLOG_ENTRY_REQUEST, TLOG_ENTRY_SUCCESS, TLOG_ENTRY_FAILURE ],
-      opts: auth,
+      opts: headerOpts,
     },
+    entryId: id,
   };
 }
 
 export function getTlogEntry(id, force, requiredFields=[]) {
   return (dispatch, getState) => {
-    const { entities: { entry: entryColl }, tlogEntry: { isFetching } } = getState();
+    const { entities: { entry: entryColl }, entryState } = getState();
+    const { isFetching } = entryState[id] || {};
     const entry = entryColl[id];
 
     if (!force && entry && requiredFields.every((key) => entry.hasOwnProperty(key))) {

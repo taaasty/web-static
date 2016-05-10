@@ -4,10 +4,20 @@ import EntryTlogCommentList from './EntryTlogCommentList';
 import EntryTlogCommentsLoadMore from './EntryTlogCommentsLoadMore';
 
 class EntryTlogComments extends Component {
+  replyComment(username) {
+    this.refs.createForm.reply(username);
+  }
+  startComment() {
+    this.refs.createForm.open();
+  }
+  postComment(text) {
+    this.props.postComment(text)
+      .then(() => this.refs.createForm.clear());
+  }
   render() {
     const { commentator, comments, commentsCount, deleteComment, isFormHidden,
-            entryId, entryUrl, limit, loadMore, loading, postComment, posting,
-            replyComment, reportComment, updateComment } = this.props;
+            entryId, entryUrl, limit, loadMore, loading, posting, reportComment,
+            updateComment } = this.props;
 
     return (
       <section className="comments">
@@ -26,13 +36,13 @@ class EntryTlogComments extends Component {
            entryId={entryId}
            entryUrl={entryUrl}
            onCommentDelete={deleteComment}
-           onCommentReply={replyComment}
+           onCommentReply={this.replyComment.bind(this)}
            onCommentReport={reportComment}
            onCommentUpdate={updateComment}
          />}
         <EntryTlogCommentCreateForm {...this.props}
           isFormHidden={isFormHidden}
-          onCommentCreate={postComment}
+          onCommentCreate={this.postComment.bind(this)}
           process={posting}
           ref="createForm"
           totalCommentsCount={commentsCount}
@@ -55,7 +65,6 @@ EntryTlogComments.propTypes = {
   loading: PropTypes.bool.isRequired,
   postComment: PropTypes.func.isRequired,
   posting: PropTypes.bool.isRequired,
-  replyComment: PropTypes.func.isRequired,
   reportComment: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
 };

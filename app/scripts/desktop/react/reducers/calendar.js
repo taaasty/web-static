@@ -26,7 +26,7 @@ const actionMap = {
     });
   },
 
-  [CALENDAR_FAILURE](state, error) {
+  [CALENDAR_FAILURE](state, { error }) {
     return Object.assign({}, state, {
       error,
       isFetching: false,

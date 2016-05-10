@@ -129,7 +129,7 @@ EntryPageContainer.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const { currentUser, entities: { comment, tlog, entryCollItem, entry } } = state;
+    const { currentUser, entities: { tlog, entryCollItem, entry } } = state;
     const { params: { slug }, location: { state: locationState } } = ownProps;
     const entryColl = entryCollItem[locationState.id];
     const commentator = entryColl && entryColl.commentator
@@ -146,11 +146,6 @@ export default connect(
         author: tlog[tlogEntry.author],
         tlog: tlog[tlogEntry.tlog],
         commentator: tlog[tlogEntry.tlog],
-        comments: (tlogEntry.comments || []).map((commentId) => {
-          const c = comment[commentId];
-
-          return Object.assign({}, c, { user: tlog[c.user] });
-        }),
       })) || {},
     };
   },

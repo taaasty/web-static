@@ -1,8 +1,7 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
 import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
-import { auth } from './CurrentUserActions';
-import { makeReqUrl } from './helpers';
+import { makeReqUrl, headerOpts } from './helpers';
 
 export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
 export const TLOG_ENTRIES_SUCCESS = 'TLOG_ENTRIES_SUCCESS';
@@ -35,7 +34,7 @@ function fetchTlogEntries(endpoint, signature) {
       endpoint,
       types: [ TLOG_ENTRIES_REQUEST, TLOG_ENTRIES_SUCCESS, TLOG_ENTRIES_FAILURE ],
       schema: Schemas.ENTRY_COLL,
-      opts: auth,
+      opts: headerOpts,
     },
   };
 }
@@ -54,7 +53,7 @@ export function getTlogEntries(params) {
       endpoint(slug, section, {
         date,
         limit: date ? void 0 : INITIAL_LOAD_LIMIT,
-        since_entry_id: sinceId || void 0,
+        sinceEntryId: sinceId || void 0,
         q: query || void 0,
       }),
       signature(params)

@@ -44,18 +44,6 @@ export default function prop2redux({
   const query = uri().query(true).q;
 
   return {
-    tlogEntry: {
-      data: {
-        author: {},
-        tlog: {},
-        commentator: null,
-        ...tlogEntry,
-        url: tlogEntry && tlogEntry.entry_url,
-      },
-      id: tlogEntry && tlogEntry.id,
-      isFetching: false,
-      error: tlogEntry && tlogEntry.error ? { error_code: tlogEntry.error } : void 0,
-    },
     flow: {
       data: { flowpic: {}, staffs: [], ...flow },
       id: flow && flow.id,

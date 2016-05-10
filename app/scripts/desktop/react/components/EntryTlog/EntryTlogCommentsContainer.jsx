@@ -1,74 +1,121 @@
-/*global i18n */
+/*global $, i18n */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import PostAuthService from '../../services/PostAuthService';
+import { loadComments } from '../../actions/CommentsActions';
+import { deleteComment, postComment, reportComment, updateComment } from '../../actions/CommentActions';
+import EntryTlogComments from './EntryTlogComments';
 import TastyConfirmController from '../../controllers/TastyConfirmController';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
 class EntryTlogCommentsContainer extends Component {
-  postComment(text) {
-    const { id } = this.props.entry;
-
-    PostAuthService.run(
-      'comment',
-      () => {
-        postComment(id, text)
-          .then(() => {
-            if (window.ga) {
-              window.ga('send', 'event', 'UX', 'Comment');
-            }
-            $(document).trigger('domChanged');
-            this.refs.createForm.clear();
-          });
-      },
-      id,
-      text
-    );
-  }
-  replyComment(username) {
-    this.refs.createForm.reply(username);
-  }
   startComment() {
-    this.refs.createForm.open();
+    this.refs.main.startComment();
   }
-  reportComment(commentId) {
+  postComment(text) {
+    const { entry: { id }, postComment } = this.props;
+
+    return postComment(id, text)
+      .then(() => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'Comment');
+        }
+        $(document).trigger('domChanged');
+      });
+
+    // TODO: restore post auth logic
+  }
+  reportComment(id) {
     TastyConfirmController.show({
       message: i18n.t('report_comment_confirm'),
       acceptButtonText: i18n.t('report_comment_button'),
-      onAccept: () => {
-        EntryActionCreators.reportComment(commentId);
-      },
+      onAccept: () => this.props.reportComment(id),
     });
   }
-  updateComment(commentId, text) {
-    EntryActionCreators.editComment(commentId, text);
+  updateComment(id, text) {
+    this.props.updateComment(id, text);
   }
-  deleteComment(commentId) {
+  deleteComment(id) {
     TastyConfirmController.show({
       message: i18n.t('delete_comment_confirm'),
       acceptButtonText: i18n.t('delete_comment_button'),
-      onAccept: () => {
-        EntryActionCreators.deleteComment(commentId)
-      },
+      onAccept: () => this.props.deleteComment(id),
     });
   }
   loadMore() {
-    const toCommentID = this.state.comments[0] ? this.state.comments[0].id : null;
+    const { comments: [ firstComment ], entry: { id }, limit, loadComments } = this.props;
 
-    EntryActionCreators.loadComments(this.props.entry.id, toCommentID, this.props.limit);
+    loadComments({ entryId: id, toCommentId: firstComment && firstComment.id, limit });
   }
   render() {
+    const { commentator, comments, entry, entryState, isFormHidden, limit } = this.props;
+
     return (
-        <EntryTlogComments
-        />;
+      <EntryTlogComments
+        commentator={commentator}
+        comments={comments}
+        commentsCount={entry.commentsCount}
+        deleteComment={this.deleteComment.bind(this)}
+        entryId={entry.id}
+        entryUrl={entry.url}
+        isFormHidden={!!isFormHidden}
+        limit={limit}
+        loadMore={this.loadMore.bind(this)}
+        loading={!!entryState.isLoadingComments}
+        postComment={this.postComment.bind(this)}
+        posting={!!entryState.isPostingComment}
+        ref="main"
+        reportComment={this.reportComment.bind(this)}
+        updateComment={this.updateComment.bind(this)}
+      />
     );
   }
 }
 
 EntryTlogCommentsContainer.propTypes = {
+  commentator: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
-  isFormHidden: 
+  entryState: PropTypes.object.isRequired,
+  isFormHidden: PropTypes.bool,
+  limit: PropTypes.number,
+  loadComments: PropTypes.func.isRequired,
+  postComment: PropTypes.func.isRequired,
+  reportComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
 };
 
-export default EntryTlogCommentsContainer;
+EntryTlogCommentsContainer.defaultProps = {
+  limit: LOAD_COMMENTS_LIMIT,
+};
+
+export default connect(
+  (state, { commentator, entry, isFormHidden, limit }) => {
+    const { entities: { comment, tlog }, entryComments, entryState: entryStateStore } = state;
+    const comments = Object.keys(comment)
+            .filter((id) => comment[id].entryId === entry.id)
+            .map((id) => {
+              const c = comment[id];
+              return Object.assign({}, c, { user: tlog[c.user] });
+            })
+            .sort((a, b) => (new Date(a.createdAt)).valueOf() - (new Date(b.createdAt)).valueOf());
+    const entryState = entryStateStore[entry.id] || {};
+
+    return {
+      commentator,
+      comments,
+      entry,
+      entryState,
+      isFormHidden,
+      limit,
+    };
+  },
+  {
+    deleteComment,
+    loadComments,
+    postComment,
+    reportComment,
+    updateComment,
+  }
+)(EntryTlogCommentsContainer);

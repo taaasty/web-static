@@ -295,54 +295,6 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
-    loadHtml: (url) ->
-      key = Constants.api.LOAD_HTML_ENTRIES
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url
-
-    loadComments: (entryID, toCommentID, limit) ->
-      url = ApiRoutes.comments_url()
-      data = {
-        limit,
-        entry_id: entryID,
-        to_comment_id: toCommentID
-      }
-
-      getRequest url, data
-
-    createComment: (entryID, text) ->
-      url = ApiRoutes.comments_url()
-      key = Constants.api.CREATE_COMMENT
-      data =
-        text: text
-        entry_id: entryID
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, data
-
-    reportComment: (commentID) ->
-      url = ApiRoutes.comments_report_url(commentID)
-      key = Constants.api.REPORT_COMMENT
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    editComment: (commentID, text) ->
-      url = ApiRoutes.comments_edit_delete_url(commentID)
-      key = Constants.api.EDIT_COMMENT
-      data = { text }
-
-      abortPendingRequests key
-      _pendingRequests[key] = putRequest url, data
-
-    deleteComment: (commentID) ->
-      url = ApiRoutes.comments_edit_delete_url(commentID)
-      key = Constants.api.DELETE_COMMENT
-
-      abortPendingRequests key
-      _pendingRequests[key] = deleteRequest url
-
   user:
     predict: (query, limit) ->
       url = ApiRoutes.users_predict()

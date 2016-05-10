@@ -161,16 +161,6 @@ let EntryActionCreators = {
         });
       });
   },
-  loadComments(entryID, toCommentID, limit) {
-    return Api.entry.loadComments(entryID, toCommentID, limit)
-      .fail((xhr) => {
-        ErrorService.notifyErrorResponse('Загрузка комментариев', {
-          method: 'EntryActionCreators.loadComments(entryID, toCommentID, limit)',
-          methodArguments: {entryID, toCommentID, limit},
-          response: xhr.responseJSON,
-        });
-      });
-  },
   createComment(entryID, text) {
     return Api.entry.createComment(entryID, text)
       .fail((xhr) => {

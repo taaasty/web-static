@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogUnknownType extends Component {
   renderTitle() {
@@ -28,7 +28,7 @@ class EntryTlogUnknownType extends Component {
           <Text value={i18n.t('entry.unknown_type')} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
