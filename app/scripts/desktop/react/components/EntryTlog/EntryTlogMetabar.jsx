@@ -17,7 +17,7 @@ function EntryTlogMetabar(props) {
     );
   }
 
-  const { commentator, entry, hostTlogId, isFeed, onComment } = props;
+  const { commentator, entry, hostTlogId, onComment } = props;
 
   return (
     <span className="meta-bar">
@@ -31,11 +31,11 @@ function EntryTlogMetabar(props) {
       <EntryTlogMetabarShare commentator={commentator} entry={entry} />
       <MetabarAuthor
         author={entry.author}
-        hostTlogId={host_tlog_id}
+        hostTlogId={hostTlogId}
         size={24}
         tlog={entry.tlog}
       />
-      <EntryTlogMetabarDate entry={entry} isFeed={isFeed} />
+      <EntryTlogMetabarDate entry={entry} />
       {entry.tags && entry.tags.length && renderTags()}
       <EntryTlogMetabarActions {...props} />
     </span>
@@ -46,7 +46,6 @@ EntryTlogMetabar.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hostTlogId: PropTypes.number,
-  isFeed: PropTypes.bool,
   onComment: PropTypes.func,
 };
 

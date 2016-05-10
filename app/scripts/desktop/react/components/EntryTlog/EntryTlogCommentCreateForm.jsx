@@ -8,7 +8,7 @@ const FORM_SHOW_STATE = 'show',
 
 class EntryTlogCommentCreateForm extends Component {
   state = {
-    currentState: this.props.hideCommentForm
+    currentState: this.props.isFormHidden
       ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
       : FORM_SHOW_STATE,
   };
@@ -65,8 +65,7 @@ class EntryTlogCommentCreateForm extends Component {
 
 EntryTlogCommentCreateForm.propTypes = {
   commentator: PropTypes.object.isRequired,
-  entryID: PropTypes.number.isRequired,
-  hideCommentForm: PropTypes.bool,
+  isFormHidden: PropTypes.bool,
   onCommentCreate: PropTypes.func,
   process: PropTypes.bool,
   totalCommentsCount: PropTypes.number.isRequired,

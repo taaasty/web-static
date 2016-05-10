@@ -26,7 +26,7 @@ class EntryBricks extends Component {
     this.forceUpdate();
   }
   render() {
-    const { canLoad, children, entries, host_tlog_id, isFeed, loading, onLoadMoreEntries } = this.props;
+    const { canLoad, children, entries, host_tlog_id, loading, onLoadMoreEntries } = this.props;
 
     return (
       <div className="bricks-wrapper">
@@ -46,7 +46,6 @@ class EntryBricks extends Component {
                <EntryBrick
                  entry={item.entry}
                  host_tlog_id={host_tlog_id}
-                 isFeed={isFeed}        
                  key={item.entry.id}
                  moderation={item.moderation}
                />)
@@ -62,7 +61,6 @@ EntryBricks.propTypes = {
   canLoad: PropTypes.bool.isRequired,
   entries: PropTypes.array.isRequired,
   host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   onLoadMoreEntries: PropTypes.func.isRequired,
 };

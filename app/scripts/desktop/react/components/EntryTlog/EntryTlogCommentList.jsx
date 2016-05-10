@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { PropTypes } from 'react';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
-function EntryTlogCommentList({ commentator, comments, entryId, entryUrl, isFeed,
+function EntryTlogCommentList({ commentator, comments, entryId, entryUrl,
                                 onCommentReply, onCommentUpdate,
                                 onCommentReport, onCommentDelete }) {
 
@@ -18,7 +18,6 @@ function EntryTlogCommentList({ commentator, comments, entryId, entryUrl, isFeed
             commentator={commentator}
             entryId={entryId}
             entryUrl={entryUrl}
-            isFeed={isFeed}
             key={comment.id}
             onCommentDelete={onCommentDelete.bind(null, comment.id)}
             onCommentReply={onCommentReply.bind(null, comment.user.name)}
@@ -36,7 +35,6 @@ EntryTlogCommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   entryId: PropTypes.number.isRequired,
   entryUrl: PropTypes.string.isRequired,
-  isFeed: PropTypes.bool,
 };
 
 export default EntryTlogCommentList;

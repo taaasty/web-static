@@ -15,11 +15,7 @@ class FeedPageBody extends Component {
   renderBricks() {
     const { appendFeedEntries, children, feedEntries } = this.props;
     return (
-      <EntryBricksContainer
-        entries={feedEntries}
-        isFeed
-        loadMoreEntries={appendFeedEntries}
-      >
+      <EntryBricksContainer entries={feedEntries} loadMoreEntries={appendFeedEntries}>
         {children}
       </EntryBricksContainer>
     );

@@ -41,7 +41,7 @@ class EntryTlogCommentMetabarActions extends Component {
   }
   render() {
     const { marginTop, open } = this.state;
-    const { comment, entryId, isFeed, onCommentReport,
+    const { comment, entryId, onCommentReport,
             onCommentEdit, onCommentDelete, url } = this.props;
     const menuClasses = classNames({
       'meta-item__dropdown': true,
@@ -65,7 +65,6 @@ class EntryTlogCommentMetabarActions extends Component {
           <EntryTlogCommentMetabarActionLink
             entryId={entryId}
             icon="icon--hyperlink"
-            isFeed={isFeed}
             title={i18n.t('link_comment_item')}
             url={url}
           />
@@ -105,7 +104,6 @@ class EntryTlogCommentMetabarActions extends Component {
 EntryTlogCommentMetabarActions. propTypes = {
   comment: PropTypes.object.isRequired,
   entryId: PropTypes.number.isRequired,
-  isFeed: PropTypes.bool,
   onCommentDelete: PropTypes.func,
   onCommentEdit: PropTypes.func,
   onCommentReport: PropTypes.func,

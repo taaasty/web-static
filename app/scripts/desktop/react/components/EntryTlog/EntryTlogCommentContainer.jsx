@@ -46,8 +46,6 @@ EntryTlogCommentContainer.propTypes = {
   comment: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   entryUrl: PropTypes.string.isRequired,
-  isFeed: PropTypes.bool,
-  onCommentUpdate: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCommentContainer;

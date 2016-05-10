@@ -26,7 +26,7 @@ class EntryTlogMetabarActions extends Component {
          />}
         <DropdownActionSPA
           icon="icon--hyperlink"
-          state={{ id, isFeed: this.props.isFeed }}
+          state={{ id }}
           title={i18n.t('link_entry_item')}
           url={url}
         />
@@ -52,7 +52,6 @@ class EntryTlogMetabarActions extends Component {
 
 EntryTlogMetabarActions.propTypes = {
   entry: PropTypes.object.isRequired,
-  isFeed: PropTypes.bool,
 };
 
 class EntryTlogMetabarFavorite extends Component {

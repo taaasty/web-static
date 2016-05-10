@@ -31,11 +31,7 @@ class TagsPage extends Component {
           <div className="page-body">
             <div className="layout-outer">
               <Helmet title={title} />
-              <EntryBricksContainer
-                entries={tagEntries}
-                isFeed
-                loadMoreEntries={appendTagEntries}
-              />
+              <EntryBricksContainer entries={tagEntries} loadMoreEntries={appendTagEntries} />
             </div>
           </div>
         </div>

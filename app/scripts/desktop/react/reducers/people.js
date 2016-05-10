@@ -1,56 +1,45 @@
 import createReducer from './createReducer';
 import {
   PEOPLE_REQUEST,
-  PEOPLE_RECEIVE,
-  PEOPLE_ERROR,
-  PEOPLE_RESET,
+  PEOPLE_SUCCESS,
+  PEOPLE_FAILURE,
   PEOPLE_RECOMMENDED_REQUEST,
-  PEOPLE_RECOMMENDED_RECEIVE,
-  PEOPLE_RECOMMENDED_ERROR,
+  PEOPLE_RECOMMENDED_SUCCESS,
+  PEOPLE_RECOMMENDED_FAILURE,
 } from '../actions/PeopleActions';
 
 const initialState = {
-  data: [],
-  dataRecommended: [],
-  query: void 0,
+  ids: [],
+  idsRecommended: [],
+  signature: void 0,
   isFetching: false,
   isFetchingRecommended: false,
   error: null,
   errorRecommended: null,
-  sort: null,
 };
 
 const actionMap = {
   [PEOPLE_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [PEOPLE_RECEIVE](state, data) {
-    return {
-      ...state,
-      ...data,
+  [PEOPLE_SUCCESS](state, { response, signature }) {
+    return Object.assign({}, state, {
+      signature,
+      ids: response.result,
       isFetching: false,
       error: null,
-    };
+    });
   },
 
-  [PEOPLE_ERROR](state, error) {
-    return {
-      ...state,
-      ...error,
+  [PEOPLE_FAILURE](state, error) {
+    return Object.assign({}, state, {
+      error,
       isFetching: false,
-    };
-  },
-
-  [PEOPLE_RESET](state) {
-    return {
-      ...state,
-      data: [],
-    };
+    });
   },
 
   [PEOPLE_RECOMMENDED_REQUEST](state) {
@@ -61,7 +50,7 @@ const actionMap = {
     };
   },
 
-  [PEOPLE_RECOMMENDED_RECEIVE](state, data) {
+  [PEOPLE_RECOMMENDED_SUCCESS](state, data) {
     return {
       ...state,
       ...data,
@@ -70,7 +59,7 @@ const actionMap = {
     };
   },
 
-  [PEOPLE_RECOMMENDED_ERROR](state, error) {
+  [PEOPLE_RECOMMENDED_FAILURE](state, error) {
     return {
       ...state,
       isFetchingRecommended: false,

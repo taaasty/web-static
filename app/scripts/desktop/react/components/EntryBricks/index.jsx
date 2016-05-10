@@ -4,14 +4,13 @@ import EntryBricks from './EntryBricks';
 class EntryBricksContainer extends Component {
   render() {
     const { children, entries: { isFetching, data: { items, has_more } },
-            hostTlogId, isFeed, loadMoreEntries } = this.props;
+            hostTlogId, loadMoreEntries } = this.props;
 
     return (
       <EntryBricks
         canLoad={!isFetching && !!has_more}
         entries={items}
         host_tlog_id={hostTlogId}
-        isFeed={isFeed}
         loading={isFetching}
         onLoadMoreEntries={loadMoreEntries}
       >
@@ -35,7 +34,6 @@ EntryBricksContainer.propTypes = {
     isFetching: PropTypes.bool,
   }).isRequired,
   hostTlogId: PropTypes.number,
-  isFeed: PropTypes.bool,
   loadMoreEntries: PropTypes.func.isRequired,
 };
 

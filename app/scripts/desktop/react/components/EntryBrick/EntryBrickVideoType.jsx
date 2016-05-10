@@ -8,7 +8,7 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
+function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
   function renderBrickBody() {
     return (
       <div className="brick__body">
@@ -16,7 +16,7 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
           <Link
             className="brick__link"
             title={entry.title_truncated}
-            to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+            to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
           >
             <Text value={entry.title_truncated} withHTML />
           </Link>
@@ -27,7 +27,7 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
 
   function renderVideo() {
     return (
-      <Link to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
+      <Link to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
         <div className="video__cover">
           <Image image={entry.preview_image} maxWidth={brickWidth} />
           {entry.is_playable && <div className="video__overlay" />}
@@ -45,11 +45,7 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
       </div>
       {entry.title_truncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar
-          entry={entry}
-          host_tlog_id={host_tlog_id}
-          isFeed={isFeed}
-        />
+        <EntryBrickMetabar entry={entry} host_tlog_id={host_tlog_id} />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -64,7 +60,6 @@ EntryBrickVideoType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

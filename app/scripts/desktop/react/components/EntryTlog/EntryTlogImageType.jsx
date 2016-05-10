@@ -17,28 +17,17 @@ class EntryTlogImageType extends Component {
     }
   }
   render() {
-    const { entry, isFeed, isInList } = this.props;
+    const { entry, isInList } = this.props;
     const { imageAttachments, isPrivate, title } = entry;
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink
-            entry={entry}
-            isFeed={isFeed}
-            show={isInList}
-          >
-            <ImageAttachmentsCollage
-              imageAttachments={imageAttachments}
-              width={712}
-            />
+          <EntryTlogContentLink entry={entry} show={isInList}>
+            <ImageAttachmentsCollage imageAttachments={imageAttachments} width={712} />
           </EntryTlogContentLink>
           {isPrivate && <PrivacyBadge />}
-          <EntryTlogContentLink
-            entry={entry}
-            isFeed={isFeed}
-            show={isInList}
-          >
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <Text value={title} withHTML />
           </EntryTlogContentLink>
         </div>
@@ -56,7 +45,6 @@ EntryTlogImageType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 
