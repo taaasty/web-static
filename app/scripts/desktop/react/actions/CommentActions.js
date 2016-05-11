@@ -1,23 +1,14 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { postOpts } from './helpers';
-
-export const COMMENT_POST_REQUEST = 'COMMENT_POST_REQUEST';
-export const COMMENT_POST_SUCCESS = 'COMMENT_POST_SUCCESS';
-export const COMMENT_POST_FAILURE = 'COMMENT_POST_FAILURE';
-
-export const COMMENT_DELETE_REQUEST = 'COMMENT_DELETE_REQUEST';
-export const COMMENT_DELETE_SUCCESS = 'COMMENT_DELETE_SUCCESS';
-
-export const COMMENT_UPDATE_REQUEST = 'COMMENT_UPDATE_REQUEST';
-export const COMMENT_UPDATE_SUCCESS = 'COMMENT_UPDATE_SUCCESS';
-
-export const COMMENT_REPORT_REQUEST = 'COMMENT_REPORT_REQUEST';
-export const COMMENT_REPORT_SUCCESS = 'COMMENT_REPORT_SUCCESS';
+import { deleteOpts, postOpts, putOpts } from './reqHelpers';
 
 export const COMMENT_REQUEST = 'COMMENT_REQUEST';
 export const COMMENT_SUCCESS = 'COMMENT_SUCCESS';
 export const COMMENT_FAILURE = 'COMMENT_FAILURE';
+
+export const COMMENT_POST_REQUEST = 'COMMENT_POST_REQUEST';
+export const COMMENT_POST_SUCCESS = 'COMMENT_POST_SUCCESS';
+export const COMMENT_POST_FAILURE = 'COMMENT_POST_FAILURE';
 
 export function postComment(entryId, text) {
   return {
@@ -31,25 +22,50 @@ export function postComment(entryId, text) {
   };
 }
 
-export function updateComment() {
-  /**
-      url = ApiRoutes.comments_edit_delete_url(commentID)
-      data = { text }
-  put
-  */
+export const COMMENT_UPDATE_REQUEST = 'COMMENT_UPDATE_REQUEST';
+export const COMMENT_UPDATE_SUCCESS = 'COMMENT_UPDATE_SUCCESS';
+export const COMMENT_UPDATE_FAILURE = 'COMMENT_UPDATE_FAILURE';
+
+export function updateComment(commentId, text) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.comments_edit_delete_url(commentId),
+      schema: Schemas.COMMENT,
+      types: [ COMMENT_UPDATE_REQUEST, COMMENT_UPDATE_SUCCESS, COMMENT_UPDATE_FAILURE ],
+      opts: putOpts({ text }),
+    },
+    commentId,
+  };
 }
 
-export function reportComment() {
-  /**
-      url = ApiRoutes.comments_report_url(commentID)
-  post
-   */
+export const COMMENT_REPORT_REQUEST = 'COMMENT_REPORT_REQUEST';
+export const COMMENT_REPORT_SUCCESS = 'COMMENT_REPORT_SUCCESS';
+export const COMMENT_REPORT_FAILURE = 'COMMENT_REPORT_FAILURE';
+
+export function reportComment(commentId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.comments_report_url(commentId),
+      schema: Schemas.NONE,
+      types: [ COMMENT_REPORT_REQUEST, COMMENT_REPORT_SUCCESS, COMMENT_REPORT_FAILURE ],
+      opts: postOpts(),
+    },
+    commentId,
+  };
 }
 
-export function deleteComment() {
-  /**
-      url = ApiRoutes.comments_edit_delete_url(commentID)
+export const COMMENT_DELETE_REQUEST = 'COMMENT_DELETE_REQUEST';
+export const COMMENT_DELETE_SUCCESS = 'COMMENT_DELETE_SUCCESS';
+export const COMMENT_DELETE_FAILURE = 'COMMENT_DELETE_FAILURE';
 
-      _pendingRequests[key] = deleteRequest url
-   */
+export function deleteComment(commentId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.comments_edit_delete_url(commentId),
+      schema: Schemas.NONE,
+      types: [ COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAILURE ],
+      opts: deleteOpts(),
+    },
+    commentId,
+  };
 }

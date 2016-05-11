@@ -1,20 +1,20 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { makeReqUrl, headerOpts } from './helpers';
+import { makeGetUrl, defaultOpts } from './reqHelpers';
 
 export const TLOG_ENTRY_REQUEST = 'TLOG_ENTRY_REQUEST';
 export const TLOG_ENTRY_SUCCESS = 'TLOG_ENTRY_SUCCESS';
 export const TLOG_ENTRY_FAILURE = 'TLOG_ENTRY_FAILURE';
 
 function fetchTlogEntry(id) {
-  const endpoint = makeReqUrl(ApiRoutes.entry_url(id), { include_comments: true });
+  const endpoint = makeGetUrl(ApiRoutes.entry_url(id), { include_comments: true });
 
   return {
     [CALL_API]: {
       endpoint,
       schema: Schemas.ENTRY,
       types: [ TLOG_ENTRY_REQUEST, TLOG_ENTRY_SUCCESS, TLOG_ENTRY_FAILURE ],
-      opts: headerOpts,
+      opts: defaultOpts,
     },
     entryId: id,
   };

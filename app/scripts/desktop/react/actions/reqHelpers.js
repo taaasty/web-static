@@ -5,7 +5,7 @@ function identity(v) {
   return v;
 }
 
-export function makeReqUrl(endpoint, params) {
+export function makeGetUrl(endpoint, params) {
   const paramStr = Object.keys(params)
           .map((k) => params[k] && `${decamelize(k)}=${encodeURIComponent(params[k])}`)
           .filter(identity)
@@ -13,9 +13,13 @@ export function makeReqUrl(endpoint, params) {
   return [ endpoint, paramStr ].filter(identity).join('?');
 }
 
-export function headerOpts(state) {
+export function defaultOpts(state) {
   const csrfNode = document.querySelector('[name="csrf-token"]');
   const opts = {
+    mode: 'cors',
+    method: 'GET',
+    redirect: 'follow',
+    credentials: 'same-origin',
     headers: {
       'X-Tasty-Client-Name': 'web_desktop',
       'X-Tasty-Client-Token': 'web',
@@ -34,9 +38,29 @@ export function headerOpts(state) {
   return opts;
 }
 
-export function postOpts(data) {
-  return (state) => merge(headerOpts(state), {
+export function postOpts(data={}) {
+  return (state) => merge(defaultOpts(state), {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(decamelizeKeys(data)),
+  });
+}
+
+export function putOpts(data={}) {
+  return (state) => merge(defaultOpts(state), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(decamelizeKeys(data)),
+  });
+}
+
+export function deleteOpts(data={}) {
+  return (state) => merge(defaultOpts(state), {
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },

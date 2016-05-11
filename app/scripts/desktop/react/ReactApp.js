@@ -12,7 +12,7 @@ import DesignActionCreators from './actions/design';
 import PopupController from './controllers/popuup';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import PostAuthService from './services/PostAuthService';
+//import PostAuthService from './services/PostAuthService';
 import MessagingService from './messaging/MessagingService';
 import NoticeService from './services/Notice';
 import moment from 'moment';
@@ -115,8 +115,8 @@ const ReactApp = {
 
     this.shellbox = new ReactShellBox();
 
-    PostAuthService.init(this, 'taaasty');
-    PostAuthService.restore();
+    //PostAuthService.init(this, 'taaasty');
+    //PostAuthService.restore();
 
     // Тултип для шаринга
     $('[tooltip]').tooltip();

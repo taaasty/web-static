@@ -10,14 +10,14 @@ const initialState = {
 };
 
 const actionMap = {
-  [EDITOR_SET_ENTRY](state, payload) {
+  [EDITOR_SET_ENTRY](state, { payload }) {
     return {
       ...state,
       entry: payload,
     };
   },
 
-  [EDITOR_SET_PREVIEW](state, payload) {
+  [EDITOR_SET_PREVIEW](state, { payload }) {
     return {
       ...state,
       preview: payload,

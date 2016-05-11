@@ -13,16 +13,10 @@ class EntryTlogCodeType extends Component {
   renderTitle() {
     const { title } = this.props.entry;
 
-    if (title) {
-      return (
-        <h1 className="post__title">{title}</h1>
-      );
-    }
+    return !!title && <h1 className="post__title">{title}</h1>;
   }
   renderActions() {
-    if (this.props.hasModeration) {
-      return <EntryTlogActions {...this.props} />;
-    }
+    return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
     const { isInList, entry } = this.props;
@@ -56,6 +50,7 @@ EntryTlogCodeType.propTypes = {
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCodeType;

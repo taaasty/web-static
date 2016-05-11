@@ -1,11 +1,24 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import EntryActionCreators from '../../actions/Entry';
 import EntryTlogContent from './EntryTlogContent';
 import EntryTlogPrivate from './EntryTlogPrivate';
 import EntryTlogError from './EntryTlogError';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import TastyConfirmController from '../../controllers/TastyConfirmController';
+import NoticeService from '../../services/Notice';
+import { connect } from 'react-redux';
+import {
+  voteEntry,
+  favoriteEntry,
+  unfavoriteEntry,
+  watchEntry,
+  unwatchEntry,
+  reportEntry,
+  deleteEntry,
+  repostEntry,
+  acceptEntry,
+  declineEntry,
+} from '../../actions/EntryActions';
 
 import { ENTRY_TYPES } from '../../constants/EntryConstants';
 import { ERROR_PRIVATE_ENTRY } from '../../../../shared/constants/ErrorConstants';
@@ -22,102 +35,91 @@ const anonCommentator = {
 };
 
 class EntryTlog extends Component {
-  state = {
-    entry: this.props.entry,
-    hasModeration: !!this.props.moderation,
-  };
-  componentWillReceiveProps(nextProps) {
-    if (this.props.entry !== nextProps.entry) {
-      this.setState({
-        entry: nextProps.entry,
-        moderation: !!nextProps.moderation,
+  voteEntry() {
+    return this.props.voteEntry(this.props.entryId)
+      .then((data) => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'Like');
+        }
+        return data;
       });
-    }
+    // TODO: restore PostAuth logic
   }
-  addToFavorites() {
-    EntryActionCreators.addToFavorites(this.props.entry.id)
-      .then(() => {
-        this.setState({ entry: { ...this.state.entry, isFavorited: true }});
-      });
-  }
-  removeFromFavorites() {
-    EntryActionCreators.removeFromFavorites(this.props.entry.id)
-      .then(() => {
-        this.setState({ entry: { ...this.state.entry, isFavorited: false }});
+  favoriteEntry() {
+    return this.props.favoriteEntry(this.props.entryId)
+      .then((data) => {
+        if (window.ga) {
+          window.ga('send', 'event', 'UX', 'AddToFavorite');
+        }
+        return data;
       });
   }
-  addToWatching() {
-    EntryActionCreators.addToWatching(this.props.entry.id)
-      .then(() => {
-        this.setState({ entry: { ...this.state.entry, isWatching: true }});
-      });
+  unfavoriteEntry() {
+    return this.props.unfavoriteEntry(this.props.entryId);
   }
-  removeFromWatching() {
-    EntryActionCreators.removeFromWatching(this.props.entry.id)
-      .then(() => {
-        this.setState({ entry: { ...this.state.entry, isWatching: false }});
-      });
+  watchEntry() {
+    return this.props.watchEntry(this.props.entryId);
   }
-  report() {
+  unwatchEntry() {
+    return this.props.unwatchEntry(this.props.entryId);
+  }
+  reportEntry() {
     TastyConfirmController.show({
       message: i18n.t('report_entry_confirm'),
       acceptButtonText: i18n.t('report_entry_button'),
       onAccept: () => {
-        EntryActionCreators.report(this.props.entry.id);
+        this.props.reportEntry(this.props.entryId)
+          .then(() => NoticeService.notifySuccess(i18n.t('report_entry_success')));
       },
     });
   }
-  delete() {
-    const {
-      entry: { id: entryID },
-      hostTlogId: tlogID,
-      onDelete,
-      successDeleteUrl,
-    } = this.props;
+  deleteEntry() {
+    const { deleteEntry, entryId, hostTlogId, onDelete } = this.props;
 
     TastyConfirmController.show({
       message: i18n.t('delete_entry_confirm'),
       acceptButtonText: i18n.t('delete_entry_button'),
       onAccept: () => {
-        EntryActionCreators.delete(entryID, tlogID)
+        deleteEntry(entryId, hostTlogId)
           .then(() => {
-            // onDelete у нас есть только если пост рендерят из контейнера
-            // тогда отдаем удаление контейнеру, иначе редиректим куда указано
-            if (typeof onDelete === 'function') {
-              onDelete(entryID);
-            } else if (successDeleteUrl) {
-              window.setTimeout(() => window.location.href = successDeleteUrl, 0);
-            }
+            NoticeService.notifySuccess(i18n.t('delete_entry_success'));
+            onDelete(entryId);
           });
       },
     });
   }
-  accept() {
-    EntryActionCreators.accept(this.props.moderation.accept_url)
-      .then(() => {
-        let { accept_action } = this.props.moderation;
+  acceptEntry() {
+    const { acceptEntry, entryId, moderation: { acceptUrl, acceptAction },
+            onDelete} = this.props;
 
-        switch(accept_action) {
+    return acceptEntry(acceptUrl)
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('messages.entry_accept_success'));
+
+        switch(acceptAction) {
           case 'delete':
-            this.props.onDelete(this.props.entry.id);
+            onDelete(entryId);
             break;
           case 'nothing':
-            this.setState({hasModeration: false});
+            //this.setState({hasModeration: false});
             break;
         }
       });
   }
-  decline() {
-    EntryActionCreators.decline(this.props.moderation.decline_url)
-      .then(() => {
-        let { decline_action } = this.props.moderation;
+  declineEntry() {
+    const { declineEntry, entryId, moderation: { declineAction, declineUrl },
+            onDelete } = this.props;
 
-        switch(decline_action) {
+    declineEntry(declineUrl)
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('messages.entry_decline_success'));
+
+        switch(declineAction) {
           case 'delete':
-            this.props.onDelete(this.props.entry.id);
+            onDelete(entryId);
             break;
           case 'nothing':
-            this.setState({hasModeration: false});
+            //this.setState({hasModeration: false});
             break;
         }
       });
@@ -135,13 +137,14 @@ class EntryTlog extends Component {
       return <EntryTlogPrivate />;
     } else if (response_code === 404) {
       return <EntryTlogError error={error} />;
-    }
+    } 
+
+    return null;
   }
   render() {
-    const { commentator: _commentator, error, hostTlogId,
+    const { commentator: _commentator, entry, error, hostTlogId,
             isFetching, isFormHidden, isInList } = this.props;
     const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
-    const { entry, hasModeration } = this.state;
 
     return !error && (isFetching || !entry.type)
       ? <article className="post post--loading">
@@ -157,34 +160,70 @@ class EntryTlog extends Component {
            : <EntryTlogContent
                commentator={commentator}
                entry={entry}
-               hasModeration={hasModeration}
+               hasModeration={false}
                hostTlogId={hostTlogId}
                isFormHidden={isFormHidden}
                isInList={isInList}
-               onAccept={this.accept.bind(this)}
-               onAddToFavorites={this.addToFavorites.bind(this)}
-               onAddToWatching={this.addToWatching.bind(this)}
-               onDecline={this.decline.bind(this)}
-               onDelete={this.delete.bind(this)}
-               onRemoveFromFavorites={this.removeFromFavorites.bind(this)}
-               onRemoveFromWatching={this.removeFromWatching.bind(this)}
-               onReport={this.report.bind(this)}
+               onAccept={this.acceptEntry.bind(this)}
+               onAddToFavorites={this.favoriteEntry.bind(this)}
+               onAddToWatching={this.watchEntry.bind(this)}
+               onDecline={this.declineEntry.bind(this)}
+               onDelete={this.deleteEntry.bind(this)}
+               onRemoveFromFavorites={this.unfavoriteEntry.bind(this)}
+               onRemoveFromWatching={this.unwatchEntry.bind(this)}
+               onReport={this.reportEntry.bind(this)}
+               onVote={this.voteEntry.bind(this)}
              />}
         </article>;
   }
 }
 
 EntryTlog.propTypes = {
+  acceptEntry: PropTypes.func.isRequired,
   commentator: PropTypes.object,
+  declineEntry: PropTypes.func.isRequired,
+  deleteEntry: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
+  entryId: PropTypes.number,
   error: PropTypes.object,
+  favoriteEntry: PropTypes.func.isRequired,
   hostTlogId: PropTypes.number,
   isFetching: PropTypes.bool,
   isFormHidden: PropTypes.bool,
   isInList: PropTypes.bool,
   moderation: PropTypes.object,
   onDelete: PropTypes.func,
-  successDeleteUrl: PropTypes.string,
+  reportEntry: PropTypes.func.isRequired,
+  repostEntry: PropTypes.func.isRequired,
+  unfavoriteEntry: PropTypes.func.isRequired,
+  unwatchEntry: PropTypes.func.isRequired,
+  voteEntry: PropTypes.func.isRequired,
+  watchEntry: PropTypes.func.isRequired,
 };
 
-export default EntryTlog;
+export default connect(
+  (state, ownProps) => {
+    const { tlog, entry: entryStore } = state.entities;
+    const tlogEntry = entryStore[ownProps.entryId];
+    const entry = (tlogEntry && Object.assign({}, tlogEntry, {
+      url: tlogEntry.url || tlogEntry.entryUrl,
+      author: tlog[tlogEntry.author],
+      tlog: tlog[tlogEntry.tlog],
+      commentator: tlog[tlogEntry.commentator],
+    })) || {};
+
+    return Object.assign({}, ownProps, { entry });
+  },
+  {
+    voteEntry,
+    favoriteEntry,
+    unfavoriteEntry,
+    watchEntry,
+    unwatchEntry,
+    reportEntry,
+    deleteEntry,
+    repostEntry,
+    acceptEntry,
+    declineEntry,
+  }
+)(EntryTlog);

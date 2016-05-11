@@ -3,6 +3,7 @@ import entities from './entities';
 import appState from './appState';
 import appStats from './appStats';
 import calendar from './calendar';
+import commentState from './commentState';
 import currentUser from './currentUser';
 import editor from './editor';
 import entryState from './entryState';
@@ -21,6 +22,7 @@ export default {
   appState,
   appStats,
   calendar,
+  commentState,
   currentUser,
   editor,
   entryState,

@@ -7,6 +7,7 @@ import {
   PUBLIC_CONVERSATION,
   GROUP_CONVERSATION,
 } from '../messaging/constants/ConversationConstants';
+import NoticeService from '../services/Notice';
 
 const tlogSchema = new Schema('tlog');
 const relSchema = new Schema(
@@ -156,7 +157,12 @@ function callApi(endpoint, opts, schema) {
   return fetch(endpoint, opts)
     .then((response) => response.json().then((json) => ({ json, response })))
     .then(({ json, response }) => {
+      if (typeof json !== 'object') {
+        json = {};
+      }
+
       if (!response.ok) {
+        NoticeService.errorResponse(json);
         return Promise.reject(json);
       }
 
@@ -219,9 +225,9 @@ export default (store) => (next) => (action) => {
       response,
       type: successType,
     })),
-    (error) => next(actionWith({
+    (error) => Promise.reject(next(actionWith({
       error,
       type: failureType,
-    }))
+    })))
   );
 }

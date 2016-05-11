@@ -1,7 +1,7 @@
 /*global Routes, i18n */
 import React, { Component, PropTypes } from 'react';
 import fuzzy from 'fuzzy';
-import EntryActionCreators from '../../../actions/Entry';
+//import EntryActionCreators from '../../../actions/Entry';
 import FlowActionCreators from '../../../actions/Flow';
 import Scroller from '../../common/Scroller';
 import RelativePopup from '../RelativePopup';

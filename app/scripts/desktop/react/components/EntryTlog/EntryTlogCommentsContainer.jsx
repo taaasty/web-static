@@ -5,6 +5,7 @@ import { loadComments } from '../../actions/CommentsActions';
 import { deleteComment, postComment, reportComment, updateComment } from '../../actions/CommentActions';
 import EntryTlogComments from './EntryTlogComments';
 import TastyConfirmController from '../../controllers/TastyConfirmController';
+import NoticeService from '../../services/Notice';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
@@ -29,17 +30,19 @@ class EntryTlogCommentsContainer extends Component {
     TastyConfirmController.show({
       message: i18n.t('report_comment_confirm'),
       acceptButtonText: i18n.t('report_comment_button'),
-      onAccept: () => this.props.reportComment(id),
+      onAccept: () => this.props.reportComment(id)
+        .then(() => NoticeService.notifySuccess(i18n.t('report_comment_success'))),
     });
   }
   updateComment(id, text) {
-    this.props.updateComment(id, text);
+    return this.props.updateComment(id, text);
   }
   deleteComment(id) {
     TastyConfirmController.show({
       message: i18n.t('delete_comment_confirm'),
       acceptButtonText: i18n.t('delete_comment_button'),
-      onAccept: () => this.props.deleteComment(id),
+      onAccept: () => this.props.deleteComment(id)
+        .then(() => NoticeService.notifySuccess(i18n.t('delete_comment_success'))),
     });
   }
   loadMore() {
@@ -92,12 +95,15 @@ EntryTlogCommentsContainer.defaultProps = {
 
 export default connect(
   (state, { commentator, entry, isFormHidden, limit }) => {
-    const { entities: { comment, tlog }, entryComments, entryState: entryStateStore } = state;
+    const { entities: { comment, tlog }, entryComments,
+            entryState: entryStateStore, commentState: commentStateStore } = state;
     const comments = Object.keys(comment)
             .filter((id) => comment[id].entryId === entry.id)
             .map((id) => {
               const c = comment[id];
-              return Object.assign({}, c, { user: tlog[c.user] });
+              const commentState = commentStateStore[id];
+
+              return Object.assign({}, c, commentState, { user: tlog[c.user] });
             })
             .sort((a, b) => (new Date(a.createdAt)).valueOf() - (new Date(b.createdAt)).valueOf());
     const entryState = entryStateStore[entry.id] || {};

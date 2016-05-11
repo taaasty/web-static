@@ -1,79 +1,46 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import EntryActionCreators from '../../actions/Entry';
 import Spinner from '../../../../shared/react/components/common/Spinner';
-import PostAuthService from '../../services/PostAuthService';
 
-export default class Voting extends Component {
-  static propTypes = {
-    entryID: PropTypes.number.isRequired,
-    rating: PropTypes.shape({
-      votes: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
-      reasons: PropTypes.array,
-      isVoted: PropTypes.bool.isRequired,
-      isVoteable: PropTypes.bool.isRequired,
-    }).isRequired,
-  };
-  state = {
-    votes: this.props.rating.votes,
-    rating: this.props.rating.rating,
-    reasons: this.props.rating.reasons || [],
-    canVote: this.props.rating.isVoteable,
-    isVoted: this.props.rating.isVoted,
-    isProcess: false,
-  };
+class Voting extends Component {
   componentDidMount() {
-    $(findDOMNode(this)).tooltip({
+    $(this.refs.container).tooltip({
       html: true,
       placement: 'top',
       container: 'body',
     });
   }
   componentWillUnmount() {
-    $(findDOMNode(this)).tooltip('destroy');
+    $(this.refs.container).tooltip('destroy');
   }
   getTitle() {
-    if (this.state.canVote && !this.state.isVoted) {
+    const { canVote, rating: { isVoted, reasons=[] } } = this.props.entry;
+
+    if (canVote && !isVoted) {
       return i18n.t('vote');
-    } else if (this.state.isVoted) {
+    } else if (isVoted) {
       return i18n.t('voted');
-    } else if (this.state.reasons.length) {
-      return this.state.reasons.join('<br />');
+    } else if (reasons.length) {
+      return reasons.join('<br />');
     } else {
       return i18n.t('cant_vote');
     }
   }
   handleClick() {
-    if (this.state.isVoted || !this.state.canVote) {
+    const { canVote, rating: { isVoted } } = this.props.entry;
+    if (isVoted || !canVote) {
       return;
     }
 
-    PostAuthService.run(
-      'vote',
-      () => {
-        this.setState({ isProcess: true });
-        EntryActionCreators.vote(this.props.entryID)
-          .then((rating) => {
-            this.setState({
-              votes: rating.votes,
-              rating: rating.rating,
-              reasons: rating.reasons,
-              isVoted: rating.isVoted,
-              canVote: rating.isVoteable,
-            });
-          })
-          .always(() => this.setState({ isProcess: false }));
-      },
-      this.props.entryID
-    );
+    this.props.onVote();
   }
   render() {
+    const { canVote, rating: { isVoted, votes } } = this.props.entry;
     const votingClasses = classNames('voting', {
-      'votable': this.state.canVote,
-      'unvotable': !this.state.canVote,
-      'voted': this.state.isVoted,
+      'votable': canVote,
+      'unvotable': !canVote,
+      'voted': isVoted,
     });
 
     return (
@@ -81,10 +48,27 @@ export default class Voting extends Component {
         className={votingClasses}
         data-original-title={this.getTitle.call(this)}
         onClick={this.handleClick.bind(this)}
+        ref="container"
       >
-        {this.props.children}
-        {this.state.isProcess ? <Spinner size={8} /> : this.state.votes}
+        {this.state.isProcess ? <Spinner size={8} /> : votes}
       </span>
     );
   }
 }
+
+Voting.propTypes = {
+  entry: PropTypes.shape({
+    canVote: PropTypes.bool.isRequired,
+    isVoting: PropTypes.bool,
+    rating: PropTypes.shape({
+      isVoted: PropTypes.bool.isRequired,
+      isVoteable: PropTypes.bool.isRequired,
+      rating: PropTypes.number.isRequired,
+      reasons: PropTypes.array,
+      votes: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onVote: PropTypes.func.isRequired,
+};
+
+export default Voting;

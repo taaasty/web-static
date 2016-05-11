@@ -12,9 +12,7 @@ class EntryTlogImageType extends Component {
     this.refs.comments.startComment();
   }
   renderActions() {
-    if (this.props.hasModeration) {
-      return <EntryTlogActions {...this.props} />;
-    }
+    return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
     const { entry, isInList } = this.props;
@@ -46,6 +44,7 @@ EntryTlogImageType.propTypes = {
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryTlogImageType;

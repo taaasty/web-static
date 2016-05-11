@@ -5,20 +5,10 @@ import EntryTlogComment from './EntryTlogComment';
 class EntryTlogCommentContainer extends Component {
   state = {
     edit: false,
-    processEdit: false,
   };
-  componentWillReceiveProps(nextProps) {
-    if (this.state.processEdit) {
-      this.setState({ processEdit: false });
-    }
-    if (this.props.comment.commentHtml !== nextProps.comment.commentHtml) {
-      this.setState({ edit: false });
-    }
-  }
   updateComment(text) {
-    this.setState({ processEdit: true }, () => {
-      this.props.onCommentUpdate(text);
-    });
+    this.props.onCommentUpdate(text)
+      .then(this.show.bind(this));
   }
   edit() {
     this.setState({ edit: true });
@@ -28,7 +18,7 @@ class EntryTlogCommentContainer extends Component {
   }
   render() {
     const { comment, commentator } = this.props;
-    const { edit, processEdit } = this.state;
+    const { edit } = this.state;
 
     return edit
       ? <EntryTlogCommentEditForm
@@ -36,7 +26,7 @@ class EntryTlogCommentContainer extends Component {
           commentator={commentator}
           onCancel={this.show.bind(this)}
           onCommentUpdate={this.updateComment.bind(this)}
-          process={processEdit}
+          process={comment.isProcessing}
         />
       : <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />;
   }
@@ -46,6 +36,7 @@ EntryTlogCommentContainer.propTypes = {
   comment: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   entryUrl: PropTypes.string.isRequired,
+  onCommentUpdate: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCommentContainer;

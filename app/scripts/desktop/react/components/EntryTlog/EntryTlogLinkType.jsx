@@ -10,11 +10,9 @@ class EntryTlogLinkType extends Component {
     this.refs.comments.startComment();
   }
   renderVoting() {
-    if (this.props.entry.isVoteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
+    const { entry, onVote } = this.props;
+
+    return !!entry.rating.isVoteable && <Voting entry={entry} onVote={onVote} />;
   }
   renderTitle() {
     if (this.props.entry.title) {
@@ -63,6 +61,7 @@ EntryTlogLinkType.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryTlogLinkType;

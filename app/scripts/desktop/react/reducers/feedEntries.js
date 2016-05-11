@@ -36,7 +36,7 @@ const actionMap = {
     };
   },
 
-  [FEED_ENTRIES_RECEIVE](state, data) {
+  [FEED_ENTRIES_RECEIVE](state, { payload: data }) {
     return {
       ...state,
       ...data,
@@ -46,7 +46,7 @@ const actionMap = {
     };
   },
   
-  [FEED_ENTRIES_ERROR](state, error) {
+  [FEED_ENTRIES_ERROR](state, { payload: error }) {
     return {
       ...state,
       ...error,
@@ -61,7 +61,7 @@ const actionMap = {
     };
   },
 
-  [FEED_ENTRIES_VIEW_STYLE](state, style) {
+  [FEED_ENTRIES_VIEW_STYLE](state, { payload: style }) {
     AppStorage.setItem(FEED_VIEW_STYLE_LS_KEY, style);
     return {
       ...state,

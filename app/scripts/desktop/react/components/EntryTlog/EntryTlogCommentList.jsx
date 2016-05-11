@@ -1,18 +1,13 @@
-import moment from 'moment';
 import React, { PropTypes } from 'react';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
-function EntryTlogCommentList({ commentator, comments, entryId, entryUrl,
-                                onCommentReply, onCommentUpdate,
-                                onCommentReport, onCommentDelete }) {
-
-  const orderedComments = comments.sort((a, b) => (
-    moment(a.updatedAt).valueOf() - moment(b.updatedAt).valueOf()
-  ));
+function EntryTlogCommentList(props) {
+  const { commentator, comments, entryId, entryUrl, onCommentReply,
+          onCommentUpdate, onCommentReport, onCommentDelete } = props;
 
   return (
       <div className="comments__list">{
-        orderedComments.map((comment) => (
+        comments.map((comment) => (
           <EntryTlogCommentContainer
             comment={comment}
             commentator={commentator}
@@ -35,6 +30,10 @@ EntryTlogCommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   entryId: PropTypes.number.isRequired,
   entryUrl: PropTypes.string.isRequired,
+  onCommentDelete: PropTypes.func.isRequired,
+  onCommentReply: PropTypes.func.isRequired,
+  onCommentReport: PropTypes.func.isRequired,
+  onCommentUpdate: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCommentList;

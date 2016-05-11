@@ -36,8 +36,8 @@ class EntryPageContainer extends Component {
     browserHistory.goBack();
   }
   title(entry) {
-    return entry.title_truncated ||
-           entry.text_truncated ||
+    return entry.titleTruncated ||
+           entry.textTruncated ||
            (entry.author && entry.author.tag);
   }
   renderFlowEntry() {
@@ -55,7 +55,6 @@ class EntryPageContainer extends Component {
                 <EntryTlog
                   commentator={commentator}
                   entry={tlogEntry}
-                  error={tlogEntry.error}
                   hostTlogId={tlog.id}
                   isFetching={!tlog.id || !tlogEntry.id}
                   onDelete={this.handleDeleteEntry.bind(this)}
@@ -89,8 +88,7 @@ class EntryPageContainer extends Component {
             <div>
               <EntryTlog
                 commentator={commentator}
-                entry={tlogEntry}
-                error={null}
+                entryId={tlogEntry.id}
                 hostTlogId={tlog.id}
                 isFetching={!tlog.id || !tlogEntry.id}
                 onDelete={this.handleDeleteEntry.bind(this)}
@@ -125,8 +123,6 @@ EntryPageContainer.propTypes = {
 };
 
 
-//      data: { ...data, url: data.url || data.entry_url },   //FIXME inconsistent data /entries|/tlogs
-
 export default connect(
   (state, ownProps) => {
     const { currentUser, entities: { tlog, entryCollItem, entry } } = state;
@@ -141,12 +137,7 @@ export default connect(
       commentator,
       currentUserId: currentUser.data.id,
       tlog: getTlog(tlog, slug),
-      tlogEntry: (tlogEntry && Object.assign({}, tlogEntry, {
-        url: tlogEntry.url || tlogEntry.entryUrl,
-        author: tlog[tlogEntry.author],
-        tlog: tlog[tlogEntry.tlog],
-        commentator: tlog[tlogEntry.tlog],
-      })) || {},
+      tlogEntry: (tlogEntry && Object.assign({}, tlogEntry, { author: tlog[tlogEntry.author] })) || {},
     };
   },
   { deleteEntry, getTlogEntry }

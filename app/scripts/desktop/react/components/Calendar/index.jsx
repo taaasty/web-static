@@ -40,7 +40,9 @@ class Calendar extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.getCalendarData(nextProps);
+    if (this.props.tlog.id !== nextProps.tlog.id) {
+      this.getCalendarData(nextProps);
+    }
     this.updatePropsEntry(nextProps);
   }
   componentWillUnmount() {

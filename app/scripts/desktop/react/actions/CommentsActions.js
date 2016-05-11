@@ -1,5 +1,5 @@
 import ApiRoutes from '../../../shared/routes/api';
-import { makeReqUrl, headerOpts } from './helpers';
+import { makeGetUrl, defaultOpts } from './reqHelpers';
 import { CALL_API, Schemas } from '../middleware/api';
 
 export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
@@ -12,14 +12,14 @@ function fetchComments({ entryId }, endpoint) {
       endpoint,
       schema: Schemas.COMMENT_COLL,
       types: [ COMMENTS_REQUEST, COMMENTS_SUCCESS, COMMENTS_FAILURE ],
-      opts: headerOpts,
+      opts: defaultOpts,
     },
     entryId,
   };
 }
 
 export function loadComments(params) {
-  const endpoint = makeReqUrl(ApiRoutes.comments_url(), params);
+  const endpoint = makeGetUrl(ApiRoutes.comments_url(), params);
 
   return fetchComments(params, endpoint);
 }

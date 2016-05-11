@@ -34,7 +34,7 @@ const actionMap = {
     };
   },
 
-  [TAG_ENTRIES_RECEIVE](state, payload) {
+  [TAG_ENTRIES_RECEIVE](state, { payload }) {
     return {
       ...state,
       ...payload,
@@ -43,7 +43,7 @@ const actionMap = {
     };
   },
 
-  [TAG_ENTRIES_ERROR](state, error) {
+  [TAG_ENTRIES_ERROR](state, { payload: error }) {
     return {
       ...state,
       ...error,

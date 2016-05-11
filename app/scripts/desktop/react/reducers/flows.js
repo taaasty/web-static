@@ -19,7 +19,7 @@ const initialState = {
 };
 
 const actionMap = {
-  [FLOWS_RECEIVE](state, data) {
+  [FLOWS_RECEIVE](state, { payload: data }) {
     return {
       ...state,
       ...data,
@@ -36,7 +36,7 @@ const actionMap = {
     };
   },
 
-  [FLOWS_ERROR](state, error) {
+  [FLOWS_ERROR](state, { payload: error }) {
     return {
       ...state,
       ...error,

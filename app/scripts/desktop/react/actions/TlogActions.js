@@ -1,6 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { headerOpts } from './helpers';
+import { defaultOpts } from './reqHelpers';
 
 export const TLOG_REQUEST = 'TLOG_REQUEST';
 export const TLOG_SUCCESS = 'TLOG_SUCCESS';
@@ -14,7 +14,7 @@ function fetchTlog(slug) {
       endpoint,
       schema: Schemas.TLOG,
       types: [ TLOG_REQUEST, TLOG_SUCCESS, TLOG_FAILURE ],
-      opts: headerOpts,
+      opts: defaultOpts,
     },
   };
 }
