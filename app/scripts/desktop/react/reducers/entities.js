@@ -3,6 +3,12 @@ import {
   COMMENT_POST_SUCCESS,
   COMMENT_DELETE_SUCCESS,
 } from '../actions/CommentActions';
+import {
+  ENTRY_FAVORITE_SUCCESS,
+  ENTRY_UNFAVORITE_SUCCESS,
+  ENTRY_WATCH_SUCCESS,
+  ENTRY_UNWATCH_SUCCESS,
+} from '../actions/EntryActions';
 
 const initialState = {
   tlog: {},
@@ -51,6 +57,26 @@ function handleExtra(state, action) {
       return merge({}, state, {
         entry: { [action.entryId]: { commentsCount: entry.commentsCount + 1 } },
       });
+    }
+    break;
+  case ENTRY_FAVORITE_SUCCESS:
+    if (action.entryId) {
+      return merge({}, state, { entry: { [action.entryId]: { isFavorited: true } } });
+    }
+    break;
+  case ENTRY_UNFAVORITE_SUCCESS:
+    if (action.entryId) {
+      return merge({}, state, { entry: { [action.entryId]: { isFavorited: false } } });
+    }
+    break;
+  case ENTRY_WATCH_SUCCESS:
+    if (action.entryId) {
+      return merge({}, state, { entry: { [action.entryId]: { isWatching: true } } });
+    }
+    break;
+  case ENTRY_UNWATCH_SUCCESS:
+    if (action.entryId) {
+      return merge({}, state, { entry: { [action.entryId]: { isWatching: false } } });
     }
     break;
   }

@@ -127,11 +127,12 @@ export default connect(
   (state, ownProps) => {
     const { currentUser, entities: { tlog, entryCollItem, entry } } = state;
     const { params: { slug }, location: { state: locationState } } = ownProps;
-    const entryColl = entryCollItem[locationState.id];
+    const entryId = locationState && locationState.id;
+    const entryColl = entryCollItem[entryId];
     const commentator = entryColl && entryColl.commentator
             ? tlog[entryColl.commentator]
             : currentUser.data;
-    const tlogEntry = entry[locationState.id];
+    const tlogEntry = entry[entryId];
 
     return {
       commentator,

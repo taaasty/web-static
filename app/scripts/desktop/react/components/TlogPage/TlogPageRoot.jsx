@@ -91,7 +91,7 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { children, currentUser, editing, flow, follow, location, params, tlog } = this.props;
+    const { children, currentUser, editing, flow, follow, location: { state }, params, tlog } = this.props;
     const { design, isFlow, slug, tlogUrl } = tlog;
     
     return (
@@ -117,7 +117,7 @@ class TlogPageRoot extends Component {
         </div>
         {!editing &&
          <Calendar
-           entryId={params.entrySlug && location.state.id}
+           entryId={params.entrySlug && state && state.id}
            tlog={tlog}
          />
         }
