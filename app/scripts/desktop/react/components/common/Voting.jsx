@@ -36,7 +36,7 @@ class Voting extends Component {
     this.props.onVote();
   }
   render() {
-    const { canVote, rating: { isVoted, votes } } = this.props.entry;
+    const { canVote, isVoting, rating: { isVoted, votes } } = this.props.entry;
     const votingClasses = classNames('voting', {
       'votable': canVote,
       'unvotable': !canVote,
@@ -50,7 +50,7 @@ class Voting extends Component {
         onClick={this.handleClick.bind(this)}
         ref="container"
       >
-        {this.state.isProcess ? <Spinner size={8} /> : votes}
+        {isVoting ? <Spinner size={8} /> : votes}
       </span>
     );
   }

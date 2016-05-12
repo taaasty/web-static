@@ -73,11 +73,11 @@ class TlogPageContainer extends Component {
     ));
   }
   searchKey(props) {
-    const { currentUser, tlog } = props;
+    const { isCurrentUser, tlog } = props;
     const section = this.section(props);
 
     if (section === TLOG_SECTION_TLOG) {
-      if (tlog.id === currentUser.id) {
+      if (isCurrentUser) {
         return SEARCH_KEY_MYTLOG;
       } else {
         return tlog.isFlow ? SEARCH_KEY_FLOW : SEARCH_KEY_TLOG;
@@ -107,16 +107,13 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { currentUser, deleteEntry, flow, flowViewStyle,
-            getCalendar, location, queryString, tlog, tlogEntries } = this.props;
-    const currentUserId = currentUser.id;
+    const { deleteEntry, flow, flowViewStyle, getCalendar, isCurrentUser,
+            location, queryString, tlog, tlogEntries } = this.props;
 
     return tlog.isFlow
       ? <FlowPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
           bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
-          currentUser={currentUser}
-          currentUserId={currentUserId}
           deleteEntry={deleteEntry}
           flow={flow}
           flowViewStyle={flowViewStyle}
@@ -128,10 +125,9 @@ class TlogPageContainer extends Component {
       : <TlogPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
           bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
-          currentUser={currentUser}
-          currentUserId={currentUserId}
           deleteEntry={deleteEntry}
           getCalendar={getCalendar}
+          isCurrentUser={isCurrentUser}
           queryString={queryString}
           section={this.section(this.props)}
           tlog={tlog}
@@ -142,13 +138,13 @@ class TlogPageContainer extends Component {
 
 TlogPageContainer.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   flow: PropTypes.object.isRequired,
   flowViewStyle: PropTypes.func.isRequired,
   getCalendar: PropTypes.func.isRequired,
   getTlogEntries: PropTypes.func.isRequired,
   getTlogEntriesIfNeeded: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
@@ -159,41 +155,16 @@ TlogPageContainer.propTypes = {
 
 export default connect(
   (state, { params }) => {
-    const { entry, entryCollItem, tlog } = state.entities;
-
-    function tlogItem(id) {
-      if (!id) {
-        return void 0;
-      }
-
-      const t = tlog[id];
-      const author = tlog[t.author];
-
-      return Object.assign({}, t, { author });
-    }
-
-    const items = state.tlogEntries.data.items.map((entryCollId) => {
-      const { commentator, entry: entryId } = entryCollItem[entryCollId];
-      const entryItem = entry[entryId];
-
-      return {
-        commentator: tlogItem(commentator),
-        entry: Object.assign({}, entryItem, {
-          author: tlog[entryItem.author],
-          commentator: tlogItem(entryItem.commentator),
-          tlog: tlogItem(entryItem.tlog),
-        }),
-      };
-    });
-    const tlogEntries = Object.assign({}, state.tlogEntries, {
-      data: Object.assign({}, state.tlogEntries.data, { items }),
-    });
+    const { currentUser, tlogEntries, flow, entities: { tlog: tlogStore } } = state;
+    const tlog = getTlog(tlogStore, params.slug);
+    const currentUserId = currentUser.data && currentUser.data.id;
+    const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
     
     return {
+      flow,
+      isCurrentUser,
+      tlog,
       tlogEntries,
-      currentUser: state.currentUser.data,
-      flow: state.flow,
-      tlog: getTlog(tlog, params.slug),
     };
   },
   {

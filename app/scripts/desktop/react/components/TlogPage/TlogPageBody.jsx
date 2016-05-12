@@ -29,14 +29,13 @@ class TlogPageBody extends Component {
     }
   }
   renderTlog() {
-    const { appendTlogEntries, currentUser, section, tlog, tlogEntries } = this.props;
+    const { appendTlogEntries, section, tlog, tlogEntries } = this.props;
     const { data: { nextDate, prevDate } } = tlogEntries;
     const isPaged = tlog.isDaylog && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
         <EntryTlogsContainer
-          currentUser={currentUser}
           entries={tlogEntries}
           handleDeleteEntry={this.handleDeleteEntry.bind(this)}
           hostTlogId={tlog.id}
@@ -51,7 +50,7 @@ class TlogPageBody extends Component {
     );
   }
   renderContents() {
-    const { currentUser, queryString, tlogEntries, tlog } = this.props;
+    const { isCurrentUser, queryString, tlogEntries, tlog } = this.props;
     const { isFetching: isFetchingEntries, data: { items }, error, section } = tlogEntries;
     const { myRelationship: state } = tlog;
 
@@ -60,7 +59,7 @@ class TlogPageBody extends Component {
     } else if (error && error.response_code === 404) {
       return <TlogPageError text={error.error} />;
     } else {
-      if (tlog.slug && currentUser.slug === tlog.slug) { //owner
+      if (isCurrentUser) { //owner
         if (items.length > 0 || isFetchingEntries) {
           return this.renderTlog();
         } else {
@@ -121,10 +120,10 @@ class TlogPageBody extends Component {
 TlogPageBody.propTypes = {
   appendTlogEntries: PropTypes.func.isRequired,
   bgStyle: PropTypes.object,
-  currentUser: PropTypes.object,
   deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
   getCalendar: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
   queryString: PropTypes.string,
   section: PropTypes.string.isRequired,
   sinceId: PropTypes.string,

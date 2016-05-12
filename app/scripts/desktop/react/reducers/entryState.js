@@ -14,6 +14,11 @@ import {
   COMMENT_POST_SUCCESS,
   COMMENT_POST_FAILURE,
 } from '../actions/CommentActions';
+import {
+  ENTRY_VOTE_REQUEST,
+  ENTRY_VOTE_SUCCESS,
+  ENTRY_VOTE_FAILURE,
+} from '../actions/EntryActions';
 
 const initialState = {};
 
@@ -22,6 +27,7 @@ const itemInitialState = {
   error: null,
   isLoadingComments: false,
   isPostingComment: false,
+  isVoting: false,
 };
 
 function entry(state, id, update) {
@@ -87,6 +93,25 @@ const actionMap = {
       isPostingComment: false,
     }));
   },
+
+  [ENTRY_VOTE_REQUEST](state, { entryId }) {
+    return Object.assign({}, state, entry(state, entryId, {
+      isVoting: true,
+    }));
+  },
+    
+  [ENTRY_VOTE_SUCCESS](state, { entryId }) {
+    return Object.assign({}, state, entry(state, entryId, {
+      isVoting: false,
+    }));
+  },
+    
+  [ENTRY_VOTE_FAILURE](state, { entryId }) {
+    return Object.assign({}, state, entry(state, entryId, {
+      isVoting: false,
+    }));
+  },
+  
 };
 
 export default createReducer(initialState, actionMap);

@@ -3,13 +3,12 @@ import EntryTlogs from './EntryTlogs';
 
 class EntryTlogsContainer extends Component {
   render() {
-    const { currentUser, entries: { isFetching, data: { items, hasMore } },
+    const { entries: { isFetching, data: { items, hasMore } },
             handleDeleteEntry, hostTlogId, isFeed, loadMoreEntries } = this.props;
 
     return (
       <EntryTlogs
         canLoad={!isFetching && !!hasMore}
-        currentUser={currentUser}
         entries={items}
         hostTlogId={hostTlogId}
         isFeed={isFeed}
@@ -22,7 +21,6 @@ class EntryTlogsContainer extends Component {
 }
 
 EntryTlogsContainer.propTypes = {
-  currentUser: PropTypes.object.isRequired,
   entries: PropTypes.shape({
     data: PropTypes.shape({
       items: PropTypes.array.isRequired,

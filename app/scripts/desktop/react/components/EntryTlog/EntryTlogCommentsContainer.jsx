@@ -51,7 +51,7 @@ class EntryTlogCommentsContainer extends Component {
     loadComments({ entryId: id, toCommentId: firstComment && firstComment.id, limit });
   }
   render() {
-    const { commentator, comments, entry, entryState, isFormHidden, limit } = this.props;
+    const { commentator, comments, entry, isFormHidden, limit } = this.props;
 
     return (
       <EntryTlogComments
@@ -64,9 +64,9 @@ class EntryTlogCommentsContainer extends Component {
         isFormHidden={!!isFormHidden}
         limit={limit}
         loadMore={this.loadMore.bind(this)}
-        loading={!!entryState.isLoadingComments}
+        loading={!!entry.isLoadingComments}
         postComment={this.postComment.bind(this)}
-        posting={!!entryState.isPostingComment}
+        posting={!!entry.isPostingComment}
         ref="main"
         reportComment={this.reportComment.bind(this)}
         updateComment={this.updateComment.bind(this)}
@@ -80,7 +80,6 @@ EntryTlogCommentsContainer.propTypes = {
   comments: PropTypes.array.isRequired,
   deleteComment: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
-  entryState: PropTypes.object.isRequired,
   isFormHidden: PropTypes.bool,
   limit: PropTypes.number,
   loadComments: PropTypes.func.isRequired,
@@ -95,8 +94,7 @@ EntryTlogCommentsContainer.defaultProps = {
 
 export default connect(
   (state, { commentator, entry, isFormHidden, limit }) => {
-    const { entities: { comment, tlog }, entryComments,
-            entryState: entryStateStore, commentState: commentStateStore } = state;
+    const { entities: { comment, tlog }, commentState: commentStateStore } = state;
     const comments = Object.keys(comment)
             .filter((id) => comment[id].entryId === entry.id)
             .map((id) => {
@@ -106,13 +104,11 @@ export default connect(
               return Object.assign({}, c, commentState, { user: tlog[c.user] });
             })
             .sort((a, b) => (new Date(a.createdAt)).valueOf() - (new Date(b.createdAt)).valueOf());
-    const entryState = entryStateStore[entry.id] || {};
 
     return {
       commentator,
       comments,
       entry,
-      entryState,
       isFormHidden,
       limit,
     };

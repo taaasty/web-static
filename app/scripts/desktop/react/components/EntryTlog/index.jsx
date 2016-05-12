@@ -179,20 +179,24 @@ class EntryTlog extends Component {
 }
 
 EntryTlog.propTypes = {
-  acceptEntry: PropTypes.func.isRequired,
-  commentator: PropTypes.object,
-  declineEntry: PropTypes.func.isRequired,
-  deleteEntry: PropTypes.func.isRequired,
-  entry: PropTypes.object.isRequired,
+  // ownProps
   entryId: PropTypes.number,
   error: PropTypes.object,
-  favoriteEntry: PropTypes.func.isRequired,
   hostTlogId: PropTypes.number,
   isFetching: PropTypes.bool,
   isFormHidden: PropTypes.bool,
   isInList: PropTypes.bool,
-  moderation: PropTypes.object,
   onDelete: PropTypes.func,
+
+  // added by connect wrapper
+  entry: PropTypes.object.isRequired,
+  commentator: PropTypes.object,
+  moderation: PropTypes.object,
+
+  acceptEntry: PropTypes.func.isRequired,
+  declineEntry: PropTypes.func.isRequired,
+  deleteEntry: PropTypes.func.isRequired,
+  favoriteEntry: PropTypes.func.isRequired,
   reportEntry: PropTypes.func.isRequired,
   repostEntry: PropTypes.func.isRequired,
   unfavoriteEntry: PropTypes.func.isRequired,
@@ -203,16 +207,35 @@ EntryTlog.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const { tlog, entry: entryStore } = state.entities;
-    const tlogEntry = entryStore[ownProps.entryId];
-    const entry = (tlogEntry && Object.assign({}, tlogEntry, {
+    const { entryId } = ownProps;
+    const { currentUser, entities, entryState } = state;
+    const { tlog, entry: entryStore, entryCollItem } = entities;
+    const tlogEntry = entryStore[entryId];
+
+    function tlogItem(id) {
+      if (!id) {
+        return void 0;
+      }
+
+      const t = tlog[id];
+      const author = tlog[t.author];
+
+      return Object.assign({}, t, { author });
+    }
+
+    const entry = (tlogEntry && Object.assign({}, tlogEntry, entryState[tlogEntry.id], {
       url: tlogEntry.url || tlogEntry.entryUrl,
       author: tlog[tlogEntry.author],
-      tlog: tlog[tlogEntry.tlog],
-      commentator: tlog[tlogEntry.commentator],
+      tlog: tlogItem(tlogEntry.tlog),
+      commentator: tlogItem(tlogEntry.commentator),
     })) || {};
+    const entryColl = entryCollItem[entryId];
+    const commentator = entryColl && entryColl.commentator
+            ? tlog[entryColl.commentator]
+            : currentUser.data;
+    const moderation = null; // TODO: implement when premod enabled
 
-    return Object.assign({}, ownProps, { entry });
+    return Object.assign({}, ownProps, { entry, commentator, moderation });
   },
   {
     voteEntry,

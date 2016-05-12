@@ -24,8 +24,7 @@ class EntryTlogs extends Component {
     $(document).trigger('waypoint.trigger', data); //trigger calendar
   }
   render() {
-    const { canLoad, currentUser, entries, hostTlogId,
-            loading, onDelete, onLoadMoreEntries } = this.props;
+    const { canLoad, entries, hostTlogId, loading, onDelete, onLoadMoreEntries } = this.props;
 
     return (
       <InfiniteScroll
@@ -34,15 +33,13 @@ class EntryTlogs extends Component {
         onLoad={onLoadMoreEntries}
       >
         <section className="posts">
-          {entries.map((item) => (
+          {entries.map((entryId) => (
              <EntryTlog
-               commentator={item.commentator || currentUser}
-               entry={item.entry}
+               entryId={entryId}
                hostTlogId={hostTlogId}
                isFormHidden={entries.length > 1}
                isInList
-               key={item.entry.id}
-               moderation={item.moderation}
+               key={`entry-tlog-${entryId}`}
                onDelete={onDelete}
              />))
           }
@@ -54,7 +51,6 @@ class EntryTlogs extends Component {
 
 EntryTlogs.propTypes = {
   canLoad: PropTypes.bool.isRequired,
-  currentUser: PropTypes.object,
   entries: PropTypes.array.isRequired,
   hostTlogId: PropTypes.number,
   isFeed: PropTypes.bool,

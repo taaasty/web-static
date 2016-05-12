@@ -22,14 +22,13 @@ class FlowPageBody extends Component {
     this.props.deleteEntry(entryId);
   }
   renderTlogs() {
-    const { appendTlogEntries, currentUser, tlog, tlogEntries } = this.props;
+    const { appendTlogEntries, tlog, tlogEntries } = this.props;
 
     return (
       <div className="content-area">
         <div className="content-area__bg" />
         <div className="content-area__inner">
           <EntryTlogsContainer
-            currentUser={currentUser}
             entries={tlogEntries}
             handleDeleteEntry={this.handleDeleteEntry.bind(this)}
             hostTlogId={tlog.data.author && tlog.data.author.id}
@@ -94,7 +93,6 @@ class FlowPageBody extends Component {
 
 FlowPageBody.propTypes = {
   appendTlogEntries: PropTypes.func.isRequired,
-  currentUser: PropTypes.object,
   deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
   flow: PropTypes.object.isRequired,

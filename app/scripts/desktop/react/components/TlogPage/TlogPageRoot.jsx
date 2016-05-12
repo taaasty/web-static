@@ -91,7 +91,8 @@ class TlogPageRoot extends Component {
       : defaultUserpic;
   }
   render() {
-    const { children, currentUser, editing, flow, follow, location: { state }, params, tlog } = this.props;
+    const { children, editing, flow, follow, isCurrentUser,
+            location: { state }, params, tlog } = this.props;
     const { design, isFlow, slug, tlogUrl } = tlog;
     
     return (
@@ -107,8 +108,8 @@ class TlogPageRoot extends Component {
              {isFlow
               ? <HeroFlow flow={flow} tlog={tlog} />
               : <HeroProfile
-                  currentUser={currentUser}
                   follow={follow}
+                  isCurrentUser={isCurrentUser}
                   tlog={tlog}
                 />
              }
@@ -137,24 +138,31 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
-  currentUser: PropTypes.object.isRequired,
   editPreview: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
   flow: PropTypes.object,
   follow: PropTypes.func.isRequired,
   getFlow: PropTypes.func.isRequired,
   getTlog: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   tlog: PropTypes.object,
 };
 
 export default connect(
-  (state, ownProps) => ({
-    currentUser: state.currentUser.data,
-    editing: state.appState.data.editing,
-    editPreview: state.editor.preview,
-    tlog: inferTlog(state.entities.tlog, getSlug(ownProps)),
-  }),
+  (state, ownProps) => {
+    const { currentUser, entities: { tlog: tlogStore } } = state;
+    const tlog = inferTlog(tlogStore, getSlug(ownProps));
+    const currentUserId = currentUser.data && currentUser.data.id;
+    const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
+
+    return {
+      isCurrentUser,
+      tlog,
+      editing: state.appState.data.editing,
+      editPreview: state.editor.preview,
+    };
+  },
   { getTlog, getFlow, follow }
 )(TlogPageRoot);

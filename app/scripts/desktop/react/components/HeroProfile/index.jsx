@@ -125,10 +125,8 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { currentUser, follow, tlog } = this.props;
+    const { follow, isCurrentUser, tlog } = this.props;
     const { myRelationship, stats } = tlog;
-    const currentUserId = currentUser && currentUser.id;
-    const isCurrentUser = currentUserId && currentUserId === tlog.id;
     const followButtonVisible = !isCurrentUser && myRelationship != null;
     
     return (
@@ -167,8 +165,8 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
-  currentUser: PropTypes.object,
   follow: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
   tlog: PropTypes.object.isRequired,
 };
 

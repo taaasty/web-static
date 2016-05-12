@@ -15,20 +15,20 @@ import Spinner from '../../../../shared/react/components/common/Spinner';
 
 class EntryPageContainer extends Component {
   componentWillMount() {
-    const { location: { state }, tlogEntry: { id }, getTlogEntry } = this.props;
+    const { location: { state }, getTlogEntry } = this.props;
 
-    (state && getTlogEntry(state.id, state.refetch));
-    if (id) {
-      sendCategory(SM_TLOG_ENTRY, id);
+    if (state && state.id) {
+      getTlogEntry(state.id, state.refetch);
+      sendCategory(SM_TLOG_ENTRY, state.id);
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { getTlogEntry, tlogEntry: { id } } = this.props;
-    const { location: { state }, tlogEntry: { id: nextId } } = nextProps;
+    const { location: { state }, getTlogEntry } = this.props;
+    const { location: { state: nextState } } = nextProps;
 
-    (state && getTlogEntry(state.id));
-    if (nextId && id !== nextId) {
-      sendCategory(SM_TLOG_ENTRY, nextId);
+    if (state && nextState && state.id !== nextState.id) {
+      getTlogEntry(nextState.id);
+      sendCategory(SM_TLOG_ENTRY, nextState.id);
     }
   }
   handleDeleteEntry(id) {
@@ -36,12 +36,10 @@ class EntryPageContainer extends Component {
     browserHistory.goBack();
   }
   title(entry) {
-    return entry.titleTruncated ||
-           entry.textTruncated ||
-           (entry.author && entry.author.tag);
+    return entry.titleTruncated || entry.textTruncated || (entry.author && entry.author.tag);
   }
   renderFlowEntry() {
-    const { commentator, tlog, tlogEntry } = this.props;
+    const { tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.design ? tlog.design.feedOpacity : '1.0' };
 
     return (
@@ -53,8 +51,7 @@ class EntryPageContainer extends Component {
             <div className="content-area__inner">
               <div>
                 <EntryTlog
-                  commentator={commentator}
-                  entry={tlogEntry}
+                  entryId={tlogEntry.id}
                   hostTlogId={tlog.id}
                   isFetching={!tlog.id || !tlogEntry.id}
                   onDelete={this.handleDeleteEntry.bind(this)}
@@ -67,7 +64,7 @@ class EntryPageContainer extends Component {
     );
   }
   renderTlogEntry() {
-    const { commentator, currentUserId, tlog, tlogEntry } = this.props;
+    const { currentUserId, tlog, tlogEntry } = this.props;
     const bgStyle = { opacity: tlog.design ? tlog.design.feedOpacity : '1.0' };
 
     return (
@@ -87,7 +84,6 @@ class EntryPageContainer extends Component {
             }
             <div>
               <EntryTlog
-                commentator={commentator}
                 entryId={tlogEntry.id}
                 hostTlogId={tlog.id}
                 isFetching={!tlog.id || !tlogEntry.id}
@@ -113,7 +109,6 @@ class EntryPageContainer extends Component {
 }
 
 EntryPageContainer.propTypes = {
-  commentator: PropTypes.object.isRequired,
   currentUserId: PropTypes.number,
   deleteEntry: PropTypes.func.isRequired,
   getTlogEntry: PropTypes.func.isRequired,
@@ -125,17 +120,11 @@ EntryPageContainer.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const { currentUser, entities: { tlog, entryCollItem, entry } } = state;
+    const { currentUser, entities: { tlog, entry } } = state;
     const { params: { slug }, location: { state: locationState } } = ownProps;
-    const entryId = locationState && locationState.id;
-    const entryColl = entryCollItem[entryId];
-    const commentator = entryColl && entryColl.commentator
-            ? tlog[entryColl.commentator]
-            : currentUser.data;
-    const tlogEntry = entry[entryId];
+    const tlogEntry = entry[locationState && locationState.id];
 
     return {
-      commentator,
       currentUserId: currentUser.data.id,
       tlog: getTlog(tlog, slug),
       tlogEntry: (tlogEntry && Object.assign({}, tlogEntry, { author: tlog[tlogEntry.author] })) || {},
