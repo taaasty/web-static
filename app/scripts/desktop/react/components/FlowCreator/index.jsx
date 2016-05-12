@@ -17,41 +17,11 @@ export default class FlowCreator extends Component {
     picFile: null,
     staffs: [],
   };
-  render() {
-    let flowpic = {
-      original_url: '//taaasty.com/images/hero-cover.jpg',
-    };
-
-    return (
-      <div className="flow-form">
-        <div className="flow-form__header">
-          <FlowFormHero
-              name={this.state.name}
-              title={this.state.title}
-              flowpic={flowpic}
-              onNameChange={this.updateValue.bind(this, 'name')}
-              onTitleChange={this.updateValue.bind(this, 'title')}
-              onPicFileChange={this.updateValue.bind(this, 'picFile')}
-              onFlowCreate={this.createFlow.bind(this)} />
-        </div>
-        <div className="flow-form__body">
-          <div className="flow-form__item">
-            <div className="flow-form__left">
-              <FlowFormChooser
-                  limitReached={this.props.staffsLimit === this.state.staffs.length}
-                  onChoose={this.handleUserChoose.bind(this)} />
-            </div>
-            <FlowFormStaffs
-                staffs={this.state.staffs}
-                canChangeRole={false}
-                onDelete={this.handleStaffDelete.bind(this)} />
-          </div>
-        </div>
-      </div>
-    );
-  }
   updateValue(name, value) {
     this.setState({[name]: value});
+  }
+  createFlow() {
+    FlowActionCreators.create(this.state);
   }
   handleUserChoose(user) {
     // Check whether user already in staffs
@@ -68,7 +38,40 @@ export default class FlowCreator extends Component {
     let newStaff = this.state.staffs.filter((user) => staff.id !== user.id);
     this.setState({staffs: newStaff});
   }
-  createFlow() {
-    FlowActionCreators.create(this.state)
+  render() {
+    let flowpic = {
+      original_url: '//taaasty.com/images/hero-cover.jpg',
+    };
+
+    return (
+      <div className="flow-form">
+        <div className="flow-form__header">
+          <FlowFormHero
+            flowpic={flowpic}
+            name={this.state.name}
+            onFlowCreate={this.createFlow.bind(this)}
+            onNameChange={this.updateValue.bind(this, 'name')}
+            onPicFileChange={this.updateValue.bind(this, 'picFile')}
+            onTitleChange={this.updateValue.bind(this, 'title')}
+            title={this.state.title}
+          />
+        </div>
+        <div className="flow-form__body">
+          <div className="flow-form__item">
+            <div className="flow-form__left">
+              <FlowFormChooser
+                limitReached={this.props.staffsLimit === this.state.staffs.length}
+                onChoose={this.handleUserChoose.bind(this)}
+              />
+            </div>
+            <FlowFormStaffs
+              canChangeRole={false}
+              onDelete={this.handleStaffDelete.bind(this)}
+              staffs={this.state.staffs}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 }

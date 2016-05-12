@@ -116,7 +116,7 @@ class TlogPageRoot extends Component {
            </header>
            {children}
         </div>
-        {!editing &&
+        {(!editing && !isFlow) &&
          <Calendar
            entryId={params.entrySlug && state && state.id}
            tlog={tlog}
@@ -152,12 +152,14 @@ TlogPageRoot.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const { currentUser, entities: { tlog: tlogStore } } = state;
+    const { currentUser, entities: { flow: flowStore, tlog: tlogStore } } = state;
     const tlog = inferTlog(tlogStore, getSlug(ownProps));
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
+    const flow = flowStore[tlog.id] || { flowpic: {} };
 
     return {
+      flow,
       isCurrentUser,
       tlog,
       editing: state.appState.data.editing,

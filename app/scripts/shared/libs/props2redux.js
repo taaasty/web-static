@@ -5,8 +5,7 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../constants/Tlog';
-import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from '../../desktop/react/constants/ViewStyleConstants';
-import { FLOW_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/flow';
+import { VIEW_STYLE_BRICKS } from '../../desktop/react/constants/ViewStyleConstants';
 import { FEED_VIEW_STYLE_LS_KEY } from '../../desktop/react/reducers/feedEntries';
 import { feedDataByUri, filterFeedItems } from '../../desktop/react/actions/FeedEntriesActions';
 import { flowsData as fData } from '../../desktop/react/actions/FlowsActions';
@@ -37,19 +36,13 @@ function peopleSort() {
 }
 
 export default function prop2redux({
-  tlogEntry, flow, flows, feedEntries, appStats, people, userToolbar
+  flows, feedEntries, appStats, people, userToolbar,
 }) {
   const feedData = feedEntries && feedDataByUri({ pathname: uri().path(), query: uri().query(true) }) || {};
   const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
   const query = uri().query(true).q;
 
   return {
-    flow: {
-      data: { flowpic: {}, staffs: [], ...flow },
-      id: flow && flow.id,
-      isFetching: false,
-      viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
-    },
     flows: {
       data: { items: [], ...flows },
       isFetching: false,

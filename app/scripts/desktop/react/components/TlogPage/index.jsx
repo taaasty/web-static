@@ -155,10 +155,12 @@ TlogPageContainer.propTypes = {
 
 export default connect(
   (state, { params }) => {
-    const { currentUser, tlogEntries, flow, entities: { tlog: tlogStore } } = state;
+    const { currentUser, tlogEntries, flow: flowState,
+            entities: { flow: flowStore, tlog: tlogStore } } = state;
     const tlog = getTlog(tlogStore, params.slug);
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
+    const flow = Object.assign({}, flowState, { data: flowStore[tlog.id] || {} });
     
     return {
       flow,

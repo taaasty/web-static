@@ -1,154 +1,101 @@
-/*global $, NoticeService, ErrorService */
 import ApiRoutes from '../../../shared/routes/api';
 import ApiHelpers from '../../../shared/helpers/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, deleteOpts, postOpts, putOpts } from './reqHelpers';
 
-export const FLOW_REQUEST = 'FLOW_REQUEST';
-export const FLOW_RECEIVE = 'FLOW_RECEIVE';
-export const FLOW_ERROR = 'FLOW_ERROR';
-export const FLOW_UPDATE = 'FLOW_UPDATE';
-export const FLOW_STAFF_ADD = 'FLOW_STAFF_ADD';
-export const FLOW_STAFF_REMOVE = 'FLOW_STAFF_REMOVE';
-export const FLOW_STAFF_ROLE = 'FLOW_STAFF_ROLE';
 export const FLOW_VIEW_STYLE = 'FLOW_VIEW_STYLE';
-
-function flowRequest() {
-  return {
-    type: FLOW_REQUEST,
-  };
-}
-
-function flowError(error) {
-  return {
-    type: FLOW_ERROR,
-    payload: error,
-  };
-}
-
-export function flowReceive(data) {
-  return {
-    type: FLOW_RECEIVE,
-    payload: data,
-  };
-}
 
 export function flowViewStyle(style) {
   return {
     type: FLOW_VIEW_STYLE,
-    payload: style,
+    style,
   };
 }
 
-function shouldFetchFlow(state, id) {
-  return (!state.flow.isFetching &&
-          (!state.flow.id || state.flow.id !== id));
-}
+export const FLOW_REQUEST = 'FLOW_REQUEST';
+export const FLOW_SUCCESS = 'FLOW_SUCCESS';
+export const FLOW_FAILURE = 'FLOW_FAILURE';
 
-function fetchFlow(id) {
-  return (dispatch) => {
-    dispatch(flowRequest());
-    return $.ajax({ url: ApiRoutes.flow(id) })
-      .done((data) => dispatch(flowReceive({ id, data })))
-      .fail((error) => {
-        NoticeService.errorResponse(error);
-        return dispatch(flowError({ id, error: error.responseJSON }));
-      });
+function fetchFlow(flowId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.flow(flowId),
+      schema: Schemas.FLOW,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: defaultOpts,
+    },
+    flowId,
   };
 }
 
-export function getFlow(id) {
+export function getFlow(flowId, requiredFields=[]) {
   return (dispatch, getState) => {
-    if (id && shouldFetchFlow(getState(), id)) {
-      return dispatch(fetchFlow(id));
+    const { flow: flowState, entities: { flow: flowStore } } = getState();
+    const flow = flowStore[flowId];
+
+    if (flow && requiredFields.every((key) => flow.hasOwnProperty(key))) {
+      return null;
     }
+    
+    return !flowState.isFetching && dispatch(fetchFlow(flowId));
   };
 }
 
-export function update({ name, slug, title, picFile, is_privacy, is_premoderate }) {
+export function updateFlow(flowId, { name, slug, title, picFile, isPrivacy, isPremoderate }) {
   const formData = ApiHelpers.prepareFormData({
-    name, slug, title, is_privacy, is_premoderate, flowpic: picFile,
+    name, slug, title, is_privacy: isPrivacy, is_premoderate: isPremoderate, flowpic: picFile,
   });
 
-  return (dispatch, getState) => {
-    const id = getState().flow.id;
-
-    dispatch(flowRequest());
-    return $.ajax({
-      url: ApiRoutes.flow(id),
-      processData: false,
-      contentType: false,
-      data: (formData.append('_method', 'PUT'), formData),
-      method: 'POST',
-    })
-      .done((data) => {
-        dispatch(flowReceive({ data }));
-        NoticeService.notifySuccess('Поток успешно обновлён');
-        return data;
-      })
-      .fail((error) => {
-        dispatch(flowError({ error: error.responseJSON }));
-        NoticeService.errorResponse(error);
-        ErrorService.notifyErrorResponse('Изменение потока', {
-          method: 'FlowActionCreators.update(flowID, {name, slug, title, picFile, is_privacy, is_premoderate})',
-          methodArguments: { id, name, slug, title, picFile, is_privacy, is_premoderate },
-          response: error.responseJSON,
-        });
-      });
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.folw(flowId),
+      schema: Schemas.FLOW,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: putOpts(formData),
+    },
+    flowId,
   };
 }
 
-export function addStaff(userId) {
-  return (dispatch, getState) => {
-    const id = getState().flow.id;
-
-    dispatch(flowRequest());
-    return $.ajax({ url: ApiRoutes.flowStaffs(id), data: { user_id: userId }, method: 'POST' })
-      .done((staff) => dispatch({ type: FLOW_STAFF_ADD, payload: staff }))
-      .fail((error) => {
-        dispatch(flowError({ error: error.responseJSON }));
-        NoticeService.errorResponse(error);
-        ErrorService.notifyErrorResponse('Добавление модератора потока', {
-          method: 'FlowActions.addStaff(userId)',
-          methodArguments: {id, userId},
-          response: error.responseJSON,
-        });
-      });
+export function addStaff(flowId, userId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.flowStaffs(flowId),
+      schema: Schemas.STAFF,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: postOpts({ userId }),
+    },
+    flowId,
+    userId,
   };
 }
 
-export function removeStaff(userId) {
-  return (dispatch, getState) => {
-    const id = getState().flow.id;
-
-    dispatch(flowRequest());
-    return $.ajax({ url: ApiRoutes.flowStaffs(id), data: { user_id: userId, _method: 'DELETE' }, method: 'POST' })
-      .done((staff) => dispatch({ type: FLOW_STAFF_REMOVE, payload: staff }))
-      .fail((error) => {
-        dispatch(flowError({ error: error.responseJSON }));
-        NoticeService.errorResponse(error);
-        ErrorService.notifyErrorResponse('Удаление модератора потока', {
-          method: 'FlowActions.removeStaff(userId)',
-          methodArguments: {id, userId},
-          response: error.responseJSON,
-        });
-      });
+export function removeStaff(flowId, userId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.flowStaffs(flowId),
+      schema: Schemas.STAFF,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: deleteOpts({ userId }),
+    },
+    flowId,
+    userId,
   };
 }
 
-export function changeStaffRole(userId, role) {
-  return (dispatch, getState) => {
-    const id = getState().flow.id;
-
-    dispatch(flowRequest());
-    return $.ajax({ url: ApiRoutes.flowStaffs(id), data: { user_id: userId, role, _method: 'PUT' }, method: 'POST' })
-      .done((staff) => dispatch({ type: FLOW_STAFF_ROLE, payload: { staff, role } }))
-      .fail((error) => {
-        dispatch(flowError({ error: error.responseJSON }));
-        NoticeService.errorResponse(error);
-        ErrorService.notifyErrorResponse('Изменение роли модератора', {
-          method: 'FlowActionCreators.removeStaff(userId, role)',
-          methodArguments: {userId, role},
-          response: error.responseJSON,
-        });
-      });
+export function changeStaffRole(flowId, userId, role) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.flowStaffs(flowId),
+      schema: Schemas.STAFF,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: putOpts({ userId, role }),
+    },
+    flowId,
+    userId,
   };
+}
+
+export function loadAvailableFlows(data) {
+    return Api.flow.loadAvailable(data)
 }

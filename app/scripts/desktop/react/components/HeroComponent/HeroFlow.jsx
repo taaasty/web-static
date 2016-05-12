@@ -31,7 +31,7 @@ class HeroFlow extends Component {
       <Link
         className="button button--small button--green"
         key="createEntryButton"
-        to={uri(Routes.new_entry_url(this.props.flow.data.slug)).path()}
+        to={uri(Routes.new_entry_url(this.props.flow.slug)).path()}
       >
         {i18n.t('buttons.hero_create_entry')}
       </Link>
@@ -42,7 +42,7 @@ class HeroFlow extends Component {
     
     return (
       <RelationButton
-        error={errorRelationship}
+        error={null}
         isFetching={!id}
         key="relationButton"
         relState={myRelationship}
@@ -106,7 +106,7 @@ class HeroFlow extends Component {
     return (
       <div className="hero__flow">
         <Hero
-          actions={!flow.data.id ? <Spinner size={24} /> : this.renderActions()}
+          actions={!flow.id ? <Spinner size={24} /> : this.renderActions()}
           backgroundUrl={originalUrl || backgroundImageUrl}
           text={this.text(publicTlogEntriesCount)}
           title={<Link to={uri(tlogUrl).path()}>{`#${name || slug}`}</Link>}
@@ -121,7 +121,7 @@ class HeroFlow extends Component {
                title={i18n.t('manage_flow.header')}
                withBackground
              >
-               <FlowManager flow={flow} />
+               <FlowManager flowId={flow.id} />
              </Popup>
            </PopupArea>
          </div>

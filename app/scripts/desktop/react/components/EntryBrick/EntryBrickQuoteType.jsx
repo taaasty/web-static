@@ -5,12 +5,12 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
   function renderQuoteSource() {
     return (
       <span className="blockquote__caption">—
         <span className="blockquote__source">
-          <i>{entry.source_truncated}</i>
+          <i>{entry.sourceTruncated}</i>
         </span>
       </span>
     );
@@ -21,9 +21,9 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
       <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id} }}>
         <blockquote className="blockquote">
           <span className="laquo">«</span>
-          {entry.text_truncated}
+          {entry.textTruncated}
           <span className="raquo">»</span>
-          {entry.source_truncated && renderQuoteSource()}
+          {entry.sourceTruncated && renderQuoteSource()}
         </blockquote>
       </Link>
     );
@@ -35,7 +35,11 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
         {renderContents()}
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} host_tlog_id={host_tlog_id} />
+        <EntryBrickMetabar
+          entry={entry}
+          hostTlogId={hostTlogId}
+          onVote={onVote}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -49,9 +53,10 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, onEntryAccept
 EntryBrickQuoteType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickQuoteType;

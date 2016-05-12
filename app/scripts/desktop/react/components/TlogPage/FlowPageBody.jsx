@@ -31,7 +31,7 @@ class FlowPageBody extends Component {
           <EntryTlogsContainer
             entries={tlogEntries}
             handleDeleteEntry={this.handleDeleteEntry.bind(this)}
-            hostTlogId={tlog.data.author && tlog.data.author.id}
+            hostTlogId={tlog.id}
             loadMoreEntries={appendTlogEntries}
           />
         </div>
@@ -45,7 +45,7 @@ class FlowPageBody extends Component {
       <EntryBricksContainer
         children={children}
         entries={tlogEntries}
-        hostTlogId={tlog.data.author && tlog.data.author.id}
+        hostTlogId={tlog.id}
         loadMoreEntries={appendTlogEntries}
       />
     );
@@ -106,19 +106,10 @@ FlowPageBody.propTypes = {
 
 FlowPageBody.defaultProps = {
   flow: {
-    flowpic: {},
+    data: {},
     viewStyle: VIEW_STYLE_TLOG,
   },
-  tlog: {
-    data: {
-      author: {
-        id: null,
-        is_daylog: false,
-        is_privacy: false,
-      },
-      tlog_url: '',
-    },
-  },
+  tlog: {},
   tlogEntries: {
     data: {
       items: [],

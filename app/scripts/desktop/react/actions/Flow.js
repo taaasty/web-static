@@ -41,62 +41,6 @@ let FlowActionCreators = {
       });
   },
 
-  update(flowID, {name, slug, title, picFile, is_privacy, is_premoderate}) {
-    let formData = ApiHelpers.prepareFormData({
-      name, slug, title, is_privacy, is_premoderate, flowpic: picFile,
-    });
-
-    return Api.flow.update(flowID, formData)
-      .then((flow) => {
-        NoticeService.notifySuccess('Поток успешно обновлён');
-        return flow;
-      })
-      .fail((xhr) => {
-        NoticeService.errorResponse(xhr);
-        ErrorService.notifyErrorResponse('Изменение потока', {
-          method: 'FlowActionCreators.update(flowID, {name, slug, title, picFile, is_privacy, is_premoderate})',
-          methodArguments: {flowID, name, slug, title, picFile, is_privacy, is_premoderate},
-          response: xhr.responseJSON,
-        });
-      });
-  },
-
-  addStaff(flowID, userID) {
-    return Api.flow.addStaff(flowID, userID)
-      .fail((xhr) => {
-        NoticeService.errorResponse(xhr);
-        ErrorService.notifyErrorResponse('Добавление модератора потока', {
-          method: 'FlowActionCreators.addStaff(flowID, userID)',
-          methodArguments: {flowID, userID},
-          response: xhr.responseJSON,
-        });
-      });
-  },
-
-  removeStaff(flowID, userID) {
-    return Api.flow.removeStaff(flowID, userID)
-      .fail((xhr) => {
-        NoticeService.errorResponse(xhr);
-        ErrorService.notifyErrorResponse('Удаление модератора потока', {
-          method: 'FlowActionCreators.removeStaff(flowID, userID)',
-          methodArguments: {flowID, userID},
-          response: xhr.responseJSON,
-        });
-      });
-  },
-
-  changeStaffRole(flowID, userID, role) {
-    return Api.flow.changeStaffRole(flowID, userID, role)
-      .fail((xhr) => {
-        NoticeService.errorResponse(xhr);
-        ErrorService.notifyErrorResponse('Изменение роли модератора', {
-          method: 'FlowActionCreators.removeStaff(flowID, userID, role)',
-          methodArguments: {flowID, userID, role},
-          response: xhr.responseJSON,
-        });
-      });
-  },
-
   load(url, data) {
     return Api.flow.load(url, data)
       .fail((xhr) => {

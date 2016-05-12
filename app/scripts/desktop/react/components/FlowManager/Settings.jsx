@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import FlowFormHero from '../FlowForm/FlowFormHero';
 import FlowFormAddress from '../FlowForm/FlowFormAddress';
 import FlowFormRadio from '../FlowForm/FlowFormRadio';
+import NoticeService from '../../services/Notice';
 
 class Settings extends Component {
   state = {
@@ -11,8 +12,8 @@ class Settings extends Component {
     slug: this.props.flow.slug,
     title: this.props.flow.title,
     flowpic: this.props.flow.flowpic,
-    is_premoderate: this.props.flow.is_premoderate,
-    is_privacy: this.props.flow.is_privacy,
+    isPremoderate: this.props.flow.isPremoderate,
+    isPrivacy: this.props.flow.isPrivacy,
     picFile: null,
   };
   updateValue(name, value) {
@@ -21,7 +22,8 @@ class Settings extends Component {
   saveFlow() {
     const { FlowActions } = this.props;
 
-    FlowActions.update(this.state)
+    updateFlow(this.state)
+      .then(() => NoticeService.notifySuccess('Поток успешно обновлён'))
       .then((flow) => this.setState({ ...flow, picFile: null }));
   }
   hasUnsavedFields() {

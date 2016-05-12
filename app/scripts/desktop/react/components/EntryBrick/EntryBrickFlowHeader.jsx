@@ -8,7 +8,7 @@ import uri from 'urijs';
 
 function EntryBrickFlowHeader({ flow }) {
   const bgUrl = ThumborService.newImageUrl(
-    flow.userpic.original_url,
+    flow.userpic.originalUrl,
     { width: brickWidth },
     ['blur(5)']
   );
@@ -18,7 +18,7 @@ function EntryBrickFlowHeader({ flow }) {
       width: flowAvatarSize,
       height: flowAvatarSize,
     },
-    url: flow.userpic.original_url,
+    url: flow.userpic.originalUrl,
   };
 
   return(
@@ -37,12 +37,12 @@ function EntryBrickFlowHeader({ flow }) {
             <div className="brick__flow-header-info">
               <div className="brick__data-item">
                 <i className="icon icon--friends" />
-                <span>{flow.followers_count || 0}</span>
+                <span>{flow.followersCount || 0}</span>
               </div>
               {false &&
                 <div className="brick__data-item">
                   <i className="icon icon--text-circle" />
-                  <span>{flow.public_tlog_entries_count || 0}</span>
+                  <span>{flow.publicTlogEntriesCount || 0}</span>
                 </div>
               }
             </div>

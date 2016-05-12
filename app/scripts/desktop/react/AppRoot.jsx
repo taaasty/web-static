@@ -22,6 +22,9 @@ import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
 import RefsPage from './components/RefsPage';
 
+import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from './constants/ViewStyleConstants';
+import { FLOW_VIEW_STYLE_LS_KEY } from './reducers/flow';
+
 import { feedStatusConnect } from './services/FeedStatusService';
 
 import PopupActions from './actions/PopupActions';
@@ -49,11 +52,14 @@ function handleRouteUpdate() {
 
 class AppRoot extends Component {
   componentWillMount() {
-    const { tlogEntries } = this.props;
+    const { appStats, feedEntries, flow, flows, people, tlogEntries, tlogEntry, userToolbar } = this.props;
 
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
     if (tlogEntries) {
-      store.dispatch({})
+      store.dispatch({});
+    }
+    if (flow) {
+      //viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
     }
     feedStatusConnect(store.getState().currentUser.data, store);
   }

@@ -77,7 +77,7 @@ class EntryBrick extends Component {
     }
   }
   render() {
-    const { entry, feedType, hostTlogId } = this.props;
+    const { entry, feedType, hostTlogId, moderation } = this.props;
 
     return (
       <article className={this.getBrickClasses()} data-id={entry.id}>
@@ -85,10 +85,11 @@ class EntryBrick extends Component {
         {this.renderPinHeader()}
         <EntryBrickContent
           entry={entry}
-          hasModeration={false}
+          hasModeration={!!moderation}
           hostTlogId={hostTlogId}
           onEntryAccept={this.acceptEntry.bind(this)}
           onEntryDecline={this.declineEntry.bind(this)}
+          onVote={this.voteEntry.bind(this)}
         />
       </article>
     );
@@ -99,7 +100,7 @@ EntryBrick.propTypes = {
   acceptEntry: PropTypes.func.isRequired,
   declineEntry: PropTypes.func.isRequired,
   entry: ProjectTypes.tlogEntry.isRequired,
-  entryId: PropTypes.number,
+  entryId: PropTypes.number.isRequired,
   feedType: PropTypes.string,
   hostTlogId: PropTypes.number,
   moderation: PropTypes.object,
@@ -108,9 +109,17 @@ EntryBrick.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const entry = {};
+    const { entryId } = ownProps;
+    const { entryState, entities: { tlog, entry: entryStore } } = state;
+    const rawEntry = entryStore[entryId];
+    const entry = (rawEntry && Object.assign({}, rawEntry, entryState, {
+      url: rawEntry.url || rawEntry.entryUrl,
+      author: tlog[rawEntry.author],
+      tlog: tlog[rawEntry.tlog],
+    })) || {};
+    const moderation = null; // TODO: implement when premod enabled
 
-    return Object.assign({}, ownProps, { entry });
+    return Object.assign({}, ownProps, { entry, moderation });
   },
   { voteEntry, acceptEntry, declineEntry }
 )(EntryBrick);

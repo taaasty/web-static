@@ -5,7 +5,7 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickLinkType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickLinkType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
   function renderBrickTitle() {
     return (
       <Link
@@ -24,7 +24,11 @@ function EntryBrickLinkType({ entry, hasModeration, host_tlog_id, onEntryAccept,
         {entry.title && renderBrickTitle()}
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} host_tlog_id={host_tlog_id} />
+        <EntryBrickMetabar
+          entry={entry}
+          hostTlogId={hostTlogId}
+          onVote={onVote}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -38,9 +42,10 @@ function EntryBrickLinkType({ entry, hasModeration, host_tlog_id, onEntryAccept,
 EntryBrickLinkType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickLinkType;

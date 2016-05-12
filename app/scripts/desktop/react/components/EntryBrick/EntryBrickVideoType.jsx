@@ -8,17 +8,17 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
   function renderBrickBody() {
     return (
       <div className="brick__body">
         <div className="brick__text">
           <Link
             className="brick__link"
-            title={entry.title_truncated}
+            title={entry.titleTruncated}
             to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
           >
-            <Text value={entry.title_truncated} withHTML />
+            <Text value={entry.titleTruncated} withHTML />
           </Link>
         </div>
       </div>
@@ -29,8 +29,8 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept
     return (
       <Link to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
         <div className="video__cover">
-          <Image image={entry.preview_image} maxWidth={brickWidth} />
-          {entry.is_playable && <div className="video__overlay" />}
+          <Image image={entry.previewImage} maxWidth={brickWidth} />
+          {entry.isPlayable && <div className="video__overlay" />}
         </div>
       </Link>
     );
@@ -43,9 +43,13 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept
           {renderVideo()}
         </figure>
       </div>
-      {entry.title_truncated && renderBrickBody()}
+      {entry.titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} host_tlog_id={host_tlog_id} />
+        <EntryBrickMetabar
+          entry={entry}
+          hostTlogId={hostTlogId}
+          onVote={onVote}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -59,9 +63,10 @@ function EntryBrickVideoType({ entry, hasModeration, host_tlog_id, onEntryAccept
 EntryBrickVideoType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickVideoType;

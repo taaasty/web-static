@@ -128,6 +128,7 @@ export const Schemas = {
   CALENDAR: calendarSchema,
   FLOW: flowSchema,
   FLOW_COLL: { items: arrayOf(flowCollItemSchema) },
+  STAFF: staffSchema,
   ENTRY: entrySchema,
   ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
   COMMENT: commentSchema,

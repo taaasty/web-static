@@ -18,7 +18,7 @@ function EntryBrickActions({ hasModeration, onAccept, onDecline }) {
           </div>
         </div>
       </div>
-    : <noscript />; //FIXME reploce with null as 0.15 come alive
+    : <noscript />; //FIXME replace with null as 0.15 come alive
 }
 
 EntryBrickActions.propTypes = {

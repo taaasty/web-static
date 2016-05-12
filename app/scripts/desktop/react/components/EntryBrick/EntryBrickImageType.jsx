@@ -9,10 +9,10 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept, onEntryDecline }) {
+function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
   function renderBrickImage() {
-    return entry.preview_image
-      ?  <Image image={entry.preview_image} maxWidth={brickWidth} />
+    return entry.previewImage
+      ?  <Image image={entry.previewImage} maxWidth={brickWidth} />
       :  <span>{i18n.t('entry.has_no_images')}</span>;
   }
 
@@ -30,10 +30,10 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
         <div className="brick__text">
           <Link
             className="brick__link"
-            title={entry.title_truncated}
+            title={entry.titleTruncated}
             to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
           >
-            <Text value={entry.title_truncated} withHTML />
+            <Text value={entry.titleTruncated} withHTML />
           </Link>
         </div>
       </div>
@@ -45,9 +45,13 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
       <div className="brick__media">
         {renderBrickImageContainer()}
       </div>
-      {entry.title_truncated && renderBrickBody()}
+      {entry.titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} host_tlog_id={host_tlog_id} />
+        <EntryBrickMetabar
+          entry={entry}
+          hostTlogId={hostTlogId}
+          onVote={onVote}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -61,9 +65,10 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, onEntryAccept
 EntryBrickImageType.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
+  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickImageType;

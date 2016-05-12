@@ -142,9 +142,8 @@ class EntryTlog extends Component {
     return null;
   }
   render() {
-    const { commentator: _commentator, entry, error, hostTlogId,
-            isFetching, isFormHidden, isInList } = this.props;
-    const commentator = (_commentator && _commentator.id) ? _commentator : anonCommentator;
+    const { commentator, entry, error, hostTlogId,
+            isFetching, isFormHidden, isInList, moderation } = this.props;
 
     return !error && (isFetching || !entry.type)
       ? <article className="post post--loading">
@@ -160,7 +159,7 @@ class EntryTlog extends Component {
            : <EntryTlogContent
                commentator={commentator}
                entry={entry}
-               hasModeration={false}
+               hasModeration={!!moderation}
                hostTlogId={hostTlogId}
                isFormHidden={isFormHidden}
                isInList={isInList}
@@ -232,7 +231,9 @@ export default connect(
     const entryColl = entryCollItem[entryId];
     const commentator = entryColl && entryColl.commentator
             ? tlog[entryColl.commentator]
-            : currentUser.data;
+            : currentUser.data.id
+              ? currentUser.data
+              : anonCommentator;
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, { entry, commentator, moderation });

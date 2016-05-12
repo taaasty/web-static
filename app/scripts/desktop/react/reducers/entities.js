@@ -29,6 +29,7 @@ const initialState = {
 
 function handleEntities(state=initialState, action) {
   if (action.response && action.response.entities) {
+    // TODO: additional processing for relationships from entries
     return merge({}, state, action.response.entities);
   }
 
