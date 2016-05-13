@@ -7,7 +7,7 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogQuoteType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -46,7 +46,6 @@ class EntryTlogQuoteType extends Component {
 }
 
 EntryTlogQuoteType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,

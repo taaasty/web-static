@@ -7,7 +7,7 @@ import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogLinkType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderVoting() {
     const { entry, onVote } = this.props;
@@ -58,7 +58,6 @@ class EntryTlogLinkType extends Component {
 }
 
 EntryTlogLinkType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   onVote: PropTypes.func.isRequired,

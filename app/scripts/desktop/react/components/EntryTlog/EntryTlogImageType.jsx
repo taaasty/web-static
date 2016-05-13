@@ -9,7 +9,7 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogImageType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderActions() {
     return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
@@ -40,7 +40,6 @@ class EntryTlogImageType extends Component {
 }
 
 EntryTlogImageType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,

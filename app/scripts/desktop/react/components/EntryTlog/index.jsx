@@ -35,6 +35,52 @@ const anonCommentator = {
 };
 
 class EntryTlog extends Component {
+  shouldComponentUpdate(nextProps) {
+    const {
+      entryId,
+      error,
+      hostTlogId,
+      isFetching,
+      isFormHidden,
+      isInList,
+      entry,
+      entryAuthor,
+      entryTlog,
+      entryTlogAuthor,
+      entryState,
+      commentator,
+      moderation,
+    } = this.props;
+    const {
+      entryId: nextEntryId,
+      error: nextError,
+      hostTlogId: nextHostTlogId,
+      isFetching: nextIsFetching,
+      isFormHidden: nextIsFormHidden,
+      isInList: nextIsInList,
+      entry: nextEntry,
+      entryAuthor: nextEntryAuthor,
+      entryTlog: nextEntryTlog,
+      entryTlogAuthor: nextEntryTlogAuthor,
+      entryState: nextEntryState,
+      commentator: nextCommentator,
+      moderation: nextModeration,
+    } = nextProps;
+
+    return entryId !== nextEntryId ||
+      error !== nextError ||
+      hostTlogId !== nextHostTlogId ||
+      isFetching !== nextIsFetching ||
+      isFormHidden !== nextIsFormHidden ||
+      isInList !== nextIsInList ||
+      entry !== nextEntry ||
+      entryAuthor !== nextEntryAuthor ||
+      entryTlog !== nextEntryTlog ||
+      entryTlogAuthor !== nextEntryTlogAuthor ||
+      entryState !== nextEntryState ||
+      commentator !== nextCommentator ||
+      moderation !== nextModeration;
+  }
   voteEntry() {
     return this.props.voteEntry(this.props.entryId)
       .then((data) => {
@@ -142,8 +188,15 @@ class EntryTlog extends Component {
     return null;
   }
   render() {
-    const { commentator, entry, error, hostTlogId,
-            isFetching, isFormHidden, isInList, moderation } = this.props;
+    const { commentator, entry: rawEntry, entryAuthor, entryTlog, entryTlogAuthor, error,
+            hostTlogId, isFetching, isFormHidden, isInList, moderation } = this.props;
+    const entry = Object.assign({}, rawEntry, {
+      url: rawEntry.url || rawEntry.entryUrl,
+      author: entryAuthor,
+      tlog: Object.assign({}, entryTlog, { author: entryTlogAuthor }),
+    });
+
+    console.count('entryTlog');
 
     return !error && (isFetching || !entry.type)
       ? <article className="post post--loading">
@@ -189,6 +242,10 @@ EntryTlog.propTypes = {
 
   // added by connect wrapper
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
+  entryTlogAuthor: PropTypes.object.isRequired,
+  entryState: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   moderation: PropTypes.object,
 
@@ -209,25 +266,8 @@ export default connect(
     const { entryId } = ownProps;
     const { currentUser, entities, entryState } = state;
     const { tlog, entry: entryStore, entryCollItem } = entities;
-    const tlogEntry = entryStore[entryId];
-
-    function tlogItem(id) {
-      if (!id) {
-        return void 0;
-      }
-
-      const t = tlog[id];
-      const author = tlog[t.author];
-
-      return Object.assign({}, t, { author });
-    }
-
-    const entry = (tlogEntry && Object.assign({}, tlogEntry, entryState[tlogEntry.id], {
-      url: tlogEntry.url || tlogEntry.entryUrl,
-      author: tlog[tlogEntry.author],
-      tlog: tlogItem(tlogEntry.tlog),
-      commentator: tlogItem(tlogEntry.commentator),
-    })) || {};
+    const entry = entryStore[entryId] || {};
+    const entryTlog = tlog[entry.tlog] || {};
     const entryColl = entryCollItem[entryId];
     const commentator = entryColl && entryColl.commentator
             ? tlog[entryColl.commentator]
@@ -236,7 +276,15 @@ export default connect(
               : anonCommentator;
     const moderation = null; // TODO: implement when premod enabled
 
-    return Object.assign({}, ownProps, { entry, commentator, moderation });
+    return Object.assign({}, ownProps, {
+      entry,
+      entryTlog,
+      commentator,
+      moderation,
+      entryAuthor: tlog[entry.author] || {},
+      entryTlogAuthor: entryTlog && tlog[entryTlog.author] || {},
+      entryState: entryState[entry.id] || {},
+    });
   },
   {
     voteEntry,

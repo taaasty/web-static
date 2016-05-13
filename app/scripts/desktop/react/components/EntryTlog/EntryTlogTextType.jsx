@@ -8,7 +8,7 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogTextType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
     if (this.props.entry.title) {
@@ -48,7 +48,6 @@ class EntryTlogTextType extends Component {
 }
 
 EntryTlogTextType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,

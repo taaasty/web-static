@@ -35,7 +35,6 @@ class EntryTlogUnknownType extends Component {
 }
 
 EntryTlogUnknownType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

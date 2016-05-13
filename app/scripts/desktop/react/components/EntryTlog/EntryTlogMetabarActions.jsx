@@ -51,6 +51,7 @@ class EntryTlogMetabarActions extends Component {
 }
 
 EntryTlogMetabarActions.propTypes = {
+  commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
 };
 

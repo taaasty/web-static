@@ -6,7 +6,7 @@ import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogSongType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
     if (this.props.entry.title) {
@@ -44,7 +44,6 @@ class EntryTlogSongType extends Component {
 }
 
 EntryTlogSongType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

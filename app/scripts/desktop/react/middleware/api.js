@@ -16,7 +16,6 @@ const relSchema = new Schema(
 );
 
 const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
-const periodSchema = new Schema('calendarPeriod', { idAttribute: 'title' });
 const markerSchema = new Schema('marker', { idAttribute: 'entryId' });
 
 const flowSchema = new Schema('flow');
@@ -51,12 +50,10 @@ tlogSchema.define({
   author: tlogSchema,
 });
 
-periodSchema.define({
-  markers: arrayOf(markerSchema),
-});
-
 calendarSchema.define({
-  periods: arrayOf(periodSchema),
+  periods: arrayOf({
+    markers: arrayOf(markerSchema),
+  }),
 });
 
 staffSchema.define({

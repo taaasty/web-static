@@ -8,7 +8,7 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogCodeType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
     const { title } = this.props.entry;
@@ -46,7 +46,6 @@ class EntryTlogCodeType extends Component {
 }
 
 EntryTlogCodeType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,

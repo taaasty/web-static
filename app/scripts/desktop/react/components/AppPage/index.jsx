@@ -1,6 +1,6 @@
 /*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
-import { getTlog } from '../TlogPage';
+import shallowCompare from 'react-addons-shallow-compare';
 import { connect } from 'react-redux';
 import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
 import Auth from '../Auth';
@@ -24,8 +24,12 @@ class AppPage extends Component {
   componentWillReceiveProps() {
     this.props.getAppStatsIfNeeded();
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
   render() {
-    const { children, currentUser, editing, location, params, tlog } = this.props;
+    const { children, currentUser, editing, location, params, tlog: tlogIm } = this.props;
+    const tlog = tlogIm.toJS();
     const isLogged = !!currentUser.id;
 
     return (
@@ -74,7 +78,7 @@ export default connect(
   (state, { params }) => ({
     currentUser: state.currentUser.data,
     editing: state.appState.data.editing,
-    tlog: getTlog(state.entities.tlog, params.slug),
+    tlog: state.entities.get('tlog').find((val) => val.get('slug') === params.slug),
   }),
   { getAppStatsIfNeeded }
 )(AppPage);

@@ -7,7 +7,7 @@ import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogVideoType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -42,7 +42,6 @@ class EntryTlogVideoType extends Component {
 }
 
 EntryTlogVideoType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

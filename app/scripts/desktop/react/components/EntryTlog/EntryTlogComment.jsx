@@ -37,7 +37,6 @@ function EntryTlogComment(props) {
 
 EntryTlogComment.propTypes = {
   comment: PropTypes.object.isRequired,
-  commentator: PropTypes.object,
   entryUrl: PropTypes.string.isRequired,
 };
 

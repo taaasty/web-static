@@ -113,7 +113,7 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const { calendar: { periods=[] } } = this.props;
+    const { periods } = this.props;
 
     if (!periods) {
       return null;
@@ -159,30 +159,28 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-  calendar: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
   getCalendar: PropTypes.func.isRequired,
+  periods: PropTypes.object.isRequired,
   selectedEntry: PropTypes.object,
   tlog: PropTypes.object.isRequired,
 };
 
 export default connect(
   (state, { entryId, tlog }) => {
-    const { calendar: calendarStore, calendarPeriod, marker, entry } = state.entities;
-    const calendar = (tlog.id && calendarStore[tlog.id]) || {};
-    const periods = (calendar.periods || []).map((periodId) => {
-      const { markers, ...rest } = calendarPeriod[periodId];
-
-      return Object.assign({}, rest, {
+    const { entities } = state;
+    const periods = entities.getIn([ 'calendar', tlog.id, 'periods' ], []).map((period) => {
+      return {
+        title,
         markers: (markers || []).map((markerId) => marker[markerId]),
-      });
+      };
     });
     const [ firstEntryId ] = state.tlogEntries.data.items;
-    const selectedEntry = (entry[entryId || firstEntryId]) || {};
+    const selectedEntry = entities.getIn([ 'entry', entryId || firstEntryId ], {});
 
     return {
+      periods,
       selectedEntry,
-      calendar: Object.assign({}, calendar, { periods }),
       currentUser: state.currentUser.data,
     };
   },
