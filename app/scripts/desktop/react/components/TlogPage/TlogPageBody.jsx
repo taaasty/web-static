@@ -21,30 +21,30 @@ class TlogPageBody extends Component {
     return date && `/~${slug}/${date.replace(/\-/g, '/')}`;
   }
   handleDeleteEntry(entryId) {
-    const { tlog } = this.props;
+    const tlogId= this.props.tlog.get('id');
 
     this.props.deleteEntry(entryId);
-    if (tlog.id) {
-      this.props.getCalendar(tlog.id, true);
+    if (tlogId) {
+      this.props.getCalendar(tlogId, true);
     }
   }
   renderTlog() {
     const { appendTlogEntries, section, tlog, tlogEntries } = this.props;
     const { data: { nextDate, prevDate } } = tlogEntries;
-    const isPaged = tlog.isDaylog && section === TLOG_SECTION_TLOG;
+    const isPaged = tlog.get('isDaylog') && section === TLOG_SECTION_TLOG;
 
     return (
       <div>
         <EntryTlogsContainer
           entries={tlogEntries}
           handleDeleteEntry={this.handleDeleteEntry.bind(this)}
-          hostTlogId={tlog.id}
+          hostTlogId={tlog.get('id')}
           loadMoreEntries={appendTlogEntries}
         />
         {isPaged &&
          <TlogPagePagination
-           nextPagePath={this.date2path(tlog.slug, nextDate)}
-           prevPagePath={this.date2path(tlog.slug, prevDate)}
+           nextPagePath={this.date2path(tlog.get('slug'), nextDate)}
+           prevPagePath={this.date2path(tlog.get('slug'), prevDate)}
          />}
       </div>
     );
@@ -52,7 +52,7 @@ class TlogPageBody extends Component {
   renderContents() {
     const { isCurrentUser, queryString, tlogEntries, tlog } = this.props;
     const { isFetching: isFetchingEntries, data: { items }, error, section } = tlogEntries;
-    const { myRelationship: state } = tlog;
+    const myRelationship = tlog.get('myRelationship');
 
     if (error && error.error === ERROR_INVALID_DATE) {
       return <TlogPageError text={i18n.t('tlog.error_invalid_date')} />;
@@ -71,11 +71,11 @@ class TlogPageBody extends Component {
           default:
             return queryString
               ? <TlogPageText text={i18n.t('tlog.no_posts_query', { query: queryString })} />
-              : <TlogPageAuthorEmpty name={tlog.name} slug={tlog.slug} />;
+              : <TlogPageAuthorEmpty name={tlog.get('name')} slug={tlog.get('slug')} />;
           }
         }
       } else { //guest
-        if (tlog.isPrivacy && state !== RELATIONSHIP_STATE_FRIEND) {
+        if (tlog.get('isPrivacy') && myRelationship !== RELATIONSHIP_STATE_FRIEND) {
           return <TlogPagePrivate text={i18n.t('tlog.private')} />;
         }
 
@@ -95,9 +95,9 @@ class TlogPageBody extends Component {
     }
   }
   render() {
-    const { bgStyle, section, tlog: { tag } } = this.props;
+    const { bgStyle, section, tlog } = this.props;
     const title = [
-      tag,
+      tlog.get('tag'),
       section === TLOG_SECTION_PRIVATE
         ? ' - ' + i18n.t('tlog.title_private')
         : section === TLOG_SECTION_FAVORITE ? ' - ' + i18n.t('tlog.title_favorite') : '',

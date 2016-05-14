@@ -30,10 +30,10 @@ function fetchFlow(flowId) {
 
 export function getFlow(flowId, requiredFields=[]) {
   return (dispatch, getState) => {
-    const { flow: flowState, entities: { flow: flowStore } } = getState();
-    const flow = flowStore[flowId];
+    const { flow: flowState, entities } = getState();
+    const flow = entities.getIn([ 'flow', flowId.toString() ]);
 
-    if (flow && requiredFields.every((key) => flow.hasOwnProperty(key))) {
+    if (flow && requiredFields.every((key) => flow.has(key))) {
       return null;
     }
     

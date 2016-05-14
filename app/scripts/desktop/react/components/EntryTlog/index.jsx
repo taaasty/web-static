@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import { Map } from 'immutable';
 import EntryTlogContent from './EntryTlogContent';
 import EntryTlogPrivate from './EntryTlogPrivate';
 import EntryTlogError from './EntryTlogError';
@@ -37,8 +38,6 @@ const anonCommentator = {
 class EntryTlog extends Component {
   shouldComponentUpdate(nextProps) {
     const {
-      entryId,
-      error,
       hostTlogId,
       isFetching,
       isFormHidden,
@@ -51,35 +50,20 @@ class EntryTlog extends Component {
       commentator,
       moderation,
     } = this.props;
-    const {
-      entryId: nextEntryId,
-      error: nextError,
-      hostTlogId: nextHostTlogId,
-      isFetching: nextIsFetching,
-      isFormHidden: nextIsFormHidden,
-      isInList: nextIsInList,
-      entry: nextEntry,
-      entryAuthor: nextEntryAuthor,
-      entryTlog: nextEntryTlog,
-      entryTlogAuthor: nextEntryTlogAuthor,
-      entryState: nextEntryState,
-      commentator: nextCommentator,
-      moderation: nextModeration,
-    } = nextProps;
 
-    return entryId !== nextEntryId ||
-      error !== nextError ||
-      hostTlogId !== nextHostTlogId ||
-      isFetching !== nextIsFetching ||
-      isFormHidden !== nextIsFormHidden ||
-      isInList !== nextIsInList ||
-      entry !== nextEntry ||
-      entryAuthor !== nextEntryAuthor ||
-      entryTlog !== nextEntryTlog ||
-      entryTlogAuthor !== nextEntryTlogAuthor ||
-      entryState !== nextEntryState ||
-      commentator !== nextCommentator ||
-      moderation !== nextModeration;
+    return (
+      hostTlogId !== nextProps.hostTlogId ||
+      isFetching !== nextProps.isFetching ||
+      isFormHidden !== nextProps.isFormHidden ||
+      isInList !== nextProps.isInList ||
+      entry !== nextProps.entry ||
+      entryAuthor !== nextProps.entryAuthor ||
+      entryTlog !== nextProps.entryTlog ||
+      entryTlogAuthor !== nextProps.entryTlogAuthor ||
+      entryState !== nextProps.entryState ||
+      commentator !== nextProps.commentator ||
+      moderation !== nextProps.moderation
+    );
   }
   voteEntry() {
     return this.props.voteEntry(this.props.entryId)
@@ -171,13 +155,13 @@ class EntryTlog extends Component {
       });
   }
   getEntryClasses() {
-    let { type } = this.props.entry;
+    const type = this.props.entry.get('type');
     let typeClass = ENTRY_TYPES.indexOf(type) != -1 ? type : 'text';
 
     return `post post--${typeClass}`;
   }
   renderError() {
-    const { error, error_code, response_code } = this.props.error;
+    const { error, error_code, response_code } = this.props.entryState.error;
 
     if (error_code === ERROR_PRIVATE_ENTRY) {
       return <EntryTlogPrivate />;
@@ -188,12 +172,15 @@ class EntryTlog extends Component {
     return null;
   }
   render() {
-    const { commentator, entry: rawEntry, entryAuthor, entryTlog, entryTlogAuthor, error,
+    const { commentator, entry: immEntry, entryAuthor, entryTlog, entryTlogAuthor, entryState,
             hostTlogId, isFetching, isFormHidden, isInList, moderation } = this.props;
-    const entry = Object.assign({}, rawEntry, {
-      url: rawEntry.url || rawEntry.entryUrl,
-      author: entryAuthor,
-      tlog: Object.assign({}, entryTlog, { author: entryTlogAuthor }),
+    const error = entryState && entryState.error;
+    // TODO: move immutable props all down the props chain
+    const jsEntry = immEntry.toJS();
+    const entry = Object.assign({}, jsEntry, entryState, {
+      url: jsEntry.url || jsEntry.entryUrl,
+      author: entryAuthor.toJS(),
+      tlog: Object.assign({}, entryTlog.toJS(), { author: entryTlogAuthor.toJS() }),
     });
 
     console.count('entryTlog');
@@ -265,25 +252,22 @@ export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
     const { currentUser, entities, entryState } = state;
-    const { tlog, entry: entryStore, entryCollItem } = entities;
-    const entry = entryStore[entryId] || {};
-    const entryTlog = tlog[entry.tlog] || {};
-    const entryColl = entryCollItem[entryId];
-    const commentator = entryColl && entryColl.commentator
-            ? tlog[entryColl.commentator]
-            : currentUser.data.id
-              ? currentUser.data
-              : anonCommentator;
+    const entry = entities.getIn([ 'entry', entryId.toString() ], Map());
+    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], Map());
+    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], Map());
+    const commentator = entities.getIn(
+      [ 'tlog', entities.getIn([ 'entryCollItem', entryId.toString(), 'commentator' ]) ],
+      currentUser.data.id ? currentUser.data : anonCommentator);
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, {
-      entry,
-      entryTlog,
       commentator,
+      entry,
+      entryAuthor,
+      entryTlog,
+      entryTlogAuthor: entities.getIn([ 'tlog', entryTlog.get('author', '').toString() ], Map()),
+      entryState: entryState[entry.get('id')],
       moderation,
-      entryAuthor: tlog[entry.author] || {},
-      entryTlogAuthor: entryTlog && tlog[entryTlog.author] || {},
-      entryState: entryState[entry.id] || {},
     });
   },
   {

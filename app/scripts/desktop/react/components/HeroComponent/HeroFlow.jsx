@@ -31,23 +31,24 @@ class HeroFlow extends Component {
       <Link
         className="button button--small button--green"
         key="createEntryButton"
-        to={uri(Routes.new_entry_url(this.props.flow.slug)).path()}
+        to={uri(Routes.new_entry_url(this.props.flow.get('slug'))).path()}
       >
         {i18n.t('buttons.hero_create_entry')}
       </Link>
     );
   }
   renderRelationButton() {
-    const { flow: { id, isPrivacy }, tlog: { myRelationship } } = this.props;
+    const { flow, tlog } = this.props;
+    const flowId = flow.get('id');
     
     return (
       <RelationButton
         error={null}
-        isFetching={!id}
+        isFetching={!flowId}
         key="relationButton"
-        relState={myRelationship}
-        subjectId={id}
-        subjectPrivacy={isPrivacy}
+        relState={tlog.get('myRelationship')}
+        subjectId={flowId}
+        subjectPrivacy={flow.get('isPrivacy')}
       />
     );
   }
@@ -60,13 +61,16 @@ class HeroFlow extends Component {
     );
   }
   renderPinFlowButton() {
-    const { id, fixedState, fixedUpAt, fixedOrderId } = this.props.flow;
+    const { flow } = this.props;
+    const fixedUpAt = flow.get('fixedUpAt');
+    const fixedState = flow.get('fixedState');
+    const fixedOrderId = flow.get('fixedOrderId');
     const tillStr = fixedUpAt && moment(fixedUpAt).format('H:mm D MMMM');
     const [ buttonText, buttonUrl, buttonClass ] = fixedState === ENTRY_PINNED_STATE
             ? [ i18n.t('buttons.hero_flow.pinned', { date: tillStr }), Routes.orders(fixedOrderId), 'button--green' ]
             : fixedState === ENTRY_AWAITING_PAYMENT_STATE
               ? [ i18n.t('buttons.hero_flow.awaiting_payment'), Routes.orders(fixedOrderId), 'button--yellow' ]
-              : [ i18n.t('buttons.hero_flow.pin_flow'), Routes.newFlowOrder(id, PIN_FLOW_ORDER), 'button--outline' ];
+              : [ i18n.t('buttons.hero_flow.pin_flow'), Routes.newFlowOrder(flow.get('id'), PIN_FLOW_ORDER), 'button--outline' ];
     const buttonClasses = classNames('button button--smass', buttonClass);
 
     return (
@@ -85,8 +89,10 @@ class HeroFlow extends Component {
       :  null;
   }
   renderActions() {
-    const { canEdit, canWrite } = this.props.flow;
-    const { myRelationship } = this.props.tlog;
+    const { flow, tlog } = this.props;
+    const canEdit = flow.get('canEdit');
+    const canWrite = flow.get('canWrite');
+    const myRelationship = tlog.get('myRelationship');
 
     return (
       <div>
@@ -100,16 +106,19 @@ class HeroFlow extends Component {
   render() {
     const { popup } = this.state;
     const { flow, tlog } = this.props;
-    const { design: { backgroundImageUrl }, slug, tlogUrl } = tlog;
-    const { flowpic: { originalUrl }, name, publicTlogEntriesCount } = flow;
+    const flowId = flow.get('id');
+    const backgroundUrl = flow.getIn(
+      [ 'flowpic', 'originalUrl' ],
+      tlog.getIn([ 'design', 'backgroundImageUrl' ])
+    );
 
     return (
       <div className="hero__flow">
         <Hero
-          actions={!flow.id ? <Spinner size={24} /> : this.renderActions()}
-          backgroundUrl={originalUrl || backgroundImageUrl}
-          text={this.text(publicTlogEntriesCount)}
-          title={<Link to={uri(tlogUrl).path()}>{`#${name || slug}`}</Link>}
+          actions={!flowId ? <Spinner size={24} /> : this.renderActions()}
+          backgroundUrl={backgroundUrl}
+          text={this.text(flow.get('publicTlogEntriesCount'))}
+          title={<Link to={uri(tlog.get('tlogUrl')).path()}>{`#${flow.get('name') || tlog.get('slug')}`}</Link>}
         />
         {popup &&
          <div className="popup-container">
@@ -121,7 +130,7 @@ class HeroFlow extends Component {
                title={i18n.t('manage_flow.header')}
                withBackground
              >
-               <FlowManager flowId={flow.id} />
+               <FlowManager flowId={flowId} />
              </Popup>
            </PopupArea>
          </div>

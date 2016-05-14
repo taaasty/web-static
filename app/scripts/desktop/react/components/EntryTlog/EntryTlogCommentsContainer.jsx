@@ -1,5 +1,6 @@
 /*global $, i18n */
-import React, { Component, PropTypes, shallowEqual } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { loadComments } from '../../actions/CommentsActions';
 import { deleteComment, postComment, reportComment, updateComment } from '../../actions/CommentActions';
@@ -9,6 +10,10 @@ import NoticeService from '../../services/Notice';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
+function shallowEqual(ImmA, ImmB) {
+  return ImmA.isSubset(ImmB) && ImmB.isSubset(ImmA);
+}
+
 class EntryTlogCommentsContainer extends Component {
   shouldComponentUpdate(nextProps) {
     const { commentator, comments, commentStates, entry, isFormHidden, users } = this.props;
@@ -16,10 +21,10 @@ class EntryTlogCommentsContainer extends Component {
             entry: nextEntry, isFormHidden: nextIsFormHidden, users: nextUsers } = nextProps;
 
     return commentator !== nextCommentator ||
-      !shallowEqual(comments, nextComments) ||
-      !shallowEqual(commentStates, nextCommentStates) ||
       entry !== nextEntry ||
       isFormHidden !== nextIsFormHidden ||
+      !shallowEqual(comments, nextComments) ||
+      !shallowEqual(commentStates, nextCommentStates) ||
       !shallowEqual(users, nextUsers);
   }
   startComment() {
@@ -64,9 +69,11 @@ class EntryTlogCommentsContainer extends Component {
   }
   render() {
     console.count('tlogComments');
-    const { commentator, comments: rawComments, commentStates, entry, isFormHidden, limit, users } = this.props;
-    const comments = Object.keys(rawComments)
-            .map((id) =>  Object.assign({}, rawComments[id], commentStates[id], { user: users[id] }))
+    const { commentator, comments: immComments, commentStates, entry, isFormHidden, limit, users: immUsers } = this.props;
+    const jsComments = immComments.toJS();
+    const jsUsers = immUsers.toJS();
+    const comments = Object.keys(jsComments)
+            .map((id) =>  Object.assign({}, jsComments[id], commentStates[id], { user: jsUsers[id] }))
             .sort((a, b) => (new Date(a.createdAt)).valueOf() - (new Date(b.createdAt)).valueOf());
     const [ firstComment ] = comments;
 
@@ -93,9 +100,9 @@ class EntryTlogCommentsContainer extends Component {
 }
 
 EntryTlogCommentsContainer.propTypes = {
+  commentStates: PropTypes.object.isRequired,
   commentator: PropTypes.object.isRequired,
   comments: PropTypes.object.isRequired,
-  commentStates: PropTypes.object.isRequired,
   deleteComment: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
   isFormHidden: PropTypes.bool,
@@ -113,13 +120,10 @@ EntryTlogCommentsContainer.defaultProps = {
 
 export default connect(
   (state, { commentator, entry, isFormHidden, limit }) => {
-    const { entities: { comment, tlog }, commentState: commentStateStore } = state;
-    const comments = Object.keys(comment)
-            .filter((id) => comment[id].entryId === entry.id)
-            .map((id) => comment[id])
-            .reduce((acc, c) => (acc[c.id] = c, acc), {});
-    const commentStates = Object.keys(comments).reduce((acc, id) => (acc[id] = commentStateStore[id], acc), {});
-    const users = Object.keys(comments).reduce((acc, id) => (acc[id] = tlog[comments[id].user], acc), {});
+    const { entities, commentState } = state;
+    const comments = entities.get('comment').filter((c) => c.get('entryId') === entry.id);
+    const commentStates = comments.map((c) => commentState[c.get('id')]);
+    const users = comments.map((c) => entities.getIn([ 'tlog', c.get('user', '').toString() ], Map()));
 
     return {
       commentator,

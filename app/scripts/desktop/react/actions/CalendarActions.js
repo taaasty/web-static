@@ -21,10 +21,10 @@ function fetchCalendar(tlogId) {
 
 export function getCalendar(tlogId, force, requiredFields=[]) {
   return (dispatch, getState) => {
-    const { entities: { calendar: calendarStore }, calendar: { isFetching } } = getState();
-    const calendar = calendarStore[tlogId];
+    const { entities, calendar: { isFetching } } = getState();
+    const calendar = entities.getIn([ 'calendar', tlogId.toString() ]);
 
-    if (!force && calendar && requiredFields.every((key) => calendar.hasOwnProperty(key))) {
+    if (!force && calendar && requiredFields.every((key) => calendar.has(key))) {
       return null;
     }
 

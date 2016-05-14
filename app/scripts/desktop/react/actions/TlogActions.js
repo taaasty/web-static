@@ -22,11 +22,11 @@ function fetchTlog(slug) {
 export function getTlog(slug, requiredFields=[]) {
   return (dispatch, getState) => {
     if (slug) {
-      const tlogs = getState().entities.tlog;
-      const [ tlogId ] = Object.keys(tlogs).filter((t) => tlogs[t].slug === slug);
-      const tlog = tlogs[tlogId];
+      const tlog = getState().entities
+              .get('tlog')
+              .find((t) => t.get('slug') === slug);
 
-      if (tlog && requiredFields.every((key) => tlog.hasOwnProperty(key))) {
+      if (tlog && requiredFields.every((key) => tlog.has(key))) {
         return null;
       }
 

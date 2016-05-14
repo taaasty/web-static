@@ -6,11 +6,11 @@ const HERO_AVATAR_SIZE_OPEN = 200;
 
 function HeroProfileAvatar({ onClick, isOpen, user }) {
   return (
-    <a href={user.tlogUrl} onClick={onClick}>
+    <a href={user.get('tlogUrl')} onClick={onClick}>
       <div className="hero__avatar">
         <UserAvatar
           size={isOpen ? HERO_AVATAR_SIZE_OPEN : HERO_AVATAR_SIZE}
-          user={user}
+          user={user.toJS()}
         />
       </div>
     </a>

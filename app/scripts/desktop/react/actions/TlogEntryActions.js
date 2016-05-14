@@ -22,11 +22,11 @@ function fetchTlogEntry(id) {
 
 export function getTlogEntry(id, force, requiredFields=[]) {
   return (dispatch, getState) => {
-    const { entities: { entry: entryColl }, entryState } = getState();
+    const { entities, entryState } = getState();
     const { isFetching } = entryState[id] || {};
-    const entry = entryColl[id];
+    const entry = entities.getIn([ 'entry', id.toString() ]);
 
-    if (!force && entry && requiredFields.every((key) => entry.hasOwnProperty(key))) {
+    if (!force && entry && requiredFields.every((key) => entry.has(key))) {
       return null;
     }
 

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { getCalendar } from '../../actions/CalendarActions';
 import { flowViewStyle } from '../../actions/FlowActions';
@@ -20,12 +21,6 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../../../../shared/constants/Tlog';
-
-export function getTlog(tlogs, slug) {
-  const [ tlogId ] = Object.keys(tlogs).filter((id) => tlogs[id].slug === slug);
-
-  return tlogs[tlogId] || {};
-}
 
 class TlogPageContainer extends Component {
   componentWillMount() {
@@ -80,7 +75,7 @@ class TlogPageContainer extends Component {
       if (isCurrentUser) {
         return SEARCH_KEY_MYTLOG;
       } else {
-        return tlog.isFlow ? SEARCH_KEY_FLOW : SEARCH_KEY_TLOG;
+        return tlog.get('isFlow') ? SEARCH_KEY_FLOW : SEARCH_KEY_TLOG;
       }
     } else if (section === TLOG_SECTION_FAVORITE) {
       return SEARCH_KEY_FAVORITES;
@@ -107,15 +102,17 @@ class TlogPageContainer extends Component {
     return (year && month && day) && `${year}-${month}-${day}`;
   }
   render() {
-    const { deleteEntry, flow, flowViewStyle, getCalendar, isCurrentUser,
+    const { deleteEntry, flow, flowState, flowViewStyle, getCalendar, isCurrentUser,
             location, queryString, tlog, tlogEntries } = this.props;
+    const bgStyle = { opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0') };
 
-    return tlog.isFlow
+    return tlog.get('isFlow')
       ? <FlowPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
-          bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
+          bgStyle={bgStyle}
           deleteEntry={deleteEntry}
           flow={flow}
+          flowState={flowState}
           flowViewStyle={flowViewStyle}
           location={location}
           queryString={queryString}
@@ -124,7 +121,7 @@ class TlogPageContainer extends Component {
         />
       : <TlogPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
-          bgStyle={{ opacity: tlog.design ? tlog.design.feedOpacity : '1.0' }}
+          bgStyle={bgStyle}
           deleteEntry={deleteEntry}
           getCalendar={getCalendar}
           isCurrentUser={isCurrentUser}
@@ -140,6 +137,7 @@ TlogPageContainer.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   flow: PropTypes.object.isRequired,
+  flowState: PropTypes.object.isRequired,
   flowViewStyle: PropTypes.func.isRequired,
   getCalendar: PropTypes.func.isRequired,
   getTlogEntries: PropTypes.func.isRequired,
@@ -155,18 +153,17 @@ TlogPageContainer.propTypes = {
 
 export default connect(
   (state, { params }) => {
-    const { currentUser, tlogEntries, flow: flowState,
-            entities: { flow: flowStore, tlog: tlogStore } } = state;
-    const tlog = getTlog(tlogStore, params.slug);
+    const { currentUser, tlogEntries, flow: flowState, entities } = state;
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === params.slug, null, Map());
     const currentUserId = currentUser.data && currentUser.data.id;
-    const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
-    const flow = Object.assign({}, flowState, { data: flowStore[tlog.id] || {} });
+    const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
     
     return {
-      flow,
+      flowState,
       isCurrentUser,
       tlog,
       tlogEntries,
+      flow: entities.getIn([ 'flow', tlog.get('id', '').toString() ], Map()),
     };
   },
   {

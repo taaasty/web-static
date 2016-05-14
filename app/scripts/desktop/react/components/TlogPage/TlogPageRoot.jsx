@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { Map } from 'immutable';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
-import { getTlog as inferTlog } from './index';
 
 import { connect } from 'react-redux';
 import { getTlog } from '../../actions/TlogActions';
@@ -27,19 +27,19 @@ class TlogPageRoot extends Component {
     const { tlog, getFlow, getTlog } = this.props;
 
     getTlog(getSlug(this.props), tlogRequiredFields);
-    if (tlog.id && tlog.isFlow) {
-      getFlow(tlog.id);
+    if (tlog.get('id') && tlog.get('isFlow')) {
+      getFlow(tlog.get('id'));
     }
   }
   componentDidMount() {
     const { editing, editPreview, tlog } = this.props;
 
-    if (tlog.isFlow) {
+    if (tlog.get('isFlow')) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
-      if (tlog.design) {
-        DesignPreviewService.apply(tlog.design);
+      if (tlog.get('design')) {
+        DesignPreviewService.apply(tlog.get('design').toJS());
       }
     }
 
@@ -53,14 +53,13 @@ class TlogPageRoot extends Component {
 
     getTlog(getSlug(nextProps), tlogRequiredFields);
 
-    if (nextTlog.id && nextTlog.isFlow) {
-      document.body.className = 'layout--feed';
+    if (nextTlog.get('id') && nextTlog.get('isFlow')) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
-      getFlow(nextTlog.id);
+      getFlow(nextTlog.get('id'));
     } else {
-      if (typeof nextTlog.design !== 'undefined' && nextTlog.design !== tlog.design) {
+      if (typeof nextTlog.get('design') !== 'undefined' && nextTlog.get('design') !== tlog.get('design')) {
         setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
-        DesignPreviewService.apply(nextTlog.design);
+        DesignPreviewService.apply(nextTlog.get('design').toJS());
       }
     }
 
@@ -85,15 +84,13 @@ class TlogPageRoot extends Component {
       document.body.classList.add('tlog-mode-minimal');
     }
   }
-  shareImg(user) {
-    return (user && user.userpic && user.userpic.originalUrl)
-      ? user.userpic.originalUrl
-      : defaultUserpic;
-  }
   render() {
     const { children, editing, flow, follow, isCurrentUser,
             location: { state }, params, tlog } = this.props;
-    const { design, isFlow, slug, tlogUrl } = tlog;
+    const isFlow = tlog.get('isFlow');
+    const tlogUrl = tlog.get('tlogUrl');
+    const slug = tlog.get('slug');
+    const backgroundImageUrl = tlog.getIn([ 'design', 'backgroundImageUrl' ]);
     
     return (
       <div className="page__inner">
@@ -101,7 +98,7 @@ class TlogPageRoot extends Component {
           {!isFlow &&
            <div
              className="page-cover js-cover"
-             style={{ backgroundImage: design && `url('${design.backgroundImageUrl}')` || '' }}
+             style={{ backgroundImage: backgroundImageUrl ? `url('${backgroundImageUrl}')` : '' }}
            />
           }
            <header className="page-header">
@@ -124,7 +121,7 @@ class TlogPageRoot extends Component {
         }
         {(!isFlow && !editing && tlogUrl) &&
          <SocialShare
-           img={this.shareImg(tlog)}
+           img={tlog.getIn([ 'userpic', 'originalUrl' ], defaultUserpic)}
            title={slug}
            url={tlogUrl}
          />}
@@ -152,11 +149,11 @@ TlogPageRoot.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const { currentUser, entities: { flow: flowStore, tlog: tlogStore } } = state;
-    const tlog = inferTlog(tlogStore, getSlug(ownProps));
+    const { currentUser, entities } = state;
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === getSlug(ownProps), null, Map());
+    const flow = entities.getIn([ 'flow', tlog.get('id', '').toString() ], Map());
     const currentUserId = currentUser.data && currentUser.data.id;
-    const isCurrentUser = !!(currentUserId && currentUserId === tlog.id);
-    const flow = flowStore[tlog.id] || { flowpic: {} };
+    const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
 
     return {
       flow,

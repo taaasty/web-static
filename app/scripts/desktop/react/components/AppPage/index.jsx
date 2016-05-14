@@ -1,6 +1,7 @@
 /*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
 import Auth from '../Auth';
@@ -78,7 +79,7 @@ export default connect(
   (state, { params }) => ({
     currentUser: state.currentUser.data,
     editing: state.appState.data.editing,
-    tlog: state.entities.get('tlog').find((val) => val.get('slug') === params.slug),
+    tlog: state.entities.get('tlog').find((val) => val.get('slug') === params.slug, null, Map()),
   }),
   { getAppStatsIfNeeded }
 )(AppPage);

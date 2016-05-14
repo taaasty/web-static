@@ -53,38 +53,38 @@ function handleExtra(state, action) {
   switch (action.type) {
   case COMMENT_DELETE_SUCCESS:
     if (action.commentId) {
-      const comment = state.getIn([ 'comment', action.commentId ]);
+      const comment = state.getIn([ 'comment', action.commentId.toString() ]);
 
       if (comment) {
         return state
-          .deleteIn([ 'comment', action.commentId ])
-          .updateIn([ 'entry', comment.entryId, 'commentsCount' ], (val) => val - 1);
+          .deleteIn([ 'comment', action.commentId.toString() ])
+          .updateIn([ 'entry', comment.get('entryId', '').toString(), 'commentsCount' ], (val) => val - 1);
       }
     }
     break;
   case COMMENT_POST_SUCCESS:
     if (action.entryId) {
-      return state.updateIn([ 'entry', action.entryId, 'commentsCount' ], (val) => val + 1);
+      return state.updateIn([ 'entry', action.entryId.toString(), 'commentsCount' ], (val) => val + 1);
     }
     break;
   case ENTRY_FAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId, 'isFavorited' ], true);
+      return state.setIn([ 'entry', action.entryId.toString(), 'isFavorited' ], true);
     }
     break;
   case ENTRY_UNFAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId, 'isFavorited' ], false);
+      return state.setIn([ 'entry', action.entryId.toString(), 'isFavorited' ], false);
     }
     break;
   case ENTRY_WATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId, 'isWatching' ], true);
+      return state.setIn([ 'entry', action.entryId.toString(), 'isWatching' ], true);
     }
     break;
   case ENTRY_UNWATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId, 'isWatching' ], false);
+      return state.setIn([ 'entry', action.entryId.toString(), 'isWatching' ], false);
     }
     break;
   }

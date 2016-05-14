@@ -13,8 +13,8 @@ class FlowPageBody extends Component {
   componentWillReceiveProps(nextProps) {
     this.setViewStyle(nextProps);
   }
-  setViewStyle({ flow, location: { query } }) {
-    if (query && query.style && flow.viewStyle !== query.style) {
+  setViewStyle({ flowState, location: { query } }) {
+    if (query && query.style && flowState.viewStyle !== query.style) {
       this.props.flowViewStyle(query.style);
     }
   }
@@ -31,7 +31,7 @@ class FlowPageBody extends Component {
           <EntryTlogsContainer
             entries={tlogEntries}
             handleDeleteEntry={this.handleDeleteEntry.bind(this)}
-            hostTlogId={tlog.id}
+            hostTlogId={tlog.get('id')}
             loadMoreEntries={appendTlogEntries}
           />
         </div>
@@ -45,7 +45,7 @@ class FlowPageBody extends Component {
       <EntryBricksContainer
         children={children}
         entries={tlogEntries}
-        hostTlogId={tlog.id}
+        hostTlogId={tlog.get('id')}
         loadMoreEntries={appendTlogEntries}
       />
     );
@@ -67,12 +67,12 @@ class FlowPageBody extends Component {
     );
   }
   render() {
-    const { flow: { data: { name }, viewStyle }, location,
+    const { flow, flowState: { viewStyle }, location,
             tlogEntries: { data: { items }, isFetching } } = this.props;
 
     return (
       <div className="page-body">
-        <Helmet title={name} />
+        <Helmet title={flow.get('name')} />
         <div className="layout-outer">
           <FeedFilters
             location={location}
@@ -96,25 +96,13 @@ FlowPageBody.propTypes = {
   deleteEntry: PropTypes.func.isRequired,
   error: PropTypes.string,
   flow: PropTypes.object.isRequired,
+  flowState: PropTypes.object.isRequired,
   flowViewStyle: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   sinceId: PropTypes.string,
   tlog: PropTypes.object,
   tlogEntries: PropTypes.object,
-};
-
-FlowPageBody.defaultProps = {
-  flow: {
-    data: {},
-    viewStyle: VIEW_STYLE_TLOG,
-  },
-  tlog: {},
-  tlogEntries: {
-    data: {
-      items: [],
-    },
-  },
 };
 
 export default FlowPageBody;

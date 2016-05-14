@@ -1,5 +1,6 @@
 /*global $, i18n */
 import React, { Component, PropTypes } from 'react';
+import { Map, List } from 'immutable';
 import classnames from 'classnames';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -40,7 +41,7 @@ class Calendar extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.tlog.id !== nextProps.tlog.id) {
+    if (this.props.tlog.get('id') !== nextProps.tlog.get('id')) {
       this.getCalendarData(nextProps);
     }
     this.updatePropsEntry(nextProps);
@@ -55,14 +56,15 @@ class Calendar extends Component {
   }
   getCalendarData(props) {
     const { currentUser: { id }, tlog, getCalendar } = props;
+    const tlogId = tlog.get('id');
 
-    if (tlog.id && !tlog.isFlow && tlog.slug !== TLOG_SLUG_ANONYMOUS &&
-        (!tlog.isPrivacy || tlog.id === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
-      getCalendar(tlog.id);
+    if (tlogId && !tlog.get('isFlow') && tlog.get('slug') !== TLOG_SLUG_ANONYMOUS &&
+        (!tlog.get('isPrivacy') || tlogId === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
+      getCalendar(tlogId);
     }
   }
   updatePropsEntry(props) {
-    const { selectedEntry } = props;
+    const selectedEntry = props.selectedEntry.toJS();
 
     this.updateSelectedEntry(selectedEntry.id, selectedEntry.createdAt || (new Date()).toISOString());
   }
@@ -113,7 +115,7 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const { periods } = this.props;
+    const periods = this.props.periods.toJS();
 
     if (!periods) {
       return null;
@@ -169,14 +171,12 @@ Calendar.propTypes = {
 export default connect(
   (state, { entryId, tlog }) => {
     const { entities } = state;
-    const periods = entities.getIn([ 'calendar', tlog.id, 'periods' ], []).map((period) => {
-      return {
-        title,
-        markers: (markers || []).map((markerId) => marker[markerId]),
-      };
-    });
+    const periods = entities.getIn([ 'calendar', tlog.get('id', '').toString(), 'periods' ], List()).map((period) => ({
+      title: period.get('title', ''),
+      markers: period.get('markers', List()).map((markerId) => entities.getIn([ 'marker', markerId.toString() ], Map())),
+    }));
     const [ firstEntryId ] = state.tlogEntries.data.items;
-    const selectedEntry = entities.getIn([ 'entry', entryId || firstEntryId ], {});
+    const selectedEntry = entities.getIn([ 'entry', (entryId || firstEntryId || '').toString() ], Map());
 
     return {
       periods,

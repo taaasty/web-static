@@ -126,7 +126,8 @@ class HeroProfile extends Component {
   }
   render() {
     const { follow, isCurrentUser, tlog } = this.props;
-    const { myRelationship, stats } = tlog;
+    const tlogId = tlog.get('id');
+    const myRelationship = tlog.get('myRelationship');
     const followButtonVisible = !isCurrentUser && myRelationship != null;
     
     return (
@@ -135,7 +136,7 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          {!tlog.id
+          {!tlogId
            ? <Spinner size={70} />
            : <HeroProfileAvatar
                isOpen={this.isOpen()}
@@ -146,19 +147,19 @@ class HeroProfile extends Component {
           {followButtonVisible &&
            <SmartFollowStatus
              error={null}
-             follow={follow.bind(null, tlog.id)}
+             follow={follow.bind(null, tlogId)}
              isFetching={!myRelationship}
              relState={myRelationship}
            />
           }
-           {tlog.id && <HeroProfileHead user={tlog} />}
+           {tlogId && <HeroProfileHead user={tlog} />}
            <HeroProfileActionsContainer
              isCurrentUser={!!isCurrentUser}
              relState={myRelationship}
              tlog={tlog}
            />
         </div>
-        {!!stats && <HeroProfileStats stats={stats} user={tlog} />}
+        {!!tlog.get('stats') && <HeroProfileStats user={tlog} />}
       </div>
     );
   }

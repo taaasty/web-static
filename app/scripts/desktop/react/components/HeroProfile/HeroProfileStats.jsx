@@ -10,7 +10,6 @@ import HeroProfileStatsTagsPopup from './HeroProfileStatsTagsPopup';
 
 const HeroProfileStats = createClass({
   propTypes: {
-    stats: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
   },
   mixins: [ ReactGrammarMixin ],
@@ -24,7 +23,7 @@ const HeroProfileStats = createClass({
   },
   
   _isPrivate() {
-    return this.props.user.isPrivacy;
+    return this.props.user.get('isPrivacy');
   },
 
   handleFollowersClick($el) {
@@ -33,7 +32,7 @@ const HeroProfileStats = createClass({
         title={i18n.t('followers')}
         toggle={$el}
       >
-        <HeroProfileStatsFollowersPopup tlogId={this.props.user.id} />
+        <HeroProfileStatsFollowersPopup tlogId={this.props.user.get('id')} />
       </HeroProfileStatsPopup>
     ), this.container);
   },
@@ -44,7 +43,7 @@ const HeroProfileStats = createClass({
         title={i18n.t('followings')}
         toggle={$el}
       >
-        <HeroProfileStatsFollowingsPopup tlogId={this.props.user.id} />
+        <HeroProfileStatsFollowingsPopup tlogId={this.props.user.get('id')} />
       </HeroProfileStatsPopup>
     ), this.container);
   },
@@ -56,17 +55,17 @@ const HeroProfileStats = createClass({
         toggle={$el}
       >
         <HeroProfileStatsTagsPopup
-          userID={this.props.user.id}
-          userSlug={this.props.user.slug}
+          userID={this.props.user.get('id')}
+          userSlug={this.props.user.get('slug')}
         />
       </HeroProfileStatsPopup>
     ), this.container);
   },
 
   renderFollowersCount() {
-    const { followersCount } = this.props.stats;
+    const followersCount = this.props.user.getIn([ 'stats', 'followersCount' ]);
 
-    return (
+    return (!!followersCount &&
       <HeroProfileStatsItem
         count={followersCount}
         key="followers"
@@ -77,9 +76,9 @@ const HeroProfileStats = createClass({
   },
 
   renderFollowingsCount() {
-    const { followingsCount } = this.props.stats;
+    const followingsCount = this.props.user.getIn([ 'stats', 'followingsCount' ]);
 
-    return (
+    return (!!followingsCount &&
       <HeroProfileStatsItem
         count={followingsCount}
         key="followings"
@@ -90,11 +89,12 @@ const HeroProfileStats = createClass({
   },
 
   renderFavoritesCount() {
-    const url = this._isPrivate() ? '#' : Routes.tlog_favorite_entries_path(this.props.user.slug);
+    const favoritesCount = this.props.user.getIn([ 'stats', 'favoritesCount' ]);
+    const url = this._isPrivate() ? '#' : Routes.tlog_favorite_entries_path(this.props.user.get('slug'));
 
-    return (
+    return (!!favoritesCount &&
       <HeroProfileStatsItem
-        count={this.props.stats.favoritesCount}
+        count={favoritesCount}
         href={url}
         key="favorites"
         title={i18n.t('stats_favorites_count')}
@@ -103,10 +103,10 @@ const HeroProfileStats = createClass({
   },
 
   renderEntriesCount() {
-    const { entriesCount } = this.props.stats;
-    const url = this._isPrivate() ? '#' : this.props.user.tlogUrl;
+    const entriesCount = this.props.user.getIn([ 'stats', 'entriesCount' ]);
+    const url = this._isPrivate() ? '#' : this.props.user.get('tlogUrl');
 
-    return (
+    return (!!entriesCount &&
       <HeroProfileStatsItem
         count={entriesCount}
         href={url}
@@ -117,9 +117,9 @@ const HeroProfileStats = createClass({
   },
 
   renderCommentsCount() {
-    const { commentsCount } = this.props.stats;
+    const commentsCount = this.props.user.getIn([ 'stats', 'commentsCount' ]);
 
-    return (
+    return (!!commentsCount &&
       <HeroProfileStatsItem
         count={commentsCount}
         key="comments"
@@ -129,9 +129,9 @@ const HeroProfileStats = createClass({
   },
 
   renderDaysCount() {
-    const { daysCount } = this.props.stats;
+    const daysCount = this.props.user.getIn([ 'stats', 'daysCount' ]);
 
-    return (
+    return (!!daysCount &&
       <HeroProfileStatsItem
         count={daysCount}
         key="days"
@@ -141,9 +141,9 @@ const HeroProfileStats = createClass({
   },
 
   renderTagsCount() {
-    const { tagsCount } = this.props.stats;
+    const tagsCount = this.props.user.getIn([ 'stats', 'tagsCount' ]);
 
-    return (
+    return (!!tagsCount &&
       <HeroProfileStatsItem
         count={tagsCount}
         key="tags"
@@ -154,19 +154,16 @@ const HeroProfileStats = createClass({
   },
 
   render() {
-    const { commentsCount, daysCount, entriesCount, favoritesCount,
-            followersCount, followingsCount, tagsCount } = this.props.stats;
-
     return (
       <div className="hero__stats">
         <div className="hero__stats-list">
-          {!!followersCount && this.renderFollowersCount()}
-          {!!followingsCount && this.renderFollowingsCount()}
-          {!!favoritesCount && this.renderFavoritesCount()}
-          {!!entriesCount && this.renderEntriesCount()}
-          {!!commentsCount && this.renderCommentsCount()}
-          {!!daysCount && this.renderDaysCount()}
-          {!!tagsCount && this.renderTagsCount()}
+          {this.renderFollowersCount()}
+          {this.renderFollowingsCount()}
+          {this.renderFavoritesCount()}
+          {this.renderEntriesCount()}
+          {this.renderCommentsCount()}
+          {this.renderDaysCount()}
+          {this.renderTagsCount()}
         </div>
       </div>
     );

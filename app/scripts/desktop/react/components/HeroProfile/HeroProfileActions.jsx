@@ -7,7 +7,8 @@ import WriteMessageButton from './WriteMessageButton';
 
 function HeroProfileActions(props) {
   const { relState, tlog } = props;
-  const isAnonymousTlog = tlog.slug === TLOG_SLUG_ANONYMOUS;
+  const tlogId = tlog.get('id');
+  const isAnonymousTlog = tlog.get('slug') === TLOG_SLUG_ANONYMOUS;
 
   return (
     <div className="hero__actions hero__actions--visible">
@@ -15,18 +16,18 @@ function HeroProfileActions(props) {
         error={false}
         isFetching={!relState}
         relState={relState}
-        subjectId={tlog.id}
-        subjectPrivacy={tlog.isPrivacy}
+        subjectId={tlogId}
+        subjectPrivacy={tlog.get('isPrivacy')}
       />
       {!isAnonymousTlog &&
        [ <WriteMessageButton
            key="write-message-button"
-           user={tlog}
+           userId={tlogId}
          />,
          <HeroProfileDropdownMenu
            key="ellipsis-button"
            status={relState}
-           userId={tlog.id}
+           userId={tlogId}
          /> ]
       }
     </div>

@@ -2,9 +2,9 @@
 import React, { PropTypes } from 'react';
 import ConversationActions from '../../messaging/actions/ConversationActions';
 
-function WriteMessageButton({ user }) {
+function WriteMessageButton({ userId }) {
   function handleClick() {
-    ConversationActions.openConversation(user.id);
+    ConversationActions.openConversation(userId);
   }
 
   return (
@@ -19,7 +19,7 @@ function WriteMessageButton({ user }) {
 }
 
 WriteMessageButton.propTypes = {
-  user: PropTypes.object.isRequired,
+  userId: PropTypes.number,
 };
 
 export default WriteMessageButton;
