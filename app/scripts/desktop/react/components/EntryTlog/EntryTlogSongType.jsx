@@ -25,12 +25,12 @@ class EntryTlogSongType extends Component {
     }
   }
   render() {
-    const { isPrivate } = this.props.entry;
+    const { isPrivate, isVoteable, rating } = this.props.entry;
 
     return (
       <span>
         <header className="post__header">
-          {isPrivate && <PrivacyBadge />}
+          {!!isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__meta">

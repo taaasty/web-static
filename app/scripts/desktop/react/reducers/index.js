@@ -12,6 +12,7 @@ import feedStatus from './feedStatus';
 import flow from './flow';
 import flows from './flows';
 import people from './people';
+import ratingState from './ratingState';
 import tagEntries from './tagEntries';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
@@ -31,6 +32,7 @@ export default {
   flow,
   flows,
   people,
+  ratingState,
   tagEntries,
   tlog,
   tlogEntries,

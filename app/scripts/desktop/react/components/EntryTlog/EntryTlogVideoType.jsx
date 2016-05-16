@@ -15,7 +15,7 @@ class EntryTlogVideoType extends Component {
     }
   }
   render() {
-    const { iframely, isPrivate, title } = this.props.entry;
+    const { iframely, isPrivate, isVoteable, rating, title } = this.props.entry;
 
     return (
       <span>
@@ -27,7 +27,7 @@ class EntryTlogVideoType extends Component {
             embedHtml={iframely.html}
           />
           <div className="video_comment">
-            {isPrivate && <PrivacyBadge />}
+            {!!isPrivate && <PrivacyBadge />}
             <Text value={title} withHTML={true} />
           </div>
         </div>

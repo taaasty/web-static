@@ -14,6 +14,7 @@ const relSchema = new Schema(
   'rel',
   { idAttribute: (e) => `${e.userId}-${e.readerId}` }
 );
+const ratingSchema = new Schema('rating', { idAttribute: 'entryId' });
 
 const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
 const markerSchema = new Schema('marker', { idAttribute: 'entryId' });
@@ -48,6 +49,7 @@ const messageSchema = new Schema('message');
 
 tlogSchema.define({
   author: tlogSchema,
+  myRelationshipObject: relSchema,
 });
 
 calendarSchema.define({
@@ -81,6 +83,7 @@ entrySchema.define({
   author: tlogSchema,
   commentator: tlogSchema,
   comments: arrayOf(commentSchema),
+  rating: ratingSchema,
   tlog: tlogSchema,
 });
 
@@ -130,6 +133,7 @@ export const Schemas = {
   ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
   COMMENT: commentSchema,
   COMMENT_COLL: { comments: arrayOf(commentSchema) },
+  RATING: ratingSchema,
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   CONVERSATION: conversationSchema,

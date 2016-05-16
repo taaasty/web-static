@@ -59,7 +59,7 @@ EntryTlogComments.propTypes = {
   commentStates: PropTypes.object.isRequired,
   commentUsers: PropTypes.object.isRequired,
   commentator: PropTypes.object,
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.object.isRequired,
   commentsCount: PropTypes.number.isRequired,
   deleteComment: PropTypes.func.isRequired,
   entryId: PropTypes.number.isRequired,

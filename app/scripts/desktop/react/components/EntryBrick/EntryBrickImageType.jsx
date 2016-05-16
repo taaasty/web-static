@@ -9,7 +9,7 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
+function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
   function renderBrickImage() {
     return entry.previewImage
       ?  <Image image={entry.previewImage} maxWidth={brickWidth} />
@@ -47,11 +47,7 @@ function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, 
       </div>
       {entry.titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar
-          entry={entry}
-          hostTlogId={hostTlogId}
-          onVote={onVote}
-        />
+        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -68,7 +64,6 @@ EntryBrickImageType.propTypes = {
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickImageType;

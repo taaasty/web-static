@@ -16,7 +16,7 @@ class EntryTlogUnknownType extends Component {
     }
   }
   render() {
-    const { isPrivate } = this.props.entry;
+    const { isPrivate, isVoteable, rating } = this.props.entry;
 
     return (
       <span>

@@ -24,12 +24,12 @@ class EntryTlogTextType extends Component {
   }
   render() {
     const { entry, isInList } = this.props;
-    const { isPrivate, text } = entry;
+    const { isPrivate, isVoteable, rating, text } = entry;
 
     return (
       <span>
         <header className="post__header">
-          {isPrivate && <PrivacyBadge />}
+          {!!isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <EntryTlogContentLink entry={entry} show={isInList}>

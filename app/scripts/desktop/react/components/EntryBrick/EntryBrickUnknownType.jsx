@@ -6,7 +6,7 @@ import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickUnknownType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
+function EntryBrickUnknownType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
   function renderBrickTitle() {
     return (
       <Link
@@ -42,11 +42,7 @@ function EntryBrickUnknownType({ entry, hasModeration, hostTlogId, onEntryAccept
         </div>
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar
-          entry={entry}
-          hostTlogId={hostTlogId}
-          onVote={onVote}
-        />
+        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -63,7 +59,6 @@ EntryBrickUnknownType.propTypes = {
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickUnknownType;

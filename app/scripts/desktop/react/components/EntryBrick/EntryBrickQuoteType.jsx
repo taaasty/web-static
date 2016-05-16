@@ -5,7 +5,7 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
+function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
   function renderQuoteSource() {
     return (
       <span className="blockquote__caption">—
@@ -35,11 +35,7 @@ function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, 
         {renderContents()}
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar
-          entry={entry}
-          hostTlogId={hostTlogId}
-          onVote={onVote}
-        />
+        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -56,7 +52,6 @@ EntryBrickQuoteType.propTypes = {
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickQuoteType;

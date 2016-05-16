@@ -1,6 +1,6 @@
 /*global $, i18n */
 import React, { Component, PropTypes } from 'react';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { loadComments } from '../../actions/CommentsActions';
 import { deleteComment, postComment, reportComment, updateComment } from '../../actions/CommentActions';
@@ -118,7 +118,7 @@ export default connect(
   (state, { commentator, entry, isFormHidden, limit }) => {
     const { entities, commentState } = state;
     const comments = entities.get('comment').filter((c) => c.get('entryId') === entry.id);
-    const commentStates = comments.map((c) => commentState[c.get('id')]);
+    const commentStates = comments.map((c) => commentState.get(c.get('id')));
     const users = comments.map((c) => entities.getIn([ 'tlog', c.get('user', '').toString() ], Map()));
 
     return {

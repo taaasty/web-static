@@ -20,12 +20,12 @@ class EntryTlogCodeType extends Component {
   }
   render() {
     const { isInList, entry } = this.props;
-    const { isPrivate, text } = entry;
+    const { isPrivate, isVoteable, rating, text } = entry;
 
     return (
       <span>
         <header className="post__header">
-          {isPrivate && <PrivacyBadge />}
+          {!!isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <EntryTlogContentLink entry={entry} show={isInList}>
@@ -49,7 +49,6 @@ EntryTlogCodeType.propTypes = {
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCodeType;

@@ -1,5 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import { List } from 'immutable';
 import classNames from 'classnames';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
@@ -15,60 +16,55 @@ class Voting extends Component {
     $(this.refs.container).tooltip('destroy');
   }
   getTitle() {
-    const { canVote, rating: { isVoted, reasons=[] } } = this.props.entry;
+    const { rating } = this.props;
+    const isVoteable = rating.get('isVoteable', false);
+    const isVoted = rating.get('isVoted', false);
+    const reasons = rating.get('reasors', List());
 
-    if (canVote && !isVoted) {
+    if (isVoteable && !isVoted) {
       return i18n.t('vote');
     } else if (isVoted) {
       return i18n.t('voted');
-    } else if (reasons.length) {
+    } else if (reasons.size) {
       return reasons.join('<br />');
     } else {
       return i18n.t('cant_vote');
     }
   }
   handleClick() {
-    const { canVote, rating: { isVoted } } = this.props.entry;
-    if (isVoted || !canVote) {
+    const { onVote, rating } = this.props;
+    if (rating.get('isVoted') || !rating.get('isVoteable')) {
       return;
     }
 
-    this.props.onVote();
+    onVote();
   }
   render() {
-    const { canVote, isVoting, rating: { isVoted, votes } } = this.props.entry;
+    const { isVoting, rating } = this.props;
+    const isVoteable = rating.get('isVoteable');
     const votingClasses = classNames('voting', {
-      'votable': canVote,
-      'unvotable': !canVote,
-      'voted': isVoted,
+      'votable': isVoteable,
+      'unvotable': !isVoteable,
+      'voted': rating.get('isVoted'),
     });
 
     return (
       <span
         className={votingClasses}
-        data-original-title={this.getTitle.call(this)}
+        data-original-title={this.getTitle()}
         onClick={this.handleClick.bind(this)}
         ref="container"
       >
-        {isVoting ? <Spinner size={8} /> : votes}
+        {isVoting ? <Spinner size={8} /> : rating.get('votes')}
       </span>
     );
   }
 }
 
 Voting.propTypes = {
-  entry: PropTypes.shape({
-    canVote: PropTypes.bool.isRequired,
-    isVoting: PropTypes.bool,
-    rating: PropTypes.shape({
-      isVoted: PropTypes.bool.isRequired,
-      isVoteable: PropTypes.bool.isRequired,
-      rating: PropTypes.number.isRequired,
-      reasons: PropTypes.array,
-      votes: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+  isVoting: PropTypes.bool.isRequired,
   onVote: PropTypes.func.isRequired,
+  rating: PropTypes.object.isRequired,
 };
 
 export default Voting;

@@ -10,7 +10,7 @@ export function voteEntry(entryId) {
   return {
     [CALL_API]: {
       endpoint: ApiRoutes.votes_url(entryId),
-      schema: Schemas.NONE,
+      schema: Schemas.RATING,
       types: [ ENTRY_VOTE_REQUEST, ENTRY_VOTE_SUCCESS, ENTRY_VOTE_FAILURE ],
       opts: postOpts(),
     },

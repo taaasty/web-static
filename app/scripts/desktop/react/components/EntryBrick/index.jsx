@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
+import { Map } from 'immutable';
 import EntryBrickContent from './EntryBrickContent';
 import EntryBrickFlowHeader from './EntryBrickFlowHeader';
 import EntryBrickPinHeader from './EntryBrickPinHeader';
 import {
-  voteEntry,
   acceptEntry,
   declineEntry,
 } from '../../actions/EntryActions';
@@ -14,15 +13,20 @@ import { ENTRY_TYPES, ENTRY_PINNED_STATE } from '../../constants/EntryConstants'
 import { FEED_TYPE_LIVE_FLOW } from '../../constants/FeedConstants';
 
 class EntryBrick extends Component {
-  voteEntry() {
-    this.props.voteEntry(this.props.entryId)
-      .then((data) => {
-        if (window.ga) {
-          window.ga('send', 'event', 'UX', 'Like');
-        }
-        return data;
-      });
-    // TODO: restore PostAuth logic
+  shouldComponentUpdate(nextProps) {
+    const { entry, entryAuthor, entryId, entryState, entryTlog,
+            feedType, hostTlogId, moderation } = this.props;
+
+    return (
+      entry !== nextProps.entry ||
+      entryAuthor !== nextProps.entryAuthor ||
+      entryId !== nextProps.entryId ||
+      entryState !== nextProps.entryState ||
+      entryTlog !== nextProps.entryTlog ||
+      feedType !== nextProps.feedType ||
+      hostTlogId !== nextProps.hostTlogId ||
+      moderation !== nextProps.moderation
+    );
   }
   acceptEntry() {
     const { acceptEntry, moderation: { acceptUrl, acceptAction } } = this.props;
@@ -59,25 +63,37 @@ class EntryBrick extends Component {
       });
   }
   getBrickClasses() {
-    const { type } = this.props.entry;
+    const type = this.props.entry.get('type');
     const typeClass = ENTRY_TYPES.indexOf(type) != -1 ? type : 'text';
 
     return `brick brick--${typeClass}`;
   }
   renderFlowHeader() {
-    const { entry: { author, tlog }, hostTlogId } = this.props;
+    const { entryAuthor, entryTlog, hostTlogId } = this.props;
 
-    if (hostTlogId == null && author && tlog && author.id !== tlog.id) {
-      return <EntryBrickFlowHeader flow={tlog} />;
+    if (hostTlogId == null && entryAuthor.get('id') !== entryTlog.get('id')) {
+      return <EntryBrickFlowHeader flow={entryTlog} />;
     }
   }
   renderPinHeader() {
-    if (this.props.entry.fixedState === ENTRY_PINNED_STATE) {
+    if (this.props.entry.get('fixedState') === ENTRY_PINNED_STATE) {
       return <EntryBrickPinHeader />;
     }
   }
   render() {
-    const { entry, feedType, hostTlogId, moderation } = this.props;
+    console.count('brickItem');
+    const { entry: immEntry, entryAuthor: immEntryAuthor, entryState,
+            entryTlog: immEntryTlog, feedType, hostTlogId, moderation } = this.props;
+    // TODO: move immutable structure down the pros chain
+    const jsEntry = immEntry.toJS();
+    const jsEntryAuthor = immEntryAuthor.toJS();
+    const jsEntryTlog = immEntryTlog.toJS();
+
+    const entry = Object.assign({}, jsEntry, entryState, {
+      url: jsEntry.url || jsEntry.entryUrl,
+      author: jsEntryAuthor,
+      tlog: jsEntryTlog,
+    });
 
     return (
       <article className={this.getBrickClasses()} data-id={entry.id}>
@@ -89,7 +105,6 @@ class EntryBrick extends Component {
           hostTlogId={hostTlogId}
           onEntryAccept={this.acceptEntry.bind(this)}
           onEntryDecline={this.declineEntry.bind(this)}
-          onVote={this.voteEntry.bind(this)}
         />
       </article>
     );
@@ -99,27 +114,32 @@ class EntryBrick extends Component {
 EntryBrick.propTypes = {
   acceptEntry: PropTypes.func.isRequired,
   declineEntry: PropTypes.func.isRequired,
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
   entryId: PropTypes.number.isRequired,
+  entryState: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   feedType: PropTypes.string,
   hostTlogId: PropTypes.number,
   moderation: PropTypes.object,
-  voteEntry: PropTypes.func.isRequired,
 };
 
 export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
-    const { entryState, entities: { tlog, entry: entryStore } } = state;
-    const rawEntry = entryStore[entryId];
-    const entry = (rawEntry && Object.assign({}, rawEntry, entryState, {
-      url: rawEntry.url || rawEntry.entryUrl,
-      author: tlog[rawEntry.author],
-      tlog: tlog[rawEntry.tlog],
-    })) || {};
+    const { entryState, entities } = state;
+    const entry = entities.getIn([ 'entry', entryId.toString() ], Map());
+    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], Map());
+    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], Map());
     const moderation = null; // TODO: implement when premod enabled
 
-    return Object.assign({}, ownProps, { entry, moderation });
+    return Object.assign({}, ownProps, {
+      entry,
+      entryAuthor,
+      entryTlog,
+      moderation,
+      entryState: entryState[entryId],
+    });
   },
-  { voteEntry, acceptEntry, declineEntry }
+  { acceptEntry, declineEntry }
 )(EntryBrick);

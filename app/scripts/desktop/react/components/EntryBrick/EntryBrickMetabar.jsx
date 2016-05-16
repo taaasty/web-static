@@ -1,18 +1,16 @@
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import MetabarAuthor from '../common/MetabarAuthor';
-import Voting from '../common/Voting';
+import Voting from '../Voting';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickMetabar({ entry, hostTlogId, onVote }) {
+function EntryBrickMetabar({ entry, hostTlogId }) {
   function renderMetaVote() {
-    const { id, rating } = entry;
-
     return (
       <span className="meta-item meta-item--vote">
         <span className="meta-item__content">
-          <Voting entry={entry} onVote={onVote} />
+          <Voting ratingId={entry.rating} />
         </span>
       </span>
     );
@@ -38,7 +36,7 @@ function EntryBrickMetabar({ entry, hostTlogId, onVote }) {
 
   return (
     <span className="meta-bar">
-      {entry.isVoteable && renderMetaVote()}
+      {!!entry.isVoteable && renderMetaVote()}
       {!!entry.commentsCount && renderMetaComments()}
       <MetabarAuthor
         author={entry.author}
@@ -52,7 +50,6 @@ function EntryBrickMetabar({ entry, hostTlogId, onVote }) {
 EntryBrickMetabar.propTypes = {
   entry: ProjectTypes.tlogEntry.isRequired,
   hostTlogId: PropTypes.number,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickMetabar;

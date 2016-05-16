@@ -9,11 +9,6 @@ class EntryTlogLinkType extends Component {
   startComment() {
     this.refs.comments.getWrappedInstance().startComment();
   }
-  renderVoting() {
-    const { entry, onVote } = this.props;
-
-    return !!entry.rating.isVoteable && <Voting entry={entry} onVote={onVote} />;
-  }
   renderTitle() {
     if (this.props.entry.title) {
       return (
@@ -35,12 +30,12 @@ class EntryTlogLinkType extends Component {
     }
   }
   render() {
-    const { isPrivate, text } = this.props.entry;
+    const { isPrivate, isVoteable, rating, text } = this.props.entry;
 
     return (
       <span>
         <header className="post__header">
-          {this.renderVoting()}
+          {!!isVoteable && <Voting ratingId={rating} />}
           {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
@@ -60,7 +55,6 @@ class EntryTlogLinkType extends Component {
 EntryTlogLinkType.propTypes = {
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryTlogLinkType;

@@ -8,7 +8,7 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline, onVote }) {
+function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
   function renderBrickBody() {
     return (
       <div className="brick__body">
@@ -45,11 +45,7 @@ function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, 
       </div>
       {entry.titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar
-          entry={entry}
-          hostTlogId={hostTlogId}
-          onVote={onVote}
-        />
+        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -66,7 +62,6 @@ EntryBrickVideoType.propTypes = {
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
-  onVote: PropTypes.func.isRequired,
 };
 
 export default EntryBrickVideoType;

@@ -9,7 +9,6 @@ import TastyConfirmController from '../../controllers/TastyConfirmController';
 import NoticeService from '../../services/Notice';
 import { connect } from 'react-redux';
 import {
-  voteEntry,
   favoriteEntry,
   unfavoriteEntry,
   watchEntry,
@@ -64,16 +63,6 @@ class EntryTlog extends Component {
       commentator !== nextProps.commentator ||
       moderation !== nextProps.moderation
     );
-  }
-  voteEntry() {
-    return this.props.voteEntry(this.props.entryId)
-      .then((data) => {
-        if (window.ga) {
-          window.ga('send', 'event', 'UX', 'Like');
-        }
-        return data;
-      });
-    // TODO: restore PostAuth logic
   }
   favoriteEntry() {
     return this.props.favoriteEntry(this.props.entryId)
@@ -211,7 +200,6 @@ class EntryTlog extends Component {
                onRemoveFromFavorites={this.unfavoriteEntry.bind(this)}
                onRemoveFromWatching={this.unwatchEntry.bind(this)}
                onReport={this.reportEntry.bind(this)}
-               onVote={this.voteEntry.bind(this)}
              />}
         </article>;
   }
@@ -232,7 +220,7 @@ EntryTlog.propTypes = {
   entryAuthor: PropTypes.object.isRequired,
   entryTlog: PropTypes.object.isRequired,
   entryTlogAuthor: PropTypes.object.isRequired,
-  entryState: PropTypes.object.isRequired,
+  entryState: PropTypes.object,
   commentator: PropTypes.object,
   moderation: PropTypes.object,
 
@@ -244,7 +232,6 @@ EntryTlog.propTypes = {
   repostEntry: PropTypes.func.isRequired,
   unfavoriteEntry: PropTypes.func.isRequired,
   unwatchEntry: PropTypes.func.isRequired,
-  voteEntry: PropTypes.func.isRequired,
   watchEntry: PropTypes.func.isRequired,
 };
 
@@ -271,7 +258,6 @@ export default connect(
     });
   },
   {
-    voteEntry,
     favoriteEntry,
     unfavoriteEntry,
     watchEntry,

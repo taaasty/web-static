@@ -116,7 +116,6 @@ global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
 global.Spinner = require '../shared/react/components/common/Spinner'
 global.SocialShare = require './react/components/common/SocialShare';
-global.Voting = require './react/components/common/Voting';
 
 require './react/components/alerts/tasty_confirm'
 require './react/components/alerts/tasty_alert'
