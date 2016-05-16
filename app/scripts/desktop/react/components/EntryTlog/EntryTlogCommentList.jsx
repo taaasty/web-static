@@ -1,31 +1,41 @@
 import React, { PropTypes } from 'react';
+import { Map } from 'immutable';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
 function EntryTlogCommentList(props) {
-  const { commentator, comments, entryId, entryUrl, onCommentReply,
-          onCommentUpdate, onCommentReport, onCommentDelete } = props;
+  const { commentStates, commentUsers, commentator, comments, entryId, entryUrl,
+          onCommentReply, onCommentUpdate, onCommentReport, onCommentDelete } = props;
 
   return (
       <div className="comments__list">{
-        comments.map((comment) => (
-          <EntryTlogCommentContainer
-            comment={comment}
-            commentator={commentator}
-            entryId={entryId}
-            entryUrl={entryUrl}
-            key={comment.id}
-            onCommentDelete={onCommentDelete.bind(null, comment.id)}
-            onCommentReply={onCommentReply.bind(null, comment.user.name)}
-            onCommentReport={onCommentReport.bind(null, comment.id)}
-            onCommentUpdate={onCommentUpdate.bind(null, comment.id)}
-          />
-        ))
+        comments.map((comment, key) => {
+          const commentId = comment.get('id');
+          const commentUserName = commentUsers.getIn([ key, 'name' ], '');
+
+          return (
+            <EntryTlogCommentContainer
+              comment={comment}
+              commentState={commentStates.get(key, Map())}
+              commentUser={commentUsers.get(key, Map())}
+              commentator={commentator}
+              entryId={entryId}
+              entryUrl={entryUrl}
+              key={`tlog-entry-comment-${commentId}`}
+              onCommentDelete={onCommentDelete.bind(null, commentId)}
+              onCommentReply={onCommentReply.bind(null, commentUserName)}
+              onCommentReport={onCommentReport.bind(null, commentId)}
+              onCommentUpdate={onCommentUpdate.bind(null, commentId)}
+            />
+          );
+        }).valueSeq()
       }
     </div>
   );
 }
 
 EntryTlogCommentList.propTypes = {
+  commentStates: PropTypes.object.isRequired,
+  commentUsers: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   comments: PropTypes.array.isRequired,
   entryId: PropTypes.number.isRequired,

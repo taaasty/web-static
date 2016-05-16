@@ -15,14 +15,14 @@ function EntryTlogCommentMetabar(props) {
     );
   }
 
-  const { comment: { createdAt, id }, commentator, entryId, entryUrl } = props;
-  const commentUrl = `${entryUrl}#comment-${id}`;
+  const { comment, commentator, entryId, entryUrl } = props;
+  const commentUrl = `${entryUrl}#comment-${comment.get('id')}`;
 
   return (
     <span className="comment__meta">
       {commentator && renderReply()}
       <EntryTlogCommentMetabarDate
-        date={createdAt}
+        date={comment.get('createdAt')}
         entryId={entryId}
         url={commentUrl}
       />
@@ -35,6 +35,7 @@ function EntryTlogCommentMetabar(props) {
 EntryTlogCommentMetabar.propTypes = {
   comment: PropTypes.object.isRequired,
   commentator: PropTypes.object,
+  entryId: PropTypes.number.isRequired,
   entryUrl: PropTypes.string.isRequired,
   onCommentReply: PropTypes.func,
 };

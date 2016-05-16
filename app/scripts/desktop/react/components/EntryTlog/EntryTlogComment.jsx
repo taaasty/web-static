@@ -8,7 +8,7 @@ import uri from 'urijs';
 export const COMMENT_AVATAR_SIZE = 40;
 
 function EntryTlogComment(props) {
-  const { comment: { user, commentHtml } } = props;
+  const { comment, commentUser } = props;
 
   return (
     <article className="comment">
@@ -16,18 +16,18 @@ function EntryTlogComment(props) {
         <div className="comment__table-cell">
           <Link
             className="comment__user"
-            title={user.name}
-            to={uri(user.tlogUrl).path()}
+            title={commentUser.get('name')}
+            to={uri(commentUser.get('tlogUrl')).path()}
           >
             <span className="comment__avatar">
-              <Avatar size={COMMENT_AVATAR_SIZE} userpic={user.userpic} />
+              <Avatar size={COMMENT_AVATAR_SIZE} userpic={commentUser.get('userpic').toJS()} />
             </span>
             <span className="comment__username comment__username--bold">
-              <UserSlug showAsStar user={user} />
+              <UserSlug showAsStar user={commentUser.toJS()} />
               {' '}
             </span>
           </Link>
-          <span dangerouslySetInnerHTML={{__html: commentHtml}} />
+          <span dangerouslySetInnerHTML={{__html: comment.get('commentHtml', '')}} />
           <EntryTlogCommentMetabar {...props} />
         </div>
       </div>
@@ -37,6 +37,7 @@ function EntryTlogComment(props) {
 
 EntryTlogComment.propTypes = {
   comment: PropTypes.object.isRequired,
+  commentUser: PropTypes.object.isRequired,
   entryUrl: PropTypes.string.isRequired,
 };
 

@@ -6,6 +6,17 @@ class EntryTlogCommentContainer extends Component {
   state = {
     edit: false,
   };
+  shouldComponentUpdate(nextProps) {
+    const { comment, commentState, commentUser, commentator , entryUrl } = this.props;
+
+    return (
+      comment !== nextProps.comment ||
+      commentState !== nextProps.commentState ||
+      commentUser !== nextProps.commentUser ||
+      commentator !== nextProps.commentator ||
+      entryUrl !== nextProps.entryUrl
+    );
+  }
   updateComment(text) {
     this.props.onCommentUpdate(text)
       .then(this.show.bind(this));
@@ -17,16 +28,17 @@ class EntryTlogCommentContainer extends Component {
     this.setState({ edit: false });
   }
   render() {
-    const { comment, commentator } = this.props;
+    console.count('commentItem');
+    const { comment, commentState, commentator } = this.props;
     const { edit } = this.state;
 
     return edit
       ? <EntryTlogCommentEditForm
-          comment={comment}
+          commentHtml={comment.get('commentHtml', '')}
           commentator={commentator}
           onCancel={this.show.bind(this)}
           onCommentUpdate={this.updateComment.bind(this)}
-          process={comment.isProcessing}
+          process={commentState.get('isProcessing', false)}
         />
       : <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />;
   }
@@ -34,6 +46,8 @@ class EntryTlogCommentContainer extends Component {
 
 EntryTlogCommentContainer.propTypes = {
   comment: PropTypes.object.isRequired,
+  commentState: PropTypes.object.isRequired,
+  commentUser: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   entryUrl: PropTypes.string.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,

@@ -15,22 +15,24 @@ class EntryTlogComments extends Component {
       .then(() => this.refs.createForm.clear());
   }
   render() {
-    const { commentator, comments, commentsCount, deleteComment, isFormHidden,
-            entryId, entryUrl, limit, loadMore, loading, posting, reportComment,
+    const { commentStates, commentUsers, commentator, comments, commentsCount, deleteComment,
+            isFormHidden, entryId, entryUrl, limit, loadMore, loading, posting, reportComment,
             updateComment } = this.props;
 
     return (
       <section className="comments">
-        {(commentsCount > comments.length) &&
+        {(commentsCount > comments.size) &&
          <EntryTlogCommentsLoadMore 
            limit={limit}
-           loadedCount={comments.length}
+           loadedCount={comments.size}
            loading={loading}
            onLoadMore={loadMore}
            totalCount={commentsCount}
          />}
-        {!!comments.length &&
+        {!!comments.size &&
          <EntryTlogCommentList
+           commentStates={commentStates}
+           commentUsers={commentUsers}
            commentator={commentator}
            comments={comments}
            entryId={entryId}
@@ -40,7 +42,8 @@ class EntryTlogComments extends Component {
            onCommentReport={reportComment}
            onCommentUpdate={updateComment}
          />}
-        <EntryTlogCommentCreateForm {...this.props}
+        <EntryTlogCommentCreateForm
+          commentator={commentator}
           isFormHidden={isFormHidden}
           onCommentCreate={this.postComment.bind(this)}
           process={posting}
@@ -53,6 +56,8 @@ class EntryTlogComments extends Component {
 }
 
 EntryTlogComments.propTypes = {
+  commentStates: PropTypes.object.isRequired,
+  commentUsers: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   comments: PropTypes.array.isRequired,
   commentsCount: PropTypes.number.isRequired,

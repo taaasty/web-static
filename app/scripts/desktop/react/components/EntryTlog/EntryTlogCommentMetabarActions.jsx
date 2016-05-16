@@ -68,32 +68,26 @@ class EntryTlogCommentMetabarActions extends Component {
             title={i18n.t('link_comment_item')}
             url={url}
           />
-          {
-            comment.canReport && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--exclamation-mark"
-                onClick={onCommentReport}
-                title={i18n.t('report_comment_item')}
-              />
-            )
+          {comment.get('canReport', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--exclamation-mark"
+             onClick={onCommentReport}
+             title={i18n.t('report_comment_item')}
+           />
           }
-          {
-            comment.canEdit && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--pencil"
-                onClick={onCommentEdit}
-                title={i18n.t('edit_comment_item')}
-              />
-            )
+          {comment.get('canEdit', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--pencil"
+             onClick={onCommentEdit}
+             title={i18n.t('edit_comment_item')}
+           />
           }
-          {
-            comment.canDelete && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--basket"
-                onClick={onCommentDelete}
-                title={i18n.t('delete_comment_item')}
-              />
-            )
+          {comment.get('canDelete', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--basket"
+             onClick={onCommentDelete}
+             title={i18n.t('delete_comment_item')}
+           />
           }
         </span>
       </span>

@@ -17,15 +17,13 @@ function shallowEqual(ImmA, ImmB) {
 class EntryTlogCommentsContainer extends Component {
   shouldComponentUpdate(nextProps) {
     const { commentator, comments, commentStates, entry, isFormHidden, users } = this.props;
-    const { commentator: nextCommentator, comments: nextComments, commentStates: nextCommentStates,
-            entry: nextEntry, isFormHidden: nextIsFormHidden, users: nextUsers } = nextProps;
 
-    return commentator !== nextCommentator ||
-      entry !== nextEntry ||
-      isFormHidden !== nextIsFormHidden ||
-      !shallowEqual(comments, nextComments) ||
-      !shallowEqual(commentStates, nextCommentStates) ||
-      !shallowEqual(users, nextUsers);
+    return commentator !== nextProps.commentator ||
+      entry !== nextProps.entry ||
+      isFormHidden !== nextProps.isFormHidden ||
+      !shallowEqual(comments, nextProps.comments) ||
+      !shallowEqual(commentStates, nextProps.commentStates) ||
+      !shallowEqual(users, nextProps.users);
   }
   startComment() {
     this.refs.main.startComment();
@@ -69,18 +67,16 @@ class EntryTlogCommentsContainer extends Component {
   }
   render() {
     console.count('tlogComments');
-    const { commentator, comments: immComments, commentStates, entry, isFormHidden, limit, users: immUsers } = this.props;
-    const jsComments = immComments.toJS();
-    const jsUsers = immUsers.toJS();
-    const comments = Object.keys(jsComments)
-            .map((id) =>  Object.assign({}, jsComments[id], commentStates[id], { user: jsUsers[id] }))
-            .sort((a, b) => (new Date(a.createdAt)).valueOf() - (new Date(b.createdAt)).valueOf());
+    const { commentator, comments, commentStates, entry, isFormHidden, limit, users } = this.props;
+    const sortedComments = comments.sortBy((c) => (new Date(c.get('createdAt'))).valueOf());
     const [ firstComment ] = comments;
 
     return (
       <EntryTlogComments
+        commentStates={commentStates}
+        commentUsers={users}
         commentator={commentator}
-        comments={comments}
+        comments={sortedComments}
         commentsCount={entry.commentsCount}
         deleteComment={this.deleteComment.bind(this)}
         entryId={entry.id}

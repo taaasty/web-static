@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react';
 import EntryTlogCommentForm from './EntryTlogCommentForm';
 
-function EntryTlogCommentEditForm({ comment, commentator, onCancel, onCommentUpdate, process }) {
+function EntryTlogCommentEditForm({ commentHtml, commentator, onCancel, onCommentUpdate, process }) {
   return (
     <EntryTlogCommentForm
       commentator={commentator}
       onCancel={onCancel}
       onSubmit={onCommentUpdate}
       process={process}
-      text={comment.commentHtml}
+      text={commentHtml}
     />
   );
 }
 
 EntryTlogCommentEditForm.propTypes = {
-  comment: PropTypes.object.isRequired,
+  commentHtml: PropTypes.string,
   commentator: PropTypes.object.isRequired,
   process: PropTypes.bool,
 };
