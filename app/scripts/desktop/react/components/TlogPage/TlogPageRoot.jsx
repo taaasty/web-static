@@ -85,8 +85,8 @@ class TlogPageRoot extends Component {
     }
   }
   render() {
-    const { children, editing, flow, follow, isCurrentUser,
-            location: { state }, params, tlog } = this.props;
+    const { children, editing, flow, follow, isCurrentUser, location: { state },
+            params, tlog, tlogRelation } = this.props;
     const isFlow = tlog.get('isFlow');
     const tlogUrl = tlog.get('tlogUrl');
     const slug = tlog.get('slug');
@@ -108,6 +108,7 @@ class TlogPageRoot extends Component {
                   follow={follow}
                   isCurrentUser={isCurrentUser}
                   tlog={tlog}
+                  tlogRelation={tlogRelation}
                 />
              }
            </header>
@@ -144,7 +145,8 @@ TlogPageRoot.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  tlog: PropTypes.object,
+  tlog: PropTypes.object.isRequired,
+  tlogRelation: PropTypes.object.isRequired,
 };
 
 export default connect(
@@ -152,6 +154,7 @@ export default connect(
     const { currentUser, entities } = state;
     const tlog = entities.get('tlog').find((t) => t.get('slug') === getSlug(ownProps), null, Map());
     const flow = entities.getIn([ 'flow', tlog.get('id', '').toString() ], Map());
+    const tlogRelation = entities.getIn([ 'rel', tlog.get('myRelationshipObject') ], Map());
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
 
@@ -159,6 +162,7 @@ export default connect(
       flow,
       isCurrentUser,
       tlog,
+      tlogRelation,
       editing: state.appState.data.editing,
       editPreview: state.editor.preview,
     };

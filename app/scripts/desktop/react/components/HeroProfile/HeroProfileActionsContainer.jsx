@@ -32,7 +32,7 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { isCurrentUser, relState, tlog } = this.props;
+    const { isCurrentUser, tlog, tlogRelation } = this.props;
 
     return (
       <div ref="container">
@@ -41,7 +41,11 @@ class HeroProfileActionsContainer extends Component {
         </style>
         {isCurrentUser
            ? <HeroProfileSelfActions />
-           : relState && <HeroProfileActions relState={relState} tlog={tlog} />
+           : !tlogRelation.isEmpty() &&
+             <HeroProfileActions
+               myRelState={tlogRelation.get('state')}
+               tlog={tlog}
+             />
         }
       </div>
     );
@@ -50,8 +54,8 @@ class HeroProfileActionsContainer extends Component {
 
 HeroProfileActionsContainer.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
-  relState: PropTypes.string,
   tlog: PropTypes.object.isRequired,
+  tlogRelation: PropTypes.object.isRequired,
 };
 
 export default HeroProfileActionsContainer;

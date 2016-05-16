@@ -1,59 +1,36 @@
-/*global $, NoticeService */
 import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { postOpts } from './reqHelpers';
 
 export const RELATIONSHIP_REQUEST = 'RELATIONSHIP_REQUEST';
-export const RELATIONSHIP_ERROR = 'RELATIONSHIP_ERROR';
-export const RELATIONSHIP_UPDATE = 'RELATIONSHIP_UPDATE';
-export 
+export const RELATIONSHIP_SUCCESS = 'RELATIONSHIP_SUCCESS';
+export const RELATIONSHIP_FAILURE = 'RELATIONSHIP_FAILURE';
 
-function relationshipUpdate(id, data) {
+function changeMyRelationship(id, relId, action) {
   return {
-    type: RELATIONSHIP_UPDATE,
-    payload: { id, data },
-  };
-}
-
-function relationshipRequest(id) {
-  return {
-    type: RELATIONSHIP_REQUEST,
-    payload: id,
-  };
-}
-
-function relationshipError(id, error) {
-  return {
-    type: RELATIONSHIP_ERROR,
-    payload: { id, error },
-  };
-}
-
-function changeMyRelationship(id, action) {
-  return (dispatch) => {
-    dispatch(relationshipRequest(id));
-    return $.ajax({
-      url: ApiRoutes.change_my_relationship_url(id, action),
-      method: 'POST',
-    })
-      .done((data) => dispatch(relationshipUpdate(id, data)))
-      .fail((error) => {
-        NoticeService.errorResponse(error);
-        dispatch(relationshipError(id, error.responseJSON || error.statusText));
-      });
+    [CALL_API]: {
+      endpoint: ApiRoutes.change_my_relationship_url(id, action),
+      schema: Schemas.RELATIONSHIP,
+      types: [ RELATIONSHIP_REQUEST, RELATIONSHIP_SUCCESS, RELATIONSHIP_FAILURE ],
+      opts: postOpts(),
+    },
+    relId,
   };
 }
 
 export function resetError(id) {
+//          .fail(() => window.setTimeout(() => resetError(subjectId), 1000));
   return (dispatch) => dispatch(relationshipError(id, null));
 }
 
-export function follow(id) {
-  return (dispatch) => dispatch(changeMyRelationship(id, 'follow'));
+export function follow(id, relId) {
+  return changeMyRelationship(id, relId, 'follow');
 }
 
-export function unfollow(id) {
-  return (dispatch) => dispatch(changeMyRelationship(id, 'unfollow'));
+export function unfollow(id, relId) {
+  return changeMyRelationship(id, relId, 'unfollow');
 }
 
-export function cancel(id) {
-  return (dispatch) => dispatch(changeMyRelationship(id, 'cancel'));
+export function cancel(id, relId) {
+  return changeMyRelationship(id, relId, 'cancel');
 }

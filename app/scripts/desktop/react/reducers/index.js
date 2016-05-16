@@ -13,6 +13,7 @@ import flow from './flow';
 import flows from './flows';
 import people from './people';
 import ratingState from './ratingState';
+import relState from './relState';
 import tagEntries from './tagEntries';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
@@ -33,6 +34,7 @@ export default {
   flows,
   people,
   ratingState,
+  relState,
   tagEntries,
   tlog,
   tlogEntries,

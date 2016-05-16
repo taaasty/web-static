@@ -6,7 +6,7 @@ import { PIN_FLOW_ORDER } from '../../constants/OrderConstants';
 import moment from 'moment';
 
 import Hero from './Hero';
-import RelationButton from '../common/RelationButtonSPA';
+import RelationButton from '../RelationButton';
 import HeroSettingsButton from './HeroSettingsButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import Routes from '../../../../shared/routes/routes';
@@ -39,16 +39,11 @@ class HeroFlow extends Component {
   }
   renderRelationButton() {
     const { flow, tlog } = this.props;
-    const flowId = flow.get('id');
     
     return (
       <RelationButton
-        error={null}
-        isFetching={!flowId}
         key="relationButton"
-        relState={tlog.get('myRelationship')}
-        subjectId={flowId}
-        subjectPrivacy={flow.get('isPrivacy')}
+        relId={tlog.get('myRelationshipObject')}
       />
     );
   }
