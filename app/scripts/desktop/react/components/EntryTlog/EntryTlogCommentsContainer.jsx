@@ -10,6 +10,9 @@ import NoticeService from '../../services/Notice';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
+const emptyUser = Map();
+const emptyCommentState = Map();
+
 function shallowEqual(ImmA, ImmB) {
   return ImmA.isSubset(ImmB) && ImmB.isSubset(ImmA);
 }
@@ -118,8 +121,8 @@ export default connect(
   (state, { commentator, entry, isFormHidden, limit }) => {
     const { entities, commentState } = state;
     const comments = entities.get('comment').filter((c) => c.get('entryId') === entry.id);
-    const commentStates = comments.map((c) => commentState.get(c.get('id')));
-    const users = comments.map((c) => entities.getIn([ 'tlog', c.get('user', '').toString() ], Map()));
+    const commentStates = comments.map((c) => commentState.get(c.get('id'), emptyCommentState));
+    const users = comments.map((c) => entities.getIn([ 'tlog', c.get('user', '').toString() ], emptyUser));
 
     return {
       commentator,

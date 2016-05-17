@@ -1,5 +1,5 @@
-/*global $ */
 import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
 import ErrorService from '../../../shared/react/services/Error';
 import {
   FEED_ENTRIES_API_TYPE_LIVE,
@@ -30,8 +30,11 @@ export function feedDataByUri({ pathname, query }) {
     section,
     type,
     query: query.q,
-    sinceId: query.since_entry_id,
   };
+}
+
+function signature({ apiType, rating, section, type, query }) {
+  return `${apiType}-${rating}-${section}-${type}-${query}`;
 }
 
 export const apiUrlMap = {
@@ -77,14 +80,8 @@ function feedEntriesReceive(data) {
   }
 
   return {
-    type: FEED_ENTRIES_RECEIVE,
+    type: FEED_ENTRIES_SUCCESS,
     payload: data,
-  };
-}
-
-function feedEntriesRequest() {
-  return {
-    type: FEED_ENTRIES_REQUEST,
   };
 }
 
@@ -94,21 +91,20 @@ function feedEntriesReset() {
   };
 }
 
-function feedEntriesError(error) {
-  return {
-    type: FEED_ENTRIES_ERROR,
-    payload: error,
-  };
-}
-
-export function feedEntriesViewStyle(style) {
+export function feedEntriesViewStyle(viewStyle) {
   return {
     type: FEED_ENTRIES_VIEW_STYLE,
-    payload: style,
+    viewStyle,
   };
 }
 
-function fetchFeedEntries(url, data) {
+function fetchFeedEntries(endpoint, signature) {
+  return {
+    signature,
+    [CALL_API]: {
+      
+    },
+  }
   return $.ajax({ url, data })
     .fail((xhr) => {
       ErrorService.notifyErrorResponse('Загрузка фида', {

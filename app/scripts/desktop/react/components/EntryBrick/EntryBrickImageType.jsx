@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import Text from '../../../../shared/react/components/common/Text';
 import Image from '../../../../shared/react/components/common/Image';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { brickWidth } from './constants';
@@ -59,7 +58,7 @@ function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 }
 
 EntryBrickImageType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

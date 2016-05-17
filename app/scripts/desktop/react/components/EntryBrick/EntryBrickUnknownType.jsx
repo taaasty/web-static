@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -54,7 +53,7 @@ function EntryBrickUnknownType({ entry, hasModeration, hostTlogId, onEntryAccept
 }
 
 EntryBrickUnknownType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

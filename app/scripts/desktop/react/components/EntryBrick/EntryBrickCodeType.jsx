@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Text from '../../../../shared/react/components/common/Text';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
@@ -56,7 +55,7 @@ function EntryBrickCodeType({ entry, hasModeration, hostTlogId, onEntryAccept, o
 }
 
 EntryBrickCodeType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

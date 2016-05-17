@@ -12,6 +12,11 @@ import { connect } from 'react-redux';
 import { ENTRY_TYPES, ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { FEED_TYPE_LIVE_FLOW } from '../../constants/FeedConstants';
 
+const emptyState = {};
+const emptyEntry = Map();
+const emptyAuthor = Map();
+const emptyTlog = Map();
+
 class EntryBrick extends Component {
   shouldComponentUpdate(nextProps) {
     const { entry, entryAuthor, entryId, entryState, entryTlog,
@@ -128,9 +133,9 @@ export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
     const { entryState, entities } = state;
-    const entry = entities.getIn([ 'entry', entryId.toString() ], Map());
-    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], Map());
-    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], Map());
+    const entry = entities.getIn([ 'entry', entryId.toString() ], emptyEntry);
+    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], emptyAuthor);
+    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], emptyTlog);
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, {
@@ -138,7 +143,7 @@ export default connect(
       entryAuthor,
       entryTlog,
       moderation,
-      entryState: entryState[entryId],
+      entryState: entryState[entryId] || emptyState,
     });
   },
   { acceptEntry, declineEntry }

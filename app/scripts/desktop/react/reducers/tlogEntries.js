@@ -32,12 +32,7 @@ const actionMap = {
 
   [TLOG_ENTRIES_SUCCESS](state, { response, signature }) {
     const data = signature === state.signature
-            ? merge(
-              {},
-              state.data,
-              response.result,
-              { items: state.data.items.concat(response.result.items) }
-            )
+            ? merge({}, state.data, response.result, { items: state.data.items.concat(response.result.items) })
             : response.result;
 
     return Object.assign({}, state, {
@@ -49,8 +44,9 @@ const actionMap = {
     });
   },
 
-  [TLOG_ENTRIES_FAILURE](state, error) {
-    return Object.assign({}, state, error, {
+  [TLOG_ENTRIES_FAILURE](state, { error }) {
+    return Object.assign({}, state, {
+      error,
       isFetching: false,
       invalid: false,
     });

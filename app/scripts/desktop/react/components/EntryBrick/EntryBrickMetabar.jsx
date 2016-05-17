@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import MetabarAuthor from '../common/MetabarAuthor';
 import Voting from '../Voting';
 import { Link } from 'react-router';
@@ -48,7 +47,7 @@ function EntryBrickMetabar({ entry, hostTlogId }) {
 }
 
 EntryBrickMetabar.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
   hostTlogId: PropTypes.number,
 };
 

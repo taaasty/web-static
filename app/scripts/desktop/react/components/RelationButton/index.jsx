@@ -79,7 +79,7 @@ class RelationButton extends Component {
     const isFetching = relState.get('isFetching');
     const buttonClasses = classnames({
       'follow-button': true,
-      'state--active': !error && !isFetching && relState === REL_FRIEND_STATE,
+      'state--active': !error && !isFetching && state === REL_FRIEND_STATE,
     });
 
     // Inline-block needed for prevent AdBlock social buttons hiding

@@ -1,12 +1,10 @@
 import React, { PropTypes } from 'react';
 import FollowStatus from '../common/FollowStatus';
-
-const STATE_NONE = 'none';
-const STATE_GUESSED = 'guessed';
+import { REL_GUESSED_STATE,  REL_NONE_STATE } from '../RelationButton';
 
 function SmartFollowStatus({ error, follow, isFetching, relState }) {
   function handleClick() {
-    if (!error && !isFetching && (relState === STATE_NONE || relState === STATE_GUESSED)) {
+    if (!error && !isFetching && (relState === REL_GUESSED_STATE || relState === REL_NONE_STATE)) {
       follow();
     }
   }
@@ -25,7 +23,7 @@ SmartFollowStatus.propTypes = {
   error: PropTypes.object,
   follow: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
-  relState: PropTypes.string.isRequired,
+  relState: PropTypes.string,
 };
 
 export default SmartFollowStatus;

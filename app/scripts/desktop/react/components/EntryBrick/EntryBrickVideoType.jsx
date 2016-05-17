@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import Text from '../../../../shared/react/components/common/Text';
 import Image from '../../../../shared/react/components/common/Image';
 import EntryBrickMetabar from './EntryBrickMetabar';
@@ -57,7 +56,7 @@ function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 }
 
 EntryBrickVideoType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
