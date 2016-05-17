@@ -471,10 +471,10 @@
         "good": "Good"
       },
       "posts_24h_none": "No posts in last 24 hours",
-      "posts_24h_some_1": "{{count}} post in last 24 hours",
-      "posts_24h_some_2": "{{count}} posts in last 24 hours",
-      "friend_posts_1": "The only friend postings",
-      "friend_posts_2": "{{count}} friends postings"
+      "posts_24h_some": "{{count}} post in last 24 hours",
+      "posts_24h_some_plural": "{{count}} posts in last 24 hours",
+      "friend_posts": "The only friend postings",
+      "friend_posts_plural": "{{count}} friends postings"
     },
     "empty": "This feed is empty yet",
     "query_empty": "Nothing found for '{{query}}' search queryt"
