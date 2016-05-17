@@ -17,7 +17,6 @@ const relSchema = new Schema(
 const ratingSchema = new Schema('rating', { idAttribute: 'entryId' });
 
 const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
-const markerSchema = new Schema('marker', { idAttribute: 'entryId' });
 
 const flowSchema = new Schema('flow');
 const flowCollItemSchema = new Schema(
@@ -50,12 +49,6 @@ const messageSchema = new Schema('message');
 tlogSchema.define({
   author: tlogSchema,
   myRelationshipObject: relSchema,
-});
-
-calendarSchema.define({
-  periods: arrayOf({
-    markers: arrayOf(markerSchema),
-  }),
 });
 
 staffSchema.define({

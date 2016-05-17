@@ -50,6 +50,17 @@ class Calendar extends Component {
     }
     this.updatePropsEntry(nextProps);
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    const { periods, tlog } = this.props;
+    const { currentState, visibleMarkers } = this.state;
+
+    return (
+      periods !== nextProps.periods ||
+      tlog.get('id') !== nextProps.tlog.get('id') ||
+      currentState !== nextState.currentState ||
+      visibleMarkers !== nextState.visibleMarkers
+    );
+  }
   componentWillUnmount() {
     if (this.timeout) {
       window.clearTimeout(this.timeout);
@@ -176,10 +187,7 @@ Calendar.propTypes = {
 export default connect(
   (state, { entryId, tlog }) => {
     const { entities } = state;
-    const periods = entities.getIn([ 'calendar', (tlog.get('id') || '').toString(), 'periods' ], emptyPeriods).map((period) => ({
-      title: period.get('title', ''),
-      markers: period.get('markers', List()).map((markerId) => entities.getIn([ 'marker', markerId.toString() ], emptyMarker)),
-    }));
+    const periods = entities.getIn([ 'calendar', (tlog.get('id') || '').toString(), 'periods' ], emptyPeriods);
     const [ firstEntryId ] = state.tlogEntries.data.items;
     const selectedEntry = entities.getIn([ 'entry', (entryId || firstEntryId || '').toString() ], emptySelectedEntry);
 

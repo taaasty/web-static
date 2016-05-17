@@ -13,10 +13,13 @@ const CalendarMarker = createClass({
   },
   mixins: [ ReactGrammarMixin ],
 
-  shouldComponentUpdate({ marker: { entry_id: nextEntryId }, selected: nextSelected }) {
-    const { marker: { entryId }, selected } = this.props;
+  shouldComponentUpdate(nextProps) {
+    const { marker, selected } = this.props;
 
-    return (nextSelected !== selected || nextEntryId !== entryId);
+    return (
+      marker !== nextProps.marker ||
+      selected !== nextProps.selected
+    );
   },
   
   getPercentValueOfDay(day) {
@@ -30,10 +33,10 @@ const CalendarMarker = createClass({
   },
 
   render() {
-    const { marker: { commentsCount, createdAt, entryId, entryUrl },
-            highlighted, selected } = this.props;
-    const records = this.getNumberOfRecords(commentsCount);
-    const date = moment(createdAt);
+    const { marker, highlighted, selected } = this.props;
+    const entryId = marker.get('entryId');
+    const records = this.getNumberOfRecords(marker.get('commentsCount', 0));
+    const date = moment(marker.get('createdAt'));
     const createdAtStr = date.format('D MMMM');
     const leftIndent = this.getPercentValueOfDay(date.dayOfYear());
 
@@ -51,7 +54,7 @@ const CalendarMarker = createClass({
           data-marker-rows={records}
           data-target={`#${entryId}`}
           style={{ left: leftIndent }}
-          to={{ pathname: uri(entryUrl).path(), state: { id: entryId } }}
+          to={{ pathname: uri(marker.get('entryUrl', 0)).path(), state: { id: entryId } }}
         />
       </li>
     );
