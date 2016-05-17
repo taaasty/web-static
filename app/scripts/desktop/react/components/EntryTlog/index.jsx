@@ -245,8 +245,8 @@ export default connect(
     const { entryId } = ownProps;
     const { currentUser, entities, entryState } = state;
     const entry = entities.getIn([ 'entry', entryId.toString() ], emptyEntry);
-    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], emptyAuthor);
-    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], emptyTlog);
+    const entryAuthor = entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyAuthor);
+    const entryTlog = entities.getIn([ 'tlog', (entry.get('tlog') || '').toString() ], emptyTlog);
     const commentator = entities.getIn(
       [ 'tlog', entities.getIn([ 'entryCollItem', entryId.toString(), 'commentator' ]) ],
       currentUser.data.id ? currentUser.data : anonCommentator);
@@ -257,7 +257,7 @@ export default connect(
       entry,
       entryAuthor,
       entryTlog,
-      entryTlogAuthor: entities.getIn([ 'tlog', entryTlog.get('author', '').toString() ], emptyAuthor),
+      entryTlogAuthor: entities.getIn([ 'tlog', (entryTlog.get('author') || '').toString() ], emptyAuthor),
       entryState: entryState[entry.get('id')] || emptyState,
       moderation,
     });

@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import uri from 'urijs';
 
 function EntryBrickFlowHeader({ flow }) {
-  const originalUrl = glow.getIn([ 'userpic', 'originalUrl' ], '');
+  const originalUrl = flow.getIn([ 'userpic', 'originalUrl' ], '');
   const bgUrl = ThumborService.newImageUrl(originalUrl, { width: brickWidth }, ['blur(5)']);
   const bgStyle = { backgroundImage: `url('${bgUrl}')` };
   const avatarData = {

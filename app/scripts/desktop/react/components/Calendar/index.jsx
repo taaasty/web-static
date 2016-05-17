@@ -18,6 +18,10 @@ const CALENDAR_OPENED_BY_CLICK = 'openedByClick';
 const TARGET_POST_CLASS = '.post';
 const TARGET_POST_PARENT_CLASS = '.posts';
 
+const emptyPeriods = List();
+const emptyMarker = Map();
+const emptySelectedEntry = Map();
+
 class Calendar extends Component {
   state = {
     currentState: CALENDAR_CLOSED,
@@ -63,10 +67,11 @@ class Calendar extends Component {
       getCalendar(tlogId);
     }
   }
-  updatePropsEntry(props) {
-    const selectedEntry = props.selectedEntry.toJS();
-
-    this.updateSelectedEntry(selectedEntry.id, selectedEntry.createdAt || (new Date()).toISOString());
+  updatePropsEntry({ selectedEntry }) {
+    this.updateSelectedEntry(
+      selectedEntry.get('id'),
+      selectedEntry.get('createdAt', (new Date()).toISOString())
+    );
   }
   updateSelectedEntry(id, time) {
     this.setState({
@@ -115,9 +120,9 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const periods = this.props.periods.toJS();
+    const { periods } = this.props;
 
-    if (!periods) {
+    if (periods.isEmpty()) {
       return null;
     }
 
@@ -137,7 +142,7 @@ class Calendar extends Component {
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
         {this.isOpen()
-         ? periods.length > 0
+         ? periods.size > 0
            ? <CalendarTimeline
                periods={periods}
                selectedEntryId={selectedEntryId}
@@ -145,7 +150,7 @@ class Calendar extends Component {
              />
            : <div className="grid-full text--center">
                <div className="grid-full__middle">
-                 {periods.length === 0
+                 {periods.size === 0
                   ? <div>{i18n.t('calendar_empty')}</div>
                   : <span className="spinner spinner--24x24">
                       <span className="spinner__icon" />
@@ -171,12 +176,12 @@ Calendar.propTypes = {
 export default connect(
   (state, { entryId, tlog }) => {
     const { entities } = state;
-    const periods = entities.getIn([ 'calendar', tlog.get('id', '').toString(), 'periods' ], List()).map((period) => ({
+    const periods = entities.getIn([ 'calendar', (tlog.get('id') || '').toString(), 'periods' ], emptyPeriods).map((period) => ({
       title: period.get('title', ''),
-      markers: period.get('markers', List()).map((markerId) => entities.getIn([ 'marker', markerId.toString() ], Map())),
+      markers: period.get('markers', List()).map((markerId) => entities.getIn([ 'marker', markerId.toString() ], emptyMarker)),
     }));
     const [ firstEntryId ] = state.tlogEntries.data.items;
-    const selectedEntry = entities.getIn([ 'entry', (entryId || firstEntryId || '').toString() ], Map());
+    const selectedEntry = entities.getIn([ 'entry', (entryId || firstEntryId || '').toString() ], emptySelectedEntry);
 
     return {
       periods,

@@ -13,16 +13,16 @@ import {
   FEED_TYPE_FRIENDS,
   FEED_TYPE_BEST,
   FEED_TYPE_LIVE_FLOW,
+  feedDataByUri,
   feedTitleMap,
   feedBestTitleMap,
   navFilters,
 } from '../../constants/FeedConstants';
 import {
-  appendFeedEntries,
-  feedDataByUri,
   feedEntriesViewStyle,
+  getFeedEntries,
   getFeedEntriesIfNeeded,
-  prependFeedEntries,
+  resetFeedEntries,
 } from '../../actions/FeedEntriesActions';
 import {
   feedAnonymousReset,
@@ -38,10 +38,10 @@ import {
   SEARCH_KEY_FRIENDS,
   SEARCH_KEY_LIVE,
 } from '../../constants/SearchConstants';
+import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 const BUTTON_OFFSET = 62;
-const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
   [FEED_TYPE_ANONYMOUS]: {
     counter: 'unreadAnonymousCount',
@@ -75,19 +75,23 @@ const typeMap = {
   },
 };
 
+const PREPEND_LOAD_LIMIT = 30;
+const APPEND_LOAD_LIMIT = 15;
+
 class FeedPage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded,
-            location, prependFeedEntries } = this.props;
+    const { appStateSetSearchKey, feedStatus, getFeedEntries,
+            getFeedEntriesIfNeeded, location } = this.props;
     const feedType = this.feedType(location);
     const type = typeMap[feedType];
+    const params = feedDataByUri(location);
 
     this.setViewStyle(this.props);
-    const willGet = getFeedEntriesIfNeeded(location);
+    const willGet = getFeedEntriesIfNeeded(params);
 
     if (type) {
       if (!willGet && feedStatus[type.counter] > 0) {
-        prependFeedEntries(feedStatus[type.counter]);
+        this.prependEntries(params, feedStatus[type.counter]);
       }
       this.props[type.reset].call(void 0);
       appStateSetSearchKey(type.searchKey);
@@ -99,16 +103,17 @@ class FeedPage extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
+    const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
-    const willGet = getFeedEntriesIfNeeded(nextProps.location);
+    const willGet = getFeedEntriesIfNeeded(nextParams);
     const nextFeedType = this.feedType(nextProps.location);
     const type = typeMap[nextFeedType]; 
 
     if (this.feedType(this.props.location) !== nextFeedType) {
       if (type) {
         if (!willGet && nextProps.feedStatus[type.counter] > 0) {
-          prependFeedEntries(nextProps.feedStatus[type.counter]);
+          this.prependEntries(nextParams, nextProps.feedStatus[type.counter]);
         }
         this.props[type.reset].call(void 0);
         appStateSetSearchKey(type.searchKey);
@@ -127,17 +132,35 @@ class FeedPage extends Component {
     }
   }
   handleClickUnreadButton(count) {
-    const { getFeedEntriesIfNeeded, prependFeedEntries, location } = this.props;
+    const { getFeedEntries, location } = this.props;
     const type = typeMap[this.feedType(location)];
+    const shouldReset = count < PREPEND_LOAD_LIMIT;
+    const params = feedDataByUri(location);
 
     if (count > 0) {
-      const promise = (count < PREPEND_LOAD_LIMIT)
-        ? prependFeedEntries(count)
-        : getFeedEntriesIfNeeded(this.props.location, true);
-      (promise && type && promise.then(this.props[type.reset]));
-    } else {
-      return null;
+      if (shouldReset) {
+        resetFeedEntries();
+        getFeedEntries(params)
+          .then(this.props[type.reset]);
+      } else {
+        this.prependEntries(params, count)
+          .then(this.props[type.reset]);
+      }
     }
+
+    return null;
+  }
+  appendEntries() {
+    const { feedEntries: { data: { nextSinceEntryId } }, getFeedEntries, location } = this.props;
+
+    return getFeedEntries(
+      feedDataByUri(location),
+      { sinceId: nextSinceEntryId, limit: APPEND_LOAD_LIMIT }
+    );
+  }
+  prependEntries(params, limit) {
+    console.log('prependEntries');
+    return null;
   }
   renderButton({ count, href, isFetching }) {
     return (
@@ -151,7 +174,7 @@ class FeedPage extends Component {
     );
   }
   render() {
-    const { appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
+    const { currentUser, feedEntries, feedStatus, location } = this.props;
     const { isFetching, viewStyle } = feedEntries;
     const { section, type, rating, query } = feedDataByUri(location);
     const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
@@ -166,7 +189,7 @@ class FeedPage extends Component {
         <Helmet title={i18n.t(title)} />
         <div className="page__paper">
           <FeedPageBody
-            appendFeedEntries={appendFeedEntries}
+            appendFeedEntries={this.appendEntries.bind(this)}
             currentUser={currentUser}
             feedEntries={feedEntries}
             feedType={type}
@@ -196,7 +219,6 @@ FeedPage.defaultProps = {
 FeedPage.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
   appStats: PropTypes.object.isRequired,
-  appendFeedEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   feedAnonymousReset: PropTypes.func.isRequired,
   feedBestReset: PropTypes.func.isRequired,
@@ -206,9 +228,10 @@ FeedPage.propTypes = {
   feedLiveFlowReset: PropTypes.func.isRequired,
   feedLiveReset: PropTypes.func.isRequired,
   feedStatus: PropTypes.object.isRequired,
+  getFeedEntries: PropTypes.func.isRequired,
   getFeedEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  prependFeedEntries: PropTypes.func.isRequired,
+  resetFeedEntries: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -220,14 +243,14 @@ export default connect(
   }),
   {
     appStateSetSearchKey,
-    appendFeedEntries,
     feedAnonymousReset,
     feedBestReset,
     feedEntriesViewStyle,
     feedFriendsReset,
     feedLiveFlowReset,
     feedLiveReset,
+    getFeedEntries,
     getFeedEntriesIfNeeded,
-    prependFeedEntries,
+    resetFeedEntries,
   }
 )(FeedPage);

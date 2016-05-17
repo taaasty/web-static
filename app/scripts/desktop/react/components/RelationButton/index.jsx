@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { Map } from 'immutable';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { cancel, follow, resetError, unfollow } from '../../actions/RelationshipActions';
+import { cancel, follow, unfollow } from '../../actions/RelationshipActions';
 
 const REL_FRIEND_STATE = 'friend';
 const REL_REQUESTED_STATE = 'requested';
@@ -22,7 +22,7 @@ class RelationButton extends Component {
     this.setState({ hover: false });
   }
   onTouchTap(ev) {
-    const { cancel, follow, unfollow, resetError, rel, relId, relState } = this.props;
+    const { cancel, follow, unfollow, rel, relId, relState } = this.props;
     const error = relState.get('error');
     const isFetching = relState.get('isFetching');
     const subjectId = rel.get('userId');
@@ -110,7 +110,6 @@ RelationButton.propTypes = {
   rel: PropTypes.object.isRequired,
   relId: PropTypes.string.isRequired,
   relState: PropTypes.object.isRequired,
-  resetError: PropTypes.func.isRequired,
   unfollow: PropTypes.func.isRequired,
 };
 
@@ -127,5 +126,5 @@ export default connect(
       relState,
     }
   },
-  { cancel, follow, resetError, unfollow }
+  { cancel, follow, unfollow }
 )(RelationButton);

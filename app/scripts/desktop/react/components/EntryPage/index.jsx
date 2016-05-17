@@ -8,10 +8,15 @@ import { connect } from 'react-redux';
 import { getTlogEntry } from '../../actions/TlogEntryActions';
 import { deleteEntry } from '../../actions/TlogEntriesActions';
 import { SM_TLOG_ENTRY, sendCategory } from '../../../../shared/react/services/Sociomantic';
+import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+
+const emptyEntry = Map();
+const emptyTlog = Map();
+const emptyEntryAuthor = Map();
 
 class EntryPageContainer extends Component {
   componentWillMount() {
@@ -103,7 +108,7 @@ class EntryPageContainer extends Component {
               <EntryTlog
                 entryId={entryId}
                 hostTlogId={tlog.get('id')}
-                isFetching={!tlog.get('id') || !entry.get('id')}
+                isFetching={!entry.get('id')}
                 onDelete={this.handleDeleteEntry.bind(this)}
               />
             </div>
@@ -140,16 +145,17 @@ EntryPageContainer.propTypes = {
 export default connect(
   (state, ownProps) => {
     const { currentUser, entities } = state;
-    const { params: { slug }, location: { state: locationState } } = ownProps;
+    const { params: { slug, anonymousEntrySlug }, location: { state: locationState } } = ownProps;
     const entryId = locationState && locationState.id;
-    const entry = entities.getIn([ 'entry', (entryId || '').toString() ], Map());
+    const entry = entities.getIn([ 'entry', (entryId || '').toString() ], emptyEntry);
+    const tSlug = slug || (anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
 
     return {
       entry,
       entryId,
-      entryAuthor: entities.getIn([ 'tlog', entry.get('author', '').toString() ], Map()),
+      entryAuthor: entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyEntryAuthor),
       currentUserId: currentUser.data.id,
-      tlog: entities.get('tlog').find((t) => t.get('slug') === slug, null, Map()),
+      tlog: entities.get('tlog').find((t) => t.get('slug') === tSlug, null, emptyTlog),
     };
   },
   { deleteEntry, getTlogEntry }

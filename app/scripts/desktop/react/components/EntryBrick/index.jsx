@@ -134,8 +134,8 @@ export default connect(
     const { entryId } = ownProps;
     const { entryState, entities } = state;
     const entry = entities.getIn([ 'entry', entryId.toString() ], emptyEntry);
-    const entryAuthor = entities.getIn([ 'tlog', entry.get('author', '').toString() ], emptyAuthor);
-    const entryTlog = entities.getIn([ 'tlog', entry.get('tlog', '').toString() ], emptyTlog);
+    const entryAuthor = entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyAuthor);
+    const entryTlog = entities.getIn([ 'tlog', (entry.get('tlog') || '').toString() ], emptyTlog);
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, {

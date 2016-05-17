@@ -16,7 +16,7 @@ import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'stats' ];
 
-function getSlug({ params, location }) {
+export function getSlug({ params, location }) {
   return (/anonymous\/new/).test(location.pathname)
     ? TLOG_SLUG_ANONYMOUS
     : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);

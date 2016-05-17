@@ -23,7 +23,7 @@ const initialState = {
   signature: null,
   isFetching: false,
   error: null,
-  viewStyle: VIEW_STYLE_BRICKS,
+  viewStyle: AppStorage.getItem(FEED_VIEW_STYLE_LS_KEY) || VIEW_STYLE_BRICKS,
 };
 
 const actionMap = {

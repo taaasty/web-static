@@ -7,7 +7,7 @@ import uri from 'urijs';
 
 function MetabarAuthor({ author, size, tlog, hostTlogId }) {
 
-  if (!author || !tlog) {
+  if (!author || !author.id || !tlog || !tlog.id) {
     return <span className="meta-item meta-item--user" />;
   }
 

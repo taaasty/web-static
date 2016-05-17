@@ -22,6 +22,9 @@ import {
   TLOG_SECTION_PRIVATE,
 } from '../../../../shared/constants/Tlog';
 
+const emptyFlow = Map();
+const emptyTlog = Map();
+
 class TlogPageContainer extends Component {
   componentWillMount() {
     const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
@@ -154,7 +157,7 @@ TlogPageContainer.propTypes = {
 export default connect(
   (state, { params }) => {
     const { currentUser, tlogEntries, flow: flowState, entities } = state;
-    const tlog = entities.get('tlog').find((t) => t.get('slug') === params.slug, null, Map());
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === params.slug, null, emptyTlog);
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
     
@@ -163,7 +166,7 @@ export default connect(
       isCurrentUser,
       tlog,
       tlogEntries,
-      flow: entities.getIn([ 'flow', tlog.get('id', '').toString() ], Map()),
+      flow: entities.getIn([ 'flow', (tlog.get('id') || '').toString() ], emptyFlow),
     };
   },
   {
