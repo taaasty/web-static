@@ -244,11 +244,11 @@ export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
     const { currentUser, entities, entryState } = state;
-    const entry = entities.getIn([ 'entry', entryId.toString() ], emptyEntry);
-    const entryAuthor = entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyAuthor);
-    const entryTlog = entities.getIn([ 'tlog', (entry.get('tlog') || '').toString() ], emptyTlog);
+    const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
+    const entryAuthor = entities.getIn([ 'tlog', String(entry.get('author')) ], emptyAuthor);
+    const entryTlog = entities.getIn([ 'tlog', String(entry.get('tlog')) ], emptyTlog);
     const commentator = entities.getIn(
-      [ 'tlog', entities.getIn([ 'entryCollItem', entryId.toString(), 'commentator' ]) ],
+      [ 'tlog', entities.getIn([ 'entryCollItem', String(entryId), 'commentator' ]) ],
       currentUser.data.id ? currentUser.data : anonCommentator);
     const moderation = null; // TODO: implement when premod enabled
 
@@ -257,7 +257,7 @@ export default connect(
       entry,
       entryAuthor,
       entryTlog,
-      entryTlogAuthor: entities.getIn([ 'tlog', (entryTlog.get('author') || '').toString() ], emptyAuthor),
+      entryTlogAuthor: entities.getIn([ 'tlog', String(entryTlog.get('author')) ], emptyAuthor),
       entryState: entryState[entry.get('id')] || emptyState,
       moderation,
     });

@@ -76,7 +76,9 @@ class EntryBrick extends Component {
   renderFlowHeader() {
     const { entryAuthor, entryTlog, hostTlogId } = this.props;
 
-    if (hostTlogId == null && entryAuthor.get('id') !== entryTlog.get('id')) {
+    if (hostTlogId == null &&
+        !entryAuthor.isEmpty() &&
+        entryAuthor.get('id') !== entryTlog.get('id')) {
       return <EntryBrickFlowHeader flow={entryTlog} />;
     }
   }
@@ -133,9 +135,9 @@ export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
     const { entryState, entities } = state;
-    const entry = entities.getIn([ 'entry', entryId.toString() ], emptyEntry);
-    const entryAuthor = entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyAuthor);
-    const entryTlog = entities.getIn([ 'tlog', (entry.get('tlog') || '').toString() ], emptyTlog);
+    const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
+    const entryAuthor = entities.getIn([ 'tlog', String(entry.get('author')) ], emptyAuthor);
+    const entryTlog = entities.getIn([ 'tlog', String(entry.get('tlog')) ], emptyTlog);
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, {

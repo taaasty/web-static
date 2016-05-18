@@ -153,7 +153,7 @@ export default connect(
   (state, ownProps) => {
     const { currentUser, entities } = state;
     const tlog = entities.get('tlog').find((t) => t.get('slug') === getSlug(ownProps), null, Map());
-    const flow = entities.getIn([ 'flow', tlog.get('id', '').toString() ], Map());
+    const flow = entities.getIn([ 'flow', String(tlog.get('id')) ], Map());
     const tlogRelation = entities.getIn([ 'rel', tlog.get('myRelationshipObject') ], Map());
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));

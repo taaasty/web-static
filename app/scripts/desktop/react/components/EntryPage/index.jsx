@@ -147,13 +147,13 @@ export default connect(
     const { currentUser, entities } = state;
     const { params: { slug, anonymousEntrySlug }, location: { state: locationState } } = ownProps;
     const entryId = locationState && locationState.id;
-    const entry = entities.getIn([ 'entry', (entryId || '').toString() ], emptyEntry);
+    const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
     const tSlug = slug || (anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
 
     return {
       entry,
       entryId,
-      entryAuthor: entities.getIn([ 'tlog', (entry.get('author') || '').toString() ], emptyEntryAuthor),
+      entryAuthor: entities.getIn([ 'tlog', String(entry.get('author')) ], emptyEntryAuthor),
       currentUserId: currentUser.data.id,
       tlog: entities.get('tlog').find((t) => t.get('slug') === tSlug, null, emptyTlog),
     };

@@ -122,7 +122,7 @@ export default connect(
     const { entities, commentState } = state;
     const comments = entities.get('comment').filter((c) => c.get('entryId') === entry.id);
     const commentStates = comments.map((c) => commentState.get(c.get('id'), emptyCommentState));
-    const users = comments.map((c) => entities.getIn([ 'tlog', (c.get('user') || '').toString() ], emptyUser));
+    const users = comments.map((c) => entities.getIn([ 'tlog', String(c.get('user')) ], emptyUser));
 
     return {
       commentator,

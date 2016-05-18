@@ -47,7 +47,7 @@ VotingContainer.propTypes = {
 
 export default connect(
   (state, { ratingId }) => {
-    const rating = state.entities.getIn([ 'rating', (ratingId || '').toString() ], Map());
+    const rating = state.entities.getIn([ 'rating', String(ratingId) ], Map());
     const isVoting = state.ratingState.getIn([ rating.get('entryId'), 'isVoting' ], false);
     
     return Object.assign({}, {

@@ -166,7 +166,7 @@ export default connect(
       isCurrentUser,
       tlog,
       tlogEntries,
-      flow: entities.getIn([ 'flow', (tlog.get('id') || '').toString() ], emptyFlow),
+      flow: entities.getIn([ 'flow', String(tlog.get('id')) ], emptyFlow),
     };
   },
   {

@@ -116,7 +116,7 @@ RelationButton.propTypes = {
 export default connect(
   (state, { relId }) => {
     const rel = state.entities.getIn([ 'rel', relId ], Map());
-    const privacy = state.entities.getIn([ 'tlog', rel.get('userId', '').toString, 'isPrivacy' ], false);
+    const privacy = state.entities.getIn([ 'tlog', String(rel.get('userId')), 'isPrivacy' ], false);
     const relState = state.relState.get(relId, Map());
 
     return {

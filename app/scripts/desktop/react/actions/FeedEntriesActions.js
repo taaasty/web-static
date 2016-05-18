@@ -66,6 +66,7 @@ export function getFeedEntries(params, { limit=INITIAL_LOAD_LIMIT, sinceId, till
 export function getFeedEntriesIfNeeded(params) {
   return (dispatch, getState) => {
     if (shouldFetchFeedEntries(getState(), params)) {
+      dispatch(resetFeedEntries());
       return dispatch(getFeedEntries(params));
     }
   };

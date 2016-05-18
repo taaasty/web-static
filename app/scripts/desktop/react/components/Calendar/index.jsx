@@ -19,7 +19,6 @@ const TARGET_POST_CLASS = '.post';
 const TARGET_POST_PARENT_CLASS = '.posts';
 
 const emptyPeriods = List();
-const emptyMarker = Map();
 const emptySelectedEntry = Map();
 
 class Calendar extends Component {
@@ -52,12 +51,13 @@ class Calendar extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     const { periods, tlog } = this.props;
-    const { currentState, visibleMarkers } = this.state;
+    const { currentState, selectedEntryId, visibleMarkers } = this.state;
 
     return (
       periods !== nextProps.periods ||
       tlog.get('id') !== nextProps.tlog.get('id') ||
       currentState !== nextState.currentState ||
+      selectedEntryId !== nextState.selectedEntryId ||
       visibleMarkers !== nextState.visibleMarkers
     );
   }
@@ -187,9 +187,9 @@ Calendar.propTypes = {
 export default connect(
   (state, { entryId, tlog }) => {
     const { entities } = state;
-    const periods = entities.getIn([ 'calendar', (tlog.get('id') || '').toString(), 'periods' ], emptyPeriods);
+    const periods = entities.getIn([ 'calendar', String(tlog.get('id')), 'periods' ], emptyPeriods);
     const [ firstEntryId ] = state.tlogEntries.data.items;
-    const selectedEntry = entities.getIn([ 'entry', (entryId || firstEntryId || '').toString() ], emptySelectedEntry);
+    const selectedEntry = entities.getIn([ 'entry', String(entryId || firstEntryId) ], emptySelectedEntry);
 
     return {
       periods,

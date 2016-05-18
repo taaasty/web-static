@@ -80,8 +80,7 @@ const APPEND_LOAD_LIMIT = 15;
 
 class FeedPage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, feedStatus, getFeedEntries,
-            getFeedEntriesIfNeeded, location } = this.props;
+    const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded, location } = this.props;
     const feedType = this.feedType(location);
     const type = typeMap[feedType];
     const params = feedDataByUri(location);
@@ -134,7 +133,7 @@ class FeedPage extends Component {
   handleClickUnreadButton(count) {
     const { getFeedEntries, location } = this.props;
     const type = typeMap[this.feedType(location)];
-    const shouldReset = count < PREPEND_LOAD_LIMIT;
+    const shouldReset = count > PREPEND_LOAD_LIMIT;
     const params = feedDataByUri(location);
 
     if (count > 0) {
@@ -159,8 +158,11 @@ class FeedPage extends Component {
     );
   }
   prependEntries(params, limit) {
-    console.log('prependEntries');
-    return null;
+    const { getFeedEntries, tillId } = this.props;
+
+    return tillId
+      ? getFeedEntries(params, { limit, tillId })
+      : Promise.reject();
   }
   renderButton({ count, href, isFetching }) {
     return (
@@ -232,15 +234,36 @@ FeedPage.propTypes = {
   getFeedEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   resetFeedEntries: PropTypes.func.isRequired,
+  tillId: PropTypes.number,
 };
 
 export default connect(
-  (state) => ({
-    appStats: state.appStats.data,
-    currentUser: state.currentUser,
-    feedEntries: state.feedEntries,
-    feedStatus: state.feedStatus,
-  }),
+  (state) => {
+    const { appStats, currentUser, entities, feedEntries, feedStatus } = state;
+    const sortedEntries = entities
+            .get('entry')
+            .filter((e, key) => (feedEntries.data.items || []).indexOf(Number(key)) > -1)
+            .toOrderedMap()
+            .sortBy((e) => 0 - (new Date(e.get('createdAt')).valueOf()) -
+                    (e.get('fixedState') === ENTRY_PINNED_STATE ? 1e12 : 0))
+            .keySeq()
+            .map(k => Number(k))
+            .toArray();
+    const tillId = Math.max(...feedEntries.data.items);
+    const sortedFeedEntries = Object.assign(
+      {},
+      feedEntries,
+      { data: Object.assign({}, feedEntries.data, { items: sortedEntries }) }
+    );
+
+    return {
+      currentUser,
+      feedStatus,
+      tillId,
+      appStats: appStats.data,
+      feedEntries: sortedFeedEntries,
+    };
+  },
   {
     appStateSetSearchKey,
     feedAnonymousReset,
