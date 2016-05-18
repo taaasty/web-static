@@ -98,22 +98,6 @@
     }
   }
 
-  // States
-  /*&.state--expanded {
-    .touch & {
-      .icon--menu {
-        .toolbar-active;
-      }
-
-      .toolbar__popup {
-        visibility: visible;
-        opacity: 1;
-        .transform(translate(0, 0));
-        .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
-      }
-    }
-  }*/
-
   &.state--open {
     .icon--menu {
       .toolbar-active;
@@ -169,28 +153,6 @@
       .animation(~"toolbar-indicators-animate .6s 1 ease");
     }
   }
-
-  // &:hover {
-  //   .no-touch & {
-  //     .toolbar-transition-all;
-
-  //     .icon--menu {
-  //       .toolbar-active;
-  //     }
-
-  //     .toolbar__dropdown {
-  //       max-width: @toolbar-dropdown-max-width;
-  //       .toolbar-transition-all;
-  //     }
-
-  //     .toolbar__popup {
-  //       visibility: visible;
-  //       opacity: 1;
-  //       .transform(translate(0, 0));
-  //       .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
-  //     }
-  //   }
-  // }
 }
 
 // Activator (hover, click/touch)
@@ -673,45 +635,38 @@
 }
 
 .toolbar--main {
-  width: 62px;
-  height: auto;
+  .toolbar-size(@toolbar-size);
+  width: 100%;
   padding: 0;
   top: 0;
-  bottom: 0;
+  right: 0;
   left: 0;
-  background: none;
-  transform: translateX(-100%);
+  background: @white;
+  border-radius: 0;
+  //transform: translateX(-100%);
   transition: transform .4s ease;
-
-  .toolbar__toggle {
-    height: @toolbar-size;
-    width: @toolbar-size;
-    position: absolute;
-    top: @toolbar-indent;
-    left: @toolbar-indent;
-    margin-left: 100%;
-    background: @toolbar-bg-base;
-    background-color: @toolbar-bg;
-    line-height: @toolbar-size;
-    color: @white;
-    text-align: center;
-    white-space: nowrap;
-    opacity: 1;
-    user-select: none;
-    border-radius: @toolbar-size;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  .toolbar__hover-line {
-    position: absolute;
-    right: -70px;
-    top: 0;
-    bottom: 0;
-    width: 70px;
-  }
+  text-align: left;
 
   .toolbar__navbar--complex {
     padding-bottom: 150px;
+  }
+
+  .toolbar--main__links {
+    list-style-type: none;
+  }
+
+  .toolbar--main__link-item {
+    display: inline-block;
+    margin-right: 30px;
+    font-size: 18px;
+    color: @black;
+
+    &.--icon-ribbon {
+      margin: 0 10px 0 20px;
+      i.icon {
+        margin-top: -5px;
+      }
+    }
   }
 }
 

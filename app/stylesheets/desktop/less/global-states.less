@@ -40,6 +40,10 @@
   }
 }
 
+.body-toolbar-main .page__inner {
+  padding-top: @toolbar-size;
+}
+
 // Шаблоны тлогов
 .layout--tlog {
   /*&.not-logged {
@@ -56,6 +60,16 @@
   }*/
   .page-body {
     font-family: @font-family-serif;
+  }
+
+  .toolbar--main {
+    background: transparent;
+    position: relative;
+    margin-bottom: -56px;
+
+    .toolbar--main__link-item {
+      color: @white;
+    }
   }
 }
 

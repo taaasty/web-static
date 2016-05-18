@@ -575,6 +575,13 @@
     "flows_count": "{{count}} flow",
     "flows_count_plural": "{{count}} flows"
   },
+  "toolbar": {
+    "live": "Live",
+    "flows": "Flows",
+    "people": "People",
+    "anonymous": "Anonymous",
+    "friends": "Friends"
+  },
   "buttons": {
     "hero_create_entry": "Write to the flow",
     "hero_create_flow": "Create flow",

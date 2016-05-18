@@ -4,10 +4,10 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { getPeopleIfNeeded } from '../../actions/PeopleActions';
 import { appStateSetSearchKey } from '../../actions/AppStateActions';
-import FeedHeader from '../common/FeedHeader';
 import PeopleNav from './PeopleNav';
 import PeopleList from './PeopleList';
 import { SEARCH_KEY_PEOPLE } from '../../constants/SearchConstants';
+import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
 export const sorts = [ 'posts', 'followers', 'interested', 'worst', 'comments', 'new', 'bad' ];
 
@@ -26,7 +26,7 @@ class PeoplePage extends Component {
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   componentDidMount() {
-    document.body.className = 'layout--feed';
+    setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
     const { location, routeParams } = nextProps;
@@ -36,18 +36,13 @@ class PeoplePage extends Component {
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   render() {
-    const { currentUser, location, people: { data: items, isFetching, query }, routeParams } = this.props;
+    const { location, people: { data: items, isFetching, query }, routeParams } = this.props;
     const { sort } = getParams(location, routeParams);
 
     return (
       <div className="page__inner">
         <div className="page__pager">
           <Helmet title={i18n.t('people.title') + ' - ' + i18n.t(`people.${sort}.title`)} />
-          <FeedHeader
-            bgImage={currentUser.design && currentUser.design.backgroundImageUrl}
-            text={i18n.t(`people.${sort}.text`)}
-            title={i18n.t(`people.${sort}.title`)}
-          />
           <div className="page-body">
             <div className="layout-outer">
               <PeopleNav
@@ -71,7 +66,6 @@ PeoplePage.displayName = 'PeoplePage';
 
 PeoplePage.propTypes = {
   appStateSetSearchKey: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   getPeopleIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   people: PropTypes.object.isRequired,
@@ -80,7 +74,6 @@ PeoplePage.propTypes = {
 
 export default connect(
   (state) => ({
-    currentUser: state.currentUser.data,
     people: state.people,
   }),
   { appStateSetSearchKey, getPeopleIfNeeded }
