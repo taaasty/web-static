@@ -1,9 +1,11 @@
+import { merge } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
 const bodyClass = 'body-toolbar-main';
@@ -40,8 +42,10 @@ class UserToolbarContainer extends Component {
     ev.preventDefault();
     PopupActionCreators.showSettings();
   }
-  showSearch(ev) {
-    
+  showSearch(q) {
+    if (q.length) {
+      browserHistory.push(merge({}, this.props.location, { query: { q }}));
+    }
   }
   onDocumentScroll() {
     if (this.state.opened) {
@@ -49,6 +53,8 @@ class UserToolbarContainer extends Component {
     }
   }
   render() {
+    const { pathname, query } = this.props.location;
+
     return (
       <UserToolbar {...this.props}
         onDesignSettingsClick={this.toggleDesignSettings.bind(this)}
@@ -57,6 +63,8 @@ class UserToolbarContainer extends Component {
         onNotificationsClick={this.showNotifications.bind(this)}
         onSearchClick={this.showSearch.bind(this)}
         onSettingsClick={this.showSettings.bind(this)}
+        pathname={pathname}
+        query={query && query.q}
       />
     );
   }

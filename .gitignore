@@ -18,3 +18,4 @@ www
 .tmp
 *.bak
 .yaxy
+/.projectile

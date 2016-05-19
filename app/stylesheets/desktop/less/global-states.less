@@ -66,9 +66,22 @@
     background: transparent;
     position: relative;
     margin-bottom: -56px;
+    box-shadow: none;
 
-    .toolbar--main__link-item {
+    .toolbar__main-list-item,
+    .toolbar__user-list-item {
       color: @white;
+    }
+
+    .toolbar__main-list-item {
+      .toolbar__main-list-link {
+        color: @white;
+      }
+
+      .search-field__icon i.icon {
+        color: rgba(255,255,255,.4);
+      }
+      
     }
   }
 }

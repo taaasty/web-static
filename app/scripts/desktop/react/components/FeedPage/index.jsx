@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import FeedPageBody from './FeedPageBody';
 import FeedFilters from '../FeedFilters';
-import UnreadLoadButton from '../common/UnreadLoadButton';
+import UnreadLoadButton from './UnreadLoadButton';
 import Routes from '../../../../shared/routes/routes';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
@@ -40,6 +40,7 @@ import {
 } from '../../constants/SearchConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
+const BUTTON_OFFSET = 62;
 const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
   [FEED_TYPE_ANONYMOUS]: {
@@ -143,7 +144,8 @@ class FeedPage extends Component {
       <UnreadLoadButton
         count={count}
         href={href}
-        isLoading={isFetching}
+        isLoading={!!isFetching}
+        offset={BUTTON_OFFSET}
         onClick={this.handleClickUnreadButton.bind(this, count)}
       />
     );
