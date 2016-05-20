@@ -41,6 +41,16 @@
   background-attachment: fixed;
   z-index: @zindex-page-cover;
   transition: opacity .3s ease, visibility 0s ease;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,.6) 0,rgba(0,0,0,.2) 400px,rgba(0,0,0,.2) 100%);
+  }
 }
 
 // Page Header

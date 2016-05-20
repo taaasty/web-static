@@ -22,6 +22,7 @@ class AppPage extends Component {
 
     return (
       <div className="page">
+        {!editing && <UserToolbar location={location} />}
         {children}
         {!isLogged && params.entrySlug && <Auth fixed />}
         {!isLogged &&
@@ -33,7 +34,6 @@ class AppPage extends Component {
          </button>
         }
         {!editing && isLogged && <ComposeToolbar tlog={tlog.data} user={currentUser.data} />}
-        {!editing && <UserToolbar location={location} />}
         {!editing && <SupportLauncher user={currentUser.data} />} 
         <BrowserSupport />
       </div>

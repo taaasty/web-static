@@ -98,22 +98,6 @@
     }
   }
 
-  // States
-  /*&.state--expanded {
-    .touch & {
-      .icon--menu {
-        .toolbar-active;
-      }
-
-      .toolbar__popup {
-        visibility: visible;
-        opacity: 1;
-        .transform(translate(0, 0));
-        .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
-      }
-    }
-  }*/
-
   &.state--open {
     .icon--menu {
       .toolbar-active;
@@ -169,28 +153,6 @@
       .animation(~"toolbar-indicators-animate .6s 1 ease");
     }
   }
-
-  // &:hover {
-  //   .no-touch & {
-  //     .toolbar-transition-all;
-
-  //     .icon--menu {
-  //       .toolbar-active;
-  //     }
-
-  //     .toolbar__dropdown {
-  //       max-width: @toolbar-dropdown-max-width;
-  //       .toolbar-transition-all;
-  //     }
-
-  //     .toolbar__popup {
-  //       visibility: visible;
-  //       opacity: 1;
-  //       .transform(translate(0, 0));
-  //       .transition-transform(~".3s ease, visibility 0s ease 0s, opacity .3s ease");
-  //     }
-  //   }
-  // }
 }
 
 // Activator (hover, click/touch)
@@ -673,45 +635,133 @@
 }
 
 .toolbar--main {
-  width: 62px;
-  height: auto;
+  .toolbar-size(@toolbar-size);
+  width: 100%;
   padding: 0;
   top: 0;
-  bottom: 0;
+  right: 0;
   left: 0;
-  background: none;
-  transform: translateX(-100%);
+  background: @white;
+  border-radius: 0;
+  //transform: translateX(-100%);
   transition: transform .4s ease;
-
-  .toolbar__toggle {
-    height: @toolbar-size;
-    width: @toolbar-size;
-    position: absolute;
-    top: @toolbar-indent;
-    left: @toolbar-indent;
-    margin-left: 100%;
-    background: @toolbar-bg-base;
-    background-color: @toolbar-bg;
-    line-height: @toolbar-size;
-    color: @white;
-    text-align: center;
-    white-space: nowrap;
-    opacity: 1;
-    user-select: none;
-    border-radius: @toolbar-size;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  .toolbar__hover-line {
-    position: absolute;
-    right: -70px;
-    top: 0;
-    bottom: 0;
-    width: 70px;
-  }
+  text-align: left;
+  box-shadow: 0 3px 2px -2px rgba(0,0,0,.2);
 
   .toolbar__navbar--complex {
     padding-bottom: 150px;
+  }
+
+  .toolbar__main-list,
+  .toolbar__user-list {
+    list-style-type: none;
+    color: @black;
+  }
+
+  .toolbar__user-list {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    // symmetrical to compose button
+    right: (@toolbar-size - (@toolbar-size-lg / 2)) * 2 + @toolbar-size-lg;
+  }
+
+  .toolbar__main-list-item.--icon-ribbon {
+    margin: 0 10px 0 20px;
+    i.icon {
+      margin-top: -5px;
+      color: @black;
+    }
+  }
+
+  .toolbar__main-list-item,
+  .toolbar__user-list-item {
+    display: inline-block;
+    margin-right: 30px;
+  }
+
+  .toolbar__user-list-item,
+  .toolbar__main-list-link {
+    font-size: 18px;
+    color: @black;
+
+    &:hover {
+      color: rgba(0,0,0,.6);
+    }
+  }
+
+  .toolbar__user-list-item {
+    &:last-child {
+      margin-right: 0;
+    }
+
+    cursor: pointer;
+  }
+
+  .toolbar__icon-wrapper {
+    position: relative;
+    line-height: 1;
+  }
+
+  .messages-badge,
+  .notifications-badge {
+    &:extend(.toolbar__indicator .messages-badge);
+    left: 20%;
+    text-align: center;
+  }
+
+  .toolbar__user-avatar {
+    padding: 9px 0;
+    line-height: 1;
+    width: 38px;
+    height: 38px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .toolbar__user-avatar-down {
+    margin-left: 10px;
+    i.icon {
+      font-size: 11px;
+    }
+  }
+
+  .toolbar__main-list-link {
+    color: @black;
+    display: block;
+    transition: color 0s;
+  }
+
+  .toolbar__main-list-badge {
+    font-size: 14px;
+  }
+
+  .search-field-wrapper {
+    width: 214px;
+  }
+
+  .search-field__icon i.icon {
+    transform: rotateY(180deg);
+    margin-top: -4px;
+    color: rgba(0,0,0,.4);
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .search-field__form {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .search-field__input {
+    width: 100%;
+    font-size: 18px;
+    line-height: @toolbar-size;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    font-family: @font-family-base;
+    background: transparent;
   }
 }
 
@@ -726,7 +776,9 @@
 
 .toolbar--compose {
   .toolbar-size(@toolbar-size-lg);
-  .toolbar-align(right);
+  top: @toolbar-size - (@toolbar-size-lg / 2);
+  right: @toolbar-size - (@toolbar-size-lg / 2);
+  left: auto;
   background: none;
 
   .toolbar__toggle {

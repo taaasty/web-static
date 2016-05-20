@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import FlowsNav from './FlowsNav';
 import FlowBricks from './FlowBricks';
-import HeroFlows from './HeroFlows';
+import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
   appendFlows,
   flowsData,
@@ -17,7 +17,7 @@ class FlowsPage extends Component {
   componentWillMount() {
     const { getFlowsIfNeeded, location } = this.props;
 
-    document.body.className = 'layout--feed';
+    setBodyLayoutClassName('layout--feed');
     getFlowsIfNeeded(flowsData(location));
   }
   componentWillReceiveProps(nextProps) {
@@ -33,9 +33,6 @@ class FlowsPage extends Component {
       <div className="page__inner">
         <Helmet title={title} />
         <div className="page__paper">
-          <header className="page-header">
-            <HeroFlows />
-          </header>
           <div className="page-body">
             <div className="layout-outer">
               <FlowsNav active={filterIdx} filters={filters} />

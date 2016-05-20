@@ -2,14 +2,12 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import FeedHeader from '../common/FeedHeader';
 import FeedPageBody from './FeedPageBody';
 import FeedFilters from '../FeedFilters';
-import UnreadLoadButton from '../common/UnreadLoadButton';
-import PreviousEntriesButton from '../common/PreviousEntriesButton';
+import UnreadLoadButton from './UnreadLoadButton';
 import Routes from '../../../../shared/routes/routes';
+import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
-  FEED_ENTRIES_API_TYPE_LIVE,
   FEED_TYPE_ANONYMOUS,
   FEED_TYPE_LIVE,
   FEED_TYPE_FRIENDS,
@@ -42,6 +40,7 @@ import {
 } from '../../constants/SearchConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
+const BUTTON_OFFSET = 62;
 const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
   [FEED_TYPE_ANONYMOUS]: {
@@ -96,7 +95,7 @@ class FeedPage extends Component {
     }
   }
   componentDidMount() {
-    document.body.className = 'layout--feed';
+    setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
     const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
@@ -140,31 +139,25 @@ class FeedPage extends Component {
       return null;
     }
   }
-  renderButton({ count, href, isFetching, location }) {
-    return location.query && location.query.since_entry_id
-      ? <PreviousEntriesButton href={href} />
-      : <UnreadLoadButton
-          count={count}
-          href={href}
-          isLoading={isFetching}
-          onClick={this.handleClickUnreadButton.bind(this, count)}
-        />;
-    }
+  renderButton({ count, href, isFetching }) {
+    return (
+      <UnreadLoadButton
+        count={count}
+        href={href}
+        isLoading={!!isFetching}
+        offset={BUTTON_OFFSET}
+        onClick={this.handleClickUnreadButton.bind(this, count)}
+      />
+    );
+  }
   render() {
-    const { appStats, appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
+    const { appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
     const { isFetching, viewStyle } = feedEntries;
-    const { apiType, section, type, rating, query } = feedDataByUri(location);
+    const { section, type, rating, query } = feedDataByUri(location);
     const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
             : feedTitleMap[location.pathname];
-    const { followings_count } = currentUser.data;
-    const posts24h = appStats && appStats.public_entries_in_day_count;
-    const headerText = apiType === FEED_ENTRIES_API_TYPE_LIVE
-            ? i18n.t('feed.title.posts_24h', { count: posts24h, context: posts24h ? 'some' : 'none' })
-            : (type === FEED_TYPE_FRIENDS && followings_count > 0)
-              ? i18n.t('feed.title.friend_posts', { count: followings_count })
-              : '';
     const { counter, href } = typeMap[type];
     const count = feedStatus[counter];
 
@@ -172,11 +165,6 @@ class FeedPage extends Component {
       <div className="page__inner">
         <Helmet title={i18n.t(title)} />
         <div className="page__paper">
-          <FeedHeader
-            bgImage={currentUser.data.design && currentUser.data.design.backgroundImageUrl}
-            text={headerText}
-            title={i18n.t(title)}
-          />
           <FeedPageBody
             appendFeedEntries={appendFeedEntries}
             currentUser={currentUser}
@@ -190,7 +178,7 @@ class FeedPage extends Component {
               navViewMode
               viewMode={viewStyle}
             >
-              {!query && this.renderButton({ count, href, isFetching, location })}
+              {!query && this.renderButton({ count, href, isFetching })}
             </FeedFilters>
           </FeedPageBody>
         </div>

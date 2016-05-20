@@ -40,6 +40,10 @@
   }
 }
 
+.body-toolbar-main .page__inner {
+  padding-top: @toolbar-size;
+}
+
 // Шаблоны тлогов
 .layout--tlog {
   /*&.not-logged {
@@ -56,6 +60,43 @@
   }*/
   .page-body {
     font-family: @font-family-serif;
+  }
+
+  &.main-toolbar-hidden .toolbar--main {
+    transform: translateY(-100%);
+    transition: transform .4s ease;
+  }
+
+  &.main-toolbar-relative .toolbar--main {
+    background: transparent;
+    position: relative;
+    margin-bottom: -56px;
+    box-shadow: none;
+    transition: transform 0s;
+
+    .toolbar__main-list-item,
+    .toolbar__user-list-item {
+      color: @white;
+    }
+
+    .toolbar__user-list-item,
+    .toolbar__main-list-link {
+      color: @white;
+
+      &:hover {
+        color: rgba(255,255,255,.6);
+      }
+    }
+
+    .toolbar__main-list-item {
+      &.--icon-ribbon i.icon {
+        color: @white;
+      }
+
+      .search-field__icon i.icon {
+        color: rgba(255,255,255,.4);
+      }
+    }
   }
 }
 

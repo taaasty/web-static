@@ -95,7 +95,6 @@ global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/UserToolbar'
-global.NotificationsContainer = require './react/components/Notifications/NotificationsContainer'
 global.ComposeToolbarContainer = require './react/components/ComposeToolbar/ComposeToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 

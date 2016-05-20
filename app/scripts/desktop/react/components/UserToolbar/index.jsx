@@ -1,63 +1,43 @@
-/*global AppStorage */
+import { merge } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
-const bodyClassName = 'main-toolbar-open';
-const STORAGE_KEY = 'states:mainToolbarOpened';
+const bodyClass = 'body-toolbar-main';
+const bodyRelativeClass = 'main-toolbar-relative';
+const bodyToolbarHiddenClass = 'main-toolbar-hidden';
+const TLOG_OFFSET_FIXED = 300;
+const TOOLBAR_SIZE = 56;
 
 class UserToolbarContainer extends Component {
   state = {
-    opened: JSON.parse(AppStorage.getItem(STORAGE_KEY)) || false,
-    openedTemporarily: false,
-    hovered: false,
+    fixed: true,
+    isNotificationsPopoverVisible: false,
+    isUserPopoverVisible: false,
   };
-  componentWillMount() {
-    document.body.classList[this.state.opened ? 'add' : 'remove'](bodyClassName);
-  }
   componentDidMount() {
-    this.scrollHandler = this.onDocumentScroll.bind(this);
+    window.document.body.classList.add(bodyClass);
+    this.scrollHandler = this.handleScroll.bind(this);
     window.addEventListener('scroll', this.scrollHandler);
+    this.checkScrollPosition();
   }
   componentWillUnmount() {
+    window.document.body.classList.remove(bodyClass);
+    window.document.body.classList.remove(bodyRelativeClass);
     window.removeEventListener('scroll', this.scrollHandler);
-  }
-  toggleOpenness() {
-    (!this.state.opened ? this.open() : this.close());
-  }
-  open() {
-    document.body.classList.add(bodyClassName);
-    AppStorage.setItem(STORAGE_KEY, true);
-    this.setState({
-      opened: true,
-      openedTemporarily: false,
-    });
-  }
-  close() {
-    document.body.classList.remove(bodyClassName);
-    AppStorage.setItem(STORAGE_KEY, false);
-    this.setState({
-      opened: false,
-      openedTemporarily: false,
-    });
   }
   toggleMessages(ev) {
     ev.preventDefault();
     PopupActionCreators.toggleMessages();
   }
-  showNotifications(ev) {
+  toggleNotifications(ev) {
     ev.preventDefault();
-    PopupActionCreators.showNotifications();
-    // Если тулбар был открыт временно, при этом открыли уведомления, то не позволяем
-    // закрыться тулбару
-    this.setState({
-      opened: true,
-      openedTemporarily: false,
-    });
+    this.setState({ isNotificationsPopoverVisible: !this.state.isNotificationsPopoverVisible });
   }
   toggleFriends(ev) {
     ev.preventDefault();
@@ -66,61 +46,70 @@ class UserToolbarContainer extends Component {
   toggleDesignSettings(ev) {
     PopupActionCreators.toggleDesignSettings(ev);
   }
+  toggleUserPopover() {
+    this.setState({ isUserPopoverVisible: !this.state.isUserPopoverVisible });
+  }
   showSettings(ev) {
     ev.preventDefault();
     PopupActionCreators.showSettings();
   }
-  showSearch(ev) {
-    ev.preventDefault();
-    PopupActionCreators.showSearch({
-      location: this.props.location,
-      searchKey: this.props.searchKey,
-    });
-  }
-  onDocumentScroll() {
-    if (this.state.opened) {
-      this.close();
+  showSearch(q) {
+    if (q.length) {
+      browserHistory.push(merge({}, this.props.location, { query: { q }}));
     }
   }
-  handleMouseEnter() {
-    this.setState({hovered: true});
+  hideNotificationsPopover() {
+    this.setState({ isNotificationsPopoverVisible: false });
   }
-  handleMouseLeave(ev) {
-    if (ev.clientX <= 0) {
-      return;
-    }
+  hideUserPopover() {
+    this.setState({ isUserPopoverVisible: false });
+  }
+  checkScrollPosition() {
+    const scrollTop = window.document.body.scrollTop ||
+          window.document.documentElement.scrollTop;
+    const cl = window.document.body.classList;
 
-    if (this.state.openedTemporarily) {
-      this.setState({
-        openedTemporarily: false,
-        hovered: false,
-      });
-      document.body.classList.remove(bodyClassName);
+    if (scrollTop > TLOG_OFFSET_FIXED) {
+      cl.remove(bodyRelativeClass);
+      cl.remove(bodyToolbarHiddenClass);
+    } else if (scrollTop > TLOG_OFFSET_FIXED - TOOLBAR_SIZE) {
+      cl.add(bodyToolbarHiddenClass);
+      cl.remove(bodyRelativeClass);
+    } else if (scrollTop > TOOLBAR_SIZE) {
+      cl.add(bodyToolbarHiddenClass);
+      cl.add(bodyRelativeClass);
     } else {
-      this.setState({ hovered: false });
+      cl.add(bodyRelativeClass);
+      cl.remove(bodyToolbarHiddenClass);
     }
   }
-  handleLineHover() {
-    if (!this.state.opened) {
-      this.setState({openedTemporarily: true});
-      document.body.classList.add(bodyClassName);
-    }
+  handleScroll() {
+    this.checkScrollPosition();
+
+    this.hideNotificationsPopover();
+    this.hideUserPopover();
   }
   render() {
-    const actions = {
-      onMouseEnter: this.handleMouseEnter.bind(this),
-      onMouseLeave: this.handleMouseLeave.bind(this),
-      onToggleClick: this.toggleOpenness.bind(this),
-      onLineHover: this.handleLineHover.bind(this),
-      onMessagesClick: this.toggleMessages.bind(this),
-      onNotificationsClick: this.showNotifications.bind(this),
-      onFriendsClick: this.toggleFriends.bind(this),
-      onDesignSettingsClick: this.toggleDesignSettings.bind(this),
-      onSettingsClick: this.showSettings.bind(this),
-      onSearchClick: this.showSearch.bind(this),
-    };
+    const { pathname, query } = this.props.location;
+    const { isNotificationsPopoverVisible, isUserPopoverVisible } = this.state;
 
-    return <UserToolbar {...this.props} {...this.state} {...actions} />;
+    return (
+      <UserToolbar {...this.props}
+        hideNotificationsPopover={this.hideNotificationsPopover.bind(this)}
+        hideUserPopover={this.hideUserPopover.bind(this)}
+        isNotificationsPopoverVisible={isNotificationsPopoverVisible}
+        isUserPopoverVisible={isUserPopoverVisible}
+        onDesignSettingsClick={this.toggleDesignSettings.bind(this)}
+        onFriendsClick={this.toggleFriends.bind(this)}
+        onMessagesClick={this.toggleMessages.bind(this)}
+        onNotificationsClick={this.toggleNotifications.bind(this)}
+        onSearchClick={this.showSearch.bind(this)}
+        onSettingsClick={this.showSettings.bind(this)}
+        onUserClick={this.toggleUserPopover.bind(this)}
+        pathname={pathname}
+        query={query && query.q}
+      />
+    );
   }
 }
 
@@ -128,28 +117,19 @@ UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   searchKey: PropTypes.oneOf(SEARCH_KEYS).isRequired,
-  unreadAnonymousCount: PropTypes.number.isRequired,
-  unreadBestCount: PropTypes.number.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
-  unreadLiveCount: PropTypes.number.isRequired,
-  unreadLiveFlowCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,
 };
 
 export default connectToStores(
   connect(
     (state, { location }) => {
-      const { unreadAnonymousCount, unreadBestCount, unreadFriendsCount,
-              unreadLiveCount, unreadLiveFlowCount } = state.feedStatus;
+      const { unreadFriendsCount } = state.feedStatus;
 
       return {
         location,
-        unreadAnonymousCount,
-        unreadBestCount,
         unreadFriendsCount,
-        unreadLiveCount,
-        unreadLiveFlowCount,
         currentUser: state.currentUser.data,
         searchKey: state.appState.data.searchKey,
       };
