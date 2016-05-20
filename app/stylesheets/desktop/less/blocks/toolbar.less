@@ -655,6 +655,7 @@
   .toolbar__main-list,
   .toolbar__user-list {
     list-style-type: none;
+    color: @black;
   }
 
   .toolbar__user-list {
@@ -662,7 +663,15 @@
     top: 0;
     bottom: 0;
     // symmetrical to compose button
-    right: (@toolbar-size - (@toolbar-size-xlg / 2)) * 2 + @toolbar-size-xlg;
+    right: (@toolbar-size - (@toolbar-size-lg / 2)) * 2 + @toolbar-size-lg;
+  }
+
+  .toolbar__main-list-item.--icon-ribbon {
+    margin: 0 10px 0 20px;
+    i.icon {
+      margin-top: -5px;
+      color: @black;
+    }
   }
 
   .toolbar__main-list-item,
@@ -682,14 +691,6 @@
   }
 
   .toolbar__user-list-item {
-    &.--icon-ribbon {
-      margin: 0 10px 0 20px;
-      i.icon {
-        margin-top: -5px;
-        color: @black;
-      }
-    }
-
     &:last-child {
       margin-right: 0;
     }
@@ -697,9 +698,25 @@
     cursor: pointer;
   }
 
+  .toolbar__icon-wrapper {
+    position: relative;
+    line-height: 1;
+  }
+
+  .messages-badge,
+  .notifications-badge {
+    &:extend(.toolbar__indicator .messages-badge);
+    left: 20%;
+    text-align: center;
+  }
+
   .toolbar__user-avatar {
-    line-height: 38px;
+    padding: 9px 0;
+    line-height: 1;
+    width: 38px;
+    height: 38px;
     display: inline-block;
+    vertical-align: middle;
   }
 
   .toolbar__user-avatar-down {
@@ -758,9 +775,9 @@
 }
 
 .toolbar--compose {
-  .toolbar-size(@toolbar-size-xlg);
-  top: @toolbar-size - (@toolbar-size-xlg / 2);
-  right: @toolbar-size - (@toolbar-size-xlg / 2);
+  .toolbar-size(@toolbar-size-lg);
+  top: @toolbar-size - (@toolbar-size-lg / 2);
+  right: @toolbar-size - (@toolbar-size-lg / 2);
   left: auto;
   background: none;
 

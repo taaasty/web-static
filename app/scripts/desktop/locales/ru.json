@@ -606,7 +606,16 @@
     "flows": "Потоки",
     "people": "Люди",
     "anonymous": "Анонимки",
-    "friends": "Лента"
+    "friends": "Лента",
+    "user": {
+      "my_tlog": "Мой дневник",
+      "favorites": "Избранное",
+      "private": "Скрытые записи",
+      "subscriptions": "Подписки",
+      "design_settings": "Дизайн дневника",
+      "settings": "Настройки",
+      "logout": "Выход"
+    }
   },
   "buttons": {
     "hero_create_entry": "Написать в поток",

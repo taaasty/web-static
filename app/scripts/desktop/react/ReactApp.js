@@ -9,7 +9,6 @@ import * as ReactUjs from 'reactUjs';
 import PopupActions from './actions/popup';
 import DesignActionCreators from './actions/design';
 import PopupController from './controllers/popuup';
-import PadController from './controllers/pad';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import PostAuthService from './services/PostAuthService';
@@ -136,7 +135,6 @@ const ReactApp = {
     injectTapEventPlugin();
 
     this.popupController = new PopupController();
-    this.padController = new PadController();
 
     this.shellbox = new ReactShellBox();
 

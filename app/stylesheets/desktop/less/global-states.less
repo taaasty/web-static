@@ -73,15 +73,23 @@
       color: @white;
     }
 
+    .toolbar__user-list-item,
+    .toolbar__main-list-link {
+      color: @white;
+
+      &:hover {
+        color: rgba(255,255,255,.6);
+      }
+    }
+
     .toolbar__main-list-item {
-      .toolbar__main-list-link {
+      &.--icon-ribbon i.icon {
         color: @white;
       }
 
       .search-field__icon i.icon {
         color: rgba(255,255,255,.4);
       }
-      
     }
   }
 }

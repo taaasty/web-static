@@ -66,12 +66,17 @@ class UserToolbar extends Component {
 
 UserToolbar.propTypes = {
   currentUser: PropTypes.object.isRequired,
+  hideNotificationsPopover: PropTypes.func.isRequired,
+  hideUserPopover: PropTypes.func.isRequired,
+  isNotificationsPopoverVisible: PropTypes.bool.isRequired,
+  isUserPopoverVisible: PropTypes.bool.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
   onFriendsClick: PropTypes.func.isRequired,
   onMessagesClick: PropTypes.func.isRequired,
   onNotificationsClick: PropTypes.func.isRequired,
   onSearchClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
+  onUserClick: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   query: PropTypes.string,
   searchKey: PropTypes.string.isRequired,

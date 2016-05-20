@@ -13,10 +13,12 @@ const bodyClass = 'body-toolbar-main';
 class UserToolbarContainer extends Component {
   state = {
     fixed: true,
+    isNotificationsPopoverVisible: false,
+    isUserPopoverVisible: false,
   };
   componentDidMount() {
     window.document.body.classList.add(bodyClass);
-    this.scrollHandler = this.onDocumentScroll.bind(this);
+    this.scrollHandler = this.handleScroll.bind(this);
     window.addEventListener('scroll', this.scrollHandler);
   }
   componentWillUnmount() {
@@ -27,9 +29,9 @@ class UserToolbarContainer extends Component {
     ev.preventDefault();
     PopupActionCreators.toggleMessages();
   }
-  showNotifications(ev) {
+  toggleNotifications(ev) {
     ev.preventDefault();
-    PopupActionCreators.showNotifications();
+    this.setState({ isNotificationsPopoverVisible: !this.state.isNotificationsPopoverVisible });
   }
   toggleFriends(ev) {
     ev.preventDefault();
@@ -37,6 +39,9 @@ class UserToolbarContainer extends Component {
   }
   toggleDesignSettings(ev) {
     PopupActionCreators.toggleDesignSettings(ev);
+  }
+  toggleUserPopover() {
+    this.setState({ isUserPopoverVisible: !this.state.isUserPopoverVisible });
   }
   showSettings(ev) {
     ev.preventDefault();
@@ -47,22 +52,33 @@ class UserToolbarContainer extends Component {
       browserHistory.push(merge({}, this.props.location, { query: { q }}));
     }
   }
-  onDocumentScroll() {
-    if (this.state.opened) {
-      this.close();
-    }
+  hideNotificationsPopover() {
+    this.setState({ isNotificationsPopoverVisible: false });
+  }
+  hideUserPopover() {
+    this.setState({ isUserPopoverVisible: false });
+  }
+  handleScroll() {
+    this.hideNotificationsPopover();
+    this.hideUserPopover();
   }
   render() {
     const { pathname, query } = this.props.location;
+    const { isNotificationsPopoverVisible, isUserPopoverVisible } = this.state;
 
     return (
       <UserToolbar {...this.props}
+        hideNotificationsPopover={this.hideNotificationsPopover.bind(this)}
+        hideUserPopover={this.hideUserPopover.bind(this)}
+        isNotificationsPopoverVisible={isNotificationsPopoverVisible}
+        isUserPopoverVisible={isUserPopoverVisible}
         onDesignSettingsClick={this.toggleDesignSettings.bind(this)}
         onFriendsClick={this.toggleFriends.bind(this)}
         onMessagesClick={this.toggleMessages.bind(this)}
-        onNotificationsClick={this.showNotifications.bind(this)}
+        onNotificationsClick={this.toggleNotifications.bind(this)}
         onSearchClick={this.showSearch.bind(this)}
         onSettingsClick={this.showSettings.bind(this)}
+        onUserClick={this.toggleUserPopover.bind(this)}
         pathname={pathname}
         query={query && query.q}
       />
