@@ -15,7 +15,7 @@ function UserPopover(props) {
         <div className="popup__arrow popup__arrow--up" />
         <div className="popup__content">
           <div className="popup__body">
-            <ul className="popup-user__list">
+            <ul className="popup-user__list" onClick={hideUserPopover}>
               <li className="popup-user__list-item">
                 <Link
                   className="popup-user__link"

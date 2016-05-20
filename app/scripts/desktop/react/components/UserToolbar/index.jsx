@@ -9,6 +9,10 @@ import { browserHistory } from 'react-router';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
 const bodyClass = 'body-toolbar-main';
+const bodyRelativeClass = 'main-toolbar-relative';
+const bodyToolbarHiddenClass = 'main-toolbar-hidden';
+const TLOG_OFFSET_FIXED = 300;
+const TOOLBAR_SIZE = 56;
 
 class UserToolbarContainer extends Component {
   state = {
@@ -20,9 +24,11 @@ class UserToolbarContainer extends Component {
     window.document.body.classList.add(bodyClass);
     this.scrollHandler = this.handleScroll.bind(this);
     window.addEventListener('scroll', this.scrollHandler);
+    this.checkScrollPosition();
   }
   componentWillUnmount() {
     window.document.body.classList.remove(bodyClass);
+    window.document.body.classList.remove(bodyRelativeClass);
     window.removeEventListener('scroll', this.scrollHandler);
   }
   toggleMessages(ev) {
@@ -58,7 +64,28 @@ class UserToolbarContainer extends Component {
   hideUserPopover() {
     this.setState({ isUserPopoverVisible: false });
   }
+  checkScrollPosition() {
+    const scrollTop = window.document.body.scrollTop ||
+          window.document.documentElement.scrollTop;
+    const cl = window.document.body.classList;
+
+    if (scrollTop > TLOG_OFFSET_FIXED) {
+      cl.remove(bodyRelativeClass);
+      cl.remove(bodyToolbarHiddenClass);
+    } else if (scrollTop > TLOG_OFFSET_FIXED - TOOLBAR_SIZE) {
+      cl.add(bodyToolbarHiddenClass);
+      cl.remove(bodyRelativeClass);
+    } else if (scrollTop > TOOLBAR_SIZE) {
+      cl.add(bodyToolbarHiddenClass);
+      cl.add(bodyRelativeClass);
+    } else {
+      cl.add(bodyRelativeClass);
+      cl.remove(bodyToolbarHiddenClass);
+    }
+  }
   handleScroll() {
+    this.checkScrollPosition();
+
     this.hideNotificationsPopover();
     this.hideUserPopover();
   }

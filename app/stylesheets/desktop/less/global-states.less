@@ -62,11 +62,17 @@
     font-family: @font-family-serif;
   }
 
-  .toolbar--main {
+  &.main-toolbar-hidden .toolbar--main {
+    transform: translateY(-100%);
+    transition: transform .4s ease;
+  }
+
+  &.main-toolbar-relative .toolbar--main {
     background: transparent;
     position: relative;
     margin-bottom: -56px;
     box-shadow: none;
+    transition: transform 0s;
 
     .toolbar__main-list-item,
     .toolbar__user-list-item {
