@@ -703,7 +703,8 @@
       "leave_conversation": "Покинуть обсуждение",
       "leave_group": "Покинуть группу",
       "group_settings": "Настройки группового чата",
-      "visit_tlog": "Посетить тлог"
+      "visit_tlog": "Перейти в тлог",
+      "visit_post": "Перейти к записи"
     },
     "request": {
       "conversation_delete_success": "Переписка удалена",

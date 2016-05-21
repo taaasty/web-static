@@ -31,17 +31,13 @@ export function getLastMsgTxt(lastMsg={}) {
 };
 
 class ItemMain extends Component {
-  renderIndicator() {
-    const { hasUnread, hasUnreceived, unreadCount } = this.props;
-
-    if (hasUnread) {
-      return <div className="unread-messages__counter">{unreadCount}</div>;
-    } else if (hasUnreceived) {
-      return <div className="unreceived-messages__counter" />;
-    }
+  renderLastMsgStatus() {
+    // TODO: detect our msg
+    if (lastMsg.author && lastMsg.author.id !== )
   }
   render() {
-    const { children, hasUnread, isMuted, lastMessageAt, onClick } = this.props;
+    const { children, hasUnread, isMuted, lastMessageAt,
+            onClick, unreadCount } = this.props;
 
     const listItemClasses = classNames({
       'messages__dialog': true,
@@ -59,7 +55,7 @@ class ItemMain extends Component {
 
     return (
       <div className={listItemClasses} onClick={onClick}>
-        {this.renderIndicator()}
+        {!!hasUnread && <div className="unread-messages__counter">{unreadCount}</div>}
         {children}
         {isMuted &&
          <span className="messages__muted">
@@ -67,6 +63,7 @@ class ItemMain extends Component {
          </span>
         }
         <span className="messages__date">
+          {this.renderLastMsgStatus()}
           {lastMessageAtStr}
         </span>
       </div>

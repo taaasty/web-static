@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import TitlePublicConversationActions from './TitlePublicConversationActions';
 import { getLastTyping } from './Conversations/List/ItemMain';
 import ConversationsListItemEntryPic from './Conversations/List/ItemEntryPic';
+import { TITLE_AVATAR_SIZE } from './TitlePrivateConversation';
 
 function TitlePublicConversation({ conversation }) {
   function title() {
@@ -24,10 +25,14 @@ function TitlePublicConversation({ conversation }) {
 
   return (
     <div className="messages__popup-title --public-conversation --with-actions">
-      <span className="messages__user-avatar">
-        <ConversationsListItemEntryPic entry={conversation.entry} title={title()} />
-      </span>
       <div className="messages__popup-title-wrapper">
+        <span className="messages__user-avatar">
+          <ConversationsListItemEntryPic
+            entry={conversation.entry}
+            size={TITLE_AVATAR_SIZE}
+            title={title()}
+          />
+        </span>
         <div className="messages__popup-title-text">
           {title()}
         </div>

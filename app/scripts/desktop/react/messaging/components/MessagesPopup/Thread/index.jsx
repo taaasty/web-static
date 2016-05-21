@@ -72,13 +72,7 @@ class Thread extends Component {
   renderHeader() {
     const { conversation } = this.props;
 
-    return conversation.type === PUBLIC_CONVERSATION
-      ? <PublicConversationHeader
-          conversation={conversation}
-          onClick={this.onClickHeader.bind(this, conversation.entry)}
-          url={conversation.entry.url}
-        />
-      : conversation.type === GROUP_CONVERSATION
+    return conversation.type === GROUP_CONVERSATION
         ? <GroupConversationHeader
             conversation={conversation}
             onClick={this.handleClickGroupHeader.bind(this)}
@@ -110,7 +104,7 @@ class Thread extends Component {
     
     return (
       <div className={containerClasses}>
-        {this.renderHeader()}
+        {false && this.renderHeader()}
         <div className={listClasses} style={threadStyles}>
           <div className="messages__thread-overlay" />
           <MessageList conversation={conversation} selectState={selectState} />

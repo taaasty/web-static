@@ -34,6 +34,29 @@
   }
 }
 
+.messages__popup-title-wrapper {
+  text-align: left;
+  padding-left: 40px;
+
+  .messages__user-avatar {
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    font-weight: normal;
+  }
+
+  .messages__preview-image {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .message-user-avatar__online-badge {
+    width: 14px;
+    height: 14px;
+  }
+}
+
 .messages__popup-title {
   position: relative;
   width: 100%;
@@ -303,6 +326,7 @@
     margin-bottom: 0;
     white-space: nowrap;
     width: 100%;
+    text-align: left;
 
     &:before {
       content: '';
@@ -339,7 +363,6 @@
     position: absolute;
     top: 12px;
     right: 14px;
-    width: 50px;
     line-height: 12px;
     text-align: right;
   }
