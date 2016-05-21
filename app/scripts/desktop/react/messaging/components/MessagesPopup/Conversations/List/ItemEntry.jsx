@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
 import ItemEntryPic from './ItemEntryPic';
 
@@ -33,7 +33,7 @@ class ItemEntry extends Component {
           </div>
           {lastMsg &&
            <div className="messages__last-message">
-             <UserAvatar size={20} user={lastMsg.user} />
+             <MsgUserAvatar size={20} user={lastMsg.user} />
              <span dangerouslySetInnerHTML={{ __html: lastMsg.content }} />
            </div>
           }

@@ -355,7 +355,7 @@
 
 .popup--messages {
   width: @messages-popup-width;
-  border-radius: @messages-border-radius;
+  border-radius: 0;
 
   .popup__header {
     width: 100%;
@@ -366,14 +366,23 @@
     z-index: (@zindex-messages + 1);
   }
 
+  .popup__headbox {
+    border-bottom: @messages-popup-border;
+    background: @white;
+    border-radius: 0;
+  }
+
   .popup__title {
     overflow: visible;
+    text-transform: none;
+    letter-spacing: initial;
+    font-size: 15px;
   }
 
   .popup__body {
     position: static;
     overflow: visible;
-    border-radius: @messages-border-radius;
+    border-radius: 0;
   }
 }
 

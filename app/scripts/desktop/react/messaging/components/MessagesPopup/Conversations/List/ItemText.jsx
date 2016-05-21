@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
@@ -17,7 +17,7 @@ class ItemText extends Component {
 
     return lastMessageText
       ? <div className="messages__last-message">
-          {showAvatar && <UserAvatar size={20} user={last_message.author} />}
+          {showAvatar && <MsgUserAvatar size={20} user={last_message.author} />}
           <span dangerouslySetInnerHTML={{ __html: lastMessageText }} />
         </div>
       : <noscript />;
@@ -37,7 +37,7 @@ class ItemText extends Component {
         unreadCount={unread_messages_count}
       >
         <span className="messages__user-avatar">
-          <UserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
+          <MsgUserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-text">

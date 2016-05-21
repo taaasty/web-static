@@ -11,7 +11,11 @@ import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
-import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
+import {
+  PRIVATE_CONVERSATION,
+  PUBLIC_CONVERSATION,
+  GROUP_CONVERSATION
+} from '../../../constants/ConversationConstants';
 
 const defaultBackgroundUrl = '/images/backgrounds/3.jpg';
 
@@ -96,6 +100,7 @@ class Thread extends Component {
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
+      '--private': conversation.type === PRIVATE_CONVERSATION,
       '--no-form': !canTalk,
     });
     const listClasses = classNames({

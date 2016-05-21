@@ -702,7 +702,8 @@
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",
       "leave_group": "Покинуть группу",
-      "group_settings": "Настройки группового чата"
+      "group_settings": "Настройки группового чата",
+      "visit_tlog": "Посетить тлог"
     },
     "request": {
       "conversation_delete_success": "Переписка удалена",

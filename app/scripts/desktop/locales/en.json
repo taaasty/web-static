@@ -674,7 +674,8 @@
       "delete_conversation": "Delete chat",
       "leave_conversation": "Leave chat",
       "leave_group": "Leave group chat",
-      "group_settings": "Settings"
+      "group_settings": "Settings",
+      "visit_tlog": "Visit TLog"
     },
     "request": {
       "conversation_delete_success": "Chat was successfully deleted",

@@ -10,8 +10,7 @@ function FooterButton({ disabled, onClick, text }) {
 
   const buttonClasses = classNames({
     'button': true,
-    'button--green': !disabled,
-    'button--grey': disabled,
+    'button--disabled': disabled,
   });
 
   return (

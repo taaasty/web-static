@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import Avatar from '../../../../../../../shared/react/components/common/Avatar';
 import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
@@ -44,7 +44,7 @@ class ItemGroup extends Component {
           </div>
           {lastMsg &&
            <div className="messages__last-message">
-             <UserAvatar size={20} user={lastMsg.user} />
+             <MsgUserAvatar size={20} user={lastMsg.user} />
              <span dangerouslySetInnerHTML={{ __html: lastMsg.content }} />
            </div>
           }
