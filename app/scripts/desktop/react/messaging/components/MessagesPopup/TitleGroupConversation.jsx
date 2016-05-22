@@ -5,6 +5,7 @@ import { getLastTyping } from './Conversations/List/ItemMain';
 import { TITLE_AVATAR_SIZE } from './TitlePrivateConversation';
 import ItemEntryPreviewImage from './Conversations/List/ItemEntryPreviewImage';
 import Avatar from '../../../../../shared/react/components/common/Avatar';
+import { SYMBOL_AVATAR_BG, SYMBOL_AVATAR_COLOR } from '../../constants/ConversationConstants';
 
 function TitleGroupConversation({ conversation }) {
   function status() {
@@ -22,8 +23,8 @@ function TitleGroupConversation({ conversation }) {
   const { avatar, topic } = conversation;
   const userpic = {
     default_colors: {
-      background: '#2ac67e',
-      name: '#fff',
+      background: SYMBOL_AVATAR_BG,
+      name: SYMBOL_AVATAR_COLOR,
     },
     symbol: topic[0],
   };

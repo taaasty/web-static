@@ -32,12 +32,22 @@ export function getLastMsgTxt(lastMsg={}) {
 
 class ItemMain extends Component {
   renderLastMsgStatus() {
+    const { lastMessage, userId } = this.props;
     // TODO: detect our msg
-    if (lastMsg.author && lastMsg.author.id !== )
+    if (lastMessage && lastMessage.author && lastMessage.author.id === userId) {
+      return (
+        <span className="messages__tick-status">
+          <i className={`icon icon--${lastMessage.read_at ? 'double-tick' : 'tick'}`} />
+        </span>
+      );
+    }
+
+    return null;
   }
   render() {
-    const { children, hasUnread, isMuted, lastMessageAt,
+    const { children, createdAt, hasUnread, isMuted, lastMessage,
             onClick, unreadCount } = this.props;
+    const lastMessageAt = lastMessage ? lastMessage.created_at : createdAt;
 
     const listItemClasses = classNames({
       'messages__dialog': true,
@@ -76,12 +86,14 @@ ItemMain.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]).isRequired,
+  createdAt: PropTypes.string.isRequired,
   hasUnread: PropTypes.bool,
   hasUnreceived: PropTypes.bool,
   isMuted: PropTypes.bool,
-  lastMessageAt: PropTypes.string.isRequired,
+  lastMessage: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   unreadCount: PropTypes.number,
+  userId: PropTypes.number.isRequired,
 };
 
 export default ItemMain;

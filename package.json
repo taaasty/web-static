@@ -50,7 +50,7 @@
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc5",
     "react-tap-event-plugin": "^0.2.1",
-    "react-textarea-autosize": "^3.3.0",
+    "react-textarea-autosize": "^3.3.1",
     "redux": "^3.0.5",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.2",
