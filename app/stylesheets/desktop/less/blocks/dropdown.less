@@ -86,29 +86,6 @@
   }
 }
 
-.make-white-popover() {
-  .make-popover();
-
-  color: @popover-bg;
-  background-color: @white;
-
-  &:after {
-    border-color: transparent transparent @white;
-  }
-
-  &--item {
-    &.state--active {
-      background-color: @white;
-      color: rgba(50, 50, 50, .9);
-    }
-
-    &:hover {
-      background-color: rgba(red(@white), green(@white), blue(@white), .05);
-      color: @popover-bg;
-    }
-  }
-}
-
 // Styles
 .dropdown-container {
   position: relative;

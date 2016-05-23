@@ -955,6 +955,9 @@
       &:after {
         left: 169px;
       }
+      &:before {
+        left: 169px;
+      }
     }
 
     .meta-item__dropdown-item {
@@ -1465,7 +1468,35 @@
 }
 
 .popup--messages .meta-item__dropdown {
-  .make-white-popover();
+  color: @popover-bg;
+  background-color: @white;
+  border: 1px solid rgba(red(@black), green(@black), blue(@black), .1);
+
+  &:after {
+    border-color: transparent transparent @white;
+  }
+
+  &:before {
+    &:extend(.meta-item__dropdown:after all);
+    bottom: 100%;
+    margin-left: -8px;
+    border-width: 0 8px 8px;
+    border-color: transparent transparent rgba(0,0,0,.1);
+  }
+
+  a.meta-item__dropdown-item {
+    color: @popover-bg;
+
+    &.state--active {
+      background-color: @white;
+      color: rgba(50, 50, 50, .9);
+    }
+
+    &:hover {
+      background-color: rgba(red(@black), green(@black), blue(@black), .05);
+      color: @popover-bg;
+    }
+  }
 }
 
 /*==================================
