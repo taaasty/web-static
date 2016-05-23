@@ -31,17 +31,23 @@ export function getLastMsgTxt(lastMsg={}) {
 };
 
 class ItemMain extends Component {
-  renderIndicator() {
-    const { hasUnread, hasUnreceived, unreadCount } = this.props;
-
-    if (hasUnread) {
-      return <div className="unread-messages__counter">{unreadCount}</div>;
-    } else if (hasUnreceived) {
-      return <div className="unreceived-messages__counter" />;
+  renderLastMsgStatus() {
+    const { lastMessage, userId } = this.props;
+    // TODO: detect our msg
+    if (lastMessage && lastMessage.author && lastMessage.author.id === userId) {
+      return (
+        <span className="messages__tick-status">
+          <i className={`icon icon--${lastMessage.read_at ? 'double-tick' : 'tick'}`} />
+        </span>
+      );
     }
+
+    return null;
   }
   render() {
-    const { children, hasUnread, isMuted, lastMessageAt, onClick } = this.props;
+    const { children, createdAt, hasUnread, isMuted, lastMessage,
+            onClick, unreadCount } = this.props;
+    const lastMessageAt = lastMessage ? lastMessage.created_at : createdAt;
 
     const listItemClasses = classNames({
       'messages__dialog': true,
@@ -59,7 +65,7 @@ class ItemMain extends Component {
 
     return (
       <div className={listItemClasses} onClick={onClick}>
-        {this.renderIndicator()}
+        {!!hasUnread && <div className="unread-messages__counter">{unreadCount}</div>}
         {children}
         {isMuted &&
          <span className="messages__muted">
@@ -67,6 +73,7 @@ class ItemMain extends Component {
          </span>
         }
         <span className="messages__date">
+          {this.renderLastMsgStatus()}
           {lastMessageAtStr}
         </span>
       </div>
@@ -79,12 +86,14 @@ ItemMain.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]).isRequired,
+  createdAt: PropTypes.string.isRequired,
   hasUnread: PropTypes.bool,
   hasUnreceived: PropTypes.bool,
   isMuted: PropTypes.bool,
-  lastMessageAt: PropTypes.string.isRequired,
+  lastMessage: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   unreadCount: PropTypes.number,
+  userId: PropTypes.number.isRequired,
 };
 
 export default ItemMain;

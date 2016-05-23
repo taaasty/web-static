@@ -7,6 +7,7 @@ import MessageActions from '../../../actions/MessageActions';
 import ConversationActions from '../../../actions/ConversationActions';
 import CurrentUserStore from '../../../../stores/current_user';
 import { GROUP_CONVERSATION, TYPING_THROTTLE_INTERVAL } from '../../../constants/ConversationConstants';
+import Textarea from 'react-textarea-autosize';
 
 class ThreadForm extends Component {
   state = {
@@ -83,39 +84,31 @@ class ThreadForm extends Component {
   }
   render() {
     const disabledInputs = this.shouldDisableForm();
-    const buttonClasses = classNames({
-      'message-form__button-send': true,
-      '--disabled': !this.msgReadyToSend(),
-    });
 
     return (
       <div className="message-form">
         <div className="message-form__controls">
+          <ThreadFormMediaPreview
+            files={this.state.files}
+            onFileRemove={this.onFileRemove.bind(this)}
+          />
           <div className="message-form__textarea-container">
-            <textarea
+            <div className="message-form__button-container">
+              <ThreadFormUploadButton
+                disabled={disabledInputs}
+                onChange={this.onFileInputChange.bind(this)}
+              />
+            </div>
+            <Textarea
               className="message-form__textarea"
               disabled={disabledInputs}
+              maxRows={3}
+              minRows={1}
               onChange={this.updateFormState.bind(this)}
               onKeyDown={this.onKeyDown.bind(this)}
               placeholder={i18n.t('new_message_placeholder')}
               ref="messageForm"
             />
-          </div>
-          <ThreadFormMediaPreview
-            files={this.state.files}
-            onFileRemove={this.onFileRemove.bind(this)}
-          />
-          <div className="message-form__button-container">
-            <ThreadFormUploadButton
-              disabled={disabledInputs}
-              onChange={this.onFileInputChange.bind(this)}
-            />
-            <button
-              className={buttonClasses}
-              onTouchTap={this.sendMessage.bind(this)}  
-            >
-              {i18n.t('buttons.messenger.send')}
-            </button>
           </div>
         </div>
       </div>

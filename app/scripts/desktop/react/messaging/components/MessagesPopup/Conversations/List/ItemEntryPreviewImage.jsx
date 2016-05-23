@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
-function ItemEntryPreviewImage({ image, isRawUrl }) {
+function ItemEntryPreviewImage({ image, isRawUrl, size }) {
   const { width, height } = image.geometry;
   const imgHorizontal = width > height;
 
@@ -11,8 +11,8 @@ function ItemEntryPreviewImage({ image, isRawUrl }) {
       <Image
         image={image}
         isRawUrl={isRawUrl}
-        maxHeight={imgHorizontal ? CONVERSATION_PIC_SIZE : Infinity}
-        maxWidth={imgHorizontal ? Infinity : CONVERSATION_PIC_SIZE}
+        maxHeight={imgHorizontal ? size : Infinity}
+        maxWidth={imgHorizontal ? Infinity : size}
       />
     </div>
   );
@@ -24,6 +24,10 @@ ItemEntryPreviewImage.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   isRawUrl: PropTypes.bool,
+};
+
+ItemEntryPreviewImage.defaultProps = {
+  size: CONVERSATION_PIC_SIZE,
 };
 
 export default ItemEntryPreviewImage;

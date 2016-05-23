@@ -4,3 +4,6 @@ export const GROUP_CONVERSATION = 'GroupConversation';
 
 export const TYPING_THROTTLE_INTERVAL = 5 * 1000;
 export const TYPING_CANCEL_INTERVAL = 7 * 1000;
+
+export const SYMBOL_AVATAR_BG = '#4477f1';
+export const SYMBOL_AVATAR_COLOR = '#fff';

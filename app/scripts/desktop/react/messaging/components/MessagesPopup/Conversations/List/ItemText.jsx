@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
@@ -17,27 +17,28 @@ class ItemText extends Component {
 
     return lastMessageText
       ? <div className="messages__last-message">
-          {showAvatar && <UserAvatar size={20} user={last_message.author} />}
+          {showAvatar && <MsgUserAvatar size={20} user={last_message.author} />}
           <span dangerouslySetInnerHTML={{ __html: lastMessageText }} />
         </div>
       : <noscript />;
   }
   render() {
-    const { conversation: { created_at, last_message, not_disturb, online, recipient, unread_messages_count },
+    const { conversation: { created_at, last_message, not_disturb, online, recipient, unread_messages_count, user_id },
             hasUnread, hasUnreceived, onClick } = this.props;
-    const lastMessageAt = last_message ? last_message.created_at : created_at;
 
     return (
       <ItemMain
+        createdAt={created_at}
         hasUnread={hasUnread}
         hasUnreceived={hasUnreceived}
         isMuted={not_disturb}
-        lastMessageAt={lastMessageAt}
+        lastMessage={last_message}
         onClick={onClick}
         unreadCount={unread_messages_count}
+        userId={user_id}
       >
         <span className="messages__user-avatar">
-          <UserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
+          <MsgUserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
           {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-text">

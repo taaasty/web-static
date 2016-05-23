@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import Avatar from '../../../../../../../shared/react/components/common/Avatar';
 import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
+import { SYMBOL_AVATAR_BG, SYMBOL_AVATAR_COLOR } from '../../../../constants/ConversationConstants';
 
 class ItemGroup extends Component {
   render() {
     const { conversation: { avatar, created_at, last_message, not_disturb,
-                            topic, typing, unread_messages_count, users },
+                            topic, typing, unread_messages_count, users, user_id },
             hasUnread, hasUnreceived, onClick } = this.props;
-    const lastMessageAt = last_message ? last_message.created_at : created_at;
     const userpic = {
       default_colors: {
-        background: '#2ac67e',
-        name: '#fff',
+        background: SYMBOL_AVATAR_BG,
+        name: SYMBOL_AVATAR_COLOR,
       },
       symbol: topic[0],
     };
@@ -25,12 +25,14 @@ class ItemGroup extends Component {
 
     return (
       <ItemMain
+        createdAt={created_at}
         hasUnread={hasUnread}
         hasUnreceived={hasUnreceived}
         isMuted={not_disturb}
-        lastMessageAt={lastMessageAt}
+        lastMessage={last_message}
         onClick={onClick}
         unreadCount={unread_messages_count}
+        userId={user_id}
       >
         <span className="messages__user-avatar">
           {avatar && avatar.url
@@ -44,7 +46,7 @@ class ItemGroup extends Component {
           </div>
           {lastMsg &&
            <div className="messages__last-message">
-             <UserAvatar size={20} user={lastMsg.user} />
+             <MsgUserAvatar size={20} user={lastMsg.user} />
              <span dangerouslySetInnerHTML={{ __html: lastMsg.content }} />
            </div>
           }

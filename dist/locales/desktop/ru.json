@@ -13,7 +13,7 @@
   "conversation_entry_user_profile": "Перейти в профиль",
   "conversation_entry_user_private": "Написать в личку",
   "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
-  "new_thread_placeholder": "Начните вводить логин",
+  "new_thread_placeholder": "Поиск...",
   "new_thread_button": "Написать сообщение",
   "new_thread_unknown_user": "К сожалению, мы не можем найти данного пользователя",
   "new_thread_process": "Создаю беседу…",
@@ -702,7 +702,9 @@
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",
       "leave_group": "Покинуть группу",
-      "group_settings": "Настройки группового чата"
+      "group_settings": "Настройки группового чата",
+      "visit_tlog": "Перейти в тлог",
+      "visit_post": "Перейти к записи"
     },
     "request": {
       "conversation_delete_success": "Переписка удалена",

@@ -12,7 +12,7 @@
   "conversation_entry_user_profile": "User profile",
   "conversation_entry_user_private": "Write a private message",
   "new_thread_hint": "Start typing your friends name to send message ",
-  "new_thread_placeholder": "Enter your name here",
+  "new_thread_placeholder": "Search...",
   "new_thread_button": "New message",
   "new_thread_unknown_user": "Unfortunately, we can't find this user ",
   "new_thread_process": "Creating a chat...",
@@ -674,7 +674,9 @@
       "delete_conversation": "Delete chat",
       "leave_conversation": "Leave chat",
       "leave_group": "Leave group chat",
-      "group_settings": "Settings"
+      "group_settings": "Settings",
+      "visit_tlog": "Visit TLog",
+      "visit_post": "Show the post"
     },
     "request": {
       "conversation_delete_success": "Chat was successfully deleted",

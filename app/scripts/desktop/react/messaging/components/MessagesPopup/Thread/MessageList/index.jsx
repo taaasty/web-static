@@ -132,6 +132,7 @@ const MessageList = createClass({
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
+            conversationType={conversation.type}
             currentUserId={conversation.user_id}
             key={this.messageKey(message)}
             message={message}

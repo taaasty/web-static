@@ -6,6 +6,8 @@ import ConversationsStore from '../../stores/ConversationsStore';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 class TitlePrivateConversationActions extends Component {
   componentWillMount() {
@@ -24,6 +26,9 @@ class TitlePrivateConversationActions extends Component {
   startSelect() {
     this.refs.dropdown.setClose();
     MessagesPopupActions.startSelect();
+  }
+  navigateTlog() {
+    browserHistory.push(uri(this.props.conversation.recipient.tlog_url).path());
   }
   deleteConversation() {
     TastyConfirmController.show({
@@ -59,6 +64,12 @@ class TitlePrivateConversationActions extends Component {
             key="select-mode"
             onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
+          />
+          <DropdownAction
+            icon="icon--diary"
+            key="visit-tlog"
+            onClick={this.navigateTlog.bind(this)}
+            title={i18n.t('messenger.title_actions.visit_tlog')}
           />
           {can_delete && <DropdownAction
             icon="icon--basket"

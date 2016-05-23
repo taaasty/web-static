@@ -3,12 +3,13 @@ import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import ImgFromFile from '../ImgFromFile';
-import UserAvatar from '../../../../../components/UserAvatar';
+import MsgUserAvatar from '../../MsgUserAvatar';
 import Image from '../../../../../../../shared/react/components/common/Image';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
 import Tooltip from '../../../../../components/common/Tooltip';
 import { SUPPORT_ID } from '../../../../../components/SupportLauncher';
+import { PRIVATE_CONVERSATION } from '../../../../constants/ConversationConstants';
 
 const ERROR_STATE = 'error';
 const SENT_STATE = 'sent';
@@ -131,23 +132,17 @@ const Item = createClass({
         target="_blank"
       >
         <span className="messages__user-avatar">
-          <UserAvatar size={35} user={user} />
+          <MsgUserAvatar size={35} user={user} />
         </span>
       </a>
     );
   },
 
-  renderAvatar() {
+  renderSupportAvatar() {
     const { user } = this.props.messageInfo;
-
-    if (!this.isIncoming()) {
-      return null;
-    } else if (!this.isSupport()) {
-      return this.renderUserAvatar(user);
-    }
-
     const { browser, platform } = this.props.message;
-    const { gender, locale, id, email, is_privacy, is_premium, has_design_bundle, created_at } = user;
+    const { gender, locale, id, email, is_privacy, is_premium,
+            has_design_bundle, created_at } = user;
 
     const support_info = i18n.t('messenger.support_info', {
       browser,
@@ -172,6 +167,20 @@ const Item = createClass({
         {this.renderUserAvatar(user)}
       </Tooltip>
     );
+  },
+
+  renderAvatar() {
+    const { user } = this.props.messageInfo;
+
+    if (!this.isIncoming()) {
+      return null;
+    } else if (!this.isSupport()) {
+      if (this.props.conversationType !== PRIVATE_CONVERSATION) {
+        return this.renderUserAvatar(user);
+      }
+    } else {
+      return this.renderSupportAvatar();
+    }
   },
 
   render() {
