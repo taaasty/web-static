@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 
 class SearchForm extends Component {
@@ -24,7 +25,7 @@ class SearchForm extends Component {
             className="search-field__input"
             defaultValue={query}
             name="query"
-            placeholder="Поиск"
+            placeholder={i18n.t('new_thread_placeholder')}
             ref="input"
             type="search"
           />

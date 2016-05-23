@@ -10,9 +10,6 @@ import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
 const bodyClass = 'body-toolbar-main';
 const bodyRelativeClass = 'main-toolbar-relative';
-const bodyToolbarHiddenClass = 'main-toolbar-hidden';
-const TLOG_OFFSET_FIXED = 300;
-const TOOLBAR_SIZE = 56;
 
 class UserToolbarContainer extends Component {
   state = {
@@ -69,18 +66,14 @@ class UserToolbarContainer extends Component {
           window.document.documentElement.scrollTop;
     const cl = window.document.body.classList;
 
-    if (scrollTop > TLOG_OFFSET_FIXED) {
-      cl.remove(bodyRelativeClass);
-      cl.remove(bodyToolbarHiddenClass);
-    } else if (scrollTop > TLOG_OFFSET_FIXED - TOOLBAR_SIZE) {
-      cl.add(bodyToolbarHiddenClass);
-      cl.remove(bodyRelativeClass);
-    } else if (scrollTop > TOOLBAR_SIZE) {
-      cl.add(bodyToolbarHiddenClass);
-      cl.add(bodyRelativeClass);
+    if (scrollTop > 0) {
+      if (cl.contains(bodyRelativeClass)) {
+        cl.remove(bodyRelativeClass);
+      }
     } else {
-      cl.add(bodyRelativeClass);
-      cl.remove(bodyToolbarHiddenClass);
+      if (!cl.contains(bodyRelativeClass)) {
+        cl.add(bodyRelativeClass); 
+      }
     }
   }
   handleScroll() {
