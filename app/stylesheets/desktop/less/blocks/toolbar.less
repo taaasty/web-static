@@ -81,8 +81,12 @@
     font-size: 20px;
   }
 
-  .icon--ribbon {
-    font-size: 38px;
+  .tasty-chat-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 20px;
   }
 
   .state--disabled {
@@ -242,6 +246,7 @@
 
   .messages-badge,
   .notifications-badge {
+    padding: 2px 4px 1px;
     margin-left: .7em;
     position: absolute;
     top: -.3em;
@@ -686,7 +691,7 @@
     color: @black;
 
     &:hover {
-      color: rgba(0,0,0,.6);
+      color: @black;
     }
   }
 
@@ -763,6 +768,17 @@
     font-family: @font-family-base;
     background: transparent;
   }
+
+  .toolbar__hidden-popover {
+    opacity: 0;
+    transition: opacity .2s ease, visibility 0 .2s;
+    visibility: hidden;
+
+    &.--state-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 
 .toolbar--avatar {
@@ -776,7 +792,7 @@
 
 .toolbar--compose {
   .toolbar-size(@toolbar-size-lg);
-  top: @toolbar-size - (@toolbar-size-lg / 2);
+  top: @toolbar-size - (@toolbar-size-lg / 2) - 10px;
   right: @toolbar-size - (@toolbar-size-lg / 2);
   left: auto;
   background: none;

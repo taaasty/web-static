@@ -19,11 +19,9 @@ class UserToolbar extends Component {
     return (
       <div className="toolbar toolbar--main">
         <ul className="toolbar__main-list">
-          <li className="toolbar__main-list-item --icon-ribbon">
-            <i className="icon icon--ribbon" />
-          </li>
           <li className="toolbar__main-list-item">
             <Link className="toolbar__main-list-link" to={uri(Routes.live_feed_path()).path()}>
+              <span className="tasty-chat-icon" />
               {i18n.t('toolbar.live')}
             </Link>
           </li>

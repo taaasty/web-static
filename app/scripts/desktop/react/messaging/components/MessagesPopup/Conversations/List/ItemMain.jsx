@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import ErrorService from '../../../../../../../shared/react/services/Error';
 import classNames from 'classnames';
-import moment from 'moment';
+import { msgDate } from '../../../../../helpers/dateHelpers';
 
 export function getLastTyping(typing, users) {
   const [ lastTyping ] = Object.keys(typing)
@@ -54,14 +54,6 @@ class ItemMain extends Component {
       'state--read': !hasUnread,
       'muted': isMuted,
     });
-    const lf = moment.localeData().longDateFormat('L');
-    const shortYearLf = lf.replace(/YYYY/g, 'YY');
-    const lastMessageAtStr = moment(lastMessageAt).calendar(null, {
-      sameDay: 'LT',
-      lastDay: `[${i18n.t('messages_date_yesterday')}]`,
-      lastWeek: shortYearLf,
-      sameElse: shortYearLf,
-    });
 
     return (
       <div className={listItemClasses} onClick={onClick}>
@@ -74,7 +66,7 @@ class ItemMain extends Component {
         }
         <span className="messages__date">
           {this.renderLastMsgStatus()}
-          {lastMessageAtStr}
+          {msgDate(lastMessageAt)}
         </span>
       </div>
     );

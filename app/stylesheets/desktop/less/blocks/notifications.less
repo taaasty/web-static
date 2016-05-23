@@ -62,31 +62,33 @@
 
 .notification__inner {
   padding: @notification-vertical-padding @notification-horizontal-padding;
+  white-space: normal;
   .clearfix();
 }
 
 .notifications__list {
   height: 100%;
   position: relative;
-  display: table;
+  display: block;
   width: 100%;
 }
 
 .notification__link {
-  display: block;
-
-  &:hover {
-    background-color: @notification-hover-bg;
-    color: inherit !important;
-  }
 }
 
 .notification__desc {
+  font-size: 13px;
+  a {
+    color: @black;
+    &:hover {
+      color: @black;
+    }
+  }
   overflow: hidden;
 }
 
 .notification__image {
-  width: 50px;
+  width: 40px;
   margin-left: 15px;
   float: right;
 
@@ -96,18 +98,15 @@
 }
 
 .notification__user {
-  font-size: 13px;
-  font-weight: bold;
-  color: #656565;
 }
 
 .notification__action-text {
-  font-size: 13px;
-  color: #656565;
 }
 
 .notification__text {
-  font-size: 13px;
+}
+
+.notification__date {
   color: #888;
 }
 
@@ -122,8 +121,8 @@
 }
 
 .notification__user-avatar {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   margin-right: 6px;
   float: left;
 }
