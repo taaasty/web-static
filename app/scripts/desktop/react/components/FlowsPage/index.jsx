@@ -35,14 +35,15 @@ class FlowsPage extends Component {
         <div className="page__paper">
           <div className="page-body">
             <div className="layout-outer">
-              <FlowsNav active={filterIdx} filters={filters} />
               <FlowBricks
                 canLoad={!isFetching && !!has_more}
                 currentUser={currentUser}
                 flows={items}
                 loading={isFetching}
                 onLoadMoreFlows={appendFlows}
-              />
+              >
+                <FlowsNav active={filterIdx} filters={filters} />
+              </FlowBricks>
             </div>
           </div>
         </div>

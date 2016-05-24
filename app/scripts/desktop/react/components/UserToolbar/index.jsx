@@ -8,26 +8,12 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
-const bodyClass = 'body-toolbar-main';
-const bodyRelativeClass = 'main-toolbar-relative';
-
 class UserToolbarContainer extends Component {
   state = {
     fixed: true,
     isNotificationsPopoverVisible: false,
     isUserPopoverVisible: false,
   };
-  componentDidMount() {
-    window.document.body.classList.add(bodyClass);
-    this.scrollHandler = this.handleScroll.bind(this);
-    window.addEventListener('scroll', this.scrollHandler);
-    this.checkScrollPosition();
-  }
-  componentWillUnmount() {
-    window.document.body.classList.remove(bodyClass);
-    window.document.body.classList.remove(bodyRelativeClass);
-    window.removeEventListener('scroll', this.scrollHandler);
-  }
   toggleMessages(ev) {
     ev.preventDefault();
     PopupActionCreators.toggleMessages();
@@ -60,27 +46,6 @@ class UserToolbarContainer extends Component {
   }
   hideUserPopover() {
     this.setState({ isUserPopoverVisible: false });
-  }
-  checkScrollPosition() {
-    const scrollTop = window.document.body.scrollTop ||
-          window.document.documentElement.scrollTop;
-    const cl = window.document.body.classList;
-
-    if (scrollTop > 0) {
-      if (cl.contains(bodyRelativeClass)) {
-        cl.remove(bodyRelativeClass);
-      }
-    } else {
-      if (!cl.contains(bodyRelativeClass)) {
-        cl.add(bodyRelativeClass); 
-      }
-    }
-  }
-  handleScroll() {
-    this.checkScrollPosition();
-
-    this.hideNotificationsPopover();
-    this.hideUserPopover();
   }
   render() {
     const { pathname, query } = this.props.location;
