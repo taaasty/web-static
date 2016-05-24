@@ -11,6 +11,8 @@ const PINNED_STATE = 'pinned';
 const UNPINNED_STATE = 'unpinned';
 const UNFIXED_STATE = 'unfixed';
 const TOOLBAR_SIZE = 56;
+const DIR_UP = 'dir_up';
+const DIR_DOWN = 'dir_down';
 
 class UserToolbar extends Component {
   state = { posState: UNFIXED_STATE, noTransition: false };
@@ -25,13 +27,22 @@ class UserToolbar extends Component {
   checkScrollPosition() {
     const scrollTop = window.document.body.scrollTop ||
           window.document.documentElement.scrollTop;
-    const direction = scrollTop - (this.prevScrollTop || 0); // > 0 - down
-                                                             // < 0 - up
+    const direction = (scrollTop - (this.prevScrollTop || 0)) > 0
+          ? DIR_DOWN
+          : DIR_UP;
+
+    if (this.prevDirection === DIR_DOWN && direction === DIR_UP) {
+      this.pivotUpPoint = scrollTop;
+    } else if (direction === DIR_DOWN) {
+      this.pivotUpPoint = null;
+    }
+
+    const upDiff = this.pivotUpPoint && (this.pivotUpPoint - scrollTop);
     
     if (scrollTop === 0) {
       this.setState({ posState: UNFIXED_STATE });
     } else {
-      if (direction > 0) {
+      if (direction === DIR_DOWN) {
         if (scrollTop > TOOLBAR_SIZE) {
           let noTransition = false;
 
@@ -44,12 +55,13 @@ class UserToolbar extends Component {
           
         }
       } else {
-        if (scrollTop > TOOLBAR_SIZE) {
+        if (scrollTop > TOOLBAR_SIZE && upDiff > TOOLBAR_SIZE) {
           this.setState({ posState: PINNED_STATE });
         }
       }
     }
 
+    this.prevDirection = direction;
     this.prevScrollTop = scrollTop;
   }
   handleScroll() {
