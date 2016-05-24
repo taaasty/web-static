@@ -20,9 +20,9 @@ class TlogPageRoot extends Component {
     const { tlog, editing, editPreview } = this.props;
 
     if (this.isFlow(this.props)) {
-      setBodyLayoutClassName('layout--feed');
+      setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
-      setBodyLayoutClassName('layout--tlog');
+      setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
       DesignPreviewService.apply(tlog.design);
     }
 
@@ -35,10 +35,10 @@ class TlogPageRoot extends Component {
     this.props.getTlog(this.slug(nextProps));
 
     if (this.isFlow(nextProps)) {
-      setBodyLayoutClassName('layout--feed');
+      setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       if (this.props.tlog.design !== tlog.design) {
-        setBodyLayoutClassName('layout--tlog');
+        setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
         DesignPreviewService.apply(tlog.design);
       }
     }

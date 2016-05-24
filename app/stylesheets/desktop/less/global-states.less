@@ -40,6 +40,10 @@
   }
 }
 
+.layout--flow .page__inner {
+  padding-top: 0;
+}
+
 // Шаблоны тлогов
 .layout--tlog {
   /*&.not-logged {
@@ -59,7 +63,7 @@
   }
 }
 
-.layout--tlog {
+.layout--dynamic-toolbar {
   .toolbar--main {
     &.toolbar--unfixed {
       background: transparent;
@@ -103,7 +107,11 @@
     &.toolbar--unpinned {
       position: fixed;
       transform: translateY(-100%);
-      transition: transform 0s;
+      transition: transform .2s ease;
+
+      &.--no-transition {
+        transition: transform 0s;
+      }
     }
   }
 }

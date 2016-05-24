@@ -13,7 +13,7 @@ const UNFIXED_STATE = 'unfixed';
 const TOOLBAR_SIZE = 56;
 
 class UserToolbar extends Component {
-  state = { posState: UNFIXED_STATE };
+  state = { posState: UNFIXED_STATE, noTransition: false };
   componentDidMount() {
     this.scrollHandler = this.handleScroll.bind(this);
     window.addEventListener('scroll', this.scrollHandler);
@@ -28,13 +28,20 @@ class UserToolbar extends Component {
     const direction = scrollTop - (this.prevScrollTop || 0); // > 0 - down
                                                              // < 0 - up
     
-    
     if (scrollTop === 0) {
       this.setState({ posState: UNFIXED_STATE });
     } else {
       if (direction > 0) {
         if (scrollTop > TOOLBAR_SIZE) {
-          this.setState({ posState: UNPINNED_STATE });
+          let noTransition = false;
+
+          if (this.state.posState === UNFIXED_STATE) {
+            noTransition = true;
+            requestAnimationFrame(() => this.setState({ noTransition: false }));
+          }
+
+          this.setState({ noTransition, posState: UNPINNED_STATE });
+          
         }
       } else {
         if (scrollTop > TOOLBAR_SIZE) {
@@ -58,7 +65,7 @@ class UserToolbar extends Component {
   }
   render() {
     const { currentUser, onSearchClick, pathname, query, unreadFriendsCount } = this.props;
-    const { posState } = this.state;
+    const { posState, noTransition } = this.state;
     const isLogged = !!currentUser.id;
     const containerClasses = classNames({
       'toolbar': true,
@@ -66,6 +73,7 @@ class UserToolbar extends Component {
       'toolbar--unfixed': posState === UNFIXED_STATE,
       'toolbar--pinned': posState === PINNED_STATE,
       'toolbar--unpinned': posState === UNPINNED_STATE,
+      '--no-transition': noTransition,
     });
 
     return (
