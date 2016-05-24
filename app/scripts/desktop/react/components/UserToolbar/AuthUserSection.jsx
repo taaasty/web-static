@@ -2,10 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/Avatar';
 import NotificationsPopover from './NotificationsPopover';
 import UserPopover from './UserPopover';
-import ReactCSSTransitionGroup from 'react-addons-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const MAX_BADGE_COUNT = 99;
 const MAX_BADGE_PRESENTATION = `${MAX_BADGE_COUNT}+`;
+const FADE_TIMEOUT = 200;
 
 class AuthUserSection extends Component {
   renderBadge(count, className) {
@@ -27,8 +28,12 @@ class AuthUserSection extends Component {
             <i className="icon icon--bell" />
             {this.renderBadge(unreadNotificationsCount, 'notifications-badge')}
           </div>
-          <ReactCSSTransitionGroup transitionName="toolbar__popover">
-            {isNotificationsPopoverVisible ? <NotificationsPopover hide={hideNotificationsPopover} /> : null}
+          <ReactCSSTransitionGroup
+            transitionEnterTimeout={FADE_TIMEOUT}
+            transitionLeaveTimeout={FADE_TIMEOUT}
+            transitionName="toolbar__popover"
+          >
+            {isNotificationsPopoverVisible && <NotificationsPopover hide={hideNotificationsPopover} key="notifications-popover" />}
           </ReactCSSTransitionGroup>
         </li>
         <li className="toolbar__user-list-item" onClick={onMessagesClick}>
@@ -44,8 +49,12 @@ class AuthUserSection extends Component {
           <span className="toolbar__user-avatar-down">
             <i className="icon icon--corner-down-bold" />
           </span>
-          <ReactCSSTransitionGroup transitionName="toolbar__popover">
-            {isUserPopoverVisible ? <UserPopover {...this.props} /> : null}
+          <ReactCSSTransitionGroup
+            transitionEnterTimeout={FADE_TIMEOUT}
+            transitionLeaveTimeout={FADE_TIMEOUT}
+            transitionName="toolbar__popover"
+          >
+            {isUserPopoverVisible && <UserPopover {...this.props} key="user-popover" />}
           </ReactCSSTransitionGroup>
         </li>
       </ul>
