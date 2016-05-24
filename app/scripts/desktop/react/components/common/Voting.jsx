@@ -82,6 +82,7 @@ export default class Voting extends Component {
         data-original-title={this.getTitle.call(this)}
         onClick={this.handleClick.bind(this)}
       >
+        {this.props.children}
         {this.state.isProcess ? <Spinner size={8} /> : this.state.votes}
       </span>
     );

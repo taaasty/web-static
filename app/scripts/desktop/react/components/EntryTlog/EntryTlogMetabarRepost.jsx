@@ -20,14 +20,6 @@ class EntryTlogMetabarRepost extends Component {
               <span className="meta-item__common">{i18n.t('entry_meta_repost_link')}</span>
             </a>
           </span>
-          {this.state.isPopupOpened &&
-            <EntryRepostPopup
-              entryID={this.props.entryID}
-              isOpened={this.state.isPopupOpened}
-              onClose={this.closePopup.bind(this)}
-              targetRef={this.refs.toggle}
-            />
-          }
         </span>
       : null;
   }

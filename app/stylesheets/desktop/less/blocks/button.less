@@ -567,10 +567,16 @@
 }
 
 .write-message-button {
-  &:extend(.action-menu-button all);
+  .button-hero-style();
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1.0;
+  }
 
   .icon {
     font-size: 22px;
+    margin-right: 6px;
   }
 }
 

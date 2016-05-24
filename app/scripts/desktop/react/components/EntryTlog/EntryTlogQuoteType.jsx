@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Voting from '../common/Voting';
 import PrivacyBadge from '../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
@@ -9,13 +8,6 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 class EntryTlogQuoteType extends Component {
   startComment() {
     this.refs.comments.startComment();
-  }
-  renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -29,7 +21,6 @@ class EntryTlogQuoteType extends Component {
     return (
       <span>
         <header className="post__header">
-          {this.renderVoting()}
           {is_private && <PrivacyBadge />}
         </header>
         <EntryTlogContentLink

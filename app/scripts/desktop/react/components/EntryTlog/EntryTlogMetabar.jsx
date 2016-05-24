@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import MetabarAuthor from '../common/MetabarAuthor';
 import EntryTlogMetabarComments from './EntryTlogMetabarComments';
 import EntryTlogMetabarDate from './EntryTlogMetabarDate';
-import EntryTlogMetabarRepost from './EntryTlogMetabarRepost';
 import EntryTlogMetabarTags from './EntryTlogMetabarTags';
 import EntryTlogMetabarActions from './EntryTlogMetabarActions';
-import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
+import EntryTlogMetabarVoting from './EntryTlogMetabarVoting';
+import EntryTlogMetabarShare from './EntryTlogMetabarShare';
 
 function EntryTlogMetabar(props) {
   function renderTags() {
@@ -21,23 +21,20 @@ function EntryTlogMetabar(props) {
 
   return (
     <span className="meta-bar">
-      <MetabarAuthor
-        author={entry.author}
-        hostTlogId={host_tlog_id}
-        tlog={entry.tlog}
-      />
+      <EntryTlogMetabarVoting entry={entry} />
       <EntryTlogMetabarComments
         commentator={commentator}
         commentsCount={entry.comments_count}
         onComment={onComment}
         url={entry.url}
       />
+      <EntryTlogMetabarShare commentator={commentator} entry={entry} />
+      <MetabarAuthor
+        author={entry.author}
+        hostTlogId={host_tlog_id}
+        tlog={entry.tlog}
+      />
       <EntryTlogMetabarDate entry={entry} isFeed={isFeed} />
-      {(entry.type !== TLOG_ENTRY_TYPE_ANONYMOUS) &&
-       <EntryTlogMetabarRepost
-        commentator={commentator}
-        entryID={entry.id}
-       />}
       {entry.tags && entry.tags.length && renderTags()}
       <EntryTlogMetabarActions {...props} />
     </span>

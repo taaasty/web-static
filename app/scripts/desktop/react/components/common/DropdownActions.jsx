@@ -57,13 +57,13 @@ class DropdownActions extends Component {
     };
 
     return (
-      <span className="meta-item meta-item--actions">
+      <span className={this.props.className}>
         <span
             className="meta-item__content"
             onMouseEnter={this.setOpen.bind(this)}
             onMouseLeave={this.setClose.bind(this)}
         >
-          <i className="meta-item__common icon icon--dots" />
+          {this.props.item}
           <span className={menuClasses} style={menuStyles} ref="menu">
             {this.props.children}
           </span>
@@ -72,5 +72,18 @@ class DropdownActions extends Component {
     );
   }
 }
+
+DropdownActions.propTypes = {
+  className: PropTypes.string,
+  item: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.element,
+  ]),
+};
+
+DropdownActions.defaultProps = {
+  className: 'meta-item meta-item--actions',
+  item: <i className="meta-item__common icon icon--dots" />,
+};
 
 export default DropdownActions;
