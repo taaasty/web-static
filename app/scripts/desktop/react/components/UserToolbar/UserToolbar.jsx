@@ -72,7 +72,7 @@ class UserToolbar extends Component {
   }
   renderCounter(count) {
     return count > 0
-      ? <span className="toolbar__main-list-badge">` (+${count})`</span>
+      ? <span className="toolbar__main-list-badge">{` (+${count})`}</span>
       : '';
   }
   render() {
