@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/Avatar';
 import NotificationsPopover from './NotificationsPopover';
 import UserPopover from './UserPopover';
-import classNames from 'classnames';
+import ReactCSSTransitionGroup from 'react-addons-transition-group';
 
 const MAX_BADGE_COUNT = 99;
 const MAX_BADGE_PRESENTATION = `${MAX_BADGE_COUNT}+`;
@@ -19,14 +19,6 @@ class AuthUserSection extends Component {
     const { currentUser: { userpic }, hideNotificationsPopover, isNotificationsPopoverVisible,
             isUserPopoverVisible, onMessagesClick, onNotificationsClick, onUserClick,
             unreadConversationsCount, unreadNotificationsCount } = this.props;
-    const notificationsContainerClasses = classNames({
-      'toolbar__hidden-popover': true,
-      '--state-visible': isNotificationsPopoverVisible,
-    });
-    const userContainerClasses = classNames({
-      'toolbar__hidden-popover': true,
-      '--state-visible': isUserPopoverVisible,
-    });
 
     return (
       <ul className="toolbar__user-list">
@@ -35,7 +27,9 @@ class AuthUserSection extends Component {
             <i className="icon icon--bell" />
             {this.renderBadge(unreadNotificationsCount, 'notifications-badge')}
           </div>
-          {isNotificationsPopoverVisible && <NotificationsPopover hide={hideNotificationsPopover} />}
+          <ReactCSSTransitionGroup transitionName="toolbar__popover">
+            {isNotificationsPopoverVisible ? <NotificationsPopover hide={hideNotificationsPopover} /> : null}
+          </ReactCSSTransitionGroup>
         </li>
         <li className="toolbar__user-list-item" onClick={onMessagesClick}>
           <div className="toolbar__icon-wrapper">
@@ -50,7 +44,9 @@ class AuthUserSection extends Component {
           <span className="toolbar__user-avatar-down">
             <i className="icon icon--corner-down-bold" />
           </span>
-          {isUserPopoverVisible && <UserPopover {...this.props} />}
+          <ReactCSSTransitionGroup transitionName="toolbar__popover">
+            {isUserPopoverVisible ? <UserPopover {...this.props} /> : null}
+          </ReactCSSTransitionGroup>
         </li>
       </ul>
     );

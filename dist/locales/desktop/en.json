@@ -422,7 +422,8 @@
   },
   "nav_filters" : {
     "live": {
-      "all": "All",
+      "all": "Live",
+      "best": "Best",
       "media": "Media",
       "flows": "Flows",
       "anonymous": "Anonymous"
