@@ -18,8 +18,14 @@
 }
 
 .comments__more {
-  font-size: @comment-meta-font-size;
-  line-height: @comment-meta-line-height;
+  width: 366px;
+  height: 35px;
+  margin-bottom: 8px;
+  font-size: @comments-font-size;
+  line-height: 35px;
+  text-align: center;
+  background-color: rgba(red(@white), green(@white), blue(@white), .2);
+  border-radius: 3px;
 }
 
 .comments__more-link {
@@ -32,7 +38,7 @@
 
 // Block Comment
 .comment {
-  margin-bottom: 6px;
+  margin-bottom: 11px;
   padding: 6px;
   position: relative;
   border: 1px solid transparent;
@@ -71,7 +77,7 @@
 .comment__table {
   min-height: @comments-line-height * 2;
   padding-right: 174px;
-  padding-left: 45px;
+  padding-left: 50px;
   position: relative;
 }
 
@@ -96,10 +102,10 @@
 }
 
 .comment__avatar {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 0;
   display: inline-block;
   background-repeat: no-repeat;
@@ -107,7 +113,7 @@
   vertical-align: middle;
   overflow: hidden;
   background-size: cover;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 
 .comment__username {
@@ -132,7 +138,7 @@
 }
 
 .comment__meta {
-  height: 18px;
+  height: @comments-line-height;
   position: absolute;
   top: 10px;
   right: 0;
@@ -221,9 +227,9 @@
 
 .comment-form__table-cell {
   &:extend(.comment__table-cell);
-  padding-top: 0;
+  padding-top: 3px;
   position: relative;
-  padding-left: 45px;
+  padding-left: 50px;
 }
 
 .comment-form__user {

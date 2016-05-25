@@ -4,6 +4,7 @@ import { findDOMNode } from 'react-dom';
 import Textarea from 'react-textarea-autosize';
 import Avatar from '../../../../shared/react/components/common/Avatar';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import { COMMENT_AVATAR_SIZE } from './EntryTlogCommentSPA';
 
 const REPLIES_LIMIT = 5;
 
@@ -93,7 +94,7 @@ class EntryTlogCommentForm extends Component {
           process
             ? <Spinner size={30} />
             : <Avatar
-                size={35}
+                size={COMMENT_AVATAR_SIZE}
                 userpic={userpic}
               />
         }

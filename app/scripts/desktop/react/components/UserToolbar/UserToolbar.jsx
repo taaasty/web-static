@@ -48,7 +48,7 @@ class UserToolbar extends Component {
 
           if (this.state.posState === UNFIXED_STATE) {
             noTransition = true;
-            requestAnimationFrame(() => this.setState({ noTransition: false }));
+            setTimeout(() => this.setState({ noTransition: false }), 100);
           }
 
           this.setState({ noTransition, posState: UNPINNED_STATE });

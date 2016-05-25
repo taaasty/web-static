@@ -11,7 +11,7 @@ function EntryTlogMetabarComments({ commentator, commentsCount, onComment, url }
           className="meta-item__common meta__link"
           onClick={onComment}
         >
-          <i className="icon icon--messages" />
+          <i className="icon icon--comments" />
           {count}
         </a>
       </span>
