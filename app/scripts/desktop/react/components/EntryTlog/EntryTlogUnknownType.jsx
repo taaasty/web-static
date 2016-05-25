@@ -1,18 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import Voting from '../common/Voting';
 import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogComments from './EntryTlogComments';
 
 class EntryTlogUnknownType extends Component {
-  renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
-  }
   renderTitle() {
     if (this.props.entry.title) {
       return <h1 className="post__title">{this.props.title}</h1>;
@@ -29,7 +21,6 @@ class EntryTlogUnknownType extends Component {
     return (
       <span>
         <header className="post__header">
-          {this.renderVoting()}
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>

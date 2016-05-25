@@ -53,8 +53,8 @@ class UserPopover extends Component {
                 <li className="popup-user__list-item">
                   <Link
                     className="popup-user__link"
-                    to={uri(Routes.userDesignSettings(slug)).path()}
                     onClick={onDesignSettingsClick}
+                    to={uri(Routes.userDesignSettings(slug)).path()}
                   >
                     {i18n.t('toolbar.user.design_settings')}
                   </Link>

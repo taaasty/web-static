@@ -126,10 +126,15 @@
   "report_entry_button": "Complain",
   "watching_entry_item": "Followed",
   "entry_meta_comment_link": "Add a comment",
+  "entry_meta_vote": "Rate",
+  "entry_meta_share": "Share",
   "comments_count": "{{count}} comment",
   "comments_count_plural": "{{count}} comments",
   "no_comments": "No comments",
   "entry_meta_repost_link": "Repost",
+  "entry_meta_vk": "Vkontakte",
+  "entry_meta_fb": "Facebook",
+  "entry_meta_twitter": "Twitter",
   "entry_repost_loading": "Loading...",
   "entry_repost_empty": "List is empty",
   "entry_repost_error": "An error occured while loading",
@@ -597,7 +602,8 @@
     "hero_create_flow": "Create flow",
     "load_previous_entries": "Go to new posts",
     "actions": {
-      "thats_you": "That's you"
+      "thats_you": "That's you",
+      "write": "Send a message"
     },
     "notifications": {
       "mark_all_read": "mark all as read"

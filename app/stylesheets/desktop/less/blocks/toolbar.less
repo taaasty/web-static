@@ -762,16 +762,34 @@
     font-family: @font-family-base;
     background: transparent;
   }
+}
 
-  .toolbar__hidden-popover {
-    opacity: 0;
-    transition: opacity .2s ease, visibility 0 .2s;
-    visibility: hidden;
+.toolbar__popover {
+  &-appear {
+    opacity: 0.01;
+  }
 
-    &.--state-visible {
-      opacity: 1;
-      visibility: visible;
-    }
+  &-appear&-appear-active {
+    opacity: 1;
+    transition: opacity 5s ease;
+  }
+
+  &-enter {
+    opacity: 0.01;
+  }
+
+  &-enter&-enter-active {
+    opacity: 1;
+    transition: opacity 5s ease;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave&-leave-active {
+    opacity: 0.01;
+    transition: opacity 5s ease;
   }
 }
 

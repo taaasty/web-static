@@ -36,7 +36,7 @@
   &,
   &:before,
    {
-    margin-right: .5em;
+    margin-right: 1em;
   }
 
   &:before {
@@ -63,6 +63,8 @@
 .meta-item__content {
   position: relative;
   cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .meta-item__common {
@@ -140,12 +142,45 @@
 }
 
 // Показываем мету при наведении на пост
-.post:hover {
+.post {
   .meta-item {
-    &:before,
-    .meta-item__common {
-      opacity: .4;
+    &:before {
+      content: none;
     }
+
+    .meta-item__common {
+      opacity: .8;
+    }
+
+    .icon {
+      padding: 0 6px 0 0;
+    }
+  }
+
+  .meta-bar__vote {
+    padding: 0 6px;
+  }
+
+  .meta-item--actions {
+    float: right;
+  }
+
+  .meta-item--user .meta-item__content {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .voting {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    float: none;
+    top: 1px;
+    right: auto;
+    left: auto;
+    background: transparent;
+    color: inherit;
   }
 
   .image__caption {

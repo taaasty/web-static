@@ -2,26 +2,18 @@
 import React, { PropTypes } from 'react';
 
 function EntryTlogMetabarComments({ commentator, commentsCount, onComment, url }) {
-  function numberOfComments() {
-    return commentsCount
-      ? i18n.t('comments_count', {count: commentsCount})
-      : i18n.t('no_comments');
-  }
+  const count = commentsCount || 0;
 
   return (
     <span className="meta-item meta-item_comments">
       <span className="meta__content">
-        {commentator
-         ? <a
-             className="meta-item__common meta__link"
-             onClick={onComment}
-           >
-             {i18n.t('entry_meta_comment_link')}
-           </a>
-         : <a className="meta-item__common meta__link" href={url}>
-             {numberOfComments()}
-           </a>
-        }
+        <a
+          className="meta-item__common meta__link"
+          onClick={onComment}
+        >
+          <i className="icon icon--messages" />
+          {count}
+        </a>
       </span>
     </span>
   );

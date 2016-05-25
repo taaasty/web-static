@@ -132,12 +132,17 @@
   "report_entry_button": "Пожаловаться",
   "delete_entry_button": "Удалить",
   "watching_entry_item": "Подписан",
-  "entry_meta_comment_link": "Прокомментировать",
+  "entry_meta_comment_link": "Комментировать",
+  "entry_meta_vote": "Оценить",
+  "entry_meta_share": "Поделиться",
   "comments_count": "{{count}} комментарий",
   "comments_count_2": "{{count}} комментария",
   "comments_count_5": "{{count}} комментариев",
   "no_comments": "Нет комментариев",
   "entry_meta_repost_link": "Сделать репост",
+  "entry_meta_vk": "Вконтакте",
+  "entry_meta_fb": "Facebook",
+  "entry_meta_twitter": "Twitter",
   "entry_repost_loading": "Загружаю..",
   "entry_repost_empty": "Список пуст",
   "entry_repost_error": "Ошибка загрузки",
@@ -623,7 +628,8 @@
     "hero_create_flow": "Создать поток",
     "load_previous_entries": "Перейти к новым записям",
     "actions": {
-      "thats_you": "Это вы"
+      "thats_you": "Это вы",
+      "write": "Написать"
     },
     "notifications": {
       "mark_all_read": "отметить все как прочитанные"
