@@ -4,6 +4,9 @@ import DropdownActions from '../common/DropdownActions';
 import DropdownAction from '../common/DropdownAction';
 import EntryRepostPopup from '../popups/EntryRepostPopup';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
+import { facebookUrl, vkontakteUrl, twitterUrl, open } from '../common/SocialShare';
+
+const defaultImg = 'http://taaasty.com/favicons/mstile-310x310.png';
 
 class EntryTlogMetabarShare extends Component {
   state = {
@@ -13,6 +16,7 @@ class EntryTlogMetabarShare extends Component {
     this.setState({ isPopupOpened: false });
   }
   togglePopup() {
+    this.refs.toggle.setClose();
     this.setState({ isPopupOpened: !this.state.isPopupOpened });
   }
   renderShare() {
@@ -24,7 +28,11 @@ class EntryTlogMetabarShare extends Component {
     );
   }
   render() {
-    const { commentator, entry: { id, type, url } } = this.props;
+    const { commentator, entry: { id, preview_image, title_truncated, type, url } } = this.props;
+
+    const vkUrl = vkontakteUrl(url, title_truncated, (preview_image && preview_image.url) || defaultImg);
+    const fbUrl = facebookUrl(url);
+    const twUrl = twitterUrl(url, title_truncated);
 
     return (
       <DropdownActions
@@ -45,17 +53,20 @@ class EntryTlogMetabarShare extends Component {
            onClick={this.togglePopup.bind(this)}
            title={i18n.t('entry_meta_repost_link')}
          />}
-         <DropdownAction
-           title={i18n.t('buttons.share.fb')}
-           url={url}
-         />
         <DropdownAction
-          title={i18n.t('buttons.share.vk')}
-          url={url}
+          onClick={open.bind(null, 'Vk', vkUrl)}
+          title={i18n.t('entry_meta_vk')}
+          url={vkUrl}
         />
         <DropdownAction
-          title={i18n.t('buttons.share.twitter')}
-          url={url}
+          onClick={open.bind(null, 'Facebook', fbUrl)}
+          title={i18n.t('entry_meta_fb')}
+          url={fbUrl}
+        />
+        <DropdownAction
+          onClick={open.bind(null, 'Twitter', twUrl)}
+          title={i18n.t('entry_meta_twitter')}
+          url={twUrl}
         />
       </DropdownActions>
     );

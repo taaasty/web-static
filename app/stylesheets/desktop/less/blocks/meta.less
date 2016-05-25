@@ -63,6 +63,8 @@
 .meta-item__content {
   position: relative;
   cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .meta-item__common {
@@ -161,6 +163,12 @@
 
   .meta-item--actions {
     float: right;
+  }
+
+  .meta-item--user .meta-item__content {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .voting {
