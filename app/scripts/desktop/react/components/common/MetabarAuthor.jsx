@@ -4,7 +4,7 @@ import Avatar from '../../../../shared/react/components/common/Avatar';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function MetabarAuthor({ author, tlog, hostTlogId }) {
+function MetabarAuthor({ author, size, tlog, hostTlogId }) {
 
   if (!author || !tlog) {
     return <noscript />;
@@ -20,7 +20,7 @@ function MetabarAuthor({ author, tlog, hostTlogId }) {
     return (
       <Link className="meta-item__link" to={uri(tlogUrl).path()}>
         <span className="meta-item__ava">
-          <Avatar size={20} userpic={tlogUserpic} />
+          <Avatar size={size} userpic={tlogUserpic} />
         </span>
       </Link>
     );
@@ -103,6 +103,7 @@ MetabarAuthor.propTypes = {
 
 MetabarAuthor.defaultProps = {
   author: {},
+  size: 20,
   tlog: {},
 };
 

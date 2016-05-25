@@ -4,6 +4,8 @@ import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
+export const COMMENT_AVATAR_SIZE = 40;
+
 function EntryTlogComment(props) {
   const { comment: { user, comment_html } } = props;
 
@@ -17,7 +19,7 @@ function EntryTlogComment(props) {
             to={uri(user.tlog_url).path()}
           >
             <span className="comment__avatar">
-              <Avatar size={35} userpic={user.userpic} />
+              <Avatar size={COMMENT_AVATAR_SIZE} userpic={user.userpic} />
             </span>
             <span className="comment__username comment__username--bold">
               {user.name} {}

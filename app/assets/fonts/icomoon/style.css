@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'tastyicons';
-    src:    url('fonts/tastyicons.eot?unakqq');
-    src:    url('fonts/tastyicons.eot?unakqq#iefix') format('embedded-opentype'),
-        url('fonts/tastyicons.ttf?unakqq') format('truetype'),
-        url('fonts/tastyicons.woff?unakqq') format('woff'),
-        url('fonts/tastyicons.svg?unakqq#tastyicons') format('svg');
+    src:    url('fonts/tastyicons.eot?8ul0ub');
+    src:    url('fonts/tastyicons.eot?8ul0ub#iefix') format('embedded-opentype'),
+        url('fonts/tastyicons.ttf?8ul0ub') format('truetype'),
+        url('fonts/tastyicons.woff?8ul0ub') format('woff'),
+        url('fonts/tastyicons.svg?8ul0ub#tastyicons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -258,10 +258,19 @@
 .icon--mute-on:before {
     content: "\e64d";
 }
-.icon--share1:before {
+.icon--share:before {
     content: "\e64e";
 }
 .icon--pin:before {
     content: "\e64f";
+}
+.icon--comment:before {
+    content: "\e650";
+}
+.icon--like:before {
+    content: "\e651";
+}
+.icon--like-fill:before {
+    content: "\e652";
 }
 

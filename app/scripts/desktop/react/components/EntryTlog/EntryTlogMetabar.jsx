@@ -32,6 +32,7 @@ function EntryTlogMetabar(props) {
       <MetabarAuthor
         author={entry.author}
         hostTlogId={host_tlog_id}
+        size={24}
         tlog={entry.tlog}
       />
       <EntryTlogMetabarDate entry={entry} isFeed={isFeed} />
