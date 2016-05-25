@@ -21,7 +21,7 @@ class EntryTlogMetabarShare extends Component {
   }
   renderShare() {
     return (
-      <span>
+      <span className="meta-item__common">
         <i className="icon icon--share" />
         {i18n.t('entry_meta_share')}
       </span>
