@@ -52,6 +52,8 @@ class TlogPageRoot extends Component {
   }
   componentWillUnmount() {
     DesignPreviewService.reset();
+    document.body.classList.remove('tlog-mode-minimal');
+    document.body.classList.remove('tlog-mode-full');
   }
   setEditorBodyClasses(preview) {
     if (preview) {
