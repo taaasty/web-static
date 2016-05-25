@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import ItemEntryPreviewImage from '../Conversations/List/ItemEntryPreviewImage';
 import Avatar from '../../../../../../shared/react/components/common/Avatar';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
+import { SYMBOL_AVATAR_BG, SYMBOL_AVATAR_COLOR } from '../../../constants/ConversationConstants';
 
 function GroupConversationHeader({ conversation, onClick }) {
   const { avatar, topic, users, users_left, users_deleted } = conversation;
@@ -11,8 +12,8 @@ function GroupConversationHeader({ conversation, onClick }) {
           .filter((u) => users_deleted.indexOf(u.id) < 0);
   const userpic = {
     default_colors: {
-      background: '#2ac67e',
-      name: '#fff',
+      background: SYMBOL_AVATAR_BG,
+      name: SYMBOL_AVATAR_COLOR,
     },
     symbol: topic[0],
   };

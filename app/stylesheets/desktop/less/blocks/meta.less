@@ -1,3 +1,7 @@
+@meta-icon-size: 20px;
+@meta-post-icon-size: 24px;
+@meta-icon-padding: 6px;
+
 // Meta Bar
 .meta-bar {
   white-space: nowrap;
@@ -5,12 +9,6 @@
   .meta-item {
     &:before {
       content: "\00b7"; // Рарзделительная точка
-    }
-
-    &:first-child {
-      &:before {
-        content: "\2014"; // Тире
-      }
     }
 
     &:before,
@@ -36,7 +34,7 @@
   &,
   &:before,
    {
-    margin-right: .5em;
+    margin-right: 1em;
   }
 
   &:before {
@@ -49,7 +47,7 @@
 
   .icon {
     font-style: normal;
-    font-size: 17px;
+    font-size: @meta-icon-size;
     vertical-align: middle;
     user-select: none;
   }
@@ -63,6 +61,8 @@
 .meta-item__content {
   position: relative;
   cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .meta-item__common {
@@ -107,8 +107,8 @@
 
 // Meta Avatar
 .meta-item__ava {
-  width: 20px;
-  height: 20px;
+  width: @meta-icon-size;
+  height: @meta-icon-size;
   margin-right: 2px;
   display: inline-block;
   vertical-align: middle;
@@ -140,11 +140,69 @@
 }
 
 // Показываем мету при наведении на пост
-.post:hover {
+.post {
   .meta-item {
-    &:before,
+    margin-right: 40px;
+
+    &:last-child,
+    &:nth-last-child(2) {
+      margin-right: 0;
+    }
+
+    &:before {
+      content: none;
+    }
+
     .meta-item__common {
-      opacity: .4;
+      opacity: .8;
+    }
+
+    .icon {
+      font-size: @meta-post-icon-size;
+      padding: 0 @meta-icon-padding 0 0;
+
+      &.icon--dots {
+        font-size: 19px;
+      }
+    }
+
+  }
+
+  .meta-item__ava {
+    width: @meta-post-icon-size;
+    height: @meta-post-icon-size;
+    margin-right: 4px;
+  }
+
+  .meta-bar__vote {
+    padding: 0 6px;
+  }
+
+  .meta-item--actions {
+    float: right;
+  }
+
+  .meta-item--user .meta-item__content {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .voting {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    float: none;
+    top: 1px;
+    right: auto;
+    left: auto;
+    background: transparent;
+    color: inherit;
+    font-size: @meta-font-size;
+
+    &:before {
+      font-size: @meta-post-icon-size;
+      margin-right: @meta-icon-padding;
     }
   }
 

@@ -8,6 +8,7 @@ import HeroFlow from '../HeroComponent/HeroFlowSPA';
 import SocialShare from '../common/SocialShare';
 import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';
+import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 
@@ -19,9 +20,9 @@ class TlogPageRoot extends Component {
     const { tlog, editing, editPreview } = this.props;
 
     if (this.isFlow(this.props)) {
-      document.body.className = 'layout--feed';
+      setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
-      document.body.className = 'layout--tlog';
+      setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
       DesignPreviewService.apply(tlog.design);
     }
 
@@ -34,10 +35,10 @@ class TlogPageRoot extends Component {
     this.props.getTlog(this.slug(nextProps));
 
     if (this.isFlow(nextProps)) {
-      document.body.className = 'layout--feed';
+      setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       if (this.props.tlog.design !== tlog.design) {
-        document.body.className = 'layout--tlog';
+        setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
         DesignPreviewService.apply(tlog.design);
       }
     }
@@ -51,6 +52,8 @@ class TlogPageRoot extends Component {
   }
   componentWillUnmount() {
     DesignPreviewService.reset();
+    document.body.classList.remove('tlog-mode-minimal');
+    document.body.classList.remove('tlog-mode-full');
   }
   setEditorBodyClasses(preview) {
     if (preview) {

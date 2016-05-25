@@ -347,7 +347,7 @@
 // Fixed Button
 .button--affixed {
   position: fixed;
-  top: @button-affixed-indent;
+  top: @button-affixed-top-indent;
   right: @button-affixed-indent;
   z-index: @zindex-button-affixed;
 }
@@ -475,7 +475,7 @@
   }
 
   .post-settings-voting {
-    .ico-fire-reg; // :before - иконка огня
+    .ico-like; // :before - иконка огня
 
     &:before {
       transition: color .4s ease;
@@ -483,10 +483,10 @@
 
     &.post-settings-voted {
       &:before {
-        color: @yellow;
+        color: @voting-fill-color;
       }
 
-      .ico-fire-fill-reg; // :before - иконка заполненного огня
+      .ico-like-fill; // :before - иконка заполненного огня
     }
   }
 
@@ -567,10 +567,16 @@
 }
 
 .write-message-button {
-  &:extend(.action-menu-button all);
+  .button-hero-style();
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1.0;
+  }
 
   .icon {
     font-size: 22px;
+    margin-right: 6px;
   }
 }
 

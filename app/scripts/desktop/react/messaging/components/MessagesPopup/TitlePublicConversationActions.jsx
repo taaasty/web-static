@@ -5,6 +5,8 @@ import DropdownAction from '../../../components/common/DropdownAction';
 import ConversationsStore from '../../stores/ConversationsStore';
 import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 class TitlePublicConversationActions extends Component {
   componentWillMount() {
@@ -31,6 +33,13 @@ class TitlePublicConversationActions extends Component {
         return MessagesPopupActions.openConversationList();
       });
   }
+  navigatePost() {
+    const { conversation } = this.state;
+
+    if (conversation && conversation.entry && conversation.entry.url) {
+      browserHistory.push(uri(conversation.entry.url).path());
+    }
+  }
   render() {
     if (!this.state.conversation) {
       return <noscript />;
@@ -52,6 +61,12 @@ class TitlePublicConversationActions extends Component {
             key="select-mode"
             onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
+          />
+          <DropdownAction
+            icon="icon--paper"
+            key="visit-post"
+            onClick={this.navigatePost.bind(this)}
+            title={i18n.t('messenger.title_actions.visit_post')}
           />
           <DropdownAction
             icon="icon--basket"

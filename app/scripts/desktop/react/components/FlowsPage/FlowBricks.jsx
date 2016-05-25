@@ -8,11 +8,12 @@ const masonryOptions = {
   transitionDuration: 0,
   isFitWidth: true,
   gutter: 20,
+  stamp: '.navs-line',
 };
 
 class FlowBricks extends Component {
   render() {
-    const { canLoad, currentUser, flows, loading, onLoadMoreFlows } = this.props;
+    const { canLoad, children, currentUser, flows, loading, onLoadMoreFlows } = this.props;
 
     return (
       <div className="bricks-wrapper">
@@ -26,6 +27,7 @@ class FlowBricks extends Component {
             elementType="section"
             options={masonryOptions}
           >
+            {children}
             {flows.map((item) => (
                <FlowBrick
                  currentUser={currentUser}

@@ -26,7 +26,7 @@
 }
 
 .page__inner {
-  padding: 0 0 34px;
+  padding: @toolbar-size 0 34px;
 }
 
 // Page Cover
@@ -41,6 +41,16 @@
   background-attachment: fixed;
   z-index: @zindex-page-cover;
   transition: opacity .3s ease, visibility 0s ease;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,.6) 0,rgba(0,0,0,.2) 400px,rgba(0,0,0,.2) 100%);
+  }
 }
 
 // Page Header
@@ -72,4 +82,10 @@
 // Page Loader
 .page-loader {
   text-align: center;
+}
+
+.tasty-chat-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='24px' height='24px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3C!-- Generator: Sketch 3.7.1 (28215) - http://www.bohemiancoding.com/sketch --%3E %3Ctitle%3EOval 1 Copy 2%3C/title%3E %3Cdesc%3ECreated with Sketch.%3C/desc%3E %3Cdefs%3E %3ClinearGradient x1='78.4706993%' y1='78.7811279%' x2='17.3367446%' y2='12.6724243%' id='linearGradient-1'%3E %3Cstop stop-color='%232534FF' offset='0%'%3E%3C/stop%3E %3Cstop stop-color='%23B421FE' offset='100%'%3E%3C/stop%3E %3C/linearGradient%3E %3C/defs%3E %3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cpath d='M3.92708333,18.1038012 L3.04477339,23.9532164 C3.04477339,23.9532164 9.2875277,20.4593085 9.28752795,20.4593082 C10.159169,20.6332282 11.067154,20.7251462 12,20.7251462 C18.627417,20.7251462 24,16.0856642 24,10.3625731 C24,4.63948201 18.627417,0 12,0 C5.372583,0 0,4.63948201 0,10.3625731 C0,13.4381332 1.46300969,16.2059766 3.92708333,18.1038012 Z' id='Oval-1-Copy-2' fill='url(%23linearGradient-1)'%3E%3C/path%3E %3C/g%3E %3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
 }

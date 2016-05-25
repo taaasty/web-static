@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import EntryBricksContainer from '../EntryBricks';
+import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
   appendTagEntries,
   getTagEntriesIfNeeded,
@@ -12,7 +13,7 @@ class TagsPage extends Component {
     this.props.getTagEntriesIfNeeded(this.props.routeParams);
   }
   componentDidMount() {
-    document.body.className = 'layout--feed';
+    setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
     this.props.getTagEntriesIfNeeded(nextProps.routeParams);

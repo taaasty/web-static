@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Voting from '../common/Voting';
 import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
@@ -10,15 +9,6 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 class EntryTlogCodeType extends Component {
   startComment() {
     this.refs.comments.startComment();
-  }
-  renderVoting() {
-    const { id, is_voteable, rating } = this.props.entry;
-
-    if (is_voteable) {
-      return (
-        <Voting entryID={id} rating={rating} />
-      );
-    }
   }
   renderTitle() {
     const { title } = this.props.entry;
@@ -41,7 +31,6 @@ class EntryTlogCodeType extends Component {
     return (
       <span>
         <header className="post__header">
-          {this.renderVoting()}
           {is_private && <PrivacyBadge />}
           {this.renderTitle()}
         </header>

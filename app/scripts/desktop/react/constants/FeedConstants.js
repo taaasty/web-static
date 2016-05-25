@@ -42,6 +42,13 @@ export const navFilters = {
       apiType: FEED_ENTRIES_API_TYPE_LIVE,
     },
     {
+      title: 'feed.title.best.best',
+      filterTitle: 'nav_filters.live.best',
+      href: '/best?rating=best',
+      type: FEED_TYPE_BEST,
+      apiType: FEED_ENTRIES_API_TYPE_BEST,
+    },
+    {
       title: 'feed.title.live.media',
       filterTitle: 'nav_filters.live.media',
       href: '/media',

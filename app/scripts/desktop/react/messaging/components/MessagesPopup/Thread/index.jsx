@@ -11,7 +11,11 @@ import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
-import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../../../constants/ConversationConstants';
+import {
+  PRIVATE_CONVERSATION,
+  PUBLIC_CONVERSATION,
+  GROUP_CONVERSATION
+} from '../../../constants/ConversationConstants';
 
 const defaultBackgroundUrl = '/images/backgrounds/3.jpg';
 
@@ -68,13 +72,7 @@ class Thread extends Component {
   renderHeader() {
     const { conversation } = this.props;
 
-    return conversation.type === PUBLIC_CONVERSATION
-      ? <PublicConversationHeader
-          conversation={conversation}
-          onClick={this.onClickHeader.bind(this, conversation.entry)}
-          url={conversation.entry.url}
-        />
-      : conversation.type === GROUP_CONVERSATION
+    return conversation.type === GROUP_CONVERSATION
         ? <GroupConversationHeader
             conversation={conversation}
             onClick={this.handleClickGroupHeader.bind(this)}
@@ -96,6 +94,7 @@ class Thread extends Component {
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
+      '--private': conversation.type === PRIVATE_CONVERSATION,
       '--no-form': !canTalk,
     });
     const listClasses = classNames({
@@ -105,7 +104,7 @@ class Thread extends Component {
     
     return (
       <div className={containerClasses}>
-        {this.renderHeader()}
+        {false && this.renderHeader()}
         <div className={listClasses} style={threadStyles}>
           <div className="messages__thread-overlay" />
           <MessageList conversation={conversation} selectState={selectState} />

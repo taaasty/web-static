@@ -13,13 +13,56 @@
   }
 }
 
+.message-user-avatar {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .message-user-avatar__online-badge {
+    display: inline-block;
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background: @messages-popup-blue;
+    border: 2px solid @white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.messages__popup-title-wrapper {
+  text-align: left;
+  padding-left: 40px;
+
+  .messages__user-avatar {
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    font-weight: normal;
+  }
+
+  .messages__preview-image {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .message-user-avatar__online-badge {
+    width: 14px;
+    height: 14px;
+  }
+}
+
 .messages__popup-title {
   position: relative;
   width: 100%;
   box-sizing: border-box;
 
   .popup--messages.--thread & {
-    letter-spacing: .05em;
   }
 
   &.--with-actions {
@@ -36,6 +79,7 @@
       font-weight: 300;
       letter-spacing: initial;
       line-height: 14px;
+      font-size: 11px;
     }
   }
 
@@ -73,28 +117,38 @@
 .messages__body {
   height: 100%;
   position: relative;
-  background-size: cover;
+  //background-size: cover;
 }
 
 // Message Footer
 .messages__footer {
-  background-color: #f5f5f5;
+  background-color: @white;
   text-align: center;
   overflow: hidden;
-  border-radius: 0 0 @messages-border-radius @messages-border-radius;
+  border-radius: 0 0 3px 3px;
+  border-top: @messages-popup-border;
+  border-bottom: @messages-popup-border;
 
   .button {
     display: block;
     box-sizing: initial;
     padding: 3px 0;
-    border-radius: 0 0 @messages-border-radius @messages-border-radius;
+    border-radius: 0;
+    text-transform: none;
+    letter-spacing: initial;
+    color: @messages-popup-blue;
+    font-size: 16px;
+  }
+
+  .button--disabled {
+    color: @grey;
   }
 }
 
 // Message Back Button
 .messages__back {
   width: 40px;
-  height: 43px;
+  height: 45px;
   position: absolute;
   top: 0;
   left: 0;
@@ -142,8 +196,9 @@
 
   margin-right: 3px;
   margin-bottom: 7px;
-  font-weight: bold;
-  color: #888;
+  font-weight: normal;
+  font-size: 16px;
+  color: @black;
 }
 
 .messages__user-online {
@@ -162,7 +217,7 @@
 .messages__counter() {
   position: absolute;
   right: 14px;
-  background-color: #2ba26a;
+  background-color: @messages-popup-blue;
   font-size: 12px;
   color: @white;
   text-align: center;
@@ -253,6 +308,15 @@
   // https://www.honeybadger.io/inspector/p/36627/6074214
   // .transition(~".background-color .3s ease");
 
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 65px;
+    border-bottom: 1px solid white;    
+  }
+
   &:hover {
     background-color: #fcfcfc;
   }
@@ -273,6 +337,7 @@
     margin-bottom: 0;
     white-space: nowrap;
     width: 100%;
+    text-align: left;
 
     &:before {
       content: '';
@@ -309,9 +374,13 @@
     position: absolute;
     top: 12px;
     right: 14px;
-    width: 50px;
     line-height: 12px;
     text-align: right;
+  }
+
+  .messages__tick-status {
+    color: @messages-popup-blue;
+    margin-right: 4px;
   }
 
   .messages__muted {
@@ -451,9 +520,19 @@
   text-overflow: ellipsis;
   overflow: hidden;
 
+  .message-user-avatar {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+
+    .message-user-avatar__online-badge {
+      width: 11px;
+      height: 11px;
+    }
+  }
+
   .avatar {
     display: inline-block;
-    margin-right: 5px;
     width: 20px;
     height: 20px;
   }
@@ -603,19 +682,6 @@
   max-width: 220px;
   border-radius: 3px;
 
-  &:before {
-    content: " ";
-    width: 25px;
-    height: 38px;
-    position: absolute;
-    top: -18px;
-    right: 15px;
-    border-radius: 50% 50% 50% 50%;
-    border-style: solid;
-    border-width: 0 20px;
-    clip: rect(21px, 30px, 45px, 20px);
-  }
-
   a {
     color: inherit !important;
 
@@ -656,7 +722,7 @@
 
 // Message Box
 .messages__box {
-  padding: 18px 15px;
+  padding: 12px 10px;
   position: absolute;
   top: 0;
   left: 0;
@@ -713,17 +779,31 @@
   display: none;
   top: 0;
   left: 0;
-  background-color: @messages-chooser-dropdown-bg;
+  background-color: @white;
+  color: @black;
+  border: @messages-popup-border;
   font-size: 16px;
   line-height: 20px;
-  color: @white;
   z-index: @zindex-messages;
   border-radius: 5px;
 }
 
+.messages__chooser-input-wrapper {
+  
+}
+
+.messages__chooser-input-icon {
+  position: absolute;
+    top: 11px;
+    left: 8px;
+    font-size: 20px;
+    transform: rotateY(180deg);
+    color: rgba(red(@black), green(@black), blue(@black),.4);  
+}
+
 .messages__chooser-input {
   width: 100%;
-  padding: 11px 10px;
+  padding: 11px 10px 11px 35px;
   border: none;
   background: none;
   font: inherit;
@@ -734,19 +814,19 @@
 .messages__chooser-loading {
   text-align: center;
   padding: 10px;
-  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+  border-top: 1px solid rgba(red(@black), green(@black), blue(@black), .1);
 }
 
 .messages__chooser-empty {
   text-align: center;
   padding: 10px;
   font-size: 14px;
-  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+  border-top: 1px solid rgba(red(@black), green(@black), blue(@black), .1);
 }
 
 .messages__chooser-result {
   padding: 10px;
-  border-top: 1px solid rgba(red(@white), green(@white), blue(@white), .1);
+  border-top: 1px solid rgba(red(@black), green(@black), blue(@black), .1);
   cursor: pointer;
 
   &:hover,
@@ -800,7 +880,7 @@
 .messages__section {
   width: 100%;
   height: 100%;
-  padding-top: 43px;
+  padding-top: 45px;
   position: relative;
   // z-index: @zindex-messages;
   box-sizing: border-box;
@@ -809,7 +889,7 @@
 .messages__section--dialogs,
 .messages__section--recipients,
 .messages__section--group-chooser {
-  padding: 43px 0 46px;
+  padding: 45px 0 46px;
   display: block;
 }
 
@@ -828,7 +908,7 @@
 
 .messages__section--group-settings {
   position: relative;
-  padding: 43px 0 0;
+  padding: 45px 0 0;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -871,6 +951,9 @@
       width: 180px;
       margin-left: -169px;
       &:after {
+        left: 169px;
+      }
+      &:before {
         left: 169px;
       }
     }
@@ -929,7 +1012,7 @@
 }
 
 .messages__section--thread {
-  padding: 43px 0 137px;
+  padding: 45px 0 0;
   display: flex;
   flex-direction: column;
 
@@ -962,11 +1045,7 @@
   }
 
   .messages__footer {
-    min-height: 137px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 5;
   }
 
@@ -989,17 +1068,12 @@
   }
 
   &.messages__section--select {
-    padding-bottom: 54px;
-
     .messages__footer {
       min-height: 54px;
     }
 
-    .message-form {
-      padding-top: 7px;
-    }
-
     .message-form__button-container {
+      position: relative;
       text-align: right;
     }
 
@@ -1018,11 +1092,28 @@
       }
     }
   }
+
+  &.--private {
+    .message--to {
+      padding: 0 44px 0 20px;
+    }
+
+    .messages__bubble:before {
+      display: none;
+    }
+  }
 }
 
 .message--container {
   position: relative;
   padding: 12px 0;
+
+  .message-user-avatar__online-badge {
+    right: 0;
+    bottom: 0;
+    width: 14px;
+    height: 14px;
+  }
 
   .message--select-mode & {
     cursor: pointer;
@@ -1041,7 +1132,7 @@
       background-color: rgba(0, 0, 0, 0.2);
       
       .message__selector {
-        background-color: @green;
+        background-color: @messages-popup-blue;
       }
     }
 
@@ -1099,7 +1190,7 @@
 
 
 .message-form {
-  padding: 20px 15px 7px 15px;
+  padding: 12px;
   position: relative;
 }
 
@@ -1111,14 +1202,12 @@
 .message-form__textarea-container {
   position: relative;
   width: 100%;
-  height: 63px;
 }
 
 .message-form__textarea {
   width: 100%;
-  height: 100%;
-  padding: 8px 12px;
-  border: 1px solid #d9d9d9;
+  padding-left: 32px;
+  border: none;
   background: @white;
   font: inherit;
   border-radius: 4px;
@@ -1133,9 +1222,9 @@
     vertical-align: middle;
   }
 
-  position: relative;
-  height: @button-small-height;
-  text-align: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .message-form__button {
@@ -1196,7 +1285,6 @@
 
 .message-form__media-preview {
   text-align: left;
-  margin-top: 7px;
   padding: 0 1px;
 }
 
@@ -1243,8 +1331,8 @@
 .message,
 .message-form {
   .messages__user-avatar {
-    margin-top: 0;
-    top: auto;
+    top: initial;
+    bottom: 18px;
   }
 
   .message__textarea {
@@ -1264,19 +1352,17 @@
   }
 
   .messages__user-name {
-    color: @white;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 0;
+    display: block;
+    font-weight: normal;
   }
 
   .messages__bubble {
     float: left;
-    background-color: #32a16c;
-    color: @white;
-
-    &:before {
-      left: 15px;
-      border-color: #32a16c;
-      .transform(rotateY(180deg));
-    }
+    background-color: @white;
+    color: @black;
 
     .messages_img-container {
       text-align: left;
@@ -1299,12 +1385,8 @@
 
   .messages__bubble {
     float: right;
-    background-color: #f1f1f1;
-
-    &:before {
-      right: -25px;
-      border-color: #f1f1f1;
-    }
+    background-color: #dafafc;
+    color: @black;
 
     .messages__img-container {
       text-align: right;
@@ -1331,11 +1413,17 @@
 }
 
 .messages.messages--email-form {
+  .message-form {
+    padding: 20px 15px 7px;
+  }
+
   .messages__section--thread {
     padding-bottom: 177px;
   }
 
   .message-form__button-container {
+    position: relative;
+    height: 40px;
     margin-top: 7px;
   }
 
@@ -1355,8 +1443,51 @@
     padding: 8px 12px;
   }
 
+  .message-form__textarea-container {
+    height: 63px;
+  }
+
+  .message-form__textarea {
+    height: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d9d9d9;
+  }
+
   .messages__footer {
     min-height: 177px;
+    background-color: #f5f5f5;
+  }
+}
+
+.popup--messages .meta-item__dropdown {
+  color: @popover-bg;
+  background-color: @white;
+  border: 1px solid rgba(red(@black), green(@black), blue(@black), .1);
+
+  &:after {
+    border-color: transparent transparent @white;
+  }
+
+  &:before {
+    &:extend(.meta-item__dropdown:after all);
+    bottom: 100%;
+    margin-left: -8px;
+    border-width: 0 8px 8px;
+    border-color: transparent transparent rgba(0,0,0,.1);
+  }
+
+  a.meta-item__dropdown-item {
+    color: @popover-bg;
+
+    &.state--active {
+      background-color: @white;
+      color: rgba(50, 50, 50, .9);
+    }
+
+    &:hover {
+      background-color: rgba(red(@black), green(@black), blue(@black), .05);
+      color: @popover-bg;
+    }
   }
 }
 

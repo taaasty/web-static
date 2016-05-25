@@ -13,7 +13,7 @@
   "conversation_entry_user_profile": "Перейти в профиль",
   "conversation_entry_user_private": "Написать в личку",
   "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
-  "new_thread_placeholder": "Начните вводить логин",
+  "new_thread_placeholder": "Поиск...",
   "new_thread_button": "Написать сообщение",
   "new_thread_unknown_user": "К сожалению, мы не можем найти данного пользователя",
   "new_thread_process": "Создаю беседу…",
@@ -132,12 +132,17 @@
   "report_entry_button": "Пожаловаться",
   "delete_entry_button": "Удалить",
   "watching_entry_item": "Подписан",
-  "entry_meta_comment_link": "Прокомментировать",
+  "entry_meta_comment_link": "Комментировать",
+  "entry_meta_vote": "Оценить",
+  "entry_meta_share": "Поделиться",
   "comments_count": "{{count}} комментарий",
   "comments_count_2": "{{count}} комментария",
   "comments_count_5": "{{count}} комментариев",
   "no_comments": "Нет комментариев",
   "entry_meta_repost_link": "Сделать репост",
+  "entry_meta_vk": "Вконтакте",
+  "entry_meta_fb": "Facebook",
+  "entry_meta_twitter": "Twitter",
   "entry_repost_loading": "Загружаю..",
   "entry_repost_empty": "Список пуст",
   "entry_repost_error": "Ошибка загрузки",
@@ -443,7 +448,8 @@
   },
   "nav_filters" : {
     "live": {
-      "all": "Все",
+      "all": "Прямой эфир",
+      "best": "Лучшее",
       "media": "Медиа",
       "flows": "Потоки",
       "anonymous": "Анонимки"
@@ -601,12 +607,29 @@
     "flows_count_2": "{{count}} потока",
     "flows_count_5": "{{count}} потоков"
   },
+  "toolbar": {
+    "live": "Записи",
+    "flows": "Потоки",
+    "people": "Люди",
+    "anonymous": "Анонимки",
+    "friends": "Лента",
+    "user": {
+      "my_tlog": "Мой дневник",
+      "favorites": "Избранное",
+      "private": "Скрытые записи",
+      "subscriptions": "Подписки",
+      "design_settings": "Дизайн дневника",
+      "settings": "Настройки",
+      "logout": "Выход"
+    }
+  },
   "buttons": {
     "hero_create_entry": "Написать в поток",
     "hero_create_flow": "Создать поток",
     "load_previous_entries": "Перейти к новым записям",
     "actions": {
-      "thats_you": "Это вы"
+      "thats_you": "Это вы",
+      "write": "Написать"
     },
     "notifications": {
       "mark_all_read": "отметить все как прочитанные"
@@ -686,7 +709,9 @@
       "delete_conversation": "Удалить переписку",
       "leave_conversation": "Покинуть обсуждение",
       "leave_group": "Покинуть группу",
-      "group_settings": "Настройки группового чата"
+      "group_settings": "Настройки группового чата",
+      "visit_tlog": "Перейти в тлог",
+      "visit_post": "Перейти к записи"
     },
     "request": {
       "conversation_delete_success": "Переписка удалена",

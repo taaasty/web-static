@@ -1,108 +1,158 @@
-import React, { createClass, PropTypes } from 'react';
-import classnames from 'classnames';
-import Scroller from '../common/Scroller';
-import UserToolbarToggle from './UserToolbarToggle';
-import UserToolbarHoverLine from './UserToolbarHoverLine';
-import UserToolbarPrimaryList from './UserToolbarPrimaryList';
-import UserToolbarAdditionalList from './UserToolbarAdditionalList';
-import UserToolbarGuestList from './UserToolbarGuestList';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
+import Routes from '../../../../shared/routes/routes';
+import { Link } from 'react-router';
+import uri from 'urijs';
+import SearchForm from './SearchForm';
+import AuthUserSection from './AuthUserSection';
+import classNames from 'classnames';
 
-const UserToolbar = createClass({
-  propTypes: {
-    currentUser: PropTypes.object.isRequired,
-    hovered: PropTypes.bool.isRequired,
-    onDesignSettingsClick: PropTypes.func.isRequired,
-    onFriendsClick: PropTypes.func.isRequired,
-    onLineHover: PropTypes.func.isRequired,
-    onMessagesClick: PropTypes.func.isRequired,
-    onMouseEnter: PropTypes.func.isRequired,
-    onMouseLeave: PropTypes.func.isRequired,
-    onNotificationsClick: PropTypes.func.isRequired,
-    onSearchClick: PropTypes.func.isRequired,
-    onSettingsClick: PropTypes.func.isRequired,
-    onToggleClick: PropTypes.func.isRequired,
-    searchKey: PropTypes.string.isRequired,
-    unreadAnonymousCount: PropTypes.number.isRequired,
-    unreadBestCount: PropTypes.number.isRequired,
-    unreadConversationsCount: PropTypes.number.isRequired,
-    unreadFriendsCount: PropTypes.number.isRequired,
-    unreadLiveCount: PropTypes.number.isRequired,
-    unreadLiveFlowCount: PropTypes.number.isRequired,
-    unreadNotificationsCount: PropTypes.number.isRequired,
-  },
+const PINNED_STATE = 'pinned';
+const UNPINNED_STATE = 'unpinned';
+const UNFIXED_STATE = 'unfixed';
+const TOOLBAR_SIZE = 56;
+const DIR_UP = 'dir_up';
+const DIR_DOWN = 'dir_down';
 
-  renderPrimaryList() {
-    const { currentUser, hovered, onDesignSettingsClick, onFriendsClick,
-            onMessagesClick, onNotificationsClick, unreadAnonymousCount,
-            unreadBestCount, unreadConversationsCount, unreadFriendsCount,
-            unreadLiveCount, unreadLiveFlowCount, unreadNotificationsCount } = this.props;
+class UserToolbar extends Component {
+  state = { posState: UNFIXED_STATE, noTransition: false };
+  componentDidMount() {
+    this.scrollHandler = this.handleScroll.bind(this);
+    window.addEventListener('scroll', this.scrollHandler);
+    this.checkScrollPosition();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollHandler);
+  }
+  checkScrollPosition() {
+    const scrollTop = window.document.body.scrollTop ||
+          window.document.documentElement.scrollTop;
+    const direction = (scrollTop - (this.prevScrollTop || 0)) > 0
+          ? DIR_DOWN
+          : DIR_UP;
 
-    return currentUser.id
-      ? <UserToolbarPrimaryList
-          currentUser={currentUser}
-          onDesignSettingsClick={onDesignSettingsClick}
-          onFriendsClick={onFriendsClick}
-          onMessagesClick={onMessagesClick}
-          onNotificationsClick={onNotificationsClick}
-          stayOpen={hovered}
-          unreadAnonymousCount={unreadAnonymousCount}
-          unreadBestCount={unreadBestCount}
-          unreadConversationsCount={unreadConversationsCount}
-          unreadFriendsCount={unreadFriendsCount}  
-          unreadLiveCount={unreadLiveCount}
-          unreadLiveFlowCount={unreadLiveFlowCount}
-          unreadNotificationsCount={unreadNotificationsCount}
-        />
-      : <UserToolbarGuestList
-          unreadBestCount={unreadBestCount}
-          unreadLiveCount={unreadLiveCount}
-        />;
-  },
+    if (this.prevDirection === DIR_DOWN && direction === DIR_UP) {
+      this.pivotUpPoint = scrollTop;
+    } else if (direction === DIR_DOWN) {
+      this.pivotUpPoint = null;
+    }
 
-  renderAdditionalList() {
-    const { currentUser: { slug }, onSearchClick, onSettingsClick, searchKey } = this.props;
+    const upDiff = this.pivotUpPoint && (this.pivotUpPoint - scrollTop);
+    
+    if (scrollTop === 0) {
+      this.setState({ posState: UNFIXED_STATE });
+    } else {
+      if (direction === DIR_DOWN) {
+        if (scrollTop > TOOLBAR_SIZE) {
+          let noTransition = false;
 
-    return (
-      <UserToolbarAdditionalList
-        onSearchClick={onSearchClick}
-        onSettingsClick={onSettingsClick}
-        searchKey={searchKey}
-        slug={slug}
-      />
-    );
-  },
+          if (this.state.posState === UNFIXED_STATE) {
+            noTransition = true;
+            setTimeout(() => this.setState({ noTransition: false }), 100);
+          }
 
+          this.setState({ noTransition, posState: UNPINNED_STATE });
+          
+        }
+      } else {
+        if (scrollTop > TOOLBAR_SIZE && upDiff > TOOLBAR_SIZE) {
+          this.setState({ posState: PINNED_STATE });
+        }
+      }
+    }
+
+    this.prevDirection = direction;
+    this.prevScrollTop = scrollTop;
+  }
+  handleScroll() {
+    this.checkScrollPosition();
+
+    this.props.hideNotificationsPopover();
+    this.props.hideUserPopover();
+  }
+  renderCounter(count) {
+    return count > 0
+      ? <span className="toolbar__main-list-badge">{` (+${count})`}</span>
+      : '';
+  }
   render() {
-    const { currentUser, onMouseEnter, onMouseLeave, onLineHover,
-            unreadConversationsCount, unreadNotificationsCount } = this.props;
+    const { currentUser, onSearchClick, pathname, query, unreadFriendsCount } = this.props;
+    const { posState, noTransition } = this.state;
     const isLogged = !!currentUser.id;
-    const navbarClasses = classnames({
-      'toolbar__navbar': true,
-      'toolbar__navbar--complex': isLogged,
+    const containerClasses = classNames({
+      'toolbar': true,
+      'toolbar--main': true,
+      'toolbar--unfixed': posState === UNFIXED_STATE,
+      'toolbar--pinned': posState === PINNED_STATE,
+      'toolbar--unpinned': posState === UNPINNED_STATE,
+      '--no-transition': noTransition,
     });
 
     return (
-      <div
-        className="toolbar toolbar--main"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
-        <UserToolbarHoverLine onMouseEnter={onLineHover} />
-        <UserToolbarToggle
-          hasConversations={!!unreadConversationsCount}
-          hasNotifications={!!unreadNotificationsCount}
-          onClick={this.props.onToggleClick}
-          onMouseEnter={onLineHover}
-        />
-        <div className={navbarClasses}>
-          <Scroller>
-            {this.renderPrimaryList()}
-          </Scroller>
-          {isLogged && this.renderAdditionalList()}
-        </div>
+      <div className={containerClasses}>
+        <ul className="toolbar__main-list">
+          <li className="toolbar__main-list-item">
+            <Link className="toolbar__main-list-link" to={uri(Routes.live_feed_path()).path()}>
+              <i className="icon icon--ribbon" />
+              {i18n.t('toolbar.live')}
+            </Link>
+          </li>
+          <li className="toolbar__main-list-item">
+            <Link className="toolbar__main-list-link" to={uri(Routes.flows_path()).path()}>
+              {i18n.t('toolbar.flows')}
+            </Link>
+          </li>
+          <li className="toolbar__main-list-item">
+            <Link className="toolbar__main-list-link" to={uri(Routes.people_path()).path()}>
+              {i18n.t('toolbar.people')}
+            </Link>
+          </li>
+          <li className="toolbar__main-list-item">
+            <Link className="toolbar__main-list-link" to={uri(Routes.anonymous_feed_path()).path()}>
+              {i18n.t('toolbar.anonymous')}
+            </Link>
+          </li>
+          {isLogged &&
+           <li className="toolbar__main-list-item">
+             <Link className="toolbar__main-list-link" to={uri(Routes.friends_feed_path()).path()}>
+               {i18n.t('toolbar.friends')}
+               {this.renderCounter(unreadFriendsCount)}
+             </Link>
+           </li>
+          }
+          <li className="toolbar__main-list-item">
+            <SearchForm
+              onSubmit={onSearchClick}
+              pathname={pathname}
+              query={query}
+            />
+          </li>
+        </ul>
+        {isLogged && <AuthUserSection {...this.props} />}
       </div>
     );
-  },
-});
+  }
+}
+
+UserToolbar.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  hideNotificationsPopover: PropTypes.func.isRequired,
+  hideUserPopover: PropTypes.func.isRequired,
+  isNotificationsPopoverVisible: PropTypes.bool.isRequired,
+  isUserPopoverVisible: PropTypes.bool.isRequired,
+  onDesignSettingsClick: PropTypes.func.isRequired,
+  onFriendsClick: PropTypes.func.isRequired,
+  onMessagesClick: PropTypes.func.isRequired,
+  onNotificationsClick: PropTypes.func.isRequired,
+  onSearchClick: PropTypes.func.isRequired,
+  onSettingsClick: PropTypes.func.isRequired,
+  onUserClick: PropTypes.func.isRequired,
+  pathname: PropTypes.string.isRequired,
+  query: PropTypes.string,
+  searchKey: PropTypes.string.isRequired,
+  unreadConversationsCount: PropTypes.number.isRequired,
+  unreadFriendsCount: PropTypes.number.isRequired,
+  unreadNotificationsCount: PropTypes.number.isRequired,
+};
 
 export default UserToolbar;

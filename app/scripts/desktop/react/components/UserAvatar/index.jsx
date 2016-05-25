@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/Avatar';
+import { TLOG_TYPE_ANONYMOUS } from '../../constants/EditorConstants';
 
 class UserAvatar extends Component {
   state = {
@@ -21,13 +22,23 @@ class UserAvatar extends Component {
     this.setState({ ...this.state.user, userpic });
   }
   render() {
-    const { name, tag, userpic } = this.state.user;
+    const { name, slug, tag, userpic } = this.state.user;
+    const tUserpic = slug === TLOG_TYPE_ANONYMOUS
+          ? {
+              kind: 'anonymous',
+              symbol: '\ue002',
+              default_colors: {
+                background: 'transparent',
+                name: '#fff',
+              },
+            }
+          : userpic;
 
     return (
       <Avatar
         name={tag || name}
         size={this.props.size}
-        userpic={userpic}
+        userpic={tUserpic}
       />
     );
   }

@@ -55,14 +55,19 @@ const Dropdown = createClass({
 
     return (
       <div className="messages__chooser-dropdown">
-        <input
-          className="messages__chooser-input"
-          onKeyDown={this.handleKeyDown}
-          placeholder={i18n.t('new_thread_placeholder')}
-          ref="chooserInput"
-          type="text"
-          valueLink={this.linkState('query')}
-        />
+        <div className="messages__chooser-input-wrapper">
+          <span className="messages__chooser-input-icon">
+            <i className="icon icon--magnifier" />
+          </span>
+          <input
+            className="messages__chooser-input"
+            onKeyDown={this.handleKeyDown}
+            placeholder={i18n.t('new_thread_placeholder')}
+            ref="chooserInput"
+            type="text"
+            valueLink={this.linkState('query')}
+          />
+        </div>
         {query && 
          <Results
            onSubmit={this.handleSubmit}

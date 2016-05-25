@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Voting from '../common/Voting';
 import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
@@ -9,13 +8,6 @@ import EntryTlogComments from './EntryTlogComments';
 class EntryTlogVideoType extends Component {
   startComment() {
     this.refs.comments.startComment();
-  }
-  renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -35,7 +27,6 @@ class EntryTlogVideoType extends Component {
             embedHtml={iframely.html}
           />
           <div className="video_comment">
-            {this.renderVoting()}
             {is_private && <PrivacyBadge />}
             <Text value={title} withHTML={true} />
           </div>

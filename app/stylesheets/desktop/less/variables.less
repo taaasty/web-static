@@ -106,11 +106,9 @@
 @zindex-media-box-form-close: (@zindex-media-box-form + 1);
 @zindex-social-share: 150;
 @zindex-affixed: 200; // toolbar, auth button
-@zindex-button-affixed: @zindex-affixed; // 200
 @zindex-button-back: @zindex-affixed; // 200
 @zindex-nav-types: @zindex-affixed; // 200
 @zindex-types-posts-active: @zindex-affixed; // 200
-@zindex-toolbar: @zindex-affixed; // 200
 @zindex-calendar: @zindex-affixed; // 200
 @zindex-toolbar-indicators: 300;
 @zindex-browserbar: 310;
@@ -127,6 +125,8 @@
 @zindex-frontlayer: 10000;
 @zindex-popup-with-background: 11000;
 @zindex-small-popup: 11005;
+@zindex-toolbar: 11010;
+@zindex-button-affixed: 11010;
 @zindex-confirmation: 11500;
 @zindex-appbar: 11505;
 @zindex-notice: 12000;
@@ -153,6 +153,7 @@
 
 @button-circle-size: 46px;
 
+@button-affixed-top-indent: 8px;
 @button-affixed-indent: @indent-base;
 
 // Follow Button
@@ -193,6 +194,7 @@
 // Toolbar
 @toolbar-size: 56px;
 @toolbar-size-lg: 70px;
+@toolbar-size-xlg: 80px;
 
 @toolbar-indent: @indent-base;
 
@@ -285,7 +287,7 @@
 
 // Comments
 @comments-font-size: 14px;
-@comments-line-height: 18px;
+@comments-line-height: 20px;
 
 @comment-meta-font-size: @meta-font-size;
 @comment-meta-line-height: @meta-line-height;
@@ -412,6 +414,7 @@
 @media-box-input-placeholder-color: @color-placeholder;
 
 // Voting
+@voting-fill-color: #eb4656;
 @voting-border-radius: 14px;
 
 @voting-font-size: 11px;
@@ -491,12 +494,16 @@
 
 // Messages
 @messages-popup-width: 340px;
+@messages-popup-border: 1px solid rgba(red(@black), green(@black), blue(@black), .05);
+@messages-popup-blue: #177df2;
 
 @messages-height: 586px;
 
 @messages-border-radius: @popup-border-radius;
 
 @messages-chooser-dropdown-bg: @popover-bg;
+
+
 
 // Design (old)
 @design-popup-width: 250px;

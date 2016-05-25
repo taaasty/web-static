@@ -26,7 +26,7 @@
 
   &:before {
     .icon;
-    margin: -5px 0 -3px;
+    margin: -5px 3px -3px 0;
     display: inline-block;
     font-size: 20px;
     vertical-align: middle;
@@ -34,49 +34,29 @@
     opacity: .9;
   }
 
-  .ico-fire-reg; // :before - иконка огня
+  .ico-like; // :before - иконка огня
 
   &.voted {
     &:before {
-      color: @yellow;
+      color: @voting-fill-color;
     }
 
     cursor: default;
-    .ico-fire-fill-reg; // :before - иконка заполненного огня
+    .ico-like-fill; // :before - иконка заполненного огня
   }
 
   &.unvotable {
     cursor: default;
-    .ico-fire-fill-reg; // :before - иконка заполненного огня
+    .ico-like-fill; // :before - иконка заполненного огня
   }
 
   &.votable {
     &:hover {
       &:before {
-        color: @yellow;
+        color: @voting-fill-color;
       }
 
-      .ico-fire-fill-reg; // :before - иконка заполненного огня
+      .ico-like-fill; // :before - иконка заполненного огня
     }
-  }
-
-  /** Types **/
-  .post--image & {
-    top: 1.5em;
-  }
-
-  .post--video & {
-    /*position: relative;
-    float: right;
-    right: 100%;*/
-    top: 1.5em;
-  }
-
-  .post--quote & {
-    top: .5em;
-  }
-
-  .post__header + .post__content & {
-    top: .833em;
   }
 }

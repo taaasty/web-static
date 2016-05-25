@@ -55,14 +55,15 @@ let FlowBrick = React.createClass({
     const brickClasses = classNames({
       'brick': true,
       'brick--flow': true,
-      '__subscribed': this.state.relState === 'friend',
+      //'__subscribed': this.state.relState === 'friend',
     });
 
     return (
       <article className={brickClasses}>
         <Link to={uri(tlog_url).path()} >
           {fixed_state === ENTRY_PINNED_STATE &&
-           <div className="brick__notice brick__notice--info">
+           <div className="brick__notice">
+             <i className="icon icon--pin" />
              {i18n.t('flow.pinned_header')}
            </div>
           }

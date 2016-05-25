@@ -103,11 +103,6 @@ PopupActions =
   toggleMessages: ->
     messagingService.toggleMessagesPopup()
 
-  showNotifications: ->
-    ReactApp.padController.open(NotificationsContainer, {
-      actSelector: '.toolbar__nav-item .icon--bell'
-    });
-
   showPinEntryPopup: (props) ->
     ReactApp.popupController.openWithBackground({
       props,

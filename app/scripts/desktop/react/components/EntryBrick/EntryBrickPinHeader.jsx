@@ -3,7 +3,8 @@ import React from 'react';
 
 function EntryBrickPinHeader() {
   return (
-    <div className="brick__notice brick__notice--info">
+    <div className="brick__notice">
+      <i className="icon icon--pin" />
       {i18n.t('entry.pinned_header')}
     </div>
   );

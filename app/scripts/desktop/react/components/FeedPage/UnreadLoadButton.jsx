@@ -5,12 +5,6 @@ import Spinner from '../../../../shared/react/components/common/Spinner';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-const propTypes = {
-  count: PropTypes.number.isRequired,
-  href: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
 class UnreadLoadButton extends Component {
   state = {
     offScreen: false,
@@ -39,7 +33,7 @@ class UnreadLoadButton extends Component {
           document.documentElement.scrollTop;    // ie, mozilla
 
     this.setState({
-      offScreen: (this.offsetTop && scrollTop > this.offsetTop),
+      offScreen: (this.offsetTop && (scrollTop + this.props.offset) > this.offsetTop),
     });
   }
   handleClick(ev) {
@@ -75,6 +69,16 @@ class UnreadLoadButton extends Component {
   }
 }
 
-UnreadLoadButton.propTypes = propTypes;
+UnreadLoadButton.propTypes = {
+  count: PropTypes.number.isRequired,
+  href: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  offset: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+};
+
+UnreadLoadButton.defaultProps = {
+  offset: 0,
+};
 
 export default UnreadLoadButton;

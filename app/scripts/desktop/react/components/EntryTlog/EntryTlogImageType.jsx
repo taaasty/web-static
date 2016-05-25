@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Voting from '../common/Voting';
 import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import ImageAttachmentsCollage from '../../../../shared/react/components/common/imageAttachmentsCollage';
@@ -11,13 +10,6 @@ import EntryTlogContentLink from './EntryTlogContentLink';
 class EntryTlogImageType extends Component {
   startComment() {
     this.refs.comments.startComment();
-  }
-  renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -41,7 +33,6 @@ class EntryTlogImageType extends Component {
               width={712}
             />
           </EntryTlogContentLink>
-          {this.renderVoting()}
           {is_private && <PrivacyBadge />}
           <EntryTlogContentLink
             entry={entry}
