@@ -7,7 +7,7 @@ import PageLayout from '../common/page/PageLayout';
 import PageHeader from '../common/page/PageHeader';
 import PageBody from '../common/page/PageBody';
 
-import HeroFeed from '../hero/feed';
+import HeroFeed from '../HeroFeed';
 import FlowsListContainer from './FlowsListContainer';
 
 import { SM_FLOWS_LIST, sendCategory } from '../../../../shared/react/services/Sociomantic';
