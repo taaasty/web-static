@@ -20,10 +20,10 @@ export default class PageWithToolbars extends Component {
     CurrentUserStore.initialize(this.props.currentUser);
   }
   render() {
-    const { locale, children, currentUser, noSupport } = this.props;
+    const { locale, children, className, currentUser, noSupport } = this.props;
 
     return (
-      <Page locale={locale}>
+      <Page className={className} locale={locale}>
         <FeedToolbarManager />
         <UserToolbarManager />
         {!noSupport && <SupportLauncher user={currentUser} />}

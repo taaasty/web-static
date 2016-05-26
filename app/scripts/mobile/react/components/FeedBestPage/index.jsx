@@ -23,6 +23,7 @@ class FeedBestPage extends Component {
     
     return (
       <PageWithAuth
+        className="layout-hero-static"
         currentUser={currentUser}
         locale={locale}
       >

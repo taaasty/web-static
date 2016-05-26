@@ -3084,6 +3084,7 @@ var FeedBestPage = function (_Component) {
       return _react2.default.createElement(
         _PageWithAuth2.default,
         {
+          className: 'layout-hero-static',
           currentUser: currentUser,
           locale: locale
         },
@@ -3259,6 +3260,7 @@ var FeedFriendsPage = function (_Component) {
       return _react2.default.createElement(
         _PageWithAuth2.default,
         {
+          className: 'layout-hero-static',
           currentUser: currentUser,
           locale: locale
         },
@@ -3461,6 +3463,7 @@ var FeedLivePage = function (_Component) {
       return _react2.default.createElement(
         _PageWithAuth2.default,
         {
+          className: 'layout-hero-static',
           currentUser: currentUser,
           locale: locale
         },
@@ -3797,6 +3800,7 @@ var FlowPage = function (_Component) {
       return _react2.default.createElement(
         _PageWithAuth2.default,
         {
+          className: 'layout-hero-static',
           currentUser: currentUser,
           locale: locale
         },
@@ -4350,7 +4354,11 @@ var FlowsPage = function (_Component) {
 
       return _react2.default.createElement(
         _PageWithAuth2.default,
-        { currentUser: currentUser, locale: locale },
+        {
+          className: 'layout-hero-static',
+          currentUser: currentUser,
+          locale: locale
+        },
         _react2.default.createElement(
           _PageLayout2.default,
           null,
@@ -4386,85 +4394,44 @@ exports.default = FlowsPage;
 module.exports = exports['default'];
 
 },{"../../../../shared/react/services/Sociomantic":292,"../../actions/view/FlowsActions":22,"../HeroFeed":51,"../common/page/PageBody":113,"../common/page/PageHeader":114,"../common/page/PageLayout":115,"../common/page/PageWithAuth":116,"./FlowsListContainer":47,"babel-runtime/core-js/object/get-prototype-of":306,"babel-runtime/helpers/classCallCheck":311,"babel-runtime/helpers/createClass":312,"babel-runtime/helpers/inherits":315,"babel-runtime/helpers/possibleConstructorReturn":316,"react":"react"}],51:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BODY_HERO_CLASS = 'layout-hero-static'; /*global i18n */
+function HeroFeed(_ref) {
+  var title = _ref.title;
 
-
-var HeroFeed = function (_Component) {
-  (0, _inherits3.default)(HeroFeed, _Component);
-
-  function HeroFeed() {
-    (0, _classCallCheck3.default)(this, HeroFeed);
-    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(HeroFeed).apply(this, arguments));
-  }
-
-  (0, _createClass3.default)(HeroFeed, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      if (typeof window !== 'undefined') {
-        window.document.body.classList.add(BODY_HERO_CLASS);
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'hero hero--static' },
-        _react2.default.createElement('div', { className: 'hero__overlay' }),
+  return _react2.default.createElement(
+    "div",
+    { className: "hero hero--static" },
+    _react2.default.createElement("div", { className: "hero__overlay" }),
+    _react2.default.createElement(
+      "div",
+      { className: "hero__content" },
+      _react2.default.createElement(
+        "div",
+        { className: "hero__head" },
         _react2.default.createElement(
-          'div',
-          { className: 'hero__content' },
+          "div",
+          { className: "hero__title" },
           _react2.default.createElement(
-            'div',
-            { className: 'hero__head' },
-            _react2.default.createElement(
-              'div',
-              { className: 'hero__title' },
-              _react2.default.createElement(
-                'span',
-                null,
-                this.props.title
-              )
-            )
+            "span",
+            null,
+            title
           )
         )
-      );
-    }
-  }]);
-  return HeroFeed;
-}(_react.Component);
+      )
+    )
+  );
+}
 
 HeroFeed.displayName = 'HeroFeed';
 
@@ -4475,7 +4442,7 @@ HeroFeed.propTypes = {
 exports.default = HeroFeed;
 module.exports = exports['default'];
 
-},{"babel-runtime/core-js/object/get-prototype-of":306,"babel-runtime/helpers/classCallCheck":311,"babel-runtime/helpers/createClass":312,"babel-runtime/helpers/inherits":315,"babel-runtime/helpers/possibleConstructorReturn":316,"react":"react"}],52:[function(require,module,exports){
+},{"react":"react"}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8200,10 +8167,15 @@ var Page = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var children = _props.children;
+      var className = _props.className;
+
+
       return _react2.default.createElement(
         'div',
-        null,
-        this.props.children
+        { className: className },
+        children
       );
     }
   }]);
@@ -8213,6 +8185,7 @@ var Page = function (_Component) {
 
 Page.propTypes = {
   children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.array]),
+  className: _react.PropTypes.string,
   locale: _react.PropTypes.string.isRequired
 };
 
@@ -8321,12 +8294,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function PageWithAuth(_ref) {
   var children = _ref.children;
+  var className = _ref.className;
   var currentUser = _ref.currentUser;
   var locale = _ref.locale;
 
   return _react2.default.createElement(
     _PageWithToolbars2.default,
     {
+      className: className,
       currentUser: currentUser,
       locale: locale
     },
@@ -8420,13 +8395,14 @@ var PageWithToolbars = function (_Component) {
       var _props = this.props;
       var locale = _props.locale;
       var children = _props.children;
+      var className = _props.className;
       var currentUser = _props.currentUser;
       var noSupport = _props.noSupport;
 
 
       return _react2.default.createElement(
         _Page2.default,
-        { locale: locale },
+        { className: className, locale: locale },
         _react2.default.createElement(_feedManager2.default, null),
         _react2.default.createElement(_userManager2.default, null),
         !noSupport && _react2.default.createElement(_SupportLauncher2.default, { user: currentUser }),
