@@ -11,9 +11,11 @@ class Page extends Component {
     moment.locale(locale);
   }
   render() {
+    const { children, className } = this.props;
+
     return (
-      <div>
-        {this.props.children}
+      <div className={className}>
+        {children}
       </div>
     );
   }
@@ -24,6 +26,7 @@ Page.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  className: PropTypes.string,
   locale: PropTypes.string.isRequired,
 };
 

@@ -25,7 +25,11 @@ class FlowsPage extends Component {
     const { currentUser, flows, locale } = this.props;
 
     return (
-      <PageWithAuth currentUser={currentUser} locale={locale}>
+      <PageWithAuth
+        className="layout-hero-static"
+        currentUser={currentUser}
+        locale={locale}
+      >
         <PageLayout>
           <PageHeader>
             <HeroFeed
