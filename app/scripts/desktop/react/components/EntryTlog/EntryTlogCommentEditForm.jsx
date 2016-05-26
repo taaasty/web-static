@@ -18,3 +18,5 @@ EntryTlogCommentEditForm.propTypes = {
   commentator: PropTypes.object.isRequired,
   process: PropTypes.bool,
 };
+
+export default EntryTlogCommentEditForm;
