@@ -31,6 +31,12 @@
   z-index: @zindex-toolbar;
 }
 
+.layout-hero-static .toolbar__toggle {
+  top: ( @hero-static-height - @toolbar-size ) / 2;
+  background: transparent;
+  color: @black;
+}
+
 // Indicators
 .toolbar__indicators {
   .font-null;
@@ -73,6 +79,7 @@
   overflow-y: auto;
   user-select: none;
   -webkit-overflow-scrolling: touch;
+  z-index: @zindex-toolbar;
 
   .notifications-badge,
   .messages-badge,

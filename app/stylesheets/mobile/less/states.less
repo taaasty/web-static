@@ -33,6 +33,14 @@
       display: none;
     }
   }
+
+  .layout-hero-static .toolbar__toggle .icon {
+    .toolbar-toogle-active(@black);
+  }
+
+  .hero.hero--static {
+    transform: translateX(@toolbar-popup-width);
+  }
 }
 
 // Когда открыт User Toolbar
@@ -69,6 +77,14 @@
       //transform: translateX(-@toolbar-popup-width);
       display: none;
     }
+  }
+
+  .layout-hero-static .toolbar__toggle .icon {
+    .toolbar-toogle-active(@black);
+  }
+
+  .hero.hero--static {
+    transform: translateX(-@toolbar-popup-width);
   }
 }
 

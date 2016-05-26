@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 
-import Hero from '../hero/feed';
+import Hero from '../HeroFeed';
 import FollowButton from '../buttons/relationship/follow';
 
 export default class HeroFlow extends Component {

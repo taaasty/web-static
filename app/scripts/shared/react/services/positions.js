@@ -1,10 +1,11 @@
-import assign from 'react/lib/Object.assign';
+/*global AppStorage */
+const TOP_OFFSET = 56;
 
-let MOVE_OFFSET = 100,
-    MIN_OFFSET = 50,
-    STORAGE_PREFIX = 'positions:';
+const MOVE_OFFSET = 100;
+const MIN_OFFSET = 50;
+const STORAGE_PREFIX = 'positions:';
 
-let PositionsService = {
+const PositionsService = {
   storage: AppStorage,
 
   savePosition(key, position) {
@@ -12,20 +13,20 @@ let PositionsService = {
   },
 
   restorePosition(key) {
-    return JSON.parse(this.storage.getItem(this._positionKey(key)));
+    return this.smartPosition(JSON.parse(this.storage.getItem(this._positionKey(key))));
   },
 
   smartPosition(position) {
-    let newPosition = assign({}, position),
-        windowWidth = $(window).width(),
-        windowHeight = $(window).height();
+    const newPosition = Object.assign({}, position);
+    const windowWidth = $(window).width();
+    const windowHeight = $(window).height();
 
     if (newPosition.top > windowHeight - MIN_OFFSET) {
       newPosition.top = windowHeight - MOVE_OFFSET;
     }
 
-    if (newPosition.top < 0) {
-      newPosition.top = 0;
+    if (newPosition.top < TOP_OFFSET) {
+      newPosition.top = TOP_OFFSET;
     }
     
     if (newPosition.left > windowWidth - MIN_OFFSET) {
@@ -40,8 +41,8 @@ let PositionsService = {
   },
 
   _positionKey(key) {
-    return STORAGE_PREFIX + ':' + key;
-  }
+    return `${STORAGE_PREFIX}:${key}`;
+  },
 };
 
 export default PositionsService;
