@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import FeedStore from '../../stores/feed';
-import HeroFeedBest from '../hero/feedBest';
+import HeroFeedBest from './HeroFeedBest';
 import FeedBest from  '../feed/feedBest';
 
 import PageWithAuth from '../common/page/PageWithAuth';

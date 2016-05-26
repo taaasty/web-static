@@ -179,15 +179,33 @@
 
 // Types
 .hero--static {
-  &:before {
-    min-height: 200px;
+  &.hero:before {
+    min-height: initial;
   }
 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: @hero-static-height;
+  z-index: @zindex-hero-static;
+  box-shadow: 0px 1px 2px 0px rgba(red(@black),green(@black),blue(@black),.3);
+
   .hero__overlay {
-    opacity: .6;
+    opacity: 1;
+    background-color: @white;
+  }
+
+  .hero__content {
+    padding: 0;
+  }
+
+  .hero__head {
+    margin-top: 0;
   }
 
   .hero__title {
-    font-size: 30px;
+    font-size: 24px;
+    color: @black;
   }
 }
