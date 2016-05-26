@@ -1,3 +1,19 @@
+.layout-hero-static {
+  .toolbar__toggle {
+    top: ( @hero-static-height - @toolbar-size ) / 2;
+    background: transparent;
+    color: @black;
+  }
+
+  .layout {
+    padding-top: @hero-static-height;
+  }
+
+  .auth-button {
+    top: (@hero-static-height - @button-extra-small-height) / 2 - 5px;
+  }
+}
+
 // Когда открыт Feed Toolbar
 .feed-toolbar-open {
   overflow: hidden;
