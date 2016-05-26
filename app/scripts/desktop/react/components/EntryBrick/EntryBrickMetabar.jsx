@@ -1,4 +1,3 @@
-/*global i18n */
 import React, { PropTypes } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import MetabarAuthor from '../common/MetabarAuthor';
@@ -21,17 +20,16 @@ function EntryBrickMetabar({ entry, host_tlog_id, isFeed }) {
 
   function renderMetaComments() {
     const { comments_count: commentsCount, url } = entry;
-    const title = i18n.t('comments_count', {count: commentsCount});
 
     return (
       <span className="meta-item meta-item--comments">
         <span className="meta-item__content">
           <Link
             className="meta-item__link"
-            title={title}
             to={{ pathname: uri(url).path(), hash: '#comments', state: { isFeed, id: entry.id } }}
           >
-            {title}
+            <i className="icon icon--comments" />
+            {commentsCount}
           </Link>
         </span>
       </span>
