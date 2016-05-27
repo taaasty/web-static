@@ -52,34 +52,6 @@ function initRoutes() {
       }
       PopupActions.showSettings();
     },
-
-    showRequestedById(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showFriends('vkontakte', Number(req.params.id));
-    },
-
-    showRequested(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showFriends('requested');
-    },
-
-    showVkontakte(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showFriends('vkontakte');
-    },
-
-    showFacebook(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showFriends('facebook');
-    },
   };
 
   Aviator.setRoutes({
@@ -87,14 +59,6 @@ function initRoutes() {
       target: UserRouteTarget,
       '/profile': 'profile',
       '/settings': 'settings',
-      '/friends': {
-        '/requested': {
-          '/': 'showRequested',
-          '/:id': 'showRequestedById',
-        },
-        '/vkontakte': 'showVkontakte',
-        '/facebook': 'showFacebook',
-      },
     },
   });
 

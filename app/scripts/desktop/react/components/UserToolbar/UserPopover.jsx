@@ -7,7 +7,7 @@ import uri from 'urijs';
 
 class UserPopover extends Component {
   render() {
-    const { currentUser, hideUserPopover, onDesignSettingsClick, onFriendsClick, onSettingsClick } = this.props;
+    const { currentUser, hideUserPopover, onDesignSettingsClick, onRelationsClick, onSettingsClick } = this.props;
     const { slug, tlog_url } = currentUser;
 
     return (
@@ -44,8 +44,7 @@ class UserPopover extends Component {
                 <li className="popup-user__list-item">
                   <a
                     className="popup-user__link"
-                    href={tlog_url}
-                    onClick={onFriendsClick}
+                    onClick={onRelationsClick}
                   >
                     {i18n.t('toolbar.user.subscriptions')}
                   </a>
@@ -89,7 +88,7 @@ UserPopover.propTypes = {
   currentUser: PropTypes.object.isRequired,
   hideUserPopover: PropTypes.func.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
-  onFriendsClick: PropTypes.func.isRequired,
+  onRelationsClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
 };
 

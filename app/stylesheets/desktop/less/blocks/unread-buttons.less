@@ -21,10 +21,13 @@
 
   &.unread-load-button-container--fixed {
     position: fixed;
-    top: @toolbar-size; left: 0; right: 0;
+    top: @toolbar-size;
+    left: 50%;
+    right: initial;
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
     z-index: @zindex-unread-load-button-container;
+    transform: translateX(-50%);
 
     .unread-load-button {
       margin-bottom: 0;

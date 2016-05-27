@@ -53,18 +53,6 @@ PopupActions =
   closeColorPicker: ->
     ReactApp.popupController.close 'color-picker-container'
 
-  showFriends: (panelName, userId) ->
-    container = document.querySelector '[popup-persons-container]'
-
-    unless container?
-      container = document.createElement 'div'
-      container.setAttribute 'popup-persons-container', ''
-      document.body.appendChild container
-
-    render (
-      <PersonsPopup panelName={ panelName } userId={ userId } />
-    ), container
-
   createFlow: ->
     ReactApp.popupController.openWithBackground({
       Component: FlowCreator
@@ -73,14 +61,6 @@ PopupActions =
         className: 'popup--dark popup--flows'
         clue: 'create-flow'
     })
-
-  toggleFriends: ->
-    container = document.querySelector '[popup-persons-container]'
-
-    if container?
-      ReactApp.popupController.close 'popup-persons-container'
-    else
-      @showFriends()
 
   closeDesignSettings: ->
     container = document.querySelector '[design-settings-container]'
@@ -102,16 +82,5 @@ PopupActions =
 
   toggleMessages: ->
     messagingService.toggleMessagesPopup()
-
-  showPinEntryPopup: (props) ->
-    ReactApp.popupController.openWithBackground({
-      props,
-      Component: PinEntryPopup,
-      popupProps: {
-        title: 'eeee',
-        className: '',
-        clue: '',
-      }
-    });
 
 module.exports = PopupActions
