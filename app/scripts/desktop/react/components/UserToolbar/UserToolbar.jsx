@@ -6,6 +6,7 @@ import uri from 'urijs';
 import SearchForm from './SearchForm';
 import AuthUserSection from './AuthUserSection';
 import classNames from 'classnames';
+import PersonsPopup from '../PersonsPopup';
 
 const PINNED_STATE = 'pinned';
 const UNPINNED_STATE = 'unpinned';
@@ -76,7 +77,8 @@ class UserToolbar extends Component {
       : '';
   }
   render() {
-    const { currentUser, onSearchClick, pathname, query, unreadFriendsCount } = this.props;
+    const { currentUser, hideRelationsPopup, isRelationsPopupVisible, onSearchClick,
+            pathname, query, unreadFriendsCount } = this.props;
     const { posState, noTransition } = this.state;
     const isLogged = !!currentUser.id;
     const containerClasses = classNames({
@@ -129,6 +131,7 @@ class UserToolbar extends Component {
           </li>
         </ul>
         {isLogged && <AuthUserSection {...this.props} />}
+        {isRelationsPopupVisible && <PersonsPopup close={hideRelationsPopup}/>}
       </div>
     );
   }
@@ -137,13 +140,15 @@ class UserToolbar extends Component {
 UserToolbar.propTypes = {
   currentUser: PropTypes.object.isRequired,
   hideNotificationsPopover: PropTypes.func.isRequired,
+  hideRelationsPopup: PropTypes.func.isRequired,
   hideUserPopover: PropTypes.func.isRequired,
   isNotificationsPopoverVisible: PropTypes.bool.isRequired,
+  isRelationsPopupVisible: PropTypes.bool.isRequired,
   isUserPopoverVisible: PropTypes.bool.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
-  onFriendsClick: PropTypes.func.isRequired,
   onMessagesClick: PropTypes.func.isRequired,
   onNotificationsClick: PropTypes.func.isRequired,
+  onRelationsClick: PropTypes.func.isRequired,
   onSearchClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
   onUserClick: PropTypes.func.isRequired,

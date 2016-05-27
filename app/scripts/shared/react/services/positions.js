@@ -13,7 +13,7 @@ const PositionsService = {
   },
 
   restorePosition(key) {
-    return this.smartPosition(JSON.parse(this.storage.getItem(this._positionKey(key))));
+    return JSON.parse(this.storage.getItem(this._positionKey(key)));
   },
 
   smartPosition(position) {
