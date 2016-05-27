@@ -20,7 +20,6 @@ function _EditorContainer(props) {
   function pinEntry(pinOrderUrl) {
     EditorActionCreators.pinEntry()
       .then((entry) => {
-        //PopupActions.showPinEntryPopup({ entry });
         window.location.href = pinOrderUrl || Routes.newOrder(entry.id, orderConstants.PIN_ENTRY_ORDER);
       });
   }
