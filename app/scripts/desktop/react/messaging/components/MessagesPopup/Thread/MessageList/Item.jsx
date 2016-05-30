@@ -1,4 +1,4 @@
-/*global ReactGrammarMixin */
+/*global i18n, ReactGrammarMixin */
 import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -18,6 +18,7 @@ const READ_STATE = 'read';
 
 const Item = createClass({
   propTypes: {
+    conversationType: PropTypes.string.isRequired,
     currentUserId: PropTypes.number.isRequired,
     deliveryStatus: PropTypes.string.isRequired,
     message: PropTypes.object.isRequired,
@@ -119,6 +120,7 @@ const Item = createClass({
             target="_blank"
           >
             {slug}
+            {this.isSupport() && this.renderSupportIcon()}
           </a>
         </span>
       : null;
@@ -138,7 +140,7 @@ const Item = createClass({
     );
   },
 
-  renderSupportAvatar() {
+  renderSupportIcon() {
     const { user } = this.props.messageInfo;
     const { browser, platform } = this.props.message;
     const { gender, locale, id, email, is_privacy, is_premium,
@@ -164,7 +166,7 @@ const Item = createClass({
         placement="top"
         title={support_info}
       >
-        {this.renderUserAvatar(user)}
+        <i className="icon icon--exclamation-mark message-support-info" />
       </Tooltip>
     );
   },
@@ -174,12 +176,8 @@ const Item = createClass({
 
     if (!this.isIncoming()) {
       return null;
-    } else if (!this.isSupport()) {
-      if (this.props.conversationType !== PRIVATE_CONVERSATION) {
-        return this.renderUserAvatar(user);
-      }
-    } else {
-      return this.renderSupportAvatar();
+    } else if (this.props.conversationType !== PRIVATE_CONVERSATION) {
+      return this.renderUserAvatar(user);
     }
   },
 
