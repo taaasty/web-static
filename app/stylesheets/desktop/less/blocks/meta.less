@@ -141,11 +141,16 @@
 
 // Показываем мету при наведении на пост
 .post {
+  .meta-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .meta-item {
     margin-right: 40px;
 
-    &:last-child,
-    &:nth-last-child(2) {
+    &:last-child {
       margin-right: 0;
     }
 
@@ -178,14 +183,15 @@
     padding: 0 6px;
   }
 
-  .meta-item--actions {
-    float: right;
-  }
-
-  .meta-item--user .meta-item__content {
-    max-width: 100px;
+  .meta-item--user {
+    flex: 1;
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    .meta-item__content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
   }
 
   .voting {
