@@ -1,6 +1,9 @@
 /*global Dispatcher, BeepService, require */
 import _ from 'lodash';
 
+const IncomingMsgSound = 'income_message.mp3';
+const SubmitMsgSound = 'submit_message.mp3';
+
 const MessagingDispatcher = Object.assign(
   new Dispatcher(),
   {
@@ -42,10 +45,10 @@ const MessagingDispatcher = Object.assign(
       if (message.user_id !== conversation.user_id) {
         if (message.conversation) {
           if (!message.conversation.not_disturb) {
-            BeepService.play();
+            BeepService.play(IncomingMsgSound);
           }
         } else {
-          BeepService.play();
+          BeepService.play(IncomingMsgSound);
         }
       }
 
@@ -59,7 +62,7 @@ const MessagingDispatcher = Object.assign(
     notificationReceived(notification) {
       console.info('Получено уведомление', notification);
 
-      BeepService.play();
+      BeepService.play(IncomingMsgSound);
 
       return MessagingDispatcher.handleServerAction({
         notification,
@@ -96,6 +99,8 @@ const MessagingDispatcher = Object.assign(
         recipient_id: recipient && recipient.id,
         user_id: currentUserId,
       };
+
+      BeepService.play(SubmitMsgSound);
 
       return MessagingDispatcher.handleViewAction({
         conversationId,

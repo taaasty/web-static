@@ -6,7 +6,7 @@ const BeepService = {
 
   play(soundPath) {
     if (!soundPath) {
-      soundPath = this.makeUrl('incoming_message.mp3');
+      soundPath = this.makeUrl('income_message.mp3');
     }
 
     let soundEl, bodyEl, isHTML5;
