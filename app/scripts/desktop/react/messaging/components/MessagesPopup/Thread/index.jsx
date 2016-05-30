@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ThreadForm from './ThreadForm';
 import SelectForm from './SelectForm';
-import PublicConversationHeader from './PublicConversationHeader';
 import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
@@ -14,10 +13,8 @@ import uri from 'urijs';
 import {
   PRIVATE_CONVERSATION,
   PUBLIC_CONVERSATION,
-  GROUP_CONVERSATION
+  GROUP_CONVERSATION,
 } from '../../../constants/ConversationConstants';
-
-const defaultBackgroundUrl = '/images/backgrounds/3.jpg';
 
 class Thread extends Component {
   state = this.getStateFromStore();
@@ -57,14 +54,24 @@ class Thread extends Component {
     ev.preventDefault();
     browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } });
   }
-  backgroundUrl() {
+  threadStyles() {
     const { conversation } = this.props;
 
-    return (conversation.type === PUBLIC_CONVERSATION
-      ? conversation.entry.author.design.backgroundImageUrl
-      : conversation.type === GROUP_CONVERSATION
-        ? conversation.background_image && conversation.background_image.url
-        : conversation.recipient.design.backgroundImageUrl) || defaultBackgroundUrl;
+    if (conversation.type === PUBLIC_CONVERSATION) {
+      const authorDesign = conversation.entry.author.design;
+
+      return authorDesign.backgroundId
+        ? { backgroundImage: `url(${authorDesign.backgroundImageUrl})` }
+        : {};
+    } else if (conversation.type === GROUP_CONVERSATION) {
+      return conversation.background_image && conversation.background_image.url || {};
+    } else {
+      const recipientDesign = conversation.recipient.design;
+
+      return recipientDesign.backgroundId
+        ? { backgroundImage: `url(${recipientDesign.backgroundImageUrl})` }
+        : {};
+    }
   }
   handleClickGroupHeader() {
     MessagesPopupActions.openGroupSettings(this.state.conversation);
@@ -86,8 +93,6 @@ class Thread extends Component {
       return null;
     }
 
-    const backgroundUrl = this.backgroundUrl();
-    const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
     const canTalk = typeof conversation.can_talk === 'undefined' ||
             conversation.can_talk;
     const containerClasses = classNames({
@@ -105,7 +110,7 @@ class Thread extends Component {
     return (
       <div className={containerClasses}>
         {false && this.renderHeader()}
-        <div className={listClasses} style={threadStyles}>
+        <div className={listClasses} style={this.threadStyles()}>
           <div className="messages__thread-overlay" />
           <MessageList conversation={conversation} selectState={selectState} />
         </div>
