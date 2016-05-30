@@ -5,9 +5,10 @@ import ApiRoutes from '../../../../shared/routes/api';
 
 class Auth extends Component {
   handleEmailClick(ev) {
+    const { token } = this.props;
     ev.preventDefault();
     ev.stopPropagation();
-    ReactApp.shellbox.show(Email);
+    ReactApp.shellbox.show(Email, { token });
   }
   renderEntriesCount() {
     const number = parseInt(TastyUtils.formatNumber(gon.app_stats.entries_count, 100, ''));
@@ -45,7 +46,7 @@ class Auth extends Component {
     );
   }
   render() {
-    const { fixed, text } = this.props;
+    const { fixed, text, token } = this.props;
     const inviterClasses = classnames({
       'inviter': true,
       'inviter--fixed': fixed,
@@ -70,13 +71,13 @@ class Auth extends Component {
               <div className="inviter__actions">
                 <a
                   className="vk-auth-button"
-                  href={ApiRoutes.omniauth_url('vkontakte')}
+                  href={ApiRoutes.omniauth_url('vkontakte', token)}
                 >
                   {i18n.t('vkontakte')}
                 </a>
                 <a
                   className="fb-auth-button"
-                  href={ApiRoutes.omniauth_url('facebook')}
+                  href={ApiRoutes.omniauth_url('facebook', token)}
                 >
                   {i18n.t('facebook')}
                 </a>
@@ -111,6 +112,7 @@ class Auth extends Component {
 Auth.propTypes = {
   fixed: PropTypes.bool,
   text: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export default Auth;
