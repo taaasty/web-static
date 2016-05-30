@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import NotificationsPopover from './NotificationsPopover';
 import UserPopover from './UserPopover';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';

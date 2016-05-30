@@ -35,6 +35,7 @@ class AppPage extends Component {
 
     return (
       <div className="page">
+        {!editing && <UserToolbar location={location} />}
         {children}
         {(!isLogged && params.entrySlug) &&
          <div className="inviter--fixed__wrapper">
@@ -52,7 +53,6 @@ class AppPage extends Component {
          </button>
         }
         {!editing && isLogged && <ComposeToolbar tlog={tlog} user={currentUser} />}
-        {!editing && <UserToolbar location={location} />}
         {!editing && <SupportLauncher user={currentUser} />} 
         <BrowserSupport />
       </div>

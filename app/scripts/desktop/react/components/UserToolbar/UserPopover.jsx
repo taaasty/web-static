@@ -9,7 +9,7 @@ class UserPopover extends Component {
   render() {
     const { currentUser, hideUserPopover, onDesignSettingsClick, onGetPremiumClick,
             onInviteClick, onRelationsClick, onSettingsClick } = this.props;
-    const { invite_url, is_premium, slug, tlog_url } = currentUser;
+    const { inviteUrl, isPremium, slug, tlogUrl } = currentUser;
 
     return (
       <Popover hide={hideUserPopover}>
@@ -21,12 +21,12 @@ class UserPopover extends Component {
                 <li className="popup-user__list-item">
                   <Link
                     className="popup-user__link"
-                    to={uri(tlog_url).path()}
+                    to={uri(tlogUrl).path()}
                   >
                     {i18n.t('toolbar.user.my_tlog')}
                   </Link>
                 </li>
-                {!is_premium &&
+                {!isPremium &&
                  <li className="popup-user__list-item">
                    <a className="popup-user__link" onClick={onGetPremiumClick}>
                      {i18n.t('toolbar.user.get_premium') + ' '}
@@ -34,7 +34,7 @@ class UserPopover extends Component {
                    </a>
                  </li>
                 }
-                {!!invite_url &&
+                {!!inviteUrl &&
                  <li className="popup-user__list-item">
                    <a className="popup-user__link" onClick={onInviteClick}>
                      {i18n.t('toolbar.user.invite_friends')}
