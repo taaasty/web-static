@@ -22,6 +22,7 @@ EmailMixin =
   login: ->
     login = @state.formData.login
     password = @state.formData.password
+    token = this.props.token
 
     @setState(isProcess: true)
 
@@ -31,6 +32,7 @@ EmailMixin =
       data:
         email:    login
         password: password
+        ref_token: token
       success: (data) =>
         NoticeService.notifySuccess i18n.t 'signin_success', userSlug: data.name
         ReactApp.shellbox.close()

@@ -7,7 +7,7 @@ import uri from 'urijs';
 function MetabarAuthor({ author, size, tlog, hostTlogId }) {
 
   if (!author || !tlog) {
-    return <noscript />;
+    return <span className="meta-item meta-item--user" />;
   }
 
   // inconsistency in list|item api responses
@@ -92,7 +92,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
           {contents}
         </span>
       </span>
-    : <noscript />;
+    : <span className="meta-item meta-item--user" />;
 }
 
 MetabarAuthor.propTypes = {
