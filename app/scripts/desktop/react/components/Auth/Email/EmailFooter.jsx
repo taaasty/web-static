@@ -1,17 +1,15 @@
-/*global i18n, ReactApp */
-import React from 'react';
-import Auth from '../index';
-import Recovery from '../Recovery';
+/*global i18n */
+import React, { PropTypes } from 'react';
 
-function EmailFooter(props) {
+function EmailFooter({ toAuth, toRecovery }) {
   function handleAuthClick(ev) {
     ev.preventDefault();
-    ReactApp.shellbox.show(Auth, props);
+    toAuth();
   }
 
   function handleRecoveryClick(ev) {
     ev.preventDefault();
-    ReactApp.shellbox.show(Recovery);
+    toRecovery();
   }
 
   return (
@@ -34,5 +32,10 @@ function EmailFooter(props) {
     </div>
   );
 }
+
+EmailFooter.propTypes = {
+  toAuth: PropTypes.func.isRequired,
+  toRecovery: PropTypes.func.isRequired,
+};
 
 export default EmailFooter;
