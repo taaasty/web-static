@@ -8,25 +8,17 @@ import EmailMixin from './EmailMixin';
 
 const Email = createClass({
   propTypes: {
+    changeLogin: PropTypes.func.isRequired,
+    changePassword: PropTypes.func.isRequired,
     login: PropTypes.string,
     password: PropTypes.string,
-    token: PropTypes.string,
+    toAuth: PropTypes.func.isRequired,
+    toRecovery: PropTypes.func.isRequired,
   },
   mixins: [ EmailMixin, ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin ],
 
-  getDefaultProps() {
-    return {
-      login: '',
-      password: '',
-    };
-  },
-
   getInitialState() {
     return {
-      formData: {
-        login: this.props.login,
-        password: this.props.password,
-      },
       isProcess: false,
       isLoginError: false,
       isPasswordError: false,
@@ -34,7 +26,8 @@ const Email = createClass({
   },
 
   render() {
-    const { formData: { login, password }, isProcess, isLoginError, isPasswordError } = this.state;
+    const { changeLogin, changePassword, login, password } = this.props;
+    const { isProcess, isLoginError, isPasswordError } = this.state;
 
     return (
       <div className="form-popup form-popup--login">
@@ -48,14 +41,14 @@ const Email = createClass({
             <EmailLoginField
               isDisabled={isProcess}
               isError={isLoginError}
-              onChange={this.handleLoginChange}
+              onChange={changeLogin}
               ref="login"
               value={login}
             />
             <EmailPasswordField
               isDisabled={isProcess}
               isError={isPasswordError}
-              onChange={this.handlePasswordChange}
+              onChange={changePassword}
               ref="password"
               value={password}
             />
@@ -66,7 +59,7 @@ const Email = createClass({
             />
           </form>
         </div>
-        {!isProcess && <EmailFooter token={this.props.token} />}
+        {!isProcess && <EmailFooter {...this.props} />}
       </div>
     );
   },

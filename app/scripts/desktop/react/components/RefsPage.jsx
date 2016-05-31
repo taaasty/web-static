@@ -1,23 +1,24 @@
-/*global ReactApp */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import Auth from './Auth';
 
 class RefsPage extends Component {
-  componentDidMount() {
-    ReactApp.shellbox.show(Auth, { token: this.props.params.token });
-  }
   render() {
-    const title = 'Регистрация по приглашению';
+    const { token } = this.props.params;
 
     return (
       <div className="page">
-        <Helmet title={title} />
         <div className="page__inner">
           <div className="page__paper">
             <div className="page-cover js-cover" style={{ backgroundImage: 'url(/images/bg.jpg)' }} />
             <div className="page-body">
-              <div className="layout-outer" />
+              <div className="layout-outer">
+                <Helmet title={i18n.t('inviter.title')} />
+                <div className="inviter-center-container">
+                  <Auth token={token} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -28,6 +29,6 @@ class RefsPage extends Component {
 
 RefsPage.propTypes = {
   params: PropTypes.object.isRequired,
-};
+}
 
 export default RefsPage;

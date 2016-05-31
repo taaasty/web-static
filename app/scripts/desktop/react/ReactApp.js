@@ -1,4 +1,4 @@
-/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher, ReactShellBox */
+/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
@@ -18,6 +18,7 @@ import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
 import AppRoot from './AppRoot';
 import uri from 'urijs';
+import ReactShellBox from './controllers/ReactShellBox';
 
 function initLocales(locale, callback) {
   numeral.language(locale);

@@ -151,12 +151,25 @@
 }
 
 // Types
-.inviter--fixed {
+.inviter--fixed__wrapper {
+  position: relative;
   width: 100%;
-  /*position: fixed;
-  left: 0;
-  bottom: 0;*/
+  height: 460px;
   z-index: @zindex-inviter-fixed;
+  background: @inviter-box-bg;
+  text-align: center;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+
+  .inviter--fixed {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   .inviter__footer {
     background: @inviter-footer-bg;
