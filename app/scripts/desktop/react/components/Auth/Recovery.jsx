@@ -1,10 +1,12 @@
 /*global i18n, ReactApp, ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin */
-import React, { createClass } from 'react';
-import Auth from './index';
+import React, { PropTypes, createClass } from 'react';
 import NoticeService from '../../services/Notice';
 import ApiRoutes from '../../../../shared/routes/api';
 
 const Recovery = createClass({
+  propTypes: {
+    toAuth: PropTypes.func.isRequired,
+  },
   mixins: [ ReactShakeMixin, RequesterMixin, ComponentManipulationsMixin ],
 
   getInitialState() {
@@ -16,7 +18,7 @@ const Recovery = createClass({
   gotoSelectSignin(ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    ReactApp.shellbox.show(Auth);
+    this.props.toAuth();
   },
 
   submit(ev) {
@@ -74,6 +76,7 @@ const Recovery = createClass({
                 <input
                   autoFocus
                   className="form-field__input"
+                  defaultValue={this.props.login}
                   disabled={isProcess}
                   placeholder={i18n.t('login_field_placeholder')}
                   ref="slug"

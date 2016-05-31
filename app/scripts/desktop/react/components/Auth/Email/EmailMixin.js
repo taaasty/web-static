@@ -1,6 +1,5 @@
-/*global i18n, ReactApp */
-import { clone, defer } from 'lodash';
-import EmailConfirmRegistration from './EmailConfirmRegistration';
+/*global i18n */
+import { defer } from 'lodash';
 import NoticeService from '../../../services/Notice';
 import ApiRoutes from '../../../../../shared/routes/api';
 
@@ -10,7 +9,7 @@ const INVALID_SLUG_MESSAGE = 'user_authenticator/user_by_slug_not_found';
 
 const EmailMixin = {
   isValid() {
-    const { login, password } = this.state.formData;
+    const { login, password } = this.props;
 
     if (login.length === 0) {
       NoticeService.notifyError(i18n.t('empty_login_error'));
@@ -24,8 +23,7 @@ const EmailMixin = {
   },
 
   login() {
-    const { login, password } = this.state.formData;
-    const { token } = this.props;
+    const { login, password, token } = this.props;
 
     this.setState({ isProcess: true });
 
@@ -39,7 +37,6 @@ const EmailMixin = {
       },
       success: (data) => {
         NoticeService.notifySuccess(i18n.t('signin_success', { userSlug: data.name }));
-        ReactApp.shellbox.close();
         if (window.ga) {
           window.ga('send', 'event', 'Account', 'Login',
                     { hitCallback: () => window.location.reload(true) });
@@ -62,7 +59,7 @@ const EmailMixin = {
             this.safeUpdateState({ isLoginError: true });
             
             if (proposedData != null) {
-              return this.handleInvalidLogin({ proposedSlug: proposedData.slug });
+              return this.props.toEmailConfirm(proposedData.slug);
             }
             break;
           }
@@ -86,35 +83,11 @@ const EmailMixin = {
     }
   },
 
-  handleInvalidLogin({ proposedSlug }) {
-    const { login, password } = this.state.formData;
-
-    ReactApp.shellbox.show(EmailConfirmRegistration, {
-      password,
-      proposedSlug,
-      email: login,
-    });
-  },
-
   resetPasswordErrors() {
     this.setState({
       isLoginError: false,
       isPasswordError: false,
     });
-  },
-
-  handleLoginChange(val) {
-    const newFormData = clone(this.state.formData);
-    newFormData.login = val;
-
-    this.setState({ formData: newFormData });
-  },
-
-  handlePasswordChange(val) {
-    const newFormData = clone(this.state.formData);
-    newFormData.password = val;
-
-    this.setState({ formData: newFormData });
   },
 };
 

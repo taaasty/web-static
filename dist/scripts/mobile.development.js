@@ -17723,8 +17723,14 @@ var ApiRoutes, MESSENGER_VERSION_PREFIX;
 MESSENGER_VERSION_PREFIX = 'v2';
 
 ApiRoutes = {
-  omniauth_url: function(provider) {
-    return gon.host + '/auth/' + provider;
+  omniauth_url: function(provider, refToken) {
+    var baseUrl;
+    baseUrl = gon.host + "/auth/" + provider;
+    if (refToken) {
+      return baseUrl + "?ref_token=" + (encodeURIComponent(refToken));
+    } else {
+      return baseUrl;
+    }
   },
   iframely_url: function() {
     return gon.api_host + '/v1/embeding/iframely.json';
