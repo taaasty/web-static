@@ -54,8 +54,8 @@ class AppRoot extends Component {
         <Router history={browserHistory} onUpdate={handleRouteUpdate}>
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
+          <Route path="/refs/:token" component={RefsPage} />
           <Route path="/" component={AppPage}>
-            <Route path="refs/:token" component={RefsPage} />
             <Route path="tags/:tags" component={TagsPage} />
             <Route path="~:slug/tags/:tags" component={TagsPage} />
             <Redirect from="~anonymous" to="live/anonymous" />

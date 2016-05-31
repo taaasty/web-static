@@ -77,15 +77,6 @@ global.EmbedComponent = require './react/components/embed'
 # ===============================================*/
 
 global.Auth = require './react/components/Auth'
-require './react/components/Auth/authorization/authorization'
-require './react/components/Auth/authorization/vk'
-require './react/components/Auth/authorization/facebook'
-
-require './react/components/Auth/buttons/vk_auth_button'
-require './react/components/Auth/buttons/facebook_auth_button'
-
-require './react/components/Auth/email/email'
-require './react/components/Auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 
