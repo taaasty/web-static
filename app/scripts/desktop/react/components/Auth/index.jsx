@@ -1,76 +1,61 @@
-/*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import ApiRoutes from '../../../../shared/routes/api';
+import Auth from './Auth';
 import Email from './Email';
-import StatsFooter from './StatsFooter';
-import RefFooter from './RefFooter';
+import Recovery from './Recovery';
+import EmailConfirm from './Email/EmailConfirm';
+import SocialConfirm from './SocialConfirm';
 
-class Auth extends Component {
-  handleEmailClick(ev) {
-    const { token } = this.props;
-    ev.preventDefault();
-    ev.stopPropagation();
-    ReactApp.shellbox.show(Email, { token });
-  }
+export const SOCIAL_CONFIRM_TAB = 'social-confirm';
+export const EMAIL_CONFIRM_TAB = 'email-confirm';
+const AUTH_TAB = 'auth';
+const EMAIL_TAB = 'email';
+const RECOVERY_TAB = 'recovery';
+const tabMap = {
+  [AUTH_TAB]: Auth,
+  [EMAIL_TAB]: Email,
+  [RECOVERY_TAB]: Recovery,
+  [SOCIAL_CONFIRM_TAB]: SocialConfirm,
+  [EMAIL_CONFIRM_TAB]: EmailConfirm,
+};
+
+class AuthContainer extends Component {
+  state = {
+    login: this.props.initLogin,
+    password: this.props.initPassword,
+    slug: this.props.initSlug,
+    tab: this.props.initTab,
+  };
   render() {
-    const { fixed, text, token } = this.props;
-    const inviterClasses = classnames({
-      'inviter': true,
-      'inviter--fixed': fixed,
-    });
-    const boxStyle = {
-      backgroundImage: 'url("//thumbor0.tasty0.ru/unsafe/712x416/smart/images/inviter_bg.jpg")',
-    };
+    const { tab } = this.state;
+    const Tab = tabMap[tab];
 
     return (
-      <div className={inviterClasses}>
-        <div className="inviter__box" style={boxStyle}>
-          <div className="inviter__overlay" />
-          <div className="grid-full">
-            <div className="grid-full__middle">
-              <div className="inviter__logo">
-                <i className="icon icon--ribbon" />
-              </div>
-              <div className="inviter__title" dangerouslySetInnerHTML={{__html: i18n.t(text || 'auth')}} />
-              <div className="inviter__text">
-                {i18n.t('auth_select_signin_method')}
-              </div>
-              <div className="inviter__actions">
-                <a
-                  className="vk-auth-button"
-                  href={ApiRoutes.omniauth_url('vkontakte', token)}
-                >
-                  {i18n.t('vkontakte')}
-                </a>
-                <a
-                  className="fb-auth-button"
-                  href={ApiRoutes.omniauth_url('facebook', token)}
-                >
-                  {i18n.t('facebook')}
-                </a>
-                <a
-                  className="site-auth-button"
-                  href="#"
-                  onClick={this.handleEmailClick.bind(this)}
-                >
-                  {i18n.t('auth_signin_login')}
-                </a>
-              </div>
-              <div className="inviter__spacer" />
-              {token ? <RefFooter /> : <StatsFooter />}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Tab {...this.props} {...this.state}
+        changeLogin={(login) => this.setState({ login })}
+        changePassword={(password) => this.setState({ password })}
+        toAuth={() => this.setState({ tab: AUTH_TAB })}
+        toEmail={() => this.setState({ tab: EMAIL_TAB })}
+        toEmailConfirm={(slug) => this.setState({ slug, tab: EMAIL_CONFIRM_TAB })}
+        toRecovery={() => this.setState({ tab: RECOVERY_TAB })}
+      />
     );
   }
 }
 
-Auth.propTypes = {
-  fixed: PropTypes.bool,
+AuthContainer.propTypes = {
+  initLogin: PropTypes.string,
+  initPassword: PropTypes.string,
+  initSlug: PropTypes.string,
+  initTab: PropTypes.string,
+  postUrl: PropTypes.string,
   text: PropTypes.string,
   token: PropTypes.string,
 };
 
-export default Auth;
+AuthContainer.defaultProps = {
+  initLogin: '',
+  initPassword: '',
+  initTab: AUTH_TAB,
+};
+
+export default AuthContainer;
