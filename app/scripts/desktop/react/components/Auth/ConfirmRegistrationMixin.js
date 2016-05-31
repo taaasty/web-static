@@ -1,7 +1,5 @@
-/*global i18n, ReactApp */
+/*global i18n */
 import { defer } from 'lodash';
-import Auth from './index';
-import Email from './Email';
 import ApiRoutes from '../../../../shared/routes/api';
 import NoticeService from '../../services/Notice';
 
@@ -13,7 +11,7 @@ const ConfirmRegistrationMixin = {
       return;
     }
 
-    const { email, password, proposedSlug } = this.props;
+    const { login, password, slug } = this.props;
 
     this.setState({ isProcess: true });
 
@@ -21,15 +19,14 @@ const ConfirmRegistrationMixin = {
       url: ApiRoutes.signup_url(),
       method: 'POST',
       data: {
-        email: email,
-        password: password,
-        slug: proposedSlug,
+        password,
+        slug,
+        email: login,
       },
       success: (data) => {
         const redirect_url = `${data.tlog_url}?first_login`;
 
         NoticeService.notifySuccess(i18n.t('signup_success', { userSlug: data.name }));
-        ReactApp.shellbox.close();
         if (window.ga) {
           window.ga('send', 'event', 'Account', 'Registered', 'Email',
                     { hitCallback: () => window.location.href = redirect_url });
@@ -39,7 +36,7 @@ const ConfirmRegistrationMixin = {
       },
       error: (data) => {
         if (data.responseJSON && data.responseJSON.error_code === USER_EXISTS_MESSAGE) {
-          this.returnToEmail();
+          this.props.toEmail();
         } else {
           this.shake();
         }
@@ -50,19 +47,6 @@ const ConfirmRegistrationMixin = {
         this.safeUpdateState({ isProcess: false });
       },
     });
-  },
-
-  returnToEmail() {
-    const { email, password } = this.props;
-
-    ReactApp.shellbox.show(Email, {
-      login: email,
-      password: password,
-    });
-  },
-
-  returnToAuth() {
-    ReactApp.shellbox.show(Auth);
   },
 };
 
