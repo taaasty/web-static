@@ -658,6 +658,10 @@
     "label_on": "Yes",
     "label_off": "No"
   },
+  "inviter": {
+    "title": "Registration by invite",
+    "gift_text": "You're amazing! Here on Tasty we highly appreciate wonderful people and present you with a one month free premium account.""
+  },
   "messenger": {
     "typing": "typing...",
     "is_typing": "{{name}} is typing...",
