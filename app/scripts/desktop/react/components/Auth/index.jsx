@@ -1,7 +1,10 @@
-/*global i18n, ReactApp, Email, TastyUtils, gon */
+/*global i18n, ReactApp */
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import ApiRoutes from '../../../../shared/routes/api';
+import Email from './Email';
+import StatsFooter from './StatsFooter';
+import RefFooter from './RefFooter';
 
 class Auth extends Component {
   handleEmailClick(ev) {
@@ -9,41 +12,6 @@ class Auth extends Component {
     ev.preventDefault();
     ev.stopPropagation();
     ReactApp.shellbox.show(Email, { token });
-  }
-  renderEntriesCount() {
-    const number = parseInt(TastyUtils.formatNumber(gon.app_stats.entries_count, 100, ''));
-    const formatedNumber = TastyUtils.formatNumber(gon.app_stats.entries_count, 100);
-
-    return (
-      <span>
-        <strong>{formatedNumber}+</strong>
-        <span>{i18n.t('entries_count', { count: number })}</span>
-      </span>
-    );
-  }
-  renderUsersCount() {
-    const number = parseInt(TastyUtils.formatNumber(gon.app_stats.users_count, 100, ''));
-    const formatedNumber = TastyUtils.formatNumber(gon.app_stats.users_count, 100);
-
-    return (
-      <span>
-        <strong>{formatedNumber}+</strong>
-        <span>{i18n.t('users_count', {count: number})}</span>
-      </span>
-    );
-  }
-  renderSecondsCount() {
-    const number = 30;
-
-    return (
-      <span>
-        <strong>
-          <span className="tilde">&#126;</span>
-          <span>{number}</span>
-        </strong>
-        <span>{i18n.t('seconds_count', { count: number })}</span>
-      </span> 
-    );
   }
   render() {
     const { fixed, text, token } = this.props;
@@ -90,17 +58,7 @@ class Auth extends Component {
                 </a>
               </div>
               <div className="inviter__spacer" />
-              <div className="inviter__stats">
-                <div className="inviter__stats-item">
-                  {this.renderEntriesCount()}
-                </div>
-                <div className="inviter__stats-item">
-                  {this.renderUsersCount()}
-                </div>
-                <div className="inviter__stats-item">
-                  {this.renderSecondsCount()}
-                </div>
-              </div>
+              {token ? <RefFooter /> : <StatsFooter />}
             </div>
           </div>
         </div>
