@@ -11,7 +11,7 @@ const ConfirmRegistrationMixin = {
       return;
     }
 
-    const { login, password, slug } = this.props;
+    const { login, password, slug, token } = this.props;
 
     this.setState({ isProcess: true });
 
@@ -22,6 +22,7 @@ const ConfirmRegistrationMixin = {
         password,
         slug,
         email: login,
+        ref_token: token,
       },
       success: (data) => {
         const redirect_url = `${data.tlog_url}?first_login`;
