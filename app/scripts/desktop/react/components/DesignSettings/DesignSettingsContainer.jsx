@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DesignActionCreators from '../../actions/design';
-import PopupActionCreators from '../../actions/popup';
+import PopupActionCreators from '../../actions/PopupActions';
 import CurrentUserStore from '../../stores/current_user';
 import DesignStore from '../../stores/design';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';

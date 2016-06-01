@@ -1,7 +1,7 @@
 /*global i18n */
 import React from 'react';
 import HeroProfileSettingsButton from './HeroProfileSettingsButton';
-import PopupActions from '../../actions/popup';
+import PopupActions from '../../actions/PopupActions';
 
 function  HeroProfileSelfActions() {
   return (

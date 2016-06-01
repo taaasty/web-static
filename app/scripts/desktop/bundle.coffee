@@ -130,4 +130,4 @@ require './react/mediators/comments'
 
 global.ReactApp = require './react/ReactApp';
 
-global._popupActions = require './react/actions/popup';
+global._popupActions = require './react/actions/PopupActions';
