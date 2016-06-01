@@ -2,6 +2,7 @@
 import { defer } from 'lodash';
 import NoticeService from '../../../services/Notice';
 import ApiRoutes from '../../../../../shared/routes/api';
+import Routes from '../../../../../shared/routes/routes';
 
 const INVALID_PASSWORD_MESSAGE = 'user_authenticator/invalid_password';
 const INVALID_EMAIL_MESSAGE = 'user_authenticator/user_by_email_not_found';
@@ -25,6 +26,14 @@ const EmailMixin = {
   login() {
     const { login, password, token } = this.props;
 
+    function redirect() {
+      if (token) {
+        window.location.href = Routes.live_feed_path();
+      } else {
+        window.location.reload(true);
+      }
+    }
+
     this.setState({ isProcess: true });
 
     this.createRequest({
@@ -38,10 +47,9 @@ const EmailMixin = {
       success: (data) => {
         NoticeService.notifySuccess(i18n.t('signin_success', { userSlug: data.name }));
         if (window.ga) {
-          window.ga('send', 'event', 'Account', 'Login',
-                    { hitCallback: () => window.location.reload(true) });
+          window.ga('send', 'event', 'Account', 'Login', { hitCallback: redirect });
         } else {
-          defer(() => window.location.reload(true));
+          defer(redirect);
         }
       },
       error: (data) => {
