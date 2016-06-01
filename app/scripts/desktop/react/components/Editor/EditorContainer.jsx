@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import EditorActionCreators from '../../actions/editor';
-//import PopupActions from '../../actions/popup';
 import EditorStore from '../../stores/EditorStore';
 import CurrentUserStore from '../../stores/current_user';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';

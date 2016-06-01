@@ -20,7 +20,7 @@ import RefsPage from './components/RefsPage';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
-import PopupActions from './actions/popup';
+import PopupActions from './actions/PopupActions';
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware
