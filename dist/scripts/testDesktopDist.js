@@ -8273,7 +8273,6 @@ var components = {
     postUrl: '',
     proposetSlug: ''
   },
-  Auth: {},
   EditorNew: {},
   EditorEdit: {
     entry: {}

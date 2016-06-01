@@ -589,6 +589,7 @@
     "friends": "Friends",
     "user": {
       "my_tlog": "My TLog",
+      "invite_friends": "Invite friends",
       "favorites": "Favorites",
       "private": "Private",
       "subscriptions": "Subscriptions",
@@ -660,7 +661,7 @@
   },
   "inviter": {
     "title": "Registration by invite",
-    "gift_text": "You're amazing! Here on Tasty we highly appreciate wonderful people and present you with a one month free premium account.""
+    "gift_text": "You're amazing! Here on Tasty we highly appreciate wonderful people and present you with a one month free premium account."
   },
   "messenger": {
     "typing": "typing...",
@@ -723,5 +724,11 @@
   },
   "prices": {
     "title": "Prices"
+  },
+  "invite_ref": {
+    "title": "Invite your friends",
+    "text": "Share the link with your friends and after registration they will get one month free premium access",
+    "vk_button": "Share via VK",
+    "fb_button": "Share via FB"
   }
 }

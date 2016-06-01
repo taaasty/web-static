@@ -1,9 +1,11 @@
+/*global ReactApp */
 import { merge } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/popup';
 import UserToolbar from './UserToolbar';
+import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { SEARCH_KEYS } from '../../constants/SearchConstants';
@@ -41,6 +43,9 @@ class UserToolbarContainer extends Component {
       browserHistory.push(merge({}, this.props.location, { query: { q }}));
     }
   }
+  showInviteShellbox() {
+    ReactApp.shellbox.show(InviteRef, { inviteUrl: this.props.currentUser.invite_url });
+  }
   hideNotificationsPopover() {
     this.setState({ isNotificationsPopoverVisible: false });
   }
@@ -63,6 +68,7 @@ class UserToolbarContainer extends Component {
         isRelationsPopupVisible={isRelationsPopupVisible}
         isUserPopoverVisible={isUserPopoverVisible}
         onDesignSettingsClick={this.toggleDesignSettings.bind(this)}
+        onInviteClick={this.showInviteShellbox.bind(this)}
         onMessagesClick={this.toggleMessages.bind(this)}
         onNotificationsClick={this.toggleNotifications.bind(this)}
         onRelationsClick={this.toggleRelationsPopup.bind(this)}
