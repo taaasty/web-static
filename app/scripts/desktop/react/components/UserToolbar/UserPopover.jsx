@@ -7,8 +7,9 @@ import uri from 'urijs';
 
 class UserPopover extends Component {
   render() {
-    const { currentUser, hideUserPopover, onDesignSettingsClick, onRelationsClick, onSettingsClick } = this.props;
-    const { slug, tlog_url } = currentUser;
+    const { currentUser, hideUserPopover, onDesignSettingsClick, onInviteClick,
+            onRelationsClick, onSettingsClick } = this.props;
+    const { invite_url, slug, tlog_url } = currentUser;
 
     return (
       <Popover hide={hideUserPopover}>
@@ -25,6 +26,14 @@ class UserPopover extends Component {
                     {i18n.t('toolbar.user.my_tlog')}
                   </Link>
                 </li>
+                {!!invite_url &&
+                 <li className="popup-user__list-item">
+                   <a className="popup-user__link" onClick={onInviteClick}>
+                     {i18n.t('toolbar.user.invite_friends')}
+                     <i className="icon icon--gift" />
+                   </a>
+                 </li>
+                }
                 <li className="popup-user__list-item">
                   <Link
                     className="popup-user__link"
@@ -42,10 +51,7 @@ class UserPopover extends Component {
                   </Link>
                 </li>
                 <li className="popup-user__list-item">
-                  <a
-                    className="popup-user__link"
-                    onClick={onRelationsClick}
-                  >
+                  <a className="popup-user__link" onClick={onRelationsClick}>
                     {i18n.t('toolbar.user.subscriptions')}
                   </a>
                 </li>
@@ -88,6 +94,7 @@ UserPopover.propTypes = {
   currentUser: PropTypes.object.isRequired,
   hideUserPopover: PropTypes.func.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
+  onInviteClick: PropTypes.func.isRequired,
   onRelationsClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
 };

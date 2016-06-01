@@ -1,0 +1,69 @@
+@base-padding: 20px;
+
+.invite-ref__container {
+  width: 100%;
+}
+
+.invite-ref__body {
+  position: relative;
+  width: 420px;
+  margin: 0 auto;
+  padding: 4 * @base-padding;
+  background: @white;
+  border-radius: 3px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.invite-ref__close {
+  position: absolute;
+  top: @base-padding;
+  right: @base-padding;
+  color: @grey;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.invite-ref__title {
+  font-size: 1.5em;
+}
+
+.invite-ref__text {
+  margin: (2 * @base-padding) 0;
+  line-height: 1.2;
+}
+
+.invite-ref__input-container {
+  width: 100%;
+  margin-bottom: @base-padding;
+}
+
+.invite-ref__input {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid @grey;
+  border-radius: 3px;
+  font-size: 1em;
+  padding: (@base-padding / 2) (@base-padding / 3);
+}
+
+.invite-ref__buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.invite-ref__button {
+  text-transform: none;
+  padding-right: 2 * @base-padding;
+  padding-left: 2 * @base-padding;
+  color: @white;
+
+  &.--vk-button {
+    background: @social-share-button-vk-bg;
+  }
+
+  &.--fb-button {
+    background: @social-share-button-fb-bg;
+  }
+}
