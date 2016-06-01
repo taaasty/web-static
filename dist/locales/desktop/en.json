@@ -717,5 +717,16 @@
     "share_text": "Tasty is a blogging platform connecting interesting people. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
+  },
+  "premium_popup": {
+    "title": "Tasty <span class=\"--bold\">premium</span>",
+    "description": "We present you with one month free premium access",
+    "badge": "Premium badge next to your name",
+    "rotation": "Your name rotation in \"Featured users\"",
+    "design": "Advanced design settings",
+    "anon_limit": "More anonymous posts before the limit",
+    "pdf": "Downloadable diary",
+    "gift": "Gift free premium to your friends",
+    "thank_you": "Thank You!"
   }
 }

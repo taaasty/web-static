@@ -1,0 +1,113 @@
+/*global i18n, ReactApp, Settings, DesignSettingsContainer, 
+  DesignPaymentContainer, DesignSettingsColorPickerPopup, messagingService */
+import UserOnboarding from '../components/UserOnboarding';
+import CurrentUserStore from  '../stores/current_user';
+import FlowCreator from '../components/FlowCreator';
+import PremiumPopup from '../components/PremiumPopup';
+import uri from 'urijs';
+
+const PopupActions = {
+  showSettings() {
+    ReactApp.popupController.openWithBackground({
+      Component: Settings,
+      popupProps: {
+        title: i18n.t('settings_header'),
+        className: 'popup--settings popup--dark',
+        clue: 'settings',
+      },
+    });
+  },
+
+  showUserOnboarding() {
+    ReactApp.popupController.openWithBackground({
+      Component: UserOnboarding,
+      popupProps: {
+        title: i18n.t('user_onboarding_title'),
+        className: 'popup--onboarding popup--dark',
+        clue: 'userOnboarding',
+      },
+    });
+  },
+
+  showPremiumPopup() {
+    ReactApp.popupController.openWithBackground({
+      Component: PremiumPopup,
+      popupProps: {
+        title: '',
+        className: 'popup--premium popup--dark',
+        clue: 'premiumPopup',
+      },
+    });
+  },
+
+  showDesignSettings() {
+    ReactApp.popupController.open({
+      Component: DesignSettingsContainer,
+      popupProps: {
+        title: i18n.t('design_settings_header'),
+        className: 'popup--design-settings',
+        clue: 'designSettings',
+        draggable: true,
+      },
+      containerAttribute: 'design-settings-container',
+    });
+  },
+
+  showDesignSettingsPayment() {
+    ReactApp.popupController.openWithBackground({
+      Component: DesignPaymentContainer,
+      popupProps: {
+        title: i18n.t('design_payment_header'),
+        className: 'popup--payment',
+      },
+    });
+  },
+
+  showColorPicker(props) {
+    ReactApp.popupController.openPopup(DesignSettingsColorPickerPopup, props, 'color-picker-container');
+  },
+
+  closeColorPicker() {
+    ReactApp.popupController.close('color-picker-container');
+  },
+
+  createFlow() {
+    ReactApp.popupController.openWithBackground({
+      Component: FlowCreator,
+      popupProps: {
+        title: i18n.t('create_flow.header'),
+        className: 'popup--dark popup--flows',
+        clue: 'create-flow',
+      },
+    });
+  },
+
+  closeDesignSettings() {
+    const container = document.querySelector('[design-settings-container]');
+
+    if (container != null) {
+      ReactApp.popupController.close('design-settings-container');
+    }
+  },
+
+  toggleDesignSettings(ev) {
+    const user = CurrentUserStore.getUser();
+
+    if (uri().path() === `/~${user.slug}/design_settings`) {
+      const container = document.querySelector('[design-settings-container]');
+
+      ev.preventDefault();
+      if (container != null) {
+        ReactApp.popupController.close('design-settings-container');
+      } else {
+        this.showDesignSettings();
+      }
+    }
+  },
+  
+  toggleMessages() {
+    messagingService.toggleMessagesPopup();
+  },
+};
+
+export default PopupActions;
