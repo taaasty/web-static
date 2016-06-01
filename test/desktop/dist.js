@@ -14,7 +14,6 @@ const components = {
     postUrl: '',
     proposetSlug: '',
   },
-  Auth: {},
   EditorNew: {},
   EditorEdit: {
     entry: {},
