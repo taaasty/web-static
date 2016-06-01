@@ -2,8 +2,12 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import Auth from './Auth';
+import { setBodyLayoutClassName } from '../helpers/htmlHelpers';
 
 class RefsPage extends Component {
+  componentWillMount() {
+    setBodyLayoutClassName('layout--tech');
+  }
   render() {
     const { token } = this.props.params;
 
