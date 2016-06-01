@@ -65,6 +65,7 @@ const ShellBox = createClass({
       (child) => cloneElement(child, {
         disableShellbox: this.disableShellbox,
         enableShellbox: this.enableShellbox,
+        closeShellbox: this.onClose,
       })
     );
 
