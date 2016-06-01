@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'tastyicons';
-    src:    url('fonts/tastyicons.eot?8ul0ub');
-    src:    url('fonts/tastyicons.eot?8ul0ub#iefix') format('embedded-opentype'),
-        url('fonts/tastyicons.ttf?8ul0ub') format('truetype'),
-        url('fonts/tastyicons.woff?8ul0ub') format('woff'),
-        url('fonts/tastyicons.svg?8ul0ub#tastyicons') format('svg');
+    src:    url('fonts/tastyicons.eot?if7y3d');
+    src:    url('fonts/tastyicons.eot?if7y3d#iefix') format('embedded-opentype'),
+        url('fonts/tastyicons.ttf?if7y3d') format('truetype'),
+        url('fonts/tastyicons.woff?if7y3d') format('woff'),
+        url('fonts/tastyicons.svg?if7y3d#tastyicons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -272,5 +272,8 @@
 }
 .icon--like-fill:before {
     content: "\e652";
+}
+.icon--gift:before {
+    content: "\e653";
 }
 

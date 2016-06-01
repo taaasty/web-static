@@ -11,7 +11,7 @@ function parseTitle(title) {
 
   const el = document.createElement('div');
 
-  el.innerHtml = title;
+  el.innerHTML = title;
   return el.innerText || el.text || el.textContent;
 }
 
@@ -37,7 +37,7 @@ export function facebookUrl(url) {
   return `https://www.facebook.com/sharer/sharer.php?u=${eUrl}`;
 }
 
-export function vkontakteUrl(url, title, img) {
+export function vkontakteUrl(url, title='', img='') {
   const eUrl = window.encodeURIComponent(url);
   const eTitle = window.encodeURIComponent(parseTitle(title));
   const eImg = window.encodeURIComponent(img);
@@ -45,7 +45,7 @@ export function vkontakteUrl(url, title, img) {
   return `http://vk.com/share.php?url=${eUrl}&title=${eTitle}&image=${eImg}`;
 }
 
-export function twitterUrl(url, title) {
+export function twitterUrl(url, title='') {
   const eUrl = window.encodeURIComponent(url);
   const eTitle = window.encodeURIComponent(parseTitle(title));
 

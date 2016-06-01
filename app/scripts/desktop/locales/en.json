@@ -589,6 +589,7 @@
     "friends": "Friends",
     "user": {
       "my_tlog": "My TLog",
+      "invite_friends": "Invite friends",
       "favorites": "Favorites",
       "private": "Private",
       "subscriptions": "Subscriptions",
@@ -658,6 +659,10 @@
     "label_on": "Yes",
     "label_off": "No"
   },
+  "inviter": {
+    "title": "Registration by invite",
+    "gift_text": "You're amazing! Here on Tasty we highly appreciate wonderful people and present you with a one month free premium account.""
+  },
   "messenger": {
     "typing": "typing...",
     "is_typing": "{{name}} is typing...",
@@ -705,5 +710,12 @@
       "conversation": "Send a message",
       "remove_user": "Remove"
     }
+  },
+  "invite_ref": {
+    "title": "Invite your friends",
+    "text": "Share the link with your friends and after registration they will get one month free premium access",
+    "share_text": "Tasty is a blogging platform connecting interesting people. Follow the link and get free premium account",
+    "vk_button": "Share via VK",
+    "fb_button": "Share via FB"
   }
 }

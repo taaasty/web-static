@@ -77,15 +77,6 @@ global.EmbedComponent = require './react/components/embed'
 # ===============================================*/
 
 global.Auth = require './react/components/Auth'
-require './react/components/Auth/authorization/authorization'
-require './react/components/Auth/authorization/vk'
-require './react/components/Auth/authorization/facebook'
-
-require './react/components/Auth/buttons/vk_auth_button'
-require './react/components/Auth/buttons/facebook_auth_button'
-
-require './react/components/Auth/email/email'
-require './react/components/Auth/recovery'
 
 # /*-----  End of Authorization resources  ------*/
 
@@ -97,10 +88,7 @@ global.ImageAttachmentsCollage = require '../shared/react/components/common/imag
 global.UserToolbarContainer = require './react/components/UserToolbar'
 global.ComposeToolbarContainer = require './react/components/ComposeToolbar/ComposeToolbarContainer'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
-
-require './react/components/shellboxes/confirm_registration'
-
-require './react/components/shellbox_layer'
+global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
 
 require './react/components/relationship_buttons/mixins/relationship'
 require './react/components/relationship_buttons/follow_button'
@@ -136,7 +124,6 @@ require './react/components/alerts/tasty_alert'
 require './react/controllers/tasty_events'
 require './react/controllers/tasty_alert'
 
-require './react/controllers/shellbox'
 require './react/controllers/popup'
 
 require './react/mediators/comments'

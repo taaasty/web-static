@@ -1,7 +1,11 @@
 MESSENGER_VERSION_PREFIX = 'v2'
 
 ApiRoutes =
-  omniauth_url:    (provider) -> gon.host + '/auth/' + provider
+  omniauth_url:    (provider, refToken) ->
+    baseUrl = "#{gon.host}/auth/#{provider}"
+
+    if refToken then "#{baseUrl}?ref_token=#{encodeURIComponent(refToken)}" else baseUrl
+
   iframely_url:               -> gon.api_host + '/v1/embeding/iframely.json'
   pusher_auth_url:            -> "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/auth"
 
