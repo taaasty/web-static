@@ -1,4 +1,4 @@
-PopupActions = require '../../../actions/popup'
+PopupActions = require '../../../actions/PopupActions'
 { PropTypes } = React
 
 DesignSettingsColorPicker = React.createClass

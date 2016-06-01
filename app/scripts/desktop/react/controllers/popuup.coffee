@@ -44,7 +44,7 @@ class PopupController
     render (
       <PopupArea onClose={onClose}>
         <Popup {...popupProps} withBackground={true} onClose={onClose}>
-          <Component {...props} />
+          <Component {...props} close={onClose} />
         </Popup>
       </PopupArea>
     ), container
