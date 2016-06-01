@@ -8,7 +8,7 @@ class InviteRef extends Component {
   }
   render () {
     const { closeShellbox, inviteUrl } = this.props;
-    const vkUrl = vkontakteUrl(inviteUrl, i18n.t("invite_ref.share_text"));
+    const vkUrl = vkontakteUrl(inviteUrl, i18n.t('invite_ref.share_text'));
     const fbUrl = facebookUrl(inviteUrl);
 
     return (
@@ -27,7 +27,7 @@ class InviteRef extends Component {
             <input
               className="invite-ref__input"
               ref="input"
-              defaultValue={invite}
+              defaultValue={inviteUrl}
             />
           </div>
           <div className="invite-ref__buttons-container">
