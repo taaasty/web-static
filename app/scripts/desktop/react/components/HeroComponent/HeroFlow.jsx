@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { createClass } from 'react';
 import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import PopupActionCreators from '../../actions/popup';
+import PopupActionCreators from '../../actions/PopupActions';
 import Hero from './Hero';
 import RelationButton from '../common/RelationButton';
 import HeroSettingsButton from './HeroSettingsButton';

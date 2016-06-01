@@ -6,7 +6,7 @@ window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
 import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
-import PopupActions from './actions/popup';
+import PopupActions from './actions/PopupActions';
 import DesignActionCreators from './actions/design';
 import PopupController from './controllers/popuup';
 import numeral from 'numeral';
@@ -90,7 +90,10 @@ const ReactApp = {
 
       if (window.gon.showUserOnboarding) {
         PopupActions.showUserOnboarding();
+      } else if (window.gon.premium_popup) {
+        PopupActions.showPremiumPopup();
       }
+      
     });
 
     // Needed for onTouchTap
