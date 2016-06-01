@@ -714,6 +714,7 @@
   "invite_ref": {
     "title": "Invite your friends",
     "text": "Share the link with your friends and after registration they will get one month free premium access",
+    "share_text": "Tasty is a blogging platform connecting interesting people. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
   }
