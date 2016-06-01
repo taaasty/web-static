@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import PopupActionCreators from '../../actions/popup';
+import PopupActionCreators from '../../actions/PopupActions';
 import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
