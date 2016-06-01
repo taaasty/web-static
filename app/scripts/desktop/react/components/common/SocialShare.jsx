@@ -11,7 +11,7 @@ function parseTitle(title) {
 
   const el = document.createElement('div');
 
-  el.innerHtml = title;
+  el.innerHTML = title;
   return el.innerText || el.text || el.textContent;
 }
 
