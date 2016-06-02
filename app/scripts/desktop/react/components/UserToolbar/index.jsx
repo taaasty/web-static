@@ -38,6 +38,9 @@ class UserToolbarContainer extends Component {
     ev.preventDefault();
     PopupActionCreators.showSettings();
   }
+  showGetPremiumPopup() {
+    PopupActionCreators.showGetPremiumPopup();
+  }
   showSearch(q) {
     if (q.length) {
       browserHistory.push(merge({}, this.props.location, { query: { q }}));
@@ -68,6 +71,7 @@ class UserToolbarContainer extends Component {
         isRelationsPopupVisible={isRelationsPopupVisible}
         isUserPopoverVisible={isUserPopoverVisible}
         onDesignSettingsClick={this.toggleDesignSettings.bind(this)}
+        onGetPremiumClick={this.showGetPremiumPopup.bind(this)}
         onInviteClick={this.showInviteShellbox.bind(this)}
         onMessagesClick={this.toggleMessages.bind(this)}
         onNotificationsClick={this.toggleNotifications.bind(this)}
