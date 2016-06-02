@@ -7,9 +7,9 @@ import uri from 'urijs';
 
 class UserPopover extends Component {
   render() {
-    const { currentUser, hideUserPopover, onDesignSettingsClick, onInviteClick,
-            onRelationsClick, onSettingsClick } = this.props;
-    const { invite_url, slug, tlog_url } = currentUser;
+    const { currentUser, hideUserPopover, onDesignSettingsClick, onGetPremiumClick,
+            onInviteClick, onRelationsClick, onSettingsClick } = this.props;
+    const { invite_url, is_premium, slug, tlog_url } = currentUser;
 
     return (
       <Popover hide={hideUserPopover}>
@@ -26,6 +26,14 @@ class UserPopover extends Component {
                     {i18n.t('toolbar.user.my_tlog')}
                   </Link>
                 </li>
+                {!is_premium &&
+                 <li className="popup-user__list-item">
+                   <a className="popup-user__link" onClick={onGetPremiumClick}>
+                     {i18n.t('toolbar.user.get_premium') + ' '}
+                     <span className="premium-badge" />
+                   </a>
+                 </li>
+                }
                 {!!invite_url &&
                  <li className="popup-user__list-item">
                    <a className="popup-user__link" onClick={onInviteClick}>
@@ -94,6 +102,7 @@ UserPopover.propTypes = {
   currentUser: PropTypes.object.isRequired,
   hideUserPopover: PropTypes.func.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
+  onGetPremiumClick: PropTypes.func.isRequired,
   onInviteClick: PropTypes.func.isRequired,
   onRelationsClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,

@@ -589,10 +589,11 @@
     "friends": "Friends",
     "user": {
       "my_tlog": "My TLog",
+      "get_premium": "Get",
       "invite_friends": "Invite friends",
       "favorites": "Favorites",
       "private": "Private",
-      "subscriptions": "Subscriptions",
+      "subscriptions": "My subscriptions",
       "design_settings": "Design settings",
       "settings": "Settings",
       "logout": "Logout"
@@ -735,12 +736,29 @@
   "premium_popup": {
     "title": "Tasty <span class=\"--bold\">premium</span>",
     "description": "We present you with one month free premium access",
+    "support_description": "Support Tasty and get access to the premium features",
     "badge": "Premium badge next to your name",
     "rotation": "Your name rotation in \"Featured users\"",
     "design": "Advanced design settings",
     "anon_limit": "More anonymous posts before the limit",
     "pdf": "Downloadable diary",
     "gift": "Gift free premium to your friends",
-    "thank_you": "Thank You!"
+    "thank_you": "Thank You!",
+    "get_premium": "Get Premium!",
+    "buy": "Buy",
+    "for_month": "for a month",
+    "plans": {
+      "month": {
+        "title": "Monthly plan",
+        "month_price": "<span class=\"price\">79</span> rub",
+        "year_price": "948 rub/year"
+      },
+      "year": {
+        "title": "Annual plan",
+        "month_price": "<span class=\"price\">59</span> rub",
+        "year_price": "710 rub/year",
+        "off": "-25%"
+      }
+    }
   }
 }

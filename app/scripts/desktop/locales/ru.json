@@ -612,13 +612,14 @@
     "flows": "Потоки",
     "people": "Люди",
     "anonymous": "Анонимки",
-    "friends": "Лента",
+    "friends": "Подписки",
     "user": {
       "my_tlog": "Мой дневник",
+      "get_premium": "Купить",
       "invite_friends": "Пригласить друзей",
       "favorites": "Избранное",
       "private": "Скрытые записи",
-      "subscriptions": "Подписки",
+      "subscriptions": "Мои подписки",
       "design_settings": "Дизайн дневника",
       "settings": "Настройки",
       "logout": "Выход"
@@ -764,12 +765,29 @@
   "premium_popup": {
     "title": "Тейсти <span class=\"--bold\">премиум</span>",
     "description": "Мы дарим Вам месяц премиум-аккаунта бесплатно",
+    "support_description": "Поддержи проект и получи премиум-возможности",
     "badge": "Бейдж рядом с именем",
     "rotation": "Ротация в блоке \"Рекомендуем подписаться\"",
     "design": "Расширенные настройки дизайна",
     "anon_limit": "Увеличение лимита на анонимки",
     "pdf": "Скачать весь дневник",
     "gift": "Бесплатный премиум для друга",
-    "thank_you": "Спасибо!"
+    "thank_you": "Спасибо!",
+    "get_premium": "Получить премиум",
+    "buy": "Купить",
+    "for_month": "на месяц",
+    "plans": {
+      "month": {
+        "title": "План на месяц",
+        "month_price": "<span class=\"price\">79</span> руб",
+        "year_price": "948 руб/год"
+      },
+      "year": {
+        "title": "План на год",
+        "month_price": "<span class=\"price\">59</span> руб",
+        "year_price": "710 руб/год",
+        "off": "-25%"
+      }
+    }
   }
 }
