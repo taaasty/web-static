@@ -66,3 +66,82 @@
     letter-spacing: normal;
   }
 }
+
+.popup-premium__plans-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.popup-premium__plan {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px 20px;
+  border-radius: 3px;
+  background: @white;
+  color: @black;
+}
+
+.popup-premium__plan-off-container {
+  position: absolute;
+  display: table;
+  box-sizing: border-box;
+  top: -70px;
+  right: -70px;
+  width: 140px;
+  height: 140px;
+  padding-bottom: 10px;
+  transform: rotate(45deg);
+  background: @yellow;
+  color: @black;
+
+  .recommended-plan & {
+    background: @green;
+    color: @white;
+  }
+}
+
+.popup-premium__plan-off {
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.popup-premium__plan-title {
+  margin-bottom: 40px;
+}
+
+.popup-premium__plan-month-price .price {
+  font-size: 2em;
+}
+
+.popup-premium__plan-year-price {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: @grey;
+}
+
+.popup-premium__plan-footer {
+  min-width: 200px;
+  margin-top: 80px;
+
+  .button {
+    width: 100%;
+    border: 1px solid @green;
+    color: @green;
+    background: @white;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 0.8em;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .recommended-plan & {
+      color: @white;
+      background: @green;
+    }
+  }
+}
