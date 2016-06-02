@@ -7,7 +7,7 @@ import { PREMIUM_ORDER } from '../../constants/OrderConstants';
 function PremiumPlan({ i18nPlanKey, months, recommended }) {
   const containerClasses = classNames({
     'popup-premium__plan': true,
-    'recommended-plan': recommended,
+    '--recommended-plan': recommended,
   });
   const offKey = `premium_popup.plans.${i18nPlanKey}.off`;
   const hasOff = i18n.exists(offKey);
