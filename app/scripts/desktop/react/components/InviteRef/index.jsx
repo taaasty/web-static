@@ -26,18 +26,18 @@ class InviteRef extends Component {
           <div className="invite-ref__input-container">
             <input
               className="invite-ref__input"
-              ref="input"
               defaultValue={inviteUrl}
+              ref="input"
             />
           </div>
           <div className="invite-ref__buttons-container">
             <a href={vkUrl} onClick={open.bind(null, 'vkontakte', vkUrl)}>
-              <span className="button button--large invite-ref__button --vk-button">
+              <span className="button button--large invite-ref__button vk-button">
                 {i18n.t('invite_ref.vk_button')}
               </span>
             </a>
             <a href={fbUrl} onClick={open.bind(null, 'facebook', fbUrl)}>
-              <span className="button button--large invite-ref__button --fb-button">
+              <span className="button button--large invite-ref__button fb-button">
                 {i18n.t('invite_ref.fb_button')}
               </span>
             </a>

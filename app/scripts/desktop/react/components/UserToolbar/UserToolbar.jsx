@@ -146,6 +146,7 @@ UserToolbar.propTypes = {
   isRelationsPopupVisible: PropTypes.bool.isRequired,
   isUserPopoverVisible: PropTypes.bool.isRequired,
   onDesignSettingsClick: PropTypes.func.isRequired,
+  onGetPremiumClick: PropTypes.func.isRequired,
   onInviteClick: PropTypes.func.isRequired,
   onMessagesClick: PropTypes.func.isRequired,
   onNotificationsClick: PropTypes.func.isRequired,
