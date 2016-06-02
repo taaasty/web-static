@@ -4,6 +4,8 @@ import UserOnboarding from '../components/UserOnboarding';
 import CurrentUserStore from  '../stores/current_user';
 import FlowCreator from '../components/FlowCreator';
 import PremiumPopup from '../components/PremiumPopup';
+import GetPremiumPopup from '../components/PremiumPopup/GetPremiumPopup';
+import SelectPremiumPlanPopup from '../components/PremiumPopup/SelectPremiumPlanPopup';
 import uri from 'urijs';
 
 const PopupActions = {
@@ -36,6 +38,31 @@ const PopupActions = {
         title: '',
         className: 'popup--premium popup--dark',
         clue: 'premiumPopup',
+      },
+    });
+  },
+
+  showGetPremiumPopup() {
+    ReactApp.popupController.openWithBackground({
+      Component: GetPremiumPopup,
+      props: {
+        onClick: this.showSelectPremiumPlanPopup,
+      },
+      popupProps: {
+        title: '',
+        className: 'popup--premium popup--dark',
+        clue: 'getPremiumPopup',
+      },
+    });
+  },
+
+  showSelectPremiumPlanPopup() {
+    ReactApp.popupController.openWithBackground({
+      Component: SelectPremiumPlanPopup,
+      popupProps: {
+        title: '',
+        className: 'popup--premium popup--dark',
+        clue: 'selectPremiumPlanPopup',
       },
     });
   },
