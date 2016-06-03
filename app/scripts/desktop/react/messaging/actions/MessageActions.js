@@ -25,6 +25,18 @@ const MessageActions = {
   toggleSelection(id) {
     MessagingDispatcher.toggleSelection(id);
   },
+
+  setReplyTo() {
+    MessagingDispatcher.handleViewAction({
+      type: 'setReplyTo',
+    });
+  },
+
+  cancelReplyTo() {
+    MessagingDispatcher.handleViewAction({
+      type: 'cancelReplyTo',
+    });
+  },
 };
 
 export default MessageActions;

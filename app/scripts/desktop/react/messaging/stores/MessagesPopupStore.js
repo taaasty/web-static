@@ -117,6 +117,7 @@ MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     MessagesPopupStore.startSelect();
     MessagesPopupStore.emitChange();
     break;
+  case 'setReplyTo':
   case 'stopSelect':
     MessagesPopupStore.stopSelect();
     MessagesPopupStore.emitChange();
