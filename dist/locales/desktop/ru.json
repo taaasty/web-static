@@ -641,7 +641,8 @@
       "select_form": {
         "delete": "Удалить",
         "delete_everywhere": "Удалить для всех",
-        "cancel": "Отмена"
+        "cancel": "Отмена",
+        "reply": "Ответить"
       },
       "new_group_chat": "Создать группу",
       "new_group_next": "Далее",
