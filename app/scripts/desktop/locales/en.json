@@ -615,7 +615,8 @@
       "select_form": {
         "delete": "Delete",
         "delete_everywhere": "Delete for everybody",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "reply": "Reply"
       },
       "new_group_chat": "Create group chat",
       "new_group_next": "Next",
