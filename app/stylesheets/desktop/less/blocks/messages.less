@@ -1073,13 +1073,22 @@
     }
 
     .message-form__button-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
       position: relative;
-      text-align: right;
     }
 
     .message-form__button {
       padding-left: 7px;
       padding-right: 7px;
+
+      &.\--cancel-button {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 7px;
+      }
     }
 
     .message {
@@ -1096,6 +1105,10 @@
   &.\--private {
     .message--to {
       padding: 0 44px 0 20px;
+    }
+
+    .message--from .message__selector {
+      left: 20px;
     }
 
     .messages__bubble:before {
@@ -1344,7 +1357,7 @@
   padding: 0 44px 0 60px;
 
   .message__selector {
-    right: 12px;
+    right: 20px;
   }
 
   .messages__user-avatar {
@@ -1375,7 +1388,7 @@
   padding: 0 20px 0 44px;
 
   .message__selector {
-    left: 12px;
+    left: 15px;
   }
 
   .messages__user-avatar {

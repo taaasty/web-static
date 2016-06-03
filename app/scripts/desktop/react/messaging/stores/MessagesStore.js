@@ -7,6 +7,7 @@ import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../constants/Conversati
 const _messages = {};
 const _allMessagesLoaded = {};
 let _selectedIds = [];
+let _replyTo = null;
 
 const MessagesStore = Object.assign(
   new BaseStore(),
@@ -137,6 +138,22 @@ const MessagesStore = Object.assign(
       _selectedIds = [];
     },
 
+    setReplyTo() {
+      _replyTo = _selectedIds[0];
+    },
+
+    cancelReplyTo() {
+      _replyTo = null;
+    },
+
+    getReplyMessage(conversationId) {
+      return _replyTo && this.getMessageById(_replyTo, conversationId);
+    },
+
+    getReplyMessageInfo(conversationId) {
+      return _replyTo && this.getMessageInfo(_replyTo, conversationId);
+    },
+
     getSelection() {
       return _selectedIds;
     },
@@ -161,6 +178,10 @@ const MessagesStore = Object.assign(
           return false;
         }
       })).length === 0 && this.canDelete();
+    },
+
+    canReply() {
+      return _selectedIds.length === 1;
     },
 
     deleteMessages(conversationId, deleted) {
@@ -236,14 +257,23 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     MessagesStore.emitChange();
     break;
   case 'closeMessagesPopup':
-  case 'startSelect':
-  case 'stopSelect':
   case 'openConversation':
   case 'openConversationList':
+    MessagesStore.cancelReplyTo();
   case 'messagesResetSelection':
+  case 'startSelect':
+  case 'stopSelect':
     MessagesStore.resetSelection();
     MessagesStore.emitChange();
     break;
+  case 'setReplyTo':
+    MessagesStore.setReplyTo();
+    MessagesStore.resetSelection();
+    MessagesStore.emitChange();
+    break;
+  case 'cancelReplyTo':
+    MessagesStore.cancelReplyTo();
+    MessagesStore.emitChange();
   case 'deleteMessages':
     MessagesStore.deleteMessages(action.conversationId, action.messages);
     MessagesStore.emitChange();

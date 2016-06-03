@@ -1,33 +1,48 @@
 /*global i18n */
+import { throttle } from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
-import MessageActions from '../../../actions/MessageActions';
+import ThreadFormReplyTo from './ThreadFormReplyTo';
 import ConversationActions from '../../../actions/ConversationActions';
 import CurrentUserStore from '../../../../stores/current_user';
 import { GROUP_CONVERSATION, TYPING_THROTTLE_INTERVAL } from '../../../constants/ConversationConstants';
 import Textarea from 'react-textarea-autosize';
+import MessagesStore from '../../../stores/MessagesStore';
+import MessageActions from '../../../actions/MessageActions';
 
 class ThreadForm extends Component {
-  state = {
+  state = Object.assign({}, {
     user: CurrentUserStore.getUser(),
     hasText: false,
     files: [],
     isLoading: false,
-  };
+  }, this.getStateFromStore());
   componentWillMount() {
-    this.typing = _.throttle(
+    this.typing = throttle(
       ConversationActions.sendTyping.bind(null, this.props.conversation.id),
       TYPING_THROTTLE_INTERVAL,
       { leading: true, trailing: false }
     );
+    this.syncStateWithStore = () => this.setState(this.getStateFromStore());
+    MessagesStore.addChangeListener(this.syncStateWithStore);
   }
   componentDidMount() {
     this.form = this.refs.messageForm;
     if (this.form instanceof HTMLElement) {
       this.form.focus();
     }
+  }
+  componentWillUnmount() {
+    MessagesStore.removeChangeListener(this.syncStateWithStore);
+  }
+  getStateFromStore() {
+    const { id } = this.props.conversation;
+
+    return {
+      replyMessage: MessagesStore.getReplyMessage(id),
+      replyMessageInfo: MessagesStore.getReplyMessageInfo(id),
+    };
   }
   onKeyDown(ev) {
     if (ev.key === 'Enter' && !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
@@ -84,10 +99,18 @@ class ThreadForm extends Component {
   }
   render() {
     const disabledInputs = this.shouldDisableForm();
+    const { replyMessage, replyMessageInfo } = this.state;
 
     return (
       <div className="message-form">
         <div className="message-form__controls">
+          {replyMessage &&
+           <ThreadFormReplyTo
+             cancel={this.props.cancelReplyTo}
+             message={replyMessage}
+             messageInfo={replyMessageInfo}
+           />
+          }
           <ThreadFormMediaPreview
             files={this.state.files}
             onFileRemove={this.onFileRemove.bind(this)}
@@ -117,6 +140,7 @@ class ThreadForm extends Component {
 }
 
 ThreadForm.propTypes = {
+  cancelReplyTo: PropTypes.func.isRequired,
   conversation: PropTypes.object.isRequired,
 };
 
