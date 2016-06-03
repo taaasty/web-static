@@ -6,6 +6,7 @@ import SelectForm from './SelectForm';
 import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
+import MessageActions from '../../../actions/MessageActions';
 import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
@@ -38,10 +39,17 @@ class Thread extends Component {
       selectedIds: MessagesStore.getSelection(),
       canDelete: MessagesStore.canDelete(),
       canDeleteEverywhere: MessagesStore.canDeleteEverywhere(id),
+      canReply: MessagesStore.canReply(),
     };
   }
   stopSelect() {
     MessagesPopupActions.stopSelect();
+  }
+  setReplyTo() {
+    MessageActions.setReplyTo();
+  }
+  cancelReplyTo() {
+    MessageActions.cancelReplyTo();
   }
   deleteMessages(all) {
     messagingService.deleteMessages(
@@ -76,6 +84,11 @@ class Thread extends Component {
   handleClickGroupHeader() {
     MessagesPopupActions.openGroupSettings(this.state.conversation);
   }
+  canTalk() {
+    const { conversation } = this.props;
+
+    return typeof conversation.can_talk === 'undefined' || conversation.can_talk;
+  }
   renderHeader() {
     const { conversation } = this.props;
 
@@ -86,21 +99,41 @@ class Thread extends Component {
           />
         : null;
   }
+  renderForm() {
+    const { conversation } = this.props;
+    const { canDelete, canDeleteEverywhere, canReply, selectState } = this.state;
+
+    if (selectState) {
+      return (
+        <SelectForm
+          canDelete={canDelete}
+          canDeleteEverywhere={canDeleteEverywhere}
+          canReply={canReply}
+          deleteEverywhereFn={this.deleteMessages.bind(this, true)}
+          deleteFn={this.deleteMessages.bind(this, false)}
+          setReplyTo={this.setReplyTo}
+          stopSelect={this.stopSelect}
+        />
+      );
+    } else if (this.canTalk()) {
+      return <ThreadForm cancelReplyTo={this.cancelReplyTo} conversation={conversation} />;
+    } else {
+      return null;
+    }
+  }
   render() {
     const { conversation } = this.props;
-    const { canDelete, canDeleteEverywhere, selectState } = this.state;
+    const { selectState } = this.state;
     if (!conversation) {
       return null;
     }
 
-    const canTalk = typeof conversation.can_talk === 'undefined' ||
-            conversation.can_talk;
     const containerClasses = classNames({
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
       '--private': conversation.type === PRIVATE_CONVERSATION,
-      '--no-form': !canTalk,
+      '--no-form': !this.canTalk(),
     });
     const listClasses = classNames({
       'messages__body': true,
@@ -115,16 +148,7 @@ class Thread extends Component {
           <MessageList conversation={conversation} selectState={selectState} />
         </div>
         <footer className="messages__footer">
-          {selectState
-           ? <SelectForm
-               canDelete={canDelete}
-               canDeleteEverywhere={canDeleteEverywhere}
-               deleteEverywhereFn={this.deleteMessages.bind(this, true)}
-               deleteFn={this.deleteMessages.bind(this, false)}
-               stopSelect={this.stopSelect}
-             />
-           : canTalk && <ThreadForm conversation={conversation} />
-          }
+          {this.renderForm()}
         </footer>
       </div>
     );
