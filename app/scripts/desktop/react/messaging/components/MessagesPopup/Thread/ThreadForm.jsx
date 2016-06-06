@@ -38,10 +38,11 @@ class ThreadForm extends Component {
   }
   getStateFromStore() {
     const { id } = this.props.conversation;
+    const replyMessage = MessagesStore.getReplyMessage(id);
 
     return {
-      replyMessage: MessagesStore.getReplyMessage(id),
-      replyMessageInfo: MessagesStore.getReplyMessageInfo(id),
+      replyMessage,
+      replyMessageInfo: replyMessage && MessagesStore.getMessageInfo(replyMessage, id),
     };
   }
   onKeyDown(ev) {
@@ -92,6 +93,7 @@ class ThreadForm extends Component {
         content: this.form.value,
         files: this.state.files,
         conversationId: this.props.conversation.id,
+        replyMessage: this.state.replyMessage,
       });
 
       this.clearForm();
