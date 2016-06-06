@@ -12,6 +12,7 @@ const MessageList = createClass({
   propTypes: {
     conversation: PropTypes.object.isRequired,
     selectState: PropTypes.bool.isRequired,
+    startSelect: PropTypes.func.isRequired,
   },
   mixins: [ ScrollerMixin ],
 
@@ -139,6 +140,7 @@ const MessageList = createClass({
             messagesCount={messages.length}
             ref={this.messageKey(message)}
             selectState={this.props.selectState}
+            startSelect={this.props.startSelect}
           />));
   },
 

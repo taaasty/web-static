@@ -135,10 +135,6 @@ const MessagesStore = Object.assign(
       return _replyTo && this.getMessageById(_replyTo, conversationId);
     },
 
-    getReplyMessageInfo(conversationId) {
-      return _replyTo && this.getMessageInfo(_replyTo, conversationId);
-    },
-
     getSelection() {
       return _selectedIds;
     },
@@ -228,6 +224,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     break;
   case 'messageSubmitted':
     MessagesStore.pushMessages(action.conversationId, [ action.message ]);
+    MessagesStore.cancelReplyTo();
     MessagesStore.emitChange();
     break;
   case 'messageSendingError':

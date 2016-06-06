@@ -8,7 +8,7 @@ import uri from 'urijs';
 import Tooltip from '../../../../../components/common/Tooltip';
 
 function MessageContents(props) {
-  const { message, messageInfo, showSlug, showSupportInfo } = props;
+  const { maxWidth, message, messageInfo, showSlug, showSupportInfo } = props;
   function handleClickUser(ev) {
     ev.preventDefault();
     browserHistory.push({ pathname: uri(messageInfo.user.tlog_url).path() });
@@ -24,7 +24,7 @@ function MessageContents(props) {
             <Image
               image={img}
               isRawUrl
-              maxWidth={220}
+              maxWidth={maxWidth}
             />
           </a>
         </div>));
@@ -99,10 +99,17 @@ function MessageContents(props) {
 MessageContents.displayName = 'MessageContents';
 
 MessageContents.propTypes = {
+  maxWidth: PropTypes.number.isRequired,
   message: PropTypes.object.isRequired,
   messageInfo: PropTypes.object.isRequired,
   showSlug: PropTypes.bool.isRequired,
   showSupportInfo: PropTypes.bool.isRequired,
+};
+
+MessageContents.defaultProps = {
+  maxWidth: 220,
+  showSlug: false,
+  showSupportInfo: false,
 };
 
 export default MessageContents;

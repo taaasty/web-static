@@ -42,6 +42,11 @@ class Thread extends Component {
       canReply: MessagesStore.canReply(),
     };
   }
+  startSelect(ev) {
+    if (!this.state.selectedState) {
+      MessagesPopupActions.startSelect();
+    }
+  }
   stopSelect() {
     MessagesPopupActions.stopSelect();
   }
@@ -145,7 +150,11 @@ class Thread extends Component {
         {false && this.renderHeader()}
         <div className={listClasses} style={this.threadStyles()}>
           <div className="messages__thread-overlay" />
-          <MessageList conversation={conversation} selectState={selectState} />
+          <MessageList
+            conversation={conversation}
+            selectState={selectState}
+            startSelect={this.startSelect.bind(this)}
+          />
         </div>
         <footer className="messages__footer">
           {this.renderForm()}

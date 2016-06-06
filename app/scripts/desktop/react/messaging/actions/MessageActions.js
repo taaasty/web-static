@@ -2,11 +2,11 @@
 import MessagingDispatcher from '../MessagingDispatcher';
 
 const MessageActions = {
-  newMessage({ conversationId, content, files }) {
+  newMessage({ conversationId, content, files, replyMessage }) {
     const uuid = UuidService.generate();
 
-    MessagingDispatcher.messageSubmitted({ conversationId, content, files, uuid });
-    messagingService.postMessage({ conversationId, content, files, uuid });
+    MessagingDispatcher.messageSubmitted({ conversationId, content, files, uuid, replyMessage });
+    messagingService.postMessage({ conversationId, content, files, uuid, replyMessage });
   },
   
   readMessage(conversationId, messageId) {
@@ -14,8 +14,8 @@ const MessageActions = {
     messagingService.markAsReadMessage(conversationId, messageId);
   },
 
-  resendMessage({ conversationId, content, files, uuid }) {
-    messagingService.postMessage({ conversationId, content, files, uuid });
+  resendMessage({ conversationId, content, files, uuid, replyMessage }) {
+    messagingService.postMessage({ conversationId, content, files, uuid, replyMessage });
   },
 
   loadMoreMessages({ conversationId, toMessageId }) {
