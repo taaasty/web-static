@@ -18,8 +18,8 @@ const MessageActions = {
     messagingService.postMessage({ conversationId, content, files, uuid, replyMessage });
   },
 
-  loadMoreMessages({ conversationId, toMessageId }) {
-    messagingService.loadMoreMessages(conversationId, toMessageId);
+  loadMoreMessages({ conversationId, toMessageId, limit }) {
+    return messagingService.loadMoreMessages(conversationId, toMessageId, limit);
   },
 
   toggleSelection(id) {

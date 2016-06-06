@@ -203,8 +203,8 @@ class MessagingService extends EventEmitter {
         console.error('Проблема при загрузке сообщений для переписки', error);
       });
   }
-  loadMoreMessages(conversationId, toMessageId) {
-    return this.requester.loadMoreMessages(conversationId, toMessageId)
+  loadMoreMessages(conversationId, toMessageId, limit) {
+    return this.requester.loadMoreMessages(conversationId, toMessageId, limit)
       .done((data) => {
         MessagingDispatcher.handleServerAction({
           type: 'moreMessagesLoaded',
