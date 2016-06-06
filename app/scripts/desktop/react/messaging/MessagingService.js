@@ -219,8 +219,8 @@ class MessagingService extends EventEmitter {
         console.error('Проблема при загрузке сообщений для переписки', error);
       });
   }
-  postMessage({ conversationId, content, files, uuid }) {
-    return this.requester.postMessage(conversationId, content, files, uuid)
+  postMessage({ conversationId, content, files, uuid, replyMessage }) {
+    return this.requester.postMessage(conversationId, content, files, uuid, replyMessage && replyMessage.uuid)
       .done((message) => {
         MessagingDispatcher.messageReceived(message);
         if (window.ga) {
@@ -232,7 +232,6 @@ class MessagingService extends EventEmitter {
           type: 'messageSendingError',
           conversationId: conversationId,
           uuid: uuid,
-          
         });
         NoticeService.errorResponse(errMsg);
       });

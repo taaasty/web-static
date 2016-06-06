@@ -22,8 +22,11 @@ const Item = createClass({
     message: PropTypes.object.isRequired,
     messageInfo: PropTypes.object.isRequired,
     onResendMessage: PropTypes.func.isRequired,
+    replyMessage: PropTypes.object,
+    replyMessageInfo: PropTypes.object,
     selectState: PropTypes.bool.isRequired,
     selected: PropTypes.bool,
+    startSelect: PropTypes.func.isRequired,
     toggleSelection: PropTypes.func.isRequired,
   },
   mixins: [ ReactGrammarMixin ],
@@ -55,6 +58,10 @@ const Item = createClass({
   handleClickUser(ev) {
     ev.preventDefault();
     browserHistory.push({ pathname: uri(this.props.messageInfo.user.tlog_url).path() });
+  },
+
+  handleClickMessage() {
+    this.props.startSelect();
   },
 
   renderDeliveryStatus() {
@@ -104,7 +111,7 @@ const Item = createClass({
   },
 
   render() {
-    const { message, messageInfo, selected } = this.props;
+    const { message, messageInfo, replyMessage, replyMessageInfo, selected } = this.props;
     const messageClasses = classnames({
       'message': true,
       'message--from': this.isOutgoing(),
@@ -117,9 +124,19 @@ const Item = createClass({
 
     return (
       <div className={containerClasses} onClick={this.toggleSelection}>
-        <div className={messageClasses}>
+        <div className={messageClasses} onClick={this.handleClickMessage}>
           {this.renderAvatar()}
-          <div className="messages__bubble">
+          <div className="messages__bubble" onClick={(ev) => ev.stopPropagation()}>
+            {replyMessage &&
+             <div className="message--reply">
+               <MessageContents
+                 message={replyMessage}
+                 messageInfo={replyMessageInfo}
+                 showSlug
+                 showSupportInfo={false}
+               />
+             </div>
+            }
             <MessageContents
               message={message}
               messageInfo={messageInfo}
