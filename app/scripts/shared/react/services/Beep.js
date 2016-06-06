@@ -4,11 +4,8 @@ const BeepService = {
     return gon.sound_asset_url + soundName;
   },
 
-  play(soundPath) {
-    if (!soundPath) {
-      soundPath = this.makeUrl('income_message.mp3');
-    }
-
+  play(soundFile='income_message.mp3') {
+    const soundPath = this.makeUrl(soundFile);
     let soundEl, bodyEl, isHTML5;
 
     isHTML5 = true;
