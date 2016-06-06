@@ -60,13 +60,13 @@ export default class MessagingRequester {
       },
     });
   }
-  loadMoreMessages(conversationId, toMessageId) {
+  loadMoreMessages(conversationId, toMessageId, limit) {
     return $.ajax({
       url: ApiRoutes.messenger_load_messages_url(conversationId),
       data: {
         socket_id: this.socket_id,
         to_message_id: toMessageId,
-        limit: 10,
+        limit: limit || 10,
       },
     });
   }

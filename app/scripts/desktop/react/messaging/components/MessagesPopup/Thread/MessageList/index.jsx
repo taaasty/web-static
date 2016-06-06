@@ -121,6 +121,33 @@ const MessageList = createClass({
     savedScrollHeight = null;
   },
 
+  scrollToMsg(replyMessage, message) {
+    const scrollTo = (msg) => {
+      const msgNode = findDOMNode(this.refs[this.messageKey(msg)]);
+
+      if (msgNode) {
+        this.scrollList(msgNode.offsetTop);
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (!scrollTo(replyMessage)) {
+      const { isAllMessagesLoaded, messages } = this.state;
+      const idx = messages.indexOf(message);
+      const limit = message.count_msgs_to_reply - idx + 10; // prepend previous 10 msgs
+
+      if (!isAllMessagesLoaded) {
+        MessageActions.loadMoreMessages({
+          limit,
+          conversationId: this.props.conversation.id,
+          toMessageId: messages[0].id,
+        }).then(() => scrollTo(replyMessage));
+      }
+    }
+  },
+
   messageKey(msg) {
     return `${msg.id}-${msg.uuid}`;
   },
@@ -139,6 +166,7 @@ const MessageList = createClass({
             message={message}
             messagesCount={messages.length}
             ref={this.messageKey(message)}
+            scrollToMsg={this.scrollToMsg}
             selectState={this.props.selectState}
             startSelect={this.props.startSelect}
           />));

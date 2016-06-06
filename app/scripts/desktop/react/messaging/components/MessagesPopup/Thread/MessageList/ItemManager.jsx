@@ -39,6 +39,7 @@ const ItemManager = createClass({
     message: PropTypes.object.isRequired,
     messagesCount: PropTypes.number,
     selectState: PropTypes.bool.isRequired,
+    scrollToMsg: PropTypes.func.isRequired,
     startSelect: PropTypes.func.isRequired,
   },
   mixins: [ ReactGrammarMixin ],
@@ -92,8 +93,9 @@ const ItemManager = createClass({
     return this.props.message.read_at === null;
   },
 
-  resendMessage() {
+  resendMessage(ev) {
     const { content, conversation_id: conversationId, files, uuid, reply_message: replyMessage } = this.props.message;
+    ev.stopPropagation();
     this.activateSendingState();
 
     return MessageActions.resendMessage({ content, conversationId, files, uuid, replyMessage });
@@ -138,7 +140,7 @@ const ItemManager = createClass({
   },
   
   render() {
-    const { conversationType, currentUserId, message, selectState, startSelect } = this.props;
+    const { conversationType, currentUserId, message, selectState, scrollToMsg, startSelect } = this.props;
     const { currentState, messageInfo, replyMessage, replyMessageInfo, selected } = this.state;
     const { type } = message;
 
@@ -154,6 +156,7 @@ const ItemManager = createClass({
           replyMessageInfo={replyMessageInfo}
           selectState={selectState}
           selected={selected}
+          scrollToMsg={scrollToMsg}
           startSelect={startSelect}
           toggleSelection={this.toggleSelection}
         />
