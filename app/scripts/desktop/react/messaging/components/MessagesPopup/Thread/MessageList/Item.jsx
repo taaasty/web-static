@@ -26,6 +26,7 @@ const Item = createClass({
     replyMessageInfo: PropTypes.object,
     selectState: PropTypes.bool.isRequired,
     selected: PropTypes.bool,
+    scrollToMsg: PropTypes.func.isRequired,
     startSelect: PropTypes.func.isRequired,
     toggleSelection: PropTypes.func.isRequired,
   },
@@ -111,7 +112,7 @@ const Item = createClass({
   },
 
   render() {
-    const { message, messageInfo, replyMessage, replyMessageInfo, selected } = this.props;
+    const { message, messageInfo, replyMessage, replyMessageInfo, selected, scrollToMsg } = this.props;
     const messageClasses = classnames({
       'message': true,
       'message--from': this.isOutgoing(),
@@ -128,7 +129,8 @@ const Item = createClass({
           {this.renderAvatar()}
           <div className="messages__bubble" onClick={(ev) => ev.stopPropagation()}>
             {replyMessage &&
-             <div className="message--reply">
+             <div className="message--reply" onClick={scrollToMsg.bind(null, replyMessage, message)}>
+               <div className="message__reply-wrapper" />
                <MessageContents
                  message={replyMessage}
                  messageInfo={replyMessageInfo}
