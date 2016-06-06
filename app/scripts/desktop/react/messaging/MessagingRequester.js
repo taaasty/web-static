@@ -70,11 +70,14 @@ export default class MessagingRequester {
       },
     });
   }
-  postMessage(conversationId, content, files, uuid) {
+  postMessage(conversationId, content, files, uuid, replyMessageUuid) {
     const formData = new window.FormData();
     formData.append('socket_id', this.socket_id);
     formData.append('content', content);
     formData.append('uuid', uuid);
+    if (replyMessageUuid) {
+      formData.append('reply_message_uuid', replyMessageUuid);
+    }
     files.forEach((file) => formData.append('files[]', file));
       
     return $.ajax({

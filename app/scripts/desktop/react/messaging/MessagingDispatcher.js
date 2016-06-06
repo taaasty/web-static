@@ -85,7 +85,7 @@ const MessagingDispatcher = Object.assign(
       });
     },
 
-    messageSubmitted({ conversationId, content, files, uuid }) {
+    messageSubmitted({ conversationId, content, files, uuid, replyMessage }) {
       const ConversationsStore = require('./stores/ConversationsStore'); //FIXME circular dep
       const conversation = ConversationsStore.getConversation(conversationId);
       const currentUserId = conversation.user_id;
@@ -98,6 +98,7 @@ const MessagingDispatcher = Object.assign(
         conversation_id: conversationId,
         recipient_id: recipient && recipient.id,
         user_id: currentUserId,
+        reply_message: replyMessage,
       };
 
       BeepService.play(SubmitMsgSound);

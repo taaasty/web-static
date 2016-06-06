@@ -39,6 +39,7 @@ const ItemManager = createClass({
     message: PropTypes.object.isRequired,
     messagesCount: PropTypes.number,
     selectState: PropTypes.bool.isRequired,
+    startSelect: PropTypes.func.isRequired,
   },
   mixins: [ ReactGrammarMixin ],
 
@@ -92,10 +93,10 @@ const ItemManager = createClass({
   },
 
   resendMessage() {
-    const { content, conversation_id: conversationId, files, uuid } = this.props.message;
+    const { content, conversation_id: conversationId, files, uuid, reply_message: replyMessage } = this.props.message;
     this.activateSendingState();
 
-    return MessageActions.resendMessage({ content, conversationId, files, uuid });
+    return MessageActions.resendMessage({ content, conversationId, files, uuid, replyMessage });
   },
     
   readMessage() {
@@ -103,6 +104,7 @@ const ItemManager = createClass({
   },
 
   stateFromProps(props) {
+    const { conversation_id: conversationId, reply_message: replyMessage } = props.message;
     let currentState;
 
     if (props.message.sendingState) {
@@ -115,7 +117,9 @@ const ItemManager = createClass({
 
     return {
       currentState,
-      messageInfo: MessagesStore.getMessageInfo(props.message, props.message.conversation_id),
+      replyMessage,
+      messageInfo: MessagesStore.getMessageInfo(props.message, conversationId),
+      replyMessageInfo: replyMessage && MessagesStore.getMessageInfo(replyMessage, conversationId),
       selected: MessagesStore.isSelected(props.message.id),
     };
   },
@@ -123,7 +127,7 @@ const ItemManager = createClass({
   toggleSelection() {
     MessageActions.toggleSelection(this.props.message.id);
   },
-    
+
   handleMessageListScroll(scrollerNode) {
     const messageNode = findDOMNode(this);
 
@@ -134,8 +138,8 @@ const ItemManager = createClass({
   },
   
   render() {
-    const { conversationType, currentUserId, message, selectState } = this.props;
-    const { currentState, messageInfo, selected } = this.state;
+    const { conversationType, currentUserId, message, selectState, startSelect } = this.props;
+    const { currentState, messageInfo, replyMessage, replyMessageInfo, selected } = this.state;
     const { type } = message;
 
     return type !== SYSTEM_MSG
@@ -146,8 +150,11 @@ const ItemManager = createClass({
           message={message}
           messageInfo={messageInfo}
           onResendMessage={this.resendMessage}
+          replyMessage={replyMessage}
+          replyMessageInfo={replyMessageInfo}
           selectState={selectState}
           selected={selected}
+          startSelect={startSelect}
           toggleSelection={this.toggleSelection}
         />
       : <SystemMessage message={message} />;
