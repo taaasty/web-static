@@ -713,6 +713,16 @@
       "remove_user": "Remove"
     }
   },
+  "terms": {
+    "panel": {
+      "contacts": "Contacts",
+      "terms": "User agreement"
+    },
+    "title": "User agreement"
+  },
+  "contacts": {
+    "title": "Contacts"
+  },
   "invite_ref": {
     "title": "Invite your friends",
     "text": "Share the link with your friends and after registration they will get one month free premium access",
