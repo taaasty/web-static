@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-function SupportLauncher({ hasUnread, onClick }) {
+function SupportLauncher({ children, hasUnread, onClick }) {
   const badgeClasses = classNames({
     'support-launcher__badge': true,
     '--visible': hasUnread,
@@ -12,12 +12,17 @@ function SupportLauncher({ hasUnread, onClick }) {
       <div className="support-launcher">
         <div className="support-launcher__button" onClick={onClick} />
         <div className={badgeClasses} />
+        {children}
       </div>
     </div>
   );
 }
 
 SupportLauncher.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
   hasUnread: PropTypes.bool,
   onClick: PropTypes.func,
 };

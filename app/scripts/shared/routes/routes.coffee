@@ -59,5 +59,7 @@ Routes =
     "/orders/new?flow_id=#{flowId}&type=#{type}"
   flows: -> '/flows'
   editEntry: (userTag, entryID) -> '/' + userTag + '/edit/' + entryID
+  contacts: -> '/contacts'
+  terms: -> '/terms'
 
 module.exports = Routes

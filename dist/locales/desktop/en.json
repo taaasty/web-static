@@ -705,5 +705,15 @@
       "conversation": "Send a message",
       "remove_user": "Remove"
     }
+  },
+  "terms": {
+    "panel": {
+      "contacts": "Contacts",
+      "terms": "User agreement"
+    },
+    "title": "User agreement"
+  },
+  "contacts": {
+    "title": "Contacts"
   }
 }
