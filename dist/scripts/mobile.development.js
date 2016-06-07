@@ -16755,6 +16755,7 @@ var _classnames2 = _interopRequireDefault(_classnames);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function SupportLauncher(_ref) {
+  var children = _ref.children;
   var hasUnread = _ref.hasUnread;
   var onClick = _ref.onClick;
 
@@ -16770,12 +16771,14 @@ function SupportLauncher(_ref) {
       'div',
       { className: 'support-launcher' },
       _react2.default.createElement('div', { className: 'support-launcher__button', onClick: onClick }),
-      _react2.default.createElement('div', { className: badgeClasses })
+      _react2.default.createElement('div', { className: badgeClasses }),
+      children
     )
   );
 }
 
 SupportLauncher.propTypes = {
+  children: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.array]),
   hasUnread: _react.PropTypes.bool,
   onClick: _react.PropTypes.func
 };
@@ -18139,6 +18142,12 @@ Routes = {
   },
   editEntry: function(userTag, entryID) {
     return '/' + userTag + '/edit/' + entryID;
+  },
+  contacts: function() {
+    return '/contacts';
+  },
+  terms: function() {
+    return '/terms';
   }
 };
 
