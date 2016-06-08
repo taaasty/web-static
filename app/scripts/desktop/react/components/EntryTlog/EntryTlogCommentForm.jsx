@@ -4,7 +4,7 @@ import { findDOMNode } from 'react-dom';
 import Textarea from 'react-textarea-autosize';
 import Avatar from '../../../../shared/react/components/common/Avatar';
 import Spinner from '../../../../shared/react/components/common/Spinner';
-import { COMMENT_AVATAR_SIZE } from './EntryTlogCommentSPA';
+import { COMMENT_AVATAR_SIZE } from './EntryTlogComment';
 
 const REPLIES_LIMIT = 5;
 
