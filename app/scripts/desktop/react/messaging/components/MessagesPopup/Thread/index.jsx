@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ThreadForm from './ThreadForm';
 import SelectForm from './SelectForm';
-import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
 import MessageActions from '../../../actions/MessageActions';
@@ -42,7 +41,7 @@ class Thread extends Component {
       canReply: MessagesStore.canReply(),
     };
   }
-  startSelect(ev) {
+  startSelect() {
     if (!this.state.selectedState) {
       MessagesPopupActions.startSelect();
     }
@@ -94,16 +93,6 @@ class Thread extends Component {
 
     return typeof conversation.can_talk === 'undefined' || conversation.can_talk;
   }
-  renderHeader() {
-    const { conversation } = this.props;
-
-    return conversation.type === GROUP_CONVERSATION
-        ? <GroupConversationHeader
-            conversation={conversation}
-            onClick={this.handleClickGroupHeader.bind(this)}
-          />
-        : null;
-  }
   renderForm() {
     const { conversation } = this.props;
     const { canDelete, canDeleteEverywhere, canReply, selectState } = this.state;
@@ -147,7 +136,6 @@ class Thread extends Component {
     
     return (
       <div className={containerClasses}>
-        {false && this.renderHeader()}
         <div className={listClasses} style={this.threadStyles()}>
           <div className="messages__thread-overlay" />
           <MessageList
