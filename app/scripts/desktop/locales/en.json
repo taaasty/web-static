@@ -489,6 +489,8 @@
     "title": "People",
     "empty": "There is nobody here",
     "query_empty": "Nobody found for '{{query}}' search query",
+    "recommended": "Featured users",
+    "get_in": "How to get listed here?",
     "posts": {
       "title": "Most active in posting",
       "text": "People in decreasing order of postings",

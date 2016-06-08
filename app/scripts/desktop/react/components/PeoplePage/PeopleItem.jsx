@@ -12,13 +12,21 @@ function PeopleItem({ title, user }) {
           <div className="people-item__avatar">
             <UserAvatar size={110} user={user} />
           </div>
-          <h3 className="people-item__name">
+          <div className="people-item__name">
             <UserSlug user={user} />
-          </h3>
-          <p
-            className="people-item__desc"
-            dangerouslySetInnerHTML={{ __html: title || user.title || '' }}
-          />
+          </div>
+          <div className="people-item__footer">
+            <div
+              className="people-item__desc"
+              dangerouslySetInnerHTML={{ __html: title || user.title || '' }}
+            />
+            <div className="">
+              {user.}
+              <div className="people-item__followers"
+                {i18n.t()}
+              </div>
+            </div>
+          </div>
         </Link>
       </div>
     </article>
