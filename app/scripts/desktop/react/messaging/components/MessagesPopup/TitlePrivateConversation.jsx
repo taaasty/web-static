@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import TitlePrivateConversationActions from './TitlePrivateConversationActions';
 import MsgUserAvatar from './MsgUserAvatar';
+import UserSlug from '../../../components/UserSlug';
 
 export const TITLE_AVATAR_SIZE = 32;
 
@@ -37,7 +38,7 @@ function TitlePrivateConversation({ conversation }) {
           <MsgUserAvatar size={TITLE_AVATAR_SIZE} user={conversation.recipient} />
         </span>
         <div className="messages__popup-title-text">
-          {conversation.recipient.slug}
+          <UserSlug user={conversation.recipient} />
         </div>
         <div className="messages__popup-title-text --status-text">
           {status()}

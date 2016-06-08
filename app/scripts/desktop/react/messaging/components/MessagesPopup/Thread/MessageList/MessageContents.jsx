@@ -6,6 +6,7 @@ import ImgFromFile from '../ImgFromFile';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
 import Tooltip from '../../../../../components/common/Tooltip';
+import UserSlug from '../../../../../components/UserSlug';
 
 function MessageContents(props) {
   const { maxWidth, message, messageInfo, showSlug, showSupportInfo } = props;
@@ -70,12 +71,12 @@ function MessageContents(props) {
   }
 
   function renderUserSlug() {
-    const { slug, tlog_url } = messageInfo.user;
+    const { tlog_url } = messageInfo.user;
 
     return (
       <span className="messages__user-name">
         <a href={tlog_url} onClick={handleClickUser}>
-          {slug}
+          <UserSlug user={messageInfo.user} />
           {showSupportInfo && renderSupportIcon()}
         </a>
       </span>

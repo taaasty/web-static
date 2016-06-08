@@ -1,6 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import UserAvatar from '../../../../components/UserAvatar';
+import UserSlug from '../../../../components/UserSlug';
 import UserActions from './UserActions';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
@@ -13,7 +14,7 @@ function UserListItem({ adminId, isAdmin, user }) {
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">
-            {user.slug}
+            <UserSlug user={user} />
             {adminId && adminId === user.id &&
              <span className="messages__dialog-admin">
                {i18n.t('messenger.group.admin')}
