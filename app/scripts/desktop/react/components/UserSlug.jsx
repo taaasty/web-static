@@ -11,7 +11,7 @@ function UserSlug({ user: { is_premium, slug } }) {
     }
   }
 
-  return is_premium || (Math.random() > 0.5)
+  return is_premium
     ? (
       <span>
         {slug + ' '}
