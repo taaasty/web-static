@@ -7,6 +7,7 @@ CurrentUserStore = _.extend new BaseStore(),
 
   isLogged: -> currentUser?
   isPrivate: -> currentUser?.is_privacy
+  isPremium: -> currentUser?.is_premium
 
   hasDesignBundle: ->
     !!currentUser?.has_design_bundle

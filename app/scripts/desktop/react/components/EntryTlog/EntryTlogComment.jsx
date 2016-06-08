@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/Avatar';
 import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
+import UserSlug from '../UserSlug';
 
 function EntryTlogComment(props) {
   const { comment: { user, comment_html } } = props;
@@ -18,7 +19,8 @@ function EntryTlogComment(props) {
               <Avatar size={35} userpic={user.userpic} />
             </span>
             <span className="comment__username comment__username--bold">
-              {user.name} {}
+              <UserSlug user={user} />
+              {' '}
             </span>
           </a>
           <span dangerouslySetInnerHTML={{__html: comment_html}} />
