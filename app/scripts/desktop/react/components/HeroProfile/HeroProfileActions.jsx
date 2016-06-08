@@ -1,32 +1,33 @@
 import React, { PropTypes } from 'react';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import RelationButton from '../common/RelationButton';
+import RelationButton from '../common/RelationButtonSPA';
 
 import HeroProfileDropdownMenu from './HeroProfileDropdownMenu';
 import WriteMessageButton from './WriteMessageButton';
 
-function HeroProfileActions({ currentUserId, onRelStateChange, relationship, user }) {
-  const isAnonymousTlog = user.slug === TLOG_SLUG_ANONYMOUS;
+function HeroProfileActions(props) {
+  const { relState, tlog } = props;
+  const { errorRelationship, isFetchingRelationship, data: { author } } = tlog;
+  const isAnonymousTlog = author.slug === TLOG_SLUG_ANONYMOUS;
 
   return (
     <div className="hero__actions hero__actions--visible">
       <RelationButton
-        objectID={currentUserId}
-        onStateChange={onRelStateChange}
-        relState={relationship}
-        subjectID={user.id}
-        subjectPrivacy={user.is_privacy}
+        error={errorRelationship}
+        isFetching={isFetchingRelationship}
+        relState={relState}
+        subjectId={author.id}
+        subjectPrivacy={author.is_privacy}
       />
       {!isAnonymousTlog &&
        [ <WriteMessageButton
            key="write-message-button"
-           user={user}
+           user={author}
          />,
          <HeroProfileDropdownMenu
            key="ellipsis-button"
-           status={relationship}
-           userId={user.id}
+           status={relState}
+           userId={author.id}
          /> ]
       }
     </div>
@@ -34,10 +35,8 @@ function HeroProfileActions({ currentUserId, onRelStateChange, relationship, use
 }
 
 HeroProfileActions.propTypes = {
-  currentUserId: PropTypes.number,
-  onRelStateChange: PropTypes.func.isRequired,
-  relationship: PropTypes.string,
-  user: ProjectTypes.heroUser,
+  relState: PropTypes.string,
+  tlog: PropTypes.object.isRequired,
 };
 
 export default HeroProfileActions;

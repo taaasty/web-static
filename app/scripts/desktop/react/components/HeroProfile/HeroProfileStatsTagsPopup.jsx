@@ -3,9 +3,12 @@
 import React, { createClass, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
 import Routes from '../../../../shared/routes/routes';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 const HeroProfileStatsTagsPopup = createClass({
   propTypes: {
+    close: PropTypes.func,
     onClose: PropTypes.func,
     userID: PropTypes.number.isRequired,
     userSlug: PropTypes.string.isRequired,
@@ -47,15 +50,24 @@ const HeroProfileStatsTagsPopup = createClass({
     });
   },
 
+  handleClickItem(pathname, ev) {
+    ev.preventDefault();
+
+    browserHistory.push({ pathname });
+    this.props.close();
+  },
+
   renderListItem(tag, key) {
     const { name, taggings_count } = tag;
     const { userSlug } = this.props;
+    const url = Routes.userTag(userSlug, name);
 
     return (
       <article className="tag" key={key}>
         <a
           className="tag__link"
-          href={Routes.userTag(userSlug, name)}
+          href={url}
+          onClick={this.handleClickItem.bind(null, uri(url).path())}
           title={`#${name}`}
         >
           <span className="tag__count">

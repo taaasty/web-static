@@ -3,9 +3,12 @@
 import React, { createClass, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
 import UserAvatar from '../UserAvatar';
+import { browserHistory } from 'react-router';
+import uri from 'urijs';
 
 const HeroProfileStatsFollowingsPopup = createClass({
   propTypes: {
+    close: PropTypes.func,
     onClose: PropTypes.func,
     tlogId: PropTypes.number.isRequired,
   },
@@ -46,6 +49,13 @@ const HeroProfileStatsFollowingsPopup = createClass({
     });
   },
 
+  handleClickItem(pathname, ev) {
+    ev.preventDefault();
+
+    browserHistory.push({ pathname });
+    this.props.close();
+  },
+
   renderListItem({ user }, key) {
     const { name, tlog_url } = user;
 
@@ -54,6 +64,7 @@ const HeroProfileStatsFollowingsPopup = createClass({
         <a
           className="user__link"
           href={tlog_url}
+          onClick={this.handleClickItem.bind(null, uri(tlog_url).path())}
           title={name}
         >
           <span className="user__avatar">
