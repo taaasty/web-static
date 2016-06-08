@@ -5,7 +5,6 @@ function MsgUserAvatar({ size, user }) {
   return (
     <div className="message-user-avatar">
       <UserAvatar size={size} user={user} />
-      {user.is_online && <span className="message-user-avatar__online-badge" />}
     </div>  
   );
 }
