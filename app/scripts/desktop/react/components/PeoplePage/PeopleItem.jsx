@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import UserAvatar from '../UserAvatar';
+import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -12,7 +13,7 @@ function PeopleItem({ title, user }) {
             <UserAvatar size={110} user={user} />
           </div>
           <h3 className="people-item__name">
-            {user.slug}
+            <UserSlug user={user} />
           </h3>
           <p
             className="people-item__desc"

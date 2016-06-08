@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Color from 'color';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import HeroProfileActions from './HeroProfileActions';
 import HeroProfileSelfActions from './HeroProfileSelfActions';
 
@@ -33,8 +32,7 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { currentUserId, isCurrentUser, onRelStateChange,
-            relationship, user } = this.props;
+    const { isCurrentUser, relState, tlog } = this.props;
 
     return (
       <div ref="container">
@@ -43,12 +41,10 @@ class HeroProfileActionsContainer extends Component {
         </style>
         {isCurrentUser
            ? <HeroProfileSelfActions />
-           : relationship &&
+           : relState &&
              <HeroProfileActions
-               currentUserId={currentUserId}
-               onRelStateChange={onRelStateChange}
-               relationship={relationship}
-               user={user}
+               relState={relState}
+               tlog={tlog}
              />
         }
       </div>
@@ -57,11 +53,9 @@ class HeroProfileActionsContainer extends Component {
 }
 
 HeroProfileActionsContainer.propTypes = {
-  currentUserId: PropTypes.number,
   isCurrentUser: PropTypes.bool.isRequired,
-  onRelStateChange: PropTypes.func.isRequired,
-  relationship: PropTypes.string,
-  user: ProjectTypes.heroUser,
+  relState: PropTypes.string,
+  tlog: PropTypes.object.isRequired,
 };
 
 export default HeroProfileActionsContainer;

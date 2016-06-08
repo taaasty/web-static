@@ -1,6 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/Avatar';
+import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -14,6 +15,10 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   const authorUrl = author.url || author.tlog_url;
   const tlogUrl = tlog.url || tlog.tlog_url;
   const tlogUserpic = tlog.userpic || tlog.author.userpic;
+
+  function UserTag(user) {
+    return <UserSlug user={{ is_premium: user.is_premium, slug: user.tag }} />;
+  }
 
   
   function renderAvatar() {
@@ -29,7 +34,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   function authorLink() {
     return (
       <Link className="meta-item__link" to={uri(authorUrl).path()}>
-        {author.tag}
+        {UserTag(author)}
       </Link>
     );
   }
@@ -38,11 +43,11 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
     return (
       <span>
         <Link className="meta-item__link" to={uri(authorUrl).path()}>
-          {author.tag}
+          {UserTag(author)}
         </Link>
         {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
         <Link className="meta-item__link" to={uri(tlogUrl).path()}>
-          {tlog.tag}
+          {UserTag(tlog)}
         </Link>
       </span>
     );
@@ -53,7 +58,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
       <span>
         {i18n.t('entry.meta.repost_from') + ' '}
         <Link className="meta-item__link" to={uri(tlogUrl).path()}>
-          {tlog.tag}
+          {UserTag(tlog)}
         </Link>
       </span>
     );
