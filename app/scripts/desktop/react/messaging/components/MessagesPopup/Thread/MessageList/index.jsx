@@ -4,6 +4,7 @@ import { findDOMNode } from 'react-dom';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
 import MessagesStore from '../../../../stores/MessagesStore';
+import ConversationsStore from '../../../../stores/ConversationsStore'; // to update messageInfo
 import MessageActions from '../../../../actions/MessageActions';
 
 let savedScrollHeight = null;
@@ -23,6 +24,7 @@ const MessageList = createClass({
     this.scrollToUnread();
 
     MessagesStore.addChangeListener(this._onStoreChange);
+    ConversationsStore.addChangeListener(this._onStoreChange);
     messagingService.openConversation(this.props.conversation.id);
   },
   
@@ -53,6 +55,7 @@ const MessageList = createClass({
 
   componentWillUnmount() {
     MessagesStore.removeChangeListener(this._onStoreChange);
+    ConversationsStore.removeChangeListener(this._onStoreChange);
   },
   
   isEmpty() {

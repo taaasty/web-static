@@ -58,12 +58,27 @@ const MessagesStore = Object.assign(
     getMessageInfo(message, conversationId) {
       const conversation = ConversationsStore.getConversation(conversationId);
 
+      if (!conversation) { // been deleted
+        return null;
+      }
+
       if ([ PUBLIC_CONVERSATION, GROUP_CONVERSATION ].indexOf(conversation.type) > -1) {
         const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[0];
 
         return ({
           type: message.user_id === conversation.user_id ? 'outgoing' : 'incoming',
-          user: msgAuthor,
+          user: msgAuthor || {
+            slug: '...',
+            tlog_url: '#',
+            userpic: {
+              kind: 'user',
+              symbol: '',
+              default_colors: {
+                background: '#42d792',
+                name: '#fff',
+              },
+            },
+          },
         });
       } else {
         const currentUser  = CurrentUserStore.getUser();

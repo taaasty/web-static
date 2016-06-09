@@ -39,7 +39,9 @@ const MessagingDispatcher = Object.assign(
 
       console.info('Получено сообщение', message);
 
-      if (message.user_id !== conversation.user_id) {
+      if (!conversation) {
+        BeepService.play();
+      } else if (message.user_id !== conversation.user_id) {
         if (message.conversation) {
           if (!message.conversation.not_disturb) {
             BeepService.play();

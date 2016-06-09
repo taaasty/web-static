@@ -47,8 +47,14 @@ const ConversationsStore = Object.assign(
       return _typing[conversationId] || {};
     },
 
-    getConversation(conversationId) {
+    findConversation(conversationId) {
       const [ conv ] = _conversations.filter(({ id }) => id === conversationId);
+
+      return conv || void 0;
+    },
+
+    getConversation(conversationId) {
+      const conv = this.findConversation(conversationId);
       return conv ? { ...conv, typing: this.getTyping(conv.id) } : void 0;
     },
 
@@ -77,13 +83,13 @@ const ConversationsStore = Object.assign(
     },
 
     updateConversationEntry(conversationId, update) {
-      const conversation = this.getConversation(conversationId);
+      const conversation = this.findConversation(conversationId);
 
       return Object.assign(conversation.entry, update);
     },
 
     decreaseUnreadCount(conversationId) {
-      const conversation = this.getConversation(conversationId);
+      const conversation = this.findConversation(conversationId);
 
       if (!conversation) {
         return;
@@ -97,7 +103,7 @@ const ConversationsStore = Object.assign(
     },
 
     unreadCount(conversationId) {
-      const conversation = this.getConversation(conversationId);
+      const conversation = this.findConversation(conversationId);
 
       return conversation && conversation.unread_messages_count;
     },
@@ -112,8 +118,8 @@ const ConversationsStore = Object.assign(
       const statusMap = data.reduce((acc, item) => ({ ...acc, [item.user_id]: item }), {});
 
       convIds.forEach((conversationId) => {
-        const conversation = this.getConversation(conversationId);
-        if (conversation.type === PRIVATE_CONVERSATION) {
+        const conversation = this.findConversation(conversationId);
+        if (conversation && conversation.type === PRIVATE_CONVERSATION) {
           conversation.recipient.is_online = statusMap[conversation.recipient_id].is_online;
           conversation.recipient.last_seen_at = statusMap[conversation.recipient_id].last_seen_at;
         }

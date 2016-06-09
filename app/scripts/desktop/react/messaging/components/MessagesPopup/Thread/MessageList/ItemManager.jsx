@@ -138,8 +138,11 @@ const ItemManager = createClass({
     const { currentState, messageInfo, selected } = this.state;
     const { type } = message;
 
-    return type !== SYSTEM_MSG
-      ? <Item
+    if (!messageInfo) {
+      return <noscript />;
+    } else if (type !== SYSTEM_MSG) {
+      return (
+        <Item
           conversationType={conversationType}
           currentUserId={currentUserId}
           deliveryStatus={currentState}
@@ -150,7 +153,10 @@ const ItemManager = createClass({
           selected={selected}
           toggleSelection={this.toggleSelection}
         />
-      : <SystemMessage message={message} />;
+      );
+    } else {
+      return <SystemMessage message={message} />;
+    }
   },
 });
 
