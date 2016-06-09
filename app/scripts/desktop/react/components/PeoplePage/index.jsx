@@ -36,7 +36,7 @@ class PeoplePage extends Component {
     const { appStateSetSearchKey, getPeopleIfNeeded, getRecommendedPeople } = this.props;
 
     getPeopleIfNeeded(getParams(location, routeParams));
-    if (location !== nextProps.location) {
+    if (location.pathname !== nextProps.location.pathname) {
       getRecommendedPeople();
     }
     appStateSetSearchKey(SEARCH_KEY_PEOPLE);
