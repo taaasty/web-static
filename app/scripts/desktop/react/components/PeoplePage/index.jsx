@@ -9,6 +9,7 @@ import PeopleList from './PeopleList';
 import PeopleRecommended from './PeopleRecommended';
 import { SEARCH_KEY_PEOPLE } from '../../constants/SearchConstants';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
+import CurrentUserStore from '../../stores/current_user';
 
 export const sorts = [ 'posts', 'followers', 'interested', 'worst', 'comments', 'new', 'bad' ];
 
@@ -53,6 +54,7 @@ class PeoplePage extends Component {
             <div className="layout-outer">
               <PeopleRecommended
                 isFetching={isFetchingRecommended}
+                isPremium={CurrentUserStore.isPremium()}
                 people={dataRecommended}
               />
               <PeopleNav

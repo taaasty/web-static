@@ -16,15 +16,18 @@ class PeopleItem extends Component{
   render() {
     const { user } = this.props;
     const { relState } = this.state;
+    const styles = user.design && user.design.backgroundImageEnabled
+          ? { backgroundImage: `url("${user.design.backgroundImageUrl}")` }
+          : {};
 
     return (
-      <article className="people-item">
+      <article className="people-item" style={styles}>
         <div className="people-item__inner">
           <Link className="people-item__link" to={uri(user.tlog_url).path()}>
             <div className="people-item__avatar">
               <UserAvatar size={60} user={user} />
             </div>
-            <div className="people-item__name">
+            <div className="people-item__name" title={user.slug}>
               <UserSlug user={user} />
             </div>
             <div className="people-item__footer">

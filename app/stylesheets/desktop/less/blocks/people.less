@@ -2,6 +2,12 @@ section.people {
   text-align: left;
 }
 
+.people__msg-container {
+  width: 100%;
+  min-height: 50px;
+  text-align: center;
+}
+
 .people-item {
   position: relative;
   display: inline-block;
@@ -14,6 +20,7 @@ section.people {
   vertical-align: top;
   box-sizing: border-box;
   border-radius: 3px;
+  background-size: cover;
 
   &:before {
     content: '';
@@ -79,36 +86,50 @@ a.people-item__link {
   }
 }
 
+.people-item__desc,
+.people-item__followers-count,
+.people-item__follow-button {
+  transition: opacity 0.2s ease;
+}
+
 .people-item__desc {
   display: inline-block;
   font-size: 15px;
   line-height: 1.1;
   vertical-align: bottom;
   opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.people-item__followers-count,
+.people-item__follow-button {
+  position: absolute;
+  bottom: 0;
+  opacity: 0.0001;
 }
 
 .people-item__followers-count {
-  display: none;
-  opacity: 0.0001;
+  left: 0;
+  font-size: 16px;
+  line-height: normal;
+}
+
+.people-item__followers-text {
+  font-size: 0.8em;
 }
 
 .people-item__follow-button {
-  display: none;
-  opacity: 0.0001;
-}
-
-.people-item__desc,
-.people-item__followers-count,
-.people-item__follow-button {
-  transition: opacity 0.3s ease;
+  right: 0;
 }
   
 .people-recommended__container {
+  height: @people-item-height + @line-height-base + 2 * 20px;
+  overflow: hidden;
   margin: 20px 0;
 }
 
 .people-recommended__title {
-  margin: 0 15px 20px;
+  margin: 0 10px 20px;
   font-size: 20px;
 }
 
@@ -122,12 +143,12 @@ span.people-recommended__get-in {
 .people-item:hover {
   .people-item__followers-count,
   .people-item__follow-button {
-    display: inline-block;
     opacity: 1;
+    transition-delay: 0.2s;
   }
 
   .people-item__desc {
-    display: none;
     opacity: 0.0001;
+    transition-delay: 0s;
   }
 }
