@@ -6,6 +6,11 @@ export const PEOPLE_REQUEST = 'PEOPLE_REQUEST';
 export const PEOPLE_RECEIVE = 'PEOPLE_RECEIVE';
 export const PEOPLE_ERROR = 'PEOPLE_ERROR';
 export const PEOPLE_RESET = 'PEOPLE_RESET';
+export const PEOPLE_RECOMMENDED_REQUEST = 'PEOPLE_RECOMMENDED_REQUEST';
+export const PEOPLE_RECOMMENDED_RECEIVE = 'PEOPLE_RECOMMENDED_RECEIVE';
+export const PEOPLE_RECOMMENDED_ERROR = 'PEOPLE_RECOMMENDED_ERROR';
+
+const RECOMMENDED_LIMIT = 8;
 
 function peopleRequest() {
   return {
@@ -33,6 +38,26 @@ function peopleReset() {
   };
 }
 
+function recommendedRequest() {
+  return {
+    type: PEOPLE_RECOMMENDED_REQUEST,
+  };
+}
+
+function recommendedReceive(data) {
+  return {
+    type: PEOPLE_RECOMMENDED_RECEIVE,
+    payload: data,
+  };
+}
+
+function recommendedError(error) {
+  return {
+    type: PEOPLE_RECOMMENDED_ERROR,
+    payload: error,
+  };
+}
+
 function fetchPeople(url, data) {
   return $.ajax({ url, data })
     .fail((xhr) => ErrorService.notifyErrorResponse('Получение списка пользователей', {
@@ -55,6 +80,15 @@ function getPeople({ sort, query }) {
     return fetchPeople(ApiRoutes.users(), { sort, q: query })
       .done((data) => dispatch(peopleReceive({ data, sort, query })))
       .fail((error) => dispatch(peopleError({ error: error.responseJSON, sort, query })));
+  };
+}
+
+export function getRecommendedPeople() {
+  return (dispatch) => {
+    dispatch(recommendedRequest());
+    return fetchPeople(ApiRoutes.users(), { sort: 'recommended', limit: RECOMMENDED_LIMIT })
+      .done((data) => dispatch(recommendedReceive({ dataRecommended: data })))
+      .fail((error) => dispatch(recommendedError({ error: error.responseJSON })));
   };
 }
 
