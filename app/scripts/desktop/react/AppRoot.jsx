@@ -18,6 +18,7 @@ import EditorPage from './components/EditorPage';
 import TagsPage from './components/TagsPage';
 import TermsPage from './components/TermsPage';
 import ContactsPage from './components/ContactsPage';
+import PricesPage from './components/PricesPage';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
@@ -58,6 +59,7 @@ class AppRoot extends Component {
           <Route path="/" component={AppPage}>
             <Route path="contacts" component={ContactsPage} />
             <Route path="terms" component={TermsPage} />
+            <Route path="prices" component={PricesPage} />
             <Route path="tags/:tags" component={TagsPage} />
             <Route path="~:slug/tags/:tags" component={TagsPage} />
             <Redirect from="~anonymous" to="live/anonymous" />
