@@ -61,5 +61,6 @@ Routes =
   editEntry: (userTag, entryID) -> '/' + userTag + '/edit/' + entryID
   contacts: -> '/contacts'
   terms: -> '/terms'
+  prices: -> '/prices'
 
 module.exports = Routes

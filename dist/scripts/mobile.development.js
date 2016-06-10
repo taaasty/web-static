@@ -18148,6 +18148,9 @@ Routes = {
   },
   terms: function() {
     return '/terms';
+  },
+  prices: function() {
+    return '/prices';
   }
 };
 

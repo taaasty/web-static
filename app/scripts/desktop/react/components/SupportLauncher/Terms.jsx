@@ -17,6 +17,11 @@ function Terms() {
             {i18n.t('terms.panel.terms')}
           </Link>
         </li>
+        <li className="terms-panel__item">
+          <Link className="terms-panel__item-link" to={Routes.prices()}>
+            {i18n.t('terms.panel.prices')}
+          </Link>
+        </li>
       </ul>
     </div>
   );

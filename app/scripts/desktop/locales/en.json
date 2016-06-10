@@ -709,11 +709,15 @@
   "terms": {
     "panel": {
       "contacts": "Contacts",
-      "terms": "User agreement"
+      "terms": "User agreement",
+      "prices": "Prices"
     },
     "title": "User agreement"
   },
   "contacts": {
     "title": "Contacts"
+  },
+  "prices": {
+    "title": "Prices"
   }
 }
