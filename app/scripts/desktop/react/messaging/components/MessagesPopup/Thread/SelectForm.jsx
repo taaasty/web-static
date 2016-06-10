@@ -1,6 +1,8 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import CurrentUserStore from '../../../../stores/current_user';
+import PopupActions from '../../../../actions/PopupActions';
 
 function SelectForm(props) {
   const { canDelete, canDeleteEverywhere, canReply, deleteFn,
@@ -27,8 +29,12 @@ function SelectForm(props) {
   }
 
   function deleteMessagesEverywhere() {
-    if (canDeleteEverywhere && typeof deleteEverywhereFn === 'function') {
-      deleteEverywhereFn();
+    if (CurrentUserStore.isPremium()) {
+      if (canDeleteEverywhere && typeof deleteEverywhereFn === 'function') {
+        deleteEverywhereFn();
+      }
+    } else {
+      PopupActions.showGetPremiumPopup();
     }
   }
 
