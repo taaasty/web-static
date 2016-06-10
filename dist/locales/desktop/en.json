@@ -315,6 +315,16 @@
   "settings_vkontakte_signin": "Link an account",
   "settings_vkontakte": "VKontakte",
   "settings_vkontakte_description": "Link your VK profile and you can set autopublication from your TLog.",
+  "settings": {
+    "premium": {
+      "title": "Tasty premium",
+      "desc_in_future": "Premium account is valid through {{date}}",
+      "desc_expired": "Premium account expired at {{date}}",
+      "desc_support": "Support Tasty and get premium features",
+      "extend": "Extend",
+      "get": "Get premium"
+    }
+  },
   "feed_best": "Best",
   "feed_friends": "Followings",
   "feed_live": "Live broadcast",
