@@ -37,7 +37,7 @@ class TitlePublicConversationActions extends Component {
     const { conversation } = this.state;
 
     if (conversation && conversation.entry && conversation.entry.url) {
-      browserHistory.push(uri(conversation.entry.url).path());
+      browserHistory.push({ pathname: uri(conversation.entry.url).path(), state: { id: conversation.entry.id } });
     }
   }
   render() {
