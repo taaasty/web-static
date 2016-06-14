@@ -51,7 +51,7 @@ class PeoplePage extends Component {
         <div className="page__pager">
           <Helmet title={i18n.t('people.title') + ' - ' + i18n.t(`people.${sort}.title`)} />
           <div className="page-body">
-            <div className="layout-outer">
+            <div className="layout-outer people-layout">
               <PeopleRecommended
                 isFetching={isFetchingRecommended}
                 isPremium={CurrentUserStore.isPremium()}
