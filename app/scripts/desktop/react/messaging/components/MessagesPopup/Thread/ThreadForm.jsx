@@ -29,7 +29,7 @@ class ThreadForm extends Component {
   }
   componentDidMount() {
     this.form = this.refs.messageForm;
-    if (this.form instanceof HTMLElement) {
+    if (typeof this.form.focus === 'function') {
       this.form.focus();
     }
   }
