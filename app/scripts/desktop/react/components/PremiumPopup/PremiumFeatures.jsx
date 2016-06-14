@@ -21,8 +21,8 @@ function PremiumFeatures() {
         {i18n.t('premium_popup.anon_limit')}
       </div>
       <div className="popup-premium__feature">
-        <i className="icon icon--pdf" />
-        {i18n.t('premium_popup.pdf')}
+        <i className="icon icon--delete-msg" />
+        {i18n.t('premium_popup.delete_everywhere')}
       </div>
       <div className="popup-premium__feature">
         <i className="icon icon--gift" />

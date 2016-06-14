@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'tastyicons';
-    src:    url('fonts/tastyicons.eot?c382z3');
-    src:    url('fonts/tastyicons.eot?c382z3#iefix') format('embedded-opentype'),
-        url('fonts/tastyicons.ttf?c382z3') format('truetype'),
-        url('fonts/tastyicons.woff?c382z3') format('woff'),
-        url('fonts/tastyicons.svg?c382z3#tastyicons') format('svg');
+    src:    url('fonts/tastyicons.eot?4f93cu');
+    src:    url('fonts/tastyicons.eot?4f93cu#iefix') format('embedded-opentype'),
+        url('fonts/tastyicons.ttf?4f93cu') format('truetype'),
+        url('fonts/tastyicons.woff?4f93cu') format('woff'),
+        url('fonts/tastyicons.svg?4f93cu#tastyicons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -284,5 +284,8 @@
 }
 .icon--pdf:before {
     content: "\e656";
+}
+.icon--delete-msg:before {
+    content: "\e657";
 }
 
