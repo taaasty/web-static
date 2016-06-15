@@ -23,7 +23,7 @@ function EntryTlogComment(props) {
               <Avatar size={COMMENT_AVATAR_SIZE} userpic={user.userpic} />
             </span>
             <span className="comment__username comment__username--bold">
-              <UserSlug user={user} />
+              <UserSlug showAsStar user={user} />
               {' '}
             </span>
           </Link>

@@ -17,7 +17,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   const tlogUserpic = tlog.userpic || tlog.author.userpic;
 
   function UserTag(user) {
-    return <UserSlug user={{ is_premium: user.is_premium, slug: user.tag }} />;
+    return <UserSlug showAsStar user={{ is_premium: user.is_premium, slug: user.tag }} />;
   }
 
   

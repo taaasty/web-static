@@ -7,6 +7,9 @@ import AppDispatcher from '../dispatchers/dispatcher';
 import UuidService from '../../../shared/react/services/uuid';
 import ApiHelpers from '../../../shared/helpers/api';
 import BrowserHelpers from '../../../shared/helpers/browser';
+import PopupActions from './PopupActions';
+
+const ERROR_CODE_PAYMENT_REQUIRED = 402;
 
 function createBlobAttachment(image, uuid) {
   return {
@@ -276,6 +279,9 @@ let EditorActionCreators = {
           type: EditorConstants.ENTRY_SAVE_ERROR,
         });
         NoticeService.errorResponse(xhr);
+        if (xhr && xhr.responseJSON && xhr.responseJSON.error_code === ERROR_CODE_PAYMENT_REQUIRED) {
+          PopupActions.showGetPremiumPopup();
+        }
         reject(xhr);
       }
 

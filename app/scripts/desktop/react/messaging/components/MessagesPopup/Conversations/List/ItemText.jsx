@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
-import UserSlug from '../../../../../components/UserSlug';
 import { CONVERSATION_PIC_SIZE } from './Item';
 
 class ItemText extends Component {
@@ -43,7 +42,7 @@ class ItemText extends Component {
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">
-            <UserSlug user={recipient} />
+            {recipient.slug}
           </div>
           {this.renderLastMessage()}
         </div>

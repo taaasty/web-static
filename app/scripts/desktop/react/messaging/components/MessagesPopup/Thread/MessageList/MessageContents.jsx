@@ -76,7 +76,7 @@ function MessageContents(props) {
     return (
       <span className="messages__user-name">
         <a href={tlog_url} onClick={handleClickUser}>
-          <UserSlug user={messageInfo.user} />
+          <UserSlug showAsStar user={messageInfo.user} />
           {showSupportInfo && renderSupportIcon()}
         </a>
       </span>

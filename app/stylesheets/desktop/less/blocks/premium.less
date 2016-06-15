@@ -12,14 +12,22 @@
     font-size: 9px;
   }
 
-  .popup-user__list-item &:before {
+  .popup-user__list-item &:before,
+  .hero__title &:before {
     padding: 4px 6px;
     font-size: 11px;
   }
 
   .hero__title &:before {
-    vertical-align: top;
-    margin-top: 18px;
+      vertical-align: top;
+      margin-top: 12px;
+  }
+
+  .hero__title & {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    transform: translateX(100%);
   }
 
   .people-item__name & {
@@ -27,4 +35,8 @@
     line-height: 0;
     transform: translateY(-100%);
   }
+}
+
+.premium-icon {
+  &:extend(.icon);
 }
