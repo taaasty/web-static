@@ -8265,6 +8265,7 @@ var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 // Components
 
 var components = {
+  AppRoot: {},
   ImageAttachmentsCollage: {
     imageAttachments: []
   },
@@ -8273,89 +8274,9 @@ var components = {
     postUrl: '',
     proposetSlug: ''
   },
-  EditorNew: {},
-  EditorEdit: {
-    entry: {}
-  },
-  EntryTlog: {
-    commentator: {
-      userpic: {
-        default_colors: {}
-      }
-    },
-    entry: {
-      author: {
-        userpic: {}
-      },
-      tlog: {
-        userpic: {}
-      },
-      rating: {}
-    }
-  },
-  TlogAlertContainer: {},
-  FollowButton: {
-    relationship: {
-      state: ''
-    }
-  },
-  Voting: {
-    rating: {
-      reasons: []
-    }
-  }
+  TlogAlertContainer: {}
 };
 
-/*
-UserToolbarContainer: {},
-FeedPageBody: {},
-Calendar: {},
-EntryPageContainer: {
-  user: {
-    tag: '',
-    name: '',
-    userpic: {
-      default_colors: {},
-    },
-  },
-  stats: {},
-  commentator: {
-    userpic: {
-      default_colors: {},
-    },
-  },
-  entry: {
-    author: {
-      userpic: {},
-    },
-    tlog: {
-      userpic: {},
-    },
-    rating: {},
-  },
-},
-TlogPageContainer: {
-  relationship: {
-    state: '',
-  },
-  user: {
-    tag: '',
-    name: '',
-    userpic: {
-      default_colors: {},
-    },
-  },
-  entries_info: {
-    items: [],
-  },
-  stats: {},
-  commentator: {
-    userpic: {
-      default_colors: {},
-    },
-  },
-},
-*/
 (0, _keys2.default)(components).forEach(function (componentName) {
   var props = components[componentName];
   var Component = global[componentName];

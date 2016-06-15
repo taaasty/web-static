@@ -6,6 +6,7 @@ const { isCompositeComponent, renderIntoDocument } = global.ReactTestUtils;
 
 // Components
 const components = {
+  AppRoot: {},
   ImageAttachmentsCollage: {
     imageAttachments: [],
   },
@@ -14,87 +15,7 @@ const components = {
     postUrl: '',
     proposetSlug: '',
   },
-  EditorNew: {},
-  EditorEdit: {
-    entry: {},
-  },
-  EntryTlog: {
-    commentator: {
-      userpic: {
-        default_colors: {},
-      },
-    },
-    entry: {
-      author: {
-        userpic: {},
-      },
-      tlog: {
-        userpic: {},
-      },
-      rating: {},
-    },
-  },
   TlogAlertContainer: {},
-  FollowButton: {
-    relationship: {
-      state: '',
-    },
-  },
-  Voting: {
-    rating: {
-      reasons: [],
-    },
-  },
-  /*
-  UserToolbarContainer: {},
-  FeedPageBody: {},
-  Calendar: {},
-  EntryPageContainer: {
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {},
-      },
-    },
-    stats: {},
-    commentator: {
-      userpic: {
-        default_colors: {},
-      },
-    },
-    entry: {
-      author: {
-        userpic: {},
-      },
-      tlog: {
-        userpic: {},
-      },
-      rating: {},
-    },
-  },
-  TlogPageContainer: {
-    relationship: {
-      state: '',
-    },
-    user: {
-      tag: '',
-      name: '',
-      userpic: {
-        default_colors: {},
-      },
-    },
-    entries_info: {
-      items: [],
-    },
-    stats: {},
-    commentator: {
-      userpic: {
-        default_colors: {},
-      },
-    },
-  },
-  */
 };
 
 Object.keys(components).forEach((componentName) => {
