@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import PopupActions from '../actions/PopupActions';
 import CurrentUserStore from '../stores/current_user';
 
-function UserSlug({ user: { is_premium, slug } }) {
+function UserSlug({ user: { is_premium, slug }, showAsStar }) {
   function handlePremiumClick(ev) {
     if (!CurrentUserStore.isPremium()) {
       ev.stopPropagation();
@@ -15,7 +15,14 @@ function UserSlug({ user: { is_premium, slug } }) {
     ? (
       <span>
         {slug + ' '}
-        <span className="premium-badge" onClick={handlePremiumClick}/>
+        {showAsStar
+         ? <i
+             className="premium-icon icon--star-fill"
+             onClick={handlePremiumClick}
+             title={i18n.t('user_slug.title')}
+           />
+         : <span className="premium-badge" onClick={handlePremiumClick}/>
+        }
       </span>
     )
     : <span>{slug}</span>;
@@ -24,10 +31,12 @@ function UserSlug({ user: { is_premium, slug } }) {
 UserSlug.displayName = 'UserSlug';
 
 UserSlug.propTypes = {
+  showAsStar: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 UserSlug.defaultProps = {
+  showAsStar: false,
   user: {},
 };
 

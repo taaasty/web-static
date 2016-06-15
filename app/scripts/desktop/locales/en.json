@@ -776,5 +776,8 @@
         "off": "-25%"
       }
     }
+  },
+  "user_slug": {
+    "title": "Tasty premium"
   }
 }
