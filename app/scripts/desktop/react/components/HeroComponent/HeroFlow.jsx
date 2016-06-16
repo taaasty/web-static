@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import { ENTRY_PINNED_STATE, ENTRY_AWAITING_PAYMENT_STATE } from '../../constants/EntryConstants';
 import { PIN_FLOW_ORDER } from '../../constants/OrderConstants';
 import moment from 'moment';
-import { connect } from 'react-redux';
-import { getFlow } from '../../actions/FlowActions';
 
 import Hero from './Hero';
 import RelationButton from '../RelationButton';
@@ -142,10 +140,4 @@ HeroFlow.propTypes = {
   tlog: PropTypes.object.isRequired,
 };
 
-export default connect(
-  (state) => ({
-    flow: state.flow,
-    tlog: state.tlog,
-  }),
-  { getFlow }
-)(HeroFlow);
+export default HeroFlow;

@@ -1,9 +1,10 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
-import UserSlug from '../UserSlug';
+import UserSlug from '../UserSlugNew';
 import { Link } from 'react-router';
 import uri from 'urijs';
+import { Map } from 'immutable';
 
 function MetabarAuthor({ author, size, tlog, hostTlogId }) {
 
@@ -17,7 +18,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   const tlogUserpic = tlog.userpic || tlog.author.userpic;
 
   function UserTag(user) {
-    return <UserSlug showAsStar user={{ is_premium: user.is_premium, slug: user.tag }} />;
+    return <UserSlug showAsStar user={Map({ isPremium: user.isPremium, slug: user.tag })} />;
   }
 
   

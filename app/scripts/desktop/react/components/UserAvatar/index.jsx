@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
+import Avatar from '../../../../shared/react/components/common/Avatar';
 import { TLOG_TYPE_ANONYMOUS } from '../../constants/EditorConstants';
 
 function UserAvatar({ size, user: { name, slug, tag, userpic={} } }) {

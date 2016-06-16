@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../UserAvatar';
-import UserSlug from '../UserSlug';
+import UserSlug from '../UserSlugNew';
 import RelationButton from '../common/RelationButton';
 import CurrentUserStore from '../../stores/current_user';
 import { Link } from 'react-router';

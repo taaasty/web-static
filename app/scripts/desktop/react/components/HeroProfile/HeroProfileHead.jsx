@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import UserSlug from '../UserSlug';
+import UserSlug from '../UserSlugNew';
 import uri from 'urijs';
 
 function HeroProfileHead({ user }) {
@@ -10,7 +10,7 @@ function HeroProfileHead({ user }) {
       <div className="hero__title">
         <span>
           <Link to={uri(user.get('tlogUrl')).path()}>
-            <UserSlug user={user.toJS()} />
+            <UserSlug user={user} />
           </Link>
         </span>
       </div>

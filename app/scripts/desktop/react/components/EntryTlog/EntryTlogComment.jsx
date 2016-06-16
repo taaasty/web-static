@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
-import UserSlug from '../UserSlug';
+import UserSlug from '../UserSlugNew';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -23,7 +23,7 @@ function EntryTlogComment(props) {
               <Avatar size={COMMENT_AVATAR_SIZE} userpic={commentUser.get('userpic').toJS()} />
             </span>
             <span className="comment__username comment__username--bold">
-              <UserSlug showAsStar user={commentUser.toJS()} />
+              <UserSlug showAsStar user={commentUser} />
               {' '}
             </span>
           </Link>
