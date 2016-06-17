@@ -4,14 +4,6 @@ import { connect } from 'react-redux';
 import { getCalendar } from '../../actions/CalendarActions';
 import { flowViewStyle } from '../../actions/FlowActions';
 import { deleteEntry, getTlogEntries, getTlogEntriesIfNeeded } from '../../actions/TlogEntriesActions';
-import { appStateSetSearchKey } from '../../actions/AppStateActions';
-import {
-  SEARCH_KEY_TLOG,
-  SEARCH_KEY_MYTLOG,
-  SEARCH_KEY_FLOW,
-  SEARCH_KEY_FAVORITES,
-  SEARCH_KEY_PRIVATES,
-} from '../../constants/SearchConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
@@ -27,24 +19,17 @@ const emptyTlog = Map();
 
 class TlogPageContainer extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
+    const { getTlogEntriesIfNeeded } = this.props;
 
     getTlogEntriesIfNeeded(this.reqParams(this.props));
-    appStateSetSearchKey(this.searchKey(this.props));
     sendCategory(this.section(this.props));
   }
   componentWillReceiveProps(nextProps) {
-    const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
+    const { getTlogEntriesIfNeeded } = this.props;
     const section = this.section(this.props);
     const nextSection = this.section(nextProps);
-    const searchKey = this.searchKey(this.props);
-    const nextSearchKey = this.searchKey(nextProps);
 
     getTlogEntriesIfNeeded(this.reqParams(nextProps));
-    if (searchKey !== nextSearchKey) {
-      appStateSetSearchKey(nextSearchKey);
-    }
-
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
@@ -69,24 +54,6 @@ class TlogPageContainer extends Component {
       this.reqParams(this.props),
       { sinceId: this.props.tlogEntries.data.nextSinceEntryId }
     ));
-  }
-  searchKey(props) {
-    const { isCurrentUser, tlog } = props;
-    const section = this.section(props);
-
-    if (section === TLOG_SECTION_TLOG) {
-      if (isCurrentUser) {
-        return SEARCH_KEY_MYTLOG;
-      } else {
-        return tlog.get('isFlow') ? SEARCH_KEY_FLOW : SEARCH_KEY_TLOG;
-      }
-    } else if (section === TLOG_SECTION_FAVORITE) {
-      return SEARCH_KEY_FAVORITES;
-    } else if (section === TLOG_SECTION_PRIVATE) {
-      return SEARCH_KEY_PRIVATES;
-    } else {
-      return SEARCH_KEY_TLOG;
-    }
   }
   section(props) {
     const { path } = props.route;
@@ -137,7 +104,6 @@ class TlogPageContainer extends Component {
 }
 
 TlogPageContainer.propTypes = {
-  appStateSetSearchKey: PropTypes.func.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   flow: PropTypes.object.isRequired,
   flowState: PropTypes.object.isRequired,
@@ -170,7 +136,6 @@ export default connect(
     };
   },
   {
-    appStateSetSearchKey,
     deleteEntry,
     getCalendar,
     getTlogEntries,

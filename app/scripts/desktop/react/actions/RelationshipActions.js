@@ -21,7 +21,7 @@ function changeMyRelationship(id, relId, action) {
       },
       relId,
     })
-      .fail(() => setTimeout(
+      .catch(() => setTimeout(
         () => dispatch({ type: RELATIONSHIP_RESET_ERROR, relId }),
         RESET_ERROR_TIMEOUT
       ));

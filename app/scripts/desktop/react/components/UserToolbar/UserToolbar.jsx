@@ -156,7 +156,6 @@ UserToolbar.propTypes = {
   onUserClick: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   query: PropTypes.string,
-  searchKey: PropTypes.string.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,

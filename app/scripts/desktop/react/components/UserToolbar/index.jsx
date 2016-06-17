@@ -8,7 +8,6 @@ import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { SEARCH_KEYS } from '../../constants/SearchConstants';
 
 class UserToolbarContainer extends Component {
   state = {
@@ -89,7 +88,6 @@ class UserToolbarContainer extends Component {
 UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  searchKey: PropTypes.oneOf(SEARCH_KEYS).isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,
@@ -104,7 +102,6 @@ export default connectToStores(
         location,
         unreadFriendsCount,
         currentUser: state.currentUser.data,
-        searchKey: state.appState.data.searchKey,
       };
     }
   )(UserToolbarContainer),

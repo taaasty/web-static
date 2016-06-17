@@ -55,7 +55,7 @@ EntryTlogs.propTypes = {
   hostTlogId: PropTypes.number,
   isFeed: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   onLoadMoreEntries: PropTypes.func.isRequired,
 };
 

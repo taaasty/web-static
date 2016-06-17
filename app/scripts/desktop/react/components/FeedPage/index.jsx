@@ -31,7 +31,6 @@ import {
   feedLiveFlowReset,  
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
-import { appStateSetSearchKey } from '../../actions/AppStateActions';
 import {
   SEARCH_KEY_ANONYMOUS,
   SEARCH_KEY_BEST,
@@ -80,7 +79,7 @@ const APPEND_LOAD_LIMIT = 15;
 
 class FeedPage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded, location } = this.props;
+    const { feedStatus, getFeedEntriesIfNeeded, location } = this.props;
     const feedType = this.feedType(location);
     const type = typeMap[feedType];
     const params = feedDataByUri(location);
@@ -93,7 +92,6 @@ class FeedPage extends Component {
         this.prependEntries(params, feedStatus[type.counter]);
       }
       this.props[type.reset].call(void 0);
-      appStateSetSearchKey(type.searchKey);
       sendCategory(feedType);
     }
   }
@@ -101,7 +99,7 @@ class FeedPage extends Component {
     setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
-    const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
+    const { getFeedEntriesIfNeeded } = this.props;
     const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
@@ -115,7 +113,6 @@ class FeedPage extends Component {
           this.prependEntries(nextParams, nextProps.feedStatus[type.counter]);
         }
         this.props[type.reset].call(void 0);
-        appStateSetSearchKey(type.searchKey);
         sendCategory(nextFeedType);
       }
     } else if (willGet && type) {
@@ -219,7 +216,6 @@ FeedPage.defaultProps = {
 };
 
 FeedPage.propTypes = {
-  appStateSetSearchKey: PropTypes.func.isRequired,
   appStats: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
   feedAnonymousReset: PropTypes.func.isRequired,
@@ -265,7 +261,6 @@ export default connect(
     };
   },
   {
-    appStateSetSearchKey,
     feedAnonymousReset,
     feedBestReset,
     feedEntriesViewStyle,

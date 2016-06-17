@@ -125,9 +125,8 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { follow, isCurrentUser, tlog, tlogRelation } = this.props;
+    const { isCurrentUser, tlog, tlogRelation } = this.props;
     const tlogId = tlog.get('id');
-    const myRelState = tlogRelation.get('state');
     
     return (
       <div className="hero hero-profile">
@@ -143,14 +142,7 @@ class HeroProfile extends Component {
                user={tlog}
              />
           }
-          {!isCurrentUser &&
-           <SmartFollowStatus
-             error={null}
-             follow={follow.bind(null, tlogId)}
-             isFetching={tlogRelation.isEmpty()}
-             relState={myRelState}
-           />
-          }
+          {!isCurrentUser && <SmartFollowStatus relId={tlog.get('myRelationshipObject')} />}
            {tlogId && <HeroProfileHead user={tlog} />}
            <HeroProfileActionsContainer
              isCurrentUser={!!isCurrentUser}
@@ -165,7 +157,6 @@ class HeroProfile extends Component {
 }
 
 HeroProfile.propTypes = {
-  follow: PropTypes.func.isRequired,
   isCurrentUser: PropTypes.bool.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogRelation: PropTypes.object.isRequired,

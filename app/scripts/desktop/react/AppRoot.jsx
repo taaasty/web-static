@@ -1,6 +1,6 @@
 /*eslint react/jsx-sort-props:0 */
 import React, { Component } from 'react';
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from './middleware/api';
@@ -29,10 +29,11 @@ import { feedStatusConnect } from './services/FeedStatusService';
 
 import PopupActions from './actions/PopupActions';
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware,
-  apiMiddleware
-)(createStore);
+const createStoreWithMiddleware = compose(
+  applyMiddleware(
+    thunkMiddleware,
+    apiMiddleware
+  ), window.devToolsExtension ? window.devToolsExtension() : (f) => f)(createStore);
 let store = void 0;
 
 let firstHit = true;

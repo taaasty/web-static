@@ -5,11 +5,11 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { cancel, follow, unfollow } from '../../actions/RelationshipActions';
 
-const REL_FRIEND_STATE = 'friend';
-const REL_REQUESTED_STATE = 'requested';
-const REL_IGNORED_STATE = 'ignored';
-const REL_GUESSED_STATE = 'guessed';
-const REL_NONE_STATE = 'none';
+export const REL_FRIEND_STATE = 'friend';
+export const REL_REQUESTED_STATE = 'requested';
+export const REL_IGNORED_STATE = 'ignored';
+export const REL_GUESSED_STATE = 'guessed';
+export const REL_NONE_STATE = 'none';
 
 class RelationButton extends Component {
   state = {
@@ -124,7 +124,7 @@ export default connect(
       rel,
       relId,
       relState,
-    }
+    };
   },
   { cancel, follow, unfollow }
 )(RelationButton);

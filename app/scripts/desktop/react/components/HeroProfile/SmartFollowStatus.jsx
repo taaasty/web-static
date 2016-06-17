@@ -1,11 +1,18 @@
 import React, { PropTypes } from 'react';
 import FollowStatus from '../common/FollowStatus';
 import { REL_GUESSED_STATE,  REL_NONE_STATE } from '../RelationButton';
+import { connect } from 'react-redux';
+import { follow } from '../../actions/RelationshipActions';
+import { Map } from 'immutable';
 
-function SmartFollowStatus({ error, follow, isFetching, relState }) {
+function SmartFollowStatus({ follow, rel, relId, relState }) {
+  const isFetching = relState.get('isFetching', false);
+  const error = relState.get('error', null);
+  const status = rel.get('state', REL_NONE_STATE);
+  
   function handleClick() {
-    if (!error && !isFetching && (relState === REL_GUESSED_STATE || relState === REL_NONE_STATE)) {
-      follow();
+    if (!error && !isFetching && (status === REL_GUESSED_STATE || status === REL_NONE_STATE)) {
+      follow(rel.get('userId'), relId);
     }
   }
 
@@ -14,16 +21,28 @@ function SmartFollowStatus({ error, follow, isFetching, relState }) {
       error={error}
       onClick={handleClick}
       process={isFetching}
-      status={relState}
+      status={status}
     />
   );
 }
 
 SmartFollowStatus.propTypes = {
-  error: PropTypes.object,
   follow: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool,
-  relState: PropTypes.string,
+  rel: PropTypes.object.isRequired,
+  relId: PropTypes.number.isRequired,
+  relState: PropTypes.object.isRequired,
 };
 
-export default SmartFollowStatus;
+export default connect(
+  (state, { relId }) => {
+    const rel = state.entities.getIn([ 'rel', relId ], Map());
+    const relState = state.relState.get(relId, Map());
+
+    return {
+      rel,
+      relId,
+      relState,
+    };
+  },
+  { follow }
+)(SmartFollowStatus);

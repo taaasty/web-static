@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import EditorNew from '../Editor/EditorNew';
 import EditorEdit from '../Editor/EditorEdit';
 import Spinner from '../../../../shared/react/components/common/Spinner';
-import { appStateSetEditing } from '../../actions/AppStateActions';
+import { appStateStartEditing, appStateStopEditing } from '../../actions/AppStateActions';
 import {
   editorResetEntry,
   editorSetEntry,
@@ -24,11 +24,11 @@ import {
 
 class EditorPage extends Component {
   componentWillMount() {
-    const { appStateSetEditing, editorSetEntry, editorSetPreview,
+    const { appStateStartEditing, editorSetEntry, editorSetPreview,
             location: { hash='' }, routeParams: { editId } } = this.props;
     const entryType = hash.substr(1);
 
-    appStateSetEditing(true);
+    appStateStartEditing();
     editorSetPreview(false);
     if (editId) {
       editorSetEntry(this.fetchEntry(editId));
@@ -49,9 +49,9 @@ class EditorPage extends Component {
     }
   }
   componentWillUnmount() {
-    const { appStateSetEditing, editorResetEntry } = this.props;
+    const { appStateStopEditing, editorResetEntry } = this.props;
 
-    appStateSetEditing(false);
+    appStateStopEditing();
     editorResetEntry();
   }
   fetchEntry(strId) {
@@ -129,7 +129,8 @@ class EditorPage extends Component {
 EditorPage.displayName = 'EditorPage';
 
 EditorPage.propTypes = {
-  appStateSetEditing: PropTypes.func.isRequired,
+  appStateStartEditing: PropTypes.func.isRequired,
+  appStateStopEditing: PropTypes.func.isRequired,
   editorResetEntry: PropTypes.func.isRequired,
   editorSetEntry: PropTypes.func.isRequired,
   editorSetPreview: PropTypes.func.isRequired,
@@ -151,7 +152,8 @@ export default connect(
     tlogEntry: state.tlogEntry.data,
   }),
   {
-    appStateSetEditing,
+    appStateStartEditing,
+    appStateStopEditing,
     editorResetEntry,
     editorSetEntry,
     editorSetPreview,

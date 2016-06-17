@@ -78,7 +78,7 @@ AppPage.propTypes = {
 export default connect(
   (state, { params }) => ({
     currentUser: state.currentUser.data,
-    editing: state.appState.data.editing,
+    editing: state.appState.editing,
     tlog: state.entities.get('tlog').find((val) => val.get('slug') === params.slug, null, Map()),
   }),
   { getAppStatsIfNeeded }

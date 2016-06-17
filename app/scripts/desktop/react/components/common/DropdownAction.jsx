@@ -32,7 +32,7 @@ DropdownAction.propTypes = {
   hoverTitle: PropTypes.string,
   icon: PropTypes.oneOfType([
     PropTypes.string, PropTypes.array,
-  ]).isRequired,
+  ]),
   onClick: PropTypes.func,
   title: PropTypes.string.isRequired,
   url: PropTypes.string,

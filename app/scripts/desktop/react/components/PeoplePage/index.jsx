@@ -3,11 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { getPeopleIfNeeded, getRecommendedPeople } from '../../actions/PeopleActions';
-import { appStateSetSearchKey } from '../../actions/AppStateActions';
 import PeopleNav from './PeopleNav';
 import PeopleList from './PeopleList';
 import PeopleRecommended from './PeopleRecommended';
-import { SEARCH_KEY_PEOPLE } from '../../constants/SearchConstants';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import CurrentUserStore from '../../stores/current_user';
 
@@ -22,25 +20,22 @@ function getParams({ query }, { sort }) {
 
 class PeoplePage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, getPeopleIfNeeded, getRecommendedPeople,
-            location, routeParams } = this.props;
+    const { getPeopleIfNeeded, getRecommendedPeople, location, routeParams } = this.props;
 
     getPeopleIfNeeded(getParams(location, routeParams));
     getRecommendedPeople();
-    appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   componentDidMount() {
     setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
     const { location, routeParams } = nextProps;
-    const { appStateSetSearchKey, getPeopleIfNeeded, getRecommendedPeople } = this.props;
+    const { getPeopleIfNeeded, getRecommendedPeople } = this.props;
 
     getPeopleIfNeeded(getParams(location, routeParams));
     if (location.pathname !== nextProps.location.pathname) {
       getRecommendedPeople();
     }
-    appStateSetSearchKey(SEARCH_KEY_PEOPLE);
   }
   render() {
     const { location, people: { data: items, isFetching, query, dataRecommended, isFetchingRecommended }, routeParams } = this.props;
@@ -79,7 +74,6 @@ class PeoplePage extends Component {
 PeoplePage.displayName = 'PeoplePage';
 
 PeoplePage.propTypes = {
-  appStateSetSearchKey: PropTypes.func.isRequired,
   getPeopleIfNeeded: PropTypes.func.isRequired,
   getRecommendedPeople: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
@@ -91,5 +85,5 @@ export default connect(
   (state) => ({
     people: state.people,
   }),
-  { appStateSetSearchKey, getPeopleIfNeeded, getRecommendedPeople }
+  { getPeopleIfNeeded, getRecommendedPeople }
 )(PeoplePage);
