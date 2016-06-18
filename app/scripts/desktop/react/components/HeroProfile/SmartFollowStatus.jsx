@@ -29,7 +29,7 @@ function SmartFollowStatus({ follow, rel, relId, relState }) {
 SmartFollowStatus.propTypes = {
   follow: PropTypes.func.isRequired,
   rel: PropTypes.object.isRequired,
-  relId: PropTypes.number.isRequired,
+  relId: PropTypes.string,
   relState: PropTypes.object.isRequired,
 };
 

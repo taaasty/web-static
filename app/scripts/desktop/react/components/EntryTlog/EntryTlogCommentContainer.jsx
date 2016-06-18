@@ -6,7 +6,7 @@ class EntryTlogCommentContainer extends Component {
   state = {
     edit: false,
   };
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     const { comment, commentState, commentUser, commentator , entryUrl } = this.props;
 
     return (
@@ -14,7 +14,8 @@ class EntryTlogCommentContainer extends Component {
       commentState !== nextProps.commentState ||
       commentUser !== nextProps.commentUser ||
       commentator !== nextProps.commentator ||
-      entryUrl !== nextProps.entryUrl
+      entryUrl !== nextProps.entryUrl ||
+      this.state.edit !== nextState.edit  
     );
   }
   updateComment(text) {
