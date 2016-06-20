@@ -88,10 +88,10 @@ const ReactApp = {
       ReactUjs.initialize(AppRoot);
       initRoutes();
 
-      if (window.gon.showUserOnboarding) {
-        PopupActions.showUserOnboarding();
-      } else if (window.gon.premium_popup) {
+      if (window.gon.premium_popup) {
         PopupActions.showPremiumPopup();
+      } else if (window.gon.showUserOnboarding) {
+        PopupActions.showUserOnboarding();
       }
       
     });
