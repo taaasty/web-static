@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
 import UserSlug from '../UserSlugNew';
 import { Link } from 'react-router';
@@ -8,7 +9,7 @@ import uri from 'urijs';
 export const COMMENT_AVATAR_SIZE = 40;
 
 function EntryTlogComment(props) {
-  const { comment, commentUser } = props;
+  const { comment, commentState, commentUser } = props;
 
   return (
     <article className="comment">
@@ -20,7 +21,10 @@ function EntryTlogComment(props) {
             to={uri(commentUser.get('tlogUrl')).path()}
           >
             <span className="comment__avatar">
-              <Avatar size={COMMENT_AVATAR_SIZE} userpic={commentUser.get('userpic').toJS()} />
+              {commentState.get('isProcessing', false)
+               ? <Spinner size={30} />
+               : <Avatar size={COMMENT_AVATAR_SIZE} userpic={commentUser.get('userpic').toJS()} />
+              }
             </span>
             <span className="comment__username comment__username--bold">
               <UserSlug showAsStar user={commentUser} />
@@ -37,6 +41,7 @@ function EntryTlogComment(props) {
 
 EntryTlogComment.propTypes = {
   comment: PropTypes.object.isRequired,
+  commentState: PropTypes.object.isRequired,
   commentUser: PropTypes.object.isRequired,
   entryUrl: PropTypes.string.isRequired,
 };
