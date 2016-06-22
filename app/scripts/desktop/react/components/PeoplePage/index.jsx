@@ -52,20 +52,22 @@ class PeoplePage extends Component {
           <Helmet title={i18n.t('people.title') + ' - ' + i18n.t(`people.${sort}.title`)} />
           <div className="page-body">
             <div className="layout-outer people-layout">
-              <PeopleRecommended
-                isFetching={isFetchingRecommended}
-                isPremium={CurrentUserStore.isPremium()}
-                people={dataRecommended}
-              />
-              <PeopleNav
-                active={sorts.indexOf(sort)}
-                sorts={sorts}
-              />
-              <PeopleList
-                isFetching={isFetching}
-                people={items}
-                query={query}
-              />
+              <div className="people-wrapper">
+                <PeopleRecommended
+                  isFetching={isFetchingRecommended}
+                  isPremium={CurrentUserStore.isPremium()}
+                  people={dataRecommended}
+                />
+                <PeopleNav
+                  active={sorts.indexOf(sort)}
+                  sorts={sorts}
+                />
+                <PeopleList
+                  isFetching={isFetching}
+                  people={items}
+                  query={query}
+                />
+              </div>
             </div>
           </div>
         </div>
