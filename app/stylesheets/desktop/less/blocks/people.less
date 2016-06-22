@@ -2,6 +2,11 @@ section.people {
   text-align: center;
 }
 
+.people-wrapper {
+  position: relative;
+  margin: 0 auto;
+}
+
 .people__msg-container {
   width: 100%;
   min-height: 50px;
@@ -17,6 +22,7 @@ section.people {
   margin: @people-item-margins;
   padding: 20px 30px;
   color: @people-item-color;
+  text-align: left;
   vertical-align: top;
   box-sizing: border-box;
   border-radius: 3px;
@@ -129,6 +135,7 @@ a.people-item__link {
 }
 
 .people-recommended__title {
+  box-sizing: border-box;
   margin: 0 10px 20px;
   font-size: 20px;
   text-align: left;
@@ -161,3 +168,15 @@ span.people-recommended__get-in {
     text-align: left;
   }
 }
+
+.container-width-gen(@i) when (@i > 0) {
+  @media only screen and (min-width: (40px + 320px * @i)) and (max-width: (40px + (320px * (@i + 1)) - 1px)) {
+    .people-wrapper {
+      width: 320px * @i;
+    }
+  }
+
+  .container-width-gen(@i - 1);
+}
+
+.container-width-gen(8);
