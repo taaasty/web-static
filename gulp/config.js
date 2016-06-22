@@ -101,6 +101,7 @@ module.exports = {
     locales: {
       static: {
         src: src + '/scripts/desktop/locales/**/*.json',
+        srcPath: src + '/scripts/desktop/locales',
         dest: build + '/locales',
       },
       production: {
