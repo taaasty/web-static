@@ -1,0 +1,12 @@
+[main]
+host = https://www.transifex.com
+
+[taaasty.reactdesktop]
+file_filter = app/scripts/desktop/locales/<lang>.json
+source_lang = ru
+type = KEYVALUEJSON
+
+[taaasty.reactmobile]
+file_filter = app/scripts/mobile/locales/<lang>.json
+source_lang = ru
+type = KEYVALUEJSON
