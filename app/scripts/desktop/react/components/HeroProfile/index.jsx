@@ -1,4 +1,4 @@
-/*global $, TastyEvents, Mousetrap */
+/*global $, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
@@ -33,9 +33,6 @@ class HeroProfile extends Component {
 
     $(window).on('resize', this.onResize);
     $(window).on('scroll', this.scrollFade);
-
-    TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
-    TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.tlog !== nextProps.tlog) {
@@ -45,9 +42,6 @@ class HeroProfile extends Component {
   componentWillUnmount() {
     $(window).off('resize', this.onResize);
     $(window).off('scroll', this.scrollFade);
-
-    TastyEvents.off(TastyEvents.keys.command_hero_open(), this.open);
-    TastyEvents.off(TastyEvents.keys.command_hero_close(), this.close);
   }
   _open() {
     Mousetrap.bind('esc', this.close);
@@ -69,7 +63,6 @@ class HeroProfile extends Component {
       this.restoreInitialHeroHeight();
       window.setTimeout(this.unsetHeroHeight.bind(this), 1500);
       $('body').removeClass(HERO_OPENED_CLASS);
-      TastyEvents.trigger(TastyEvents.keys.hero_closed());
     }
   }
   setInitialHeroHeight() {

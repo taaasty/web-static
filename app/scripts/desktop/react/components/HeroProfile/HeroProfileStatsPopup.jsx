@@ -1,24 +1,21 @@
-/*global $, TastyEvents, ReactUnmountMixin, ComponentManipulationsMixin */
+/*global $ */
 import React, { cloneElement, createClass, Children, PropTypes } from 'react';
 import PopupHeader from '../Popup/Header';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { findDOMNode } from 'react-dom';
 
 const MARGIN = 10;
-const FADE_DURATION = 300;
+const FADE_TIMEOUT = 300;
 
 const HeroProfileStatsPopup = createClass({
   propTypes: {
-    onClose: PropTypes.func,
+    close: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-    toggle: PropTypes.object.isRequired,
   },
-  mixins: [ 'ReactActivitiesMixin', ReactUnmountMixin, ComponentManipulationsMixin ],
+  mixins: [ 'ReactActivitiesMixin' ],
 
   componentDidMount() {
     this.alignPopup();
-    this.open();
-
-    TastyEvents.on(TastyEvents.keys.hero_closed(), this.close);
     $(window).one('resize', this.close);
   },
   
@@ -27,7 +24,6 @@ const HeroProfileStatsPopup = createClass({
   },
 
   componentWillUnmount() {
-    TastyEvents.off(TastyEvents.keys.hero_closed(), this.close);
     $(window).off('resize', this.close);
   },
   
@@ -47,44 +43,42 @@ const HeroProfileStatsPopup = createClass({
   
   alignPopup() {
     this.$popup =  $(findDOMNode(this));
-    this.$toggle = this.props.toggle;
+    this.$toggle = this.$popup.parent();
     this.$popup.css({
       top: this.getPopupOffset().top,
       left: this.getPopupOffset().left,
     });
   },
   
-  open() {
-    this.$popup.css('display', 'none').fadeIn(FADE_DURATION);
-  },
-  
-  close() {
-    this.safeUpdate(() => this.$popup.fadeOut(FADE_DURATION, this.unmount));
-  },
-
   render() {
-    const { children, isDraggable, title } = this.props;
+    const { children, close, title } = this.props;
 
     const newChildren = Children.map(children, (context) => (
       cloneElement(context, {
+        close,
         activitiesHandler: this.activitiesHandler,
-        close: this.close.bind(this),
       })
     ));
 
     return (
-      <div className="popup popup--dark">
-        <div className="popup__arrow popup__arrow--down" />
-        <PopupHeader
-          draggable={isDraggable}
-          hasActivities={this.hasActivities()}
-          onClose={this.close}
-          title={title}
-        />
-        <div className="popup__body">
-          {newChildren}
+      <ReactCSSTransitionGroup
+        transitionEnterTimeout={FADE_TIMEOUT}
+        transitionLeaveTimeout={FADE_TIMEOUT}
+        transitionName="hero__stats-popup"
+      >
+        <div className="popup popup--dark">
+          <div className="popup__arrow popup__arrow--down" />
+          <PopupHeader
+            draggable={false}
+            hasActivities={this.hasActivities()}
+            onClose={close}
+            title={title}
+          />
+          <div className="popup__body">
+            {newChildren}
+          </div>
         </div>
-      </div>
+      </ReactCSSTransitionGroup>
     );
   },
 });

@@ -1,4 +1,4 @@
-/*global messagingService, TastyEvents */
+/*global messagingService */
 import MessagingDispatcher from '../MessagingDispatcher';
 import ConversationsStore from '../stores/ConversationsStore';
 
@@ -23,7 +23,7 @@ const ConversationActions = {
     }
 
     messagingService.openMessagesPopup();
-    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
+    //return TastyEvents.emit(TastyEvents.keys.command_hero_close());
   },
 
   deleteConversation(id) {

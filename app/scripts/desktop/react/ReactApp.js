@@ -1,4 +1,4 @@
-/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher */
+/*global $, CurrentUserStore, CurrentUserDispatcher */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
@@ -45,10 +45,6 @@ function initRoutes() {
   }
   
   const UserRouteTarget = {
-    profile() {
-      return TastyEvents.emit(TastyEvents.keys.command_hero_open());
-    },
-
     settings(req) {
       if (!hasAccessBySlug(req.params.slug)) {
         return;
@@ -60,7 +56,6 @@ function initRoutes() {
   Aviator.setRoutes({
     '/:slug': {
       target: UserRouteTarget,
-      '/profile': 'profile',
       '/settings': 'settings',
     },
   });

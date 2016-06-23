@@ -1,6 +1,5 @@
-/*global $, i18n, ReactGrammarMixin */
-import React, { createClass, PropTypes } from 'react';
-import { render } from 'react-dom';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import HeroProfileStatsItem from './HeroProfileStatsItem';
 import HeroProfileStatsPopup from './HeroProfileStatsPopup';
@@ -8,89 +7,71 @@ import HeroProfileStatsFollowersPopup from './HeroProfileStatsFollowersPopup';
 import HeroProfileStatsFollowingsPopup from './HeroProfileStatsFollowingsPopup';
 import HeroProfileStatsTagsPopup from './HeroProfileStatsTagsPopup';
 
-const HeroProfileStats = createClass({
-  propTypes: {
-    user: PropTypes.object.isRequired,
-  },
-  mixins: [ ReactGrammarMixin ],
-
-  componentDidMount() {
-    this.container = document.querySelectorAll('[popup-hero-stats-container]')[0];
-
-    if (!this.container) {
-      this.container = $('<\div>', {'popup-hero-stats-container': ''}).appendTo('body').get(0);
-    }
-  },
-  
-  _isPrivate() {
+class HeroProfileStats extends Component {
+  state = {
+    isFollowersPopupVisible: false,
+    isFollowingsPopupVisible: false,
+    isTagsPopupVisible: false,
+  };
+  isPrivate() {
     return this.props.user.get('isPrivacy');
-  },
-
-  handleFollowersClick($el) {
-    render((
-      <HeroProfileStatsPopup
-        title={i18n.t('followers')}
-        toggle={$el}
-      >
-        <HeroProfileStatsFollowersPopup tlogId={this.props.user.get('id')} />
-      </HeroProfileStatsPopup>
-    ), this.container);
-  },
-  
-  handleFollowingsClick($el) {
-    render((
-      <HeroProfileStatsPopup
-        title={i18n.t('followings')}
-        toggle={$el}
-      >
-        <HeroProfileStatsFollowingsPopup tlogId={this.props.user.get('id')} />
-      </HeroProfileStatsPopup>
-    ), this.container);
-  },
-
-  handleTagsClick($el) {
-    render((
-      <HeroProfileStatsPopup
-        title={i18n.t('tags')}
-        toggle={$el}
-      >
-        <HeroProfileStatsTagsPopup
-          userID={this.props.user.get('id')}
-          userSlug={this.props.user.get('slug')}
-        />
-      </HeroProfileStatsPopup>
-    ), this.container);
-  },
-
+  }
+  handleFollowersClick() {
+    this.setState({ isFollowersPopupVisible: !this.state.isFollowersPopupVisible });
+  }
+  handleFollowingsClick() {
+    this.setState({ isFollowingsPopupVisible: !this.state.isFollowingsPopupVisible });
+  }
+  handleTagsClick() {
+    this.setState({ isTagsPopupVisible: !this.state.isTagsPopupVisible });
+  }
   renderFollowersCount() {
     const followersCount = this.props.user.getIn([ 'stats', 'followersCount' ]);
 
-    return (!!followersCount &&
-      <HeroProfileStatsItem
-        count={followersCount}
-        key="followers"
-        onClick={this.handleFollowersClick}
-        title={i18n.t('stats_followers_count', { count: followersCount })}
-      />
+    return !!followersCount && (
+      <span>
+        <HeroProfileStatsItem
+          count={followersCount}
+          key="followers"
+          onClick={this.handleFollowersClick.bind(this)}
+          title={i18n.t('stats_followers_count', { count: followersCount })}
+        />
+        {this.state.isFollowersPopupVisible && 
+         <HeroProfileStatsPopup
+           close={() => this.setState({ isFollowersPopupVisible: false })}
+           title={i18n.t('followers')}
+         >
+           <HeroProfileStatsFollowersPopup tlogId={this.props.user.get('id')} />
+         </HeroProfileStatsPopup>
+        }
+      </span>
     );
-  },
-
+  }
   renderFollowingsCount() {
     const followingsCount = this.props.user.getIn([ 'stats', 'followingsCount' ]);
 
-    return (!!followingsCount &&
-      <HeroProfileStatsItem
-        count={followingsCount}
-        key="followings"
-        onClick={this.handleFollowingsClick}
-        title={i18n.t('stats_followings_count', { count: followingsCount })}
-      />
+    return !!followingsCount && (
+      <span>
+        <HeroProfileStatsItem
+          count={followingsCount}
+          key="followings"
+          onClick={this.handleFollowingsClick.bind(this)}
+          title={i18n.t('stats_followings_count', { count: followingsCount })}
+        />
+        {this.state.isFollowingsPopupVisible &&
+         <HeroProfileStatsPopup
+           close={() => this.setState({ isFollowingsPopupVisible: false })}
+           title={i18n.t('followings')}
+         >
+           <HeroProfileStatsFollowingsPopup  tlogId={this.props.user.get('id')} />
+         </HeroProfileStatsPopup>
+        }
+      </span>
     );
-  },
-
+  }
   renderFavoritesCount() {
     const favoritesCount = this.props.user.getIn([ 'stats', 'favoritesCount' ]);
-    const url = this._isPrivate() ? '#' : Routes.tlog_favorite_entries_path(this.props.user.get('slug'));
+    const url = this.isPrivate() ? '#' : Routes.tlog_favorite_entries_path(this.props.user.get('slug'));
 
     return (!!favoritesCount &&
       <HeroProfileStatsItem
@@ -100,11 +81,10 @@ const HeroProfileStats = createClass({
         title={i18n.t('stats_favorites_count')}
       />
     );
-  },
-
+  }
   renderEntriesCount() {
     const entriesCount = this.props.user.getIn([ 'stats', 'entriesCount' ]);
-    const url = this._isPrivate() ? '#' : this.props.user.get('tlogUrl');
+    const url = this.isPrivate() ? '#' : this.props.user.get('tlogUrl');
 
     return (!!entriesCount &&
       <HeroProfileStatsItem
@@ -114,8 +94,7 @@ const HeroProfileStats = createClass({
         title={i18n.t('stats_entries_count', { count: entriesCount })}
       />
     );
-  },
-
+  }
   renderCommentsCount() {
     const commentsCount = this.props.user.getIn([ 'stats', 'commentsCount' ]);
 
@@ -126,8 +105,7 @@ const HeroProfileStats = createClass({
         title={i18n.t('stats_comments_count', { counts: commentsCount })}
       />
     );
-  },
-
+  }
   renderDaysCount() {
     const daysCount = this.props.user.getIn([ 'stats', 'daysCount' ]);
 
@@ -138,21 +116,32 @@ const HeroProfileStats = createClass({
         title={i18n.t('stats_days_count', { count: daysCount })}
       />
     );
-  },
-
+  }
   renderTagsCount() {
     const tagsCount = this.props.user.getIn([ 'stats', 'tagsCount' ]);
 
-    return (!!tagsCount &&
-      <HeroProfileStatsItem
-        count={tagsCount}
-        key="tags"
-        onClick={this.handleTagsClick}
-        title={i18n.t('stats_tags_count', { count: tagsCount })}
-      />
+    return !!tagsCount && (
+      <span>
+        <HeroProfileStatsItem
+          count={tagsCount}
+          key="tags"
+          onClick={this.handleTagsClick.bind(this)}
+          title={i18n.t('stats_tags_count', { count: tagsCount })}
+        />
+        {this.state.isTagsPopupVisible && 
+         <HeroProfileStatsPopup
+           close={() => this.setState({ isTagsPopupVisible: false })}
+           title={i18n.t('tags')}
+         >
+           <HeroProfileStatsTagsPopup
+             userID={this.props.user.get('id')}
+             userSlug={this.props.user.get('slug')}
+           />
+         </HeroProfileStatsPopup>
+        }
+      </span>
     );
-  },
-
+  }
   render() {
     return (
       <div className="hero__stats">
@@ -167,7 +156,11 @@ const HeroProfileStats = createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+HeroProfileStats.propTypes = {
+  user: PropTypes.object.isRequired,
+};
   
 export default HeroProfileStats;

@@ -1,4 +1,3 @@
-/*global ReactGrammarMixin */
 import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -29,7 +28,6 @@ const Item = createClass({
     startSelect: PropTypes.func.isRequired,
     toggleSelection: PropTypes.func.isRequired,
   },
-  mixins: [ ReactGrammarMixin ],
 
   isUnread() {
     return !this.props.message.read_at;

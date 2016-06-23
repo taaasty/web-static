@@ -1,4 +1,4 @@
-/*global ReactGrammarMixin, messagingService, TastyEvents */
+/*global messagingService, TastyEvents */
 import React, { createClass, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import MessageActions from '../../../../actions/MessageActions';
@@ -41,7 +41,6 @@ const ItemManager = createClass({
     selectState: PropTypes.bool.isRequired,
     startSelect: PropTypes.func.isRequired,
   },
-  mixins: [ ReactGrammarMixin ],
 
   getInitialState() {
     return this.stateFromProps(this.props);

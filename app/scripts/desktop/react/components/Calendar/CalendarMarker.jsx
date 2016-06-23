@@ -1,18 +1,11 @@
-/*global i18n, ReactGrammarMixin */
-import React, { createClass, PropTypes } from 'react';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import classnames from 'classnames';
 import moment from 'moment';
 
-const CalendarMarker = createClass({
-  propTypes: {
-    highlighted: PropTypes.bool.isRequired,
-    marker: PropTypes.object.isRequired,
-    selected: PropTypes.bool.isRequired,
-  },
-  mixins: [ ReactGrammarMixin ],
-
+class CalendarMarker extends Component {
   shouldComponentUpdate(nextProps) {
     const { marker, selected } = this.props;
 
@@ -20,18 +13,15 @@ const CalendarMarker = createClass({
       marker !== nextProps.marker ||
       selected !== nextProps.selected
     );
-  },
-  
+  }
   getPercentValueOfDay(day) {
     return (day * parseInt(100, 10) / parseInt(365, 10)).toFixed(2) + '%';
-  },
-  
+  }
   getNumberOfRecords(number) {
     return (number > 0)
       ? i18n.t('marker_comments_count', { count: number })
       : i18n.t('marker_no_comments');
-  },
-
+  }
   render() {
     const { marker, highlighted, selected } = this.props;
     const entryId = marker.get('entryId');
@@ -58,7 +48,13 @@ const CalendarMarker = createClass({
         />
       </li>
     );
-  },
-});
+  }
+}
+
+CalendarMarker.propTypes = {
+  highlighted: PropTypes.bool.isRequired,
+  marker: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+};
 
 export default CalendarMarker;

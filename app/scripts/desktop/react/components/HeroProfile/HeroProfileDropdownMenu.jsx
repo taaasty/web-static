@@ -1,4 +1,3 @@
-/*global TastyEvents */
 import React, { createClass, PropTypes } from 'react';
 import classnames from 'classnames';
 

@@ -1,8 +1,8 @@
-/*global i18n, ReactGrammarMixin, ScrollerMixin */
+/*global i18n, ScrollerMixin */
 import React, { PropTypes } from 'react';
 
 const SuggestionListMixin = {
-  mixins: [ ReactGrammarMixin, ScrollerMixin ],
+  mixins: [ ScrollerMixin ],
 
   propTypes: {
     suggestions: PropTypes.array.isRequired,
