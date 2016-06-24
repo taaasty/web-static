@@ -1,32 +1,20 @@
-/*global i18n, NoticeService, ReactUnmountMixin, RequesterMixin,
- ScrollerMixin, ComponentManipulationsMixin, */
-import React, { createClass, PropTypes } from 'react';
+/*global i18n, NoticeService */
+import React, { Component, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
 import UserAvatar from '../UserAvatar/new';
-import { browserHistory } from 'react-router';
+import Scroller from '../common/Scroller';
+import { Link } from 'react-router';
 import uri from 'urijs';
 
-const HeroProfileStatsFollowersPopup = createClass({
-  propTypes: {
-    close: PropTypes.func,
-    onClose: PropTypes.func,
-    tlogId: PropTypes.number.isRequired,
-  },
-  mixins: [ 'ReactActivitiesUser', ReactUnmountMixin, RequesterMixin,
-           ScrollerMixin, ComponentManipulationsMixin ],
-
-  getInitialState() {
-    return ({
-      relationships: null,
-      isError: false,
-      isLoading: false,
-    });
-  },
-
+class HeroProfileStatsFollowersPopup extends Component {
+  state = {
+    relationships: null,
+    isError: false,
+    isLoading: false,
+  };
   componentDidMount() {
     this.loadFollowers();
-  },
-
+  }
   loadFollowers() {
     this.safeUpdate(() => this.incrementActivities());
     this.setState({
@@ -47,21 +35,19 @@ const HeroProfileStatsFollowersPopup = createClass({
         this.safeUpdateState({ isLoading: false });
       },
     });
-  },
-
+  }
   handleClickItem(pathname, ev) {
     ev.preventDefault();
 
     browserHistory.push({ pathname });
     this.props.close();
-  },
-
+  }
   renderListItem({ reader }, key) {
     const { name, tlogUrl } = reader;
 
     return (
       <article className="user__item" key={key}>
-        <a
+        <Link
           className="user__link"
           href={tlogUrl}
           onClick={this.handleClickItem.bind(null, uri(tlogUrl).path())}
@@ -75,19 +61,17 @@ const HeroProfileStatsFollowersPopup = createClass({
               {name}
             </span>
           </span>
-        </a>
+        </Link>
       </article>
     );
-  },
-  
+  }
   renderList() {
     return (
       <section className="users">
         {this.state.relationships.map(this.renderListItem)}
       </section>
     );
-  },
-
+  }
   renderMessage() {
     const { isError, isLoading } = this.state;
     const messageKey = isError
@@ -105,25 +89,24 @@ const HeroProfileStatsFollowersPopup = createClass({
         </div>
       </div>
     );
-  },
-
+  }
   render() {
     const { relationships } = this.state;
 
     return (
-      <div className="scroller scroller--users" ref="scroller">
-        <div className="scroller__pane js-scroller-pane">
-          {relationships && relationships.length > 0
-             ? this.renderList()
-             : this.renderMessage()
-          }
-        </div>
-        <div className="scroller__track js-scroller-track">
-          <div className="scroller__bar js-scroller-bar" />
-        </div>
-      </div>
+      <Scroller className="scroller--users">
+        {relationships && relationships.length > 0
+         ? this.renderList()
+         : this.renderMessage()
+        }
+      </Scroller>
     );
-  },
-});
+  }
+}
+
+HeroProfileStatsFollowersPopup.propTypes = {
+  close: PropTypes.func,
+  tlogId: PropTypes.number.isRequired,
+};
 
 export default HeroProfileStatsFollowersPopup;
