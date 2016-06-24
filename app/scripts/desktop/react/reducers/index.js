@@ -11,6 +11,8 @@ import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
 import flows from './flows';
+import followers from './followers';
+import followings from './followings';
 import people from './people';
 import ratingState from './ratingState';
 import relState from './relState';
@@ -32,6 +34,8 @@ export default {
   feedStatus,
   flow,
   flows,
+  followers,
+  followings,
   people,
   ratingState,
   relState,

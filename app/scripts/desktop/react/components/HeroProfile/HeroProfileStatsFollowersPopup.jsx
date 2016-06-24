@@ -1,4 +1,4 @@
-/*global i18n, NoticeService */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import ApiRoutes from '../../../../shared/routes/api';
 import UserAvatar from '../UserAvatar/new';
@@ -36,12 +36,6 @@ class HeroProfileStatsFollowersPopup extends Component {
       },
     });
   }
-  handleClickItem(pathname, ev) {
-    ev.preventDefault();
-
-    browserHistory.push({ pathname });
-    this.props.close();
-  }
   renderListItem({ reader }, key) {
     const { name, tlogUrl } = reader;
 
@@ -49,9 +43,9 @@ class HeroProfileStatsFollowersPopup extends Component {
       <article className="user__item" key={key}>
         <Link
           className="user__link"
-          href={tlogUrl}
-          onClick={this.handleClickItem.bind(null, uri(tlogUrl).path())}
+          onClick={this.props.close}
           title={name}
+          to={uri(tlogUrl).path()}
         >
           <span className="user__avatar">
             <UserAvatar size={40} user={reader} />
@@ -68,17 +62,15 @@ class HeroProfileStatsFollowersPopup extends Component {
   renderList() {
     return (
       <section className="users">
-        {this.state.relationships.map(this.renderListItem)}
+        {this.state.relationships.map(this.renderListItem.bind(this))}
       </section>
     );
   }
   renderMessage() {
     const { isError, isLoading } = this.state;
-    const messageKey = isError
-      ? 'hero_stats_popup_error'
-      : isLoading
-        ? 'hero_stats_popup_loading'
-        : 'hero_stats_popup_empty';
+    const messageKey = isError ? 'hero_stats_popup_error'
+                     : isLoading ? 'hero_stats_popup_loading'
+                     : 'hero_stats_popup_empty';
 
     return (
       <div className="grid-full">
