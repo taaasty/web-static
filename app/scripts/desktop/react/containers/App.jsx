@@ -13,7 +13,6 @@ let store = void 0;
 
 class App extends Component {
   componentWillMount() {
-    window.SPA = true;
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
   }
   render() {

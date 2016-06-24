@@ -9,7 +9,7 @@ class RefsPage extends Component {
     setBodyLayoutClassName('layout--tech');
   }
   render() {
-    const { token } = this.props.params;
+    const { params: { token }, route: { refUsername } } = this.props;
 
     return (
       <div className="page">
@@ -20,7 +20,7 @@ class RefsPage extends Component {
               <div className="layout-outer">
                 <Helmet title={i18n.t('inviter.title')} />
                 <div className="inviter-center-container">
-                  <Auth token={token} />
+                  <Auth refUsername={refUsername} token={token} />
                 </div>
               </div>
             </div>
@@ -33,6 +33,7 @@ class RefsPage extends Component {
 
 RefsPage.propTypes = {
   params: PropTypes.object.isRequired,
-}
+  route: PropTypes.object.isRequired,
+};
 
 export default RefsPage;

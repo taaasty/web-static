@@ -678,7 +678,8 @@
   },
   "inviter": {
     "title": "Registration by invite",
-    "gift_text": "You're amazing! Here on Tasty we highly appreciate wonderful people and present you with a one month free premium account."
+    "gift_text_empty": "You will get three months of free premium access after registration",
+    "gift_text_from": "As a gift from {{userName}} you will get three months of free premium access after registration"
   },
   "messenger": {
     "typing": "typing...",
@@ -744,14 +745,15 @@
   },
   "invite_ref": {
     "title": "Invite your friends",
-    "text": "Share the link with your friends and after registration they will get one month free premium access",
-    "share_text": "Tasty is a blogging platform connecting interesting people. Follow the link and get free premium account",
+    "text": "Share the link on social networking site or with your friends. After registration they will get three months of free premium access",
+    "footer_text": "Or you cat gift the premium to your Tasty friends. Just share the link with them",
+    "share_text": "Tasty is a friendly space for communications. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
   },
   "premium_popup": {
     "title": "Tasty <span class=\"--bold\">premium</span>",
-    "description": "We present you with one month free premium access",
+    "description": "You got three months of free premium access! What does it mean?",
     "support_description": "Support Tasty and get access to the premium features",
     "badge": "Premium badge next to your name",
     "rotation": "Your name rotation in \"Featured users\"",

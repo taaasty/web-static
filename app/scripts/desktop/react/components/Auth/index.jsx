@@ -48,6 +48,7 @@ AuthContainer.propTypes = {
   initSlug: PropTypes.string,
   initTab: PropTypes.string,
   postUrl: PropTypes.string,
+  refUsername: PropTypes.string,
   text: PropTypes.string,
   token: PropTypes.string,
 };

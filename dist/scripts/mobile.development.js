@@ -77305,7 +77305,7 @@ function mountReactComponents(root) {
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props.userToolbar });
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(props));
 
-      (0, _reactDom.render)((0, _react.createElement)(root, null), _node);
+      (0, _reactDom.render)((0, _react.createElement)(root, props), _node);
       return;
     }
   }
