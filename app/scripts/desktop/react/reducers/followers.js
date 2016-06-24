@@ -13,9 +13,30 @@ const initialState = {
 };
 
 const actionMap = {
-  []() {},
-  []() {},
-  []() {},
+  [FOLLOWERS_REQUEST](state) {
+    return Object.assign({}, state, {
+      isFetching: true,
+      error: null,
+    });
+  },
+
+  [FOLLOWERS_SUCCESS](state, { response, tlogId }) {
+    return Object.assign({}, state, {
+      tlogId,
+      ids: response.result,
+      isFetching: false,
+      error: null,
+    });
+  },
+
+  [FOLLOWERS_FAILURE](state, { error, tlogId }) {
+    return Object.assign({}, state, {
+      error,
+      tlogId,
+      ids: [],
+      isFetching: false,
+    });
+  },
 };
 
 export default createReducer(initialState, actionMap);
