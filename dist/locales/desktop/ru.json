@@ -12,6 +12,7 @@
   "conversation_entry_users_5": "Обсуждаете вы и еще <span class=\"messages__dialog-users-more\">{{count}} человек</span>",
   "conversation_entry_user_profile": "Перейти в профиль",
   "conversation_entry_user_private": "Написать в личку",
+  "premium_popup_fail": "У владельца ссылки закончились подарочные премиумы. Но вы можете приобрести премиум самостоятельно и подарить друзьям",
   "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
   "new_thread_placeholder": "Поиск...",
   "new_thread_button": "Написать сообщение",

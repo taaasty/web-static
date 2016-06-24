@@ -13,6 +13,7 @@ import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import PostAuthService from './services/PostAuthService';
 import MessagingService from './messaging/MessagingService';
+import NoticeService from './services/Notice';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
 import Aviator from 'aviator';
@@ -90,6 +91,9 @@ const ReactApp = {
 
       if (window.gon.premium_popup) {
         PopupActions.showPremiumPopup();
+      } else if (window.gon.premium_popup_fail) {
+        PopupActions.showGetPremiumPopup();
+        NoticeService.notifyError(i18n.t('premium_popup_fail'), 5000);
       } else if (window.gon.showUserOnboarding) {
         PopupActions.showUserOnboarding();
       }

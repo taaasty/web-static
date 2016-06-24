@@ -11,6 +11,7 @@
   "conversation_entry_users_plural": "Discussed by you and <span class=\"messages__dialog-users-more\">{{count}} people </span>",
   "conversation_entry_user_profile": "User profile",
   "conversation_entry_user_private": "Write a private message",
+  "premium_popup_fail": "All free premiums for this refferal link have been already used. You can buy your own premium account and gift free premiums to your friends",
   "new_thread_hint": "Start typing your friends name to send message ",
   "new_thread_placeholder": "Search...",
   "new_thread_button": "New message",
