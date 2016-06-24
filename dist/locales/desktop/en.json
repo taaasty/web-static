@@ -763,6 +763,7 @@
     "get_premium": "Get Premium!",
     "buy": "Buy",
     "for_month": "for a month",
+    "year_price": "Only 490 rub/year",
     "plans": {
       "month": {
         "title": "Monthly plan",

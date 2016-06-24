@@ -1,6 +1,8 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import PremiumFeatures from './PremiumFeatures';
+import Routes from '../../../../shared/routes/routes';
+import { PREMIUM_ORDER } from '../../constants/OrderConstants';
 
 function GetPremiumPopup({ onClick }) {
   return (
@@ -14,9 +16,24 @@ function GetPremiumPopup({ onClick }) {
       </div>
       <PremiumFeatures />
       <div className="popup-premium__footer">
-        <span className="button button--large button--green" onClick={onClick}>
-          {i18n.t('premium_popup.get_premium')}
-        </span>
+        <form action={Routes.orders()} method="POST">
+          <input
+            name="type"
+            type="hidden"
+            value={PREMIUM_ORDER}
+          />
+          <input
+            name="count_months"
+            type="hidden"
+            value={12}
+          />
+          <button className="button button--large button--green">
+            {i18n.t('premium_popup.get_premium')}
+          </button>
+          <div className="popup-premium__footer-description">
+            {i18n.t('premium_popup.year_price')}
+          </div>
+        </form>
       </div>
     </div>
   );
