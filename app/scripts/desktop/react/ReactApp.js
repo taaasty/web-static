@@ -93,7 +93,7 @@ const ReactApp = {
         PopupActions.showPremiumPopup();
       } else if (window.gon.premium_popup_fail) {
         PopupActions.showGetPremiumPopup();
-        NoticeService.notifyError(i18n.t('premium_popup_fail'), 5000);
+        NoticeService.notifyError(window.gon.premium_popup_fail, 5000);
       } else if (window.gon.showUserOnboarding) {
         PopupActions.showUserOnboarding();
       }
