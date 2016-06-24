@@ -1,6 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import { facebookUrl, vkontakteUrl, open } from '../common/SocialShare';
+import CurrentUserStore from '../../stores/current_user';
 
 class InviteRef extends Component {
   componentDidMount() {
@@ -8,7 +9,8 @@ class InviteRef extends Component {
   }
   render () {
     const { closeShellbox, inviteUrl } = this.props;
-    const vkUrl = vkontakteUrl(inviteUrl, i18n.t('invite_ref.share_text'));
+    const userpic = CurrentUserStore.getUserpic();
+    const vkUrl = vkontakteUrl(inviteUrl, i18n.t('invite_ref.share_text'), userpic && userpic.original_url);
     const fbUrl = facebookUrl(inviteUrl);
 
     return (
@@ -41,6 +43,9 @@ class InviteRef extends Component {
                 {i18n.t('invite_ref.fb_button')}
               </span>
             </a>
+          </div>
+          <div className="invite-ref__footer">
+            {i18n.t('invite_ref.footer_text')}
           </div>
         </div>
       </div>

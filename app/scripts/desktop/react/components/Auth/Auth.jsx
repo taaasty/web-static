@@ -11,7 +11,7 @@ class Auth extends Component {
     this.props.toEmail();
   }
   render() {
-    const { text, token } = this.props;
+    const { refUsername, text, token } = this.props;
     const boxStyle = {
       backgroundImage: 'url("//thumbor0.tasty0.ru/unsafe/712x416/smart/images/inviter_bg.jpg")',
     };
@@ -51,7 +51,7 @@ class Auth extends Component {
                 </a>
               </div>
               <div className="inviter__spacer" />
-              {token ? <RefFooter /> : <StatsFooter />}
+              {token ? <RefFooter userName={refUsername} /> : <StatsFooter />}
             </div>
           </div>
         </div>
@@ -61,6 +61,7 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
+  refUsername: PropTypes.string,
   text: PropTypes.string,
   toEmail: PropTypes.func.isRequired,
   token: PropTypes.string,
