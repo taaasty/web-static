@@ -60,6 +60,7 @@ flowSchema.define({
 });
 
 relSchema.define({
+  reader: tlogSchema,
   user: tlogSchema,
 });
 

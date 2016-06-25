@@ -1,43 +1,22 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import ApiRoutes from '../../../../shared/routes/api';
 import UserAvatar from '../UserAvatar/new';
 import Scroller from '../common/Scroller';
 import { Link } from 'react-router';
 import uri from 'urijs';
+import { connect } from 'react-redux';
+import { getFollowersIfNeeded } from '../../actions/FollowersActions';
+import { Map } from 'immutable';
 
 class HeroProfileStatsFollowersPopup extends Component {
-  state = {
-    relationships: null,
-    isError: false,
-    isLoading: false,
-  };
-  componentDidMount() {
-    this.loadFollowers();
+  componentWillMount() {
+    const { getFollowersIfNeeded, tlogId } = this.props;
+
+    getFollowersIfNeeded(tlogId);
   }
-  loadFollowers() {
-    this.safeUpdate(() => this.incrementActivities());
-    this.setState({
-      isError: false,
-      isLoading: true,
-    });
-    this.createRequest({
-      url: ApiRoutes.tlog_followers(this.props.tlogId),
-      success: (data) => {
-        this.safeUpdateState({ relationships: data.relationships });
-      },
-      error: (data) => {
-        this.safeUpdateState({ isError: true });
-        NoticeService.errorResponse(data);
-      },
-      complete: () => {
-        this.safeUpdate(() => this.decrementActivities());
-        this.safeUpdateState({ isLoading: false });
-      },
-    });
-  }
-  renderListItem({ reader }, key) {
-    const { name, tlogUrl } = reader;
+  renderListItem(user, key) {
+    const name = user.get('name', '');
+    const tlogUrl = user.get('tlogUrl', '');
 
     return (
       <article className="user__item" key={key}>
@@ -48,7 +27,7 @@ class HeroProfileStatsFollowersPopup extends Component {
           to={uri(tlogUrl).path()}
         >
           <span className="user__avatar">
-            <UserAvatar size={40} user={reader} />
+            <UserAvatar size={40} user={user.toJS()} />
           </span>
           <span className="user__desc">
             <span className="user__name">
@@ -62,14 +41,14 @@ class HeroProfileStatsFollowersPopup extends Component {
   renderList() {
     return (
       <section className="users">
-        {this.state.relationships.map(this.renderListItem.bind(this))}
+        {this.props.followers.map(this.renderListItem.bind(this))}
       </section>
     );
   }
   renderMessage() {
-    const { isError, isLoading } = this.state;
-    const messageKey = isError ? 'hero_stats_popup_error'
-                     : isLoading ? 'hero_stats_popup_loading'
+    const { error, isFetching } = this.props;
+    const messageKey = error ? 'hero_stats_popup_error'
+                     : isFetching ? 'hero_stats_popup_loading'
                      : 'hero_stats_popup_empty';
 
     return (
@@ -83,11 +62,11 @@ class HeroProfileStatsFollowersPopup extends Component {
     );
   }
   render() {
-    const { relationships } = this.state;
+    const { followers } = this.props;
 
     return (
       <Scroller className="scroller--users">
-        {relationships && relationships.length > 0
+        {followers && followers.length > 0
          ? this.renderList()
          : this.renderMessage()
         }
@@ -98,7 +77,28 @@ class HeroProfileStatsFollowersPopup extends Component {
 
 HeroProfileStatsFollowersPopup.propTypes = {
   close: PropTypes.func,
+  error: PropTypes.object,
+  followers: PropTypes.array.isRequired,
+  getFollowersIfNeeded: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   tlogId: PropTypes.number.isRequired,
 };
 
-export default HeroProfileStatsFollowersPopup;
+export default connect(
+  (state, { tlogId, ...rest }) => {
+    const { ids, isFetching, error } = state.followers;
+
+    return {
+      ...rest,
+      isFetching,
+      error,
+      tlogId,
+      followers: ids.map((id) => {
+        const rel = state.entities.getIn([ 'rel', id ], Map());
+
+        return state.entities.getIn([ 'tlog', String(rel.get('reader')) ], Map());
+      }),
+    };
+  },
+  { getFollowersIfNeeded }
+)(HeroProfileStatsFollowersPopup);

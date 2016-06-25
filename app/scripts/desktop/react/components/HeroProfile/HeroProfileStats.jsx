@@ -29,7 +29,7 @@ class HeroProfileStats extends Component {
     const followersCount = this.props.user.getIn([ 'stats', 'followersCount' ]);
 
     return !!followersCount && (
-      <span>
+      <span className="hero__stats-item-wrapper">
         <HeroProfileStatsItem
           count={followersCount}
           key="followers"
@@ -51,7 +51,7 @@ class HeroProfileStats extends Component {
     const followingsCount = this.props.user.getIn([ 'stats', 'followingsCount' ]);
 
     return !!followingsCount && (
-      <span>
+      <span className="hero__stats-item-wrapper">
         <HeroProfileStatsItem
           count={followingsCount}
           key="followings"
@@ -121,7 +121,7 @@ class HeroProfileStats extends Component {
     const tagsCount = this.props.user.getIn([ 'stats', 'tagsCount' ]);
 
     return !!tagsCount && (
-      <span>
+      <span className="hero__stats-item-wrapper">
         <HeroProfileStatsItem
           count={tagsCount}
           key="tags"

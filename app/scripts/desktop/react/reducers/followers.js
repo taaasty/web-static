@@ -23,7 +23,7 @@ const actionMap = {
   [FOLLOWERS_SUCCESS](state, { response, tlogId }) {
     return Object.assign({}, state, {
       tlogId,
-      ids: response.result,
+      ids: response.result.relationships,
       isFetching: false,
       error: null,
     });

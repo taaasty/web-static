@@ -1,6 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { makeGetUrl, defaultOpts } from './reqHelpers';
+import { defaultOpts } from './reqHelpers';
 
 export const FOLLOWERS_REQUEST = 'FOLLOWERS_REQUEST';
 export const FOLLOWERS_SUCCESS = 'FOLLOWERS_SUCCESS';
@@ -26,6 +26,8 @@ function shouldFetchFollowers(state, tlogId) {
 
 export function getFollowersIfNeeded(tlogId) {
   return (dispatch, getState) => {
-    
+    if (shouldFetchFollowers(getState(), tlogId)) {
+      return dispatch(fetchFollowers(ApiRoutes.tlog_followers(tlogId), tlogId));
+    }
   };
 }
