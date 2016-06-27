@@ -89,6 +89,10 @@ const ReactApp = {
       ReactUjs.initialize(AppRoot);
       initRoutes();
 
+      if (window.gon.flash_error) {
+        NoticeService.notifyError(window.gon.flash_error);
+      }
+
       if (window.gon.premium_popup) {
         PopupActions.showPremiumPopup();
       } else if (window.gon.premium_popup_fail) {
