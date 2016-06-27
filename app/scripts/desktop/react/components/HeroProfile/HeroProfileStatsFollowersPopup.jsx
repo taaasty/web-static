@@ -5,14 +5,16 @@ import Scroller from '../common/Scroller';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import { connect } from 'react-redux';
-import { getFollowersIfNeeded } from '../../actions/FollowersActions';
+import { getTlogFollowersIfNeeded } from '../../actions/TlogFollowersActions';
 import { Map } from 'immutable';
+
+const emptyUser = Map();
 
 class HeroProfileStatsFollowersPopup extends Component {
   componentWillMount() {
-    const { getFollowersIfNeeded, tlogId } = this.props;
+    const { getTlogFollowersIfNeeded, tlogId } = this.props;
 
-    getFollowersIfNeeded(tlogId);
+    getTlogFollowersIfNeeded(tlogId);
   }
   renderListItem(user, key) {
     const name = user.get('name', '');
@@ -62,11 +64,11 @@ class HeroProfileStatsFollowersPopup extends Component {
     );
   }
   render() {
-    const { followers } = this.props;
+    const { isFetching, followers } = this.props;
 
     return (
       <Scroller className="scroller--users">
-        {followers && followers.length > 0
+        {followers && followers.length > 0 && !isFetching
          ? this.renderList()
          : this.renderMessage()
         }
@@ -79,14 +81,14 @@ HeroProfileStatsFollowersPopup.propTypes = {
   close: PropTypes.func,
   error: PropTypes.object,
   followers: PropTypes.array.isRequired,
-  getFollowersIfNeeded: PropTypes.func.isRequired,
+  getTlogFollowersIfNeeded: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   tlogId: PropTypes.number.isRequired,
 };
 
 export default connect(
   (state, { tlogId, ...rest }) => {
-    const { ids, isFetching, error } = state.followers;
+    const { ids, isFetching, error } = state.tlogFollowers;
 
     return {
       ...rest,
@@ -96,9 +98,9 @@ export default connect(
       followers: ids.map((id) => {
         const rel = state.entities.getIn([ 'rel', id ], Map());
 
-        return state.entities.getIn([ 'tlog', String(rel.get('reader')) ], Map());
+        return state.entities.getIn([ 'tlog', String(rel.get('reader')) ], emptyUser);
       }),
     };
   },
-  { getFollowersIfNeeded }
+  { getTlogFollowersIfNeeded }
 )(HeroProfileStatsFollowersPopup);

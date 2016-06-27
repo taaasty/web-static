@@ -17,13 +17,25 @@ class HeroProfileStats extends Component {
     return this.props.user.get('isPrivacy');
   }
   handleFollowersClick() {
-    this.setState({ isFollowersPopupVisible: !this.state.isFollowersPopupVisible });
+    this.setState({
+      isFollowersPopupVisible: !this.state.isFollowersPopupVisible,
+      isFollowingsPopupVisible: false,
+      isTagsPopupVisible: false,
+    });
   }
   handleFollowingsClick() {
-    this.setState({ isFollowingsPopupVisible: !this.state.isFollowingsPopupVisible });
+    this.setState({
+      isFollowingsPopupVisible: !this.state.isFollowingsPopupVisible,
+      isFollowersPopupVisible: false,
+      isTagsPopupVisible: false,
+    });
   }
   handleTagsClick() {
-    this.setState({ isTagsPopupVisible: !this.state.isTagsPopupVisible });
+    this.setState({
+      isTagsPopupVisible: !this.state.isTagsPopupVisible,
+      isFollowersPopupVisible: false,
+      isFollowingsPopupVisible: false,
+    });
   }
   renderFollowersCount() {
     const followersCount = this.props.user.getIn([ 'stats', 'followersCount' ]);

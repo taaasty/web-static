@@ -40,6 +40,7 @@ class HeroProfile extends Component {
     }
   }
   componentWillUnmount() {
+    $('body').removeClass(HERO_OPENED_CLASS);
     $(window).off('resize', this.onResize);
     $(window).off('scroll', this.scrollFade);
   }

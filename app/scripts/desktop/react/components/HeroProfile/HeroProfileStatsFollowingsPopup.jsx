@@ -1,100 +1,57 @@
-/*global i18n, NoticeService, ReactUnmountMixin, RequesterMixin,
- ScrollerMixin, ComponentManipulationsMixin */
-import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../shared/routes/api';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
+import Scroller from '../common/Scroller';
 import UserAvatar from '../UserAvatar/new';
-import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import uri from 'urijs';
+import { connect } from 'react-redux';
+import { getTlogFollowingsIfNeeded } from '../../actions/TlogFollowingsActions';
+import { Map } from 'immutable';
 
-const HeroProfileStatsFollowingsPopup = createClass({
-  propTypes: {
-    close: PropTypes.func,
-    onClose: PropTypes.func,
-    tlogId: PropTypes.number.isRequired,
-  },
-  mixins: [ 'ReactActivitiesUser', ReactUnmountMixin, RequesterMixin,
-           ScrollerMixin, ComponentManipulationsMixin ],
+const emptyUser = Map();
 
-  getInitialState() {
-    return ({
-      relationships: null,
-      isError: false,
-      isLoading: false,
-    });
-  },
-
+class HeroProfileStatsFollowingsPopup extends Component {
   componentDidMount() {
-    this.loadFollowings();
-  },
+    const { getTlogFollowingsIfNeeded, tlogId } = this.props;
 
-  loadFollowings() {
-    this.safeUpdate(() => this.incrementActivities());
-    this.setState({
-      isError: false,
-      isLoading: true,
-    });
-    this.createRequest({
-      url: ApiRoutes.tlog_followings(this.props.tlogId),
-      success: (data) => {
-        this.safeUpdateState({ relationships: data.relationships });
-      },
-      error: (data) => {
-        this.safeUpdateState({ isError: true });
-        NoticeService.errorResponse(data);
-      },
-      complete: () => {
-        this.safeUpdate(() => this.decrementActivities());
-        this.safeUpdateState({ isLoading: false });
-      },
-    });
-  },
-
-  handleClickItem(pathname, ev) {
-    ev.preventDefault();
-
-    browserHistory.push({ pathname });
-    this.props.close();
-  },
-
-  renderListItem({ user }, key) {
-    const { name, tlogUrl } = user;
+    getTlogFollowingsIfNeeded(tlogId);
+  }
+  renderListItem(user, key) {
+    const name = user.get('name', '');
+    const  tlogUrl = user.get('tlogUrl', '');
 
     return (
       <article className="user__item" key={key}>
-        <a
+        <Link
           className="user__link"
-          href={tlogUrl}
-          onClick={this.handleClickItem.bind(null, uri(tlogUrl).path())}
+          onClick={this.props.close}
           title={name}
+          to={uri(tlogUrl).path()}
         >
           <span className="user__avatar">
-            <UserAvatar size={40} user={user} />
+            <UserAvatar size={40} user={user.toJS()} />
           </span>
           <span className="user__desc">
             <span className="user__name">
               {name}
             </span>
           </span>
-        </a>
+        </Link>
       </article>
     );
-  },
-
+  }
   renderList() {
     return (
       <section className="users">
-        {this.state.relationships.map(this.renderListItem)}
+        {this.props.followings.map(this.renderListItem.bind(this))}
       </section>
     );
-  },
-
+  }
   renderMessage() {
-    const { isError, isLoading } = this.state;
-    const messageKey = isError
-      ? 'hero_stats_popup_error'
-      : isLoading
-        ? 'hero_stats_popup_loading'
-        : 'hero_stats_popup_empty';
+    const { error, isFetching } = this.props;
+    const messageKey = error ? 'hero_stats_popup_error'
+                     : isFetching ? 'hero_stats_popup_loading'
+                     : 'hero_stats_popup_empty';
 
     return (
       <div className="grid-full">
@@ -105,25 +62,45 @@ const HeroProfileStatsFollowingsPopup = createClass({
         </div>
       </div>
     );
-  },
-
+  }
   render() {
-    const { relationships } = this.state;
+    const { isFetching, followings } = this.props;
 
     return (
-      <div className="scroller scroller--users" ref="scroller">
-        <div className="scroller__pane js-scroller-pane">
-          {relationships && relationships.length > 0
-             ? this.renderList()
-             : this.renderMessage()
-          }
-        </div>
-        <div className="scroller__track js-scroller-track">
-          <div className="scroller__bar js-scroller-bar" />
-        </div>
-      </div>
+      <Scroller className="scroller--users">
+        {followings && followings.length > 0 && !isFetching
+         ? this.renderList()
+         : this.renderMessage()
+        }
+      </Scroller>
     );
-  },
-});
+  }
+}
 
-export default HeroProfileStatsFollowingsPopup;
+HeroProfileStatsFollowingsPopup.propTypes = {
+  close: PropTypes.func,
+  error: PropTypes.object,
+  followings: PropTypes.array.isRequired,
+  getTlogFollowingsIfNeeded: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  tlogId: PropTypes.number.isRequired,
+};
+
+export default connect(
+  (state, { tlogId, ...rest }) => {
+    const { error, ids, isFetching } = state.tlogFollowings;
+
+    return {
+      ...rest,
+      isFetching,
+      error,
+      tlogId,
+      followings: ids.map((id) => {
+        const rel = state.entities.getIn([ 'rel', id ], Map());
+
+        return state.entities.getIn([ 'tlog', String(rel.get('user'))], emptyUser);
+      }),
+    };
+  },
+  { getTlogFollowingsIfNeeded }
+)(HeroProfileStatsFollowingsPopup);
