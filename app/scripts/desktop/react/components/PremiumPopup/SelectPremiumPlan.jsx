@@ -13,15 +13,8 @@ function SelectPremiumPlanPopup() {
         {i18n.t('premium_popup.support_description')}
       </div>
       <div className="popup-premium__plans-container">
-        <PremiumPlan
-          i18nPlanKey="month"
-          url="aaa"
-        />
-        <PremiumPlan
-          i18nPlanKey="year"
-          url="bbb"
-          recommended
-        />
+        <PremiumPlan i18nPlanKey="month" />
+        <PremiumPlan i18nPlanKey="year" recommended />
       </div>
     </div>
   );

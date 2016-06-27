@@ -15,11 +15,7 @@ function SettingsPremium({ expires }) {
   function handleButtonClick(ev) {
     ev.preventDefault();
 
-    if (expires) {
-      PopupActions.showSelectPremiumPlanPopup();
-    } else {
-      PopupActions.showGetPremiumPopup();
-    }
+    PopupActions.showGetPremiumPopup();
   }
 
   function getContext() {
