@@ -11,6 +11,7 @@
   "conversation_entry_users_plural": "Discussed by you and <span class=\"messages__dialog-users-more\">{{count}} people </span>",
   "conversation_entry_user_profile": "User profile",
   "conversation_entry_user_private": "Write a private message",
+  "premium_popup_fail": "All free premiums for this refferal link have been already used. You can buy your own premium account and gift free premiums to your friends",
   "new_thread_hint": "Start typing your friends name to send message ",
   "new_thread_placeholder": "Search...",
   "new_thread_button": "New message",
@@ -29,8 +30,8 @@
   "notifications_empty_list": "You have no new notifications",
   "notifications_loading_error": "Loading notifications error",
   "auth_select_signin_method": "Choose way to log in/register",
-  "auth_for_vote": "Register first for your vote being counted",
-  "auth_for_vote_complete": "Your vote has been counted",
+  "auth_for_vote": "Register first for your like being counted",
+  "auth_for_vote_complete": "Your like has been counted",
   "auth_for_comment": "Register first for your comment being posted",
   "auth_for_comment_complete": "Your comment has been added",
   "vkontakte": "Vkontakte",
@@ -315,6 +316,16 @@
   "settings_vkontakte_signin": "Link an account",
   "settings_vkontakte": "VKontakte",
   "settings_vkontakte_description": "Link your VK profile and you can set autopublication from your TLog.",
+  "settings": {
+    "premium": {
+      "title": "Tasty premium",
+      "desc_in_future": "Premium account is valid through {{date}}",
+      "desc_expired": "Premium account expired at {{date}}",
+      "desc_support": "Support Tasty and get premium features",
+      "extend": "Extend",
+      "get": "Get premium"
+    }
+  },
   "feed_best": "Best",
   "feed_friends": "Followings",
   "feed_live": "Live broadcast",
@@ -347,9 +358,9 @@
   "follow_status_ignored": "The user didn't approve your request",
   "follow_status_guessed": "You may like",
   "follow_status_requested": "In process",
-  "vote": "Vote",
-  "voted": "You have already voted",
-  "cant_vote": "You can't vote",
+  "vote": "Like",
+  "voted": "You have already liked the post",
+  "cant_vote": "You can't like the post",
   "report_entry_success": "Your complaint on the post was successfully sent",
   "repost_entry_success": "You have successfully shared this post",
   "delete_entry_success": "Post has successfully removed",
@@ -489,6 +500,10 @@
     "title": "People",
     "empty": "There is nobody here",
     "query_empty": "Nobody found for '{{query}}' search query",
+    "recommended": "Featured users",
+    "get_in": "How to get listed here?",
+    "followers_count": "follower",
+    "followers_count_plural": "followers",
     "posts": {
       "title": "Most active in posting",
       "text": "People in decreasing order of postings",
@@ -543,7 +558,7 @@
       "repost_from": "Repost from",
       "author_posted_in": "posted in",
       "pin_entry": "Pin the post on live broadcast",
-      "awaiting_paiment": "The post is awaiting payment to be pinned up",
+      "awaiting_payment": "The post is awaiting payment to be pinned up",
       "pinned": "The post is pinned up"
     },
     "repost": {
@@ -589,9 +604,11 @@
     "friends": "Friends",
     "user": {
       "my_tlog": "My TLog",
+      "get_premium": "Get",
+      "invite_friends": "Invite friends",
       "favorites": "Favorites",
       "private": "Private",
-      "subscriptions": "Subscriptions",
+      "subscriptions": "My subscriptions",
       "design_settings": "Design settings",
       "settings": "Settings",
       "logout": "Logout"
@@ -613,7 +630,8 @@
       "select_form": {
         "delete": "Delete",
         "delete_everywhere": "Delete for everybody",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "reply": "Reply"
       },
       "new_group_chat": "Create group chat",
       "new_group_next": "Next",
@@ -657,6 +675,11 @@
   "switcher": {
     "label_on": "Yes",
     "label_off": "No"
+  },
+  "inviter": {
+    "title": "Registration by invite",
+    "gift_text_empty": "You will get three months of free premium access after registration",
+    "gift_text_from": "As a gift from {{userName}} you will get three months of free premium access after registration"
   },
   "messenger": {
     "typing": "typing...",
@@ -719,5 +742,47 @@
   },
   "prices": {
     "title": "Prices"
+  },
+  "invite_ref": {
+    "title": "Invite your friends",
+    "text": "Share the link on social networking site or with your friends. After registration they will get three months of free premium access",
+    "footer_text": "Or you cat gift the premium to your Tasty friends. Just share the link with them",
+    "share_title": "Accept the gift from me and Tasty.",
+    "share_desc": "Tasty is a friendly space for communications. Follow the link and get free premium account",
+    "vk_button": "Share via VK",
+    "fb_button": "Share via FB"
+  },
+  "premium_popup": {
+    "title": "Tasty <span class=\"--bold\">premium</span>",
+    "description": "You got three months of free premium access! What does it mean?",
+    "support_description": "Support Tasty and get access to the premium features",
+    "badge": "Premium badge next to your name",
+    "rotation": "Your name rotation in \"Featured users\"",
+    "design": "Advanced design settings",
+    "anon_limit": "More anonymous posts before the limit",
+    "pdf": "Downloadable diary",
+    "delete_everywhere": "Delete chat message everywhere",
+    "gift": "Gift free premium to your friends",
+    "thank_you": "Thank You!",
+    "get_premium": "Get Premium!",
+    "buy": "Buy",
+    "for_month": "for a month",
+    "year_price": "Only 490 rub/year",
+    "plans": {
+      "month": {
+        "title": "Monthly plan",
+        "month_price": "<span class=\"price\">79</span> rub",
+        "year_price": "948 rub/year"
+      },
+      "year": {
+        "title": "Annual plan",
+        "month_price": "<span class=\"price\">59</span> rub",
+        "year_price": "710 rub/year",
+        "off": "-25%"
+      }
+    }
+  },
+  "user_slug": {
+    "title": "Tasty premium"
   }
 }

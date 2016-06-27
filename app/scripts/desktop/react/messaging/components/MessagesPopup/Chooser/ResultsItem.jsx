@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import UserAvatar from '../../../../components/UserAvatar';
+import UserSlug from '../../../../components/UserSlug';
 
 function ResultsItem({ onClick, predictedUser, selected }) {
   const itemClasses = classnames({
@@ -21,7 +22,7 @@ function ResultsItem({ onClick, predictedUser, selected }) {
           <UserAvatar size={35} user={predictedUser} />
         </div>
         <div className="messages__person-name">
-          {predictedUser.slug}
+          <UserSlug user={predictedUser} />
         </div>
       </div>
     </div>

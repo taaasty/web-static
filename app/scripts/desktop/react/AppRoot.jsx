@@ -19,10 +19,11 @@ import TagsPage from './components/TagsPage';
 import TermsPage from './components/TermsPage';
 import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
+import RefsPage from './components/RefsPage';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
-import PopupActions from './actions/popup';
+import PopupActions from './actions/PopupActions';
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware
@@ -46,7 +47,6 @@ function handleRouteUpdate() {
 
 class AppRoot extends Component {
   componentWillMount() {
-    window.SPA = true;
     store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
     feedStatusConnect(store.getState().currentUser.data, store);
   }
@@ -56,6 +56,7 @@ class AppRoot extends Component {
         <Router history={browserHistory} onUpdate={handleRouteUpdate}>
           <Route path="/account/:id/recover/:secret" component={AppPageEmpty} />
           <Route path="/orders/:id/:result" component={AppPageEmpty} />
+          <Route path="/refs/:token" refUsername={this.props.refUsername} component={RefsPage} />
           <Route path="/" component={AppPage}>
             <Route path="contacts" component={ContactsPage} />
             <Route path="terms" component={TermsPage} />

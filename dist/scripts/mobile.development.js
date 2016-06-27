@@ -17726,8 +17726,14 @@ var ApiRoutes, MESSENGER_VERSION_PREFIX;
 MESSENGER_VERSION_PREFIX = 'v2';
 
 ApiRoutes = {
-  omniauth_url: function(provider) {
-    return gon.host + '/auth/' + provider;
+  omniauth_url: function(provider, refToken) {
+    var baseUrl;
+    baseUrl = gon.host + "/auth/" + provider;
+    if (refToken) {
+      return baseUrl + "?ref_token=" + (encodeURIComponent(refToken));
+    } else {
+      return baseUrl;
+    }
   },
   iframely_url: function() {
     return gon.api_host + '/v1/embeding/iframely.json';
@@ -77299,7 +77305,7 @@ function mountReactComponents(root) {
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props.userToolbar });
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(props));
 
-      (0, _reactDom.render)((0, _react.createElement)(root, null), _node);
+      (0, _reactDom.render)((0, _react.createElement)(root, props), _node);
       return;
     }
   }

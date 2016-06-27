@@ -1,11 +1,16 @@
-/*global $, TastyEvents, Mousetrap, CurrentUserStore */
+/*global $, TastyEvents, Mousetrap */
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+
+import { follow } from '../../actions/RelationshipActions';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
 import CloseToolbar from '../toolbars/CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';
 import HeroProfileStats from './HeroProfileStats';
+import SmartFollowStatus from './SmartFollowStatus';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const HERO_CLOSED = 'closed';
 const HERO_OPENED = 'opened';
@@ -17,7 +22,6 @@ const transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
 class HeroProfile extends Component {
   state = {
     currentState: HERO_CLOSED,
-    relState: this.props.relationship && this.props.relationship.state,
   };
   componentWillMount() {
     this.open = this._open.bind(this);
@@ -34,6 +38,11 @@ class HeroProfile extends Component {
 
     TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
     TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.tlog.data.author !== nextProps.tlog.data.author) {
+      this._close();
+    }
   }
   componentWillUnmount() {
     $(window).off('resize', this.onResize);
@@ -110,9 +119,6 @@ class HeroProfile extends Component {
       this.setHeroWindowHeight();
     }
   }
-  updateRelState(relState) {
-    this.setState({ relState });
-  }
   handleAvatarClick(ev) {
     if (!this.isOpen()) {
       this.setInitialHeroHeight();
@@ -121,11 +127,11 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { stats, user } = this.props;
-    const relState = this.state.relState; //FIXME legacy when invoked from rails
-    const currentUser = CurrentUserStore.getUser();
+    const { currentUser, tlog } = this.props;
+    const { data: { author, my_relationship: relState, stats },
+            errorRelationship, isFetching, isFetchingRelationship } = tlog;
     const currentUserId = currentUser && currentUser.id;
-    const isCurrentUser = currentUserId && currentUserId === user.id;
+    const isCurrentUser = currentUserId && currentUserId === author.id;
     const followButtonVisible = !isCurrentUser && relState != null;
     
     return (
@@ -134,39 +140,45 @@ class HeroProfile extends Component {
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          <HeroProfileAvatar
-            isOpen={this.isOpen()}
-            onClick={this.handleAvatarClick.bind(this)}
-            user={user}
-          />
+          {!author.id || isFetching
+           ? <Spinner size={70} />
+           : <HeroProfileAvatar
+               isOpen={this.isOpen()}
+               onClick={this.handleAvatarClick.bind(this)}
+               user={author}
+             />
+          }
           {followButtonVisible &&
            <SmartFollowStatus
-             status={relState}
-             tlogId={user.id}
+             error={errorRelationship}
+             follow={follow.bind(null, author.id)}
+             isFetching={isFetchingRelationship}
+             relState={relState}
            />
           }
-           <HeroProfileHead user={user} />
+           {author.id && !isFetching && <HeroProfileHead user={author} />}
            <HeroProfileActionsContainer
-             currentUserId={currentUserId}
-             isCurrentUser={isCurrentUser}
-             onRelStateChange={this.updateRelState.bind(this)}
-             relationship={relState}
-             user={user}
+             isCurrentUser={!!isCurrentUser}
+             relState={relState}
+             tlog={tlog}
            />
         </div>
-        <HeroProfileStats
-          stats={stats}
-          user={user}
-        />
+        <HeroProfileStats stats={stats} user={author} />
       </div>
     );
   }
 }
 
 HeroProfile.propTypes = {
-  relationship: PropTypes.object,
-  stats: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  follow: PropTypes.func.isRequired,
+  tlog: PropTypes.object.isRequired,
 };
 
-export default HeroProfile;
+export default connect(
+  (state) => ({
+    currentUser: state.currentUser.data,
+    tlog: state.tlog,
+  }),
+  { follow }
+)(HeroProfile);

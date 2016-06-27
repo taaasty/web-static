@@ -1,8 +1,12 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import CurrentUserStore from '../../../../stores/current_user';
+import PopupActions from '../../../../actions/PopupActions';
 
-function SelectForm({ canDelete, canDeleteEverywhere, deleteFn, deleteEverywhereFn, stopSelect }) {
+function SelectForm(props) {
+  const { canDelete, canDeleteEverywhere, canReply, deleteFn,
+          deleteEverywhereFn, setReplyTo, stopSelect } = props;
   const deleteClasses = classNames({
     'message-form__button': true,
     'button--red': true,
@@ -13,6 +17,11 @@ function SelectForm({ canDelete, canDeleteEverywhere, deleteFn, deleteEverywhere
     'button--red': true,
     '--disabled': !canDeleteEverywhere,
   });
+  const replyClasses = classNames({
+    'message-form__button': true,
+    'button--green': true,
+    '--disabled': !canReply,
+  });
 
   function deleteMessages() {
     if (canDelete && typeof deleteFn === 'function')
@@ -20,8 +29,12 @@ function SelectForm({ canDelete, canDeleteEverywhere, deleteFn, deleteEverywhere
   }
 
   function deleteMessagesEverywhere() {
-    if (canDeleteEverywhere && typeof deleteEverywhereFn === 'function') {
-      deleteEverywhereFn();
+    if (CurrentUserStore.isPremium()) {
+      if (canDeleteEverywhere && typeof deleteEverywhereFn === 'function') {
+        deleteEverywhereFn();
+      }
+    } else {
+      PopupActions.showGetPremiumPopup();
     }
   }
 
@@ -41,7 +54,13 @@ function SelectForm({ canDelete, canDeleteEverywhere, deleteFn, deleteEverywhere
           {i18n.t('buttons.messenger.select_form.delete_everywhere')}
         </button>
         <button
-          className="message-form__button --white"
+          className={replyClasses}
+          onTouchTap={setReplyTo}
+        >
+          {i18n.t('buttons.messenger.select_form.reply')}
+        </button>
+        <button
+          className="message-form__button --white --cancel-button"
           onTouchTap={stopSelect}
         >
           {i18n.t('buttons.messenger.select_form.cancel')}
@@ -54,8 +73,10 @@ function SelectForm({ canDelete, canDeleteEverywhere, deleteFn, deleteEverywhere
 SelectForm.propTypes = {
   canDelete: PropTypes.bool.isRequired,
   canDeleteEverywhere: PropTypes.bool.isRequired,
+  canReply: PropTypes.bool.isRequired,
   deleteEverywhereFn: PropTypes.func.isRequired,
   deleteFn: PropTypes.func.isRequired,
+  setReplyTo: PropTypes.func.isRequired,
   stopSelect: PropTypes.func.isRequired,
 };
 

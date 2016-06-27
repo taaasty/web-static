@@ -1,102 +1,166 @@
 /*global i18n */
-import React, { createClass } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
-import PopupActionCreators from '../../actions/popup';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { getFlow }  from '../../actions/FlowActions';
+import classNames from 'classnames';
+import { ENTRY_PINNED_STATE, ENTRY_AWAITING_PAYMENT_STATE } from '../../constants/EntryConstants';
+import { PIN_FLOW_ORDER } from '../../constants/OrderConstants';
+import moment from 'moment';
+
 import Hero from './Hero';
-import RelationButton from '../common/RelationButton';
+import RelationButton from '../common/RelationButtonSPA';
 import HeroSettingsButton from './HeroSettingsButton';
-import HeroSubscriptionsButton from './HeroSubscriptionsButton';
-import HeroDesignSettingsButton from './HeroDesignSettingsButton';
+import Spinner from '../../../../shared/react/components/common/Spinner';
+import Routes from '../../../../shared/routes/routes';
+import FlowManager from '../FlowManager';
+import Popup from '../Popup';
+import PopupArea from '../Popup/Area';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
-let HeroFlow = createClass({
-  propTypes: {
-    flow: ProjectTypes.flow.isRequired,
-    relationship: ProjectTypes.relationship,
-  },
+class HeroFlow extends Component {
+  state = { popup: false };
+  componentWillMount() {
+    const { author: { is_flow }, id } = this.props.tlog.data;
 
-  getInitialState() {
-    const { flow, relationship } = this.props;
+    if (is_flow) {
+      this.props.getFlow(id);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    const { author: { is_flow }, id } = nextProps.tlog.data;
 
-    return {
-      flow: flow,
-      relState: relationship && relationship.state,
-    };
-  },
-
+    if (is_flow) {
+      nextProps.getFlow(id);
+    }
+  }
   showSettings() {
-    PopupActionCreators.manageFlow(this.state.flow, this.updateFlow);
-  },
+    this.setState({ popup: true });
+    document.body.classList.add('popup-enabled');
+  }
+  hideSettings() {
+    this.setState({ popup: false });
+    document.body.classList.remove('popup-enabled');
+  }
+  renderWriteButton() {
+    return (
+      <Link
+        className="button button--small button--green"
+        key="createEntryButton"
+        to={uri(Routes.new_entry_url(this.props.flow.data.slug)).path()}
+      >
+        {i18n.t('buttons.hero_create_entry')}
+      </Link>
+    );
+  }
+  renderRelationButton() {
+    const { flow, tlog } = this.props;
+    const { errorRelationship, isFetchingRelationship,
+            data: { my_relationship: relState } } = tlog;
+    const { id, is_privacy } = flow.data;
+    
+    return (
+      <RelationButton
+        error={errorRelationship}
+        isFetching={isFetchingRelationship}
+        key="relationButton"
+        relState={relState}
+        subjectId={id}
+        subjectPrivacy={is_privacy}
+      />
+    );
+  }
+  renderSettingsButton() {
+    return (
+      <HeroSettingsButton
+        key="settingsButton"
+        onClick={this.showSettings.bind(this)}
+      />
+    );
+  }
+  renderPinFlowButton() {
+    const { id, fixed_state, fixed_up_at, fixed_order_id } = this.props.flow.data;
+    const tillStr = fixed_up_at && moment(fixed_up_at).format('H:mm D MMMM');
+    const [ buttonText, buttonUrl, buttonClass ] = fixed_state === ENTRY_PINNED_STATE
+            ? [ i18n.t('buttons.hero_flow.pinned', { date: tillStr }), Routes.orders(fixed_order_id), 'button--green' ]
+            : fixed_state === ENTRY_AWAITING_PAYMENT_STATE
+              ? [ i18n.t('buttons.hero_flow.awaiting_payment'), Routes.orders(fixed_order_id), 'button--yellow' ]
+              : [ i18n.t('buttons.hero_flow.pin_flow'), Routes.newFlowOrder(id, PIN_FLOW_ORDER), 'button--outline' ];
+    const buttonClasses = classNames('button button--smass', buttonClass);
 
-  updateFlow(flow) {
-    this.setState({ flow });
-  },
-
-  updateRelState(relState) {
-    this.setState({ relState });
-  },
-
-  getText(count) {
+    return (
+      <a
+        className={buttonClasses}
+        href={buttonUrl}
+        key="pinFlowButton"
+      >
+        {buttonText}
+      </a>
+    );
+  }
+  text(count) {
     return count
       ?  i18n.t('hero.flow_entries_count', { count })
       :  null;
-  },
+  }
+  renderActions() {
+    const { can_edit, can_write } = this.props.flow.data;
+    const { my_relationship: relState } = this.props.tlog.data;
 
-  getActions() {
-    return [
-      this.renderWriteButton(),
-      this.renderRelationButton(),
-      this.renderSettingsButton(),
-    ];
-  },
-
-  renderWriteButton() {
-    if (this.state.flow.can_write) {
-      return (
-        <a
-          className="button button--small button--green"
-          href={Routes.new_entry_url(this.state.flow.slug)}
-          key="createEntryButton"
-        >
-          {i18n.t('buttons.hero_create_entry')}
-        </a>
-      );
-    }
-  },
-
-  renderRelationButton() {
-    if (this.props.relationship) {
-      return (
-        <RelationButton
-          key="relationButton"
-          objectID={CurrentUserStore.getUserID()}
-          onStateChange={this.updateRelState}
-          relState={this.state.relState}
-          subjectID={this.state.flow.id}
-          subjectPrivacy={this.state.flow.is_privacy}
-        />
-      );
-    }
-  },
-
-  renderSettingsButton() {
-    if (this.state.flow.can_edit) {
-      return (
-        <HeroSettingsButton onClick={this.showSettings} key="settingsButton" />
-      );
-    }
-  },
-
-  render() {
-    const { flowpic: { original_url }, name, public_tlog_entries_count, tlog_url } = this.state.flow;
     return (
-      <Hero
-        actions={this.getActions()}
-        backgroundUrl={original_url}
-        text={this.getText(public_tlog_entries_count)}
-        title={<a href={tlog_url}>{`#${name}`}</a>}
-      />
+      <div>
+        {can_write && this.renderWriteButton()}
+        {relState  && this.renderRelationButton()}
+        {can_edit && this.renderSettingsButton()}
+        {can_edit && this.renderPinFlowButton()}
+      </div>
     );
-  },
-});
+  }
+  render() {
+    const { popup } = this.state;
+    const { flow, tlog } = this.props;
+    const isFetching = flow.isFetching || !flow.data.id;
+    const { design: { backgroundImageUrl }, slug, tlog_url } = tlog.data;
+    const { flowpic: { original_url }, name, public_tlog_entries_count } = flow.data;
 
-export default HeroFlow;
+    return (
+      <div className="hero__flow">
+        <Hero
+          actions={isFetching ? <Spinner size={24} /> : this.renderActions()}
+          backgroundUrl={original_url || backgroundImageUrl}
+          text={this.text(public_tlog_entries_count)}
+          title={<Link to={uri(tlog_url).path()}>{`#${name || slug}`}</Link>}
+        />
+        {popup &&
+         <div className="popup-container">
+           <PopupArea onClose={this.hideSettings.bind(this)}>
+             <Popup
+               className="popup--dark popup--flows"
+               clue="manage-flow"
+               onClose={this.hideSettings.bind(this)}
+               title={i18n.t('manage_flow.header')}
+               withBackground
+             >
+               <FlowManager flow={flow} />
+             </Popup>
+           </PopupArea>
+         </div>
+        }
+      </div>
+    );
+  }
+}
+
+HeroFlow.propTypes = {
+  flow: PropTypes.object.isRequired,
+  getFlow: PropTypes.func.isRequired,
+  tlog: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => ({
+    flow: state.flow,
+    tlog: state.tlog,
+  }),
+  { getFlow }
+)(HeroFlow);

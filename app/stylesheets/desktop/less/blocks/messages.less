@@ -62,10 +62,10 @@
   width: 100%;
   box-sizing: border-box;
 
-  .popup--messages.--thread & {
+  .popup--messages.\--thread & {
   }
 
-  &.--with-actions {
+  &.\--with-actions {
     padding-right: 27px;
   }
 
@@ -74,7 +74,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    &.--status-text {
+    &.\--status-text {
       text-transform: none;
       font-weight: 300;
       letter-spacing: initial;
@@ -182,7 +182,7 @@
   top: 12px;
   left: 15px;
 
-  .icon.--group-default {
+  .icon.\--group-default {
     font-size: 40px;
     color: @grey;
   }
@@ -332,7 +332,7 @@
     padding-right: 90px;
   }
 
-  .messages__dialog-text.--public-header {
+  .messages__dialog-text.\--public-header {
     height: 40px;
     margin-bottom: 0;
     white-space: nowrap;
@@ -936,7 +936,7 @@
       background-color: inherit;
     }
 
-    &.--with-actions {
+    &.\--with-actions {
       padding: 12px 50px 12px 65px;
     }
   }
@@ -976,7 +976,7 @@
     cursor: pointer;
   }
 
-  .messages__dialog-text.--group-header {
+  .messages__dialog-text.\--group-header {
     position: relative;
     line-height: 40px;
     z-index: 10;
@@ -1016,7 +1016,7 @@
   display: flex;
   flex-direction: column;
 
-  &.--no-form {
+  &.\--no-form {
     padding-bottom: 0;
 
     .messages__footer {
@@ -1073,13 +1073,22 @@
     }
 
     .message-form__button-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
       position: relative;
-      text-align: right;
     }
 
     .message-form__button {
       padding-left: 7px;
       padding-right: 7px;
+
+      &.\--cancel-button {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 7px;
+      }
     }
 
     .message {
@@ -1093,9 +1102,13 @@
     }
   }
 
-  &.--private {
+  &.\--private {
     .message--to {
       padding: 0 44px 0 20px;
+    }
+
+    .message--from .message__selector {
+      left: 20px;
     }
 
     .messages__bubble:before {
@@ -1232,7 +1245,7 @@
   margin-left: 7px;
   &:extend(.button, .button--small);
 
-  &.--disabled {
+  &.\--disabled {
     &:extend(.button--grey);
     cursor: not-allowed;
   }
@@ -1242,7 +1255,7 @@
   float: right;
   &:extend(.button, .button--small, .button--green);
 
-  &.--disabled {
+  &.\--disabled {
     cursor: no-drop;
     &:extend(.button--grey);
   }
@@ -1344,7 +1357,7 @@
   padding: 0 44px 0 60px;
 
   .message__selector {
-    right: 12px;
+    right: 20px;
   }
 
   .messages__user-avatar {
@@ -1375,7 +1388,7 @@
   padding: 0 20px 0 44px;
 
   .message__selector {
-    left: 12px;
+    left: 15px;
   }
 
   .messages__user-avatar {
@@ -1401,6 +1414,28 @@
   .message-delivery__status {
     font-size: 10px;
     margin-left: 3px;
+  }
+}
+
+.message--reply {
+  position: relative;
+  text-align: left;
+  margin-bottom: 15px;
+  margin-left: 8px;
+  padding-left: 10px;
+  padding-right: 15px;
+  border-left: 2px solid @grey;
+
+  .messages__user-name:extend(.message--to .messages__user-name) {};
+
+  .messages__text {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .messages__img-container {
   }
 }
 
@@ -1456,6 +1491,26 @@
   .messages__footer {
     min-height: 177px;
     background-color: #f5f5f5;
+  }
+}
+
+.message-support-info {
+  vertical-align: middle;
+  margin-left: 5px;
+  color: @green;
+}
+
+.message-form__reply-container {
+  position: relative;
+
+  .message-form__reply-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    cursor: pointer;
+    font-size: 13px;
+    color: @grey;
   }
 }
 

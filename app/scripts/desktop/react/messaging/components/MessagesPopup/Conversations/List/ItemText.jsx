@@ -23,7 +23,7 @@ class ItemText extends Component {
       : <noscript />;
   }
   render() {
-    const { conversation: { created_at, last_message, not_disturb, online, recipient, unread_messages_count, user_id },
+    const { conversation: { created_at, last_message, not_disturb, recipient, unread_messages_count, user_id },
             hasUnread, hasUnreceived, onClick } = this.props;
 
     return (
@@ -39,7 +39,6 @@ class ItemText extends Component {
       >
         <span className="messages__user-avatar">
           <MsgUserAvatar size={CONVERSATION_PIC_SIZE} user={recipient} />
-          {online && <span className="messages__user-online" />}
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">

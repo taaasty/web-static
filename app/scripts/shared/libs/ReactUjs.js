@@ -29,7 +29,7 @@ function mountReactComponents(root) {
       window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, { userToolbar: props.userToolbar });
       window.STATE_FROM_SERVER = Object.assign(window.STATE_FROM_SERVER, props2redux(props));
 
-      render(createElement(root, null), node);
+      render(createElement(root, props), node);
       return;
     }
   }

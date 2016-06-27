@@ -3,8 +3,8 @@ import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
 import { connect } from 'react-redux';
 import { getTlog } from '../../actions/TlogActions';
-import HeroProfile from '../HeroProfileSPA';
-import HeroFlow from '../HeroComponent/HeroFlowSPA';
+import HeroProfile from '../HeroProfile';
+import HeroFlow from '../HeroComponent/HeroFlow';
 import SocialShare from '../common/SocialShare';
 import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';

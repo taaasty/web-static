@@ -3,10 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ThreadForm from './ThreadForm';
 import SelectForm from './SelectForm';
-import PublicConversationHeader from './PublicConversationHeader';
-import GroupConversationHeader from './GroupConversationHeader';
 import MessageList from './MessageList';
 import MessagesStore from '../../../stores/MessagesStore';
+import MessageActions from '../../../actions/MessageActions';
 import MessagesPopupStore from '../../../stores/MessagesPopupStore';
 import MessagesPopupActions from '../../../actions/MessagesPopupActions';
 import { browserHistory } from 'react-router';
@@ -14,10 +13,8 @@ import uri from 'urijs';
 import {
   PRIVATE_CONVERSATION,
   PUBLIC_CONVERSATION,
-  GROUP_CONVERSATION
+  GROUP_CONVERSATION,
 } from '../../../constants/ConversationConstants';
-
-const defaultBackgroundUrl = '/images/backgrounds/3.jpg';
 
 class Thread extends Component {
   state = this.getStateFromStore();
@@ -41,10 +38,22 @@ class Thread extends Component {
       selectedIds: MessagesStore.getSelection(),
       canDelete: MessagesStore.canDelete(),
       canDeleteEverywhere: MessagesStore.canDeleteEverywhere(id),
+      canReply: MessagesStore.canReply(),
     };
+  }
+  startSelect() {
+    if (!this.state.selectedState) {
+      MessagesPopupActions.startSelect();
+    }
   }
   stopSelect() {
     MessagesPopupActions.stopSelect();
+  }
+  setReplyTo() {
+    MessageActions.setReplyTo();
+  }
+  cancelReplyTo() {
+    MessageActions.cancelReplyTo();
   }
   deleteMessages(all) {
     messagingService.deleteMessages(
@@ -57,45 +66,68 @@ class Thread extends Component {
     ev.preventDefault();
     browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } });
   }
-  backgroundUrl() {
+  threadStyles() {
     const { conversation } = this.props;
 
-    return (conversation.type === PUBLIC_CONVERSATION
-      ? conversation.entry.author.design.backgroundImageUrl
-      : conversation.type === GROUP_CONVERSATION
-        ? conversation.background_image && conversation.background_image.url
-        : conversation.recipient.design.backgroundImageUrl) || defaultBackgroundUrl;
+    if (conversation.type === PUBLIC_CONVERSATION) {
+      const authorDesign = conversation.entry.author.design;
+
+      return authorDesign.backgroundId
+        ? { backgroundImage: `url(${authorDesign.backgroundImageUrl})` }
+        : {};
+    } else if (conversation.type === GROUP_CONVERSATION) {
+      return conversation.background_image && conversation.background_image.url || {};
+    } else {
+      const recipientDesign = conversation.recipient.design;
+
+      return recipientDesign.backgroundId
+        ? { backgroundImage: `url(${recipientDesign.backgroundImageUrl})` }
+        : {};
+    }
   }
   handleClickGroupHeader() {
     MessagesPopupActions.openGroupSettings(this.state.conversation);
   }
-  renderHeader() {
+  canTalk() {
     const { conversation } = this.props;
 
-    return conversation.type === GROUP_CONVERSATION
-        ? <GroupConversationHeader
-            conversation={conversation}
-            onClick={this.handleClickGroupHeader.bind(this)}
-          />
-        : null;
+    return typeof conversation.can_talk === 'undefined' || conversation.can_talk;
+  }
+  renderForm() {
+    const { conversation } = this.props;
+    const { canDelete, canDeleteEverywhere, canReply, selectState } = this.state;
+
+    if (selectState) {
+      return (
+        <SelectForm
+          canDelete={canDelete}
+          canDeleteEverywhere={canDeleteEverywhere}
+          canReply={canReply}
+          deleteEverywhereFn={this.deleteMessages.bind(this, true)}
+          deleteFn={this.deleteMessages.bind(this, false)}
+          setReplyTo={this.setReplyTo}
+          stopSelect={this.stopSelect}
+        />
+      );
+    } else if (this.canTalk()) {
+      return <ThreadForm cancelReplyTo={this.cancelReplyTo} conversation={conversation} />;
+    } else {
+      return null;
+    }
   }
   render() {
     const { conversation } = this.props;
-    const { canDelete, canDeleteEverywhere, selectState } = this.state;
+    const { selectState } = this.state;
     if (!conversation) {
       return null;
     }
 
-    const backgroundUrl = this.backgroundUrl();
-    const threadStyles  = { backgroundImage: `url(${backgroundUrl})` };
-    const canTalk = typeof conversation.can_talk === 'undefined' ||
-            conversation.can_talk;
     const containerClasses = classNames({
       'messages__section': true,
       'messages__section--thread': true,
       'messages__section--select': selectState,
       '--private': conversation.type === PRIVATE_CONVERSATION,
-      '--no-form': !canTalk,
+      '--no-form': !this.canTalk(),
     });
     const listClasses = classNames({
       'messages__body': true,
@@ -104,22 +136,16 @@ class Thread extends Component {
     
     return (
       <div className={containerClasses}>
-        {false && this.renderHeader()}
-        <div className={listClasses} style={threadStyles}>
+        <div className={listClasses} style={this.threadStyles()}>
           <div className="messages__thread-overlay" />
-          <MessageList conversation={conversation} selectState={selectState} />
+          <MessageList
+            conversation={conversation}
+            selectState={selectState}
+            startSelect={this.startSelect.bind(this)}
+          />
         </div>
         <footer className="messages__footer">
-          {selectState
-           ? <SelectForm
-               canDelete={canDelete}
-               canDeleteEverywhere={canDeleteEverywhere}
-               deleteEverywhereFn={this.deleteMessages.bind(this, true)}
-               deleteFn={this.deleteMessages.bind(this, false)}
-               stopSelect={this.stopSelect}
-             />
-           : canTalk && <ThreadForm conversation={conversation} />
-          }
+          {this.renderForm()}
         </footer>
       </div>
     );

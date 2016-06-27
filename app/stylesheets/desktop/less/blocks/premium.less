@@ -1,0 +1,48 @@
+.premium-badge {
+  &:before {
+    content: "PREMIUM";
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px 4px;
+    border-radius: 0;
+    color: @premium-color;
+    background: @premium-bg;
+    letter-spacing: 1px;
+    line-height: 1;
+    font-size: 9px;
+    font-family: @font-family-base!important;
+  }
+
+  .popup-user__list-item &:before,
+  .hero__title &:before {
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+
+  .hero__title &:before {
+      vertical-align: top;
+      //margin-top: 12px;
+  }
+
+  .hero__title & {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    transform: translateX(100%);
+  }
+
+  .people-item__name & {
+    display: block;
+    line-height: 0;
+    transform: translateY(-100%);
+  }
+}
+
+.premium-icon {
+  &:extend(.icon);
+
+  .messages__user-name & {
+    font-size: 12px;
+    color: @premium-star-color;
+  }
+}

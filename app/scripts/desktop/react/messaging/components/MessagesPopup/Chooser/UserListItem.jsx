@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import UserAvatar from '../../../../components/UserAvatar';
+import UserSlug from '../../../../components/UserSlug';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
 function UserListItem({ onClick, selected, user }) {
@@ -20,7 +21,7 @@ function UserListItem({ onClick, selected, user }) {
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">
-            {user.slug}
+            <UserSlug user={user} />
           </div>
         </div>
       </div>

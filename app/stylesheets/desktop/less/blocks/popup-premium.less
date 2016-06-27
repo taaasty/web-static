@@ -1,0 +1,152 @@
+@popup-premium-bg: #3c434f;
+
+.popup--premium {
+  width: 600px;
+
+  .popup__headbox, .popup__body {
+    background-color: @popup-premium-bg;
+    color: @white;
+  }
+
+  .popup__headbox {
+    height: 40px;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .popup__body {
+    padding: 40px;
+    border-radius: 0 0 3px 3px;
+    text-align: center;
+  }
+}
+
+.popup-premium__title {
+  margin-bottom: 20px;
+  font-size: 50px;
+  line-height: 1;
+
+  .\--bold {
+    font-weight: bold;
+  }
+}
+
+.popup-premium__description {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.popup-premium__feature-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.popup-premium__feature {
+  display: inline-block;
+  width: 30%;
+  box-sizing: border-box;
+  margin: 20px 0;
+
+  i.icon {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 60px;
+  }
+}
+
+.popup-premium__footer {
+  margin-top: 40px;
+
+  .button {
+    text-transform: none;
+    font-size: 18px;
+    letter-spacing: normal;
+  }
+}
+
+.popup-premium__footer-description {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.popup-premium__plans-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.popup-premium__plan {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px 20px;
+  border-radius: 3px;
+  background: @white;
+  color: @black;
+}
+
+.popup-premium__plan-off-container {
+  position: absolute;
+  display: table;
+  box-sizing: border-box;
+  top: -70px;
+  right: -70px;
+  width: 140px;
+  height: 140px;
+  padding-bottom: 10px;
+  transform: rotate(45deg);
+  background: @yellow;
+  color: @black;
+
+  .\--recommended-plan & {
+    background: @green;
+    color: @white;
+  }
+}
+
+.popup-premium__plan-off {
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.popup-premium__plan-title {
+  margin-bottom: 40px;
+}
+
+.popup-premium__plan-month-price .price {
+  font-size: 2em;
+}
+
+.popup-premium__plan-year-price {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: @grey;
+}
+
+.popup-premium__plan-footer {
+  min-width: 200px;
+  margin-top: 80px;
+
+  .button {
+    width: 100%;
+    border: 1px solid @green;
+    color: @green;
+    background: @white;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 0.8em;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .\--recommended-plan & {
+      color: @white;
+      background: @green;
+    }
+  }
+}

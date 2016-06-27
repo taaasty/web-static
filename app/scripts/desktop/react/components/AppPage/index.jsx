@@ -24,7 +24,13 @@ class AppPage extends Component {
       <div className="page">
         {!editing && <UserToolbar location={location} />}
         {children}
-        {!isLogged && params.entrySlug && <Auth fixed />}
+        {(!isLogged && params.entrySlug) &&
+         <div className="inviter--fixed__wrapper">
+           <div className="inviter--fixed">
+             <Auth />
+           </div>
+         </div>
+        }
         {!isLogged &&
          <button
            className="auth-button"

@@ -12,6 +12,7 @@
   "conversation_entry_users_5": "Обсуждаете вы и еще <span class=\"messages__dialog-users-more\">{{count}} человек</span>",
   "conversation_entry_user_profile": "Перейти в профиль",
   "conversation_entry_user_private": "Написать в личку",
+  "premium_popup_fail": "У владельца ссылки закончились подарочные премиумы. Но вы можете приобрести премиум самостоятельно и подарить друзьям",
   "new_thread_hint": "Начните вводить имя друга, которому хотите написать сообщение",
   "new_thread_placeholder": "Поиск...",
   "new_thread_button": "Написать сообщение",
@@ -31,8 +32,8 @@
   "notifications_empty_list": "Нет непросмотренных уведомлений",
   "notifications_loading_error": "Ошибка загрузки уведомлений",
   "auth_select_signin_method": "Выберите способ входа/регистрации",
-  "auth_for_vote": "Чтобы Ваш голос был учтен необходимо зарегистрироваться",
-  "auth_for_vote_complete": "Ваш голос был учтен",
+  "auth_for_vote": "Необходимо зарегистрироваться, чтобы поставить лайк",
+  "auth_for_vote_complete": "Ваш лайк был учтен",
   "auth_for_comment": "Чтобы комментарий появился на сайте необходимо зарегистрироваться",
   "auth_for_comment_complete": "Ваш комментарий был добавлен",
   "vkontakte": "Вконтакте",
@@ -181,14 +182,13 @@
   "persons_popup_header": "Управление подписками",
   "editor_private_entry": "Закрытая запись",
   "editor_public_entry": "Открытая запись",
-  "editor_public_with_voting_entry": "Открытая запись с голосованием",
-  "editor_enable_voting": "Добавить голосование",
-  "editor_disable_voting": "Убрать голосование",
+  "editor_public_with_voting_entry": "Открытая запись с возможностью ставить лайк",
+  "editor_enable_voting": "Разрешить лайк",
+  "editor_disable_voting": "Запретить лайк",
   "editor_publish_button": "Опубликовать",
   "editor_publish_to_tlog_button": "Опубликовать в {{tlogTag}}",
   "editor_save_button": "Сохранить в тлоге",
   "editor_preview_button": "Предпросмотр",
-  "editor_public_with_voting_entry": "Открытая запись с голосованием",
   "editor_title_placeholder": "Заголовок (199 символов)",
   "editor_text_placeholder": "Начните набирать текст поста.<br>Shift + Enter новая строка, Enter – новый абзац",
   "editor_description_placeholder": "Придумайте подпись",
@@ -326,6 +326,16 @@
   "settings_vkontakte_signin": "Привязать аккаунт",
   "settings_vkontakte": "Вконтакте",
   "settings_vkontakte_description": "Привяжите свой аккаунт Вконтакте, если вы захотите можно будет включить автопубликацию ваших записей из дневника",
+  "settings": {
+    "premium": {
+      "title": "Тейсти премиум",
+      "desc_in_future": "Премиум аккаунт действует до {{date}}",
+      "desc_expired": "Срок действия премиум-аккаунта истек {{date}}",
+      "desc_support": "Поддержи проект и получи премиум-возможности",
+      "extend": "Продлить",
+      "get": "Купить"
+    }
+  },
   "feed_best": "Лучшее",
   "feed_friends": "Подписки",
   "feed_live": "Прямой эфир",
@@ -358,9 +368,9 @@
   "follow_status_ignored": "Вам отказано в подписке на данный тлог",
   "follow_status_guessed": "Рекомендуем подписаться",
   "follow_status_requested": "В ожидании",
-  "vote": "Проголосовать",
-  "voted": "Вы уже проголосовали",
-  "cant_vote": "Вы не можете проголосовать",
+  "vote": "Нравится",
+  "voted": "Вы уже поставили лайк",
+  "cant_vote": "Вы не можете поставить лайк",
   "report_entry_success": "Жалоба на пост успешно отправлена",
   "repost_entry_success": "Вы успешно поделились постом",
   "delete_entry_success": "Пост успешно удалён",
@@ -512,6 +522,11 @@
     "title": "Люди",
     "empty": "Тут никого нет",
     "query_empty": "По запросу '{{query}}' никого не найдено",
+    "recommended": "Рекомендуем подписаться",
+    "get_in": "Как сюда попасть?",
+    "followers_count": "подписчик",
+    "followers_count_2": "подписчика",
+    "followers_count_5": "подписчиков",
     "posts": {
       "title": "Больше всего пишут",
       "text": "Люди в порядке количества публикаций",
@@ -567,7 +582,7 @@
       "author_posted_in": "написала в",
       "author_posted_in_m": "написал в",
       "pin_entry": "Закрепить пост в прямом эфире",
-      "awaiting_paiment": "Пост ожидает оплаты для закрепления",
+      "awaiting_payment": "Пост ожидает оплаты для закрепления",
       "pinned": "Пост закреплен"
     },
     "repost": {
@@ -612,12 +627,14 @@
     "flows": "Потоки",
     "people": "Люди",
     "anonymous": "Анонимки",
-    "friends": "Лента",
+    "friends": "Подписки",
     "user": {
       "my_tlog": "Мой дневник",
+      "get_premium": "Купить",
+      "invite_friends": "Пригласить друзей",
       "favorites": "Избранное",
       "private": "Скрытые записи",
-      "subscriptions": "Подписки",
+      "subscriptions": "Мои подписки",
       "design_settings": "Дизайн дневника",
       "settings": "Настройки",
       "logout": "Выход"
@@ -639,7 +656,8 @@
       "select_form": {
         "delete": "Удалить",
         "delete_everywhere": "Удалить для всех",
-        "cancel": "Отмена"
+        "cancel": "Отмена",
+        "reply": "Ответить"
       },
       "new_group_chat": "Создать группу",
       "new_group_next": "Далее",
@@ -684,6 +702,11 @@
   "switcher": {
     "label_on": "Да",
     "label_off": "Нет"
+  },
+  "inviter": {
+    "title": "Регистрация по приглашению",
+    "gift_text_empty": "Зарегистрировавшись, вы получите три месяца премиума в подарок",
+    "gift_text_from": "Зарегистрировавшись, вы получите три месяца премиума в подарок от {{userName}}"
   },
   "messenger": {
     "typing": "печатает...",
@@ -748,5 +771,47 @@
   },
   "prices": {
     "title": "Цены"
+  },
+  "invite_ref": {
+    "title": "Пригласи друзей",
+    "text": "Отправь ссылку друзьям или опубликуй в соцсетях. При регистрации они получат три месяца премиума в подарок",
+    "footer_text": "Также премиум можно подарить двум своим друзьям на Тейсти. Просто отправь им ссылку",
+    "share_title": "Получи подарок от меня и Тейсти.",
+    "share_desc": "Тейсти - дружелюбное пространство для общения. Перейди по ссылке и получи премиум-аккаунт бесплатно",
+    "vk_button": "Отправить VK",
+    "fb_button": "Отправить FB"
+  },
+  "premium_popup": {
+    "title": "Тейсти <span class=\"--bold\">премиум</span>",
+    "description": "Вы только что получили три месяца премиума в подарок! Что это дает?",
+    "support_description": "Поддержи проект и получи премиум-возможности",
+    "badge": "Бейдж рядом с именем",
+    "rotation": "Ротация в блоке \"Рекомендуем подписаться\"",
+    "design": "Расширенные настройки дизайна",
+    "anon_limit": "Увеличение лимита на анонимки",
+    "pdf": "Скачать весь дневник",
+    "delete_everywhere": "Удалить сообщение для всех в чате",
+    "gift": "Бесплатный премиум для друга",
+    "thank_you": "Спасибо!",
+    "get_premium": "Получить премиум",
+    "buy": "Купить",
+    "for_month": "на месяц",
+    "year_price": "Всего 490 руб/год",
+    "plans": {
+      "month": {
+        "title": "План на месяц",
+        "month_price": "<span class=\"price\">79</span> руб",
+        "year_price": "948 руб/год"
+      },
+      "year": {
+        "title": "План на год",
+        "month_price": "<span class=\"price\">59</span> руб",
+        "year_price": "710 руб/год",
+        "off": "-25%"
+      }
+    }
+  },
+  "user_slug": {
+    "title": "Тейсти премиум"
   }
 }

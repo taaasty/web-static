@@ -7,6 +7,7 @@ import SettingsEmail from './email/email';
 import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
 import SettingsAccounts from './SettingsAccounts';
+import SettingsPremium from './SettingsPremium';
 import SettingsMixin from './mixins/settings';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
@@ -50,6 +51,7 @@ const Settings = createClass({
             user={user}
           />
           <div className="settings__body">
+            <SettingsPremium expires={user.premium_expired} />
             <SettingsRadioItem
               checked={user.is_privacy}
               description={i18n.t('settings_privacy_description')}

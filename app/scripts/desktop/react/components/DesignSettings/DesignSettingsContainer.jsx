@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DesignActionCreators from '../../actions/design';
-import PopupActionCreators from '../../actions/popup';
+import PopupActionCreators from '../../actions/PopupActions';
 import CurrentUserStore from '../../stores/current_user';
 import DesignStore from '../../stores/design';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
@@ -17,8 +17,8 @@ class DesignSettingsContainer extends Component {
     DesignActionCreators.changeBgImage(file);
   }
   save() {
-    if (this.props.hasPaidValues && !this.props.hasDesignBundle) {
-      PopupActionCreators.showDesignSettingsPayment();
+    if (this.props.hasPaidValues && !this.props.isPremium) {
+      PopupActionCreators.showGetPremiumPopup();
     } else {
       DesignActionCreators.saveCurrent();
     }
@@ -37,16 +37,16 @@ class DesignSettingsContainer extends Component {
 DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore, CurrentUserStore], (props) => ({
   design: DesignStore.getCurrent(),
   options: DesignStore.getOptions(),
-  hasDesignBundle: CurrentUserStore.hasDesignBundle(),
   hasUnsavedFields: DesignStore.hasUnsavedFields(),
   hasPaidValues: DesignStore.hasPaidValues(),
+  isPremium: CurrentUserStore.isPremium(),
   isSaving: DesignStore.isSaving(),
 }));
 
 DesignSettingsContainer.propTypes = {
   design: PropTypes.object.isRequired,
-  hasDesignBundle: PropTypes.bool.isRequired,
   hasPaidValues: PropTypes.bool.isRequired,
+  isPremium: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired,
 };

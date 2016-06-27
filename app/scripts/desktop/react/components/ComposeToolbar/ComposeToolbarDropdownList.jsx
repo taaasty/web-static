@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
-import PopupActionCreators from '../../actions/popup';
+import PopupActionCreators from '../../actions/PopupActions';
 import Tooltip from '../common/Tooltip';
 import { Link } from 'react-router';
 import uri from 'urijs';
