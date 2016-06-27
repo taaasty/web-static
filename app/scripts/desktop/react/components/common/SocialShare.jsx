@@ -37,12 +37,13 @@ export function facebookUrl(url) {
   return `https://www.facebook.com/sharer/sharer.php?u=${eUrl}`;
 }
 
-export function vkontakteUrl(url, title='', img='') {
+export function vkontakteUrl(url, title='', img='', description='') {
   const eUrl = window.encodeURIComponent(url);
   const eTitle = window.encodeURIComponent(parseTitle(title));
+  const eDesc = window.encodeURIComponent(description);
   const eImg = window.encodeURIComponent(img);
 
-  return `http://vk.com/share.php?url=${eUrl}&title=${eTitle}&image=${eImg}`;
+  return `http://vk.com/share.php?url=${eUrl}&title=${eTitle}&image=${eImg}&description=${eDesc}`;
 }
 
 export function twitterUrl(url, title='') {

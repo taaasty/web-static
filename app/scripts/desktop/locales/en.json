@@ -747,7 +747,8 @@
     "title": "Invite your friends",
     "text": "Share the link on social networking site or with your friends. After registration they will get three months of free premium access",
     "footer_text": "Or you cat gift the premium to your Tasty friends. Just share the link with them",
-    "share_text": "Tasty is a friendly space for communications. Follow the link and get free premium account",
+    "share_title": "Accept the gift from me and Tasty.",
+    "share_desc": "Tasty is a friendly space for communications. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
   },
