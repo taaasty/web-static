@@ -10,7 +10,12 @@ class InviteRef extends Component {
   render () {
     const { closeShellbox, inviteUrl } = this.props;
     const userpic = CurrentUserStore.getUserpic();
-    const vkUrl = vkontakteUrl(inviteUrl, i18n.t('invite_ref.share_text'), userpic && userpic.original_url);
+    const vkUrl = vkontakteUrl(
+      inviteUrl,
+      i18n.t('invite_ref.share_title'),
+      userpic && userpic.original_url,
+      i18n.t('invite_ref.share_desc')
+    );
     const fbUrl = facebookUrl(inviteUrl);
 
     return (
