@@ -733,7 +733,8 @@
     "panel": {
       "contacts": "Contacts",
       "terms": "User agreement",
-      "prices": "Prices"
+      "prices": "Prices",
+      "policy": "Privacy policy"
     },
     "title": "User agreement"
   },
@@ -742,6 +743,9 @@
   },
   "prices": {
     "title": "Prices"
+  },
+  "policy": {
+    "title": "Privacy policy"
   },
   "invite_ref": {
     "title": "Invite your friends",

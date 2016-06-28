@@ -62,5 +62,6 @@ Routes =
   contacts: -> '/contacts'
   terms: -> '/terms'
   prices: -> '/prices'
+  policy: -> '/policy'
 
 module.exports = Routes
