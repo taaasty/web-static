@@ -22,6 +22,13 @@ function Terms() {
             {i18n.t('terms.panel.prices')}
           </Link>
         </li>
+        {i18n.language === 'en' && (
+          <li className="terms-panel__item">
+            <Link className="terms-panel__item-link" to={Routes.policy()}>
+              {i18n.t('terms.panel.policy')}
+            </Link>
+          </li>
+        )}
       </ul>
     </div>
   );
