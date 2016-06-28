@@ -146,8 +146,8 @@ class HeroProfileStats extends Component {
            title={i18n.t('tags')}
          >
            <HeroProfileStatsTagsPopup
-             userID={this.props.user.get('id')}
-             userSlug={this.props.user.get('slug')}
+             tlogId={this.props.user.get('id')}
+             tlogSlug={this.props.user.get('slug')}
            />
          </HeroProfileStatsPopup>
         }

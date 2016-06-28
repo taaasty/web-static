@@ -12,7 +12,7 @@ function fetchTlogTags(endpoint, tlogId) {
     [CALL_API]: {
       endpoint,
       types: [ TLOG_TAGS_REQUEST, TLOG_TAGS_SUCCESS, TLOG_TAGS_FAILURE ],
-      schema: Schemas.RELATIONSHIP_COLL,
+      schema: Schemas.NONE,
       opts: defaultOpts,
     },
   };

@@ -14,20 +14,20 @@ class HeroProfileStatsTagsPopup extends Component {
     getTlogTagsIfNeeded(tlogId);
   }
   renderListItem(tag, key) {
-    const { name, taggings_count } = tag;
-    const { userSlug } = this.props;
-    const url = Routes.userTag(userSlug, name);
+    const { name, taggingsCount } = tag;
+    const { close, tlogSlug } = this.props;
+    const url = Routes.userTag(tlogSlug, name);
 
     return (
       <article className="tag" key={key}>
         <Link
           className="tag__link"
-          onClick={this.props.close}
+          onClick={close}
           title={`#${name}`}
           to={uri(url).path()}
         >
           <span className="tag__count">
-            {taggings_count}
+            {taggingsCount}
           </span>
           <span className="tag__text">
             {`#${name}`}
@@ -60,11 +60,11 @@ class HeroProfileStatsTagsPopup extends Component {
     );
   }
   render() {
-    const { tags } = this.props;
+    const { isFetching, tags } = this.props;
 
     return (
       <Scroller className="scroller--tags">
-        {tags && tags.length > 0
+        {tags && tags.length > 0 && !isFetching
          ? this.renderList()
          : this.renderMessage()
         }
@@ -75,12 +75,25 @@ class HeroProfileStatsTagsPopup extends Component {
 
 HeroProfileStatsTagsPopup.propTypes = {
   close: PropTypes.func,
+  error: PropTypes.object,
+  getTlogTagsIfNeeded: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  tags: PropTypes.array.isRequired,
   tlogId: PropTypes.number.isRequired,
+  tlogSlug: PropTypes.string.isRequired,
 };
 
 export default connect(
   (state, { tlogId, ...rest }) => {
-    return {};
+    const { error, isFetching, tags } = state.tlogTags;
+
+    return {
+      ...rest,
+      tlogId,
+      error,
+      isFetching,
+      tags,
+    };
   },
   { getTlogTagsIfNeeded }
 )(HeroProfileStatsTagsPopup);

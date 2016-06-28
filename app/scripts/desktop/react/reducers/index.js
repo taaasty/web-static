@@ -19,6 +19,7 @@ import tlog from './tlog';
 import tlogEntries from './tlogEntries';
 import tlogFollowers from './tlogFollowers';
 import tlogFollowings from './tlogFollowings';
+import tlogTags from './tlogTags';
 import userToolbar from './userToolbar';
 
 export default {
@@ -42,5 +43,6 @@ export default {
   tlogEntries,
   tlogFollowers,
   tlogFollowings,
+  tlogTags,
   userToolbar,
 };
