@@ -17,7 +17,7 @@ class DesignSettingsContainer extends Component {
     DesignActionCreators.changeBgImage(file);
   }
   save() {
-    if (this.props.hasPaidValues && !this.props.isPremium) {
+    if (this.props.hasPaidValues && !(this.props.isPremium || this.props.hasDesignBundle)) {
       PopupActionCreators.showGetPremiumPopup();
     } else {
       DesignActionCreators.saveCurrent();
@@ -37,6 +37,7 @@ class DesignSettingsContainer extends Component {
 DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore, CurrentUserStore], (props) => ({
   design: DesignStore.getCurrent(),
   options: DesignStore.getOptions(),
+  hasDesignBundle: CurrentUserStore.hasDesignBundle(),
   hasUnsavedFields: DesignStore.hasUnsavedFields(),
   hasPaidValues: DesignStore.hasPaidValues(),
   isPremium: CurrentUserStore.isPremium(),
@@ -45,6 +46,7 @@ DesignSettingsContainer = connectToStores(DesignSettingsContainer, [DesignStore,
 
 DesignSettingsContainer.propTypes = {
   design: PropTypes.object.isRequired,
+  hasDesignBundle: PropTypes.bool.isRequired,
   hasPaidValues: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
