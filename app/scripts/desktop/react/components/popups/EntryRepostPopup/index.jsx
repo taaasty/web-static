@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { repostEntry } from '../../../actions/EntryActions';
 import { loadAvailableFlows } from '../../../actions/FlowActions';
 import fuzzy from 'fuzzy';
+import Popup from '../../Popup';
 import Scroller from '../../common/Scroller';
-import RelativePopup from '../RelativePopup';
 import EntryRepostTargetItem from './EntryRepostTargetItem';
 import EntryRepostTargetSearch from './EntryRepostTargetSearch';
 

@@ -4,7 +4,7 @@ import Spinner from './Spinner';
 
 class Header extends Component {
   render() {
-    const { draggable, hasActivities, onClose, title } = this.props;
+    const { draggable, onClose, showSpinner, title } = this.props;
     const headerClasses = classNames({
       'popup__header': true,
       'cursor--move': draggable,
@@ -17,7 +17,7 @@ class Header extends Component {
             {title}
           </h3>
         </div>
-        {hasActivities && <Spinner />}
+        {!!showSpinner && <Spinner />}
         <div className="popup__close" onClick={onClose}>
           <i className="icon icon--cross" />
         </div>
@@ -27,10 +27,16 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  draggable: PropTypes.bool,
-  hasActivities: PropTypes.bool.isRequired,
+  draggable: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  showSpinner: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
+};
+
+Header.defaultProps = {
+  draggable: false,
+  showSpinner: false,
+  title: '--',
 };
 
 export default Header;

@@ -25,7 +25,6 @@ class HeroProfileStatsPopup extends Component {
           <div className="popup__arrow popup__arrow--down" />
           <PopupHeader
             draggable={false}
-            hasActivities={false}
             onClose={close}
             title={title}
           />

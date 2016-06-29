@@ -1,9 +1,19 @@
 /*global $ */
-import React, { cloneElement, createClass, Children, PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
 import Header from './Header';
+
+function isNodeInRoot(node, root) {
+  while (node) {
+    if (node === root) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
 
 const _Popup = createClass({
   propTypes: {
@@ -13,9 +23,9 @@ const _Popup = createClass({
     onClose: PropTypes.func.isRequired,
     onPositionChange: PropTypes.func.isRequired,
     position: PropTypes.object.isRequired,
+    showSpinner: PropTypes.bool,
     title: PropTypes.string.isRequired,
   },
-  mixins: [ 'ReactActivitiesMixin' ],
 
   componentDidMount() {
     if (this.props.draggable) {
@@ -60,12 +70,19 @@ const _Popup = createClass({
     });
   },
 
+  handleOutsideMouseClick(e) {
+    if (isNodeInRoot(e.target, findDOMNode(this))) {
+      return;
+    }
+
+    if (isNodeInRoot(e.target, findDOMNode(this.props.targetRef))) { return; }
+    e.stopPropagation();
+    this.props.onClose();
+  },
+
   render() {
-    const { className, draggable, onClose, position, title } = this.props;
+    const { className, children, draggable, onClose, position, showSpinner, title } = this.props;
     const popupClasses = classNames('popup', className);
-    const children = Children.map(this.props.children, ((child) =>
-      cloneElement(child, { activitiesHandler: this.activitiesHandler })
-    ));
 
     return (
       <div
@@ -77,9 +94,9 @@ const _Popup = createClass({
       >
         <Header
           draggable={draggable}
-          hasActivities={this.hasActivities()}
           onClose={onClose}
           ref="header"
+          showSpinner={showSpinner}
           title={title}
         />
         <div className="popup__body">

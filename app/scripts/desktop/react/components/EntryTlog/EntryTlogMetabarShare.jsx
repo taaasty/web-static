@@ -41,10 +41,8 @@ class EntryTlogMetabarShare extends Component {
       >
         {this.state.isPopupOpened &&
          <EntryRepostPopup
-           entryID={id}
-           isOpened={this.state.isPopupOpened}
+           entryId={id}
            onClose={this.closePopup.bind(this)}
-           targetRef={this.refs.toggle}
          />
         }
         {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
