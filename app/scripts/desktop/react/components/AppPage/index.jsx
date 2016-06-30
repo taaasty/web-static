@@ -10,12 +10,14 @@ import BrowserSupport from '../BrowserSupport';
 import SupportLauncher from '../SupportLauncher';
 import PopupActions from '../../actions/PopupActions';
 
+const PREMIUM_HASH_PARAM = 'premium';
+
 class AppPage extends Component {
   componentWillMount() {
     this.props.getAppStatsIfNeeded();
   }
   componentDidMount() {
-    if ((/\bpremium\b/).test(String(this.props.location.hash))) {
+    if (new RegExp(`\\b${PREMIUM_HASH_PARAM}\\b`).test(String(this.props.location.hash))) {
       PopupActions.showGetPremiumPopup();
     }
   }
