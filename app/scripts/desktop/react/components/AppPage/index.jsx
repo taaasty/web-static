@@ -8,10 +8,18 @@ import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
 import BrowserSupport from '../BrowserSupport';
 import SupportLauncher from '../SupportLauncher';
+import PopupActions from '../../actions/PopupActions';
+
+const PREMIUM_HASH_PARAM = 'premium';
 
 class AppPage extends Component {
   componentWillMount() {
     this.props.getAppStatsIfNeeded();
+  }
+  componentDidMount() {
+    if (new RegExp(`\\b${PREMIUM_HASH_PARAM}\\b`).test(String(this.props.location.hash))) {
+      PopupActions.showGetPremiumPopup();
+    }
   }
   componentWillReceiveProps() {
     this.props.getAppStatsIfNeeded();
