@@ -142,9 +142,6 @@
   "entry_meta_vk": "Вконтакте",
   "entry_meta_fb": "Facebook",
   "entry_meta_twitter": "Twitter",
-  "entry_repost_loading": "Загружаю..",
-  "entry_repost_empty": "Список пуст",
-  "entry_repost_error": "Ошибка загрузки",
   "hero_stats_popup_loading": "Загружаю..",
   "hero_stats_popup_empty": "Список пуст",
   "hero_stats_popup_error": "Ошибка загрузки",
@@ -340,7 +337,6 @@
   "feed_people": "Люди",
   "feed_anonymous": "Анонимки",
   "settings_header": "Настройки",
-  "entry_repost_header": "Куда репост?",
   "toolbar_new_entry_item": "Новая запись",
   "toolbar_new_text_entry": "Текст в дневник",
   "toolbar_new_image_entry": "Картинка в дневник",
@@ -590,6 +586,11 @@
       "pinned": "Пост закреплен"
     },
     "repost": {
+      "header": "Куда репост?",
+      "loading": "Загружаю..",
+      "empty": "Список пуст",
+      "error": "Ошибка загрузки",
+      "search_placeholder": "Поиск...",
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"{{flowsLink}}\">потоки</a> чтобы добавлять туда посты"
     }
   },

@@ -15,7 +15,7 @@ import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
 const Settings = createClass({
   displayName: 'Settings',
   mixins: [
-    SettingsMixin, 'ReactActivitiesUser', ReactShakeMixin, RequesterMixin,
+    SettingsMixin, ReactShakeMixin, RequesterMixin,
     ComponentManipulationsMixin, LinkedStateMixin,
   ],
 
@@ -45,7 +45,6 @@ const Settings = createClass({
       <div className="settings">
         <form>
           <SettingsHeader
-            activitiesHandler={this.props.activitiesHandler}
             onSlugChange={this.updateSlug}
             onTitleChange={this.updateTitle}
             user={user}

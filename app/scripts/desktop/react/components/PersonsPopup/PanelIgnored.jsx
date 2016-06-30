@@ -5,7 +5,7 @@ import ApiRoutes from '../../../../shared/routes/api';
 import RelationshipIgnored from './RelationshipIgnored';
 
 const PanelIgnored = createClass({
-  mixins: [ 'ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
+  mixins: [ RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
   relationshipType: 'ignored',
   itemClass() {
     return RelationshipIgnored;

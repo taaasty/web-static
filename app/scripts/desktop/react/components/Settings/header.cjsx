@@ -7,7 +7,7 @@ SettingsHeader = React.createClass
 
   propTypes:
     user:              React.PropTypes.object.isRequired
-    activitiesHandler: React.PropTypes.object.isRequired
+#    activitiesHandler: React.PropTypes.object.isRequired
     onSlugChange:      React.PropTypes.func.isRequired
     onTitleChange:     React.PropTypes.func.isRequired
 
@@ -20,9 +20,7 @@ SettingsHeader = React.createClass
            className="settings__hero">
         <div className="settings__hero__overlay" />
         <div className="settings__hero__box">
-          <SettingsAvatar
-              user={ @props.user }
-              activitiesHandler={ @props.activitiesHandler } />
+          <SettingsAvatar user={ @props.user } />
           <SettingsSlug
               slug={ @props.user.slug }
               onChange={ @props.onSlugChange } />

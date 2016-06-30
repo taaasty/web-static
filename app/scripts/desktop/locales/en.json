@@ -134,9 +134,6 @@
   "entry_meta_vk": "Vkontakte",
   "entry_meta_fb": "Facebook",
   "entry_meta_twitter": "Twitter",
-  "entry_repost_loading": "Loading...",
-  "entry_repost_empty": "List is empty",
-  "entry_repost_error": "An error occured while loading",
   "hero_stats_popup_loading": "Loading...",
   "hero_stats_popup_empty": "List is empty",
   "hero_stats_popup_error": "Loading error",
@@ -330,7 +327,6 @@
   "feed_people": "People",
   "feed_anonymous": "Anonymous ",
   "settings_header": "Settings",
-  "entry_repost_header": "Repost to",
   "toolbar_new_entry_item": "New post",
   "toolbar_new_text_entry": "Text to TLog",
   "toolbar_new_image_entry": "Image to TLog",
@@ -566,6 +562,11 @@
       "pinned": "The post is pinned up"
     },
     "repost": {
+      "header": "Repost to",
+      "loading": "Loading...",
+      "empty": "List is empty",
+      "error": "An error occured while loading",
+      "search_placeholder": "Search...",
       "no_flows": "Follow or create new <a class=\"popup__link\" href=\"{{flowsLink}}\">flows</a> to share your thoughts there"
     }
   },

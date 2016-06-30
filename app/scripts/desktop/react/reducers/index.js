@@ -14,6 +14,7 @@ import flows from './flows';
 import people from './people';
 import ratingState from './ratingState';
 import relState from './relState';
+import repostFlows from './repostFlows';
 import tagEntries from './tagEntries';
 import tlog from './tlog';
 import tlogEntries from './tlogEntries';
@@ -38,6 +39,7 @@ export default {
   people,
   ratingState,
   relState,
+  repostFlows,
   tagEntries,
   tlog,
   tlogEntries,

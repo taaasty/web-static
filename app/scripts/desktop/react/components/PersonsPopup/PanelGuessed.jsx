@@ -5,7 +5,7 @@ import ApiRoutes from '../../../../shared/routes/api';
 import RelationshipGuessed from './RelationshipGuessed';
 
 const PanelGuessed = createClass({
-  mixins: [ 'ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
+  mixins: [ RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
   relationshipType: 'guessed',
   itemClass() {
     return RelationshipGuessed;

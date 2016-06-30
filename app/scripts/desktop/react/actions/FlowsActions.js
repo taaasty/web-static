@@ -1,14 +1,18 @@
-/*global $ */
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, makeGetUrl } from './reqHelpers';
 
 export const FLOWS_REQUEST = 'FLOWS_REQUEST';
-export const FLOWS_RECEIVE = 'FLOWS_RECEIVE';
-export const FLOWS_ERROR = 'FLOWS_ERROR';
-export const FLOWS_RESET = 'FLOWS_RESET';
+export const FLOWS_SUCCESS = 'FLOWS_SUCCESS';
+export const FLOWS_FAILURE = 'FLOWS_FAILURE';
+
+export const FLOWS_MINE_REQUEST = 'FLOWS_MINE_REQUEST';
+export const FLOWS_MINE_SUCCESS = 'FLOWS_MINE_SUCCESS';
+export const FLOWS_MINE_FAILURE = 'FLOWS_MINE_FAILURE';
 
 export const navFilters = [ 'popular', 'newest', 'my' ];
 export const navFiltersUnauth = [ 'popular', 'newest' ]; // should be a subset of navFilters
+
 const PAGE_SIZE_LIMIT = 30;
 
 export function flowsData({ query }) {
@@ -22,39 +26,15 @@ export function flowsData({ query }) {
 }
 
 
-function flowsRequest() {
+function fetchFlows(endpoint) {
   return {
-    type: FLOWS_REQUEST,
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.FLOW_COLL,
+      types: [],
+      opts: defaultOpts,
+    },
   };
-}
-
-function flowsReceive(data) {
-  return {
-    type: FLOWS_RECEIVE,
-    payload: data,
-  };
-}
-
-function flowsError(error) {
-  return {
-    type: FLOWS_ERROR,
-    payload: error,
-  };
-}
-
-function flowsReset() {
-  return {
-    type: FLOWS_RESET,
-  };
-}
-
-function fetchFlows(url, data) {
-  return $.ajax({ url, data })
-    .fail((xhr) => ErrorService.notifyErrorResponse('Загрузка списка потоков', {
-      method: 'fetchFlows(url, data)',
-      methodArguments: { url, data },
-      response: xhr.responseJSON,
-    }));
 }
 
 function shouldFetchFlows(state, { filter }) {

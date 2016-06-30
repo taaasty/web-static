@@ -5,7 +5,7 @@ import ApiRoutes from '../../../../shared/routes/api';
 import RelationshipRequested from './RelationshipRequested';
 
 const PanelRequested = createClass({
-  mixins: [ 'ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
+  mixins: [ RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
   relationshipType: 'requested',
   itemClass() {
     return RelationshipRequested;

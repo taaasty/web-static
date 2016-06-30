@@ -2,101 +2,77 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { repostEntry } from '../../../actions/EntryActions';
-import { loadAvailableFlows } from '../../../actions/FlowActions';
+import { getRepostFlows } from '../../../actions/RepostFlowsActions';
 import fuzzy from 'fuzzy';
-import PopupHeader from '../../PopupHeader';
+import PopupHeader from '../../Popup/Header';
 import Scroller from '../../common/Scroller';
 import EntryRepostTargetItem from './EntryRepostTargetItem';
 import EntryRepostTargetSearch from './EntryRepostTargetSearch';
 import Routes from '../../../../../shared/routes/routes';
+import { Map } from 'immutable';
+
+const emptyFlow = Map();
 
 class EntryRepostPopup extends Component {
   state = {
-    targetList: [CurrentUserStore.getUser()],
-    visibleList: [CurrentUserStore.getUser()],
-    nextPage: 1,
     pattern: '',
-    isLoading: true,
-    isLoadingMore: false,
-    isError: false,
   };
   componentDidMount() {
-    this.loadTargets();
+    this.props.getRepostFlows();
   }
-  loadTargets() {
-    const loadingState = this.state.nextPage > 1 ? 'isLoadingMore' : 'isLoading';
-    const data = { page: this.state.nextPage };
-
-    this.setState({ [loadingState]: true, isError: false });
-    this.props.loadAvailableFlows(data)
-      .then((flowsInfo) => {
-        const list = this.state.targetList.concat(flowsInfo.items.map((item) => item.flow));
-
-        this.setState({
-          targetList: list,
-          visibleList: this.getVisibleList(list, this.state.pattern),
-          hasMore: flowsInfo.has_more,
-          nextPage: flowsInfo.next_page,
-        });
-      })
-      .fail(() => this.setState({ hasMore: false, isError: true }))
-      .always(() => this.setState({ [loadingState]: false }));
-  }
-  getVisibleList(list, pattern) {
+  getVisibleList() {
+    const { pattern } = this.state;
+    const { flows } = this.props;
     const options = {
       extract(target) { return target.name; },
     };
 
     return fuzzy
-      .filter(pattern, list, options)
-      .map((res) => list[res.index]);
+      .filter(pattern, flows, options)
+      .map((res) => flows[res.index]);
   }
   handleSearchChange(pattern) {
-    this.setState({
-      pattern,
-      visibleList: this.getVisibleList(this.state.targetList, pattern),
-    });
+    this.setState({ pattern });
   }
   handleTargetSelect(target) {
     this.props.repostEntry(this.props.entryId, target.id)
       .then(this.props.onClose);
   }
   handleScroll(e) {
-    if (!this.state.hasMore || this.state.isLoading || this.state.isLoadingMore) {
+    const { getRepostFlows, hasMore, isFetching } = this.props;
+
+    if (!hasMore || isFetching) {
       return;
     }
 
     const el = e.target;
     if (el.scrollTop + el.offsetHeight > el.scrollHeight * .9) {
-      this.loadTargets();
+      getRepostFlows();
     }
   }
   renderMessage() {
-    const message = this.state.isError ? i18n.t('entry_repost_error')
-      : this.state.isLoading ? i18n.t('entry_repost_loading')
-      : this.state.visibleList.length === 0 ? i18n.t('entry_repost_empty')
+    const { error, isFetching } = this.props;
+    const flows = this.getVisibleList();
+    const message = error ? i18n.t('entry.repost.error')
+      : isFetching ? i18n.t('entry.repost.loading')
+      : flows.length === 0 ? i18n.t('entry.repost.empty')
       : '';
 
     return (
       <div className="grid-full">
         <div className="grid-full__middle">
-          <div className="popup__text"
-            dangerouslySetInnerHTML={{__html: message}}
-          />
+          <div className="popup__text" dangerouslySetInnerHTML={{ __html: message }} />
         </div>
       </div>
     );
   }
   renderAddFlowMessage() {
-    return this.state.targetList.length <= 1 &&
+    return this.props.flows.targetList.length <= 1 &&
       this.renderMessage(i18n.t('entry.repost.no_flows', { flowsLink: Routes.flows}));
   }
   renderSearch() {
     return (this.state.targetList.length && !this.state.isLoading) && (
-      <EntryRepostTargetSearch
-        onChange={this.handleSearchChange.bind(this)}
-        targetList={this.state.targetList}
-      />
+      <EntryRepostTargetSearch onChange={this.handleSearchChange.bind(this)} />
     );
   }
   renderTargetList() {
@@ -114,14 +90,16 @@ class EntryRepostPopup extends Component {
     ];
   }
   render() {
+    const { isFetching, onClose } = this.props;
+
     return (
       <div className="popup popup--dark popup--repost">
         <div className="popup__arrow popup__arrow--down" />
         <PopupHeader
           draggable={false}
-          onClose={close}
-          showSpinner={this.state.isLoading || this.state.isLoadingMore}
-          title={i18n.t('entry_repost_header')}
+          onClose={onClose}
+          showSpinner={isFetching}
+          title={i18n.t('entry.repost.header')}
         />
         <div className="popup__body">
           {this.renderSearch.call(this)}
@@ -139,19 +117,30 @@ class EntryRepostPopup extends Component {
 
 EntryRepostPopup.propTypes = {
   entryId: PropTypes.number.isRequired,
-  loadAvailableFlows: PropTypes.func.isRequired,
+  error: PropTypes.object,
+  flows: PropTypes.array.isRequired,
+  getRepostFlows: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  nextPage: PropTypes.number,
   onClose: PropTypes.func.isRequired,
   repostEntry: PropTypes.func.isRequired,
 };
 
 export default connect(
-  (state, { entryId, onClose}) => {
-    
+  (state, { entryId, onClose }) => {
+    const { data: { items, hasMore, nextPage }, isFetching, error } = state.repostFlows;
+    const repostFlows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow));
 
     return {
       entryId,
+      error,
+      hasMore,
+      isFetching,
+      nextPage,
       onClose,
+      flows: [ state.currentUser.data ].concat(repostFlows),
     };
   },
-  { repostEntry, loadAvailableFlows }
+  { repostEntry, getRepostFlows }
 )(EntryRepostPopup);

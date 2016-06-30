@@ -3,24 +3,20 @@ CurrentUserServerActions = require '../../actions/server/current_user'
 { PropTypes } = React
 
 SettingsAvatar = React.createClass
-  mixins: ['ReactActivitiesUser']
-
   propTypes:
     user:              PropTypes.object.isRequired
-    activitiesHandler: PropTypes.object.isRequired
+#    activitiesHandler: PropTypes.object.isRequired
 
   componentDidMount: ->
     $(this.refs.avatarInput).fileupload
       url: ApiRoutes.userpic_url()
       replaceFileInput: false
-      start: => @incrementActivities()
       fail: (e, data) =>
         NoticeService.errorResponse data
       done: (e, data) =>
         userpic = data.response().jqXHR.responseJSON
 
         CurrentUserServerActions.updateUserpic userpic
-      always: => @decrementActivities()
 
   componentWillUnmount: ->
     $(this.refs.avatarInput).fileupload 'destroy'

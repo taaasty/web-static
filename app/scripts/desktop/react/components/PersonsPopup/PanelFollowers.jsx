@@ -5,7 +5,7 @@ import ApiRoutes from '../../../../shared/routes/api';
 import RelationshipFollower from './RelationshipFollower';
 
 const PanelFollowers = createClass({
-  mixins: [ 'ReactActivitiesUser', RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
+  mixins: [ RequesterMixin, ComponentManipulationsMixin, ScrollerMixin, PanelMixin ],
   relationshipType: 'followers',
   itemClass() {
     return RelationshipFollower;

@@ -95,7 +95,3 @@ export function changeStaffRole(flowId, userId, role) {
     userId,
   };
 }
-
-export function loadAvailableFlows(data) {
-  return Api.flow.loadAvailable(data);
-}

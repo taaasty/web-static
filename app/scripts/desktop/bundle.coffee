@@ -37,7 +37,6 @@ require './react/mixins/dom_manipulations'
 require './react/mixins/component_manipulations'
 require './react/mixins/shake'
 require './react/mixins/error_timer'
-require './react/mixins/activities'
 require './react/mixins/requester'
 require './react/mixins/scroller'
 
