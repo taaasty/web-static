@@ -8,10 +8,16 @@ import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
 import BrowserSupport from '../BrowserSupport';
 import SupportLauncher from '../SupportLauncher';
+import PopupActions from '../../actions/PopupActions';
 
 class AppPage extends Component {
   componentWillMount() {
     this.props.getAppStatsIfNeeded();
+  }
+  componentDidMount() {
+    if ((/\bpremium\b/).test(String(this.props.location.hash))) {
+      PopupActions.showGetPremiumPopup();
+    }
   }
   componentWillReceiveProps() {
     this.props.getAppStatsIfNeeded();
