@@ -21,7 +21,7 @@ class HeroProfileStatsPopup extends Component {
         transitionLeaveTimeout={FADE_TIMEOUT}
         transitionName="hero__stats-popup"
       >
-        <div className="popup popup--dark popup--hero-stats" ref="container">
+        <div className="popup popup--dark popup--hero-stats">
           <div className="popup__arrow popup__arrow--down" />
           <PopupHeader
             draggable={false}

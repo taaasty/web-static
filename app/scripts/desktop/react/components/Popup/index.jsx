@@ -5,16 +5,6 @@ import classNames from 'classnames';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
 import Header from './Header';
 
-function isNodeInRoot(node, root) {
-  while (node) {
-    if (node === root) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-}
-
 const _Popup = createClass({
   propTypes: {
     children: PropTypes.element.isRequired,
@@ -68,16 +58,6 @@ const _Popup = createClass({
         node.classList.remove('front-layer');
       }
     });
-  },
-
-  handleOutsideMouseClick(e) {
-    if (isNodeInRoot(e.target, findDOMNode(this))) {
-      return;
-    }
-
-    if (isNodeInRoot(e.target, findDOMNode(this.props.targetRef))) { return; }
-    e.stopPropagation();
-    this.props.onClose();
   },
 
   render() {

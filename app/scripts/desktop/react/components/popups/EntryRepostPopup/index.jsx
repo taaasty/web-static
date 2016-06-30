@@ -1,13 +1,14 @@
-/*global Routes, i18n */
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { repostEntry } from '../../../actions/EntryActions';
 import { loadAvailableFlows } from '../../../actions/FlowActions';
 import fuzzy from 'fuzzy';
-import Popup from '../../Popup';
+import PopupHeader from '../../PopupHeader';
 import Scroller from '../../common/Scroller';
 import EntryRepostTargetItem from './EntryRepostTargetItem';
 import EntryRepostTargetSearch from './EntryRepostTargetSearch';
+import Routes from '../../../../../shared/routes/routes';
 
 class EntryRepostPopup extends Component {
   state = {
@@ -70,7 +71,12 @@ class EntryRepostPopup extends Component {
       this.loadTargets();
     }
   }
-  renderMessage(message) {
+  renderMessage() {
+    const message = this.state.isError ? i18n.t('entry_repost_error')
+      : this.state.isLoading ? i18n.t('entry_repost_loading')
+      : this.state.visibleList.length === 0 ? i18n.t('entry_repost_empty')
+      : '';
+
     return (
       <div className="grid-full">
         <div className="grid-full__middle">
@@ -107,37 +113,26 @@ class EntryRepostPopup extends Component {
       this.renderAddFlowMessage(),
     ];
   }
-  renderListStateMessage() {
-    let message = '';
-
-    if (this.state.isError) {
-      message = i18n.t('entry_repost_error');
-    } else if (this.state.isLoading) {
-      message = i18n.t('entry_repost_loading');
-    } else if (this.state.visibleList.length === 0) {
-      message = i18n.t('entry_repost_empty');
-    }
-
-    return this.renderMessage(message);
-  }
   render() {
     return (
-      <RelativePopup {...this.props}
-        className="popup--dark popup--repost"
-        hasActivities={this.state.isLoading || this.state.isLoadingMore}
-        title={i18n.t('entry_repost_header')}
-      >
-        {this.renderSearch.call(this)}
-        <Scroller
-          className="scroller--users"
-          onScroll={this.handleScroll.bind(this)}
-        >
-          {this.state.visibleList.length && !this.state.isLoading
-            ? this.renderTargetList.call(this)
-            : this.renderListStateMessage.call(this)
-          }
-        </Scroller>
-      </RelativePopup>
+      <div className="popup popup--dark popup--repost">
+        <div className="popup__arrow popup__arrow--down" />
+        <PopupHeader
+          draggable={false}
+          onClose={close}
+          showSpinner={this.state.isLoading || this.state.isLoadingMore}
+          title={i18n.t('entry_repost_header')}
+        />
+        <div className="popup__body">
+          {this.renderSearch.call(this)}
+          <Scroller className="scroller--users" onScroll={this.handleScroll.bind(this)}>
+            {this.state.visibleList.length && !this.state.isLoading
+             ? this.renderTargetList()
+             : this.renderMessage()
+            }
+          </Scroller>
+        </div>
+      </div>
     );
   }
 }
@@ -150,6 +145,13 @@ EntryRepostPopup.propTypes = {
 };
 
 export default connect(
-  (state, ownProps) => ownProps,
+  (state, { entryId, onClose}) => {
+    
+
+    return {
+      entryId,
+      onClose,
+    };
+  },
   { repostEntry, loadAvailableFlows }
 )(EntryRepostPopup);
