@@ -24,8 +24,8 @@ const actionMap = {
   },
 
   [REPOST_FLOWS_SUCCESS](state, { response }) {
-    const data = Object.assign({}, state.data, response, {
-      items: state.data.items.concat(response.items),
+    const data = Object.assign({}, state.data, response.result, {
+      items: state.data.items.concat(response.result.items),
     });
 
     return Object.assign({}, state, {

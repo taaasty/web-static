@@ -1,35 +1,41 @@
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../../shared/react/components/common/AvatarCamelCase';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
-export default class EntryRepostTargetItem {
-  static propTypes = {
-    target: PropTypes.object.isRequired,
-    onSelect: PropTypes.func.isRequired,
-  };
-  render() {
-    return (
-      <article className="user__item">
-        <a
-          href={this.props.target.tlog_url}
-          title={this.props.target.name}
-          className="user__link"
-          onClick={this.handleClick.bind(this)}
-        >
+function EntryRepostTargetItem({ onSelect, target: { name, tlogUrl, flowpic, userpic } }) {
+  function handleClick(ev) {
+    ev.preventDefault();
+    onSelect();
+  }
+
+  return (
+    <article className="user__item">
+      <Link
+        className="user__link"
+        onClick={handleClick}
+        title={name}
+        to={uri(tlogUrl).path()}
+      >
         <span className="user__avatar">
           <Avatar
-            userpic={this.props.target.flowpic || this.props.target.userpic}
             size={40}
+            userpic={flowpic || userpic}
           />
         </span>
         <span className="user__desc">
-          <span className="user__name">{this.props.target.name}</span>
+          <span className="user__name">
+            {name}
+          </span>
         </span>
-      </a>
+      </Link>
     </article>
-    );
-  }
-  handleClick(e) {
-    e.preventDefault();
-    this.props.onSelect();
-  }
+  );
 }
+
+EntryRepostTargetItem.propTypes = {
+  onSelect: PropTypes.func.isRequired,
+  target: PropTypes.object.isRequired,
+};
+
+export default EntryRepostTargetItem;

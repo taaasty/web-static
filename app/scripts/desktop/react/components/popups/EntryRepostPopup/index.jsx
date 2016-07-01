@@ -50,13 +50,13 @@ class EntryRepostPopup extends Component {
       getRepostFlows();
     }
   }
-  renderMessage() {
+  renderMessage(msg) {
     const { error, isFetching } = this.props;
     const flows = this.getVisibleList();
     const message = error ? i18n.t('entry.repost.error')
       : isFetching ? i18n.t('entry.repost.loading')
       : flows.length === 0 ? i18n.t('entry.repost.empty')
-      : '';
+      : msg;
 
     return (
       <div className="grid-full">
@@ -67,16 +67,19 @@ class EntryRepostPopup extends Component {
     );
   }
   renderAddFlowMessage() {
-    return this.props.flows.targetList.length <= 1 &&
-      this.renderMessage(i18n.t('entry.repost.no_flows', { flowsLink: Routes.flows}));
+    return this.props.flows.length <= 1 &&
+      this.renderMessage(i18n.t('entry.repost.no_flows', { flowsLink: Routes.flows() }));
   }
   renderSearch() {
-    return (this.state.targetList.length && !this.state.isLoading) && (
+    const { isFetching, flows } = this.props;
+
+    return (flows.length && !isFetching) && (
       <EntryRepostTargetSearch onChange={this.handleSearchChange.bind(this)} />
     );
   }
   renderTargetList() {
-    const items = this.state.visibleList.map((target) => (
+    const list = this.getVisibleList();
+    const items = list.map((target) => (
       <EntryRepostTargetItem
         key={target.id}
         onSelect={this.handleTargetSelect.bind(this, target)}
@@ -90,7 +93,8 @@ class EntryRepostPopup extends Component {
     ];
   }
   render() {
-    const { isFetching, onClose } = this.props;
+    const { isFetching, nextPage, onClose } = this.props;
+    const list = this.getVisibleList();
 
     return (
       <div className="popup popup--dark popup--repost">
@@ -104,7 +108,7 @@ class EntryRepostPopup extends Component {
         <div className="popup__body">
           {this.renderSearch.call(this)}
           <Scroller className="scroller--users" onScroll={this.handleScroll.bind(this)}>
-            {this.state.visibleList.length && !this.state.isLoading
+            {list.length && !(isFetching && !nextPage)
              ? this.renderTargetList()
              : this.renderMessage()
             }
@@ -130,7 +134,7 @@ EntryRepostPopup.propTypes = {
 export default connect(
   (state, { entryId, onClose }) => {
     const { data: { items, hasMore, nextPage }, isFetching, error } = state.repostFlows;
-    const repostFlows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow));
+    const repostFlows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow).toJS());
 
     return {
       entryId,

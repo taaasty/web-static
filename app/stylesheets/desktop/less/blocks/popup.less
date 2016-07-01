@@ -512,6 +512,18 @@
   transform: translate(-50%, -100%);
 }
 
+.popup--repost {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  white-space: initial;
+
+  .post & i.icon--cross {
+    &:extend(.popup__header .icon--cross);
+  }
+}
+
 // Responsive height of Persons Popup
 @media (max-height: 600px) {
   .popup--persons {

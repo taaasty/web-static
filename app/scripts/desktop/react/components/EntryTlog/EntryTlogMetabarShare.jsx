@@ -34,38 +34,39 @@ class EntryTlogMetabarShare extends Component {
     const twUrl = twitterUrl(url, title_truncated);
 
     return (
-      <DropdownActions
-        className="meta-item meta-item--share"
-        item={this.renderShare()}
-        ref="toggle"
-      >
+      <span className="meta-item meta-item--share">
         {this.state.isPopupOpened &&
          <EntryRepostPopup
            entryId={id}
            onClose={this.closePopup.bind(this)}
          />
         }
-        {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
-         <DropdownAction
-           onClick={this.togglePopup.bind(this)}
-           title={i18n.t('entry_meta_repost_link')}
-         />}
-        <DropdownAction
-          onClick={open.bind(null, 'Vk', vkUrl)}
-          title={i18n.t('entry_meta_vk')}
-          url={vkUrl}
-        />
-        <DropdownAction
-          onClick={open.bind(null, 'Facebook', fbUrl)}
-          title={i18n.t('entry_meta_fb')}
-          url={fbUrl}
-        />
-        <DropdownAction
-          onClick={open.bind(null, 'Twitter', twUrl)}
-          title={i18n.t('entry_meta_twitter')}
-          url={twUrl}
-        />
-      </DropdownActions>
+         <DropdownActions
+           item={this.renderShare()}
+           ref="toggle"
+         >
+           {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
+            <DropdownAction
+              onClick={this.togglePopup.bind(this)}
+              title={i18n.t('entry_meta_repost_link')}
+            />}
+            <DropdownAction
+              onClick={open.bind(null, 'Vk', vkUrl)}
+              title={i18n.t('entry_meta_vk')}
+              url={vkUrl}
+            />
+            <DropdownAction
+              onClick={open.bind(null, 'Facebook', fbUrl)}
+              title={i18n.t('entry_meta_fb')}
+              url={fbUrl}
+            />
+            <DropdownAction
+              onClick={open.bind(null, 'Twitter', twUrl)}
+              title={i18n.t('entry_meta_twitter')}
+              url={twUrl}
+            />
+         </DropdownActions>
+      </span>
     );
   }
 }
