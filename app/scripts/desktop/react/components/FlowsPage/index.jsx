@@ -7,11 +7,24 @@ import FlowBricks from './FlowBricks';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
   appendFlows,
-  flowsData,
   getFlowsIfNeeded,
-  navFilters,
-  navFiltersUnauth,
 } from '../../actions/FlowsActions';
+import { Map } from 'immutable';
+
+const emptyFlow = Map();
+
+const navFilters = [ 'popular', 'newest', 'my' ];
+const navFiltersUnauth = [ 'popular', 'newest' ]; // should be a subset of navFilters
+
+function flowsData({ query }) {
+  const activeIdx = navFilters.indexOf(query && query.flows_filter);
+  const filterIdx = activeIdx < 0 ? 0 : activeIdx;
+
+  return {
+    filterIdx,
+    filter: navFilters[filterIdx],
+  };
+}
 
 class FlowsPage extends Component {
   componentWillMount() {
@@ -24,7 +37,7 @@ class FlowsPage extends Component {
     this.props.getFlowsIfNeeded(flowsData(nextProps.location));
   }
   render() {
-    const { appendFlows, currentUser, flows: { data: { items, has_more }, isFetching }, location } = this.props;
+    const { appendFlows, currentUser, flows, hasMore, isFetching, location } = this.props;
     const { filterIdx } = flowsData(location);
     const filters = !!currentUser.id ? navFilters : navFiltersUnauth;
     const title = i18n.t('hero.flows') + ' - ' + i18n.t(`nav_filters.flows.${filters[filterIdx]}`);
@@ -36,9 +49,9 @@ class FlowsPage extends Component {
           <div className="page-body">
             <div className="layout-outer">
               <FlowBricks
-                canLoad={!isFetching && !!has_more}
+                canLoad={!isFetching && !!hasMore}
                 currentUser={currentUser}
-                flows={items}
+                flows={flows}
                 loading={isFetching}
                 onLoadMoreFlows={appendFlows}
               >
@@ -59,6 +72,8 @@ FlowsPage.propTypes = {
   currentUser: PropTypes.object.isRequired,
   flows: PropTypes.object.isRequired,
   getFlowsIfNeeded: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
 
@@ -69,9 +84,16 @@ FlowsPage.defaultProps = {
 };
 
 export default connect(
-  (state) => ({
-    currentUser: state.currentUser.data,
-    flows: state.flows,
-  }),
+  (state) => {
+    const { data: { items, hasMore }, isFetching } = state.flows;
+    const flows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow).toJS());
+
+    return {
+      flows,
+      hasMore,
+      isFetching,
+      currentUser: state.currentUser.data,
+    };
+  },
   { appendFlows, getFlowsIfNeeded }
 )(FlowsPage);
