@@ -30,7 +30,7 @@ FlowsNav.displayName = 'FlowsNav';
 
 FlowsNav.propTypes = {
   active: PropTypes.number.isRequired,
-  filters: PropTypes.bool.isRequired,
+  filters: PropTypes.array.isRequired,
 };
 
 export default FlowsNav;

@@ -4,7 +4,6 @@ import {
   TLOG_SECTION_FAVORITE,
   TLOG_SECTION_PRIVATE,
 } from '../constants/Tlog';
-import { flowsData as fData } from '../../desktop/react/actions/FlowsActions';
 import { initialState as feedStatusInitialState } from '../../desktop/react/reducers/feedStatus';
 
 const mapSection = {
@@ -34,16 +33,9 @@ function peopleSort() {
 export default function prop2redux({
   flows, appStats, people, userToolbar,
 }) {
-  const flowsData = flows && uri().path() === '/flows' && fData({ query: uri().query(true) });
   const query = uri().query(true).q;
 
   return {
-    flows: {
-      data: { items: [], ...flows },
-      isFetching: false,
-      filter: flowsData && flowsData.filter,
-      error: flows && flows.error,
-    },
     appStats: {
       data: appStats || {},
       isFetching: false,

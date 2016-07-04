@@ -50,7 +50,6 @@ class FlowsPage extends Component {
             <div className="layout-outer">
               <FlowBricks
                 canLoad={!isFetching && !!hasMore}
-                currentUser={currentUser}
                 flows={flows}
                 loading={isFetching}
                 onLoadMoreFlows={appendFlows}
@@ -70,7 +69,7 @@ FlowsPage.displayName = 'FlowsPage';
 FlowsPage.propTypes = {
   appendFlows: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
-  flows: PropTypes.object.isRequired,
+  flows: PropTypes.array.isRequired,
   getFlowsIfNeeded: PropTypes.func.isRequired,
   hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -86,13 +85,14 @@ FlowsPage.defaultProps = {
 export default connect(
   (state) => {
     const { data: { items, hasMore }, isFetching } = state.flows;
-    const flows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow).toJS());
+    const currentUser = state.currentUser.data;
+    const flows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow));
 
     return {
+      currentUser,
       flows,
-      hasMore,
-      isFetching,
-      currentUser: state.currentUser.data,
+      hasMore: !!hasMore,
+      isFetching: !!isFetching,
     };
   },
   { appendFlows, getFlowsIfNeeded }

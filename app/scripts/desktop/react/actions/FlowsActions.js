@@ -45,6 +45,6 @@ export function appendFlows() {
       return null;
     }
 
-    return fetchFlows({ filter, page: nextPage });
+    return dispatch(fetchFlows({ filter, page: nextPage }));
   };
 }

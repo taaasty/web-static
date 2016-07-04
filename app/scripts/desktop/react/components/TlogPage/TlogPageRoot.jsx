@@ -14,6 +14,7 @@ import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'stats' ];
+const flowRequiredFields = [ 'canEdit', 'canWrite', 'design', 'staffs' ];
 
 export function getSlug({ params, location }) {
   return (/anonymous\/new/).test(location.pathname)
@@ -27,7 +28,7 @@ class TlogPageRoot extends Component {
 
     getTlog(getSlug(this.props), tlogRequiredFields);
     if (tlog.get('id') && tlog.get('isFlow')) {
-      getFlow(tlog.get('id'));
+      getFlow(tlog.get('id'), flowRequiredFields);
     }
   }
   componentDidMount() {
@@ -54,7 +55,7 @@ class TlogPageRoot extends Component {
 
     if (nextTlog.get('id') && nextTlog.get('isFlow')) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
-      getFlow(nextTlog.get('id'));
+      getFlow(nextTlog.get('id'), flowRequiredFields);
     } else {
       if (typeof nextTlog.get('design') !== 'undefined' && nextTlog.get('design') !== tlog.get('design')) {
         setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
