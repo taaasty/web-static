@@ -10,6 +10,7 @@ import entryState from './entryState';
 import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
+import flowUsers from './flowUsers';
 import flows from './flows';
 import people from './people';
 import ratingState from './ratingState';
@@ -35,6 +36,7 @@ export default {
   feedEntries,
   feedStatus,
   flow,
+  flowUsers,
   flows,
   people,
   ratingState,

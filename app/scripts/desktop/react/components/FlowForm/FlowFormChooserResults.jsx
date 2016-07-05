@@ -1,42 +1,47 @@
-import classnames from 'classnames';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import Scroller from '../common/Scroller';
 
-let FlowFormChooserResults = React.createClass({
-  propTypes: {
-    results: React.PropTypes.array.isRequired,
-    selectedIndex: React.PropTypes.number.isRequired,
-    onResultClick: React.PropTypes.func.isRequired
-  },
-
-  render() {
-    let resultList = this.props.results.map((result, i) => {
-      let resultClasses = classnames('flow-form__chooser-result', {
-        'state--active': i == this.props.selectedIndex
+function FlowFormChooserResults({ onResultClick, results, selected }) {
+  function renderList() {
+    return results.map((tlog, i) => {
+      const resultClasses = classNames('flow-form__chooser-result', {
+        'state--active': i === selected,
       });
 
       return (
-        <div className={resultClasses}
-             key={result.id}
-             onTouchTap={this.props.onResultClick.bind(null, result)}>
+        <div
+          className={resultClasses}
+          key={tlog.get('id')}
+          onTouchTap={onResultClick.bind(null, tlog)}
+        >
           <div className="flow-form__user">
             <div className="flow-form__user-avatar">
-              <Avatar userpic={result.userpic} size={35} />
+              <Avatar size={35} userpic={tlog.get('userpic').toJS()} />
             </div>
-            <div className="flow-form__user-name">{result.slug}</div>
+            <div className="flow-form__user-name">
+              {tlog.get('slug')}
+            </div>
           </div>
         </div>
       );
     });
-
-    return (
-      <Scroller>
-        <div className="flow-form__chooser-results">
-          {resultList}
-        </div>
-      </Scroller>
-    );
   }
-});
+
+  return (
+    <Scroller>
+      <div className="flow-form__chooser-results">
+        {renderList()}
+      </div>
+    </Scroller>
+  );
+}
+
+FlowFormChooserResults.propTypes = {
+  onResultClick: PropTypes.func.isRequired,
+  results: PropTypes.array.isRequired,
+  selected: PropTypes.number.isRequired,
+};
 
 export default FlowFormChooserResults;

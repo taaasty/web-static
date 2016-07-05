@@ -2,24 +2,24 @@ import React, { PropTypes } from 'react';
 import FlowFormChooser from '../FlowForm/FlowFormChooser';
 import FlowFormStaffs from '../FlowForm/FlowFormStaffs';
 
-function Staffs({ FlowActions, limit, staffs })  {
+function Staffs({ addStaff, changeStaffRole, limit, removeStaff, staffs })  {
   function handleUserChoose(user) {
-    FlowActions.addStaff(user.id);
+    addStaff(user.id);
   }
 
   function handleStaffDelete(staff) {
-    FlowActions.removeStaff(staff.user.id);
+    removeStaff(staff.get('user'));
   }
 
   function handleStaffRoleChange(staff, role) {
-    FlowActions.changeStaffRole(staff.user.id, role);
+    changeStaffRole(staff.get('user'), role);
   }
 
   return (
     <div>
       <div className="flow-form__item">
         <FlowFormChooser
-          limitReached={limit === staffs.length}
+          limitReached={limit === staffs.count()}
           onChoose={handleUserChoose}
         />
       </div>
@@ -33,9 +33,11 @@ function Staffs({ FlowActions, limit, staffs })  {
 }
 
 Staffs.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
+  addStaff: PropTypes.func.isRequired,
+  changeStaffRole: PropTypes.func.isRequired,
   limit: PropTypes.number,
-  staffs: PropTypes.array.isRequired,
+  removeStaff: PropTypes.func.isRequired,
+  staffs: PropTypes.object.isRequired,
 };
 
 Staffs.defaultProps = {

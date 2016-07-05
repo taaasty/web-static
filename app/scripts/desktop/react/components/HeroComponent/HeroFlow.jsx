@@ -92,7 +92,7 @@ class HeroFlow extends Component {
     return (
       <div>
         {canWrite && this.renderWriteButton()}
-        {myRelationship  && this.renderRelationButton()}
+        {myRelationship && this.renderRelationButton()}
         {canEdit && this.renderSettingsButton()}
         {canEdit && this.renderPinFlowButton()}
       </div>
@@ -125,7 +125,7 @@ class HeroFlow extends Component {
                title={i18n.t('manage_flow.header')}
                withBackground
              >
-               <FlowManager flowId={flowId} />
+               <FlowManager flow={flow} />
              </Popup>
            </PopupArea>
          </div>

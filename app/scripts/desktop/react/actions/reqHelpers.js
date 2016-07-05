@@ -1,3 +1,4 @@
+/*global FormData */
 import { merge } from 'lodash';
 import { decamelize, decamelizeKeys } from 'humps';
 
@@ -39,23 +40,31 @@ export function defaultOpts(state) {
 }
 
 export function postOpts(data={}) {
-  return (state) => merge(defaultOpts(state), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(decamelizeKeys(data)),
-  });
+  return (state) => {
+    const isFormData = data instanceof FormData;
+
+    return merge(defaultOpts(state), {
+      method: 'POST',
+      headers: {
+        'Content-Type': isFormData ? void 0 : 'application/json',
+      },
+      body: isFormData ? data : JSON.stringify(decamelizeKeys(data)),
+    });
+  };
 }
 
 export function putOpts(data={}) {
-  return (state) => merge(defaultOpts(state), {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(decamelizeKeys(data)),
-  });
+  return (state) => {
+    const isFormData = data instanceof FormData;
+
+    return merge(defaultOpts(state), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': isFormData ? void 0 : 'application/json',
+      },
+      body: isFormData ? data : JSON.stringify(decamelizeKeys(data)),
+    });
+  };
 }
 
 export function deleteOpts(data={}) {

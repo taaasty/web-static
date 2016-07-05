@@ -579,6 +579,7 @@
     "private_title": "Private flow?",
     "premoderate_description": "Posts appear in the flow only after approval",
     "premoderate_title": "Pre-moderation",
+    "update_success": "Changes have been saved",
     "tabs": {
       "settings": "Settings",
       "staffs": "Staffs",
@@ -587,6 +588,10 @@
       "ignored": "Ignored"
     },
     "save": "Save"
+  },
+  "flow_form": {
+    "name_placeholder": "#Flow name",
+    "title_placeholder": "Short description, below 140 characters"
   },
   "tlog_alert": {
     "owner_private_tlog": "TLog can be viewed only by subscribers and you. To become a subscriber you must be approved.",

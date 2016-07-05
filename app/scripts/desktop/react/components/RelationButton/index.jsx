@@ -106,7 +106,7 @@ class RelationButton extends Component {
 RelationButton.propTypes = {
   cancel: PropTypes.func.isRequired,
   follow: PropTypes.func.isRequired,
-  privacy: PropTypes.bool.isRequired,
+  privacy: PropTypes.bool,
   rel: PropTypes.object.isRequired,
   relId: PropTypes.string.isRequired,
   relState: PropTypes.object.isRequired,

@@ -48,7 +48,7 @@ export function updateFlow(flowId, { name, slug, title, picFile, isPrivacy, isPr
 
   return {
     [CALL_API]: {
-      endpoint: ApiRoutes.folw(flowId),
+      endpoint: ApiRoutes.flow(flowId),
       schema: Schemas.FLOW,
       types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
       opts: putOpts(formData),

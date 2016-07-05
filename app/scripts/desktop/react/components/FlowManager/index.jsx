@@ -1,18 +1,23 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as FlowActions from '../../actions/FlowActions';
+import {
+  addStaff,
+  removeStaff,
+  changeStaffRole,
+  updateFlow,
+} from '../../actions/FlowActions';
 import TabbedArea from '../Tabs/TabbedArea';
 import TabPane from '../Tabs/TabPane';
 import Staffs from './Staffs';
 import Followers from './Followers';
 import Ignored from './Ignored';
 import Settings from './Settings';
+import { List, Map } from 'immutable';
 
-function FlowManager({ FlowActions, flow }) {
-  const { data: { staffs }, followersCount, ignoredCount } = flow;
+const emptyStaff = Map();
 
+function FlowManager({ flow, staffs, updateFlow }) {
   function renderRequested() {
     return false;
     // if (!flow.data.is_privacy) {
@@ -27,14 +32,14 @@ function FlowManager({ FlowActions, flow }) {
   return (
     <TabbedArea>
       <TabPane tab={i18n.t('manage_flow.tabs.settings')}>
-        <Settings FlowActions={FlowActions} flow={flow.data} />
+        <Settings flow={flow.toJS()} updateFlow={updateFlow} />
       </TabPane>
-      <TabPane count={staffs.length} tab={i18n.t('manage_flow.tabs.staffs')}>
-        <Staffs
-          FlowActions={FlowActions}
-          staffs={staffs}
-        />
+      <TabPane count={staffs.count()} tab={i18n.t('manage_flow.tabs.staffs')}>
+        <Staffs staffs={staffs} />
       </TabPane>
+    </TabbedArea>
+  );
+    /*
       {renderRequested()}
       <TabPane count={followersCount} tab={i18n.t('manage_flow.tabs.followers')}>
         <Followers FlowActions={FlowActions} flow={flow.data} />
@@ -44,27 +49,26 @@ function FlowManager({ FlowActions, flow }) {
       </TabPane>
     </TabbedArea>
   );
+  */
 }
 
 FlowManager.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
-  flow: PropTypes.shape({
-    data: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      staffs: PropTypes.array.isRequired,
-      flowpic: PropTypes.object.isRequired,
-      tlog_url: PropTypes.string.isRequired,
-    }).isRequired,
-    followersCount: PropTypes.number,
-    ignoredCount: PropTypes.number,
-    requestedCount: PropTypes.number,
-  }).isRequired,
+  addStaff: PropTypes.func.isRequired,
+  changeStaffRole: PropTypes.func.isRequired,
+  flow: PropTypes.object.isRequired,
+  removeStaff: PropTypes.func.isRequired,
+  staffs: PropTypes.object.isRequired,
+  updateFlow: PropTypes.func.isRequired,
 };
 
 export default connect(
-  null,
-  (dispatch) => ({ FlowActions: bindActionCreators(FlowActions, dispatch) })
+  (state, { flow }) => {
+    const flowId = flow.get('id');
+
+    return {
+      flow,
+      staffs: state.entities.get('staff').filter((s) => s.get('flowId') === flowId).valueSeq(),
+    };
+  },
+  { addStaff, changeStaffRole, removeStaff, updateFlow }
 )(FlowManager);

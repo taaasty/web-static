@@ -17,13 +17,13 @@ class Settings extends Component {
     picFile: null,
   };
   updateValue(name, value) {
-    this.setState({[name]: value});
+    this.setState({ [name]: value });
   }
   saveFlow() {
-    const { FlowActions } = this.props;
+    const { flow: { id }, updateFlow } = this.props;
 
-    updateFlow(this.state)
-      .then(() => NoticeService.notifySuccess('Поток успешно обновлён'))
+    updateFlow(id, this.state)
+      .then(() => NoticeService.notifySuccess(i18n.t('manage_flow.update_success')))
       .then((flow) => this.setState({ ...flow, picFile: null }));
   }
   hasUnsavedFields() {
@@ -31,16 +31,16 @@ class Settings extends Component {
       name: pName,
       slug: pSlug,
       title: pTitle,
-      is_privacy: pisPrivacy,
-      is_premoderate: pisPremoderate,
+      isPrivacy: pisPrivacy,
+      isPremoderate: pisPremoderate,
     } = this.props.flow;
     const {
       picFile,
       name: sName,
       slug: sSlug,
       title: sTitle,
-      is_privacy: sisPrivacy,
-      is_premoderate: sisPremoderate,
+      isPrivacy: sisPrivacy,
+      isPremoderate: sisPremoderate,
     } = this.state;
 
     return (
@@ -60,7 +60,7 @@ class Settings extends Component {
     );
   }
   render() {
-    const { flowpic, is_premoderate, is_privacy, name, slug, title } = this.state;
+    const { flowpic, isPremoderate, isPrivacy, name, slug, title } = this.state;
     const formClasses = classNames({
       'flow-form': true,
       '__has-unsaved-fields': this.hasUnsavedFields(),
@@ -87,19 +87,19 @@ class Settings extends Component {
           </div>
           <div className="flow-form__item">
             <FlowFormRadio
-              checked={is_privacy}
+              checked={isPrivacy}
               description={i18n.t('manage_flow.private_description')}
               id="flow-privacy"
-              onChange={this.updateValue.bind(this, 'is_privacy')}
+              onChange={this.updateValue.bind(this, 'isPrivacy')}
               title={i18n.t('manage_flow.private_title')}
             />
           </div>
           {false && <div className="flow-form__item">
             <FlowFormRadio
-              checked={is_premoderate}
+              checked={isPremoderate}
               description={i18n.t('manage_flow.premoderate_description')}
               id="flow-has-premoderation"
-              onChange={this.updateValue.bind(this, 'is_premoderate')}
+              onChange={this.updateValue.bind(this, 'isPremoderate')}
               title={i18n.t('manage_flow.premoderate_title')}
             />
           </div>}
@@ -113,16 +113,8 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
-  flow: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    is_privacy: PropTypes.bool.isRequired,
-    is_premoderate: PropTypes.bool.isRequired,
-    flowpic: PropTypes.object.isRequired,
-  }).isRequired,
+  flow: PropTypes.object.isRequired,
+  updateFlow: PropTypes.func.isRequired,
 };
 
 export default Settings;

@@ -1,29 +1,34 @@
-import {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Switcher from '../common/Switcher';
 
-export default class FlowFormRadio {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
-  };
-  render() {
-    return (
-      <div>
-        <div className="flow-form__right">
-          <Switcher {...this.props} />
-        </div>
-        <div className="flow-form__left">
-          <h3 className="flow-form__title">{this.props.title}</h3>
-          {this.renderDescription()}
-        </div>
+function FlowFormRadio(props) {
+  const { description, title } = props;
+
+  return (
+    <div>
+      <div className="flow-form__right">
+        <Switcher {...props} />
       </div>
-    );
-  }
-  renderDescription() {
-    let {description} = this.props;
-    return description ? <p className="flow-form__desc">{description}</p> : null;
-  }
+      <div className="flow-form__left">
+        <h3 className="flow-form__title">
+          {title}
+        </h3>
+        {description &&
+         <p className="flow-form__desc">
+           {description}
+         </p>
+        }
+      </div>
+    </div>
+  );
 }
+
+FlowFormRadio.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  description: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+export default FlowFormRadio;
