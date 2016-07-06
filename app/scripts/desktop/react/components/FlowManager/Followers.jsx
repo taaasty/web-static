@@ -1,22 +1,18 @@
 import React, { PropTypes } from 'react';
-import RelationshipsContainer from '../Relationships/RelationshipsContainer';
+import Relationships from '../Relationships';
 import UnfollowButton from '../common/UnfollowButton';
-import ApiRoutes from '../../../../shared/routes/api';
 
-function Followers({ FlowActions, flow: { id } }) {
+function Followers({ flowId }) {
   return (
-    <RelationshipsContainer
-      onCountUpdate={(followersCount) => FlowActions.flowReceive({ followersCount })}
-      url={ApiRoutes.tlogRelationshipsBy(id, 'friend')}
+    <Relationships
     >
-      <UnfollowButton objectID={id} />
-    </RelationshipsContainer>
+      <UnfollowButton objectId={flowId} />
+    </Relationships>
   );
 }
 
 Followers.propTypes = {
-  FlowActions: PropTypes.object.isRequired,
-  flow: PropTypes.object.isRequired,
+  flowId: PropTypes.number.isRequired,
 };
 
 export default Followers;

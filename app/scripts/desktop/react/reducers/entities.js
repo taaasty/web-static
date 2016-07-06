@@ -9,6 +9,9 @@ import {
   ENTRY_WATCH_SUCCESS,
   ENTRY_UNWATCH_SUCCESS,
 } from '../actions/EntryActions';
+import {
+  STAFF_DELETE_SUCCESS,
+} from '../actions/StaffActions';
 
 const initialState = Immutable.fromJS({
   tlog: {},
@@ -53,40 +56,44 @@ function handleExtra(state, action) {
   switch (action.type) {
   case COMMENT_DELETE_SUCCESS:
     if (action.commentId) {
-      const comment = state.getIn([ 'comment', action.commentId.toString() ]);
+      const comment = state.getIn([ 'comment', String(action.commentId) ]);
 
       if (comment) {
         return state
-          .deleteIn([ 'comment', action.commentId.toString() ])
-          .updateIn([ 'entry', comment.get('entryId', '').toString(), 'commentsCount' ], (val) => val - 1);
+          .deleteIn([ 'comment', String(action.commentId) ])
+          .updateIn([ 'entry', String(comment.get('entryId', '')), 'commentsCount' ], (val) => val - 1);
       }
     }
     break;
   case COMMENT_POST_SUCCESS:
     if (action.entryId) {
-      return state.updateIn([ 'entry', action.entryId.toString(), 'commentsCount' ], (val) => val + 1);
+      return state.updateIn([ 'entry', String(action.entryId), 'commentsCount' ], (val) => val + 1);
     }
     break;
   case ENTRY_FAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId.toString(), 'isFavorited' ], true);
+      return state.setIn([ 'entry', String(action.entryId), 'isFavorited' ], true);
     }
     break;
   case ENTRY_UNFAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId.toString(), 'isFavorited' ], false);
+      return state.setIn([ 'entry', String(action.entryId), 'isFavorited' ], false);
     }
     break;
   case ENTRY_WATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId.toString(), 'isWatching' ], true);
+      return state.setIn([ 'entry', String(action.entryId), 'isWatching' ], true);
     }
     break;
   case ENTRY_UNWATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn([ 'entry', action.entryId.toString(), 'isWatching' ], false);
+      return state.setIn([ 'entry', String(action.entryId), 'isWatching' ], false);
     }
     break;
+  case STAFF_DELETE_SUCCESS:
+    if (action.response && action.response.result) {
+      return state.deleteIn([ 'staff', String(action.response.result) ]);
+    }
   }
 
   return state;

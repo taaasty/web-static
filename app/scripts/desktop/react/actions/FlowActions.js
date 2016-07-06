@@ -1,7 +1,11 @@
 import ApiRoutes from '../../../shared/routes/api';
 import ApiHelpers from '../../../shared/helpers/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { defaultOpts, deleteOpts, postOpts, putOpts } from './reqHelpers';
+import { defaultOpts, putOpts } from './reqHelpers';
+
+export const FLOW_REQUEST = 'FLOW_REQUEST';
+export const FLOW_SUCCESS = 'FLOW_SUCCESS';
+export const FLOW_FAILURE = 'FLOW_FAILURE';
 
 export const FLOW_VIEW_STYLE = 'FLOW_VIEW_STYLE';
 
@@ -11,10 +15,6 @@ export function flowViewStyle(style) {
     style,
   };
 }
-
-export const FLOW_REQUEST = 'FLOW_REQUEST';
-export const FLOW_SUCCESS = 'FLOW_SUCCESS';
-export const FLOW_FAILURE = 'FLOW_FAILURE';
 
 function fetchFlow(flowId) {
   return {
@@ -54,44 +54,5 @@ export function updateFlow(flowId, { name, slug, title, picFile, isPrivacy, isPr
       opts: putOpts(formData),
     },
     flowId,
-  };
-}
-
-export function addStaff(flowId, userId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiRoutes.flowStaffs(flowId),
-      schema: Schemas.STAFF,
-      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
-      opts: postOpts({ userId }),
-    },
-    flowId,
-    userId,
-  };
-}
-
-export function removeStaff(flowId, userId) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiRoutes.flowStaffs(flowId),
-      schema: Schemas.STAFF,
-      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
-      opts: deleteOpts({ userId }),
-    },
-    flowId,
-    userId,
-  };
-}
-
-export function changeStaffRole(flowId, userId, role) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiRoutes.flowStaffs(flowId),
-      schema: Schemas.STAFF,
-      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
-      opts: putOpts({ userId, role }),
-    },
-    flowId,
-    userId,
   };
 }

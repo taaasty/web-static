@@ -2,17 +2,17 @@ import React, { PropTypes } from 'react';
 import FlowFormChooser from '../FlowForm/FlowFormChooser';
 import FlowFormStaffs from '../FlowForm/FlowFormStaffs';
 
-function Staffs({ addStaff, changeStaffRole, limit, removeStaff, staffs })  {
+function Staffs({ addStaff, changeStaffRole, flowId, limit, removeStaff, staffs })  {
   function handleUserChoose(user) {
-    addStaff(user.id);
+    addStaff(flowId, user.get('id'));
   }
 
   function handleStaffDelete(staff) {
-    removeStaff(staff.get('user'));
+    removeStaff(flowId, staff.getIn([ 'user', 'id' ]));
   }
 
   function handleStaffRoleChange(staff, role) {
-    changeStaffRole(staff.get('user'), role);
+    changeStaffRole(flowId, staff.getIn([ 'user', 'id' ]), role);
   }
 
   return (
@@ -35,6 +35,7 @@ function Staffs({ addStaff, changeStaffRole, limit, removeStaff, staffs })  {
 Staffs.propTypes = {
   addStaff: PropTypes.func.isRequired,
   changeStaffRole: PropTypes.func.isRequired,
+  flowId: PropTypes.number.isRequired,
   limit: PropTypes.number,
   removeStaff: PropTypes.func.isRequired,
   staffs: PropTypes.object.isRequired,

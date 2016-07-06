@@ -1,12 +1,12 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { updateFlow } from '../../actions/FlowActions';
 import {
   addStaff,
   removeStaff,
   changeStaffRole,
-  updateFlow,
-} from '../../actions/FlowActions';
+} from '../../actions/StaffActions';
 import TabbedArea from '../Tabs/TabbedArea';
 import TabPane from '../Tabs/TabPane';
 import Staffs from './Staffs';
@@ -16,8 +16,9 @@ import Settings from './Settings';
 import { List, Map } from 'immutable';
 
 const emptyStaff = Map();
+const emptyUser = Map();
 
-function FlowManager({ flow, staffs, updateFlow }) {
+function FlowManager({ addStaff, changeStaffRole, flow, removeStaff, staffs, updateFlow }) {
   function renderRequested() {
     return false;
     // if (!flow.data.is_privacy) {
@@ -35,15 +36,21 @@ function FlowManager({ flow, staffs, updateFlow }) {
         <Settings flow={flow.toJS()} updateFlow={updateFlow} />
       </TabPane>
       <TabPane count={staffs.count()} tab={i18n.t('manage_flow.tabs.staffs')}>
-        <Staffs staffs={staffs} />
+        <Staffs
+          addStaff={addStaff}
+          changeStaffRole={changeStaffRole}
+          flowId={flow.get('id')}
+          removeStaff={removeStaff}
+          staffs={staffs}
+        />
+      </TabPane>
+      {renderRequested()}
+      <TabPane count={flow.get('followersCount', 0)} tab={i18n.t('manage_flow.tabs.followers')}>
+        <Followers flow={flow} />
       </TabPane>
     </TabbedArea>
   );
-    /*
-      {renderRequested()}
-      <TabPane count={followersCount} tab={i18n.t('manage_flow.tabs.followers')}>
-        <Followers FlowActions={FlowActions} flow={flow.data} />
-      </TabPane>
+  /*
       <TabPane count={ignoredCount} tab={i18n.t('manage_flow.tabs.ignored')}>
         <Ignored FlowActions={FlowActions} flow={flow.data} />
       </TabPane>
@@ -67,7 +74,12 @@ export default connect(
 
     return {
       flow,
-      staffs: state.entities.get('staff').filter((s) => s.get('flowId') === flowId).valueSeq(),
+      staffs: state
+        .entities
+        .get('staff')
+        .filter((s) => s.get('flowId') === flowId)
+        .map((s) => s.set('user', state.entities.getIn([ 'tlog', String(s.get('user')) ], emptyUser)))
+        .valueSeq(),
     };
   },
   { addStaff, changeStaffRole, removeStaff, updateFlow }
