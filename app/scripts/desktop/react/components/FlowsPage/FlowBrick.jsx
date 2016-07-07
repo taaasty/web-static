@@ -5,7 +5,7 @@ import uri from 'urijs';
 import Tooltip from '../common/Tooltip';
 import RelationButton from '../RelationButton';
 import FlowBrickAvatar from './FlowBrickAvatar';
-import { REL_NONE_STATE, REL_GUESSED_STATE } from '../common/RelationButton/constants';
+import { REL_NONE_STATE, REL_GUESSED_STATE } from '../../actions/RelationshipActions';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';

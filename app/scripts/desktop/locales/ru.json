@@ -605,6 +605,8 @@
     "premoderate_title": "Премодерация",
     "save": "Сохранить",
     "update_success": "Поток успешно обновлен",
+    "empty_list": "Список пуст",
+    "error_list": "Ошибка загрузки",
     "tabs": {
       "settings": "Настройки",
       "staffs": "Руководство",

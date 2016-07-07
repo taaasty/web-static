@@ -4,7 +4,6 @@ import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
 window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
-import { camelizeKeys } from 'humps';
 import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
 import PopupActions from './actions/PopupActions';
@@ -69,7 +68,6 @@ const ReactApp = {
 
     if (user) {
       window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser || {};
-      window.STATE_FROM_SERVER.currentUser.data = camelizeKeys(user); //REDUX
       CurrentUserDispatcher.setupUser(user);
       window.messagingService = new MessagingService(user);
 

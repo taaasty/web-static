@@ -1,12 +1,29 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 import Relationships from './Relationships';
 
 const ERROR_STATE = 'error',
       LOADED_STATE = 'loaded',
       LOADING_STATE = 'loading';
 
-class RelationshipsContainer extends Component {
+let RelationshipsContainer = React.createClass({
+  propTypes: {
+    url: React.PropTypes.string.isRequired,
+    onCountUpdate: React.PropTypes.func
+  },
+
+  getInitialState() {
+    return {
+      relationships: [],
+      sincePosition: null,
+      hasMore: true,
+      currentState: LOADING_STATE
+    };
+  },
+
+  componentDidMount() {
+    this.loadRelationships()
+  },
+
   render() {
     return (
       <Relationships
@@ -52,10 +69,6 @@ class RelationshipsContainer extends Component {
         }
       });
   }
-}
+});
 
-export default connect(
-  (state) => {
-    
-  }
-)(RelationshipsContainer);
+export default RelationshipsContainer;

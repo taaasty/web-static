@@ -1,7 +1,13 @@
 /*global setTimeout */
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { postOpts } from './reqHelpers';
+import { deleteOpts, postOpts } from './reqHelpers';
+
+export const REL_FRIEND_STATE = 'friend';
+export const REL_REQUESTED_STATE = 'requested';
+export const REL_IGNORED_STATE = 'ignored';
+export const REL_GUESSED_STATE = 'guessed';
+export const REL_NONE_STATE = 'none';
 
 export const RELATIONSHIP_REQUEST = 'RELATIONSHIP_REQUEST';
 export const RELATIONSHIP_SUCCESS = 'RELATIONSHIP_SUCCESS';
@@ -38,4 +44,16 @@ export function unfollow(id, relId) {
 
 export function cancel(id, relId) {
   return changeMyRelationship(id, relId, 'cancel');
+}
+
+export function unfollowFrom(objectId, subjectId, relId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.tlogRelationshipsByTlog(objectId, subjectId),
+      schema: Schemas.RELATIONSHIP,
+      types: [ RELATIONSHIP_REQUEST, RELATIONSHIP_SUCCESS, RELATIONSHIP_FAILURE ],
+      opts: deleteOpts(),
+    },
+    relId,
+  };
 }

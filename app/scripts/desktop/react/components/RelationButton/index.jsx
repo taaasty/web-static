@@ -3,13 +3,16 @@ import React, { Component, PropTypes } from 'react';
 import { Map } from 'immutable';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { cancel, follow, unfollow } from '../../actions/RelationshipActions';
-
-export const REL_FRIEND_STATE = 'friend';
-export const REL_REQUESTED_STATE = 'requested';
-export const REL_IGNORED_STATE = 'ignored';
-export const REL_GUESSED_STATE = 'guessed';
-export const REL_NONE_STATE = 'none';
+import {
+  cancel,
+  follow,
+  unfollow,
+  REL_FRIEND_STATE,
+  REL_REQUESTED_STATE,
+  REL_IGNORED_STATE,
+  REL_GUESSED_STATE,
+  REL_NONE_STATE,
+} from '../../actions/RelationshipActions';
 
 class RelationButton extends Component {
   state = {

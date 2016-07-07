@@ -13,6 +13,8 @@ import {
   STAFF_DELETE_SUCCESS,
 } from '../actions/StaffActions';
 
+export const INIT_SET_TLOG = 'INIT_SET_TLOG';
+
 const initialState = Immutable.fromJS({
   tlog: {},
   rel: {},
@@ -94,6 +96,9 @@ function handleExtra(state, action) {
     if (action.response && action.response.result) {
       return state.deleteIn([ 'staff', String(action.response.result) ]);
     }
+    break;
+  case INIT_SET_TLOG:
+    return state.mergeIn([ 'tlog' ], { [action.tlogId]: action.tlog });
   }
 
   return state;

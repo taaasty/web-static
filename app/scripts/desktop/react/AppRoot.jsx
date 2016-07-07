@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from './middleware/api';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
+import { camelizeKeys } from 'humps';
 
 import AppPageEmpty from './components/AppPage/Empty'; // for non-spa components with toolbars
 import AppPage from './components/AppPage';
@@ -21,6 +22,8 @@ import TermsPage from './components/TermsPage';
 import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
 import RefsPage from './components/RefsPage';
+
+import { initTlog } from './actions/InitActions';
 
 import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from './constants/ViewStyleConstants';
 import { FLOW_VIEW_STYLE_LS_KEY } from './reducers/flow';
@@ -53,11 +56,18 @@ function handleRouteUpdate() {
 
 class AppRoot extends Component {
   componentWillMount() {
-    const { appStats, feedEntries, flow, flows, people, tlogEntries, tlogEntry, userToolbar } = this.props;
+    const { appStats, currentUser, feedEntries, flow, flows, people, tlogEntries, tlogEntry, userToolbar } = this.props;
 
-    store = createStoreWithMiddleware(combineReducers(reducers), window.STATE_FROM_SERVER);
+    store = createStoreWithMiddleware(combineReducers(reducers), {
+      currentUser: {
+        data: camelizeKeys(gon.user),
+      },
+    });
+    if (gon.user) {
+      store.dispatch(initTlog(camelizeKeys(gon.user)));
+    }
     if (tlogEntries) {
-      store.dispatch({});
+      //store.dispatch({});
     }
     if (flow) {
       //viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,

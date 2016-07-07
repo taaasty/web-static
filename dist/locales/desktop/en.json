@@ -580,6 +580,8 @@
     "premoderate_description": "Posts appear in the flow only after approval",
     "premoderate_title": "Pre-moderation",
     "update_success": "Changes have been saved",
+    "empty_list": "No data",
+    "error_list": "Load error",
     "tabs": {
       "settings": "Settings",
       "staffs": "Staffs",

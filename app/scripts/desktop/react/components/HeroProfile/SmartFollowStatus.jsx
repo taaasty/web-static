@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import FollowStatus from '../common/FollowStatus';
-import { REL_GUESSED_STATE,  REL_NONE_STATE } from '../RelationButton';
 import { connect } from 'react-redux';
-import { follow } from '../../actions/RelationshipActions';
+import { follow, REL_GUESSED_STATE, REL_NONE_STATE } from '../../actions/RelationshipActions';
 import { Map } from 'immutable';
 
 function SmartFollowStatus({ follow, rel, relId, relState }) {
