@@ -9,6 +9,10 @@ export const REL_IGNORED_STATE = 'ignored';
 export const REL_GUESSED_STATE = 'guessed';
 export const REL_NONE_STATE = 'none';
 
+export const RELATION_UNFOLLOW = 'unfollow';
+export const RELATION_FOLLOW = 'follow';
+export const RELATION_CANCEL = 'cancel';
+
 export const RELATIONSHIP_REQUEST = 'RELATIONSHIP_REQUEST';
 export const RELATIONSHIP_SUCCESS = 'RELATIONSHIP_SUCCESS';
 export const RELATIONSHIP_FAILURE = 'RELATIONSHIP_FAILURE';
@@ -26,6 +30,7 @@ function changeMyRelationship(id, relId, action) {
         opts: postOpts(),
       },
       relId,
+      action,
     })
       .catch(() => setTimeout(
         () => dispatch({ type: RELATIONSHIP_RESET_ERROR, relId }),
@@ -35,15 +40,15 @@ function changeMyRelationship(id, relId, action) {
 }
 
 export function follow(id, relId) {
-  return changeMyRelationship(id, relId, 'follow');
+  return changeMyRelationship(id, relId, RELATION_FOLLOW);
 }
 
 export function unfollow(id, relId) {
-  return changeMyRelationship(id, relId, 'unfollow');
+  return changeMyRelationship(id, relId, RELATION_UNFOLLOW);
 }
 
 export function cancel(id, relId) {
-  return changeMyRelationship(id, relId, 'cancel');
+  return changeMyRelationship(id, relId, RELATION_CANCEL);
 }
 
 export function unfollowFrom(objectId, subjectId, relId) {

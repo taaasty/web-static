@@ -59,7 +59,7 @@ RelationList.propTypes = {
   canLoad: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.array,
-    PropTypes.element,
+    PropTypes.node,
   ]),
   isEmpty: PropTypes.bool.isRequired,
   isError: PropTypes.bool.isRequired,

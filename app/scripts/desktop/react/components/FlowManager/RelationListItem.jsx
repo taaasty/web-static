@@ -39,7 +39,7 @@ function RelationListItem({ children, user }) {
 
 RelationListItem.propTypes = {
   children: PropTypes.oneOfType([
-    PropTypes.element,
+    PropTypes.node,
     PropTypes.array,
   ]),
   user: PropTypes.object.isRequired,

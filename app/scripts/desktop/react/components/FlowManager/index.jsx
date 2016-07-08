@@ -23,9 +23,8 @@ import Staffs from './Staffs';
 import Followers from './Followers';
 import Ignored from './Ignored';
 import Settings from './Settings';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 
-const emptyStaff = Map();
 const emptyUser = Map();
 const emptyRelUser = Map();
 
@@ -46,9 +45,10 @@ class FlowManager extends Component {
     // }
   }
   render() {
-    const { addStaff, changeStaffRole, flow, flowId, followers,
-            followersState, getRelsByFriend, ignored, removeStaff,
-            staffs, unfollowFrom, updateFlow } = this.props;
+    const { getRelsByFriend, unfollowFrom, updateFlow } = this.props;
+    const { addStaff, changeStaffRole, removeStaff } = this.props;
+    const { flow, flowId, staffs } = this.props;
+    const { followers, followersState, followersTotalCount } = this.props;
 
     return (
       <TabbedArea>
@@ -65,7 +65,7 @@ class FlowManager extends Component {
           />
         </TabPane>
         {this.renderRequested()}
-        <TabPane count={followersState.getIn([ 'data', 'totalCount' ], 0)} tab={i18n.t('manage_flow.tabs.followers')}>
+        <TabPane count={followersTotalCount} tab={i18n.t('manage_flow.tabs.followers')}>
           <Followers
             followers={followers}
             followersState={followersState}
@@ -92,9 +92,12 @@ FlowManager.propTypes = {
   flowId: PropTypes.number.isRequired,
   followers: PropTypes.object.isRequired,
   followersState: PropTypes.object.isRequired,
+  followersTotalCount: PropTypes.number.isRequired,
+  getRelsByFriend: PropTypes.func.isRequired,
   ignored: PropTypes.object.isRequired,
   removeStaff: PropTypes.func.isRequired,
   staffs: PropTypes.object.isRequired,
+  unfollowFrom: PropTypes.func.isRequired,
   updateFlow: PropTypes.func.isRequired,
 };
 
@@ -108,6 +111,7 @@ export default connect(
       .sortBy((r) => r.get('position'))
       .map((r) => r.set('reader', state.entities.getIn([ 'tlog', String(r.get('readerId')) ], emptyRelUser)));
     const followersState = state.rels.get(RELS_BY_FRIEND, Map());
+    const followersTotalCount = followersState.get('unloadedCount') + followers.count();
     const ignored = state
       .entities
       .get('rel')
@@ -120,6 +124,7 @@ export default connect(
       flowId,
       followers,
       followersState,
+      followersTotalCount,
       ignored,
       staffs: state
         .entities

@@ -3,6 +3,7 @@ import {
   RELS_REQUEST,
   RELS_SUCCESS,
   RELS_FAILURE,
+  RELS_UNLOADED,
   RELS_BY_FRIEND,
   RELS_TO_IGNORED,
 } from '../actions/RelsActions';
@@ -10,6 +11,7 @@ import Immutable from 'immutable';
 
 const initialTypeState = {
   data: {},
+  unloadedCount: 0,
   isFetching: false,
   error: null,
 };
@@ -40,6 +42,13 @@ const actionMap = {
       error,
       isFetching: false,
     });
+  },
+
+  [RELS_UNLOADED](state, { relType, currentRelsCount }) {
+    return state.setIn(
+      [ relType, 'unloadedCount' ],
+      state.getIn([ relType, 'data', 'totalCount' ], 0) - currentRelsCount
+    );
   },
 };
 
