@@ -12,6 +12,9 @@ export const REL_NONE_STATE = 'none';
 export const RELATION_UNFOLLOW = 'unfollow';
 export const RELATION_FOLLOW = 'follow';
 export const RELATION_CANCEL = 'cancel';
+export const RELATION_IGNORE = 'ignore';
+export const RELATION_APPROVE = 'approve';
+export const RELATION_DECLINE = 'decline';
 
 export const RELATIONSHIP_REQUEST = 'RELATIONSHIP_REQUEST';
 export const RELATIONSHIP_SUCCESS = 'RELATIONSHIP_SUCCESS';
@@ -61,4 +64,55 @@ export function unfollowFrom(objectId, subjectId, relId) {
     },
     relId,
   };
+}
+
+function changeTlogRelationship(endpoint, relId, action) {
+  return (dispatch) => {
+    return dispatch({
+      [CALL_API]: {
+        endpoint,
+        schema: Schemas.RELATIONSHIP,
+        types: [ RELATIONSHIP_REQUEST, RELATIONSHIP_SUCCESS, RELATIONSHIP_FAILURE ],
+        opts: postOpts(),
+      },
+      relId,
+      action,
+    })
+      .catch(() => setTimeout(
+        () => dispatch({ type: RELATIONSHIP_RESET_ERROR, relId }),
+        RESET_ERROR_TIMEOUT
+      ));
+  };
+}
+
+export function ignoreTlog(objectId, subjectId, relId) {
+  return changeTlogRelationship(
+    ApiRoutes.tlogRelationshipsToTlog(objectId, subjectId, RELATION_IGNORE),
+    relId,
+    RELATION_IGNORE
+  );
+}
+
+export function cancelIgnoreTlog(objectId, subjectId, relId) {
+  return changeTlogRelationship(
+    ApiRoutes.tlogRelationshipsToTlog(objectId, subjectId, RELATION_CANCEL),
+    relId,
+    RELATION_CANCEL
+  );
+}
+
+export function approveTlog(objectId, subjectId, relId) {
+  return changeTlogRelationship(
+    ApiRoutes.tlogRelationshipsByApprove(objectId, subjectId),
+    relId,
+    RELATION_APPROVE
+  );
+}
+
+export function declineTlog(objectId, subjectId, relId) {
+  return changeTlogRelationship(
+    ApiRoutes.tlogRelationshipsByDisapprove(objectId, subjectId),
+    relId,
+    RELATION_DECLINE
+  );
 }

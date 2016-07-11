@@ -60,7 +60,7 @@ class AppRoot extends Component {
 
     store = createStoreWithMiddleware(combineReducers(reducers), {
       currentUser: {
-        data: camelizeKeys(gon.user),
+        data: camelizeKeys(gon.user || {}),
       },
     });
     if (gon.user) {

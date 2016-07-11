@@ -20,6 +20,24 @@
     }
   }
 
+  .follow-button__title--hover {
+    display: none;
+  }
+
+  .follow-button__title--nohover {
+    display: initial;
+  }
+
+  &:hover {
+    .follow-button__title--hover {
+      display: initial;
+    }
+
+    .follow-button__title--nohover {
+      display: none;
+    }
+  }
+
   // Кнопка Follow Button в блоке Persons
   .persons & {
     width: auto;

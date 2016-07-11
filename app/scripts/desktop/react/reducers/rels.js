@@ -5,6 +5,7 @@ import {
   RELS_FAILURE,
   RELS_UNLOADED,
   RELS_BY_FRIEND,
+  RELS_BY_REQUESTED,
   RELS_TO_IGNORED,
 } from '../actions/RelsActions';
 import Immutable from 'immutable';
@@ -18,6 +19,7 @@ const initialTypeState = {
 
 const initialState = Immutable.fromJS({
   [RELS_BY_FRIEND]: initialTypeState,
+  [RELS_BY_REQUESTED]: initialTypeState,
   [RELS_TO_IGNORED]: initialTypeState,
 });
 

@@ -16242,15 +16242,15 @@ var ThumborService = {
 
   newImageUrl: function newImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
-    var width = size.width || '',
-        height = size.height || '';
+    var width = size.width || '';
+    var height = size.height || '';
 
     return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters(filtersArr) + '/' + url : url;
   },
   newRetinaImageUrl: function newRetinaImageUrl(url, size, filtersArr) {
     url = prepareUrl(url);
-    var width = size.width ? size.width * 2 : '',
-        height = size.height ? size.height * 2 : '';
+    var width = size.width ? size.width * 2 : '';
+    var height = size.height ? size.height * 2 : '';
 
     return this.thumborWithUrl ? this.thumborWithUrl + '/unsafe/' + width + 'x' + height + filters(filtersArr) + '/' + url + ' 2x' : url;
   },
@@ -16267,8 +16267,8 @@ var ThumborService = {
     var size = _ref2.size;
 
     url = prepareUrl(url);
-    var width = size.width ? size.width * 2 : '',
-        height = size.height ? size.height * 2 : '';
+    var width = size.width ? size.width * 2 : '';
+    var height = size.height ? size.height * 2 : '';
 
     return this.thumborWithPath ? this.thumborWithPath + '/unsafe/' + width + 'x' + height + filters() + '/' + path + ' 2x' : url;
   }
@@ -75360,7 +75360,7 @@ function mountReactComponents(root) {
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, { userToolbar: props.userToolbar });
       window.STATE_FROM_SERVER = (0, _assign2.default)(window.STATE_FROM_SERVER, (0, _props2redux2.default)(props));
 
-      (0, _reactDom.render)((0, _react.createElement)(root, null), _node);
+      (0, _reactDom.render)((0, _react.createElement)(root, props), _node);
       return;
     }
   }

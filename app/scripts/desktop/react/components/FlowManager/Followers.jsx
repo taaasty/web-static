@@ -17,7 +17,7 @@ function Followers({ followers, followersState, getFollowers, unfollowFrom }) {
       onLoadMore={getFollowers}
     >
       {followers.map((follower, relId) => (
-         <RelationListItem key={`rel-item-${relId}`} user={follower.get('reader')}>
+         <RelationListItem key={`follower-item-${relId}`} user={follower.get('reader')}>
            <ButtonUnfollow onClick={handleButtonClick.bind(null, follower, relId)} />
          </RelationListItem>
        )).valueSeq()}

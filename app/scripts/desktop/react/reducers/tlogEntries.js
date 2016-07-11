@@ -44,9 +44,10 @@ const actionMap = {
     });
   },
 
-  [TLOG_ENTRIES_FAILURE](state, { error }) {
+  [TLOG_ENTRIES_FAILURE](state, { error, signature }) {
     return Object.assign({}, state, {
       error,
+      signature,
       isFetching: false,
       invalid: false,
     });
