@@ -116,19 +116,17 @@ class HeroFlow extends Component {
           title={<Link to={uri(tlog.get('tlogUrl')).path()}>{`#${flow.get('name') || tlog.get('slug')}`}</Link>}
         />
         {popup &&
-         <div className="popup-container">
-           <PopupArea onClose={this.hideSettings.bind(this)}>
-             <Popup
-               className="popup--dark popup--flows"
-               clue="manage-flow"
-               onClose={this.hideSettings.bind(this)}
-               title={i18n.t('manage_flow.header')}
-               withBackground
-             >
-               <FlowManager flow={flow} />
-             </Popup>
-           </PopupArea>
-         </div>
+         <PopupArea onClose={this.hideSettings.bind(this)}>
+           <Popup
+             className="popup--dark popup--flows"
+             clue="manage-flow"
+             onClose={this.hideSettings.bind(this)}
+             title={i18n.t('manage_flow.header')}
+             withBackground
+           >
+             <FlowManager flow={flow} />
+           </Popup>
+         </PopupArea>
         }
       </div>
     );

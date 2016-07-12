@@ -29,8 +29,7 @@ class AppPage extends Component {
     return shallowCompare(this, nextProps, nextState);
   }
   render() {
-    const { children, currentUser, editing, location, params, tlog: tlogIm } = this.props;
-    const tlog = tlogIm.toJS();
+    const { children, currentUser, editing, location, params, tlog } = this.props;
     const isLogged = !!currentUser.id;
 
     return (

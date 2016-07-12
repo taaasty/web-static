@@ -1,7 +1,8 @@
 import ApiRoutes from '../../../shared/routes/api';
 import ApiHelpers from '../../../shared/helpers/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { defaultOpts, putOpts } from './reqHelpers';
+import { defaultOpts, postOpts, putOpts } from './reqHelpers';
+import { decamelizeKeys } from 'humps';
 
 export const FLOW_REQUEST = 'FLOW_REQUEST';
 export const FLOW_SUCCESS = 'FLOW_SUCCESS';
@@ -54,5 +55,18 @@ export function updateFlow(flowId, { name, slug, title, picFile, isPrivacy, isPr
       opts: putOpts(formData),
     },
     flowId,
+  };
+}
+
+export function createFlow(data) { // { name, title, flowpic, staffIds }
+  const formData = ApiHelpers.prepareFormData(decamelizeKeys(data));
+
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.flows(),
+      schema: Schemas.FLOW,
+      types: [ FLOW_REQUEST, FLOW_SUCCESS, FLOW_FAILURE ],
+      opts: postOpts(formData),
+    },
   };
 }

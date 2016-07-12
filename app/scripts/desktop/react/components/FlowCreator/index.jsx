@@ -1,46 +1,64 @@
+/*global i18n, ga */
 import React, {PropTypes, Component} from 'react';
 import FlowFormHero from '../FlowForm/FlowFormHero';
 import FlowFormChooser from '../FlowForm/FlowFormChooser';
 import FlowFormStaffs from '../FlowForm/FlowFormStaffs';
-import FlowActionCreators from '../../actions/Flow';
+import { connect } from 'react-redux';
+import { createFlow } from '../../actions/FlowActions';
+import {
+  flowCreatorSet,
+  flowCreatorReset,
+  flowCreatorAddStaff,
+  flowCreatorRemoveStaff,
+} from '../../actions/FlowCreatorActions';
+import TastyLockingAlertController from '../../controllers/TastyLockingAlertController';
 
-export default class FlowCreator extends Component {
-  static propTypes = {
-    staffsLimit: PropTypes.number,
-  };
-  static defaultProps = {
-    staffsLimit: 5,
-  };
-  state = {
-    name: '',
-    title: '',
-    picFile: null,
-    staffs: [],
-  };
-  updateValue(name, value) {
-    this.setState({[name]: value});
+const defaultRole = 'moderator';
+
+class FlowCreator extends Component {
+  componentWillUnmount() {
+    this.props.flowCreatorReset();
   }
   createFlow() {
-    FlowActionCreators.create(this.state);
+    const { name, title, flowpic, staffs, createFlow } = this.props;
+
+    createFlow({
+      name,
+      title,
+      flowpic,
+      staffIds: staffs.map((s) => s.getIn([ 'user', 'id' ])).toArray(),
+    })
+      .then((flow) => {
+        function redirect() {
+          TastyLockingAlertController.show({
+            message: i18n.t('create_flow.create_success'),
+            action() {
+              window.location = flow.tlog_url;
+            },
+          });
+        }
+
+        if (window.ga) {
+          ga('send', 'event', 'UX', 'CreateFlow', flow.name, {
+            hitCallback: redirect,
+          });
+        } else {
+          redirect();
+        }
+      });
   }
   handleUserChoose(user) {
-    // Check whether user already in staffs
-    for (let i = 0; i < this.state.staffs.length; i++) {
-      let staff = this.state.staffs[i];
-      if (staff.user.id === user.id) return;
-    }
+    const { currentUserId, flowCreatorAddStaff } = this.props;
 
-    let staff = {user, role: 'moderator'};
-    let newStaff = this.state.staffs.concat(staff);
-    this.setState({staffs: newStaff});
-  }
-  handleStaffDelete(staff) {
-    let newStaff = this.state.staffs.filter((user) => staff.id !== user.id);
-    this.setState({staffs: newStaff});
+    if (user.get('id') !== currentUserId) {
+      flowCreatorAddStaff(user, defaultRole);
+    }
   }
   render() {
-    let flowpic = {
-      original_url: '//taaasty.com/images/hero-cover.jpg',
+    const { name, title, staffs, flowCreatorSet,
+            flowCreatorRemoveStaff, staffsLimit } = this.props;
+    const flowpic = {
+      originalUrl: '//taaasty.com/images/hero-cover.jpg',
     };
 
     return (
@@ -48,26 +66,26 @@ export default class FlowCreator extends Component {
         <div className="flow-form__header">
           <FlowFormHero
             flowpic={flowpic}
-            name={this.state.name}
+            name={name}
             onFlowCreate={this.createFlow.bind(this)}
-            onNameChange={this.updateValue.bind(this, 'name')}
-            onPicFileChange={this.updateValue.bind(this, 'picFile')}
-            onTitleChange={this.updateValue.bind(this, 'title')}
-            title={this.state.title}
+            onNameChange={flowCreatorSet.bind(null, 'name')}
+            onPicFileChange={flowCreatorSet.bind(null, 'flowpic')}
+            onTitleChange={flowCreatorSet.bind(null, 'title')}
+            title={title}
           />
         </div>
         <div className="flow-form__body">
           <div className="flow-form__item">
             <div className="flow-form__left">
               <FlowFormChooser
-                limitReached={this.props.staffsLimit === this.state.staffs.length}
+                limitReached={staffsLimit === staffs.count()}
                 onChoose={this.handleUserChoose.bind(this)}
               />
             </div>
             <FlowFormStaffs
               canChangeRole={false}
-              onDelete={this.handleStaffDelete.bind(this)}
-              staffs={this.state.staffs}
+              onDelete={flowCreatorRemoveStaff}
+              staffs={staffs}
             />
           </div>
         </div>
@@ -75,3 +93,38 @@ export default class FlowCreator extends Component {
     );
   }
 }
+
+FlowCreator.propTypes = {
+  createFlow: PropTypes.func.isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  flowCreatorAddStaff: PropTypes.func.isRequired,
+  flowCreatorRemoveStaff: PropTypes.func.isRequired,
+  flowCreatorReset: PropTypes.func.isRequired,
+  flowCreatorSet: PropTypes.func.isRequired,
+  flowpic: PropTypes.object,
+  name: PropTypes.string,
+  staffs: PropTypes.object.isRequired,
+  staffsLimit: PropTypes.number,
+  title: PropTypes.string,
+};
+
+FlowCreator.defaultProps = {
+  staffsLimit: 5,
+};
+
+export default connect(
+  (state, ownProps) => {
+    const { flowCreator } = state;
+
+    return {
+      ...ownProps,
+      currentUserId: state.currentUser.data.id,
+      name: flowCreator.get('name'),
+      title: flowCreator.get('title'),
+      flowpic: flowCreator.get('flowpic'),
+      staffs: flowCreator.get('staffs'),
+    };
+  },
+  { createFlow, flowCreatorSet, flowCreatorReset,
+    flowCreatorAddStaff, flowCreatorRemoveStaff }
+)(FlowCreator);

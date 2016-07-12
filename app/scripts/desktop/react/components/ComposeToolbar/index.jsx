@@ -3,12 +3,16 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
 import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
+import FlowCreator from '../FlowCreator';
+import PopupArea from '../Popup/Area';
+import Popup from '../Popup';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
 class ComposeToolbar extends Component {
   state = {
-    dropdownVisible: false,
+    isDropdownVisible: false,
+    isFlowCreatorPopupVisible: false,
   };
   componentDidMount() {
     $(this.refs.button).tooltip({
@@ -21,17 +25,27 @@ class ComposeToolbar extends Component {
     $(this.refs.button).tooltip('destroy');
   }
   onMouseEnter() {
-    this.setState({ dropdownVisible: true });
+    this.setState({ isDropdownVisible: true });
   }
   onMouseLeave() {
-    this.setState({ dropdownVisible: false });
+    this.setState({ isDropdownVisible: false });
+  }
+  showFlowCreatorPopup() {
+    this.setState({
+      isDropdownVisible: false,
+      isFlowCreatorPopupVisible: true,
+    });
+  }
+  hideFlowCreatorPopup() {
+    this.setState({ isFlowCreatorPopupVisible: false });
   }
   render() {
     const { tlog, user } = this.props;
+    const { isDropdownVisible, isFlowCreatorPopupVisible } = this.state;
     const containerClasses = classNames({
       'toolbar': true,
       'toolbar--compose': true,
-      'state--open': this.state.dropdownVisible,
+      'state--open': isDropdownVisible,
     });
 
     return (
@@ -40,16 +54,30 @@ class ComposeToolbar extends Component {
         onMouseEnter={this.onMouseEnter.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
-        <Link to={uri(Routes.new_entry_url(this.props.user.slug)).path()}>
+        <Link to={uri(Routes.new_entry_url(user.slug)).path()}>
           <div className="toolbar__toggle" ref="button">
             <i className="icon icon--plus" />
           </div>
         </Link>
         <ComposeToolbarDropdownList
-          isFlow={tlog.author && tlog.author.is_flow}
-          tlogSlug={tlog.slug}
+          isFlow={tlog.get('isFlow', false)}
+          showFlowCreatorPopup={this.showFlowCreatorPopup.bind(this)}
+          tlogSlug={tlog.get('slug', '')}
           userSlug={user.slug}
         />
+        {isFlowCreatorPopupVisible &&
+         <PopupArea onClose={this.hideFlowCreatorPopup.bind(this)}>
+           <Popup
+             className="popup--dark popup--flows"
+             clue="create-flow"
+             onClose={this.hideFlowCreatorPopup.bind(this)}
+             title={i18n.t('create_flow.header')}
+             withBackground
+           >
+             <FlowCreator />
+           </Popup>
+         </PopupArea>
+        }
       </div>
     );
   }

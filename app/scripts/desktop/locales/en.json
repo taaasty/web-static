@@ -571,7 +571,8 @@
     }
   },
   "create_flow": {
-    "header": "Create flow"
+    "header": "Create flow",
+    "create_success": "Flow successfully created! Redirection to the flow page..."
   },
   "manage_flow": {
     "header": "Flow management",

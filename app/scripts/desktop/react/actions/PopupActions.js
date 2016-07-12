@@ -2,7 +2,6 @@
   DesignPaymentContainer, DesignSettingsColorPickerPopup, messagingService */
 import UserOnboarding from '../components/UserOnboarding';
 import CurrentUserStore from  '../stores/current_user';
-import FlowCreator from '../components/FlowCreator';
 import PremiumPopup from '../components/PremiumPopup';
 import GetPremiumPopup from '../components/PremiumPopup/GetPremiumPopup';
 import SelectPremiumPlanPopup from '../components/PremiumPopup/SelectPremiumPlanPopup';
@@ -96,17 +95,6 @@ const PopupActions = {
 
   closeColorPicker() {
     ReactApp.popupController.close('color-picker-container');
-  },
-
-  createFlow() {
-    ReactApp.popupController.openWithBackground({
-      Component: FlowCreator,
-      popupProps: {
-        title: i18n.t('create_flow.header'),
-        className: 'popup--dark popup--flows',
-        clue: 'create-flow',
-      },
-    });
   },
 
   closeDesignSettings() {
