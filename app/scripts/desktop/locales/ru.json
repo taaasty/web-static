@@ -55,8 +55,6 @@
   "return_to_selecting_signin_method": "Вернуться к выбору способа входа",
   "forgot_password_or_email": "Я забыл пароль или почту",
   "email_submit_process_button": "Вхожу..",
-  "confirm_signup": "Сейчас будет создан новый аккаунт @{{userSlug}}",
-  "confirm_signup_approve": "Да, зарегистрировать новый аккаунт",
   "or": "или",
   "email_signin_signup_header": "Вход/Регистрация через емейл",
   "reset_password_process_button": "Отправляю запрос..",
@@ -386,7 +384,6 @@
   "email_submit_button": "Войти",
   "login_field_placeholder": "Электронная почта или ник",
   "password_field": "Пароль",
-  "already_registered_link": "Я уже зарегистрирован",
   "remembered_password_link": "Я всё вспомнил, верните меня",
   "delete_comment_item": "Удалить комментарий",
   "delete_comment_confirm": "Вы действительно хотите удалить комментарий?",
@@ -436,6 +433,13 @@
   "signin_success": "Добро пожаловать, {{userSlug}}! Подождите, я перезагружусь..",
   "browser_support_update_to": "Мы не поддерживаем ваш браузер ({{browserName}} {{browserVersion}}), обновите его до",
   "browser_support_last_version": "последней версии",
+  "auth": {
+    "accept_terms": "Регистрируясь вы принимаете условия ",
+    "accept_terms_link": "Пользовательского соглашения",
+    "confirm_signup": "Сейчас будет создан новый аккаунт @{{userSlug}}",
+    "confirm_signup_approve": "Да, зарегистрировать новый аккаунт",
+    "already_registered_link": "Я уже зарегистрирован"
+  },
   "editor" : {
     "title": "Редактор поста"
   },
