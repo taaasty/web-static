@@ -50,8 +50,6 @@
   "return_to_selecting_signin_method": "Return to choose how to log in",
   "forgot_password_or_email": "I forgot my password or email",
   "email_submit_process_button": "Entering...",
-  "confirm_signup": "New account @{{userSlug}} will be created now",
-  "confirm_signup_approve": "Yes, I want to create new account",
   "or": "or",
   "email_signin_signup_header": "Log in/Registration with email ",
   "reset_password_process_button": "Sending a request...",
@@ -376,7 +374,6 @@
   "email_submit_button": "Log in",
   "login_field_placeholder": "Email or nickname",
   "password_field": "Password",
-  "already_registered_link": "I am already regestered",
   "remembered_password_link": "I remembered everything! Please take me back",
   "delete_comment_item": "Delete the comment",
   "delete_comment_confirm": "Do you really want to delete this comment?",
@@ -417,6 +414,13 @@
   "signin_success": "Welcome, {{userSlug}}! Wait, i am restarting...",
   "browser_support_update_to": "You have unsupported version of browser ({{browserName}} {{browserVersion}}), upgrade it to",
   "browser_support_last_version": "last version",
+  "auth": {
+    "accept_terms": "Регистрируясь вы принимаете условия ",
+    "accept_terms_link": "Пользовательского соглашения",
+    "confirm_signup": "New account @{{userSlug}} will be created now",
+    "confirm_signup_approve": "Yes, I want to create new account",
+    "already_registered_link": "I am already regestered"
+  },
   "editor" : {
     "title": "Post editor"
   },
