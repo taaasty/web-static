@@ -10,20 +10,18 @@ import RelationButton from '../RelationButton';
 import HeroSettingsButton from './HeroSettingsButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import Routes from '../../../../shared/routes/routes';
-import FlowManager from '../FlowManager';
-import Popup from '../Popup';
-import PopupArea from '../Popup/Area';
+import FlowManagerPopup from '../FlowManagerPopup';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
 class HeroFlow extends Component {
-  state = { popup: false };
+  state = { isFlowManagerPopupVisible: false };
   showSettings() {
-    this.setState({ popup: true });
+    this.setState({ isFlowManagerPopupVisible: true });
     document.body.classList.add('popup-enabled');
   }
   hideSettings() {
-    this.setState({ popup: false });
+    this.setState({ isFlowManagerPopupVisible: false });
     document.body.classList.remove('popup-enabled');
   }
   renderWriteButton() {
@@ -38,7 +36,7 @@ class HeroFlow extends Component {
     );
   }
   renderRelationButton() {
-    const { flow, tlog } = this.props;
+    const { tlog } = this.props;
     
     return (
       <RelationButton
@@ -99,7 +97,7 @@ class HeroFlow extends Component {
     );
   }
   render() {
-    const { popup } = this.state;
+    const { isFlowManagerPopupVisible } = this.state;
     const { flow, tlog } = this.props;
     const flowId = flow.get('id');
     const backgroundUrl = flow.getIn(
@@ -115,19 +113,7 @@ class HeroFlow extends Component {
           text={this.text(flow.get('publicTlogEntriesCount'))}
           title={<Link to={uri(tlog.get('tlogUrl')).path()}>{`#${flow.get('name') || tlog.get('slug')}`}</Link>}
         />
-        {popup &&
-         <PopupArea onClose={this.hideSettings.bind(this)}>
-           <Popup
-             className="popup--dark popup--flows"
-             clue="manage-flow"
-             onClose={this.hideSettings.bind(this)}
-             title={i18n.t('manage_flow.header')}
-             withBackground
-           >
-             <FlowManager flow={flow} />
-           </Popup>
-         </PopupArea>
-        }
+        {isFlowManagerPopupVisible && <FlowManagerPopup flow={flow} onClose={this.hideSettings.bind(this)} />}
       </div>
     );
   }

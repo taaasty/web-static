@@ -167,13 +167,6 @@
   "vkontakte_suggestions_empty": "К сожалению, на Тейсти нет ваших друзей из Вконтакте на которых вы не подписаны",
   "vkontakte_suggestions_not_signedin": "Вы еще не привязали свой аккаунт Вконтакте",
   "vkontakte_suggestions_signin_button": "Найти друзей Вконтакте",
-  "persons_popup_menu_followings": "Вы подписаны",
-  "persons_popup_menu_followers": "Подписчики",
-  "persons_popup_menu_requested": "Заявки",
-  "persons_popup_menu_guessed": "Рекомендации",
-  "persons_popup_menu_ignored": "Заблокированы",
-  "persons_popup_menu_vkontakte": "Вконтакте",
-  "persons_popup_menu_facebook": "Facebook",
   "persons_popup_header": "Управление подписками",
   "editor_private_entry": "Закрытая запись",
   "editor_public_entry": "Открытая запись",
@@ -797,6 +790,17 @@
     "share_desc": "Тейсти - дружелюбное пространство для общения. Перейди по ссылке и получи премиум-аккаунт бесплатно",
     "vk_button": "Отправить VK",
     "fb_button": "Отправить FB"
+  },
+  "persons_popup": {
+    "menu": {
+      "followings": "Вы подписаны",
+      "followers": "Подписчики",
+      "requested": "Заявки",
+      "guessed": "Рекомендации",
+      "ignored": "Заблокированы",
+      "vkontakte": "Вконтакте",
+      "facebook": "Facebook"
+    }
   },
   "premium_popup": {
     "title": "Тейсти <span class=\"--bold\">премиум</span>",

@@ -339,6 +339,10 @@
   white-space: normal;
   text-align: initial;
 
+  .tabs-nav {
+    &:extend(.popup--flows .tabs-nav all);
+  }
+
   .popup__body {
     height: @persons-popup-body-height;
     background-color: @persons-popup-body-bg;

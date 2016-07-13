@@ -3,9 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import Routes from '../../../../shared/routes/routes';
 import ComposeToolbarDropdownList from './ComposeToolbarDropdownList';
-import FlowCreator from '../FlowCreator';
-import PopupArea from '../Popup/Area';
-import Popup from '../Popup';
+import FlowCreatorPopup from '../FlowCreatorPopup';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
@@ -65,19 +63,7 @@ class ComposeToolbar extends Component {
           tlogSlug={tlog.get('slug', '')}
           userSlug={user.slug}
         />
-        {isFlowCreatorPopupVisible &&
-         <PopupArea onClose={this.hideFlowCreatorPopup.bind(this)}>
-           <Popup
-             className="popup--dark popup--flows"
-             clue="create-flow"
-             onClose={this.hideFlowCreatorPopup.bind(this)}
-             title={i18n.t('create_flow.header')}
-             withBackground
-           >
-             <FlowCreator />
-           </Popup>
-         </PopupArea>
-        }
+        {isFlowCreatorPopupVisible && <FlowCreatorPopup onClose={this.hideFlowCreatorPopup.bind(this)} />}
       </div>
     );
   }

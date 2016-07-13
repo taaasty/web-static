@@ -13,10 +13,11 @@ export const RELS_FAILURE = 'RELS_FAILURE';
 export const RELS_UNLOADED = 'RELS_UNLOADED';
 
 export const RELS_BY_FRIEND = 'RELS_BY_FRIEND';
+export const RELS_TO_FRIEND = 'RELS_TO_FRIEND';
 export const RELS_BY_REQUESTED = 'RELS_BY_REQUESTED';
 export const RELS_TO_IGNORED = 'RELS_TO_IGNORED';
 
-const RELS_LIMIT = 10;
+const RELS_LIMIT = 20;
 
 function unloadedRels(relType, currentRelsCount) {
   return {
@@ -56,6 +57,36 @@ export function getRelsByFriend(objectId) {
 
       return dispatch(fetchRelsByFriend(objectId, sincePosition))
         .then(() => dispatch(unloadedRels(getFriends().count(), RELS_BY_FRIEND)));
+    }
+  };
+}
+
+function fetchRelsToFriend(subjectId, sincePosition) {
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.tlogRelationshipsTo(subjectId, REL_FRIEND_STATE), { limit: RELS_LIMIT, sincePosition }),
+      schema: Schemas.RELATIONSHIP_COLL,
+      types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
+      opts: defaultOpts,
+    },
+    relType: RELS_TO_FRIEND,
+  };
+}
+
+export function getRelsToFriend(subjectId) {
+  return (dispatch, getState) => {
+    if (shouldFetchRels(getState().rels.get(RELS_TO_FRIEND))) {
+      const getFollowings = () => getState()
+            .entities
+            .get('rel')
+            .filter((r) => r.get('readerId') === subjectId && r.get('state') === REL_FRIEND_STATE);
+      const last = getFollowings()
+            .sortBy((r) => r.get('position', 100000))
+            .last();
+      const sincePosition = last && last.get('id');
+
+      return dispatch(fetchRelsToFriend(subjectId, sincePosition))
+        .then(() => dispatch(unloadedRels(getFollowings().count(), RELS_TO_FRIEND)));
     }
   };
 }

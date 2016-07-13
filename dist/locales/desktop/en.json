@@ -158,13 +158,6 @@
   "vkontakte_suggestions_empty": "Unfortunately, there are no your friends from VK which you have not subscribed already",
   "vkontakte_suggestions_not_signedin": "You haven't link VK account yet",
   "vkontakte_suggestions_signin_button": "Find your friends from VK",
-  "persons_popup_menu_followings": "Followings",
-  "persons_popup_menu_followers": "Followers",
-  "persons_popup_menu_requested": "Requests",
-  "persons_popup_menu_guessed": "Recommendations",
-  "persons_popup_menu_ignored": "Blocked",
-  "persons_popup_menu_vkontakte": "VKontakte",
-  "persons_popup_menu_facebook": "Facebook",
   "persons_popup_header": "Subscriptions settings",
   "editor_private_entry": "Private post",
   "editor_public_entry": "Public post",
@@ -768,6 +761,17 @@
     "share_desc": "Tasty is a friendly space for communications. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
+  },
+  "persons_popup": {
+    "menu": {
+      "followings": "Followings",
+      "followers": "Followers",
+      "requested": "Requests",
+      "guessed": "Recommendations",
+      "ignored": "Blocked",
+      "vkontakte": "VKontakte",
+      "facebook": "Facebook"
+    }
   },
   "premium_popup": {
     "title": "Tasty <span class=\"--bold\">premium</span>",
