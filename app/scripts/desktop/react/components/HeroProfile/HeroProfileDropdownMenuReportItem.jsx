@@ -1,38 +1,20 @@
-/*global i18n, RequesterMixin, NoticeService */
-import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../shared/routes/api';
+/*global i18n */
+import React, { PropTypes } from 'react';
 
-const HeroProfileDropdownMenuReportItem = createClass({
-  propTypes: {
-    onRequestEnd: PropTypes.func.isRequired,
-    userId: PropTypes.number.isRequired,
-  },
-  mixins: [ RequesterMixin ],
+function HeroProfileDropdownMenuReportItem({ tlogReport }) {
+  return (
+    <a
+      className="action-dropdown-item"
+      onClick={tlogReport}
+    >
+      <i className="icon icon--exclamation-mark" />
+      {i18n.t('report_tlog_item')}
+    </a>
+  );
+}
 
-  report() {
-    this.createRequest({
-      url: ApiRoutes.tlog_report(this.props.userId),
-      method: 'POST',
-      success: () => {
-        NoticeService.notifySuccess(i18n.t('report_user_success'));
-        this.props.onRequestEnd();
-      },
-      error(data) {
-        NoticeService.errorResponse(data);
-      },
-    }, { progressBar: true });
-  },
-  render() {
-    return (
-      <a
-        className="action-dropdown-item"
-        onClick={this.report}
-      >
-        <i className="icon icon--exclamation-mark" />
-        {i18n.t('report_tlog_item')}
-      </a>
-    );
-  },
-});
+HeroProfileDropdownMenuReportItem.propTypes = {
+  tlogReport: PropTypes.func.isRequired,
+};
 
 export default HeroProfileDropdownMenuReportItem;

@@ -15,7 +15,7 @@ function PanelFollowers(props) {
              {isPrivacy && (
                 <button
                   className="button button--small button--outline-light-white button--icon"
-                  onClick={unfollowFromMe.bind(null, rel.get('readerId'))}
+                  onClick={unfollowFromMe.bind(null, rel.get('readerId'), relId)}
                 >
                   <i className="icon icon--cross" />
                 </button>

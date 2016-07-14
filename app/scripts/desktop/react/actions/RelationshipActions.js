@@ -54,6 +54,10 @@ export function cancel(id, relId) {
   return changeMyRelationship(id, relId, RELATION_CANCEL);
 }
 
+export function ignore(id, relId) {
+  return changeMyRelationship(id, relId, RELATION_IGNORE);
+}
+
 export function unfollowFrom(objectId, subjectId, relId) {
   return {
     [CALL_API]: {
@@ -66,14 +70,14 @@ export function unfollowFrom(objectId, subjectId, relId) {
   };
 }
 
-function changeTlogRelationship(endpoint, relId, action) {
+function changeTlogRelationship(endpoint, relId, action, opts) {
   return (dispatch) => {
     return dispatch({
       [CALL_API]: {
         endpoint,
         schema: Schemas.RELATIONSHIP,
         types: [ RELATIONSHIP_REQUEST, RELATIONSHIP_SUCCESS, RELATIONSHIP_FAILURE ],
-        opts: postOpts(),
+        opts: postOpts(opts),
       },
       relId,
       action,
@@ -105,7 +109,8 @@ export function approveTlog(objectId, subjectId, relId) {
   return changeTlogRelationship(
     ApiRoutes.tlogRelationshipsByApprove(objectId, subjectId),
     relId,
-    RELATION_APPROVE
+    RELATION_APPROVE,
+    { exposeReverse: true }
   );
 }
 
@@ -113,6 +118,7 @@ export function declineTlog(objectId, subjectId, relId) {
   return changeTlogRelationship(
     ApiRoutes.tlogRelationshipsByDisapprove(objectId, subjectId),
     relId,
-    RELATION_DECLINE
+    RELATION_DECLINE,
+    { exposeReverse: true }
   );
 }
