@@ -2,7 +2,12 @@
 import React, { PropTypes } from 'react';
 import Scroller from '../common/Scroller';
 
-function Panel({ canLoadMore, children, isEmpty, isError, isFetching, loadMoreData }) {
+function Panel({ children, loadMoreData, relations, relationsState, totalCount }) {
+  const isEmpty = !relations.count();
+  const isFetching = relationsState.get('isFetching', false);
+  const isError = !!relationsState.get('error');
+  const canLoadMore = relations.count() < totalCount;
+
   function renderMoreButton() {
     return (
       <div className="popup__more">
@@ -44,15 +49,14 @@ function Panel({ canLoadMore, children, isEmpty, isError, isFetching, loadMoreDa
 };
 
 Panel.propTypes = {
-  canLoadMore: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.array,
   ]),
-  isEmpty: PropTypes.bool.isRequired,
-  isError: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   loadMoreData: PropTypes.func.isRequired,
+  relations: PropTypes.object.isRequired,
+  relationsState: PropTypes.object.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default Panel;

@@ -31,10 +31,13 @@ function shouldFetchRels(state) {
   return !state.get('isFetching');
 }
 
-function fetchRelsByFriend(objectId, sincePosition) {
+function fetchRelsByFriend(objectId, exposeReverse, sincePosition) {
   return {
     [CALL_API]: {
-      endpoint: makeGetUrl(ApiRoutes.tlogRelationshipsBy(objectId, REL_FRIEND_STATE), { limit: RELS_LIMIT, sincePosition }),
+      endpoint: makeGetUrl(
+        ApiRoutes.tlogRelationshipsBy(objectId, REL_FRIEND_STATE),
+        { limit: RELS_LIMIT, sincePosition, exposeReverse }
+      ),
       schema: Schemas.RELATIONSHIP_COLL,
       types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
       opts: defaultOpts,
@@ -43,7 +46,7 @@ function fetchRelsByFriend(objectId, sincePosition) {
   };
 }
 
-export function getRelsByFriend(objectId) {
+export function getRelsByFriend(objectId, exposeReverse=false) {
   return (dispatch, getState) => {
     if (shouldFetchRels(getState().rels.get(RELS_BY_FRIEND))) {
       const getFriends = () => getState()
@@ -55,7 +58,7 @@ export function getRelsByFriend(objectId) {
             .last();
       const sincePosition = last && last.get('position');
 
-      return dispatch(fetchRelsByFriend(objectId, sincePosition))
+      return dispatch(fetchRelsByFriend(objectId, exposeReverse, sincePosition))
         .then(() => dispatch(unloadedRels(getFriends().count(), RELS_BY_FRIEND)));
     }
   };

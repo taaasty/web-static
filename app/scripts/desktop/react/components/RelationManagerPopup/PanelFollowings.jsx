@@ -3,17 +3,11 @@ import Panel from './Panel';
 import PersonItem from './PersonItem';
 import RelationButton from '../RelationButton';
 
-function PanelFollowings({ loadMoreData, relations, relationsState, totalCount }) {
+function PanelFollowings(props) {
   return (
-    <Panel
-      canLoadMore={relations.count() === totalCount}
-      isEmpty={!relations.count()}
-      isError={!!relationsState.get('error')}
-      isFetching={relationsState.get('isFetching', false)}
-      loadMoreData={loadMoreData}
-    >
+    <Panel {...props}>
       <ul className="persons">
-        {relations.map((rel, relId) => (
+        {props.relations.map((rel, relId) => (
            <PersonItem key={`following-item-${relId}`} user={rel.get('user')}>
              <RelationButton relId={relId} />
            </PersonItem>

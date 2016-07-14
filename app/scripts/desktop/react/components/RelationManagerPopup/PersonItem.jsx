@@ -25,6 +25,7 @@ function PersonItem({ children, user }) {
           <div className="person__count">
             <span>
               {publicEntriesCount}
+              {' '}
               {i18n.t('entries_count', { count: publicEntriesCount })}
             </span>
           </div>

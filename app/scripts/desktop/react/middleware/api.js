@@ -61,6 +61,7 @@ flowSchema.define({
 
 relSchema.define({
   reader: tlogSchema,
+  reverseRelationship: relSchema,
   user: tlogSchema,
 });
 

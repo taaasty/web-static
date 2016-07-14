@@ -14,6 +14,8 @@ import FlowManagerPopup from '../FlowManagerPopup';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
+const defaultBackgroundUrl = "//taaasty.com/images/hero-cover.jpg";
+
 class HeroFlow extends Component {
   state = { isFlowManagerPopupVisible: false };
   showSettings() {
@@ -102,7 +104,7 @@ class HeroFlow extends Component {
     const flowId = flow.get('id');
     const backgroundUrl = flow.getIn(
       [ 'flowpic', 'originalUrl' ],
-      tlog.getIn([ 'design', 'backgroundImageUrl' ])
+      tlog.getIn([ 'design', 'backgroundImageUrl' ], defaultBackgroundUrl)
     );
 
     return (
