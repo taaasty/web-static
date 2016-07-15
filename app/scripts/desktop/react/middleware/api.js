@@ -131,6 +131,7 @@ export const Schemas = {
   RATING: ratingSchema,
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
+  RELATIONSHIP_ARR: arrayOf(relSchema),
   CONVERSATION: conversationSchema,
   CONVERSATION_COLL: arrayOf(conversationSchema),
   MESSAGE: messageSchema,

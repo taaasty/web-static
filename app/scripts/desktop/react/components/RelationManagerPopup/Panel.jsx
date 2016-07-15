@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import Scroller from '../common/Scroller';
 
-function Panel({ children, loadMoreData, relations, relationsState, totalCount }) {
+function Panel({ children, emptyMsg, loadMoreData, relations, relationsState, totalCount }) {
   const isEmpty = !relations.count();
   const isFetching = relationsState.get('isFetching', false);
   const isError = !!relationsState.get('error');
@@ -24,7 +24,7 @@ function Panel({ children, loadMoreData, relations, relationsState, totalCount }
   function messageText() {
     return isError ? i18n.t('persons_popup_error')
       : isFetching ? i18n.t('persons_popup_loading')
-      : isEmpty ? i18n.t('persons_popup_empty')
+      : isEmpty ? (emptyMsg || i18n.t('persons_popup_empty'))
       : '';
   }
 
@@ -53,7 +53,8 @@ Panel.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
-  loadMoreData: PropTypes.func.isRequired,
+  emptyMsg: PropTypes.string,
+  loadMoreData: PropTypes.func,
   relations: PropTypes.object.isRequired,
   relationsState: PropTypes.object.isRequired,
   totalCount: PropTypes.number.isRequired,

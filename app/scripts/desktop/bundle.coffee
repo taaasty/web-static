@@ -86,13 +86,6 @@ global.UserToolbarContainer = require './react/components/UserToolbar'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
 
-require './react/components/relationship_buttons/mixins/relationship'
-require './react/components/relationship_buttons/follow_button'
-require './react/components/relationship_buttons/follower_button'
-require './react/components/relationship_buttons/ignore_button'
-require './react/components/relationship_buttons/request_button'
-require './react/components/relationship_buttons/guess_button'
-
 require './react/components/editable_field'
 
 global.EntryTlog = require './react/components/EntryTlog'

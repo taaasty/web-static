@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../UserAvatar';
 import UserSlug from '../UserSlugNew';
-import RelationButton from '../common/RelationButton';
+import RelationButton from '../RelationButton';
 import CurrentUserStore from '../../stores/current_user';
 import { Link } from 'react-router';
 import uri from 'urijs';

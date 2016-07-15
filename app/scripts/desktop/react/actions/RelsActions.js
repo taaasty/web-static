@@ -1,6 +1,6 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { defaultOpts, makeGetUrl } from './reqHelpers';
+import { defaultOpts, makeGetUrl, postOpts } from './reqHelpers';
 import {
   REL_FRIEND_STATE,
   REL_IGNORED_STATE,
@@ -16,6 +16,8 @@ export const RELS_BY_FRIEND = 'RELS_BY_FRIEND';
 export const RELS_TO_FRIEND = 'RELS_TO_FRIEND';
 export const RELS_BY_REQUESTED = 'RELS_BY_REQUESTED';
 export const RELS_TO_IGNORED = 'RELS_TO_IGNORED';
+export const RELS_VK_SUGGESTED = 'RELS_VK_SUGGESTED';
+export const RELS_FB_SUGGESTED = 'RELS_FB_SUGGESTED';
 
 const RELS_LIMIT = 20;
 
@@ -151,5 +153,53 @@ export function getRelsByRequested(objectId) {
       return dispatch(fetchRelsByRequested(objectId, sincePosition))
         .then(() => dispatch(unloadedRels(getRequested().count(), RELS_BY_REQUESTED)));
     }
+  };
+}
+
+export function getRelsVkSuggested() {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.suggestions_vkontakte(),
+      schema: Schemas.RELATIONSHIP_ARR,
+      types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
+      opts: defaultOpts,
+    },
+    relType: RELS_VK_SUGGESTED,
+  };
+}
+
+export function subscribeAllVk() {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.suggestions_vkontakte(),
+      schema: Schemas.RELATIONSHIP_ARR,
+      types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
+      opts: postOpts(),
+    },
+    relType: RELS_VK_SUGGESTED,
+  };
+}
+
+export function getRelsFbSuggested() {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.suggestions_facebook(),
+      schema: Schemas.RELATIONSHIP_ARR,
+      types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
+      opts: defaultOpts,
+    },
+    relType: RELS_FB_SUGGESTED,
+  };
+}
+
+export function subscribeAllFb() {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.suggestions_facebook(),
+      schema: Schemas.RELATIONSHIP_ARR,
+      types: [ RELS_REQUEST, RELS_SUCCESS, RELS_FAILURE ],
+      opts: postOpts(),
+    },
+    relType: RELS_FB_SUGGESTED,
   };
 }

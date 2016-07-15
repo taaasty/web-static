@@ -8,6 +8,8 @@ import {
   RELS_TO_FRIEND,
   RELS_BY_REQUESTED,
   RELS_TO_IGNORED,
+  RELS_VK_SUGGESTED,
+  RELS_FB_SUGGESTED,
 } from '../actions/RelsActions';
 import Immutable from 'immutable';
 
@@ -23,6 +25,8 @@ const initialState = Immutable.fromJS({
   [RELS_TO_FRIEND]: initialTypeState,
   [RELS_BY_REQUESTED]: initialTypeState,
   [RELS_TO_IGNORED]: initialTypeState,
+  [RELS_VK_SUGGESTED]: initialTypeState,
+  [RELS_FB_SUGGESTED]: initialTypeState,
 });
 
 const actionMap = {
