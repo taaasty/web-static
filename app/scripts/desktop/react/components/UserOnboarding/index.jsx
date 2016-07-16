@@ -2,37 +2,29 @@
 import React, { Component, PropTypes } from 'react';
 import UserOnboardingList from './UserOnboardingList';
 import UserOnboardingMoreButton from './UserOnboardingMoreButton';
-import UserOnboardingStore from '../../stores/UserOnboardingStore';
-import * as UserOnboardingActions from '../../actions/UserOnboardingActions';
+import { connect } from 'react-redux';
+import { loadOnboarding } from '../../actions/UserOnboardingActions';
+import { List, Map } from 'immutable';
+
+const emptyRelations = List();
+const emptyRel = Map();
+const emptyRelUser = Map();
 
 const RELS_PER_PAGE = 6;
 
 class UserOnboarding extends Component {
-  state = Object.assign({}, this.getStoreState(), { page: 0 });
+  state = { page: 0 };
   componentWillMount() {
-    const { isLoading, relationships: rels } = this.state;
-    this.sync = this._syncWithStore.bind(this);
-    UserOnboardingStore.addChangeListener(this.sync);
-    if (rels.length === 0 && !isLoading) {
-      UserOnboardingActions.load();
-    }
-  }
-  componentWillUnmount() {
-    UserOnboardingStore.removeChangeListener(this.sync);
-  }
-  getStoreState() {
-    return UserOnboardingStore.getState();
-  }
-  _syncWithStore() {
-    this.setState(this.getStoreState());
+    this.props.loadOnboarding();
   }
   showMore() {
     this.setState({ page: this.state.page + 1 });
   }
   render() {
-    const { isLoading, page, relationships } = this.state;
-    const relationshipsPage = relationships.slice(0, (page + 1) * RELS_PER_PAGE);
-    const hasMore = (page + 1) * RELS_PER_PAGE < relationships.length;
+    const { isFetching, relations } = this.props;
+    const { page } = this.state;
+    const visibleRelations = relations.take((page + 1) * RELS_PER_PAGE);
+    const hasMore = (page + 1) * RELS_PER_PAGE < relations.count();
 
     return (
       <div className="user-onboarding">
@@ -42,14 +34,32 @@ class UserOnboarding extends Component {
         <div className="user-onboarding__body">
           <UserOnboardingList
             hasMore={hasMore}
-            isLoading={isLoading}
-            relationships={relationshipsPage}
+            isFetching={isFetching}
+            relations={visibleRelations}
           />
-          {hasMore && <UserOnboardingMoreButton isLoading={isLoading} showMore={this.showMore.bind(this)} />}
+          {hasMore && <UserOnboardingMoreButton isFetching={isFetching} showMore={this.showMore.bind(this)} />}
         </div>
       </div>
     );
   }
 }
 
-export default UserOnboarding;
+UserOnboarding.propTypes = {
+  error: PropTypes.object,
+  isFetching: PropTypes.bool.isRequired,
+  loadOnboarding: PropTypes.func.isRequired,
+  relations: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => ({
+    isFetching: state.userOnboarding.get('isFetching', false),
+    error: state.userOnboarding.get('error', null),
+    relations: state.userOnboarding
+      .getIn([ 'data', 'relations' ], emptyRelations)
+      .toOrderedMap()
+      .mapEntries(([ idx, relId ]) => state.entities.getIn([ 'rel', relId ], emptyRel))
+      .map((r) => r.set('user', state.entities.getIn([ 'tlog', r.get('userId') ], emptyRelUser))),
+  }),
+  { loadOnboarding }
+)(UserOnboarding);

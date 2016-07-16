@@ -9,7 +9,7 @@ import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
 import BrowserSupport from '../BrowserSupport';
 import SupportLauncher from '../SupportLauncher';
-import PopupActions from '../../actions/PopupActions';
+import PopupContainer from '../PopupContainer';
 
 const PREMIUM_HASH_PARAM = 'premium';
 
@@ -54,6 +54,7 @@ class AppPage extends Component {
         {!editing && isLogged && <ComposeToolbar tlog={tlog} user={currentUser} />}
         {!editing && <SupportLauncher user={currentUser} />} 
         <BrowserSupport />
+        <PopupContainer />
       </div>
     );
   }

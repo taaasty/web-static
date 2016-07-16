@@ -209,14 +209,6 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest url, data
 
-  onboarding:
-    load: (params) ->
-      url = ApiRoutes.onboarding_url()
-      key = Constants.api.USER_ONBOARDING_LOAD
-
-      abortPendingRequests(key);
-      _pendingRequests[key] = getRequest(url, params);
-
   sendSupportRequest: (email, text) ->
     url = ApiRoutes.supportRequest()
     key = Constants.api.SUPPORT_REQUEST
