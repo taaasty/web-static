@@ -1,6 +1,5 @@
 /*global i18n, ReactApp, Settings, DesignSettingsContainer, 
   DesignPaymentContainer, DesignSettingsColorPickerPopup, messagingService */
-import UserOnboarding from '../components/UserOnboarding';
 import CurrentUserStore from  '../stores/current_user';
 import PremiumPopup from '../components/PremiumPopup';
 import GetPremiumPopup from '../components/PremiumPopup/GetPremiumPopup';
@@ -15,17 +14,6 @@ const PopupActions = {
         title: i18n.t('settings_header'),
         className: 'popup--settings popup--dark',
         clue: 'settings',
-      },
-    });
-  },
-
-  showUserOnboarding() {
-    ReactApp.popupController.openWithBackground({
-      Component: UserOnboarding,
-      popupProps: {
-        title: i18n.t('user_onboarding_title'),
-        className: 'popup--onboarding popup--dark',
-        clue: 'userOnboarding',
       },
     });
   },

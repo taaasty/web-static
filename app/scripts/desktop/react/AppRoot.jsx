@@ -63,15 +63,19 @@ class AppRoot extends Component {
         data: camelizeKeys(gon.user || {}),
       },
     });
+
     if (gon.user) {
       store.dispatch(initTlog(camelizeKeys(gon.user)));
     }
+
     if (tlogEntries) {
       //store.dispatch({});
     }
+
     if (flow) {
       //viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
     }
+
     feedStatusConnect(store.getState().currentUser.data, store);
   }
   render() {

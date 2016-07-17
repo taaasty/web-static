@@ -19,7 +19,7 @@ const actionMap = {
 
   [USER_ONBOARDING_SUCCESS](state, { response }) {
     return state.merge({
-      data: response.results,
+      data: response.result,
       isFetching: false,
       error: null,
     });
