@@ -20,11 +20,9 @@ class HeroFlow extends Component {
   state = { isFlowManagerPopupVisible: false };
   showSettings() {
     this.setState({ isFlowManagerPopupVisible: true });
-    document.body.classList.add('popup-enabled');
   }
   hideSettings() {
     this.setState({ isFlowManagerPopupVisible: false });
-    document.body.classList.remove('popup-enabled');
   }
   renderWriteButton() {
     return (

@@ -32,7 +32,7 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { isCurrentUser, tlog, tlogRelation } = this.props;
+    const { isCurrentUser, showSettingsPopup, tlog, tlogRelation } = this.props;
 
     return (
       <div ref="container">
@@ -40,7 +40,7 @@ class HeroProfileActionsContainer extends Component {
           {this.state.extraStyles}
         </style>
         {isCurrentUser
-           ? <HeroProfileSelfActions />
+           ? <HeroProfileSelfActions showSettingsPopup={showSettingsPopup} />
            : !tlogRelation.isEmpty() &&
              <HeroProfileActions
                myRelState={tlogRelation.get('state')}
@@ -54,6 +54,7 @@ class HeroProfileActionsContainer extends Component {
 
 HeroProfileActionsContainer.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogRelation: PropTypes.object.isRequired,
 };

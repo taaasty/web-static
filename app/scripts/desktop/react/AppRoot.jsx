@@ -30,8 +30,6 @@ import { FLOW_VIEW_STYLE_LS_KEY } from './reducers/flow';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
-import PopupActions from './actions/PopupActions';
-
 const createStoreWithMiddleware = compose(
   applyMiddleware(
     thunkMiddleware,
@@ -97,13 +95,8 @@ class AppRoot extends Component {
               <Route path="edit/:editId" component={EditorPage} />
               <Route path="new" component={EditorPage} />
               <Route path="anonymous/new" component={EditorPage} />
-              <Route
-                  path="design_settings"
-                  component={TlogPage}
-                  onEnter={PopupActions.showDesignSettings}
-                  onLeave={PopupActions.closeDesignSettings}
-              />
-              <Route path="settings" component={TlogPage} />
+              <Route path="design_settings" designSettings component={TlogPage} />
+              <Route path="settings" settings component={TlogPage} />
               <Route path="privates" component={TlogPage} />
               <Route path="favorites" component={TlogPage} />
               <Route path=":year/:month/:day" component={TlogPage} />

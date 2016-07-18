@@ -77,8 +77,6 @@ global.Auth = require './react/components/Auth'
 
 # /*-----  End of Authorization resources  ------*/
 
-global.Settings = require './react/components/Settings'
-
 global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'

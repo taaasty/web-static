@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/PopupActions';
+import { showSettingsPopup } from '../../actions/AppStateActions';
 import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
@@ -35,7 +36,7 @@ class UserToolbarContainer extends Component {
   }
   showSettings(ev) {
     ev.preventDefault();
-    PopupActionCreators.showSettings();
+    this.props.showSettingsPopup();
   }
   showGetPremiumPopup() {
     PopupActionCreators.showGetPremiumPopup();
@@ -88,6 +89,7 @@ class UserToolbarContainer extends Component {
 UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,
@@ -103,7 +105,8 @@ export default connectToStores(
         unreadFriendsCount,
         currentUser: state.currentUser.data,
       };
-    }
+    },
+    { showSettingsPopup }
   )(UserToolbarContainer),
   [ MessagingStatusStore ],
   (props) => ({

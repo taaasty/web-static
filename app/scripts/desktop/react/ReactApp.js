@@ -16,7 +16,6 @@ import MessagingService from './messaging/MessagingService';
 import NoticeService from './services/Notice';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
-import Aviator from 'aviator';
 import AppRoot from './AppRoot';
 import uri from 'urijs';
 import ReactShellBox from './controllers/ReactShellBox';
@@ -35,33 +34,6 @@ function initLocales(locale, callback) {
     }, callback);
 }
 
-function initRoutes() {
-  function hasAccessBySlug(urlSlug) {
-    const user = CurrentUserStore.getUser();
-    const userLogged = CurrentUserStore.isLogged();
-
-    return userLogged && urlSlug.slice(1).toLowerCase() === user.slug;
-  }
-  
-  const UserRouteTarget = {
-    settings(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showSettings();
-    },
-  };
-
-  Aviator.setRoutes({
-    '/:slug': {
-      target: UserRouteTarget,
-      '/settings': 'settings',
-    },
-  });
-
-  Aviator.dispatch();
-}
-  
 const ReactApp = {
   start({ user, locale }) {
     console.log('ReactApp start');
@@ -81,7 +53,6 @@ const ReactApp = {
     initLocales(locale, () => {
       console.log('Locales loaded');
       ReactUjs.initialize(AppRoot);
-      initRoutes();
 
       if (window.gon.flash_error) {
         NoticeService.notifyError(window.gon.flash_error);

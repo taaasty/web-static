@@ -2,12 +2,17 @@ import createReducer from './createReducer';
 import {
   APP_STATE_SET_EDITING,
   APP_STATE_SET_POPUP,
+  POPUP_USER_ONBOARDING,
+  POPUP_SETTINGS,
+  POPUP_DESIGN_SETTINGS,
 } from '../actions/AppStateActions';
 
 const initialState = {
   editing: false,
   popups: {
-    isUserOnboardingPopupVisible: false,
+    [POPUP_USER_ONBOARDING]: false,
+    [POPUP_SETTINGS]: false,
+    [POPUP_DESIGN_SETTINGS]: false,
   },
 };
 

@@ -5,6 +5,7 @@ import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import { connect } from 'react-redux';
 import { getTlog } from '../../actions/TlogActions';
 import { getFlow }  from '../../actions/FlowActions';
+import { showSettingsPopup } from '../../actions/AppStateActions';
 import HeroProfile from '../HeroProfile';
 import HeroFlow from '../HeroComponent/HeroFlow';
 import SocialShare from '../common/SocialShare';
@@ -86,7 +87,7 @@ class TlogPageRoot extends Component {
   }
   render() {
     const { children, editing, flow, isCurrentUser, location: { state },
-            params, tlog, tlogRelation } = this.props;
+            params, showSettingsPopup, tlog, tlogRelation } = this.props;
     const isFlow = tlog.get('isFlow');
     const tlogUrl = tlog.get('tlogUrl');
     const slug = tlog.get('slug');
@@ -106,6 +107,7 @@ class TlogPageRoot extends Component {
               ? <HeroFlow flow={flow} tlog={tlog} />
               : <HeroProfile
                   isCurrentUser={isCurrentUser}
+                  showSettingsPopup={showSettingsPopup}
                   tlog={tlog}
                   tlogRelation={tlogRelation}
                 />
@@ -143,6 +145,7 @@ TlogPageRoot.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogRelation: PropTypes.object.isRequired,
 };
@@ -165,5 +168,5 @@ export default connect(
       editPreview: state.editor.preview,
     };
   },
-  { getTlog, getFlow }
+  { getTlog, getFlow, showSettingsPopup }
 )(TlogPageRoot);

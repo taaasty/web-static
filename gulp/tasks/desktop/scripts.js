@@ -50,7 +50,6 @@ const dependencies = {
   'jquery.scrollto': './app/bower_components/jquery.scrollto/jquery.scrollTo',
   'undo': './app/bower_components/undo/undo',
   'medium-editor': './node_modules/medium-editor/dist/js/medium-editor',
-  'aviator': './node_modules/aviator',
   'nanobar': './app/bower_components/nanobar/index',
   'urijs': './node_modules/urijs',
   'jquery.select2': './app/bower_components/select2/dist/js/select2',

@@ -1,4 +1,4 @@
-/*global i18n, ReactApp, Settings, DesignSettingsContainer, 
+/*global i18n, ReactApp, DesignSettingsContainer, 
   DesignPaymentContainer, DesignSettingsColorPickerPopup, messagingService */
 import CurrentUserStore from  '../stores/current_user';
 import PremiumPopup from '../components/PremiumPopup';
@@ -7,17 +7,6 @@ import SelectPremiumPlanPopup from '../components/PremiumPopup/SelectPremiumPlan
 import uri from 'urijs';
 
 const PopupActions = {
-  showSettings() {
-    ReactApp.popupController.openWithBackground({
-      Component: Settings,
-      popupProps: {
-        title: i18n.t('settings_header'),
-        className: 'popup--settings popup--dark',
-        clue: 'settings',
-      },
-    });
-  },
-
   showPremiumPopup() {
     ReactApp.popupController.openWithBackground({
       Component: PremiumPopup,

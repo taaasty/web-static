@@ -119,7 +119,7 @@ class HeroProfile extends Component {
     this.open();
   }
   render() {
-    const { isCurrentUser, tlog, tlogRelation } = this.props;
+    const { isCurrentUser, showSettingsPopup, tlog, tlogRelation } = this.props;
     const tlogId = tlog.get('id');
     
     return (
@@ -140,6 +140,7 @@ class HeroProfile extends Component {
            {tlogId && <HeroProfileHead user={tlog} />}
            <HeroProfileActionsContainer
              isCurrentUser={!!isCurrentUser}
+             showSettingsPopup={showSettingsPopup}
              tlog={tlog}
              tlogRelation={tlogRelation}
            />
@@ -152,6 +153,7 @@ class HeroProfile extends Component {
 
 HeroProfile.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogRelation: PropTypes.object.isRequired,
 };

@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { getCalendar } from '../../actions/CalendarActions';
 import { flowViewStyle } from '../../actions/FlowActions';
 import { deleteEntry, getTlogEntries, getTlogEntriesIfNeeded } from '../../actions/TlogEntriesActions';
+import {
+  showSettingsPopup,
+  hideSettingsPopup,
+  showDesignSettingsPopup,
+  hideDesignSettingsPopup,
+} from '../../actions/AppStateActions';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
@@ -24,6 +30,16 @@ class TlogPageContainer extends Component {
     getTlogEntriesIfNeeded(this.reqParams(this.props));
     sendCategory(this.section(this.props));
   }
+  componentDidMount() {
+    const { showSettingsPopup, showDesignSettingsPopup,
+            route: { settings, designSettings } } = this.props;
+
+    if (settings) {
+      showSettingsPopup();
+    } else if (designSettings) {
+      showDesignSettingsPopup();
+    }
+  }
   componentWillReceiveProps(nextProps) {
     const { getTlogEntriesIfNeeded } = this.props;
     const section = this.section(this.props);
@@ -33,6 +49,9 @@ class TlogPageContainer extends Component {
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
+  }
+  componentWillUnmount() {
+    const { hideSettingsPopup, hideDesignSettingsPopup } = this.props;
   }
   reqParams(props) {
     const { params, location } = props;
@@ -141,5 +160,9 @@ export default connect(
     getTlogEntries,
     getTlogEntriesIfNeeded,
     flowViewStyle,
+    showSettingsPopup,
+    hideSettingsPopup,
+    showDesignSettingsPopup,
+    hideDesignSettingsPopup,
   }
 )(TlogPageContainer);
