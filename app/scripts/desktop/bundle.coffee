@@ -84,8 +84,6 @@ global.UserToolbarContainer = require './react/components/UserToolbar'
 global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
 
-require './react/components/editable_field'
-
 global.EntryTlog = require './react/components/EntryTlog'
 global.SearchResults = require './react/components/SearchResults/SearchResults'
 

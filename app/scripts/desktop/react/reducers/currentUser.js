@@ -4,6 +4,7 @@ import {
   CURRENT_USER_REQUEST,
   CURRENT_USER_SUCCESS,
   CURRENT_USER_FAILURE,
+  CURRENT_USER_USERPIC,
   CURRENT_USER_CONFIRM_EMAIL_CANCEL,
   CURRENT_USER_STOP_FB_CROSSPOST,
   CURRENT_USER_STOP_TWITTER_CROSSPOST,
@@ -13,11 +14,8 @@ import { CROSSPOST_NONE } from '../constants/CrosspostConstants';
 const initialState = {
   data: {},
   isFetching: false,
+  error: null,
 };
-
-function updateData(state, payload) {
-  return { ...state, data: { ...state.data, ...payload } };
-}
 
 const actionMap = {
   [CURRENT_USER_SETUP](state, payload) {
@@ -32,9 +30,32 @@ const actionMap = {
     });
   },
 
-  [CURRENT_USER_SUCCESS](state, data) {
-    
-  }
+  [CURRENT_USER_SUCCESS](state, { response: { entities, result } }) {
+    const data = Object.assign({}, state.data, entities.tlog[result]);
+
+    return Object.assign({}, state, {
+      data,
+      isFetching: false,
+      error: null,
+    });
+  },
+
+  [CURRENT_USER_USERPIC](state, { response }) {
+    const data = Object.assign({}, state.data, { userpic: response.result });
+
+    return Object.assign({}, state, {
+      data,
+      isFetching: false,
+      error: null,
+    });
+  },
+
+  [CURRENT_USER_FAILURE](state, { error }) {
+    return Object.assign({}, state, {
+      error,
+      isFetching: false,
+    });
+  },
 };
 
 export default createReducer(initialState, actionMap);

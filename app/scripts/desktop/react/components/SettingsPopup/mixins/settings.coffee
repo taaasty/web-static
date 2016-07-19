@@ -4,46 +4,6 @@ CurrentUserViewActions = require '../../../actions/view/current_user'
 TastyLockingAlertController = require '../../../controllers/TastyLockingAlertController';
 
 SettingsMixin =
-
-  updateSlug: (slug) ->
-    CurrentUserViewActions.updateSlug
-      slug: slug
-      beforeSend: => @incrementActivities()
-      success: (data) ->
-        TastyLockingAlertController.show
-          title:   i18n.t 'settings_alert_header'
-          message: i18n.t 'settings_redirect', tlogUrl: data.tlog_url
-          action: -> window.location = data.tlog_url
-      complete: => @decrementActivities()
-
-  updateTitle: (title) ->
-    CurrentUserViewActions.updateTitle
-      title: title
-      beforeSend: => @incrementActivities()
-      success:    => NoticeService.notifySuccess i18n.t('settings_change_description_success'), 2000
-      complete:   => @decrementActivities()
-
-  updatePrivacy: (privacy) ->
-    CurrentUserViewActions.updatePrivacy
-      privacy: privacy
-      beforeSend: => @incrementActivities()
-      success:    => NoticeService.notifySuccess i18n.t('settings_change_privacy_success'), 2000
-      complete:   => @decrementActivities()
-
-  updateDaylog: (daylog) ->
-    CurrentUserViewActions.updateDaylog
-      daylog: daylog
-      beforeSend: => @incrementActivities()
-      success:    => NoticeService.notifySuccess i18n.t('settings_change_daylog_success'), 2000
-      complete:   => @decrementActivities()
-
-  updateFemale: (female) ->
-    CurrentUserViewActions.updateFemale
-      female: female
-      beforeSend: => @incrementActivities()
-      success:    => NoticeService.notifySuccess i18n.t('settings_change_gender_success'), 2000
-      complete:   => @decrementActivities()
-
   updatePassword: ({password, success}) ->
     CurrentUserViewActions.updatePassword
       password: password

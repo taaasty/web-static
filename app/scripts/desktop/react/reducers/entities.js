@@ -12,6 +12,9 @@ import {
 import {
   STAFF_DELETE_SUCCESS,
 } from '../actions/StaffActions';
+import {
+  CURRENT_USER_USERPIC,
+} from '../actions/CurrentUserActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -98,7 +101,9 @@ function handleExtra(state, action) {
     }
     break;
   case INIT_SET_TLOG:
-    return state.mergeIn([ 'tlog' ], { [action.tlogId]: action.tlog });
+    return state.mergeIn([ 'tlog' ], { [String(action.tlogId)]: action.tlog });
+  case CURRENT_USER_USERPIC:
+    return state.mergeIn([ 'tlog', String(action.tlogId) ], { userpic: action.response.result });
   }
 
   return state;

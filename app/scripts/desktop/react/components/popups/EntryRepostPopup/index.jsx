@@ -81,7 +81,7 @@ class EntryRepostPopup extends Component {
     const list = this.getVisibleList();
     const items = list.map((target) => (
       <EntryRepostTargetItem
-        key={target.id}
+        key={`target-item-${target.id}`}
         onSelect={this.handleTargetSelect.bind(this, target)}
         target={target}
       />

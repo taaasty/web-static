@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import Popup from '../Popup';
 import PopupArea from '../Popup/Area';
-import SettingsHeader from './header';
+import SettingsHeader from './SettingsHeader';
 import SettingsRadioItem from './SettingsRadioItem';
 import SettingsPhone from './SettingsPhone';
 import SettingsEmail from './email/email';
@@ -10,11 +10,13 @@ import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
 import SettingsAccounts from './SettingsAccounts';
 import SettingsPremium from './SettingsPremium';
-import TastyLockingAlertController from '../../../controllers/TastyLockingAlertController';
+import TastyLockingAlertController from '../../controllers/TastyLockingAlertController';
 import NoticeService from '../../services/Notice';
-import { updateUserProfile } from '../../actions/CurrentUserActions';
+import { updateUserProfile, updateUserpic } from '../../actions/CurrentUserActions';
 import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
 import { connect } from 'react-redux';
+
+export const NOTIFY_TIMEOUT = 2000;
 
 class SettingsPopup extends Component {
   updateSlug(slug) {
@@ -29,19 +31,22 @@ class SettingsPopup extends Component {
   }
   updateTitle(title) {
     this.props.updateUserProfile({ title })
-      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_description_success'), 2000));
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_description_success'), NOTIFY_TIMEOUT));
   }
   updatePrivacy(isPrivacy) {
     this.props.updateUserProfile({ isPrivacy })
-      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_privacy_success'), 2000));
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_privacy_success'), NOTIFY_TIMEOUT));
   }
-  updateDaylog(daylog) {
-    this.props.updateUserProfile({ daylog })
-      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_daylog_success'), 2000));
+  updateDaylog(isDaylog) {
+    this.props.updateUserProfile({ isDaylog })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_daylog_success'), NOTIFY_TIMEOUT));
   }
-  updateFemale(female) {
-    this.props.updateUserProfile({ female })
-      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_gender_success'), 2000));
+  updateFemale(isFemale) {
+    this.props.updateUserProfile({ isFemale })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_gender_success'), NOTIFY_TIMEOUT));
+  }
+  updateUserpic(ev) {
+    this.props.updateUserpic(ev.target.files[0]);
   }
   renderLanguage() {
     return (
@@ -55,7 +60,7 @@ class SettingsPopup extends Component {
     );
   }
   render() {
-    const { currentUser, crossposts, onClose } = this.props;
+    const { currentUser, onClose } = this.props;
     const { data: user } = currentUser;
 
     return (
@@ -70,33 +75,42 @@ class SettingsPopup extends Component {
           <div className="settings">
             <form>
               <SettingsHeader
-                onSlugChange={this.updateSlug}
-                onTitleChange={this.updateTitle}
+                handleSlugChange={this.updateSlug.bind(this)}
+                handleTitleChange={this.updateTitle.bind(this)}
+                handleUserpicChange={this.updateUserpic.bind(this)}
                 user={user}
               />
               <div className="settings__body">
-                <SettingsPremium expires={user.premium_expired} />
+                <SettingsPremium expires={user.premiumExpired} />
                 <SettingsRadioItem
-                  checked={user.is_privacy}
+                  checked={user.isPrivacy}
                   description={i18n.t('settings_privacy_description')}
                   id="isPrivacy"
-                  onChange={this.updatePrivacy}
+                  onChange={this.updatePrivacy.bind(this)}
                   title={i18n.t('settings_privacy')}
                 />
                 <SettingsRadioItem
-                  checked={user.is_daylog}
+                  checked={user.isDaylog}
                   description={i18n.t('settings_daylog_description')}
                   id="isDaylog"
-                  onChange={this.updateDaylog}
+                  onChange={this.updateDaylog.bind(this)}
                   title={i18n.t('settings_daylog')}
                 />
                 <SettingsRadioItem
-                  checked={user.is_female}
+                  checked={user.isFemale}
                   description={i18n.t('settings_gender_description')}
                   id="isFemale"
-                  onChange={this.updateFemale}
+                  onChange={this.updateFemale.bind(this)}
                   title={i18n.t('settings_gender')}
                 />
+              </div>
+            </form>
+          </div>
+        </Popup>
+      </PopupArea>
+    );
+/*
+
                 <SettingsPhone
                   onUpdate={this.updatePhone}
                   phone={user.phone}
@@ -142,6 +156,7 @@ class SettingsPopup extends Component {
         </Popup>
       </PopupArea>
     );
+*/
   }
 }
 
@@ -149,6 +164,7 @@ SettingsPopup.propTypes = {
   currentUser: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   updateUserProfile: PropTypes.func.isRequired,
+  updateUserpic: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -167,5 +183,5 @@ export default connect(
       currentUser: state.currentUser,
     };
   },
-  { updateUserProfile }
+  { updateUserProfile, updateUserpic }
 )(SettingsPopup);
