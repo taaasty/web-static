@@ -3,17 +3,28 @@ import classnames from 'classnames';
 import Textarea from 'react-textarea-autosize';
 
 class EditableField extends Component {
-  focus() {
-    this.refs.field.focus();
+  state = { focused: false };
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.focused && !prevState.focused) {
+      const { field } = this.refs;
+
+      field.selectionStart = field.value.length;
+      field.selectionEnd = field.value.length;
+      this.refs.field.focus();
+    }
+  }
+  handleClick() {
+    if (!this.props.withPencil) {
+      this.handleFocus();
+    }
   }
   handleFocus() {
-    const field = this.refs.field;
-
-    if (typeof field.selectionStart !== 'undefined' &&
-        typeof field.selectionEnd !== 'undefined') {
-      const len = field.value.length * 2;
-      field.selectionStart = len;
-      field.selectionEnd = len;
+    this.setState({ focused: true });
+  }
+  handleBlur() {
+    this.setState({ focused: false });
+    if (this.props.onBlur) {
+      this.props.onBlur();
     }
   }
   handleChange(ev) {
@@ -33,20 +44,21 @@ class EditableField extends Component {
     }
   }
   render() {
-    const { maxLength, onBlur, placeholder, value, withPencil } = this.props;
+    const { maxLength, placeholder, value: rawValue, withPencil } = this.props;
+    const value = rawValue || '';
     const fieldClasses = classnames('editable-field', {
       'state--empty': value.trim() === '',
+      'state--focus': this.state.focused,
     });
 
     return (
-      <div className={fieldClasses}>
+      <div className={fieldClasses} onClick={this.handleClick.bind(this)}>
         <div className="editable-field__control-wrap">
           <Textarea
             className="editable-field__control"
             maxLength={maxLength}
-            onBlur={onBlur}
+            onBlur={this.handleBlur.bind(this)}
             onChange={this.handleChange.bind(this)}
-            onFocus={this.handleFocus.bind(this)}
             onKeyDown={this.handleKeyDown.bind(this)}
             placeholder={placeholder}
             ref="field"
@@ -61,7 +73,7 @@ class EditableField extends Component {
             {value}
           </span>
           {withPencil && (
-             <span className="editable-field__button" onClick={this.focus.bind(this)}>
+             <span className="editable-field__button" onClick={this.handleFocus.bind(this)}>
                <i className="icon icon--pencil" />
              </span>
           )}

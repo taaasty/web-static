@@ -20,7 +20,7 @@ export const NOTIFY_TIMEOUT = 2000;
 
 class SettingsPopup extends Component {
   updateSlug(slug) {
-    this.props.updateUserProfile({ slug })
+    return this.props.updateUserProfile({ slug })
       .then((data) => {
         TastyLockingAlertController.show({
           title: i18n.t('settings_alert_header'),
@@ -30,23 +30,23 @@ class SettingsPopup extends Component {
       });
   }
   updateTitle(title) {
-    this.props.updateUserProfile({ title })
+    return this.props.updateUserProfile({ title })
       .then(() => NoticeService.notifySuccess(i18n.t('settings_change_description_success'), NOTIFY_TIMEOUT));
   }
   updatePrivacy(isPrivacy) {
-    this.props.updateUserProfile({ isPrivacy })
+    return this.props.updateUserProfile({ isPrivacy })
       .then(() => NoticeService.notifySuccess(i18n.t('settings_change_privacy_success'), NOTIFY_TIMEOUT));
   }
   updateDaylog(isDaylog) {
-    this.props.updateUserProfile({ isDaylog })
+    return this.props.updateUserProfile({ isDaylog })
       .then(() => NoticeService.notifySuccess(i18n.t('settings_change_daylog_success'), NOTIFY_TIMEOUT));
   }
   updateFemale(isFemale) {
-    this.props.updateUserProfile({ isFemale })
+    return this.props.updateUserProfile({ isFemale })
       .then(() => NoticeService.notifySuccess(i18n.t('settings_change_gender_success'), NOTIFY_TIMEOUT));
   }
   updateUserpic(ev) {
-    this.props.updateUserpic(ev.target.files[0]);
+    return this.props.updateUserpic(ev.target.files[0]);
   }
   renderLanguage() {
     return (

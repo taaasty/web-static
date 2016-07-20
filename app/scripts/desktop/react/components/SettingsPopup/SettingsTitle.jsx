@@ -7,10 +7,11 @@ class SettingsTitle extends Component {
   resetTitle() {
     this.setState({ title: this.props.title });
   }
-  handleSave(newTitle) {
-    if (newTitle !== this.props.title) {
-      this.props.handleChange(newTitle)
-        .fail(this.resetTitle.bind(this));
+  handleSave(title) {
+    if (title !== this.props.title) {
+      this.setState({ title });
+      this.props.handleChange(title)
+        .catch(this.resetTitle.bind(this));
     }
   }
   handleChange(title) {

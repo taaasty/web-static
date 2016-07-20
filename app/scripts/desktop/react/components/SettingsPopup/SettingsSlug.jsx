@@ -12,8 +12,9 @@ class SettingsSlug extends Component {
   handleSave(slug) {
     if (slug) {
       if (slug !== this.props.slug) {
+        this.setState({ slug });
         this.props.handleChange(slug)
-          .fail(this.resetSlug.bind(this));
+          .catch(this.resetSlug.bind(this));
       }
     } else {
       NoticeService.notifyError(i18n.t('settings_empty_slug_error'), NOTIFY_TIMEOUT);
