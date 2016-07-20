@@ -35,7 +35,7 @@ class SettingsPhoneEdit extends Component {
     }
   }
   render() {
-    const { onEditCancel, phone } = this.props;
+    const { phone } = this.props;
     const { isUpdatable } = this.state;
 
     const buttonClasses = classNames({

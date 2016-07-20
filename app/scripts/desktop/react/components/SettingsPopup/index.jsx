@@ -1,18 +1,23 @@
-/*global i18n, gon */
+/*global i18n, gon, setTimeout */
 import React, { Component, PropTypes } from 'react';
 import Popup from '../Popup';
 import PopupArea from '../Popup/Area';
 import SettingsHeader from './SettingsHeader';
 import SettingsRadioItem from './SettingsRadioItem';
 import SettingsPhone from './SettingsPhone';
-import SettingsEmail from './email/email';
+import SettingsEmail from './SettingsEmail';
 import SettingsPassword from './password/password';
 import SettingsLanguage from './SettingsLanguage';
 import SettingsAccounts from './SettingsAccounts';
 import SettingsPremium from './SettingsPremium';
 import TastyLockingAlertController from '../../controllers/TastyLockingAlertController';
 import NoticeService from '../../services/Notice';
-import { updateUserProfile, updateUserpic } from '../../actions/CurrentUserActions';
+import {
+  cancelEmailConfirmation,
+  resendEmailConfirmation,
+  updateUserProfile,
+  updateUserpic,
+} from '../../actions/CurrentUserActions';
 import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
 import { connect } from 'react-redux';
 
@@ -48,12 +53,43 @@ class SettingsPopup extends Component {
   updateUserpic(ev) {
     return this.props.updateUserpic(ev.target.files[0]);
   }
+  updatePhone(phone) {
+    return this.props.updateUserProfile({ phone })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_phone_change_success'), NOTIFY_TIMEOUT));
+  }
+  updateEmail(email) {
+    return this.props.updateUserProfile({ email })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_email_mail_sent'), NOTIFY_TIMEOUT));
+  }
+  updateAvailableNotifications(availableNotifications) {
+    return this.props.updateUserProfile({ availableNotifications })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_notifications_success'), NOTIFY_TIMEOUT));
+  }
+  updateLanguage(locale) {
+    return this.props.updateUserProfile({ locale })
+      .then(() => {
+        NoticeService.notifySuccess(i18n.t('settings_change_language_success'), NOTIFY_TIMEOUT);
+        setTimeout(window.location.reload, 1000);
+      });
+  }
+  updatePassword(password) {
+    return this.props.updateUserProfile({ password })
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_password_success'), NOTIFY_TIMEOUT));
+  }
+  cancelEmailConfirmation() {
+    return this.props.cancelEmailConfirmation()
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_email_canceled'), NOTIFY_TIMEOUT));
+  }
+  resendEmailConfirmation() {
+    return this.props.resendEmailConfirmation()
+      .then(() => NoticeService.notifySuccess(i18n.t('settings_change_email_mail_resent'), NOTIFY_TIMEOUT));
+  }
   renderLanguage() {
     return (
       (gon.languages && gon.languages.length > 1) &&
       <SettingsLanguage
         languages={gon.languages}
-        onChange={this.updateLanguage}
+        onChange={this.updateLanguage.bind(this)}
         title={i18n.t('settings_language_title')}
         value={this.props.currentUser.data.locale}
       />
@@ -103,41 +139,43 @@ class SettingsPopup extends Component {
                   onChange={this.updateFemale.bind(this)}
                   title={i18n.t('settings_gender')}
                 />
+                <SettingsPhone
+                  onUpdate={this.updatePhone.bind(this)}
+                  phone={user.phone}
+                />
+                <SettingsEmail
+                  confirmationEmail={user.confirmationEmail}
+                  email={user.email}
+                  error={currentUser.errorConfirmEmail}
+                  isFetching={currentUser.isFetchingConfirmEmail}
+                  isSent={currentUser.isConfirmEmailSent}
+                  onCancel={this.cancelEmailConfirmation.bind(this)}
+                  onResend={this.resendEmailConfirmation.bind(this)}
+                  onUpdate={this.updateEmail.bind(this)}
+                />
+                <SettingsRadioItem
+                  checked={user.availableNotifications}
+                  description={i18n.t('settings_notifications_description')}
+                  id="availableNotifications"
+                  onChange={this.updateAvailableNotifications.bind(this)}
+                  title={i18n.t('settings_notifications')}
+                />
+                {crossposts.facebook &&
+                 <SettingsRadioItem
+                   checked={crossposts.facebook.crosspostingCd === CROSSPOST_OUT}
+                   description={i18n.t('settings_crosspost_description', { context: 'facebook' })}
+                   id="fbCrosspost"
+                   onChange={this.updateFbCrosspost.bind(this)}
+                   title={i18n.t('settings_crosspost', { context: 'facebook' })}
+                 />
+                }
               </div>
             </form>
           </div>
         </Popup>
       </PopupArea>
     );
-/*
-
-                <SettingsPhone
-                  onUpdate={this.updatePhone}
-                  phone={user.phone}
-                />
-                <SettingsEmail
-                  confirmationEmail={user.confirmation_email}
-                  email={user.email}
-                  onCancel={this.cancelEmailConfirmation}
-                  onResend={this.resendEmailConfirmation}
-                  onUpdate={this.updateEmail}
-                />
-                <SettingsRadioItem
-                  checked={user.available_notifications}
-                  description={i18n.t('settings_notifications_description')}
-                  id="availableNotifications"
-                  onChange={this.updateAvailableNotifications}
-                  title={i18n.t('settings_notifications')}
-                />
-                {crossposts.facebook &&
-                 <SettingsRadioItem
-                   checked={crossposts.facebook.crossposting_cd === CROSSPOST_OUT}
-                   description={i18n.t('settings_crosspost_description', { context: 'facebook' })}
-                   id="fbCrosspost"
-                   onChange={this.updateFbCrosspost}
-                   title={i18n.t('settings_crosspost', { context: 'facebook' })}
-                 />
-                }
+    /*
                  {crossposts.twitter &&
                   <SettingsRadioItem
                     checked={crossposts.twitter.crossposting_cd === CROSSPOST_OUT}
@@ -161,8 +199,10 @@ class SettingsPopup extends Component {
 }
 
 SettingsPopup.propTypes = {
+  cancelEmailConfirmation: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
+  resendEmailConfirmation: PropTypes.func.isRequired,
   updateUserProfile: PropTypes.func.isRequired,
   updateUserpic: PropTypes.func.isRequired,
 };
@@ -183,5 +223,10 @@ export default connect(
       currentUser: state.currentUser,
     };
   },
-  { updateUserProfile, updateUserpic }
+  {
+    cancelEmailConfirmation,
+    resendEmailConfirmation,
+    updateUserProfile,
+    updateUserpic,
+  }
 )(SettingsPopup);

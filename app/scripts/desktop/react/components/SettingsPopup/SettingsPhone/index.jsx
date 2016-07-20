@@ -16,10 +16,8 @@ class SettingsPhone extends Component {
     this.setState({ state: EDIT_STATE });
   }
   onUpdate(phone) {
-    this.props.onUpdate({
-      phone,
-      success: this.onEditCancel.bind(this),
-    });
+    return this.props.onUpdate(phone)
+      .then(this.onEditCancel.bind(this));
   }
   render() {
     const { phone } = this.props;

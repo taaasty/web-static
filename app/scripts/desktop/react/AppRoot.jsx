@@ -23,7 +23,7 @@ import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
 import RefsPage from './components/RefsPage';
 
-import { initTlog } from './actions/InitActions';
+import { initCurrentUser, initTlog } from './actions/InitActions';
 
 import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from './constants/ViewStyleConstants';
 import { FLOW_VIEW_STYLE_LS_KEY } from './reducers/flow';
@@ -56,14 +56,13 @@ class AppRoot extends Component {
   componentWillMount() {
     const { appStats, currentUser, feedEntries, flow, flows, people, tlogEntries, tlogEntry, userToolbar } = this.props;
 
-    store = createStoreWithMiddleware(combineReducers(reducers), {
-      currentUser: {
-        data: camelizeKeys(gon.user || {}),
-      },
-    });
+    store = createStoreWithMiddleware(combineReducers(reducers));
 
     if (gon.user) {
-      store.dispatch(initTlog(camelizeKeys(gon.user)));
+      const user = camelizeKeys(gon.user);
+
+      store.dispatch(initCurrentUser(user))
+      store.dispatch(initTlog(user));
     }
 
     if (tlogEntries) {
