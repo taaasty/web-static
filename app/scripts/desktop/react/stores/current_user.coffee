@@ -1,6 +1,6 @@
 _ = require 'lodash'
 BaseStore = require './BaseStore'
-{ CROSSPOST_NONE } = require('../constants/CrosspostConstants');
+CROSSPOST_NONE = 'none'
 
 currentUser = null
 CurrentUserStore = _.extend new BaseStore(),

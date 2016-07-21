@@ -6,7 +6,7 @@ import SettingsHeader from './SettingsHeader';
 import SettingsRadioItem from './SettingsRadioItem';
 import SettingsPhone from './SettingsPhone';
 import SettingsEmail from './SettingsEmail';
-import SettingsPassword from './password/password';
+import SettingsPassword from './SettingsPassword';
 import SettingsLanguage from './SettingsLanguage';
 import SettingsAccounts from './SettingsAccounts';
 import SettingsPremium from './SettingsPremium';
@@ -15,10 +15,14 @@ import NoticeService from '../../services/Notice';
 import {
   cancelEmailConfirmation,
   resendEmailConfirmation,
+  stopFbCrosspost,
+  stopTwitterCrosspost,
   updateUserProfile,
   updateUserpic,
+  CURRENT_USER_AUTH_FB,
+  CURRENT_USER_AUTH_TWITTER,
+  CURRENT_USER_CROSSPOST_OUT,
 } from '../../actions/CurrentUserActions';
-import { CROSSPOST_OUT } from '../../constants/CrosspostConstants';
 import { connect } from 'react-redux';
 
 export const NOTIFY_TIMEOUT = 2000;
@@ -69,7 +73,7 @@ class SettingsPopup extends Component {
     return this.props.updateUserProfile({ locale })
       .then(() => {
         NoticeService.notifySuccess(i18n.t('settings_change_language_success'), NOTIFY_TIMEOUT);
-        setTimeout(window.location.reload, 1000);
+        setTimeout(() => window.location.reload(), NOTIFY_TIMEOUT / 2);
       });
   }
   updatePassword(password) {
@@ -84,6 +88,48 @@ class SettingsPopup extends Component {
     return this.props.resendEmailConfirmation()
       .then(() => NoticeService.notifySuccess(i18n.t('settings_change_email_mail_resent'), NOTIFY_TIMEOUT));
   }
+  updateFbCrosspost(allow) {
+    const { omniauthFbUrl, stopFbCrosspost } = this.props;
+
+    if (allow) {
+      if (omniauthFbUrl) {
+        TastyLockingAlertController.show({
+          title: i18n.t('settings_alert_header'),
+          message: i18n.t('settings_alert_redirect', { context: 'facebook' }),
+          action: () => window.location.href = omniauthFbUrl,
+        });
+      } else {
+        NoticeService.notifyError(i18n.t('settings_change_crosspost_error', { context: 'facebook' }), NOTIFY_TIMEOUT);
+      }
+    } else {
+      return stopFbCrosspost()
+        .then(() => NoticeService.notifySuccess(
+          i18n.t('settings_change_crosspost_success', { context: 'facebook' }),
+          NOTIFY_TIMEOUT
+        ));
+    }
+  }
+  updateTwitterCrosspost(allow) {
+    const { omniauthTwitterUrl, stopTwitterCrosspost } = this.props;
+
+    if (allow) {
+      if (omniauthTwitterUrl) {
+        TastyLockingAlertController.show({
+          title: i18n.t('settings_alert_header'),
+          message: i18n.t('settings_alert_redirect', { context: 'twitter' }),
+          action: () => window.location.href = omniauthTwitterUrl,
+        });
+      } else {
+        NoticeService.notifyError(i18n.t('settings_change_crosspost_error', { context: 'twitter' }), NOTIFY_TIMEOUT);
+      }
+    } else {
+      return stopTwitterCrosspost()
+        .then(() => NoticeService.notifySuccess(
+          i18n.t('settings_change_crosspost_success', { context: 'twitter' }),
+          NOTIFY_TIMEOUT
+        ));
+    }
+  }
   renderLanguage() {
     return (
       (gon.languages && gon.languages.length > 1) &&
@@ -96,7 +142,7 @@ class SettingsPopup extends Component {
     );
   }
   render() {
-    const { currentUser, onClose } = this.props;
+    const { crossposts, currentUser, onClose } = this.props;
     const { data: user } = currentUser;
 
     return (
@@ -160,65 +206,63 @@ class SettingsPopup extends Component {
                   onChange={this.updateAvailableNotifications.bind(this)}
                   title={i18n.t('settings_notifications')}
                 />
-                {crossposts.facebook &&
+                {crossposts[CURRENT_USER_AUTH_FB] &&
                  <SettingsRadioItem
-                   checked={crossposts.facebook.crosspostingCd === CROSSPOST_OUT}
+                   checked={crossposts[CURRENT_USER_AUTH_FB].crosspostingCd === CURRENT_USER_CROSSPOST_OUT}
                    description={i18n.t('settings_crosspost_description', { context: 'facebook' })}
                    id="fbCrosspost"
                    onChange={this.updateFbCrosspost.bind(this)}
                    title={i18n.t('settings_crosspost', { context: 'facebook' })}
                  />
                 }
+                {crossposts[CURRENT_USER_AUTH_TWITTER] &&
+                 <SettingsRadioItem
+                   checked={crossposts[CURRENT_USER_AUTH_TWITTER].crosspostingCd === CURRENT_USER_CROSSPOST_OUT}
+                   description={i18n.t('settings_crosspost_description', { context: 'twitter' })}
+                   id="twitterCrosspost"
+                   onChange={this.updateTwitterCrosspost.bind(this)}
+                   title={i18n.t('settings_crosspost', { context: 'twitter' })}
+                 />
+                }
+                <SettingsPassword onUpdate={this.updatePassword.bind(this)} />
+                {this.renderLanguage()}
+                <SettingsAccounts accounts={[]} user={user} />
               </div>
             </form>
           </div>
         </Popup>
       </PopupArea>
     );
-    /*
-                 {crossposts.twitter &&
-                  <SettingsRadioItem
-                    checked={crossposts.twitter.crossposting_cd === CROSSPOST_OUT}
-                    description={i18n.t('settings_crosspost_description', { context: 'twitter' })}
-                    id="twitterCrosspost"
-                    onChange={this.updateTwitterCrosspost}
-                    title={i18n.t('settings_crosspost', { context: 'twitter' })}
-                  />
-                 }
-                  <SettingsPassword onUpdate={this.updatePassword} />
-                  {this.renderLanguage()}
-                  <SettingsAccounts accounts={[]} user={user} />
-              </div>
-            </form>
-          </div>
-        </Popup>
-      </PopupArea>
-    );
-*/
   }
 }
 
 SettingsPopup.propTypes = {
   cancelEmailConfirmation: PropTypes.func.isRequired,
+  crossposts: PropTypes.object,
   currentUser: PropTypes.object.isRequired,
+  omniauthFbUrl: PropTypes.string,
+  omniauthTwitterUrl: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   resendEmailConfirmation: PropTypes.func.isRequired,
+  stopFbCrosspost: PropTypes.func.isRequired,
+  stopTwitterCrosspost: PropTypes.func.isRequired,
   updateUserProfile: PropTypes.func.isRequired,
   updateUserpic: PropTypes.func.isRequired,
 };
 
 export default connect(
   (state, { onClose }) => {
-    const crossposts = (state.currentUser.data.authentications || []).reduce((acc, el) => {
-      if (el.provider) {
-        acc[el.provider] = el;
-      }
-
-      return acc;
-    }, {});
+    const crossposts = (state.currentUser.data.authentications || [])
+          .reduce((acc, el) => el.provider ? (acc[el.provider] = el, acc) : acc, {});
+    const omniauthFbUrl = crossposts[CURRENT_USER_AUTH_FB] &&
+          crossposts[CURRENT_USER_AUTH_FB].omniauthEnableUrl;
+    const omniauthTwitterUrl = crossposts[CURRENT_USER_AUTH_TWITTER] &&
+          crossposts[CURRENT_USER_AUTH_TWITTER].omniauthEnableUrl;
 
     return {
       crossposts,
+      omniauthFbUrl,
+      omniauthTwitterUrl,
       onClose,
       currentUser: state.currentUser,
     };
@@ -226,6 +270,8 @@ export default connect(
   {
     cancelEmailConfirmation,
     resendEmailConfirmation,
+    stopFbCrosspost,
+    stopTwitterCrosspost,
     updateUserProfile,
     updateUserpic,
   }

@@ -50,7 +50,7 @@ function SettingsPremium({ expires }) {
 SettingsPremium.displayName = 'SettingsPremium';
 
 SettingsPremium.propTypes = {
-  expires: PropTypes.string.isRequired,
+  expires: PropTypes.string,
 };
 
 export default SettingsPremium;

@@ -45,4 +45,3 @@ require('jquery.ui.touch-punch');
 require('jquery.collage');
 require('jquery.connection');
 require('jquery.fileupload');
-require('jquery.select2');

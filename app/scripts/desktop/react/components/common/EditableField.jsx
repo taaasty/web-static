@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import Textarea from 'react-textarea-autosize';
 
 class EditableField extends Component {
@@ -46,7 +46,7 @@ class EditableField extends Component {
   render() {
     const { maxLength, placeholder, value: rawValue, withPencil } = this.props;
     const value = rawValue || '';
-    const fieldClasses = classnames('editable-field', {
+    const fieldClasses = classNames('editable-field', {
       'state--empty': value.trim() === '',
       'state--focus': this.state.focused,
     });

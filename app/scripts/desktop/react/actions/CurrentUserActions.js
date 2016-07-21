@@ -18,18 +18,27 @@ export const CURRENT_USER_CONFIRM_EMAIL_FAILURE = 'CURRENT_USER_CONFIRM_EMAIL_FA
 export const CURRENT_USER_STOP_FB_CROSSPOST = 'CURRENT_USER_STOP_FB_CROSSPOST';
 export const CURRENT_USER_STOP_TWITTER_CROSSPOST = 'CURRENT_USER_STOP_TWITTER_CROSSPOST';
 
+export const CURRENT_USER_AUTH_FB = 'facebook';
+export const CURRENT_USER_AUTH_TWITTER = 'twitter';
+export const CURRENT_USER_AUTH_VK = 'vkontakte';
+export const CURRENT_USER_CROSSPOST_OUT = 'out';
+export const CURRENT_USER_CROSSPOST_NONE = 'none';
+
 function currentUserId(state) {
   return state.currentUser.data.id;
 }
 
 export function updateUserProfile(data) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiRoutes.update_profile_url(),
-      schema: Schemas.TLOG,
-      types: [ CURRENT_USER_REQUEST, CURRENT_USER_SUCCESS, CURRENT_USER_FAILURE ],
-      opts: putOpts(data),
-    },
+  return (dispatch) => {
+    return dispatch({
+      [CALL_API]: {
+        endpoint: ApiRoutes.update_profile_url(),
+        schema: Schemas.TLOG,
+        types: [ CURRENT_USER_REQUEST, CURRENT_USER_SUCCESS, CURRENT_USER_FAILURE ],
+        opts: putOpts(data),
+      },
+    })
+      .then(({ response: { result, entities } }) => entities.tlog[result]);
   };
 }
 
@@ -80,7 +89,7 @@ export function stopFbCrosspost() {
   return (dispatch, getState) => {
     const tlogId = currentUserId(getState());
 
-    return {
+    return dispatch({
       [CALL_API]: {
         endpoint: ApiRoutes.fb_crosspost_url(),
         schema: Schemas.NONE,
@@ -88,7 +97,7 @@ export function stopFbCrosspost() {
         opts: deleteOpts(),
       },
       tlogId,
-    };
+    });
   };
 }
 
@@ -96,7 +105,7 @@ export function stopTwitterCrosspost() {
   return (dispatch, getState) => {
     const tlogId = currentUserId(getState());
 
-    return {
+    return dispatch({
       [CALL_API]: {
         endpoint: ApiRoutes.twitter_crosspost_url(),
         schema: Schemas.NONE,
@@ -104,6 +113,6 @@ export function stopTwitterCrosspost() {
         opts: deleteOpts(),
       },
       tlogId,
-    };
+    });
   };
 }

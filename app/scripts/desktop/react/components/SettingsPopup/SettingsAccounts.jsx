@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 
 function SettingsAccounts({ user: { name, userpic } }) {
   function onClickLogout(ev) {

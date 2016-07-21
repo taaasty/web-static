@@ -15,7 +15,7 @@ class SettingsEmailEstablishEdit extends Component {
   handleButtonMouseDown() {
     const { onEditCancel, onSubmit } = this.props;
 
-    if (this.isValid) {
+    if (this.isValid()) {
       onSubmit(this.state.email);
     } else {
       onEditCancel();
@@ -61,7 +61,7 @@ class SettingsEmailEstablishEdit extends Component {
         </div>
         <div className="settings__left">
           <h3 className="settings__title">
-            Емейл
+            {i18n.t('settings_email')}
           </h3>
           <div className="form-field form-field--default">
             <input

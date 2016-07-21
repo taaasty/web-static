@@ -54,6 +54,7 @@
     "react-portal": "^1.4.1",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc5",
+    "react-select": "^1.0.0-beta14",
     "react-tap-event-plugin": "^0.2.1",
     "react-textarea-autosize": "^3.3.1",
     "redux": "^3.5.2",

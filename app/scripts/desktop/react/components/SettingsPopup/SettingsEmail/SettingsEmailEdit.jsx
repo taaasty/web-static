@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
 class SettingsEmailEdit extends Component {
-  state = { email: this.props.email };
+  state = { email: this.props.email || '' };
   componentDidMount() {
     this.refs.email.focus();
   }

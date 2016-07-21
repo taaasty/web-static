@@ -18,7 +18,6 @@
     "undo": "https://github.com/jzaefferer/undo/archive/master.zip",
     "es5-shim": "~4.1.1",
     "intro.js": "~1.0.0",
-    "select2": "~4.0.0",
     "jqueryui-touch-punch": "*"
   }
 }

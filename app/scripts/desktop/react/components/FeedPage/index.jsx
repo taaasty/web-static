@@ -31,12 +31,6 @@ import {
   feedLiveFlowReset,  
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
-import {
-  SEARCH_KEY_ANONYMOUS,
-  SEARCH_KEY_BEST,
-  SEARCH_KEY_FRIENDS,
-  SEARCH_KEY_LIVE,
-} from '../../constants/SearchConstants';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
@@ -46,31 +40,26 @@ const typeMap = {
     counter: 'unreadAnonymousCount',
     reset: 'feedAnonymousReset',
     href: Routes.live_anonymous_feed_path(),
-    searchKey: SEARCH_KEY_ANONYMOUS,
   },
   [FEED_TYPE_BEST]: {
     counter: 'unreadBestCount',
     reset: 'feedBestReset',
     href: Routes.best_feed_path(),
-    searchKey: SEARCH_KEY_BEST,
   },
   [FEED_TYPE_FRIENDS]: {
     counter: 'unreadFriendsCount',
     reset: 'feedFriendsReset',
     href: Routes.friends_feed_path(),
-    searchKey: SEARCH_KEY_FRIENDS,
   },
   [FEED_TYPE_LIVE_FLOW]: {
     counter: 'unreadLiveFlowCount',
     reset: 'feedLiveFlowReset',
     href: Routes.live_flows_feed_path(),
-    searchKey: SEARCH_KEY_LIVE,
   },
   [FEED_TYPE_LIVE]: {
     counter: 'unreadLiveCount',
     reset: 'feedLiveReset',
     href: Routes.live_feed_path(),
-    searchKey: SEARCH_KEY_LIVE,
   },
 };
 

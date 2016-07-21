@@ -66,7 +66,7 @@ class SettingsEmail extends Component {
 
 SettingsEmail.propTypes = {
   confirmationEmail: PropTypes.any,
-  email: PropTypes.any.isRequired,
+  email: PropTypes.any,
   error: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   isSent: PropTypes.bool.isRequired,

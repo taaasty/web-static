@@ -142,55 +142,6 @@ Api =
       _pendingRequests[key] = putRequest url
 
   relationship:
-    unfollow: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'unfollow'
-      key = Constants.api.UNFOLLOW_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    unfollowFromYourself: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsByTlog objectID, subjectID
-      key = Constants.api.UNFOLLOW_TLOG_FROM_YOURSELF
-
-      abortPendingRequests key
-      _pendingRequests[key] = deleteRequest url
-
-    follow: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'follow'
-      key = Constants.api.FOLLOW_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    cancel: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'cancel'
-      key = Constants.api.CANCEL_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    ignore: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsToTlog objectID, subjectID, 'ignore'
-      key = Constants.api.IGNORE_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    approve: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsByApprove objectID, subjectID
-      key = Constants.api.APPROVE_REQUEST_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
-    decline: (objectID, subjectID) ->
-      url = ApiRoutes.tlogRelationshipsByDisapprove objectID, subjectID
-      key = Constants.api.DISAPPROVE_REQUEST_TLOG
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url
-
     load: (url, sincePosition, limit) ->
       key = Constants.api.LOAD_RELATIONSHIPS
       data = prepareData({
@@ -219,64 +170,5 @@ Api =
 
     abortPendingRequests(key)
     _pendingRequests[key] = postRequest(url, data)
-
-  flow:
-    create: (formData) ->
-      url = ApiRoutes.flows()
-      key = Constants.api.CREATE_FLOW
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, formData
-
-    update: (flowID, formData) ->
-      url = ApiRoutes.flow(flowID)
-      key = Constants.api.UPDATE_FLOW
-
-      abortPendingRequests key
-      _pendingRequests[key] = putRequest url, formData
-
-    addStaff: (flowID, userID) ->
-      url = ApiRoutes.flowStaffs(flowID)
-      key = Constants.api.ADD_STAFF_FLOW
-      data = {user_id: userID}
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, data
-
-    removeStaff: (flowID, userID) ->
-      url = ApiRoutes.flowStaffs(flowID)
-      key = Constants.api.REMOVE_STAFF_FLOW
-      data = {user_id: userID}
-
-      abortPendingRequests key
-      _pendingRequests[key] = deleteRequest url, data
-
-    changeStaffRole: (flowID, userID, role) ->
-      url = ApiRoutes.flowStaffs(flowID)
-      key = Constants.api.CHANGE_STAFF_ROLE_FLOW
-      data = {user_id: userID, role}
-
-      abortPendingRequests key
-      _pendingRequests[key] = putRequest url, data      
-
-    load: (url, data) ->
-      key = Constants.api.LOAD_FLOWS
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadMine: (data) ->
-      url = ApiRoutes.flowsMine()
-      key = Constants.api.LOAD_MY_FLOWS
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
-
-    loadAvailable: (data) ->
-      url = ApiRoutes.flowsAvailable()
-      key = Constants.api.LOAD_AVAILABLE_FLOWS
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest url, data
 
 module.exports = Api

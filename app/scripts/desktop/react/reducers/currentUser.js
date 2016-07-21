@@ -10,9 +10,11 @@ import {
   CURRENT_USER_CONFIRM_EMAIL_FAILURE,
   CURRENT_USER_STOP_FB_CROSSPOST,
   CURRENT_USER_STOP_TWITTER_CROSSPOST,
+  CURRENT_USER_AUTH_FB,
+  CURRENT_USER_AUTH_TWITTER,
+  CURRENT_USER_CROSSPOST_NONE,
 } from '../actions/CurrentUserActions';
 import { INIT_CURRENT_USER } from '../actions/InitActions';
-import { CROSSPOST_NONE } from '../constants/CrosspostConstants';
 
 const initialState = {
   data: {},
@@ -22,6 +24,19 @@ const initialState = {
   isFetchingConfirmEmail: false,
   errorConfirmEmail: null,
 };
+
+function stopCrosspost(data, provider) {
+  if (data.authentications) {
+    return Object.assign({}, data, {
+      authentications: data.authentications
+        .map((auth) => auth.provider === provider
+             ? Object.assign({}, auth, { crosspostingCd: CURRENT_USER_CROSSPOST_NONE })
+             : auth),
+    });
+  } else {
+    return data;
+  }
+}
 
 const actionMap = {
   [INIT_CURRENT_USER](state, { user }) {
@@ -92,6 +107,22 @@ const actionMap = {
     return Object.assign({}, state, {
       isFetchingConfirmEmail: false,
       errorConfirmEmail: error,
+    });
+  },
+
+  [CURRENT_USER_STOP_FB_CROSSPOST](state) {
+    return Object.assign({}, state, {
+      data: stopCrosspost(state.data, CURRENT_USER_AUTH_FB),
+      isFetching: false,
+      error: null,
+    });
+  },
+
+  [CURRENT_USER_STOP_TWITTER_CROSSPOST](state) {
+    return Object.assign({}, state, {
+      data: stopCrosspost(state.data, CURRENT_USER_AUTH_TWITTER),
+      isFetching: false,
+      error: null,
     });
   },
 };

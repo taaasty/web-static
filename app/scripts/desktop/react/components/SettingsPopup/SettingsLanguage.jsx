@@ -1,20 +1,27 @@
 import React, { PropTypes } from 'react';
-import SelectBox from '../common/SelectBox/SelectBox';
+import Select from 'react-select';
 
 function SettingsLanguage({ languages, onChange, title, value }) {
-  function handleChange(language) {
-    onChange(language);
+  function handleSelect({ value: newValue }) {
+    if (value !== newValue) {
+      onChange(newValue);
+    }
   }
 
   return (
     <div className="settings__item">
       <div className="settings__right">
-        <SelectBox
-          onSelect={handleChange}
-          options={languages}
-          value={value}
-          withSearchBox={false}
-        />
+        <div className="settings__select-container">
+          <Select
+            clearable={false}
+            labelKey="text"
+            multi={false}
+            onChange={handleSelect}
+            options={languages}
+            searchable={false}
+            value={value}
+          />
+        </div>
       </div>
       <div className="settings__left">
         <h3 className="settings__title">
