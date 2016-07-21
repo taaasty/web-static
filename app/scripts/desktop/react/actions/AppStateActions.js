@@ -51,3 +51,9 @@ export function showDesignSettingsPopup() {
 export function hideDesignSettingsPopup() {
   return appStateSetPopup(POPUP_DESIGN_SETTINGS, false);
 }
+
+export function toggleDesignSettingsPopup() {
+  return (dispatch, getState) => {
+    return dispatch(appStateSetPopup(POPUP_DESIGN_SETTINGS, !getState().appState.popups[POPUP_DESIGN_SETTINGS]));
+  };
+}

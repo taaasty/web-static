@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../common/DropdownActions';
 import DropdownAction from '../common/DropdownAction';
-import EntryRepostPopup from '../popups/EntryRepostPopup';
+import EntryRepostPopup from '../EntryRepostPopup';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 import { facebookUrl, vkontakteUrl, twitterUrl, open } from '../common/SocialShare';
 

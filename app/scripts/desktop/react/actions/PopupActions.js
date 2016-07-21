@@ -1,10 +1,7 @@
-/*global i18n, ReactApp, DesignSettingsContainer, 
-  DesignPaymentContainer, DesignSettingsColorPickerPopup, messagingService */
-import CurrentUserStore from  '../stores/current_user';
+/*global ReactApp, DesignSettingsColorPickerPopup, messagingService */
 import PremiumPopup from '../components/PremiumPopup';
 import GetPremiumPopup from '../components/PremiumPopup/GetPremiumPopup';
 import SelectPremiumPlanPopup from '../components/PremiumPopup/SelectPremiumPlanPopup';
-import uri from 'urijs';
 
 const PopupActions = {
   showPremiumPopup() {
@@ -43,29 +40,6 @@ const PopupActions = {
     });
   },
 
-  showDesignSettings() {
-    ReactApp.popupController.open({
-      Component: DesignSettingsContainer,
-      popupProps: {
-        title: i18n.t('design_settings_header'),
-        className: 'popup--design-settings',
-        clue: 'designSettings',
-        draggable: true,
-      },
-      containerAttribute: 'design-settings-container',
-    });
-  },
-
-  showDesignSettingsPayment() {
-    ReactApp.popupController.openWithBackground({
-      Component: DesignPaymentContainer,
-      popupProps: {
-        title: i18n.t('design_payment_header'),
-        className: 'popup--payment',
-      },
-    });
-  },
-
   showColorPicker(props) {
     ReactApp.popupController.openPopup(DesignSettingsColorPickerPopup, props, 'color-picker-container');
   },
@@ -74,29 +48,6 @@ const PopupActions = {
     ReactApp.popupController.close('color-picker-container');
   },
 
-  closeDesignSettings() {
-    const container = document.querySelector('[design-settings-container]');
-
-    if (container != null) {
-      ReactApp.popupController.close('design-settings-container');
-    }
-  },
-
-  toggleDesignSettings(ev) {
-    const user = CurrentUserStore.getUser();
-
-    if (uri().path() === `/~${user.slug}/design_settings`) {
-      const container = document.querySelector('[design-settings-container]');
-
-      ev.preventDefault();
-      if (container != null) {
-        ReactApp.popupController.close('design-settings-container');
-      } else {
-        this.showDesignSettings();
-      }
-    }
-  },
-  
   toggleMessages() {
     messagingService.toggleMessagesPopup();
   },

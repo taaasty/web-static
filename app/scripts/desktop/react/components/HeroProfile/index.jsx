@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
-import CloseToolbar from '../toolbars/CloseToolbar';
+import CloseToolbar from './CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';
 import HeroProfileStats from './HeroProfileStats';

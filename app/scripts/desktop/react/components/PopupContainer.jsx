@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import UserOnboardingPopup from './UserOnboardingPopup';
 import SettingsPopup from './SettingsPopup';
+import DesignSettingsPopup from './DesignSettingsPopup';
 
 class PopupContainer extends Component {
   componentWillMount() {
@@ -36,6 +37,7 @@ class PopupContainer extends Component {
       <div>
         {this.props[POPUP_USER_ONBOARDING] && <UserOnboardingPopup onClose={hideUserOnboardingPopup} />}
         {this.props[POPUP_SETTINGS] && <SettingsPopup onClose={hideSettingsPopup} />}
+        {this.props[POPUP_DESIGN_SETTINGS] && <DesignSettingsPopup onClose={hideDesignSettingsPopup} />}
       </div>
     );
   }

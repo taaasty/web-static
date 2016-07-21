@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/PopupActions';
-import { showSettingsPopup } from '../../actions/AppStateActions';
+import { showSettingsPopup, toggleDesignSettingsPopup } from '../../actions/AppStateActions';
 import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
@@ -25,8 +25,8 @@ class UserToolbarContainer extends Component {
     ev.preventDefault();
     this.setState({ isNotificationsPopoverVisible: !this.state.isNotificationsPopoverVisible });
   }
-  toggleDesignSettings(ev) {
-    PopupActionCreators.toggleDesignSettings(ev);
+  toggleDesignSettings() {
+    this.props.toggleDesignSettingsPopup();
   }
   toggleUserPopover() {
     this.setState({ isUserPopoverVisible: !this.state.isUserPopoverVisible });
@@ -90,6 +90,7 @@ UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   showSettingsPopup: PropTypes.func.isRequired,
+  toggleDesignSettingsPopup: PropTypes.func.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,
@@ -106,7 +107,7 @@ export default connectToStores(
         currentUser: state.currentUser.data,
       };
     },
-    { showSettingsPopup }
+    { showSettingsPopup, toggleDesignSettingsPopup }
   )(UserToolbarContainer),
   [ MessagingStatusStore ],
   (props) => ({

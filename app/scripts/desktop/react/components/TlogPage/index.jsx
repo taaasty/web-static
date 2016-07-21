@@ -41,7 +41,7 @@ class TlogPageContainer extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { getTlogEntriesIfNeeded } = this.props;
+    const { getTlogEntriesIfNeeded, hideDesignSettingsPopup, showDesignSettingsPopup } = this.props;
     const section = this.section(this.props);
     const nextSection = this.section(nextProps);
 
@@ -49,9 +49,20 @@ class TlogPageContainer extends Component {
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
+
+    if (!nextProps.isCurrentUser) {
+      hideDesignSettingsPopup();
+    } else if (nextProps.isCurrentUser &&
+               nextProps.route.designSettings &&
+               !this.props.route.designSettings) {
+      showDesignSettingsPopup();
+    }
   }
   componentWillUnmount() {
     const { hideSettingsPopup, hideDesignSettingsPopup } = this.props;
+
+    hideSettingsPopup();
+    hideDesignSettingsPopup();
   }
   reqParams(props) {
     const { params, location } = props;
@@ -130,11 +141,15 @@ TlogPageContainer.propTypes = {
   getCalendar: PropTypes.func.isRequired,
   getTlogEntries: PropTypes.func.isRequired,
   getTlogEntriesIfNeeded: PropTypes.func.isRequired,
+  hideDesignSettingsPopup: PropTypes.func.isRequired,
+  hideSettingsPopup: PropTypes.func.isRequired,
   isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   route: PropTypes.object.isRequired,
+  showDesignSettingsPopup: PropTypes.func.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,
 };

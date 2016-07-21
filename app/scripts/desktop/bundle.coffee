@@ -43,11 +43,9 @@ require './react/mixins/scroller'
 # /*-----  End of Mixins  ------*/
 
 require './react/dispatchers/current_user'
-require './react/dispatchers/relationships'
 global.CurrentUserStore = require './react/stores/current_user'
 DesignStore = require './react/stores/design'
 require './react/stores/EditorStore'
-require './react/stores/relationships'
 
 require './react/components/transition/timeout_transition_group'
 
@@ -81,19 +79,9 @@ global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/UserToolbar'
-global.AvatarToolbarContainer = require './react/components/toolbars/AvatarToolbarContainer'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
 
-global.EntryTlog = require './react/components/EntryTlog'
-global.SearchResults = require './react/components/SearchResults/SearchResults'
-
-require './react/components/search/search'
-require './react/components/search/button'
-require './react/components/search/field'
-
-global.DesignSettingsContainer = require './react/components/DesignSettings/DesignSettingsContainer'
-global.DesignPaymentContainer = require './react/components/DesignPayment/DesignPaymentContainer'
-global.DesignSettingsColorPickerPopup = require './react/components/DesignSettings/common/colorPicker/popup'
+global.DesignSettingsColorPickerPopup = require './react/components/DesignSettingsPopup/common/colorPicker/popup'
 global.HeroProfile = require './react/components/HeroProfile'
 global.EditorNew = require './react/components/Editor/EditorNew'
 global.EditorEdit = require './react/components/Editor/EditorEdit'
