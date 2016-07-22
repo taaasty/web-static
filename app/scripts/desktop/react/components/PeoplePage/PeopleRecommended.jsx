@@ -1,11 +1,10 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import PeopleList from './PeopleList';
-import PopupActions from '../../actions/PopupActions';
 
-function PeopleRecommended({ isFetching, isPremium, people }) {
-  function handleGetInClick(ev) {
-    PopupActions.showGetPremiumPopup();
+function PeopleRecommended({ isFetching, isPremium, people, showGetPremiumPopup }) {
+  function handleGetInClick() {
+    showGetPremiumPopup();
   }
 
   return (
@@ -33,6 +32,7 @@ PeopleRecommended.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,
   people: PropTypes.array.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
 };
 
 PeopleRecommended.defaultProps = {

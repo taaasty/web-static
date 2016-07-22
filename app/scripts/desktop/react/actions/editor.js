@@ -280,7 +280,7 @@ let EditorActionCreators = {
         });
         NoticeService.errorResponse(xhr);
         if (xhr && xhr.responseJSON && xhr.responseJSON.error_code === ERROR_CODE_PAYMENT_REQUIRED) {
-          PopupActions.showGetPremiumPopup();
+          PopupActions.showGetPremiumPopup(); //TODO -> appstateactions
         }
         reject(xhr);
       }

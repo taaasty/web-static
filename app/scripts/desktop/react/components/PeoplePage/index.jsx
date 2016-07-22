@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { getPeopleIfNeeded, getRecommendedPeople } from '../../actions/PeopleActions';
+import { showGetPremiumPopup } from '../../actions/AppStateActions';
 import PeopleNav from './PeopleNav';
 import PeopleList from './PeopleList';
 import PeopleRecommended from './PeopleRecommended';
@@ -38,7 +39,12 @@ class PeoplePage extends Component {
     }
   }
   render() {
-    const { location, people: { data: items, isFetching, query, dataRecommended, isFetchingRecommended }, routeParams } = this.props;
+    const {
+      location,
+      people: { data: items, isFetching, query, dataRecommended, isFetchingRecommended },
+      routeParams,
+      showGetPremiumPopup,
+    } = this.props;
     const { sort } = getParams(location, routeParams);
 
     return (
@@ -52,6 +58,7 @@ class PeoplePage extends Component {
                   isFetching={isFetchingRecommended}
                   isPremium={CurrentUserStore.isPremium()}
                   people={dataRecommended}
+                  showGetPremiumPopup={showGetPremiumPopup}
                 />
                 <PeopleNav
                   active={sorts.indexOf(sort)}
@@ -79,11 +86,12 @@ PeoplePage.propTypes = {
   location: PropTypes.object.isRequired,
   people: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
 };
 
 export default connect(
   (state) => ({
     people: state.people,
   }),
-  { getPeopleIfNeeded, getRecommendedPeople }
+  { getPeopleIfNeeded, getRecommendedPeople, showGetPremiumPopup }
 )(PeoplePage);

@@ -74,22 +74,6 @@ Api =
       abortPendingRequests key
       _pendingRequests[key] = getRequest searchUrl
 
-  design:
-    saveCurrent: (design, userID) ->
-      url  = ApiRoutes.design_settings_url userID
-      key  = Constants.api.DESIGN_SAVE
-      data = design
-
-      abortPendingRequests key
-      _pendingRequests[key] = putRequest url, data
-
-    createBgImage: (formData) ->
-      url = ApiRoutes.backgrounds()
-      key = Constants.api.CREATE_BG_IMAGE
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, formData
-
   editor:
     createImageAttachment: (formData) ->
       url = ApiRoutes.imageAttachments()

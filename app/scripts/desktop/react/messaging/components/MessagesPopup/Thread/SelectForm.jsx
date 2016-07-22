@@ -34,7 +34,7 @@ function SelectForm(props) {
         deleteEverywhereFn();
       }
     } else {
-      PopupActions.showGetPremiumPopup();
+      PopupActions.showGetPremiumPopup(); //TODO -> appstateactions
     }
   }
 

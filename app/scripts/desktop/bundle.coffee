@@ -99,5 +99,3 @@ require './react/controllers/popup'
 require './react/mediators/comments'
 
 global.ReactApp = require './react/ReactApp';
-
-global._popupActions = require './react/actions/PopupActions';

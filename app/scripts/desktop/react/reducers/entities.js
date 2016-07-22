@@ -15,6 +15,9 @@ import {
 import {
   CURRENT_USER_USERPIC,
 } from '../actions/CurrentUserActions';
+import {
+  DESIGN_SAVE_SUCCESS,
+} from '../actions/DesignActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -104,6 +107,8 @@ function handleExtra(state, action) {
     return state.mergeIn([ 'tlog' ], { [String(action.tlogId)]: action.tlog });
   case CURRENT_USER_USERPIC:
     return state.mergeIn([ 'tlog', String(action.tlogId) ], { userpic: action.response.result });
+  case DESIGN_SAVE_SUCCESS:
+    return state.mergeIn([ 'tlog', String(action.tlogId) ], { design: action.response.result });
   }
 
   return state;

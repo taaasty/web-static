@@ -23,6 +23,7 @@ import {
   CURRENT_USER_AUTH_TWITTER,
   CURRENT_USER_CROSSPOST_OUT,
 } from '../../actions/CurrentUserActions';
+import { showGetPremiumPopup } from '../../actions/AppStateActions';
 import { connect } from 'react-redux';
 
 export const NOTIFY_TIMEOUT = 2000;
@@ -142,7 +143,7 @@ class SettingsPopup extends Component {
     );
   }
   render() {
-    const { crossposts, currentUser, onClose } = this.props;
+    const { crossposts, currentUser, onClose, showGetPremiumPopup } = this.props;
     const { data: user } = currentUser;
 
     return (
@@ -169,6 +170,7 @@ class SettingsPopup extends Component {
                   description={i18n.t('settings_privacy_description')}
                   id="isPrivacy"
                   onChange={this.updatePrivacy.bind(this)}
+                  showGetPremiumPopup={showGetPremiumPopup}
                   title={i18n.t('settings_privacy')}
                 />
                 <SettingsRadioItem
@@ -244,6 +246,7 @@ SettingsPopup.propTypes = {
   omniauthTwitterUrl: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   resendEmailConfirmation: PropTypes.func.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   stopFbCrosspost: PropTypes.func.isRequired,
   stopTwitterCrosspost: PropTypes.func.isRequired,
   updateUserProfile: PropTypes.func.isRequired,
@@ -274,5 +277,6 @@ export default connect(
     stopTwitterCrosspost,
     updateUserProfile,
     updateUserpic,
+    showGetPremiumPopup,
   }
 )(SettingsPopup);

@@ -4,6 +4,8 @@ export const APP_STATE_SET_POPUP = 'APP_STATE_SET_POPUP';
 export const POPUP_USER_ONBOARDING = 'POPUP_USER_ONBOARDING';
 export const POPUP_SETTINGS = 'POPUP_SETTINGS';
 export const POPUP_DESIGN_SETTINGS = 'POPUP_DESIGN_SETTINGS';
+export const POPUP_GET_PREMIUM = 'POPUP_GET_PREMIUM';
+export const POPUP_PREMIUM = 'POPUP_PREMIUM';
 
 function appStateSetEditing(flag) {
   return {
@@ -56,4 +58,20 @@ export function toggleDesignSettingsPopup() {
   return (dispatch, getState) => {
     return dispatch(appStateSetPopup(POPUP_DESIGN_SETTINGS, !getState().appState.popups[POPUP_DESIGN_SETTINGS]));
   };
+}
+
+export function showGetPremiumPopup() {
+  return appStateSetPopup(POPUP_GET_PREMIUM, true);
+}
+
+export function hideGetPremiumPopup() {
+  return appStateSetPopup(POPUP_GET_PREMIUM, false);
+}
+
+export function showPremiumPopup() {
+  return appStateSetPopup(POPUP_PREMIUM, true);
+}
+
+export function hidePremiumPopup() {
+  return appStateSetPopup(POPUP_PREMIUM, false);
 }

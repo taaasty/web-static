@@ -5,6 +5,7 @@ import appStats from './appStats';
 import calendar from './calendar';
 import commentState from './commentState';
 import currentUser from './currentUser';
+import design from './design';
 import editor from './editor';
 import entryState from './entryState';
 import feedEntries from './feedEntries';
@@ -35,6 +36,7 @@ export default {
   calendar,
   commentState,
   currentUser,
+  design,
   editor,
   entryState,
   feedEntries,

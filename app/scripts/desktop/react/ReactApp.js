@@ -1,4 +1,4 @@
-/*global $, CurrentUserStore, CurrentUserDispatcher */
+/*global $, CurrentUserDispatcher */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
@@ -6,8 +6,6 @@ window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
 import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
-import PopupActions from './actions/PopupActions';
-import DesignActionCreators from './actions/design';
 import PopupController from './controllers/popuup';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -43,7 +41,6 @@ const ReactApp = {
       CurrentUserDispatcher.setupUser(user);
       window.messagingService = new MessagingService(user);
 
-      DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
       sendUser(user);
       if (window.gon.register_provider || uri().query(true).first_login !== void 0) {
         sendRegister(user.id);
@@ -57,16 +54,6 @@ const ReactApp = {
       if (window.gon.flash_error) {
         NoticeService.notifyError(window.gon.flash_error);
       }
-
-      if (window.gon.premium_popup) {
-        PopupActions.showPremiumPopup();
-      } else if (window.gon.premium_popup_fail) {
-        PopupActions.showGetPremiumPopup();
-        NoticeService.notifyError(window.gon.premium_popup_fail, 5000);
-      } else if (window.gon.showUserOnboarding) {
-        PopupActions.showUserOnboarding();
-      }
-      
     });
 
     // Needed for onTouchTap

@@ -5,6 +5,8 @@ import {
   POPUP_USER_ONBOARDING,
   POPUP_SETTINGS,
   POPUP_DESIGN_SETTINGS,
+  POPUP_GET_PREMIUM,
+  POPUP_PREMIUM,
 } from '../actions/AppStateActions';
 
 const initialState = {
@@ -13,6 +15,8 @@ const initialState = {
     [POPUP_USER_ONBOARDING]: false,
     [POPUP_SETTINGS]: false,
     [POPUP_DESIGN_SETTINGS]: false,
+    [POPUP_GET_PREMIUM]: false,
+    [POPUP_PREMIUM]: false,
   },
 };
 

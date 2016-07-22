@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
-import PopupActions from '../../actions/PopupActions';
 
 function SettingsPremium({ expires }) {
   const expiresFmt = moment(expires).format('LL');
@@ -15,7 +14,7 @@ function SettingsPremium({ expires }) {
   function handleButtonClick(ev) {
     ev.preventDefault();
 
-    PopupActions.showGetPremiumPopup();
+    this.props.showGetPremiumPopup();
   }
 
   function getContext() {
@@ -51,6 +50,7 @@ SettingsPremium.displayName = 'SettingsPremium';
 
 SettingsPremium.propTypes = {
   expires: PropTypes.string,
+  showGetPremiumPopup: PropTypes.func.isRequired,
 };
 
 export default SettingsPremium;

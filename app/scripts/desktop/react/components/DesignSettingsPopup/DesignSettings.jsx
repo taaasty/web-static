@@ -1,34 +1,36 @@
+/*global i18n */
 import React, { Component, PropTypes } from 'react';
+import Popup from '../Popup';
 import classNames from 'classnames';
-import DesignSettingsDropZone from './DropZone/DropZone';
-import DesignSettingsGroups from './Groups/Groups';
-import DesignSettingsSaveButton from './buttons/Save';
+import DesignSettingsDropZone from './DesignSettingsDropZone';
+import DesignSettingsGroups from './DesignSettingsGroups';
+import DesignSettingsSaveButton from './DesignSettingsSaveButton';
 
 class DesignSettings extends Component {
   state = {
     dragActive: false,
   };
-  handleDragLeave(e) {
+  handleDragLeave(ev) {
     const rect = this.refs.container.getBoundingClientRect();
 
-    if (e.clientX > rect.left + rect.width || e.clientX < rect.left ||
-        e.clientY > rect.top + rect.height || e.clientY < rect.top) {
+    if (ev.clientX > rect.left + rect.width || ev.clientX < rect.left ||
+        ev.clientY > rect.top + rect.height || ev.clientY < rect.top) {
       this.setState({ dragActive: false });
     }
   }
-  handleDragOver(e) {
-    e.preventDefault();
+  handleDragOver(ev) {
+    ev.preventDefault();
 
     if (!this.state.dragActive) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'copy';
+      ev.preventDefault();
+      ev.dataTransfer.dropEffect = 'copy';
 
       this.setState({ dragActive: true });
     }
   }
-  handleDrop(e) {
-    e.preventDefault();
-    let file = e.dataTransfer.files[0];
+  handleDrop(ev) {
+    ev.preventDefault();
+    const file = ev.dataTransfer.files[0];
 
     if (file) {
       this.props.onBgImageChange(file);
@@ -36,59 +38,73 @@ class DesignSettings extends Component {
 
     this.setState({ dragActive: false });
   }
-  renderSaveButton() {
-    const { hasDesignBundle, hasPaidValues, hasUnsavedFields, isSaving, onSave } = this.props;
-
-    if (hasUnsavedFields) {
-      return (
-        <DesignSettingsSaveButton
-          hasDesignBundle={hasDesignBundle}
-          hasPaidValues={hasPaidValues}
-          isSaving={isSaving}
-          onClick={onSave}
-        />
-      );
-    }
-  }
   render() {
+    const {
+      availableOptions,
+      changeDesignOption,
+      design,
+      hasChanges,
+      hasPaidValues,
+      isFetching,
+      isPremium,
+      onBgImageChange,
+      onClose,
+      onSave,
+    } = this.props;
     const settingsClasses = classNames('design-settings', {
-      '__has-unsaved-fields': this.props.hasUnsavedFields,
+      '__has-unsaved-fields': hasChanges,
       '__draghover': this.state.dragActive,
     });
 
     return (
-      <div
-        className={settingsClasses}
-        onDragLeave={this.handleDragLeave.bind(this)}
-        onDragOver={this.handleDragOver.bind(this)}
-        onDrop={this.handleDrop.bind(this)}
-        ref="container"
+      <Popup
+        className="popup--design-settings"
+        clue="designSettings"
+        draggable
+        onClose={onClose}
+        title={i18n.t('design_settings_header')}
       >
-        <DesignSettingsDropZone />
-        <div className="design-settings__options">
-          <DesignSettingsGroups
-            design={this.props.design}
-            onBgImageChange={this.props.onBgImageChange}
-            onOptionChange={this.props.onOptionChange}
-            options={this.props.options}
-          />
-          {this.renderSaveButton()}
+        <div
+          className={settingsClasses}
+          onDragLeave={this.handleDragLeave.bind(this)}
+          onDragOver={this.handleDragOver.bind(this)}
+          onDrop={this.handleDrop.bind(this)}
+          ref="container"
+        >
+          <DesignSettingsDropZone />
+          <div className="design-settings__options">
+            <DesignSettingsGroups
+              availableOptions={availableOptions}
+              changeDesignOption={changeDesignOption}
+              design={design}
+              onBgImageChange={onBgImageChange}
+            />
+            {hasChanges &&
+             <DesignSettingsSaveButton
+               hasPaidValues={hasPaidValues}
+               isFetching={isFetching}
+               isPremium={isPremium}
+               onClick={onSave}
+             />
+            }
+          </div>
         </div>
-      </div>
+      </Popup>
     );
   }
 }
 
 DesignSettings.propTypes = {
+  availableOptions: PropTypes.object.isRequired,
+  changeDesignOption: PropTypes.func.isRequired,
   design: PropTypes.object.isRequired,
-  hasDesignBundle: PropTypes.bool.isRequired,
+  hasChanges: PropTypes.bool.isRequired,
   hasPaidValues: PropTypes.bool.isRequired,
-  hasUnsavedFields: PropTypes.bool.isRequired,
-  isSaving: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  isPremium: PropTypes.bool.isRequired,
   onBgImageChange: PropTypes.func.isRequired,
-  onOptionChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired,
 };
 
 export default DesignSettings;

@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import PopupActions from '../actions/PopupActions';
+import { showGetPremiumPopup } from '../actions/AppStateActions';
 import { connect } from 'react-redux';
 
 function UserSlug({ isCurrentPremium, user, showAsStar }) {
@@ -8,7 +8,7 @@ function UserSlug({ isCurrentPremium, user, showAsStar }) {
     if (!isCurrentPremium()) {
       ev.stopPropagation();
       ev.preventDefault();
-      PopupActions.showGetPremiumPopup();
+      this.props.showGetPremiumPopup();
     }
   }
 
@@ -36,6 +36,7 @@ UserSlug.displayName = 'UserSlug';
 UserSlug.propTypes = {
   isCurrentPremium: PropTypes.bool.isRequired,
   showAsStar: PropTypes.bool.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
@@ -46,5 +47,6 @@ UserSlug.defaultProps = {
 };
 
 export default connect(
-  (state, props) => Object.assign({}, props, { isCurrentPremium: state.currentUser.data.isPremium })
+  (state, props) => Object.assign({}, props, { isCurrentPremium: state.currentUser.data.isPremium }),
+  { showGetPremiumPopup }
 )(UserSlug);

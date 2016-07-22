@@ -3,7 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
-import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
+import {
+  getAppStatsIfNeeded,
+  showGetPremiumPopup,
+} from '../../actions/AppStatsActions';
 import Auth from '../Auth';
 import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
@@ -18,8 +21,10 @@ class AppPage extends Component {
     this.props.getAppStatsIfNeeded();
   }
   componentDidMount() {
-    if (new RegExp(`\\b${PREMIUM_HASH_PARAM}\\b`).test(String(this.props.location.hash))) {
-      PopupActions.showGetPremiumPopup();
+    const { location: { hash }, showGetPremiumPopup } = this.props;
+
+    if (new RegExp(`\\b${PREMIUM_HASH_PARAM}\\b`).test(String(hash))) {
+      showGetPremiumPopup();
     }
   }
   componentWillReceiveProps() {
@@ -72,6 +77,7 @@ AppPage.propTypes = {
   getAppStatsIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
 };
 
@@ -81,5 +87,5 @@ export default connect(
     editing: state.appState.editing,
     tlog: state.entities.get('tlog').find((val) => val.get('slug') === params.slug, null, Map()),
   }),
-  { getAppStatsIfNeeded }
+  { getAppStatsIfNeeded, showGetPremiumPopup }
 )(AppPage);

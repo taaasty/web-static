@@ -4,7 +4,11 @@ import React, { Component, PropTypes } from 'react';
 import MessagingStatusStore from '../../messaging/stores/messaging_status';
 import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import PopupActionCreators from '../../actions/PopupActions';
-import { showSettingsPopup, toggleDesignSettingsPopup } from '../../actions/AppStateActions';
+import {
+  showSettingsPopup,
+  showGetPremiumPopup,
+  toggleDesignSettingsPopup,
+} from '../../actions/AppStateActions';
 import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
@@ -39,7 +43,7 @@ class UserToolbarContainer extends Component {
     this.props.showSettingsPopup();
   }
   showGetPremiumPopup() {
-    PopupActionCreators.showGetPremiumPopup();
+    this.props.showGetPremiumPopup();
   }
   showSearch(q) {
     if (q.length) {
@@ -89,6 +93,7 @@ class UserToolbarContainer extends Component {
 UserToolbarContainer.propTypes = {
   currentUser: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   showSettingsPopup: PropTypes.func.isRequired,
   toggleDesignSettingsPopup: PropTypes.func.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
@@ -107,7 +112,7 @@ export default connectToStores(
         currentUser: state.currentUser.data,
       };
     },
-    { showSettingsPopup, toggleDesignSettingsPopup }
+    { showSettingsPopup, showGetPremiumPopup, toggleDesignSettingsPopup }
   )(UserToolbarContainer),
   [ MessagingStatusStore ],
   (props) => ({
