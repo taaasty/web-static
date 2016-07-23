@@ -1,42 +1,45 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import DesignSettingsRadio from './DesignSettingsRadio';
 
 function DesignSettingsRadioList(props) {
   const {
-    style,
-    optionName,
-    value,
-    items,
     className,
+    items,
     onChange,
+    optionName,
+    style,
+    value,
   } = props;
 
-  render: ->
-    listClasses = ['form-radiogroup', 'form-radiogroup--' + @props.style, @props.className].join ' '
+  const listClasses = classNames(
+    'form-radiogroup',
+    `form-radiogroup--${style}`,
+    className
+  );
 
-    listItems = _.map @props.items, (item) =>
-      value = item
-      custom = false
-      checked = @props.value is value
+  return (
+    <span className={listClasses}>
+      {items.map((item) => {
+        const [ val, custom, checked ] = item === ':ANY:'
+              ? [ value, true, !items.includes(value) ]
+              : [ item, false, item === value ];
 
-      if item is ':ANY:'
-        value = @props.value
-        custom = true
-        checked = @props.items.indexOf(value) is -1
-
-      <DesignSettingsRadio
-          value={ value }
-          custom={ custom }
-          checked={ checked }
-          optionName={ @props.optionName }
-          onChange={ @props.onChange }
-          key={ item } />
-
-    return <span className={ listClasses }>
-             { listItems}
-           </span>
-  }
-
+        return (
+          <DesignSettingsRadio
+            checked={checked}
+            custom={custom}
+            isFree={isFree}
+            key={item}
+            onChange={onChange}
+            optionName={optionName}
+            value={val}
+          />
+        );
+      })}
+    </span>
+  );
+}
 
 DesignSettingsRadioList.propTypes = {
   className: PropTypes.string,

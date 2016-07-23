@@ -46,7 +46,6 @@ class DesignSettings extends Component {
       hasChanges,
       hasPaidValues,
       isFetching,
-      isPremium,
       onBgImageChange,
       onClose,
       onSave,
@@ -83,7 +82,6 @@ class DesignSettings extends Component {
              <DesignSettingsSaveButton
                hasPaidValues={hasPaidValues}
                isFetching={isFetching}
-               isPremium={isPremium}
                onClick={onSave}
              />
             }
@@ -101,7 +99,6 @@ DesignSettings.propTypes = {
   hasChanges: PropTypes.bool.isRequired,
   hasPaidValues: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  isPremium: PropTypes.bool.isRequired,
   onBgImageChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,

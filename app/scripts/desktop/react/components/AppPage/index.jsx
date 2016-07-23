@@ -3,10 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
-import {
-  getAppStatsIfNeeded,
-  showGetPremiumPopup,
-} from '../../actions/AppStatsActions';
+import { getAppStatsIfNeeded } from '../../actions/AppStatsActions';
+import { showGetPremiumPopup } from '../../actions/AppStateActions';
 import Auth from '../Auth';
 import UserToolbar from '../UserToolbar';
 import ComposeToolbar from '../ComposeToolbar';
@@ -34,7 +32,14 @@ class AppPage extends Component {
     return shallowCompare(this, nextProps, nextState);
   }
   render() {
-    const { children, currentUser, editing, location, params, tlog } = this.props;
+    const {
+      children,
+      currentUser,
+      editing,
+      location,
+      params,
+      tlog,
+    } = this.props;
     const isLogged = !!currentUser.id;
 
     return (
@@ -56,8 +61,12 @@ class AppPage extends Component {
            {i18n.t('auth_button')}
          </button>
         }
-        {!editing && isLogged && <ComposeToolbar tlog={tlog} user={currentUser} />}
-        {!editing && <SupportLauncher user={currentUser} />} 
+        {!editing && isLogged &&
+          <ComposeToolbar tlog={tlog} user={currentUser} />
+        }
+        {!editing &&
+          <SupportLauncher user={currentUser} />
+        }
         <BrowserSupport />
         <PopupContainer />
       </div>

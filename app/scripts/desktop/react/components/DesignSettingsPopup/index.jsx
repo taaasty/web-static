@@ -12,6 +12,9 @@ import DesignSettings from './DesignSettings';
 import NoticeService from '../../services/Notice';
 import { List, Map } from 'immutable';
 
+const emptyList = List();
+const emptyMap = Map();
+
 class DesignSettingsPopup extends Component {
   componentWillUnmount() {
     this.props.resetDesignChanges();
@@ -24,7 +27,6 @@ class DesignSettingsPopup extends Component {
       design,
       hasChanges,
       hasPaidValues,
-      isPremium,
       showGetPremiumPopup,
       saveDesignChanges,
     } = this.props;
@@ -34,7 +36,7 @@ class DesignSettingsPopup extends Component {
       return;
     }
 
-    if (hasPaidValues && !isPremium) {
+    if (hasPaidValues) {
       showGetPremiumPopup();
     } else {
       saveDesignChanges(design)
@@ -60,7 +62,6 @@ DesignSettingsPopup.propTypes = {
   hasChanges: PropTypes.bool.isRequired,
   hasPaidValues: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  isPremium: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   resetDesignChanges: PropTypes.func.isRequired,
   saveDesignChanges: PropTypes.func.isRequired,
@@ -73,7 +74,6 @@ export default connect(
     const isPremium = state.currentUser.data.isPremium;
 
     const availableOptions = state.design.get('availableOptions', Map());
-    const freeOptions = state.design.get('freeOptions', Map());
     const isFetching = state.design.get('isFetching', false);
     const changes = state.design.get('changes', Map());
 
@@ -82,10 +82,12 @@ export default connect(
           .entities
           .getIn([ 'tlog', String(currentUserId), 'design' ], Map())
           .merge(changes);
-    const hasPaidValues = !changes.every((val, key) => {
-      const freeVals = freeOptions.get(key, List());
-
-      return freeVals === ':ANY:' || freeVals.includes(val);
+    const hasPaidValues = !isPremium && design.some((val, key) => {
+      return availableOptions.get(key) !== ':ANY:' &&
+        availableOptions
+        .get(key, emptyList)
+        .find((v) => v.get('value') === val, null, emptyMap)
+        .get('free') !== true;
     });
 
     return {
@@ -94,7 +96,6 @@ export default connect(
       hasChanges,
       hasPaidValues,
       isFetching,
-      isPremium,
       onClose,
     };
   },

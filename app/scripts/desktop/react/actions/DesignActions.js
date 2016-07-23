@@ -34,18 +34,27 @@ export function changeBgImage(tlogId, image) {
     const formData = new FormData();
     formData.append('image', image);
 
-    dispatch(changeDesignOption('backgroundImageUrl', BrowserHelpers.createObjectURL(image)));
+    dispatch(changeDesignOption(
+      'backgroundImageUrl',
+      BrowserHelpers.createObjectURL(image))
+    );
 
     bgUploadPromise = dispatch({
       [CALL_API]: {
         endpoint: ApiRoutes.design_settings_cover_url(tlogId),
         schema: Schemas.NONE,
-        types: [ DESIGN_UPLOAD_BG_REQUEST, DESIGN_UPLOAD_BG_SUCCESS, DESIGN_UPLOAD_BG_FAILURE ],
+        types: [
+          DESIGN_UPLOAD_BG_REQUEST,
+          DESIGN_UPLOAD_BG_SUCCESS,
+          DESIGN_UPLOAD_BG_FAILURE,
+         ],
         opts: postOpts(formData),
       },
       tlogId,
     })
-      .then(({ response }) => dispatch(changeDesignOption('backgroundId', response.result.backgroundId)));
+      .then(({ response }) => dispatch(
+        changeDesignOption('backgroundId', response.result.backgroundId))
+      );
 
     return bgUploadPromise;
   };
@@ -57,7 +66,11 @@ export function saveDesignChanges(tlogId, design) {
       [CALL_API]: {
         endpoint: ApiRoutes.design_settings_url(tlogId),
         schema: Schemas.NONE,
-        types: [ DESIGN_SAVE_REQUEST, DESIGN_SAVE_SUCCESS, DESIGN_SAVE_FAILURE ],
+        types: [
+          DESIGN_SAVE_REQUEST,
+          DESIGN_SAVE_SUCCESS,
+          DESIGN_SAVE_FAILURE,
+        ],
         opts: putOpts(design),
       },
       tlogId,
