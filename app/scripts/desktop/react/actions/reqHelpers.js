@@ -53,7 +53,7 @@ export function postOpts(data={}) {
   };
 }
 
-export function putOpts(data={}) {
+export function putOpts(data={}, rawData=false) {
   return (state) => {
     const isFormData = data instanceof FormData;
 
@@ -62,7 +62,7 @@ export function putOpts(data={}) {
       headers: {
         'Content-Type': isFormData ? void 0 : 'application/json',
       },
-      body: isFormData ? data : JSON.stringify(decamelizeKeys(data)),
+      body: isFormData ? data : JSON.stringify(rawData ? data : decamelizeKeys(data)),
     });
   };
 }

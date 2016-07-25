@@ -2,9 +2,9 @@
 import React, { PropTypes } from 'react';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
-function DesignSettingsSaveButton({ hasPaidValues, isFetching, isPremium, onClick }) {
+function DesignSettingsSaveButton({ hasPaidValues, isFetching, onClick }) {
   function title() {
-    return (isPremium || !hasPaidValues)
+    return !hasPaidValues
       ? i18n.t('design_settings_save_button')
       : i18n.t('design_settings_save_with_payment_button');
   }
@@ -19,7 +19,6 @@ function DesignSettingsSaveButton({ hasPaidValues, isFetching, isPremium, onClic
 DesignSettingsSaveButton.propTypes = {
   hasPaidValues: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  isPremium: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 };
 

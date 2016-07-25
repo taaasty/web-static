@@ -13,6 +13,12 @@ import Calendar from '../Calendar';
 import DesignPreviewService from '../../services/designPreview';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 
+const emptyTlog = Map();
+const emptyFlow = Map();
+const emptyRel = Map();
+const emptyDesign = Map();
+const emptyChanges = Map();
+
 const defaultUserpic = '//taaasty.com/favicons/mstile-310x310.png';
 const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'stats' ];
 const flowRequiredFields = [ 'canEdit', 'canWrite', 'design', 'staffs' ];
@@ -33,14 +39,14 @@ class TlogPageRoot extends Component {
     }
   }
   componentDidMount() {
-    const { editing, editPreview, tlog } = this.props;
+    const { design, editing, editPreview, tlog } = this.props;
 
     if (tlog.get('isFlow')) {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
     } else {
       setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
-      if (tlog.get('design')) {
-        DesignPreviewService.apply(tlog.get('design').toJS());
+      if (!design.isEmpty()) {
+        DesignPreviewService.apply(design.toJS());
       }
     }
 
@@ -49,8 +55,8 @@ class TlogPageRoot extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { tlog, getFlow, getTlog } = this.props;
-    const { editing, editPreview, tlog: nextTlog } = nextProps;
+    const { design, getFlow, getTlog } = this.props;
+    const { design: nextDesign, editing, editPreview, tlog: nextTlog } = nextProps;
 
     getTlog(getSlug(nextProps), tlogRequiredFields);
 
@@ -58,9 +64,9 @@ class TlogPageRoot extends Component {
       setBodyLayoutClassName('layout--feed layout--flow layout--dynamic-toolbar');
       getFlow(nextTlog.get('id'), flowRequiredFields);
     } else {
-      if (typeof nextTlog.get('design') !== 'undefined' && nextTlog.get('design') !== tlog.get('design')) {
+      if (design !== nextDesign) {
         setBodyLayoutClassName('layout--tlog layout--dynamic-toolbar');
-        DesignPreviewService.apply(nextTlog.get('design').toJS());
+        DesignPreviewService.apply(nextDesign.toJS());
       }
     }
 
@@ -137,6 +143,7 @@ TlogPageRoot.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
+  design: PropTypes.object.isRequired,
   editPreview: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
   flow: PropTypes.object,
@@ -153,13 +160,18 @@ TlogPageRoot.propTypes = {
 export default connect(
   (state, ownProps) => {
     const { currentUser, entities } = state;
-    const tlog = entities.get('tlog').find((t) => t.get('slug') === getSlug(ownProps), null, Map());
-    const flow = entities.getIn([ 'flow', String(tlog.get('id')) ], Map());
-    const tlogRelation = entities.getIn([ 'rel', tlog.get('myRelationshipObject') ], Map());
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === getSlug(ownProps), null, emptyTlog);
+    const flow = entities.getIn([ 'flow', String(tlog.get('id')) ], emptyFlow);
+    const tlogRelation = entities.getIn([ 'rel', tlog.get('myRelationshipObject') ], emptyRel);
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
+    const designChanges = state.design.get('changes', emptyChanges);
+    const currentDesign = tlog.get('design', emptyDesign);
+
+    const design = currentDesign.merge(designChanges);
 
     return {
+      design,
       flow,
       isCurrentUser,
       tlog,

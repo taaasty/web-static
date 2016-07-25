@@ -30,7 +30,7 @@ class UserToolbarContainer extends Component {
     this.setState({ isNotificationsPopoverVisible: !this.state.isNotificationsPopoverVisible });
   }
   toggleDesignSettings() {
-    this.props.toggleDesignSettingsPopup();
+    window.requestAnimationFrame(() => this.props.toggleDesignSettingsPopup());
   }
   toggleUserPopover() {
     this.setState({ isUserPopoverVisible: !this.state.isUserPopoverVisible });
@@ -51,7 +51,7 @@ class UserToolbarContainer extends Component {
     }
   }
   showInviteShellbox() {
-    ReactApp.shellbox.show(InviteRef, { inviteUrl: this.props.currentUser.invite_url });
+    ReactApp.shellbox.show(InviteRef, { inviteUrl: this.props.currentUser.inviteUrl });
   }
   hideNotificationsPopover() {
     this.setState({ isNotificationsPopoverVisible: false });

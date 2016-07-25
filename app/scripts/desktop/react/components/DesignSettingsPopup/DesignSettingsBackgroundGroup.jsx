@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import DesignSettingsGroup from './DesignSettingsGroup';
 import DesignSettingsOption from './DesignSettingsOption';
 import DesignSettingsOptionState from './DesignSettingsOptionState';
-import DesignSettingsOptionUpload from '.DesignSettingsOptionUpload/';
+import DesignSettingsOptionUpload from './DesignSettingsOptionUpload';
 import DesignSettingsRadioList from './DesignSettingsRadioList';
 
 function DesignSettingsBackgroundGroup(props) {
@@ -27,9 +27,9 @@ function DesignSettingsBackgroundGroup(props) {
         <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={backgroundColorItems}
           onChange={changeDesignOption.bind(null, 'backgroundColor')}
           optionName="backgroundColor"
+          options={backgroundColorItems}
           style="circlebtns"
           value={backgroundColor}
         />
@@ -52,9 +52,9 @@ function DesignSettingsBackgroundGroup(props) {
       >
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={backgroundAlignmentItems}
           onChange={changeDesignOption.bind(null, 'backgroundAlignment')}
           optionName="backgroundAlignment"
+          options={backgroundAlignmentItems}
           style="dotted"
           value={backgroundAlignment}
         />
@@ -65,9 +65,9 @@ function DesignSettingsBackgroundGroup(props) {
 
 DesignSettingsBackgroundGroup.propTypes = {
   backgroundAlignment: PropTypes.string.isRequired,
-  backgroundAlignmentItems: PropTypes.array.isRequired,
+  backgroundAlignmentItems: PropTypes.object.isRequired,
   backgroundColor: PropTypes.string.isRequired,
-  backgroundColorItems: PropTypes.array.isRequired,
+  backgroundColorItems: PropTypes.object.isRequired,
   backgroundImageEnabled: PropTypes.bool.isRequired,
   backgroundImageUrl: PropTypes.string.isRequired,
   changeDesignOption: PropTypes.func.isRequired,

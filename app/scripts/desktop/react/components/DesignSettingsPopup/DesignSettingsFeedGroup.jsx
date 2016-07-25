@@ -29,9 +29,9 @@ function DesignSettingsFeedGroup(props) {
         <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={feedBackgroundColorItems}
           onChange={changeDesignOption.bind(null, 'feedBackgroundColor')}
           optionName="feedBackgroundColor"
+          options={feedBackgroundColorItems}
           style="circlebtns"
           value={feedBackgroundColor}
         />
@@ -43,9 +43,9 @@ function DesignSettingsFeedGroup(props) {
         <DesignSettingsOptionState style="font" text="Aa" />
         <DesignSettingsSlider className="ds-fadein-down">
           <DesignSettingsRadioList
-            items={feedFontItems}
             onChange={changeDesignOption.bind(null, 'feedFont')}
             optionName="feedFont"
+            options={feedFontItems}
             style="font"
             value={feedFont}
           />
@@ -58,9 +58,9 @@ function DesignSettingsFeedGroup(props) {
         <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={feedFontColorItems}
           onChange={changeDesignOption.bind(null, 'feedFontColor')}
           optionName="feedFontColor"
+          options={feedFontColorItems}
           style="circlebtns"
           value={feedFontColor}
         />
@@ -81,11 +81,11 @@ function DesignSettingsFeedGroup(props) {
 DesignSettingsFeedGroup.propTypes = {
   changeDesignOption: PropTypes.func.isRequired,
   feedBackgroundColor: PropTypes.string.isRequired,
-  feedBackgroundColorItems: PropTypes.array.isRequired,
+  feedBackgroundColorItems: PropTypes.object.isRequired,
   feedFont: PropTypes.string.isRequired,
   feedFontColor: PropTypes.string.isRequired,
-  feedFontColorItems: PropTypes.array.isRequired,
-  feedFontItems: PropTypes.array.isRequired,
+  feedFontColorItems: PropTypes.object.isRequired,
+  feedFontItems: PropTypes.object.isRequired,
   feedOpacity: PropTypes.number.isRequired,
 };
 

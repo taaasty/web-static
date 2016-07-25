@@ -23,7 +23,7 @@ export function changeDesignOption(name, value) {
   };
 }
 
-export function resetChanges() {
+export function resetDesignChanges() {
   return {
     type: DESIGN_RESET_CHANGES,
   };
@@ -41,7 +41,7 @@ export function changeBgImage(tlogId, image) {
 
     bgUploadPromise = dispatch({
       [CALL_API]: {
-        endpoint: ApiRoutes.design_settings_cover_url(tlogId),
+        endpoint: ApiRoutes.backgrounds(),
         schema: Schemas.NONE,
         types: [
           DESIGN_UPLOAD_BG_REQUEST,
@@ -53,7 +53,7 @@ export function changeBgImage(tlogId, image) {
       tlogId,
     })
       .then(({ response }) => dispatch(
-        changeDesignOption('backgroundId', response.result.backgroundId))
+        changeDesignOption('backgroundId', response.result.id))
       );
 
     return bgUploadPromise;
@@ -71,7 +71,7 @@ export function saveDesignChanges(tlogId, design) {
           DESIGN_SAVE_SUCCESS,
           DESIGN_SAVE_FAILURE,
         ],
-        opts: putOpts(design),
+        opts: putOpts(design, true),
       },
       tlogId,
     }));

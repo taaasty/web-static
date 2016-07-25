@@ -27,9 +27,9 @@ function DesignSettingsHeaderGroup(props) {
         <DesignSettingsOptionState style="font" text="Aa" />
         <DesignSettingsSlider className="ds-fadein-down">
           <DesignSettingsRadioList
-            items={headerFontItems}
             onChange={changeDesignOption.bind(null, 'headerFont')}
             optionName="headerFont"
+            options={headerFontItems}
             style="font"
             value={headerFont}
           />
@@ -41,9 +41,9 @@ function DesignSettingsHeaderGroup(props) {
       >
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={headerSizeItems}
           onChange={changeDesignOption.bind(null, 'headerSize')}
           optionName="headerSize"
+          options={headerSizeItems}
           style="dotted"
           value={headerSize}
         />
@@ -55,9 +55,9 @@ function DesignSettingsHeaderGroup(props) {
         <DesignSettingsOptionState style="circlebtn" />
         <DesignSettingsRadioList
           className="ds-absolute-left ds-fadein-down"
-          items={headerColorItems}
           onChange={changeDesignOption.bind(null, 'headerColor')}
           optionName="headerColor"
+          options={headerColorItems}
           style="circlebtns"
           value={headerColor}
         />

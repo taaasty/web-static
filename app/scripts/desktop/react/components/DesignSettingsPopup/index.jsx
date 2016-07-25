@@ -14,6 +14,8 @@ import { List, Map } from 'immutable';
 
 const emptyList = List();
 const emptyMap = Map();
+const emptyDesign = Map();
+const emptyChanges = Map();
 
 class DesignSettingsPopup extends Component {
   componentWillUnmount() {
@@ -39,7 +41,7 @@ class DesignSettingsPopup extends Component {
     if (hasPaidValues) {
       showGetPremiumPopup();
     } else {
-      saveDesignChanges(design)
+      saveDesignChanges(design.toJS())
         .then(() => NoticeService.notifySuccess(i18n.t('design_settings_save_success')))
         .catch(() => NoticeService.notifyError(i18n.t('design_settings_save_error')));
     }
@@ -69,21 +71,22 @@ DesignSettingsPopup.propTypes = {
 };
 
 export default connect(
-  (state, { onClose }) => {
+  (state) => {
     const currentUserId = state.currentUser.data.id;
     const isPremium = state.currentUser.data.isPremium;
 
     const availableOptions = state.design.get('availableOptions', Map());
     const isFetching = state.design.get('isFetching', false);
-    const changes = state.design.get('changes', Map());
+    const changes = state.design.get('changes', emptyChanges);
 
-    const hasChanges = !!changes.count();
-    const design = state
+    const currentDesign = state
           .entities
-          .getIn([ 'tlog', String(currentUserId), 'design' ], Map())
-          .merge(changes);
+          .getIn([ 'tlog', String(currentUserId), 'design' ], emptyDesign);
+    const design = currentDesign.merge(changes);
+    const hasChanges = !currentDesign.equals(design);
     const hasPaidValues = !isPremium && design.some((val, key) => {
-      return availableOptions.get(key) !== ':ANY:' &&
+      return availableOptions.has(key) &&
+        availableOptions.get(key) !== ':ANY:' &&
         availableOptions
         .get(key, emptyList)
         .find((v) => v.get('value') === val, null, emptyMap)
@@ -96,7 +99,7 @@ export default connect(
       hasChanges,
       hasPaidValues,
       isFetching,
-      onClose,
+      tlogId: currentUserId,
     };
   },
   {
@@ -105,5 +108,9 @@ export default connect(
     changeBgImage,
     resetDesignChanges,
     saveDesignChanges,
-  }
+  },
+  (stateProps, dispatchProps, ownProps) => Object.assign({}, stateProps, dispatchProps, {
+    changeBgImage: dispatchProps.changeBgImage.bind(null, stateProps.tlogId),
+    saveDesignChanges: dispatchProps.saveDesignChanges.bind(null, stateProps.tlogId),
+  }, ownProps)
 )(DesignSettingsPopup);

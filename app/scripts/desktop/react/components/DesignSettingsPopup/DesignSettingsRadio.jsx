@@ -1,68 +1,67 @@
-import React, { PropTypes } from 'react';
-import DesignOptionsService from '../../services/designOptions';
-import DesignPresenterService from '../../services/designPresenter';
+import React, { Component, PropTypes } from 'react';
 import DesignSettingsColorPicker from './common/colorPicker';
 
-function DesignSettingsRadio(props) {
-  const {
-    value,
-    custom,
-    checked,
-    isFree,
-    optionName,
-    onChange,
-  } = props;
+class DesignSettingsRadio extends Component {
+  handleChange() {
+    const { isColorPicker, onChange, option } = this.props;
 
-  function handleChange() {
-    return onChange(custom ? this.refs.colorPicker.getValue() : value);
+    return onChange(isColorPicker ? this.refs.colorPicker.getValue() : option.get('value'));
   }
+  render() {
+    const {
+      checked,
+      isColorPicker,
+      option,
+      optionName,
+      onChange,
+      value,
+    } = this.props;
 
-  getInitialState: ->
-    name: DesignPresenterService.getName @props.optionName, @props.value
-    text: DesignPresenterService.getText @props.optionName, @props.value
+    const name = isColorPicker ? 'custom' : option.get('name');
+    const optionTitle = option.get('title');
+    const title = typeof optionTitle === 'function' ? optionTitle.call(null) : optionTitle;
 
-  const name = custom ? 'custom' : name;
-
-  return (
-    <span className={`form-radiobtn form-radiobtn--${name}`}>
-      <input
-        className="form-radiobtn__input"
-        checked={checked}
-        id={`${optionName}-${name}`}
-        onChange={handleChange}
-        type="radio"
-      />
-      <label
-        className="form-radiobtn__label"
-        htmlFor={`${optionName}-${name}`}
-      >
-        {isFree && (
-           <span className="free">
-             free
-           </span>
-         )}
-           <span className="form-radiobtn__inner">
-             <span className="form-radiobtn__text">
-               { @state.text }
+    return (
+      <span className={`form-radiobtn form-radiobtn--${name}`}>
+        <input
+          checked={checked}
+          className="form-radiobtn__input"
+          id={`${optionName}-${name}`}
+          onChange={this.handleChange.bind(this)}
+          type="radio"
+        />
+        <label
+          className="form-radiobtn__label"
+          htmlFor={`${optionName}-${name}`}
+        >
+          {option.get('free') && (
+             <span className="free">
+               free
              </span>
-           </span>
-           {custom && (
-              <DesignSettingsColorPicker
-                color={value}
-                onChange={onChange}
-                ref="colorPicker"
-              />
-            )}
-      </label>
-    </span>
-  );
+           )}
+             <span className="form-radiobtn__inner">
+               <span className="form-radiobtn__text">
+                 {title}
+               </span>
+             </span>
+             {isColorPicker && (
+                <DesignSettingsColorPicker
+                  color={value}
+                  onChange={onChange}
+                  ref="colorPicker"
+                />
+              )}
+        </label>
+      </span>
+    );
+  }
 }
 
 DesignSettingsRadio.propTypes = {
   checked: PropTypes.bool.isRequired,
-  custom: PropTypes.bool.isRequired,
-  isFree: PropTypes.bool.isRequired,
+  isColorPicker: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
+  option: PropTypes.object.isRequired,
   optionName: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
 };

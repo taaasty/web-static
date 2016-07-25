@@ -1,117 +1,107 @@
-_  = require 'lodash'
-classnames = require 'classnames'
-DesignSettingsSliderPrevButton = require './slider/prevButton'
-DesignSettingsSliderNextButton = require './slider/nextButton'
-{ PropTypes } = React
+/*global setTimeout */
+import React, { Component ,PropTypes } from 'react';
+import classNames from 'classnames';
 
-DesignSettingsSlider = React.createClass
-  displayName: 'DesignSettingsSlider'
+class DesignSettingsSlider extends Component {
+  state = {
+    init: false,
+    leftLimit: true,
+    rightLimit: false,
+    leftOffset: 0,
+  };
+  componentDidMount() {
+    setTimeout(() => requestAnimationFrame(() => this.setState({ init: true })));
+  }
+  slidePrev() {
+    const rightLimit = false;
+    const mainWidth = this.refs.main.offsetWidth;
+    const shift = mainWidth - 40;
 
-  propTypes:
-    className: PropTypes.string
-    children: PropTypes.element.isRequired
+    let leftLimit = this.state.leftLimit;
+    let leftOffset = Math.abs(this.state.leftOffset);
 
-  getInitialState: ->
-    inited: false
-    leftLimit: true
-    rightLimit: false
-    leftOffset: 0
+    if (leftOffset == 0) {
+      return;
+    }
 
-  componentDidMount: ->
-    @setState(inited: true)
+    if (leftOffset - shift <= 0) {
+      leftLimit = true;
+      leftOffset = 0;
+    } else {
+      leftOffset = leftOffset - shift;
+    }
 
-  render: ->
-    sliderClasses = classnames('slider', {
-      '__inited': @state.inited
-      '__leftlimit': @state.leftLimit
-      '__rightlimit': @state.rightLimit
-    })
-    sliderClasses = [sliderClasses, @props.className].join ' '
+    this.setState({ leftLimit, rightLimit, leftOffset: leftOffset * -1 });
+  }
+  slideNext() {
+    const leftLimit = false;
+    const listWidth = this.refs.list.offsetWidth;
+    const mainWidth = this.refs.main.offsetWidth;
+    const shift = mainWidth - 40;
 
-    return <div className={ sliderClasses }>
-             <div ref="main"
-                  className="slider__main">
-               <div ref="list"
-                    className="slider__list"
-                    style={ @getListStyles() }>
-                 <div className="slider__table">
-                   <div className="slider__table-cell">
-                     { @props.children }
-                   </div>
-                 </div>
-               </div>
-             </div>
-             { @renderButtons() }
-           </div>
+    let rightLimit = this.state.rightLimit;
+    let leftOffset = Math.abs(this.state.leftOffset);
 
-  renderButtons: ->
-    buttons = []
-    prevButton = <DesignSettingsSliderPrevButton onClick={ @slidePrev } key="prev" />
-    nextButton = <DesignSettingsSliderNextButton onClick={ @slideNext } key="next" />
+    if (leftOffset + shift >= listWidth) {
+      return;
+    }
 
-    if @state.inited
-      listWidth = @refs.list.offsetWidth
-      mainWidth = @refs.main.offsetWidth
+    if (leftOffset + shift >= listWidth - mainWidth) {
+      rightLimit = true;
+      leftOffset = listWidth - mainWidth;
+    } else {
+      leftOffset = leftOffset + shift;
+    }
 
-      if listWidth > mainWidth
-        buttons = buttons.concat prevButton, nextButton
+    this.setState({ leftLimit, rightLimit, leftOffset: leftOffset * -1 });
+  }
+  renderButtons() {
+    return (this.state.init && this.refs.list.offsetWidth > this.refs.main.offsetWidth) && [
+      <div
+        className="slider__btn slider__btn--left"
+        key="prev"
+        onClick={this.slidePrev.bind(this)}
+      />,
+      <div
+        className="slider__btn slider__btn--right"
+        key="next"
+        onClick={this.slideNext.bind(this)}
+      />,
+    ];
+  }
+  render() {
+    const { children, className } = this.props;
+    const { init, leftLimit, leftOffset, rightLimit } = this.state;
+    const sliderClasses = classNames('slider', {
+      '__inited': init,
+      '__leftlimit': leftLimit,
+      '__rightlimit': rightLimit,
+    }, className);
 
-    buttons
+    return (
+      <div className={sliderClasses}>
+        <div className="slider__main" ref="main">
+          <div
+            className="slider__list"
+            ref="list"
+            style={{ transform: `translateX(${leftOffset}px)` }}
+          >
+            <div className="slider__table">
+              <div className="slider__table-cell">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+        {this.renderButtons()}
+      </div>
+    );
+  }
+}
 
-  slidePrev: ->
-    rightLimit = false
-    leftLimit  = @state.leftLimit
-    listWidth  = @refs.list.offsetWidth
-    mainWidth  = @refs.main.offsetWidth
-    leftOffset = Math.abs @state.leftOffset
-    shift      = mainWidth - 40
+DesignSettingsSlider.propTypes = {
+  children: PropTypes.element.isRequired,
+  className: PropTypes.string,
+};
 
-    return if leftOffset == 0
-
-    if leftOffset - shift <= 0
-      leftOffset = 0
-      leftLimit = true      
-    else
-      leftOffset = leftOffset - shift
-
-    @setState {leftLimit, rightLimit, leftOffset: leftOffset * -1}
-
-  slideNext: ->
-    leftLimit  = false
-    rightLimit = @state.rightLimit
-    listWidth  = @refs.list.offsetWidth
-    mainWidth  = @refs.main.offsetWidth
-    leftOffset = Math.abs @state.leftOffset
-    shift      = mainWidth - 40
-
-    return if leftOffset + shift >= listWidth
-
-    if leftOffset + shift >= listWidth - mainWidth
-      rightLimit = true
-      leftOffset = listWidth - mainWidth
-    else
-      leftOffset = leftOffset + shift
-
-    @setState {leftLimit, rightLimit, leftOffset: leftOffset * -1}
-
-  getListStyles: ->
-    styles = {}
-    supportedTransform = @getSupportedTransform()
-
-    if supportedTransform
-      styles[supportedTransform] = 'translateX(' + @state.leftOffset + 'px)'
-    else
-      styles.left = @state.leftOffset
-
-    styles
-
-  getSupportedTransform: ->
-    # It will return either the name of the first supported prefix or false 
-    # if none of the prefixes are supported
-    prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split ' '
-    div = document.createElement 'div'
-    firstPrefix = _.find prefixes, (prefix) -> div.style[prefix]?
-
-    return firstPrefix ? false
-
-module.exports = DesignSettingsSlider
+export default DesignSettingsSlider;

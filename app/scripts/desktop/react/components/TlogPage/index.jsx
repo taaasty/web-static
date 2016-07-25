@@ -41,7 +41,7 @@ class TlogPageContainer extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { getTlogEntriesIfNeeded, hideDesignSettingsPopup, showDesignSettingsPopup } = this.props;
+    const { getTlogEntriesIfNeeded, hideDesignSettingsPopup } = this.props;
     const section = this.section(this.props);
     const nextSection = this.section(nextProps);
 
@@ -52,10 +52,6 @@ class TlogPageContainer extends Component {
 
     if (!nextProps.isCurrentUser) {
       hideDesignSettingsPopup();
-    } else if (nextProps.isCurrentUser &&
-               nextProps.route.designSettings &&
-               !this.props.route.designSettings) {
-      showDesignSettingsPopup();
     }
   }
   componentWillUnmount() {

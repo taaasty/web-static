@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
 
-function SettingsPremium({ expires }) {
+function SettingsPremium({ expires, showGetPremiumPopup }) {
   const expiresFmt = moment(expires).format('LL');
   const inFuture = moment().isBefore(expires);
   const descClasses = classNames({
@@ -14,7 +14,7 @@ function SettingsPremium({ expires }) {
   function handleButtonClick(ev) {
     ev.preventDefault();
 
-    this.props.showGetPremiumPopup();
+    showGetPremiumPopup();
   }
 
   function getContext() {

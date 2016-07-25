@@ -1,57 +1,54 @@
-{ PropTypes } = React
+/*global $ */
+import React, { Component, PropTypes } from 'react';
 
-MINIMUM = 0
-MAXIMUM = 1
-STEP    = 0.01
+class DesignSettingsRange extends Component {
+  state = { value: this.props.value };
+  componentDidMount() {
+    const { from, to, step, value } = this.props;
 
-DesignSettingsRange = React.createClass
-  displayName: 'DesignSettingsRange'
-
-  propTypes:
-    value: PropTypes.number.isRequired
-    from: PropTypes.number
-    to: PropTypes.number
-    step: PropTypes.number
-    onChange: PropTypes.func.isRequired
-
-  getDefaultProps: ->
-    from: MINIMUM
-    to:   MAXIMUM
-    step: STEP
-
-  getInitialState: ->
-    value: @props.value
-
-  componentDidMount: ->
-    $(this.refs.range).slider
-      min: @props.from
-      max: @props.to
-      step: @props.step
-      range: 'min'
-      value: @props.value
-      animate: true
-      slide: @handleSlide
-
-  componentWillUnmount: ->
+    $(this.refs.range).slider({
+      min: from,
+      max: to,
+      step: step,
+      range: 'min',
+      value: value,
+      animate: true,
+      slide: this.handleSlide.bind(this),
+    });
+  }
+  componentWillUnmount() {
     $(this.refs.range).slider('destroy');
-
-  render: ->
-    <span>
-      <span ref="range" className="form-range ds-absolute-left ds-fadein-down">
-        <input type="text" className="form-range__input" />
+  }
+  handleSlide(ev, ui) {
+    this.setState({ value: ui.value });
+    this.props.onChange(ui.value);
+  }
+  render() {
+    return (
+      <span>
+        <span className="form-range ds-absolute-left ds-fadein-down" ref="range">
+          <input className="form-range__input" type="text" />
+        </span>
+        <span className="form-range-value">
+          {(this.state.value * 100).toFixed() + '%'}
+        </span>
       </span>
-      { @renderValue() }
-    </span>
+    );
+  }
+}
 
-  renderValue: ->
-    formattedValue = (@state.value * 100).toFixed() + '%'
+DesignSettingsRange.propTypes = {
+  from: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  step: PropTypes.number,
+  to: PropTypes.number,
+  value: PropTypes.number.isRequired,
+};
 
-    return <span className="form-range-value">
-             { formattedValue }
-           </span>
+DesignSettingsRange.defaultProps = {
+  from: 0,
+  to: 1,
+  step: 0.01,
+};
 
-  handleSlide: (e, ui) ->
-    @setState(value: ui.value)
-    @props.onChange ui.value
-
-module.exports = DesignSettingsRange
+export default DesignSettingsRange;

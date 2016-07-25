@@ -164,13 +164,15 @@ class SettingsPopup extends Component {
                 user={user}
               />
               <div className="settings__body">
-                <SettingsPremium expires={user.premiumExpired} />
+                <SettingsPremium
+                  expires={user.premiumExpired}
+                  showGetPremiumPopup={showGetPremiumPopup}
+                />
                 <SettingsRadioItem
                   checked={user.isPrivacy}
                   description={i18n.t('settings_privacy_description')}
                   id="isPrivacy"
                   onChange={this.updatePrivacy.bind(this)}
-                  showGetPremiumPopup={showGetPremiumPopup}
                   title={i18n.t('settings_privacy')}
                 />
                 <SettingsRadioItem

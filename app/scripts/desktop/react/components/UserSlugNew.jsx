@@ -3,12 +3,12 @@ import React, { PropTypes } from 'react';
 import { showGetPremiumPopup } from '../actions/AppStateActions';
 import { connect } from 'react-redux';
 
-function UserSlug({ isCurrentPremium, user, showAsStar }) {
+function UserSlug({ isCurrentPremium, user, showAsStar, showGetPremiumPopup }) {
   function handlePremiumClick(ev) {
-    if (!isCurrentPremium()) {
+    if (!isCurrentPremium) {
       ev.stopPropagation();
       ev.preventDefault();
-      this.props.showGetPremiumPopup();
+      showGetPremiumPopup();
     }
   }
 

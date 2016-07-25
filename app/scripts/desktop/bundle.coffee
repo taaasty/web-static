@@ -44,7 +44,6 @@ require './react/mixins/scroller'
 
 require './react/dispatchers/current_user'
 global.CurrentUserStore = require './react/stores/current_user'
-DesignStore = require './react/stores/design'
 require './react/stores/EditorStore'
 
 require './react/components/transition/timeout_transition_group'
@@ -95,7 +94,5 @@ require './react/controllers/tasty_events'
 require './react/controllers/tasty_alert'
 
 require './react/controllers/popup'
-
-require './react/mediators/comments'
 
 global.ReactApp = require './react/ReactApp';

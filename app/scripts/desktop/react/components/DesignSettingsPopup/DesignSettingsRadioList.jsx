@@ -5,9 +5,9 @@ import DesignSettingsRadio from './DesignSettingsRadio';
 function DesignSettingsRadioList(props) {
   const {
     className,
-    items,
     onChange,
     optionName,
+    options,
     style,
     value,
   } = props;
@@ -20,20 +20,21 @@ function DesignSettingsRadioList(props) {
 
   return (
     <span className={listClasses}>
-      {items.map((item) => {
-        const [ val, custom, checked ] = item === ':ANY:'
-              ? [ value, true, !items.includes(value) ]
-              : [ item, false, item === value ];
+      {options.map((option) => {
+        const isColorPicker = option.get('value') === ':COLOR_PICKER:';
+        const checked = isColorPicker
+              ? options.find((o) => o.get('value') === value, null, false) === false
+              : option.get('value') === value;
 
         return (
           <DesignSettingsRadio
             checked={checked}
-            custom={custom}
-            isFree={isFree}
-            key={item}
+            isColorPicker={isColorPicker}
+            key={option.get('value')}
             onChange={onChange}
+            option={option}
             optionName={optionName}
-            value={val}
+            value={value}
           />
         );
       })}
@@ -43,9 +44,9 @@ function DesignSettingsRadioList(props) {
 
 DesignSettingsRadioList.propTypes = {
   className: PropTypes.string,
-  items: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   optionName: PropTypes.string.isRequired,
+  options: PropTypes.object.isRequired,
   style: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
 };
