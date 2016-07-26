@@ -7,8 +7,9 @@ import {
   PEOPLE_RECOMMENDED_SUCCESS,
   PEOPLE_RECOMMENDED_FAILURE,
 } from '../actions/PeopleActions';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
   ids: [],
   idsRecommended: [],
   signature: void 0,
@@ -16,18 +17,18 @@ const initialState = {
   isFetchingRecommended: false,
   error: null,
   errorRecommended: null,
-};
+});
 
 const actionMap = {
   [PEOPLE_REQUEST](state) {
-    return Object.assign({}, state, {
+    return state.merge({
       isFetching: true,
       error: null,
     });
   },
 
   [PEOPLE_SUCCESS](state, { response, signature }) {
-    return Object.assign({}, state, {
+    return state.merge({
       signature,
       ids: response.result,
       isFetching: false,
@@ -35,36 +36,34 @@ const actionMap = {
     });
   },
 
-  [PEOPLE_FAILURE](state, error) {
-    return Object.assign({}, state, {
+  [PEOPLE_FAILURE](state, { error, signature }) {
+    return state.merge({
       error,
+      signature,
       isFetching: false,
     });
   },
 
   [PEOPLE_RECOMMENDED_REQUEST](state) {
-    return {
-      ...state,
+    return state.merge({
       isFetchingRecommended: true,
       errorRecommended: null,
-    };
+    });
   },
 
-  [PEOPLE_RECOMMENDED_SUCCESS](state, data) {
-    return {
-      ...state,
-      ...data,
+  [PEOPLE_RECOMMENDED_SUCCESS](state, { response }) {
+    return state.merge({
+      idsRecommended: response.result,
       isFetchingRecommended: false,
       errorRecommended: null,
-    };
+    });
   },
 
-  [PEOPLE_RECOMMENDED_FAILURE](state, error) {
-    return {
-      ...state,
+  [PEOPLE_RECOMMENDED_FAILURE](state, { error }) {
+    return state.merge({
       isFetchingRecommended: false,
       errorRecommended: error,
-    };
+    });
   },
 };
 

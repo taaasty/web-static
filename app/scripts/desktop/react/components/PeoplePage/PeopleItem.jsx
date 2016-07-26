@@ -1,56 +1,47 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../UserAvatar';
+import UserAvatar from '../UserAvatar/new';
 import UserSlug from '../UserSlugNew';
 import RelationButton from '../RelationButton';
-import CurrentUserStore from '../../stores/current_user';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
 class PeopleItem extends Component{
-  state = { relState: this.props.user.my_relationship };
   handleButtonClick(ev) {
     ev.preventDefault();
     ev.stopPropagation();
   }
   render() {
     const { user } = this.props;
-    const { relState } = this.state;
-    const styles = user.design && user.design.backgroundImageEnabled
-          ? { backgroundImage: `url("${user.design.backgroundImageUrl}")` }
+    const relId = user.get('myRel', false);
+    const bgImageEnabled = user.getIn([ 'design', 'backgroundImageEnabled' ], false);
+    const styles = bgImageEnabled
+          ? { backgroundImage: `url("${user.getIn([ 'design', 'backgroundImageUrl' ], '')}")` }
           : {};
 
     return (
       <article className="people-item" style={styles}>
         <div className="people-item__inner">
-          <Link className="people-item__link" to={uri(user.tlog_url).path()}>
+          <Link className="people-item__link" to={uri(user.get('tlogUrl', '')).path()}>
             <div className="people-item__avatar">
-              <UserAvatar size={60} user={user} />
+              <UserAvatar size={60} user={user.toJS()} />
             </div>
-            <div className="people-item__name" title={user.slug}>
+            <div className="people-item__name" title={user.get('slug')}>
               <UserSlug user={user} />
             </div>
             <div className="people-item__footer">
               <div
                 className="people-item__desc"
-                dangerouslySetInnerHTML={{ __html: user.title || '' }}
+                dangerouslySetInnerHTML={{ __html: user.get('title', '') }}
               />
               <div className="people-item__followers-count">
-                {user.followers_count}
+                {user.get('followersCount')}
                 <div className="people-item__followers-text">
-                  {i18n.t('people.followers_count', { count: user.followers_count })}
+                  {i18n.t('people.followers_count', { count: user.get('followersCount') })}
                 </div>
               </div>
               <div className="people-item__follow-button" onClick={this.handleButtonClick}>
-                {relState && 
-                 <RelationButton
-                   objectID={CurrentUserStore.getUserID()}
-                   onStateChange={(relState) => this.setState({ relState })}
-                   relState={relState}
-                   subjectID={user.id}
-                   subjectPrivacy={user.is_privacy}
-                 />
-                }
+                {relId && <RelationButton relId={relId} />}
               </div>
             </div>
           </Link>
@@ -63,7 +54,6 @@ class PeopleItem extends Component{
 PeopleItem.displayName = 'PeopleItem';
 
 PeopleItem.propTypes = {
-  title: PropTypes.string,
   user: PropTypes.object.isRequired,
 };
 

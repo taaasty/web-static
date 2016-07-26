@@ -132,6 +132,7 @@ export const Schemas = {
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   RELATIONSHIP_ARR: arrayOf(relSchema),
+  PEOPLE_COLL: arrayOf({ user: tlogSchema }),
   CONVERSATION: conversationSchema,
   CONVERSATION_COLL: arrayOf(conversationSchema),
   MESSAGE: messageSchema,

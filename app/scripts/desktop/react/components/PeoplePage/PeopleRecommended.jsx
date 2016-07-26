@@ -31,14 +31,13 @@ PeopleRecommended.displayName = 'PeopleRecommended';
 PeopleRecommended.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,
-  people: PropTypes.array.isRequired,
+  people: PropTypes.object.isRequired,
   showGetPremiumPopup: PropTypes.func.isRequired,
 };
 
 PeopleRecommended.defaultProps = {
   isFetching: false,
   isPremium: false,
-  people: [],
 };
 
 export default PeopleRecommended;
