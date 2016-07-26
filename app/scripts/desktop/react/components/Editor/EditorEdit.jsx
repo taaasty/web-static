@@ -15,8 +15,14 @@ class EditorEdit extends Component {
     EditorActionCreators.init({entry, tlog, tlogType});
   }
   render() {
-    const { backUrl, location, tlogEntries, tlogEntriesInvalidate,
-            tlogType, togglePreview } = this.props;
+    const {
+      backUrl,
+      location,
+      tlogEntries,
+      tlogEntriesInvalidate,
+      tlogType,
+      togglePreview,
+    } = this.props;
 
     return (
       <EditorContainer

@@ -27,11 +27,20 @@ class EntryTlogMetabarShare extends Component {
     );
   }
   render() {
-    const { commentator, entry: { id, preview_image, title_truncated, type, url } } = this.props;
+    const {
+      commentator,
+      entry: {
+        id,
+        previewImage,
+        titleTruncated,
+        type,
+        url,
+      },
+    } = this.props;
 
-    const vkUrl = vkontakteUrl(url, title_truncated, (preview_image && preview_image.url) || defaultImg);
+    const vkUrl = vkontakteUrl(url, titleTruncated, (previewImage && previewImage.url) || defaultImg);
     const fbUrl = facebookUrl(url);
-    const twUrl = twitterUrl(url, title_truncated);
+    const twUrl = twitterUrl(url, titleTruncated);
 
     return (
       <span className="meta-item meta-item--share">

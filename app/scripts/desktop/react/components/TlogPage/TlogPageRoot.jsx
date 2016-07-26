@@ -177,7 +177,7 @@ export default connect(
       tlog,
       tlogRelation,
       editing: state.appState.editing,
-      editPreview: state.editor.preview,
+      editPreview: state.editor.get('preview'),
     };
   },
   { getTlog, getFlow, showSettingsPopup }

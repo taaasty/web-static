@@ -61,7 +61,7 @@ class AppRoot extends Component {
     if (gon.user) {
       const user = camelizeKeys(gon.user);
 
-      store.dispatch(initCurrentUser(user))
+      store.dispatch(initCurrentUser(user));
       store.dispatch(initTlog(user));
     }
 

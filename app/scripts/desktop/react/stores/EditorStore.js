@@ -2,7 +2,6 @@ import Constants from '../constants/constants';
 import BaseStore from './BaseStore';
 import EntryNormalizationService from '../services/entryNormalization';
 import EntryKeeperService from '../services/entryKeeper';
-import NormalizedEntry from '../entities/normalizedEntry';
 import AppDispatcher from '../dispatchers/dispatcher';
 
 const PRIVACY_TYPES = {
@@ -13,10 +12,10 @@ const PRIVACY_TYPES = {
 let _loading = false,
     _creatingAttachments = false,
     _tlog = null,
-    _entry = new NormalizedEntry({
+    _entry = {
       type: 'text',
       privacy: 'public',
-    });
+    };
 
 function getPrivacyByTlogType(tlogType) {
   let privacy = EntryKeeperService.restoreLastEntryPrivacy(),
@@ -111,18 +110,12 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
         if (tlogType === 'anonymous') {
           _entry = (
             EntryKeeperService.restoreExistingAnonymousEntry() ||
-            new NormalizedEntry({
-              type: 'anonymous',
-              privacy: 'public',
-            })
+            { type: 'anonymous', privacy: 'public' }
           );
         } else {
           _entry = (
             EntryKeeperService.restoreExistingNewEntry() ||
-            new NormalizedEntry({
-              type: 'text',
-              privacy: getPrivacyByTlogType(tlogType),
-            })
+            { type: 'text', privacy: getPrivacyByTlogType(tlogType) }
           );
         }
       }
@@ -157,10 +150,7 @@ EditorStore.dispatchToken = AppDispatcher.register((payload) => {
     case Constants.editor.ENTRY_SAVE_SUCCESS:
       _loading = false;
       EntryKeeperService.remove(_entry);
-      _entry = new NormalizedEntry({
-        type: 'text',
-        privacy: 'public',
-      });
+      _entry = { type: 'text', privacy: 'public' };
       break;
 
     case Constants.editor.ENTRY_SAVE_ERROR:

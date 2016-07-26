@@ -6,22 +6,24 @@ import EditorArea from './EditorArea';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 
 class Editor extends Component {
-  renderTypeSwitcher() {
-    const { canChangeType, entryType, loading, location, tlogType } = this.props;
-    if (tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) {
-      return (
-        <EditorTypeSwitcher
-          canChangeType={canChangeType}
-          entryType={entryType}
-          loading={loading}
-          location={location}
-        />
-      );
-    }
-  }
   render() {
-    const { backUrl, entry, entryPrivacy, entryType, loading, onChangePrivacy,
-            onPinEntry, onSaveEntry, tlog, tlogType, togglePreview, user: { id, features } } = this.props;
+    const {
+      backUrl,
+      canChangeType,
+      entry,
+      entryPrivacy,
+      entryType,
+      loading,
+      location,
+      onChangePrivacy,
+      onPinEntry,
+      onSaveEntry,
+      tlog,
+      tlogType,
+      togglePreview,
+      user: { id, features },
+    } = this.props;
+
     return (
       <EditorLayout backUrl={backUrl} loading={loading}>
         <EditorActions
@@ -45,7 +47,14 @@ class Editor extends Component {
           entryType={entryType}
           loading={loading}
         />
-        {this.renderTypeSwitcher()}
+        {(tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) && (
+          <EditorTypeSwitcher
+            canChangeType={canChangeType}
+            entryType={entryType}
+            loading={loading}
+            location={location}
+          />
+        )}
       </EditorLayout>
     );
   }

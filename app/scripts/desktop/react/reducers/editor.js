@@ -3,25 +3,21 @@ import {
   EDITOR_SET_ENTRY,
   EDITOR_SET_PREVIEW,
 } from '../actions/EditorActions';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
   entry: null,
+  isFetching: false,
   preview: false,
-};
+});
 
 const actionMap = {
-  [EDITOR_SET_ENTRY](state, { payload }) {
-    return {
-      ...state,
-      entry: payload,
-    };
+  [EDITOR_SET_ENTRY](state, { entry }) {
+    return state.merge({ entry });
   },
 
-  [EDITOR_SET_PREVIEW](state, { payload }) {
-    return {
-      ...state,
-      preview: payload,
-    };
+  [EDITOR_SET_PREVIEW](state, { preview }) {
+    return state.set('preview', preview);
   },
 };
 

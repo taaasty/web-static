@@ -15,6 +15,12 @@ export const DESIGN_UPLOAD_BG_FAILURE = 'DESIGN_UPLOAD_BG_FAILURE';
 
 let bgUploadPromise = Promise.resolve();
 
+function designSaveRequest() {
+  return {
+    type: DESIGN_SAVE_REQUEST,
+  };
+}
+
 export function changeDesignOption(name, value) {
   return {
     type: DESIGN_SET_OPTION,
@@ -62,6 +68,7 @@ export function changeBgImage(tlogId, image) {
 
 export function saveDesignChanges(tlogId, design) {
   return (dispatch) => {
+    dispatch(designSaveRequest());
     return bgUploadPromise.then(() => dispatch({
       [CALL_API]: {
         endpoint: ApiRoutes.design_settings_url(tlogId),
