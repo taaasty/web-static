@@ -12,14 +12,25 @@ import {
 } from '../services/EntryNormalizationService';
 import {
   TLOG_TYPE_ANONYMOUS,
-} from '../../constants/EditorConstants';
+  ENTRY_PRIVACY_LIVE,
+  ENTRY_PRIVACY_PRIVATE,
+  ENTRY_PRIVACY_PUBLIC,
+} from '../constants/EditorConstants';
 
 export const EDITOR_SET_ENTRY = 'EDITOR_SET_ENTRY';
 export const EDITOR_SET_PREVIEW = 'EDITOR_SET_PREVIEW';
+export const EDITOR_UPDATE_ENTRY = 'EDITOR_UPDATE_ENTRY';
 
 const PRIVACY_TYPES = {
-  private: ['public', 'private'],
-  public: ['live', 'public', 'private'],
+  private: [
+    ENTRY_PRIVACY_PUBLIC,
+    ENTRY_PRIVACY_PRIVATE,
+   ],
+  public: [
+    ENTRY_PRIVACY_LIVE,
+    ENTRY_PRIVACY_PUBLIC,
+    ENTRY_PRIVACY_PRIVATE,
+  ],
 };
 
 function getPrivacyByTlogType(tlogType) {
@@ -81,6 +92,22 @@ export function editorSetPreview(flag) {
 
 export function editorTogglePreview() {
   return (dispatch, getState) => {
-    return dispatch(editorSetPreview(!getState().editor.preview));
+    return dispatch(editorSetPreview(!getState().editor.get('preview')));
   };
+}
+
+export function updateEntry(key, value) {
+  return {
+    type: EDITOR_UPDATE_ENTRY,
+    key,
+    value,
+  };
+}
+
+export function changeEntryType(entryType) {
+  return updateEntry('type', entryType);
+}
+
+export function changeEntryPrivacy(privacy) {
+  return updateEntry('privacy', privacy);
 }

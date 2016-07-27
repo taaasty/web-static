@@ -14,55 +14,57 @@ import {
   editorSetEntry,
   editorSetPreview,
   editorTogglePreview,
+  changeEntryType,
 } from '../../actions/EditorActions';
-import { tlogEntriesInvalidate } from '../../actions/TlogEntriesActions';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
-import EditorActionCreators from '../../actions/editor';
 import {
   TLOG_TYPE_PRIVATE,
   TLOG_TYPE_PUBLIC,
   TLOG_TYPE_ANONYMOUS,
   EDITOR_ENTRY_TYPES,
 } from '../../constants/EditorConstants';
+import { Map } from 'immutable';
+
+const emptyEntry = Map();
+const emptyTlog = Map();
 
 class EditorPage extends Component {
   componentWillMount() {
     const {
       appStateStartEditing,
+      editId,
       editorSetEntry,
       editorSetPreview,
       entry,
-      location: { hash='' },
-      routeParams: { editId },
+      entryType,
+      tlogType,
     } = this.props;
-    const entryType = hash.substr(1);
 
     appStateStartEditing();
     editorSetPreview(false);
     if (editId) {
-      editorSetEntry(entry);
+      editorSetEntry(entry, tlogType);
     } else if (EDITOR_ENTRY_TYPES.indexOf(entryType) > -1) {
-      EditorActionCreators.changeEntryType(entryType);
+      changeEntryType(entryType);
     }
   }
   componentWillReceiveProps(nextProps) {
     const {
+      editId,
       editorSetEntry,
-      location: { hash='' },
-      routeParams: { editId },
+      entryType,
     } = this.props;
     const {
+      editId: nextEditId,
       entry: nextEntry,
-      location: { hash: nextHash='' },
-      routeParams: { editId: nextEditId },
+      entryType: nextEntryType,
+      tlogType: nextTlogType,
     } = nextProps;
-    const nextEntryType = nextHash.substr(1);
-    const entryType = hash.substr(1);
 
     if (nextEditId && editId !== nextEditId) {
-      editorSetEntry(nextEntry);
+      editorSetEntry(nextEntry, nextTlogType);
     } else if (entryType !== nextEntryType && EDITOR_ENTRY_TYPES.indexOf(nextEntryType) > -1) {
-      EditorActionCreators.changeEntryType(nextEntryType);
+      changeEntryType(nextEntryType);
     }
   }
   componentWillUnmount() {
@@ -73,44 +75,33 @@ class EditorPage extends Component {
   }
   renderContents() {
     const {
-      entry,
+      editId,
       editorTogglePreview,
-      location,
-      routeParams: { editId },
-      tlog: {
-        data: tlog,
-        isFetching,
-      },
-      tlogEntries,
-      tlogEntriesInvalidate,
+      entry,
+      isFetchingTlog,
+      pathname,
+      tlog,
     } = this.props;
-    const tlogType = tlog.slug === TLOG_SLUG_ANONYMOUS
-            ? TLOG_TYPE_ANONYMOUS
-            : tlog.is_privacy ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
 
     return (
       <div className="content-area">
         <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
         <div className="content-area__inner">
-          {isFetching
+          {isFetchingTlog
            ? <Spinner size={30} />
            : editId
-             ? entry
+             ? !entry.isEmpty()
                ? <EditorEdit
                    entry={entry}
-                   location={location}
+                   pathname={pathname}
                    tlog={tlog}
-                   tlogEntries={tlogEntries}
-                   tlogEntriesInvalidate={tlogEntriesInvalidate}
                    tlogType={tlogType}
                    togglePreview={editorTogglePreview}
                  />
                : <Spinner size={30} />
              : <EditorNew
-                 location={location}
+                 pathname={pathname}
                  tlog={tlog}
-                 tlogEntries={tlogEntries}
-                 tlogEntriesInvalidate={tlogEntriesInvalidate}
                  tlogType={tlogType}
                  togglePreview={editorTogglePreview}
                />
@@ -121,12 +112,12 @@ class EditorPage extends Component {
 
   }
   render() {
-    const { author } = this.props.tlog.data;
+    const { tlog } = this.props;
 
     return (
       <div className="page-body">
         <Helmet title={i18n.t('editor.title')} />
-        {author && author.is_flow
+        {!tlog.isEmpty() && tlog.get('isFlow')
          ? <div className="layout-outer">
              {this.renderContents()}
            </div>
@@ -142,26 +133,48 @@ EditorPage.displayName = 'EditorPage';
 EditorPage.propTypes = {
   appStateStartEditing: PropTypes.func.isRequired,
   appStateStopEditing: PropTypes.func.isRequired,
+  editId: PropTypes.string,
   editorResetEntry: PropTypes.func.isRequired,
   editorSetEntry: PropTypes.func.isRequired,
   editorSetPreview: PropTypes.func.isRequired,
   editorTogglePreview: PropTypes.func.isRequired,
-  entry: PropTypes.object,
-  location: PropTypes.object.isRequired,
-  routeParams: PropTypes.object.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryType: PropTypes.string.isRequired,
+  isFetchingTlog: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired,
   tlog: PropTypes.object.isRequired,
-  tlogEntries: PropTypes.object.isRequired,
-  tlogEntriesInvalidate: PropTypes.func.isRequired,
-  tlogEntry: PropTypes.object.isRequired,
+  tlogType: PropTypes.oneOf([
+    TLOG_TYPE_ANONYMOUS,
+    TLOG_TYPE_PRIVATE,
+    TLOG_TYPE_PUBLIC,
+  ]).isRequired,
 };
 
 export default connect(
-  (state) => ({
-    entry: state.editor.entry,
-    tlog: state.tlog,
-    tlogEntries: state.tlogEntries,
-    tlogEntry: state.tlogEntry.data,
-  }),
+  (state, ownProps) => {
+    const entry = state.editor.get('entry', emptyEntry);
+    const {
+      params: { slug },
+      routeParams: { editId },
+      location: { hash, pathname },
+     } = ownProps;
+    const { entryType } = (hash || '').substr(1);
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === slug, null, emptyTlog);
+    const isFetchingTlog = state.tlog.isFetching;
+    const tlogType = slug === TLOG_SLUG_ANONYMOUS
+      ? TLOG_TYPE_ANONYMOUS
+      : tlog.get('isPrivacy') ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
+
+    return {
+      editId,
+      entry,
+      entryType,
+      isFetchingTlog,
+      pathname,
+      tlog,
+      tlogType,
+    };
+  },
   {
     appStateStartEditing,
     appStateStopEditing,
@@ -169,6 +182,6 @@ export default connect(
     editorSetEntry,
     editorSetPreview,
     editorTogglePreview,
-    tlogEntriesInvalidate,
+    changeEntryType,
   }
 )(EditorPage);

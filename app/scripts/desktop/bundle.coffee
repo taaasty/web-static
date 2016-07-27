@@ -44,7 +44,6 @@ require './react/mixins/scroller'
 
 require './react/dispatchers/current_user'
 global.CurrentUserStore = require './react/stores/current_user'
-require './react/stores/EditorStore'
 
 require './react/components/transition/timeout_transition_group'
 

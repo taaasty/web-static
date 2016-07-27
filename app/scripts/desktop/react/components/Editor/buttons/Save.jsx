@@ -1,28 +1,35 @@
-let EditorSaveButton = React.createClass({
-  propTypes: {
-    tlog: React.PropTypes.object,
-    private: React.PropTypes.bool.isRequired,
-    entryForCurrentUser: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired
-  },
+import React, { PropTypes } from 'react';
 
-  render() {
-    return (
-      <button className="button button--green" onClick={this.props.onClick}>
-        <span className="button__text">
-          {this.getTitle()}
-        </span>
-      </button>
-    );
-  },
+function EditorSaveButton(props) {
+  const {
+    isEntryForCurrentUser,
+    isPrivate,
+    onClick,
+    tag,
+  } = props;
 
-  getTitle() {
-    if (this.props.entryForCurrentUser) {
-      return this.props.private ? i18n.t('editor_save_button') : i18n.t('editor_publish_button');
+  function title() {
+    if (isEntryForCurrentUser) {
+      return isPrivate ? i18n.t('editor_save_button') : i18n.t('editor_publish_button');
     } else {
-      return i18n.t('editor_publish_to_tlog_button', {tlogTag: this.props.tlog.tag});
+      return i18n.t('editor_publish_to_tlog_button', { tlogTag: tag });
     }
   }
-});
+
+  return (
+    <button className="button button--green" onClick={onClick}>
+      <span className="button__text">
+        {title()}
+      </span>
+    </button>
+  );
+}
+
+EditorSaveButton.propTypes = {
+  isEntryForCurrentUser: PropTypes.bool.isRequired,
+  isPrivate: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  tag: PropTypes.object,
+};
 
 export default EditorSaveButton;

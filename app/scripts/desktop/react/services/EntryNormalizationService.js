@@ -45,7 +45,7 @@ export function normalize(entry) {
     pinnedTill: entry.fixedUpAt,
     updatedAt: new Date(entry.updatedAt).getTime(),
   };
-  
+
   switch (entry.type) {
   case 'text':
   case 'anonymous':
@@ -77,12 +77,11 @@ export function normalize(entry) {
   }
 }
 
-export function getNormalizedEntryValue(entry, key) {
-  const correspondingValues = CORRESPONDENCE_NORMALIZED_TABLE[entry.type];
-  return entry[correspondingValues[key]] || null;
+export function getNormalizedKey(type, key) {
+  const correspondingValues = CORRESPONDENCE_NORMALIZED_TABLE[type];
+  return correspondingValues[key] || null;
 }
 
-export function getNormalizedKey(entry, key) {
-  const correspondingValues = CORRESPONDENCE_NORMALIZED_TABLE[entry.type];
-  return correspondingValues[key] || null;
+export function getNormalizedEntryValue(entry, key) {
+  return entry[getNormalizedKey(entry.type, key)] || null;
 }
