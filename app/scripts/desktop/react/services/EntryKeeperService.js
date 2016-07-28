@@ -11,15 +11,15 @@ function keyAnonymous() {
   return `${STORAGE_PREFIX}:anonymous`;
 }
 
-function keyExisting(id, updatedAt) {
-  return `${STORAGE_PREFIX}:${id}:${new Date(updatedAt).getTime()}`;
+function keyExisting(id, timestamp) {
+  return `${STORAGE_PREFIX}:${id}:${timestamp}`;
 }
 
 function key(entry) {
   if (entry.type === 'anonymous') {
     return keyAnonymous();
   } else if (entry.id) {
-    return keyExisting(entry.id, entry.updatedAt);
+    return keyExisting(entry.id, entry.updatedAt || entry.createdAt);
   } else {
     return keyNew();
   }
@@ -39,13 +39,13 @@ function restore(storageKey) {
     } else {
       return null;
     }
-  } catch(e) {
+  } catch (e) {
     return null;
   }
 }
 
-export function restoreExistingEntry(id, updatedAt) {
-  return restore(keyExisting(id, updatedAt));
+export function restoreExistingEntry(id, timestamp) {
+  return restore(keyExisting(id, timestamp));
 }
 
 export function restoreExistingNewEntry() {

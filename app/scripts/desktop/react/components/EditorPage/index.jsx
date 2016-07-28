@@ -2,9 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import EditorNew from '../Editor/EditorNew';
-import EditorEdit from '../Editor/EditorEdit';
+import EditorContainer from '../Editor/EditorContainer';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import { getTlogEntry } from '../../actions/TlogEntryActions';
 import {
   appStateStartEditing,
   appStateStopEditing,
@@ -16,6 +16,9 @@ import {
   editorTogglePreview,
   changeEntryType,
 } from '../../actions/EditorActions';
+import {
+  normalize,
+} from '../../services/EntryNormalizationService';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import {
   TLOG_TYPE_PRIVATE,
@@ -33,38 +36,47 @@ class EditorPage extends Component {
     const {
       appStateStartEditing,
       editId,
-      editorSetEntry,
       editorSetPreview,
-      entry,
-      entryType,
+      getTlogEntry,
+      hashEntryType,
+      sourceEntry,
       tlogType,
     } = this.props;
 
     appStateStartEditing();
     editorSetPreview(false);
-    if (editId) {
-      editorSetEntry(entry, tlogType);
-    } else if (EDITOR_ENTRY_TYPES.indexOf(entryType) > -1) {
-      changeEntryType(entryType);
+    this.setEntry(sourceEntry, tlogType);
+
+    if (editId && sourceEntry.isEmpty()) {
+      getTlogEntry(editId);
+    }
+
+    if (EDITOR_ENTRY_TYPES.indexOf(hashEntryType) > -1) {
+      changeEntryType(hashEntryType);
     }
   }
   componentWillReceiveProps(nextProps) {
     const {
-      editId,
-      editorSetEntry,
-      entryType,
+      getTlogEntry,
+      hashEntryType,
+      sourceEntry,
     } = this.props;
     const {
       editId: nextEditId,
-      entry: nextEntry,
-      entryType: nextEntryType,
+      hashEntryType: nextHashEntryType,
+      sourceEntry: nextSourceEntry,
       tlogType: nextTlogType,
     } = nextProps;
 
-    if (nextEditId && editId !== nextEditId) {
-      editorSetEntry(nextEntry, nextTlogType);
-    } else if (entryType !== nextEntryType && EDITOR_ENTRY_TYPES.indexOf(nextEntryType) > -1) {
-      changeEntryType(nextEntryType);
+    if (sourceEntry.get('id') !== nextSourceEntry.get('id')) {
+      if (nextEditId && nextSourceEntry.isEmpty()) {
+        getTlogEntry(nextEditId);
+      }
+
+      this.setEntry(nextSourceEntry, nextTlogType);
+    } else if (hashEntryType !== nextHashEntryType &&
+        EDITOR_ENTRY_TYPES.indexOf(nextHashEntryType) > -1) {
+      changeEntryType(nextHashEntryType);
     }
   }
   componentWillUnmount() {
@@ -73,6 +85,9 @@ class EditorPage extends Component {
     appStateStopEditing();
     editorResetEntry();
   }
+  setEntry(entry, type) {
+    return this.props.editorSetEntry(normalize(entry.toJS()), type);
+  }
   renderContents() {
     const {
       editId,
@@ -80,31 +95,28 @@ class EditorPage extends Component {
       entry,
       isFetchingTlog,
       pathname,
+      sourceEntry,
       tlog,
+      tlogType,
     } = this.props;
+    const styles = {
+      opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0'),
+    };
 
     return (
       <div className="content-area">
-        <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
+        <div className="content-area__bg" style={styles} />
         <div className="content-area__inner">
-          {isFetchingTlog
+          {isFetchingTlog || (editId && sourceEntry.isEmpty()) || entry.isEmpty()
            ? <Spinner size={30} />
-           : editId
-             ? !entry.isEmpty()
-               ? <EditorEdit
-                   entry={entry}
-                   pathname={pathname}
-                   tlog={tlog}
-                   tlogType={tlogType}
-                   togglePreview={editorTogglePreview}
-                 />
-               : <Spinner size={30} />
-             : <EditorNew
-                 pathname={pathname}
-                 tlog={tlog}
-                 tlogType={tlogType}
-                 togglePreview={editorTogglePreview}
-               />
+           : <EditorContainer
+               canChangeType={!editId}
+               entry={entry}
+               pathname={pathname}
+               tlog={tlog}
+               tlogType={tlogType}
+               togglePreview={editorTogglePreview}
+             />
           }
         </div>
       </div>
@@ -139,9 +151,11 @@ EditorPage.propTypes = {
   editorSetPreview: PropTypes.func.isRequired,
   editorTogglePreview: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
-  entryType: PropTypes.string.isRequired,
+  getTlogEntry: PropTypes.func.isRequired,
+  hashEntryType: PropTypes.string,
   isFetchingTlog: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
+  sourceEntry: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_ANONYMOUS,
@@ -152,25 +166,33 @@ EditorPage.propTypes = {
 
 export default connect(
   (state, ownProps) => {
-    const entry = state.editor.get('entry', emptyEntry);
     const {
       params: { slug },
+      route: { isAnonymousTlog },
       routeParams: { editId },
       location: { hash, pathname },
      } = ownProps;
-    const { entryType } = (hash || '').substr(1);
-    const tlog = entities.get('tlog').find((t) => t.get('slug') === slug, null, emptyTlog);
+    const { hashEntryType } = (hash || '').substr(1);
+    const sourceEntry = state
+      .entities
+      .getIn([ 'entry', String(editId) ], emptyEntry);
+    const entry = state.editor.get('entry', emptyEntry);
+    const tlog = state
+      .entities
+      .get('tlog')
+      .find((t) => t.get('slug') === slug, null, emptyTlog);
     const isFetchingTlog = state.tlog.isFetching;
-    const tlogType = slug === TLOG_SLUG_ANONYMOUS
+    const tlogType = isAnonymousTlog
       ? TLOG_TYPE_ANONYMOUS
       : tlog.get('isPrivacy') ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
 
     return {
       editId,
       entry,
-      entryType,
+      hashEntryType,
       isFetchingTlog,
       pathname,
+      sourceEntry,
       tlog,
       tlogType,
     };
@@ -183,5 +205,6 @@ export default connect(
     editorSetPreview,
     editorTogglePreview,
     changeEntryType,
+    getTlogEntry,
   }
 )(EditorPage);

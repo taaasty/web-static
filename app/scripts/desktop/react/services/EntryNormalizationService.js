@@ -37,13 +37,16 @@ export function normalize(entry) {
   const attrs = {
     id: entry.id,
     type: entry.type,
-    privacy: entry.isPrivate ? 'private'
-      : entry.isVoteable ? 'live'
-      : 'public',
+    privacy: entry.isPrivate ? 'private' :
+      entry.isVoteable ? 'live' :
+      'public',
     pinOrderUrl: entry.orderUrl,
     pinState: entry.fixedState,
     pinnedTill: entry.fixedUpAt,
-    updatedAt: new Date(entry.updatedAt).getTime(),
+    createdAt: new Date(entry.createdAt)
+      .getTime(),
+    updatedAt: new Date(entry.updatedAt)
+      .getTime(),
   };
 
   switch (entry.type) {

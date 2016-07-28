@@ -1,4 +1,4 @@
-
+/*global i18n */
 import React, { PropTypes } from 'react';
 import EditorTextField from '../Field/Text';
 

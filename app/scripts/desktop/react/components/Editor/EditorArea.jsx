@@ -20,7 +20,7 @@ import {
 
 class EditorArea extends Component {
   renderEditor() {
-    const { entryType, updateEntry } = this.props;
+    const { entry, entryType, updateEntry } = this.props;
     let Component;
 
     switch(entryType) {

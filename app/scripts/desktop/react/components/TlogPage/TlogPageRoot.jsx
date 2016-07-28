@@ -24,9 +24,9 @@ const tlogRequiredFields = [ 'slug', 'design', 'isFlow', 'stats' ];
 const flowRequiredFields = [ 'canEdit', 'canWrite', 'design', 'staffs' ];
 
 export function getSlug({ params, location }) {
-  return (/anonymous\/new/).test(location.pathname)
+  return (/anonymous\/new/).test(location.pathname) || params.anonymousEntrySlug
     ? TLOG_SLUG_ANONYMOUS
-    : params.slug || (params.anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+    : params.slug;
 }
 
 class TlogPageRoot extends Component {
@@ -98,7 +98,7 @@ class TlogPageRoot extends Component {
     const tlogUrl = tlog.get('tlogUrl');
     const slug = tlog.get('slug');
     const backgroundImageUrl = tlog.getIn([ 'design', 'backgroundImageUrl' ]);
-    
+
     return (
       <div className="page__inner">
         <div className="page__paper">

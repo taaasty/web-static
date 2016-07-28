@@ -159,7 +159,7 @@ class EditorActions extends Component {
           <div className="button-group">
             <EditorSaveButton
               isEntryForCurrentUser={isEntryForCurrentUser}
-              isPprivate={this.isEntryPrivate()}
+              isPrivate={this.isEntryPrivate()}
               onClick={this.saveEntry.bind(this)}
               tlog={tlog.get('tag', '')}
             />

@@ -25,10 +25,10 @@ function Editor(props) {
     tlogType,
     togglePreview,
     updateEntry,
-  } = this.props;
+  } = props;
 
   return (
-    <EditorLayout backUrl={backUrl} loading={loading}>
+    <EditorLayout backUrl={backUrl} isFetching={isFetching}>
       <EditorActions
         canPinEntry={canPinEntry}
         entryPrivacy={entryPrivacy}
@@ -75,7 +75,7 @@ Editor.propTypes = {
   onChangePrivacy: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,
-  pathname: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
   tlog: PropTypes.object,
   tlogType: PropTypes.string.isRequired,
   togglePreview: PropTypes.func.isRequired,

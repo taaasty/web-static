@@ -6,10 +6,9 @@ import {
   restoreExistingAnonymousEntry,
   restoreExistingEntry,
   restoreExistingNewEntry,
+  store,
+  storeLastEntryPrivacy,
 } from '../services/EntryKeeperService';
-import {
-  normalize,
-} from '../services/EntryNormalizationService';
 import {
   TLOG_TYPE_ANONYMOUS,
   ENTRY_PRIVACY_LIVE,
@@ -18,6 +17,7 @@ import {
 } from '../constants/EditorConstants';
 
 export const EDITOR_SET_ENTRY = 'EDITOR_SET_ENTRY';
+export const EDITOR_RESET_ENTRY = 'EDITOR_RESET_ENTRY';
 export const EDITOR_SET_PREVIEW = 'EDITOR_SET_PREVIEW';
 export const EDITOR_UPDATE_ENTRY = 'EDITOR_UPDATE_ENTRY';
 
@@ -25,7 +25,7 @@ const PRIVACY_TYPES = {
   private: [
     ENTRY_PRIVACY_PUBLIC,
     ENTRY_PRIVACY_PRIVATE,
-   ],
+  ],
   public: [
     ENTRY_PRIVACY_LIVE,
     ENTRY_PRIVACY_PUBLIC,
@@ -56,31 +56,37 @@ function setEntry(entry) {
 }
 
 export function editorSetEntry(entry, tlogType) {
-  if (entry != null && entry.id) {
-    const { id, updatedAt } = entry;
+  if (entry && entry.id) {
+    const { id, createdAt, updatedAt } = entry;
 
     if (tlogType === TLOG_TYPE_ANONYMOUS) {
-      setEntry(restoreExistingAnonymousEntry() || normalize(entry));
+      return setEntry(restoreExistingAnonymousEntry() || entry);
     } else {
-      setEntry(restoreExistingEntry(id, updatedAt) || normalize(entry));
+      return setEntry(restoreExistingEntry(id, updatedAt || createdAt) || entry);
     }
   } else {
     if (tlogType === TLOG_TYPE_ANONYMOUS) {
-      setEntry(
-        restoreExistingAnonymousEntry() ||
-          { type: 'anonymous', privacy: 'public' }
+      return setEntry(
+        restoreExistingAnonymousEntry() || {
+          type: 'anonymous',
+          privacy: 'public',
+        }
       );
     } else {
-      setEntry(
-        restoreExistingNewEntry() ||
-          { type: 'text', privacy: getPrivacyByTlogType(tlogType) }
+      return setEntry(
+        restoreExistingNewEntry() || {
+          type: 'text',
+          privacy: getPrivacyByTlogType(tlogType),
+        }
       );
     }
   }
 }
 
 export function editorResetEntry() {
-  return setEntry(null);
+  return {
+    type: EDITOR_RESET_ENTRY,
+  };
 }
 
 export function editorSetPreview(flag) {
@@ -92,15 +98,22 @@ export function editorSetPreview(flag) {
 
 export function editorTogglePreview() {
   return (dispatch, getState) => {
-    return dispatch(editorSetPreview(!getState().editor.get('preview')));
+    return dispatch(editorSetPreview(!getState()
+      .editor.get('preview')));
   };
 }
 
 export function updateEntry(key, value) {
-  return {
-    type: EDITOR_UPDATE_ENTRY,
-    key,
-    value,
+  return (dispatch, getState) => {
+    dispatch({
+      type: EDITOR_UPDATE_ENTRY,
+      key,
+      value,
+    });
+
+    store(getState()
+      .editor.get('entry')
+      .toJS());
   };
 }
 
@@ -109,5 +122,15 @@ export function changeEntryType(entryType) {
 }
 
 export function changeEntryPrivacy(privacy) {
+  storeLastEntryPrivacy(privacy);
+
   return updateEntry('privacy', privacy);
+}
+
+export function pinEntry() {
+
+}
+
+export function saveEntry() {
+
 }

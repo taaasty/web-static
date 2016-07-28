@@ -56,6 +56,7 @@ function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) 
          <EditorTypeSwitcherItem
            active={entryType === type}
            icon={typeMap[type].icon}
+           isFetching={isFetching}
            key={type}
            pathname={pathname}
            title={typeMap[type].title()}
@@ -64,8 +65,9 @@ function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) 
        : <EditorTypeSwitcherItem
            active
            icon={typeMap[entryType].icon}
+           isFetching={isFetching}
            pathname={pathname}
-           title={typeMap[entryType].title()}
+           title={typeMap[entryType].title.call(null)}
          />
       }
     </nav>
@@ -76,7 +78,7 @@ EditorTypeSwitcher.propTypes = {
   canChangeType: PropTypes.bool.isRequired,
   entryType: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  pathname: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
 };
 
 export default EditorTypeSwitcher;

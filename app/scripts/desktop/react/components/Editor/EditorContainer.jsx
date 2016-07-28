@@ -63,7 +63,7 @@ EditorContainer.propTypes = {
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  pathname: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
   pinEntry: PropTypes.func.isRequired,
   saveEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object,
@@ -80,7 +80,8 @@ export default connect(
   (state, { entry, tlog, tlogType }) => ({
     canPinEntry: !!state.currentUser.data.features.fixup,
     entryPrivacy: entry.get('privacy'),
-    isEntryForCurrentUser: tlogType !== TLOG_TYPE_ANONYMOUS &&
+    entryType: entry.get('type'),
+    isEntryForCurrentUser: tlogType === TLOG_TYPE_ANONYMOUS ||
       tlog.get('id') === state.currentUser.data.id,
     isFetching: state.editor.get('isFetching', false),
   }),

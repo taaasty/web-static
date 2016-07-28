@@ -81,8 +81,6 @@ global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistra
 
 global.DesignSettingsColorPickerPopup = require './react/components/DesignSettingsPopup/common/colorPicker/popup'
 global.HeroProfile = require './react/components/HeroProfile'
-global.EditorNew = require './react/components/Editor/EditorNew'
-global.EditorEdit = require './react/components/Editor/EditorEdit'
 global.Spinner = require '../shared/react/components/common/Spinner'
 global.SocialShare = require './react/components/common/SocialShare';
 

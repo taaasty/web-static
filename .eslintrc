@@ -19,6 +19,7 @@
     "templateStrings": true,
     "jsx": true
   },
+  "extends": "eslint:recommended",
   "rules": {
     "comma-dangle": [1, "always-multiline"],
     "consistent-return": [1],
@@ -28,6 +29,7 @@
     "jsx-quotes": [2, "prefer-double"],
     "new-cap": [0],
     "no-multi-spaces": [0],
+    "no-undef": [2],
     "no-unused-expressions": [0],
     "no-underscore-dangle": [0],
     "no-shadow": [0],

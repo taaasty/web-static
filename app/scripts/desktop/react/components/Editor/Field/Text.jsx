@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import MediumEditor from 'medium-editor';
+import Editor from 'react-medium-editor';
+import striptags from 'striptags';
 
 const FIELD_MODE_OPTIONS = {
   inline: {
@@ -34,42 +35,30 @@ const FIELD_MODE_OPTIONS = {
 };
 
 class EditorTextField extends Component {
-  componentDidMount() {
-    const fieldContent = this.refs.fieldContent;
-    const modeOptions = FIELD_MODE_OPTIONS[this.props.mode];
-    const options = {
-      ...modeOptions,
-      placeholder: {
-        ...modeOptions.placeholder,
-        text: this.props.placeholder.replace('<br>', '\r\n'),
-      },
-    };
-
-    this.mediumEditor = new MediumEditor(fieldContent, options);
-    this.inputHandler = this.handleInput.bind(this);
-    this.mediumEditor.subscribe('editableInput', this.inputHandler);
-  }
-  shouldComponentUpdate(nextProps) {
-    let fieldContent = this.refs.fieldContent;
-    return fieldContent.innerHTML !== nextProps.text;
-  }
-  componentWillUnmount() {
-    this.mediumEditor.unsubscribe('editableInput', this.inputHandler);
-    this.mediumEditor.destroy();
-    this.mediumEditor = null;
-  }
-  handleInput(e) {
-    this.props.onChange(e.target.innerHTML);
-  }
   render() {
-    const fieldClasses = classNames('tasty-editor', this.props.className);
+    const {
+      className,
+      mode,
+      onChange,
+      placeholder,
+      text,
+    } = this.props;
+    const fieldClasses = classNames('tasty-editor', className, {
+      'medium--hide-placeholder': striptags(text).length > 0, // optimized use
+    });
+    const options = Object.assign({}, FIELD_MODE_OPTIONS[mode], {
+      placeholder: {
+        text: placeholder.replace('<br>', '\r\n'),
+      },
+    })
 
     return (
       <div className={fieldClasses}>
-        <div
+        <Editor
           className="tasty-editor-content"
-          dangerouslySetInnerHTML={{ __html: this.props.text || '' }}
-          ref="fieldContent"
+          onChange={onChange}
+          options={options}
+          text={text}
         />
       </div>
     );
@@ -86,6 +75,7 @@ EditorTextField.propTypes = {
 
 EditorTextField.defaultProps = {
   mode: 'inline',
+  text: '',
 };
 
 export default EditorTextField;

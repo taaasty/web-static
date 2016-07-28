@@ -1,3 +1,4 @@
+/*global i18n, $ */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
@@ -34,7 +35,7 @@ class EditorVoteButton extends Component {
     return (
       <button
         className="button button--outline-grey post-settings-button"
-        data-original-title={this.getTitle()}
+        data-original-title={this.title()}
         onClick={onClick}
         ref="container"
       >

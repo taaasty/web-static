@@ -1,3 +1,4 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
 
 function EditorSaveButton(props) {

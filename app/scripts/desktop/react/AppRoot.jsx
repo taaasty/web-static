@@ -93,7 +93,7 @@ class AppRoot extends Component {
               <IndexRoute component={TlogPage} />
               <Route path="edit/:editId" component={EditorPage} />
               <Route path="new" component={EditorPage} />
-              <Route path="anonymous/new" component={EditorPage} />
+              <Route path="anonymous/new" isAnonymousTlog component={EditorPage} />
               <Route path="design_settings" designSettings component={TlogPage} />
               <Route path="settings" settings component={TlogPage} />
               <Route path="privates" component={TlogPage} />
