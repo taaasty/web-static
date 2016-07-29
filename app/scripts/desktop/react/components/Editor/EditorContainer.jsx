@@ -10,7 +10,6 @@ import {
 } from '../../constants/EditorConstants';
 import {
   changeEntryPrivacy,
-  updateEntry,
   pinEntry,
   saveEntry,
 } from '../../actions/EditorActions';
@@ -73,7 +72,6 @@ EditorContainer.propTypes = {
     TLOG_TYPE_ANONYMOUS,
   ]).isRequired,
   togglePreview: PropTypes.func.isRequired,
-  updateEntry: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -87,7 +85,6 @@ export default connect(
   }),
   {
     changeEntryPrivacy,
-    updateEntry,
     pinEntry,
     saveEntry,
   }

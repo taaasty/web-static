@@ -19,7 +19,6 @@ import {
 import {
   normalize,
 } from '../../services/EntryNormalizationService';
-import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 import {
   TLOG_TYPE_PRIVATE,
   TLOG_TYPE_PUBLIC,
@@ -35,6 +34,7 @@ class EditorPage extends Component {
   componentWillMount() {
     const {
       appStateStartEditing,
+      changeEntryType,
       editId,
       editorSetPreview,
       getTlogEntry,
@@ -57,6 +57,7 @@ class EditorPage extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const {
+      changeEntryType,
       getTlogEntry,
       hashEntryType,
       sourceEntry,
@@ -145,6 +146,7 @@ EditorPage.displayName = 'EditorPage';
 EditorPage.propTypes = {
   appStateStartEditing: PropTypes.func.isRequired,
   appStateStopEditing: PropTypes.func.isRequired,
+  changeEntryType: PropTypes.func.isRequired,
   editId: PropTypes.string,
   editorResetEntry: PropTypes.func.isRequired,
   editorSetEntry: PropTypes.func.isRequired,
@@ -172,7 +174,7 @@ export default connect(
       routeParams: { editId },
       location: { hash, pathname },
      } = ownProps;
-    const { hashEntryType } = (hash || '').substr(1);
+    const hashEntryType = (hash || '').substr(1);
     const sourceEntry = state
       .entities
       .getIn([ 'entry', String(editId) ], emptyEntry);

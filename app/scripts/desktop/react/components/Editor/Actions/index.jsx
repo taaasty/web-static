@@ -1,11 +1,11 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import moment from 'moment';
-import EditorVoteButton from '../buttons/Vote';
-import EditorPrivacyButton from '../buttons/Privacy';
-import EditorPreviewButton from '../buttons/Preview';
-import EditorSaveButton from '../buttons/Save';
+import EditorVoteButton from '../Button/Vote';
+import EditorPrivacyButton from '../Button/Privacy';
+import EditorPreviewButton from '../Button/Preview';
+import EditorSaveButton from '../Button/Save';
 import Spinner from '../../../../../shared/react/components/common/Spinner';
 import {
   ENTRY_PINNED_STATE,
@@ -85,7 +85,7 @@ class EditorActions extends Component {
     }
 
     const pinnedTillStr = moment(pinnedTill).format('H:mm D MMMM');
-    const buttonClasses = classnames({
+    const buttonClasses = classNames({
       'button': true,
       'post-settings-button': true,
       'post-settings-promotion-button': true,
@@ -119,9 +119,9 @@ class EditorActions extends Component {
       return (
         <div className="post-action post-action--button">
           <EditorPrivacyButton
-            live={this.isEntryLive()}
+            isLive={this.isEntryLive()}
+            isPrivate={this.isEntryPrivate()}
             onClick={this.handlePrivacyButtonClick.bind(this)}
-            private={this.isEntryPrivate()}
           />
         </div>
       );
@@ -141,7 +141,7 @@ class EditorActions extends Component {
       togglePreview,
       tlog,
     } = this.props;
-    const actionsClasses = classnames({
+    const actionsClasses = classNames({
       'post-actions': true,
       'state--loading': isFetching,
     });

@@ -20,6 +20,8 @@ export const EDITOR_SET_ENTRY = 'EDITOR_SET_ENTRY';
 export const EDITOR_RESET_ENTRY = 'EDITOR_RESET_ENTRY';
 export const EDITOR_SET_PREVIEW = 'EDITOR_SET_PREVIEW';
 export const EDITOR_UPDATE_ENTRY = 'EDITOR_UPDATE_ENTRY';
+export const EDITOR_SET_INSERT = 'EDITOR_SET_INSERT';
+export const EDITOR_SET_LOADING_IMAGE_URL = 'EDITOR_SET_LOADING_IMAGE_URL';
 
 const PRIVACY_TYPES = {
   private: [
@@ -133,4 +135,60 @@ export function pinEntry() {
 
 export function saveEntry() {
 
+}
+
+export function createImageAttachments(files) {
+
+}
+
+export function deleteImages() {
+  // deleteFromServer if existing entry
+  // changeImageUrl(null)
+  // deleteImageAttachments
+
+}
+
+function setLoadingImageUrl(value) {
+  return {
+    type: EDITOR_SET_LOADING_IMAGE_URL,
+    value,
+  };
+}
+
+export function changeImageUrl(key, url) {
+  return (dispatch) => {
+    dispatch(setLoadingImageUrl(true));
+
+    return Promise((resolve, reject) => {
+      const image = new Image();
+
+      image.onload = (data) => {
+        dispatch(setLoadingImageUrl(false));
+        dispatch(updateEntry(key, url));
+        resolve(data);
+      };
+
+      image.onerror = () => {
+        dispatch(setLoadingImageUrl(false));
+        reject();
+      };
+
+      image.src = url;
+    });
+  };
+}
+
+function setInsertingUrl(value) {
+  return {
+    type: EDITOR_SET_INSERT,
+    value,
+  };
+}
+
+export function startInsert() {
+  return setInsertingUrl(true);
+}
+
+export function stopInsert() {
+  return setInsertingUrl(false);
 }

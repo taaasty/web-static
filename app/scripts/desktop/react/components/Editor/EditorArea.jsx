@@ -8,57 +8,34 @@ import {
   EDITOR_ENTRY_TYPE_VIDEO,
   EDITOR_ENTRY_TYPE_QUOTE,
 } from '../../constants/EditorConstants';
-import EditorTypeText from './types/Text';
-//import EditorTypeImage from './types/Image';
-//import EditorTypeInstagram from './types/Instagram';
-//import EditorTypeMusic from './types/Music';
-//import EditorTypeVideo from './types/Video';
-//import EditorTypeQuote from './types/Quote';
-import {
-  getNormalizedKey,
-} from '../../services/EntryNormalizationService';
+import EditorTypeText from './Type/Text';
+import EditorTypeImage from './Type/Image';
+import EditorTypeInstagram from './Type/Instagram';
+import EditorTypeMusic from './Type/Music';
+import EditorTypeVideo from './Type/Video';
+import EditorTypeQuote from './Type/Quote';
 
 class EditorArea extends Component {
   renderEditor() {
-    const { entry, entryType, updateEntry } = this.props;
-    let Component;
+    const {
+      entryType,
+     } = this.props;
 
     switch(entryType) {
     case EDITOR_ENTRY_TYPE_TEXT:
     case EDITOR_ENTRY_TYPE_ANONYMOUS:
-      const normTitleKey = getNormalizedKey(entryType, 'title');
-      const normTextKey = getNormalizedKey(entryType, 'text');
-
-      return (
-        <EditorTypeText
-          changeText={updateEntry.bind(null, normTextKey)}
-          changeTitle={updateEntry.bind(null, normTitleKey)}
-          text={entry.get(normTextKey)}
-          title={entry.get(normTitleKey)}
-        />
-      );
-      /*
+      return <EditorTypeText />;
     case EDITOR_ENTRY_TYPE_IMAGE:
-      Component = EditorTypeImage;
-      break;
+      return <EditorTypeImage />;
     case EDITOR_ENTRY_TYPE_INSTAGRAM:
-      Component = EditorTypeInstagram;
-      break;
+      return <EditorTypeInstagram />;
     case EDITOR_ENTRY_TYPE_MUSIC:
-      Component = EditorTypeMusic;
-      break;
+      return <EditorTypeMusic />;
     case EDITOR_ENTRY_TYPE_VIDEO:
-      Component = EditorTypeVideo;
-      break;
+      return <EditorTypeVideo />;
     case EDITOR_ENTRY_TYPE_QUOTE:
-      Component = EditorTypeQuote;
-      break;
-      */
-    default:
-      console.warn('Unknown type of normalized entry', entryType);
+      return <EditorTypeQuote />;
     }
-
-    return <Component {...this.props} />;
   }
   render() {
     return (
@@ -70,11 +47,7 @@ class EditorArea extends Component {
 }
 
 EditorArea.propTypes = {
-  entry: PropTypes.object.isRequired,
-  entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  updateEntry: PropTypes.func.isRequired,
-}
+};
 
 export default EditorArea;

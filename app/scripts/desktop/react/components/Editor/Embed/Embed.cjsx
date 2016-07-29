@@ -1,4 +1,3 @@
-EditorActionCreators = require '../../../actions/editor'
 EditorEmbedUrlInsert = require './EmbedUrlInsert'
 EditorEmbedLoading = require './EmbedLoading'
 EditorEmbedLoaded = require './EmbedLoaded'

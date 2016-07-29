@@ -4,6 +4,8 @@ import {
   EDITOR_RESET_ENTRY,
   EDITOR_UPDATE_ENTRY,
   EDITOR_SET_PREVIEW,
+  EDITOR_SET_INSERT,
+  EDITOR_SET_LOADING_IMAGE_URL,
 } from '../actions/EditorActions';
 import {
   EDITOR_ENTRY_TYPE_TEXT,
@@ -19,7 +21,10 @@ const defaultEntry = {
 
 const initialState = fromJS({
   entry: defaultEntry,
-  isFetching: false,
+  isSaving: false,
+  isInsertingUrl: false,
+  isLoadingImageUrl: false,
+  isUploadingAttachments: false,
   preview: false,
 });
 
@@ -37,7 +42,17 @@ const actionMap = {
   },
 
   [EDITOR_UPDATE_ENTRY](state, { key, value }) {
-    return state.setIn(['entry', key], value);
+    return state.mergeIn(['entry'], {
+      [key]: value,
+    });
+  },
+
+  [EDITOR_SET_INSERT](state, { value }) {
+    return state.set('isInsertingUrl', value);
+  },
+
+  [EDITOR_SET_LOADING_IMAGE_URL](state, { value }) {
+    return state.set('isLoadingImageUrl', value);
   },
 };
 

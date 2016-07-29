@@ -24,7 +24,6 @@ function Editor(props) {
     tlog,
     tlogType,
     togglePreview,
-    updateEntry,
   } = props;
 
   return (
@@ -44,13 +43,7 @@ function Editor(props) {
         tlogType={tlogType}
         togglePreview={togglePreview}
       />
-      <EditorArea
-        entry={entry}
-        entryPrivacy={entryPrivacy}
-        entryType={entryType}
-        isFetching={isFetching}
-        updateEntry={updateEntry}
-      />
+      <EditorArea entryType={entryType} />
       {(tlogType !== TLOG_ENTRY_TYPE_ANONYMOUS) && (
         <EditorTypeSwitcher
           canChangeType={canChangeType}
@@ -79,7 +72,6 @@ Editor.propTypes = {
   tlog: PropTypes.object,
   tlogType: PropTypes.string.isRequired,
   togglePreview: PropTypes.func.isRequired,
-  updateEntry: PropTypes.func.isRequired,
 };
 
 export default Editor;
