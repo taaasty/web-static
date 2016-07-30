@@ -17,7 +17,8 @@ import {
   getNormalizedKey,
 } from '../../../../services/EntryNormalizationService';
 import EditorTextField from '../../Field/Text';
-import EditorMediaBox from '../../MediaBox/MediaBox';
+import EditorMediaBox from '../../MediaBox';
+import EditorMediaBoxProgress from '../../MediaBox/Progress';
 import EditorTypeImageWelcome from './Welcome';
 import EditorTypeImageUrlInsert from './UrlInsert';
 import EditorTypeImageLoaded from './Loaded';
@@ -93,7 +94,9 @@ class EditorTypeImage extends Component {
 
     if (imageFiles.length > MAX_ATTACHMENTS) {
       imageFiles = imageFiles.slice(0, MAX_ATTACHMENTS)
-      NoticeService.notifyError(i18n.t('editor_files_limit_reached', { count: MAX_ATTACHMENTS }));
+      NoticeService.notifyError(
+        i18n.t('editor_files_limit_reached', { count: MAX_ATTACHMENTS }
+      ));
     }
 
     this.props.createImageAttachments(imageFiles);
@@ -144,7 +147,9 @@ class EditorTypeImage extends Component {
   render() {
     const {
       changeTitle,
+      isUploadingAttachments,
       title,
+      uploadingProgress,
      } = this.props;
     const currentState = this.getCurrentState();
     const editorClasses = classNames('post', 'post--image', 'post--edit', {
@@ -159,6 +164,9 @@ class EditorTypeImage extends Component {
             state={this.getMediaBoxState(currentState)}
           >
             {this.renderEditorScreen(currentState)}
+            {isUploadingAttachments && (
+              <EditorMediaBoxProgress progress={uploadingProgress} />
+            )}
           </EditorMediaBox>
           <EditorTextField
             className="post__content"
@@ -187,6 +195,7 @@ EditorTypeImage.propTypes = {
   startInsert: PropTypes.func.isRequired,
   stopInsert: PropTypes.func.isRequired,
   title: PropTypes.string,
+  uploadingProgress: PropTypes.number.isRequired,
 };
 
 const imageAttachmentsKey = getNormalizedKey(EDITOR_ENTRY_TYPE_IMAGE, 'imageAttachments');
@@ -202,6 +211,9 @@ export default connect(
     isLoadingImageUrl: state.editor.get('isLoadingImageUrl', false),
     isUploadingAttachments: state.editor.get('isUploadingAttachments', false),
     title: state.editor.getIn([ 'entry', titleKey ]),
+    uploadingProgress: state.editor.get('uploadTotal', 0) === 0
+      ? 0
+      : ( state.editor.get('uploadProgress', 0) / state.editor.get('uploadTotal') * 100 ),
   }),
   {
     changeImageUrl,

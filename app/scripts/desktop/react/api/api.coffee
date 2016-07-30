@@ -75,18 +75,6 @@ Api =
       _pendingRequests[key] = getRequest searchUrl
 
   editor:
-    createImageAttachment: (formData) ->
-      url = ApiRoutes.imageAttachments()
-      key = Constants.api.EDITOR_CREATE_IMAGE_ATTACHMENT
-
-      _pendingRequests[key] = postRequest url, formData
-
-    deleteImageAttachment: (attachmentID) ->
-      url = ApiRoutes.imageAttachmentsWithID attachmentID
-      key = Constants.api.EDITOR_DELETE_IMAGE_ATTACHMENT
-
-      _pendingRequests[key] = deleteRequest url
-
     createEmbed: (embedUrl) ->
       url  = ApiRoutes.iframely_url()
       key  = Constants.api.EDITOR_CREATE_EMBED

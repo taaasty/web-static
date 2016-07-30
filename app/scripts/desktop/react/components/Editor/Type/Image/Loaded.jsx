@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import EditorMediaBoxActions from '../../MediaBox/MediaBoxActions';
+import EditorMediaBoxActions from '../../MediaBox/Actions';
 import ImageAttachmentsCollage from '../../../../../../shared/react/components/common/imageAttachmentsCollage';
 
 class EditorTypeImageLoaded extends Component {

@@ -1,4 +1,4 @@
-MediaBox = require '../../MediaBox/MediaBox'
+MediaBox = require '../../MediaBox'
 { PropTypes } = React
 
 EditorTypeMusicWelcome = React.createClass

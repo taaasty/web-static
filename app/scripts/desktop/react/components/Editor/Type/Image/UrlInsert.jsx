@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import EditorMediaBoxActions from '../../MediaBox/MediaBoxActions';
+import EditorMediaBoxActions from '../../MediaBox/Actions';
 
 function EditorTypeImageUrlInsert({ onCancel, onInsertImageUrl }) {
   function handlePaste(ev) {

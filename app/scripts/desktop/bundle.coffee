@@ -18,7 +18,6 @@ require './react/services/positions'
 global.NoticeService = require './react/services/Notice'
 global.BeepService = require '../shared/react/services/Beep'
 global.ThumborService = require '../shared/react/services/thumbor'
-require './react/services/uuid'
 
 # /*===============================
 # =            Helpers            =

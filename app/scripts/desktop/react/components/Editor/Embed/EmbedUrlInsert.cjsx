@@ -1,5 +1,5 @@
-MediaBox = require '../MediaBox/MediaBox'
-MediaBoxActions = require '../MediaBox/MediaBoxActions'
+MediaBox = require '../MediaBox'
+MediaBoxActions = require '../MediaBox/Actions'
 { PropTypes } = React
 
 EditorEmbedUrlInsert = React.createClass
@@ -16,7 +16,7 @@ EditorEmbedUrlInsert = React.createClass
         <input type="url"
                autoFocus={ true }
                id="media-box-video-url"
-               className="media-box__form-input" 
+               className="media-box__form-input"
                onPaste={ @handlePaste }
                onBlur={ @handleBlur } />
       </label>

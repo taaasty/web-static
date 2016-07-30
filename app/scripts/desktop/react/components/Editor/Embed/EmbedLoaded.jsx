@@ -1,5 +1,5 @@
-import MediaBox from '../MediaBox/MediaBox';
-import MediaBoxActions from '../MediaBox/MediaBoxActions';
+import MediaBox from '../MediaBox';
+import MediaBoxActions from '../MediaBox/Actions';
 
 let EditorEmbedLoaded = React.createClass({
   propTypes: {
@@ -14,7 +14,7 @@ let EditorEmbedLoaded = React.createClass({
         <div className="media-box__display"
              dangerouslySetInnerHTML={{__html: this.props.embedHtml || ''}} />
         {this.renderActions()}
-      </MediaBox>  
+      </MediaBox>
     );
   },
 
