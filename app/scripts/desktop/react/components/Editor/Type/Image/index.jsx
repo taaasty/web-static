@@ -60,9 +60,7 @@ class EditorTypeImage extends Component {
     }
   }
   getMediaBoxState(currentState) {
-    if (currentState === WELCOME_STATE) {
-      return null;
-    } else if (this.state.dragging) {
+    if (this.state.dragging) {
       return 'drag-hover';
     } else if (currentState === INSERT_STATE) {
       return 'insert';
@@ -75,11 +73,14 @@ class EditorTypeImage extends Component {
     }
   }
   handleChangeImageUrl(imageUrl) {
-    this.props.changeImageUrl(imageUrl)
+    const { changeImageUrl, stopInsert } = this.props;
+
+    changeImageUrl(imageUrl)
       .catch(() => NoticeService.notifyError(
         i18n.t('editor_image_doesnt_exist',
         { imageUrl }
       )));
+    stopInsert();
   }
   handleSelectFiles(files) {
     let imageFiles = [].slice.call(files).filter((file) => {
@@ -99,7 +100,6 @@ class EditorTypeImage extends Component {
   }
   renderEditorScreen(currentState) {
     const {
-      changeImageUrl,
       deleteImages,
       imageAttachments,
       imageUrl,
@@ -123,7 +123,7 @@ class EditorTypeImage extends Component {
       return (
         <EditorTypeImageUrlInsert
           onCancel={stopInsert}
-          onInsertImageUrl={changeImageUrl}
+          onInsertImageUrl={this.handleChangeImageUrl.bind(this)}
         />
       );
     case LOADED_STATE:
@@ -182,7 +182,6 @@ EditorTypeImage.propTypes = {
   imageUrl: PropTypes.string,
   isInsertingUrl: PropTypes.bool.isRequired,
   isLoadingImageUrl: PropTypes.bool.isRequired,
-  isNew: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   isUploadingAttachments: PropTypes.bool.isRequired,
   startInsert: PropTypes.func.isRequired,
@@ -197,13 +196,12 @@ const titleKey = getNormalizedKey(EDITOR_ENTRY_TYPE_IMAGE, 'title');
 export default connect(
   (state) => ({
     imageAttachments: state.editor.getIn([ 'entry', imageAttachmentsKey ], emptyAttachments),
-    imageUrl: state.editor.getIn([ 'entry', imageUrlKey ], ''),
+    imageUrl: state.editor.getIn([ 'entry', imageUrlKey ]),
     isSaving: state.editor.get('isSaving', false),
     isInsertingUrl: state.editor.get('isInsertingUrl', false),
     isLoadingImageUrl: state.editor.get('isLoadingImageUrl', false),
-    isNew: !state.editor.getIn([ 'entry', 'id' ]),
     isUploadingAttachments: state.editor.get('isUploadingAttachments', false),
-    title: state.editor.getIn([ 'entry', titleKey ], ''),
+    title: state.editor.getIn([ 'entry', titleKey ]),
   }),
   {
     changeImageUrl,

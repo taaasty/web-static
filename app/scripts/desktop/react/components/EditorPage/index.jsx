@@ -86,8 +86,8 @@ class EditorPage extends Component {
     appStateStopEditing();
     editorResetEntry();
   }
-  setEntry(entry, type) {
-    return this.props.editorSetEntry(normalize(entry.toJS()), type);
+  setEntry(entry, tlogType) {
+    return this.props.editorSetEntry(normalize(entry.toJS()), tlogType);
   }
   renderContents() {
     const {

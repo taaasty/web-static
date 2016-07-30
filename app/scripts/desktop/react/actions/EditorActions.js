@@ -10,10 +10,14 @@ import {
   storeLastEntryPrivacy,
 } from '../services/EntryKeeperService';
 import {
+  getNormalizedKey,
+} from '../services/EntryNormalizationService';
+import {
   TLOG_TYPE_ANONYMOUS,
   ENTRY_PRIVACY_LIVE,
   ENTRY_PRIVACY_PRIVATE,
   ENTRY_PRIVACY_PUBLIC,
+  EDITOR_ENTRY_TYPE_IMAGE,
 } from '../constants/EditorConstants';
 
 export const EDITOR_SET_ENTRY = 'EDITOR_SET_ENTRY';
@@ -137,46 +141,6 @@ export function saveEntry() {
 
 }
 
-export function createImageAttachments(files) {
-
-}
-
-export function deleteImages() {
-  // deleteFromServer if existing entry
-  // changeImageUrl(null)
-  // deleteImageAttachments
-
-}
-
-function setLoadingImageUrl(value) {
-  return {
-    type: EDITOR_SET_LOADING_IMAGE_URL,
-    value,
-  };
-}
-
-export function changeImageUrl(key, url) {
-  return (dispatch) => {
-    dispatch(setLoadingImageUrl(true));
-
-    return Promise((resolve, reject) => {
-      const image = new Image();
-
-      image.onload = (data) => {
-        dispatch(setLoadingImageUrl(false));
-        dispatch(updateEntry(key, url));
-        resolve(data);
-      };
-
-      image.onerror = () => {
-        dispatch(setLoadingImageUrl(false));
-        reject();
-      };
-
-      image.src = url;
-    });
-  };
-}
 
 function setInsertingUrl(value) {
   return {
@@ -192,3 +156,58 @@ export function startInsert() {
 export function stopInsert() {
   return setInsertingUrl(false);
 }
+
+// EDITOR_ENTRY_TYPE_IMAGE type entries only functions
+
+const imageUrlKey = getNormalizedKey(
+  EDITOR_ENTRY_TYPE_IMAGE,
+  'imageUrl'
+);
+const imageAttachmentsKey = getNormalizedKey(
+  EDITOR_ENTRY_TYPE_IMAGE,
+  'imageAttachments'
+);
+
+export function createImageAttachments(files) {
+  return {};
+}
+
+export function deleteImages() {
+  return (dispatch) => {
+    // deleteFromServer if existing entry
+    dispatch(updateEntry(imageUrlKey, null));
+    // deleteImageAttachments
+  }
+}
+
+function setLoadingImageUrl(value) {
+  return {
+    type: EDITOR_SET_LOADING_IMAGE_URL,
+    value,
+  };
+}
+
+export function changeImageUrl(url) {
+  return (dispatch) => {
+    dispatch(setLoadingImageUrl(true));
+    dispatch(updateEntry(imageUrlKey, url));
+
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+
+      image.onload = (data) => {
+        dispatch(setLoadingImageUrl(false));
+        resolve(data);
+      };
+
+      image.onerror = (error) => {
+        dispatch(setLoadingImageUrl(false));
+        dispatch(updateEntry(imageUrlKey, null));
+        reject(error);
+      };
+
+      image.src = url;
+    });
+  };
+}
+// -end EDITOR_ENTRY_TYPE_IMAGE functions block

@@ -21,7 +21,7 @@ class DropZone extends Component {
     }
 
     this.handleDrop = (ev) => {
-      const files = ev.originalEvent.dataTransfer.files;
+      const files = ev.dataTransfer.files;
       ev.preventDefault();
 
       if (typeof onDrop === 'function') {
