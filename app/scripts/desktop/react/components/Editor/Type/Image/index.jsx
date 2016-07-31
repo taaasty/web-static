@@ -106,7 +106,6 @@ class EditorTypeImage extends Component {
       deleteImages,
       imageAttachments,
       imageUrl,
-      isUploadingAttachments,
       startInsert,
       stopInsert,
     } = this.props;
@@ -134,7 +133,6 @@ class EditorTypeImage extends Component {
         <EditorTypeImageLoaded
           imageAttachments={imageAttachments}
           imageUrl={imageUrl}
-          isUploadingAttachments={isUploadingAttachments}
           onDelete={deleteImages}
         />
       );

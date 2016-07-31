@@ -7,6 +7,8 @@ import {
   EDITOR_SET_INSERT,
   EDITOR_SET_LOADING_IMAGE_URL,
   EDITOR_ADD_BLOB_ATTACHMENT,
+  EDITOR_REMOVE_BLOB_ATTACHMENT,
+  EDITOR_DELETE_IMAGES,
   EDITOR_UPLOAD_ATTACHMENT_REQUEST,
   EDITOR_UPLOAD_ATTACHMENT_SUCCESS,
   EDITOR_UPLOAD_ATTACHMENT_FAILURE,
@@ -33,6 +35,21 @@ const initialState = fromJS({
   uploadProgress: 0,
   preview: false,
 });
+
+function attachmentsUploadStatusUpdater(state) {
+  const attachments = state.getIn(['entry', 'imageAttachments'], List());
+  const total = attachments.count();
+  const progress = attachments
+    .filter((a) => a.get('id') != null)
+    .count();
+  const isFinised = progress >= total;
+
+  return state.merge({
+    isUploadingAttachments: !isFinised,
+    uploadTotal: isFinised ? 0 : total,
+    uploadProgress: isFinised ? 0 : progress,
+  });
+}
 
 const actionMap = {
   [EDITOR_SET_ENTRY](state, { entry }) {
@@ -62,41 +79,17 @@ const actionMap = {
   },
 
   [EDITOR_ADD_BLOB_ATTACHMENT](state, { attachment }) {
-    return state.updateIn(
-      ['entry', 'imageAttachments'],
-      List(),
-      (arr) => arr.push(fromJS(attachment))
-    );
-  },
-
-  [EDITOR_UPLOAD_ATTACHMENT_REQUEST](state) {
-    return state.set('isUploadingAttachments', true)
-      .update('uploadTotal', (c) => c + 1);
-  },
-
-  [EDITOR_UPLOAD_ATTACHMENT_SUCCESS](state, { response: { result }, uuid }) {
-    return state.update('uploadTotal', (c) => c - 1)
-      .update(
-        'isUploadingAttachments',
-        () => state.get('uploadTotal', 0) !== 0
-      )
+    return state
       .updateIn(
         ['entry', 'imageAttachments'],
         List(),
-        (arr) => {
-          const idx = arr.findKey((a) => a.get('uuid') === uuid);
-
-          return idx >= 0 ? arr.update(idx, () => fromJS(result)) : arr;
-        }
+        (arr) => arr.push(fromJS(attachment))
       )
+      .update(attachmentsUploadStatusUpdater);
   },
 
-  [EDITOR_UPLOAD_ATTACHMENT_FAILURE](state, { uuid }) {
-    return state.update('uploadTotal', (c) => c - 1)
-      .update(
-        'isUploadingAttachments',
-        () => state.get('uploadTotal', 0) !== 0
-      )
+  [EDITOR_REMOVE_BLOB_ATTACHMENT](state, { uuid }) {
+    return state
       .updateIn(
         ['entry', 'imageAttachments'],
         List(),
@@ -106,10 +99,61 @@ const actionMap = {
           return idx >= 0 ? arr.delete(idx) : arr;
         }
       )
+      .update(attachmentsUploadStatusUpdater);
+  },
+
+  [EDITOR_DELETE_IMAGES](state) {
+    return state
+      .mergeIn(['entry'], {
+        imageUrl: null,
+        imageAttachments: [],
+      })
+      .update(attachmentsUploadStatusUpdater);
+  },
+
+  [EDITOR_UPLOAD_ATTACHMENT_REQUEST](state) {
+    return state
+      .update(attachmentsUploadStatusUpdater);
+  },
+
+  [EDITOR_UPLOAD_ATTACHMENT_SUCCESS](state, { response: { result }, uuid }) {
+    return state
+      .updateIn(
+        ['entry', 'imageAttachments'],
+        List(),
+        (arr) => {
+          const idx = arr.findKey((a) => a.get('uuid') === uuid);
+
+          return idx >= 0 ? arr.update(idx, () => fromJS(result)) : arr;
+        }
+      )
+      .update(attachmentsUploadStatusUpdater);
+  },
+
+  [EDITOR_UPLOAD_ATTACHMENT_FAILURE](state, { uuid }) {
+    return state
+      .updateIn(
+        ['entry', 'imageAttachments'],
+        List(),
+        (arr) => {
+          const idx = arr.findKey((a) => a.get('uuid') === uuid);
+
+          return idx >= 0 ? arr.delete(idx) : arr;
+        }
+      )
+      .update(attachmentsUploadStatusUpdater);
   },
 
   [EDITOR_DELETE_ATTACHMENT_SUCCESS](state, { id }) {
+    return state.updateIn(
+      ['entry', 'imageAttachments'],
+      List(),
+      (arr) => {
+        const idx = arr.findKey((a) => a.get('id') === id);
 
+        return idx >= 0 ? arr.delete(idx) : arr;
+      }
+    );
   },
 };
 

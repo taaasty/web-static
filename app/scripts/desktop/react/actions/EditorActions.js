@@ -1,3 +1,4 @@
+/*global i18n */
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
 import { postOpts, putOpts, deleteOpts } from './reqHelpers';
@@ -21,6 +22,8 @@ import {
 } from '../constants/EditorConstants';
 import { generate as generateUuid } from '../../../shared/react/services/uuid';
 import { createObjectURL } from '../../../shared/helpers/browser';
+import NoticeService from '../services/Notice';
+import { List, Map } from 'immutable';
 
 export const EDITOR_SET_ENTRY = 'EDITOR_SET_ENTRY';
 export const EDITOR_RESET_ENTRY = 'EDITOR_RESET_ENTRY';
@@ -29,12 +32,16 @@ export const EDITOR_UPDATE_ENTRY = 'EDITOR_UPDATE_ENTRY';
 export const EDITOR_SET_INSERT = 'EDITOR_SET_INSERT';
 export const EDITOR_SET_LOADING_IMAGE_URL = 'EDITOR_SET_LOADING_IMAGE_URL';
 export const EDITOR_ADD_BLOB_ATTACHMENT = 'EDITOR_ADD_BLOB_ATTACHMENT';
+export const EDITOR_REMOVE_BLOB_ATTACHMENT = 'EDITOR_REMOVE_BLOB_ATTACHMENT';
+export const EDITOR_DELETE_IMAGES = 'EDITOR_DELETE_IMAGES';
+
 export const EDITOR_UPLOAD_ATTACHMENT_REQUEST =
   'EDITOR_UPLOAD_ATTACHMENT_REQUEST';
 export const EDITOR_UPLOAD_ATTACHMENT_SUCCESS =
   'EDITOR_UPLOAD_ATTACHMENT_SUCCESS';
 export const EDITOR_UPLOAD_ATTACHMENT_FAILURE =
   'EDITOR_UPLOAD_ATTACHMENT_FAILURE';
+
 export const EDITOR_DELETE_ATTACHMENT_REQUEST =
   'EDITOR_DELETE_ATTACHMENT_REQUEST';
 export const EDITOR_DELETE_ATTACHMENT_SUCCESS =
@@ -182,21 +189,6 @@ const imageAttachmentsKey = getNormalizedKey(
   'imageAttachments'
 );
 
-export function deleteImageAttachment(id) {
-  return {
-    [CALL_API]: {
-      endpoint: ApiRoutes.imageAttachmentsWithID(id),
-      schema: Schemas.NONE,
-      types: [
-        EDITOR_DELETE_ATTACHMENT_REQUEST,
-        EDITOR_DELETE_ATTACHMENT_SUCCESS,
-        EDITOR_DELETE_ATTACHMENT_FAILURE,
-      ],
-      opts: deleteOpts(),
-    },
-  };
-}
-
 function createBlobAttachment({ width, height, src }, uuid) {
   return {
     uuid,
@@ -214,11 +206,43 @@ function addBlobAttachment(attachment) {
   };
 }
 
-export function createImageAttachments(files) {
-  return (dispatch) => {
-    dispatch(setUploadingFlag(true));
+function uploadAttachment(file, uuid) {
+  const formData = new FormData();
+  formData.append('image', file);
 
-    const promisePool = [].slice.call(files)
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.imageAttachments(),
+      schema: Schemas.NONE,
+      types: [
+        EDITOR_UPLOAD_ATTACHMENT_REQUEST,
+        EDITOR_UPLOAD_ATTACHMENT_SUCCESS,
+        EDITOR_UPLOAD_ATTACHMENT_FAILURE,
+      ],
+      opts: postOpts(formData),
+    },
+    uuid,
+  };
+}
+
+function deleteAttachment(id) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.imageAttachmentsWithID(id),
+      schema: Schemas.NONE,
+      types: [
+        EDITOR_DELETE_ATTACHMENT_REQUEST,
+        EDITOR_DELETE_ATTACHMENT_SUCCESS,
+        EDITOR_DELETE_ATTACHMENT_FAILURE,
+      ],
+      opts: deleteOpts(),
+    },
+  };
+}
+
+export function createImageAttachments(files) {
+  return (dispatch, getState) => {
+    return [].slice.call(files)
       .map((file) => {
         // Общий uuid для imageAttachment-like blob и imageAttachment
         const uuid = generateUuid();
@@ -228,30 +252,21 @@ export function createImageAttachments(files) {
         const image = new Image();
         image.onload = () => {
           if (!failed) {
-            dispatch(addImageAttachment(createBlobAttachment(image, uuid)));
+            dispatch(addBlobAttachment(createBlobAttachment(image, uuid)));
           }
         };
         image.src = createObjectURL(file);
 
-        // Делаем запрос на создание картинки, на успешный ответ заменяем blob с uuid
-        const formData = new FormData();
-        formData.append('image', file);
+        return dispatch(uploadAttachment(file, uuid))
+          .then(({ response }) => {
+            const idx = getState()
+              .editor
+              .getIn(['entry', imageAttachmentsKey], List())
+              .findKey((a) => a.get('id') === response.result.id);
 
-        return dispatch({
-            [CALL_API]: {
-              endpoint: ApiRoutes.imageAttachments(),
-              schema: Schemas.NONE,
-              types: [
-                EDITOR_UPLOAD_REQUEST,
-                EDITOR_UPLOAD_SUCCESS,
-                EDITOR_UPLOAD_FAILURE,
-              ],
-              opts: postOpts(formData),
-            },
-            uuid,
-          })
-          .then({ isRemoved } => {
-
+            if (typeof idx === 'undefined') { // attachment already removed
+              return dispatch(deleteAttachment((response.result.id)));
+            }
           })
           .catch(() => {
             failed = true;
@@ -259,57 +274,23 @@ export function createImageAttachments(files) {
               i18n.t('editor_attachment_error', { fileName: file.name })
             );
           });
-
-
-
-        Api.editor.createImageAttachment(formData)
-          .then((imageAttachment) => {
-            let blobIndex = _.findIndex(newAttachments, (item) => item.uuid ===
-              uuid);
-
-            if (blobIndex === -1) {
-              // Такого аттачмента локально уже нет, удаляем его на сервере.
-              Api.editor.deleteImageAttachment(imageAttachment.id);
-            } else {
-              newAttachments[blobIndex] = imageAttachment;
-            }
-
-            this.updateField('imageAttachments', newAttachments);
-          })
-          .catch(() => {
-            let blobIndex = _.findIndex(newAttachments, (item) => item.uuid ===
-              uuid);
-
-            failed = true;
-            NoticeService.notifyError(
-              i18n.t('editor_attachment_error', { fileName: file.name })
-            );
-            if (blobIndex !== -1) {
-              newAttachments.splice(blobIndex, 1);
-            }
-
-            this.updateField('imageAttachments', newAttachments);
-          });
-      });
-
-    AppDispatcher.handleServerAction({
-      type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_START,
-    });
-
-    return ApiHelpers.settle(promises)
-      .always(() => {
-        AppDispatcher.handleServerAction({
-          type: EditorConstants.ENTRY_CREATING_ATTACHMENTS_END,
-        });
-      });
-  }
+      })
+  };
 }
 
 export function deleteImages() {
-  return (dispatch) => {
-    dispatch(updateEntry(imageUrlKey, null));
-    // deleteFromServer if existing entry
-    // deleteImageAttachments
+  return (dispatch, getState) => {
+    const entry = getState()
+      .editor.get('entry', Map());
+
+    if (entry.get('id')) { // remove from server if entry exists
+      entry.get('imageAttachments', List())
+        .forEach(
+          (attachment) => dispatch(deleteAttachment(attachment.get('id')))
+        );
+    }
+
+    dispatch({ type: EDITOR_DELETE_IMAGES });
   };
 }
 

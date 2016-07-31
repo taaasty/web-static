@@ -6,8 +6,10 @@ class EditorTypeImageLoaded extends Component {
   shouldComponentUpdate(nextProps) {
     //  Не обновляем компонент, если количество аттачментов или путь до картинки
     //  остались прежними. Тем самым избавляемся от перерисовки blob => remote image url
-    return this.props.imageAttachments.count() !== nextProps.imageAttachments.count() ||
-       this.props.imageUrl !== nextProps.imageUrl;
+    return (
+      this.props.imageAttachments.count() !== nextProps.imageAttachments.count() ||
+      this.props.imageUrl !== nextProps.imageUrl
+    );
   }
   renderImage() {
     const { imageAttachments, imageUrl } = this.props;
@@ -19,25 +21,33 @@ class EditorTypeImageLoaded extends Component {
     } else {
       return null;
     }
-}
+  }
   render() {
-    const { isUploadingAttachments, onDelete } = this.props;
+    const {
+      imageAttachments,
+      imageUrl,
+      onDelete,
+     } = this.props;
+     const showDeleteButton = (
+       typeof onDelete === 'function' && (
+         imageUrl || imageAttachments.count()
+       )
+     );
 
     return (
       <div className="media-box__display">
         {this.renderImage()}
-        {!isUploadingAttachments && (
+        {showDeleteButton && (
           <EditorMediaBoxActions onDelete={onDelete} />
         )}
       </div>
     );
-}
   }
+}
 
 EditorTypeImageLoaded.propTypes = {
   imageAttachments: PropTypes.object.isRequired,
   imageUrl: PropTypes.string,
-  isUploadingAttachments: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
