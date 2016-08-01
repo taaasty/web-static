@@ -13,6 +13,9 @@ import {
   EDITOR_UPLOAD_ATTACHMENT_SUCCESS,
   EDITOR_UPLOAD_ATTACHMENT_FAILURE,
   EDITOR_DELETE_ATTACHMENT_SUCCESS,
+  EDITOR_EMBED_REQUEST,
+  EDITOR_EMBED_SUCCESS,
+  EDITOR_EMBED_FAILURE,
 } from '../actions/EditorActions';
 import {
   EDITOR_ENTRY_TYPE_TEXT,
@@ -72,6 +75,18 @@ const actionMap = {
 
   [EDITOR_SET_INSERT](state, { value }) {
     return state.set('isInsertingUrl', value);
+  },
+
+  [EDITOR_EMBED_REQUEST](state) {
+    return state.set('isFetchingEmbed', true);
+  },
+
+  [EDITOR_EMBED_SUCCESS](state) {
+    return state.set('isFetchingEmbed', false);
+  },
+
+  [EDITOR_EMBED_FAILURE](state) {
+    return state.set('isFetchingEmbed', false);
   },
 
   [EDITOR_SET_LOADING_IMAGE_URL](state, { value }) {

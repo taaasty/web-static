@@ -35,6 +35,10 @@ export const EDITOR_ADD_BLOB_ATTACHMENT = 'EDITOR_ADD_BLOB_ATTACHMENT';
 export const EDITOR_REMOVE_BLOB_ATTACHMENT = 'EDITOR_REMOVE_BLOB_ATTACHMENT';
 export const EDITOR_DELETE_IMAGES = 'EDITOR_DELETE_IMAGES';
 
+export const EDITOR_EMBED_REQUEST = 'EDITOR_EMBED_REQUEST';
+export const EDITOR_EMBED_SUCCESS = 'EDITOR_EMBED_SUCCESS';
+export const EDITOR_EMBED_FAILURE = 'EDITOR_EMBED_FAILURE';
+
 export const EDITOR_UPLOAD_ATTACHMENT_REQUEST =
   'EDITOR_UPLOAD_ATTACHMENT_REQUEST';
 export const EDITOR_UPLOAD_ATTACHMENT_SUCCESS =
@@ -176,6 +180,17 @@ export function startInsert() {
 
 export function stopInsert() {
   return setInsertingUrl(false);
+}
+
+export function createEmbed(url) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.iframely_url(),
+      schema: Schemas.NONE,
+      types: [EDITOR_EMBED_REQUEST, EDITOR_EMBED_SUCCESS, EDITOR_EMBED_FAILURE],
+      opts: postOpts({ url }),
+    },
+  };
 }
 
 // EDITOR_ENTRY_TYPE_IMAGE type entries only functions

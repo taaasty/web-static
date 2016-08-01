@@ -75,14 +75,6 @@ Api =
       _pendingRequests[key] = getRequest searchUrl
 
   editor:
-    createEmbed: (embedUrl) ->
-      url  = ApiRoutes.iframely_url()
-      key  = Constants.api.EDITOR_CREATE_EMBED
-      data = url: embedUrl
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, data
-
     createEntry: (url, data) ->
       key = Constants.api.EDITOR_CREATE_ENTRY
 
