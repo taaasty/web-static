@@ -44,9 +44,9 @@ const typeMap = {
   },
 };
 
-function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) {
+function EditorTypeSwitcher({ canChangeType, entryType, isSaving, pathname }) {
   const switcherClasses = classNames('nav-types', {
-    'state--loading': isFetching,
+    'state--loading': isSaving,
   });
 
   return (
@@ -56,7 +56,7 @@ function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) 
          <EditorTypeSwitcherItem
            active={entryType === type}
            icon={typeMap[type].icon}
-           isFetching={isFetching}
+           isSaving={isSaving}
            key={type}
            pathname={pathname}
            title={typeMap[type].title()}
@@ -65,7 +65,7 @@ function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) 
        : <EditorTypeSwitcherItem
            active
            icon={typeMap[entryType].icon}
-           isFetching={isFetching}
+           isSaving={isSaving}
            pathname={pathname}
            title={typeMap[entryType].title.call(null)}
          />
@@ -77,7 +77,7 @@ function EditorTypeSwitcher({ canChangeType, entryType, isFetching, pathname }) 
 EditorTypeSwitcher.propTypes = {
   canChangeType: PropTypes.bool.isRequired,
   entryType: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
 };
 

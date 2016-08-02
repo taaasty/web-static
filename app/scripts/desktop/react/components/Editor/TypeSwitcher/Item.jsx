@@ -11,17 +11,17 @@ class EditorTypeSwitcherItem extends Component {
     $(this.refs.button).tooltip('destroy');
   }
   handleClick(ev) {
-    const { isFetching, pathname, type } = this.props;
+    const { isSaving, pathname, type } = this.props;
 
     ev.preventDefault();
-    if (!isFetching) {
+    if (!isSaving) {
       browserHistory.replace({ pathname, hash: !!type && `#${type}` });
     }
   }
   render() {
-    const { active, icon, isFetching, title, type } = this.props;
+    const { active, icon, isSaving, title, type } = this.props;
     const itemClasses = classNames('button', 'button--circle', {
-      'state--disable': isFetching,
+      'state--disable': isSaving,
       'state--active': active,
     });
 
@@ -43,7 +43,7 @@ class EditorTypeSwitcherItem extends Component {
 EditorTypeSwitcherItem.propTypes = {
   active: PropTypes.bool.isRequired,
   icon: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string,

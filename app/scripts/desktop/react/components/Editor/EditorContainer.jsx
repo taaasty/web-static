@@ -1,3 +1,4 @@
+/*global ga */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
 import Editor from './Editor';
@@ -16,17 +17,20 @@ import {
 import {
   PIN_ENTRY_ORDER,
 } from '../../constants/OrderConstants';
+import NoticeService from '../../services/Notice';
 import { connect } from 'react-redux';
 
 function EditorContainer(props) {
   const {
     changeEntryPrivacy,
+    entry,
     pinEntry,
     saveEntry,
+    tlog,
   } = props;
 
   function onPinEntry(pinOrderUrl) {
-    pinEntry()
+    pinEntry(tlog.get('id'))
       .then((entry) => {
         window.location.href = pinOrderUrl ||
           Routes.newOrder(entry.id, PIN_ENTRY_ORDER);
@@ -34,13 +38,27 @@ function EditorContainer(props) {
   }
 
   function onSaveEntry() {
-    saveEntry()
-      .then((entry) => {
-        //FIXME think through better tlogEntries update logic
-        browserHistory.push({
-          pathname: uri(entry.entry_url).path(),
-          state: { id: entry.id, refetch: true },
-        });
+    const isNew = !entry.get('id');
+
+    saveEntry(tlog.get('id'))
+      .then(({ response }) => {
+        const newEntry = response.entities.entry[response.result];
+
+        NoticeService.closeAll();
+        if (newEntry) {
+          if (isNew && typeof ga === 'function') {
+            ga('send', 'event', 'UX',
+              newEntry.isPrivate ? 'CreateAnonymous' : 'CreatePost',
+              newEntry.type
+            );
+          }
+
+          //FIXME think through better tlogEntries update logic
+          browserHistory.push({
+            pathname: uri(newEntry.entryUrl).path(),
+            state: { id: newEntry.id, refetch: true },
+          });
+        }
       });
   }
 
@@ -61,7 +79,7 @@ EditorContainer.propTypes = {
   entry: PropTypes.object.isRequired,
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
   pinEntry: PropTypes.func.isRequired,
   saveEntry: PropTypes.func.isRequired,
@@ -81,7 +99,7 @@ export default connect(
     entryType: entry.get('type'),
     isEntryForCurrentUser: tlogType === TLOG_TYPE_ANONYMOUS ||
       tlog.get('id') === state.currentUser.data.id,
-    isFetching: state.editor.get('isFetching', false),
+    isSaving: state.editor.get('isSaving', false),
   }),
   {
     changeEntryPrivacy,

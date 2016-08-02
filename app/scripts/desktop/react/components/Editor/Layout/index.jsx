@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 
-function EditorLayout({ backUrl, children, isFetching }) {
+function EditorLayout({ backUrl, children, isSaving }) {
   function handleClick() {
     return backUrl
       ? browserHistory.push({ pathname: backUrl })
@@ -10,7 +10,7 @@ function EditorLayout({ backUrl, children, isFetching }) {
 
   return (
     <div>
-      {!isFetching && <a className="back-button" onClick={handleClick} />}
+      {!isSaving && <a className="back-button" onClick={handleClick} />}
       {children}
     </div>
   );
@@ -22,7 +22,7 @@ EditorLayout.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]),
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
 };
 
 export default EditorLayout;

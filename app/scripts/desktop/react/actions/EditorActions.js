@@ -3,6 +3,7 @@ import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
 import { postOpts, putOpts, deleteOpts } from './reqHelpers';
 import {
+  remove,
   restoreLastEntryPrivacy,
   restoreExistingAnonymousEntry,
   restoreExistingEntry,
@@ -18,8 +19,17 @@ import {
   ENTRY_PRIVACY_LIVE,
   ENTRY_PRIVACY_PRIVATE,
   ENTRY_PRIVACY_PUBLIC,
+  EDITOR_ENTRY_TYPE_TEXT,
   EDITOR_ENTRY_TYPE_IMAGE,
+  EDITOR_ENTRY_TYPE_INSTAGRAM,
+  EDITOR_ENTRY_TYPE_MUSIC,
+  EDITOR_ENTRY_TYPE_VIDEO,
+  EDITOR_ENTRY_TYPE_QUOTE,
+  EDITOR_ENTRY_TYPE_ANONYMOUS,
 } from '../constants/EditorConstants';
+import {
+  showGetPremiumPopup,
+} from './AppStateActions';
 import { generate as generateUuid } from '../../../shared/react/services/uuid';
 import { createObjectURL } from '../../../shared/helpers/browser';
 import NoticeService from '../services/Notice';
@@ -53,6 +63,10 @@ export const EDITOR_DELETE_ATTACHMENT_SUCCESS =
 export const EDITOR_DELETE_ATTACHMENT_FAILURE =
   'EDITOR_DELETE_ATTACHMENT_FAILURE';
 
+export const EDITOR_SAVE_REQUEST = 'EDITOR_SAVE_REQUEST';
+export const EDITOR_SAVE_SUCCESS = 'EDITOR_SAVE_SUCCESS';
+export const EDITOR_SAVE_FAILURE = 'EDITOR_SAVE_FAILURE';
+
 const PRIVACY_TYPES = {
   private: [
     ENTRY_PRIVACY_PUBLIC,
@@ -64,6 +78,9 @@ const PRIVACY_TYPES = {
     ENTRY_PRIVACY_PRIVATE,
   ],
 };
+
+const ERROR_CODE_PAYMENT_REQUIRED = 402;
+let attachmentPromises = [];
 
 function getPrivacyByTlogType(tlogType) {
   const privacy = restoreLastEntryPrivacy();
@@ -87,12 +104,134 @@ function setEntry(entry) {
   };
 }
 
-export function pinEntry() {
-
+export function pinEntry(tlogId) {
+  return saveEntry(tlogId, true);
 }
 
-export function saveEntry() {
+function prepareEntryData(state, { tlogId, wantToFix }) {
+  const data = {
+    tlogId,
+    wantToFix,
+  };
+  const entry = state.editor.get('entry', Map());
+  const entryType = entry.get('type', EDITOR_ENTRY_TYPE_TEXT);
+  const privacy = entry.get('privacy');
 
+  const title = entry.get(getNormalizedKey(entryType, 'title'));
+  const text = entry.get(getNormalizedKey(entryType, 'text'));
+  const imageAttachmentsIds = entry.get('imageAttachments', List())
+    .map((a) => a.get('id'))
+    .toJS();
+  const imageUrl = entry.get(getNormalizedKey(entryType, 'imageUrl'));
+  const embedUrl = entry.get(getNormalizedKey(entryType, 'embedUrl'));
+  const source = entry.get(getNormalizedKey(entryType, 'source'));
+
+  switch (entryType) {
+  case EDITOR_ENTRY_TYPE_TEXT:
+    return Object.assign(data, {
+      title,
+      text,
+      privacy,
+    });
+  case EDITOR_ENTRY_TYPE_ANONYMOUS:
+    return Object.assign(data, {
+      title,
+      text,
+    });
+  case EDITOR_ENTRY_TYPE_IMAGE:
+    return Object.assign(data, {
+      title,
+      privacy,
+      imageUrl,
+      imageAttachmentsIds,
+    });
+  case EDITOR_ENTRY_TYPE_INSTAGRAM:
+  case EDITOR_ENTRY_TYPE_MUSIC:
+  case EDITOR_ENTRY_TYPE_VIDEO:
+    return Object.assign(data, {
+      title,
+      privacy,
+      videoUrl: embedUrl,
+    });
+  case EDITOR_ENTRY_TYPE_QUOTE:
+    return Object.assign(data, {
+      text,
+      source,
+      privacy,
+    });
+  }
+}
+
+function createEntry(entryType, data) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.create_entry_url(entryType),
+      schema: Schemas.ENTRY,
+      types: [EDITOR_SAVE_REQUEST, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAILURE],
+      opts: postOpts(data),
+    },
+  };
+}
+
+function syncEntry(entryId, entryType, data) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.update_entry_url(entryId, entryType),
+      schema: Schemas.ENTRY,
+      types: [EDITOR_SAVE_REQUEST, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAILURE],
+      opts: putOpts(data),
+    },
+    entryId,
+  };
+}
+
+export function saveEntry(tlogId, wantToFix) {
+  return (dispatch, getState) => {
+    const entry = getState()
+      .editor.get('entry', Map());
+    const entryId = entry.get('id');
+    let entryType = entry.get('type', EDITOR_ENTRY_TYPE_TEXT);
+
+    function handleFail(err) {
+      if (err && err.responseJSON &&
+        err.responseJSON.error_code === ERROR_CODE_PAYMENT_REQUIRED) {
+        return dispatch(showGetPremiumPopup());
+      }
+    }
+
+    // Сохраняем Video, Instagram и Music в video точке
+    if (entryType === EDITOR_ENTRY_TYPE_MUSIC ||
+      entryType === EDITOR_ENTRY_TYPE_INSTAGRAM) {
+      entryType = EDITOR_ENTRY_TYPE_VIDEO;
+    }
+
+    dispatch({ type: EDITOR_SAVE_REQUEST });
+
+    if (entryId) {
+      return Promise.all(attachmentPromises)
+        .then(() => dispatch(syncEntry(
+          entryId,
+          entryType,
+          prepareEntryData(getState(), { tlogId, wantToFix })
+        )))
+        .then((data) => {
+          remove(entry.toJS());
+          return data;
+        })
+        .catch(handleFail);
+    } else {
+      return Promise.all(attachmentPromises)
+        .then(() => dispatch(createEntry(
+          entryType,
+          prepareEntryData(getState(), { tlogId, wantToFix })
+        )))
+        .then((data) => {
+          remove(entry.toJS());
+          return data;
+        })
+        .catch(handleFail);
+    }
+  }
 }
 
 export function editorSetEntry(entry, tlogType) {
@@ -102,7 +241,8 @@ export function editorSetEntry(entry, tlogType) {
     if (tlogType === TLOG_TYPE_ANONYMOUS) {
       return setEntry(restoreExistingAnonymousEntry() || entry);
     } else {
-      return setEntry(restoreExistingEntry(id, updatedAt || createdAt) || entry);
+      return setEntry(restoreExistingEntry(id, updatedAt || createdAt) ||
+        entry);
     }
   } else {
     if (tlogType === TLOG_TYPE_ANONYMOUS) {
@@ -187,7 +327,11 @@ export function createEmbed(url) {
     [CALL_API]: {
       endpoint: ApiRoutes.iframely_url(),
       schema: Schemas.NONE,
-      types: [EDITOR_EMBED_REQUEST, EDITOR_EMBED_SUCCESS, EDITOR_EMBED_FAILURE],
+      types: [
+        EDITOR_EMBED_REQUEST,
+        EDITOR_EMBED_SUCCESS,
+        EDITOR_EMBED_FAILURE,
+      ],
       opts: postOpts({ url }),
     },
   };
@@ -257,7 +401,7 @@ function deleteAttachment(id) {
 
 export function createImageAttachments(files) {
   return (dispatch, getState) => {
-    return [].slice.call(files)
+    attachmentPromises = [].slice.call(files)
       .map((file) => {
         // Общий uuid для imageAttachment-like blob и imageAttachment
         const uuid = generateUuid();
@@ -267,7 +411,8 @@ export function createImageAttachments(files) {
         const image = new Image();
         image.onload = () => {
           if (!failed) {
-            dispatch(addBlobAttachment(createBlobAttachment(image, uuid)));
+            dispatch(addBlobAttachment(createBlobAttachment(image,
+              uuid)));
           }
         };
         image.src = createObjectURL(file);
@@ -290,6 +435,7 @@ export function createImageAttachments(files) {
             );
           });
       })
+    return attachmentPromises;
   };
 }
 

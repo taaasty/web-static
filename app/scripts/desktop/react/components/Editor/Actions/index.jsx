@@ -21,23 +21,23 @@ import {
 
 class EditorActions extends Component {
   handleVoteButtonClick() {
-    if (this.props.isFetching) {
+    if (this.props.isSaving) {
       return;
     }
     const newEntryPrivacy = this.isEntryLive() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_LIVE;
     this.props.onChangePrivacy(newEntryPrivacy);
   }
   handlePrivacyButtonClick() {
-    if (this.props.isFetching) {
+    if (this.props.isSaving) {
       return;
     }
     const newEntryPrivacy = this.isEntryPrivate() ? ENTRY_PRIVACY_PUBLIC : ENTRY_PRIVACY_PRIVATE;
     this.props.onChangePrivacy(newEntryPrivacy);
   }
   onPinEntryButtonClick() {
-    const { isFetching, onPinEntry, pinOrderUrl } = this.props;
+    const { isSaving, onPinEntry, pinOrderUrl } = this.props;
 
-    if (isFetching || this.isPinned()) {
+    if (isSaving || this.isPinned()) {
       return;
     }
 
@@ -70,7 +70,7 @@ class EditorActions extends Component {
     return this.props.pinState === ENTRY_AWAITING_PAYMENT_STATE;
   }
   saveEntry() {
-    if (this.props.isFetching) {
+    if (this.props.isSaving) {
       return;
     }
 
@@ -136,19 +136,19 @@ class EditorActions extends Component {
   }
   render() {
     const {
-      isFetching,
+      isSaving,
       isEntryForCurrentUser,
       togglePreview,
       tlog,
     } = this.props;
     const actionsClasses = classNames({
       'post-actions': true,
-      'state--loading': isFetching,
+      'state--loading': isSaving,
     });
 
     return (
       <div className={actionsClasses}>
-        {isFetching && this.renderSpinner()}
+        {isSaving && this.renderSpinner()}
         {this.renderPinEntryButton()}
         {this.renderVoteButton()}
         {this.renderPrivacyButton()}
@@ -180,7 +180,7 @@ EditorActions.propTypes = {
   canPinEntry: PropTypes.bool,
   entryPrivacy: PropTypes.string.isRequired,
   isEntryForCurrentUser: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
   onChangePrivacy: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,

@@ -16,12 +16,15 @@ import {
   EDITOR_EMBED_REQUEST,
   EDITOR_EMBED_SUCCESS,
   EDITOR_EMBED_FAILURE,
+  EDITOR_SAVE_REQUEST,
+  EDITOR_SAVE_SUCCESS,
+  EDITOR_SAVE_FAILURE,
 } from '../actions/EditorActions';
 import {
   EDITOR_ENTRY_TYPE_TEXT,
   ENTRY_PRIVACY_PUBLIC,
 } from '../constants/EditorConstants';
-import { List, Map, fromJS } from 'immutable';
+import { List, fromJS } from 'immutable';
 
 const defaultEntry = {
   type: EDITOR_ENTRY_TYPE_TEXT,
@@ -169,6 +172,18 @@ const actionMap = {
         return idx >= 0 ? arr.delete(idx) : arr;
       }
     );
+  },
+
+  [EDITOR_SAVE_REQUEST](state) {
+    return state.set('isSaving', true);
+  },
+
+  [EDITOR_SAVE_SUCCESS](state) {
+    return state.set('isSaving', false);
+  },
+
+  [EDITOR_SAVE_FAILURE](state) {
+    return state.set('isSaving', false);
   },
 };
 

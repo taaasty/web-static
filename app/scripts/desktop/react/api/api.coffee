@@ -67,26 +67,6 @@ putRequest = (url, data) -> request 'PUT', url, data
 deleteRequest = (url, data) -> request 'DELETE', url, data
 
 Api =
-  search:
-    loadNextPage: (searchUrl) ->
-      key = Constants.api.SEARCH_LOAD_NEXT_PAGE
-
-      abortPendingRequests key
-      _pendingRequests[key] = getRequest searchUrl
-
-  editor:
-    createEntry: (url, data) ->
-      key = Constants.api.EDITOR_CREATE_ENTRY
-
-      abortPendingRequests key
-      _pendingRequests[key] = postRequest url, data
-
-    updateEntry: (url, data) ->
-      key = Constants.api.EDITOR_UPDATE_ENTRY
-
-      abortPendingRequests key
-      _pendingRequests[key] = putRequest url, data
-
   notifications:
     load: (sinceID) ->
       url = ApiRoutes.notificationsUrl()

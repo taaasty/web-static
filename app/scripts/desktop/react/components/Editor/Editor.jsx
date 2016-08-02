@@ -16,7 +16,7 @@ function Editor(props) {
     entryPrivacy,
     entryType,
     isEntryForCurrentUser,
-    isFetching,
+    isSaving,
     onChangePrivacy,
     onPinEntry,
     onSaveEntry,
@@ -27,12 +27,12 @@ function Editor(props) {
   } = props;
 
   return (
-    <EditorLayout backUrl={backUrl} isFetching={isFetching}>
+    <EditorLayout backUrl={backUrl} isSaving={isSaving}>
       <EditorActions
         canPinEntry={canPinEntry}
         entryPrivacy={entryPrivacy}
         isEntryForCurrentUser={isEntryForCurrentUser}
-        isFetching={isFetching}
+        isSaving={isSaving}
         onChangePrivacy={onChangePrivacy}
         onPinEntry={onPinEntry}
         onSaveEntry={onSaveEntry}
@@ -48,7 +48,7 @@ function Editor(props) {
         <EditorTypeSwitcher
           canChangeType={canChangeType}
           entryType={entryType}
-          isFetching={isFetching}
+          isSaving={isSaving}
           pathname={pathname}
         />
       )}
@@ -64,7 +64,7 @@ Editor.propTypes = {
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
   isEntryForCurrentUser: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
   onChangePrivacy: PropTypes.func.isRequired,
   onPinEntry: PropTypes.func.isRequired,
   onSaveEntry: PropTypes.func.isRequired,
