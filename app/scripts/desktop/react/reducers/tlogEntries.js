@@ -1,4 +1,3 @@
-import { merge } from 'lodash';
 import createReducer from './createReducer';
 import {
   TLOG_ENTRIES_REQUEST,
@@ -33,10 +32,9 @@ const actionMap = {
 
   [TLOG_ENTRIES_SUCCESS](state, { response, slug, signature }) {
     const data = signature === state.signature ?
-      merge({},
-        state.data,
-        response.result, { items: state.data.items.concat(response.result.items) }
-      ) :
+      Object.assign({}, response.result, {
+        items: state.data.items.concat(response.result.items),
+      }) :
       response.result;
 
     return Object.assign({}, state, {
@@ -70,7 +68,7 @@ const actionMap = {
   },
 
   [TLOG_ENTRIES_INVALIDATE](state) {
-    return merge({}, state, { invalid: true });
+    return Object.assign({}, state, { invalid: true });
   },
 };
 

@@ -31,11 +31,14 @@ class TagsPage extends Component {
           <div className="page-body">
             <div className="layout-outer">
               <Helmet title={title} />
-              <EntryBricksContainer entries={tagEntries} loadMoreEntries={appendTagEntries} />
+              <EntryBricksContainer
+                entries={tagEntries}
+                loadMoreEntries={appendTagEntries.bind(null, routeParams)} 
+              />
             </div>
           </div>
         </div>
-      </div>  
+      </div>
     );
   }
 }
@@ -51,5 +54,8 @@ export default connect(
   (state) => ({
     tagEntries: state.tagEntries,
   }),
-  { appendTagEntries, getTagEntriesIfNeeded }
+  {
+    appendTagEntries,
+    getTagEntriesIfNeeded,
+   }
 )(TagsPage);

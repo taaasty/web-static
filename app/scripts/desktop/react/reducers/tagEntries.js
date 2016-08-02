@@ -1,54 +1,49 @@
 import createReducer from './createReducer';
 import {
   TAG_ENTRIES_REQUEST,
-  TAG_ENTRIES_RECEIVE,
-  TAG_ENTRIES_RESET,
-  TAG_ENTRIES_ERROR,
+  TAG_ENTRIES_SUCCESS,
+  TAG_ENTRIES_FAILURE,
 } from '../actions/TagEntriesActions';
 
 const initialState = {
   data: {
     items: [],
-    has_more: null,
-    next_since_entry_id: null,
+    hasMore: null,
+    nextSinceEntryId: null,
   },
+  signature: null,
   isFetching: false,
   error: null,
-  slug: null,
-  tags: null,
 };
 
 const actionMap = {
   [TAG_ENTRIES_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [TAG_ENTRIES_RESET](state) {
-    return {
-      ...state,
-      data: initialState.data,
-    };
-  },
+  [TAG_ENTRIES_SUCCESS](state, { response, signature }) {
+    const data = signature === state.signature ?
+      Object.assign({}, response.result, {
+        items: state.data.items.concat(response.result.items),
+      }) :
+      response.result;
 
-  [TAG_ENTRIES_RECEIVE](state, { payload }) {
-    return {
-      ...state,
-      ...payload,
+    return Object.assign({}, state, {
+      data,
+      signature,
       isFetching: false,
       error: null,
-    };
+    });
   },
 
-  [TAG_ENTRIES_ERROR](state, { payload: error }) {
-    return {
-      ...state,
-      ...error,
+  [TAG_ENTRIES_FAILURE](state, { error }) {
+    return Object.assign({}, state, {
+      error,
       isFetching: false,
-    };
+    });
   },
 };
 
