@@ -16,7 +16,7 @@ class HeroProfileActionsContainer extends Component {
 
       const extraStyles = `
         .hero__actions button {
-           background-color: ${currentColor}; 
+           background-color: ${currentColor};
            opacity: 0.6;
         }
         .hero__actions button:before {

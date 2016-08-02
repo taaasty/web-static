@@ -48,7 +48,7 @@ class HeroProfileStats extends Component {
           onClick={this.handleFollowersClick.bind(this)}
           title={i18n.t('stats_followers_count', { count: followersCount })}
         />
-        {this.state.isFollowersPopupVisible && 
+        {this.state.isFollowersPopupVisible &&
          <HeroProfileStatsPopup
            close={() => this.setState({ isFollowersPopupVisible: false })}
            title={i18n.t('followers')}
@@ -75,7 +75,7 @@ class HeroProfileStats extends Component {
            close={() => this.setState({ isFollowingsPopupVisible: false })}
            title={i18n.t('followings')}
          >
-           <HeroProfileStatsFollowingsPopup  tlogId={this.props.user.get('id')} />
+           <HeroProfileStatsFollowingsPopup tlogId={this.props.user.get('id')} />
          </HeroProfileStatsPopup>
         }
       </span>
@@ -90,6 +90,7 @@ class HeroProfileStats extends Component {
         count={favoritesCount}
         href={url}
         key="favorites"
+        onClick={this.props.close}
         title={i18n.t('stats_favorites_count')}
       />
     );
@@ -103,6 +104,7 @@ class HeroProfileStats extends Component {
         count={entriesCount}
         href={url}
         key="entries"
+        onClick={this.props.close}
         title={i18n.t('stats_entries_count', { count: entriesCount })}
       />
     );
@@ -140,7 +142,7 @@ class HeroProfileStats extends Component {
           onClick={this.handleTagsClick.bind(this)}
           title={i18n.t('stats_tags_count', { count: tagsCount })}
         />
-        {this.state.isTagsPopupVisible && 
+        {this.state.isTagsPopupVisible &&
          <HeroProfileStatsPopup
            close={() => this.setState({ isTagsPopupVisible: false })}
            title={i18n.t('tags')}
@@ -172,7 +174,8 @@ class HeroProfileStats extends Component {
 }
 
 HeroProfileStats.propTypes = {
+  close: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
-  
+
 export default HeroProfileStats;

@@ -105,7 +105,7 @@ class HeroProfile extends Component {
         'opacity': Math.max(1 - scrollTop / height, 0),
       });
     }
-  }    
+  }
   _onResize() {
     if (this.isOpen()) {
       this.setHeroWindowHeight();
@@ -121,7 +121,7 @@ class HeroProfile extends Component {
   render() {
     const { isCurrentUser, showSettingsPopup, tlog, tlogRelation } = this.props;
     const tlogId = tlog.get('id');
-    
+
     return (
       <div className="hero hero-profile">
         <CloseToolbar onClick={this.close.bind(this)} />
@@ -145,7 +145,12 @@ class HeroProfile extends Component {
              tlogRelation={tlogRelation}
            />
         </div>
-        {!!tlog.get('stats') && <HeroProfileStats user={tlog} />}
+        {!!tlog.get('stats') && (
+          <HeroProfileStats
+            close={this._close.bind(this)}
+            user={tlog}
+          />
+        )}
       </div>
     );
   }

@@ -67,7 +67,6 @@ function EditorContainer(props) {
             }
           }
 
-          //FIXME think through better tlogEntries update logic
           browserHistory.push({
             pathname: uri(savedEntry.entryUrl).path(),
             state: { id: savedEntry.id, refetch: true },
