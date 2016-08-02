@@ -163,6 +163,7 @@ function prepareEntryData(state, { tlogId, wantToFix }) {
 }
 
 function createEntry(entryType, data) {
+  // TODO: implement update logic for tlog list if it could contain newly created entry
   return {
     [CALL_API]: {
       endpoint: ApiRoutes.create_entry_url(entryType),

@@ -19,20 +19,21 @@ function tlogEntriesReset() {
   };
 }
 
-function endpoint(slug, section=TLOG_SECTION_TLOG, params) {
+function endpoint(slug, section = TLOG_SECTION_TLOG, params) {
   return makeGetUrl(ApiRoutes.tlogEntries(slug, section, 'tlogs'), params);
 }
 
-function signature({ slug='', section='', date='', query='' }) {
+function signature({ slug = '', section = '', date = '', query = '' }) {
   return `${slug}-${section}-${date}-${query}`;
 }
 
-function fetchTlogEntries(endpoint, signature) {
+function fetchTlogEntries(endpoint, slug, signature) {
   return {
+    slug,
     signature,
     [CALL_API]: {
       endpoint,
-      types: [ TLOG_ENTRIES_REQUEST, TLOG_ENTRIES_SUCCESS, TLOG_ENTRIES_FAILURE ],
+      types: [TLOG_ENTRIES_REQUEST, TLOG_ENTRIES_SUCCESS, TLOG_ENTRIES_FAILURE],
       schema: Schemas.ENTRY_COLL,
       opts: defaultOpts,
     },
@@ -56,6 +57,7 @@ export function getTlogEntries(params) {
         sinceEntryId: sinceId || void 0,
         q: query || void 0,
       }),
+      slug,
       signature(params)
     ));
   };

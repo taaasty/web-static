@@ -15,6 +15,9 @@ import {
   saveEntry,
 } from '../../actions/EditorActions';
 import {
+  tlogEntriesInvalidate,
+} from '../../actions/TlogEntriesActions';
+import {
   PIN_ENTRY_ORDER,
 } from '../../constants/OrderConstants';
 import NoticeService from '../../services/Notice';
@@ -27,6 +30,8 @@ function EditorContainer(props) {
     pinEntry,
     saveEntry,
     tlog,
+    tlogEntriesSlug,
+    tlogEntriesInvalidate,
   } = props;
 
   function onPinEntry(pinOrderUrl) {
@@ -42,21 +47,30 @@ function EditorContainer(props) {
 
     saveEntry(tlog.get('id'))
       .then(({ response }) => {
-        const newEntry = response.entities.entry[response.result];
+        const savedEntry = response.entities.entry[response.result];
+        const savedTlog = savedEntry && response.entities.tlog && (
+          response.entities.tlog[savedEntry.tlog]
+        );
 
         NoticeService.closeAll();
-        if (newEntry) {
-          if (isNew && typeof ga === 'function') {
-            ga('send', 'event', 'UX',
-              newEntry.isPrivate ? 'CreateAnonymous' : 'CreatePost',
-              newEntry.type
-            );
+        if (savedEntry) {
+          if (isNew) {
+            if (typeof ga === 'function') {
+              ga('send', 'event', 'UX',
+                savedEntry.isPrivate ? 'CreateAnonymous' : 'CreatePost',
+                savedEntry.type
+              );
+            }
+
+            if (savedTlog && savedTlog.slug === tlogEntriesSlug) {
+              tlogEntriesInvalidate(); // invalidate if tlog entries already fetched
+            }
           }
 
           //FIXME think through better tlogEntries update logic
           browserHistory.push({
-            pathname: uri(newEntry.entryUrl).path(),
-            state: { id: newEntry.id, refetch: true },
+            pathname: uri(savedEntry.entryUrl).path(),
+            state: { id: savedEntry.id, refetch: true },
           });
         }
       });
@@ -84,6 +98,8 @@ EditorContainer.propTypes = {
   pinEntry: PropTypes.func.isRequired,
   saveEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object,
+  tlogEntriesInvalidate: PropTypes.func.isRequired,
+  tlogEntriesSlug: PropTypes.string,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_PUBLIC,
     TLOG_TYPE_PRIVATE,
@@ -100,10 +116,12 @@ export default connect(
     isEntryForCurrentUser: tlogType === TLOG_TYPE_ANONYMOUS ||
       tlog.get('id') === state.currentUser.data.id,
     isSaving: state.editor.get('isSaving', false),
+    tlogEntriesSlug: state.tlogEntries.slug,
   }),
   {
     changeEntryPrivacy,
     pinEntry,
     saveEntry,
+    tlogEntriesInvalidate,
   }
 )(EditorContainer);

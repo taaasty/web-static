@@ -17,6 +17,7 @@ export const initialState = {
     nextSinceEntryId: null,
   },
   signature: null,
+  slug: null, // for invalidation purposes
   isFetching: false,
   error: null,
   invalid: false,
@@ -30,24 +31,29 @@ const actionMap = {
     });
   },
 
-  [TLOG_ENTRIES_SUCCESS](state, { response, signature }) {
-    const data = signature === state.signature
-            ? merge({}, state.data, response.result, { items: state.data.items.concat(response.result.items) })
-            : response.result;
+  [TLOG_ENTRIES_SUCCESS](state, { response, slug, signature }) {
+    const data = signature === state.signature ?
+      merge({},
+        state.data,
+        response.result, { items: state.data.items.concat(response.result.items) }
+      ) :
+      response.result;
 
     return Object.assign({}, state, {
       data,
       signature,
+      slug,
       isFetching: false,
       error: null,
       invalid: false,
     });
   },
 
-  [TLOG_ENTRIES_FAILURE](state, { error, signature }) {
+  [TLOG_ENTRIES_FAILURE](state, { error, slug, signature }) {
     return Object.assign({}, state, {
       error,
       signature,
+      slug,
       isFetching: false,
       invalid: false,
     });
