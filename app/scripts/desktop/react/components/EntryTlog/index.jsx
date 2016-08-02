@@ -1,4 +1,5 @@
 /*global i18n */
+/*eslint react/jsx-sort-prop-types: 0 */
 import React, { Component, PropTypes } from 'react';
 import { Map } from 'immutable';
 import EntryTlogContent from './EntryTlogContent';
@@ -161,7 +162,7 @@ class EntryTlog extends Component {
       return <EntryTlogPrivate />;
     } else if (response_code === 404) {
       return <EntryTlogError error={error} />;
-    } 
+    }
 
     return null;
   }
@@ -248,12 +249,12 @@ export default connect(
     const entryAuthor = entities.getIn([ 'tlog', String(entry.get('author')) ], emptyAuthor);
     const entryTlog = entities.getIn([ 'tlog', String(entry.get('tlog')) ], emptyTlog);
     const commentator = entities.getIn(
-      [ 'tlog', entities.getIn([ 'entryCollItem', String(entryId), 'commentator' ]) ],
+      [ 'tlog', String(entities.getIn([ 'entryCollItem', String(entryId), 'commentator' ])) ],
       currentUser.data.id ? currentUser.data : anonCommentator);
     const moderation = null; // TODO: implement when premod enabled
 
     return Object.assign({}, ownProps, {
-      commentator,
+      commentator: typeof commentator.toJS === 'function' ? commentator.toJS() : commentator,
       entry,
       entryAuthor,
       entryTlog,
