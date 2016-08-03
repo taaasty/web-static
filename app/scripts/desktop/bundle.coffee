@@ -50,10 +50,6 @@ require './react/components/transition/timeout_transition_group'
 # =            Messaging resourses            =
 # ============================================*/
 
-# /*==========  Stores  ==========*/
-
-global.MessagingStatusStore = require './react/messaging/stores/messaging_status'
-
 # /*==========  Control structures  ==========*/
 
 require './react/messaging/messaging_testing'
@@ -61,8 +57,6 @@ require './react/messaging/messaging_testing'
 # /*-----  End of Messaging resources  ------*/
 
 require './react/components/common/adaptive_input'
-
-global.EmbedComponent = require './react/components/embed'
 
 # /*===============================================
 # =            Authorization resources            =

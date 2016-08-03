@@ -4,6 +4,7 @@ import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
+import Embed from '../Embed';
 
 class EntryTlogVideoType extends Component {
   startComment() {
@@ -15,20 +16,20 @@ class EntryTlogVideoType extends Component {
     }
   }
   render() {
-    const { iframely, isPrivate, isVoteable, rating, title } = this.props.entry;
+    const { iframely, isPrivate, title } = this.props.entry;
 
     return (
       <span>
         <div className="post__content">
-          <EmbedComponent
+          <Embed
             autoplay={false}
-            frameWidth={712}
-            frameHeight={400}
             embedHtml={iframely.html}
+            frameHeight={400}
+            frameWidth={712}
           />
           <div className="video_comment">
             {!!isPrivate && <PrivacyBadge />}
-            <Text value={title} withHTML={true} />
+            <Text value={title} withHTML />
           </div>
         </div>
         <div className="post__meta">
