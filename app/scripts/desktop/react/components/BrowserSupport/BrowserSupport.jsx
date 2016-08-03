@@ -1,38 +1,32 @@
-let BrowserSupport = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    version: React.PropTypes.number.isRequired,
-    updateUrl: React.PropTypes.string
-  },
+/*global i18n */
+import React, { PropTypes } from 'react';
 
-  render() {
-    return (
-      <div className="browserbar">
-        <div className="browserbar__inner">
-          {this.renderText()} {this.renderLink()}
-        </div>
-      </div>
-    );
-  },
-
-  renderText() {
-    return (
-      i18n.t('browser_support_update_to', {
-        browserName: this.props.name,
-        browserVersion: this.props.version
-      })
-    );
-  },
-
-  renderLink() {
+function BrowserSupport({ name, version, updateUrl }) {
     let phrase = i18n.t('browser_support_last_version');
 
-    if (this.props.updateUrl) {
-      return <a href={this.props.updateUrl}>{phrase}</a>;
-    } else {
-      return phrase;
-    }
-  }
-});
+  return (
+    <div className="browserbar">
+      <div className="browserbar__inner">
+        {i18n.t('browser_support_update_to', {
+          browserName: name,
+          browserVersion: version,
+        })}
+        {' '}
+        {updateUrl ? (
+          <a href={updateUrl}>
+            {phrase}
+          </a>
+        )
+        : phrase}
+      </div>
+    </div>
+  );
+}
+
+BrowserSupport.propTypes = {
+  name: PropTypes.string.isRequired,
+  updateUrl: PropTypes.string,
+  version: PropTypes.number.isRequired,
+};
 
 export default BrowserSupport;

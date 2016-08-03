@@ -14,6 +14,7 @@ import flow from './flow';
 import flowCreator from './flowCreator';
 import flowUsers from './flowUsers';
 import flows from './flows';
+import msg from '../messaging/reducers';
 import notifications from './notifications';
 import people from './people';
 import ratingState from './ratingState';
@@ -45,6 +46,7 @@ export default {
   flowCreator,
   flowUsers,
   flows,
+  msg,
   notifications,
   people,
   ratingState,

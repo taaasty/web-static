@@ -17018,6 +17018,9 @@ Routes = {
   },
   prices: function() {
     return '/prices';
+  },
+  policy: function() {
+    return '/policy';
   }
 };
 

@@ -44,8 +44,6 @@ require './react/mixins/scroller'
 require './react/dispatchers/current_user'
 global.CurrentUserStore = require './react/stores/current_user'
 
-require './react/components/transition/timeout_transition_group'
-
 # /*============================================
 # =            Messaging resourses            =
 # ============================================*/
@@ -67,7 +65,6 @@ global.Auth = require './react/components/Auth'
 # /*-----  End of Authorization resources  ------*/
 
 global.BrowserSupportContainer = require './react/components/BrowserSupport'
-global.TlogAlertContainer = require './react/components/TlogAlert/TlogAlertContainer'
 global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
 global.UserToolbarContainer = require './react/components/UserToolbar'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
@@ -78,11 +75,8 @@ global.Spinner = require '../shared/react/components/common/Spinner'
 global.SocialShare = require './react/components/common/SocialShare';
 
 require './react/components/alerts/tasty_confirm'
-require './react/components/alerts/tasty_alert'
 
 require './react/controllers/tasty_events'
-require './react/controllers/tasty_alert'
 
-require './react/controllers/popup'
-
+global.AppRoot = require './react/AppRoot';
 global.ReactApp = require './react/ReactApp';

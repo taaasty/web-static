@@ -1,4 +1,5 @@
-/*eslint react/jsx-sort-props:0 */
+/*global gon */
+/*eslint react/jsx-sort-props:0, react/jsx-max-props-per-line:0 */
 import React, { Component } from 'react';
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
@@ -54,11 +55,21 @@ function handleRouteUpdate() {
 
 class AppRoot extends Component {
   componentWillMount() {
-    const { appStats, currentUser, feedEntries, flow, flows, people, tlogEntries, tlogEntry, userToolbar } = this.props;
+    const {
+      appStats,
+      currentUser,
+      feedEntries,
+      flow,
+      flows,
+      people,
+      tlogEntries,
+      tlogEntry,
+      userToolbar,
+    } = this.props;
 
     store = createStoreWithMiddleware(combineReducers(reducers));
 
-    if (gon.user) {
+    if (typeof gon === 'object' && gon.user) {
       const user = camelizeKeys(gon.user);
 
       store.dispatch(initCurrentUser(user));

@@ -8256,7 +8256,7 @@ var _chai = require('chai');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = global.React; /*global global */
+var React = global.React; /*global global, describe, it */
 
 var _global$ReactTestUtil = global.ReactTestUtils;
 var isCompositeComponent = _global$ReactTestUtil.isCompositeComponent;
@@ -8266,15 +8266,12 @@ var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 
 var components = {
   AppRoot: {},
-  ImageAttachmentsCollage: {
-    imageAttachments: []
-  },
+  BrowserSupportContainer: {},
   ConfirmRegistrationShellbox: {
     type: 'email',
     postUrl: '',
     proposetSlug: ''
-  },
-  TlogAlertContainer: {}
+  }
 };
 
 (0, _keys2.default)(components).forEach(function (componentName) {

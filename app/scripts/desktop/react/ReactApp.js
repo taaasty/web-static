@@ -37,12 +37,15 @@ const ReactApp = {
     console.log('ReactApp start');
 
     if (user) {
-      window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser || {};
+      window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser ||
+        {};
       CurrentUserDispatcher.setupUser(user);
       window.messagingService = new MessagingService(user);
 
       sendUser(user);
-      if (window.gon.register_provider || uri().query(true).first_login !== void 0) {
+      if (window.gon.register_provider || uri()
+        .query(true)
+        .first_login !== void 0) {
         sendRegister(user.id);
       }
     }
@@ -70,14 +73,14 @@ const ReactApp = {
     //PostAuthService.restore();
 
     // Тултип для шаринга
-    $('[tooltip]').tooltip();
+    $('[tooltip]')
+      .tooltip();
 
-    $('.js-connection-start').connection({
-      connectionEnd: '.js-connection-end',
-      connectionLineClass: 'connection-line',
-    });
-
-    // GuideController.start();
+    $('.js-connection-start')
+      .connection({
+        connectionEnd: '.js-connection-end',
+        connectionLineClass: 'connection-line',
+      });
   },
 };
 
