@@ -168,6 +168,7 @@ RelationManagerPopup.propTypes = {
   getMyRelsToIgnored: PropTypes.func.isRequired,
   getRelsFbSuggested: PropTypes.func.isRequired,
   getRelsVkSuggested: PropTypes.func.isRequired,
+  hasFbAuth: PropTypes.bool.isRequired,
   hasVkAuth: PropTypes.bool.isRequired,
   ignoreTlog: PropTypes.func.isRequired,
   ignored: PropTypes.object.isRequired,
@@ -180,6 +181,8 @@ RelationManagerPopup.propTypes = {
   requestedTotalCount: PropTypes.number.isRequired,
   subscribeAllFb: PropTypes.func.isRequired,
   subscribeAllVk: PropTypes.func.isRequired,
+  suggestionsFb: PropTypes.object.isRequired,
+  suggestionsFbState: PropTypes.object.isRequired,
   suggestionsVk: PropTypes.object.isRequired,
   suggestionsVkState: PropTypes.object.isRequired,
   unfollowFromMe: PropTypes.func.isRequired,
@@ -192,7 +195,7 @@ export default connect(
                       !!state.currentUser.data.authentications.filter((a) => a.provider === PROVIDER_VK && a.id).length;
     const hasFbAuth = state.currentUser.data.authentications &&
                       !!state.currentUser.data.authentications.filter((a) => a.provider === PROVIDER_FB && a.id).length;
-    
+
     const followings = state
           .entities
           .get('rel')
@@ -235,16 +238,15 @@ export default connect(
     const suggestionsVk = suggestionsVkState
       .get('data', List())
       .toMap()
-      .mapEntries(([ key, relId ]) => [ relId, state.entities.getIn([ 'rel', relId ], emptyRel) ])
+      .mapEntries(([ key, relId ]) => [ relId, state.entities.getIn([ 'rel', relId ], emptyRel) ]) // eslint-disable-line no-unused-vars
       .map((r) => r.set('user', state.entities.getIn([ 'tlog', String(r.get('userId')) ], emptyRelUser)));
 
     const suggestionsFbState = state.rels.get(RELS_FB_SUGGESTED);
     const suggestionsFb = suggestionsFbState
       .get('data', List())
       .toMap()
-      .mapEntries(([ key, relId ]) => [ relId, state.entities.getIn([ 'rel', relId ], emptyRel) ])
+      .mapEntries(([ key, relId ]) => [ relId, state.entities.getIn([ 'rel', relId ], emptyRel) ]) // eslint-disable-line no-unused-vars
       .map((r) => r.set('user', state.entities.getIn([ 'tlog', String(r.get('userId')) ], emptyRelUser)));
-                         
 
     return {
       currentUserId,

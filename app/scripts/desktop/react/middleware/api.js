@@ -11,8 +11,7 @@ import NoticeService from '../services/Notice';
 
 const tlogSchema = new Schema('tlog');
 const relSchema = new Schema(
-  'rel',
-  { idAttribute: (e) => `${e.userId}-${e.readerId}` }
+  'rel', { idAttribute: (e) => `${e.userId}-${e.readerId}` }
 );
 const ratingSchema = new Schema('rating', { idAttribute: 'entryId' });
 
@@ -20,8 +19,7 @@ const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
 
 const flowSchema = new Schema('flow');
 const flowCollItemSchema = new Schema(
-  'flowCollItem',
-  { idAttribute: (el) => el.flow.id }
+  'flowCollItem', { idAttribute: (el) => el.flow.id }
 );
 const staffSchema = new Schema('staff');
 
@@ -29,8 +27,7 @@ const commentSchema = new Schema('comment');
 
 const entrySchema = new Schema('entry');
 const entryCollItemSchema = new Schema(
-  'entryCollItem',
-  { idAttribute: (el) => el.entry.id }
+  'entryCollItem', { idAttribute: (el) => el.entry.id }
 );
 
 const privateConversationSchema = new Schema('privateConversation');
@@ -108,12 +105,12 @@ groupConversationSchema.define({
 });
 
 const conversationSchema = unionOf(
-  conversationMap,
-  { schemaAttribute: 'type' }
+  conversationMap, { schemaAttribute: 'type' }
 );
 
 notificationSchema.define({
   sender: tlogSchema,
+  senderRelation: relSchema,
 });
 
 export const Schemas = {
@@ -141,20 +138,25 @@ export const Schemas = {
     conversations: arrayOf(conversationSchema),
     notifications: arrayOf(notificationSchema),
   },
+  NOTIFICATION: notificationSchema,
+  NOTIFICATION_ARR: arrayOf(notificationSchema),
+  NOTIFICATION_COLL: {
+    notifications: arrayOf(notificationSchema),
+  },
 };
 
 export const CALL_API = Symbol('Call API');
 
 export function prepareResponse(json, schema) {
-  return Object.assign(
-    {},
+  return Object.assign({},
     normalize(camelizeKeys(json), schema)
   );
 }
 
 function callApi(endpoint, opts, schema) {
   return fetch(endpoint, opts)
-    .then((response) => response.json().then((json) => ({ json, response })))
+    .then((response) => response.json()
+      .then((json) => ({ json, response })))
     .then(({ json, response }) => {
       if (typeof json !== 'object') {
         json = {};
@@ -193,8 +195,8 @@ export default (store) => (next) => (action) => {
   }
 
   if (typeof opts !== 'undefined' &&
-      typeof opts !== 'string' &&
-      typeof opts !== 'object') {
+    typeof opts !== 'string' &&
+    typeof opts !== 'object') {
     throw new Error('Expected opts to be a string or an object');
   }
 
@@ -216,17 +218,18 @@ export default (store) => (next) => (action) => {
     return finalAction;
   }
 
-  const [ requestType, successType, failureType ] = types;
+  const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, opts, schema).then(
-    (response) => next(actionWith({
-      response,
-      type: successType,
-    })),
-    (error) => Promise.reject(next(actionWith({
-      error,
-      type: failureType,
-    })))
-  );
+  return callApi(endpoint, opts, schema)
+    .then(
+      (response) => next(actionWith({
+        response,
+        type: successType,
+      })),
+      (error) => Promise.reject(next(actionWith({
+        error,
+        type: failureType,
+      })))
+    );
 }

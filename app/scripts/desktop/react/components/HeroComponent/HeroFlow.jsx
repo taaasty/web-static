@@ -14,7 +14,7 @@ import FlowManagerPopup from '../FlowManagerPopup';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-const defaultBackgroundUrl = "//taaasty.com/images/hero-cover.jpg";
+const defaultBackgroundUrl = '//taaasty.com/images/hero-cover.jpg';
 
 class HeroFlow extends Component {
   state = { isFlowManagerPopupVisible: false };
@@ -37,7 +37,7 @@ class HeroFlow extends Component {
   }
   renderRelationButton() {
     const { tlog } = this.props;
-    
+
     return (
       <RelationButton
         key="relationButton"
@@ -78,8 +78,8 @@ class HeroFlow extends Component {
   }
   text(count) {
     return count
-      ?  i18n.t('hero.flow_entries_count', { count })
-      :  null;
+      ? i18n.t('hero.flow_entries_count', { count })
+      : null;
   }
   renderActions() {
     const { flow, tlog } = this.props;

@@ -12,9 +12,9 @@ import feedEntries from './feedEntries';
 import feedStatus from './feedStatus';
 import flow from './flow';
 import flowCreator from './flowCreator';
-import flowManager from './flowManager';
 import flowUsers from './flowUsers';
 import flows from './flows';
+import notifications from './notifications';
 import people from './people';
 import ratingState from './ratingState';
 import relState from './relState';
@@ -43,9 +43,9 @@ export default {
   feedStatus,
   flow,
   flowCreator,
-  flowManager,
   flowUsers,
   flows,
+  notifications,
   people,
   ratingState,
   relState,

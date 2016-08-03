@@ -36,7 +36,7 @@ class SupportLauncherContainer extends Component {
     if (this.hoverTimeout) {
       clearTimeout(this.hoverTimeout);
     }
-    
+
     this.setState({ isHover: true });
   }
   handleMouseLeave() {
@@ -52,8 +52,14 @@ class SupportLauncherContainer extends Component {
     return (
       <div>
         {isEmailFormVisible && <EmailForm onClose={this.handleClose.bind(this)} />}
-        <div onMouseEnter={this.handleMouseEnter.bind(this)} onMouseLeave={this.handleMouseLeave.bind(this)}>
-          <SupportLauncher hasUnread={this.state.hasUnread} onClick={this.handleClick.bind(this)}>
+        <div
+          onMouseEnter={this.handleMouseEnter.bind(this)}
+          onMouseLeave={this.handleMouseLeave.bind(this)}
+        >
+          <SupportLauncher
+            hasUnread={this.state.hasUnread}
+            onClick={this.handleClick.bind(this)}
+          >
             <div className={termsContainer}>
               <Terms />
             </div>

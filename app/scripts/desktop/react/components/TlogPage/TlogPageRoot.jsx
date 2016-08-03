@@ -4,7 +4,7 @@ import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
 import { connect } from 'react-redux';
 import { getTlog } from '../../actions/TlogActions';
-import { getFlow }  from '../../actions/FlowActions';
+import { getFlow } from '../../actions/FlowActions';
 import { showSettingsPopup } from '../../actions/AppStateActions';
 import HeroProfile from '../HeroProfile';
 import HeroFlow from '../HeroComponent/HeroFlow';
