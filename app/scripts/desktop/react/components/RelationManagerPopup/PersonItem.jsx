@@ -1,6 +1,6 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import UserAvatar from '../UserAvatar/new';
+import UserAvatar from '../UserAvatar';
 import { Link } from 'react-router';
 import uri from 'urijs';
 

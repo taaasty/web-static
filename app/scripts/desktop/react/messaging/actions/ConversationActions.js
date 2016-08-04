@@ -11,7 +11,8 @@ const ConversationActions = {
   },
 
   openConversation(recipientId) {
-    const conversation = ConversationsStore.getConversationByUserId(recipientId);
+    const conversation = ConversationsStore.getConversationByUserId(
+      recipientId);
 
     if (conversation) {
       MessagingDispatcher.handleViewAction({
@@ -24,6 +25,7 @@ const ConversationActions = {
 
     messagingService.openMessagesPopup();
     //return TastyEvents.emit(TastyEvents.keys.command_hero_close());
+    // TODO: implement hero closing when opens message popup
   },
 
   deleteConversation(id) {
@@ -45,7 +47,7 @@ const ConversationActions = {
     return messagingService.dontDisturb(id, flag);
   },
 
-  postNewConversation({recipientId, error}) {
+  postNewConversation({ recipientId, error }) {
     return messagingService.postNewConversation({ recipientId, error });
   },
 

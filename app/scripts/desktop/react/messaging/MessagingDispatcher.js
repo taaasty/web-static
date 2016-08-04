@@ -1,12 +1,12 @@
-/*global Dispatcher, BeepService, require */
+/*global Dispatcher, require */
 import _ from 'lodash';
+import BeepService from '../../../shared/react/services/Beep';
 
 const IncomingMsgSound = 'income_message.mp3';
 const SubmitMsgSound = 'submit_message.mp3';
 
 const MessagingDispatcher = Object.assign(
-  new Dispatcher(),
-  {
+  new Dispatcher(), {
     handleViewAction(action) {
       return this.dispatch({ source: 'VIEW_ACTION', action });
     },
@@ -38,7 +38,8 @@ const MessagingDispatcher = Object.assign(
 
     messageReceived(message) {
       const ConversationsStore = require('./stores/ConversationsStore'); //FIXME circular dep
-      const conversation = message.conversation || ConversationsStore.getConversation(message.conversation_id);
+      const conversation = message.conversation || ConversationsStore.getConversation(
+        message.conversation_id);
 
       console.info('Получено сообщение', message);
 

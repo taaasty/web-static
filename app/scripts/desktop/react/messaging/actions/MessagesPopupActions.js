@@ -1,4 +1,75 @@
-/*global messagingService */
+export const MSG_POPUP_SET_CONVERSATION_ID = 'MSG_POPUP_SET_CONVERSATION_ID';
+export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
+export const MSG_POPUP_POP_HISTORY = 'MSG_POPUP_POP_HISTORY';
+export const MSG_POPUP_SET_HISTORY = 'MSG_POPUP_SET_HISTORY';
+
+export const MSG_POPUP_STATE_CONVERSATIONS = 'MSG_POPUP_STATE_CONVERSATIONS';
+export const MSG_POPUP_STATE_CREATE_NEW = 'MSG_POPUP_STATE_CREATE_NEW';
+export const MSG_POPUP_STATE_THREAD = 'MSG_POPUP_STATE_THREAD';
+export const MSG_POPUP_STATE_GROUP_CHOOSER = 'MSG_POPUP_STATE_GROUP_CHOOSER';
+export const MSG_POPUP_STATE_GROUP_SETTINGS = 'MSG_POPUP_STATE_GROUP_SETTINGS';
+
+export function initPopup() {
+  return (dispatch) => {
+    dispatch(stopSelect());
+    return dispatch(showConversationList());
+  };
+}
+
+function setHistory(history) {
+  return {
+    type: MSG_POPUP_SET_HISTORY,
+    history,
+  };
+}
+
+function pushHistory(popupState) {
+  return {
+    type: MSG_POPUP_PUSH_HISTORY,
+    popupState,
+  };
+}
+
+function setCurrentConversationId(id) {
+  return {
+    type: MSG_POPUP_SET_CONVERSATION_ID,
+    id,
+  };
+}
+
+export function showConversationList() {
+  return setHistory([MSG_POPUP_STATE_CONVERSATIONS]);
+}
+
+export function showCreateNew() {
+  return pushHistory(MSG_POPUP_STATE_CREATE_NEW);
+}
+
+export function showGroupSettings() {
+
+}
+
+export function showGroupChooser() {
+
+}
+
+export function showThread(id) {
+  return (dispatch) => {
+    dispatch(setCurrentConversationId(id));
+    return dispatch(setHistory([
+      MSG_POPUP_STATE_CONVERSATIONS,
+      MSG_POPUP_STATE_THREAD,
+    ]));
+  }
+}
+
+export function historyBack() {
+  return {
+    type: MSG_POPUP_POP_HISTORY,
+  };
+}
+
+/*
 import MessagingDispatcher from '../MessagingDispatcher';
 
 const MessagesPopupActions = {
@@ -8,36 +79,14 @@ const MessagesPopupActions = {
       type: 'closeMessagesPopup',
     });
   },
-  
+
   openMessagesPopup() {
     messagingService.openMessagesPopup();
-  },
-
-  toggleMessagesPopup() {
-    messagingService.toggleMessagesPopup();
   },
 
   openConversationList() {
     MessagingDispatcher.handleViewAction({
       type: 'openConversationList',
-    });
-  },
-
-  backButtonClick() {
-    MessagingDispatcher.handleViewAction({
-      type: 'backButtonClick',
-    });
-  },
-
-  startSelect() {
-    MessagingDispatcher.handleViewAction({
-      type: 'startSelect',
-    });
-  },
-
-  stopSelect() {
-    MessagingDispatcher.handleViewAction({
-      type: 'stopSelect',
     });
   },
 
@@ -71,3 +120,155 @@ const MessagesPopupActions = {
 };
 
 export default MessagesPopupActions;
+*******************************************************************
+
+import BaseStore from '../../stores/BaseStore';
+import MessagingDispatcher from '../MessagingDispatcher';
+import ConversationsStore from './ConversationsStore';
+
+export const CONVERSATIONS_STATE = 'conversations';
+export const CREATE_NEW_CONVERSATION_STATE = 'createNewConversation';
+export const THREAD_STATE = 'thread';
+export const GROUP_CHOOSER_STATE = 'groupChooser';
+export const GROUP_SETTINGS_STATE = 'groupSettings';
+
+//let currentState = CONVERSATIONS_STATE;
+let selectState = false;
+let conversationId = null;
+let _history = [ CONVERSATIONS_STATE ];
+
+const MessagesPopupStore = Object.assign(
+  new BaseStore(),
+  {
+    getCurrentState() {
+      return _history[_history.length - 1];
+    },
+
+    getSelectState() {
+      return selectState;
+    },
+
+    getCurrentConversationId() {
+      return conversationId;
+    },
+
+    setCurrentConversationId(id) {
+      conversationId = id;
+    },
+
+    setThreadState() {
+      _history = [ CONVERSATIONS_STATE, THREAD_STATE ];
+    },
+
+    setCreateNewConversationState() {
+      _history.push(CREATE_NEW_CONVERSATION_STATE);
+    },
+
+    setConversationsState() {
+      _history = [ CONVERSATIONS_STATE ];
+    },
+
+    backButtonClick() {
+      _history.pop(); //TODO improve back button logic
+    },
+
+    startSelect() {
+      selectState = _history[_history.length - 1] === THREAD_STATE; // set to true only if in thread state
+    },
+
+    stopSelect() {
+      selectState = false;
+    },
+
+    showGroupSettings() {
+      const prev = _history[_history.length - 2];
+
+      //prevent multiple cycles of chooser/settings navigation
+      if (prev === GROUP_SETTINGS_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_SETTINGS_STATE);
+      }
+    },
+
+    showGroupChooser() {
+      const prev = _history[_history.length -2];
+
+      if (prev === GROUP_CHOOSER_STATE) {
+        this.backButtonClick();
+      } else {
+        _history.push(GROUP_CHOOSER_STATE);
+      }
+    },
+
+    closeGroupSettings() {
+      _history = _history.filter((e) => [ GROUP_CHOOSER_STATE, GROUP_SETTINGS_STATE ].indexOf(e) < 0);
+    },
+  }
+);
+
+MessagesPopupStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
+  switch (action.type) {
+  case 'postNewConversation':
+    MessagingDispatcher.waitFor([ ConversationsStore.dispatchToken ]);
+    MessagesPopupStore.setCurrentConversationId(action.conversation.id);
+    MessagesPopupStore.setThreadState();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'clickNewConversation':
+    MessagesPopupStore.setCreateNewConversationState();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'openConversationList':
+    MessagesPopupStore.setConversationsState();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'openConversation':
+    MessagesPopupStore.setCurrentConversationId(action.conversationId);
+    MessagesPopupStore.setThreadState();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'closeMessagesPopup':
+    MessagesPopupStore.setConversationsState();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'startSelect':
+    MessagesPopupStore.startSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'setReplyTo':
+  case 'stopSelect':
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'showGroupSettings':
+    MessagesPopupStore.showGroupSettings();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'showGroupChooser':
+    MessagesPopupStore.showGroupChooser();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'closeGroupSettings':
+    MessagesPopupStore.closeGroupSettings();
+    MessagesPopupStore.emitChange();
+    break;
+  case 'backButtonClick':
+    MessagesPopupStore.backButtonClick();
+    MessagesPopupStore.stopSelect();
+    MessagesPopupStore.emitChange();
+    break;
+  }
+});
+
+export default MessagesPopupStore;
+
+
+*/

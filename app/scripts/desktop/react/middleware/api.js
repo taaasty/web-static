@@ -6,7 +6,7 @@ import {
   PRIVATE_CONVERSATION,
   PUBLIC_CONVERSATION,
   GROUP_CONVERSATION,
-} from '../messaging/constants/ConversationConstants';
+} from '../messaging/constants';
 import NoticeService from '../services/Notice';
 
 const tlogSchema = new Schema('tlog');
@@ -57,6 +57,7 @@ flowSchema.define({
 });
 
 relSchema.define({
+  flow: flowSchema,
   reader: tlogSchema,
   reverseRelationship: relSchema,
   user: tlogSchema,

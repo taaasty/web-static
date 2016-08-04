@@ -1,6 +1,6 @@
-/*global ThumborService */
 import React, { PropTypes } from 'react';
 import Image from '../../../../shared/react/components/common/Image';
+import ThumborService from '../../../../shared/react/services/thumbor';
 import { brickWidth, flowAvatarSize } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
@@ -45,7 +45,7 @@ function EntryBrickFlowHeader({ flow }) {
           </span>
         </div>
       </Link>
-    </div>  
+    </div>
   );
 }
 

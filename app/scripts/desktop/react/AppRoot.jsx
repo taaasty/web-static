@@ -8,6 +8,7 @@ import apiMiddleware from './middleware/api';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 import { camelizeKeys } from 'humps';
+import { pusherSubscribe } from './messaging/actions/PusherActions';
 
 import AppPageEmpty from './components/AppPage/Empty'; // for non-spa components with toolbars
 import AppPage from './components/AppPage';
@@ -73,6 +74,7 @@ class AppRoot extends Component {
       const user = camelizeKeys(gon.user);
 
       store.dispatch(initCurrentUser(user));
+      store.dispatch(pusherSubscribe(user));
       store.dispatch(initTlog(user));
     }
 

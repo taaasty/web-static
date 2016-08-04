@@ -1,4 +1,4 @@
-/*global $, CurrentUserDispatcher */
+/*global $ */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
@@ -10,7 +10,6 @@ import PopupController from './controllers/popuup';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 //import PostAuthService from './services/PostAuthService';
-import MessagingService from './messaging/MessagingService';
 import NoticeService from './services/Notice';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
@@ -37,11 +36,6 @@ const ReactApp = {
     console.log('ReactApp start');
 
     if (user) {
-      window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser ||
-        {};
-      CurrentUserDispatcher.setupUser(user);
-      window.messagingService = new MessagingService(user);
-
       sendUser(user);
       if (window.gon.register_provider || uri()
         .query(true)

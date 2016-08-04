@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
-import UserAvatar from '../UserAvatar/new';
-import UserSlug from '../UserSlugNew';
+import UserAvatar from '../UserAvatar';
+import UserSlug from '../UserSlug';
 import RelationButton from '../RelationButton';
 import { Link } from 'react-router';
 import uri from 'urijs';
@@ -13,7 +13,7 @@ class PeopleItem extends Component{
   }
   render() {
     const { user } = this.props;
-    const relId = user.get('myRel', false);
+    const relId = user.get('myRelationshipObject', false);
     const bgImageEnabled = user.getIn([ 'design', 'backgroundImageEnabled' ], false);
     const styles = bgImageEnabled
           ? { backgroundImage: `url("${user.getIn([ 'design', 'backgroundImageUrl' ], '')}")` }

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import UserAvatar from '../UserAvatar/new';
+import UserAvatar from '../UserAvatar';
 import RelationButton from '../RelationButton';
 import { Link } from 'react-router';
 import uri from 'urijs';

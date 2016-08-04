@@ -16,8 +16,6 @@ require './locales/moment/en'
 
 require './react/services/positions'
 global.NoticeService = require './react/services/Notice'
-global.BeepService = require '../shared/react/services/Beep'
-global.ThumborService = require '../shared/react/services/thumbor'
 
 # /*===============================
 # =            Helpers            =
@@ -41,38 +39,13 @@ require './react/mixins/scroller'
 
 # /*-----  End of Mixins  ------*/
 
-require './react/dispatchers/current_user'
-global.CurrentUserStore = require './react/stores/current_user'
-
-# /*============================================
-# =            Messaging resourses            =
-# ============================================*/
-
-# /*==========  Control structures  ==========*/
-
 require './react/messaging/messaging_testing'
 
 # /*-----  End of Messaging resources  ------*/
 
-require './react/components/common/adaptive_input'
-
-# /*===============================================
-# =            Authorization resources            =
-# ===============================================*/
-
-global.Auth = require './react/components/Auth'
-
-# /*-----  End of Authorization resources  ------*/
-
 global.BrowserSupportContainer = require './react/components/BrowserSupport'
-global.ImageAttachmentsCollage = require '../shared/react/components/common/imageAttachmentsCollage'
-global.UserToolbarContainer = require './react/components/UserToolbar'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
-
 global.DesignSettingsColorPickerPopup = require './react/components/DesignSettingsPopup/common/colorPicker/popup'
-global.HeroProfile = require './react/components/HeroProfile'
-global.Spinner = require '../shared/react/components/common/Spinner'
-global.SocialShare = require './react/components/common/SocialShare';
 
 require './react/components/alerts/tasty_confirm'
 

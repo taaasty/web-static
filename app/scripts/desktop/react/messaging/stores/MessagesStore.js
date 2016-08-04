@@ -2,7 +2,7 @@
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
 import ConversationsStore from '../stores/ConversationsStore';
-import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../constants/ConversationConstants';
+import { PUBLIC_CONVERSATION, GROUP_CONVERSATION } from '../constants';
 
 const _messages = {};
 const _allMessagesLoaded = {};
@@ -10,10 +10,10 @@ let _selectedIds = [];
 let _replyTo = null;
 
 const MessagesStore = Object.assign(
-  new BaseStore(),
-  {
+  new BaseStore(), {
     pushMessages(conversationId, messages) {
-      const clonedMessages = (_messages[conversationId] || []).slice(0);
+      const clonedMessages = (_messages[conversationId] || [])
+        .slice(0);
 
       messages.forEach((message) => {
         if (!this.isMessageExists(conversationId, message)) {
@@ -23,16 +23,17 @@ const MessagesStore = Object.assign(
 
       _messages[conversationId] = clonedMessages;
     },
-    
+
     unshiftMessages(conversationId, messages) {
       const loadedMessages = messages.reverse();
       const clonedMessages = _messages[conversationId].slice(0);
 
-      loadedMessages.forEach((loadedMessage) => clonedMessages.unshift(loadedMessage));
+      loadedMessages.forEach((loadedMessage) => clonedMessages.unshift(
+        loadedMessage));
 
       _messages[conversationId] = clonedMessages;
     },
-    
+
     updateMessage(conversationId, data) {
       const messages = _messages[conversationId] || [];
 
@@ -63,8 +64,10 @@ const MessagesStore = Object.assign(
         return null;
       }
 
-      if ([ PUBLIC_CONVERSATION, GROUP_CONVERSATION ].indexOf(conversation.type) > -1) {
-        const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[0];
+      if ([PUBLIC_CONVERSATION, GROUP_CONVERSATION].indexOf(conversation.type) >
+        -1) {
+        const msgAuthor = conversation.users.filter((u) => u.id === message.user_id)[
+          0];
 
         return ({
           type: message.user_id === conversation.user_id ? 'outgoing' : 'incoming',
@@ -82,7 +85,7 @@ const MessagesStore = Object.assign(
           },
         });
       } else {
-        const currentUser  = CurrentUserStore.getUser();
+        const currentUser = CurrentUserStore.getUser();
         const recipient = conversation.recipient;
 
         if (recipient.id === message.recipient_id) {
@@ -95,7 +98,7 @@ const MessagesStore = Object.assign(
 
     isMessageExists(conversationId, message) {
       const messages = (_messages[conversationId] || [])
-              .filter((msg) => msg.uuid === message.uuid);
+        .filter((msg) => msg.uuid === message.uuid);
 
       return !!messages.length;
     },
@@ -166,14 +169,15 @@ const MessagesStore = Object.assign(
       let msg;
 
       return (_selectedIds.filter((id) => {
-        if ((msg = this.getMessageById(id, conversationId))) {
-          const msgInfo = this.getMessageInfo(msg, conversationId);
+          if ((msg = this.getMessageById(id, conversationId))) {
+            const msgInfo = this.getMessageInfo(msg, conversationId);
 
-          return msgInfo.type === 'incoming';
-        } else {
-          return false;
-        }
-      })).length === 0 && this.canDelete();
+            return msgInfo.type === 'incoming';
+          } else {
+            return false;
+          }
+        }))
+        .length === 0 && this.canDelete();
     },
 
     canReply() {
@@ -184,15 +188,17 @@ const MessagesStore = Object.assign(
       const messages = _messages[conversationId] || [];
 
       _selectedIds = _selectedIds.filter((id) => deleted.indexOf(id) < 0);
-      _messages[conversationId] = messages.filter((msg) => deleted.indexOf(msg.id) < 0);
+      _messages[conversationId] = messages.filter((msg) => deleted.indexOf(
+        msg.id) < 0);
     },
 
     deleteUserMessages(conversationId, deleted) {
       const messages = _messages[conversationId] || [];
       const deletedHash = deleted.reduce((acc, { id, content, ...rest }) => {
-        return acc[id] = { ...rest, content_html: content }, acc;
+        return acc[id] = {...rest, content_html: content }, acc;
       }, {});
-      const deletedIds = Object.keys(deletedHash).map((id) => parseInt(id, 10));
+      const deletedIds = Object.keys(deletedHash)
+        .map((id) => parseInt(id, 10));
 
       _selectedIds = _selectedIds.filter((id) => deletedIds.indexOf(id) < 0);
       messages.forEach((msg) => {
@@ -230,7 +236,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     if (MessagesStore.isMessageExists(action.conversationId, message)) {
       MessagesStore.updateMessage(action.conversationId, message);
     } else {
-      MessagesStore.pushMessages(action.conversationId, [ message ]);
+      MessagesStore.pushMessages(action.conversationId, [message]);
       MessagesStore.sortByAsc(action.conversationId);
     }
 
@@ -238,7 +244,7 @@ MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
     MessagesStore.emitChange();
     break;
   case 'messageSubmitted':
-    MessagesStore.pushMessages(action.conversationId, [ action.message ]);
+    MessagesStore.pushMessages(action.conversationId, [action.message]);
     MessagesStore.cancelReplyTo();
     MessagesStore.emitChange();
     break;

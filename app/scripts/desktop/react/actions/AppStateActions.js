@@ -6,6 +6,7 @@ export const POPUP_SETTINGS = 'POPUP_SETTINGS';
 export const POPUP_DESIGN_SETTINGS = 'POPUP_DESIGN_SETTINGS';
 export const POPUP_GET_PREMIUM = 'POPUP_GET_PREMIUM';
 export const POPUP_PREMIUM = 'POPUP_PREMIUM';
+export const POPUP_MESSAGES = 'POPUP_MESSAGES';
 
 function appStateSetEditing(flag) {
   return {
@@ -56,7 +57,8 @@ export function hideDesignSettingsPopup() {
 
 export function toggleDesignSettingsPopup() {
   return (dispatch, getState) => {
-    return dispatch(appStateSetPopup(POPUP_DESIGN_SETTINGS, !getState().appState.popups[POPUP_DESIGN_SETTINGS]));
+    return dispatch(appStateSetPopup(POPUP_DESIGN_SETTINGS, !getState()
+      .appState.popups[POPUP_DESIGN_SETTINGS]));
   };
 }
 
@@ -74,4 +76,19 @@ export function showPremiumPopup() {
 
 export function hidePremiumPopup() {
   return appStateSetPopup(POPUP_PREMIUM, false);
+}
+
+export function showMessagesPopup() {
+  return appStateSetPopup(POPUP_MESSAGES, true);
+}
+
+export function hideMessagesPopup() {
+  return appStateSetPopup(POPUP_MESSAGES, false);
+}
+
+export function toggleMessagesPopup() {
+  return (dispatch, getState) => {
+    return dispatch(appStateSetPopup(POPUP_MESSAGES, !getState()
+      .appState.popups[POPUP_MESSAGES]));
+  }
 }

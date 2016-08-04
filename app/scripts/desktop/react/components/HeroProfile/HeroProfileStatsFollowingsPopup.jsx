@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import Scroller from '../common/Scroller';
-import UserAvatar from '../UserAvatar/new';
+import UserAvatar from '../UserAvatar';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import { connect } from 'react-redux';

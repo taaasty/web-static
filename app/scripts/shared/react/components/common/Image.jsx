@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ImageLoader from 'react-imageloader';
 import FitSpinner from './FitSpinner';
+import ThumborService from '../../services/thumbor';
 
 const Image = (props) => {
   function renderPreloader() {

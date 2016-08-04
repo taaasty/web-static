@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import UserAvatar from '../UserAvatar/new';
+import UserAvatar from '../UserAvatar';
 
 function SettingsAvatar({ handleUserpicChange, user }) {
   return (

@@ -1,8 +1,9 @@
 /*global setTimeout, clearTimeout */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import ConversationsStore from '../../messaging/stores/ConversationsStore';
-import ConversationActions from '../../messaging/actions/ConversationActions';
+// TODO: restore conversation with support
+//import ConversationsStore from '../../messaging/stores/ConversationsStore';
+//import ConversationActions from '../../messaging/actions/ConversationActions';
 import SupportLauncher from '../../../../shared/react/components/common/SupportLauncher';
 import EmailForm from './EmailForm';
 import Terms from './Terms';
@@ -14,13 +15,14 @@ class SupportLauncherContainer extends Component {
   state = Object.assign({}, this.getStateFromStore(), { isEmailFormVisible: false, isHover: false });
   componentWillMount() {
     this.syncStateWithStore = () => this.setState(this.getStateFromStore.bind(this));
-    ConversationsStore.addChangeListener(this.syncStateWithStore);
+    //ConversationsStore.addChangeListener(this.syncStateWithStore);
   }
   componentWillUnmount() {
-    ConversationsStore.removeChangeListener(this.syncStateWithStore);
+    //ConversationsStore.removeChangeListener(this.syncStateWithStore);
   }
   getStateFromStore() {
-    return { hasUnread: !!ConversationsStore.unreadCountByUserId(SUPPORT_ID) };
+    return {};
+    //return { hasUnread: !!ConversationsStore.unreadCountByUserId(SUPPORT_ID) };
   }
   handleClick() {
     if (this.props.user.id) {

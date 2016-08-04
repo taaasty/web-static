@@ -1,7 +1,7 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
-import UserSlug from '../UserSlugNew';
+import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import { Map } from 'immutable';

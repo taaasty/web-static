@@ -1,6 +1,6 @@
 /*global i18n, RequesterMixin, ReactShakeMixin, ComponentManipulationsMixin */
 import React, { PropTypes, createClass } from 'react';
-import ConfirmRegistrationMixin from  '../ConfirmRegistrationMixin';
+import ConfirmRegistrationMixin from '../ConfirmRegistrationMixin';
 import Routes from '../../../../../shared/routes/routes';
 
 const EmailConfirm = createClass({

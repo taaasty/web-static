@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import TitlePrivateConversationActions from './TitlePrivateConversationActions';
-import MsgUserAvatar from './MsgUserAvatar';
+import MsgUserAvatar from '../MsgUserAvatar';
 
 export const TITLE_AVATAR_SIZE = 32;
 

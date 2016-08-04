@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import UserSlug from '../UserSlugNew';
+import UserSlug from '../UserSlug';
 import uri from 'urijs';
 
 function HeroProfileHead({ user }) {

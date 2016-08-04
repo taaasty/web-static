@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import { TLOG_TYPE_ANONYMOUS } from '../../constants/EditorConstants';
 
 function UserAvatar({ size, user: { name, slug, tag, userpic={} } }) {
@@ -7,7 +7,7 @@ function UserAvatar({ size, user: { name, slug, tag, userpic={} } }) {
     ? {
         kind: 'anonymous',
         symbol: '\ue002',
-        default_colors: {
+        defaultColors: {
           background: 'transparent',
           name: '#fff',
         },

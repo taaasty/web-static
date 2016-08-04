@@ -1,13 +1,13 @@
+/*
 import BaseStore from '../../stores/BaseStore';
 import MessagingDispatcher from '../MessagingDispatcher';
-import { PRIVATE_CONVERSATION, TYPING_CANCEL_INTERVAL } from '../constants/ConversationConstants';
+import { PRIVATE_CONVERSATION, TYPING_CANCEL_INTERVAL } from '../constants';
 
 let _conversations = [];
 let _typing = {};
 
 const ConversationsStore = Object.assign(
-  new BaseStore(),
-  {
+  new BaseStore(), {
     unshiftConversations(conversations) {
       const clonedConversations = _conversations.slice(0);
 
@@ -48,24 +48,27 @@ const ConversationsStore = Object.assign(
     },
 
     findConversation(conversationId) {
-      const [ conv ] = _conversations.filter(({ id }) => id === conversationId);
+      const [conv] = _conversations.filter(({ id }) => id === conversationId);
 
       return conv || void 0;
     },
 
     getConversation(conversationId) {
       const conv = this.findConversation(conversationId);
-      return conv ? { ...conv, typing: this.getTyping(conv.id) } : void 0;
+      return conv ? {...conv, typing: this.getTyping(conv.id) } : void 0;
     },
 
     getConversationByUserId(recipientId) {
-      const [ conv ] = _conversations
-              .filter(({ recipient }) => recipient && recipient.id === recipientId);
-      return conv ? { ...conv, typing: this.getTyping(conv.id) } : void 0;
+      const [conv] = _conversations
+        .filter(({ recipient }) => recipient && recipient.id === recipientId);
+      return conv ? {...conv, typing: this.getTyping(conv.id) } : void 0;
     },
 
     getConversations() {
-      return _conversations.map((conv) => ({ ...conv, typing: this.getTyping(conv.id) }));
+      return _conversations.map((conv) => ({...conv,
+        typing: this.getTyping(
+          conv.id)
+      }));
     },
 
     sortByDesc() {
@@ -114,30 +117,43 @@ const ConversationsStore = Object.assign(
       return conversation && conversation.unread_messages_count;
     },
 
-    updateOnlineStatuses(convIds=[], data=[]) {
-      const statusMap = data.reduce((acc, item) => ({ ...acc, [item.user_id]: item }), {});
+    updateOnlineStatuses(convIds = [], data = []) {
+      const statusMap = data.reduce((acc, item) => ({...acc, [item.user_id]: item }), {});
 
       convIds.forEach((conversationId) => {
         const conversation = this.findConversation(conversationId);
         if (conversation && conversation.type === PRIVATE_CONVERSATION) {
-          conversation.recipient.is_online = statusMap[conversation.recipient_id].is_online;
-          conversation.recipient.last_seen_at = statusMap[conversation.recipient_id].last_seen_at;
+          conversation.recipient.is_online = statusMap[conversation.recipient_id]
+            .is_online;
+          conversation.recipient.last_seen_at = statusMap[conversation.recipient_id]
+            .last_seen_at;
         }
       });
     },
 
     updateTyping(convId, userId) {
-      const timeoutId = setTimeout(this.cancelTyping.bind(this, convId, userId), TYPING_CANCEL_INTERVAL);
+      const timeoutId = setTimeout(this.cancelTyping.bind(this, convId,
+        userId), TYPING_CANCEL_INTERVAL);
 
       if (!_typing[convId]) {
-        _typing[convId] = { [userId]: { timeoutId, eventAt: (new Date()).valueOf() } };
+        _typing[convId] = {
+          [userId]: {
+            timeoutId,
+            eventAt: (new Date())
+              .valueOf()
+          }
+        };
       } else {
         const userTyping = _typing[convId][userId];
         if (userTyping && userTyping.timeoutId) {
           clearTimeout(userTyping.timeoutId);
         }
 
-        _typing[convId][userId] = { timeoutId, eventAt: (new Date()).valueOf() };
+        _typing[convId][userId] = {
+          timeoutId,
+          eventAt: (new Date())
+            .valueOf()
+        };
       }
     },
 
@@ -159,7 +175,7 @@ const ConversationsStore = Object.assign(
 ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
   switch (action.type) {
   case 'postNewConversation':
-    ConversationsStore.unshiftConversations([ action.conversation ]);
+    ConversationsStore.unshiftConversations([action.conversation]);
     // ConversationsStore.preloadConversationsImages([action.conversation]);
     ConversationsStore.emitChange();
     break;
@@ -173,7 +189,7 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     if (ConversationsStore.isConversationExists(action.conversation)) {
       ConversationsStore.updateConversation(action.conversation);
     } else {
-      ConversationsStore.unshiftConversations([ action.conversation ]);
+      ConversationsStore.unshiftConversations([action.conversation]);
       // ConversationsStore.preloadConversationsImages([action.conversation]);
     }
 
@@ -207,3 +223,4 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
 });
 
 export default ConversationsStore;
+*/

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 import EntryTlogCommentMetabar from './EntryTlogCommentMetabar';
-import UserSlug from '../UserSlugNew';
+import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
 

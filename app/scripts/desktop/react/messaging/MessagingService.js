@@ -1,14 +1,16 @@
-/*global $, i18n, gon, NoticeService, EventEmitter */
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+/*global $, i18n, gon, EventEmitter */
+/*eslint no-console: 0 */
 import Pusher from 'pusher';
-import MessagingDispatcher from './MessagingDispatcher';
-import MessagesPopup from './components/MessagesPopup';
 import ApiRoutes from '../../../shared/routes/api';
-import ConnectionStateStore from './stores/ConnectionStateStore';
-import ConversationsStore from './stores/ConversationsStore';
-import MessagingRequester from './MessagingRequester';
-import { PRIVATE_CONVERSATION } from './constants/ConversationConstants';
+import {
+  PRIVATE_CONVERSATION,
+} from './constants';
+import {
+  connectionStateProcess,
+  connectionStateConnected,
+  connectionStateError,
+} from './actions/ConnectionStateActions';
+import NoticeService from '../services/Notice';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -19,25 +21,26 @@ const EVENT_UPDATE_NOTIFICATIONS = 'update_notifications';
 const EVENT_DELETE_MESSAGES = 'delete_messages';
 const EVENT_DELETE_USER_MESSAGES = 'delete_user_messages';
 const EVENT_TYPING = 'typed';
-const RECONNECT_EVENT = 'reconnected';
+const EVENT_RECONNECT = 'reconnected';
 
 function channelMain(userId) {
   return `private-${userId}-messaging`;
 }
 
 class MessagingService extends EventEmitter {
-  constructor(user) {
-    MessagingDispatcher.changeConnectionState(ConnectionStateStore.PROCESS_STATE);
+  constructor(dispatch, user) {
+    dispatch(connectionStateProcess());
 
     super();
     this.user = user;
+    this.dispatch = dispatch;
     this.pusher = new Pusher(gon.pusher.key, {
       authEndpoint: ApiRoutes.pusher_auth_url(),
       pong_timeout: 6000,
       unavailable_timeout: 2000,
       auth: {
         headers: {
-          'X-User-Token': this.user.api_key.access_token,
+          'X-User-Token': this.user.apiKey.accessToken,
         },
       },
     });
@@ -46,7 +49,7 @@ class MessagingService extends EventEmitter {
     this.channel.bind('pusher:subscription_succeeded', this._connected, this);
     this.channel.bind('pusher:subscription_error', () => {
       NoticeService.notify('error', i18n.t('pusher_subscription_error'));
-      MessagingDispatcher.changeConnectionState(ConnectionStateStore.ERROR_STATE);
+      this.dispatch(connectionStateError());
     });
 
     this.channel.bind_all((_type='', data) => {
@@ -78,13 +81,13 @@ class MessagingService extends EventEmitter {
     this.notificationsContainer = $('<\div>', { 'popup-notifications-container': '' }).appendTo('body')[0];
   }
   reconnect() {
-    MessagingDispatcher.changeConnectionState(ConnectionStateStore.PROCESS_STATE);
+    this.dispatch(connectionStateProcess());
     this.channel = this.pusher.subscribe(channelMain(this.user.id));
   }
 
   _connected() {
+    this.dispatch(connectionStateConnected());
     const updateOnlineStatuses = this.updateOnlineStatuses.bind(this);
-    MessagingDispatcher.changeConnectionState(ConnectionStateStore.CONNECTED_STATE);
 
     this.requester = new MessagingRequester({
       access_token: this.user.api_key.access_token,
@@ -117,7 +120,7 @@ class MessagingService extends EventEmitter {
     this.pusher.connection.bind('connected', this.emitReconnect, this);
   }
   emitReconnect() {
-    return this.emit(RECONNECT_EVENT);
+    return this.emit(EVENT_RECONNECT);
   }
   updateOnlineStatuses() {
     const convMap = ConversationsStore.getConversations()
@@ -260,6 +263,7 @@ class MessagingService extends EventEmitter {
       })
       .fail((err) => NoticeService.errorResponse(err));
   }
+  /*
   isMessagesPopupShown() {
     return this.messagesPopup && this.messagesPopup.isMounted();
   }
@@ -273,18 +277,12 @@ class MessagingService extends EventEmitter {
       this.messagesPopup = render(<MessagesPopup />, this.messagesContainer);
     }
   }
-  toggleMessagesPopup() {
-    if (this.isMessagesPopupShown()) {
-      this.closeMessagesPopup();
-    } else {
-      this.openMessagesPopup();
-    }
-  }
+  */
   addReconnectListener(callback) {
-    return this.on(RECONNECT_EVENT, callback);
+    return this.on(EVENT_RECONNECT, callback);
   }
   removeReconnectListener(callback) {
-    return this.off(RECONNECT_EVENT, callback);
+    return this.off(EVENT_RECONNECT, callback);
   }
 }
 

@@ -1,12 +1,10 @@
 /*global ReactApp */
 import { merge } from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import MessagingStatusStore from '../../messaging/stores/messaging_status';
-import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import PopupActionCreators from '../../actions/PopupActions';
 import {
   showSettingsPopup,
   showGetPremiumPopup,
+  toggleMessagesPopup,
   toggleDesignSettingsPopup,
 } from '../../actions/AppStateActions';
 import UserToolbar from './UserToolbar';
@@ -21,9 +19,8 @@ class UserToolbarContainer extends Component {
     isUserPopoverVisible: false,
     isRelationsPopupVisible: false,
   };
-  toggleMessages(ev) {
-    ev.preventDefault();
-    PopupActionCreators.toggleMessages();
+  toggleMessages() {
+    this.props.toggleMessagesPopup();
   }
   toggleNotifications(ev) {
     ev.preventDefault();
@@ -96,28 +93,28 @@ UserToolbarContainer.propTypes = {
   showGetPremiumPopup: PropTypes.func.isRequired,
   showSettingsPopup: PropTypes.func.isRequired,
   toggleDesignSettingsPopup: PropTypes.func.isRequired,
+  toggleMessagesPopup: PropTypes.func.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,
 };
 
-export default connectToStores(
-  connect(
-    (state, { location }) => {
-      const { unreadFriendsCount } = state.feedStatus;
+export default connect(
+  (state, { location }) => {
+    const { unreadFriendsCount } = state.feedStatus;
 
-      return {
-        location,
-        unreadFriendsCount,
-        currentUser: state.currentUser.data,
-      };
-    },
-    { showSettingsPopup, showGetPremiumPopup, toggleDesignSettingsPopup }
-  )(UserToolbarContainer),
-  [ MessagingStatusStore ],
-  (props) => ({
-    ...props,
-    unreadConversationsCount: MessagingStatusStore.getUnreadConversationsCount(),
-    unreadNotificationsCount: MessagingStatusStore.getUnreadNotificationsCount(),
-  })
-);
+    return {
+      location,
+      unreadFriendsCount,
+      currentUser: state.currentUser.data,
+      unreadConversationsCount: state.msg.messagingStatus.get('unreadConversationsCount'),
+      unreadNotificationsCount: state.msg.messagingStatus.get('unreadNotificationsCount'),
+    };
+  },
+  {
+    showSettingsPopup,
+    showGetPremiumPopup,
+    toggleDesignSettingsPopup,
+    toggleMessagesPopup,
+  }
+)(UserToolbarContainer)

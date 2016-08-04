@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import Image from '../../../../shared/react/components/common/Image';
-import UserAvatar from '../UserAvatar/new';
+import UserAvatar from '../UserAvatar';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import { msgDate } from '../../helpers/dateHelpers';

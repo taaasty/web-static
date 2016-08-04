@@ -1,17 +1,20 @@
+/*global i18n */
 import React, { PropTypes } from 'react';
-import PopupActions from '../actions/PopupActions';
-import CurrentUserStore from '../stores/current_user';
+import { showGetPremiumPopup } from '../actions/AppStateActions';
+import { connect } from 'react-redux';
 
-function UserSlug({ user: { is_premium, slug }, showAsStar }) {
+function UserSlug({ isCurrentPremium, user, showAsStar, showGetPremiumPopup }) {
   function handlePremiumClick(ev) {
-    if (!CurrentUserStore.isPremium()) {
+    if (!isCurrentPremium) {
       ev.stopPropagation();
       ev.preventDefault();
-      PopupActions.showGetPremiumPopup();
+      showGetPremiumPopup();
     }
   }
 
-  return is_premium
+  const slug = user.get('slug');
+
+  return user.get('isPremium')
     ? (
       <span>
         {slug + ' '}
@@ -31,13 +34,19 @@ function UserSlug({ user: { is_premium, slug }, showAsStar }) {
 UserSlug.displayName = 'UserSlug';
 
 UserSlug.propTypes = {
+  isCurrentPremium: PropTypes.bool.isRequired,
   showAsStar: PropTypes.bool.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 UserSlug.defaultProps = {
+  isCurrentPremium: false,
   showAsStar: false,
   user: {},
 };
 
-export default UserSlug;
+export default connect(
+  (state, props) => Object.assign({}, props, { isCurrentPremium: state.currentUser.data.isPremium }),
+  { showGetPremiumPopup }
+)(UserSlug);
