@@ -1,13 +1,23 @@
-export function startSelect() {
+export const MSG_MESSAGES_STOP_SELECT = 'MSG_MESSAGES_STOP_SELECT';
+export const MSG_MESSAGES_START_SELECT = 'MSG_MESSAGES_START_SELECT';
+export const MSG_MESSAGES_RESET_SELECT = 'MSG_MESSAGES_RESET_SELECT';
 
+export function startSelect() {
+  return {
+    type: MSG_MESSAGES_START_SELECT,
+  };
 }
 
 export function stopSelect() {
-
+  return {
+    type: MSG_MESSAGES_STOP_SELECT,
+  };
 }
 
 export function resetSelect() {
-
+  return {
+    type: MSG_MESSAGES_RESET_SELECT,
+  };
 }
 
 /*

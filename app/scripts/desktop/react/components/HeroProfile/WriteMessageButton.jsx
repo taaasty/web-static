@@ -1,10 +1,13 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import ConversationActions from '../../messaging/actions/ConversationActions';
+import { connect } from 'react-redux';
+import {
+  showThread,
+} from '../../messaging/actions/MessagesPopupActions';
 
 function WriteMessageButton({ userId }) {
   function handleClick() {
-    ConversationActions.openConversation(userId);
+    showThread(userId); // TODO: check if working
   }
 
   return (
@@ -19,7 +22,13 @@ function WriteMessageButton({ userId }) {
 }
 
 WriteMessageButton.propTypes = {
+  showThread: PropTypes.func.isRequired,
   userId: PropTypes.number,
 };
 
-export default WriteMessageButton;
+export default connect(
+  null,
+  {
+    showThread,
+  }
+)(WriteMessageButton);

@@ -1,3 +1,7 @@
+import {
+  stopSelect,
+} from './MessagesActions';
+
 export const MSG_POPUP_SET_CONVERSATION_ID = 'MSG_POPUP_SET_CONVERSATION_ID';
 export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
 export const MSG_POPUP_POP_HISTORY = 'MSG_POPUP_POP_HISTORY';

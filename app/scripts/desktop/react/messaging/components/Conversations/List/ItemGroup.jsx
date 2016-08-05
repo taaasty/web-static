@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import MsgUserAvatar from '../../MsgUserAvatar';
 import Avatar from '../../../../../../shared/react/components/common/AvatarCamelCase';
-import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
+import ItemMain, { getLastMsgTxt } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import {
   CONVERSATION_PIC_SIZE,
@@ -11,18 +11,24 @@ import {
   SYMBOL_AVATAR_BG,
   SYMBOL_AVATAR_COLOR,
 } from '../../../constants';
+import { connect } from 'react-redux';
 import { Map } from 'immutable';
+
+const emptyLastMessage = Map();
+const emptyUser = Map();
 
 function ItemGroup(props) {
   const {
     conversation,
     hasUnread,
     hasUnreceived,
+    lastMessage,
+    lastMessageAuthor,
+    lastTyping,
     onClick,
   } = props;
-  const lastMessage = conversation.get('lastMessage');
   const topic = conversation.get('topic');
-  const avatar = conversation.get('avatar', Map());
+  const avatar = conversation.get('avatar') || Map();
   const userpic = {
     defaultColors: {
       background: SYMBOL_AVATAR_BG,
@@ -30,10 +36,9 @@ function ItemGroup(props) {
     },
     symbol: topic[0],
   };
-  const lastTyping = getLastTyping(conversation.get('typing'), conversation.get('users'));
-  const [ lastMsgUser, lastMsgContent ] = lastTyping
+  const [ lastMsgUser, lastMsgContent ] = !lastTyping.isEmpty()
     ? [ lastTyping, i18n.t('messenger.typing') ]
-    : !lastMessage.isEmpty() && [ lastMessage.get('author'), getLastMsgTxt(lastMessage) ];
+    : !lastMessage.isEmpty() && [ lastMessageAuthor, getLastMsgTxt(lastMessage) ];
 
   return (
     <ItemMain
@@ -42,6 +47,7 @@ function ItemGroup(props) {
       hasUnreceived={hasUnreceived}
       isMuted={conversation.get('notDisturb')}
       lastMessage={lastMessage}
+      lastMessageAuthor={lastMessageAuthor}
       onClick={onClick}
       unreadCount={conversation.get('unreadMessagesCount')}
       userId={conversation.get('userId')}
@@ -71,7 +77,25 @@ ItemGroup.propTypes = {
   conversation: PropTypes.object.isRequired,
   hasUnread: PropTypes.bool.isRequired,
   hasUnreceived: PropTypes.bool.isRequired,
+  lastMessage: PropTypes.object.isRequired,
+  lastMessageAuthor: PropTypes.object.isRequired,
+  lastTyping: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default ItemGroup;
+export default connect(
+  (state, { conversation }) => {
+    const lastMessage = state.entities
+      .getIn(['message', String(conversation.get('lastMessage'))], emptyLastMessage);
+    const lastMessageAuthor = state.entities
+      .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
+    const lastTyping = state.entities
+      .getIn(['tlog', String()], emptyUser); // TODO: get last typed
+
+    return {
+      lastMessage,
+      lastMessageAuthor,
+      lastTyping,
+    };
+  }
+)(ItemGroup);

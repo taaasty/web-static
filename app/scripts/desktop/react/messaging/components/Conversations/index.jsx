@@ -37,19 +37,35 @@ Conversations.propTypes = {
 };
 
 function weight(conv) {
-  const createdAt = conv.getIn(['lastMessage', 'createdAt']);
+  const createdAt = conv.get('lastMessageAt');
 
-  return (conv.get('unreadMessagesCount', 0) > 0 ? 1e6 : 0)
-    - (!conv.getIn(['entry', 'isWatching']) ? 1e5 : 0)
-    + (createdAt ? moment(createdAt).valueOf() / 1e9 : 0);
+  return -1 * ( // the more weight the higher position
+    (conv.get('unreadMessagesCount', 0) > 0 ? 1e6 : 0)
+    - (conv.get('isNotWatchingEntry') ? 1e5 : 0)
+    + (createdAt ? moment(createdAt).valueOf() / 1e9 : 0)
+  );
 }
 
 export default connect(
   (state) => {
-    const currentUserId = state.currentUser.data.id;
+    function extendNestedFields(conv) {
+      const entry = conv.get('entry');
+      const lastMessage = conv.get('lastMessage');
+
+      return conv
+        .set('lastMessageAt', state
+          .entities
+          .getIn(['message', String(lastMessage), 'createdAt'])
+        )
+        .set('isNotWatchingEntry', entry && !state
+          .entities
+          .getIn(['entry', String(entry), 'isWatching'])
+        );
+    }
+
     const conversations = state.entities
       .get('conversation')
-      .filter((c) => c.get('userId' === currentUserId))
+      .map(extendNestedFields)
       .sortBy(weight);
 
     return {

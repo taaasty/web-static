@@ -1,4 +1,4 @@
-/*global messagingService */
+/*
 import MessagingDispatcher from '../MessagingDispatcher';
 import ConversationsStore from '../stores/ConversationsStore';
 
@@ -57,3 +57,4 @@ const ConversationActions = {
 };
 
 export default ConversationActions;
+*/

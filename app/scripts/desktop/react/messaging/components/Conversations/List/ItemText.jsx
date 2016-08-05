@@ -4,30 +4,34 @@ import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
 import { Map } from 'immutable';
+import { connect } from 'react-redux';
+
+const emptyUser = Map();
+const emptyLastMessage = Map();
 
 function ItemText(props) {
   const {
     conversation,
     hasUnread,
     hasUnreceived,
+    isRecipientTyping,
+    lastMessage,
+    lastMessageAuthor,
     onClick,
+    recipient,
   } = props;
-  const recipient = conversation.get('recipient', Map());
-  const lastMessage = conversation.get('lastMessage', Map());
   const userId = conversation.get('userId');
 
   function renderLastMessage() {
-    const recipientId = conversation.get('recipientId');
-    const typing = conversation.get('typing', Map());
-    const lastMessageText = typing.get(recipientId)
+    const lastMessageText = isRecipientTyping
       ? i18n.t('messenger.typing')
       : !lastMessage.isEmpty() ? getLastMsgTxt(lastMessage) : '';
-    const showAvatar = !typing.get(recipientId) &&
-      lastMessage.getIn(['author', 'id']) === userId;
+    const showAvatar = !isRecipientTyping &&
+      lastMessageAuthor.get('id') === userId;
 
     return lastMessageText
       ? <div className="messages__last-message">
-          {showAvatar && <MsgUserAvatar size={20} user={lastMessage.get('author')} />}
+          {showAvatar && <MsgUserAvatar size={20} user={lastMessageAuthor} />}
           <span dangerouslySetInnerHTML={{ __html: lastMessageText }} />
         </div>
       : <noscript />;
@@ -40,6 +44,7 @@ function ItemText(props) {
       hasUnreceived={hasUnreceived}
       isMuted={conversation.get('notDisturb')}
       lastMessage={lastMessage}
+      lastMessageAuthor={lastMessageAuthor}
       onClick={onClick}
       unreadCount={conversation.get('unreadMessagesCount')}
       userId={userId}
@@ -61,7 +66,28 @@ ItemText.propTypes = {
   conversation: PropTypes.object.isRequired,
   hasUnread: PropTypes.bool.isRequired,
   hasUnreceived: PropTypes.bool.isRequired,
+  isRecipientTyping: PropTypes.bool.isRequired,
+  lastMessage: PropTypes.object.isRequired,
+  lastMessageAuthor: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
+  recipient: PropTypes.object.isRequired,
 };
 
-export default ItemText;
+export default connect(
+  (state, { conversation }) => {
+    const lastMessage = state.entities
+      .getIn(['message', String(conversation.get('lastMessage'))], emptyLastMessage);
+    const lastMessageAuthor = state.entities
+      .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
+    const recipient = state.entities
+      .getIn(['tlog', String(conversation.get('recipient'))], emptyUser);
+    const isRecipientTyping = false; // TODO: detect typing
+
+    return {
+      isRecipientTyping,
+      lastMessage,
+      lastMessageAuthor,
+      recipient,
+    };
+  }
+)(ItemText);

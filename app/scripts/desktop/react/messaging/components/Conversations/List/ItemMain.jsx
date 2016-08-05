@@ -5,16 +5,6 @@ import classNames from 'classnames';
 import { msgDate } from '../../../../helpers/dateHelpers';
 import { List, Map } from 'immutable';
 
-export function getLastTyping(typing=List(), users=List()) {
-  return typing
-    .sortBy((t) => t.get('eventAt'))
-    .map((_, userId) => users
-      .filter((u) => u.get('id') === parseInt(userId, 10))
-      .first()
-    )
-    .last();
-}
-
 export function getLastMsgTxt(lastMsg=Map()) {
   const contentHtml = lastMsg.get('contentHtml');
   const attachments = lastMsg.get('attachments', List());
@@ -39,6 +29,7 @@ function ItemMain(props) {
     hasUnread,
     isMuted,
     lastMessage,
+    lastMessageAuthor,
     onClick,
     unreadCount,
     userId,
@@ -51,7 +42,7 @@ function ItemMain(props) {
   });
 
   function renderLastMsgStatus() {
-    if (lastMessage.getIn(['author', 'id']) === userId) {
+    if (lastMessageAuthor.get('id') === userId) {
       return (
         <span className="messages__tick-status">
           <i className={`icon icon--${lastMessage.get('readAt') ? 'double-tick' : 'tick'}`} />
@@ -92,7 +83,8 @@ ItemMain.propTypes = {
   hasUnread: PropTypes.bool.isRequired,
   hasUnreceived: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool,
-  lastMessage: PropTypes.object,
+  lastMessage: PropTypes.object.isRequired,
+  lastMessageAuthor: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   unreadCount: PropTypes.number,
   userId: PropTypes.number.isRequired,

@@ -22,7 +22,7 @@ function ItemEntryPreviewImage({ image, isRawUrl, size }) {
 ItemEntryPreviewImage.propTypes = {
   image: PropTypes.object.isRequired,
   isRawUrl: PropTypes.bool,
-  size: PropTypes.number.isRequired,
+  size: PropTypes.number,
 };
 
 ItemEntryPreviewImage.defaultProps = {

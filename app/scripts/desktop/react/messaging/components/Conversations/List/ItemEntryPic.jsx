@@ -4,11 +4,8 @@ import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import { CONVERSATION_PIC_SIZE } from './Item';
 import { Map } from 'immutable';
 
-function ItemEntryPic({ entry, size, title }) {
-  const defaultColors = entry.getIn(
-    ['author', 'userpic', 'defaultColors'],
-    Map()
-  );
+function ItemEntryPic({ entry, entryAuthor, size, title }) {
+  const defaultColors = entryAuthor.getIn(['userpic', 'defaultColors'], Map());
   const previewImage = entry.get('previewImage', Map());
   const userpic = {
     defaultColors: defaultColors.toJS(),
@@ -22,7 +19,8 @@ function ItemEntryPic({ entry, size, title }) {
 
 ItemEntryPic.propTypes = {
   entry: PropTypes.object.isRequired,
-  size: PropTypes.number.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  size: PropTypes.number,
   title: PropTypes.string.isRequired,
 };
 

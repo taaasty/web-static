@@ -1,12 +1,7 @@
 /*global fetch */
-import { Schema, arrayOf, unionOf, normalize } from 'normalizr';
+import { Schema, arrayOf, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import 'isomorphic-fetch'; // provides global.fetch
-import {
-  PRIVATE_CONVERSATION,
-  PUBLIC_CONVERSATION,
-  GROUP_CONVERSATION,
-} from '../messaging/constants';
 import NoticeService from '../services/Notice';
 
 const tlogSchema = new Schema('tlog');
@@ -30,17 +25,8 @@ const entryCollItemSchema = new Schema(
   'entryCollItem', { idAttribute: (el) => el.entry.id }
 );
 
-const privateConversationSchema = new Schema('privateConversation');
-const publicConversationSchema = new Schema('publicConversation');
-const groupConversationSchema = new Schema('groupConversation');
-const conversationMap = {
-  [PRIVATE_CONVERSATION]: privateConversationSchema,
-  [PUBLIC_CONVERSATION]: publicConversationSchema,
-  [GROUP_CONVERSATION]: groupConversationSchema,
-};
-
+const conversationSchema = new Schema('conversation');
 const notificationSchema = new Schema('notification');
-
 const messageSchema = new Schema('message');
 
 tlogSchema.define({
@@ -90,24 +76,12 @@ messageSchema.define({
   recipient: tlogSchema,
 });
 
-privateConversationSchema.define({
+conversationSchema.define({
+  entry: entrySchema,
   lastMessage: messageSchema,
   recipient: tlogSchema,
-});
-
-publicConversationSchema.define({
-  lastMessage: messageSchema,
   users: arrayOf(tlogSchema),
 });
-
-groupConversationSchema.define({
-  lastMessage: messageSchema,
-  users: arrayOf(tlogSchema),
-});
-
-const conversationSchema = unionOf(
-  conversationMap, { schemaAttribute: 'type' }
-);
 
 notificationSchema.define({
   sender: tlogSchema,

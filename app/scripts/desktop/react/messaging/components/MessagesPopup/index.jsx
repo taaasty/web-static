@@ -12,12 +12,13 @@ import {
 import BackButton from './BackButton';
 //import Thread from '../Thread';
 //import CreateNewConversation from '../CreateNewConversation';
-//import Conversations from '../Conversations';
+import Conversations from '../Conversations';
 //import GroupSettings from '../GroupSettings';
 //import GroupChooser from '../GroupChooser';
 import PopupTitle from './PopupTitle';
 import Popup from '../../../components/Popup';
 import { connect } from 'react-redux';
+import { Map } from 'immutable';
 
 class MessagesPopup extends Component {
   componentWillMount() {
@@ -82,7 +83,8 @@ MessagesPopup.propTypes = {
 
 export default connect(
   (state) => ({
-    conversation: state.entities.getIn(['conversation', String()], Map()),
+    conversation: state.entities
+      .getIn([ 'conversation', String(state.msg.messagesPopup.get('currentConversationId')) ], Map()),
     popupState: state.msg.messagesPopup.get('history').last(),
   }),
   {

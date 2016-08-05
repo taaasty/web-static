@@ -1,24 +1,32 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import MsgUserAvatar from '../../MsgUserAvatar';
-import ItemMain, { getLastMsgTxt, getLastTyping } from './ItemMain';
+import ItemMain, { getLastMsgTxt } from './ItemMain';
 import ItemEntryPic from './ItemEntryPic';
+import { connect } from 'react-redux';
 import { Map } from 'immutable';
+
+const emptyEntry = Map();
+const emptyLastMessage = Map();
+const emptyUser = Map();
 
 function ItemEntry(props) {
   const {
     conversation,
+    entry,
+    entryAuthor,
     hasUnread,
     hasUnreceived,
+    lastMessage,
+    lastMessageAuthor,
+    lastTyping,
     onClick,
   } = props;
-  const lastMessage = conversation.get('lastMessage', Map());
-  const entry = conversation.get('entry', Map());
+
   const title = entry.get('title') || entry.get('text') || i18n.t('messages_public_conversation_title');
-  const lastTyping = getLastTyping(conversation.get('typing'), conversation.get('users'));
-  const [ lastMsgUser, lastMsgContent ] = lastTyping
+  const [ lastMsgUser, lastMsgContent ] = !lastTyping.isEmpty()
     ? [ lastTyping, i18n.t('messenger.typing') ]
-    : !lastMessage.isEmpty() && [ lastMessage.get('author'), getLastMsgTxt(lastMessage) ];
+    : !lastMessage.isEmpty() && [ lastMessageAuthor, getLastMsgTxt(lastMessage) ];
 
   return (
     <ItemMain
@@ -27,12 +35,17 @@ function ItemEntry(props) {
       hasUnreceived={hasUnreceived}
       isMuted={conversation.get('notDisturb')}
       lastMessage={lastMessage}
+      lastMessageAuthor={lastMessageAuthor}
       onClick={onClick}
       unreadCount={conversation.get('unreadMessagesCount')}
       userId={conversation.get('userId')}
     >
       <span className="messages__user-avatar">
-        <ItemEntryPic entry={entry} title={title} />
+        <ItemEntryPic
+          entry={entry}
+          entryAuthor={entryAuthor}
+          title={title}
+        />
       </span>
       <div className="messages__dialog-text">
         <div className="messages__user-name">
@@ -51,9 +64,35 @@ function ItemEntry(props) {
 
 ItemEntry.propTypes = {
   conversation: PropTypes.object.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
   hasUnread: PropTypes.bool.isRequired,
   hasUnreceived: PropTypes.bool.isRequired,
+  lastMessage: PropTypes.object.isRequired,
+  lastMessageAuthor: PropTypes.object.isRequired,
+  lastTyping: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default ItemEntry;
+export default connect(
+  (state, { conversation }) => {
+    const lastMessage = state.entities
+      .getIn(['message', String(conversation.get('lastMessage'))], emptyLastMessage);
+    const lastMessageAuthor = state.entities
+      .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
+    const lastTyping = state.entities
+      .getIn(['tlog', String()], emptyUser); // TODO: detect lastTyping
+    const entry = state.entities
+      .getIn(['entry', String(conversation.get('entry'))], emptyEntry);
+    const entryAuthor = state.entities
+      .getIn(['tlog', String(entry.get('author'))], emptyUser);
+
+    return {
+      entry,
+      entryAuthor,
+      lastMessage,
+      lastMessageAuthor,
+      lastTyping,
+    };
+  }
+)(ItemEntry);
