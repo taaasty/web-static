@@ -1,11 +1,12 @@
-/*global $, i18n, NoticeService */
+/*global i18n */
 import React, { Component } from 'react';
 import LoadingMessage from '../MessagesPopup/LoadingMessage';
 import Chooser from '../Chooser';
 import FooterButton from '../MessagesPopup/FooterButton';
-import ConversationActions from '../../actions/ConversationActions';
+import ConversationActions from '../../actions/ConversationsActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import ApiRoutes from '../../../../../shared/routes/api';
+import NoticeService from '../../../services/Notice';
 
 const PROCESS_STATE = 'process';
 const CHOOSER_STATE = 'chooser';

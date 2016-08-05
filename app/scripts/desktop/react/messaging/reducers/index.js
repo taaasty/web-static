@@ -3,6 +3,7 @@ import conversations from './conversations';
 import messages from './messages';
 import messagesPopup from './messagesPopup';
 import messagingStatus from './messagingStatus';
+import typing from './typing';
 
 export default function (state, action) {
   return {
@@ -11,5 +12,6 @@ export default function (state, action) {
     messages: messages(state && state.messages, action),
     messagesPopup: messagesPopup(state && state.messagesPopup, action),
     messagingStatus: messagingStatus(state && state.messagingStatus, action),
+    typing: typing(state && state.typing, action),
   };
 }

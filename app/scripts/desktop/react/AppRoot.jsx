@@ -5,6 +5,7 @@ import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from './middleware/api';
+import normalizeMiddleware from './middleware/normalize';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 import { camelizeKeys } from 'humps';
@@ -35,7 +36,8 @@ import { feedStatusConnect } from './services/FeedStatusService';
 const createStoreWithMiddleware = compose(
   applyMiddleware(
     thunkMiddleware,
-    apiMiddleware
+    apiMiddleware,
+    normalizeMiddleware
   ), window.devToolsExtension ? window.devToolsExtension() : (f) => f)(createStore);
 let store = void 0;
 

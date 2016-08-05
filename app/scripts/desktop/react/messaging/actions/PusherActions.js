@@ -1,6 +1,7 @@
 /*global i18n, gon */
 /*eslint no-console: 0 */
 import { CALL_API, Schemas } from '../../middleware/api';
+import { NORMALIZE_DATA } from '../../middleware/normalize';
 import { postOpts } from '../../actions/reqHelpers';
 import Pusher from 'pusher';
 import ApiRoutes from '../../../../shared/routes/api';
@@ -19,6 +20,7 @@ export const MSG_NOTIFY_READY_SUCCESS = 'MSG_NOTIFY_READY_SUCCESS';
 export const MSG_NOTIFY_READY_FAILURE = 'MSG_NOTIFY_READY_FAILURE';
 
 export const MSG_PUSHER_RECONNECT = 'MSG_PUSHER_RECONNECT';
+export const MSG_PUSHER_PUSH_NOTIFICATION = 'MSG_PUSHER_PUSH_NOTIFICATION';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -32,6 +34,16 @@ const EVENT_TYPING = 'typed';
 
 function channelMain(userId) {
   return `private-${userId}-messaging`;
+}
+
+function pushNotification(data) {
+  return {
+    [NORMALIZE_DATA]: {
+      schema: Schemas.NOTIFICATION,
+      type: MSG_PUSHER_PUSH_NOTIFICATION,
+      data,
+    },
+  }
 }
 
 export function pusherSubscribe(user) {
@@ -69,16 +81,16 @@ export function pusherSubscribe(user) {
       switch (type) {
       case EVENT_STATUS:
         return dispatch(updateMessagingStatus(data));
+      case EVENT_PUSH_NOTIFICATION:
+        return dispatch(pushNotification(data));
+      case EVENT_UPDATE_NOTIFICATIONS:
+        //return MessagingDispatcher.notificationsUpdated(data);
       case EVENT_UPDATE_CONVERSATION:
         //return MessagingDispatcher.updateConversation(data);
       case EVENT_PUSH_MESSAGE:
         //return MessagingDispatcher.messageReceived(data);
       case EVENT_UPDATE_MESSAGES:
         //return MessagingDispatcher.messagesUpdated(data);
-      case EVENT_PUSH_NOTIFICATION:
-        //return MessagingDispatcher.notificationReceived(data);
-      case EVENT_UPDATE_NOTIFICATIONS:
-        //return MessagingDispatcher.notificationsUpdated(data);
       case EVENT_DELETE_MESSAGES:
         //return MessagingDispatcher.deleteMessages(data);
       case EVENT_DELETE_USER_MESSAGES:

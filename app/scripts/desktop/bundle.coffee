@@ -39,10 +39,6 @@ require './react/mixins/scroller'
 
 # /*-----  End of Mixins  ------*/
 
-require './react/messaging/messaging_testing'
-
-# /*-----  End of Messaging resources  ------*/
-
 global.BrowserSupportContainer = require './react/components/BrowserSupport'
 global.ConfirmRegistrationShellbox = require './react/components/ConfirmRegistrationShellbox';
 global.DesignSettingsColorPickerPopup = require './react/components/DesignSettingsPopup/common/colorPicker/popup'

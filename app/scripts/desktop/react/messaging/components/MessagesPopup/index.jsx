@@ -11,7 +11,7 @@ import {
 } from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
 //import Thread from '../Thread';
-//import CreateNewConversation from '../CreateNewConversation';
+import CreateNewConversation from '../CreateNewConversation';
 import Conversations from '../Conversations';
 //import GroupSettings from '../GroupSettings';
 //import GroupChooser from '../GroupChooser';
