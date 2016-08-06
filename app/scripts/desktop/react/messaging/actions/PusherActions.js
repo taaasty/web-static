@@ -13,6 +13,9 @@ import {
 import {
   updateMessagingStatus,
 } from './MessagingStatusActions';
+import {
+  initTyping,
+} from './TypingActions';
 import NoticeService from '../../services/Notice';
 
 export const MSG_NOTIFY_READY_REQUEST = 'MSG_NOTIFY_READY_REQUEST';
@@ -96,7 +99,7 @@ export function pusherSubscribe(user) {
       case EVENT_DELETE_USER_MESSAGES:
         //return MessagingDispatcher.deleteUserMessages(data);
       case EVENT_TYPING:
-        //return MessagingDispatcher.typing(data);
+        return dispatch(initTyping(data));
       }
     });
   }

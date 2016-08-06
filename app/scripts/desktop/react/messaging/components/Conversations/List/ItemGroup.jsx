@@ -12,7 +12,7 @@ import {
   SYMBOL_AVATAR_COLOR,
 } from '../../../constants';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
 const emptyLastMessage = Map();
 const emptyUser = Map();
@@ -89,8 +89,12 @@ export default connect(
       .getIn(['message', String(conversation.get('lastMessage'))], emptyLastMessage);
     const lastMessageAuthor = state.entities
       .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
+    const lastTypingId = state.msg
+      .typing
+      .get(conversation.get('id'), List())
+      .last();
     const lastTyping = state.entities
-      .getIn(['tlog', String()], emptyUser); // TODO: get last typed
+      .getIn(['tlog', String(lastTypingId)], emptyUser);
 
     return {
       lastMessage,

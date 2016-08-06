@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
 import { CONVERSATION_PIC_SIZE } from './Item';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 
 const emptyUser = Map();
@@ -81,7 +81,11 @@ export default connect(
       .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
     const recipient = state.entities
       .getIn(['tlog', String(conversation.get('recipient'))], emptyUser);
-    const isRecipientTyping = false; // TODO: detect typing
+    const lastTypingId = state.msg
+      .typing
+      .get(conversation.get('id'), List())
+      .last();
+    const isRecipientTyping = lastTypingId === conversation.get('recipient');
 
     return {
       isRecipientTyping,

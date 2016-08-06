@@ -4,7 +4,7 @@ import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
 import ItemEntryPic from './ItemEntryPic';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
 const emptyEntry = Map();
 const emptyLastMessage = Map();
@@ -80,12 +80,16 @@ export default connect(
       .getIn(['message', String(conversation.get('lastMessage'))], emptyLastMessage);
     const lastMessageAuthor = state.entities
       .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
-    const lastTyping = state.entities
-      .getIn(['tlog', String()], emptyUser); // TODO: detect lastTyping
     const entry = state.entities
       .getIn(['entry', String(conversation.get('entry'))], emptyEntry);
     const entryAuthor = state.entities
       .getIn(['tlog', String(entry.get('author'))], emptyUser);
+    const lastTypingId = state.msg
+      .typing
+      .get(conversation.get('id'), List())
+      .last();
+    const lastTyping = state.entities
+      .getIn(['tlog', String(lastTypingId)], emptyUser);
 
     return {
       entry,

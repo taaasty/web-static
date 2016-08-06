@@ -1,6 +1,10 @@
 import ApiRoutes from '../../../../shared/routes/api';
 import { postOpts } from '../../actions/reqHelpers';
 import { CALL_API, Schemas } from '../../middleware/api';
+import { camelizeKeys } from 'humps';
+import {
+  TYPING_CANCEL_INTERVAL,
+} from '../constants';
 
 export const MSG_TYPING_INIT = 'MSG_TYPING_INIT';
 export const MSG_TYPING_CANCEL = 'MSG_TYPING_CANCEL';
@@ -9,22 +13,26 @@ export const MSG_TYPING_REQUEST = 'MSG_TYPING_REQUEST';
 export const MSG_TYPING_SUCCESS = 'MSG_TYPING_SUCCESS';
 export const MSG_TYPING_FAILURE = 'MSG_TYPING_FAILURE';
 
+export function initTyping(rawData) {
+  return (dispatch) => {
+    const data = camelizeKeys(rawData);
 
-
-export function initTyping(data) {
-  return (dispatch, getState) => {
-    const state = getState();
-
-    if (state.msg.typing.getIn([])) {
-
-    } else {
-      return dispatch()
+    if (typeof setTimeout === 'function') {
+      setTimeout(() => dispatch(cancelTyping(data)), TYPING_CANCEL_INTERVAL);
     }
+
+    return dispatch({
+      type: MSG_TYPING_INIT,
+      data,
+    });
   };
 }
 
-function cancelTyping() {
-
+function cancelTyping(data) {
+  return {
+    type: MSG_TYPING_CANCEL,
+    data,
+  };
 }
 
 export function sendTyping(conversationId) {
@@ -41,46 +49,3 @@ export function sendTyping(conversationId) {
     },
   };
 }
-
-
-/*
-updateTyping(convId, userId) {
-  const timeoutId = setTimeout(this.cancelTyping.bind(this, convId,
-    userId), TYPING_CANCEL_INTERVAL);
-
-  if (!_typing[convId]) {
-    _typing[convId] = {
-      [userId]: {
-        timeoutId,
-        eventAt: (new Date())
-          .valueOf()
-      }
-    };
-  } else {
-    const userTyping = _typing[convId][userId];
-    if (userTyping && userTyping.timeoutId) {
-      clearTimeout(userTyping.timeoutId);
-    }
-
-    _typing[convId][userId] = {
-      timeoutId,
-      eventAt: (new Date())
-        .valueOf()
-    };
-  }
-},
-
-cancelTyping(convId, userId) {
-  const typing = _typing[convId];
-
-  if (typing) {
-    if (typing[userId] && typing[userId].timeoutId) {
-      clearTimeout(typing[userId].timeoutId);
-    }
-
-    delete _typing[convId][userId];
-    this.emitChange();
-  }
-},
-
-*/
