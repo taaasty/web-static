@@ -6,27 +6,6 @@ export default class MessagingRequester {
     this.access_token = access_token;
     this.socket_id = socket_id;
   }
-  notifyReady({ success, error }) {
-    return $.ajax({
-      url: ApiRoutes.messenger_ready_url(),
-      data: {
-        socket_id: this.socket_id,
-      },
-      method: 'POST',
-      success,
-      error,
-    });
-  }
-  postNewConversation(recipientId, content) {
-    return $.ajax({
-      url: ApiRoutes.messengerConversationsByUserId(recipientId),
-      method: 'POST',
-      data: {
-        socket_id: this.socket_id,
-        content: content,
-      },
-    });
-  }
   deleteConversation(id) {
     return $.ajax({
       url: ApiRoutes.messengerConversationsById(id),
@@ -41,7 +20,7 @@ export default class MessagingRequester {
       data: { socket_id: this.socket_id },
     });
   }
-  deleteMessages(conversationId, ids=[], all) {
+  deleteMessages(conversationId, ids = [], all) {
     return $.ajax({
       url: ApiRoutes.messengerDeleteMessages(conversationId),
       method: 'DELETE',
@@ -79,7 +58,7 @@ export default class MessagingRequester {
       formData.append('reply_message_uuid', replyMessageUuid);
     }
     files.forEach((file) => formData.append('files[]', file));
-      
+
     return $.ajax({
       url: ApiRoutes.messenger_new_message_url(conversationId),
       method: 'POST',
@@ -127,15 +106,6 @@ export default class MessagingRequester {
       data: {
         socket_id: this.socket_id,
         user_ids: ids.join(','),
-      },
-    });
-  }
-  sendTyping(conversationId) {
-    return $.ajax({
-      url: ApiRoutes.messengerTyping(conversationId),
-      method: 'POST',
-      data: {
-        socket_id: this.socket_id,
       },
     });
   }

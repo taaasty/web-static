@@ -5,6 +5,7 @@ import UserSlug from '../../../components/UserSlug';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
 function UserListItem({ onClick, selected, user }) {
+  const jsUser = user.toJS();
   const containerClasses = classNames({
     'message--container': true,
     'message--selected': selected,
@@ -17,7 +18,7 @@ function UserListItem({ onClick, selected, user }) {
       </span>
       <div className="messages__dialog">
         <span className="messages__user-avatar">
-          <UserAvatar size={CONVERSATION_PIC_SIZE} user={user} />
+          <UserAvatar size={CONVERSATION_PIC_SIZE} user={jsUser} />
         </span>
         <div className="messages__dialog-text">
           <div className="messages__user-name">

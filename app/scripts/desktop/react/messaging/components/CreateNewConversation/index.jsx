@@ -1,68 +1,52 @@
 /*global i18n */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import LoadingMessage from '../MessagesPopup/LoadingMessage';
 import Chooser from '../Chooser';
 import FooterButton from '../MessagesPopup/FooterButton';
-import ConversationActions from '../../actions/ConversationsActions';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
-import ApiRoutes from '../../../../../shared/routes/api';
-import NoticeService from '../../../services/Notice';
+import {
+  postNewConversation,
+} from '../../actions/ConversationsActions';
+import {
+  showGroupChooser,
+  showThread,
+} from '../../actions/MessagesPopupActions';
+import {
+  RELS_BY_FRIEND,
+  getRelsByFriend,
+} from '../../../actions/RelsActions';
+import {
+  REL_FRIEND_STATE,
+} from '../../../actions/RelationshipActions';
+import { connect } from 'react-redux';
+import { Map } from 'immutable';
 
-const PROCESS_STATE = 'process';
-const CHOOSER_STATE = 'chooser';
+const emptyRels = Map();
+const emptyUser = Map();
 
 class CreateNewConversation extends Component {
-  state = {
-    currentState: CHOOSER_STATE,
-    loading: false,
-    users: [],
-  };
   componentWillMount() {
-    this.mounted = true;
+    this.props.getMyRelsByFriend();
+  }
+  postNewConversation(user) {
+    const { postNewConversation, showThread } = this.props;
 
-    this.setState({ loading: true });
-    $.ajax({ url: ApiRoutes.relationships_by_url('friend') })
-      .done(({ relationships }) => {
-        if (this.mounted) {
-          this.setState({ users: relationships.map((r) => r.reader) });
-        }
-      })
-      .fail((error) => NoticeService.errorResponse(error))
-      .then(() => {
-        if (this.mounted) {
-          this.setState({ loading: false });
-        }
+    postNewConversation(user.get('id'))
+      .then(({ response }) => {
+        showThread(response.result);
       });
   }
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-  activateProcessState() {
-    this.setState({ currentState: PROCESS_STATE });
-  }
-  activateChooserState() {
-    this.setState({ currentState: CHOOSER_STATE });
-  }
-  postNewConversation({ id }) {
-    this.activateProcessState();
-
-    ConversationActions.postNewConversation({
-      recipientId: id,
-      error: this.activateChooserState.bind(this),
-    });
-  }
   newGroupChat() {
-    MessagesPopupActions.openGroupChooser({ users: this.state.users });
+    this.props.showGroupChooser();
   }
   render() {
-    const { currentState, loading, users } = this.state;
+    const { isFetching, isFetchingRels, users } = this.props;
 
     return (
       <div className="messages__section messages__section--recipients">
-          {currentState === PROCESS_STATE
+          {isFetching
            ? <LoadingMessage content={i18n.t('new_thread_process')} />
            : <Chooser
-               loading={loading}
+               isFetching={isFetchingRels}
                onClickUser={this.postNewConversation.bind(this)}
                onSubmit={this.postNewConversation.bind(this)}
                selectState={false}
@@ -78,4 +62,45 @@ class CreateNewConversation extends Component {
   }
 }
 
-export default CreateNewConversation;
+CreateNewConversation.propTypes = {
+  getMyRelsByFriend: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  isFetchingRels: PropTypes.bool.isRequired,
+  postNewConversation: PropTypes.func.isRequired,
+  showGroupChooser: PropTypes.func.isRequired,
+  showThread: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => {
+    const currentUserId = state.currentUser.data.id;
+    const isFetching = state.msg.conversations.get('isFetchingNewConversation', false);
+    const isFetchingRels = state.rels.getIn([RELS_BY_FRIEND, 'isFetching'], false);
+    const users = state.entities
+      .get('rel', emptyRels)
+      .filter((r) => r.get('userId') === currentUserId && r.get('state') === REL_FRIEND_STATE)
+      .map((r) => state.entities.getIn(['tlog', String(r.get('readerId'))], emptyUser));
+
+    return {
+      currentUserId,
+      isFetching,
+      isFetchingRels,
+      users,
+    }
+  },
+  {
+    getRelsByFriend,
+    postNewConversation,
+    showGroupChooser,
+    showThread,
+  },
+  (stateProps, dispatchProps) => Object.assign(
+    {},
+    stateProps,
+    dispatchProps,
+    {
+      getMyRelsByFriend: dispatchProps.getRelsByFriend.bind(null, stateProps.currentUserId),
+    }
+  )
+)(CreateNewConversation);

@@ -2,7 +2,6 @@ import {
   stopSelect,
 } from './MessagesActions';
 
-export const MSG_POPUP_SET_CONVERSATION_ID = 'MSG_POPUP_SET_CONVERSATION_ID';
 export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
 export const MSG_POPUP_POP_HISTORY = 'MSG_POPUP_POP_HISTORY';
 export const MSG_POPUP_SET_HISTORY = 'MSG_POPUP_SET_HISTORY';
@@ -14,39 +13,47 @@ export const MSG_POPUP_STATE_GROUP_CHOOSER = 'MSG_POPUP_STATE_GROUP_CHOOSER';
 export const MSG_POPUP_STATE_GROUP_SETTINGS = 'MSG_POPUP_STATE_GROUP_SETTINGS';
 
 export function initPopup() {
-  return (dispatch) => {
-    dispatch(stopSelect());
-    return dispatch(showConversationList());
-  };
+  return showConversationList();
 }
 
 function setHistory(history) {
-  return {
-    type: MSG_POPUP_SET_HISTORY,
-    history,
+  return (dispatch) => {
+    dispatch(stopSelect());
+
+    return dispatch({
+      type: MSG_POPUP_SET_HISTORY,
+      history,
+    });
   };
 }
 
 function pushHistory(popupState) {
-  return {
-    type: MSG_POPUP_PUSH_HISTORY,
-    popupState,
-  };
+  return (dispatch) => {
+    dispatch(stopSelect());
+
+    return dispatch({
+      type: MSG_POPUP_PUSH_HISTORY,
+      popupState,
+    });
+  }
 }
 
-function setCurrentConversationId(id) {
-  return {
-    type: MSG_POPUP_SET_CONVERSATION_ID,
-    id,
+export function historyBack() {
+  return (dispatch) => {
+    dispatch(stopSelect());
+
+    return dispatch({
+      type: MSG_POPUP_POP_HISTORY,
+    });
   };
 }
 
 export function showConversationList() {
-  return setHistory([MSG_POPUP_STATE_CONVERSATIONS]);
+  return setHistory([{ state: MSG_POPUP_STATE_CONVERSATIONS }]);
 }
 
 export function showCreateNew() {
-  return pushHistory(MSG_POPUP_STATE_CREATE_NEW);
+  return pushHistory({ state: MSG_POPUP_STATE_CREATE_NEW });
 }
 
 export function showGroupSettings() {
@@ -57,20 +64,13 @@ export function showGroupChooser() {
 
 }
 
-export function showThread(id) {
+export function showThread(conversationId) {
   return (dispatch) => {
-    dispatch(setCurrentConversationId(id));
     return dispatch(setHistory([
-      MSG_POPUP_STATE_CONVERSATIONS,
-      MSG_POPUP_STATE_THREAD,
+      { state: MSG_POPUP_STATE_CONVERSATIONS },
+      { state: MSG_POPUP_STATE_THREAD, conversationId },
     ]));
   }
-}
-
-export function historyBack() {
-  return {
-    type: MSG_POPUP_POP_HISTORY,
-  };
 }
 
 /*

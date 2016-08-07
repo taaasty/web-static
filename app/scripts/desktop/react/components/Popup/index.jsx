@@ -14,7 +14,7 @@ const _Popup = createClass({
     onPositionChange: PropTypes.func.isRequired,
     position: PropTypes.object.isRequired,
     showSpinner: PropTypes.bool,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.node.isRequired,
   },
 
   componentDidMount() {

@@ -174,13 +174,6 @@ ConversationsStore.dispatchToken = MessagingDispatcher.register(({ action }) => 
     ConversationsStore.updateOnlineStatuses(action.convIds, action.data);
     ConversationsStore.emitChange();
     break;
-  case 'conversationTyping':
-    ConversationsStore.updateTyping(action.id, action.userId);
-    ConversationsStore.emitChange();
-    break;
-  case 'conversationCancelTyping':
-    ConversationsStore.cancelTyping(action.id, action.userId);
-    break;
   }
 });
 

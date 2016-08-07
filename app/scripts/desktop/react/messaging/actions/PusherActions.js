@@ -148,7 +148,7 @@ function pusherConnected(pusher) {
     return dispatch(notifyReady())
       .then(() => {
         console.log('Server is notified');
-        // return dispatch(updateOnleneStatuses());
+        // TODO: return dispatch(updateOnleneStatuses());
       })
       .catch((err) => {
         console.error('Error', err);

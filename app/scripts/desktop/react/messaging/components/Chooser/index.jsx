@@ -17,8 +17,14 @@ class Chooser extends Component {
   }
   render() {
     const { currentState } = this.state;
-    const { loading, onClickUser, onSubmit, selectState,
-            selectedIds, users } = this.props;
+    const {
+      isFetching,
+      onClickUser,
+      onSubmit,
+      selectState,
+      selectedIds,
+      users,
+    } = this.props;
     const chooserClasses = classNames({
       'messages__chooser': true,
       'state--open': currentState === OPEN_STATE,
@@ -44,7 +50,7 @@ class Chooser extends Component {
         <div className="messages__body">
           <div className={friendsClasses}>
             <UserList
-              loading={loading}
+              isFetching={isFetching}
               onClick={onClickUser}
               selectState={selectState}
               selectedIds={selectedIds}
@@ -58,17 +64,16 @@ class Chooser extends Component {
 }
 
 Chooser.propTypes = {
-  loading: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
   onClickUser: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   selectState: PropTypes.bool.isRequired,
   selectedIds: PropTypes.array,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 Chooser.defaultProps = {
   selectedIds: [],
-  users: [],
 };
 
 export default Chooser;

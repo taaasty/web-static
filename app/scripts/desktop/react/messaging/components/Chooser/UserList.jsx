@@ -3,18 +3,18 @@ import UserListItem from './UserListItem';
 import Spinner from '../../../../../shared/react/components/common/Spinner';
 import Scroller from '../../../components/common/Scroller';
 
-function UserList({ loading, onClick, selectedIds, users })  {
-  return loading
+function UserList({ isFetching, onClick, selectedIds, users })  {
+  return isFetching
     ? <Spinner size={30} />
     : <Scroller>
         <div className="messages__dialogs">
           {users.map((user) => (
              <UserListItem
-               key={user.id}
+               key={user.get('id')}
                onClick={onClick.bind(null, user)}
-               selected={selectedIds.indexOf(user.id) > -1}
+               selected={selectedIds.indexOf(user.get('id')) > -1}
                user={user}
-             />))
+             />)).valueSeq()
           }
         </div>
       </Scroller>
@@ -23,16 +23,15 @@ function UserList({ loading, onClick, selectedIds, users })  {
 UserList.displayName = 'UserList';
 
 UserList.propTypes = {
-  loading: PropTypes.bool,
+  isFetching: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   selectedIds: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 UserList.defaultProps = {
   onClick: () => {},
   selectedIds: [],
-  users: [],
 };
 
 export default UserList;

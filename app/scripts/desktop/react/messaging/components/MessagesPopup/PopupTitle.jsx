@@ -14,10 +14,12 @@ import TitleGroupConversation from './TitleGroupConversation';
 import TitlePrivateConversation from './TitlePrivateConversation';
 
 function PopupTitle({ conversation, state }) {
+  const conversationType = conversation.get('type');
+
   if (!conversation.isEmpty() && state === MSG_POPUP_STATE_THREAD) {
-    if (conversation.get('type') === PUBLIC_CONVERSATION) {
+    if (conversationType === PUBLIC_CONVERSATION) {
       return <TitlePublicConversation conversation={conversation} />;
-     } else if (conversation.get('type') === GROUP_CONVERSATION) {
+     } else if (conversationType === GROUP_CONVERSATION) {
        return <TitleGroupConversation conversation={conversation} />;
      } else {
        return <TitlePrivateConversation conversation={conversation} />;

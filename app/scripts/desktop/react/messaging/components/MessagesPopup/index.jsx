@@ -18,11 +18,27 @@ import Conversations from '../Conversations';
 import PopupTitle from './PopupTitle';
 import Popup from '../../../components/Popup';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
+
+const emptyHistory = List();
+const emptyState = Map();
 
 class MessagesPopup extends Component {
   componentWillMount() {
     this.props.initPopup();
+  }
+  renderTitle() {
+    const {
+      conversation,
+      popupState,
+    } = this.props;
+
+    return (
+      <PopupTitle
+        conversation={conversation}
+        state={popupState}
+      />
+    );
   }
   renderContents() {
     const {
@@ -44,7 +60,7 @@ class MessagesPopup extends Component {
   }
   render() {
     const {
-      conversation,
+      historyBack,
       popupState,
      } = this.props;
     const popupClasses = classNames({
@@ -60,11 +76,11 @@ class MessagesPopup extends Component {
         draggable
         onClose={this.props.onClose}
         position={{ top: 30, left: 30 }}
-        title={<PopupTitle conversation={conversation} state={popupState} />}
+        title={this.renderTitle()}
       >
         <div className="messages">
           {popupState !== MSG_POPUP_STATE_CONVERSATIONS &&
-           <BackButton onClick={this.handleBackButtonClick} />
+           <BackButton onClick={historyBack} />
           }
           {this.renderContents()}
         </div>
@@ -82,11 +98,18 @@ MessagesPopup.propTypes = {
 };
 
 export default connect(
-  (state) => ({
-    conversation: state.entities
-      .getIn([ 'conversation', String(state.msg.messagesPopup.get('currentConversationId')) ], Map()),
-    popupState: state.msg.messagesPopup.get('history').last(),
-  }),
+  (state) => {
+    const lastState = state.msg
+      .messagesPopup
+      .get('history', emptyHistory)
+      .last() || emptyState;
+
+    return {
+      conversation: state.entities
+        .getIn([ 'conversation', String(lastState.get('conversationId'))], Map()),
+      popupState: lastState.get('state'),
+    };
+  },
   {
     historyBack,
     initPopup,

@@ -30,7 +30,7 @@ Header.propTypes = {
   draggable: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   showSpinner: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
 };
 
 Header.defaultProps = {
