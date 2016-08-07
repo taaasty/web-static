@@ -1,66 +1,44 @@
-import React, { Component, PropTypes } from 'react';
-import Button from './Button';
+import React, { PropTypes } from 'react';
+//import Button from './Button';
 import Dropdown from './Dropdown';
 import UserList from './UserList';
 import classNames from 'classnames';
 
-const OPEN_STATE = 'openState';
-const CLOSE_STATE = 'closeState';
+function Chooser(props) {
+  const {
+    isFetching,
+    onClickUser,
+    onSubmit,
+    selectState,
+    selectedIds,
+    users,
+  } = props;
 
-class Chooser extends Component {
-  state = { currentState: OPEN_STATE };
-  activateOpenState() {
-    this.setState({ currentState: OPEN_STATE });
-  }
-  activateCloseState() {
-    this.setState({ currentState: CLOSE_STATE });
-  }
-  render() {
-    const { currentState } = this.state;
-    const {
-      isFetching,
-      onClickUser,
-      onSubmit,
-      selectState,
-      selectedIds,
-      users,
-    } = this.props;
-    const chooserClasses = classNames({
-      'messages__chooser': true,
-      'state--open': currentState === OPEN_STATE,
-    });
-    const friendsClasses = classNames({
-      'messages__friends-container': true,
-      'message--select-mode': selectState,
-    });
+  const friendsClasses = classNames({
+    'messages__friends-container': true,
+    'message--select-mode': selectState,
+  });
 
-    return (
-      <div className="messages__chooser-container">
-        <div className="messages__box">
-          <div className={chooserClasses}>
-            {currentState === CLOSE_STATE
-             ? <Button onClick={this.activateOpenState.bind(this)} />
-             : <Dropdown
-                 onCancel={this.activateCloseState.bind(this)}
-                 onSubmit={onSubmit}
-               />
-            }
-          </div>
-        </div>
-        <div className="messages__body">
-          <div className={friendsClasses}>
-            <UserList
-              isFetching={isFetching}
-              onClick={onClickUser}
-              selectState={selectState}
-              selectedIds={selectedIds}
-              users={users}
-            />
-          </div>
+  return (
+    <div className="messages__chooser-container">
+      <div className="messages__box">
+        <div className="messages__chooser state--open">
+          <Dropdown onSubmit={onSubmit} />
         </div>
       </div>
-    );
-  }
+      <div className="messages__body">
+        <div className={friendsClasses}>
+          <UserList
+            isFetching={isFetching}
+            onClick={onClickUser}
+            selectState={selectState}
+            selectedIds={selectedIds}
+            users={users}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 Chooser.propTypes = {

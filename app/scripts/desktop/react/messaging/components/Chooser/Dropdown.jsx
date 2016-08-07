@@ -1,57 +1,76 @@
 /*global i18n */
-import React, { createClass, PropTypes } from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import React, { Component, PropTypes } from 'react';
 import Results from './Results';
+import {
+  setChooserQuery,
+  resetChooserQuery,
+  selectNext,
+  selectPrev,
+} from '../../actions/ChooserActions';
+import { connect } from 'react-redux';
+import { List, Map } from 'immutable';
 
-const Dropdown = createClass({
-  propTypes: {
-    onCancel: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-  },
-  mixins: [ LinkedStateMixin ],
+const emptyUser = Map();
 
-  getInitialState() {
-    return { query: '' };
-  },
-
+class Dropdown extends Component {
+  componentWillMount() {
+    this.props.resetChooserQuery();
+  }
   componentDidMount() {
-    this.refs.chooserInput.focus();
-  },
+    this.refs.input.focus();
+  }
+  componentWillUnmount() {
+    this.props.resetChooserQuery();
+  }
+  handleSubmit(user) {
+    const {
+      onSubmit,
+      resetChooserQuery,
+    } = this.props;
 
-  handleSubmit(data) {
-    this.setState({ query: '' });
-    this.props.onSubmit(data);
-    this.refs.chooserInput.focus();
-  },
+    resetChooserQuery();
+    onSubmit(user);
+  }
+  handleChange(ev) {
+    this.props.setChooserQuery(ev.target.value || '');
+  }
+  handleKeyDown(ev) {
+    const {
+      resetChooserQuery,
+      selectNext,
+      selectPrev,
+      selectedIndex,
+      users,
+    } = this.props;
 
-  handleKeyDown(e) {
-    const { onCancel } = this.props;
-    const chooserResults = this.refs.chooserResults;
-
-    switch (e.key) {
+    switch (ev.key) {
     case 'Enter':
-      e.preventDefault();
-      if (chooserResults) {
-        this.handleSubmit(chooserResults.getSelectedUser());
+      ev.preventDefault();
+      if (users.count() > 0) {
+        this.handleSubmit(users.get(selectedIndex));
       }
       break;
     case 'Escape':
-      e.preventDefault();
-      onCancel();
+      ev.preventDefault();
+      resetChooserQuery();
       break;
     case 'ArrowUp':
-      e.preventDefault();
-      chooserResults.selectPreviousResult();
+      ev.preventDefault();
+      selectPrev();
       break;
     case 'ArrowDown':
-      e.preventDefault();
-      chooserResults.selectNextResult();
+      ev.preventDefault();
+      selectNext();
       break;
     }
-  },
-
+  }
   render() {
-    const { query } = this.state;
+    const {
+      isFetching,
+      query,
+      selectedIndex,
+      users,
+    } = this.props;
 
     return (
       <div className="messages__chooser-dropdown">
@@ -61,23 +80,60 @@ const Dropdown = createClass({
           </span>
           <input
             className="messages__chooser-input"
-            onKeyDown={this.handleKeyDown}
+            onChange={this.handleChange.bind(this)}
+            onKeyDown={this.handleKeyDown.bind(this)}
             placeholder={i18n.t('new_thread_placeholder')}
-            ref="chooserInput"
+            ref="input"
             type="text"
-            valueLink={this.linkState('query')}
           />
         </div>
-        {query && 
+        {query &&
          <Results
-           onSubmit={this.handleSubmit}
+           isFetching={isFetching}
+           onSubmit={this.handleSubmit.bind(this)}
            query={query}
-           ref="chooserResults"
+           selectedIndex={selectedIndex}
+           users={users}
          />
         }
       </div>
     );
-  },
-});
+  }
+}
 
-export default Dropdown;
+Dropdown.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  resetChooserQuery: PropTypes.func.isRequired,
+  selectNext: PropTypes.func.isRequired,
+  selectPrev: PropTypes.func.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
+  setChooserQuery: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
+};
+
+export default connect(
+  (state) => {
+    const users = state.msg
+      .chooser
+      .get('users', List())
+      .map((id) => state.entities.getIn(['tlog', String(id)], emptyUser));
+    const selectedIndex = state.msg.chooser.get('selectedIndex', 0);
+    const isFetching = state.msg.chooser.get('isFetching', false);
+    const query = state.msg.chooser.get('query', '');
+
+    return {
+      isFetching,
+      query,
+      selectedIndex,
+      users,
+    };
+  },
+  {
+    setChooserQuery,
+    resetChooserQuery,
+    selectNext,
+    selectPrev,
+  }
+)(Dropdown);

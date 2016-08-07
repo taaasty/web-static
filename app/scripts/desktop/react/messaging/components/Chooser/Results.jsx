@@ -1,122 +1,60 @@
-/*global i18n, RequesterMixin, NoticeService */
-import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../../shared/routes/api';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
 import ResultsItem from './ResultsItem';
+import Spinner from '../../../../../shared/react/components/common/Spinner';
 
-const LOADING_STATE = 'loadingState';
-const LOADED_STATE = 'loadedState';
-const EMPTY_STATE = 'emptyState';
+class Results extends Component {
+  renderContents() {
+    const {
+      isFetching,
+      onSubmit,
+      query,
+      selectedIndex,
+      users,
+    } = this.props;
 
-const Results = createClass({
-  propTypes: {
-    onSubmit: PropTypes.func.isRequired,
-    query: PropTypes.string.isRequired,
-  },
-  mixins: [RequesterMixin],
-
-  getInitialState() {
-    return {
-      currentState: LOADING_STATE,
-      predictedUsers: [],
-      selectedUserIndex: 0,
-    };
-  },
-
-  componentDidMount() {
-    this.loadPredictions(this.props.query);
-  },
-
-  componentWillReceiveProps({ query }) {
-    if (this.props.query !== query) {
-      this.loadPredictions(query);
-    }
-  },
-
-  activateEmptyState() {
-    this.setState({ currentState: EMPTY_STATE });
-  },
-
-  activateLoadedState() {
-    this.setState({ currentState: LOADED_STATE });
-  },
-
-  selectPreviousResult() {
-    this._moveHighlight(-1);
-  },
-
-  selectNextResult() {
-    this._moveHighlight(1);
-  },
-
-  loadPredictions(query) {
-    if (this.req) {
-      this.removeActiveRequest(this.req);
-      this.req.abort();
-    }
-
-    this.req = this.createRequest({
-      url: ApiRoutes.users_predict(),
-      method: 'GET',
-      data: { query },
-      success: (predictedUsers) => {
-        this.setState({ predictedUsers });
-
-        if (predictedUsers.length === 0) {
-          this.activateEmptyState();
-        } else {
-          this.activateLoadedState();
-        }
-      },
-      error(errMsg) {
-        NoticeService.errorResponse(errMsg);
-      },
-    });
-  },
-
-  getSelectedUser() {
-    return this.state.predictedUsers[this.state.selectedUserIndex];
-  },
-
-  _moveHighlight(delta) {
-    const usersCount = this.state.predictedUsers.length;
-    const userIndex  = this.state.selectedUserIndex;
-
-    if (usersCount > 0) {
-      if ((userIndex > 0 && delta < 0) || (userIndex < usersCount - 1 && delta > 0)) {
-        this.setState({ selectedUserIndex: userIndex + delta });
+    if (isFetching) {
+      return (
+        <div className="messages__chooser-empty">
+          <Spinner size={24} />
+        </div>
+      );
+    } else if (users.count() === 0) {
+      if (query.length > 0) {
+        return (
+          <div className="messages__chooser-empty">
+            {i18n.t('new_thread_unknown_user')}
+          </div>
+        )
+      } else {
+        return null;
       }
+    } else {
+      return users.map((user, i) => (
+        <ResultsItem
+          key={user.get('id')}
+          onClick={onSubmit}
+          selected={selectedIndex === i}
+          user={user}
+        />
+      )).valueSeq();
     }
-  },
-
-  renderResults() {
-    const { predictedUsers, selectedUserIndex } = this.state;
-
-    return predictedUsers.map((predictedUser, i) => (
-      <ResultsItem
-        key={predictedUser.id}
-        onClick={this.props.onSubmit}
-        predictedUser={predictedUser}
-        selected={selectedUserIndex === i}
-      />
-    ));
-  },
-
+  }
   render() {
-    const { currentState } = this.state;
-
     return (
       <div className="messages__chooser-results">
-        {currentState === LOADED_STATE
-         ? this.renderResults()
-         : currentState === EMPTY_STATE
-           ? <div className="messages__chooser-empty">
-               {i18n.t('new_thread_unknown_user')}
-             </div>
-           : <noscript />
-        }
+        {this.renderContents()}
       </div>
     );
-  },
-});
+  }
+}
+
+Results.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
+  users: PropTypes.object.isRequired,
+};
 
 export default Results;

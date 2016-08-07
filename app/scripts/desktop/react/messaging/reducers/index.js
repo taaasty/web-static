@@ -1,3 +1,4 @@
+import chooser from './chooser';
 import connectionState from './connectionState';
 import conversations from './conversations';
 import messages from './messages';
@@ -7,6 +8,7 @@ import typing from './typing';
 
 export default function (state, action) {
   return {
+    chooser: chooser(state && state.chooser, action),
     connectionState: connectionState(state && state.connectionState, action),
     conversations: conversations(state && state.conversations, action),
     messages: messages(state && state.messages, action),
