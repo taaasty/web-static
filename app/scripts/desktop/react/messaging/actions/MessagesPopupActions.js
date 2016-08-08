@@ -1,6 +1,10 @@
 import {
   stopSelect,
 } from './MessagesActions';
+import {
+  resetGroupSettings,
+} from './GroupSettingsActions';
+import { List } from 'immutable';
 
 export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
 export const MSG_POPUP_POP_HISTORY = 'MSG_POPUP_POP_HISTORY';
@@ -56,12 +60,49 @@ export function showCreateNew() {
   return pushHistory({ state: MSG_POPUP_STATE_CREATE_NEW });
 }
 
-export function showGroupSettings() {
+function getHistory(state) {
+  return state.msg.messagesPopup.get('history', List());
+}
 
+export function showGroupSettings() {
+  return (dispatch, getState) => {
+    const history = getHistory(getState());
+    const prevState = history.getIn([history.count() - 2, 'state']);
+
+
+    if (prevState === MSG_POPUP_STATE_GROUP_SETTINGS) {
+      return dispatch(historyBack());
+    } else {
+      return dispatch(pushHistory({ state: MSG_POPUP_STATE_GROUP_SETTINGS }));
+    }
+  }
 }
 
 export function showGroupChooser() {
+  return (dispatch, getState) => {
+    const history = getHistory(getState());
+    const prevState = history.getIn([history.count() - 2, 'state']);
 
+
+    if (prevState === MSG_POPUP_STATE_GROUP_CHOOSER) {
+      return dispatch(historyBack());
+    } else {
+      return dispatch(pushHistory({ state: MSG_POPUP_STATE_GROUP_CHOOSER }));
+    }
+  }
+}
+
+export function closeGroupSettings() {
+  return (dispatch, getState) => {
+    dispatch(resetGroupSettings());
+
+    return dispatch(setHistory(getHistory(getState()
+      .filter((e) => (
+        e.get('state') !== MSG_POPUP_STATE_GROUP_CHOOSER &&
+        e.get('state') !== MSG_POPUP_STATE_GROUP_SETTINGS
+      ))
+    )));
+  };
 }
 
 export function showThread(conversationId) {

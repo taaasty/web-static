@@ -14,7 +14,7 @@ import BackButton from './BackButton';
 import CreateNewConversation from '../CreateNewConversation';
 import Conversations from '../Conversations';
 //import GroupSettings from '../GroupSettings';
-//import GroupChooser from '../GroupChooser';
+import GroupChooser from '../GroupChooser';
 import PopupTitle from './PopupTitle';
 import Popup from '../../../components/Popup';
 import { connect } from 'react-redux';

@@ -10,7 +10,7 @@ function Chooser(props) {
     onClickUser,
     onSubmit,
     selectState,
-    selectedIds,
+    selected,
     users,
   } = props;
 
@@ -32,7 +32,7 @@ function Chooser(props) {
             isFetching={isFetching}
             onClick={onClickUser}
             selectState={selectState}
-            selectedIds={selectedIds}
+            selected={selected}
             users={users}
           />
         </div>
@@ -46,7 +46,7 @@ Chooser.propTypes = {
   onClickUser: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   selectState: PropTypes.bool.isRequired,
-  selectedIds: PropTypes.array,
+  selected: PropTypes.object,
   users: PropTypes.object.isRequired,
 };
 

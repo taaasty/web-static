@@ -1,50 +1,77 @@
 /*global i18n */
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import Chooser from '../Chooser';
 import FooterButton from '../MessagesPopup/FooterButton';
-import GroupSettingsStore from '../../stores/GroupSettingsStore';
-import GroupSettingsActions from '../../actions/GroupSettingsActions';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import {
+  showGroupSettings,
+} from '../../actions/MessagesPopupActions';
+import {
+  addGroupUser,
+  toggleSelectedUser,
+} from '../../actions/GroupSettingsActions';
+import { connect } from 'react-redux';
+import { Map, OrderedSet } from 'immutable';
 
-class GroupChooser extends Component {
-  state = GroupSettingsStore.getState();
-  componentWillMount() {
-    this.syncStateWithStore = () => this.setState(GroupSettingsStore.getState());
-    GroupSettingsStore.addChangeListener(this.syncStateWithStore);
-  }
-  componentWillUnmount() {
-    GroupSettingsStore.removeChangeListener(this.syncStateWithStore);
-  }
-  handleSubmit(user) {
-    GroupSettingsActions.addUser(user);
-    GroupSettingsActions.selectId(user.id);
-  }
-  handleClickUser({ id }) {
-    GroupSettingsActions.toggleSelectedId(id);
-  }
-  handleClickChooserButton() {
-    MessagesPopupActions.showGroupSettings();
-  }
-  render() {
-    const { selectedIds, settings: { users } } = this.state;
+const emptySet = OrderedSet();
+const emptyUser = Map();
 
-    return (
-      <div className="messages__section messages__section--group-chooser">
-        <Chooser
-          onClickUser={this.handleClickUser}
-          onSubmit={this.handleSubmit}
-          selectState
-          selectedIds={selectedIds}
-          users={users}
-        />
-        <FooterButton
-          disabled={!selectedIds.length}
-          onClick={this.handleClickChooserButton}
-          text={i18n.t('buttons.messenger.new_group_next')}
-        />
-      </div>
-    );
-  }
+function GroupChooser(props) {
+  const {
+    addGroupUser,
+    selected,
+    showGroupSettings,
+    toggleSelectedUser,
+    users,
+  } = props;
+
+  return (
+    <div className="messages__section messages__section--group-chooser">
+      <Chooser
+        isFetching={false}
+        onClickUser={toggleSelectedUser}
+        onSubmit={addGroupUser}
+        selectState
+        selected={selected}
+        users={users}
+      />
+      <FooterButton
+        disabled={selected.count() === 0}
+        onClick={showGroupSettings}
+        text={i18n.t('buttons.messenger.new_group_next')}
+      />
+    </div>
+  );
 }
 
-export default GroupChooser;
+GroupChooser.propTypes = {
+  addGroupUser: PropTypes.func.isRequired,
+  selected: PropTypes.object.isRequired,
+  showGroupSettings: PropTypes.func.isRequired,
+  toggleSelectedUser: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
+
+}
+
+export default connect(
+  (state) => {
+    const selected = state
+      .msg
+      .groupSettings
+      .get('selected', emptySet);
+    const users = state
+      .msg
+      .groupSettings
+      .getIn(['data', 'users'], emptySet)
+      .map((id) => state.entities.getIn(['tlog', String(id)], emptyUser));
+
+    return {
+      selected,
+      users,
+    }
+  },
+  {
+    addGroupUser,
+    showGroupSettings,
+    toggleSelectedUser,
+  }
+)(GroupChooser);

@@ -15,6 +15,9 @@ import {
   getRelsByFriend,
 } from '../../../actions/RelsActions';
 import {
+  initGroupSettings,
+} from '../../actions/GroupSettingsActions';
+import {
   REL_FRIEND_STATE,
 } from '../../../actions/RelationshipActions';
 import { connect } from 'react-redux';
@@ -28,7 +31,10 @@ class CreateNewConversation extends Component {
     this.props.getMyRelsByFriend();
   }
   postNewConversation(user) {
-    const { postNewConversation, showThread } = this.props;
+    const {
+      postNewConversation,
+      showThread,
+    } = this.props;
 
     postNewConversation(user.get('id'))
       .then(({ response }) => {
@@ -36,7 +42,16 @@ class CreateNewConversation extends Component {
       });
   }
   newGroupChat() {
-    this.props.showGroupChooser();
+    const {
+      initGroupSettings,
+      showGroupChooser,
+      users,
+    } = this.props;
+
+    initGroupSettings({
+      users: users.map((u) => u.get('id')),
+    });
+    showGroupChooser();
   }
   render() {
     const { isFetching, isFetchingRels, users } = this.props;
@@ -64,6 +79,7 @@ class CreateNewConversation extends Component {
 
 CreateNewConversation.propTypes = {
   getMyRelsByFriend: PropTypes.func.isRequired,
+  initGroupSettings: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isFetchingRels: PropTypes.bool.isRequired,
   postNewConversation: PropTypes.func.isRequired,
@@ -91,6 +107,7 @@ export default connect(
   },
   {
     getRelsByFriend,
+    initGroupSettings,
     postNewConversation,
     showGroupChooser,
     showThread,

@@ -77,6 +77,7 @@ messageSchema.define({
 });
 
 conversationSchema.define({
+  admin: tlogSchema,
   entry: entrySchema,
   lastMessage: messageSchema,
   recipient: tlogSchema,

@@ -4,17 +4,22 @@ import UserAvatar from '../../../components/UserAvatar';
 import UserSlug from '../../../components/UserSlug';
 import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
 
-function UserListItem({ onClick, selected, user }) {
+function UserListItem(props) {
+  const {
+    isSelected,
+    onClick,
+    user,
+  } = props;
   const jsUser = user.toJS();
   const containerClasses = classNames({
     'message--container': true,
-    'message--selected': selected,
+    'message--selected': isSelected,
   });
 
   return (
     <div className={containerClasses} onClick={onClick}>
       <span className="message__selector">
-        {selected && <i className="icon icon--tick" />}
+        {isSelected && <i className="icon icon--tick" />}
       </span>
       <div className="messages__dialog">
         <span className="messages__user-avatar">
@@ -33,8 +38,8 @@ function UserListItem({ onClick, selected, user }) {
 UserListItem.displayName = 'UserListItem';
 
 UserListItem.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
 };
 

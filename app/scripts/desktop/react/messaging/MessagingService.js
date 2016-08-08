@@ -48,21 +48,6 @@ class MessagingService extends EventEmitter {
     this.osId = window.setTimeout(this.updateOnlineStatuses.bind(this), 10 *
       60 * 1000);
   }
-  postNewConversation({ recipientId, error }) {
-    return this.requester.postNewConversation(recipientId)
-      .done((conversation) => {
-        return MessagingDispatcher.handleServerAction({
-          type: 'postNewConversation',
-          conversation: conversation,
-        });
-      })
-      .fail((errMsg) => {
-        if (typeof error === 'function') {
-          error();
-        }
-        NoticeService.errorResponse(errMsg);
-      });
-  }
   deleteConversation(conversationId) {
     return this.requester.deleteConversation(conversationId)
       .done((data) => {
