@@ -43,12 +43,14 @@ class CreateNewConversation extends Component {
   }
   newGroupChat() {
     const {
+      currentUserId,
       initGroupSettings,
       showGroupChooser,
       users,
     } = this.props;
 
     initGroupSettings({
+      admin: currentUserId,
       users: users.map((u) => u.get('id')),
     });
     showGroupChooser();
@@ -78,6 +80,7 @@ class CreateNewConversation extends Component {
 }
 
 CreateNewConversation.propTypes = {
+  currentUserId: PropTypes.number.isRequired,
   getMyRelsByFriend: PropTypes.func.isRequired,
   initGroupSettings: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,

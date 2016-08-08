@@ -2,17 +2,27 @@ import React, { PropTypes } from 'react';
 import UserListItem from './UserListItem';
 import Scroller from '../../../components/common/Scroller';
 
-function UserList({ adminId, isAdmin, users })  {
+function UserList(props) {
+  const {
+    admin,
+    isAdmin,
+    openConversation,
+    unselectUser,
+    users,
+  } = props;
+
   return (
     <Scroller>
       <div className="messages__dialogs">
         {users.map((user) => (
            <UserListItem
-             adminId={adminId}
+             admin={admin}
              isAdmin={isAdmin}
-             key={user.id}
+             key={user.get('id')}
+             openConversation={openConversation}
+             unselectUser={unselectUser}
              user={user}
-           />))
+           />)).valueSeq()
         }
       </div>
     </Scroller>
@@ -22,13 +32,11 @@ function UserList({ adminId, isAdmin, users })  {
 UserList.displayName = 'UserList';
 
 UserList.propTypes = {
-  adminId: PropTypes.number,
+  admin: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  users: PropTypes.array.isRequired,
-};
-
-UserList.defaultProps = {
-  users: [],
+  openConversation: PropTypes.func.isRequired,
+  unselectUser: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 export default UserList;

@@ -22,6 +22,13 @@ export function initGroupSettings(data) {
   };
 }
 
+export function updateGroupSettings(data) {
+  return {
+    type: MSG_GROUP_UPDATE,
+    data,
+  };
+}
+
 export function saveGroupSettings(data) {
   const endpoint = data.id ?
     ApiRoutes.messengerConversationsById(data.id) :
@@ -60,7 +67,7 @@ function selectUser(user) {
   };
 }
 
-function unselectUser(user) {
+export function unselectUser(user) {
   return {
     type: MSG_GROUP_UNSELECT_USER,
     user,

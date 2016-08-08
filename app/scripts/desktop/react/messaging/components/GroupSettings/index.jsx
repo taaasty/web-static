@@ -6,10 +6,14 @@ import FooterButton from '../MessagesPopup/FooterButton';
 import Spinner from '../../../../../shared/react/components/common/Spinner';
 import {
   saveGroupSettings,
+  updateGroupSettings,
+  unselectUser,
 } from '../../actions/GroupSettingsActions';
 import {
   closeGroupSettings,
   showGroupChooser,
+  showThread,
+  openConversation,
 } from '../../actions/MessagesPopupActions';
 import { connect } from 'react-redux';
 import { List, Map } from 'immutable';
@@ -25,10 +29,13 @@ function GroupSettings(props) {
     isAdmin,
     isFetching,
     isValidParams,
+    openConversation,
     saveGroupSettings,
     showGroupChooser,
     selected,
     topic,
+    updateGroupSettings,
+    unselectUser,
     users,
   } = props;
 
@@ -37,10 +44,16 @@ function GroupSettings(props) {
       saveGroupSettings({
         id: conversationId,
         topic,
-        avatar: avatar && avatar.file,
+        avatar: avatar && avatar.get('file'),
         ids: selected.join(','),
       })
-      .then(closeGroupSettings);
+      .then(({ response }) => {
+        closeGroupSettings();
+
+        if (!conversationId) {
+          showThread(response.result);
+        }
+      });
     }
   }
 
@@ -50,6 +63,7 @@ function GroupSettings(props) {
         avatar={avatar}
         disabled={!isAdmin}
         topic={topic}
+        updateGroupSettings={updateGroupSettings}
       />
       <div className="messages__group-list-container">
         <div className="messages__group-list-header">
@@ -72,6 +86,8 @@ function GroupSettings(props) {
           <UserList
             admin={admin}
             isAdmin={isAdmin}
+            openConversation={openConversation}
+            unselectUser={unselectUser}
             users={users}
           />
         </div>
@@ -87,19 +103,20 @@ function GroupSettings(props) {
 
 GroupSettings.propTypes = {
   admin: PropTypes.object.isRequired,
-  avatar: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
+  avatar: PropTypes.object,
   closeGroupSettings: PropTypes.func.isRequired,
   conversationId: PropTypes.number,
   isAdmin: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isValidParams: PropTypes.bool.isRequired,
+  openConversation: PropTypes.func.isRequired,
   saveGroupSettings: PropTypes.func.isRequired,
   selected: PropTypes.object.isRequired,
   showGroupChooser: PropTypes.func.isRequired,
+  showThread: PropTypes.func.isRequired,
   topic: PropTypes.string.isRequired,
+  unselectUser: PropTypes.func.isRequired,
+  updateGroupSettings: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,
 };
 
@@ -129,7 +146,7 @@ export default connect(
     const admin = state.entities
       .getIn(['tlog', adminId && String(adminId)], emptyUser);
     const isAdmin = adminId === state.currentUser.data.id;
-    const isValidParams = topic && users.count() > 0;
+    const isValidParams = !!(topic && topic.length > 0) && users.count() > 0;
 
     return {
       admin,
@@ -145,7 +162,11 @@ export default connect(
   },
   {
     closeGroupSettings,
+    openConversation,
     saveGroupSettings,
     showGroupChooser,
+    showThread,
+    unselectUser,
+    updateGroupSettings,
   }
 )(GroupSettings);

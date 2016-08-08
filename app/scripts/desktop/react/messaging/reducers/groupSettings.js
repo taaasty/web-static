@@ -9,6 +9,7 @@ import {
   MSG_GROUP_UNSELECT_USER,
   MSG_GROUP_INIT,
   MSG_GROUP_RESET,
+  MSG_GROUP_UPDATE,
 } from '../actions/GroupSettingsActions';
 
 const initialState = fromJS({
@@ -47,6 +48,10 @@ const actionMap = {
       error: null,
       selected: selected ? selected.toOrderedSet() : OrderedSet(),
     });
+  },
+
+  [MSG_GROUP_UPDATE](state, { data }) {
+    return state.mergeIn(['data'], data);
   },
 
   [MSG_GROUP_RESET]() {

@@ -2,34 +2,36 @@
 import React, { PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
-import ConversationActions from '../../actions/ConversationActions';
-import GroupSettingsActions from '../../actions/GroupSettingsActions';
-import { browserHistory } from 'react-router';
-import uri from 'urijs';
+import DropdownActionSPA from '../../../components/common/DropdownActionSPA';
 
-function UserActions({ adminId, isAdmin, user }) {
+function UserActions(props) {
+  const {
+    admin,
+    isAdmin,
+    openConversation,
+    unselectUser,
+    user,
+  } = props;
+  const adminId = admin.get('id');
+  const userId = user.get('id');
+  const tlogUrl = user.get('tlogUrl');
+
   function handleClickConversation() {
-    ConversationActions.openConversation(user.id);
-  }
-
-  function redirectToTlog(ev) {
-    ev.preventDefault();
-    browserHistory.push({ pathname: uri(user.tlog_url).path() });
+    openConversation(userId);
   }
 
   function handleClickRemoveUser() {
-    GroupSettingsActions.unselectId(user.id);
+    unselectUser(user);
   }
 
   return (
     <div className="messages__group-user-actions">
       <DropdownActions>
-        <DropdownAction
+        <DropdownActionSPA
           icon=""
           key="tlog"
-          onClick={redirectToTlog}
           title={i18n.t('messenger.group.to_tlog')}
-          url={user.tlog_url}
+          url={tlogUrl}
         />
         <DropdownAction
           icon=""
@@ -37,7 +39,7 @@ function UserActions({ adminId, isAdmin, user }) {
           onClick={handleClickConversation}
           title={i18n.t('messenger.group.conversation')}
         />
-        {(isAdmin && adminId !== user.id) &&
+        {(isAdmin && adminId !== userId) &&
            <DropdownAction
              icon=""
              key="remove"
@@ -53,8 +55,10 @@ function UserActions({ adminId, isAdmin, user }) {
 UserActions.displayName = 'UserActions';
 
 UserActions.propTypes = {
-  adminId: PropTypes.number.isRequired,
+  admin: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  openConversation: PropTypes.func.isRequired,
+  unselectUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 

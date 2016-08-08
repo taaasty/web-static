@@ -13,7 +13,7 @@ import BackButton from './BackButton';
 //import Thread from '../Thread';
 import CreateNewConversation from '../CreateNewConversation';
 import Conversations from '../Conversations';
-//import GroupSettings from '../GroupSettings';
+import GroupSettings from '../GroupSettings';
 import GroupChooser from '../GroupChooser';
 import PopupTitle from './PopupTitle';
 import Popup from '../../../components/Popup';

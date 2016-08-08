@@ -1,6 +1,7 @@
 import { CALL_API, Schemas } from '../../middleware/api';
 import ApiRoutes from '../../../../shared/routes/api';
 import { postOpts } from '../../actions/reqHelpers';
+import { Map } from 'immutable';
 
 export const MSG_CONVERSATIONS_POST_REQUEST = 'MSG_CONVERSATIONS_POST_REQUEST';
 export const MSG_CONVERSATIONS_POST_SUCCESS = 'MSG_CONVERSATIONS_POST_SUCCESS';
@@ -20,7 +21,6 @@ export function postNewConversation(userId) {
     },
   };
 }
-
 
 /*
 import MessagingDispatcher from '../MessagingDispatcher';
