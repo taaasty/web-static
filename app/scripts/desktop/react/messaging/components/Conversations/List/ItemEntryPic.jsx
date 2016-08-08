@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Avatar from '../../../../../../shared/react/components/common/AvatarCamelCase';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
-import { CONVERSATION_PIC_SIZE } from './Item';
+import { CONVERSATION_PIC_SIZE } from '../../../constants';
 import { Map } from 'immutable';
 
 function ItemEntryPic({ entry, entryAuthor, size, title }) {

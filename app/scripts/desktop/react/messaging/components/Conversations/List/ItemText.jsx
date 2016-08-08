@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import MsgUserAvatar from '../../MsgUserAvatar';
 import ItemMain, { getLastMsgTxt } from './ItemMain';
-import { CONVERSATION_PIC_SIZE } from './Item';
+import { CONVERSATION_PIC_SIZE } from '../../../constants';
 import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 

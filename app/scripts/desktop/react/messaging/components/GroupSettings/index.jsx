@@ -32,6 +32,7 @@ function GroupSettings(props) {
     openConversation,
     saveGroupSettings,
     showGroupChooser,
+    showThread,
     selected,
     topic,
     updateGroupSettings,

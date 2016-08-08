@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import UserAvatar from '../../../components/UserAvatar';
 import UserSlug from '../../../components/UserSlug';
 import UserActions from './UserActions';
-import { CONVERSATION_PIC_SIZE } from '../Conversations/List/Item';
+import { CONVERSATION_PIC_SIZE } from '../../constants';
 
 function UserListItem(props) {
   const {

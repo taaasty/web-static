@@ -7,8 +7,6 @@ import {
   GROUP_CONVERSATION,
 } from '../../../constants';
 
-export const CONVERSATION_PIC_SIZE = 40;
-
 function Item(props) {
   const {
     conversation,

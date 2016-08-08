@@ -6,7 +6,7 @@ import ItemMain, { getLastMsgTxt } from './ItemMain';
 import ItemEntryPreviewImage from './ItemEntryPreviewImage';
 import {
   CONVERSATION_PIC_SIZE,
-} from './Item';
+} from '../../../constants';
 import {
   SYMBOL_AVATAR_BG,
   SYMBOL_AVATAR_COLOR,

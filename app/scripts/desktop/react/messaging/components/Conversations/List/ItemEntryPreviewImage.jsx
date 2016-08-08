@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import Image from '../../../../../../shared/react/components/common/Image';
-import { CONVERSATION_PIC_SIZE } from './Item';
+import { CONVERSATION_PIC_SIZE } from '../../../constants';
 
 function ItemEntryPreviewImage({ image, isRawUrl, size }) {
-  const width = image.getIn(['geomentry', 'width']);
+  const width = image.getIn(['geometry', 'width']);
   const height = image.getIn(['geometry', 'height']);
   const isHorizontal = width > height;
 
