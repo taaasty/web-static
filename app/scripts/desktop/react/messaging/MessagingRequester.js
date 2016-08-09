@@ -31,24 +31,6 @@ export default class MessagingRequester {
       },
     });
   }
-  loadMessages(conversationId) {
-    return $.ajax({
-      url: ApiRoutes.messenger_load_messages_url(conversationId),
-      data: {
-        socket_id: this.socket_id,
-      },
-    });
-  }
-  loadMoreMessages(conversationId, toMessageId) {
-    return $.ajax({
-      url: ApiRoutes.messenger_load_messages_url(conversationId),
-      data: {
-        socket_id: this.socket_id,
-        to_message_id: toMessageId,
-        limit: 10,
-      },
-    });
-  }
   postMessage(conversationId, content, files, uuid, replyMessageUuid) {
     const formData = new window.FormData();
     formData.append('socket_id', this.socket_id);

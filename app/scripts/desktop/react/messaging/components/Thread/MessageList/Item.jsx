@@ -18,12 +18,12 @@ const Item = createClass({
     conversationType: PropTypes.string.isRequired,
     currentUserId: PropTypes.number.isRequired,
     deliveryStatus: PropTypes.string.isRequired,
+    isSelectState: PropTypes.bool.isRequired,
     message: PropTypes.object.isRequired,
     messageInfo: PropTypes.object.isRequired,
     onResendMessage: PropTypes.func.isRequired,
     replyMessage: PropTypes.object,
     replyMessageInfo: PropTypes.object,
-    selectState: PropTypes.bool.isRequired,
     selected: PropTypes.bool,
     startSelect: PropTypes.func.isRequired,
     toggleSelection: PropTypes.func.isRequired,
@@ -46,9 +46,9 @@ const Item = createClass({
   },
 
   toggleSelection() {
-    const { selectState, toggleSelection } = this.props;
+    const { isSelectState, toggleSelection } = this.props;
 
-    if (selectState) {
+    if (isSelectState) {
       toggleSelection();
     }
   },

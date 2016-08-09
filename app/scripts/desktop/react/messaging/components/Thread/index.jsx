@@ -1,159 +1,171 @@
-/*global messagingService */
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import ThreadForm from './ThreadForm';
 import SelectForm from './SelectForm';
 import MessageList from './MessageList';
-import MessagesStore from '../../stores/MessagesStore';
-import MessageActions from '../../actions/MessagesActions';
-import MessagesPopupStore from '../../stores/MessagesPopupStore';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
-import { browserHistory } from 'react-router';
-import uri from 'urijs';
+import moment from 'moment';
 import {
   PRIVATE_CONVERSATION,
   PUBLIC_CONVERSATION,
   GROUP_CONVERSATION,
 } from '../../constants';
+import {
+  startSelect,
+} from '../../actions/ThreadActions';
+import {
+  loadMessages,
+  loadArchivedMessages,
+} from '../../actions/ConversationActions';
+import { connect } from 'react-redux';
+import { Map, Set, fromJS } from 'immutable';
 
-class Thread extends Component {
-  state = this.getStateFromStore();
-  componentDidMount() {
-    this.listener = this.syncStateWithStore.bind(this);
-    MessagesPopupStore.addChangeListener(this.listener);
-    MessagesStore.addChangeListener(this.listener);
-  }
-  componentWillUnmount() {
-    MessagesPopupStore.removeChangeListener(this.listener);
-    MessagesStore.removeChangeListener(this.listener);
-  }
-  syncStateWithStore() {
-    this.setState(this.getStateFromStore());
-  }
-  getStateFromStore() {
-    const { id } = this.props.conversation;
+const defaultUser = fromJS({
+  slug: '...',
+  tlogUrl: '#',
+  userpic: {
+    kind: 'user',
+    symbol: '',
+    defaultColors: {
+      background: '#42d792',
+      name: '#fff',
+    },
+  },
+});
+const emptyUser = Map();
+const emptyEntry = Map();
 
-    return {
-      selectState: MessagesPopupStore.getSelectState(),
-      selectedIds: MessagesStore.getSelection(),
-      canDelete: MessagesStore.canDelete(),
-      canDeleteEverywhere: MessagesStore.canDeleteEverywhere(id),
-      canReply: MessagesStore.canReply(),
-    };
-  }
-  startSelect() {
-    if (!this.state.selectedState) {
-      MessagesPopupActions.startSelect();
-    }
-  }
-  stopSelect() {
-    MessagesPopupActions.stopSelect();
-  }
-  setReplyTo() {
-    MessageActions.setReplyTo();
-  }
-  cancelReplyTo() {
-    MessageActions.cancelReplyTo();
-  }
-  deleteMessages(all) {
-    messagingService.deleteMessages(
-      this.props.conversation.id,
-      this.state.selectedIds,
-      all
-    );
-  }
-  onClickHeader(entry, ev) {
-    ev.preventDefault();
-    browserHistory.push({ pathname: uri(entry.url).path(), state: { id: entry.id } });
-  }
-  threadStyles() {
-    const { conversation } = this.props;
+function Thread(props) {
+  const {
+    bgImage,
+    canTalk,
+    conversation,
+    isSelectState,
+    loadArchivedMessages,
+    loadMessages,
+    messageAuthors,
+    messages,
+    selectedIds,
+    startSelect,
+  } = props;
+  const conversationType = conversation.get('type');
+  const threadStyles = bgImage ?
+    { backgroundImage: `url(${bgImage})` } :
+    {};
 
-    if (conversation.type === PUBLIC_CONVERSATION) {
-      const authorDesign = conversation.entry.author.design;
-
-      return authorDesign.backgroundId
-        ? { backgroundImage: `url(${authorDesign.backgroundImageUrl})` }
-        : {};
-    } else if (conversation.type === GROUP_CONVERSATION) {
-      return conversation.background_image && conversation.background_image.url || {};
-    } else {
-      const recipientDesign = conversation.recipient.design;
-
-      return recipientDesign.backgroundId
-        ? { backgroundImage: `url(${recipientDesign.backgroundImageUrl})` }
-        : {};
-    }
-  }
-  handleClickGroupHeader() {
-    MessagesPopupActions.openGroupSettings(this.state.conversation);
-  }
-  canTalk() {
-    const { conversation } = this.props;
-
-    return typeof conversation.can_talk === 'undefined' || conversation.can_talk;
-  }
-  renderForm() {
-    const { conversation } = this.props;
-    const { canDelete, canDeleteEverywhere, canReply, selectState } = this.state;
-
-    if (selectState) {
+  function renderForm() {
+    if (isSelectState) {
       return (
         <SelectForm
-          canDelete={canDelete}
-          canDeleteEverywhere={canDeleteEverywhere}
-          canReply={canReply}
-          deleteEverywhereFn={this.deleteMessages.bind(this, true)}
-          deleteFn={this.deleteMessages.bind(this, false)}
-          setReplyTo={this.setReplyTo}
-          stopSelect={this.stopSelect}
+          conversation={conversation}
+          messages={messages}
         />
       );
-    } else if (this.canTalk()) {
-      return <ThreadForm cancelReplyTo={this.cancelReplyTo} conversation={conversation} />;
+    } else if (canTalk) {
+      return <ThreadForm conversation={conversation} />;
     } else {
       return null;
     }
   }
-  render() {
-    const { conversation } = this.props;
-    const { selectState } = this.state;
-    if (!conversation) {
-      return null;
-    }
 
-    const containerClasses = classNames({
-      'messages__section': true,
-      'messages__section--thread': true,
-      'messages__section--select': selectState,
-      '--private': conversation.type === PRIVATE_CONVERSATION,
-      '--no-form': !this.canTalk(),
-    });
-    const listClasses = classNames({
-      'messages__body': true,
-      'message--select-mode': selectState,
-    });
+  const containerClasses = classNames({
+    'messages__section': true,
+    'messages__section--thread': true,
+    'messages__section--select': isSelectState,
+    '--private': conversationType === PRIVATE_CONVERSATION,
+    '--no-form': !canTalk,
+  });
+  const listClasses = classNames({
+    'messages__body': true,
+    'message--select-mode': isSelectState,
+  });
 
-    return (
-      <div className={containerClasses}>
-        <div className={listClasses} style={this.threadStyles()}>
-          <div className="messages__thread-overlay" />
-          <MessageList
-            conversation={conversation}
-            selectState={selectState}
-            startSelect={this.startSelect.bind(this)}
-          />
-        </div>
-        <footer className="messages__footer">
-          {this.renderForm()}
-        </footer>
+  return (
+    <div className={containerClasses}>
+      <div className={listClasses} style={threadStyles}>
+        <div className="messages__thread-overlay" />
+        <MessageList
+          conversation={conversation}
+          isSelectState={isSelectState}
+          loadArchivedMessages={loadArchivedMessages}
+          loadMessages={loadMessages}
+          messageAuthors={messageAuthors}
+          messages={messages}
+          selectedIds={selectedIds}
+          startSelect={startSelect}
+        />
       </div>
-    );
-  }
+      <footer className="messages__footer">
+        {renderForm()}
+      </footer>
+    </div>
+  );
 }
 
 Thread.propTypes = {
+  bgImage: PropTypes.string,
+  canTalk: PropTypes.bool.isRequired,
   conversation: PropTypes.object.isRequired,
+  isSelectState: PropTypes.bool.isRequired,
+  loadArchivedMessages: PropTypes.func.isRequired,
+  loadMessages: PropTypes.func.isRequired,
+  messageAuthors: PropTypes.object.isRequired,
+  messages: PropTypes.object.isRequired,
+  selectedIds: PropTypes.object.isRequired,
+  startSelect: PropTypes.func.isRequired,
 };
 
-export default Thread;
+export default connect(
+  (state, { conversation }) => {
+    const conversationType = conversation.get('type');
+    const conversationId = conversation.get('id');
+    const isSelectState = state.msg.thread.get('isSelectState', false);
+    const selectedIds = state.msg.thread.get('selectedIds', Set());
+    const canTalk = conversation.get('canTalk', true); // true if not set
+    const messages = state
+      .entities
+      .get('message', Map())
+      .filter((m) => m.get('conversationId') === conversationId)
+      .sortBy((m) => -moment(m.get('createdAt').valueOf));
+    const messageAuthors = messages
+      .map((m) => state.entities.getIn(['tlog', String(m.get('userId'))], defaultUser));
+    let bgImage;
+
+    if (conversationType === PRIVATE_CONVERSATION) {
+      const recipient = state
+        .entities
+        .getIn(['tlog', String(conversation.get('recipient'))], emptyUser);
+
+      bgImage = recipient.getIn(['design', 'backgroundId']) &&
+        recipient.getIn(['design', 'backgroundImageUrl']);
+    } else if (conversationType === PUBLIC_CONVERSATION) {
+      const entry = state
+        .entities
+        .getIn(['entry', String(conversation.get('entry'))], emptyEntry);
+      const entryAuthor = state
+        .entities
+        .getIn(['tlog', String(entry.get('author'))], emptyUser);
+
+      bgImage = entryAuthor.getIn(['design', 'backgroundId']) &&
+        entryAuthor.getIn(['design', 'backgroundImageUrl']);
+    } else if (conversationType === GROUP_CONVERSATION) {
+      bgImage = conversation.getIn(['backgroundImage', 'url']);
+    } else {
+      bgImage = null;
+    }
+
+    return {
+      bgImage,
+      canTalk,
+      conversation,
+      isSelectState,
+      messageAuthors,
+      messages,
+      selectedIds,
+    };
+  },
+  {
+    startSelect,
+    loadArchivedMessages,
+    loadMessages,
+  }
+)(Thread);

@@ -4,46 +4,40 @@ import React, { Component, PropTypes } from 'react';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
 import ThreadFormMediaPreview from './ThreadFormMediaPreview';
 import ThreadFormReplyTo from './ThreadFormReplyTo';
-import ConversationActions from '../../actions/ConversationActions';
-//import CurrentUserStore from '../../../stores/current_user';
-import { GROUP_CONVERSATION, TYPING_THROTTLE_INTERVAL } from '../../constants';
+import {
+  GROUP_CONVERSATION,
+  TYPING_THROTTLE_INTERVAL,
+} from '../../constants';
 import Textarea from 'react-textarea-autosize';
-import MessagesStore from '../../stores/MessagesStore';
-import MessageActions from '../../actions/MessagesActions';
+import {
+  sendTyping,
+} from '../../actions/TypingActions';
+import {
+  cancelReplyTo,
+} from '../../actions/ThreadActions';
+import {
+  postNewMessage,
+} from '../../actions/MessageActions';
+import { connect } from 'react-redux';
 
 class ThreadForm extends Component {
-  state = Object.assign({}, {
-    user: CurrentUserStore.getUser(),
-    hasText: false,
-    files: [],
-    isLoading: false,
-  }, this.getStateFromStore());
   componentWillMount() {
+    const {
+      conversation,
+      sendTyping,
+    } = this.props;
+
     this.typing = throttle(
-      ConversationActions.sendTyping.bind(null, this.props.conversation.id),
+      sendTyping.bind(null, conversation.get('id')),
       TYPING_THROTTLE_INTERVAL,
       { leading: true, trailing: false }
     );
-    this.syncStateWithStore = () => this.setState(this.getStateFromStore());
-    MessagesStore.addChangeListener(this.syncStateWithStore);
   }
   componentDidMount() {
     this.form = this.refs.messageForm;
     if (typeof this.form.focus === 'function') {
       this.form.focus();
     }
-  }
-  componentWillUnmount() {
-    MessagesStore.removeChangeListener(this.syncStateWithStore);
-  }
-  getStateFromStore() {
-    const { id } = this.props.conversation;
-    const replyMessage = MessagesStore.getReplyMessage(id);
-
-    return {
-      replyMessage,
-      replyMessageInfo: replyMessage && MessagesStore.getMessageInfo(replyMessage, id),
-    };
   }
   onKeyDown(ev) {
     if (ev.key === 'Enter' && !ev.shiftKey && !ev.ctrlKey && !ev.altKey && !ev.metaKey) {
@@ -80,16 +74,9 @@ class ThreadForm extends Component {
 
     return (hasText || files.length) && !this.shouldDisableForm();
   }
-  shouldDisableForm() {
-    const { type, users_left=[], users_kicked=[] } = this.props.conversation;
-    const { user: { id } } = this.state;
-
-    return type === GROUP_CONVERSATION &&
-      (users_left.indexOf(id) > -1 || users_kicked.indexOf(id) > -1);
-  }
   sendMessage() {
     if (this.msgReadyToSend()) {
-      MessageActions.newMessage({
+      postNewMessage({
         content: this.form.value,
         files: this.state.files,
         conversationId: this.props.conversation.id,
@@ -100,21 +87,32 @@ class ThreadForm extends Component {
     }
   }
   render() {
-    const disabledInputs = this.shouldDisableForm();
-    const { replyMessage, replyMessageInfo } = this.state;
+    const {
+      cancelReplyTo,
+      conversation,
+      currentUserId,
+      messageFiles,
+      messageText,
+      replyMessage,
+      replyMessageAuthor,
+    } = this.state;
+    const disabledInputs = conversation.get('type') === GROUP_CONVERSATION &&
+      (conversation.get('usersLeft').includes(currentUserId) ||
+       conversation.get('usersKicked').includes(currentUserId));
 
     return (
       <div className="message-form">
         <div className="message-form__controls">
           {replyMessage &&
            <ThreadFormReplyTo
-             cancel={this.props.cancelReplyTo}
+             cancel={cancelReplyTo}
+             conversation={conversation}
              message={replyMessage}
-             messageInfo={replyMessageInfo}
+             messageAuthor={replyMessageAuthor}
            />
           }
           <ThreadFormMediaPreview
-            files={this.state.files}
+            files={messageFiles}
             onFileRemove={this.onFileRemove.bind(this)}
           />
           <div className="message-form__textarea-container">
@@ -133,6 +131,7 @@ class ThreadForm extends Component {
               onKeyDown={this.onKeyDown.bind(this)}
               placeholder={i18n.t('new_message_placeholder')}
               ref="messageForm"
+              value={messageText}
             />
           </div>
         </div>
@@ -144,6 +143,17 @@ class ThreadForm extends Component {
 ThreadForm.propTypes = {
   cancelReplyTo: PropTypes.func.isRequired,
   conversation: PropTypes.object.isRequired,
+  postNewMessage: PropTypes.func.isRequired,
+  replyMessage: PropTypes.object,
+  replyMessageAuthor: PropTypes.object,
+  sendTyping: PropTypes.func.isRequired,
 };
 
-export default ThreadForm;
+export default connect(
+  (state, { conversation }) => {
+
+  },
+  {
+    cancelReplyTo,
+  }
+)(ThreadForm);

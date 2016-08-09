@@ -5,7 +5,7 @@ import Chooser from '../Chooser';
 import FooterButton from '../MessagesPopup/FooterButton';
 import {
   postNewConversation,
-} from '../../actions/ConversationsActions';
+} from '../../actions/ConversationActions';
 import {
   showGroupChooser,
   showThread,
@@ -94,7 +94,7 @@ CreateNewConversation.propTypes = {
 export default connect(
   (state) => {
     const currentUserId = state.currentUser.data.id;
-    const isFetching = state.msg.conversations.get('isFetchingNewConversation', false);
+    const isFetching = state.msg.conversation.get('isFetchingNewConversation', false);
     const isFetchingRels = state.rels.getIn([RELS_BY_FRIEND, 'isFetching'], false);
     const users = state.entities
       .get('rel', emptyRels)

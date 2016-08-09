@@ -1,12 +1,31 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-//import CurrentUserStore from '../../../stores/current_user';
-import PopupActions from '../../../actions/PopupActions';
+import {
+  stopSelect,
+  setReplyToId,
+} from '../../actions/ThreadActions';
+import {
+  deleteMessages,
+} from '../../actions/ConversationActions';
+import {
+  showGetPremiumPopup,
+} from '../../../actions/PopupActions';
+
+import { connect } from 'react-redux';
 
 function SelectForm(props) {
-  const { canDelete, canDeleteEverywhere, canReply, deleteFn,
-          deleteEverywhereFn, setReplyTo, stopSelect } = props;
+  const {
+    canDelete,
+    canDeleteEverywhere,
+    canReply,
+    deleteEverywhereFn,
+    deleteFn,
+    isPremium,
+    setReplyToId,
+    showGetPremiumPopup,
+    stopSelect,
+  } = props;
   const deleteClasses = classNames({
     'message-form__button': true,
     'button--red': true,
@@ -29,12 +48,12 @@ function SelectForm(props) {
   }
 
   function deleteMessagesEverywhere() {
-    if (CurrentUserStore.isPremium()) {
+    if (isPremium) {
       if (canDeleteEverywhere && typeof deleteEverywhereFn === 'function') {
         deleteEverywhereFn();
       }
     } else {
-      PopupActions.showGetPremiumPopup(); //TODO -> appstateactions
+      showGetPremiumPopup();
     }
   }
 
@@ -55,7 +74,7 @@ function SelectForm(props) {
         </button>
         <button
           className={replyClasses}
-          onTouchTap={setReplyTo}
+          onTouchTap={setReplyToId}
         >
           {i18n.t('buttons.messenger.select_form.reply')}
         </button>
@@ -76,8 +95,50 @@ SelectForm.propTypes = {
   canReply: PropTypes.bool.isRequired,
   deleteEverywhereFn: PropTypes.func.isRequired,
   deleteFn: PropTypes.func.isRequired,
-  setReplyTo: PropTypes.func.isRequired,
+  isPremium: PropTypes.bool.isRequired,
+  setReplyToId: PropTypes.func.isRequired,
+  showGetPremiumPopup: PropTypes.func.isRequired,
   stopSelect: PropTypes.func.isRequired,
 };
 
-export default SelectForm;
+export default connect(
+  (state, { conversation, messages }) => {
+    const isPremium = !!state.currentUser.data.isPremium;
+    const conversationUserId = conversation.get('userId');
+    const selectedIds = state.msg.thread.get('selectedIds', Set());
+    const canDelete = selectedIds.count() > 0;
+    const canReply = selectedIds.count() === 1;
+    const canDeleteEverywhere = canDelete && selectedIds
+      // selection has only own messages
+      .every((id) => messages.getIn([String(id), 'userId']) === conversationUserId);
+
+    return {
+      canDelete,
+      canDeleteEverywhere,
+      canReply,
+      conversation,
+      isPremium,
+    };
+  },
+  {
+    stopSelect,
+    setReplyToId,
+    deleteMessages,
+    showGetPremiumPopup,
+  },
+  (stateProps, dispatchProps) => Object.assign(
+    stateProps,
+    dispatchProps,
+    {
+      deleteFn: () => dispatchProps.deleteMessages(
+        stateProps.conversationId,
+        stateProps.selectedIds
+      ),
+      deleteEverywhereFn: () => dispatchProps.deleteMessages(
+        stateProps.conversationId,
+        stateProps.selectedIds,
+        true
+      ),
+    }
+  )
+)(SelectForm);

@@ -1,12 +1,12 @@
 import {
   stopSelect,
-} from './MessagesActions';
+} from './ThreadActions';
 import {
   resetGroupSettings,
 } from './GroupSettingsActions';
 import {
   postNewConversation,
-} from './ConversationsActions';
+} from './ConversationActions';
 import { List } from 'immutable';
 
 export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
@@ -37,7 +37,10 @@ export function openConversation(recipientId) {
 }
 
 export function initPopup() {
-  return showConversationList();
+  return (dispatch) => {
+    dispatch(resetGroupSettings());
+    return dispatch(showConversationList());
+  }
 }
 
 function setHistory(history) {
@@ -133,32 +136,3 @@ export function showThread(conversationId) {
     ]));
   }
 }
-
-/*
-  closeMessagesPopup() {
-    messagingService.closeMessagesPopup();
-    MessagingDispatcher.handleViewAction({
-      type: 'closeMessagesPopup',
-    });
-  },
-
-  openMessagesPopup() {
-    messagingService.openMessagesPopup();
-  },
-
-  case 'closeMessagesPopup':
-    MessagesPopupStore.setConversationsState();
-    MessagesPopupStore.stopSelect();
-    MessagesPopupStore.emitChange();
-    break;
-  case 'startSelect':
-    MessagesPopupStore.startSelect();
-    MessagesPopupStore.emitChange();
-    break;
-  case 'setReplyTo':
-  case 'stopSelect':
-    MessagesPopupStore.stopSelect();
-    MessagesPopupStore.emitChange();
-    break;
-
-*/

@@ -10,7 +10,7 @@ import {
   historyBack,
 } from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
-//import Thread from '../Thread';
+import Thread from '../Thread';
 import CreateNewConversation from '../CreateNewConversation';
 import Conversations from '../Conversations';
 import GroupSettings from '../GroupSettings';
@@ -42,6 +42,7 @@ class MessagesPopup extends Component {
   }
   renderContents() {
     const {
+      conversation,
       popupState,
     } = this.props;
 
@@ -51,7 +52,7 @@ class MessagesPopup extends Component {
     case MSG_POPUP_STATE_CREATE_NEW:
       return <CreateNewConversation key="newConversation" />;
     case MSG_POPUP_STATE_THREAD:
-      return <Thread key="thread" />;
+      return <Thread conversation={conversation} key="thread" />;
     case MSG_POPUP_STATE_GROUP_SETTINGS:
       return <GroupSettings key="groupSettings" />;
     case MSG_POPUP_STATE_GROUP_CHOOSER:

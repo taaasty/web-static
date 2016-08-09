@@ -1,21 +1,23 @@
 import chooser from './chooser';
 import connectionState from './connectionState';
-import conversations from './conversations';
+import conversation from './conversation';
 import groupSettings from './groupSettings';
-import messages from './messages';
+import message from './message';
 import messagesPopup from './messagesPopup';
 import messagingStatus from './messagingStatus';
+import thread from './thread';
 import typing from './typing';
 
 export default function (state, action) {
   return {
     chooser: chooser(state && state.chooser, action),
     connectionState: connectionState(state && state.connectionState, action),
-    conversations: conversations(state && state.conversations, action),
+    conversation: conversation(state && state.conversation, action),
     groupSettings: groupSettings(state && state.groupSettings, action),
-    messages: messages(state && state.messages, action),
+    message: message(state && state.message, action),
     messagesPopup: messagesPopup(state && state.messagesPopup, action),
     messagingStatus: messagingStatus(state && state.messagingStatus, action),
+    thread: thread(state && state.thread, action),
     typing: typing(state && state.typing, action),
   };
 }

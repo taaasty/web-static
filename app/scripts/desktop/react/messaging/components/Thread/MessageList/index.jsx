@@ -1,175 +1,141 @@
-/*global ScrollerMixin, messagingService, TastyEvents */
-import React, { createClass, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import Scroller from '../../../../components/common/Scroller';
 import { findDOMNode } from 'react-dom';
 import Empty from './Empty';
 import ItemManager from './ItemManager';
-import MessagesStore from '../../../stores/MessagesStore';
-import ConversationsStore from '../../../stores/ConversationsStore'; // to update messageInfo
-import MessageActions from '../../../actions/MessagesActions';
 
 let savedScrollHeight = null;
 
-const MessageList = createClass({
-  propTypes: {
-    conversation: PropTypes.object.isRequired,
-    selectState: PropTypes.bool.isRequired,
-    startSelect: PropTypes.func.isRequired,
-  },
-  mixins: [ ScrollerMixin ],
+class MessageList extends Component {
+  componentWillMount() {
+    const {
+      conversation,
+      loadMessages,
+    } = this.props;
 
-  getInitialState() {
-    return this.getStateFromStore();
-  },
-
+    loadMessages(conversation.get('id'));
+  }
   componentDidMount() {
     this.scrollToUnread();
+  }
+  componentWillUpdate(nextProps) {
+    const {
+      messages,
+    } = this.props;
 
-    MessagesStore.addChangeListener(this._onStoreChange);
-    ConversationsStore.addChangeListener(this._onStoreChange);
-    messagingService.openConversation(this.props.conversation.id);
-  },
-
-  componentWillUpdate(nextProps, nextState) {
-    const { messages } = this.state;
-
-    if (messages[0] != null && nextState.messages[0] != null) {
-      if (messages[0].uuid !== nextState.messages[0].uuid) {
+    if (messages.first() && nextProps.messages.first()) {
+      if (messages.first() !== nextProps.messages.first()) {
         // Добавятся сообщения из истории
         savedScrollHeight = this.refs.scrollerPane.scrollHeight;
       }
     }
-  },
+  }
+  componentDidUpdate(prevProps) {
+    const {
+      messages,
+    } = this.props;
 
-  componentDidUpdate(prevProps, prevState) {
-    const { messages } = this.state;
-
-    if (prevState.messages[0] != null && messages[0] != null) {
-      if (prevState.messages[0].uuid !== messages[0].uuid) {
-        this._holdScroll(); // Подгрузились сообщения из истории
-      } else if (prevState.messages.length !== messages.length) { // добавлено сообщение
-        this._scrollToBottom();
+    if (prevProps.first() && messages.first()) {
+      if (prevProps.messages.first() !== messages.first()) {
+        this.holdScroll(); // Подгрузились сообщения из истории
+      } else if (prevProps.messages.count() !== messages.count()) { // добавлено сообщение
+        this.scrollToBottom();
       }
     } else {
-      this._scrollToBottom();
+      this.scrollToBottom();
     }
-  },
-
-  componentWillUnmount() {
-    MessagesStore.removeChangeListener(this._onStoreChange);
-    ConversationsStore.removeChangeListener(this._onStoreChange);
-  },
-
-  isEmpty() {
-    return this.state.messages.length === 0;
-  },
-
+  }
   handleScroll() {
-    const { isAllMessagesLoaded, messages } = this.state;
+    const {
+      conversation,
+      loadArchivedMessages,
+    } = this.props;
     const scrollerPaneNode = this.refs.scrollerPane;
 
-    if (scrollerPaneNode.scrollTop === 0 && !isAllMessagesLoaded) {
-      MessageActions.loadMoreMessages({
-        conversationId: this.props.conversation.id,
-        toMessageId: messages[0].id,
-      });
+    if (scrollerPaneNode.scrollTop === 0) {
+      loadArchivedMessages(conversation.get('id'));
     }
-
-    TastyEvents.emit(TastyEvents.keys.message_list_scrolled(), scrollerPaneNode);
-  },
-
-  getStateFromStore() {
-    const { id } = this.props.conversation;
-
-    return {
-      isAllMessagesLoaded: MessagesStore.isAllMessagesLoaded(id),
-      messages: MessagesStore.getMessages(id),
-    };
-  },
-
-  _onStoreChange() {
-    this.setState(this.getStateFromStore());
-  },
-
-  _scrollToBottom() {
+  }
+  scrollToBottom() {
     this.scrollList(this.refs.scrollerPane.scrollHeight);
-  },
-
+  }
   scrollList(offset) {
     this.refs.scrollerPane.scrollTop = offset;
-  },
-
+  }
   scrollToUnread() {
-    const { messages } = this.state;
-    const unread = messages.filter((msg) => {
-      if (msg.read_at) {
-        return false;
-      }
+    const {
+      conversation,
+      messages,
+    } = this.props;
+    const unread = messages
+      // only unread incoming messages
+      .filter((msg) => (
+        msg.get('userId') !== conversation.get('userId') && !msg.get('readAt')
+      ));
 
-      const info = MessagesStore.getMessageInfo(msg, this.props.conversation.id);
-      return info.type === 'incoming';
-    });
-
-    if (unread.length) {
-      const unreadMsgNode = findDOMNode(this.refs[this.messageKey(unread[0])]);
+    if (unread.count() > 0) {
+      const unreadMsgNode = findDOMNode(this.refs[this.messageKey(unread.first())]);
       if (unreadMsgNode) {
         this.scrollList(unreadMsgNode.offsetTop);
       }
     } else {
-      this._scrollToBottom();
+      this.scrollToBottom();
     }
-  },
-
-  _holdScroll() {
+  }
+  holdScroll() {
     this.scrollList(this.refs.scrollerPane.scrollHeight - savedScrollHeight);
     savedScrollHeight = null;
-  },
-
+  }
   messageKey(msg) {
-    return `${msg.id}-${msg.uuid}`;
-  },
-
+    return `${msg.get('id')}-${msg.get('uuid')}`;
+  }
   renderMessages() {
-    const { conversation } = this.props;
-    const { messages } = this.state;
+    const {
+      conversation,
+      isSelectState,
+      messages,
+      startSelect,
+    } = this.props;
 
-    return this.isEmpty()
+    return messages.count() === 0
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
             conversationType={conversation.type}
             currentUserId={conversation.user_id}
+            isSelectState={isSelectState}
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.length}
             ref={this.messageKey(message)}
-            selectState={this.props.selectState}
-            startSelect={this.props.startSelect}
-          />));
-  },
-
+            startSelect={startSelect}
+          />)).valueSeq();
+  }
   render() {
     return (
-      <div
-        className="scroller scroller--dark scroller--messages"
+      <Scroller
+        className="scroller--messages"
+        onScroll={this.handleScroll}
         ref="scroller"
       >
-        <div
-          className="scroller__pane js-scroller-pane"
-          onScroll={this.handleScroll}
-          ref="scrollerPane"
-        >
-          <div className="messages__list" ref="messageList">
-            <div className="messages__list-cell">
-              {this.renderMessages()}
-            </div>
+        <div className="messages__list" ref="messageList">
+          <div className="messages__list-cell">
+            {false && this.renderMessages()}
           </div>
         </div>
-        <div className="scroller__track js-scroller-track">
-          <div className="scroller__bar js-scroller-bar" />
-        </div>
-      </div>
+      </Scroller>
     );
-  },
-});
+  }
+}
+
+MessageList.propTypes = {
+  conversation: PropTypes.object.isRequired,
+  isSelectState: PropTypes.bool.isRequired,
+  loadArchivedMessages: PropTypes.func.isRequired,
+  loadMessages: PropTypes.func.isRequired,
+  messageAuthors: PropTypes.object.isRequired,
+  messages: PropTypes.object.isRequired,
+  startSelect: PropTypes.func.isRequired,
+};
 
 export default MessageList;

@@ -21,6 +21,7 @@
   },
   "extends": "eslint:recommended",
   "rules": {
+    "semi": [1, "always"],
     "comma-dangle": [1, "always-multiline"],
     "consistent-return": [1],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true }],

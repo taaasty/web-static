@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
 import ConversationsStore from '../../stores/ConversationsStore';
-import ConversationActions from '../../actions/ConversationsActions';
+import ConversationActions from '../../actions/ConversationActions';
 import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
 import { browserHistory } from 'react-router';

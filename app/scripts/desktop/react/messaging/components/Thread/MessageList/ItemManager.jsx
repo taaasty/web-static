@@ -1,8 +1,5 @@
-/*global messagingService, TastyEvents */
 import React, { createClass, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import MessageActions from '../../../actions/MessagesActions';
-import MessagesStore from '../../../stores/MessagesStore';
 import Item from './Item';
 import SystemMessage from './SystemMessage';
 
@@ -16,9 +13,11 @@ const SYSTEM_MSG = 'SystemMessage';
 function isElementInViewport(el, parent) {
   const position = getElementPosition(el, parent);
 
-  return ((position.viewportHeight > position.elemBottomBorder ||
-           position.viewportHeight > position.elemTopBorder) &&
-          (position.elemTopBorder > 0 || position.elemBottomBorder > 0));
+  return (
+    (position.viewportHeight > position.elemBottomBorder ||
+     position.viewportHeight > position.elemTopBorder) &&
+    (position.elemTopBorder > 0 || position.elemBottomBorder > 0)
+  );
 }
 
 function getElementPosition(el, parent) {
@@ -36,9 +35,9 @@ const ItemManager = createClass({
   propTypes: {
     conversationType: PropTypes.string.isRequired,
     currentUserId: PropTypes.number.isRequired,
+    isSelectState: PropTypes.bool.isRequired,
     message: PropTypes.object.isRequired,
     messagesCount: PropTypes.number,
-    selectState: PropTypes.bool.isRequired,
     startSelect: PropTypes.func.isRequired,
   },
 
@@ -47,14 +46,6 @@ const ItemManager = createClass({
   },
 
   componentDidMount() {
-    if (this.isUnread() && this.state.messageInfo.type === 'incoming') {
-      if (this.props.messagesCount > 10) {
-        TastyEvents.on(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
-      } else {
-        setTimeout(() => this.readMessage(), 0); //fixes Flux issue with nested dispatches
-      }
-    }
-
     if (this.isErrorState()) {
       messagingService.addReconnectListener(this.resendMessage);
     }
@@ -71,7 +62,6 @@ const ItemManager = createClass({
   },
 
   componentWillUnmount() {
-    TastyEvents.off(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
     messagingService.removeReconnectListener(this.resendMessage);
   },
 
@@ -127,17 +117,8 @@ const ItemManager = createClass({
     MessageActions.toggleSelection(this.props.message.id);
   },
 
-  handleMessageListScroll(scrollerNode) {
-    const messageNode = findDOMNode(this);
-
-    if (isElementInViewport(messageNode, scrollerNode)) {
-      this.readMessage();
-      TastyEvents.off(TastyEvents.keys.message_list_scrolled(), this.handleMessageListScroll);
-    }
-  },
-
   render() {
-    const { conversationType, currentUserId, message, selectState, startSelect } = this.props;
+    const { conversationType, currentUserId, message, isSelectState, startSelect } = this.props;
     const { currentState, messageInfo, replyMessage, replyMessageInfo, selected } = this.state;
     const { type } = message;
 
@@ -149,12 +130,12 @@ const ItemManager = createClass({
           conversationType={conversationType}
           currentUserId={currentUserId}
           deliveryStatus={currentState}
+          isSelectState={isSelectState}
           message={message}
           messageInfo={messageInfo}
           onResendMessage={this.resendMessage}
           replyMessage={replyMessage}
           replyMessageInfo={replyMessageInfo}
-          selectState={selectState}
           selected={selected}
           startSelect={startSelect}
           toggleSelection={this.toggleSelection}

@@ -48,69 +48,6 @@ class MessagingService extends EventEmitter {
     this.osId = window.setTimeout(this.updateOnlineStatuses.bind(this), 10 *
       60 * 1000);
   }
-  deleteConversation(conversationId) {
-    return this.requester.deleteConversation(conversationId)
-      .done((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'deleteConversation',
-          id: conversationId,
-        });
-        NoticeService.notifySuccess(i18n.t(
-          'messenger.request.conversation_delete_success'));
-        return data;
-      })
-      .fail((err) => NoticeService.errorResponse(err));
-  }
-  leaveConversation(conversationId) {
-    return this.requester.leaveConversation(conversationId)
-      .done((data) => {
-        NoticeService.notifySuccess(i18n.t(
-          'messenger.request.conversation_leave_success'));
-        return data;
-      })
-      .fail((err) => NoticeService.errorResponse(err));
-  }
-  deleteMessages(conversationId, msgIds, all = false) {
-    return this.requester.deleteMessages(conversationId, msgIds, all)
-      .done((data) => data)
-      .fail((err) => NoticeService.errorResponse(err));
-  }
-  openConversation(conversationId) {
-    return this.loadMessages(conversationId);
-  }
-  loadMessages(conversationId) {
-    return this.requester.loadMessages(conversationId)
-      .done((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'messagesLoaded',
-          conversationId: conversationId,
-          messages: data.messages,
-        });
-
-        return data;
-      })
-      .fail((error) => {
-        console.error('Проблема при загрузке сообщений для переписки',
-          error);
-      });
-  }
-  loadMoreMessages(conversationId, toMessageId) {
-    return this.requester.loadMoreMessages(conversationId, toMessageId)
-      .done((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'moreMessagesLoaded',
-          conversationId: conversationId,
-          messages: data.messages,
-          allMessagesLoaded: data.scope_count < 10,
-        });
-
-        return data;
-      })
-      .fail((error) => {
-        console.error('Проблема при загрузке сообщений для переписки',
-          error);
-      });
-  }
   postMessage({ conversationId, content, files, uuid, replyMessage }) {
     return this.requester.postMessage(conversationId, content, files, uuid,
         replyMessage && replyMessage.uuid)
@@ -136,22 +73,10 @@ class MessagingService extends EventEmitter {
       });
   }
   markAsReadNotification(notificationId) {
-    return this.requester.markAsReadNotification(notificationId)
-      .fail((errMsg) => {
-        console.error('Проблема при прочтении уведомления', errMsg);
-      });
-  }
-  dontDisturb(id, flag) {
-      return this.requester.dontDisturb(id, flag)
-        .done((data) => {
-          MessagingDispatcher.handleServerAction({
-            type: 'updateConversation',
-            conversation: data,
-          });
-
-          return data;
-        })
-        .fail((err) => NoticeService.errorResponse(err));
+      return this.requester.markAsReadNotification(notificationId)
+        .fail((errMsg) => {
+          console.error('Проблема при прочтении уведомления', errMsg);
+        });
     }
     /*
     isMessagesPopupShown() {
