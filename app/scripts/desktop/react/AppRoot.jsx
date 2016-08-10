@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from './middleware/api';
 import normalizeMiddleware from './middleware/normalize';
+import beepMiddleware from './middleware/beep';
 import reducers from './reducers';
 import { browserHistory, IndexRoute, Router, Route, Redirect } from 'react-router';
 import { camelizeKeys } from 'humps';
@@ -37,7 +38,8 @@ const createStoreWithMiddleware = compose(
   applyMiddleware(
     thunkMiddleware,
     apiMiddleware,
-    normalizeMiddleware
+    normalizeMiddleware,
+    beepMiddleware
   ), window.devToolsExtension ? window.devToolsExtension() : (f) => f)(createStore);
 let store = void 0;
 

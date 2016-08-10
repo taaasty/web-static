@@ -26,8 +26,10 @@ const entryCollItemSchema = new Schema(
 );
 
 const conversationSchema = new Schema('conversation');
+const conversationEntrySchema = new Schema('conversationEntry');
+
 const notificationSchema = new Schema('notification');
-const messageSchema = new Schema('message');
+const messageSchema = new Schema('message', { idAttribute: 'uuid' });
 
 tlogSchema.define({
   author: tlogSchema,
@@ -78,10 +80,14 @@ messageSchema.define({
 
 conversationSchema.define({
   admin: tlogSchema,
-  entry: entrySchema,
+  entry: conversationEntrySchema,
   lastMessage: messageSchema,
   recipient: tlogSchema,
   users: arrayOf(tlogSchema),
+});
+
+conversationEntrySchema.define({
+  author: tlogSchema,
 });
 
 notificationSchema.define({
@@ -208,4 +214,4 @@ export default (store) => (next) => (action) => {
         type: failureType,
       })))
     );
-}
+};

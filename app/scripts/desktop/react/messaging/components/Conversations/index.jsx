@@ -59,7 +59,7 @@ export default connect(
         )
         .set('isNotWatchingEntry', entry && !state
           .entities
-          .getIn(['entry', String(entry), 'isWatching'])
+          .getIn(['conversationEntry', String(entry), 'isWatching'])
         );
     }
 

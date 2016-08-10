@@ -32,14 +32,14 @@ export function postNewConversation(userId) {
   };
 }
 
-export function loadMessages(conversationId, data) {
+export function loadMessages(conversationId, data = {}) {
   return {
     [CALL_API]: {
       endpoint: makeGetUrl(
         ApiRoutes.messenger_load_messages_url(conversationId),
         data
       ),
-      schema: Schemas.MESSAGES_COLL,
+      schema: Schemas.MESSAGE_COLL,
       types: [
         MSG_CONVERSATION_MSGS_REQUEST,
         MSG_CONVERSATION_MSGS_SUCCESS,

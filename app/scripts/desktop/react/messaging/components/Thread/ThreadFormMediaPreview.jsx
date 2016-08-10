@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import ImgFromFile from './ImgFromFile';
 
 function ThreadFormMediaPreview(props) {
-  function onTouchTap(idx) {
-    props.onFileRemove(idx);
-  }
+  const {
+    files,
+    onFileRemove,
+  } = props;
 
   return (
     <div className="message-form__media-preview">
@@ -16,21 +17,21 @@ function ThreadFormMediaPreview(props) {
           >
             <div
               className="message-form__media-preview__item-remove"
-              onTouchTap={onTouchTap.bind(null, idx)}
+              onTouchTap={onFileRemove.bind(null, file)}
             >
               <i className="icon icon--cross" />
             </div>
             <ImgFromFile file={file} />
           </div>
-        ))
+        )).valueSeq()
       }
     </div>
   );
 }
 
 ThreadFormMediaPreview.propTypes = {
-  files: PropTypes.array.isRequired,
+  files: PropTypes.object.isRequired,
   onFileRemove: PropTypes.func.isRequired,
-}
+};
 
 export default ThreadFormMediaPreview;

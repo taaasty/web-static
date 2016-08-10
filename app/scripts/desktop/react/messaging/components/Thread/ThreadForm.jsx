@@ -1,4 +1,4 @@
-/*global i18n */
+/*global i18n, ga */
 import { throttle } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import ThreadFormUploadButton from './ThreadFormUploadButton';
@@ -14,11 +14,19 @@ import {
 } from '../../actions/TypingActions';
 import {
   cancelReplyTo,
+  setMessageText,
+  addMessageFiles,
+  removeMessageFile,
+  resetThreadForm,
 } from '../../actions/ThreadActions';
 import {
   postNewMessage,
 } from '../../actions/MessageActions';
 import { connect } from 'react-redux';
+import { Map, List } from 'immutable';
+
+const emptyUser = Map();
+const emptyMessage = Map();
 
 class ThreadForm extends Component {
   componentWillMount() {
@@ -50,84 +58,97 @@ class ThreadForm extends Component {
     if (!window.File || !window.FileList) {
       return;
     }
-    const files = [].slice.call(ev.target.files);
-    this.setState({ files: this.state.files.concat(files.map(this.getFileData)) });
+
+    this.props.addMessageFiles(ev.target.files);
   }
-  onFileRemove(idx) {
-    this.setState({
-      files: this.state.files.filter((el, i) => i !== idx),
-    });
-  }
-  getFileData(file) {
-    return file;
-  }
-  updateFormState() {
-    this.setState({ hasText: this.form && this.form.value !== '' });
+  updateMessageText(ev) {
+    this.props.setMessageText(ev.target.value);
     this.typing();
   }
-  clearForm() {
-    this.form.value = '';
-    this.setState({ hasText: false, files: [] });
-  }
   msgReadyToSend() {
-    const { files, hasText } = this.state;
+    const {
+      messageFiles,
+      messageText,
+    } = this.props;
 
-    return (hasText || files.length) && !this.shouldDisableForm();
+    return (messageText.length > 0 || messageFiles.count() > 0)
+      && !this.isFormDisabled();
+  }
+  isFormDisabled() {
+    const {
+      currentUserId,
+      conversation,
+    } = this.props;
+
+    return conversation.get('type') === GROUP_CONVERSATION &&
+      (conversation.get('usersLeft').includes(currentUserId) ||
+       conversation.get('usersKicked').includes(currentUserId));
   }
   sendMessage() {
+    const {
+      conversation,
+      messageFiles,
+      messageText,
+      replyMessage,
+      resetThreadForm,
+    } = this.props;
+
     if (this.msgReadyToSend()) {
       postNewMessage({
-        content: this.form.value,
-        files: this.state.files,
-        conversationId: this.props.conversation.id,
-        replyMessage: this.state.replyMessage,
+        conversation,
+        replyMessage,
+        content: messageText,
+        files: messageFiles,
+      })
+      .then(() => {
+        if (typeof ga === 'function') {
+          ga('send', 'event', 'UX', 'SendMessage');
+        }
       });
 
-      this.clearForm();
+      resetThreadForm();
     }
   }
   render() {
     const {
       cancelReplyTo,
       conversation,
-      currentUserId,
       messageFiles,
       messageText,
+      removeMessageFile,
       replyMessage,
       replyMessageAuthor,
-    } = this.state;
-    const disabledInputs = conversation.get('type') === GROUP_CONVERSATION &&
-      (conversation.get('usersLeft').includes(currentUserId) ||
-       conversation.get('usersKicked').includes(currentUserId));
+    } = this.props;
+    const isFormDisabled = this.isFormDisabled();
 
     return (
       <div className="message-form">
         <div className="message-form__controls">
-          {replyMessage &&
-           <ThreadFormReplyTo
-             cancel={cancelReplyTo}
-             conversation={conversation}
-             message={replyMessage}
-             messageAuthor={replyMessageAuthor}
-           />
+          {!replyMessage.isEmpty() &&
+            <ThreadFormReplyTo
+              cancel={cancelReplyTo}
+              conversation={conversation}
+              message={replyMessage}
+              messageAuthor={replyMessageAuthor}
+            />
           }
           <ThreadFormMediaPreview
             files={messageFiles}
-            onFileRemove={this.onFileRemove.bind(this)}
+            onFileRemove={removeMessageFile}
           />
           <div className="message-form__textarea-container">
             <div className="message-form__button-container">
               <ThreadFormUploadButton
-                disabled={disabledInputs}
+                disabled={isFormDisabled}
                 onChange={this.onFileInputChange.bind(this)}
               />
             </div>
             <Textarea
               className="message-form__textarea"
-              disabled={disabledInputs}
+              disabled={isFormDisabled}
               maxRows={3}
               minRows={1}
-              onChange={this.updateFormState.bind(this)}
+              onChange={this.updateMessageText.bind(this)}
               onKeyDown={this.onKeyDown.bind(this)}
               placeholder={i18n.t('new_message_placeholder')}
               ref="messageForm"
@@ -141,19 +162,50 @@ class ThreadForm extends Component {
 }
 
 ThreadForm.propTypes = {
+  addMessageFiles: PropTypes.func.isRequired,
   cancelReplyTo: PropTypes.func.isRequired,
   conversation: PropTypes.object.isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  messageFiles: PropTypes.object.isRequired,
+  messageText: PropTypes.string.isRequired,
   postNewMessage: PropTypes.func.isRequired,
+  removeMessageFile: PropTypes.func.isRequired,
   replyMessage: PropTypes.object,
   replyMessageAuthor: PropTypes.object,
+  resetThreadForm: PropTypes.func.isRequired,
   sendTyping: PropTypes.func.isRequired,
+  setMessageText: PropTypes.func.isRequired,
 };
 
 export default connect(
   (state, { conversation }) => {
+    const currentUserId = state.currentUser.data.id;
+    const messageFiles = state.msg.thread.get('messageFiles', List());
+    const messageText = state.msg.thread.get('messageText', '');
+    const replyId = state.msg.thread.get('replyToId');
+    const replyMessage = state
+      .entities
+      .getIn(['message', String(replyId)], emptyMessage);
+    const replyMessageAuthor = state
+      .entities
+      .getIn(['tlog', String(replyMessage.get('userId'))], emptyUser);
 
+    return {
+      conversation,
+      currentUserId,
+      messageFiles,
+      messageText,
+      replyMessage,
+      replyMessageAuthor,
+    };
   },
   {
     cancelReplyTo,
+    postNewMessage,
+    setMessageText,
+    addMessageFiles,
+    removeMessageFile,
+    sendTyping,
+    resetThreadForm,
   }
 )(ThreadForm);

@@ -33,6 +33,7 @@ const defaultUser = fromJS({
 });
 const emptyUser = Map();
 const emptyEntry = Map();
+const emptyMsgState = Map();
 
 function Thread(props) {
   const {
@@ -43,6 +44,7 @@ function Thread(props) {
     loadArchivedMessages,
     loadMessages,
     messageAuthors,
+    messageStates,
     messages,
     selectedIds,
     startSelect,
@@ -89,6 +91,7 @@ function Thread(props) {
           loadArchivedMessages={loadArchivedMessages}
           loadMessages={loadMessages}
           messageAuthors={messageAuthors}
+          messageStates={messageStates}
           messages={messages}
           selectedIds={selectedIds}
           startSelect={startSelect}
@@ -109,6 +112,7 @@ Thread.propTypes = {
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
   messageAuthors: PropTypes.object.isRequired,
+  messageStates: PropTypes.object.isRequired,
   messages: PropTypes.object.isRequired,
   selectedIds: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
@@ -128,6 +132,8 @@ export default connect(
       .sortBy((m) => -moment(m.get('createdAt').valueOf));
     const messageAuthors = messages
       .map((m) => state.entities.getIn(['tlog', String(m.get('userId'))], defaultUser));
+    const messageStates = messages
+      .map((m) => state.msg.message.get(m.get('uuid'), emptyMsgState));
     let bgImage;
 
     if (conversationType === PRIVATE_CONVERSATION) {
@@ -140,7 +146,7 @@ export default connect(
     } else if (conversationType === PUBLIC_CONVERSATION) {
       const entry = state
         .entities
-        .getIn(['entry', String(conversation.get('entry'))], emptyEntry);
+        .getIn(['conversationEntry', String(conversation.get('entry'))], emptyEntry);
       const entryAuthor = state
         .entities
         .getIn(['tlog', String(entry.get('author'))], emptyUser);
@@ -159,6 +165,7 @@ export default connect(
       conversation,
       isSelectState,
       messageAuthors,
+      messageStates,
       messages,
       selectedIds,
     };

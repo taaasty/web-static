@@ -3,6 +3,16 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import TitlePrivateConversationActions from './TitlePrivateConversationActions';
 import MsgUserAvatar from '../MsgUserAvatar';
+import {
+  startSelect,
+} from '../../actions/ThreadActions';
+import {
+  deleteConversation,
+  dontDisturb,
+} from '../../actions/ConversationActions';
+import {
+  showConversationList,
+} from '../../actions/MessagesPopupActions';
 import { connect } from 'react-redux';
 import { List, Map } from 'immutable';
 
@@ -53,7 +63,14 @@ function TitlePrivateConversation(props) {
           {status()}
         </div>
       </div>
-      <TitlePrivateConversationActions conversation={conversation} />
+      <TitlePrivateConversationActions
+        conversation={conversation}
+        deleteConversation={deleteConversation}
+        dontDisturb={dontDisturb}
+        recipient={recipient}
+        showConversationList={showConversationList}
+        startSelect={startSelect}
+      />
     </div>
   );
 }
@@ -62,8 +79,12 @@ TitlePrivateConversation.displayName = 'TitlePrivateConversation';
 
 TitlePrivateConversation.propTypes = {
   conversation: PropTypes.object.isRequired,
+  deleteConversation: PropTypes.func.isRequired,
+  dontDisturb: PropTypes.func.isRequired,
   isRecipientTyping: PropTypes.bool.isRequired,
   recipient: PropTypes.object.isRequired,
+  showConversationList: PropTypes.func.isRequired,
+  startSelect: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -80,5 +101,11 @@ export default connect(
       isRecipientTyping,
       recipient,
     };
+  },
+  {
+    deleteConversation,
+    dontDisturb,
+    showConversationList,
+    startSelect,
   }
 )(TitlePrivateConversation);

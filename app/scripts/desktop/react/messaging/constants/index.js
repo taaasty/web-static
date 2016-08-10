@@ -1,5 +1,8 @@
 export const CONVERSATION_PIC_SIZE = 40;
 
+export const MSG_SOUND_INCOMING = 'income_message.mp3';
+export const MSG_SOUND_SUBMIT = 'submit_message.mp3';
+
 export const PRIVATE_CONVERSATION = 'PrivateConversation';
 export const PUBLIC_CONVERSATION = 'PublicConversation';
 export const GROUP_CONVERSATION = 'GroupConversation';

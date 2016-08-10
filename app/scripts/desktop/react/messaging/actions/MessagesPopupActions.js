@@ -28,7 +28,7 @@ export function openConversation(recipientId) {
       .first();
 
     if (conversation) {
-      return dispatch(showThread(conversation.get('id')))
+      return dispatch(showThread(conversation.get('id')));
     } else {
       return dispatch(postNewConversation(recipientId))
         .then(({ response }) => showThread(response.result));
@@ -40,7 +40,7 @@ export function initPopup() {
   return (dispatch) => {
     dispatch(resetGroupSettings());
     return dispatch(showConversationList());
-  }
+  };
 }
 
 function setHistory(history) {
@@ -62,7 +62,7 @@ function pushHistory(popupState) {
       type: MSG_POPUP_PUSH_HISTORY,
       popupState,
     });
-  }
+  };
 }
 
 export function historyBack() {
@@ -98,7 +98,7 @@ export function showGroupSettings() {
     } else {
       return dispatch(pushHistory({ state: MSG_POPUP_STATE_GROUP_SETTINGS }));
     }
-  }
+  };
 }
 
 export function showGroupChooser() {
@@ -112,7 +112,7 @@ export function showGroupChooser() {
     } else {
       return dispatch(pushHistory({ state: MSG_POPUP_STATE_GROUP_CHOOSER }));
     }
-  }
+  };
 }
 
 export function closeGroupSettings() {
@@ -134,5 +134,5 @@ export function showThread(conversationId) {
       { state: MSG_POPUP_STATE_CONVERSATIONS },
       { state: MSG_POPUP_STATE_THREAD, conversationId },
     ]));
-  }
+  };
 }

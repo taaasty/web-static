@@ -31,24 +31,6 @@ export default class MessagingRequester {
       },
     });
   }
-  postMessage(conversationId, content, files, uuid, replyMessageUuid) {
-    const formData = new window.FormData();
-    formData.append('socket_id', this.socket_id);
-    formData.append('content', content);
-    formData.append('uuid', uuid);
-    if (replyMessageUuid) {
-      formData.append('reply_message_uuid', replyMessageUuid);
-    }
-    files.forEach((file) => formData.append('files[]', file));
-
-    return $.ajax({
-      url: ApiRoutes.messenger_new_message_url(conversationId),
-      method: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-    });
-  }
   markAsReadMessage(conversationId, messageId) {
     return $.ajax({
       url: ApiRoutes.messenger_read_messages_url(conversationId),

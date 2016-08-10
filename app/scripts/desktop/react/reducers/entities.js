@@ -36,6 +36,7 @@ const initialState = Immutable.fromJS({
   message: {},
   notification: {},
   conversation: {},
+  conversationEntry: {},
 });
 
 /**

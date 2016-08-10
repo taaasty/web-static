@@ -134,6 +134,7 @@ MessageList.propTypes = {
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
   messageAuthors: PropTypes.object.isRequired,
+  messageStates: PropTypes.object.isRequired,
   messages: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
 };

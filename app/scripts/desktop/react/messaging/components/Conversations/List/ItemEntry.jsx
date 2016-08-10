@@ -81,7 +81,7 @@ export default connect(
     const lastMessageAuthor = state.entities
       .getIn(['tlog', String(lastMessage.get('author'))], emptyUser);
     const entry = state.entities
-      .getIn(['entry', String(conversation.get('entry'))], emptyEntry);
+      .getIn(['conversationEntry', String(conversation.get('entry'))], emptyEntry);
     const entryAuthor = state.entities
       .getIn(['tlog', String(entry.get('author'))], emptyUser);
     const lastTypingId = state.msg

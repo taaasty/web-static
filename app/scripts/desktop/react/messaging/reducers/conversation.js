@@ -73,7 +73,7 @@ const actionMap = {
   },
 
   [MSG_CONVERSATION_MSGS_SUCCESS](state, { response, conversationId }) {
-    return state.mergenIn(['state', conversationId], {
+    return state.mergeIn(['state', conversationId], {
       isFetching: false,
       error: null,
       data: response.result,

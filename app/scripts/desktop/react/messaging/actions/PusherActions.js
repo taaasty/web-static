@@ -2,6 +2,7 @@
 /*eslint no-console: 0 */
 import { CALL_API, Schemas } from '../../middleware/api';
 import { NORMALIZE_DATA } from '../../middleware/normalize';
+import { BEEP } from '../../middleware/beep';
 import { postOpts } from '../../actions/reqHelpers';
 import Pusher from 'pusher';
 import ApiRoutes from '../../../../shared/routes/api';
@@ -16,6 +17,9 @@ import {
 import {
   initTyping,
 } from './TypingActions';
+import {
+  MSG_SOUND_INCOMING,
+} from '../constants';
 import NoticeService from '../../services/Notice';
 
 export const MSG_NOTIFY_READY_REQUEST = 'MSG_NOTIFY_READY_REQUEST';
@@ -41,12 +45,15 @@ function channelMain(userId) {
 
 function pushNotification(data) {
   return {
+    [BEEP]: {
+      src: MSG_SOUND_INCOMING,
+    },
     [NORMALIZE_DATA]: {
       schema: Schemas.NOTIFICATION,
       type: MSG_PUSHER_PUSH_NOTIFICATION,
       data,
     },
-  }
+  };
 }
 
 export function pusherSubscribe(user) {
@@ -102,7 +109,7 @@ export function pusherSubscribe(user) {
         return dispatch(initTyping(data));
       }
     });
-  }
+  };
 }
 
 /*
@@ -154,5 +161,5 @@ function pusherConnected(pusher) {
         console.error('Error', err);
       });
 
-  }
+  };
 }

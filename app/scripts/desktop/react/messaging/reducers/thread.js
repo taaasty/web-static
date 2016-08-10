@@ -5,6 +5,10 @@ import {
   MSG_THREAD_RESET_SELECTION,
   MSG_THREAD_SET_REPLY_TO,
   MSG_THREAD_CANCEL_REPLY_TO,
+  MSG_THREAD_SET_MESSAGE_TEXT,
+  MSG_THREAD_ADD_MESSAGE_FILES,
+  MSG_THREAD_REMOVE_MESSAGE_FILE,
+  MSG_THREAD_RESET_FORM,
 } from '../actions/ThreadActions';
 import { Set, fromJS } from 'immutable';
 
@@ -12,6 +16,8 @@ const initialState = fromJS({
   isSelectState: false,
   selectedIds: Set(),
   replyToId: null,
+  messageText: '',
+  messageFiles: [],
 });
 
 const actionMap = {
@@ -33,6 +39,27 @@ const actionMap = {
 
   [MSG_THREAD_CANCEL_REPLY_TO](state) {
     return state.set('replyToId', null);
+  },
+
+  [MSG_THREAD_SET_MESSAGE_TEXT](state, { text }) {
+    return state.set('messageText', text || '');
+  },
+
+  [MSG_THREAD_ADD_MESSAGE_FILES](state, { files }) {
+    const arrFiles = [].slice.call(files); // convert to Array
+
+    return state.update('messageFiles', (arr) => arr.concat(arrFiles));
+  },
+
+  [MSG_THREAD_REMOVE_MESSAGE_FILE](state, { file }) {
+    return state.update('messageFiles', (arr) => arr.filter((f) => f === file));
+  },
+
+  [MSG_THREAD_RESET_FORM](state) {
+    return state.merge({
+      messageText: '',
+      messageFiles: [],
+    });
   },
 };
 

@@ -20,7 +20,7 @@ export default (store) => (next) => (action) => {
   }
 
   if (typeof data !== 'object') {
-    throw new Error('')
+    throw new Error('Normalization action should contain a data to normalize');
   }
 
   function nextAction(data) {
@@ -33,4 +33,4 @@ export default (store) => (next) => (action) => {
     response: normalize(camelizeKeys(data), schema),
     type,
   }));
-}
+};
