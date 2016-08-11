@@ -28,6 +28,10 @@ export const MSG_NOTIFY_READY_FAILURE = 'MSG_NOTIFY_READY_FAILURE';
 
 export const MSG_PUSHER_RECONNECT = 'MSG_PUSHER_RECONNECT';
 export const MSG_PUSHER_PUSH_NOTIFICATION = 'MSG_PUSHER_PUSH_NOTIFICATION';
+export const MSG_PUSHER_PUSH_CONVERSATION = 'MSG_PUSHER_PUSH_CONVERSATION';
+export const MSG_PUSHER_UPDATE_NOTIFICATIONS =
+  'MSG_PUSHER_UPDATE_NOTIFICATIONS';
+export const MSG_PUSHER_PUSH_MESSAGE = 'MSG_PUSHER_PUSH_MESSAGE';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -51,6 +55,36 @@ function pushNotification(data) {
     [NORMALIZE_DATA]: {
       schema: Schemas.NOTIFICATION,
       type: MSG_PUSHER_PUSH_NOTIFICATION,
+      data,
+    },
+  };
+}
+
+function updateNotifications(data) {
+  return {
+    [NORMALIZE_DATA]: {
+      schema: Schemas.NOTIFICATION_COLL,
+      type: MSG_PUSHER_UPDATE_NOTIFICATIONS,
+      data,
+    },
+  };
+}
+
+function pushConversation(data) {
+  return {
+    [NORMALIZE_DATA]: {
+      schema: Schemas.CONVERSATION,
+      type: MSG_PUSHER_PUSH_CONVERSATION,
+      data,
+    },
+  };
+}
+
+function pushMessage(data) {
+  return {
+    [NORMALIZE_DATA]: {
+      schema: Schemas.MESSAGE,
+      type: MSG_PUSHER_PUSH_MESSAGE,
       data,
     },
   };
@@ -94,17 +128,20 @@ export function pusherSubscribe(user) {
       case EVENT_PUSH_NOTIFICATION:
         return dispatch(pushNotification(data));
       case EVENT_UPDATE_NOTIFICATIONS:
-        //return MessagingDispatcher.notificationsUpdated(data);
+        return dispatch(updateNotifications(data));
       case EVENT_UPDATE_CONVERSATION:
-        //return MessagingDispatcher.updateConversation(data);
+        return dispatch(pushConversation(data));
       case EVENT_PUSH_MESSAGE:
-        //return MessagingDispatcher.messageReceived(data);
+        return dispatch(pushMessage(data));
       case EVENT_UPDATE_MESSAGES:
         //return MessagingDispatcher.messagesUpdated(data);
+        return;
       case EVENT_DELETE_MESSAGES:
         //return MessagingDispatcher.deleteMessages(data);
+        return;
       case EVENT_DELETE_USER_MESSAGES:
         //return MessagingDispatcher.deleteUserMessages(data);
+        return;
       case EVENT_TYPING:
         return dispatch(initTyping(data));
       }

@@ -25,6 +25,6 @@ class ImgFromFile extends Component {
 
 ImgFromFile.propTypes = {
   file: PropTypes.object.isRequired,
-}
+};
 
 export default ImgFromFile;

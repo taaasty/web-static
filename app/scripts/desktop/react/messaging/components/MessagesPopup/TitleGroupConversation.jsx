@@ -113,11 +113,12 @@ export default connect(
       .get('users')
       .filter((id) => !conversation.get('usersLeft', List()).includes(id))
       .filter((id) => !conversation.get('usersDeleted', List()).includes(id));
-    const lastTypingId = state
+    const lastTypingRec = state
       .msg
       .typing
       .get(conversation.get('id'), List())
       .last();
+    const lastTypingId = lastTypingRec && lastTypingRec.get('userId');
     const lastTyping = state
       .entities
       .getIn(['tlog', String(lastTypingId)], emptyUser);

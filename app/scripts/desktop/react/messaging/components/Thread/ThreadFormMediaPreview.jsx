@@ -10,7 +10,7 @@ function ThreadFormMediaPreview(props) {
   return (
     <div className="message-form__media-preview">
       {
-        props.files.map((file, idx) => (
+        files.map((file, idx) => (
           <div
             className="message-form__media-preview__item"
             key={`file-${idx}-${file.name}-${file.size}`}

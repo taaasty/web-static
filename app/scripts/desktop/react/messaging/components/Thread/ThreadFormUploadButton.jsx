@@ -29,6 +29,6 @@ class ThreadFormUploadButton extends Component {
 ThreadFormUploadButton.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-}
+};
 
 export default ThreadFormUploadButton;

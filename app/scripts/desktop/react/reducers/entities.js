@@ -25,6 +25,9 @@ import {
 import {
   MSG_GROUP_SAVE_SUCCESS,
 } from '../messaging/actions/GroupSettingsActions';
+import {
+  MSG_PUSHER_PUSH_CONVERSATION,
+} from '../messaging/actions/PusherActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -131,6 +134,7 @@ function handleExtra(state, action) {
   case MSG_CONVERSATION_DELETE_SUCCESS:
   case MSG_CONVERSATION_LEAVE_SUCCESS:
     return state.deleteIn(['conversation', String(action.conversationId)]);
+  case MSG_PUSHER_PUSH_CONVERSATION:
   case MSG_GROUP_SAVE_SUCCESS:
     const {
       response: {

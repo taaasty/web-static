@@ -8,6 +8,7 @@ import {
   makeGetUrl,
 } from '../../actions/reqHelpers';
 import { Map } from 'immutable';
+import moment from 'moment';
 
 const ARCHIVED_MESSAGES_LIMIT = 10;
 
@@ -73,10 +74,17 @@ export function loadMessages(conversationId, data = {}) {
 
 export function loadArchivedMessages(conversationId) {
   return (dispatch, getState) => {
-    const toMessageId = 0; // TODO: detect first message id
+    const oldestMessage = getState()
+      .entities
+      .get('message', Map())
+      .filter((m) => m.get('conversationId') === conversationId && m.get(
+        'createdAt'))
+      .sortBy((m) => moment(m.get('createdAt'))
+        .valueOf())
+      .first();
 
-    return dispatch(loadMessages(conversationId, {
-      toMessageId,
+    return oldestMessage && dispatch(loadMessages(conversationId, {
+      toMessageId: oldestMessage.get('id'),
       limit: ARCHIVED_MESSAGES_LIMIT,
     }));
   };

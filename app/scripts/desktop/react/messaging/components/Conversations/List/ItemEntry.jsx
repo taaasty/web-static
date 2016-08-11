@@ -84,10 +84,11 @@ export default connect(
       .getIn(['conversationEntry', String(conversation.get('entry'))], emptyEntry);
     const entryAuthor = state.entities
       .getIn(['tlog', String(entry.get('author'))], emptyUser);
-    const lastTypingId = state.msg
+    const lastTypingRec = state.msg
       .typing
       .get(conversation.get('id'), List())
       .last();
+    const lastTypingId = lastTypingRec && lastTypingRec.get('userId');
     const lastTyping = state.entities
       .getIn(['tlog', String(lastTypingId)], emptyUser);
 
