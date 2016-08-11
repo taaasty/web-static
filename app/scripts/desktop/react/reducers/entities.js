@@ -18,6 +18,10 @@ import {
 import {
   DESIGN_SAVE_SUCCESS,
 } from '../actions/DesignActions';
+import {
+  MSG_CONVERSATION_DELETE_SUCCESS,
+  MSG_CONVERSATION_LEAVE_SUCCESS,
+} from '../messaging/actions/ConversationActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -121,6 +125,9 @@ function handleExtra(state, action) {
     return state.mergeIn(['tlog', String(action.tlogId)], {
       design: action.response.result,
     });
+  case MSG_CONVERSATION_DELETE_SUCCESS:
+  case MSG_CONVERSATION_LEAVE_SUCCESS:
+    return state.deleteIn(['conversation', String(action.conversationId)]);
   }
 
   return state;

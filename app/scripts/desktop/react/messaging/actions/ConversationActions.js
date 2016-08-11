@@ -3,6 +3,8 @@ import ApiRoutes from '../../../../shared/routes/api';
 import {
   defaultOpts,
   postOpts,
+  putOpts,
+  deleteOpts,
   makeGetUrl,
 } from '../../actions/reqHelpers';
 import { Map } from 'immutable';
@@ -16,6 +18,24 @@ export const MSG_CONVERSATION_POST_FAILURE = 'MSG_CONVERSATION_POST_FAILURE';
 export const MSG_CONVERSATION_MSGS_REQUEST = 'MSG_CONVERSATION_MSGS_REQUEST';
 export const MSG_CONVERSATION_MSGS_SUCCESS = 'MSG_CONVERSATION_MSGS_SUCCESS';
 export const MSG_CONVERSATION_MSGS_FAILURE = 'MSG_CONVERSATION_MSGS_FAILURE';
+
+export const MSG_CONVERSATION_LEAVE_REQUEST = 'MSG_CONVERSATION_LEAVE_REQUEST';
+export const MSG_CONVERSATION_LEAVE_SUCCESS = 'MSG_CONVERSATION_LEAVE_SUCCESS';
+export const MSG_CONVERSATION_LEAVE_FAILURE = 'MSG_CONVERSATION_LEAVE_FAILURE';
+
+export const MSG_CONVERSATION_DELETE_REQUEST =
+  'MSG_CONVERSATION_DELETE_REQUEST';
+export const MSG_CONVERSATION_DELETE_SUCCESS =
+  'MSG_CONVERSATION_DELETE_SUCCESS';
+export const MSG_CONVERSATION_DELETE_FAILURE =
+  'MSG_CONVERSATION_DELETE_FAILURE';
+
+export const MSG_CONVERSATION_DISTURB_REQUEST =
+  'MSG_CONVERSATION_DISTURB_REQUEST';
+export const MSG_CONVERSATION_DISTURB_SUCCESS =
+  'MSG_CONVERSATION_DISTURB_SUCCESS';
+export const MSG_CONVERSATION_DISTURB_FAILURE =
+  'MSG_CONVERSATION_DISTURB_FAILURE';
 
 export function postNewConversation(userId) {
   return {
@@ -53,7 +73,7 @@ export function loadMessages(conversationId, data = {}) {
 
 export function loadArchivedMessages(conversationId) {
   return (dispatch, getState) => {
-    const toMessageId = 0;
+    const toMessageId = 0; // TODO: detect first message id
 
     return dispatch(loadMessages(conversationId, {
       toMessageId,
@@ -64,6 +84,17 @@ export function loadArchivedMessages(conversationId) {
 
 export function deleteMessages() {
   /*
+  deleteMessages(conversationId, ids = [], all) {
+    return $.ajax({
+      url: ApiRoutes.messengerDeleteMessages(conversationId),
+      method: 'DELETE',
+      data: {
+        socket_id: this.socket_id,
+        ids: ids.join(','),
+        all: all,
+      },
+    });
+  }
   deleteMessages(conversationId, msgIds, all = false) {
     return this.requester.deleteMessages(conversationId, msgIds, all)
       .done((data) => data)
@@ -73,52 +104,50 @@ export function deleteMessages() {
 }
 
 export function leaveConversation(conversationId) {
-  /*
-  leaveConversation(conversationId) {
-    return this.requester.leaveConversation(conversationId)
-      .done((data) => {
-        NoticeService.notifySuccess(i18n.t(
-          'messenger.request.conversation_leave_success'));
-        return data;
-      })
-      .fail((err) => NoticeService.errorResponse(err));
-  }
-  */
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerConversationsByIdLeave(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_LEAVE_REQUEST,
+        MSG_CONVERSATION_LEAVE_SUCCESS,
+        MSG_CONVERSATION_LEAVE_FAILURE,
+      ],
+      opts: putOpts(),
+    },
+    conversationId,
+  };
 }
 
 export function deleteConversation(conversationId) {
-  /*
-  deleteConversation(conversationId) {
-    return this.requester.deleteConversation(conversationId)
-      .done((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'deleteConversation',
-          id: conversationId,
-        });
-        NoticeService.notifySuccess(i18n.t(
-          'messenger.request.conversation_delete_success'));
-        return data;
-      })
-      .fail((err) => NoticeService.errorResponse(err));
-  }
-  */
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerConversationsById(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_DELETE_REQUEST,
+        MSG_CONVERSATION_DELETE_SUCCESS,
+        MSG_CONVERSATION_DELETE_FAILURE,
+      ],
+      opts: deleteOpts(),
+    },
+    conversationId,
+  };
 }
 
 export function dontDisturb(conversationId, flag) {
-  /*
-  dontDisturb(id, flag) {
-      return this.requester.dontDisturb(id, flag)
-        .done((data) => {
-          MessagingDispatcher.handleServerAction({
-            type: 'updateConversation',
-            conversation: data,
-          });
-
-          return data;
-        })
-        .fail((err) => NoticeService.errorResponse(err));
-    }
-  */
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerDontDisturb(conversationId),
+      schema: Schemas.CONVERSATION,
+      types: [
+        MSG_CONVERSATION_DISTURB_REQUEST,
+        MSG_CONVERSATION_DISTURB_SUCCESS,
+        MSG_CONVERSATION_DISTURB_FAILURE,
+      ],
+      opts: flag ? postOpts() : deleteOpts(),
+    },
+  };
 }
 
 

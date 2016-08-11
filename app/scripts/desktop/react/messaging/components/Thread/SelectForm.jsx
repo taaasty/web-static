@@ -10,9 +10,9 @@ import {
 } from '../../actions/ConversationActions';
 import {
   showGetPremiumPopup,
-} from '../../../actions/PopupActions';
-
+} from '../../../actions/AppStateActions';
 import { connect } from 'react-redux';
+import { Set } from 'immutable';
 
 function SelectForm(props) {
   const {

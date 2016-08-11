@@ -26,7 +26,7 @@ class MessageList extends Component {
     if (messages.first() && nextProps.messages.first()) {
       if (messages.first() !== nextProps.messages.first()) {
         // Добавятся сообщения из истории
-        savedScrollHeight = this.refs.scrollerPane.scrollHeight;
+        savedScrollHeight = this.refs.scroller.refs.scrollerPane.scrollHeight;
       }
     }
   }
@@ -35,7 +35,7 @@ class MessageList extends Component {
       messages,
     } = this.props;
 
-    if (prevProps.first() && messages.first()) {
+    if (prevProps.messages.first() && messages.first()) {
       if (prevProps.messages.first() !== messages.first()) {
         this.holdScroll(); // Подгрузились сообщения из истории
       } else if (prevProps.messages.count() !== messages.count()) { // добавлено сообщение
@@ -50,17 +50,17 @@ class MessageList extends Component {
       conversation,
       loadArchivedMessages,
     } = this.props;
-    const scrollerPaneNode = this.refs.scrollerPane;
+    const scrollerPaneNode = this.refs.scroller.refs.scrollerPane;
 
     if (scrollerPaneNode.scrollTop === 0) {
       loadArchivedMessages(conversation.get('id'));
     }
   }
   scrollToBottom() {
-    this.scrollList(this.refs.scrollerPane.scrollHeight);
+    this.scrollList(this.refs.scroller.refs.scrollerPane.scrollHeight);
   }
   scrollList(offset) {
-    this.refs.scrollerPane.scrollTop = offset;
+    this.refs.scroller.refs.scrollerPane.scrollTop = offset;
   }
   scrollToUnread() {
     const {
@@ -83,7 +83,7 @@ class MessageList extends Component {
     }
   }
   holdScroll() {
-    this.scrollList(this.refs.scrollerPane.scrollHeight - savedScrollHeight);
+    this.scrollList(this.refs.scroller.refs.scrollerPane.scrollHeight - savedScrollHeight);
     savedScrollHeight = null;
   }
   messageKey(msg) {

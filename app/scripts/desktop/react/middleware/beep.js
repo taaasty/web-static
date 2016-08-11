@@ -10,7 +10,7 @@ export default (store) => (next) => (action) => {
 
   const { src } = beepAction;
 
-  if (typeof beepAction !== 'string') {
+  if (typeof src !== 'string') {
     throw new Error('Beep action should contain `src` string field');
   }
 

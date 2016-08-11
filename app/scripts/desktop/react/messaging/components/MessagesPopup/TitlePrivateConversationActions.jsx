@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
 import DropdownActionSPA from '../../../components/common/DropdownActionSPA';
+import NoticeService from '../../../services/Notice';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
 
 class TitlePrivateConversationActions extends Component {
@@ -20,6 +21,7 @@ class TitlePrivateConversationActions extends Component {
   }
   deleteConversation() {
     const {
+      conversation,
       deleteConversation,
       showConversationList,
     } = this.props;
@@ -27,7 +29,10 @@ class TitlePrivateConversationActions extends Component {
     TastyConfirmController.show({
       message: i18n.t('messenger.confirm.leave_text'),
       acceptButtonText: i18n.t('messenger.confirm.leave_button'),
-      onAccept: () => deleteConversation(this.props.conversation.id)
+      onAccept: () => deleteConversation(conversation.get('id'))
+        .then(() => NoticeService.notifySuccess(i18n.t(
+          'messenger.request.conversation_delete_success'))
+        )
         .then(showConversationList),
     });
   }

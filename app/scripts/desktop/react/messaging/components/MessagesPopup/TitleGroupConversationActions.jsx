@@ -2,51 +2,60 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
-import ConversationsStore from '../../stores/ConversationsStore';
-import ConversationActions from '../../actions/ConversationActions';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
+import NoticeService from '../../../services/Notice';
 
 class TitleGroupConversationActions extends Component {
-  componentWillMount() {
-    this.syncStateWithStore = () => this.setState({
-      conversation: ConversationsStore.getConversation(this.props.conversation.id),
-    });
-    this.syncStateWithStore();
-    ConversationsStore.addChangeListener(this.syncStateWithStore);
-  }
-  componentWillUnmount() {
-    ConversationsStore.removeChangeListener(this.syncStateWithStore);
-  }
   dontDisturb(flag) {
-    ConversationActions.dontDisturb(this.props.conversation.id, flag);
+    const {
+      conversation,
+      dontDisturb,
+    } = this.props;
+
+    dontDisturb(conversation.get('id'), flag);
   }
   startSelect() {
     this.refs.dropdown.setClose();
-    MessagesPopupActions.startSelect();
+    this.props.startSelect();
   }
   openSettings() {
-    MessagesPopupActions.openGroupSettings(this.state.conversation);
+    const {
+      conversation,
+      initGroupSettings,
+      showGroupSettings,
+    } = this.props;
+
+    initGroupSettings(conversation);
+    showGroupSettings();
   }
   leaveConversation() {
+    const {
+      conversation,
+      leaveConversation,
+      showConversationList,
+    } = this.props;
+
     TastyConfirmController.show({
       message: i18n.t('messenger.confirm.leave_text'),
       acceptButtonText: i18n.t('messenger.confirm.leave_button'),
-      onAccept: () => {
-        ConversationActions
-          .leaveConversation(this.props.conversation.id)
-          .then(() => {
-            return MessagesPopupActions.openConversationList();
-          });
+      onAccept: () => leaveConversation(conversation.get('id'))
+          .then(() => NoticeService.notifySuccess(
+            i18n.t('messenger.request.conversation_leave_success')
+          ))
+          .then(showConversationList),
       },
-    });
+    );
   }
   render() {
-    if (!this.state.conversation) {
+    const {
+      conversation,
+    } = this.props;
+
+    if (conversation.isEmpty()) {
       return <noscript />;
     }
 
-    const { not_disturb } = this.state.conversation;
+    const notDisturb = conversation.get('notDisturb');
 
     return (
       <div className="messages__popup-title-actions">
@@ -58,10 +67,10 @@ class TitleGroupConversationActions extends Component {
             title={i18n.t('messenger.title_actions.group_settings')}
           />
           <DropdownAction
-            icon={`icon--mute-${not_disturb ? 'off' : 'on'}`}
+            icon={`icon--mute-${notDisturb ? 'off' : 'on'}`}
             key="dont-disturb"
-            onClick={this.dontDisturb.bind(this, !not_disturb)}
-            title={i18n.t(`messenger.title_actions.${not_disturb ? 'disturb' : 'dont_disturb'}`)}
+            onClick={this.dontDisturb.bind(this, !notDisturb)}
+            title={i18n.t(`messenger.title_actions.${notDisturb ? 'disturb' : 'dont_disturb'}`)}
           />
           <DropdownAction
             icon="icon--double-tick"
@@ -83,6 +92,12 @@ class TitleGroupConversationActions extends Component {
 
 TitleGroupConversationActions.propTypes = {
   conversation: PropTypes.object.isRequired,
+  dontDisturb: PropTypes.func.isRequired,
+  initGroupSettings: PropTypes.func.isRequired,
+  leaveConversation: PropTypes.func.isRequired,
+  showConversationList: PropTypes.func.isRequired,
+  showGroupSettings: PropTypes.func.isRequired,
+  startSelect: PropTypes.func.isRequired,
 };
 
 export default TitleGroupConversationActions;

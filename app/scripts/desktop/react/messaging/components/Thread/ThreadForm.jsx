@@ -27,6 +27,7 @@ import { Map, List } from 'immutable';
 
 const emptyUser = Map();
 const emptyMessage = Map();
+const emptyList = List();
 
 class ThreadForm extends Component {
   componentWillMount() {
@@ -81,14 +82,15 @@ class ThreadForm extends Component {
     } = this.props;
 
     return conversation.get('type') === GROUP_CONVERSATION &&
-      (conversation.get('usersLeft').includes(currentUserId) ||
-       conversation.get('usersKicked').includes(currentUserId));
+      (conversation.get('usersLeft', emptyList).includes(currentUserId) ||
+       conversation.get('usersDeleted', emptyList).includes(currentUserId));
   }
   sendMessage() {
     const {
       conversation,
       messageFiles,
       messageText,
+      postNewMessage,
       replyMessage,
       resetThreadForm,
     } = this.props;

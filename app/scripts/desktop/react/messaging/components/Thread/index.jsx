@@ -129,7 +129,13 @@ export default connect(
       .entities
       .get('message', Map())
       .filter((m) => m.get('conversationId') === conversationId)
-      .sortBy((m) => -moment(m.get('createdAt').valueOf));
+      .sortBy((m) => {
+        const createdAt = m.get('createdAt');
+
+        return createdAt ?
+          -moment(createdAt).valueOf() :
+          1e9 - m.get('submittedAt').valueOf();
+      });
     const messageAuthors = messages
       .map((m) => state.entities.getIn(['tlog', String(m.get('userId'))], defaultUser));
     const messageStates = messages

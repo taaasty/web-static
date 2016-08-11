@@ -52,7 +52,7 @@ const actionMap = {
   },
 
   [MSG_THREAD_REMOVE_MESSAGE_FILE](state, { file }) {
-    return state.update('messageFiles', (arr) => arr.filter((f) => f === file));
+    return state.update('messageFiles', (arr) => arr.filter((f) => f !== file));
   },
 
   [MSG_THREAD_RESET_FORM](state) {

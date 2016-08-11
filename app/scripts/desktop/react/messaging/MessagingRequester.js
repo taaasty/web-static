@@ -6,20 +6,6 @@ export default class MessagingRequester {
     this.access_token = access_token;
     this.socket_id = socket_id;
   }
-  deleteConversation(id) {
-    return $.ajax({
-      url: ApiRoutes.messengerConversationsById(id),
-      method: 'DELETE',
-      data: { socket_id: this.socket_id },
-    });
-  }
-  leaveConversation(id) {
-    return $.ajax({
-      url: ApiRoutes.messengerConversationsByIdLeave(id),
-      method: 'PUT',
-      data: { socket_id: this.socket_id },
-    });
-  }
   deleteMessages(conversationId, ids = [], all) {
     return $.ajax({
       url: ApiRoutes.messengerDeleteMessages(conversationId),

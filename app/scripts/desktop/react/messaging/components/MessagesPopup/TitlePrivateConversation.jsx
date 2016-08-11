@@ -23,8 +23,12 @@ export const TITLE_AVATAR_SIZE = 32;
 function TitlePrivateConversation(props) {
   const {
     conversation,
+    deleteConversation,
+    dontDisturb,
     isRecipientTyping,
     recipient,
+    showConversationList,
+    startSelect,
   } = props;
 
   function status() {

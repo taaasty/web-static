@@ -32,10 +32,12 @@ function submitMessage(uuid, params) {
       content,
       files,
       uuid,
-      replyMessage: replyMessage.toJS(),
+      replyMessage: replyMessage.get('uuid'),
       contentHtml: escape(content),
       conversationId: conversation.get('id'),
       recipientId: conversation.get('recipientId'),
+      submittedAt: (new Date())
+        .toString(),
       userId: conversation.get('userId'),
     };
 
