@@ -22,6 +22,9 @@ import {
   MSG_CONVERSATION_DELETE_SUCCESS,
   MSG_CONVERSATION_LEAVE_SUCCESS,
 } from '../messaging/actions/ConversationActions';
+import {
+  MSG_GROUP_SAVE_SUCCESS,
+} from '../messaging/actions/GroupSettingsActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -128,6 +131,18 @@ function handleExtra(state, action) {
   case MSG_CONVERSATION_DELETE_SUCCESS:
   case MSG_CONVERSATION_LEAVE_SUCCESS:
     return state.deleteIn(['conversation', String(action.conversationId)]);
+  case MSG_GROUP_SAVE_SUCCESS:
+    const {
+      response: {
+        result,
+        entities,
+      },
+    } = action;
+
+    // prevents dull behavior when merging arrays
+    return state.mergeIn(['conversation'], {
+      [String(result)]: entities.conversation[result],
+    });
   }
 
   return state;

@@ -4,6 +4,9 @@ import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
 import NoticeService from '../../../services/Notice';
+import { List } from 'immutable';
+
+const emptyList = List();
 
 class TitleGroupConversationActions extends Component {
   dontDisturb(flag) {
@@ -24,8 +27,18 @@ class TitleGroupConversationActions extends Component {
       initGroupSettings,
       showGroupSettings,
     } = this.props;
+    const users = conversation.get('users', emptyList)
+      .filter((id) => !conversation.get('usersLeft', emptyList).includes(id))
+      .filter((id) => !conversation.get('usersDeleted', emptyList).includes(id));
 
-    initGroupSettings(conversation);
+    initGroupSettings({
+      users,
+      selected: users,
+      admin: conversation.get('admin'),
+      avatar: conversation.get('avatar'),
+      id: conversation.get('id'),
+      topic: conversation.get('topic'),
+    });
     showGroupSettings();
   }
   leaveConversation() {
