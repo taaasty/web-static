@@ -3,6 +3,7 @@ import {
   MSG_THREAD_START_SELECT,
   MSG_THREAD_STOP_SELECT,
   MSG_THREAD_RESET_SELECTION,
+  MSG_THREAD_TOGGLE_SELECTION,
   MSG_THREAD_SET_REPLY_TO,
   MSG_THREAD_CANCEL_REPLY_TO,
   MSG_THREAD_SET_MESSAGE_TEXT,
@@ -31,6 +32,13 @@ const actionMap = {
 
   [MSG_THREAD_RESET_SELECTION](state) {
     return state.set('selectedIds', Set());
+  },
+
+  [MSG_THREAD_TOGGLE_SELECTION](state, { id }) {
+    return state.update(
+      'selectedIds',
+      (s) => s.includes(id) ? s.delete(id) : s.add(id)
+    );
   },
 
   [MSG_THREAD_SET_REPLY_TO](state, { messageId }) {
@@ -108,19 +116,6 @@ export default createReducer(initialState, actionMap);
 
 MessagesStore.dispatchToken = MessagingDispatcher.register(({ action }) => {
   switch (action.type) {
-  case 'messageReceived':
-    const message = Object.assign(action.message, { sendingState: null });
-
-    if (MessagesStore.isMessageExists(action.conversationId, message)) {
-      MessagesStore.updateMessage(action.conversationId, message);
-    } else {
-      MessagesStore.pushMessages(action.conversationId, [message]);
-      MessagesStore.sortByAsc(action.conversationId);
-    }
-
-    ConversationsStore.cancelTyping(action.conversationId, message.user_id);
-    MessagesStore.emitChange();
-    break;
   case 'messageSubmitted':
     MessagesStore.pushMessages(action.conversationId, [action.message]);
     MessagesStore.cancelReplyTo();

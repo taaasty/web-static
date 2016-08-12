@@ -19,7 +19,7 @@ import {
 import { connect } from 'react-redux';
 import { Map, Set, fromJS } from 'immutable';
 
-const defaultUser = fromJS({
+export const defaultUser = fromJS({
   slug: '...',
   tlogUrl: '#',
   userpic: {
@@ -33,7 +33,6 @@ const defaultUser = fromJS({
 });
 const emptyUser = Map();
 const emptyEntry = Map();
-const emptyMsgState = Map();
 
 function Thread(props) {
   const {
@@ -43,8 +42,6 @@ function Thread(props) {
     isSelectState,
     loadArchivedMessages,
     loadMessages,
-    messageAuthors,
-    messageStates,
     messages,
     selectedIds,
     startSelect,
@@ -90,8 +87,6 @@ function Thread(props) {
           isSelectState={isSelectState}
           loadArchivedMessages={loadArchivedMessages}
           loadMessages={loadMessages}
-          messageAuthors={messageAuthors}
-          messageStates={messageStates}
           messages={messages}
           selectedIds={selectedIds}
           startSelect={startSelect}
@@ -111,8 +106,6 @@ Thread.propTypes = {
   isSelectState: PropTypes.bool.isRequired,
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
-  messageAuthors: PropTypes.object.isRequired,
-  messageStates: PropTypes.object.isRequired,
   messages: PropTypes.object.isRequired,
   selectedIds: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
@@ -133,13 +126,9 @@ export default connect(
         const createdAt = m.get('createdAt');
 
         return createdAt ?
-          -moment(createdAt).valueOf() :
-          1e9 - m.get('submittedAt').valueOf();
+          moment(createdAt).valueOf() :
+          1e9 + m.get('submittedAt').valueOf();
       });
-    const messageAuthors = messages
-      .map((m) => state.entities.getIn(['tlog', String(m.get('userId'))], defaultUser));
-    const messageStates = messages
-      .map((m) => state.msg.message.get(m.get('uuid'), emptyMsgState));
     let bgImage;
 
     if (conversationType === PRIVATE_CONVERSATION) {
@@ -170,8 +159,6 @@ export default connect(
       canTalk,
       conversation,
       isSelectState,
-      messageAuthors,
-      messageStates,
       messages,
       selectedIds,
     };

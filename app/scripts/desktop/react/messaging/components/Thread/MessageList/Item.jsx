@@ -1,158 +1,131 @@
-import React, { createClass, PropTypes } from 'react';
-import classnames from 'classnames';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import moment from 'moment';
 import MsgUserAvatar from '../../MsgUserAvatar';
-import { browserHistory } from 'react-router';
-import uri from 'urijs';
-import { SUPPORT_ID } from '../../../../components/SupportLauncher';
-import { PRIVATE_CONVERSATION } from '../../../constants';
 import MessageContents from './MessageContents';
+import { Link } from 'react-router';
+import uri from 'urijs';
+import {
+  SUPPORT_ID,
+} from '../../../../components/SupportLauncher';
+import {
+  PRIVATE_CONVERSATION,
+} from '../../../constants';
 
-const ERROR_STATE = 'error';
-const SENT_STATE = 'sent';
-const READ_STATE = 'read';
-//const SENDING_STATE = 'sending';
+const MSG_ERROR_STATE = Symbol('Error delivering message');
+const MSG_SENT_STATE = Symbol('Message successfully sent');
+const MSG_READ_STATE = Symbol('Message is read');
 
-const Item = createClass({
-  propTypes: {
-    conversationType: PropTypes.string.isRequired,
-    currentUserId: PropTypes.number.isRequired,
-    deliveryStatus: PropTypes.string.isRequired,
-    isSelectState: PropTypes.bool.isRequired,
-    message: PropTypes.object.isRequired,
-    messageInfo: PropTypes.object.isRequired,
-    onResendMessage: PropTypes.func.isRequired,
-    replyMessage: PropTypes.object,
-    replyMessageInfo: PropTypes.object,
-    selected: PropTypes.bool,
-    startSelect: PropTypes.func.isRequired,
-    toggleSelection: PropTypes.func.isRequired,
-  },
+function Item(props) {
+  const {
+    conversationType,
+    conversationUserId,
+    isSelected,
+    message,
+    messageAuthor,
+    messageState,
+    onResendMessage,
+    replyMessage,
+    replyMessageAuthor,
+    startSelect,
+    toggleSelection,
+  } = props;
+  const isSupport = conversationUserId === SUPPORT_ID;
+  const createdAt = message.get('createdAt');
+  const createdAtMsg = createdAt ? moment(createdAt).format('D MMMM HH:mm') : '';
 
-  isUnread() {
-    return !this.props.message.read_at;
-  },
+  const isIncoming = conversationUserId !== message.get('userId');
 
-  isOutgoing() {
-    return this.props.messageInfo.type === 'outgoing';
-  },
+  function getStatus() {
+    //const isFetching = messageState.get('isFetching', false);
+    const isError = !!messageState.get('error', null);
+    const isSent = messageState.get('isSent', false);
+    const isRead = !!message.get('readAt');
 
-  isIncoming() {
-    return this.props.messageInfo.type === 'incoming';
-  },
-
-  isSupport() {
-    return this.props.currentUserId === SUPPORT_ID;
-  },
-
-  toggleSelection() {
-    const { isSelectState, toggleSelection } = this.props;
-
-    if (isSelectState) {
-      toggleSelection();
+    if (isRead) {
+      return MSG_READ_STATE;
+    } else if (isIncoming || isSent) {
+      return MSG_SENT_STATE;
+    } else if (isError) {
+      return MSG_ERROR_STATE;
     }
-  },
+  }
 
-  handleClickUser(ev) {
-    ev.preventDefault();
-    browserHistory.push({ pathname: uri(this.props.messageInfo.user.tlog_url).path() });
-  },
+  const status = getStatus();
 
-  handleClickMessage() {
-    this.props.startSelect();
-  },
+  const deliveryClasses = classNames({
+    'icon': true,
+    'icon--refresh': status === MSG_ERROR_STATE,
+    'icon--tick': status === MSG_SENT_STATE,
+    'icon--double-tick': status === MSG_READ_STATE,
+  });
+  const messageClasses = classNames({
+    'message': true,
+    'message--from': !isIncoming,
+    'message--to': isIncoming,
+  });
+  const containerClasses = classNames({
+    'message--container': true,
+    'message--selected': isSelected,
+  });
 
-  renderDeliveryStatus() {
-    const { deliveryStatus: status, onResendMessage } = this.props;
-    const deliveryClasses = classnames({
-      'icon': true,
-      'icon--refresh': status === ERROR_STATE,
-      'icon--tick': status === SENT_STATE,
-      'icon--double-tick': status === READ_STATE,
-    });
-
-    return (
-      <span
-        className="message-delivery__status"
-        onClick={status === ERROR_STATE ? onResendMessage : null}
-      >
-        <span className={deliveryClasses} />
-      </span>
-    );
-  },
-
-  renderMessageCreatedAt() {
-    const { created_at } = this.props.message;
-    return created_at && moment(created_at).format('D MMMM HH:mm');
-  },
-
-  renderUserAvatar(user) {
-    return (
-      <a
-        href={user.tlog_url}
-        onClick={this.handleClickUser}
-        target="_blank"
-      >
-        <span className="messages__user-avatar">
-          <MsgUserAvatar size={35} user={user} />
-        </span>
-      </a>
-    );
-  },
-
-  renderAvatar() {
-    const { user } = this.props.messageInfo;
-
-    return (this.isIncoming() && this.props.conversationType !== PRIVATE_CONVERSATION)
-      ? this.renderUserAvatar(user)
-      : null;
-  },
-
-  render() {
-    const { message, messageInfo, replyMessage, replyMessageInfo, selected } = this.props;
-    const messageClasses = classnames({
-      'message': true,
-      'message--from': this.isOutgoing(),
-      'message--to': this.isIncoming(),
-    });
-    const containerClasses = classnames({
-      'message--container': true,
-      'message--selected': selected,
-    });
-
-    return (
-      <div className={containerClasses} onClick={this.toggleSelection}>
-        <div className={messageClasses} onClick={this.handleClickMessage}>
-          {this.renderAvatar()}
-          <div className="messages__bubble" onClick={(ev) => ev.stopPropagation()}>
-            {replyMessage &&
-             <div className="message--reply">
-               <MessageContents
-                 message={replyMessage}
-                 messageInfo={replyMessageInfo}
-                 showSlug
-                 showSupportInfo={false}
-               />
-             </div>
-            }
-            <MessageContents
-              message={message}
-              messageInfo={messageInfo}
-              showSlug={this.isIncoming()}
-              showSupportInfo={this.isSupport()}
-            />
-          </div>
-          <span className="messages__date">
-            {this.renderMessageCreatedAt()}
-            {this.renderDeliveryStatus()}
+  return (
+    <div className={containerClasses} onClick={toggleSelection}>
+      <div className={messageClasses} onClick={startSelect}>
+        {(isIncoming && conversationType !== PRIVATE_CONVERSATION) && (
+          <Link to={uri(messageAuthor.get('tlogUrl', '')).path()}>
+            <span className="messages__user-avatar">
+              <MsgUserAvatar size={35} user={messageAuthor} />
+            </span>
+          </Link>
+        )}
+        <div className="messages__bubble" onClick={(ev) => ev.stopPropagation()}>
+          {!replyMessage.isEmpty() &&
+            <div className="message--reply">
+              <MessageContents
+                message={replyMessage}
+                messageAuthor={replyMessageAuthor}
+                showSlug
+                showSupportInfo={false}
+              />
+            </div>
+          }
+          <MessageContents
+            message={message}
+            messageAuthor={messageAuthor}
+            showSlug={isIncoming}
+            showSupportInfo={isSupport}
+          />
+        </div>
+        <span className="messages__date">
+          {createdAtMsg}
+          <span
+            className="message-delivery__status"
+            onClick={status === MSG_ERROR_STATE ? onResendMessage : null}
+          >
+            <span className={deliveryClasses} />
           </span>
-          <div className="message__selector">
-            {selected && <i className="icon icon--tick" />}
-          </div>
+        </span>
+        <div className="message__selector">
+          {isSelected && <i className="icon icon--tick" />}
         </div>
       </div>
-    );
-  },
-});
+    </div>
+  );
+}
+
+Item.propTypes = {
+  conversationType: PropTypes.string.isRequired,
+  conversationUserId: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  message: PropTypes.object.isRequired,
+  messageAuthor: PropTypes.object.isRequired,
+  messageState: PropTypes.object.isRequired,
+  onResendMessage: PropTypes.func.isRequired,
+  replyMessage: PropTypes.object.isRequired,
+  replyMessageAuthor: PropTypes.object.isRequired,
+  startSelect: PropTypes.func.isRequired,
+  toggleSelection: PropTypes.func.isRequired,
+};
 
 export default Item;

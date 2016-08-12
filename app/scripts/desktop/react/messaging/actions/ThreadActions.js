@@ -1,6 +1,7 @@
 export const MSG_THREAD_STOP_SELECT = 'MSG_THREAD_STOP_SELECT';
 export const MSG_THREAD_START_SELECT = 'MSG_THREAD_START_SELECT';
 export const MSG_THREAD_RESET_SELECTION = 'MSG_THREAD_RESET_SELECTION';
+export const MSG_THREAD_TOGGLE_SELECTION = 'MSG_THREAD_TOGGLE_SELECTION';
 export const MSG_THREAD_SET_REPLY_TO = 'MSG_THREAD_SET_REPLY_TO';
 export const MSG_THREAD_CANCEL_REPLY_TO = 'MSG_THREAD_CANCEL_REPLY_TO';
 
@@ -10,20 +11,35 @@ export const MSG_THREAD_ADD_MESSAGE_FILES = 'MSG_THREAD_ADD_MESSAGE_FILES';
 export const MSG_THREAD_REMOVE_MESSAGE_FILE = 'MSG_THREAD_REMOVE_MESSAGE_FILE';
 
 export function startSelect() {
-  return {
-    type: MSG_THREAD_START_SELECT,
+  return (dispatch) => {
+    dispatch(resetSelect());
+
+    return dispatch({
+      type: MSG_THREAD_START_SELECT,
+    });
   };
 }
 
 export function stopSelect() {
-  return {
-    type: MSG_THREAD_STOP_SELECT,
+  return (dispatch) => {
+    dispatch(resetSelect());
+
+    return dispatch({
+      type: MSG_THREAD_STOP_SELECT,
+    });
   };
 }
 
 export function resetSelect() {
   return {
     type: MSG_THREAD_RESET_SELECTION,
+  };
+}
+
+export function toggleSelection(id) {
+  return {
+    type: MSG_THREAD_TOGGLE_SELECTION,
+    id,
   };
 }
 
@@ -62,8 +78,12 @@ export function removeMessageFile(file) {
 }
 
 export function resetThreadForm() {
-  return {
-    type: MSG_THREAD_RESET_FORM,
+  return (dispatch) => {
+    dispatch(stopSelect());
+
+    return dispatch({
+      type: MSG_THREAD_RESET_FORM,
+    });
   };
 }
 

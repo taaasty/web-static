@@ -56,7 +56,7 @@ function submitMessage(uuid, params) {
   };
 }
 
-export function postNewMessage(params) {
+function postMessage(uuid, params) {
   return (dispatch) => {
     const {
       conversation,
@@ -65,7 +65,6 @@ export function postNewMessage(params) {
       replyMessage,
     } = params;
     const conversationId = conversation.get('id');
-    const uuid = generateUuid();
     const formData = new FormData();
 
     formData.append('content', content);
@@ -74,8 +73,6 @@ export function postNewMessage(params) {
     if (replyMessage.get('uuid')) {
       formData.append('reply_message_uuid', replyMessage.get('uuid'));
     }
-
-    dispatch(submitMessage(uuid, params));
 
     return dispatch({
       [CALL_API]: {
@@ -91,7 +88,20 @@ export function postNewMessage(params) {
       conversationId,
       uuid,
     });
-  }
+  };
+}
+
+export function resendMessage(uuid, params) {
+  return postMessage(uuid, params);
+}
+
+export function postNewMessage(params) {
+  return (dispatch) => {
+    const uuid = generateUuid();
+
+    dispatch(submitMessage(uuid, params));
+    return dispatch(postMessage(uuid, params));
+  };
 }
 
 

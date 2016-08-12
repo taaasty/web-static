@@ -4,18 +4,12 @@ export const BEEP = Symbol('Play beep sound');
 
 export default (store) => (next) => (action) => {
   const beepAction = action[BEEP];
-  if (typeof beepAction === 'undefined') {
+  if (typeof beepAction === 'undefined' || !beepAction.src) {
     return next(action);
   }
 
-  const { src } = beepAction;
-
-  if (typeof src !== 'string') {
-    throw new Error('Beep action should contain `src` string field');
-  }
-
   try {
-    Beep.play(src);
+    Beep.play(beepAction.src);
   } catch (e) {
     console.error('Beep error: ', e);
   }

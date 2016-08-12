@@ -4,6 +4,7 @@ import { CALL_API, Schemas } from '../../middleware/api';
 import { NORMALIZE_DATA } from '../../middleware/normalize';
 import { BEEP } from '../../middleware/beep';
 import { postOpts } from '../../actions/reqHelpers';
+import { camelizeKeys } from 'humps';
 import Pusher from 'pusher';
 import ApiRoutes from '../../../../shared/routes/api';
 import {
@@ -21,6 +22,7 @@ import {
   MSG_SOUND_INCOMING,
 } from '../constants';
 import NoticeService from '../../services/Notice';
+import { Map } from 'immutable';
 
 export const MSG_NOTIFY_READY_REQUEST = 'MSG_NOTIFY_READY_REQUEST';
 export const MSG_NOTIFY_READY_SUCCESS = 'MSG_NOTIFY_READY_SUCCESS';
@@ -80,13 +82,25 @@ function pushConversation(data) {
   };
 }
 
-function pushMessage(data) {
-  return {
-    [NORMALIZE_DATA]: {
-      schema: Schemas.MESSAGE,
-      type: MSG_PUSHER_PUSH_MESSAGE,
-      data,
-    },
+function pushMessage(rawData) {
+  return (dispatch, getState) => {
+    const data = camelizeKeys(rawData);
+    const conversation = getState()
+      .entities
+      .getIn(['conversation', String(data.conversationId)], Map());
+    const doBeep = data.userId !== conversation.get('userId') &&
+      !conversation.get('notDisturb');
+
+    return dispatch({
+      [BEEP]: {
+        src: doBeep && MSG_SOUND_INCOMING,
+      },
+      [NORMALIZE_DATA]: {
+        schema: Schemas.MESSAGE,
+        type: MSG_PUSHER_PUSH_MESSAGE,
+        data: rawData,
+      },
+    });
   };
 }
 

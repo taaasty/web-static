@@ -6,7 +6,7 @@ function SystemMessage({ message }) {
       <div className="message message--system">
         <span
           className="messages__text"
-          dangerouslySetInnerHTML={{ __html: message.content_html }}
+          dangerouslySetInnerHTML={{ __html: message.get('contentHtml', '') }}
         />
       </div>
     </div>

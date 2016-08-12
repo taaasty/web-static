@@ -50,6 +50,7 @@ class MessageList extends Component {
       conversation,
       loadArchivedMessages,
     } = this.props;
+
     const scrollerPaneNode = this.refs.scroller.refs.scrollerPane;
 
     if (scrollerPaneNode.scrollTop === 0) {
@@ -95,18 +96,19 @@ class MessageList extends Component {
       isSelectState,
       messages,
       startSelect,
+      selectedIds,
     } = this.props;
 
     return messages.count() === 0
       ? <Empty />
       : messages.map((message) => (
           <ItemManager
-            conversationType={conversation.type}
-            currentUserId={conversation.user_id}
+            conversation={conversation}
             isSelectState={isSelectState}
+            isSelected={selectedIds.includes(message.get('id', false))}
             key={this.messageKey(message)}
             message={message}
-            messagesCount={messages.length}
+            messagesCount={messages.count()}
             ref={this.messageKey(message)}
             startSelect={startSelect}
           />)).valueSeq();
@@ -115,12 +117,12 @@ class MessageList extends Component {
     return (
       <Scroller
         className="scroller--messages"
-        onScroll={this.handleScroll}
+        onScroll={this.handleScroll.bind(this)}
         ref="scroller"
       >
         <div className="messages__list" ref="messageList">
           <div className="messages__list-cell">
-            {false && this.renderMessages()}
+            {this.renderMessages()}
           </div>
         </div>
       </Scroller>
@@ -133,9 +135,8 @@ MessageList.propTypes = {
   isSelectState: PropTypes.bool.isRequired,
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
-  messageAuthors: PropTypes.object.isRequired,
-  messageStates: PropTypes.object.isRequired,
   messages: PropTypes.object.isRequired,
+  selectedIds: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
 };
 
