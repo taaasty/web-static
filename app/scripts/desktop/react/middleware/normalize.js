@@ -9,7 +9,7 @@ export default (store) => (next) => (action) => {
     return next(action);
   }
 
-  const { schema, data, type } = normalizeData;
+  const { schema, data, type, options } = normalizeData;
 
   if (!schema) {
     throw new Error('Specify exact schema for normalization');
@@ -23,14 +23,25 @@ export default (store) => (next) => (action) => {
     throw new Error('Normalization action should contain a data to normalize');
   }
 
+  if (typeof options !== 'undefined' &&
+    typeof options !== 'object') {
+    throw new Error('Options must be an object');
+  }
+
   function nextAction(data) {
     const nextActionData = Object.assign({}, action, data);
     delete nextActionData[NORMALIZE_DATA];
     return nextActionData;
   }
 
+  function _process(data) {
+    return (options && options.dontCamelize) ?
+      data :
+      camelizeKeys(data);
+  }
+
   return next(nextAction({ // mimic middleware/api data structure
-    response: normalize(camelizeKeys(data), schema),
+    response: normalize(_process(data), schema),
     type,
   }));
 };

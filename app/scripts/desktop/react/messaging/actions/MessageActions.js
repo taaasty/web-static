@@ -30,8 +30,8 @@ function submitMessage(uuid, params) {
     } = params;
     const data = {
       content,
-      files,
       uuid,
+      files,
       replyMessage: replyMessage.get('uuid'),
       contentHtml: escape(content),
       conversationId: conversation.get('id'),
@@ -50,6 +50,7 @@ function submitMessage(uuid, params) {
       [NORMALIZE_DATA]: {
         type: MSG_MESSAGE_SUBMIT,
         schema: Schemas.MESSAGE,
+        options: { dontCamelize: true },
         data,
       },
     });

@@ -39,12 +39,12 @@ function Item(props) {
   function getStatus() {
     //const isFetching = messageState.get('isFetching', false);
     const isError = !!messageState.get('error', null);
-    const isSent = messageState.get('isSent', false);
+    const isSent = !!message.get('id', false);
     const isRead = !!message.get('readAt');
 
     if (isRead) {
       return MSG_READ_STATE;
-    } else if (isIncoming || isSent) {
+    } else if (isSent) {
       return MSG_SENT_STATE;
     } else if (isError) {
       return MSG_ERROR_STATE;

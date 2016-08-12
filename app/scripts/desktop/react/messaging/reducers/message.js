@@ -6,14 +6,13 @@ import {
 } from '../actions/MessageActions';
 import { fromJS } from 'immutable';
 
-const initialState = fromJS({}); // { uuid: { isFetching, error, isSent } }
+const initialState = fromJS({}); // { uuid: { isFetching, error } }
 
 const actionMap = {
   [MSG_MESSAGE_POST_REQUEST](state, { uuid }) {
     return state.mergeIn([uuid], {
       isFetching: true,
       error: null,
-      isSent: false,
     });
   },
 
@@ -21,21 +20,15 @@ const actionMap = {
     return state.mergeIn([uuid], {
       isFetching: false,
       error: null,
-      isSent: true,
     });
   },
 
   [MSG_MESSAGE_POST_FAILURE](state, { uuid, error }) {
     return state.mergeIn([uuid], {
       isFetching: false,
-      isSent: false,
       error,
     });
   },
 };
 
 export default createReducer(initialState, actionMap);
-
-/*
-
-*/

@@ -23,8 +23,8 @@ function MessageContents(props) {
     const files = message.get('files', List());
 
     if (attachments.count() > 0) {
-      return attachments.map((img) => (
-        <div className="messages__img">
+      return attachments.map((img, idx) => (
+        <div className="messages__img" key={`msg-attach-${idx}`}>
           <a href={img.get('url')} target="_blank">
             <Image
               image={img.toJS()}
@@ -34,8 +34,8 @@ function MessageContents(props) {
           </a>
         </div>)).valueSeq();
     } else if (files.count() > 0) {
-      return files.map((file) => (
-        <div className="messages__img">
+      return files.map((file, idx) => (
+        <div className="messages__img" key={`msg-file-${idx}`}>
           <ImgFromFile file={file} />
         </div>)).valueSeq();
     } else {
