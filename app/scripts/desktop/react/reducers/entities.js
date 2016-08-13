@@ -28,6 +28,9 @@ import {
 import {
   MSG_PUSHER_PUSH_CONVERSATION,
 } from '../messaging/actions/PusherActions';
+import {
+  MSG_MESSAGE_SUBMIT,
+} from '../messaging/actions/MessageActions';
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
@@ -147,6 +150,20 @@ function handleExtra(state, action) {
     return state.mergeIn(['conversation'], {
       [String(result)]: entities.conversation[result],
     });
+  case MSG_MESSAGE_SUBMIT:
+    const lastSubmit = state
+      .get('message')
+      .filter((m) => m.get('submitNr'))
+      .sortBy((m) => m.get('submitNr'))
+      .last();
+    const lastSubmitNr = lastSubmit ?
+      (lastSubmit.get('submitNr', 0) + 1) :
+      1;
+
+    return state.setIn(
+      ['message', action.response.result, 'submitNr'],
+      lastSubmitNr
+    );
   }
 
   return state;

@@ -124,11 +124,13 @@ export default connect(
       .filter((m) => m.get('conversationId') === conversationId)
       .sortBy((m) => {
         const createdAt = m.get('createdAt');
+        const submitNr = m.get('submitNr');
 
         return createdAt ?
           moment(createdAt).valueOf() :
-          1e9 + m.get('submittedAt').valueOf();
+          2e12 + submitNr;
       });
+
     let bgImage;
 
     if (conversationType === PRIVATE_CONVERSATION) {

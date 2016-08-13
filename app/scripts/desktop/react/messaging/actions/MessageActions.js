@@ -36,8 +36,6 @@ function submitMessage(uuid, params) {
       contentHtml: escape(content),
       conversationId: conversation.get('id'),
       recipientId: conversation.get('recipientId'),
-      submittedAt: (new Date())
-        .toString(),
       userId: conversation.get('userId'),
     };
 
