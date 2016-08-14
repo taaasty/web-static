@@ -50,8 +50,4 @@ Chooser.propTypes = {
   users: PropTypes.object.isRequired,
 };
 
-Chooser.defaultProps = {
-  selectedIds: [],
-};
-
 export default Chooser;

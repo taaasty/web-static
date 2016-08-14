@@ -43,7 +43,7 @@ function Thread(props) {
     loadArchivedMessages,
     loadMessages,
     messages,
-    selectedIds,
+    selectedUuids,
     startSelect,
   } = props;
   const conversationType = conversation.get('type');
@@ -88,7 +88,7 @@ function Thread(props) {
           loadArchivedMessages={loadArchivedMessages}
           loadMessages={loadMessages}
           messages={messages}
-          selectedIds={selectedIds}
+          selectedUuids={selectedUuids}
           startSelect={startSelect}
         />
       </div>
@@ -107,7 +107,7 @@ Thread.propTypes = {
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
   messages: PropTypes.object.isRequired,
-  selectedIds: PropTypes.object.isRequired,
+  selectedUuids: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
 };
 
@@ -116,7 +116,7 @@ export default connect(
     const conversationType = conversation.get('type');
     const conversationId = conversation.get('id');
     const isSelectState = state.msg.thread.get('isSelectState', false);
-    const selectedIds = state.msg.thread.get('selectedIds', Set());
+    const selectedUuids = state.msg.thread.get('selectedUuids', Set());
     const canTalk = conversation.get('canTalk', true); // true if not set
     const messages = state
       .entities
@@ -162,7 +162,7 @@ export default connect(
       conversation,
       isSelectState,
       messages,
-      selectedIds,
+      selectedUuids,
     };
   },
   {

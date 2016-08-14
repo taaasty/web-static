@@ -15,8 +15,8 @@ import { Set, fromJS } from 'immutable';
 
 const initialState = fromJS({
   isSelectState: false,
-  selectedIds: Set(),
-  replyToId: null,
+  selectedUuids: Set(),
+  replyToUuid: null,
   messageText: '',
   messageFiles: [],
 });
@@ -31,22 +31,22 @@ const actionMap = {
   },
 
   [MSG_THREAD_RESET_SELECTION](state) {
-    return state.set('selectedIds', Set());
+    return state.set('selectedUuids', Set());
   },
 
-  [MSG_THREAD_TOGGLE_SELECTION](state, { id }) {
+  [MSG_THREAD_TOGGLE_SELECTION](state, { uuid }) {
     return state.update(
-      'selectedIds',
-      (s) => s.includes(id) ? s.delete(id) : s.add(id)
+      'selectedUuids',
+      (s) => s.includes(uuid) ? s.delete(uuid) : s.add(uuid)
     );
   },
 
-  [MSG_THREAD_SET_REPLY_TO](state, { messageId }) {
-    return state.set('replyToId', messageId);
+  [MSG_THREAD_SET_REPLY_TO](state, { uuid }) {
+    return state.set('replyToUuid', uuid);
   },
 
   [MSG_THREAD_CANCEL_REPLY_TO](state) {
-    return state.set('replyToId', null);
+    return state.set('replyToUuid', null);
   },
 
   [MSG_THREAD_SET_MESSAGE_TEXT](state, { text }) {

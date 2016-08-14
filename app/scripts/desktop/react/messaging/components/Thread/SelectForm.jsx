@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import {
   stopSelect,
-  setReplyToId,
+  setReplyToUuid,
 } from '../../actions/ThreadActions';
 import {
   deleteMessages,
@@ -22,7 +22,7 @@ function SelectForm(props) {
     deleteEverywhereFn,
     deleteFn,
     isPremium,
-    setReplyToId,
+    setReplyToUuid,
     showGetPremiumPopup,
     stopSelect,
   } = props;
@@ -74,7 +74,7 @@ function SelectForm(props) {
         </button>
         <button
           className={replyClasses}
-          onTouchTap={setReplyToId}
+          onTouchTap={setReplyToUuid}
         >
           {i18n.t('buttons.messenger.select_form.reply')}
         </button>
@@ -96,7 +96,7 @@ SelectForm.propTypes = {
   deleteEverywhereFn: PropTypes.func.isRequired,
   deleteFn: PropTypes.func.isRequired,
   isPremium: PropTypes.bool.isRequired,
-  setReplyToId: PropTypes.func.isRequired,
+  setReplyToUuid: PropTypes.func.isRequired,
   showGetPremiumPopup: PropTypes.func.isRequired,
   stopSelect: PropTypes.func.isRequired,
 };
@@ -105,12 +105,12 @@ export default connect(
   (state, { conversation, messages }) => {
     const isPremium = !!state.currentUser.data.isPremium;
     const conversationUserId = conversation.get('userId');
-    const selectedIds = state.msg.thread.get('selectedIds', Set());
-    const canDelete = selectedIds.count() > 0;
-    const canReply = selectedIds.count() === 1;
-    const canDeleteEverywhere = canDelete && selectedIds
+    const selectedUuids = state.msg.thread.get('selectedUuids', Set());
+    const canDelete = selectedUuids.count() > 0;
+    const canReply = selectedUuids.count() === 1;
+    const canDeleteEverywhere = canDelete && selectedUuids
       // selection has only own messages
-      .every((id) => messages.getIn([String(id), 'userId']) === conversationUserId);
+      .every((uuid) => messages.getIn([String(uuid), 'userId']) === conversationUserId);
 
     return {
       canDelete,
@@ -118,11 +118,12 @@ export default connect(
       canReply,
       conversation,
       isPremium,
+      selectedUuids,
     };
   },
   {
     stopSelect,
-    setReplyToId,
+    setReplyToUuid,
     deleteMessages,
     showGetPremiumPopup,
   },
@@ -132,12 +133,15 @@ export default connect(
     {
       deleteFn: () => dispatchProps.deleteMessages(
         stateProps.conversationId,
-        stateProps.selectedIds
+        stateProps.selectedUuids
       ),
       deleteEverywhereFn: () => dispatchProps.deleteMessages(
         stateProps.conversationId,
-        stateProps.selectedIds,
+        stateProps.selectedUuids,
         true
+      ),
+      setReplyToUuid: () => dispatchProps.setReplyToUuid(
+        stateProps.selectedUuids.first()
       ),
     }
   )

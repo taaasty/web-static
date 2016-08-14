@@ -45,7 +45,7 @@ function ItemManager(props) {
 
   function onToggleSelection() {
     if(isSelectState) {
-      toggleSelection(message.get('id'));
+      toggleSelection(message.get('uuid'));
     }
   }
 

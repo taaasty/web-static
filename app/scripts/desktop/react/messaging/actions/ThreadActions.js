@@ -36,17 +36,21 @@ export function resetSelect() {
   };
 }
 
-export function toggleSelection(id) {
+export function toggleSelection(uuid) {
   return {
     type: MSG_THREAD_TOGGLE_SELECTION,
-    id,
+    uuid,
   };
 }
 
-export function setReplyToId(messageId) {
-  return {
-    type: MSG_THREAD_SET_REPLY_TO,
-    messageId,
+export function setReplyToUuid(uuid) {
+  return (dispatch) => {
+    dispatch(stopSelect());
+
+    return dispatch({
+      type: MSG_THREAD_SET_REPLY_TO,
+      uuid,
+    });
   };
 }
 

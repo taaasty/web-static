@@ -184,10 +184,10 @@ export default connect(
     const currentUserId = state.currentUser.data.id;
     const messageFiles = state.msg.thread.get('messageFiles', List());
     const messageText = state.msg.thread.get('messageText', '');
-    const replyId = state.msg.thread.get('replyToId');
+    const replyUuid = state.msg.thread.get('replyToUuid');
     const replyMessage = state
       .entities
-      .getIn(['message', String(replyId)], emptyMessage);
+      .getIn(['message', String(replyUuid)], emptyMessage);
     const replyMessageAuthor = state
       .entities
       .getIn(['tlog', String(replyMessage.get('userId'))], emptyUser);

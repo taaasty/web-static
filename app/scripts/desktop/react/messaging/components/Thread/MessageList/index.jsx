@@ -96,7 +96,7 @@ class MessageList extends Component {
       isSelectState,
       messages,
       startSelect,
-      selectedIds,
+      selectedUuids,
     } = this.props;
 
     return messages.count() === 0
@@ -105,7 +105,7 @@ class MessageList extends Component {
           <ItemManager
             conversation={conversation}
             isSelectState={isSelectState}
-            isSelected={selectedIds.includes(message.get('id', false))}
+            isSelected={selectedUuids.includes(message.get('uuid', false))}
             key={this.messageKey(message)}
             message={message}
             messagesCount={messages.count()}
@@ -136,7 +136,7 @@ MessageList.propTypes = {
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
   messages: PropTypes.object.isRequired,
-  selectedIds: PropTypes.object.isRequired,
+  selectedUuids: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
 };
 

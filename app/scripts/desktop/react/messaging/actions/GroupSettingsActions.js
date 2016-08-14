@@ -93,18 +93,3 @@ export function resetGroupSettings() {
     type: MSG_GROUP_RESET,
   };
 }
-
-/*
-
-    init(data) {
-      const isNew = !data.id;
-      selectedIds = isNew
-        ? []
-        : data.users
-            .filter((u) => data.users_left.indexOf(u.id) < 0)
-            .map((u) => u.id);
-      isFetching = false;
-      settings = { ...initSettings, ...data };
-      settings = { ...settings, users: sortUsers(settings.users, selectedIds) };
-    },
-*/
