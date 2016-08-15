@@ -76,6 +76,7 @@ entryCollItemSchema.define({
 messageSchema.define({
   author: tlogSchema,
   recipient: tlogSchema,
+  replyMessage: messageSchema,
 });
 
 conversationSchema.define({

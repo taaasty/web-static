@@ -1,7 +1,13 @@
 import React, { PropTypes } from 'react';
 import MessageContents from './MessageList/MessageContents';
 
-function ThreadFormReplyTo({ cancel, message, messageInfo }) {
+function ThreadFormReplyTo(props) {
+  const {
+    cancel,
+    message,
+    messageAuthor,
+  } = props;
+
   return (
     <div className="message-form__reply-container">
       <div className="message-form__reply-close" onClick={cancel}>
@@ -11,7 +17,7 @@ function ThreadFormReplyTo({ cancel, message, messageInfo }) {
         <MessageContents
           maxWidth={60}
           message={message}
-          messageInfo={messageInfo}
+          messageAuthor={messageAuthor}
           showSlug
           showSupportInfo={false}
         />
@@ -25,14 +31,7 @@ ThreadFormReplyTo.displayName = 'ThreadFormReplyTo';
 ThreadFormReplyTo.propTypes = {
   cancel: PropTypes.func.isRequired,
   message: PropTypes.object.isRequired,
-  messageInfo: PropTypes.object.isRequired,
-};
-
-ThreadFormReplyTo.defaultProps = {
-  message: {},
-  messageInfo: {
-    user: {},
-  },
+  messageAuthor: PropTypes.object.isRequired,
 };
 
 export default ThreadFormReplyTo;
