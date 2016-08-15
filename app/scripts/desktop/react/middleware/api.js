@@ -117,6 +117,7 @@ export const Schemas = {
   CONVERSATION_COLL: arrayOf(conversationSchema),
   MESSAGE: messageSchema,
   MESSAGE_COLL: { messages: arrayOf(messageSchema) },
+  MESSAGE_ARR: arrayOf(messageSchema),
   MESSENGER_READY: {
     conversations: arrayOf(conversationSchema),
     notifications: arrayOf(notificationSchema),

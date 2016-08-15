@@ -22,7 +22,7 @@ import {
   MSG_SOUND_INCOMING,
 } from '../constants';
 import NoticeService from '../../services/Notice';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 export const MSG_NOTIFY_READY_REQUEST = 'MSG_NOTIFY_READY_REQUEST';
 export const MSG_NOTIFY_READY_SUCCESS = 'MSG_NOTIFY_READY_SUCCESS';
@@ -34,6 +34,8 @@ export const MSG_PUSHER_PUSH_CONVERSATION = 'MSG_PUSHER_PUSH_CONVERSATION';
 export const MSG_PUSHER_UPDATE_NOTIFICATIONS =
   'MSG_PUSHER_UPDATE_NOTIFICATIONS';
 export const MSG_PUSHER_PUSH_MESSAGE = 'MSG_PUSHER_PUSH_MESSAGE';
+export const MSG_PUSHER_DELETE_MSGS = 'MSG_PUSHER_DELETE_MSGS';
+export const MSG_PUSHER_DELETE_USER_MSGS = 'MSG_PUSHER_DELETE_USER_MSGS';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -104,6 +106,42 @@ function pushMessage(rawData) {
   };
 }
 
+function pushDeleteMessages(rawData) {
+  const { conversationId, messages } = camelizeKeys(rawData);
+
+  return (dispatch, getState) => {
+    const deletedUuids = getState()
+      .entities
+      .get('message')
+      .filter((m) => m.get('conversationId') === conversationId &&
+        messages.indexOf(m.get('id')) > -1
+      )
+      .map((m) => m.get('uuid'));
+
+    return dispatch({
+      type: MSG_PUSHER_DELETE_MSGS,
+      deletedUuids,
+    });
+  };
+}
+
+function pushDeleteUserMessages(rawData) {
+  const { conversationId, messages } = camelizeKeys(rawData);
+  const deletedUuids = fromJS(messages.map((m) => m.uuid));
+  const deletedMessages = messages.map((m) => Object.assign({}, m, {
+    contentHtml: m.content
+  }));
+
+  return {
+    [NORMALIZE_DATA]: {
+      type: MSG_PUSHER_DELETE_USER_MSGS,
+      schema: Schemas.MESSAGE_ARR,
+      data: deletedMessages,
+    },
+    deletedUuids,
+  };
+}
+
 export function pusherSubscribe(user) {
   return (dispatch) => {
     dispatch(connectionStateProcess());
@@ -151,11 +189,9 @@ export function pusherSubscribe(user) {
         //return MessagingDispatcher.messagesUpdated(data);
         return;
       case EVENT_DELETE_MESSAGES:
-        //return MessagingDispatcher.deleteMessages(data);
-        return;
+        return dispatch(pushDeleteMessages(data));
       case EVENT_DELETE_USER_MESSAGES:
-        //return MessagingDispatcher.deleteUserMessages(data);
-        return;
+        return dispatch(pushDeleteUserMessages(data));
       case EVENT_TYPING:
         return dispatch(initTyping(data));
       }

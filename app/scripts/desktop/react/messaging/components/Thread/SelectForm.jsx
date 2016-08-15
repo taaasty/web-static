@@ -106,6 +106,8 @@ export default connect(
     const isPremium = !!state.currentUser.data.isPremium;
     const conversationUserId = conversation.get('userId');
     const selectedUuids = state.msg.thread.get('selectedUuids', Set());
+    const selectedIds = selectedUuids
+      .map((uuid) => state.entities.getIn(['message', uuid, 'id']));
     const canDelete = selectedUuids.count() > 0;
     const canReply = selectedUuids.count() === 1;
     const canDeleteEverywhere = canDelete && selectedUuids
@@ -118,7 +120,9 @@ export default connect(
       canReply,
       conversation,
       isPremium,
+      selectedIds,
       selectedUuids,
+      conversationId: conversation.get('id'),
     };
   },
   {
@@ -133,11 +137,11 @@ export default connect(
     {
       deleteFn: () => dispatchProps.deleteMessages(
         stateProps.conversationId,
-        stateProps.selectedUuids
+        stateProps.selectedIds
       ),
       deleteEverywhereFn: () => dispatchProps.deleteMessages(
         stateProps.conversationId,
-        stateProps.selectedUuids,
+        stateProps.selectedIds,
         true
       ),
       setReplyToUuid: () => dispatchProps.setReplyToUuid(

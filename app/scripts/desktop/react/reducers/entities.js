@@ -27,6 +27,8 @@ import {
 } from '../messaging/actions/GroupSettingsActions';
 import {
   MSG_PUSHER_PUSH_CONVERSATION,
+  MSG_PUSHER_DELETE_MSGS,
+  MSG_PUSHER_DELETE_USER_MSGS,
 } from '../messaging/actions/PusherActions';
 import {
   MSG_MESSAGE_SUBMIT,
@@ -164,6 +166,15 @@ function handleExtra(state, action) {
       ['message', action.response.result, 'submitNr'],
       lastSubmitNr
     );
+  case MSG_PUSHER_DELETE_MSGS:
+    return state
+      .update(
+        'message',
+        Immutable.Map(),
+        (messages) => messages.filterNot(
+          (m) => action.deletedUuids.includes(m.get('uuid'))
+        )
+      );
   }
 
   return state;

@@ -6,17 +6,6 @@ export default class MessagingRequester {
     this.access_token = access_token;
     this.socket_id = socket_id;
   }
-  deleteMessages(conversationId, ids = [], all) {
-    return $.ajax({
-      url: ApiRoutes.messengerDeleteMessages(conversationId),
-      method: 'DELETE',
-      data: {
-        socket_id: this.socket_id,
-        ids: ids.join(','),
-        all: all,
-      },
-    });
-  }
   markAsReadMessage(conversationId, messageId) {
     return $.ajax({
       url: ApiRoutes.messenger_read_messages_url(conversationId),
