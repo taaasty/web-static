@@ -11,6 +11,7 @@ import { Map } from 'immutable';
 import moment from 'moment';
 
 const ARCHIVED_MESSAGES_LIMIT = 10;
+const UPDATE_ONLINE_STATUSES_TIMEOUT = 10 * 60 * 1000; // 10 minutes
 
 export const MSG_CONVERSATION_POST_REQUEST = 'MSG_CONVERSATION_POST_REQUEST';
 export const MSG_CONVERSATION_POST_SUCCESS = 'MSG_CONVERSATION_POST_SUCCESS';
@@ -23,6 +24,13 @@ export const MSG_CONVERSATION_MSGS_FAILURE = 'MSG_CONVERSATION_MSGS_FAILURE';
 export const MSG_CONVERSATION_LEAVE_REQUEST = 'MSG_CONVERSATION_LEAVE_REQUEST';
 export const MSG_CONVERSATION_LEAVE_SUCCESS = 'MSG_CONVERSATION_LEAVE_SUCCESS';
 export const MSG_CONVERSATION_LEAVE_FAILURE = 'MSG_CONVERSATION_LEAVE_FAILURE';
+
+export const MSG_CONVERSATION_ONLINE_REQUEST =
+  'MSG_CONVERSATION_ONLINE_REQUEST';
+export const MSG_CONVERSATION_ONLINE_SUCCESS =
+  'MSG_CONVERSATION_ONLINE_SUCCESS';
+export const MSG_CONVERSATION_ONLINE_FAILURE =
+  'MSG_CONVERSATION_ONLINE_FAILURE';
 
 export const MSG_CONVERSATION_DELETE_REQUEST =
   'MSG_CONVERSATION_DELETE_REQUEST';
@@ -162,22 +170,39 @@ export function dontDisturb(conversationId, flag) {
   };
 }
 
+let osId = void 0;
 
-/*
-    updateOnlineStatuses(convIds = [], data = []) {
-      const statusMap = data.reduce((acc, item) => ({...acc, [item.user_id]: item }), {});
+export function updateOnlineStatuses() {
+  return (dispatch, getState) => {
+    const userIds = getState()
+      .entities
+      .get('conversation')
+      .filter((c) => c.has('recipientId') && !!c.get('recipientId'))
+      .map((c) => c.get('recipientId'))
+      .join(',');
 
-      convIds.forEach((conversationId) => {
-        const conversation = this.findConversation(conversationId);
-        if (conversation && conversation.type === PRIVATE_CONVERSATION) {
-          conversation.recipient.is_online = statusMap[conversation.recipient_id]
-            .is_online;
-          conversation.recipient.last_seen_at = statusMap[conversation.recipient_id]
-            .last_seen_at;
-        }
-      });
-    },
+    if (osId && typeof clearTimeout === 'function') {
+      clearTimeout(osId);
+    }
 
-  }
-);
-*/
+    if (typeof setTimeout === 'function') {
+      osId = setTimeout(
+        () => dispatch(updateOnlineStatuses()),
+        UPDATE_ONLINE_STATUSES_TIMEOUT
+      );
+    }
+
+    return dispatch({
+      [CALL_API]: {
+        endpoint: makeGetUrl(ApiRoutes.onlineStatuses(), { userIds }),
+        schema: Schemas.NONE, // TODO: temporary before api fixed
+        types: [
+          MSG_CONVERSATION_ONLINE_REQUEST,
+          MSG_CONVERSATION_ONLINE_SUCCESS,
+          MSG_CONVERSATION_ONLINE_FAILURE,
+        ],
+        opts: defaultOpts,
+      },
+    });
+  };
+}

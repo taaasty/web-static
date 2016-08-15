@@ -19,6 +19,9 @@ import {
   initTyping,
 } from './TypingActions';
 import {
+  updateOnlineStatuses,
+} from './ConversationActions';
+import {
   MSG_SOUND_INCOMING,
 } from '../constants';
 import NoticeService from '../../services/Notice';
@@ -242,7 +245,7 @@ function pusherConnected(pusher) {
     return dispatch(notifyReady())
       .then(() => {
         console.log('Server is notified');
-        // TODO: return dispatch(updateOnleneStatuses());
+        return dispatch(updateOnlineStatuses());
       })
       .catch((err) => {
         console.error('Error', err);

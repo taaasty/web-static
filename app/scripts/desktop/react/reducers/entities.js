@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+import { Map, fromJS } from 'immutable';
 import {
   COMMENT_POST_SUCCESS,
   COMMENT_DELETE_SUCCESS,
@@ -21,6 +21,7 @@ import {
 import {
   MSG_CONVERSATION_DELETE_SUCCESS,
   MSG_CONVERSATION_LEAVE_SUCCESS,
+  MSG_CONVERSATION_ONLINE_SUCCESS,
 } from '../messaging/actions/ConversationActions';
 import {
   MSG_GROUP_SAVE_SUCCESS,
@@ -28,7 +29,6 @@ import {
 import {
   MSG_PUSHER_PUSH_CONVERSATION,
   MSG_PUSHER_DELETE_MSGS,
-  MSG_PUSHER_DELETE_USER_MSGS,
 } from '../messaging/actions/PusherActions';
 import {
   MSG_MESSAGE_SUBMIT,
@@ -36,7 +36,7 @@ import {
 
 export const INIT_SET_TLOG = 'INIT_SET_TLOG';
 
-const initialState = Immutable.fromJS({
+const initialState = fromJS({
   tlog: {},
   rel: {},
   calendar: {},
@@ -139,6 +139,23 @@ function handleExtra(state, action) {
   case MSG_CONVERSATION_DELETE_SUCCESS:
   case MSG_CONVERSATION_LEAVE_SUCCESS:
     return state.deleteIn(['conversation', String(action.conversationId)]);
+  case MSG_CONVERSATION_ONLINE_SUCCESS: // TODO: temporary before api fixed
+    const updatedIds = fromJS(action.response.result)
+      .toMap()
+      .mapKeys((k, val) => val.get('userId'));
+
+    return state
+      .update(
+        'tlog',
+        Map(),
+        (tlogs) => tlogs.map((t) => {
+          const tlogId = t.get('id');
+
+          return updatedIds.has(tlogId) ?
+            t.merge(updatedIds.get(tlogId)) :
+            t;
+        })
+      );
   case MSG_PUSHER_PUSH_CONVERSATION:
   case MSG_GROUP_SAVE_SUCCESS:
     const {
@@ -170,7 +187,7 @@ function handleExtra(state, action) {
     return state
       .update(
         'message',
-        Immutable.Map(),
+        Map(),
         (messages) => messages.filterNot(
           (m) => action.deletedUuids.includes(m.get('uuid'))
         )
