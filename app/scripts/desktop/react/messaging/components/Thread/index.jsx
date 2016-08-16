@@ -15,6 +15,7 @@ import {
 import {
   loadMessages,
   loadArchivedMessages,
+  markAllMessagesRead,
 } from '../../actions/ConversationActions';
 import { connect } from 'react-redux';
 import { Map, Set, fromJS } from 'immutable';
@@ -42,6 +43,7 @@ function Thread(props) {
     isSelectState,
     loadArchivedMessages,
     loadMessages,
+    markAllMessagesRead,
     messages,
     selectedUuids,
     startSelect,
@@ -87,6 +89,7 @@ function Thread(props) {
           isSelectState={isSelectState}
           loadArchivedMessages={loadArchivedMessages}
           loadMessages={loadMessages}
+          markAllMessagesRead={markAllMessagesRead}
           messages={messages}
           selectedUuids={selectedUuids}
           startSelect={startSelect}
@@ -106,6 +109,7 @@ Thread.propTypes = {
   isSelectState: PropTypes.bool.isRequired,
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
+  markAllMessagesRead: PropTypes.func.isRequired,
   messages: PropTypes.object.isRequired,
   selectedUuids: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,
@@ -169,5 +173,6 @@ export default connect(
     startSelect,
     loadArchivedMessages,
     loadMessages,
+    markAllMessagesRead,
   }
 )(Thread);

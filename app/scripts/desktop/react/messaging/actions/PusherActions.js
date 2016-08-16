@@ -39,6 +39,7 @@ export const MSG_PUSHER_UPDATE_NOTIFICATIONS =
 export const MSG_PUSHER_PUSH_MESSAGE = 'MSG_PUSHER_PUSH_MESSAGE';
 export const MSG_PUSHER_DELETE_MSGS = 'MSG_PUSHER_DELETE_MSGS';
 export const MSG_PUSHER_DELETE_USER_MSGS = 'MSG_PUSHER_DELETE_USER_MSGS';
+export const MSG_PUSHER_UPDATE_MSGS = 'MSG_PUSHER_UPDATE_MSGS';
 
 const EVENT_STATUS = 'status';
 const EVENT_UPDATE_CONVERSATION = 'update_conversation';
@@ -129,10 +130,10 @@ function pushDeleteMessages(rawData) {
 }
 
 function pushDeleteUserMessages(rawData) {
-  const { conversationId, messages } = camelizeKeys(rawData);
+  const { messages } = camelizeKeys(rawData);
   const deletedUuids = fromJS(messages.map((m) => m.uuid));
   const deletedMessages = messages.map((m) => Object.assign({}, m, {
-    contentHtml: m.content
+    contentHtml: m.content,
   }));
 
   return {
@@ -142,6 +143,16 @@ function pushDeleteUserMessages(rawData) {
       data: deletedMessages,
     },
     deletedUuids,
+  };
+}
+
+function pushUpdateMessages(data) {
+  return {
+    [NORMALIZE_DATA]: {
+      type: MSG_PUSHER_UPDATE_MSGS,
+      schema: Schemas.MESSAGE_COLL,
+      data,
+    },
   };
 }
 
@@ -189,8 +200,7 @@ export function pusherSubscribe(user) {
       case EVENT_PUSH_MESSAGE:
         return dispatch(pushMessage(data));
       case EVENT_UPDATE_MESSAGES:
-        //return MessagingDispatcher.messagesUpdated(data);
-        return;
+        return dispatch(pushUpdateMessages(data));
       case EVENT_DELETE_MESSAGES:
         return dispatch(pushDeleteMessages(data));
       case EVENT_DELETE_USER_MESSAGES:

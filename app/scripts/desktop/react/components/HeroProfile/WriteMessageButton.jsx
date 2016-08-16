@@ -2,12 +2,17 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
-  showThread,
-} from '../../messaging/actions/MessagesPopupActions';
+  showMessagesPopup,
+} from '../../actions/AppStateActions';
 
-function WriteMessageButton({ userId }) {
+function WriteMessageButton(props) {
+  const {
+    showMessagesPopup,
+    userId,
+  } = props;
+
   function handleClick() {
-    showThread(userId); // TODO: check if working
+    showMessagesPopup(userId);
   }
 
   return (
@@ -22,13 +27,13 @@ function WriteMessageButton({ userId }) {
 }
 
 WriteMessageButton.propTypes = {
-  showThread: PropTypes.func.isRequired,
+  showMessagesPopup: PropTypes.func.isRequired,
   userId: PropTypes.number,
 };
 
 export default connect(
   null,
   {
-    showThread,
+    showMessagesPopup,
   }
 )(WriteMessageButton);

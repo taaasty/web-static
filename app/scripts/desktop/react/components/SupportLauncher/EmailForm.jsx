@@ -2,10 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import Popup from '../Popup';
 import classNames from 'classnames';
-import {
-  sendSupportRequest, // TODO: move to parent component
-} from '../../actions/SupportActions';
-import { connect } from 'react-redux';
 import NoticeService from '../../services/Notice';
 
 class EmailForm extends Component {
@@ -98,9 +94,4 @@ EmailForm.propTypes = {
   sendSupportRequest: PropTypes.func.isRequired,
 };
 
-export default connect(
-  null,
-  {
-    sendSupportRequest,
-  }
-)(EmailForm);
+export default EmailForm;

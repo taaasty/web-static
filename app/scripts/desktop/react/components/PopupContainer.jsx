@@ -62,27 +62,28 @@ class PopupContainer extends Component {
       hidePremiumPopup,
       hideMessagesPopup,
     } = this.props;
+    const messagesPopup = this.props[POPUP_MESSAGES];
 
     return (
       <div>
-        {this.props[POPUP_USER_ONBOARDING] && <UserOnboardingPopup onClose={hideUserOnboardingPopup} />}
-        {this.props[POPUP_SETTINGS] && <SettingsPopup onClose={hideSettingsPopup} />}
-        {this.props[POPUP_DESIGN_SETTINGS] && <DesignSettingsPopup onClose={hideDesignSettingsPopup} />}
-        {this.props[POPUP_GET_PREMIUM] && <GetPremiumPopup onClose={hideGetPremiumPopup} />}
-        {this.props[POPUP_PREMIUM] && <PremiumPopup onClose={hidePremiumPopup} />}
-        {this.props[POPUP_MESSAGES] && <MessagesPopup onClose={hideMessagesPopup} />}
+        {this.props[POPUP_USER_ONBOARDING].visible && <UserOnboardingPopup onClose={hideUserOnboardingPopup} />}
+        {this.props[POPUP_SETTINGS].visible && <SettingsPopup onClose={hideSettingsPopup} />}
+        {this.props[POPUP_DESIGN_SETTINGS].visible && <DesignSettingsPopup onClose={hideDesignSettingsPopup} />}
+        {this.props[POPUP_GET_PREMIUM].visible && <GetPremiumPopup onClose={hideGetPremiumPopup} />}
+        {this.props[POPUP_PREMIUM].visible && <PremiumPopup onClose={hidePremiumPopup} />}
+        {messagesPopup.visible && <MessagesPopup onClose={hideMessagesPopup} userId={messagesPopup.userId} />}
       </div>
     );
   }
 }
 
 PopupContainer.propTypes = {
-  [POPUP_DESIGN_SETTINGS]: PropTypes.bool.isRequired,
-  [POPUP_GET_PREMIUM]: PropTypes.bool.isRequired,
-  [POPUP_MESSAGES]: PropTypes.bool.isRequired,
-  [POPUP_PREMIUM]: PropTypes.bool.isRequired,
-  [POPUP_SETTINGS]: PropTypes.bool.isRequired,
-  [POPUP_USER_ONBOARDING]: PropTypes.bool.isRequired,
+  [POPUP_DESIGN_SETTINGS]: PropTypes.object.isRequired,
+  [POPUP_GET_PREMIUM]: PropTypes.object.isRequired,
+  [POPUP_MESSAGES]: PropTypes.object.isRequired,
+  [POPUP_PREMIUM]: PropTypes.object.isRequired,
+  [POPUP_SETTINGS]: PropTypes.object.isRequired,
+  [POPUP_USER_ONBOARDING]: PropTypes.object.isRequired,
   hideDesignSettingsPopup: PropTypes.func.isRequired,
   hideGetPremiumPopup: PropTypes.func.isRequired,
   hideMessagesPopup: PropTypes.func.isRequired,

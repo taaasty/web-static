@@ -20,7 +20,6 @@ const emptyMsg = Map();
 function ItemManager(props) {
   const {
     conversation,
-    isSelectState,
     isSelected,
     message,
     messageAuthor,
@@ -44,9 +43,7 @@ function ItemManager(props) {
   }
 
   function onToggleSelection() {
-    if(isSelectState) {
-      toggleSelection(message.get('uuid'));
-    }
+    toggleSelection(message.get('uuid'));
   }
 
   return message.get('type') === SYSTEM_MSG

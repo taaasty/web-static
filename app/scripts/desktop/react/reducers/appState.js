@@ -13,12 +13,12 @@ import {
 const initialState = {
   editing: false,
   popups: {
-    [POPUP_USER_ONBOARDING]: false,
-    [POPUP_SETTINGS]: false,
-    [POPUP_DESIGN_SETTINGS]: false,
-    [POPUP_GET_PREMIUM]: false,
-    [POPUP_PREMIUM]: false,
-    [POPUP_MESSAGES]: false,
+    [POPUP_USER_ONBOARDING]: { visible: false },
+    [POPUP_SETTINGS]: { visible: false },
+    [POPUP_DESIGN_SETTINGS]: { visible: false },
+    [POPUP_GET_PREMIUM]: { visible: false },
+    [POPUP_PREMIUM]: { visible: false },
+    [POPUP_MESSAGES]: { visible: false, userId: null },
   },
 };
 
@@ -27,10 +27,10 @@ const actionMap = {
     return Object.assign({}, state, { editing });
   },
 
-  [APP_STATE_SET_POPUP](state, { flagName, flag }) {
+  [APP_STATE_SET_POPUP](state, { flagName, flag, ...rest }) {
     return Object.assign({}, state, {
       popups: Object.assign({}, state.popups, {
-        [flagName]: flag,
+        [flagName]: { visible: flag, ...rest },
       }),
     });
   },

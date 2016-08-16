@@ -8,6 +8,7 @@ import {
   MSG_POPUP_STATE_GROUP_CHOOSER,
   initPopup,
   historyBack,
+  openConversation,
 } from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
 import Thread from '../Thread';
@@ -25,7 +26,16 @@ const emptyState = Map();
 
 class MessagesPopup extends Component {
   componentWillMount() {
-    this.props.initPopup();
+    const {
+      initPopup,
+      openConversation,
+      userId,
+    } = this.props;
+
+    initPopup();
+    if (userId) {
+      openConversation(userId);
+    }
   }
   renderTitle() {
     const {
@@ -95,7 +105,9 @@ MessagesPopup.propTypes = {
   historyBack: PropTypes.func.isRequired,
   initPopup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  openConversation: PropTypes.func.isRequired,
   popupState: PropTypes.string.isRequired,
+  userId: PropTypes.number,
 };
 
 export default connect(
@@ -114,5 +126,6 @@ export default connect(
   {
     historyBack,
     initPopup,
+    openConversation,
   }
 )(MessagesPopup);

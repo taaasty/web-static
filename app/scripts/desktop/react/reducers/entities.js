@@ -21,7 +21,7 @@ import {
 import {
   MSG_CONVERSATION_DELETE_SUCCESS,
   MSG_CONVERSATION_LEAVE_SUCCESS,
-  MSG_CONVERSATION_ONLINE_SUCCESS,
+  MSG_CONVERSATION_MARK_ALL_READ_REQUEST,
 } from '../messaging/actions/ConversationActions';
 import {
   MSG_GROUP_SAVE_SUCCESS,
@@ -139,23 +139,6 @@ function handleExtra(state, action) {
   case MSG_CONVERSATION_DELETE_SUCCESS:
   case MSG_CONVERSATION_LEAVE_SUCCESS:
     return state.deleteIn(['conversation', String(action.conversationId)]);
-  case MSG_CONVERSATION_ONLINE_SUCCESS: // TODO: temporary before api fixed
-    const updatedIds = fromJS(action.response.result)
-      .toMap()
-      .mapKeys((k, val) => val.get('userId'));
-
-    return state
-      .update(
-        'tlog',
-        Map(),
-        (tlogs) => tlogs.map((t) => {
-          const tlogId = t.get('id');
-
-          return updatedIds.has(tlogId) ?
-            t.merge(updatedIds.get(tlogId)) :
-            t;
-        })
-      );
   case MSG_PUSHER_PUSH_CONVERSATION:
   case MSG_GROUP_SAVE_SUCCESS:
     const {
@@ -192,6 +175,13 @@ function handleExtra(state, action) {
           (m) => action.deletedUuids.includes(m.get('uuid'))
         )
       );
+  case MSG_CONVERSATION_MARK_ALL_READ_REQUEST:
+    return state
+      .setIn([
+        'conversation',
+        String(action.conversationId),
+        'unreadMessagesCount',
+      ], 0);
   }
 
   return state;

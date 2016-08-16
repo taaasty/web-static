@@ -53,6 +53,13 @@ export const MSG_CONVERSATION_DISTURB_SUCCESS =
 export const MSG_CONVERSATION_DISTURB_FAILURE =
   'MSG_CONVERSATION_DISTURB_FAILURE';
 
+export const MSG_CONVERSATION_MARK_ALL_READ_REQUEST =
+  'MSG_CONVERSATION_MARK_ALL_READ_REQUEST';
+export const MSG_CONVERSATION_MARK_ALL_READ_SUCCESS =
+  'MSG_CONVERSATION_MARK_ALL_READ_SUCCESS';
+export const MSG_CONVERSATION_MARK_ALL_READ_FAILURE =
+  'MSG_CONVERSATION_MARK_ALL_READ_FAILURE';
+
 export function postNewConversation(userId) {
   return {
     [CALL_API]: {
@@ -89,16 +96,23 @@ export function loadMessages(conversationId, data = {}) {
 
 export function loadArchivedMessages(conversationId) {
   return (dispatch, getState) => {
-    const oldestMessage = getState()
+    const state = getState();
+    const conversation = state
+      .entities
+      .getIn(['conversation', String(conversationId)]);
+    const messages = state
       .entities
       .get('message', Map())
       .filter((m) => m.get('conversationId') === conversationId && m.get(
         'createdAt'))
       .sortBy((m) => moment(m.get('createdAt'))
-        .valueOf())
-      .first();
+        .valueOf());
+    const oldestMessage = messages.first();
+    const hasMore = (
+      messages.count() < conversation.get('messagesCount', +Infinity)
+    );
 
-    return oldestMessage && dispatch(loadMessages(conversationId, {
+    return hasMore && oldestMessage && dispatch(loadMessages(conversationId, {
       toMessageId: oldestMessage.get('id'),
       limit: ARCHIVED_MESSAGES_LIMIT,
     }));
@@ -195,7 +209,7 @@ export function updateOnlineStatuses() {
     return dispatch({
       [CALL_API]: {
         endpoint: makeGetUrl(ApiRoutes.onlineStatuses(), { userIds }),
-        schema: Schemas.NONE, // TODO: temporary before api fixed
+        schema: Schemas.MESSAGE_COLL,
         types: [
           MSG_CONVERSATION_ONLINE_REQUEST,
           MSG_CONVERSATION_ONLINE_SUCCESS,
@@ -204,5 +218,21 @@ export function updateOnlineStatuses() {
         opts: defaultOpts,
       },
     });
+  };
+}
+
+export function markAllMessagesRead(conversationId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerMarkAllMessagesRead(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_MARK_ALL_READ_REQUEST,
+        MSG_CONVERSATION_MARK_ALL_READ_SUCCESS,
+        MSG_CONVERSATION_MARK_ALL_READ_FAILURE,
+      ],
+      opts: putOpts(),
+    },
+    conversationId,
   };
 }

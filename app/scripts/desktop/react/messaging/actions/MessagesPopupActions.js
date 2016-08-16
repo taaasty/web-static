@@ -7,7 +7,7 @@ import {
 import {
   postNewConversation,
 } from './ConversationActions';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
 export const MSG_POPUP_PUSH_HISTORY = 'MSG_POPUP_PUSH_HISTORY';
 export const MSG_POPUP_POP_HISTORY = 'MSG_POPUP_POP_HISTORY';

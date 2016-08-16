@@ -7,16 +7,18 @@ import ItemManager from './ItemManager';
 let savedScrollHeight = null;
 
 class MessageList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const {
       conversation,
       loadMessages,
+      markAllMessagesRead,
     } = this.props;
+    const conversationId = conversation.get('id');
+    const hasUnread = !!conversation.get('unreadMessagesCount', 0);
 
-    loadMessages(conversation.get('id'));
-  }
-  componentDidMount() {
-    this.scrollToUnread();
+    loadMessages(conversationId)
+      .then(this.scrollToUnread.bind(this))
+      .then(() => hasUnread && markAllMessagesRead(conversationId));
   }
   componentWillUpdate(nextProps) {
     const {
@@ -135,6 +137,7 @@ MessageList.propTypes = {
   isSelectState: PropTypes.bool.isRequired,
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
+  markAllMessagesRead: PropTypes.func.isRequired,
   messages: PropTypes.object.isRequired,
   selectedUuids: PropTypes.object.isRequired,
   startSelect: PropTypes.func.isRequired,

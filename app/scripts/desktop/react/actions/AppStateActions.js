@@ -15,11 +15,12 @@ function appStateSetEditing(flag) {
   };
 }
 
-function appStateSetPopup(flagName, flag) {
+function appStateSetPopup(flagName, flag, rest) {
   return {
     type: APP_STATE_SET_POPUP,
     flagName,
     flag,
+    ...rest,
   };
 }
 
@@ -58,7 +59,7 @@ export function hideDesignSettingsPopup() {
 export function toggleDesignSettingsPopup() {
   return (dispatch, getState) => {
     return dispatch(appStateSetPopup(POPUP_DESIGN_SETTINGS, !getState()
-      .appState.popups[POPUP_DESIGN_SETTINGS]));
+      .appState.popups[POPUP_DESIGN_SETTINGS].visible));
   };
 }
 
@@ -78,8 +79,8 @@ export function hidePremiumPopup() {
   return appStateSetPopup(POPUP_PREMIUM, false);
 }
 
-export function showMessagesPopup() {
-  return appStateSetPopup(POPUP_MESSAGES, true);
+export function showMessagesPopup(userId) {
+  return appStateSetPopup(POPUP_MESSAGES, true, { userId });
 }
 
 export function hideMessagesPopup() {
@@ -89,6 +90,6 @@ export function hideMessagesPopup() {
 export function toggleMessagesPopup() {
   return (dispatch, getState) => {
     return dispatch(appStateSetPopup(POPUP_MESSAGES, !getState()
-      .appState.popups[POPUP_MESSAGES]));
+      .appState.popups[POPUP_MESSAGES].visible));
   }
 }
