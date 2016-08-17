@@ -1,6 +1,11 @@
 import ApiRoutes from '../../../shared/routes/api';
 import { CALL_API, Schemas } from '../middleware/api';
-import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
+import { NORMALIZE_DATA } from '../middleware/normalize';
+import {
+  TLOG_SECTION_TLOG,
+  TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_PRIVATE,
+} from '../../../shared/constants/Tlog';
 import { makeGetUrl, defaultOpts } from './reqHelpers';
 
 export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
@@ -12,6 +17,55 @@ export const TLOG_ENTRIES_RESET = 'TLOG_ENTRIES_RESET';
 export const TLOG_ENTRIES_INVALIDATE = 'TLOG_ENTRIES_INVALIDATE';
 
 const INITIAL_LOAD_LIMIT = 10;
+
+export function getReqParams(props) {
+  const {
+    params: {
+      year,
+      month,
+      day,
+      slug,
+    } = {},
+    location: {
+      query,
+    } = {},
+    route: {
+      path,
+    },
+  } = props;
+  const date = (year && month && day) && `${year}-${month}-${day}`;
+
+  function section() {
+    if (date) {
+      return TLOG_SECTION_TLOG;
+    } else if (path === TLOG_SECTION_PRIVATE || path === TLOG_SECTION_FAVORITE) {
+      return path;
+    } else {
+      return TLOG_SECTION_TLOG;
+    }
+  }
+
+  return {
+    date,
+    slug,
+    section: section(),
+    query: query && query.q,
+  };
+}
+
+export function initTlogEntries(data, props) {
+  const reqParams = getReqParams(props);
+
+  return {
+    [NORMALIZE_DATA]: {
+      schema: Schemas.ENTRY_COLL,
+      type: TLOG_ENTRIES_SUCCESS,
+      data,
+    },
+    slug: reqParams.slug,
+    signature: signature(reqParams),
+  };
+}
 
 function tlogEntriesReset() {
   return {

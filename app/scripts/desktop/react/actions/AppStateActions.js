@@ -1,5 +1,6 @@
 export const APP_STATE_SET_EDITING = 'APP_STATE_SET_EDITING';
 export const APP_STATE_SET_POPUP = 'APP_STATE_SET_POPUP';
+export const APP_STATE_SET_HERO = 'APP_STATE_SET_HERO';
 
 export const POPUP_USER_ONBOARDING = 'POPUP_USER_ONBOARDING';
 export const POPUP_SETTINGS = 'POPUP_SETTINGS';
@@ -7,6 +8,21 @@ export const POPUP_DESIGN_SETTINGS = 'POPUP_DESIGN_SETTINGS';
 export const POPUP_GET_PREMIUM = 'POPUP_GET_PREMIUM';
 export const POPUP_PREMIUM = 'POPUP_PREMIUM';
 export const POPUP_MESSAGES = 'POPUP_MESSAGES';
+
+function setHero(flag) {
+  return {
+    type: APP_STATE_SET_HERO,
+    flag,
+  };
+}
+
+export function openHero() {
+  return setHero(true);
+}
+
+export function closeHero() {
+  return setHero(false);
+}
 
 function appStateSetEditing(flag) {
   return {
@@ -80,7 +96,11 @@ export function hidePremiumPopup() {
 }
 
 export function showMessagesPopup(userId) {
-  return appStateSetPopup(POPUP_MESSAGES, true, { userId });
+  return (dispatch) => {
+    dispatch(closeHero());
+
+    return dispatch(appStateSetPopup(POPUP_MESSAGES, true, { userId }));
+  };
 }
 
 export function hideMessagesPopup() {
@@ -91,5 +111,5 @@ export function toggleMessagesPopup() {
   return (dispatch, getState) => {
     return dispatch(appStateSetPopup(POPUP_MESSAGES, !getState()
       .appState.popups[POPUP_MESSAGES].visible));
-  }
+  };
 }

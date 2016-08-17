@@ -28,7 +28,7 @@ import {
   feedAnonymousReset,
   feedBestReset,
   feedFriendsReset,
-  feedLiveFlowReset,  
+  feedLiveFlowReset,
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
@@ -94,7 +94,7 @@ class FeedPage extends Component {
     this.setViewStyle(nextProps);
     const willGet = getFeedEntriesIfNeeded(nextParams);
     const nextFeedType = this.feedType(nextProps.location);
-    const type = typeMap[nextFeedType]; 
+    const type = typeMap[nextFeedType];
 
     if (this.feedType(this.props.location) !== nextFeedType) {
       if (type) {
@@ -117,7 +117,11 @@ class FeedPage extends Component {
     }
   }
   handleClickUnreadButton(count) {
-    const { getFeedEntries, location } = this.props;
+    const {
+      getFeedEntries,
+      location,
+      resetFeedEntries,
+     } = this.props;
     const type = typeMap[this.feedType(location)];
     const shouldReset = count > PREPEND_LOAD_LIMIT;
     const params = feedDataByUri(location);

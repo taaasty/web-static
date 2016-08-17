@@ -1,4 +1,4 @@
-/*global AppStorage */
+import AppStorage from '../../../shared/resources/AppStorage';
 import createReducer from './createReducer';
 import {
   FLOW_REQUEST,
@@ -15,7 +15,7 @@ export const FLOW_VIEW_STYLE_LS_KEY = 'flowViewStyle';
 const initialState = {
   isFetching: false,
   error: null,
-  viewStyle: VIEW_STYLE_TLOG,
+  viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
 };
 
 const actionMap = {

@@ -103,8 +103,8 @@ export function loadArchivedMessages(conversationId) {
     const messages = state
       .entities
       .get('message', Map())
-      .filter((m) => m.get('conversationId') === conversationId && m.get(
-        'createdAt'))
+      .filter((m) => m.get('conversationId') === conversationId &&
+        m.get('createdAt')) // exclude replyMessages and submitted
       .sortBy((m) => moment(m.get('createdAt'))
         .valueOf());
     const oldestMessage = messages.first();

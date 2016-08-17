@@ -2,6 +2,7 @@ import createReducer from './createReducer';
 import {
   APP_STATE_SET_EDITING,
   APP_STATE_SET_POPUP,
+  APP_STATE_SET_HERO,
   POPUP_USER_ONBOARDING,
   POPUP_SETTINGS,
   POPUP_DESIGN_SETTINGS,
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
   editing: false,
+  isHeroOpen: false,
   popups: {
     [POPUP_USER_ONBOARDING]: { visible: false },
     [POPUP_SETTINGS]: { visible: false },
@@ -32,6 +34,12 @@ const actionMap = {
       popups: Object.assign({}, state.popups, {
         [flagName]: { visible: flag, ...rest },
       }),
+    });
+  },
+
+  [APP_STATE_SET_HERO](state, { flag }) {
+    return Object.assign({}, state, {
+      isHeroOpen: flag,
     });
   },
 };

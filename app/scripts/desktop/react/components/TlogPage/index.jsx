@@ -3,7 +3,12 @@ import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { getCalendar } from '../../actions/CalendarActions';
 import { flowViewStyle } from '../../actions/FlowActions';
-import { deleteEntry, getTlogEntries, getTlogEntriesIfNeeded } from '../../actions/TlogEntriesActions';
+import {
+  deleteEntry,
+  getTlogEntries,
+  getTlogEntriesIfNeeded,
+  getReqParams,
+} from '../../actions/TlogEntriesActions';
 import {
   showSettingsPopup,
   hideSettingsPopup,
@@ -14,11 +19,6 @@ import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
 import FlowPageBody from './FlowPageBody';
-import {
-  TLOG_SECTION_TLOG,
-  TLOG_SECTION_FAVORITE,
-  TLOG_SECTION_PRIVATE,
-} from '../../../../shared/constants/Tlog';
 
 const emptyFlow = Map();
 const emptyTlog = Map();
@@ -26,13 +26,20 @@ const emptyTlog = Map();
 class TlogPageContainer extends Component {
   componentWillMount() {
     const { getTlogEntriesIfNeeded } = this.props;
+    const reqParams = getReqParams(this.props);
 
-    getTlogEntriesIfNeeded(this.reqParams(this.props));
-    sendCategory(this.section(this.props));
+    getTlogEntriesIfNeeded(reqParams);
+    sendCategory(reqParams.section);
   }
   componentDidMount() {
-    const { showSettingsPopup, showDesignSettingsPopup,
-            route: { settings, designSettings } } = this.props;
+    const {
+      showSettingsPopup,
+      showDesignSettingsPopup,
+      route: {
+        settings,
+        designSettings,
+      },
+    } = this.props;
 
     if (settings) {
       showSettingsPopup();
@@ -41,11 +48,16 @@ class TlogPageContainer extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { getTlogEntriesIfNeeded, hideDesignSettingsPopup } = this.props;
-    const section = this.section(this.props);
-    const nextSection = this.section(nextProps);
+    const {
+      getTlogEntriesIfNeeded,
+      hideDesignSettingsPopup,
+    } = this.props;
+    const reqParams = getReqParams(this.props);
+    const nextReqParams = getReqParams(nextProps);
+    const { section } = reqParams;
+    const { section: nextSection } = nextReqParams;
 
-    getTlogEntriesIfNeeded(this.reqParams(nextProps));
+    getTlogEntriesIfNeeded(nextReqParams);
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
@@ -55,55 +67,41 @@ class TlogPageContainer extends Component {
     }
   }
   componentWillUnmount() {
-    const { hideSettingsPopup, hideDesignSettingsPopup } = this.props;
+    const {
+      hideSettingsPopup,
+      hideDesignSettingsPopup,
+    } = this.props;
 
     hideSettingsPopup();
     hideDesignSettingsPopup();
-  }
-  reqParams(props) {
-    const { params, location } = props;
-
-    return {
-      slug: params.slug,
-      section: this.section(props),
-      date: this.date(params),
-      query: this.query(location),
-    };
-  }
-  query({ query }) {
-    return query && query.q;
   }
   appendTlogEntries() {
     const { getTlogEntries } = this.props;
 
     getTlogEntries(Object.assign(
-      this.reqParams(this.props),
+      getReqParams(this.props),
       { sinceId: this.props.tlogEntries.data.nextSinceEntryId }
     ));
   }
-  section(props) {
-    const { path } = props.route;
-    
-    if (this.date(props.params)) {
-      return TLOG_SECTION_TLOG;
-    } else if (path === TLOG_SECTION_PRIVATE || path === TLOG_SECTION_FAVORITE) {
-      return path;
-    } else {
-      return TLOG_SECTION_TLOG;
-    }
-  }
-  date(params = {}) {
-    const { year, month, day } = params;
-
-    return (year && month && day) && `${year}-${month}-${day}`;
-  }
   render() {
-    const { deleteEntry, flow, flowState, flowViewStyle, getCalendar, isCurrentUser,
-            location, queryString, tlog, tlogEntries } = this.props;
+    const {
+      deleteEntry,
+      flow,
+      flowState,
+      flowViewStyle,
+      getCalendar,
+      isCurrentUser,
+      location,
+      queryString,
+      tlog,
+      tlogEntries,
+    } = this.props;
+    const { section } = getReqParams(this.props);
     const bgStyle = { opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0') };
 
     return tlog.get('isFlow')
-      ? <FlowPageBody
+      ? (
+        <FlowPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
           bgStyle={bgStyle}
           deleteEntry={deleteEntry}
@@ -115,17 +113,20 @@ class TlogPageContainer extends Component {
           tlog={tlog}
           tlogEntries={tlogEntries}
         />
-      : <TlogPageBody
+       )
+      : (
+        <TlogPageBody
           appendTlogEntries={this.appendTlogEntries.bind(this)}
           bgStyle={bgStyle}
           deleteEntry={deleteEntry}
           getCalendar={getCalendar}
           isCurrentUser={isCurrentUser}
           queryString={queryString}
-          section={this.section(this.props)}
+          section={section}
           tlog={tlog}
           tlogEntries={tlogEntries}
-        />;
+        />
+      );
   }
 }
 
@@ -156,7 +157,7 @@ export default connect(
     const tlog = entities.get('tlog').find((t) => t.get('slug') === params.slug, null, emptyTlog);
     const currentUserId = currentUser.data && currentUser.data.id;
     const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
-    
+
     return {
       flowState,
       isCurrentUser,

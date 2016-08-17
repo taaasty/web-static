@@ -33,8 +33,9 @@ import {
 import {
   MSG_MESSAGE_SUBMIT,
 } from '../messaging/actions/MessageActions';
-
-export const INIT_SET_TLOG = 'INIT_SET_TLOG';
+import {
+  INIT_SET_TLOG,
+} from '../actions/InitActions';
 
 const initialState = fromJS({
   tlog: {},
@@ -124,10 +125,6 @@ function handleExtra(state, action) {
       return state.deleteIn(['staff', String(action.response.result)]);
     }
     break;
-  case INIT_SET_TLOG:
-    return state.mergeIn(['tlog'], {
-      [String(action.tlogId)]: action.tlog,
-    });
   case CURRENT_USER_USERPIC:
     return state.mergeIn(['tlog', String(action.tlogId)], {
       userpic: action.response.result,
@@ -155,7 +152,7 @@ function handleExtra(state, action) {
   case MSG_MESSAGE_SUBMIT:
     const lastSubmit = state
       .get('message')
-      .filter((m) => m.get('submitNr'))
+      .filter((m) => m.has('submitNr'))
       .sortBy((m) => m.get('submitNr'))
       .last();
     const lastSubmitNr = lastSubmit ?

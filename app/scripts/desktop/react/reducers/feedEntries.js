@@ -1,7 +1,6 @@
 /*global AppStorage */
 import { merge } from 'lodash';
 import createReducer from './createReducer';
-import { List, Map } from 'immutable';
 import {
   FEED_ENTRIES_REQUEST,
   FEED_ENTRIES_SUCCESS,
@@ -35,9 +34,10 @@ const actionMap = {
   },
 
   [FEED_ENTRIES_SUCCESS](state, { response, signature }) {
-    const data = signature === state.signature
-            ? merge({}, state.data, response.result, { items: state.data.items.concat(response.result.items) })
-            : response.result;
+    const data = signature === state.signature ?
+      merge({}, state.data, response.result, { items: state.data.items.concat(
+          response.result.items) }) :
+      response.result;
 
     return Object.assign({}, state, {
       data,
@@ -46,7 +46,7 @@ const actionMap = {
       isFetching: false,
     });
   },
-  
+
   [FEED_ENTRIES_FAILURE](state, { error }) {
     return Object.assign({}, state, {
       error,

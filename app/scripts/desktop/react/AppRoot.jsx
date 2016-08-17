@@ -1,6 +1,6 @@
 /*global gon */
 /*eslint react/jsx-sort-props:0, react/jsx-max-props-per-line:0 */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
@@ -27,10 +27,21 @@ import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
 import RefsPage from './components/RefsPage';
 
-import { initCurrentUser, initTlog } from './actions/InitActions';
-
-import { VIEW_STYLE_TLOG, VIEW_STYLE_BRICKS } from './constants/ViewStyleConstants';
-import { FLOW_VIEW_STYLE_LS_KEY } from './reducers/flow';
+import {
+  initCurrentUser,
+  initTlog,
+  initTlogEntry,
+  initFlow,
+} from './actions/InitActions';
+import {
+  initAppStats,
+} from './actions/AppStatsActions';
+import {
+  initTlogEntries,
+} from './actions/TlogEntriesActions';
+import {
+  initFlows,
+} from './actions/FlowsActions';
 
 import { feedStatusConnect } from './services/FeedStatusService';
 
@@ -62,14 +73,15 @@ class AppRoot extends Component {
   componentWillMount() {
     const {
       appStats,
-      currentUser,
-      feedEntries,
+//      currentUser,
       flow,
       flows,
-      people,
+      tlog,
       tlogEntries,
       tlogEntry,
       userToolbar,
+//      location,
+//      params,
     } = this.props;
 
     store = createStoreWithMiddleware(combineReducers(reducers));
@@ -82,13 +94,13 @@ class AppRoot extends Component {
       store.dispatch(initTlog(user));
     }
 
-    if (tlogEntries) {
-      //store.dispatch({});
-    }
-
-    if (flow) {
-      //viewStyle: AppStorage.getItem(FLOW_VIEW_STYLE_LS_KEY) || VIEW_STYLE_TLOG,
-    }
+    (appStats && store.dispatch(initAppStats(appStats)));
+    (tlog && store.dispatch(initTlog(tlog)));
+    (tlogEntry && store.dispatch(initTlogEntry(tlogEntry)));
+    (flow && store.dispatch(initFlow(flow)));
+// TODO: get data from props
+//    (tlogEntries && store.dispatch(initTlogEntries(tlogEntries, this.props)));
+//    (flows && store.dispatch(initFlows(flows, location)));
 
     feedStatusConnect(store.getState().currentUser.data, store);
   }
@@ -115,6 +127,7 @@ class AppRoot extends Component {
               <Route path="settings" settings component={TlogPage} />
               <Route path="privates" component={TlogPage} />
               <Route path="favorites" component={TlogPage} />
+              <Route path="profile" profile component={TlogPage} />
               <Route path=":year/:month/:day" component={TlogPage} />
               <Route path=":entrySlug" component={EntryPage} />
               <Route path="/anonymous/:anonymousEntrySlug" component={EntryPage} />
@@ -143,5 +156,17 @@ class AppRoot extends Component {
 }
 
 AppRoot.displayName = 'AppRoot';
+
+AppRoot.propTypes = {
+  appStats: PropTypes.object,
+  currentUser: PropTypes.object,
+  flow: PropTypes.object,
+  flows: PropTypes.object,
+  people: PropTypes.object,
+  tlog: PropTypes.object,
+  tlogEntries: PropTypes.object,
+  tlogEntry: PropTypes.object,
+  userToolbar: PropTypes.object,
+};
 
 export default AppRoot;

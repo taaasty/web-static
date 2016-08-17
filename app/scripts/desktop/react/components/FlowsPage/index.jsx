@@ -8,23 +8,13 @@ import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
   appendFlows,
   getFlowsIfNeeded,
+  navFilters,
+  navFiltersUnauth,
+  flowsData,
 } from '../../actions/FlowsActions';
 import { Map } from 'immutable';
 
 const emptyFlow = Map();
-
-const navFilters = [ 'popular', 'newest', 'my' ];
-const navFiltersUnauth = [ 'popular', 'newest' ]; // should be a subset of navFilters
-
-function flowsData({ query }) {
-  const activeIdx = navFilters.indexOf(query && query.flows_filter);
-  const filterIdx = activeIdx < 0 ? 0 : activeIdx;
-
-  return {
-    filterIdx,
-    filter: navFilters[filterIdx],
-  };
-}
 
 class FlowsPage extends Component {
   componentWillMount() {
@@ -39,7 +29,7 @@ class FlowsPage extends Component {
   render() {
     const { appendFlows, currentUser, flows, hasMore, isFetching, location } = this.props;
     const { filterIdx } = flowsData(location);
-    const filters = !!currentUser.id ? navFilters : navFiltersUnauth;
+    const filters = currentUser.id ? navFilters : navFiltersUnauth;
     const title = i18n.t('hero.flows') + ' - ' + i18n.t(`nav_filters.flows.${filters[filterIdx]}`);
 
     return (

@@ -125,7 +125,9 @@ export default connect(
     const messages = state
       .entities
       .get('message', Map())
-      .filter((m) => m.get('conversationId') === conversationId)
+      .filter((m) => m.get('conversationId') === conversationId &&
+        m.has('createdAt') // exclude replyMessages
+      )
       .sortBy((m) => {
         const createdAt = m.get('createdAt');
         const submitNr = m.get('submitNr');
