@@ -3,8 +3,18 @@ import EntryBricks from './EntryBricks';
 
 class EntryBricksContainer extends Component {
   render() {
-    const { children, entries: { isFetching, data: { items, hasMore } },
-            hostTlogId, loadMoreEntries } = this.props;
+    const {
+      children,
+      entries: {
+        isFetching,
+        data: {
+          items,
+          hasMore,
+        },
+      },
+      hostTlogId,
+      loadMoreEntries,
+    } = this.props;
 
     return (
       <EntryBricks

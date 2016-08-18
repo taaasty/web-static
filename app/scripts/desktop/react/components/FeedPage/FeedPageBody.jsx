@@ -13,15 +13,28 @@ import { VIEW_STYLE_BRICKS } from '../../constants/ViewStyleConstants';
 
 class FeedPageBody extends Component {
   renderBricks() {
-    const { appendFeedEntries, children, feedEntries } = this.props;
+    const {
+      appendFeedEntries,
+      children,
+      feedEntries,
+    } = this.props;
+
     return (
-      <EntryBricksContainer entries={feedEntries} loadMoreEntries={appendFeedEntries}>
+      <EntryBricksContainer
+        entries={feedEntries}
+        loadMoreEntries={appendFeedEntries}
+      >
         {children}
       </EntryBricksContainer>
     );
   }
   renderTlogs() {
-    const { appendFeedEntries, children, currentUser, feedEntries } = this.props;
+    const {
+      appendFeedEntries,
+      children,
+      currentUser,
+      feedEntries,
+    } = this.props;
 
     return (
       <div>
@@ -60,16 +73,23 @@ class FeedPageBody extends Component {
     );
   }
   render() {
-    const { data: { items }, query, isFetching, viewStyle } = this.props.feedEntries;
+    const {
+      data: {
+        items,
+      },
+      query,
+      isFetching,
+      viewStyle,
+    } = this.props.feedEntries;
 
     return (
       <div className="page-body">
         <div className="layout-outer">
           {!isFetching && items.length === 0
-             ? this.renderMsg(query ? i18n.t('feed.query_empty', { query }) : i18n.t('feed.empty'))
-             : viewStyle === VIEW_STYLE_BRICKS
-               ? this.renderBricks()
-               : this.renderTlogs()
+            ? this.renderMsg(query ? i18n.t('feed.query_empty', { query }) : i18n.t('feed.empty'))
+            : viewStyle === VIEW_STYLE_BRICKS
+            ? this.renderBricks()
+            : this.renderTlogs()
           }
         </div>
       </div>

@@ -24,7 +24,14 @@ class EntryBricks extends Component {
     this.forceUpdate();
   }
   render() {
-    const { canLoad, children, entries, hostTlogId, loading, onLoadMoreEntries } = this.props;
+    const {
+      canLoad,
+      children,
+      entries,
+      hostTlogId,
+      loading,
+      onLoadMoreEntries,
+    } = this.props;
 
     return (
       <div className="bricks-wrapper">

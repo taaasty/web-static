@@ -20,6 +20,7 @@ export const initialState = {
   isFetching: false,
   error: null,
   invalid: false,
+  visible: 0,
 };
 
 const actionMap = {

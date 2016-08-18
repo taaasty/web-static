@@ -23,6 +23,7 @@ import {
   getFeedEntries,
   getFeedEntriesIfNeeded,
   resetFeedEntries,
+  setVisibleFeedEntries,
 } from '../../actions/FeedEntriesActions';
 import {
   feedAnonymousReset,
@@ -64,17 +65,26 @@ const typeMap = {
 };
 
 const PREPEND_LOAD_LIMIT = 30;
-const APPEND_LOAD_LIMIT = 15;
+const VISIBLE_INITIAL = 40;
+const VISIBLE_APPEND_THRESHOLD = 60; // if less than threshold entries then load more
+const VISIBLE_APPEND_STEP = 15;
+const APPEND_LOAD_LIMIT = 100;
 
 class FeedPage extends Component {
   componentWillMount() {
-    const { feedStatus, getFeedEntriesIfNeeded, location } = this.props;
+    const {
+      feedStatus,
+      getFeedEntriesIfNeeded,
+      location,
+      setVisibleFeedEntries,
+    } = this.props;
     const feedType = this.feedType(location);
     const type = typeMap[feedType];
     const params = feedDataByUri(location);
 
     this.setViewStyle(this.props);
     const willGet = getFeedEntriesIfNeeded(params);
+    setVisibleFeedEntries(VISIBLE_INITIAL);
 
     if (type) {
       if (!willGet && feedStatus[type.counter] > 0) {
@@ -88,7 +98,10 @@ class FeedPage extends Component {
     setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
-    const { getFeedEntriesIfNeeded } = this.props;
+    const {
+      getFeedEntriesIfNeeded,
+      setVisibleFeedEntries,
+    } = this.props;
     const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
@@ -107,6 +120,13 @@ class FeedPage extends Component {
     } else if (willGet && type) {
       this.props[type.reset].call(void 0);
     }
+
+    if (willGet) {
+      setVisibleFeedEntries(VISIBLE_INITIAL);
+    }
+  }
+  componentWillUnmount() {
+    this.props.setVisibleFeedEntries(VISIBLE_INITIAL);
   }
   feedType(location) {
     return (feedDataByUri(location) || {}).type;
@@ -140,15 +160,34 @@ class FeedPage extends Component {
     return null;
   }
   appendEntries() {
-    const { feedEntries: { data: { nextSinceEntryId } }, getFeedEntries, location } = this.props;
+    const {
+      feedEntries: {
+        data: {
+          items,
+          nextSinceEntryId,
+        },
+        visible,
+      },
+      getFeedEntries,
+      location,
+      setVisibleFeedEntries,
+    } = this.props;
 
-    return getFeedEntries(
-      feedDataByUri(location),
-      { sinceId: nextSinceEntryId, limit: APPEND_LOAD_LIMIT }
-    );
+    console.log('items.length: ', items.length, ' | visible: ', visible, ' | diff: ', items.length - visible);
+    if (items.length - visible <= VISIBLE_APPEND_THRESHOLD) {
+      getFeedEntries(
+        feedDataByUri(location),
+        { sinceId: nextSinceEntryId, limit: APPEND_LOAD_LIMIT }
+      );
+    }
+
+    setVisibleFeedEntries(visible + VISIBLE_APPEND_STEP);
   }
   prependEntries(params, limit) {
-    const { getFeedEntries, tillId } = this.props;
+    const {
+      getFeedEntries,
+      tillId,
+    } = this.props;
 
     return tillId
       ? getFeedEntries(params, { limit, tillId })
@@ -166,15 +205,26 @@ class FeedPage extends Component {
     );
   }
   render() {
-    const { currentUser, feedEntries, feedStatus, location } = this.props;
-    const { isFetching, viewStyle } = feedEntries;
+    const {
+      currentUser,
+      feedEntries,
+      feedStatus,
+      location,
+    } = this.props;
+    const { isFetching, viewStyle, visible } = feedEntries;
     const { section, type, rating, query } = feedDataByUri(location);
-    const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
+    const navFilterItems = navFilters[section]
+      .map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
             : feedTitleMap[location.pathname];
     const { counter, href } = typeMap[type];
     const count = feedStatus[counter];
+    const visibleFeedEntries = Object.assign({}, feedEntries, {
+      data: Object.assign({}, feedEntries.data, {
+        items: feedEntries.data.items.slice(0, visible),
+      }),
+    });
 
     return (
       <div className="page__inner">
@@ -183,7 +233,7 @@ class FeedPage extends Component {
           <FeedPageBody
             appendFeedEntries={this.appendEntries.bind(this)}
             currentUser={currentUser}
-            feedEntries={feedEntries}
+            feedEntries={visibleFeedEntries}
             feedType={type}
             location={location}
           >
@@ -223,6 +273,7 @@ FeedPage.propTypes = {
   getFeedEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   resetFeedEntries: PropTypes.func.isRequired,
+  setVisibleFeedEntries: PropTypes.func.isRequired,
   tillId: PropTypes.number,
 };
 
@@ -263,5 +314,6 @@ export default connect(
     getFeedEntries,
     getFeedEntriesIfNeeded,
     resetFeedEntries,
+    setVisibleFeedEntries,
   }
 )(FeedPage);

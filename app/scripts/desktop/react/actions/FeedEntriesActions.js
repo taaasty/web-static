@@ -7,16 +7,24 @@ export const FEED_ENTRIES_SUCCESS = 'FEED_ENTRIES_SUCCESS';
 export const FEED_ENTRIES_FAILURE = 'FEED_ENTRIES_FAILURE';
 
 export const FEED_ENTRIES_RESET = 'FEED_ENTRIES_RESET';
+export const FEED_ENTRIES_SET_VISIBLE = 'FEED_ENTRIES_SET_VISIBLE';
 export const FEED_ENTRIES_VIEW_STYLE = 'FEED_ENTRIES_VIEW_STYLE';
 
-function signature({ apiType='', rating='', section='', type='', query='' }) {
+function signature({ apiType = '', rating = '', section = '', type = '', query = '' }) {
   return `${apiType}-${rating}-${section}-${type}-${query}`;
 }
 
-const INITIAL_LOAD_LIMIT = 30;
+const INITIAL_LOAD_LIMIT = 90;
 
 export function resetFeedEntries() {
   return { type: FEED_ENTRIES_RESET };
+}
+
+export function setVisibleFeedEntries(visible) {
+  return {
+    type: FEED_ENTRIES_SET_VISIBLE,
+    visible,
+  };
 }
 
 export function feedEntriesViewStyle(viewStyle) {
@@ -26,12 +34,17 @@ export function feedEntriesViewStyle(viewStyle) {
   };
 }
 
-function fetchFeedEntries(endpoint, signature) {
+function fetchFeedEntries(endpoint, signature, isPrepend = false) {
   return {
+    isPrepend,
     signature,
     [CALL_API]: {
       endpoint,
-      types: [ FEED_ENTRIES_REQUEST, FEED_ENTRIES_SUCCESS, FEED_ENTRIES_FAILURE ],
+      types: [
+        FEED_ENTRIES_REQUEST,
+        FEED_ENTRIES_SUCCESS,
+        FEED_ENTRIES_FAILURE,
+      ],
       schema: Schemas.ENTRY_COLL,
       opts: defaultOpts,
     },
@@ -44,7 +57,11 @@ function shouldFetchFeedEntries(state, params) {
   return !isFetching && signature(params) !== cSignature;
 }
 
-export function getFeedEntries(params, { limit=INITIAL_LOAD_LIMIT, sinceId, tillId }={}) {
+export function getFeedEntries(params, {
+  limit = INITIAL_LOAD_LIMIT,
+  sinceId,
+  tillId,
+} = {}) {
   return (dispatch) => {
     const { apiType, rating, query } = params;
     const url = apiUrlMap[apiType];
@@ -59,7 +76,7 @@ export function getFeedEntries(params, { limit=INITIAL_LOAD_LIMIT, sinceId, till
       sinceEntryId: sinceId,
       tillEntryId: tillId,
       q: query || void 0,
-    }), signature(params)));
+    }), signature(params), !!tillId));
   };
 }
 
