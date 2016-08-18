@@ -11,6 +11,7 @@ import UserToolbar from './UserToolbar';
 import InviteRef from '../InviteRef';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import { onlyUpdateForKeys } from 'recompose';
 
 class UserToolbarContainer extends Component {
   state = {
@@ -117,4 +118,10 @@ export default connect(
     toggleDesignSettingsPopup,
     toggleMessagesPopup,
   }
-)(UserToolbarContainer)
+)(onlyUpdateForKeys([
+  'currentUser',
+  'location',
+  'unreadConversationsCount',
+  'unreadFriendsCount',
+  'unreadNotificationsCount',
+])(UserToolbarContainer));

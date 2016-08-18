@@ -7,17 +7,31 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
+function EntryBrickVideoType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const titleTruncated = entry.get('titleTruncated');
+  const previewImage = entry.get('previewImage').toJS();
+
   function renderBrickBody() {
     return (
       <div className="brick__body">
         <div className="brick__text">
           <Link
             className="brick__link"
-            title={entry.titleTruncated}
-            to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+            title={titleTruncated}
+            to={{ pathname: uri(url).path(), state: { id }}}
           >
-            <Text value={entry.titleTruncated} withHTML />
+            <Text value={titleTruncated} withHTML />
           </Link>
         </div>
       </div>
@@ -26,10 +40,10 @@ function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 
   function renderVideo() {
     return (
-      <Link to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
+      <Link to={{ pathname: uri(url).path(), state: { id } }}>
         <div className="video__cover">
-          <Image image={entry.previewImage} maxWidth={brickWidth} />
-          {entry.isPlayable && <div className="video__overlay" />}
+          <Image image={previewImage} maxWidth={brickWidth} />
+          {entry.get('isPlayable') && <div className="video__overlay" />}
         </div>
       </Link>
     );
@@ -42,9 +56,14 @@ function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, 
           {renderVideo()}
         </figure>
       </div>
-      {entry.titleTruncated && renderBrickBody()}
+      {titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
+        <EntryBrickMetabar
+          entry={entry}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -57,6 +76,8 @@ function EntryBrickVideoType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 
 EntryBrickVideoType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

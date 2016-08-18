@@ -1,8 +1,15 @@
 import React, { PropTypes } from 'react';
 
-function EntryBrickActions({ hasModeration, onAccept, onDecline }) {
+function EntryBrickActions(props) {
+  const {
+    hasModeration,
+    onAccept,
+    onDecline,
+  } = props;
+
   return hasModeration
-    ? <div className="brick__actions">
+    ? (
+      <div className="brick__actions">
         <div className="moderator-actions">
           <div
             className="moderator-action moderator-action--accept"
@@ -18,7 +25,8 @@ function EntryBrickActions({ hasModeration, onAccept, onDecline }) {
           </div>
         </div>
       </div>
-    : <noscript />; //FIXME replace with null as 0.15 come alive
+    )
+    : <noscript />;
 }
 
 EntryBrickActions.propTypes = {

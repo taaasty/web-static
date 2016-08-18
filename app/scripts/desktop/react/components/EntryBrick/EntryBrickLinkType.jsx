@@ -4,15 +4,30 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickLinkType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
+function EntryBrickLinkType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const title = entry.get('title');
+
   function renderBrickTitle() {
     return (
       <Link
         className="brick__link"
-        title={entry.title}
-        to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        title={title}
+        to={{ pathname: uri(url).path(), state: { id }}}
       >
-        <h2 className="brick__title">{entry.title}</h2>
+        <h2 className="brick__title">
+          {title}
+        </h2>
       </Link>
     );
   }
@@ -20,10 +35,15 @@ function EntryBrickLinkType({ entry, hasModeration, hostTlogId, onEntryAccept, o
   return (
     <span>
       <div className="brick__body">
-        {entry.title && renderBrickTitle()}
+        {title && renderBrickTitle()}
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
+        <EntryBrickMetabar
+          entry={entry}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -36,6 +56,8 @@ function EntryBrickLinkType({ entry, hasModeration, hostTlogId, onEntryAccept, o
 
 EntryBrickLinkType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

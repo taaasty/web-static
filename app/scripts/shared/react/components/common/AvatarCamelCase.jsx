@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import Image from './Image';
+import { pure } from 'recompose';
 
 function Avatar(props) {
   function getAvatarClasses() {
@@ -60,4 +61,4 @@ Avatar.defaultProps = {
   size: 220,
 };
 
-export default Avatar;
+export default pure(Avatar);

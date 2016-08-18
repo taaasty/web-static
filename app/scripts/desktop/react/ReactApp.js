@@ -4,6 +4,7 @@ import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
 window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
+import Perf from 'react-addons-perf';
 import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
 import PopupController from './controllers/popuup';
@@ -16,6 +17,8 @@ import Routes from '../../shared/routes/routes';
 import AppRoot from './AppRoot';
 import uri from 'urijs';
 import ReactShellBox from './controllers/ReactShellBox';
+
+window.Perf = Perf;
 
 function initLocales(locale, callback) {
   numeral.language(locale);

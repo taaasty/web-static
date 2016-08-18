@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ImageLoader from 'react-imageloader';
 import FitSpinner from './FitSpinner';
 import ThumborService from '../../services/thumbor';
+import { pure } from 'recompose';
 
 const Image = (props) => {
   function renderPreloader() {
@@ -49,7 +50,7 @@ const Image = (props) => {
       style={style}
     />
   );
-}
+};
 
 Image.propTypes = {
   className: PropTypes.string,
@@ -101,4 +102,4 @@ Image.getSize = function getSize({ width, height, maxWidth, maxHeight }) {
   }
 };
 
-export default Image;
+export default pure(Image);

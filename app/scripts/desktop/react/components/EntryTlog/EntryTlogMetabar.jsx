@@ -8,35 +8,37 @@ import EntryTlogMetabarVoting from './EntryTlogMetabarVoting';
 import EntryTlogMetabarShare from './EntryTlogMetabarShare';
 
 function EntryTlogMetabar(props) {
-  function renderTags() {
-    return (
-      <EntryTlogMetabarTags
-        tags={props.entry.tags}
-        userSlug={props.entry.tlog.slug}
-      />
-    );
-  }
-
-  const { commentator, entry, hostTlogId, onComment } = props;
+  const {
+    commentator,
+    entry,
+    entryAuthor,
+    entryTlog,
+    hostTlogId,
+    onComment,
+  } = props;
 
   return (
     <span className="meta-bar">
       <EntryTlogMetabarVoting entry={entry} />
       <EntryTlogMetabarComments
-        commentator={commentator}
-        commentsCount={entry.commentsCount}
+        commentsCount={entry.get('commentsCount')}
         onComment={onComment}
-        url={entry.url}
       />
-      <EntryTlogMetabarShare commentator={commentator} entry={entry} />
+      <EntryTlogMetabarShare
+        commentator={commentator}
+        entry={entry}
+      />
       <MetabarAuthor
-        author={entry.author}
+        author={entryAuthor}
         hostTlogId={hostTlogId}
         size={24}
-        tlog={entry.tlog}
+        tlog={entryTlog}
       />
       <EntryTlogMetabarDate entry={entry} />
-      {entry.tags && entry.tags.length && renderTags()}
+      <EntryTlogMetabarTags
+        tags={entry.get('tags')}
+        userSlug={entryTlog.get('slug')}
+      />
       <EntryTlogMetabarActions {...props} />
     </span>
   );
@@ -45,6 +47,8 @@ function EntryTlogMetabar(props) {
 EntryTlogMetabar.propTypes = {
   commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hostTlogId: PropTypes.number,
   onComment: PropTypes.func,
 };

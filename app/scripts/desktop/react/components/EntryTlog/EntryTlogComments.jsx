@@ -15,14 +15,28 @@ class EntryTlogComments extends Component {
       .then(() => this.refs.createForm.clear());
   }
   render() {
-    const { commentStates, commentUsers, commentator, comments, commentsCount, deleteComment,
-            isFormHidden, entryId, entryUrl, limit, loadMore, loading, posting, reportComment,
-            updateComment } = this.props;
+    const {
+      commentStates,
+      commentUsers,
+      commentator,
+      comments,
+      commentsCount,
+      deleteComment,
+      isFormHidden,
+      entryId,
+      entryUrl,
+      limit,
+      loadMore,
+      loading,
+      posting,
+      reportComment,
+      updateComment,
+    } = this.props;
 
     return (
       <section className="comments">
         {(commentsCount > comments.size) &&
-         <EntryTlogCommentsLoadMore 
+         <EntryTlogCommentsLoadMore
            limit={limit}
            loadedCount={comments.size}
            loading={loading}

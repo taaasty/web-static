@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ErrorService from '../../../../shared/react/services/Error';
 import EntryBrickTextType from './EntryBrickTextType';
 import EntryBrickImageType from './EntryBrickImageType';
@@ -20,42 +20,44 @@ import {
   ENTRY_TYPE_CODE,
 } from '../../constants/EntryConstants';
 
-class EntryBrickContent extends Component {
-  render() {
-    const { id, type } = this.props.entry;
+function EntryBrickContent(props) {
+  const {
+    entry,
+  } = props;
 
-    switch(type) {
-      case ENTRY_TYPE_TEXT:
-      case ENTRY_TYPE_ANONYMOUS:
-      case ENTRY_TYPE_CONVO:
-        return <EntryBrickTextType {...this.props} />;
-      case ENTRY_TYPE_IMAGE:
-        return <EntryBrickImageType {...this.props} />;
-      case ENTRY_TYPE_VIDEO:
-        return <EntryBrickVideoType {...this.props} />;
-      case ENTRY_TYPE_QUOTE:
-        return <EntryBrickQuoteType {...this.props} />;
-      case ENTRY_TYPE_LINK:
-        return <EntryBrickLinkType {...this.props} />;
-      case ENTRY_TYPE_SONG:
-        return <EntryBrickSongType {...this.props} />;
-      case ENTRY_TYPE_CODE:
-        return <EntryBrickCodeType {...this.props} />;
-      default:
-        ErrorService.notifyWarning('Неизвестный тип brick-поста', {
-          componentName: this.constructor.displayName,
-          method: 'render',
-          entryID: id,
-          entryType: type,
-        });
-
-        return <EntryBrickUnknownType {...this.props} />;
-    }
+  switch(entry.get('type')) {
+  case ENTRY_TYPE_TEXT:
+  case ENTRY_TYPE_ANONYMOUS:
+  case ENTRY_TYPE_CONVO:
+    return <EntryBrickTextType {...props} />;
+  case ENTRY_TYPE_IMAGE:
+    return <EntryBrickImageType {...props} />;
+  case ENTRY_TYPE_VIDEO:
+    return <EntryBrickVideoType {...props} />;
+  case ENTRY_TYPE_QUOTE:
+    return <EntryBrickQuoteType {...props} />;
+  case ENTRY_TYPE_LINK:
+    return <EntryBrickLinkType {...props} />;
+  case ENTRY_TYPE_SONG:
+    return <EntryBrickSongType {...props} />;
+  case ENTRY_TYPE_CODE:
+    return <EntryBrickCodeType {...props} />;
+  default:
+    ErrorService.notifyWarning('Неизвестный тип brick-поста', {
+      componentName: this.constructor.displayName,
+      method: 'render',
+      entryID: entry.get('id'),
+      entryType: entry.get('type'),
+    });
+    return <EntryBrickUnknownType {...props} />;
   }
 }
 
 EntryBrickContent.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryState: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,

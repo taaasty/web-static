@@ -34,6 +34,7 @@ import {
 } from '../../actions/FeedStatusActions';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
+import { onlyUpdateForKeys } from 'recompose';
 
 const BUTTON_OFFSET = 62;
 const typeMap = {
@@ -141,6 +142,7 @@ class FeedPage extends Component {
       getFeedEntries,
       location,
       resetFeedEntries,
+      setVisibleFeedEntries,
      } = this.props;
     const type = typeMap[this.feedType(location)];
     const shouldReset = count > PREPEND_LOAD_LIMIT;
@@ -150,6 +152,7 @@ class FeedPage extends Component {
       if (shouldReset) {
         resetFeedEntries();
         getFeedEntries(params)
+          .then(() => setVisibleFeedEntries(VISIBLE_INITIAL))
           .then(this.props[type.reset]);
       } else {
         this.prependEntries(params, count)
@@ -173,7 +176,6 @@ class FeedPage extends Component {
       setVisibleFeedEntries,
     } = this.props;
 
-    console.log('items.length: ', items.length, ' | visible: ', visible, ' | diff: ', items.length - visible);
     if (items.length - visible <= VISIBLE_APPEND_THRESHOLD) {
       getFeedEntries(
         feedDataByUri(location),
@@ -213,8 +215,7 @@ class FeedPage extends Component {
     } = this.props;
     const { isFetching, viewStyle, visible } = feedEntries;
     const { section, type, rating, query } = feedDataByUri(location);
-    const navFilterItems = navFilters[section]
-      .map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
+    const navFilterItems = navFilters[section];
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
             : feedTitleMap[location.pathname];
@@ -239,7 +240,8 @@ class FeedPage extends Component {
           >
             <FeedFilters
               location={location}
-              navFilters={{ active: idx, items: navFilterItems }}
+              navFiltersActive={idx}
+              navFiltersItems={navFilterItems}
               navViewMode
               viewMode={viewStyle}
             >
@@ -316,4 +318,11 @@ export default connect(
     resetFeedEntries,
     setVisibleFeedEntries,
   }
-)(FeedPage);
+)(onlyUpdateForKeys([
+  'appStats',
+  'currentUser',
+  'feedEntries',
+  'feedStatus',
+  'location',
+  'tillId',
+])(FeedPage));

@@ -14,7 +14,7 @@ function signature({ apiType = '', rating = '', section = '', type = '', query =
   return `${apiType}-${rating}-${section}-${type}-${query}`;
 }
 
-const INITIAL_LOAD_LIMIT = 90;
+const INITIAL_LOAD_LIMIT = 30;
 
 export function resetFeedEntries() {
   return { type: FEED_ENTRIES_RESET };

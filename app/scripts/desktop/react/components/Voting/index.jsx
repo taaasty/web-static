@@ -3,6 +3,9 @@ import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { voteEntry } from '../../actions/EntryActions';
 import Voting from './Voting';
+import { onlyUpdateForKeys } from 'recompose';
+
+const emptyRating = Map();
 
 class VotingContainer extends Component {
   shouldComponentUpdate(nextProps) {
@@ -47,14 +50,20 @@ VotingContainer.propTypes = {
 
 export default connect(
   (state, { ratingId }) => {
-    const rating = state.entities.getIn([ 'rating', String(ratingId) ], Map());
+    const rating = state.entities.getIn([ 'rating', String(ratingId) ], emptyRating);
     const isVoting = state.ratingState.getIn([ rating.get('entryId'), 'isVoting' ], false);
-    
-    return Object.assign({}, {
+
+    return {
       isVoting,
       rating,
       ratingId,
-    });
+    };
   },
-  { voteEntry }
-)(VotingContainer);
+  {
+    voteEntry,
+  }
+)(onlyUpdateForKeys([
+  'isVoting',
+  'rating',
+  'ratingId',
+])(VotingContainer));

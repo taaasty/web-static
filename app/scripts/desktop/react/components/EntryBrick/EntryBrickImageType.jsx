@@ -8,16 +8,30 @@ import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
+function EntryBrickImageType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const titleTruncated = entry.get('titleTruncated');
+  const previewImage = entry.get('previewImage');
+
   function renderBrickImage() {
-    return entry.previewImage
-      ?  <Image image={entry.previewImage} maxWidth={brickWidth} />
-      :  <span>{i18n.t('entry.has_no_images')}</span>;
+    return previewImage
+      ? <Image image={previewImage.toJS()} maxWidth={brickWidth} />
+      : <span>{i18n.t('entry.has_no_images')}</span>;
   }
 
   function renderBrickImageContainer() {
     return (
-      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id } }}>
+      <Link className="brick__link" to={{ pathname: uri(url).path(), state: { id } }}>
         {renderBrickImage()}
       </Link>
     );
@@ -29,10 +43,10 @@ function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, 
         <div className="brick__text">
           <Link
             className="brick__link"
-            title={entry.titleTruncated}
-            to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+            title={titleTruncated}
+            to={{ pathname: uri(url).path(), state: { id }}}
           >
-            <Text value={entry.titleTruncated} withHTML />
+            <Text value={titleTruncated} withHTML />
           </Link>
         </div>
       </div>
@@ -44,9 +58,14 @@ function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, 
       <div className="brick__media">
         {renderBrickImageContainer()}
       </div>
-      {entry.titleTruncated && renderBrickBody()}
+      {titleTruncated && renderBrickBody()}
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
+        <EntryBrickMetabar
+          entry={entry}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -59,6 +78,8 @@ function EntryBrickImageType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 
 EntryBrickImageType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

@@ -5,16 +5,29 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickTextType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
+function EntryBrickTextType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const title = entry.get('title');
+  const url = entry.get('url', entry.get('entryUrl'));
+
   function renderBrickTitle() {
     return (
       <Link
         className="brick__link"
-        title={entry.title}
-        to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        title={title}
+        to={{ pathname: uri(url).path(), state: { id }}}
       >
         <h2 className="brick__title">
-          {entry.title}
+          {title}
         </h2>
       </Link>
     );
@@ -24,10 +37,10 @@ function EntryBrickTextType({ entry, hasModeration, hostTlogId, onEntryAccept, o
     return (
       <Link
         className="brick__link"
-        title={entry.title}
-        to={{ pathname: uri(entry.url).path(), state: { id: entry.id }}}
+        title={title}
+        to={{ pathname: uri(url).path(), state: { id }}}
       >
-        <Text value={entry.textTruncated} withHTML />
+        <Text value={entry.get('textTruncated')} withHTML />
       </Link>
     );
   }
@@ -35,13 +48,18 @@ function EntryBrickTextType({ entry, hasModeration, hostTlogId, onEntryAccept, o
   return (
     <span>
       <div className="brick__body">
-        {entry.title && renderBrickTitle()}
+        {title && renderBrickTitle()}
         <div className="brick__text">
           {renderContents()}
         </div>
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
+        <EntryBrickMetabar
+          entry={entry}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -54,6 +72,8 @@ function EntryBrickTextType({ entry, hasModeration, hostTlogId, onEntryAccept, o
 
 EntryBrickTextType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,

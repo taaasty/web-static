@@ -11,9 +11,13 @@ class EntryTlogTextType extends Component {
     this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const title = this.props.entry.get('title');
+
+    if (title) {
       return (
-        <h1 className="post__title">{this.props.entry.title}</h1>
+        <h1 className="post__title">
+          {title}
+        </h1>
       );
     }
   }
@@ -23,18 +27,23 @@ class EntryTlogTextType extends Component {
     }
   }
   render() {
-    const { entry, isInList } = this.props;
-    const { isPrivate, isVoteable, rating, text } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
 
     return (
       <span>
         <header className="post__header">
-          {!!isPrivate && <PrivacyBadge />}
+          {!!entry.get('isPrivate') && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <EntryTlogContentLink entry={entry} show={isInList}>
+        <EntryTlogContentLink
+          entry={entry}
+          show={isInList}
+        >
           <div className="post__content">
-            <Text value={text} withHTML />
+            <Text value={entry.get('text')} withHTML />
           </div>
         </EntryTlogContentLink>
         <div className="post__meta">
@@ -49,6 +58,7 @@ class EntryTlogTextType extends Component {
 
 EntryTlogTextType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryState: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   isInList: PropTypes.bool,
 };

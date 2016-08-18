@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ErrorService from '../../../../shared/react/services/Error';
 import EntryTlogTextType from './EntryTlogTextType';
 import EntryTlogImageType from './EntryTlogImageType';
@@ -8,6 +8,7 @@ import EntryTlogLinkType from './EntryTlogLinkType';
 import EntryTlogSongType from './EntryTlogSongType';
 import EntryTlogCodeType from './EntryTlogCodeType';
 import EntryTlogUnknownType from './EntryTlogUnknownType';
+import { onlyUpdateForKeys } from 'recompose';
 
 const ENTRY_TEXT_TYPE = 'text',
       ENTRY_IMAGE_TYPE = 'image',
@@ -19,56 +20,61 @@ const ENTRY_TEXT_TYPE = 'text',
       ENTRY_CONVO_TYPE = 'convo',
       ENTRY_ANONYMOUS_TYPE = 'anonymous';
 
-class EntryTlogContent extends Component {
-  shouldComponentUpdate(nextProps) {
-    const { commentator, entry, hasModeration, hostTlogId, isInList } = this.props;
-    const { commentator: nextCommentator, entry: nextEntry,
-            hasModeration: nextHasModeration, hostTlogId: nextHostTlogId,
-            isInList: nextIsInList } = nextProps;
+function EntryTlogContent(props) {
+  const {
+    entry,
+  } = props;
 
-    return (commentator !== nextCommentator || entry !== nextEntry ||
-            hasModeration !== nextHasModeration || hostTlogId !== nextHostTlogId ||
-            isInList !== nextIsInList);
-  }
-  render() {
-    const { entry } = this.props;
+  switch(entry.get('type')) {
+  case ENTRY_TEXT_TYPE:
+  case ENTRY_ANONYMOUS_TYPE:
+  case ENTRY_CONVO_TYPE:
+    return <EntryTlogTextType {...props} />;
+  case ENTRY_IMAGE_TYPE:
+    return <EntryTlogImageType {...props} />;
+  case ENTRY_VIDEO_TYPE:
+    return <EntryTlogVideoType {...props} />;
+  case ENTRY_QUOTE_TYPE:
+    return <EntryTlogQuoteType {...props} />;
+  case ENTRY_LINK_TYPE:
+    return <EntryTlogLinkType {...props} />;
+  case ENTRY_SONG_TYPE:
+    return <EntryTlogSongType {...props} />;
+  case ENTRY_CODE_TYPE:
+    return <EntryTlogCodeType {...props} />;
+  default:
+    ErrorService.notifyWarning('Неизвестный тип tlog-поста', {
+      componentName: 'EntryTlogContent',
+      method: 'render',
+      entryID: entry.get('id'),
+      entryType: entry.get('type'),
+    });
 
-    switch(entry.type) {
-    case ENTRY_TEXT_TYPE:
-    case ENTRY_ANONYMOUS_TYPE:
-    case ENTRY_CONVO_TYPE:
-      return <EntryTlogTextType {...this.props} />;
-    case ENTRY_IMAGE_TYPE:
-      return <EntryTlogImageType {...this.props} />;
-    case ENTRY_VIDEO_TYPE:
-      return <EntryTlogVideoType {...this.props} />;
-    case ENTRY_QUOTE_TYPE:
-      return <EntryTlogQuoteType {...this.props} />;
-    case ENTRY_LINK_TYPE:
-      return <EntryTlogLinkType {...this.props} />;
-    case ENTRY_SONG_TYPE:
-      return <EntryTlogSongType {...this.props} />;
-    case ENTRY_CODE_TYPE:
-      return <EntryTlogCodeType {...this.props} />;
-    default:
-      ErrorService.notifyWarning('Неизвестный тип tlog-поста', {
-        componentName: this.constructor.name,
-        method: 'render',
-        entryID: entry.id,
-        entryType: entry.type,
-      });
-      
-      return <EntryTlogUnknownType {...this.props} />;
-    }
+    return <EntryTlogUnknownType {...props} />;
   }
 }
 
 EntryTlogContent.propTypes = {
   commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
+  entryTlogAuthor: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
+  isFormHidden: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 
-export default EntryTlogContent;
+export default onlyUpdateForKeys([
+  'commentator',
+  'entry',
+  'entryAuthor',
+  'entryTlog',
+  'entryTlogAuthor',
+  'entryState',
+  'hasModeration',
+  'hostTlogId',
+  'isFormHidden',
+  'isInList',
+])(EntryTlogContent);

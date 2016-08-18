@@ -4,12 +4,28 @@ import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, onEntryDecline }) {
+function EntryBrickQuoteType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const textTruncated = entry.get('textTruncated');
+  const sourceTruncated = entry.get('sourceTruncated');
+
   function renderQuoteSource() {
     return (
       <span className="blockquote__caption">—
         <span className="blockquote__source">
-          <i>{entry.sourceTruncated}</i>
+          <i>
+            {sourceTruncated}
+          </i>
         </span>
       </span>
     );
@@ -17,12 +33,12 @@ function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 
   function renderContents() {
     return (
-      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { id: entry.id} }}>
+      <Link className="brick__link" to={{ pathname: uri(url).path(), state: { id } }}>
         <blockquote className="blockquote">
           <span className="laquo">«</span>
-          {entry.textTruncated}
+          {textTruncated}
           <span className="raquo">»</span>
-          {entry.sourceTruncated && renderQuoteSource()}
+          {sourceTruncated && renderQuoteSource()}
         </blockquote>
       </Link>
     );
@@ -34,7 +50,12 @@ function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, 
         {renderContents()}
       </div>
       <div className="brick__meta">
-        <EntryBrickMetabar entry={entry} hostTlogId={hostTlogId} />
+        <EntryBrickMetabar
+          entry={entry}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
+        />
       </div>
       <EntryBrickActions
         hasModeration={hasModeration}
@@ -47,6 +68,8 @@ function EntryBrickQuoteType({ entry, hasModeration, hostTlogId, onEntryAccept, 
 
 EntryBrickQuoteType.propTypes = {
   entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
   hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
