@@ -22,7 +22,7 @@ function EntryTlogContentLink(props) {
 
 EntryTlogContentLink.propTypes = {
   children: PropTypes.oneOfType([
-    PropTypes.element,
+    PropTypes.node,
     PropTypes.array,
   ]),
   entry: PropTypes.object.isRequired,

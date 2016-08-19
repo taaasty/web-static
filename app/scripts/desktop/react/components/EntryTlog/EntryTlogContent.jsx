@@ -58,6 +58,7 @@ EntryTlogContent.propTypes = {
   commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
   entryAuthor: PropTypes.object.isRequired,
+  entryState: PropTypes.object.isRequired,
   entryTlog: PropTypes.object.isRequired,
   entryTlogAuthor: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,

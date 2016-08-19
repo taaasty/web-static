@@ -6,6 +6,9 @@ import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
 import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 import EntryTlogContentLink from './EntryTlogContentLink';
+import { List } from 'immutable';
+
+const emptyAttachments = List();
 
 class EntryTlogImageType extends Component {
   startComment() {
@@ -15,8 +18,13 @@ class EntryTlogImageType extends Component {
     return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
-    const { entry, isInList } = this.props;
-    const { imageAttachments, isPrivate, isVoteable, rating, title } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
+    const imageAttachments = entry.get('imageAttachments', emptyAttachments).toJS();
+    const isPrivate = entry.get('isPrivate', false);
+    const title = entry.get('title');
 
     return (
       <span>

@@ -3,7 +3,14 @@ import moment from 'moment';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogMetabarDate({ entry: { createdAt: date, id, url } }) {
+function EntryTlogMetabarDate(props) {
+  const {
+    entry,
+  } = props;
+  const id = entry.get('id');
+  const date = entry.get('createdAt');
+  const url = entry.get('url', entry.get('entryUrl'));
+
   function renderLink(text) {
     return (
       <Link to={{ pathname: uri(url).path(), state: { id } }}>

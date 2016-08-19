@@ -15,7 +15,7 @@ class EntryTlogCommentContainer extends Component {
       commentUser !== nextProps.commentUser ||
       commentator !== nextProps.commentator ||
       entryUrl !== nextProps.entryUrl ||
-      this.state.edit !== nextState.edit  
+      this.state.edit !== nextState.edit
     );
   }
   updateComment(text) {
@@ -29,7 +29,6 @@ class EntryTlogCommentContainer extends Component {
     this.setState({ edit: false });
   }
   render() {
-    console.count('commentItem');
     const { comment, commentState, commentator } = this.props;
     const { edit } = this.state;
 

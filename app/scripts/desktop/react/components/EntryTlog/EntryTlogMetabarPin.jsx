@@ -1,12 +1,17 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
-import { ENTRY_PINNED_STATE, ENTRY_AWAITING_PAYMENT_STATE } from '../../constants/EntryConstants';
+import {
+  ENTRY_PINNED_STATE,
+  ENTRY_AWAITING_PAYMENT_STATE,
+} from '../../constants/EntryConstants';
 import { PIN_ENTRY_ORDER } from '../../constants/OrderConstants';
 import DropdownAction from '../common/DropdownAction';
 
 function EntryTlogMetabarPin({ entry }) {
-  const { id: entryId, fixedOrderId: orderId, fixedState: status } = entry;
+  const entryId = entry.get('id');
+  const orderId = entry.get('fixedOrderId');
+  const status = entry.get('fixedState');
   const [ title, url ] = status === ENTRY_PINNED_STATE
     ? [ i18n.t('entry.meta.pinned'), Routes.live_feed_path() ]
     : status === ENTRY_AWAITING_PAYMENT_STATE

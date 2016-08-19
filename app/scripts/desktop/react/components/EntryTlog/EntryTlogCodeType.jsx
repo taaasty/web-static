@@ -11,16 +11,27 @@ class EntryTlogCodeType extends Component {
     this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    const { title } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
 
-    return !!title && <h1 className="post__title">{title}</h1>;
+    return !!title && (
+      <h1 className="post__title">
+        {title}
+      </h1>
+    );
   }
   renderActions() {
     return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
-    const { isInList, entry } = this.props;
-    const { isPrivate, isVoteable, rating, text } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
+    const isPrivate = entry.get('isPrivate');
+    const text = entry.get('text');
 
     return (
       <span>

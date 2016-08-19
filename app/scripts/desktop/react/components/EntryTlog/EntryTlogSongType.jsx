@@ -9,11 +9,21 @@ class EntryTlogSongType extends Component {
     this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
+    const audioUrl = entry.get('audioUrl');
+
+    if (title) {
       return (
         <h1 className="post__title">
-          <a href={this.props.entry.audioUrl} target="_blank" className="post__link">
-            {this.props.entry.title}
+          <a
+            className="post__link"
+            href={audioUrl}
+            target="_blank"
+          >
+            {title}
           </a>
         </h1>
       );
@@ -25,7 +35,7 @@ class EntryTlogSongType extends Component {
     }
   }
   render() {
-    const { isPrivate, isVoteable, rating } = this.props.entry;
+    const isPrivate = this.props.entry.get('isPrivate', false);
 
     return (
       <span>

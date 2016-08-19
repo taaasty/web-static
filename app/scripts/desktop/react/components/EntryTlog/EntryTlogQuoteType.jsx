@@ -15,8 +15,13 @@ class EntryTlogQuoteType extends Component {
     }
   }
   render() {
-    const { entry, isInList } = this.props;
-    const { isPrivate, isVoteable, rating, source, text } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
+    const isPrivate = entry.get('isPrivate', false);
+    const text = entry.get('text');
+    const source = entry.get('source');
 
     return (
       <span>
@@ -26,12 +31,21 @@ class EntryTlogQuoteType extends Component {
         <EntryTlogContentLink entry={entry} show={isInList}>
           <div className="post__content">
             <blockquote className="blockquote">
-              <span className="laquo">«</span>{text}<span className="raquo">»</span>
-              {source &&
-               <span className="blockquote__caption">—
-                 <span className="blockquote__source"> {source}</span>
+              <span className="laquo">
+                {'«'}
+              </span>
+              {text}
+              <span className="raquo">
+                {'»'}
+              </span>
+              {source && (
+                <span className="blockquote__caption">—
+                  <span className="blockquote__source">
+                    {' '}
+                    {source}
+                  </span>
                 </span>
-              }
+              )}
             </blockquote>
           </div>
         </EntryTlogContentLink>

@@ -16,14 +16,19 @@ class EntryTlogVideoType extends Component {
     }
   }
   render() {
-    const { iframely, isPrivate, title } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const embedHtml = entry.getIn(['iframely', 'html']);
+    const isPrivate = entry.get('isPrivate');
+    const title = entry.get('title');
 
     return (
       <span>
         <div className="post__content">
           <Embed
             autoplay={false}
-            embedHtml={iframely.html}
+            embedHtml={embedHtml}
             frameHeight={400}
             frameWidth={712}
           />

@@ -41,8 +41,8 @@ function EntryTlogMetabarTags(props) {
 }
 
 EntryTlogMetabarTags.propTypes = {
-  tags: PropTypes.object.isRequired,
-  userSlug: PropTypes.string.isRequired,
+  tags: PropTypes.object,
+  userSlug: PropTypes.string,
 };
 
 export default EntryTlogMetabarTags;

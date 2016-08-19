@@ -10,15 +10,21 @@ class EntryTlogLinkType extends Component {
     this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
+    const link = entry.get('link');
+
+    if (title) {
       return (
         <h1 className="post__title">
           <a
             className="post__link"
-            href={this.props.entry.link}
+            href={link}
             target="_blank"
           >
-            {this.props.entry.title}
+            {title}
           </a>
         </h1>
       );
@@ -30,12 +36,15 @@ class EntryTlogLinkType extends Component {
     }
   }
   render() {
-    const { isPrivate, isVoteable, rating, text } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const isPrivate = entry.get('isPrivate');
+    const text = entry.get('text');
 
     return (
       <span>
         <header className="post__header">
-          {!!isVoteable && <Voting ratingId={rating} />}
           {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>

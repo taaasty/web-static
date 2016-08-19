@@ -7,7 +7,6 @@ import { deleteComment, postComment, reportComment, updateComment } from '../../
 import EntryTlogComments from './EntryTlogComments';
 import TastyConfirmController from '../../controllers/TastyConfirmController';
 import NoticeService from '../../services/Notice';
-import { onlyUpdateForKeys } from 'recompose';
 
 const LOAD_COMMENTS_LIMIT = 50;
 
@@ -25,12 +24,14 @@ class EntryTlogCommentsContainer extends Component {
       comments,
       commentStates,
       entry,
+      entryState,
       isFormHidden,
       users,
     } = this.props;
 
     return commentator !== nextProps.commentator ||
       entry !== nextProps.entry ||
+      entryState !== nextProps.entryState ||
       isFormHidden !== nextProps.isFormHidden ||
       !shallowEqual(comments, nextProps.comments) ||
       !shallowEqual(commentStates, nextProps.commentStates) ||
@@ -77,7 +78,6 @@ class EntryTlogCommentsContainer extends Component {
     loadComments({ entryId, toCommentId, limit });
   }
   render() {
-    console.count('tlogComments');
     const {
       commentator,
       comments,
@@ -164,14 +164,3 @@ export default connect(
   null,
   { withRef: true }
 )(EntryTlogCommentsContainer);
-// TODO: replace shouldComponentUpdate with onlyUpdateForKeys
-/*
-(onlyUpdateForKeys([
-  'commentator',
-  'comments',
-  'commentStates',
-  'entry',
-  'isFormHidden',
-  'users',
-])(EntryTlogCommentsContainer));
-*/

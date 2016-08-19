@@ -48,9 +48,7 @@ FeedFilters.propTypes = {
 };
 
 FeedFilters.defaultProps = {
-  navFilters: {
-    items: [],
-  },
+  navFiltersItems: [],
   navViewMode: false,
 };
 

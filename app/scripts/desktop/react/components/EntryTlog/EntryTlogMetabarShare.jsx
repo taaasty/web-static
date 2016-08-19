@@ -29,52 +29,52 @@ class EntryTlogMetabarShare extends Component {
   render() {
     const {
       commentator,
-      entry: {
-        id,
-        previewImage,
-        titleTruncated,
-        type,
-        url,
-      },
+      entry,
     } = this.props;
 
-    const vkUrl = vkontakteUrl(url, titleTruncated, (previewImage && previewImage.url) || defaultImg);
+    const id = entry.get('id');
+    const url = entry.get('url', entry.get('entryUrl'));
+    const titleTruncated = entry.get('titleTruncated');
+    const type = entry.get('type');
+    const previewImageUrl = entry.getIn(['previewImage', 'url']);
+
+    const vkUrl = vkontakteUrl(url, titleTruncated, previewImageUrl || defaultImg);
     const fbUrl = facebookUrl(url);
     const twUrl = twitterUrl(url, titleTruncated);
 
     return (
       <span className="meta-item meta-item--share">
         {this.state.isPopupOpened &&
-         <EntryRepostPopup
-           entryId={id}
-           onClose={this.closePopup.bind(this)}
-         />
+          <EntryRepostPopup
+            entryId={id}
+            onClose={this.closePopup.bind(this)}
+          />
         }
-         <DropdownActions
-           item={this.renderShare()}
-           ref="toggle"
-         >
-           {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
+        <DropdownActions
+          item={this.renderShare()}
+          ref="toggle"
+        >
+          {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
             <DropdownAction
               onClick={this.togglePopup.bind(this)}
               title={i18n.t('entry_meta_repost_link')}
             />}
-            <DropdownAction
-              onClick={open.bind(null, 'Vk', vkUrl)}
-              title={i18n.t('entry_meta_vk')}
-              url={vkUrl}
-            />
-            <DropdownAction
-              onClick={open.bind(null, 'Facebook', fbUrl)}
-              title={i18n.t('entry_meta_fb')}
-              url={fbUrl}
-            />
-            <DropdownAction
-              onClick={open.bind(null, 'Twitter', twUrl)}
-              title={i18n.t('entry_meta_twitter')}
-              url={twUrl}
-            />
-         </DropdownActions>
+          <DropdownAction
+            onClick={open.bind(null, 'Vk', vkUrl)}
+            title={i18n.t('entry_meta_vk')}
+            url={vkUrl}
+          />
+          <DropdownAction
+            onClick={open.bind(null, 'Facebook', fbUrl)}
+            title={i18n.t('entry_meta_fb')}
+            url={fbUrl}
+          />
+          <DropdownAction
+            onClick={open.bind(null, 'Twitter', twUrl)}
+            title={i18n.t('entry_meta_twitter')}
+            url={twUrl}
+          />
+        </DropdownActions>
       </span>
     );
   }
