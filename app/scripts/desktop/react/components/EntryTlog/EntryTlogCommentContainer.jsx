@@ -5,20 +5,22 @@ import EntryTlogComment from './EntryTlogComment';
 class EntryTlogCommentContainer extends Component {
   state = {
     edit: false,
-    processEdit: false,
   };
-  componentWillReceiveProps(nextProps) {
-    if (this.state.processEdit) {
-      this.setState({ processEdit: false });
-    }
-    if (this.props.comment.comment_html !== nextProps.comment.comment_html) {
-      this.setState({ edit: false });
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    const { comment, commentState, commentUser, commentator , entryUrl } = this.props;
+
+    return (
+      comment !== nextProps.comment ||
+      commentState !== nextProps.commentState ||
+      commentUser !== nextProps.commentUser ||
+      commentator !== nextProps.commentator ||
+      entryUrl !== nextProps.entryUrl ||
+      this.state.edit !== nextState.edit
+    );
   }
   updateComment(text) {
-    this.setState({ processEdit: true }, () => {
-      this.props.onCommentUpdate(text);
-    });
+    this.props.onCommentUpdate(text)
+      .then(this.show.bind(this));
   }
   edit() {
     this.setState({ edit: true });
@@ -27,16 +29,16 @@ class EntryTlogCommentContainer extends Component {
     this.setState({ edit: false });
   }
   render() {
-    const { comment, commentator } = this.props;
-    const { edit, processEdit } = this.state;
+    const { comment, commentState, commentator } = this.props;
+    const { edit } = this.state;
 
     return edit
       ? <EntryTlogCommentEditForm
-          comment={comment}
+          commentHtml={comment.get('commentHtml', '')}
           commentator={commentator}
           onCancel={this.show.bind(this)}
           onCommentUpdate={this.updateComment.bind(this)}
-          process={processEdit}
+          process={commentState.get('isProcessing', false)}
         />
       : <EntryTlogComment {...this.props} onCommentEdit={this.edit.bind(this)} />;
   }
@@ -44,9 +46,10 @@ class EntryTlogCommentContainer extends Component {
 
 EntryTlogCommentContainer.propTypes = {
   comment: PropTypes.object.isRequired,
+  commentState: PropTypes.object.isRequired,
+  commentUser: PropTypes.object.isRequired,
   commentator: PropTypes.object,
   entryUrl: PropTypes.string.isRequired,
-  isFeed: PropTypes.bool,
   onCommentUpdate: PropTypes.func.isRequired,
 };
 

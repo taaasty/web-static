@@ -7,11 +7,14 @@ import FlowBricks from './FlowBricks';
 import { setBodyLayoutClassName } from '../../helpers/htmlHelpers';
 import {
   appendFlows,
-  flowsData,
   getFlowsIfNeeded,
   navFilters,
   navFiltersUnauth,
+  flowsData,
 } from '../../actions/FlowsActions';
+import { Map } from 'immutable';
+
+const emptyFlow = Map();
 
 class FlowsPage extends Component {
   componentWillMount() {
@@ -24,9 +27,9 @@ class FlowsPage extends Component {
     this.props.getFlowsIfNeeded(flowsData(nextProps.location));
   }
   render() {
-    const { appendFlows, currentUser, flows: { data: { items, has_more }, isFetching }, location } = this.props;
+    const { appendFlows, currentUser, flows, hasMore, isFetching, location } = this.props;
     const { filterIdx } = flowsData(location);
-    const filters = !!currentUser.id ? navFilters : navFiltersUnauth;
+    const filters = currentUser.id ? navFilters : navFiltersUnauth;
     const title = i18n.t('hero.flows') + ' - ' + i18n.t(`nav_filters.flows.${filters[filterIdx]}`);
 
     return (
@@ -36,9 +39,8 @@ class FlowsPage extends Component {
           <div className="page-body">
             <div className="layout-outer">
               <FlowBricks
-                canLoad={!isFetching && !!has_more}
-                currentUser={currentUser}
-                flows={items}
+                canLoad={!isFetching && !!hasMore}
+                flows={flows}
                 loading={isFetching}
                 onLoadMoreFlows={appendFlows}
               >
@@ -57,8 +59,10 @@ FlowsPage.displayName = 'FlowsPage';
 FlowsPage.propTypes = {
   appendFlows: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
-  flows: PropTypes.object.isRequired,
+  flows: PropTypes.array.isRequired,
   getFlowsIfNeeded: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
 
@@ -69,9 +73,17 @@ FlowsPage.defaultProps = {
 };
 
 export default connect(
-  (state) => ({
-    currentUser: state.currentUser.data,
-    flows: state.flows,
-  }),
+  (state) => {
+    const { data: { items, hasMore }, isFetching } = state.flows;
+    const currentUser = state.currentUser.data;
+    const flows = items.map((id) => state.entities.getIn([ 'flow', String(id) ], emptyFlow));
+
+    return {
+      currentUser,
+      flows,
+      hasMore: !!hasMore,
+      isFetching: !!isFetching,
+    };
+  },
   { appendFlows, getFlowsIfNeeded }
 )(FlowsPage);

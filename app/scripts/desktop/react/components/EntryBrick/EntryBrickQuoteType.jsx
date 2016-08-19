@@ -1,16 +1,31 @@
 import React, { PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
+function EntryBrickQuoteType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const textTruncated = entry.get('textTruncated');
+  const sourceTruncated = entry.get('sourceTruncated');
+
   function renderQuoteSource() {
     return (
       <span className="blockquote__caption">—
         <span className="blockquote__source">
-          <i>{entry.source_truncated}</i>
+          <i>
+            {sourceTruncated}
+          </i>
         </span>
       </span>
     );
@@ -18,12 +33,12 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
 
   function renderContents() {
     return (
-      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id} }}>
+      <Link className="brick__link" to={{ pathname: uri(url).path(), state: { id } }}>
         <blockquote className="blockquote">
           <span className="laquo">«</span>
-          {entry.text_truncated}
+          {textTruncated}
           <span className="raquo">»</span>
-          {entry.source_truncated && renderQuoteSource()}
+          {sourceTruncated && renderQuoteSource()}
         </blockquote>
       </Link>
     );
@@ -37,8 +52,9 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
       <div className="brick__meta">
         <EntryBrickMetabar
           entry={entry}
-          host_tlog_id={host_tlog_id}
-          isFeed={isFeed}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
         />
       </div>
       <EntryBrickActions
@@ -51,10 +67,11 @@ function EntryBrickQuoteType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
 }
 
 EntryBrickQuoteType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

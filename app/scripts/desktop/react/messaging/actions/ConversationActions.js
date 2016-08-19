@@ -1,111 +1,238 @@
-/*global messagingService, TastyEvents */
-import MessagingDispatcher from '../MessagingDispatcher';
-import ConversationsStore from '../stores/ConversationsStore';
-import EntryActionCreators from '../../actions/Entry';
+import { CALL_API, Schemas } from '../../middleware/api';
+import ApiRoutes from '../../../../shared/routes/api';
+import {
+  defaultOpts,
+  postOpts,
+  putOpts,
+  deleteOpts,
+  makeGetUrl,
+} from '../../actions/reqHelpers';
+import { Map } from 'immutable';
+import moment from 'moment';
 
-function updateConversationEntry(id, func) {
-  const conversation = ConversationsStore.getConversation(id);
-  if (!(conversation && conversation.entry)) {
-    return null;
+const ARCHIVED_MESSAGES_LIMIT = 10;
+const UPDATE_ONLINE_STATUSES_TIMEOUT = 10 * 60 * 1000; // 10 minutes
+
+export const MSG_CONVERSATION_POST_REQUEST = 'MSG_CONVERSATION_POST_REQUEST';
+export const MSG_CONVERSATION_POST_SUCCESS = 'MSG_CONVERSATION_POST_SUCCESS';
+export const MSG_CONVERSATION_POST_FAILURE = 'MSG_CONVERSATION_POST_FAILURE';
+
+export const MSG_CONVERSATION_MSGS_REQUEST = 'MSG_CONVERSATION_MSGS_REQUEST';
+export const MSG_CONVERSATION_MSGS_SUCCESS = 'MSG_CONVERSATION_MSGS_SUCCESS';
+export const MSG_CONVERSATION_MSGS_FAILURE = 'MSG_CONVERSATION_MSGS_FAILURE';
+
+export const MSG_CONVERSATION_LEAVE_REQUEST = 'MSG_CONVERSATION_LEAVE_REQUEST';
+export const MSG_CONVERSATION_LEAVE_SUCCESS = 'MSG_CONVERSATION_LEAVE_SUCCESS';
+export const MSG_CONVERSATION_LEAVE_FAILURE = 'MSG_CONVERSATION_LEAVE_FAILURE';
+
+export const MSG_CONVERSATION_ONLINE_REQUEST =
+  'MSG_CONVERSATION_ONLINE_REQUEST';
+export const MSG_CONVERSATION_ONLINE_SUCCESS =
+  'MSG_CONVERSATION_ONLINE_SUCCESS';
+export const MSG_CONVERSATION_ONLINE_FAILURE =
+  'MSG_CONVERSATION_ONLINE_FAILURE';
+
+export const MSG_CONVERSATION_DELETE_REQUEST =
+  'MSG_CONVERSATION_DELETE_REQUEST';
+export const MSG_CONVERSATION_DELETE_SUCCESS =
+  'MSG_CONVERSATION_DELETE_SUCCESS';
+export const MSG_CONVERSATION_DELETE_FAILURE =
+  'MSG_CONVERSATION_DELETE_FAILURE';
+
+export const MSG_CONVERSATION_DELETE_MSGS_REQUEST =
+  'MSG_CONVERSATION_DELETE_MSGS_REQUEST';
+export const MSG_CONVERSATION_DELETE_MSGS_SUCCESS =
+  'MSG_CONVERSATION_DELETE_MSGS_SUCCESS';
+export const MSG_CONVERSATION_DELETE_MSGS_FAILURE =
+  'MSG_CONVERSATION_DELETE_MSGS_FAILURE';
+
+export const MSG_CONVERSATION_DISTURB_REQUEST =
+  'MSG_CONVERSATION_DISTURB_REQUEST';
+export const MSG_CONVERSATION_DISTURB_SUCCESS =
+  'MSG_CONVERSATION_DISTURB_SUCCESS';
+export const MSG_CONVERSATION_DISTURB_FAILURE =
+  'MSG_CONVERSATION_DISTURB_FAILURE';
+
+export const MSG_CONVERSATION_MARK_ALL_READ_REQUEST =
+  'MSG_CONVERSATION_MARK_ALL_READ_REQUEST';
+export const MSG_CONVERSATION_MARK_ALL_READ_SUCCESS =
+  'MSG_CONVERSATION_MARK_ALL_READ_SUCCESS';
+export const MSG_CONVERSATION_MARK_ALL_READ_FAILURE =
+  'MSG_CONVERSATION_MARK_ALL_READ_FAILURE';
+
+export function postNewConversation(userId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerConversationsByUserId(userId),
+      schema: Schemas.CONVERSATION,
+      types: [
+        MSG_CONVERSATION_POST_REQUEST,
+        MSG_CONVERSATION_POST_SUCCESS,
+        MSG_CONVERSATION_POST_FAILURE,
+      ],
+      opts: postOpts(),
+    },
   };
-
-  return func(conversation.entry.id);
 }
 
-const ConversationActions = {
-  clickConversation(conversationId) {
-    return MessagingDispatcher.handleViewAction({
-      type: 'openConversation',
-      conversationId: conversationId,
-    });
-  },
+export function loadMessages(conversationId, data = {}) {
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(
+        ApiRoutes.messenger_load_messages_url(conversationId),
+        data
+      ),
+      schema: Schemas.MESSAGE_COLL,
+      types: [
+        MSG_CONVERSATION_MSGS_REQUEST,
+        MSG_CONVERSATION_MSGS_SUCCESS,
+        MSG_CONVERSATION_MSGS_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
+    conversationId,
+  };
+}
 
-  openConversation(recipientId) {
-    const conversation = ConversationsStore.getConversationByUserId(recipientId);
+export function loadArchivedMessages(conversationId) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const conversation = state
+      .entities
+      .getIn(['conversation', String(conversationId)]);
+    const messages = state
+      .entities
+      .get('message', Map())
+      .filter((m) => m.get('conversationId') === conversationId &&
+        m.get('createdAt')) // exclude replyMessages and submitted
+      .sortBy((m) => moment(m.get('createdAt'))
+        .valueOf());
+    const oldestMessage = messages.first();
+    const hasMore = (
+      messages.count() < conversation.get('messagesCount', +Infinity)
+    );
 
-    if (conversation) {
-      MessagingDispatcher.handleViewAction({
-        type: 'openConversation',
-        conversationId: conversation.id,
-      });
-    } else {
-      messagingService.postNewConversation({ recipientId });
+    return hasMore && oldestMessage && dispatch(loadMessages(conversationId, {
+      toMessageId: oldestMessage.get('id'),
+      limit: ARCHIVED_MESSAGES_LIMIT,
+    }));
+  };
+}
+
+export function deleteMessages(conversationId, ids, everywhere = false) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerDeleteMessages(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_DELETE_MSGS_REQUEST,
+        MSG_CONVERSATION_DELETE_MSGS_SUCCESS,
+        MSG_CONVERSATION_DELETE_MSGS_FAILURE,
+      ],
+      opts: deleteOpts({
+        ids: ids.join(','),
+        all: !!everywhere,
+      }),
+    },
+  };
+}
+
+export function leaveConversation(conversationId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerConversationsByIdLeave(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_LEAVE_REQUEST,
+        MSG_CONVERSATION_LEAVE_SUCCESS,
+        MSG_CONVERSATION_LEAVE_FAILURE,
+      ],
+      opts: putOpts(),
+    },
+    conversationId,
+  };
+}
+
+export function deleteConversation(conversationId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerConversationsById(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_DELETE_REQUEST,
+        MSG_CONVERSATION_DELETE_SUCCESS,
+        MSG_CONVERSATION_DELETE_FAILURE,
+      ],
+      opts: deleteOpts(),
+    },
+    conversationId,
+  };
+}
+
+export function dontDisturb(conversationId, flag) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerDontDisturb(conversationId),
+      schema: Schemas.CONVERSATION,
+      types: [
+        MSG_CONVERSATION_DISTURB_REQUEST,
+        MSG_CONVERSATION_DISTURB_SUCCESS,
+        MSG_CONVERSATION_DISTURB_FAILURE,
+      ],
+      opts: flag ? postOpts() : deleteOpts(),
+    },
+  };
+}
+
+let osId = void 0;
+
+export function updateOnlineStatuses() {
+  return (dispatch, getState) => {
+    const userIds = getState()
+      .entities
+      .get('conversation')
+      .filter((c) => c.has('recipientId') && !!c.get('recipientId'))
+      .map((c) => c.get('recipientId'))
+      .join(',');
+
+    if (osId && typeof clearTimeout === 'function') {
+      clearTimeout(osId);
     }
 
-    messagingService.openMessagesPopup();
-    return TastyEvents.emit(TastyEvents.keys.command_hero_close());
-  },
+    if (typeof setTimeout === 'function') {
+      osId = setTimeout(
+        () => dispatch(updateOnlineStatuses()),
+        UPDATE_ONLINE_STATUSES_TIMEOUT
+      );
+    }
 
-  deleteConversation(id) {
-    return messagingService.deleteConversation(id);
-  },
+    return dispatch({
+      [CALL_API]: {
+        endpoint: makeGetUrl(ApiRoutes.onlineStatuses(), { userIds }),
+        schema: Schemas.MESSAGE_COLL,
+        types: [
+          MSG_CONVERSATION_ONLINE_REQUEST,
+          MSG_CONVERSATION_ONLINE_SUCCESS,
+          MSG_CONVERSATION_ONLINE_FAILURE,
+        ],
+        opts: defaultOpts,
+      },
+    });
+  };
+}
 
-  leaveConversation(id) {
-    return messagingService.leaveConversation(id)
-      .done((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'deleteConversation',
-          id: id,
-        });
-        return data;
-      });
-  },
-
-  dontDisturb(id, flag) {
-    return messagingService.dontDisturb(id, flag);
-  },
-
-  postNewConversation({recipientId, error}) {
-    return messagingService.postNewConversation({ recipientId, error });
-  },
-
-  conversationEntryAddToFavorites(id) {
-    return updateConversationEntry(id, EntryActionCreators.addToFavorites)
-      .then((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'updateConversationEntry',
-          id: id,
-          update: { is_favorited: true },
-        });
-      });
-  },
-
-  conversationEntryRemoveFromFavorites(id) {
-    return updateConversationEntry(id, EntryActionCreators.removeFromFavorites)
-      .then((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'updateConversationEntry',
-          id: id,
-          update: { is_favorited: false },
-        });
-      });
-  },
-
-  conversationEntryAddToWatching(id) {
-    return updateConversationEntry(id, EntryActionCreators.addToWatching)
-      .then((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'updateConversationEntry',
-          id: id,
-          update: { is_watching: true },
-        });
-      });
-  },
-
-  conversationEntryRemoveFromWatching(id) {
-    return updateConversationEntry(id, EntryActionCreators.removeFromWatching)
-      .then((data) => {
-        MessagingDispatcher.handleServerAction({
-          type: 'updateConversationEntry',
-          id: id,
-          update: { is_watching: false },
-        });
-      });
-  },
-
-  sendTyping(id) {
-    return messagingService.sendTyping(id);
-  },
-};
-
-export default ConversationActions;
+export function markAllMessagesRead(conversationId) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.messengerMarkAllMessagesRead(conversationId),
+      schema: Schemas.NONE,
+      types: [
+        MSG_CONVERSATION_MARK_ALL_READ_REQUEST,
+        MSG_CONVERSATION_MARK_ALL_READ_SUCCESS,
+        MSG_CONVERSATION_MARK_ALL_READ_FAILURE,
+      ],
+      opts: putOpts(),
+    },
+    conversationId,
+  };
+}

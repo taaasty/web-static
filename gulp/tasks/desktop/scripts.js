@@ -7,7 +7,8 @@ import streamify from 'gulp-streamify';
 import envify from 'envify/custom';
 import bundleLogger from '../../util/bundleLogger';
 import handleErrors from '../../util/handleErrors';
-const config = require('../../config').desktop.scripts;
+const config = require('../../config')
+  .desktop.scripts;
 
 const babelifyOpts = {
   ignore: /(node_modules|bower_components|shims)/,
@@ -28,7 +29,7 @@ const dependencies = {
   'jquery.fileupload': './app/bower_components/blueimp-file-upload/js/jquery.fileupload',
   'masonry-layout': './node_modules/masonry-layout/masonry',
   'lodash': './node_modules/lodash',
-  'react': './node_modules/react',
+  'react': './node_modules/react/',
   'react-dom': './node_modules/react-dom',
   'react-mixin-manager': './app/bower_components/react-mixin-manager/react-mixin-manager',
   'reactUjs': './app/scripts/shared/libs/ReactUjs',
@@ -50,10 +51,8 @@ const dependencies = {
   'jquery.scrollto': './app/bower_components/jquery.scrollto/jquery.scrollTo',
   'undo': './app/bower_components/undo/undo',
   'medium-editor': './node_modules/medium-editor/dist/js/medium-editor',
-  'aviator': './node_modules/aviator',
   'nanobar': './app/bower_components/nanobar/index',
   'urijs': './node_modules/urijs',
-  'jquery.select2': './app/bower_components/select2/dist/js/select2',
   'numeral': './node_modules/numeral',
   'react-tap-event-plugin': './node_modules/react-tap-event-plugin',
   'color': './node_modules/color',
@@ -64,14 +63,16 @@ const dependencies = {
 
 gulp.task('[D][S] Client scripts', () => {
   let bundler = browserify({
-    cache: {}, packageCache: {},
+    cache: {},
+    packageCache: {},
     entries: config.static.client.entries,
     extensions: config.static.client.extensions,
   });
 
-  Object.keys(dependencies).forEach((dep) => {
-    bundler.external(dep);
-  });
+  Object.keys(dependencies)
+    .forEach((dep) => {
+      bundler.external(dep);
+    });
 
   function rebundle() {
     bundleLogger.start(config.static.client.outputName);
@@ -83,7 +84,7 @@ gulp.task('[D][S] Client scripts', () => {
       .on('end', () => {
         bundleLogger.end(config.static.client.outputName);
       });
-  };
+  }
 
   if (global.isWatching) {
     bundler = watchify(bundler
@@ -104,14 +105,16 @@ gulp.task('[D][S] Client scripts', () => {
 
 gulp.task('[D][S] Vendor scripts', (cb) => {
   let bundler = browserify({
-    cache: {}, packageCache: {},
+    cache: {},
+    packageCache: {},
     entries: config.static.vendor.entries,
     extensions: config.static.vendor.extensions,
   });
 
-  Object.keys(dependencies).forEach((dep) => {
-    bundler.require(dependencies[dep], { expose: dep });
-  });
+  Object.keys(dependencies)
+    .forEach((dep) => {
+      bundler.require(dependencies[dep], { expose: dep });
+    });
 
   bundleLogger.start(config.static.vendor.outputName);
 
@@ -130,14 +133,16 @@ gulp.task('[D][S] Vendor scripts', (cb) => {
 
 gulp.task('[D][S] Test scripts', () => {
   let bundler = browserify({
-    cache: {}, packageCache: {},
+    cache: {},
+    packageCache: {},
     entries: config.static.test.entries,
     extensions: config.static.test.extensions,
   });
 
-  Object.keys(dependencies).forEach((dep) => {
-    bundler.external(dep);
-  });
+  Object.keys(dependencies)
+    .forEach((dep) => {
+      bundler.external(dep);
+    });
 
   function rebundle() {
     bundleLogger.start(config.static.test.outputName);
@@ -149,7 +154,7 @@ gulp.task('[D][S] Test scripts', () => {
       .on('end', () => {
         bundleLogger.end(config.static.test.outputName);
       });
-  };
+  }
 
   if (global.isWatching) {
     bundler = watchify(bundler
@@ -170,14 +175,16 @@ gulp.task('[D][S] Test scripts', () => {
 
 gulp.task('[D][D] Scripts', () => {
   let bundler = browserify({
-    cache: {}, packageCache: {},
+    cache: {},
+    packageCache: {},
     entries: config.development.entries,
     extensions: config.development.extensions,
   });
 
-  Object.keys(dependencies).forEach((dep) => {
-    bundler.require(dependencies[dep], { expose: dep });
-  });
+  Object.keys(dependencies)
+    .forEach((dep) => {
+      bundler.require(dependencies[dep], { expose: dep });
+    });
 
   bundleLogger.start(config.development.outputName);
 
@@ -198,13 +205,13 @@ gulp.task('[D][P] Test scripts', () => {
   const { dest, entries, extensions, outputName } = config.production.test;
 
   bundleLogger.start(outputName);
-  
+
   return browserify({
-    entries,
-    extensions,
-    cache: {},
-    packageCache: {},
-  })
+      entries,
+      extensions,
+      cache: {},
+      packageCache: {},
+    })
     .transform('babelify', babelifyOpts)
     .transform('browserify-shim')
     .bundle()
@@ -226,9 +233,10 @@ gulp.task('[D][P] Scripts', () => {
     extensions: extensions,
   });
 
-  Object.keys(dependencies).forEach((dep) => {
-    bundler.require(dependencies[dep], { expose: dep });
-  });
+  Object.keys(dependencies)
+    .forEach((dep) => {
+      bundler.require(dependencies[dep], { expose: dep });
+    });
 
   bundleLogger.start(outputName);
 

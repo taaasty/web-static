@@ -1,101 +1,53 @@
-/*global i18n, NoticeService, ReactUnmountMixin, RequesterMixin,
- ScrollerMixin, ComponentManipulationsMixin */
-import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../shared/routes/api';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
+import Scroller from '../common/Scroller';
 import Routes from '../../../../shared/routes/routes';
-import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import uri from 'urijs';
+import { connect } from 'react-redux';
+import { getTlogTagsIfNeeded } from '../../actions/TlogTagsActions';
 
-const HeroProfileStatsTagsPopup = createClass({
-  propTypes: {
-    close: PropTypes.func,
-    onClose: PropTypes.func,
-    userID: PropTypes.number.isRequired,
-    userSlug: PropTypes.string.isRequired,
-  },
-  mixins: [ 'ReactActivitiesUser', ReactUnmountMixin, RequesterMixin,
-           ScrollerMixin, ComponentManipulationsMixin ],
-
-  getInitialState() {
-    return ({
-      tags: null,
-      isError: false,
-      isLoading: false,
-    });
-  },
-
+class HeroProfileStatsTagsPopup extends Component {
   componentDidMount() {
-    this.loadTags();
-  },
+    const { getTlogTagsIfNeeded, tlogId } = this.props;
 
-  loadTags() {
-    this.safeUpdate(() => this.incrementActivities());
-    this.setState({
-      isError: false,
-      isLoading: true,
-    });
-    this.createRequest({
-      url: ApiRoutes.tlog_tags(this.props.userID),
-      success: (data) => {
-        this.safeUpdateState({ tags: data });
-      },
-      error: (data) => {
-        this.safeUpdateState({ isError: true });
-        NoticeService.errorResponse(data);
-      },
-      complete: () => {
-        this.safeUpdate(() => this.decrementActivities());
-        this.safeUpdateState({ isLoading: false });
-      },
-    });
-  },
-
-  handleClickItem(pathname, ev) {
-    ev.preventDefault();
-
-    browserHistory.push({ pathname });
-    this.props.close();
-  },
-
+    getTlogTagsIfNeeded(tlogId);
+  }
   renderListItem(tag, key) {
-    const { name, taggings_count } = tag;
-    const { userSlug } = this.props;
-    const url = Routes.userTag(userSlug, name);
+    const { name, taggingsCount } = tag;
+    const { close, tlogSlug } = this.props;
+    const url = Routes.userTag(tlogSlug, name);
 
     return (
       <article className="tag" key={key}>
-        <a
+        <Link
           className="tag__link"
-          href={url}
-          onClick={this.handleClickItem.bind(null, uri(url).path())}
+          onClick={close}
           title={`#${name}`}
+          to={uri(url).path()}
         >
           <span className="tag__count">
-            {taggings_count}
+            {taggingsCount}
           </span>
           <span className="tag__text">
             {`#${name}`}
           </span>
-        </a>
+        </Link>
       </article>
     );
-  },
-
+  }
   renderList() {
     return (
       <section className="users">
-        {this.state.tags.map(this.renderListItem)}
+        {this.props.tags.map(this.renderListItem.bind(this))}
       </section>
     );
-  },
-
+  }
   renderMessage() {
-    const { isError, isLoading } = this.state;
-    const messageKey = isError
-      ? 'hero_stats_popup_error'
-      : isLoading
-        ? 'hero_stats_popup_loading'
-        : 'hero_stats_popup_empty';
+    const { error, isFetching} = this.props;
+    const messageKey = error ? 'hero_stats_popup_error'
+                     : isFetching ? 'hero_stats_popup_loading'
+                     : 'hero_stats_popup_empty';
 
     return (
       <div className="grid-full">
@@ -106,25 +58,42 @@ const HeroProfileStatsTagsPopup = createClass({
         </div>
       </div>
     );
-  },
-
+  }
   render() {
-    const { tags } = this.state;
+    const { isFetching, tags } = this.props;
 
     return (
-      <div className="scroller scroller--tags" ref="scroller">
-        <div className="scroller__pane js-scroller-pane">
-          {tags && tags.length > 0
-           ? this.renderList()
-           : this.renderMessage()
-          }
-        </div>
-        <div className="scroller__track js-scroller-track">
-          <div className="scroller__bar js-scroller-bar" />
-        </div>
-      </div>
+      <Scroller className="scroller--tags">
+        {tags && tags.length > 0 && !isFetching
+         ? this.renderList()
+         : this.renderMessage()
+        }
+      </Scroller>
     );
-  },
-});
+  }
+}
 
-export default HeroProfileStatsTagsPopup;
+HeroProfileStatsTagsPopup.propTypes = {
+  close: PropTypes.func,
+  error: PropTypes.object,
+  getTlogTagsIfNeeded: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  tags: PropTypes.array.isRequired,
+  tlogId: PropTypes.number.isRequired,
+  tlogSlug: PropTypes.string.isRequired,
+};
+
+export default connect(
+  (state, { tlogId, ...rest }) => {
+    const { error, isFetching, tags } = state.tlogTags;
+
+    return {
+      ...rest,
+      tlogId,
+      error,
+      isFetching,
+      tags,
+    };
+  },
+  { getTlogTagsIfNeeded }
+)(HeroProfileStatsTagsPopup);

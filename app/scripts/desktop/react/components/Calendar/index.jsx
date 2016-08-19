@@ -1,10 +1,11 @@
 /*global $, i18n */
 import React, { Component, PropTypes } from 'react';
+import { Map, List } from 'immutable';
 import classnames from 'classnames';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { getCalendar, resetCalendar } from '../../actions/CalendarActions';
+import { getCalendar } from '../../actions/CalendarActions';
 import CalendarHeader from './CalendarHeader';
 import CalendarTimeline from './CalendarTimeline';
 import { RELATIONSHIP_STATE_FRIEND } from '../../../../shared/constants/RelationshipConstants';
@@ -16,6 +17,9 @@ const CALENDAR_OPENED_BY_HOVER = 'openedByHover';
 const CALENDAR_OPENED_BY_CLICK = 'openedByClick';
 const TARGET_POST_CLASS = '.post';
 const TARGET_POST_PARENT_CLASS = '.posts';
+
+const emptyPeriods = List();
+const emptySelectedEntry = Map();
 
 class Calendar extends Component {
   state = {
@@ -40,8 +44,22 @@ class Calendar extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.getCalendarData(nextProps);
+    if (this.props.tlog.get('id') !== nextProps.tlog.get('id')) {
+      this.getCalendarData(nextProps);
+    }
     this.updatePropsEntry(nextProps);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    const { periods, tlog } = this.props;
+    const { currentState, selectedEntryId, visibleMarkers } = this.state;
+
+    return (
+      periods !== nextProps.periods ||
+      tlog.get('id') !== nextProps.tlog.get('id') ||
+      currentState !== nextState.currentState ||
+      selectedEntryId !== nextState.selectedEntryId ||
+      visibleMarkers !== nextState.visibleMarkers
+    );
   }
   componentWillUnmount() {
     if (this.timeout) {
@@ -52,21 +70,19 @@ class Calendar extends Component {
     }
   }
   getCalendarData(props) {
-    const { currentUser: { id }, tlog: { author, my_relationship },
-            getCalendar, resetCalendar } = props;
-    
-    if (author && !author.is_flow && author.slug !== TLOG_SLUG_ANONYMOUS &&
-        (!author.is_privacy || author.id === id || my_relationship === RELATIONSHIP_STATE_FRIEND)) {
-      getCalendar(author.id);
-    } else {
-      resetCalendar();
+    const { currentUser: { id }, tlog, getCalendar } = props;
+    const tlogId = tlog.get('id');
+
+    if (tlogId && !tlog.get('isFlow') && tlog.get('slug') !== TLOG_SLUG_ANONYMOUS &&
+        (!tlog.get('isPrivacy') || tlogId === id || tlog.myRelationship === RELATIONSHIP_STATE_FRIEND)) {
+      getCalendar(tlogId);
     }
   }
-  updatePropsEntry(props) {
-    const { isEntry, tlogEntry, tlogEntries } = props;
-    const selectedEntry = (isEntry ? tlogEntry : tlogEntries.items.length && tlogEntries.items[0].entry) || {};
-
-    this.updateSelectedEntry(selectedEntry.id, selectedEntry.created_at || (new Date()).toISOString());
+  updatePropsEntry({ selectedEntry }) {
+    this.updateSelectedEntry(
+      selectedEntry.get('id'),
+      selectedEntry.get('createdAt', (new Date()).toISOString())
+    );
   }
   updateSelectedEntry(id, time) {
     this.setState({
@@ -115,7 +131,12 @@ class Calendar extends Component {
     return (this.state.currentState === CALENDAR_OPENED_BY_CLICK);
   }
   render() {
-    const { calendar } = this.props;
+    const { periods } = this.props;
+
+    if (periods.isEmpty()) {
+      return null;
+    }
+
     const calendarClasses = classnames({
       'calendar': true,
       'calendar--open': this.isOpen(),
@@ -123,11 +144,6 @@ class Calendar extends Component {
       'calendar--opened-by-click': this.isOpenedByClick(),
     });
     const { headerDate, selectedEntryId, visibleMarkers } = this.state;
-    const periodsCount = calendar.periods.length;
-
-    if (!periodsCount) {
-      return null;
-    }
     
     return (
       <nav
@@ -137,15 +153,15 @@ class Calendar extends Component {
         onMouseLeave={this.onMouseLeave.bind(this)}
       >
         {this.isOpen()
-         ? periodsCount && periodsCount > 0
+         ? periods.size > 0
            ? <CalendarTimeline
-               periods={calendar.periods}
+               periods={periods}
                selectedEntryId={selectedEntryId}
                visibleMarkers={visibleMarkers}
              />
            : <div className="grid-full text--center">
                <div className="grid-full__middle">
-                 {periodsCount === 0
+                 {periods.size === 0
                   ? <div>{i18n.t('calendar_empty')}</div>
                   : <span className="spinner spinner--24x24">
                       <span className="spinner__icon" />
@@ -161,23 +177,25 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-  calendar: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   getCalendar: PropTypes.func.isRequired,
-  isEntry: PropTypes.bool.isRequired,
-  resetCalendar: PropTypes.func.isRequired,
-  tlogEntries: PropTypes.object.isRequired,
-  tlogEntry: PropTypes.object.isRequired,
+  periods: PropTypes.object.isRequired,
+  selectedEntry: PropTypes.object,
+  tlog: PropTypes.object.isRequired,
 };
 
 export default connect(
-  (state, { isEntry }) => ({
-    isEntry,
-    calendar: state.calendar.data,
-    currentUser: state.currentUser.data,
-    tlog: state.tlog.data,
-    tlogEntries: state.tlogEntries.data,
-    tlogEntry: state.tlogEntry.data,
-  }),
-  { getCalendar, resetCalendar }
+  (state, { entryId, tlog }) => {
+    const { entities } = state;
+    const periods = entities.getIn([ 'calendar', String(tlog.get('id')), 'periods' ], emptyPeriods);
+    const [ firstEntryId ] = state.tlogEntries.data.items;
+    const selectedEntry = entities.getIn([ 'entry', String(entryId || firstEntryId) ], emptySelectedEntry);
+
+    return {
+      periods,
+      selectedEntry,
+      currentUser: state.currentUser.data,
+    };
+  },
+  { getCalendar }
 )(Calendar);

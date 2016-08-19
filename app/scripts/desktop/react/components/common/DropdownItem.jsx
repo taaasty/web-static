@@ -1,26 +1,28 @@
-import { PropTypes } from 'react';
-import classnames from 'classnames';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
-export default class DropdownItem {
-  static propTypes = {
-    item: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    active: PropTypes.bool,
-    onClick: PropTypes.func,
-  };
-  render() {
-    let itemClasses = classnames('person__dropdown-item', {
-      'state--active': this.props.active
-    });
+function DropdownItem({ active, item, onClick, title }) {
+  function handleClick(ev) {
+    ev.preventDefault();
+    onClick(item);
+  }
 
-    return (
-      <a className={itemClasses} onClick={this.handleClick.bind(this)}>
-        {this.props.title}
-      </a>
-    );
-  }
-  handleClick(e) {
-    e.preventDefault();
-    this.props.onClick(this.props.item)
-  }
+  const itemClasses = classNames('person__dropdown-item', {
+    'state--active': active,
+  });
+
+  return (
+    <a className={itemClasses} onClick={handleClick}>
+      {title}
+    </a>
+  );
 }
+
+DropdownItem.propTypes = {
+  active: PropTypes.bool,
+  item: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  title: PropTypes.string.isRequired,
+};
+
+export default DropdownItem;

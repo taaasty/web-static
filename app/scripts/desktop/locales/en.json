@@ -134,9 +134,6 @@
   "entry_meta_vk": "Vkontakte",
   "entry_meta_fb": "Facebook",
   "entry_meta_twitter": "Twitter",
-  "entry_repost_loading": "Loading...",
-  "entry_repost_empty": "List is empty",
-  "entry_repost_error": "An error occured while loading",
   "hero_stats_popup_loading": "Loading...",
   "hero_stats_popup_empty": "List is empty",
   "hero_stats_popup_error": "Loading error",
@@ -161,13 +158,6 @@
   "vkontakte_suggestions_empty": "Unfortunately, there are no your friends from VK which you have not subscribed already",
   "vkontakte_suggestions_not_signedin": "You haven't link VK account yet",
   "vkontakte_suggestions_signin_button": "Find your friends from VK",
-  "persons_popup_menu_followings": "Followings",
-  "persons_popup_menu_followers": "Followers",
-  "persons_popup_menu_requested": "Requests",
-  "persons_popup_menu_guessed": "Recommendations",
-  "persons_popup_menu_ignored": "Blocked",
-  "persons_popup_menu_vkontakte": "VKontakte",
-  "persons_popup_menu_facebook": "Facebook",
   "persons_popup_header": "Subscriptions settings",
   "editor_private_entry": "Private post",
   "editor_public_entry": "Public post",
@@ -191,11 +181,11 @@
   "editor_files_limit_reached_plural": "The post can't contain more than {{count}} Images",
   "editor_video_mediabox_loading": "Loading..",
   "editor_image_mediabox_loading": "Loading image from url..",
-  "editor_welcome_move_or": "Drag or",
+  "editor_welcome_move_or": "Drag or ",
   "editor_welcome_choose": "choose",
-  "editor_welcome_picture_or": "image or",
+  "editor_welcome_picture_or": " an image or ",
   "editor_welcome_insert": "insert",
-  "editor_welcome_link_to_it": "a link to it",
+  "editor_welcome_link_to_it": " a link to it",
   "editor_welcome_instagram_insert": "Insert",
   "editor_welcome_instagram_link": "a link to the post in Instagram.",
   "editor_welcome_music_insert": "Insert",
@@ -330,7 +320,6 @@
   "feed_people": "People",
   "feed_anonymous": "Anonymous ",
   "settings_header": "Settings",
-  "entry_repost_header": "Repost to",
   "toolbar_new_entry_item": "New post",
   "toolbar_new_text_entry": "Text to TLog",
   "toolbar_new_image_entry": "Image to TLog",
@@ -566,11 +555,17 @@
       "pinned": "The post is pinned up"
     },
     "repost": {
+      "header": "Repost to",
+      "loading": "Loading...",
+      "empty": "List is empty",
+      "error": "An error occured while loading",
+      "search_placeholder": "Search...",
       "no_flows": "Follow or create new <a class=\"popup__link\" href=\"{{flowsLink}}\">flows</a> to share your thoughts there"
     }
   },
   "create_flow": {
-    "header": "Create flow"
+    "header": "Create flow",
+    "create_success": "Flow successfully created! Redirection to the flow page..."
   },
   "manage_flow": {
     "header": "Flow management",
@@ -578,6 +573,9 @@
     "private_title": "Private flow?",
     "premoderate_description": "Posts appear in the flow only after approval",
     "premoderate_title": "Pre-moderation",
+    "update_success": "Changes have been saved",
+    "empty_list": "No data",
+    "error_list": "Load error",
     "tabs": {
       "settings": "Settings",
       "staffs": "Staffs",
@@ -586,6 +584,10 @@
       "ignored": "Ignored"
     },
     "save": "Save"
+  },
+  "flow_form": {
+    "name_placeholder": "#Flow name",
+    "title_placeholder": "Short description, below 140 characters"
   },
   "tlog_alert": {
     "owner_private_tlog": "TLog can be viewed only by subscribers and you. To become a subscriber you must be approved.",
@@ -759,6 +761,17 @@
     "share_desc": "Tasty is a friendly space for communications. Follow the link and get free premium account",
     "vk_button": "Share via VK",
     "fb_button": "Share via FB"
+  },
+  "persons_popup": {
+    "menu": {
+      "followings": "Followings",
+      "followers": "Followers",
+      "requested": "Requests",
+      "guessed": "Recommendations",
+      "ignored": "Blocked",
+      "vkontakte": "VKontakte",
+      "facebook": "Facebook"
+    }
   },
   "premium_popup": {
     "title": "Tasty <span class=\"--bold\">premium</span>",

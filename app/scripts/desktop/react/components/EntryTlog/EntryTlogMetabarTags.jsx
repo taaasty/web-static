@@ -3,14 +3,17 @@ import Routes from '../../../../shared/routes/routes';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryTlogMetabarTags({ tags, userSlug }) {
+function EntryTlogMetabarTags(props) {
+  const {
+    tags,
+    userSlug,
+  } = props;
+
+  if (!tags || tags.count() === 0) {
+    return <noscript />;
+  }
+
   function renderTag(tag, idx) {
-    let separator;
-
-    if (idx < tags.length - 1) {
-      separator = <span className="meta-item__common">, </span>;
-    }
-
     return (
       <span key={`tag-${idx}`}>
         <Link
@@ -19,7 +22,11 @@ function EntryTlogMetabarTags({ tags, userSlug }) {
         >
           #{tag}
         </Link>
-        {separator}
+        {(idx < tags.count() - 1) && (
+          <span className="meta-item__common">
+            {', '}
+          </span>
+        )}
       </span>
     );
   }
@@ -27,15 +34,15 @@ function EntryTlogMetabarTags({ tags, userSlug }) {
   return (
     <span className="meta-item meta-item--tags">
       <span className="meta-item__content">
-        {tags.map(renderTag)}
+        {tags.map(renderTag).valueSeq()}
       </span>
     </span>
   );
 }
 
 EntryTlogMetabarTags.propTypes = {
-  tags: PropTypes.array.isRequired,
-  userSlug: PropTypes.string.isRequired,
+  tags: PropTypes.object,
+  userSlug: PropTypes.string,
 };
 
 export default EntryTlogMetabarTags;

@@ -2,23 +2,36 @@
 import React, { PropTypes } from 'react';
 import Text from '../../../../shared/react/components/common/Text';
 import Image from '../../../../shared/react/components/common/Image';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
 import { brickWidth } from './constants';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
+function EntryBrickImageType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const titleTruncated = entry.get('titleTruncated');
+  const previewImage = entry.get('previewImage');
+
   function renderBrickImage() {
-    return entry.preview_image
-      ?  <Image image={entry.preview_image} maxWidth={brickWidth} />
-      :  <span>{i18n.t('entry.has_no_images')}</span>;
+    return previewImage
+      ? <Image image={previewImage.toJS()} maxWidth={brickWidth} />
+      : <span>{i18n.t('entry.has_no_images')}</span>;
   }
 
   function renderBrickImageContainer() {
     return (
-      <Link className="brick__link" to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id } }}>
+      <Link className="brick__link" to={{ pathname: uri(url).path(), state: { id } }}>
         {renderBrickImage()}
       </Link>
     );
@@ -30,10 +43,10 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
         <div className="brick__text">
           <Link
             className="brick__link"
-            title={entry.title_truncated}
-            to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+            title={titleTruncated}
+            to={{ pathname: uri(url).path(), state: { id }}}
           >
-            <Text value={entry.title_truncated} withHTML />
+            <Text value={titleTruncated} withHTML />
           </Link>
         </div>
       </div>
@@ -45,12 +58,13 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
       <div className="brick__media">
         {renderBrickImageContainer()}
       </div>
-      {entry.title_truncated && renderBrickBody()}
+      {titleTruncated && renderBrickBody()}
       <div className="brick__meta">
         <EntryBrickMetabar
           entry={entry}
-          host_tlog_id={host_tlog_id}
-          isFeed={isFeed}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
         />
       </div>
       <EntryBrickActions
@@ -63,10 +77,11 @@ function EntryBrickImageType({ entry, hasModeration, host_tlog_id, isFeed, onEnt
 }
 
 EntryBrickImageType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

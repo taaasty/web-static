@@ -142,9 +142,6 @@
   "entry_meta_vk": "Вконтакте",
   "entry_meta_fb": "Facebook",
   "entry_meta_twitter": "Twitter",
-  "entry_repost_loading": "Загружаю..",
-  "entry_repost_empty": "Список пуст",
-  "entry_repost_error": "Ошибка загрузки",
   "hero_stats_popup_loading": "Загружаю..",
   "hero_stats_popup_empty": "Список пуст",
   "hero_stats_popup_error": "Ошибка загрузки",
@@ -170,13 +167,6 @@
   "vkontakte_suggestions_empty": "К сожалению, на Тейсти нет ваших друзей из Вконтакте на которых вы не подписаны",
   "vkontakte_suggestions_not_signedin": "Вы еще не привязали свой аккаунт Вконтакте",
   "vkontakte_suggestions_signin_button": "Найти друзей Вконтакте",
-  "persons_popup_menu_followings": "Вы подписаны",
-  "persons_popup_menu_followers": "Подписчики",
-  "persons_popup_menu_requested": "Заявки",
-  "persons_popup_menu_guessed": "Рекомендации",
-  "persons_popup_menu_ignored": "Заблокированы",
-  "persons_popup_menu_vkontakte": "Вконтакте",
-  "persons_popup_menu_facebook": "Facebook",
   "persons_popup_header": "Управление подписками",
   "editor_private_entry": "Закрытая запись",
   "editor_public_entry": "Открытая запись",
@@ -201,11 +191,11 @@
   "editor_files_limit_reached_5": "В записи не может быть больше чем {{count}} изображений",
   "editor_video_mediabox_loading": "Загружаю..",
   "editor_image_mediabox_loading": "Загружаю изображение по адресу..",
-  "editor_welcome_move_or": "Перетащите или",
+  "editor_welcome_move_or": "Перетащите или ",
   "editor_welcome_choose": "выберите",
-  "editor_welcome_picture_or": "картинку или",
+  "editor_welcome_picture_or": " картинку или ",
   "editor_welcome_insert": "вставьте",
-  "editor_welcome_link_to_it": "ссылку на неё",
+  "editor_welcome_link_to_it": " ссылку на неё",
   "editor_welcome_instagram_insert": "Вставьте",
   "editor_welcome_instagram_link": "ссылку на пост в инстаграме.",
   "editor_welcome_music_insert": "Вставьте",
@@ -340,7 +330,6 @@
   "feed_people": "Люди",
   "feed_anonymous": "Анонимки",
   "settings_header": "Настройки",
-  "entry_repost_header": "Куда репост?",
   "toolbar_new_entry_item": "Новая запись",
   "toolbar_new_text_entry": "Текст в дневник",
   "toolbar_new_image_entry": "Картинка в дневник",
@@ -590,11 +579,17 @@
       "pinned": "Пост закреплен"
     },
     "repost": {
+      "header": "Куда репост?",
+      "loading": "Загружаю..",
+      "empty": "Список пуст",
+      "error": "Ошибка загрузки",
+      "search_placeholder": "Поиск...",
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"{{flowsLink}}\">потоки</a> чтобы добавлять туда посты"
     }
   },
   "create_flow": {
-    "header": "Создать поток"
+    "header": "Создать поток",
+    "create_success": "Поток создан! Переходим на страницу потока..."
   },
   "manage_flow": {
     "header": "Управление потоком",
@@ -603,6 +598,9 @@
     "premoderate_description": "Записи появляются в потоке только после одобрения руководством потока.",
     "premoderate_title": "Премодерация",
     "save": "Сохранить",
+    "update_success": "Поток успешно обновлен",
+    "empty_list": "Список пуст",
+    "error_list": "Ошибка загрузки",
     "tabs": {
       "settings": "Настройки",
       "staffs": "Руководство",
@@ -610,6 +608,10 @@
       "followers": "Подписчики",
       "ignored": "Заблокированные"
     }
+  },
+  "flow_form": {
+    "name_placeholder": "#Название потока",
+    "title_placeholder": "Краткое описание, не более 140 символов"
   },
   "tlog_alert": {
     "owner_private_tlog": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",
@@ -788,6 +790,17 @@
     "share_desc": "Тейсти - дружелюбное пространство для общения. Перейди по ссылке и получи премиум-аккаунт бесплатно",
     "vk_button": "Отправить VK",
     "fb_button": "Отправить FB"
+  },
+  "persons_popup": {
+    "menu": {
+      "followings": "Вы подписаны",
+      "followers": "Подписчики",
+      "requested": "Заявки",
+      "guessed": "Рекомендации",
+      "ignored": "Заблокированы",
+      "vkontakte": "Вконтакте",
+      "facebook": "Facebook"
+    }
   },
   "premium_popup": {
     "title": "Тейсти <span class=\"--bold\">премиум</span>",

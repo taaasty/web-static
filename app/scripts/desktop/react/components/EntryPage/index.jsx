@@ -1,84 +1,77 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
+import { Map } from 'immutable';
 import Helmet from 'react-helmet';
 import uri from 'urijs';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { getTlogEntry, resetTlogEntry, setTlogEntry } from '../../actions/TlogEntryActions';
+import { getTlogEntry } from '../../actions/TlogEntryActions';
 import { deleteEntry } from '../../actions/TlogEntriesActions';
 import { SM_TLOG_ENTRY, sendCategory } from '../../../../shared/react/services/Sociomantic';
+import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
 
 import EntryTlog from '../EntryTlog';
 import PinPostButton from './PinPostButton';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
+const emptyEntry = Map();
+const emptyTlog = Map();
+const emptyEntryAuthor = Map();
+
 class EntryPageContainer extends Component {
   componentWillMount() {
-    const { location: { state }, tlogEntry } = this.props;
+    const { location: { state }, getTlogEntry } = this.props;
 
-    state && this.fetchData(state, state.refetch);
-    if (tlogEntry.data.id) {
-      sendCategory(SM_TLOG_ENTRY, tlogEntry.data.id);
+    if (state && state.id) {
+      getTlogEntry(state.id, state.refetch);
+      sendCategory(SM_TLOG_ENTRY, state.id);
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { state } = nextProps.location;
-    const { id: nextId } = nextProps.tlogEntry.data;
+    const { location: { state }, getTlogEntry } = this.props;
+    const { location: { state: nextState } } = nextProps;
 
-    state && this.fetchData(state);
-    if (nextId && this.props.tlogEntry.data.id !== nextId) {
-      sendCategory(SM_TLOG_ENTRY, nextId);
+    if (state && nextState && state.id !== nextState.id) {
+      getTlogEntry(nextState.id);
+      sendCategory(SM_TLOG_ENTRY, nextState.id);
     }
   }
-  fetchData({ id: newId, isFeed }, refetch) {
-    const { getTlogEntry, setTlogEntry,
-            feedEntries: { items: feedItems },
-            tlogEntries: { items: tlogItems },
-            tlogEntry } = this.props;
+  shouldComponentUpdate(nextProps) {
+    const { entry, entryAuthor, tlog } = this.props;
 
-    if (newId) {
-      if (refetch) {
-        getTlogEntry(newId, true);
-      } else if (!tlogEntry.data.id || newId !== tlogEntry.data.id) {
-        const items = isFeed ? feedItems : tlogItems;
-        const entries = items.filter((item) => item.entry.id === newId);
-        const entry = entries[0];
-
-        if (entry) {
-          setTlogEntry(entry);
-        } else {
-          getTlogEntry(newId);
-        }
-      }
-    }
+    return (
+      !Object.is(tlog, nextProps.tlog) ||
+      !Object.is(entry, nextProps.entry) ||
+      !Object.is(entryAuthor, nextProps.entryAuthor)
+    );
   }
   handleDeleteEntry(id) {
     this.props.deleteEntry(id);
     browserHistory.goBack();
   }
-  title(entry) {
-    return entry.title_truncated ||
-           entry.text_truncated ||
-           (entry.author && entry.author.tag);
+  title(entry, author) {
+    return (
+      entry.get('titleTruncated') ||
+      entry.get('textTruncated') ||
+      author.get('tag', '')
+    );
   }
   renderFlowEntry() {
-    const { currentUser, tlog, tlogEntry } = this.props;
-    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+    const { entry, entryAuthor, entryId, tlog } = this.props;
+    const bgStyle = { opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0') };
 
     return (
       <div className="page-body">
-        <Helmet title={this.title(tlogEntry.data)} />
+        <Helmet title={this.title(entry, entryAuthor)} />
         <div className="layout-outer">
           <div className="content-area">
             <div className="content-area__bg" style={bgStyle} />
             <div className="content-area__inner">
               <div>
                 <EntryTlog
-                  commentator={tlogEntry.data.commentator || currentUser}
-                  entry={tlogEntry.data}
-                  error={tlogEntry.error}
-                  host_tlog_id={tlog.data.author.id}
-                  isFetching={tlogEntry.isFetching || tlog.isFetching}
+                  entryId={entryId}
+                  hostTlogId={tlog.get('id')}
+                  isFetching={!tlog.get('id') || !entry.get('id')}
                   onDelete={this.handleDeleteEntry.bind(this)}
                 />
               </div>
@@ -89,39 +82,40 @@ class EntryPageContainer extends Component {
     );
   }
   renderTlogEntry() {
-    const { currentUser, tlog, tlogEntry } = this.props;
-    const currentUserId = currentUser.id;
-    const bgStyle = { opacity: tlog.data.design.feedOpacity };
+    const { currentUserId, entry, entryAuthor, entryId, tlog } = this.props;
+    const bgStyle = { opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0') };
+    const showPinButton = (
+      currentUserId &&
+      currentUserId === entryAuthor.get('id') &&
+      !entry.get('isPrivate')
+    );
 
     return (
       <div className="page-body">
-        <Helmet title={this.title(tlogEntry.data)} />
+        <Helmet title={this.title(entry, entryAuthor)} />
         <div className="content-area">
           <div className="content-area__bg" style={bgStyle} />
           <div className="content-area__inner">
-             {currentUserId && tlogEntry.data.author &&
-              currentUserId === tlogEntry.data.author.id && !tlogEntry.data.is_private &&
-             <PinPostButton
-               entryId={tlogEntry.data.id}
-               orderId={tlogEntry.data.fixed_order_id}
-               status={tlogEntry.data.fixed_state}
-               till={tlogEntry.data.fixed_up_at}
-             />
+             {showPinButton &&
+              <PinPostButton
+                entryId={entry.get('id')}
+                orderId={entry.get('fixedOrderId')}
+                status={entry.get('fixedState')}
+                till={entry.get('fixedUpAt')}
+              />
             }
             <div>
               <EntryTlog
-                commentator={tlogEntry.data.commentator || currentUser}
-                entry={tlogEntry.data}
-                error={tlogEntry.error}
-                host_tlog_id={tlog.data.author.id}
-                isFetching={tlogEntry.isFetching || tlog.isFetching}
+                entryId={entryId}
+                hostTlogId={tlog.get('id')}
+                isFetching={!entry.get('id')}
                 onDelete={this.handleDeleteEntry.bind(this)}
               />
             </div>
             <nav className="pagination">
-              {tlog.isFetching || !tlog.data.author.tlog_url
+              {!tlog.get('tlogUrl')
                ? <Spinner size={24} />
-               : <Link className="pagination__item" to={uri(tlog.data.author.tlog_url).path()}>
+               : <Link className="pagination__item" to={uri(tlog.get('tlogUrl')).path()}>
                    {i18n.t('buttons.pagination.tlog_root')}
                  </Link>
               }
@@ -132,32 +126,37 @@ class EntryPageContainer extends Component {
     );
   }
   render() {
-    return this.props.tlog.data.author.is_flow
-      ? this.renderFlowEntry()
-      : this.renderTlogEntry();
+    return this.props.tlog.get('isFlow') ? this.renderFlowEntry() : this.renderTlogEntry();
   }
 }
 
 EntryPageContainer.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  currentUserId: PropTypes.number,
   deleteEntry: PropTypes.func.isRequired,
-  feedEntries: PropTypes.object.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryId: PropTypes.number.isRequired,
   getTlogEntry: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  resetTlogEntry: PropTypes.func.isRequired,
-  setTlogEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
-  tlogEntries: PropTypes.object.isRequired,
-  tlogEntry: PropTypes.object.isRequired,
 };
 
+
 export default connect(
-  (state) => ({
-    currentUser: state.currentUser.data,
-    feedEntries: state.feedEntries.data,
-    tlog: state.tlog,
-    tlogEntries: state.tlogEntries.data,
-    tlogEntry: state.tlogEntry,
-  }),
-  { deleteEntry, getTlogEntry, resetTlogEntry, setTlogEntry }
+  (state, ownProps) => {
+    const { currentUser, entities } = state;
+    const { params: { slug, anonymousEntrySlug }, location: { state: locationState } } = ownProps;
+    const entryId = locationState && locationState.id;
+    const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
+    const tSlug = slug || (anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
+
+    return {
+      entry,
+      entryId,
+      entryAuthor: entities.getIn([ 'tlog', String(entry.get('author')) ], emptyEntryAuthor),
+      currentUserId: currentUser.data.id,
+      tlog: entities.get('tlog').find((t) => t.get('slug') === tSlug, null, emptyTlog),
+    };
+  },
+  { deleteEntry, getTlogEntry }
 )(EntryPageContainer);

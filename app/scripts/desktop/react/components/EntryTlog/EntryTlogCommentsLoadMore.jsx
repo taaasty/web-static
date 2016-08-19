@@ -2,10 +2,18 @@
 import React, { PropTypes } from 'react';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
-function EntryTlogCommentsLoadMore({ limit, loadedCount, loading, onLoadMore, totalCount }) {
+function EntryTlogCommentsLoadMore(props) {
+  const {
+    limit,
+    loadedCount,
+    loading,
+    onLoadMore,
+    totalCount,
+  } = props;
+
   function getTitle() {
     const remainingCount = totalCount - loadedCount;
-    const possibleCount  = loadedCount + limit;
+    const possibleCount = loadedCount + limit;
 
     if (possibleCount < totalCount) {
       return i18n.t('load_more_comments', { count: limit });
@@ -28,6 +36,7 @@ EntryTlogCommentsLoadMore.propTypes = {
   limit: PropTypes.number.isRequired,
   loadedCount: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 

@@ -1,36 +1,29 @@
-import Api from '../api/api';
-import ErrorService from '../../../shared/react/services/Error';
-import NoticeService from '../services/Notice';
-import AppDispatcher from '../dispatchers/dispatcher';
-import {
-  USER_ONBOARDING_SET_ISLOADING,
-  USER_ONBOARDING_SET_RELATIONSHIPS,
-} from '../constants/UserOnboardingConstants';
+import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts } from './reqHelpers';
+import { List } from 'immutable';
 
-function setIsLoading(status) {
-  AppDispatcher.handleServerAction({
-    payload: status,
-    type: USER_ONBOARDING_SET_ISLOADING,
-  });
+export const USER_ONBOARDING_REQUEST = 'USER_ONBOARDING_REQUEST';
+export const USER_ONBOARDING_SUCCESS = 'USER_ONBOARDING_SUCCESS';
+export const USER_ONBOARDING_FAILURE = 'USER_ONBOARDING_FAILURE';
+
+function fetchOnboarding() {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.onboarding_url(),
+      schema: Schemas.RELATIONSHIP_COLL,
+      types: [ USER_ONBOARDING_REQUEST, USER_ONBOARDING_SUCCESS, USER_ONBOARDING_FAILURE ],
+      opts: defaultOpts,
+    },
+  };
 }
 
-export function load() {
-  setIsLoading(true);
-  
-  return Api.onboarding.load()
-    .then((data) => {
-      AppDispatcher.handleServerAction({
-        payload: data.relationships,
-        type: USER_ONBOARDING_SET_RELATIONSHIPS,
-      });
-    })
-    .fail((xhr) => {
-      NoticeService.errorResponse(xhr);
-      ErrorService.notifyErrorResponse('Подгрузка новых пользователей', {
-        method: 'UserOnboardingActions.loadMore()',
-        methodArguments: {},
-        response: xhr.responseJSON,
-      });
-    })
-    .always(() => setIsLoading(false));
+export function loadOnboarding() {
+  return (dispatch, getState) => {
+    const state = getState().userOnboarding;
+
+    if (!state.get('isFetching') && state.getIn([ 'data', 'relationships' ], List()).count() === 0) {
+      return dispatch(fetchOnboarding());
+    }
+  };
 }

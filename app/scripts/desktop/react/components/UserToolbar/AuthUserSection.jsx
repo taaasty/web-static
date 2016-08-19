@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import NotificationsPopover from './NotificationsPopover';
 import UserPopover from './UserPopover';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { onlyUpdateForKeys } from 'recompose';
 
 const MAX_BADGE_COUNT = 99;
 const MAX_BADGE_PRESENTATION = `${MAX_BADGE_COUNT}+`;
@@ -80,4 +81,10 @@ AuthUserSection.propTypes = {
   unreadNotificationsCount: PropTypes.number.isRequired,
 };
 
-export default AuthUserSection;
+export default onlyUpdateForKeys([
+  'currentUser',
+  'isNotificationsPopoverVisible',
+  'isUserPopoverVisible',
+  'unreadConversationsCount',
+  'unreadNotificationsCount',
+])(AuthUserSection);

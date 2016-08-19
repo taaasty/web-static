@@ -32,7 +32,9 @@ export default {
       this.messagingService = new MessagingService(user.id, user.api_key.access_token);
       sendUser(user);
 
-      if (registerProvider || uri().query(true).first_login !== void 0) {
+      if (registerProvider || uri()
+        .query(true)
+        .first_login !== void 0) {
         sendRegister(user.id);
       }
     }

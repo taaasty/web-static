@@ -1,7 +1,10 @@
-/*global i18n */
 import React, { PropTypes } from 'react';
 
-function EntryTlogMetabarComments({ commentator, commentsCount, onComment, url }) {
+function EntryTlogMetabarComments(props) {
+  const {
+    commentsCount,
+    onComment,
+  } = props;
   const count = commentsCount || 0;
 
   return (
@@ -20,10 +23,8 @@ function EntryTlogMetabarComments({ commentator, commentsCount, onComment, url }
 }
 
 EntryTlogMetabarComments.propTypes = {
-  commentator: PropTypes.object,
   commentsCount: PropTypes.number.isRequired,
   onComment: PropTypes.func,
-  url: PropTypes.string.isRequired,
 };
 
 export default EntryTlogMetabarComments;

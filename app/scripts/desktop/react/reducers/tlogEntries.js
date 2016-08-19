@@ -1,9 +1,9 @@
 import createReducer from './createReducer';
 import {
   TLOG_ENTRIES_REQUEST,
-  TLOG_ENTRIES_RECEIVE,
+  TLOG_ENTRIES_SUCCESS,
+  TLOG_ENTRIES_FAILURE,
   TLOG_ENTRIES_DELETE_ENTRY,
-  TLOG_ENTRIES_ERROR,
   TLOG_ENTRIES_RESET,
   TLOG_ENTRIES_INVALIDATE,
 } from '../actions/TlogEntriesActions';
@@ -12,66 +12,64 @@ export const initialState = {
   data: {
     items: [],
     limit: null,
-    has_more: null,
-    next_since_entry_id: null,
+    hasMore: null,
+    nextSinceEntryId: null,
   },
-  id: null,
-  section: '',
-  query: '',
+  signature: null,
+  slug: null, // for invalidation purposes
   isFetching: false,
   error: null,
   invalid: false,
+  visible: 0,
 };
 
 const actionMap = {
   [TLOG_ENTRIES_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [TLOG_ENTRIES_RECEIVE](state, data) {
-    return {
-      ...state,
-      ...data,
+  [TLOG_ENTRIES_SUCCESS](state, { response, slug, signature }) {
+    const data = signature === state.signature ?
+      Object.assign({}, response.result, {
+        items: state.data.items.concat(response.result.items),
+      }) :
+      response.result;
+
+    return Object.assign({}, state, {
+      data,
+      signature,
+      slug,
       isFetching: false,
       error: null,
       invalid: false,
-    };
+    });
+  },
+
+  [TLOG_ENTRIES_FAILURE](state, { error, slug, signature }) {
+    return Object.assign({}, state, {
+      error,
+      signature,
+      slug,
+      isFetching: false,
+      invalid: false,
+    });
   },
 
   [TLOG_ENTRIES_RESET](state) {
-    return {
-      ...state,
-      data: initialState.data,
-    };
+    return Object.assign({}, state, { data: initialState.data });
   },
 
-  [TLOG_ENTRIES_DELETE_ENTRY](state, entryId) {
-    const items = state.data.items.filter((item) => item.entry.id !== entryId);
+  [TLOG_ENTRIES_DELETE_ENTRY](state, { entryId }) {
+    const items = state.data.items.filter((id) => id !== entryId);
 
-    return {
-      ...state,
-      data: { ...state.data, items },
-    };
-  },
-
-  [TLOG_ENTRIES_ERROR](state, error) {
-    return {
-      ...state,
-      ...error,
-      isFetching: false,
-      invalid: false,
-    };
+    return Object.assign({}, state, { data: Object.assign({}, state.data, { items }) });
   },
 
   [TLOG_ENTRIES_INVALIDATE](state) {
-    return {
-      ...state,
-      invalid: true,
-    };
+    return Object.assign({}, state, { invalid: true });
   },
 };
 

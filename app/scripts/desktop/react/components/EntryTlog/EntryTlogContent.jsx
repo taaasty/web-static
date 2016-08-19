@@ -8,6 +8,7 @@ import EntryTlogLinkType from './EntryTlogLinkType';
 import EntryTlogSongType from './EntryTlogSongType';
 import EntryTlogCodeType from './EntryTlogCodeType';
 import EntryTlogUnknownType from './EntryTlogUnknownType';
+import { onlyUpdateForKeys } from 'recompose';
 
 const ENTRY_TEXT_TYPE = 'text',
       ENTRY_IMAGE_TYPE = 'image',
@@ -20,7 +21,11 @@ const ENTRY_TEXT_TYPE = 'text',
       ENTRY_ANONYMOUS_TYPE = 'anonymous';
 
 function EntryTlogContent(props) {
-  switch(props.entry.type) {
+  const {
+    entry,
+  } = props;
+
+  switch(entry.get('type')) {
   case ENTRY_TEXT_TYPE:
   case ENTRY_ANONYMOUS_TYPE:
   case ENTRY_CONVO_TYPE:
@@ -39,19 +44,38 @@ function EntryTlogContent(props) {
     return <EntryTlogCodeType {...props} />;
   default:
     ErrorService.notifyWarning('Неизвестный тип tlog-поста', {
-      componentName: this.constructor.name,
+      componentName: 'EntryTlogContent',
       method: 'render',
-      entryID: props.entry.id,
-      entryType: props.entry.type,
+      entryID: entry.get('id'),
+      entryType: entry.get('type'),
     });
-    
+
     return <EntryTlogUnknownType {...props} />;
   }
 }
 
 EntryTlogContent.propTypes = {
+  commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
-  hasModeration: PropTypes.bool,
+  entryAuthor: PropTypes.object.isRequired,
+  entryState: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
+  entryTlogAuthor: PropTypes.object.isRequired,
+  hasModeration: PropTypes.bool.isRequired,
+  hostTlogId: PropTypes.number,
+  isFormHidden: PropTypes.bool,
+  isInList: PropTypes.bool,
 };
 
-export default EntryTlogContent;
+export default onlyUpdateForKeys([
+  'commentator',
+  'entry',
+  'entryAuthor',
+  'entryTlog',
+  'entryTlogAuthor',
+  'entryState',
+  'hasModeration',
+  'hostTlogId',
+  'isFormHidden',
+  'isInList',
+])(EntryTlogContent);

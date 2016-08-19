@@ -1,72 +1,51 @@
-/*global $ */
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, makeGetUrl } from './reqHelpers';
 
-export const TAG_ENTRIES_RESET = 'TAG_ENTRIES_RESET';
 export const TAG_ENTRIES_REQUEST = 'TAG_ENTRIES_REQUEST';
-export const TAG_ENTRIES_RECEIVE = 'TAG_ENTRIES_RECEIVE';
-export const TAG_ENTRIES_ERROR = 'TAG_ENTRIES_ERROR';
+export const TAG_ENTRIES_SUCCESS = 'TAG_ENTRIES_SUCCESS';
+export const TAG_ENTRIES_FAILURE = 'TAG_ENTRIES_FAILURE';
 
 const encode = window.encodeURIComponent;
 
-const INITIAL_LOAD_LIMIT = 45;
+const INITIAL_LOAD_LIMIT = 25;
 const APPEND_LOAD_LIMIT = 15;
 
-function tagEntriesReceive(data) {
+function getSignature(slug, tags) {
+  return `${slug}--${tags}`;
+}
+
+function tagsUrl(slug, tags) {
+  return slug ?
+    ApiRoutes.tagsTlog(slug, encode(tags)) :
+    ApiRoutes.tagsFeed(encode(tags));
+}
+
+function fetchTagEntries({ slug = '', tags, ...rest }) {
   return {
-    type: TAG_ENTRIES_RECEIVE,
-    payload: data,
-  };
-}
-
-function tagEntriesRequest() {
-  return {
-    type: TAG_ENTRIES_REQUEST,
-  };
-}
-
-function tagEntriesError(error) {
-  return {
-    type: TAG_ENTRIES_ERROR,
-    payload: error,
-  };
-}
-
-function tagEntriesReset() {
-  return {
-    type: TAG_ENTRIES_RESET,
-  };
-}
-
-function url(slug, tags) {
-  return slug ? ApiRoutes.tagsTlog(slug, encode(tags)) : ApiRoutes.tagsFeed(encode(tags));
-}
-
-function fetchTagEntries(url, data) {
-  return $.ajax({ url, data })
-    .fail((xhr) => {
-      ErrorService.notifyErrorResponse('Загрузка записей по тэгам', {
-        method: 'fetchTagEntries(url, data)',
-        methodArguments: { url, data },
-        response: xhr.responseJSON,
-      });
-    });
-}
-
-function getTagEntries({ slug='', tags }) {
-  return (dispatch) => {
-    dispatch(tagEntriesRequest());
-    dispatch(tagEntriesReset());
-    return fetchTagEntries(url(slug, tags), { limit: INITIAL_LOAD_LIMIT })
-      .then((data) => dispatch(tagEntriesReceive({ data, slug, tags })))
-      .fail((error) => dispatch(tagEntriesError({ error: error.responseJSON, slug, tags })));
+    [CALL_API]: {
+      endpoint: makeGetUrl(tagsUrl(slug, tags), rest),
+      schema: Schemas.ENTRY_COLL,
+      types: [
+        TAG_ENTRIES_REQUEST,
+        TAG_ENTRIES_SUCCESS,
+        TAG_ENTRIES_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
+    signature: getSignature(slug, tags),
   };
 }
 
 function shouldFetchTagEntries(state, { slug, tags }) {
-  const { isFetching, slug: cSlug, tags: cTags } = state.tagEntries;
+  const signature = getSignature(slug, tags);
+  const { isFetching, signature: cSignature } = state.tagEntries;
 
-  return !isFetching && (slug !== cSlug || tags !== cTags);
+  return !isFetching && (signature !== cSignature);
+}
+
+function getTagEntries({ slug = '', tags }) {
+  return fetchTagEntries({ slug, tags, limit: INITIAL_LOAD_LIMIT })
 }
 
 export function getTagEntriesIfNeeded(params) {
@@ -77,24 +56,20 @@ export function getTagEntriesIfNeeded(params) {
   };
 }
 
-export function appendTagEntries() {
+export function appendTagEntries({ slug = '', tags }) {
   return (dispatch, getState) => {
-    const { isFetching, slug, tags, data: { next_since_entry_id } } = getState().tagEntries;
+    const { isFetching, data: { nextSinceEntryId } } = getState()
+      .tagEntries;
 
     if (isFetching) {
       return null;
     }
 
-    dispatch(tagEntriesRequest());
-    return fetchTagEntries(url(slug, tags), {
-      since_entry_id: next_since_entry_id,
+    return dispatch(fetchTagEntries({
+      slug,
+      tags,
+      sinceEntryId: nextSinceEntryId,
       limit: APPEND_LOAD_LIMIT,
-    })
-      .done((data) => {
-        const prevItems = getState().tagEntries.data.items;
-        dispatch(tagEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(tagEntriesError({ error: error.responseJSON })));
+    }));
   };
 }

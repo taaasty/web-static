@@ -1,32 +1,38 @@
 import React, { PropTypes } from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import MetabarAuthor from '../common/MetabarAuthor';
-import Voting from '../common/Voting';
+import Voting from '../Voting';
 import { Link } from 'react-router';
 import uri from 'urijs';
+import { pure } from 'recompose';
 
-function EntryBrickMetabar({ entry, host_tlog_id, isFeed }) {
+function EntryBrickMetabar(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hostTlogId,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const commentsCount = entry.get('commentsCount');
+
   function renderMetaVote() {
-    const { id, rating } = entry;
-
     return (
       <span className="meta-item meta-item--vote">
         <span className="meta-item__content">
-          <Voting entryID={id} rating={rating} />
+          <Voting ratingId={entry.get('rating')} />
         </span>
       </span>
     );
   }
 
   function renderMetaComments() {
-    const { comments_count: commentsCount, url } = entry;
-
     return (
       <span className="meta-item meta-item--comments">
         <span className="meta-item__content">
           <Link
             className="meta-item__link"
-            to={{ pathname: uri(url).path(), hash: '#comments', state: { isFeed, id: entry.id } }}
+            to={{ pathname: uri(url).path(), hash: '#comments', state: { id } }}
           >
             <i className="icon icon--comments" />
             {commentsCount}
@@ -38,21 +44,22 @@ function EntryBrickMetabar({ entry, host_tlog_id, isFeed }) {
 
   return (
     <span className="meta-bar">
-      {entry.is_voteable && renderMetaVote()}
-      {!!entry.comments_count && renderMetaComments()}
+      {!!entry.get('isVoteable') && renderMetaVote()}
+      {!!commentsCount && renderMetaComments()}
       <MetabarAuthor
-        author={entry.author}
-        hostTlogId={host_tlog_id}
-        tlog={entry.tlog}
+        author={entryAuthor}
+        hostTlogId={hostTlogId}
+        tlog={entryTlog}
       />
     </span>
   );
 }
 
 EntryBrickMetabar.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
-  host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
+  hostTlogId: PropTypes.number,
 };
 
-export default EntryBrickMetabar;
+export default pure(EntryBrickMetabar);

@@ -4,7 +4,7 @@ import Image from '../../../../shared/react/components/common/Image';
 function FlowBrickAvatar({ flowpic }) {
   function image() {
     return {
-      url: flowpic.original_url,
+      url: flowpic.get('originalUrl'),
       geometry: {
         width: 362,
         height: 180,

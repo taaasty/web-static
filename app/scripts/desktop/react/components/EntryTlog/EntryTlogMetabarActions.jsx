@@ -7,52 +7,77 @@ import EntryTlogMetabarPin from './EntryTlogMetabarPin';
 
 class EntryTlogMetabarActions extends Component {
   canPin() {
-    const { commentator, entry: { author, is_private } } = this.props;
+    const {
+      commentator,
+      entry,
+      entryAuthor,
+    } = this.props;
 
-    return commentator && author &&
-      commentator.id === author.id && !is_private;
+    return (
+      commentator &&
+      !entryAuthor.isEmpty() &&
+      commentator.id === entryAuthor.get('id') &&
+      !entry.get('isPrivate')
+    );
   }
   render() {
-    const { id, can_delete, can_edit, can_favorite, can_report, can_watch,
-            edit_url, is_favorited, is_watching, url } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const id = entry.get('id');
+    const url = entry.get('url', entry.get('entryUrl'));
+    const canDelete = entry.get('canDelete', false);
+    const canEdit = entry.get('canEdit', false);
+    const editUrl = entry.get('editUrl');
+    const canFavorite = entry.get('canFavorite', false);
+    const canWatch = entry.get('canWatch', false);
+    const isFavorited = entry.get('isFavorited', false);
+    const isWatching = entry.get('isWatching', false);
+    const canReport = entry.get('canReport', false);
 
     return (
       <DropdownActions>
-        {can_edit && edit_url &&
-         <DropdownActionSPA
-           icon="icon--pencil"
-           title={i18n.t('edit_entry_item')}
-           url={edit_url}
-         />}
+        {canEdit && editUrl && (
+          <DropdownActionSPA
+            icon="icon--pencil"
+            title={i18n.t('edit_entry_item')}
+            url={editUrl}
+          />
+        )}
         <DropdownActionSPA
           icon="icon--hyperlink"
-          state={{ id, isFeed: this.props.isFeed }}
+          state={{ id }}
           title={i18n.t('link_entry_item')}
           url={url}
         />
-        {this.canPin() &&
-         <EntryTlogMetabarPin entry={this.props.entry} />
-        }
-        {can_favorite &&
-         <EntryTlogMetabarFavorite {...this.props}
-           isFavorited={is_favorited}
-         />}
-        {can_watch &&
-         <EntryTlogMetabarWatch {...this.props}
-           isWatching={is_watching}
-         />}
-        {can_report &&
-         <EntryTlogMetabarReport {...this.props} />}
-        {can_delete &&
-         <EntryTlogMetabarDelete {...this.props} />}
+        {this.canPin() && (
+          <EntryTlogMetabarPin entry={this.props.entry} />
+        )}
+        {canFavorite && (
+          <EntryTlogMetabarFavorite {...this.props}
+            isFavorited={isFavorited}
+          />
+        )}
+        {canWatch && (
+          <EntryTlogMetabarWatch {...this.props}
+            isWatching={isWatching}
+          />
+        )}
+        {canReport && (
+          <EntryTlogMetabarReport {...this.props} />
+        )}
+        {canDelete && (
+          <EntryTlogMetabarDelete {...this.props} />
+        )}
       </DropdownActions>
     );
   }
 }
 
 EntryTlogMetabarActions.propTypes = {
+  commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
-  isFeed: PropTypes.bool,
+  entryAuthor: PropTypes.object.isRequired,
 };
 
 class EntryTlogMetabarFavorite extends Component {
@@ -61,6 +86,9 @@ class EntryTlogMetabarFavorite extends Component {
     onAddToFavorites: PropTypes.func.isRequired,
     onRemoveFromFavorites: PropTypes.func.isRequired,
   };
+  handleClick() {
+    return this.props.isFavorited ? this.props.onRemoveFromFavorites : this.props.onAddToFavorites;
+  }
   render() {
     let icon, title, hoverTitle;
 
@@ -82,9 +110,6 @@ class EntryTlogMetabarFavorite extends Component {
       />
     );
   }
-  handleClick() {
-    return this.props.isFavorited ? this.props.onRemoveFromFavorites : this.props.onAddToFavorites;
-  }
 }
 
 class EntryTlogMetabarWatch extends Component {
@@ -93,6 +118,9 @@ class EntryTlogMetabarWatch extends Component {
     onAddToWatching: PropTypes.func.isRequired,
     onRemoveFromWatching: PropTypes.func.isRequired,
   };
+  handleClick() {
+    return this.props.isWatching ? this.props.onRemoveFromWatching : this.props.onAddToWatching;
+  }
   render() {
     let title, hoverTitle;
 
@@ -111,9 +139,6 @@ class EntryTlogMetabarWatch extends Component {
         title={title}
       />
     );
-  }
-  handleClick() {
-    return this.props.isWatching ? this.props.onRemoveFromWatching : this.props.onAddToWatching;
   }
 }
 

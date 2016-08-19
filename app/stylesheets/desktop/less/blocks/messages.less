@@ -251,7 +251,7 @@
     margin-top: -15px;
     margin-left: -15px;
   }
-  
+
   & .messages__user-name {
     margin: 0;
     line-height: 40px;
@@ -314,7 +314,7 @@
     bottom: -1px;
     left: 0;
     width: 65px;
-    border-bottom: 1px solid white;    
+    border-bottom: 1px solid white;
   }
 
   &:hover {
@@ -515,10 +515,11 @@
   & > span {
     vertical-align: middle;
   }
-  
+
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  line-height: 20px;
 
   .message-user-avatar {
     width: 20px;
@@ -789,7 +790,7 @@
 }
 
 .messages__chooser-input-wrapper {
-  
+
 }
 
 .messages__chooser-input-icon {
@@ -798,7 +799,7 @@
     left: 8px;
     font-size: 20px;
     transform: rotateY(180deg);
-    color: rgba(red(@black), green(@black), blue(@black),.4);  
+    color: rgba(red(@black), green(@black), blue(@black),.4);
 }
 
 .messages__chooser-input {
@@ -912,7 +913,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  
+
   .messages__body {
     height: initial;
     flex: 1;
@@ -931,7 +932,7 @@
     input:disabled {
       background-color: @white;
     }
-    
+
     &:hover {
       background-color: inherit;
     }
@@ -965,7 +966,7 @@
       }
     }
   }
-  
+
   .messages__group-avatar-input {
     position: absolute;
     top: 0;
@@ -1093,11 +1094,11 @@
 
     .message {
       &.message--to {
-        
+
       }
 
       &.message--from {
-        
+
       }
     }
   }
@@ -1143,7 +1144,7 @@
 
     &.message--selected {
       background-color: rgba(0, 0, 0, 0.2);
-      
+
       .message__selector {
         background-color: @messages-popup-blue;
       }

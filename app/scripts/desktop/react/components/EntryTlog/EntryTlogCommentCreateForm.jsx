@@ -2,19 +2,20 @@
 import React, { Component, PropTypes } from 'react';
 import EntryTlogCommentForm from './EntryTlogCommentForm';
 
-const FORM_SHOW_STATE = 'show',
-      FORM_LINK_STATE = 'link',
-      FORM_HIDDEN_STATE = 'hidden';
+const FORM_SHOW_STATE = 'show';
+const FORM_LINK_STATE = 'link';
+const FORM_HIDDEN_STATE = 'hidden';
 
 class EntryTlogCommentCreateForm extends Component {
   state = {
-    currentState: this.props.hideCommentForm
+    currentState: this.props.isFormHidden
       ? this.props.totalCommentsCount > 5 ? FORM_LINK_STATE : FORM_HIDDEN_STATE
       : FORM_SHOW_STATE,
   };
   clear() {
     if (this.state.currentState === FORM_SHOW_STATE) {
       this.refs.form.clear();
+      this.refs.form.focus();
     }
   }
   reply(username) {
@@ -65,8 +66,7 @@ class EntryTlogCommentCreateForm extends Component {
 
 EntryTlogCommentCreateForm.propTypes = {
   commentator: PropTypes.object.isRequired,
-  entryID: PropTypes.number.isRequired,
-  hideCommentForm: PropTypes.bool,
+  isFormHidden: PropTypes.bool,
   onCommentCreate: PropTypes.func,
   process: PropTypes.bool,
   totalCommentsCount: PropTypes.number.isRequired,

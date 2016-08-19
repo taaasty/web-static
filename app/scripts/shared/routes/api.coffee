@@ -82,7 +82,7 @@ ApiRoutes =
   get_my_relationship_url:              (tlogId) -> gon.api_host + '/v1/relationships/to/tlog/' + tlogId
 
   # Comments
-  comments_url:             (entryId) -> gon.api_host + '/v1/comments'
+  comments_url:             () -> gon.api_host + '/v1/comments'
   comments_edit_delete_url: (commentId) -> gon.api_host + '/v1/comments/' + commentId
   comments_report_url:      (commentId) -> gon.api_host + '/v1/comments/' + commentId + '/report'
 
@@ -107,6 +107,8 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages"
   messenger_read_messages_url: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/read"
+  messengerMarkAllMessagesRead: (id) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/read_all.json"
   messengerConversationsByUserIds: () ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_ids.json"
   messengerDontDisturb: (id) ->

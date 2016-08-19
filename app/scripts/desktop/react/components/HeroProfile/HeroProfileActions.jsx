@@ -1,33 +1,29 @@
 import React, { PropTypes } from 'react';
 import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
-import RelationButton from '../common/RelationButtonSPA';
+import RelationButton from '../RelationButton';
 
 import HeroProfileDropdownMenu from './HeroProfileDropdownMenu';
 import WriteMessageButton from './WriteMessageButton';
 
 function HeroProfileActions(props) {
-  const { relState, tlog } = props;
-  const { errorRelationship, isFetchingRelationship, data: { author } } = tlog;
-  const isAnonymousTlog = author.slug === TLOG_SLUG_ANONYMOUS;
+  const { myRelState, tlog } = props;
+  const tlogId = tlog.get('id');
+  const relId = tlog.get('myRelationshipObject');
+  const isAnonymousTlog = tlog.get('slug') === TLOG_SLUG_ANONYMOUS;
 
   return (
     <div className="hero__actions hero__actions--visible">
-      <RelationButton
-        error={errorRelationship}
-        isFetching={isFetchingRelationship}
-        relState={relState}
-        subjectId={author.id}
-        subjectPrivacy={author.is_privacy}
-      />
+      <RelationButton relId={relId} />
       {!isAnonymousTlog &&
        [ <WriteMessageButton
            key="write-message-button"
-           user={author}
+           userId={tlogId}
          />,
          <HeroProfileDropdownMenu
            key="ellipsis-button"
-           status={relState}
-           userId={author.id}
+           relId={relId}
+           status={myRelState}
+           userId={tlogId}
          /> ]
       }
     </div>
@@ -35,7 +31,7 @@ function HeroProfileActions(props) {
 }
 
 HeroProfileActions.propTypes = {
-  relState: PropTypes.string,
+  myRelState: PropTypes.string,
   tlog: PropTypes.object.isRequired,
 };
 

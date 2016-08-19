@@ -2,20 +2,32 @@
 import React, { PropTypes } from 'react';
 import EntryBrickMetabar from './EntryBrickMetabar';
 import EntryBrickActions from './EntryBrickActions';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, isFeed, onEntryAccept, onEntryDecline }) {
+function EntryBrickUnknownType(props) {
+  const {
+    entry,
+    entryAuthor,
+    entryTlog,
+    hasModeration,
+    hostTlogId,
+    onEntryAccept,
+    onEntryDecline,
+  } = props;
+  const id = entry.get('id');
+  const url = entry.get('url', entry.get('entryUrl'));
+  const title = entry.get('title');
+
   function renderBrickTitle() {
     return (
       <Link
         className="brick__link"
-        title={entry.title}
-        to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+        title={title}
+        to={{ pathname: uri(url).path(), state: { id }}}
       >
         <h2 className="brick__title">
-          {entry.title}
+          {title}
         </h2>
       </Link>
     );
@@ -25,8 +37,8 @@ function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, isFeed, onE
     return (
       <Link
         className="brick__link"
-        title={entry.title}
-        to={{ pathname: uri(entry.url).path(), state: { isFeed, id: entry.id }}}
+        title={title}
+        to={{ pathname: uri(url).path(), state: { id }}}
       >
         {i18n.t('entry.unknown_type')}
       </Link>
@@ -36,7 +48,7 @@ function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, isFeed, onE
   return (
     <span>
       <div className="brick__body">
-        {entry.title && renderBrickTitle()}
+        {title && renderBrickTitle()}
         <div className="brick__text">
           {renderContents()}
         </div>
@@ -44,8 +56,9 @@ function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, isFeed, onE
       <div className="brick__meta">
         <EntryBrickMetabar
           entry={entry}
-          host_tlog_id={host_tlog_id}
-          isFeed={isFeed}
+          entryAuthor={entryAuthor}
+          entryTlog={entryTlog}
+          hostTlogId={hostTlogId}
         />
       </div>
       <EntryBrickActions
@@ -58,10 +71,11 @@ function EntryBrickUnknownType({ entry, hasModeration, host_tlog_id, isFeed, onE
 }
 
 EntryBrickUnknownType.propTypes = {
-  entry: ProjectTypes.tlogEntry.isRequired,
+  entry: PropTypes.object.isRequired,
+  entryAuthor: PropTypes.object.isRequired,
+  entryTlog: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
+  hostTlogId: PropTypes.number,
   onEntryAccept: PropTypes.func.isRequired,
   onEntryDecline: PropTypes.func.isRequired,
 };

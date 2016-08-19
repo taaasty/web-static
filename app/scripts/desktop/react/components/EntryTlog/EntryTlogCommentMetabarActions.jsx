@@ -41,7 +41,7 @@ class EntryTlogCommentMetabarActions extends Component {
   }
   render() {
     const { marginTop, open } = this.state;
-    const { comment, entryId, isFeed, onCommentReport,
+    const { comment, entryId, onCommentReport,
             onCommentEdit, onCommentDelete, url } = this.props;
     const menuClasses = classNames({
       'meta-item__dropdown': true,
@@ -65,36 +65,29 @@ class EntryTlogCommentMetabarActions extends Component {
           <EntryTlogCommentMetabarActionLink
             entryId={entryId}
             icon="icon--hyperlink"
-            isFeed={isFeed}
             title={i18n.t('link_comment_item')}
             url={url}
           />
-          {
-            comment.can_report && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--exclamation-mark"
-                onClick={onCommentReport}
-                title={i18n.t('report_comment_item')}
-              />
-            )
+          {comment.get('canReport', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--exclamation-mark"
+             onClick={onCommentReport}
+             title={i18n.t('report_comment_item')}
+           />
           }
-          {
-            comment.can_edit && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--pencil"
-                onClick={onCommentEdit}
-                title={i18n.t('edit_comment_item')}
-              />
-            )
+          {comment.get('canEdit', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--pencil"
+             onClick={onCommentEdit}
+             title={i18n.t('edit_comment_item')}
+           />
           }
-          {
-            comment.can_delete && (
-              <EntryTlogCommentMetabarAction
-                icon="icon--basket"
-                onClick={onCommentDelete}
-                title={i18n.t('delete_comment_item')}
-              />
-            )
+          {comment.get('canDelete', false) &&
+           <EntryTlogCommentMetabarAction
+             icon="icon--basket"
+             onClick={onCommentDelete}
+             title={i18n.t('delete_comment_item')}
+           />
           }
         </span>
       </span>
@@ -105,7 +98,6 @@ class EntryTlogCommentMetabarActions extends Component {
 EntryTlogCommentMetabarActions. propTypes = {
   comment: PropTypes.object.isRequired,
   entryId: PropTypes.number.isRequired,
-  isFeed: PropTypes.bool,
   onCommentDelete: PropTypes.func,
   onCommentEdit: PropTypes.func,
   onCommentReport: PropTypes.func,

@@ -1,19 +1,5 @@
-import keyMirror from 'keymirror';
+import ApiRoutes from '../../../shared/routes/api';
 import uri from 'urijs';
-
-export default keyMirror({
-  FEED_INITIAL_COUNTS: null,
-  FEED_LIVE_NEW_ENTRY: null,
-  FEED_LIVE_RESET: null,
-  FEED_BEST_NEW_ENTRY: null,
-  FEED_BEST_RESET: null,
-  FEED_FRIENDS_NEW_ENTRY: null,
-  FEED_FRIENDS_RESET: null,
-  FEED_ANONYMOUS_NEW_ENTRY: null,
-  FEED_ANONYMOUS_RESET: null,
-  FEED_LIVE_FLOW_NEW_ENTRY: null,
-  FEED_LIVE_FLOW_RESET: null,
-});
 
 //pusher channels
 export const FEED_TYPE_ANONYMOUS = 'anonymous';
@@ -118,6 +104,16 @@ export const navFilters = {
   ],
 };
 
+export const apiUrlMap = {
+  [FEED_ENTRIES_API_TYPE_LIVE]: ApiRoutes.feedLiveTlogs(),
+  [FEED_ENTRIES_API_TYPE_MEDIA]: ApiRoutes.feedMediaTlogs(),
+  [FEED_ENTRIES_API_TYPE_FLOWS]: ApiRoutes.feedFlowsTlogs(),
+  [FEED_ENTRIES_API_TYPE_ANONYMOUS]: ApiRoutes.feedAnonymousTlogs(),
+  [FEED_ENTRIES_API_TYPE_BEST]: ApiRoutes.feedBestTlogs(),
+  [FEED_ENTRIES_API_TYPE_FRIENDS]: ApiRoutes.feedFriendsTlogs(),
+  [FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA]: ApiRoutes.feedFriendsMediaTlogs(),
+};
+
 export const feedTypeMap = Object.keys(navFilters)
         .reduce((acc, section) => (
           navFilters[section].forEach(({ href, type, apiType }) => acc[uri(href).path()] = { section, type, apiType }), acc
@@ -126,3 +122,16 @@ export const feedTitleMap = Object.keys(navFilters)
         .reduce((acc, section) => (navFilters[section].forEach(({ href, title }, idx) => acc[href] = { title, idx }), acc), {});
 export const feedBestTitleMap = navFilters.best
         .reduce((acc, { href, title }, idx) => (acc[uri(href).query(true).rating] = { title, idx }, acc), {});
+
+export function feedDataByUri({ pathname, query }) {
+  const { apiType, section, type } = feedTypeMap[pathname] || {};
+  const rating = apiType === FEED_ENTRIES_API_TYPE_BEST ? (query.rating || 'excellent') : void 0;
+
+  return {
+    apiType,
+    rating,
+    section,
+    type,
+    query: query.q,
+  };
+}

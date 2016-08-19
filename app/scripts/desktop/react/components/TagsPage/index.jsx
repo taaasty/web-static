@@ -33,13 +33,12 @@ class TagsPage extends Component {
               <Helmet title={title} />
               <EntryBricksContainer
                 entries={tagEntries}
-                isFeed
-                loadMoreEntries={appendTagEntries}
+                loadMoreEntries={appendTagEntries.bind(null, routeParams)} 
               />
             </div>
           </div>
         </div>
-      </div>  
+      </div>
     );
   }
 }
@@ -55,5 +54,8 @@ export default connect(
   (state) => ({
     tagEntries: state.tagEntries,
   }),
-  { appendTagEntries, getTagEntriesIfNeeded }
+  {
+    appendTagEntries,
+    getTagEntriesIfNeeded,
+   }
 )(TagsPage);

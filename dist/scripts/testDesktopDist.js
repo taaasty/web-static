@@ -8256,7 +8256,7 @@ var _chai = require('chai');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = global.React; /*global global */
+var React = global.React; /*global global, describe, it */
 
 var _global$ReactTestUtil = global.ReactTestUtils;
 var isCompositeComponent = _global$ReactTestUtil.isCompositeComponent;
@@ -8265,97 +8265,15 @@ var renderIntoDocument = _global$ReactTestUtil.renderIntoDocument;
 // Components
 
 var components = {
-  ImageAttachmentsCollage: {
-    imageAttachments: []
-  },
+  AppRoot: {},
+  BrowserSupportContainer: {},
   ConfirmRegistrationShellbox: {
     type: 'email',
     postUrl: '',
     proposetSlug: ''
-  },
-  EditorNew: {},
-  EditorEdit: {
-    entry: {}
-  },
-  EntryTlog: {
-    commentator: {
-      userpic: {
-        default_colors: {}
-      }
-    },
-    entry: {
-      author: {
-        userpic: {}
-      },
-      tlog: {
-        userpic: {}
-      },
-      rating: {}
-    }
-  },
-  TlogAlertContainer: {},
-  FollowButton: {
-    relationship: {
-      state: ''
-    }
-  },
-  Voting: {
-    rating: {
-      reasons: []
-    }
   }
 };
 
-/*
-UserToolbarContainer: {},
-FeedPageBody: {},
-Calendar: {},
-EntryPageContainer: {
-  user: {
-    tag: '',
-    name: '',
-    userpic: {
-      default_colors: {},
-    },
-  },
-  stats: {},
-  commentator: {
-    userpic: {
-      default_colors: {},
-    },
-  },
-  entry: {
-    author: {
-      userpic: {},
-    },
-    tlog: {
-      userpic: {},
-    },
-    rating: {},
-  },
-},
-TlogPageContainer: {
-  relationship: {
-    state: '',
-  },
-  user: {
-    tag: '',
-    name: '',
-    userpic: {
-      default_colors: {},
-    },
-  },
-  entries_info: {
-    items: [],
-  },
-  stats: {},
-  commentator: {
-    userpic: {
-      default_colors: {},
-    },
-  },
-},
-*/
 (0, _keys2.default)(components).forEach(function (componentName) {
   var props = components[componentName];
   var Component = global[componentName];

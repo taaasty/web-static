@@ -3,29 +3,28 @@ import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogLinkType extends Component {
   startComment() {
-    this.refs.comments.startComment();
-  }
-  renderVoting() {
-    if (this.props.entry.is_voteable) {
-      return (
-        <Voting entryID={this.props.entry.id} rating={this.props.entry.rating} />
-      );
-    }
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
+    const link = entry.get('link');
+
+    if (title) {
       return (
         <h1 className="post__title">
           <a
             className="post__link"
-            href={this.props.entry.link}
+            href={link}
             target="_blank"
           >
-            {this.props.entry.title}
+            {title}
           </a>
         </h1>
       );
@@ -37,13 +36,16 @@ class EntryTlogLinkType extends Component {
     }
   }
   render() {
-    const { is_private, text } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const isPrivate = entry.get('isPrivate');
+    const text = entry.get('text');
 
     return (
       <span>
         <header className="post__header">
-          {this.renderVoting()}
-          {is_private && <PrivacyBadge />}
+          {isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__content">
@@ -53,14 +55,13 @@ class EntryTlogLinkType extends Component {
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
 }
 
 EntryTlogLinkType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

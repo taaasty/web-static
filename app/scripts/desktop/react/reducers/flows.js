@@ -1,17 +1,16 @@
 import createReducer from './createReducer';
 import {
   FLOWS_REQUEST,
-  FLOWS_RECEIVE,
-  FLOWS_ERROR,
-  FLOWS_RESET,
+  FLOWS_SUCCESS,
+  FLOWS_FAILURE,
 } from '../actions/FlowsActions';
 
 const initialState = {
   data: {
     items: [],
-    has_more: void 0,
-    current_page: void 0,
-    next_page: void 0,
+    hasMore: void 0,
+    currentPage: void 0,
+    nextPage: void 0,
   },
   isFetching: false,
   filter: null,
@@ -19,36 +18,34 @@ const initialState = {
 };
 
 const actionMap = {
-  [FLOWS_RECEIVE](state, data) {
-    return {
-      ...state,
-      ...data,
-      isFetching: false,
-      error: null,
-    };
-  },
-
   [FLOWS_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [FLOWS_ERROR](state, error) {
-    return {
-      ...state,
-      ...error,
+  [FLOWS_SUCCESS](state, { response, filter }) {
+    const data = Object.assign({}, state.data, response.result, {
+      items: state.filter !== filter
+        ? response.result.items
+        : state.data.items.concat(response.result.items),
+    });
+
+    return Object.assign({}, state, {
+      data,
+      filter,
       isFetching: false,
-    };
+      error: null,
+    });
   },
 
-  [FLOWS_RESET](state) {
-    return {
-      ...state,
-      data: initialState.data,
-    }
+  [FLOWS_FAILURE](state, { error, filter }) {
+    return Object.assign({}, state, {
+      error,
+      filter,
+      isFetching: false,
+    });
   },
 };
 

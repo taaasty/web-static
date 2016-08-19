@@ -179,6 +179,11 @@
   }
 }
 
+.hero__stats-item-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .hero__stats-link {
   display: block;
   color: @white;
@@ -204,6 +209,27 @@
     opacity: .6;
   }
 }
+
+.hero__stats-popup {
+  &-enter {
+    opacity: 0.01;
+  }
+
+  &-enter&-enter-active {
+    opacity: 1;
+    transition: opacity .2s ease;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave&-leave-active {
+    opacity: 0.01;
+    transition: opacity .2s ease;
+  }
+}
+
 
 // Keyframes
 @-webkit-keyframes hero-animate-open {

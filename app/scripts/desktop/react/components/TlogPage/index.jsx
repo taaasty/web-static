@@ -1,169 +1,180 @@
 import React, { Component, PropTypes } from 'react';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { getCalendar } from '../../actions/CalendarActions';
 import { flowViewStyle } from '../../actions/FlowActions';
-import { appendTlogEntries, deleteEntry, getTlogEntriesIfNeeded } from '../../actions/TlogEntriesActions';
-import { appStateSetSearchKey } from '../../actions/AppStateActions';
 import {
-  SEARCH_KEY_TLOG,
-  SEARCH_KEY_MYTLOG,
-  SEARCH_KEY_FLOW,
-  SEARCH_KEY_FAVORITES,
-  SEARCH_KEY_PRIVATES,
-} from '../../constants/SearchConstants';
+  deleteEntry,
+  getTlogEntries,
+  getTlogEntriesIfNeeded,
+  getReqParams,
+} from '../../actions/TlogEntriesActions';
+import {
+  showSettingsPopup,
+  hideSettingsPopup,
+  showDesignSettingsPopup,
+  hideDesignSettingsPopup,
+} from '../../actions/AppStateActions';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
 import TlogPageBody from './TlogPageBody';
 import FlowPageBody from './FlowPageBody';
-import {
-  TLOG_SECTION_TLOG,
-  TLOG_SECTION_FAVORITE,
-  TLOG_SECTION_PRIVATE,
-} from '../../../../shared/constants/Tlog';
+
+const emptyFlow = Map();
+const emptyTlog = Map();
 
 class TlogPageContainer extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, getTlogEntriesIfNeeded,
-            params: { slug }, location } = this.props;
-    const section = this.section(this.props);
+    const { getTlogEntriesIfNeeded } = this.props;
+    const reqParams = getReqParams(this.props);
 
-    getTlogEntriesIfNeeded({
-      slug,
-      section,
-      date: this.date(this.props.params),
-      query: this.query(location),
-      sinceId: this.sinceId(location),
-    });
-    appStateSetSearchKey(this.searchKey(this.props));
-    sendCategory(section);
+    getTlogEntriesIfNeeded(reqParams);
+    sendCategory(reqParams.section);
+  }
+  componentDidMount() {
+    const {
+      showSettingsPopup,
+      showDesignSettingsPopup,
+      route: {
+        settings,
+        designSettings,
+      },
+    } = this.props;
+
+    if (settings) {
+      showSettingsPopup();
+    } else if (designSettings) {
+      showDesignSettingsPopup();
+    }
   }
   componentWillReceiveProps(nextProps) {
-    const { appStateSetSearchKey, getTlogEntriesIfNeeded } = this.props;
-    const section = this.section(this.props);
-    const nextSection = this.section(nextProps);
+    const {
+      getTlogEntriesIfNeeded,
+      hideDesignSettingsPopup,
+    } = this.props;
+    const reqParams = getReqParams(this.props);
+    const nextReqParams = getReqParams(nextProps);
+    const { section } = reqParams;
+    const { section: nextSection } = nextReqParams;
 
-    getTlogEntriesIfNeeded({
-      slug: nextProps.params.slug,
-      section: nextSection,
-      date: this.date(nextProps.params),
-      query: this.query(nextProps.location),
-      sinceId: this.sinceId(nextProps.location),
-    });
-    appStateSetSearchKey(this.searchKey(nextProps));
+    getTlogEntriesIfNeeded(nextReqParams);
     if (section !== nextSection) {
       sendCategory(nextSection);
     }
-  }
-  query({ query }) {
-    return query && query.q;
-  }
-  searchKey(props) {
-    const { currentUser: { data: userData }, tlog: { data: tlogData } } = props;
 
-    const section = this.section(props);
-
-    if (section === TLOG_SECTION_TLOG) {
-      if (tlogData.id === userData.id) {
-        return SEARCH_KEY_MYTLOG;
-      } else {
-        return (tlogData.author && tlogData.author.is_flow)
-          ? SEARCH_KEY_FLOW
-          : SEARCH_KEY_TLOG;
-      }
-    } else if (section === TLOG_SECTION_FAVORITE) {
-      return SEARCH_KEY_FAVORITES;
-    } else if (section === TLOG_SECTION_PRIVATE) {
-      return SEARCH_KEY_PRIVATES;
-    } else {
-      return SEARCH_KEY_TLOG;
+    if (!nextProps.isCurrentUser) {
+      hideDesignSettingsPopup();
     }
   }
-  sinceId({ query }) {
-    return query && query.since_entry_id;
-  }
-  section(props) {
-    const { path } = props.route;
-    
-    if (this.date(props.params)) {
-      return TLOG_SECTION_TLOG;
-    } else if (path === TLOG_SECTION_PRIVATE || path === TLOG_SECTION_FAVORITE) {
-      return path;
-    } else {
-      return TLOG_SECTION_TLOG;
-    }
-  }
-  date(params = {}) {
-    const { year, month, day } = params;
+  componentWillUnmount() {
+    const {
+      hideSettingsPopup,
+      hideDesignSettingsPopup,
+    } = this.props;
 
-    return (year && month && day) && `${year}-${month}-${day}`;
+    hideSettingsPopup();
+    hideDesignSettingsPopup();
+  }
+  appendTlogEntries() {
+    const { getTlogEntries } = this.props;
+
+    getTlogEntries(Object.assign(
+      getReqParams(this.props),
+      { sinceId: this.props.tlogEntries.data.nextSinceEntryId }
+    ));
   }
   render() {
-    const { appendTlogEntries, currentUser, deleteEntry, flow, flowViewStyle,
-            getCalendar, location, queryString, tlog, tlogEntries } = this.props;
-    const sinceId = this.sinceId(location);
-    const currentUserId = currentUser.data.id;
+    const {
+      deleteEntry,
+      flow,
+      flowState,
+      flowViewStyle,
+      getCalendar,
+      isCurrentUser,
+      location,
+      queryString,
+      tlog,
+      tlogEntries,
+    } = this.props;
+    const { section } = getReqParams(this.props);
+    const bgStyle = { opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0') };
 
-    return (tlog.data.author && tlog.data.author.is_flow)
-      ? <FlowPageBody
-          appendTlogEntries={appendTlogEntries}
-          bgStyle={{ opacity: tlog.data.design.feedOpacity }}
-          currentUser={currentUser}
-          currentUserId={currentUserId}
+    return tlog.get('isFlow')
+      ? (
+        <FlowPageBody
+          appendTlogEntries={this.appendTlogEntries.bind(this)}
+          bgStyle={bgStyle}
           deleteEntry={deleteEntry}
           flow={flow}
+          flowState={flowState}
           flowViewStyle={flowViewStyle}
           location={location}
           queryString={queryString}
-          sinceId={sinceId}
           tlog={tlog}
           tlogEntries={tlogEntries}
         />
-      : <TlogPageBody
-          appendTlogEntries={appendTlogEntries}
-          bgStyle={{ opacity: tlog.data.design.feedOpacity }}
-          currentUser={currentUser}
-          currentUserId={currentUserId}
+       )
+      : (
+        <TlogPageBody
+          appendTlogEntries={this.appendTlogEntries.bind(this)}
+          bgStyle={bgStyle}
           deleteEntry={deleteEntry}
           getCalendar={getCalendar}
+          isCurrentUser={isCurrentUser}
           queryString={queryString}
-          section={this.section(this.props)}
-          sinceId={sinceId}
+          section={section}
           tlog={tlog}
           tlogEntries={tlogEntries}
-        />;
+        />
+      );
   }
 }
 
 TlogPageContainer.propTypes = {
-  appStateSetSearchKey: PropTypes.func.isRequired,
-  appendTlogEntries: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   flow: PropTypes.object.isRequired,
+  flowState: PropTypes.object.isRequired,
   flowViewStyle: PropTypes.func.isRequired,
   getCalendar: PropTypes.func.isRequired,
+  getTlogEntries: PropTypes.func.isRequired,
   getTlogEntriesIfNeeded: PropTypes.func.isRequired,
+  hideDesignSettingsPopup: PropTypes.func.isRequired,
+  hideSettingsPopup: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   queryString: PropTypes.string,
   route: PropTypes.object.isRequired,
+  showDesignSettingsPopup: PropTypes.func.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
   tlogEntries: PropTypes.object.isRequired,
 };
 
 export default connect(
-  (state) => ({
-    currentUser: state.currentUser,
-    flow: state.flow,
-    tlog: state.tlog,
-    tlogEntries: state.tlogEntries,
-  }),
+  (state, { params }) => {
+    const { currentUser, tlogEntries, flow: flowState, entities } = state;
+    const tlog = entities.get('tlog').find((t) => t.get('slug') === params.slug, null, emptyTlog);
+    const currentUserId = currentUser.data && currentUser.data.id;
+    const isCurrentUser = !!(currentUserId && currentUserId === tlog.get('id'));
+
+    return {
+      flowState,
+      isCurrentUser,
+      tlog,
+      tlogEntries,
+      flow: entities.getIn([ 'flow', String(tlog.get('id')) ], emptyFlow),
+    };
+  },
   {
-    appStateSetSearchKey,
-    appendTlogEntries,
     deleteEntry,
     getCalendar,
+    getTlogEntries,
     getTlogEntriesIfNeeded,
     flowViewStyle,
+    showSettingsPopup,
+    hideSettingsPopup,
+    showDesignSettingsPopup,
+    hideDesignSettingsPopup,
   }
 )(TlogPageContainer);

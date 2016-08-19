@@ -1,25 +1,27 @@
-let FlowFormUpload = React.createClass({
-  propTypes: {
-    onUpload: React.PropTypes.func.isRequired
-  },
+import React, { PropTypes } from 'react';
 
-  render() {
-    return (
-      <span className="form-upload form-upload--icon">
-        <input type="file"
-               accept="image/*"
-               className="form-upload__input"
-               onChange={this.handleChange} />
-        <span className="form-upload__text">
-          <i className="icon icon--image-circle" />
-        </span>
-      </span>
-    );
-  },
-
-  handleChange(e) {
-    this.props.onUpload(e.target.files[0]);
+function FlowFormUpload({ onUpload }) {
+  function handleChange(e) {
+    onUpload(e.target.files[0]);
   }
-});
+
+  return (
+    <span className="form-upload form-upload--icon">
+      <input
+        accept="image/*"
+        className="form-upload__input"
+        onChange={handleChange}
+        type="file"
+      />
+      <span className="form-upload__text">
+        <i className="icon icon--image-circle" />
+      </span>
+    </span>
+  );
+}
+
+FlowFormUpload.propTypes = {
+  onUpload: PropTypes.func.isRequired,
+};
 
 export default FlowFormUpload;

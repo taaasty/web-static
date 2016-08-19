@@ -1,15 +1,16 @@
-/*global $ */
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
+import { CALL_API, Schemas } from '../middleware/api';
+import { NORMALIZE_DATA } from '../middleware/normalize';
+import { defaultOpts, makeGetUrl } from './reqHelpers';
 
 export const FLOWS_REQUEST = 'FLOWS_REQUEST';
-export const FLOWS_RECEIVE = 'FLOWS_RECEIVE';
-export const FLOWS_ERROR = 'FLOWS_ERROR';
-export const FLOWS_RESET = 'FLOWS_RESET';
+export const FLOWS_SUCCESS = 'FLOWS_SUCCESS';
+export const FLOWS_FAILURE = 'FLOWS_FAILURE';
 
-export const navFilters = [ 'popular', 'newest', 'my' ];
-export const navFiltersUnauth = [ 'popular', 'newest' ]; // should be a subset of navFilters
 const PAGE_SIZE_LIMIT = 30;
+
+export const navFilters = ['popular', 'newest', 'my'];
+export const navFiltersUnauth = ['popular', 'newest']; // should be a subset of navFilters
 
 export function flowsData({ query }) {
   const activeIdx = navFilters.indexOf(query && query.flows_filter);
@@ -21,40 +22,31 @@ export function flowsData({ query }) {
   };
 }
 
+export function initFlows(data, location) {
+  const { filter } = flowsData(location);
 
-function flowsRequest() {
   return {
-    type: FLOWS_REQUEST,
+    [NORMALIZE_DATA]: {
+      schema: Schemas.FLOW_COLL,
+      type: FLOWS_SUCCESS,
+      data,
+    },
+    filter,
   };
 }
 
-function flowsReceive(data) {
+function fetchFlows({ filter, page }) {
   return {
-    type: FLOWS_RECEIVE,
-    payload: data,
+    [CALL_API]: {
+      endpoint: makeGetUrl(
+        ApiRoutes.flows(), { page, sort: filter, limit: PAGE_SIZE_LIMIT }
+      ),
+      schema: Schemas.FLOW_COLL,
+      types: [FLOWS_REQUEST, FLOWS_SUCCESS, FLOWS_FAILURE],
+      opts: defaultOpts,
+    },
+    filter,
   };
-}
-
-function flowsError(error) {
-  return {
-    type: FLOWS_ERROR,
-    payload: error,
-  };
-}
-
-function flowsReset() {
-  return {
-    type: FLOWS_RESET,
-  };
-}
-
-function fetchFlows(url, data) {
-  return $.ajax({ url, data })
-    .fail((xhr) => ErrorService.notifyErrorResponse('Загрузка списка потоков', {
-      method: 'fetchFlows(url, data)',
-      methodArguments: { url, data },
-      response: xhr.responseJSON,
-    }));
 }
 
 function shouldFetchFlows(state, { filter }) {
@@ -63,39 +55,23 @@ function shouldFetchFlows(state, { filter }) {
   return (!isFetching && filter !== cFilter);
 }
 
-function getFlows({ filter }) {
-  return (dispatch) => {
-    dispatch(flowsRequest());
-    dispatch(flowsReset());
-    return fetchFlows(ApiRoutes.flows(), { sort: filter, limit: PAGE_SIZE_LIMIT })
-      .done((data) => dispatch(flowsReceive({ data, filter })))
-      .fail((error) => dispatch(flowsError({ error: error.responseJSON, filter })));
-  };
-}
-
 export function getFlowsIfNeeded(params) {
   return (dispatch, getState) => {
     if (shouldFetchFlows(getState(), params)) {
-      return dispatch(getFlows(params));
+      return dispatch(fetchFlows(params));
     }
   };
 }
 
 export function appendFlows() {
   return (dispatch, getState) => {
-    const { isFetching, filter, data: { has_more, next_page } } = getState().flows;
+    const { isFetching, filter, data: { hasMore, nextPage } } = getState()
+      .flows;
 
-    if (isFetching || !has_more) {
+    if (isFetching || !hasMore) {
       return null;
     }
 
-    dispatch(flowsRequest());
-    return fetchFlows(ApiRoutes.flows(), { sort: filter, limit: PAGE_SIZE_LIMIT, page: next_page })
-      .done((data) => {
-        const prevItems = getState().flows.data.items;
-        dispatch(flowsReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(flowsError({ error: error.responseJSON })));
+    return dispatch(fetchFlows({ filter, page: nextPage }));
   };
 }

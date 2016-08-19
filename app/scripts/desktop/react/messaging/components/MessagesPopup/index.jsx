@@ -1,82 +1,83 @@
-/*global Popup, RequesterMixin, ReactUnmountMixin */
-import React, { createClass } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import Thread from './Thread';
-import MessagesPopupStore, {
-  CONVERSATIONS_STATE,
-  CREATE_NEW_CONVERSATION_STATE,
-  THREAD_STATE,
-  GROUP_SETTINGS_STATE,
-  GROUP_CHOOSER_STATE,
-} from '../../stores/MessagesPopupStore';
-import ConversationsStore from '../../stores/ConversationsStore';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import {
+  MSG_POPUP_STATE_CONVERSATIONS,
+  MSG_POPUP_STATE_CREATE_NEW,
+  MSG_POPUP_STATE_THREAD,
+  MSG_POPUP_STATE_GROUP_SETTINGS,
+  MSG_POPUP_STATE_GROUP_CHOOSER,
+  initPopup,
+  historyBack,
+  openConversation,
+} from '../../actions/MessagesPopupActions';
 import BackButton from './BackButton';
-import CreateNewConversation from './CreateNewConversation';
-import Conversations from './Conversations';
-import GroupSettings from './GroupSettings';
-import GroupChooser from './GroupChooser';
+import Thread from '../Thread';
+import CreateNewConversation from '../CreateNewConversation';
+import Conversations from '../Conversations';
+import GroupSettings from '../GroupSettings';
+import GroupChooser from '../GroupChooser';
 import PopupTitle from './PopupTitle';
 import Popup from '../../../components/Popup';
+import { connect } from 'react-redux';
+import { List, Map } from 'immutable';
 
-//const ENTER_TIMEOUT = 300;
-//const LEAVE_TIMEOUT = 300;
+const emptyHistory = List();
+const emptyState = Map();
 
-const MessagesPopup = createClass({
-  mixins: [ ReactUnmountMixin, RequesterMixin ],
-  getInitialState() {
-    return this.getStateFromStore();
-  },
+class MessagesPopup extends Component {
+  componentWillMount() {
+    const {
+      initPopup,
+      openConversation,
+      userId,
+    } = this.props;
 
-  componentDidMount() {
-    MessagesPopupStore.addChangeListener(this._onStoreChange);
-    ConversationsStore.addChangeListener(this._onStoreChange);
-  },
+    initPopup();
+    if (userId) {
+      openConversation(userId);
+    }
+  }
+  renderTitle() {
+    const {
+      conversation,
+      popupState,
+    } = this.props;
 
-  componentWillUnmount() {
-    MessagesPopupStore.removeChangeListener(this._onStoreChange);
-    ConversationsStore.removeChangeListener(this._onStoreChange);
-  },
-
-  getStateFromStore() {
-    return {
-      currentState: MessagesPopupStore.getCurrentState(),
-      selectState: MessagesPopupStore.getSelectState(),
-      conversation: ConversationsStore.getConversation(MessagesPopupStore.getCurrentConversationId()),
-    };
-  },
-
-  handleBackButtonClick() {
-    MessagesPopupActions.backButtonClick();
-  },
-
-  _onStoreChange() {
-    this.setState(this.getStateFromStore());
-  },
-
+    return (
+      <PopupTitle
+        conversation={conversation}
+        state={popupState}
+      />
+    );
+  }
   renderContents() {
-    const { conversation, currentState } = this.state;
+    const {
+      conversation,
+      popupState,
+    } = this.props;
 
-    switch(currentState) {
-    case CONVERSATIONS_STATE:
+    switch(popupState) {
+    case MSG_POPUP_STATE_CONVERSATIONS:
       return <Conversations key="conversations" />;
-    case CREATE_NEW_CONVERSATION_STATE:
+    case MSG_POPUP_STATE_CREATE_NEW:
       return <CreateNewConversation key="newConversation" />;
-    case THREAD_STATE:
-      return conversation ? <Thread conversation={conversation} key="thread"/> : null;
-    case GROUP_SETTINGS_STATE:
+    case MSG_POPUP_STATE_THREAD:
+      return <Thread conversation={conversation} key="thread" />;
+    case MSG_POPUP_STATE_GROUP_SETTINGS:
       return <GroupSettings key="groupSettings" />;
-    case GROUP_CHOOSER_STATE:
+    case MSG_POPUP_STATE_GROUP_CHOOSER:
       return <GroupChooser key="groupChooser" />;
     }
-  },
-
+  }
   render() {
-    const { conversation, currentState } = this.state;
+    const {
+      historyBack,
+      popupState,
+     } = this.props;
     const popupClasses = classNames({
       'popup--messages': true,
       'popup--light': true,
-      '--thread': currentState === THREAD_STATE,
+      '--thread': popupState === MSG_POPUP_STATE_THREAD,
     });
 
     return (
@@ -84,19 +85,47 @@ const MessagesPopup = createClass({
         className={popupClasses}
         clue="messages"
         draggable
-        onClose={MessagesPopupActions.closeMessagesPopup}
+        onClose={this.props.onClose}
         position={{ top: 30, left: 30 }}
-        title={<PopupTitle conversation={conversation} state={currentState} />}
+        title={this.renderTitle()}
       >
         <div className="messages">
-          {currentState !== CONVERSATIONS_STATE &&
-           <BackButton onClick={this.handleBackButtonClick} />
+          {popupState !== MSG_POPUP_STATE_CONVERSATIONS &&
+           <BackButton onClick={historyBack} />
           }
           {this.renderContents()}
         </div>
       </Popup>
     );
-  },
-});
+  }
+}
 
-export default MessagesPopup;
+MessagesPopup.propTypes = {
+  conversation: PropTypes.object.isRequired,
+  historyBack: PropTypes.func.isRequired,
+  initPopup: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  openConversation: PropTypes.func.isRequired,
+  popupState: PropTypes.string.isRequired,
+  userId: PropTypes.number,
+};
+
+export default connect(
+  (state) => {
+    const lastState = state.msg
+      .messagesPopup
+      .get('history', emptyHistory)
+      .last() || emptyState;
+
+    return {
+      conversation: state.entities
+        .getIn([ 'conversation', String(lastState.get('conversationId'))], Map()),
+      popupState: lastState.get('state'),
+    };
+  },
+  {
+    historyBack,
+    initPopup,
+    openConversation,
+  }
+)(MessagesPopup);

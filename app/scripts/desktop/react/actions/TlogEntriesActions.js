@@ -1,27 +1,69 @@
-import Api from '../api/api';
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
-import { TLOG_SECTION_TLOG } from '../../../shared/constants/Tlog';
+import { CALL_API, Schemas } from '../middleware/api';
+import { NORMALIZE_DATA } from '../middleware/normalize';
+import {
+  TLOG_SECTION_TLOG,
+  TLOG_SECTION_FAVORITE,
+  TLOG_SECTION_PRIVATE,
+} from '../../../shared/constants/Tlog';
+import { makeGetUrl, defaultOpts } from './reqHelpers';
 
 export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
-export const TLOG_ENTRIES_RECEIVE = 'TLOG_ENTRIES_RECEIVE';
-export const TLOG_ENTRIES_RESET = 'TLOG_ENTRIES_RESET';
+export const TLOG_ENTRIES_SUCCESS = 'TLOG_ENTRIES_SUCCESS';
+export const TLOG_ENTRIES_FAILURE = 'TLOG_ENTRIES_FAILURE';
+
 export const TLOG_ENTRIES_DELETE_ENTRY = 'TLOG_ENTRIES_DELETE_ENTRY';
-export const TLOG_ENTRIES_ERROR = 'TLOG_ENTRIES_ERROR';
+export const TLOG_ENTRIES_RESET = 'TLOG_ENTRIES_RESET';
 export const TLOG_ENTRIES_INVALIDATE = 'TLOG_ENTRIES_INVALIDATE';
 
 const INITIAL_LOAD_LIMIT = 10;
 
-function tlogEntriesReceive(data) {
+export function getReqParams(props) {
+  const {
+    params: {
+      year,
+      month,
+      day,
+      slug,
+    } = {},
+    location: {
+      query,
+    } = {},
+    route: {
+      path,
+    },
+  } = props;
+  const date = (year && month && day) && `${year}-${month}-${day}`;
+
+  function section() {
+    if (date) {
+      return TLOG_SECTION_TLOG;
+    } else if (path === TLOG_SECTION_PRIVATE || path === TLOG_SECTION_FAVORITE) {
+      return path;
+    } else {
+      return TLOG_SECTION_TLOG;
+    }
+  }
+
   return {
-    type: TLOG_ENTRIES_RECEIVE,
-    payload: data,
+    date,
+    slug,
+    section: section(),
+    query: query && query.q,
   };
 }
 
-function tlogEntriesRequest() {
+export function initTlogEntries(data, props) {
+  const reqParams = getReqParams(props);
+
   return {
-    type: TLOG_ENTRIES_REQUEST,
+    [NORMALIZE_DATA]: {
+      schema: Schemas.ENTRY_COLL,
+      type: TLOG_ENTRIES_SUCCESS,
+      data,
+    },
+    slug: reqParams.slug,
+    signature: signature(reqParams),
   };
 }
 
@@ -31,87 +73,63 @@ function tlogEntriesReset() {
   };
 }
 
-function tlogEntriesError(error) {
+function endpoint(slug, section = TLOG_SECTION_TLOG, params) {
+  return makeGetUrl(ApiRoutes.tlogEntries(slug, section, 'tlogs'), params);
+}
+
+function signature({ slug = '', section = '', date = '', query = '' }) {
+  return `${slug}-${section}-${date}-${query}`;
+}
+
+function fetchTlogEntries(endpoint, slug, signature) {
   return {
-    type: TLOG_ENTRIES_ERROR,
-    payload: error,
+    slug,
+    signature,
+    [CALL_API]: {
+      endpoint,
+      types: [TLOG_ENTRIES_REQUEST, TLOG_ENTRIES_SUCCESS, TLOG_ENTRIES_FAILURE],
+      schema: Schemas.ENTRY_COLL,
+      opts: defaultOpts,
+    },
   };
 }
 
-function fetchTlogEntries(url, data) {
-  return Api.entry.load(url, data)
-    .fail((xhr) => {
-      ErrorService.notifyErrorResponse('Загрузка записей', {
-        method: 'fetchTlogEntries(url, data)',
-        methodArguments: {url, data},
-        response: xhr.responseJSON,
-      });
-    });
+function shouldFetchTlogEntries(state, params) {
+  const { isFetching, signature: cSignature, invalid } = state.tlogEntries;
+
+  return !isFetching && (invalid || signature(params) !== cSignature);
 }
 
-function shouldFetchTlogEntries(state, { slug, section, date, query, sinceId }) {
-  const { isFetching, date: cDate, query: cQuery, section: cSection,
-          sinceId: cSinceId, slug: cSlug, invalid } = state.tlogEntries;
-
-  return !isFetching &&
-    (invalid || slug !== cSlug || date !== cDate || section !== cSection || query !== cQuery ||
-     (cSinceId && sinceId == null)); // update only if reset sinceId
-}
-
-function getTlogEntries({ slug, section, date, query, sinceId }) {
+export function getTlogEntries(params) {
   return (dispatch) => {
-    const url = ApiRoutes.tlogEntries(slug, section, 'tlogs');
+    const { slug, section, date, query, sinceId } = params;
 
-    dispatch(tlogEntriesRequest());
-    dispatch(tlogEntriesReset());
-    return fetchTlogEntries(url, {
-      date,
-      limit: date ? void 0 : INITIAL_LOAD_LIMIT,
-      since_entry_id: sinceId || void 0,
-      q: query || void 0,
-    })
-      .then((data) => dispatch(tlogEntriesReceive({ data, date, section, slug, query, sinceId })))
-      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON, date, section, slug, query, sinceId })));
+    return dispatch(fetchTlogEntries(
+      endpoint(slug, section, {
+        date,
+        limit: date ? void 0 : INITIAL_LOAD_LIMIT,
+        sinceEntryId: sinceId || void 0,
+        q: query || void 0,
+      }),
+      slug,
+      signature(params)
+    ));
   };
 }
 
-export function getTlogEntriesIfNeeded({ slug, section=TLOG_SECTION_TLOG, date, query, sinceId }) {
+export function getTlogEntriesIfNeeded(params) {
   return (dispatch, getState) => {
-    if (shouldFetchTlogEntries(getState(), { slug, section, date, query, sinceId })) {
-      return dispatch(getTlogEntries({ slug, section, date, query, sinceId }));
+    if (shouldFetchTlogEntries(getState(), params)) {
+      dispatch(tlogEntriesReset());
+      return dispatch(getTlogEntries(params));
     }
-  };
-}
-
-export function appendTlogEntries() {
-  return (dispatch, getState) => {
-    const { isFetching, section, slug, query, data: { next_since_entry_id } } = getState().tlogEntries;
-
-    if (isFetching) {
-      return null;
-    }
-
-    const url = ApiRoutes.tlogEntries(slug, section, 'tlogs');
-    const params = {
-      since_entry_id: next_since_entry_id || void 0,
-      q: query || void 0,
-    };
-
-    dispatch(tlogEntriesRequest());
-    return fetchTlogEntries(url, params)
-      .then((data) => {
-        const prevItems = getState().tlogEntries.data.items;
-        dispatch(tlogEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(tlogEntriesError({ error: error.responseJSON })));
   };
 }
 
 export function deleteEntry(entryId) {
   return {
     type: TLOG_ENTRIES_DELETE_ENTRY,
-    payload: entryId,
+    entryId,
   };
 }
 

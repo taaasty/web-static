@@ -1,7 +1,15 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-function Area({ onClose, children }) {
-  function handleClick(ev) {
+class Area extends Component {
+  componentWillMount() {
+    document.body.classList.add('popup-enabled');
+  }
+  componentWillUnmount() {
+    document.body.classList.remove('popup-enabled');
+  }
+  handleClick(ev) {
+    const { onClose } = this.props;
+
     if (ev.target.classList.contains('popup-container__cell')) {
       ev.preventDefault();
       if (typeof onClose === 'function') {
@@ -9,16 +17,19 @@ function Area({ onClose, children }) {
       }
     }
   }
+  render() {
+    const { children } = this.props;
 
-  return (
-    <div className="popup-container">
-      <div className="popup-container__main">
-        <div className="popup-container__cell" onClick={handleClick}>
-          {children}
+    return (
+      <div className="popup-container">
+        <div className="popup-container__main">
+          <div className="popup-container__cell" onClick={this.handleClick.bind(this)}>
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 Area.propTypes = {
