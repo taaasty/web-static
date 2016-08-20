@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "4.2.1"
+  - "6.3.1"
 install:
   - npm install
   - npm install bower@1.7.9
