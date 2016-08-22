@@ -722,6 +722,7 @@
     "support_message": "Привет! Если у вас есть вопросы по работе сервиса, можете задать их здесь.",
     "support_email_placeholder": "Ваш e-mail",
     "support_info": "<p style=\"text-align:left;\">Id: {{id}}<br>Локаль: {{locale}}<br>Email: {{email}}<br>Пол: {{gender}}<br>Закрытый тлог: {{private}}<br>Премиум: {{premium}}<br>Дизайн бандл: {{design_bundle}}<br>Зарегистрирован: {{registered_at}}<br>Браузер: {{browser}}<br>Платформа: {{platform}}</p>",
+    "unread_messages": "Непрочитанные сообщения",
     "title_status": {
       "online": "онлайн",
       "members": "{{count}} участник",

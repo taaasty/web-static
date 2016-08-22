@@ -4,11 +4,36 @@ export const MSG_THREAD_RESET_SELECTION = 'MSG_THREAD_RESET_SELECTION';
 export const MSG_THREAD_TOGGLE_SELECTION = 'MSG_THREAD_TOGGLE_SELECTION';
 export const MSG_THREAD_SET_REPLY_TO = 'MSG_THREAD_SET_REPLY_TO';
 export const MSG_THREAD_CANCEL_REPLY_TO = 'MSG_THREAD_CANCEL_REPLY_TO';
+export const MSG_THREAD_SET_AT_BOTTOM = 'MSG_THREAD_SET_AT_BOTTOM';
+export const MSG_THREAD_SET_DIVIDER_VISIBLE = 'MSG_THREAD_SET_DIVIDER_VISIBLE';
+export const MSG_THREAD_SET_UNREAD_BUTTON_VISIBLE =
+  'MSG_THREAD_SET_UNREAD_BUTTON_VISIBLE';
 
 export const MSG_THREAD_RESET_FORM = 'MSG_THREAD_RESET_FORM';
 export const MSG_THREAD_SET_MESSAGE_TEXT = 'MSG_THREAD_SET_MESSAGE_TEXT';
 export const MSG_THREAD_ADD_MESSAGE_FILES = 'MSG_THREAD_ADD_MESSAGE_FILES';
 export const MSG_THREAD_REMOVE_MESSAGE_FILE = 'MSG_THREAD_REMOVE_MESSAGE_FILE';
+
+export function setAtBottom(flag) {
+  return {
+    type: MSG_THREAD_SET_AT_BOTTOM,
+    flag,
+  };
+}
+
+export function setIsUnreadButtonVisible(flag) {
+  return {
+    type: MSG_THREAD_SET_UNREAD_BUTTON_VISIBLE,
+    flag,
+  };
+}
+
+export function setIsDividerVisible(flag) {
+  return {
+    type: MSG_THREAD_SET_DIVIDER_VISIBLE,
+    flag,
+  };
+}
 
 export function startSelect() {
   return (dispatch) => {

@@ -1448,6 +1448,43 @@
   background: rgba(red(@black), green(@black), blue(@black), .25);
 }
 
+.message--unread-divider {
+  padding: 6px 0;
+  text-align: center;
+  font-size: 0.9em;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid @white;
+;
+  }
+
+  .message--unread-divider-text {
+    display: inline-block;
+    position: relative;
+    color: @black;
+    padding: 4px;
+    background: @white;
+    border-radius: 3px;
+  }
+}
+
+.message--unread-button-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .message--unread-button {
+    
+  }
+}
+
 .messages.messages--email-form {
   .message-form {
     padding: 20px 15px 7px;

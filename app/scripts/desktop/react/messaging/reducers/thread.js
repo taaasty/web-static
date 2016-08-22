@@ -10,6 +10,9 @@ import {
   MSG_THREAD_ADD_MESSAGE_FILES,
   MSG_THREAD_REMOVE_MESSAGE_FILE,
   MSG_THREAD_RESET_FORM,
+  MSG_THREAD_SET_AT_BOTTOM,
+  MSG_THREAD_SET_DIVIDER_VISIBLE,
+  MSG_THREAD_SET_UNREAD_BUTTON_VISIBLE,
 } from '../actions/ThreadActions';
 import {
   MSG_PUSHER_DELETE_MSGS,
@@ -23,9 +26,24 @@ const initialState = fromJS({
   replyToUuid: null,
   messageText: '',
   messageFiles: [],
+  isAtBottom: true,
+  isUnreadDividerVisible: false,
+  isUnreadButtonVisible: false,
 });
 
 const actionMap = {
+  [MSG_THREAD_SET_AT_BOTTOM](state, { flag }) {
+    return state.set('isAtBottom', flag);
+  },
+
+  [MSG_THREAD_SET_DIVIDER_VISIBLE](state, { flag }) {
+    return state.set('isUnreadDividerVisible', flag);
+  },
+
+  [MSG_THREAD_SET_UNREAD_BUTTON_VISIBLE](state, { flag }) {
+    return state.set('isUnreadButtonVisible', flag);
+  },
+
   [MSG_THREAD_START_SELECT](state) {
     return state.set('isSelectState', true);
   },
