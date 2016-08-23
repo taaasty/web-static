@@ -33,8 +33,6 @@
     "js-sha256": "^0.3.0",
     "keymirror": "^0.1.1",
     "lodash": "^3.1.0",
-    "masonry-layout": "^3.3.0",
-    "medium-editor": "^5.21.0",
     "moment": "^2.10.3",
     "normalizr": "^2.2.1",
     "numeral": "^1.5.3",
@@ -65,7 +63,6 @@
     "redux-thunk": "^1.0.3",
     "set-query-string": "^2.1.0",
     "striptags": "^2.1.1",
-    "tether": "^1.1.0",
     "urijs": "^1.17.0"
   },
   "devDependencies": {
@@ -117,6 +114,6 @@
     "watchify": "^3.2.1"
   },
   "engines": {
-    "node": "^4.2.1"
+    "node": "^6.3.1"
   }
 }

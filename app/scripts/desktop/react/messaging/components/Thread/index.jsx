@@ -11,6 +11,9 @@ import {
 } from '../../constants';
 import {
   startSelect,
+  setAtBottom,
+  setIsDividerVisible,
+  setIsUnreadButtonVisible,
 } from '../../actions/ThreadActions';
 import {
   loadMessages,
@@ -40,12 +43,18 @@ function Thread(props) {
     bgImage,
     canTalk,
     conversation,
+    isAtBottom,
     isSelectState,
+    isUnreadButtonVisible,
+    isUnreadDividerVisible,
     loadArchivedMessages,
     loadMessages,
     markAllMessagesRead,
     messages,
     selectedUuids,
+    setAtBottom,
+    setIsDividerVisible,
+    setIsUnreadButtonVisible,
     startSelect,
   } = props;
   const conversationType = conversation.get('type');
@@ -53,7 +62,7 @@ function Thread(props) {
     { backgroundImage: `url(${bgImage})` } :
     {};
 
-  function renderForm() {
+  function renderForm() { // eslint-disable-line react/no-multi-comp
     if (isSelectState) {
       return (
         <SelectForm
@@ -86,12 +95,18 @@ function Thread(props) {
         <div className="messages__thread-overlay" />
         <MessageList
           conversation={conversation}
+          isAtBottom={isAtBottom}
           isSelectState={isSelectState}
+          isUnreadButtonVisible={isUnreadButtonVisible}
+          isUnreadDividerVisible={isUnreadDividerVisible}
           loadArchivedMessages={loadArchivedMessages}
           loadMessages={loadMessages}
           markAllMessagesRead={markAllMessagesRead}
           messages={messages}
           selectedUuids={selectedUuids}
+          setAtBottom={setAtBottom}
+          setIsDividerVisible={setIsDividerVisible}
+          setIsUnreadButtonVisible={setIsUnreadButtonVisible}
           startSelect={startSelect}
         />
       </div>
@@ -106,12 +121,18 @@ Thread.propTypes = {
   bgImage: PropTypes.string,
   canTalk: PropTypes.bool.isRequired,
   conversation: PropTypes.object.isRequired,
+  isAtBottom: PropTypes.bool.isRequired,
   isSelectState: PropTypes.bool.isRequired,
+  isUnreadButtonVisible: PropTypes.bool.isRequired,
+  isUnreadDividerVisible: PropTypes.bool.isRequired,
   loadArchivedMessages: PropTypes.func.isRequired,
   loadMessages: PropTypes.func.isRequired,
   markAllMessagesRead: PropTypes.func.isRequired,
   messages: PropTypes.object.isRequired,
   selectedUuids: PropTypes.object.isRequired,
+  setAtBottom: PropTypes.func.isRequired,
+  setIsDividerVisible: PropTypes.func.isRequired,
+  setIsUnreadButtonVisible: PropTypes.func.isRequired,
   startSelect: PropTypes.func.isRequired,
 };
 
@@ -121,10 +142,14 @@ export default connect(
     const conversationId = conversation.get('id');
     const isSelectState = state.msg.thread.get('isSelectState', false);
     const selectedUuids = state.msg.thread.get('selectedUuids', Set());
+    const isAtBottom = state.msg.thread.get('isAtBottom', false);
+    const isUnreadButtonVisible = state.msg.thread.get('isUnreadButtonVisible', false);
+    const isUnreadDividerVisible = state.msg.thread.get('isUnreadDividerVisible', false);
     const canTalk = conversation.get('canTalk', true); // true if not set
     const messages = state
       .entities
       .get('message', Map())
+      .toList()
       .filter((m) => m.get('conversationId') === conversationId &&
         m.has('createdAt') // exclude replyMessages
       )
@@ -166,7 +191,10 @@ export default connect(
       bgImage,
       canTalk,
       conversation,
+      isAtBottom,
       isSelectState,
+      isUnreadButtonVisible,
+      isUnreadDividerVisible,
       messages,
       selectedUuids,
     };
@@ -176,5 +204,8 @@ export default connect(
     loadArchivedMessages,
     loadMessages,
     markAllMessagesRead,
+    setAtBottom,
+    setIsDividerVisible,
+    setIsUnreadButtonVisible,
   }
 )(Thread);
