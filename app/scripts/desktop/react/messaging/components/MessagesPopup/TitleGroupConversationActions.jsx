@@ -27,9 +27,9 @@ class TitleGroupConversationActions extends Component {
       initGroupSettings,
       showGroupSettings,
     } = this.props;
-    const users = conversation.get('users', emptyList)
-      .filter((id) => !conversation.get('usersLeft', emptyList).includes(id))
-      .filter((id) => !conversation.get('usersDeleted', emptyList).includes(id));
+    const users = conversation.get('usersIds', emptyList)
+      .filterNot((id) => conversation.get('usersLeft', emptyList).includes(id))
+      .filterNot((id) => conversation.get('usersDeleted', emptyList).includes(id));
 
     initGroupSettings({
       users,

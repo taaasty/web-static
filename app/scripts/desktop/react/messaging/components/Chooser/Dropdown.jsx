@@ -85,6 +85,7 @@ class Dropdown extends Component {
             placeholder={i18n.t('new_thread_placeholder')}
             ref="input"
             type="text"
+            value={query}
           />
         </div>
         {query &&

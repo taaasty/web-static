@@ -25,6 +25,10 @@ export const MSG_CONVERSATION_LEAVE_REQUEST = 'MSG_CONVERSATION_LEAVE_REQUEST';
 export const MSG_CONVERSATION_LEAVE_SUCCESS = 'MSG_CONVERSATION_LEAVE_SUCCESS';
 export const MSG_CONVERSATION_LEAVE_FAILURE = 'MSG_CONVERSATION_LEAVE_FAILURE';
 
+export const MSG_CONVERSATION_USERS_REQUEST = 'MSG_CONVERSATION_USERS_REQUEST';
+export const MSG_CONVERSATION_USERS_SUCCESS = 'MSG_CONVERSATION_USERS_SUCCESS';
+export const MSG_CONVERSATION_USERS_FAILURE = 'MSG_CONVERSATION_USERS_FAILURE';
+
 export const MSG_CONVERSATION_ONLINE_REQUEST =
   'MSG_CONVERSATION_ONLINE_REQUEST';
 export const MSG_CONVERSATION_ONLINE_SUCCESS =
@@ -218,6 +222,25 @@ export function updateOnlineStatuses() {
         opts: defaultOpts,
       },
     });
+  };
+}
+
+export function fetchConversationUsers(conversationId, usersIds) {
+  const endpoint = makeGetUrl(
+    ApiRoutes.messengerConversationsByIdUsers(conversationId), { usersIds }
+  );
+
+  return {
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.TLOG_COLL,
+      types: [
+        MSG_CONVERSATION_USERS_REQUEST,
+        MSG_CONVERSATION_USERS_SUCCESS,
+        MSG_CONVERSATION_USERS_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
   };
 }
 

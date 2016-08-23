@@ -65,6 +65,7 @@ export default connect(
 
     const conversations = state.entities
       .get('conversation')
+      .filterNot((c) => c.get('isDisabled'))
       .map(extendNestedFields)
       .sortBy(weight);
 
