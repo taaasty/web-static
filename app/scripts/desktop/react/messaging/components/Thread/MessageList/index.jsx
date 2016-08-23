@@ -8,6 +8,7 @@ import ItemManager from './ItemManager';
 import { Map } from 'immutable';
 
 const BOTTOM_OFFSET_THRESHOLD = 20;
+const MARK_ALL_TIMEOUT = 2000;
 let savedScrollHeight = null;
 
 class MessageList extends Component {
@@ -106,11 +107,13 @@ class MessageList extends Component {
     } = props;
 
     return messages
-      .filter((msg) => msg.get('userId') === conversation.get('userId'))
+      .filter((msg) => msg.get('userId') !== conversation.get('userId'))
       .some((msg) => msg.has('readAt') && !msg.get('readAt'));
   }
   checkScrollPositions() {
     const {
+      conversation,
+      markAllMessagesRead,
       setAtBottom,
       setIsUnreadButtonVisible,
     } = this.props;
@@ -123,7 +126,16 @@ class MessageList extends Component {
         scrollerPaneNode.scrollHeight - BOTTOM_OFFSET_THRESHOLD);
 
     if (divider) {
-      setIsUnreadButtonVisible(scrollerPaneBottom > divider.offsetTop);
+      const isDividerAboveBottom = scrollerPaneBottom > divider.offsetTop;
+      setIsUnreadButtonVisible(!isDividerAboveBottom);
+      if (isDividerAboveBottom &&
+          !this.markTimeout &&
+          typeof setTimeout === 'function') {
+        this.markTimeout = setTimeout(() => {
+          this.markTimeout = null;
+          markAllMessagesRead(conversation.get('id'));
+        }, MARK_ALL_TIMEOUT);
+      }
     }
   }
   handleScroll() {
@@ -264,9 +276,9 @@ class MessageList extends Component {
         <div className="messages__list" ref="messageList">
           <div className="messages__list-cell">
             {this.renderMessages()}
-            {this.renderUnreadButton()}
           </div>
         </div>
+        {this.renderUnreadButton()}
       </Scroller>
     );
   }

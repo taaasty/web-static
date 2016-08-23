@@ -8,7 +8,7 @@ function UnreadButton(props) {
 
   return (
     <div className="message--unread-button-container">
-      <div className="message-unread-button" onClick={onClick}>
+      <div className="button button--blue message--unread-button" onClick={onClick}>
         {i18n.t('messenger.unread_button')}
         {' '}
         {'\u2304'}
