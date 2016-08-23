@@ -87,7 +87,7 @@ TitlePublicConversation.propTypes = {
 
 export default connect(
   (state, { conversation }) => {
-    const activeUsers = conversation.get('users', emptyList)
+    const activeUsers = conversation.get('usersIds', emptyList)
       .filter((id) => !conversation.get('usersDeleted', emptyList).includes(id));
     const lastTypingRec = state
       .msg

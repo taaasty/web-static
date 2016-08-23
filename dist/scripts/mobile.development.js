@@ -16757,6 +16757,9 @@ ApiRoutes = {
   messengerConversationsByIdLeave: function(id) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/leave.json";
   },
+  messengerConversationsByIdUsers: function(id) {
+    return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_id/" + id + "/users.json";
+  },
   messengerConversationsByUserId: function(userId) {
     return gon.api_host + "/" + MESSENGER_VERSION_PREFIX + "/messenger/conversations/by_user_id/" + userId;
   },

@@ -19,6 +19,7 @@ import {
   initTyping,
 } from './TypingActions';
 import {
+  fetchConversationUsers,
   updateOnlineStatuses,
 } from './ConversationActions';
 import {
@@ -42,7 +43,7 @@ export const MSG_PUSHER_DELETE_USER_MSGS = 'MSG_PUSHER_DELETE_USER_MSGS';
 export const MSG_PUSHER_UPDATE_MSGS = 'MSG_PUSHER_UPDATE_MSGS';
 
 const EVENT_STATUS = 'status';
-const EVENT_UPDATE_CONVERSATION = 'update_conversation';
+const EVENT_UPDATE_CONVERSATION = 'new_update_conversation';
 const EVENT_PUSH_MESSAGE = 'push_message';
 const EVENT_PUSH_NOTIFICATION = 'push_notification';
 const EVENT_UPDATE_MESSAGES = 'update_messages';
@@ -79,12 +80,40 @@ function updateNotifications(data) {
 }
 
 function pushConversation(data) {
-  return {
-    [NORMALIZE_DATA]: {
-      schema: Schemas.CONVERSATION,
-      type: MSG_PUSHER_PUSH_CONVERSATION,
-      data,
-    },
+  const requiredFields = [
+    'id',
+    'name',
+    'slug',
+    'tlogUrl',
+    'userpic',
+  ];
+
+  return (dispatch, getState) => {
+    const { response } = dispatch({
+      [NORMALIZE_DATA]: {
+        schema: Schemas.CONVERSATION,
+        type: MSG_PUSHER_PUSH_CONVERSATION,
+        data,
+      },
+    });
+
+    const { id, usersIds = [] } = response.entities.conversation[response.result] ||
+      {};
+
+    if (!id || !usersIds || usersIds.length === 0) {
+      return;
+    }
+
+    const state = getState();
+
+    const idsToFetch = usersIds.filter((id) => {
+      const user = state.entities.getIn(['tlog', String(id)]);
+
+      return !user || requiredFields.some((field) => !user.has(field));
+    });
+
+    return idsToFetch.length > 0 &&
+      dispatch(fetchConversationUsers(id, idsToFetch.join(',')));
   };
 }
 
@@ -186,7 +215,7 @@ export function pusherSubscribe(user) {
     );
 
     channel.bind_all((_type = '', data) => {
-      const type = _type.replace(/^(public_|group_)/, '');
+      const type = _type.replace(/^(new_)?(public_|group_)/, '$1');
 
       switch (type) {
       case EVENT_STATUS:

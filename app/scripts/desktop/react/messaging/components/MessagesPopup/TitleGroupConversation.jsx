@@ -28,6 +28,7 @@ import { connect } from 'react-redux';
 import { List, Map } from 'immutable';
 
 const emptyUser = Map();
+const emptyList = List();
 
 function TitleGroupConversation(props) {
   const {
@@ -110,9 +111,9 @@ TitleGroupConversation.propTypes = {
 export default connect(
   (state, { conversation }) => {
     const activeUsers = conversation
-      .get('users')
-      .filter((id) => !conversation.get('usersLeft', List()).includes(id))
-      .filter((id) => !conversation.get('usersDeleted', List()).includes(id));
+      .get('usersIds', emptyList)
+      .filterNot((id) => conversation.get('usersLeft', emptyList).includes(id))
+      .filterNot((id) => conversation.get('usersDeleted', emptyList).includes(id));
     const lastTypingRec = state
       .msg
       .typing
