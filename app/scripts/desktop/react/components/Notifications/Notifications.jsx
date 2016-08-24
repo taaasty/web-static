@@ -5,6 +5,8 @@ import NotificationsNotificationList from './NotificationList';
 import NotificationsLoadingMessage from './LoadingMessage';
 import NotificationsErrorMessage from './ErrorMessage';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import Routes from '../../../../shared/routes/routes';
+import { Link } from 'react-router';
 
 function Notifications(props) {
   const {
@@ -63,6 +65,11 @@ function Notifications(props) {
       >
         {renderContent()}
       </Scroller>
+      <div className="notifications__footer">
+        <Link to={Routes.activities()}>
+          {i18n.t('notifications.go_to_activity')}
+        </Link>
+      </div>
     </div>
   );
 }

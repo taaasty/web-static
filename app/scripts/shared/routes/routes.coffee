@@ -63,5 +63,7 @@ Routes =
   terms: -> '/terms'
   prices: -> '/prices'
   policy: -> '/policy'
+  activities: -> '/activities'
+  activitiesMy: -> '/activities?my'
 
 module.exports = Routes

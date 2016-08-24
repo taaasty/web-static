@@ -26,6 +26,7 @@ import TermsPage from './components/TermsPage';
 import ContactsPage from './components/ContactsPage';
 import PricesPage from './components/PricesPage';
 import RefsPage from './components/RefsPage';
+import ActivitiesPage from './components/ActivitiesPage';
 
 import {
   initCurrentUser,
@@ -118,6 +119,7 @@ class AppRoot extends Component {
             <Route path="tags/:tags" component={TagsPage} />
             <Route path="~:slug/tags/:tags" component={TagsPage} />
             <Redirect from="~anonymous" to="live/anonymous" />
+            <Route path="activities" component={ActivitiesPage} />
             <Route path="~:slug" component={TlogPageRoot}>
               <IndexRoute component={TlogPage} />
               <Route path="edit/:editId" component={EditorPage} />

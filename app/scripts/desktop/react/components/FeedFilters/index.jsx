@@ -44,7 +44,7 @@ FeedFilters.propTypes = {
   viewMode: PropTypes.oneOf([
     VIEW_STYLE_TLOG,
     VIEW_STYLE_BRICKS,
-  ]).isRequired,
+  ]),
 };
 
 FeedFilters.defaultProps = {
