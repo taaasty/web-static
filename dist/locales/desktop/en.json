@@ -810,5 +810,11 @@
   },
   "user_slug": {
     "title": "Tasty premium"
+  },
+  "activities": {
+    "filter": {
+      "all": "Activity",
+      "my": "Notifications"
+    }
   }
 }
