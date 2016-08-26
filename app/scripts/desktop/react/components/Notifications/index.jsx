@@ -2,16 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import Notifications from './Notifications';
 import { connect } from 'react-redux';
 import {
+  NOTIFICATION_MY,
+  getFilterNotifications,
   getNotifications,
   markNotificationAsRead,
   markAllNotificationsAsRead,
 } from '../../actions/NotificationsActions';
 import { Map } from 'immutable';
-import moment from 'moment';
 
 class NotificationsContainer extends Component {
   componentWillMount() {
-    this.props.getNotifications();
+    this.getNotifications = this.props.getNotifications.bind(null, NOTIFICATION_MY);
+
+    this.getNotifications();
   }
   componentWillUnmount() {
     const { hasUnread, markAllNotificationsAsRead } = this.props;
@@ -21,7 +24,11 @@ class NotificationsContainer extends Component {
     }
   }
   render() {
-    return <Notifications {...this.props} />;
+    return (
+      <Notifications {...this.props}
+        getNotifications={this.getNotifications}
+      />
+    );
   }
 }
 
@@ -37,12 +44,7 @@ NotificationsContainer.propTypes = {
 
 export default connect(
   (state) => {
-    const currentUserId = state.currentUser.data.id;
-    const notifications = state.entities
-      .get('notification', Map())
-      .filter((n) => n.get('userId') === currentUserId)
-      .toOrderedMap()
-      .sortBy((n) => -moment(n.get('createdAt')))
+    const notifications = getFilterNotifications(state, NOTIFICATION_MY)
       .map((n) => n.set('sender', state.entities.getIn(['tlog', String(n.get('sender'))], Map())));
     const hasUnread = notifications.some((n) => !n.get('readAt'));
 

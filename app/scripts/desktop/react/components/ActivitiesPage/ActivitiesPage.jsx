@@ -1,14 +1,15 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import FeedFilters from '../FeedFilters';
 import Helmet from 'react-helmet';
 import ActivitiesList from './ActivitiesList';
 import ActivitiesNav from './ActivitiesNav';
 
 function ActivitiesPage(props) {
   const {
-    activities,
-    appendActivities,
+    entries,
+    loadMoreEntries,
+    hasMore,
+    isFetching,
     navFilterActive,
     navFilterItems,
   } = props;
@@ -27,8 +28,10 @@ function ActivitiesPage(props) {
               <div className="content-area__bg" />
               <div className="content-area__inner">
                 <ActivitiesList
-                  entries={activities}
-                  loadMoreEntries={appendActivities}
+                  entries={entries}
+                  hasMore={hasMore}
+                  isFetching={isFetching}
+                  loadMoreEntries={loadMoreEntries}
                 />
               </div>
             </div>
@@ -40,8 +43,10 @@ function ActivitiesPage(props) {
 }
 
 ActivitiesPage.propTypes = {
-  activities: PropTypes.object.isRequired,
-  appendActivities: PropTypes.func.isRequired,
+  entries: PropTypes.object.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  loadMoreEntries: PropTypes.func.isRequired,
   navFilterActive: PropTypes.number.isRequired,
   navFilterItems: PropTypes.array.isRequired,
 };

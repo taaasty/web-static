@@ -19,6 +19,9 @@ export const NOTIFICATIONS_MARK_ALL_READ_SUCCESS =
 export const NOTIFICATIONS_MARK_ALL_READ_FAILURE =
   'NOTIFICATIONS_MARK_ALL_READ_FAILURE';
 
+export const NOTIFICATION_MY = 'ActivityNotification';
+export const NOTIFICATION_FRIEND = 'FriendActivityNotification';
+
 export function markNotificationAsRead(id) {
   return {
     [CALL_API]: {
@@ -49,10 +52,10 @@ export function markAllNotificationsAsRead() {
   };
 }
 
-function fetchNotifications(toNotificationId) {
+function fetchNotifications(params) {
   return {
     [CALL_API]: {
-      endpoint: makeGetUrl(ApiRoutes.notificationsUrl(), { toNotificationId }),
+      endpoint: makeGetUrl(ApiRoutes.notificationsUrl(), params),
       schema: Schemas.NOTIFICATION_COLL,
       types: [
         NOTIFICATIONS_GET_REQUEST,
@@ -61,36 +64,55 @@ function fetchNotifications(toNotificationId) {
       ],
       opts: defaultOpts,
     },
+    filter: params.type,
   };
 }
 
-function shouldFetchNotifications(state) {
+export function getFilterNotifications(state, filter) {
   const currentUserId = state.currentUser.data.id;
+
+  return state.entities.get('notification', Map())
+    .filter((n) => n.get('userId') === currentUserId &&
+      n.get('type') === filter
+    )
+    .toOrderedMap()
+    .sortBy((n) => -moment(n.get('createdAt')));
+}
+
+function shouldFetchNotifications(state, filter) {
   const isFetching = state.notifications.get('isFetching', false);
-  const notificationCount = state.entities.get('notification', Map())
-    .filter((n) => n.get('userId') === currentUserId)
+  const notificationCount = getFilterNotifications(state, filter)
     .count();
   const totalCount = state.notifications
-    .getIn(['data', 'totalCount'], +Infinity);
+    .getIn(['totalCount', filter], +Infinity);
 
   return !isFetching && totalCount > notificationCount;
 }
 
-function getLastNotificationId(state) {
-  const currentUserId = state.currentUser.data.id;
-  const last = state.entities.get('notification', Map())
-    .filter((n) => n.get('userId') === currentUserId)
-    .toOrderedMap()
-    .sortBy((n) => -moment(n.get('createdAt')))
-    .last();
+export function prependNotifications(filter) {
+  return (dispatch, getState) => {
+    const first = getFilterNotifications(getState(), filter)
+      .first();
+    const fromNotificationId = first && first.get('id');
 
-  return last && last.get('id');
+    return dispatch(fetchNotifications({
+      fromNotificationId,
+      type: filter,
+    }));
+  };
 }
 
-export function getNotifications() {
+export function getNotifications(filter) {
   return (dispatch, getState) => {
-    if (shouldFetchNotifications(getState())) {
-      return dispatch(fetchNotifications(getLastNotificationId(getState())));
+    if (shouldFetchNotifications(getState(), filter)) {
+      const last = getFilterNotifications(getState(), filter)
+        .last();
+      const toNotificationId = last && last.get('id');
+
+      return dispatch(fetchNotifications({
+        toNotificationId,
+        type: filter,
+      }));
     }
-  }
+  };
 }

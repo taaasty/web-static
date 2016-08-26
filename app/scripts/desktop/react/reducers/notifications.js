@@ -7,9 +7,7 @@ import {
 } from '../actions/NotificationsActions';
 
 const initialState = fromJS({
-  data: {
-    totalCount: +Infinity,
-  },
+  totalCount: {}, // [filter]: count
   isFetching: false,
   error: null,
 });
@@ -22,9 +20,11 @@ const actionMap = {
     });
   },
 
-  [NOTIFICATIONS_GET_SUCCESS](state, { response }) {
-    return state.merge({
-      data: response.result,
+  [NOTIFICATIONS_GET_SUCCESS](state, { response, filter }) {
+    return state.mergeDeep({
+      totalCount: {
+        [filter]: response.result.totalCount,
+      },
       isFetching: false,
       error: null,
     });

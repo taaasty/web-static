@@ -1,15 +1,19 @@
 import React, { PropTypes } from 'react';
-import Scroller from '../common/Scroller';
+import InfiniteScroll from '../common/InfiniteScroll';
 
 function ActivitiesList(props) {
   const {
     entries,
+    hasMore,
+    isFetching,
     loadMoreEntries,
   } = props;
 
   return (
-    <Scroller
-
+    <InfiniteScroll
+      canLoad={hasMore}
+      loading={isFetching}
+      onLoad={loadMoreEntries}
     >
       {entries.map((item) => {
         return (
@@ -17,13 +21,15 @@ function ActivitiesList(props) {
             {item}
           </div>
         );
-      })}
-    </Scroller>
+      }).valueSeq()}
+    </InfiniteScroll>
   );
 }
 
 ActivitiesList.propTypes = {
   entries: PropTypes.object.isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   loadMoreEntries: PropTypes.func.isRequired,
 };
 
