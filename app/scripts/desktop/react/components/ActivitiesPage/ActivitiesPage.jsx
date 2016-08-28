@@ -12,6 +12,7 @@ function ActivitiesPage(props) {
     isFetching,
     navFilterActive,
     navFilterItems,
+    users,
   } = props;
 
   return (
@@ -32,6 +33,7 @@ function ActivitiesPage(props) {
                   hasMore={hasMore}
                   isFetching={isFetching}
                   loadMoreEntries={loadMoreEntries}
+                  users={users}
                 />
               </div>
             </div>
@@ -49,6 +51,7 @@ ActivitiesPage.propTypes = {
   loadMoreEntries: PropTypes.func.isRequired,
   navFilterActive: PropTypes.number.isRequired,
   navFilterItems: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 export default ActivitiesPage;

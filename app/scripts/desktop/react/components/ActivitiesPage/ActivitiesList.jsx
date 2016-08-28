@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import InfiniteScroll from '../common/InfiniteScroll';
+import ActivityItem from './ActivityItem';
 
 function ActivitiesList(props) {
   const {
@@ -7,6 +8,7 @@ function ActivitiesList(props) {
     hasMore,
     isFetching,
     loadMoreEntries,
+    users,
   } = props;
 
   return (
@@ -15,13 +17,20 @@ function ActivitiesList(props) {
       loading={isFetching}
       onLoad={loadMoreEntries}
     >
-      {entries.map((item) => {
-        return (
-          <div>
-            {item}
-          </div>
-        );
-      }).valueSeq()}
+      {entries.count() > 0
+        ? (
+        entries.map((item, key) => (
+          <ActivityItem
+            item={item}
+            key={`activity-item-${key}`}
+            user={users.get(key)}
+          />
+        )).valueSeq()
+        )
+        : (
+          <noscript />
+        )
+      }
     </InfiniteScroll>
   );
 }
@@ -31,6 +40,7 @@ ActivitiesList.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   loadMoreEntries: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
 export default ActivitiesList;

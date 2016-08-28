@@ -16734,6 +16734,12 @@ Routes = {
   },
   policy: function() {
     return '/policy';
+  },
+  activities: function() {
+    return '/activities';
+  },
+  activitiesMy: function() {
+    return '/activities?my';
   }
 };
 

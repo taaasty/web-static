@@ -10,6 +10,9 @@ import {
   getNotifications,
   prependNotifications,
 } from '../../actions/NotificationsActions';
+import { Map } from 'immutable';
+
+const emptyUser = Map();
 
 const filters = [
   {
@@ -62,6 +65,7 @@ class ActivitiesPageContainer extends Component {
       isFetching,
       notifications,
       getNotifications,
+      senders,
     } = this.props;
 
     return (
@@ -72,6 +76,7 @@ class ActivitiesPageContainer extends Component {
         loadMoreEntries={getNotifications.bind(void 0, filter)}
         navFilterActive={activeIdx}
         navFilterItems={filters}
+        users={senders}
       />
     );
   }
@@ -86,6 +91,7 @@ ActivitiesPageContainer.propTypes = {
   location: PropTypes.object.isRequired,
   notifications: PropTypes.object.isRequired,
   prependNotifications: PropTypes.func.isRequired,
+  senders: PropTypes.object.isRequired,
 };
 
 export default connect(
@@ -93,6 +99,8 @@ export default connect(
     const activeIdx = {}.hasOwnProperty.call(location.query, 'my') ? 1 : 0;
     const { filter } = filters[activeIdx];
     const notifications = getFilterNotifications(state, filter);
+    const senders = notifications
+      .map((n) => state.entities.getIn(['tlog', String(n.get('sender'))], emptyUser));
     const totalFilterCount = state
       .notifications
       .getIn(['totalCount', filter], +Infinity);
@@ -103,6 +111,7 @@ export default connect(
       filter,
       isFetching,
       notifications,
+      senders,
       hasMore: totalFilterCount > notifications.count(),
     };
   },

@@ -11,18 +11,9 @@ const NOTIFICATION_ENTITY_TYPE_COMMENT = 'Comment';
 const NOTIFICATION_ENTITY_TYPE_ENTRY = 'Entry';
 //const NOTIFICATION_ENTITY_TYPE_RELATIONSHIP = 'Relationship';
 
-function NotificationsNotificationListItem({ notification, onNotificationRead }) {
-  const readAt = notification.get('readAt');
+export function getEntityLocation(notification) {
+  const pathname = uri(notification.get('entityUrl')).path();
   const entityType = notification.get('entityType');
-  const sender = notification.get('sender', Map());
-  const senderUrl = sender.get('tlogUrl', '');
-  const senderSlug = sender.get('slug', '');
-
-  function handleClick() {
-    if (!readAt) {
-      onNotificationRead();
-    }
-  }
 
   function state() {
     if (entityType === NOTIFICATION_ENTITY_TYPE_ENTRY) {
@@ -34,11 +25,33 @@ function NotificationsNotificationListItem({ notification, onNotificationRead })
     }
   }
 
+  return {
+    pathname,
+    state: state(),
+  };
+}
+
+function NotificationsNotificationListItem(props) {
+  const {
+    notification,
+    onNotificationRead,
+    sender,
+  } = props;
+  const readAt = notification.get('readAt');
+  const senderUrl = sender.get('tlogUrl', '');
+  const senderSlug = sender.get('slug', '');
+
+  function handleClick() {
+    if (!readAt) {
+      onNotificationRead();
+    }
+  }
+
   const notificationClasses = classNames({
     'notification': true,
     'state--unread': !readAt,
   });
-  const entityLocation = { pathname: uri(notification.get('entityUrl')).path(), state: state()};
+  const entityLocation = getEntityLocation(notification);
 
   return (
     <li className={notificationClasses} onTouchTap={handleClick}>
@@ -50,15 +63,15 @@ function NotificationsNotificationListItem({ notification, onNotificationRead })
               <UserAvatar size={40} user={sender.toJS()} />
             </Link>
           </div>
-          {notification.image != null &&
-           <Link to={entityLocation}>
-             <Image
-               className="notification__image"
-               image={notification.get('image', Map()).toJS()}
-               maxHeight={40}
-               maxWidth={40}
-             />
-           </Link>
+          {notification.get('image') != null &&
+            <Link to={entityLocation}>
+              <Image
+                className="notification__image"
+                image={notification.get('image', Map()).toJS()}
+                maxHeight={40}
+                maxWidth={40}
+              />
+            </Link>
           }
           <div className="notification__desc">
             <span className="notification__user">
@@ -91,6 +104,7 @@ function NotificationsNotificationListItem({ notification, onNotificationRead })
 NotificationsNotificationListItem.propTypes = {
   notification: PropTypes.object.isRequired,
   onNotificationRead: PropTypes.func.isRequired,
+  sender: PropTypes.object.isRequired,
 };
 
 export default NotificationsNotificationListItem;
