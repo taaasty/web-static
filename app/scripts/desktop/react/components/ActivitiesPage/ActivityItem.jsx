@@ -6,8 +6,11 @@ import { Link } from 'react-router';
 import uri from 'urijs';
 import { Map } from 'immutable';
 import { getEntityLocation } from '../Notifications/NotificationListItem';
+import { connect } from 'react-redux';
 
-function ActivityItem(props) {
+const emptyUser = Map();
+
+function ActivityItemContainer(props) {
   const {
     item,
     user,
@@ -54,9 +57,19 @@ function ActivityItem(props) {
   );
 }
 
-ActivityItem.propTypes = {
+ActivityItemContainer.propTypes = {
   item: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
 
-export default ActivityItem;
+export default connect(
+  (state, { item }) => {
+    const user = state
+      .entities
+      .getIn(['tlog', String(item.get('sender'))], emptyUser);
+
+    return {
+      user,
+    };
+  }
+)(ActivityItemContainer);

@@ -53,9 +53,13 @@ export function markAllNotificationsAsRead() {
 }
 
 function fetchNotifications(params) {
+  const finalParams = Object.assign({}, params, {
+    includeEntity: 'true',
+  });
+
   return {
     [CALL_API]: {
-      endpoint: makeGetUrl(ApiRoutes.notificationsUrl(), params),
+      endpoint: makeGetUrl(ApiRoutes.notificationsUrl(), finalParams),
       schema: Schemas.NOTIFICATION_COLL,
       types: [
         NOTIFICATIONS_GET_REQUEST,

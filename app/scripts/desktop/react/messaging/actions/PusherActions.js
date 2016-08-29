@@ -3,7 +3,7 @@
 import { CALL_API, Schemas } from '../../middleware/api';
 import { NORMALIZE_DATA } from '../../middleware/normalize';
 import { BEEP } from '../../middleware/beep';
-import { postOpts } from '../../actions/reqHelpers';
+import { makeGetUrl, postOpts } from '../../actions/reqHelpers';
 import { camelizeKeys } from 'humps';
 import Pusher from 'pusher';
 import ApiRoutes from '../../../../shared/routes/api';
@@ -253,7 +253,9 @@ function pusherReconnect(pusher, userId) {
 function notifyReady() {
   return {
     [CALL_API]: {
-      endpoint: ApiRoutes.messenger_ready_url(),
+      endpoint: makeGetUrl(
+        ApiRoutes.messenger_ready_url(), { includeEntity: true }
+      ),
       schema: Schemas.MESSENGER_READY,
       types: [
         MSG_NOTIFY_READY_REQUEST,

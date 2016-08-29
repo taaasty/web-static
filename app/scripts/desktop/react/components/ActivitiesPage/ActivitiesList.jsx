@@ -8,7 +8,6 @@ function ActivitiesList(props) {
     hasMore,
     isFetching,
     loadMoreEntries,
-    users,
   } = props;
 
   return (
@@ -23,7 +22,6 @@ function ActivitiesList(props) {
           <ActivityItem
             item={item}
             key={`activity-item-${key}`}
-            user={users.get(key)}
           />
         )).valueSeq()
         )
@@ -40,7 +38,6 @@ ActivitiesList.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   loadMoreEntries: PropTypes.func.isRequired,
-  users: PropTypes.object.isRequired,
 };
 
 export default ActivitiesList;

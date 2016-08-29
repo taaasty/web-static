@@ -1,5 +1,5 @@
 /*global fetch */
-import { Schema, arrayOf, normalize } from 'normalizr';
+import { Schema, arrayOf, unionOf, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import 'isomorphic-fetch'; // provides global.fetch
 import NoticeService from '../services/Notice';
@@ -91,7 +91,28 @@ conversationEntrySchema.define({
   author: tlogSchema,
 });
 
+const entity = unionOf({
+  'comment': commentSchema,
+  'relationship': relSchema,
+  'entry': entrySchema,
+}, {
+  schemaAttribute: (entity) => {
+    if (!entity) {
+      return null;
+    }
+    // Comment, Relationship, Authentication, Entry, Order
+    if (entity.hasOwnProperty('readerId')) {
+      return 'relationship';
+    } else if (entity.hasOwnProperty('isVoteable')) {
+      return 'entry';
+    } else if (entity.hasOwnProperty('commentHtml')) {
+      return 'comment';
+    }
+  },
+});
+
 notificationSchema.define({
+  entity,
   sender: tlogSchema,
   senderRelation: relSchema,
 });
