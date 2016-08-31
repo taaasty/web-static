@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import ActivityItemDefault from './ActivityItemDefault';
 import ActivityItemEntry from './ActivityItemEntry';
 import ActivityItemRel from './ActivityItemRel';
+import {
+  getTlogEntry,
+} from '../../actions/TlogEntryActions';
 
 const emptyUser = Map();
 const emptyEntry = Map();
@@ -20,6 +23,7 @@ function ActivityItemContainer(props) {
     entry,
     entryAuthor,
     entityType,
+    getTlogEntry,
     item,
     relUser,
     user,
@@ -30,6 +34,7 @@ function ActivityItemContainer(props) {
       <ActivityItemEntry
         entry={entry}
         entryAuthor={entryAuthor}
+        getTlogEntry={getTlogEntry}
         item={item}
         user={user}
       />
@@ -57,6 +62,7 @@ ActivityItemContainer.propTypes = {
   entityType: PropTypes.string.isRequired,
   entry: PropTypes.object,
   entryAuthor: PropTypes.object,
+  getTlogEntry: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
   relUser: PropTypes.object,
   user: PropTypes.object.isRequired,
@@ -95,5 +101,8 @@ export default connect(
       relUser,
       user,
     };
+  },
+  {
+    getTlogEntry,
   }
 )(ActivityItemContainer);
