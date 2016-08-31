@@ -1,74 +1,98 @@
 import React, { PropTypes } from 'react';
-import UserAvatar from '../UserAvatar';
-import { msgDate } from '../../helpers/dateHelpers';
-import Image from '../../../../shared/react/components/common/Image';
-import { Link } from 'react-router';
-import uri from 'urijs';
 import { Map } from 'immutable';
-import { getEntityLocation } from '../Notifications/NotificationListItem';
 import { connect } from 'react-redux';
+import ActivityItemDefault from './ActivityItemDefault';
+import ActivityItemEntry from './ActivityItemEntry';
+import ActivityItemRel from './ActivityItemRel';
 
 const emptyUser = Map();
+const emptyEntry = Map();
+const emptyRel = Map();
+
+const ENTITY_TYPE_ENTRY = 'Entry';
+const ENTITY_TYPE_RELATIONSHIP = 'Relationship';
+const ENTITY_TYPE_COMMENT = 'Comment';
+const ENTITY_TYPE_ORDER = 'Order';
+const ENTITY_TYPE_AUTHENTICATION = 'Authentication';
 
 function ActivityItemContainer(props) {
   const {
+    entry,
+    entryAuthor,
+    entityType,
     item,
+    relUser,
     user,
   } = props;
-  const tlogUrl = uri(user.get('tlogUrl', '')).path();
-  const entityLocation = getEntityLocation(item);
 
-  return (
-    <div className="activity-item">
-      <div className="activity-item__header">
-        <div className="activity-item__avatar-container">
-          <Link to={tlogUrl}>
-            <UserAvatar size={50} user={user.toJS()} />
-          </Link>
-        </div>
-        <div className="activity-item__title-container">
-          <div className="activity-item__title">
-            <Link to={tlogUrl}>
-              {user.get('slug', '')}
-            </Link>
-            {' '}
-            {item.get('actionText')}
-          </div>
-          <div className="activity-item__created-at">
-            {msgDate(item.get('createdAt'))}
-          </div>
-        </div>
-      </div>
-      <div className="activity-item__body">
-        <Link to={entityLocation}>
-          <div className="activity-item__text">
-            {item.get('text')}
-          </div>
-          {item.get('image') != null && (
-            <Image
-              className="activity-item__image"
-              image={item.get('image', Map()).toJS()}
-              maxHeight={160}
-            />
-          )}
-        </Link>
-      </div>
-    </div>
-  );
+  if (entityType === ENTITY_TYPE_ENTRY) {
+    return (
+      <ActivityItemEntry
+        entry={entry}
+        entryAuthor={entryAuthor}
+        item={item}
+        user={user}
+      />
+    );
+  } else if (entityType === ENTITY_TYPE_RELATIONSHIP &&
+      item.get('type') === 'NOTIFICATION_FRIEND') {
+    return (
+      <ActivityItemRel
+        item={item}
+        relUser={relUser}
+        user={user}
+      />
+    );
+  } else {
+    return (
+      <ActivityItemDefault
+        item={item}
+        user={user}
+      />
+    );
+  }
 }
 
 ActivityItemContainer.propTypes = {
+  entityType: PropTypes.string.isRequired,
+  entry: PropTypes.object,
+  entryAuthor: PropTypes.object,
   item: PropTypes.object.isRequired,
+  relUser: PropTypes.object,
   user: PropTypes.object.isRequired,
 };
 
 export default connect(
   (state, { item }) => {
+    const entityType = item.get('entityType');
+    const entityId = item.get('entityId');
     const user = state
       .entities
       .getIn(['tlog', String(item.get('sender'))], emptyUser);
+    let entry, entryAuthor, relUser;
+
+    if (entityType === ENTITY_TYPE_ENTRY) {
+      entry = state
+        .entities
+        .getIn(['entry', String(entityId)], emptyEntry);
+      entryAuthor = state
+        .entities
+        .getIn(['tlog', String(entry.get('author'))], emptyUser);
+    } else if (entityType === ENTITY_TYPE_RELATIONSHIP) {
+      const rel = state
+        .entities
+        .get('rel')
+        .find((r) => r.get('id') === entityId, null, emptyRel);
+      relUser = state
+        .entities
+        .getIn(['tlog', String(rel.get('userId'))], emptyUser);
+    }
 
     return {
+      entry,
+      entryAuthor,
+      entityType,
+      relUser,
       user,
     };
   }

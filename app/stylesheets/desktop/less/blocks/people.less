@@ -39,6 +39,38 @@ section.people {
   }
 }
 
+.people-item.\--small {
+  width: @people-item-width / 2;
+  height: @people-item-height / 2;
+  margin: 0 10px 15px 0;
+  padding: 10px 15px;
+
+  .people-item__avatar {
+    width: @people-item-avatar-size / 2;
+    height: @people-item-avatar-size / 2;
+  }
+
+  .people-item__name {
+    height: @people-item-avatar-size / 2;
+    line-height: @people-item-avatar-size / 2;
+    padding-left: @people-item-avatar-size / 2 + 5px;
+    font-size: 14px;
+  }
+
+  .people-item__footer {
+    top: @people-item-avatar-size / 2;
+    padding-top: 5px;
+  }
+
+  .people-item__desc {
+    font-size: 10px;
+  }
+
+  .people-item__followers-count {
+    font-size: 12px;
+  }
+}
+
 .people-item__inner {
   display: block;
   position: relative;
@@ -127,7 +159,7 @@ a.people-item__link {
 .people-item__follow-button {
   right: 0;
 }
-  
+
 .people-recommended__container {
   height: @people-item-height + @line-height-base + 2 * 20px;
   overflow: hidden;
