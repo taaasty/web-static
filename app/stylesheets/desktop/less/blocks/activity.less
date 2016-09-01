@@ -2,6 +2,25 @@
   position: relative;
 }
 
+.activity-item__fetching-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 60px;
+  z-index: 10;
+  background: rgba(red(@white), green(@white), blue(@white), .8);
+  text-align: center;
+}
+
+.activity-item__spinner {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .activity-item__header {
   display: block;
   position: relative;

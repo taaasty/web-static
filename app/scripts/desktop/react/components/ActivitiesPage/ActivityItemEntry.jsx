@@ -9,6 +9,7 @@ import { Map } from 'immutable';
 import {
   NOTIFICATION_FRIEND,
 } from '../../actions/NotificationsActions';
+import Spinner from '../../../../shared/react/components/common/Spinner';
 
 const REQUIRED_FIELDS = [
   'titleTruncated',
@@ -46,6 +47,7 @@ class ActivityItemEntry extends Component {
     const {
       entry,
       entryAuthor,
+      isFetchingEntry,
       item,
       user,
     } = this.props;
@@ -57,6 +59,13 @@ class ActivityItemEntry extends Component {
         text={this.renderActionText()}
         user={user}
       >
+        {isFetchingEntry && (
+          <div className="activity-item__fetching-overlay">
+            <div className="activity-item__spinner">
+              <Spinner size={24} />
+            </div>
+          </div>
+        )}
         <div className="activity-item__body">
           <Link to={entityLocation}>
             <div className="activity-item__text">
@@ -89,6 +98,7 @@ ActivityItemEntry.propTypes = {
   entry: PropTypes.object.isRequired,
   entryAuthor: PropTypes.object.isRequired,
   getTlogEntry: PropTypes.func.isRequired,
+  isFetchingEntry: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
