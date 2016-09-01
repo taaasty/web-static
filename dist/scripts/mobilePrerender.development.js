@@ -6034,9 +6034,6 @@ var TlogRegularPage = function (_Component) {
   return TlogRegularPage;
 }(_react.Component);
 
-exports.default = TlogRegularPage;
-
-
 TlogRegularPage.propTypes = {
   currentUser: _react.PropTypes.object, //elaborate
   entries: _react.PropTypes.array.isRequired,
