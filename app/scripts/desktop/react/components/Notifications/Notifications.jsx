@@ -5,16 +5,21 @@ import NotificationsNotificationList from './NotificationList';
 import NotificationsLoadingMessage from './LoadingMessage';
 import NotificationsErrorMessage from './ErrorMessage';
 import Spinner from '../../../../shared/react/components/common/Spinner';
+import Routes from '../../../../shared/routes/routes';
+import { Link } from 'react-router';
+import { onlyUpdateForKeys } from 'recompose';
 
 function Notifications(props) {
   const {
     error,
     getNotifications,
     hasUnread,
+    hide,
     isFetching,
     markAllNotificationsAsRead,
     markNotificationAsRead,
     notifications,
+    senders,
   } = props;
 
   function handleScroll(ev) {
@@ -35,6 +40,7 @@ function Notifications(props) {
           <NotificationsNotificationList
             markNotificationAsRead={markNotificationAsRead}
             notifications={notifications}
+            senders={senders}
           />
           {isFetching && (
             <div className="loader">
@@ -63,6 +69,11 @@ function Notifications(props) {
       >
         {renderContent()}
       </Scroller>
+      <div className="notifications__footer">
+        <Link onClick={hide} to={Routes.activities()}>
+          {i18n.t('notifications.go_to_activity')}
+        </Link>
+      </div>
     </div>
   );
 }
@@ -71,10 +82,18 @@ Notifications.propTypes = {
   error: PropTypes.bool,
   getNotifications: PropTypes.func.isRequired,
   hasUnread: PropTypes.bool.isRequired,
+  hide: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   markAllNotificationsAsRead: PropTypes.func.isRequired,
   markNotificationAsRead: PropTypes.func.isRequired,
   notifications: PropTypes.object.isRequired,
+  senders: PropTypes.object.isRequired,
 };
 
-export default Notifications;
+export default onlyUpdateForKeys([
+  'error',
+  'hasUnread',
+  'isFetching',
+  'notifications',
+  'senders',
+])(Notifications);

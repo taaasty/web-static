@@ -13,13 +13,13 @@ import TlogPagination from '../pagination/TlogPagination';
 
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 
-export default class TlogRegularPage extends Component {
+class TlogRegularPage extends Component {
   componentWillMount() {
     sendCategory(this.props.pagination.type);
   }
   render () {
     const { currentUser, entries, locale, pagination, tlog } = this.props;
-    
+
     return (
       <PageWithAuth currentUser={currentUser} locale={locale}>
         <PageLayout>

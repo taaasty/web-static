@@ -11,7 +11,11 @@ export function voteEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.votes_url(entryId),
       schema: Schemas.RATING,
-      types: [ ENTRY_VOTE_REQUEST, ENTRY_VOTE_SUCCESS, ENTRY_VOTE_FAILURE ],
+      types: [
+        ENTRY_VOTE_REQUEST,
+        ENTRY_VOTE_SUCCESS,
+        ENTRY_VOTE_FAILURE,
+      ],
       opts: postOpts(),
     },
     entryId,
@@ -27,7 +31,11 @@ export function favoriteEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.favorites_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_FAVORITE_REQUEST, ENTRY_FAVORITE_SUCCESS, ENTRY_FAVORITE_FAILURE ],
+      types: [
+        ENTRY_FAVORITE_REQUEST,
+        ENTRY_FAVORITE_SUCCESS,
+        ENTRY_FAVORITE_FAILURE,
+      ],
       opts: postOpts({ entryId }),
     },
     entryId,
@@ -43,7 +51,11 @@ export function unfavoriteEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.favorites_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_UNFAVORITE_REQUEST, ENTRY_UNFAVORITE_SUCCESS, ENTRY_UNFAVORITE_FAILURE ],
+      types: [
+        ENTRY_UNFAVORITE_REQUEST,
+        ENTRY_UNFAVORITE_SUCCESS,
+        ENTRY_UNFAVORITE_FAILURE,
+      ],
       opts: deleteOpts({ entryId }),
     },
     entryId,
@@ -59,7 +71,11 @@ export function watchEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.watching_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_WATCH_REQUEST, ENTRY_WATCH_SUCCESS, ENTRY_WATCH_FAILURE ],
+      types: [
+        ENTRY_WATCH_REQUEST,
+        ENTRY_WATCH_SUCCESS,
+        ENTRY_WATCH_FAILURE,
+      ],
       opts: postOpts({ entryId }),
     },
     entryId,
@@ -75,7 +91,11 @@ export function unwatchEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.watching_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_UNWATCH_REQUEST, ENTRY_UNWATCH_SUCCESS, ENTRY_UNWATCH_FAILURE ],
+      types: [
+        ENTRY_UNWATCH_REQUEST,
+        ENTRY_UNWATCH_SUCCESS,
+        ENTRY_UNWATCH_FAILURE,
+      ],
       opts: deleteOpts({ entryId }),
     },
     entryId,
@@ -91,7 +111,11 @@ export function reportEntry(entryId) {
     [CALL_API]: {
       endpoint: ApiRoutes.report_url(entryId),
       schema: Schemas.NONE,
-      types: [ ENTRY_REPORT_REQUEST, ENTRY_REPORT_SUCCESS, ENTRY_REPORT_FAILURE ],
+      types: [
+        ENTRY_REPORT_REQUEST,
+        ENTRY_REPORT_SUCCESS,
+        ENTRY_REPORT_FAILURE,
+      ],
       opts: postOpts(),
     },
     entryId,
@@ -107,7 +131,11 @@ export function deleteEntry(entryId, tlogId) {
     [CALL_API]: {
       endpoint: ApiRoutes.reposts_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_DELETE_REQUEST, ENTRY_DELETE_SUCCESS, ENTRY_DELETE_FAILURE ],
+      types: [
+        ENTRY_DELETE_REQUEST,
+        ENTRY_DELETE_SUCCESS,
+        ENTRY_DELETE_FAILURE,
+      ],
       opts: deleteOpts({ entryId, tlogId }),
     },
     entryId,
@@ -124,20 +152,16 @@ export function repostEntry(entryId, tlogId) {
     [CALL_API]: {
       endpoint: ApiRoutes.reposts_url(),
       schema: Schemas.NONE,
-      types: [ ENTRY_REPOST_REQUEST, ENTRY_REPOST_SUCCESS, ENTRY_REPOST_FAILURE ],
+      types: [
+        ENTRY_REPOST_REQUEST,
+        ENTRY_REPOST_SUCCESS,
+        ENTRY_REPOST_FAILURE,
+      ],
       opts: postOpts({ entryId, tlogId }),
     },
     entryId,
     tlogId,
   };
-/**
-    return Api.entry.repost(entryID, tlogID)
-      .then(() => {
-        if (window.ga) {
-          window.ga('send', 'event', 'UX', 'Repost');
-        }
-        NoticeService.notifySuccess(i18n.t('repost_entry_success'));
-  */
 }
 
 export const ENTRY_ACCEPT_REQUEST = 'ENTRY_ACCEPT_REQUEST';
@@ -149,7 +173,11 @@ export function acceptEntry(acceptUrl) {
     [CALL_API]: {
       endpoint: acceptUrl,
       schema: Schemas.NONE,
-      types: [ ENTRY_ACCEPT_REQUEST, ENTRY_ACCEPT_SUCCESS, ENTRY_ACCEPT_FAILURE ],
+      types: [
+        ENTRY_ACCEPT_REQUEST,
+        ENTRY_ACCEPT_SUCCESS,
+        ENTRY_ACCEPT_FAILURE,
+      ],
       opts: putOpts(),
     },
   };
@@ -164,7 +192,11 @@ export function declineEntry(declineUrl) {
     [CALL_API]: {
       endpoint: declineUrl,
       schema: Schemas.NONE,
-      types: [ ENTRY_DECLINE_REQUEST, ENTRY_DECLINE_SUCCESS, ENTRY_DECLINE_FAILURE ],
+      types: [
+        ENTRY_DECLINE_REQUEST,
+        ENTRY_DECLINE_SUCCESS,
+        ENTRY_DECLINE_FAILURE,
+      ],
       opts: putOpts(),
     },
   };

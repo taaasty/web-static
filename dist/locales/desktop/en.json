@@ -687,6 +687,9 @@
     "gift_text_empty": "You will get three months of free premium access after registration",
     "gift_text_from": "As a gift from {{userName}} you will get three months of free premium access after registration"
   },
+  "notifications": {
+    "go_to_activity": "All activity"
+  },
   "messenger": {
     "typing": "typing...",
     "is_typing": "{{name}} is typing...",
@@ -807,5 +810,11 @@
   },
   "user_slug": {
     "title": "Tasty premium"
+  },
+  "activities": {
+    "filter": {
+      "all": "Activity",
+      "my": "Notifications"
+    }
   }
 }

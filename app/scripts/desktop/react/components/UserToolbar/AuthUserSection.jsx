@@ -34,7 +34,12 @@ class AuthUserSection extends Component {
             transitionLeaveTimeout={FADE_TIMEOUT}
             transitionName="toolbar__popover"
           >
-            {isNotificationsPopoverVisible && <NotificationsPopover hide={hideNotificationsPopover} key="notifications-popover" />}
+            {isNotificationsPopoverVisible && (
+              <NotificationsPopover
+                hide={hideNotificationsPopover}
+                key="notifications-popover"
+              />
+            )}
           </ReactCSSTransitionGroup>
         </li>
         <li className="toolbar__user-list-item" onClick={onMessagesClick}>
@@ -55,7 +60,11 @@ class AuthUserSection extends Component {
             transitionLeaveTimeout={FADE_TIMEOUT}
             transitionName="toolbar__popover"
           >
-            {isUserPopoverVisible && <UserPopover {...this.props} key="user-popover" />}
+            {isUserPopoverVisible && (
+              <UserPopover {...this.props}
+                key="user-popover"
+              />
+            )}
           </ReactCSSTransitionGroup>
         </li>
       </ul>

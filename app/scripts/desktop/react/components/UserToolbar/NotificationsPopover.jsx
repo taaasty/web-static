@@ -4,13 +4,17 @@ import Popover from './Popover';
 
 class NotificationsPopover extends Component {
   render() {
+    const {
+      hide,
+    } = this.props;
+
     return (
-      <Popover hide={this.props.hide}>
+      <Popover hide={hide}>
         <div className="popup popup--notifications popup--light front-layer">
           <div className="popup__arrow popup__arrow--up" />
           <div className="popup__content">
             <div className="popup__body">
-              <Notifications />
+              <Notifications hide={hide} />
             </div>
           </div>
         </div>

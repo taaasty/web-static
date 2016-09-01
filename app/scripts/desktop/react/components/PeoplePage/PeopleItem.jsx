@@ -5,6 +5,7 @@ import UserSlug from '../UserSlug';
 import RelationButton from '../RelationButton';
 import { Link } from 'react-router';
 import uri from 'urijs';
+import classNames from 'classnames';
 
 class PeopleItem extends Component{
   handleButtonClick(ev) {
@@ -12,7 +13,15 @@ class PeopleItem extends Component{
     ev.stopPropagation();
   }
   render() {
-    const { user } = this.props;
+    const {
+      isSmall,
+      user,
+    } = this.props;
+    const itemClasses = classNames({
+      'people-item': true,
+      '--small': isSmall,
+    });
+    const avatarSize = isSmall ? 30 : 60;
     const relId = user.get('myRelationshipObject', false);
     const bgImageEnabled = user.getIn([ 'design', 'backgroundImageEnabled' ], false);
     const styles = bgImageEnabled
@@ -20,11 +29,11 @@ class PeopleItem extends Component{
           : {};
 
     return (
-      <article className="people-item" style={styles}>
+      <article className={itemClasses} style={styles}>
         <div className="people-item__inner">
           <Link className="people-item__link" to={uri(user.get('tlogUrl', '')).path()}>
             <div className="people-item__avatar">
-              <UserAvatar size={60} user={user.toJS()} />
+              <UserAvatar size={avatarSize} user={user.toJS()} />
             </div>
             <div className="people-item__name" title={user.get('slug')}>
               <UserSlug user={user} />
@@ -41,7 +50,7 @@ class PeopleItem extends Component{
                 </div>
               </div>
               <div className="people-item__follow-button" onClick={this.handleButtonClick}>
-                {relId && <RelationButton relId={relId} />}
+                {(relId && !isSmall) && <RelationButton relId={relId} />}
               </div>
             </div>
           </Link>
@@ -54,6 +63,7 @@ class PeopleItem extends Component{
 PeopleItem.displayName = 'PeopleItem';
 
 PeopleItem.propTypes = {
+  isSmall: PropTypes.bool,
   user: PropTypes.object.isRequired,
 };
 
