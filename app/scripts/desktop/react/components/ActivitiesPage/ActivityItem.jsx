@@ -24,6 +24,7 @@ function ActivityItemContainer(props) {
     entryAuthor,
     entityType,
     getTlogEntry,
+    isFetchingEntry,
     item,
     relUser,
     user,
@@ -35,6 +36,7 @@ function ActivityItemContainer(props) {
         entry={entry}
         entryAuthor={entryAuthor}
         getTlogEntry={getTlogEntry}
+        isFetchingEntry={isFetchingEntry}
         item={item}
         user={user}
       />
@@ -63,6 +65,7 @@ ActivityItemContainer.propTypes = {
   entry: PropTypes.object,
   entryAuthor: PropTypes.object,
   getTlogEntry: PropTypes.func.isRequired,
+  isFetchingEntry: PropTypes.bool,
   item: PropTypes.object.isRequired,
   relUser: PropTypes.object,
   user: PropTypes.object.isRequired,
@@ -75,12 +78,14 @@ export default connect(
     const user = state
       .entities
       .getIn(['tlog', String(item.get('sender'))], emptyUser);
-    let entry, entryAuthor, relUser;
+    let entry, entryAuthor, isFetchingEntry, relUser;
 
     if (entityType === ENTITY_TYPE_ENTRY) {
+      const entryState = state.entryState[entityId];
       entry = state
         .entities
         .getIn(['entry', String(entityId)], emptyEntry);
+      isFetchingEntry = !!entryState && entryState.isFetching;
       entryAuthor = state
         .entities
         .getIn(['tlog', String(entry.get('author'))], emptyUser);
@@ -98,6 +103,7 @@ export default connect(
       entry,
       entryAuthor,
       entityType,
+      isFetchingEntry,
       relUser,
       user,
     };
