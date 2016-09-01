@@ -7,6 +7,9 @@ import ActivityItemRel from './ActivityItemRel';
 import {
   getTlogEntry,
 } from '../../actions/TlogEntryActions';
+import {
+  NOTIFICATION_FRIEND,
+} from '../../actions/NotificationsActions';
 
 const emptyUser = Map();
 const emptyEntry = Map();
@@ -42,7 +45,7 @@ function ActivityItemContainer(props) {
       />
     );
   } else if (entityType === ENTITY_TYPE_RELATIONSHIP &&
-      item.get('type') === 'NOTIFICATION_FRIEND') {
+      item.get('type') === NOTIFICATION_FRIEND) {
     return (
       <ActivityItemRel
         item={item}
