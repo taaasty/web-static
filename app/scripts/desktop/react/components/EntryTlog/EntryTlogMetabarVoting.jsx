@@ -11,7 +11,7 @@ function EntryTlogMetabarVoting(props) {
       <span className="meta-item meta-item--vote">
         <span className="meta__content">
           <span className="meta-item__common meta__link">
-            <Voting ratingId={entry.get('rating')} />
+            <Voting ratingId={entry.get('id')} />
           </span>
         </span>
       </span>

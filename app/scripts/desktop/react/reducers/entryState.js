@@ -8,6 +8,9 @@ import {
   COMMENTS_REQUEST,
   COMMENTS_SUCCESS,
   COMMENTS_FAILURE,
+  COMMENTS_ENTRIES_REQUEST,
+  COMMENTS_ENTRIES_SUCCESS,
+  COMMENTS_ENTRIES_FAILURE,
 } from '../actions/CommentsActions';
 import {
   COMMENT_POST_REQUEST,
@@ -68,6 +71,27 @@ const actionMap = {
     return Object.assign({}, state, entry(state, entryId, {
       isLoadingComments: false,
     }));
+  },
+
+  [COMMENTS_ENTRIES_REQUEST](state, { entries }) {
+    return Object.assign({}, state, entries.map((e, id) => entry(state, id, {
+        isLoadingComments: true,
+      }))
+      .toJS());
+  },
+
+  [COMMENTS_ENTRIES_SUCCESS](state, { entries }) {
+    return Object.assign({}, state, entries.map((e, id) => entry(state, id, {
+        isLoadingComments: false,
+      }))
+      .toJS());
+  },
+
+  [COMMENTS_ENTRIES_FAILURE](state, { entries }) {
+    return Object.assign({}, state, entries.map((e, id) => entry(state, id, {
+        isLoadingComments: false,
+      }))
+      .toJS());
   },
 
   [COMMENT_POST_REQUEST](state, { entryId }) {

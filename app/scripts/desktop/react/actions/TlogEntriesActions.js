@@ -126,6 +126,18 @@ export function getTlogEntriesIfNeeded(params) {
   };
 }
 
+export function getTlogEntriesRatingsIfNeeded(entries) {
+  return (dispatch, getState) => {
+
+  };
+}
+
+export function getTlogEntriesPermissionsIfNeeded(entries) {
+  return (dispatch, getState) => {
+
+  };
+}
+
 export function deleteEntry(entryId) {
   return {
     type: TLOG_ENTRIES_DELETE_ENTRY,

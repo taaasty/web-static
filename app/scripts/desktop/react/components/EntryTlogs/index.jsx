@@ -1,10 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import EntryTlogs from './EntryTlogs';
+import {
+  fetchCommentsByEntries,
+} from '../../actions/CommentsActions';
+import {
+  getTlogEntriesPermissionsIfNeeded,
+  getTlogEntriesRatingsIfNeeded,
+} from '../../actions/TlogEntriesActions';
+import { connect } from 'react-redux';
 
 class EntryTlogsContainer extends Component {
   render() {
-    const { entries: { isFetching, data: { items, hasMore } },
-            handleDeleteEntry, hostTlogId, isFeed, loadMoreEntries } = this.props;
+    const {
+      entries: {
+        isFetching,
+        data: {
+          items,
+          hasMore,
+        },
+      },
+      handleDeleteEntry,
+      hostTlogId,
+      isFeed,
+      loadMoreEntries,
+    } = this.props;
 
     return (
       <EntryTlogs

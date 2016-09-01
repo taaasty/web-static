@@ -1,6 +1,17 @@
 MESSENGER_VERSION_PREFIX = 'v2'
 
 ApiRoutes =
+
+  # cached == v2 =======
+  tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v2/tlog/#{tlogId}/#{section}/#{type}.json"
+
+  ratings: () -> "#{gon.api_host}/v1/ratings.json"
+  entriesPermissions: () -> "#{gon.api_host}/v1/entries_permissions.json"
+  commentsByEntriesIds: () -> "#{gon.api_host}/v1/comments/by_entries_ids.json"
+  # ====================
+
+
+
   omniauth_url:    (provider, refToken) ->
     baseUrl = "#{gon.host}/auth/#{provider}"
 
@@ -71,7 +82,6 @@ ApiRoutes =
   tlog: (tlogId) -> "#{gon.api_host}/v1/tlog/#{tlogId}.json"
 
   _tlogEntries:                          (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries'
-  tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v1/tlog/#{tlogId}/#{section}/#{type}.json"
   tlogEntriesTlogs:                     (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries/tlogs'
   tlogEntriesBricks:                    (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/enrties/bricks'
 

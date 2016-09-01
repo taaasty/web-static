@@ -11,7 +11,7 @@ import {
   COMMENT_REPORT_FAILURE,
 } from '../actions/CommentActions';
 
-export default function commentState(state=Map(), { type, commentId }) {
+export default function commentState(state = Map(), { type, commentId }) {
   if (!commentId) {
     return state;
   }
@@ -20,16 +20,14 @@ export default function commentState(state=Map(), { type, commentId }) {
   case COMMENT_UPDATE_REQUEST:
   case COMMENT_DELETE_REQUEST:
   case COMMENT_REPORT_REQUEST:
-    return state.setIn([ commentId, 'isProcessing' ], true);
-    break;
+    return state.setIn([commentId, 'isProcessing'], true);
   case COMMENT_UPDATE_SUCCESS:
   case COMMENT_DELETE_SUCCESS:
   case COMMENT_REPORT_SUCCESS:
   case COMMENT_UPDATE_FAILURE:
   case COMMENT_DELETE_FAILURE:
   case COMMENT_REPORT_FAILURE:
-    return state.setIn([ commentId, 'isProcessing' ], false);
-    break;
+    return state.setIn([commentId, 'isProcessing'], false);
   }
 
   return state;
