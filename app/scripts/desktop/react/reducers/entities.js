@@ -48,6 +48,8 @@ const initialState = fromJS({
   staff: {},
   comment: {},
   entry: {},
+  rating: {},
+  permission: {},
   entryCollItem: {},
   message: {},
   notification: {},
