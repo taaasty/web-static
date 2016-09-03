@@ -31,28 +31,22 @@ export function loadComments(params) {
 }
 
 export function getTlogEntriesCommentsIfNeeded(entries) {
-  return (dispatch, getState) => {
-    const { entryState } = getState();
-    const fEntries = entries
-      .filterNot((e) => entryState[e.get('id')] && entryState[e.get('id')].isFetchingComments);
-
-    return fEntries.count() > 0 && dispatch({
-      [CALL_API]: {
-        endpoint: makeGetUrl(ApiRoutes.commentsByEntriesIds(), {
-          entriesIds: fEntries
-            .keySeq()
-            .join(','),
-          limit: BY_ENTRIES_LIMIT,
-        }),
-        schema: Schemas.COMMENT_COLL_ARR,
-        types: [
-          COMMENTS_ENTRIES_REQUEST,
-          COMMENTS_ENTRIES_SUCCESS,
-          COMMENTS_ENTRIES_FAILURE,
-        ],
-        opts: defaultOpts,
-      },
-      entries: fEntries,
-    });
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.commentsByEntriesIds(), {
+        entriesIds: entries
+          .keySeq()
+          .join(','),
+        limit: BY_ENTRIES_LIMIT,
+      }),
+      schema: Schemas.COMMENT_COLL_ARR,
+      types: [
+        COMMENTS_ENTRIES_REQUEST,
+        COMMENTS_ENTRIES_SUCCESS,
+        COMMENTS_ENTRIES_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
+    entries,
   };
 }

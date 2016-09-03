@@ -9,15 +9,21 @@ const emptyRating = Map();
 
 class VotingContainer extends Component {
   shouldComponentUpdate(nextProps) {
-    const { isVoting, rating } = this.props;
+    const {
+      isFetching,
+      rating,
+    } = this.props;
 
     return (
       rating !== nextProps.rating ||
-      isVoting !== nextProps.isVoting
+      isFetching !== nextProps.isFetching
     );
   }
   handleClick() {
-    const { rating, voteEntry } = this.props;
+    const {
+      rating,
+      voteEntry,
+    } = this.props;
 
     voteEntry(rating.get('entryId'))
       .then((data) => {
@@ -29,11 +35,14 @@ class VotingContainer extends Component {
     // TODO: restore PostAuth logic
   }
   render() {
-    const { isVoting, rating } = this.props;
+    const {
+      isFetching,
+      rating,
+    } = this.props;
 
     return (
       <Voting
-        isVoting={isVoting}
+        isFetching={isFetching}
         onVote={this.handleClick.bind(this)}
         rating={rating}
       />
@@ -42,7 +51,7 @@ class VotingContainer extends Component {
 }
 
 VotingContainer.propTypes = {
-  isVoting: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   rating: PropTypes.object.isRequired,
   ratingId: PropTypes.number.isRequired,
   voteEntry: PropTypes.func.isRequired,
@@ -51,10 +60,10 @@ VotingContainer.propTypes = {
 export default connect(
   (state, { ratingId }) => {
     const rating = state.entities.getIn([ 'rating', String(ratingId) ], emptyRating);
-    const isVoting = state.ratingState.getIn([ rating.get('entryId'), 'isVoting' ], false);
+    const isFetching = state.ratingState.getIn([ rating.get('entryId'), 'isFetching' ], false);
 
     return {
-      isVoting,
+      isFetching,
       rating,
       ratingId,
     };
@@ -63,7 +72,7 @@ export default connect(
     voteEntry,
   }
 )(onlyUpdateForKeys([
-  'isVoting',
+  'isFetching',
   'rating',
   'ratingId',
 ])(VotingContainer));

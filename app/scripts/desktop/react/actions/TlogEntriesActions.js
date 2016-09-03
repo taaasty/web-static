@@ -138,54 +138,42 @@ export function getTlogEntriesIfNeeded(params) {
 }
 
 export function getTlogEntriesRatingsIfNeeded(entries) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const fEntries = entries
-      .filterNot((e) => state.ratingState.getIn([e.get('id'), 'isFetching']));
-
-    return fEntries.count() > 0 && dispatch({
-      [CALL_API]: {
-        endpoint: makeGetUrl(ApiRoutes.ratings(), {
-          ids: fEntries
-            .keySeq()
-            .join(','),
-        }),
-        schema: Schemas.RATING_ARR,
-        types: [
-          TLOG_ENTRIES_RATINGS_REQUEST,
-          TLOG_ENTRIES_RATINGS_SUCCESS,
-          TLOG_ENTRIES_RATINGS_FAILURE,
-        ],
-        opts: defaultOpts,
-      },
-      entries: fEntries,
-    });
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.ratings(), {
+        ids: entries
+          .keySeq()
+          .join(','),
+      }),
+      schema: Schemas.RATING_ARR,
+      types: [
+        TLOG_ENTRIES_RATINGS_REQUEST,
+        TLOG_ENTRIES_RATINGS_SUCCESS,
+        TLOG_ENTRIES_RATINGS_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
+    entries: entries,
   };
 }
 
 export function getTlogEntriesPermissionsIfNeeded(entries) {
-  return (dispatch, getState) => {
-    const { entryState } = getState();
-    const fEntries = entries
-      .filterNot((e) => entryState[e.get('id')] && entryState[e.get('id')].isFetchingPermissions);
-
-    return fEntries.count() > 0 && dispatch({
-      [CALL_API]: {
-        endpoint: makeGetUrl(ApiRoutes.entriesPermissions(), {
-          entriesIds: fEntries
-            .keySeq()
-            .join(','),
-        }),
-        schema: Schemas.PERMISSION_ARR,
-        types: [
-          TLOG_ENTRIES_PERMISSIONS_REQUEST,
-          TLOG_ENTRIES_PERMISSIONS_SUCCESS,
-          TLOG_ENTRIES_PERMISSIONS_FAILIRE,
-        ],
-        opts: defaultOpts,
-      },
-      entries: fEntries,
-    });
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.entriesPermissions(), {
+        entriesIds: entries
+          .keySeq()
+          .join(','),
+      }),
+      schema: Schemas.PERMISSION_ARR,
+      types: [
+        TLOG_ENTRIES_PERMISSIONS_REQUEST,
+        TLOG_ENTRIES_PERMISSIONS_SUCCESS,
+        TLOG_ENTRIES_PERMISSIONS_FAILIRE,
+      ],
+      opts: defaultOpts,
+    },
+    entries: entries,
   };
 }
 

@@ -65,6 +65,7 @@ EntryTlogContent.propTypes = {
   hostTlogId: PropTypes.number,
   isFormHidden: PropTypes.bool,
   isInList: PropTypes.bool,
+  permissions: PropTypes.object.isRequired,
 };
 
 export default onlyUpdateForKeys([
@@ -78,4 +79,5 @@ export default onlyUpdateForKeys([
   'hostTlogId',
   'isFormHidden',
   'isInList',
+  'permissions',
 ])(EntryTlogContent);

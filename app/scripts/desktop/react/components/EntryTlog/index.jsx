@@ -20,15 +20,29 @@ import {
   acceptEntry,
   declineEntry,
 } from '../../actions/EntryActions';
+import {
+  BY_ENTRIES_LIMIT,
+  getTlogEntriesCommentsIfNeeded,
+} from '../../actions/CommentsActions';
+import {
+  getTlogEntriesPermissionsIfNeeded,
+  getTlogEntriesRatingsIfNeeded,
+} from '../../actions/TlogEntriesActions';
 import { onlyUpdateForKeys } from 'recompose';
 
-import { ENTRY_TYPES } from '../../constants/EntryConstants';
-import { ERROR_PRIVATE_ENTRY } from '../../../../shared/constants/ErrorConstants';
+import {
+  ENTRY_TYPES,
+  ENTRY_TYPE_ANONYMOUS,
+} from '../../constants/EntryConstants';
+import {
+  ERROR_PRIVATE_ENTRY,
+} from '../../../../shared/constants/ErrorConstants';
 
 const emptyState = {};
 const emptyEntry = Map();
 const emptyAuthor = Map();
 const emptyTlog = Map();
+const emptyPermissions = Map();
 
 const anonCommentator = {
   userpic: {
@@ -42,6 +56,39 @@ const anonCommentator = {
 };
 
 class EntryTlog extends Component {
+  componentWillMount() {
+    this.fetchNeededData(this.props);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.fetchNeededData(nextProps);
+  }
+  fetchNeededData(props) {
+    const {
+      entry,
+      shouldFetchComments,
+      shouldFetchPermissions,
+      shouldFetchRating,
+      getTlogEntriesCommentsIfNeeded,
+      getTlogEntriesPermissionsIfNeeded,
+      getTlogEntriesRatingsIfNeeded,
+    } = props;
+
+    if (entry.get('id')) {
+      const entries = Map({ [entry.get('id')]: entry });
+
+      if (shouldFetchComments) {
+        getTlogEntriesCommentsIfNeeded(entries);
+      }
+
+      if (shouldFetchPermissions) {
+        getTlogEntriesPermissionsIfNeeded(entries);
+      }
+
+      if (shouldFetchRating) {
+        getTlogEntriesRatingsIfNeeded(entries);
+      }
+    }
+  }
   favoriteEntry() {
     return this.props.favoriteEntry(this.props.entryId)
       .then((data) => {
@@ -174,6 +221,7 @@ class EntryTlog extends Component {
       isFormHidden,
       isInList,
       moderation,
+      permissions,
     } = this.props;
     const error = entryState && entryState.error;
     const entryType = entry.get('type');
@@ -212,6 +260,7 @@ class EntryTlog extends Component {
                 onRemoveFromFavorites={this.unfavoriteEntry.bind(this)}
                 onRemoveFromWatching={this.unwatchEntry.bind(this)}
                 onReport={this.reportEntry.bind(this)}
+                permissions={permissions}
               />
           )}
         </article>
@@ -237,6 +286,7 @@ EntryTlog.propTypes = {
   entryState: PropTypes.object,
   commentator: PropTypes.object,
   moderation: PropTypes.object,
+  permissions: PropTypes.object.isRequired,
 
   acceptEntry: PropTypes.func.isRequired,
   declineEntry: PropTypes.func.isRequired,
@@ -247,12 +297,24 @@ EntryTlog.propTypes = {
   unfavoriteEntry: PropTypes.func.isRequired,
   unwatchEntry: PropTypes.func.isRequired,
   watchEntry: PropTypes.func.isRequired,
+
+  shouldFetchComments: PropTypes.bool.isRequired,
+  shouldFetchPermissions: PropTypes.bool.isRequired,
+  shouldFetchRating: PropTypes.bool.isRequired,
+  getTlogEntriesCommentsIfNeeded: PropTypes.func.isRequired,
+  getTlogEntriesPermissionsIfNeeded: PropTypes.func.isRequired,
+  getTlogEntriesRatingsIfNeeded: PropTypes.func.isRequired,
 };
 
 export default connect(
   (state, ownProps) => {
     const { entryId } = ownProps;
-    const { currentUser, entities, entryState } = state;
+    const {
+      currentUser,
+      entities,
+      entryState,
+      ratingState,
+    } = state;
     const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
     const entryAuthor = entities.getIn([ 'tlog', String(entry.get('author')) ], emptyAuthor);
     const entryTlog = entities.getIn([ 'tlog', String(entry.get('tlog')) ], emptyTlog);
@@ -260,6 +322,23 @@ export default connect(
       [ 'tlog', String(entities.getIn([ 'entryCollItem', String(entryId), 'commentator' ])) ],
       currentUser.data.id ? currentUser.data : anonCommentator);
     const moderation = null; // TODO: implement when premod enabled
+    const shouldFetchComments = (
+      entities
+        .get('comment')
+        .filter((c) => c.get('entryId') === entryId)
+        .count() < Math.min(BY_ENTRIES_LIMIT, entry.get('commentsCount')) &&
+      !(entryState[entryId] && entryState[entryId].isFetchingComments)
+    );
+    const shouldFetchRating = (
+      entry.get('type') !== ENTRY_TYPE_ANONYMOUS &&
+      !entities.getIn(['rating', String(entryId)]) &&
+      !ratingState.getIn([entryId, 'isFetching'])
+    );
+    const permissions = entities.getIn(['permission', String(entryId)], emptyPermissions);
+    const shouldFetchPermissions = (
+      permissions.isEmpty() &&
+      !(entryState[entryId] && entryState[entryId].isFetchingPermissions)
+    );
 
     return {
       commentator: typeof commentator.toJS === 'function' ? commentator.toJS() : commentator,
@@ -269,6 +348,10 @@ export default connect(
       entryTlogAuthor: entities.getIn([ 'tlog', String(entryTlog.get('author')) ], emptyAuthor),
       entryState: entryState[entry.get('id')] || emptyState,
       moderation,
+      permissions,
+      shouldFetchComments,
+      shouldFetchPermissions,
+      shouldFetchRating,
     };
   },
   {
@@ -281,6 +364,9 @@ export default connect(
     repostEntry,
     acceptEntry,
     declineEntry,
+    getTlogEntriesCommentsIfNeeded,
+    getTlogEntriesPermissionsIfNeeded,
+    getTlogEntriesRatingsIfNeeded,
   }
 )(onlyUpdateForKeys([
   'entryId',
@@ -296,4 +382,8 @@ export default connect(
   'entryState',
   'commentator',
   'moderation',
+  'permissions',
+  'shouldFetchComments',
+  'shouldFetchPermissions',
+  'shouldFetchRating',
 ])(EntryTlog));

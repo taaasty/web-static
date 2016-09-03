@@ -8,6 +8,9 @@ import {
   getTlogEntriesPermissionsIfNeeded,
   getTlogEntriesRatingsIfNeeded,
 } from '../../actions/TlogEntriesActions';
+import {
+  ENTRY_TYPE_ANONYMOUS,
+} from '../../constants/EntryConstants';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
 
@@ -82,6 +85,9 @@ EntryTlogsContainer.propTypes = {
   fetchCommentsEntries: PropTypes.object.isRequired,
   fetchPermissionsEntries: PropTypes.object.isRequired,
   fetchRatingsEntries: PropTypes.object.isRequired,
+  getTlogEntriesCommentsIfNeeded: PropTypes.func.isRequired,
+  getTlogEntriesPermissionsIfNeeded: PropTypes.func.isRequired,
+  getTlogEntriesRatingsIfNeeded: PropTypes.func.isRequired,
   handleDeleteEntry: PropTypes.func,
   hostTlogId: PropTypes.number,
   isFeed: PropTypes.bool,
@@ -90,23 +96,36 @@ EntryTlogsContainer.propTypes = {
 
 export default connect(
   (state, { entries }) => {
+    const {
+      entities,
+      ratingState,
+      entryState,
+    } = state;
     const { items } = entries.data;
     const tEntries = fromJS(items)
       .toMap()
       .mapKeys((_, id) => id)
-      .map((id) => state.entities.getIn(['entry', String(id)], emptyEntry));
+      .map((id) => entities.getIn(['entry', String(id)], emptyEntry));
     const fetchCommentsEntries = tEntries
-      .filter((e, id) => e.get('commentsCount', 0) > 0 &&
-        state
-          .entities
+      .filter((e, id) => (
+        e.get('commentsCount', 0) > 0 &&
+        entities
           .get('comment')
           .filter((c) => String(c.get('entryId')) === String(id))
-          .count() < Math.min(e.get('commentsCount', 0), BY_ENTRIES_LIMIT)
+          .count() < Math.min(e.get('commentsCount', 0), BY_ENTRIES_LIMIT) &&
+        !(entryState[id] && entryState[id].isFetchingComments))
       );
     const fetchPermissionsEntries = tEntries
-      .filter((e, id) => !e.has('canDelete') && !state.entities.getIn(['permission', String(id)]));
+      .filter((e, id) => (
+        !entities.getIn(['permission', String(id)]) &&
+        !(entryState[id] && entryState[id].isFetchingPermissions))
+      );
     const fetchRatingsEntries = tEntries
-      .filter((e, id) => !state.entities.getIn(['rating', String(id)]));
+      .filter((e, id) => (
+        e.get('type') !== ENTRY_TYPE_ANONYMOUS &&
+        !entities.getIn(['rating', String(id)]) &&
+        !ratingState.getIn([id, 'isFetching']))
+      );
 
     return {
       fetchCommentsEntries,

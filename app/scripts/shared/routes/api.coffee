@@ -5,12 +5,21 @@ ApiRoutes =
   # cached == v2 =======
   tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v2/tlog/#{tlogId}/#{section}/#{type}.json"
 
+  feedLiveTlogs: -> "#{gon.api_host}/v2/feeds/live/tlogs.json"
+  feedMediaTlogs: -> "#{gon.api_host}/v2/feeds/media/tlogs.json"
+  feedFlowsTlogs: -> "#{gon.api_host}/v2/feeds/live_flows/tlogs.json"
+  feedAnonymousTlogs: -> "#{gon.api_host}/v2/feeds/anonymous/tlogs.json"
+  feedBestTlogs:    -> "#{gon.api_host}/v2/feeds/best/tlogs.json"
+
   ratings: () -> "#{gon.api_host}/v1/ratings.json"
   entriesPermissions: () -> "#{gon.api_host}/v1/entries_permissions.json"
   commentsByEntriesIds: () -> "#{gon.api_host}/v1/comments/by_entries_ids.json"
   # ====================
 
+  feedFriendsTlogs: -> "#{gon.api_host}/v1/my_feeds/friends/tlogs.json"
+  feedFriendsMediaTlogs: -> "#{gon.api_host}/v1/my_feeds/friends_media/tlogs.json"
 
+  # ====================
 
   omniauth_url:    (provider, refToken) ->
     baseUrl = "#{gon.host}/auth/#{provider}"
@@ -143,14 +152,6 @@ ApiRoutes =
 
   tagsTlog: (slug, tags) -> "#{gon.api_host}/v1/tlog/#{slug}/entries/tags_tlogs/#{tags}.json"
   tagsFeed: (tags) -> "#{gon.api_host}/v1/feeds/tags_tlogs/#{tags}.json"
-
-  feedLiveTlogs: -> "#{gon.api_host}/v1/feeds/live/tlogs.json"
-  feedMediaTlogs: -> "#{gon.api_host}/v1/feeds/media/tlogs.json"
-  feedFlowsTlogs: -> "#{gon.api_host}/v1/feeds/live_flows/tlogs.json"
-  feedAnonymousTlogs: -> "#{gon.api_host}/v1/feeds/anonymous/tlogs.json"
-  feedBestTlogs:    -> "#{gon.api_host}/v1/feeds/best/tlogs.json"
-  feedFriendsTlogs: -> "#{gon.api_host}/v1/my_feeds/friends/tlogs.json"
-  feedFriendsMediaTlogs: -> "#{gon.api_host}/v1/my_feeds/friends_media/tlogs.json"
 
   imageAttachments: -> gon.api_host + '/v1/image_attachments'
   imageAttachmentsWithID: (attachmentID) -> gon.api_host + '/v1/image_attachments/' + attachmentID

@@ -13,15 +13,15 @@ import {
 
 const actionMap = {
   [ENTRY_VOTE_REQUEST](state, { entryId }) {
-    return state.setIn([entryId, 'isVoting'], true);
+    return state.setIn([entryId, 'isFetching'], true);
   },
 
   [ENTRY_VOTE_SUCCESS](state, { entryId }) {
-    return state.setIn([entryId, 'isVoting'], false);
+    return state.setIn([entryId, 'isFetching'], false);
   },
 
   [ENTRY_VOTE_FAILURE](state, { entryId }) {
-    return state.setIn([entryId, 'isVoting'], false);
+    return state.setIn([entryId, 'isFetching'], false);
   },
 
   [TLOG_ENTRIES_RATINGS_REQUEST](state, { entries }) {
