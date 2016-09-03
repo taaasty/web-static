@@ -48,6 +48,8 @@ const initialState = fromJS({
   staff: {},
   comment: {},
   entry: {},
+  rating: {},
+  permission: {},
   entryCollItem: {},
   message: {},
   notification: {},
@@ -101,23 +103,26 @@ function handleExtra(state, action) {
     break;
   case ENTRY_FAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn(['entry', String(action.entryId), 'isFavorited'], true);
+      return state.setIn(['permission', String(action.entryId), 'isFavorited'],
+        true);
     }
     break;
   case ENTRY_UNFAVORITE_SUCCESS:
     if (action.entryId) {
-      return state.setIn(['entry', String(action.entryId), 'isFavorited'],
+      return state.setIn(['permission', String(action.entryId), 'isFavorited'],
         false);
     }
     break;
   case ENTRY_WATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn(['entry', String(action.entryId), 'isWatching'], true);
+      return state.setIn(['permission', String(action.entryId), 'isWatching'],
+        true);
     }
     break;
   case ENTRY_UNWATCH_SUCCESS:
     if (action.entryId) {
-      return state.setIn(['entry', String(action.entryId), 'isWatching'], false);
+      return state.setIn(['permission', String(action.entryId), 'isWatching'],
+        false);
     }
     break;
   case STAFF_DELETE_SUCCESS:

@@ -106,7 +106,7 @@ class EntryTlogCommentsContainer extends Component {
         isFormHidden={!!isFormHidden}
         limit={limit}
         loadMore={this.loadMore.bind(this, entryId, (firstComment && firstComment.id))}
-        loading={!!entryState.isLoadingComments}
+        loading={!!entryState.isFetchingComments}
         postComment={this.postComment.bind(this)}
         posting={!!entryState.isPostingComment}
         ref="main"

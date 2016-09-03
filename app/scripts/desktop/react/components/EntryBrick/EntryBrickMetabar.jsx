@@ -20,7 +20,7 @@ function EntryBrickMetabar(props) {
     return (
       <span className="meta-item meta-item--vote">
         <span className="meta-item__content">
-          <Voting ratingId={entry.get('rating')} />
+          <Voting ratingId={entry.get('id')} />
         </span>
       </span>
     );

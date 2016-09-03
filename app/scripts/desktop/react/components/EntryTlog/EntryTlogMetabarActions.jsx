@@ -23,17 +23,18 @@ class EntryTlogMetabarActions extends Component {
   render() {
     const {
       entry,
+      permissions,
     } = this.props;
     const id = entry.get('id');
     const url = entry.get('url', entry.get('entryUrl'));
-    const canDelete = entry.get('canDelete', false);
-    const canEdit = entry.get('canEdit', false);
     const editUrl = entry.get('editUrl');
-    const canFavorite = entry.get('canFavorite', false);
-    const canWatch = entry.get('canWatch', false);
-    const isFavorited = entry.get('isFavorited', false);
-    const isWatching = entry.get('isWatching', false);
-    const canReport = entry.get('canReport', false);
+    const canDelete = permissions.get('canDelete', false);
+    const canEdit = permissions.get('canEdit', false);
+    const canFavorite = permissions.get('canFavorite', false);
+    const canWatch = permissions.get('canWatch', false);
+    const isFavorited = permissions.get('isFavorited', false);
+    const isWatching = permissions.get('isWatching', false);
+    const canReport = permissions.get('canReport', false);
 
     return (
       <DropdownActions>
@@ -78,6 +79,7 @@ EntryTlogMetabarActions.propTypes = {
   commentator: PropTypes.object.isRequired,
   entry: PropTypes.object.isRequired,
   entryAuthor: PropTypes.object.isRequired,
+  permissions: PropTypes.object.isRequired,
 };
 
 class EntryTlogMetabarFavorite extends Component {

@@ -1,4 +1,4 @@
-/*global i18n */
+/*global $, i18n */
 import React, { Component, PropTypes } from 'react';
 import { List } from 'immutable';
 import classNames from 'classnames';
@@ -32,7 +32,11 @@ class Voting extends Component {
     }
   }
   handleClick() {
-    const { onVote, rating } = this.props;
+    const {
+      onVote,
+      rating,
+    } = this.props;
+
     if (rating.get('isVoted') || !rating.get('isVoteable')) {
       return;
     }
@@ -40,7 +44,10 @@ class Voting extends Component {
     onVote();
   }
   render() {
-    const { isVoting, rating } = this.props;
+    const {
+      isFetching,
+      rating,
+    } = this.props;
     const isVoteable = rating.get('isVoteable');
     const votingClasses = classNames('voting', {
       'votable': isVoteable,
@@ -55,14 +62,14 @@ class Voting extends Component {
         onClick={this.handleClick.bind(this)}
         ref="container"
       >
-        {isVoting ? <Spinner size={8} /> : rating.get('votes')}
+        {isFetching ? <Spinner size={8} /> : rating.get('votes')}
       </span>
     );
   }
 }
 
 Voting.propTypes = {
-  isVoting: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   onVote: PropTypes.func.isRequired,
   rating: PropTypes.object.isRequired,
 };

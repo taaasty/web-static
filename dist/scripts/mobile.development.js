@@ -16577,6 +16577,39 @@ var ApiRoutes, MESSENGER_VERSION_PREFIX;
 MESSENGER_VERSION_PREFIX = 'v2';
 
 ApiRoutes = {
+  tlogEntries: function(tlogId, section, type) {
+    return gon.api_host + "/v2/tlog/" + tlogId + "/" + section + "/" + type + ".json";
+  },
+  feedLiveTlogs: function() {
+    return gon.api_host + "/v2/feeds/live/tlogs.json";
+  },
+  feedMediaTlogs: function() {
+    return gon.api_host + "/v2/feeds/media/tlogs.json";
+  },
+  feedFlowsTlogs: function() {
+    return gon.api_host + "/v2/feeds/live_flows/tlogs.json";
+  },
+  feedAnonymousTlogs: function() {
+    return gon.api_host + "/v2/feeds/anonymous/tlogs.json";
+  },
+  feedBestTlogs: function() {
+    return gon.api_host + "/v2/feeds/best/tlogs.json";
+  },
+  ratings: function() {
+    return gon.api_host + "/v1/ratings.json";
+  },
+  entriesPermissions: function() {
+    return gon.api_host + "/v1/entries_permissions.json";
+  },
+  commentsByEntriesIds: function() {
+    return gon.api_host + "/v1/comments/by_entries_ids.json";
+  },
+  feedFriendsTlogs: function() {
+    return gon.api_host + "/v1/my_feeds/friends/tlogs.json";
+  },
+  feedFriendsMediaTlogs: function() {
+    return gon.api_host + "/v1/my_feeds/friends_media/tlogs.json";
+  },
   omniauth_url: function(provider, refToken) {
     var baseUrl;
     baseUrl = gon.host + "/auth/" + provider;
@@ -16709,9 +16742,6 @@ ApiRoutes = {
   _tlogEntries: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/entries';
   },
-  tlogEntries: function(tlogId, section, type) {
-    return gon.api_host + "/v1/tlog/" + tlogId + "/" + section + "/" + type + ".json";
-  },
   tlogEntriesTlogs: function(tlogId) {
     return gon.api_host + '/v1/tlog/' + tlogId + '/entries/tlogs';
   },
@@ -16816,27 +16846,6 @@ ApiRoutes = {
   },
   tagsFeed: function(tags) {
     return gon.api_host + "/v1/feeds/tags_tlogs/" + tags + ".json";
-  },
-  feedLiveTlogs: function() {
-    return gon.api_host + "/v1/feeds/live/tlogs.json";
-  },
-  feedMediaTlogs: function() {
-    return gon.api_host + "/v1/feeds/media/tlogs.json";
-  },
-  feedFlowsTlogs: function() {
-    return gon.api_host + "/v1/feeds/live_flows/tlogs.json";
-  },
-  feedAnonymousTlogs: function() {
-    return gon.api_host + "/v1/feeds/anonymous/tlogs.json";
-  },
-  feedBestTlogs: function() {
-    return gon.api_host + "/v1/feeds/best/tlogs.json";
-  },
-  feedFriendsTlogs: function() {
-    return gon.api_host + "/v1/my_feeds/friends/tlogs.json";
-  },
-  feedFriendsMediaTlogs: function() {
-    return gon.api_host + "/v1/my_feeds/friends_media/tlogs.json";
   },
   imageAttachments: function() {
     return gon.api_host + '/v1/image_attachments';

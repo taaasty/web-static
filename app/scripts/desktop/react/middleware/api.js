@@ -9,6 +9,7 @@ const relSchema = new Schema(
   'rel', { idAttribute: (e) => `${e.userId}-${e.readerId}` }
 );
 const ratingSchema = new Schema('rating', { idAttribute: 'entryId' });
+const permissionSchema = new Schema('permission', { idAttribute: 'entryId' });
 
 const calendarSchema = new Schema('calendar', { idAttribute: 'tlogId' });
 
@@ -129,7 +130,11 @@ export const Schemas = {
   ENTRY_COLL: { items: arrayOf(entryCollItemSchema) },
   COMMENT: commentSchema,
   COMMENT_COLL: { comments: arrayOf(commentSchema) },
+  COMMENT_COLL_ARR: arrayOf({ comments: arrayOf(commentSchema) }),
   RATING: ratingSchema,
+  RATING_ARR: arrayOf(ratingSchema),
+  PERMISSION: permissionSchema,
+  PERMISSION_ARR: arrayOf(permissionSchema),
   RELATIONSHIP: relSchema,
   RELATIONSHIP_COLL: { relationships: arrayOf(relSchema) },
   RELATIONSHIP_ARR: arrayOf(relSchema),

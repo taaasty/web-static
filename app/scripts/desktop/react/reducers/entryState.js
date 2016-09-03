@@ -5,9 +5,17 @@ import {
   TLOG_ENTRY_FAILURE,
 } from '../actions/TlogEntryActions';
 import {
+  TLOG_ENTRIES_PERMISSIONS_REQUEST,
+  TLOG_ENTRIES_PERMISSIONS_SUCCESS,
+  TLOG_ENTRIES_PERMISSIONS_FAILIRE,
+} from '../actions/TlogEntriesActions';
+import {
   COMMENTS_REQUEST,
   COMMENTS_SUCCESS,
   COMMENTS_FAILURE,
+  COMMENTS_ENTRIES_REQUEST,
+  COMMENTS_ENTRIES_SUCCESS,
+  COMMENTS_ENTRIES_FAILURE,
 } from '../actions/CommentsActions';
 import {
   COMMENT_POST_REQUEST,
@@ -20,13 +28,18 @@ const initialState = {};
 const itemInitialState = {
   isFetching: false,
   error: null,
-  isLoadingComments: false,
+  isFetchingComments: false,
+  isFetchingPermissions: false,
   isPostingComment: false,
 };
 
+function entryValue(state, id, update) {
+  return Object.assign({}, state[id] || itemInitialState, update);
+}
+
 function entry(state, id, update) {
   return {
-    [id]: Object.assign({}, state[id] || itemInitialState, update),
+    [id]: entryValue(state, id, update),
   };
 }
 
@@ -54,20 +67,80 @@ const actionMap = {
 
   [COMMENTS_REQUEST](state, { entryId }) {
     return Object.assign({}, state, entry(state, entryId, {
-      isLoadingComments: true,
+      isFetchingComments: true,
     }));
   },
 
   [COMMENTS_SUCCESS](state, { entryId }) {
     return Object.assign({}, state, entry(state, entryId, {
-      isLoadingComments: false,
+      isFetchingComments: false,
     }));
   },
 
   [COMMENTS_FAILURE](state, { entryId }) {
     return Object.assign({}, state, entry(state, entryId, {
-      isLoadingComments: false,
+      isFetchingComments: false,
     }));
+  },
+
+  [COMMENTS_ENTRIES_REQUEST](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingComments: true,
+      }))
+      .toJS()
+    );
+  },
+
+  [COMMENTS_ENTRIES_SUCCESS](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingComments: false,
+      }))
+      .toJS()
+    );
+  },
+
+  [COMMENTS_ENTRIES_FAILURE](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingComments: false,
+      }))
+      .toJS()
+    );
+  },
+
+  [TLOG_ENTRIES_PERMISSIONS_REQUEST](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingPermissions: true,
+      }))
+      .toJS()
+    );
+  },
+
+  [TLOG_ENTRIES_PERMISSIONS_SUCCESS](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingPermissions: false,
+      }))
+      .toJS()
+    );
+  },
+
+  [TLOG_ENTRIES_PERMISSIONS_FAILIRE](state, { entries }) {
+    return Object.assign({},
+      state,
+      entries.map((e, id) => entryValue(state, id, {
+        isFetchingPermissions: false,
+      }))
+      .toJS()
+    );
   },
 
   [COMMENT_POST_REQUEST](state, { entryId }) {

@@ -12,6 +12,17 @@ export const TLOG_ENTRIES_REQUEST = 'TLOG_ENTRIES_REQUEST';
 export const TLOG_ENTRIES_SUCCESS = 'TLOG_ENTRIES_SUCCESS';
 export const TLOG_ENTRIES_FAILURE = 'TLOG_ENTRIES_FAILURE';
 
+export const TLOG_ENTRIES_RATINGS_REQUEST = 'TLOG_ENTRIES_RATINGS_REQUEST';
+export const TLOG_ENTRIES_RATINGS_SUCCESS = 'TLOG_ENTRIES_RATINGS_SUCCESS';
+export const TLOG_ENTRIES_RATINGS_FAILURE = 'TLOG_ENTRIES_RATINGS_FAILURE';
+
+export const TLOG_ENTRIES_PERMISSIONS_REQUEST =
+  'TLOG_ENTRIES_PERMISSIONS_REQUEST';
+export const TLOG_ENTRIES_PERMISSIONS_SUCCESS =
+  'TLOG_ENTRIES_PERMISSIONS_SUCCESS';
+export const TLOG_ENTRIES_PERMISSIONS_FAILIRE =
+  'TLOG_ENTRIES_PERMISSIONS_FAILIRE';
+
 export const TLOG_ENTRIES_DELETE_ENTRY = 'TLOG_ENTRIES_DELETE_ENTRY';
 export const TLOG_ENTRIES_RESET = 'TLOG_ENTRIES_RESET';
 export const TLOG_ENTRIES_INVALIDATE = 'TLOG_ENTRIES_INVALIDATE';
@@ -123,6 +134,46 @@ export function getTlogEntriesIfNeeded(params) {
       dispatch(tlogEntriesReset());
       return dispatch(getTlogEntries(params));
     }
+  };
+}
+
+export function getTlogEntriesRatingsIfNeeded(entries) {
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.ratings(), {
+        ids: entries
+          .keySeq()
+          .join(','),
+      }),
+      schema: Schemas.RATING_ARR,
+      types: [
+        TLOG_ENTRIES_RATINGS_REQUEST,
+        TLOG_ENTRIES_RATINGS_SUCCESS,
+        TLOG_ENTRIES_RATINGS_FAILURE,
+      ],
+      opts: defaultOpts,
+    },
+    entries: entries,
+  };
+}
+
+export function getTlogEntriesPermissionsIfNeeded(entries) {
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.entriesPermissions(), {
+        entriesIds: entries
+          .keySeq()
+          .join(','),
+      }),
+      schema: Schemas.PERMISSION_ARR,
+      types: [
+        TLOG_ENTRIES_PERMISSIONS_REQUEST,
+        TLOG_ENTRIES_PERMISSIONS_SUCCESS,
+        TLOG_ENTRIES_PERMISSIONS_FAILIRE,
+      ],
+      opts: defaultOpts,
+    },
+    entries: entries,
   };
 }
 
