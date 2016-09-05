@@ -3,42 +3,43 @@ import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 import EntryTlogContentLink from './EntryTlogContentLink';
 
 class EntryTlogCodeType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    const { title } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
 
-    if (title) {
-      return (
-        <h1 className="post__title">{title}</h1>
-      );
-    }
+    return !!title && (
+      <h1 className="post__title">
+        {title}
+      </h1>
+    );
   }
   renderActions() {
-    if (this.props.hasModeration) {
-      return <EntryTlogActions {...this.props} />;
-    }
+    return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
-    const { isFeed, isInList, entry } = this.props;
-    const { is_private, text } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
+    const isPrivate = entry.get('isPrivate');
+    const text = entry.get('text');
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {!!isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
-        <EntryTlogContentLink
-          entry={entry}
-          isFeed={isFeed}
-          show={isInList}
-        >
+        <EntryTlogContentLink entry={entry} show={isInList}>
           <div className="post__content">
             <pre>
               <Text value={text} withHTML />
@@ -49,17 +50,15 @@ class EntryTlogCodeType extends Component {
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
 }
 
 EntryTlogCodeType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 

@@ -1,7 +1,5 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import setQuery from 'set-query-string';
-import WaypointService from '../../services/CustomWaypointService';
 import EntryBrick from '../EntryBrick';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Masonry from 'react-masonry-component';
@@ -26,7 +24,14 @@ class EntryBricks extends Component {
     this.forceUpdate();
   }
   render() {
-    const { canLoad, children, entries, host_tlog_id, isFeed, loading, onLoadMoreEntries } = this.props;
+    const {
+      canLoad,
+      children,
+      entries,
+      hostTlogId,
+      loading,
+      onLoadMoreEntries,
+    } = this.props;
 
     return (
       <div className="bricks-wrapper">
@@ -42,13 +47,11 @@ class EntryBricks extends Component {
             ref={(c) => {if (c) { this.masonry = c.masonry; }}}
           >
             {children}
-            {entries.map((item) =>
+            {entries.map((entryId) =>
                <EntryBrick
-                 entry={item.entry}
-                 host_tlog_id={host_tlog_id}
-                 isFeed={isFeed}        
-                 key={item.entry.id}
-                 moderation={item.moderation}
+                 entryId={entryId}
+                 hostTlogId={hostTlogId}
+                 key={`brick-item-${entryId}`}
                />)
             }
           </Masonry>
@@ -60,9 +63,12 @@ class EntryBricks extends Component {
 
 EntryBricks.propTypes = {
   canLoad: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]),
   entries: PropTypes.array.isRequired,
-  host_tlog_id: PropTypes.number,
-  isFeed: PropTypes.bool,
+  hostTlogId: PropTypes.number,
   loading: PropTypes.bool.isRequired,
   onLoadMoreEntries: PropTypes.func.isRequired,
 };

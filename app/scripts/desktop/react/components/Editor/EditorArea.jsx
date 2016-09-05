@@ -8,44 +8,34 @@ import {
   EDITOR_ENTRY_TYPE_VIDEO,
   EDITOR_ENTRY_TYPE_QUOTE,
 } from '../../constants/EditorConstants';
-import EditorTypeText from './types/Text';
-import EditorTypeImage from './types/Image';
-import EditorTypeInstagram from './types/Instagram';
-import EditorTypeMusic from './types/Music';
-import EditorTypeVideo from './types/Video';
-import EditorTypeQuote from './types/Quote';
+import EditorTypeText from './Type/Text';
+import EditorTypeImage from './Type/Image';
+import EditorTypeInstagram from './Type/Instagram';
+import EditorTypeMusic from './Type/Music';
+import EditorTypeVideo from './Type/Video';
+import EditorTypeQuote from './Type/Quote';
 
 class EditorArea extends Component {
   renderEditor() {
-    const { entry, entryType, loading } = this.props;
-    const props = { entry, entryType, loading };
-    let Component;
+    const {
+      entryType,
+     } = this.props;
 
     switch(entryType) {
     case EDITOR_ENTRY_TYPE_TEXT:
     case EDITOR_ENTRY_TYPE_ANONYMOUS:
-      Component = EditorTypeText;
-      break;
+      return <EditorTypeText />;
     case EDITOR_ENTRY_TYPE_IMAGE:
-      Component = EditorTypeImage;
-      break;
+      return <EditorTypeImage />;
     case EDITOR_ENTRY_TYPE_INSTAGRAM:
-      Component = EditorTypeInstagram;
-      break;
+      return <EditorTypeInstagram />;
     case EDITOR_ENTRY_TYPE_MUSIC:
-      Component = EditorTypeMusic;
-      break;
+      return <EditorTypeMusic />;
     case EDITOR_ENTRY_TYPE_VIDEO:
-      Component = EditorTypeVideo;
-      break;
+      return <EditorTypeVideo />;
     case EDITOR_ENTRY_TYPE_QUOTE:
-      Component = EditorTypeQuote;
-      break;
-    default:
-      console.warn('Unknown type of normalized entry', entryType);
+      return <EditorTypeQuote />;
     }
-
-    return <Component {...props} />;
   }
   render() {
     return (
@@ -57,10 +47,7 @@ class EditorArea extends Component {
 }
 
 EditorArea.propTypes = {
-  entry: PropTypes.object.isRequired,
-  entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-}
+};
 
 export default EditorArea;

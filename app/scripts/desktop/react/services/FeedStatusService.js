@@ -16,7 +16,7 @@ export function feedStatusConnect(user, store) {
     return;
   }
 
-  const userToken = user.api_key && user.api_key.access_token;
+  const userToken = user.apiKey && user.apiKey.accessToken;
   const authOptions = userToken
           ? {
             auth: {

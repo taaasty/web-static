@@ -13,84 +13,85 @@ import {
   FEED_TYPE_FRIENDS,
   FEED_TYPE_BEST,
   FEED_TYPE_LIVE_FLOW,
+  feedDataByUri,
   feedTitleMap,
   feedBestTitleMap,
   navFilters,
 } from '../../constants/FeedConstants';
 import {
-  appendFeedEntries,
-  feedDataByUri,
   feedEntriesViewStyle,
+  getFeedEntries,
   getFeedEntriesIfNeeded,
-  prependFeedEntries,
+  resetFeedEntries,
+  setVisibleFeedEntries,
 } from '../../actions/FeedEntriesActions';
 import {
   feedAnonymousReset,
   feedBestReset,
   feedFriendsReset,
-  feedLiveFlowReset,  
+  feedLiveFlowReset,
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
-import { appStateSetSearchKey } from '../../actions/AppStateActions';
-import {
-  SEARCH_KEY_ANONYMOUS,
-  SEARCH_KEY_BEST,
-  SEARCH_KEY_FRIENDS,
-  SEARCH_KEY_LIVE,
-} from '../../constants/SearchConstants';
+import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
+import { onlyUpdateForKeys } from 'recompose';
 
 const BUTTON_OFFSET = 62;
-const PREPEND_LOAD_LIMIT = 30;
 const typeMap = {
   [FEED_TYPE_ANONYMOUS]: {
     counter: 'unreadAnonymousCount',
     reset: 'feedAnonymousReset',
     href: Routes.live_anonymous_feed_path(),
-    searchKey: SEARCH_KEY_ANONYMOUS,
   },
   [FEED_TYPE_BEST]: {
     counter: 'unreadBestCount',
     reset: 'feedBestReset',
     href: Routes.best_feed_path(),
-    searchKey: SEARCH_KEY_BEST,
   },
   [FEED_TYPE_FRIENDS]: {
     counter: 'unreadFriendsCount',
     reset: 'feedFriendsReset',
     href: Routes.friends_feed_path(),
-    searchKey: SEARCH_KEY_FRIENDS,
   },
   [FEED_TYPE_LIVE_FLOW]: {
     counter: 'unreadLiveFlowCount',
     reset: 'feedLiveFlowReset',
     href: Routes.live_flows_feed_path(),
-    searchKey: SEARCH_KEY_LIVE,
   },
   [FEED_TYPE_LIVE]: {
     counter: 'unreadLiveCount',
     reset: 'feedLiveReset',
     href: Routes.live_feed_path(),
-    searchKey: SEARCH_KEY_LIVE,
   },
 };
 
+const PREPEND_LOAD_LIMIT = 30;
+const VISIBLE_INITIAL = 40;
+const VISIBLE_APPEND_THRESHOLD = 60; // if less than threshold entries then load more
+const VISIBLE_APPEND_STEP = 15;
+const APPEND_LOAD_LIMIT = 100;
+
 class FeedPage extends Component {
   componentWillMount() {
-    const { appStateSetSearchKey, feedStatus, getFeedEntriesIfNeeded,
-            location, prependFeedEntries } = this.props;
+    const {
+      feedStatus,
+      getFeedEntriesIfNeeded,
+      location,
+      setVisibleFeedEntries,
+    } = this.props;
     const feedType = this.feedType(location);
     const type = typeMap[feedType];
+    const params = feedDataByUri(location);
 
     this.setViewStyle(this.props);
-    const willGet = getFeedEntriesIfNeeded(location);
+    const willGet = getFeedEntriesIfNeeded(params);
+    setVisibleFeedEntries(VISIBLE_INITIAL);
 
     if (type) {
       if (!willGet && feedStatus[type.counter] > 0) {
-        prependFeedEntries(feedStatus[type.counter]);
+        this.prependEntries(params, feedStatus[type.counter]);
       }
       this.props[type.reset].call(void 0);
-      appStateSetSearchKey(type.searchKey);
       sendCategory(feedType);
     }
   }
@@ -98,25 +99,35 @@ class FeedPage extends Component {
     setBodyLayoutClassName('layout--feed');
   }
   componentWillReceiveProps(nextProps) {
-    const { appStateSetSearchKey, getFeedEntriesIfNeeded } = this.props;
+    const {
+      getFeedEntriesIfNeeded,
+      setVisibleFeedEntries,
+    } = this.props;
+    const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
-    const willGet = getFeedEntriesIfNeeded(nextProps.location);
+    const willGet = getFeedEntriesIfNeeded(nextParams);
     const nextFeedType = this.feedType(nextProps.location);
-    const type = typeMap[nextFeedType]; 
+    const type = typeMap[nextFeedType];
 
     if (this.feedType(this.props.location) !== nextFeedType) {
       if (type) {
         if (!willGet && nextProps.feedStatus[type.counter] > 0) {
-          prependFeedEntries(nextProps.feedStatus[type.counter]);
+          this.prependEntries(nextParams, nextProps.feedStatus[type.counter]);
         }
         this.props[type.reset].call(void 0);
-        appStateSetSearchKey(type.searchKey);
         sendCategory(nextFeedType);
       }
     } else if (willGet && type) {
       this.props[type.reset].call(void 0);
     }
+
+    if (willGet) {
+      setVisibleFeedEntries(VISIBLE_INITIAL);
+    }
+  }
+  componentWillUnmount() {
+    this.props.setVisibleFeedEntries(VISIBLE_INITIAL);
   }
   feedType(location) {
     return (feedDataByUri(location) || {}).type;
@@ -127,17 +138,62 @@ class FeedPage extends Component {
     }
   }
   handleClickUnreadButton(count) {
-    const { getFeedEntriesIfNeeded, prependFeedEntries, location } = this.props;
+    const {
+      getFeedEntries,
+      location,
+      resetFeedEntries,
+      setVisibleFeedEntries,
+     } = this.props;
     const type = typeMap[this.feedType(location)];
+    const shouldReset = count > PREPEND_LOAD_LIMIT;
+    const params = feedDataByUri(location);
 
     if (count > 0) {
-      const promise = (count < PREPEND_LOAD_LIMIT)
-        ? prependFeedEntries(count)
-        : getFeedEntriesIfNeeded(this.props.location, true);
-      (promise && type && promise.then(this.props[type.reset]));
-    } else {
-      return null;
+      if (shouldReset) {
+        resetFeedEntries();
+        getFeedEntries(params)
+          .then(() => setVisibleFeedEntries(VISIBLE_INITIAL))
+          .then(this.props[type.reset]);
+      } else {
+        this.prependEntries(params, count)
+          .then(this.props[type.reset]);
+      }
     }
+
+    return null;
+  }
+  appendEntries() {
+    const {
+      feedEntries: {
+        data: {
+          items,
+          nextSinceEntryId,
+        },
+        visible,
+      },
+      getFeedEntries,
+      location,
+      setVisibleFeedEntries,
+    } = this.props;
+
+    if (items.length - visible <= VISIBLE_APPEND_THRESHOLD) {
+      getFeedEntries(
+        feedDataByUri(location),
+        { sinceId: nextSinceEntryId, limit: APPEND_LOAD_LIMIT }
+      );
+    }
+
+    setVisibleFeedEntries(visible + VISIBLE_APPEND_STEP);
+  }
+  prependEntries(params, limit) {
+    const {
+      getFeedEntries,
+      tillId,
+    } = this.props;
+
+    return tillId
+      ? getFeedEntries(params, { limit, tillId })
+      : Promise.reject();
   }
   renderButton({ count, href, isFetching }) {
     return (
@@ -151,30 +207,41 @@ class FeedPage extends Component {
     );
   }
   render() {
-    const { appendFeedEntries, currentUser, feedEntries, feedStatus, location } = this.props;
-    const { isFetching, viewStyle } = feedEntries;
+    const {
+      currentUser,
+      feedEntries,
+      feedStatus,
+      location,
+    } = this.props;
+    const { isFetching, viewStyle, visible } = feedEntries;
     const { section, type, rating, query } = feedDataByUri(location);
-    const navFilterItems = navFilters[section].map(({ href, filterTitle }) => ({ href, title: i18n.t(filterTitle) }));
+    const navFilterItems = navFilters[section];
     const { idx, title } = type === FEED_TYPE_BEST
             ? feedBestTitleMap[rating]
             : feedTitleMap[location.pathname];
     const { counter, href } = typeMap[type];
     const count = feedStatus[counter];
+    const visibleFeedEntries = Object.assign({}, feedEntries, {
+      data: Object.assign({}, feedEntries.data, {
+        items: feedEntries.data.items.slice(0, visible),
+      }),
+    });
 
     return (
       <div className="page__inner">
         <Helmet title={i18n.t(title)} />
         <div className="page__paper">
           <FeedPageBody
-            appendFeedEntries={appendFeedEntries}
+            appendFeedEntries={this.appendEntries.bind(this)}
             currentUser={currentUser}
-            feedEntries={feedEntries}
+            feedEntries={visibleFeedEntries}
             feedType={type}
             location={location}
           >
             <FeedFilters
               location={location}
-              navFilters={{ active: idx, items: navFilterItems }}
+              navFiltersActive={idx}
+              navFiltersItems={navFilterItems}
               navViewMode
               viewMode={viewStyle}
             >
@@ -194,9 +261,7 @@ FeedPage.defaultProps = {
 };
 
 FeedPage.propTypes = {
-  appStateSetSearchKey: PropTypes.func.isRequired,
   appStats: PropTypes.object.isRequired,
-  appendFeedEntries: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   feedAnonymousReset: PropTypes.func.isRequired,
   feedBestReset: PropTypes.func.isRequired,
@@ -206,28 +271,58 @@ FeedPage.propTypes = {
   feedLiveFlowReset: PropTypes.func.isRequired,
   feedLiveReset: PropTypes.func.isRequired,
   feedStatus: PropTypes.object.isRequired,
+  getFeedEntries: PropTypes.func.isRequired,
   getFeedEntriesIfNeeded: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  prependFeedEntries: PropTypes.func.isRequired,
+  resetFeedEntries: PropTypes.func.isRequired,
+  setVisibleFeedEntries: PropTypes.func.isRequired,
+  tillId: PropTypes.number,
 };
 
 export default connect(
-  (state) => ({
-    appStats: state.appStats.data,
-    currentUser: state.currentUser,
-    feedEntries: state.feedEntries,
-    feedStatus: state.feedStatus,
-  }),
+  (state) => {
+    const { appStats, currentUser, entities, feedEntries, feedStatus } = state;
+    const sortedEntries = entities
+            .get('entry')
+            .filter((e, key) => (feedEntries.data.items || []).indexOf(Number(key)) > -1)
+            .toOrderedMap()
+            .sortBy((e) => 0 - (new Date(e.get('createdAt')).valueOf()) -
+                    (e.get('fixedState') === ENTRY_PINNED_STATE ? 1e12 : 0))
+            .keySeq()
+            .map(k => Number(k))
+            .toArray();
+    const tillId = Math.max(...feedEntries.data.items);
+    const sortedFeedEntries = Object.assign(
+      {},
+      feedEntries,
+      { data: Object.assign({}, feedEntries.data, { items: sortedEntries }) }
+    );
+
+    return {
+      currentUser,
+      feedStatus,
+      tillId,
+      appStats: appStats.data,
+      feedEntries: sortedFeedEntries,
+    };
+  },
   {
-    appStateSetSearchKey,
-    appendFeedEntries,
     feedAnonymousReset,
     feedBestReset,
     feedEntriesViewStyle,
     feedFriendsReset,
     feedLiveFlowReset,
     feedLiveReset,
+    getFeedEntries,
     getFeedEntriesIfNeeded,
-    prependFeedEntries,
+    resetFeedEntries,
+    setVisibleFeedEntries,
   }
-)(FeedPage);
+)(onlyUpdateForKeys([
+  'appStats',
+  'currentUser',
+  'feedEntries',
+  'feedStatus',
+  'location',
+  'tillId',
+])(FeedPage));

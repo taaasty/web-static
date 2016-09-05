@@ -3,11 +3,12 @@ import PrivacyBadge from '../common/PrivacyBadge';
 import Text from '../../../../shared/react/components/common/Text';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
+import Embed from '../Embed';
 
 class EntryTlogVideoType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderActions() {
     if (this.props.hasModeration) {
@@ -15,34 +16,38 @@ class EntryTlogVideoType extends Component {
     }
   }
   render() {
-    const { iframely, is_private, title } = this.props.entry;
+    const {
+      entry,
+    } = this.props;
+    const embedHtml = entry.getIn(['iframely', 'html']);
+    const isPrivate = entry.get('isPrivate');
+    const title = entry.get('title');
 
     return (
       <span>
         <div className="post__content">
-          <EmbedComponent
+          <Embed
             autoplay={false}
-            frameWidth={712}
+            embedHtml={embedHtml}
             frameHeight={400}
-            embedHtml={iframely.html}
+            frameWidth={712}
           />
           <div className="video_comment">
-            {is_private && <PrivacyBadge />}
-            <Text value={title} withHTML={true} />
+            {!!isPrivate && <PrivacyBadge />}
+            <Text value={title} withHTML />
           </div>
         </div>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
 }
 
 EntryTlogVideoType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

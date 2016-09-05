@@ -1,100 +1,57 @@
-/*global i18n, NoticeService, ReactUnmountMixin, RequesterMixin,
- ScrollerMixin, ComponentManipulationsMixin, */
-import React, { createClass, PropTypes } from 'react';
-import ApiRoutes from '../../../../shared/routes/api';
+/*global i18n */
+import React, { Component, PropTypes } from 'react';
 import UserAvatar from '../UserAvatar';
-import { browserHistory } from 'react-router';
+import Scroller from '../common/Scroller';
+import { Link } from 'react-router';
 import uri from 'urijs';
+import { connect } from 'react-redux';
+import { getTlogFollowersIfNeeded } from '../../actions/TlogFollowersActions';
+import { Map } from 'immutable';
 
-const HeroProfileStatsFollowersPopup = createClass({
-  propTypes: {
-    close: PropTypes.func,
-    onClose: PropTypes.func,
-    tlogId: PropTypes.number.isRequired,
-  },
-  mixins: [ 'ReactActivitiesUser', ReactUnmountMixin, RequesterMixin,
-           ScrollerMixin, ComponentManipulationsMixin ],
+const emptyUser = Map();
 
-  getInitialState() {
-    return ({
-      relationships: null,
-      isError: false,
-      isLoading: false,
-    });
-  },
+class HeroProfileStatsFollowersPopup extends Component {
+  componentWillMount() {
+    const { getTlogFollowersIfNeeded, tlogId } = this.props;
 
-  componentDidMount() {
-    this.loadFollowers();
-  },
-
-  loadFollowers() {
-    this.safeUpdate(() => this.incrementActivities());
-    this.setState({
-      isError: false,
-      isLoading: true,
-    });
-    this.createRequest({
-      url: ApiRoutes.tlog_followers(this.props.tlogId),
-      success: (data) => {
-        this.safeUpdateState({ relationships: data.relationships });
-      },
-      error: (data) => {
-        this.safeUpdateState({ isError: true });
-        NoticeService.errorResponse(data);
-      },
-      complete: () => {
-        this.safeUpdate(() => this.decrementActivities());
-        this.safeUpdateState({ isLoading: false });
-      },
-    });
-  },
-
-  handleClickItem(pathname, ev) {
-    ev.preventDefault();
-
-    browserHistory.push({ pathname });
-    this.props.close();
-  },
-
-  renderListItem({ reader }, key) {
-    const { name, tlog_url } = reader;
+    getTlogFollowersIfNeeded(tlogId);
+  }
+  renderListItem(user, key) {
+    const name = user.get('name', '');
+    const tlogUrl = user.get('tlogUrl', '');
 
     return (
       <article className="user__item" key={key}>
-        <a
+        <Link
           className="user__link"
-          href={tlog_url}
-          onClick={this.handleClickItem.bind(null, uri(tlog_url).path())}
+          onClick={this.props.close}
           title={name}
+          to={uri(tlogUrl).path()}
         >
           <span className="user__avatar">
-            <UserAvatar size={40} user={reader} />
+            <UserAvatar size={40} user={user.toJS()} />
           </span>
           <span className="user__desc">
             <span className="user__name">
               {name}
             </span>
           </span>
-        </a>
+        </Link>
       </article>
     );
-  },
-  
+  }
   renderList() {
     return (
       <section className="users">
-        {this.state.relationships.map(this.renderListItem)}
+        {this.props.followers.map(this.renderListItem.bind(this))}
       </section>
     );
-  },
-
+  }
   renderMessage() {
-    const { isError, isLoading } = this.state;
-    const messageKey = isError
-      ? 'hero_stats_popup_error'
-      : isLoading
-        ? 'hero_stats_popup_loading'
-        : 'hero_stats_popup_empty';
+    const { error, isFetching } = this.props;
+    const messageKey = error ? 'hero_stats_popup_error'
+                     : isFetching ? 'hero_stats_popup_loading'
+                     : 'hero_stats_popup_empty';
 
     return (
       <div className="grid-full">
@@ -105,25 +62,45 @@ const HeroProfileStatsFollowersPopup = createClass({
         </div>
       </div>
     );
-  },
-
+  }
   render() {
-    const { relationships } = this.state;
+    const { isFetching, followers } = this.props;
 
     return (
-      <div className="scroller scroller--users" ref="scroller">
-        <div className="scroller__pane js-scroller-pane">
-          {relationships && relationships.length > 0
-             ? this.renderList()
-             : this.renderMessage()
-          }
-        </div>
-        <div className="scroller__track js-scroller-track">
-          <div className="scroller__bar js-scroller-bar" />
-        </div>
-      </div>
+      <Scroller className="scroller--users">
+        {followers && followers.length > 0 && !isFetching
+         ? this.renderList()
+         : this.renderMessage()
+        }
+      </Scroller>
     );
-  },
-});
+  }
+}
 
-export default HeroProfileStatsFollowersPopup;
+HeroProfileStatsFollowersPopup.propTypes = {
+  close: PropTypes.func,
+  error: PropTypes.object,
+  followers: PropTypes.array.isRequired,
+  getTlogFollowersIfNeeded: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  tlogId: PropTypes.number.isRequired,
+};
+
+export default connect(
+  (state, { tlogId, ...rest }) => {
+    const { ids, isFetching, error } = state.tlogFollowers;
+
+    return {
+      ...rest,
+      isFetching,
+      error,
+      tlogId,
+      followers: ids.map((id) => {
+        const rel = state.entities.getIn([ 'rel', id ], Map());
+
+        return state.entities.getIn([ 'tlog', String(rel.get('reader')) ], emptyUser);
+      }),
+    };
+  },
+  { getTlogFollowersIfNeeded }
+)(HeroProfileStatsFollowersPopup);

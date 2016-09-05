@@ -1,6 +1,26 @@
 MESSENGER_VERSION_PREFIX = 'v2'
 
 ApiRoutes =
+
+  # cached == v2 =======
+  tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v2/tlog/#{tlogId}/#{section}/#{type}.json"
+
+  feedLiveTlogs: -> "#{gon.api_host}/v2/feeds/live/tlogs.json"
+  feedMediaTlogs: -> "#{gon.api_host}/v2/feeds/media/tlogs.json"
+  feedFlowsTlogs: -> "#{gon.api_host}/v2/feeds/live_flows/tlogs.json"
+  feedAnonymousTlogs: -> "#{gon.api_host}/v2/feeds/anonymous/tlogs.json"
+  feedBestTlogs:    -> "#{gon.api_host}/v2/feeds/best/tlogs.json"
+
+  ratings: () -> "#{gon.api_host}/v1/ratings.json"
+  entriesPermissions: () -> "#{gon.api_host}/v1/entries_permissions.json"
+  commentsByEntriesIds: () -> "#{gon.api_host}/v1/comments/by_entries_ids.json"
+  # ====================
+
+  feedFriendsTlogs: -> "#{gon.api_host}/v1/my_feeds/friends/tlogs.json"
+  feedFriendsMediaTlogs: -> "#{gon.api_host}/v1/my_feeds/friends_media/tlogs.json"
+
+  # ====================
+
   omniauth_url:    (provider, refToken) ->
     baseUrl = "#{gon.host}/auth/#{provider}"
 
@@ -71,7 +91,6 @@ ApiRoutes =
   tlog: (tlogId) -> "#{gon.api_host}/v1/tlog/#{tlogId}.json"
 
   _tlogEntries:                          (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries'
-  tlogEntries: (tlogId, section, type) -> "#{gon.api_host}/v1/tlog/#{tlogId}/#{section}/#{type}.json"
   tlogEntriesTlogs:                     (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/entries/tlogs'
   tlogEntriesBricks:                    (tlogId) -> gon.api_host + '/v1/tlog/' + tlogId + '/enrties/bricks'
 
@@ -82,7 +101,7 @@ ApiRoutes =
   get_my_relationship_url:              (tlogId) -> gon.api_host + '/v1/relationships/to/tlog/' + tlogId
 
   # Comments
-  comments_url:             (entryId) -> gon.api_host + '/v1/comments'
+  comments_url:             () -> gon.api_host + '/v1/comments'
   comments_edit_delete_url: (commentId) -> gon.api_host + '/v1/comments/' + commentId
   comments_report_url:      (commentId) -> gon.api_host + '/v1/comments/' + commentId + '/report'
 
@@ -97,6 +116,8 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}"
   messengerConversationsByIdLeave: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/leave.json"
+  messengerConversationsByIdUsers: (id) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/users.json"
   messengerConversationsByUserId: (userId) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_id/#{userId}"
   messengerDeleteMessages: (id) ->
@@ -107,6 +128,8 @@ ApiRoutes =
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages"
   messenger_read_messages_url: (id) ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/read"
+  messengerMarkAllMessagesRead: (id) ->
+    "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_id/#{id}/messages/read_all.json"
   messengerConversationsByUserIds: () ->
     "#{gon.api_host}/#{MESSENGER_VERSION_PREFIX}/messenger/conversations/by_user_ids.json"
   messengerDontDisturb: (id) ->
@@ -129,14 +152,6 @@ ApiRoutes =
 
   tagsTlog: (slug, tags) -> "#{gon.api_host}/v1/tlog/#{slug}/entries/tags_tlogs/#{tags}.json"
   tagsFeed: (tags) -> "#{gon.api_host}/v1/feeds/tags_tlogs/#{tags}.json"
-
-  feedLiveTlogs: -> "#{gon.api_host}/v1/feeds/live/tlogs.json"
-  feedMediaTlogs: -> "#{gon.api_host}/v1/feeds/media/tlogs.json"
-  feedFlowsTlogs: -> "#{gon.api_host}/v1/feeds/live_flows/tlogs.json"
-  feedAnonymousTlogs: -> "#{gon.api_host}/v1/feeds/anonymous/tlogs.json"
-  feedBestTlogs:    -> "#{gon.api_host}/v1/feeds/best/tlogs.json"
-  feedFriendsTlogs: -> "#{gon.api_host}/v1/my_feeds/friends/tlogs.json"
-  feedFriendsMediaTlogs: -> "#{gon.api_host}/v1/my_feeds/friends_media/tlogs.json"
 
   imageAttachments: -> gon.api_host + '/v1/image_attachments'
   imageAttachmentsWithID: (attachmentID) -> gon.api_host + '/v1/image_attachments/' + attachmentID

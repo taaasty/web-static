@@ -2,62 +2,61 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../../../components/common/DropdownActions';
 import DropdownAction from '../../../components/common/DropdownAction';
-import ConversationsStore from '../../stores/ConversationsStore';
-import ConversationActions from '../../actions/ConversationActions';
-import MessagesPopupActions from '../../actions/MessagesPopupActions';
+import DropdownActionSPA from '../../../components/common/DropdownActionSPA';
+import NoticeService from '../../../services/Notice';
 import TastyConfirmController from '../../../controllers/TastyConfirmController';
-import { browserHistory } from 'react-router';
-import uri from 'urijs';
 
 class TitlePrivateConversationActions extends Component {
-  componentWillMount() {
-    this.syncStateWithStore = () => this.setState({
-      conversation: ConversationsStore.getConversation(this.props.conversation.id),
-    });
-    this.syncStateWithStore();
-    ConversationsStore.addChangeListener(this.syncStateWithStore);
-  }
-  componentWillUnmount() {
-    ConversationsStore.removeChangeListener(this.syncStateWithStore);
-  }
   dontDisturb(flag) {
-    ConversationActions.dontDisturb(this.props.conversation.id, flag);
+    const {
+      conversation,
+      dontDisturb,
+    } = this.props;
+
+    dontDisturb(conversation.get('id'), flag);
   }
   startSelect() {
     this.refs.dropdown.setClose();
-    MessagesPopupActions.startSelect();
-  }
-  navigateTlog() {
-    browserHistory.push(uri(this.props.conversation.recipient.tlog_url).path());
+    this.props.startSelect();
   }
   deleteConversation() {
+    const {
+      conversation,
+      deleteConversation,
+      showConversationList,
+    } = this.props;
+
     TastyConfirmController.show({
       message: i18n.t('messenger.confirm.leave_text'),
       acceptButtonText: i18n.t('messenger.confirm.leave_button'),
-      onAccept: () => {
-        ConversationActions
-          .deleteConversation(this.props.conversation.id)
-          .then(() => {
-            return MessagesPopupActions.openConversationList();
-          });
-      },
+      onAccept: () => deleteConversation(conversation.get('id'))
+        .then(() => NoticeService.notifySuccess(i18n.t(
+          'messenger.request.conversation_delete_success'))
+        )
+        .then(showConversationList),
     });
   }
   render() {
-    if (!this.state.conversation) {
+    const {
+      conversation,
+      recipient,
+    } = this.props;
+
+    if (conversation.isEmpty()) {
       return <noscript />;
     }
 
-    const { can_delete, not_disturb } = this.state.conversation;
+    const notDisturb = conversation.get('notDisturb', false);
+    const canDelete = conversation.get('canDelete', false);
 
     return (
       <div className="messages__popup-title-actions">
         <DropdownActions ref="dropdown">
           <DropdownAction
-            icon={`icon--mute-${not_disturb ? 'off' : 'on'}`}
+            icon={`icon--mute-${notDisturb ? 'off' : 'on'}`}
             key="dont-disturb"
-            onClick={this.dontDisturb.bind(this, !not_disturb)}
-            title={i18n.t(`messenger.title_actions.${not_disturb ? 'disturb' : 'dont_disturb'}`)}
+            onClick={this.dontDisturb.bind(this, !notDisturb)}
+            title={i18n.t(`messenger.title_actions.${notDisturb ? 'disturb' : 'dont_disturb'}`)}
           />
           <DropdownAction
             icon="icon--double-tick"
@@ -65,18 +64,20 @@ class TitlePrivateConversationActions extends Component {
             onClick={this.startSelect.bind(this)}
             title={i18n.t('messenger.title_actions.start_select_mode')}
           />
-          <DropdownAction
+          <DropdownActionSPA
             icon="icon--diary"
             key="visit-tlog"
-            onClick={this.navigateTlog.bind(this)}
             title={i18n.t('messenger.title_actions.visit_tlog')}
+            url={recipient.get('tlogUrl')}
           />
-          {can_delete && <DropdownAction
-            icon="icon--basket"
-            key="delete-conversation"
-            onClick={this.deleteConversation.bind(this)}
-            title={i18n.t('messenger.title_actions.delete_conversation')}
-          />}
+          {canDelete && (
+            <DropdownAction
+              icon="icon--basket"
+              key="delete-conversation"
+              onClick={this.deleteConversation.bind(this)}
+              title={i18n.t('messenger.title_actions.delete_conversation')}
+            />
+          )}
         </DropdownActions>
       </div>
     );
@@ -85,6 +86,11 @@ class TitlePrivateConversationActions extends Component {
 
 TitlePrivateConversationActions.propTypes = {
   conversation: PropTypes.object.isRequired,
+  deleteConversation: PropTypes.func.isRequired,
+  dontDisturb: PropTypes.func.isRequired,
+  recipient: PropTypes.object.isRequired,
+  showConversationList: PropTypes.func.isRequired,
+  startSelect: PropTypes.func.isRequired,
 };
 
 export default TitlePrivateConversationActions;

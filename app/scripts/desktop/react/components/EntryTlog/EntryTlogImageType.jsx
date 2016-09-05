@@ -4,41 +4,36 @@ import Text from '../../../../shared/react/components/common/Text';
 import ImageAttachmentsCollage from '../../../../shared/react/components/common/imageAttachmentsCollage';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 import EntryTlogContentLink from './EntryTlogContentLink';
+import { List } from 'immutable';
+
+const emptyAttachments = List();
 
 class EntryTlogImageType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderActions() {
-    if (this.props.hasModeration) {
-      return <EntryTlogActions {...this.props} />;
-    }
+    return !!this.props.hasModeration && <EntryTlogActions {...this.props} />;
   }
   render() {
-    const { entry, isFeed, isInList } = this.props;
-    const { image_attachments, is_private, title } = entry;
+    const {
+      entry,
+      isInList,
+    } = this.props;
+    const imageAttachments = entry.get('imageAttachments', emptyAttachments).toJS();
+    const isPrivate = entry.get('isPrivate', false);
+    const title = entry.get('title');
 
     return (
       <span>
         <div className="post__content">
-          <EntryTlogContentLink
-            entry={entry}
-            isFeed={isFeed}
-            show={isInList}
-          >
-            <ImageAttachmentsCollage
-              imageAttachments={image_attachments}
-              width={712}
-            />
+          <EntryTlogContentLink entry={entry} show={isInList}>
+            <ImageAttachmentsCollage imageAttachments={imageAttachments} width={712} />
           </EntryTlogContentLink>
-          {is_private && <PrivacyBadge />}
-          <EntryTlogContentLink
-            entry={entry}
-            isFeed={isFeed}
-            show={isInList}
-          >
+          {!!isPrivate && <PrivacyBadge />}
+          <EntryTlogContentLink entry={entry} show={isInList}>
             <Text value={title} withHTML />
           </EntryTlogContentLink>
         </div>
@@ -46,17 +41,15 @@ class EntryTlogImageType extends Component {
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
 }
 
 EntryTlogImageType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
-  isFeed: PropTypes.bool,
   isInList: PropTypes.bool,
 };
 

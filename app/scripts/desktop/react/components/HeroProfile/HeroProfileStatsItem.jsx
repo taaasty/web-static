@@ -1,6 +1,8 @@
 /*global $ */
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
+import { Link } from 'react-router';
+import uri from 'urijs';
 
 function HeroProfileStatsItem({ count, href, onClick, title }) {
   function handleClick(ev) {
@@ -8,32 +10,6 @@ function HeroProfileStatsItem({ count, href, onClick, title }) {
       ev.preventDefault();
       onClick($(ev.currentTarget));
     }
-  }
-
-  function renderLink() {
-    return (
-      <a
-        className="hero__stats-link"
-        href={href}
-        title={`${count} ${title}`}
-      >
-        <strong>
-          {count}
-        </strong>
-        {title}
-      </a>
-    );
-  }
-
-  function renderButton() {
-    return (
-      <span>
-        <strong>
-          {count}
-        </strong>
-        {title}
-      </span>
-    );
   }
 
   const statsItemClasses = classnames({
@@ -46,7 +22,28 @@ function HeroProfileStatsItem({ count, href, onClick, title }) {
       className={statsItemClasses}
       onClick={handleClick}
     >
-      {href ? renderLink() : renderButton()}
+      {href
+        ? (
+          <Link
+            className="hero__stats-link"
+            title={`${count} ${title}`}
+            to={uri(href).path()}
+          >
+            <strong>
+              {count}
+            </strong>
+            {title}
+          </Link>
+        )
+        : (
+          <span>
+            <strong>
+              {count}
+            </strong>
+            {title}
+          </span>
+        )
+      }
     </div>
   );
 }

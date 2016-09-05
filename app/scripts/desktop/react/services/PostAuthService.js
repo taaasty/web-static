@@ -1,5 +1,5 @@
 /*global i18n */
-import EntryActionCreators from '../actions/Entry';
+//import EntryActionCreators from '../actions/Entry';
 import CurrentUserStore from '../stores/current_user';
 import Auth from '../components/Auth';
 import NoticeService from './Notice';

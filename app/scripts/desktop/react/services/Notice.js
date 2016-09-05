@@ -79,6 +79,8 @@ const NoticeService = {
     if (response.responseJSON != null) {
       let { responseJSON: json } = response;
       message = json.message || json.long_message || json.error;
+    } else if (response.error) {
+      message = response.error;
     } else {
       message = i18n.t('network_error', {text: response.statusText});
     }

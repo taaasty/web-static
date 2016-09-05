@@ -1,66 +1,61 @@
+import React, { Children, Component, PropTypes, cloneElement, isValidElement } from 'react';
 import Tab from './Tab';
 
-let TabbedArea = React.createClass({
-  getInitialState() {
-    return {
-      activeKey: 0
-    };
-  },
+class TabbedArea extends Component {
+  state = { activeKey: 0 };
+  renderTab(child, index) {
+    const { tab, count, disabled } = child.props;
 
-  render() {
-    let validChildren = [];
-
-    React.Children.forEach(this.props.children, (child) => {
-      if (React.isValidElement(child)) validChildren.push(child);
+    return (
+      <Tab
+        active={this.state.activeKey === index}
+        count={count}
+        disabled={disabled}
+        key={index}
+        onClick={this.handleTabClick.bind(this, index)}
+        ref={`tab${index}`}
+      >
+        {tab}
+      </Tab>
+    );
+  }
+  renderPane(child, index) {
+    return cloneElement(child, {
+      active: (this.state.activeKey === index),
+      key: child.key ? child.key : index,
     });
-
+  }
+  handleTabClick(index) {
+    this.setState({ activeKey: index });
+  }
+  render() {
     function renderTabIfSet(child, index) {
       return child.props.tab != null ? this.renderTab(child, index) : null;
     };
 
-    let nav = (
-      <nav className="tabs-nav tabs-nav--white">
-        <ul className="tabs-nav__list">
-          {validChildren.map(renderTabIfSet.bind(this))}
-        </ul>
-      </nav>
-    );
+    const { children } = this.props;
+    const validChildren = Children.toArray(children).filter(isValidElement);
 
     return (
-      <div>
-        {nav}
+      <div className="tabs-wrapper">
+        <nav className="tabs-nav tabs-nav--white">
+          <ul className="tabs-nav__list">
+            {validChildren.map(renderTabIfSet.bind(this))}
+          </ul>
+        </nav>
         <div className="tabs-content" ref="panes">
-          {validChildren.map(this.renderPane)}
+          {validChildren.map(this.renderPane.bind(this))}
         </div>
       </div>
     );
-  },
-
-  renderTab(child, index) {
-    let { tab, count, disabled } = child.props;
-
-    return (
-      <Tab ref={'tab' + index}
-           active={this.state.activeKey === index}
-           count={count}
-           disabled={disabled}
-           onClick={this.handleTabClick.bind(null, index)}
-           key={index}>
-        {tab}
-      </Tab>
-    );
-  },
-
-  renderPane(child, index) {
-    return React.cloneElement(child, {
-      active: (this.state.activeKey === index),
-      key: child.key ? child.key : index,
-    });
-  },
-
-  handleTabClick(index) {
-    this.setState({activeKey: index});
   }
-});
+}
+
+TabbedArea.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.array,
+  ]),
+};
 
 export default TabbedArea;

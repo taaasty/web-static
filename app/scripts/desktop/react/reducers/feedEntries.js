@@ -1,10 +1,11 @@
-/*global AppStorage */
+import AppStorage from '../../../shared/resources/AppStorage';
 import createReducer from './createReducer';
 import {
   FEED_ENTRIES_REQUEST,
-  FEED_ENTRIES_RECEIVE,
-  FEED_ENTRIES_ERROR,
+  FEED_ENTRIES_SUCCESS,
+  FEED_ENTRIES_FAILURE,
   FEED_ENTRIES_RESET,
+  FEED_ENTRIES_SET_VISIBLE,
   FEED_ENTRIES_VIEW_STYLE,
 } from '../actions/FeedEntriesActions';
 import { VIEW_STYLE_BRICKS } from '../constants/ViewStyleConstants';
@@ -15,58 +16,59 @@ const initialState = {
   data: {
     items: [],
     limit: null,
-    has_more: null,
-    next_since_entry_id: null,
+    nextSinceEntryId: null,
   },
+  signature: null,
   isFetching: false,
-  apiType: '',
-  rating: '',
-  query: '',
-  sinceId: null,
   error: null,
-  viewStyle: VIEW_STYLE_BRICKS,
+  viewStyle: AppStorage.getItem(FEED_VIEW_STYLE_LS_KEY) || VIEW_STYLE_BRICKS,
+  visible: 0,
 };
 
 const actionMap = {
   [FEED_ENTRIES_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [FEED_ENTRIES_RECEIVE](state, data) {
-    return {
-      ...state,
-      ...data,
-      data: { ...data.data, items: (data.data && data.data.items) || [] },
+  [FEED_ENTRIES_SUCCESS](state, { response, signature, isPrepend }) {
+    const data = signature === state.signature ?
+      Object.assign({}, state.data, isPrepend ? {} : response.result, {
+        items: state.data.items.concat(response.result.items),
+      }) :
+      response.result;
+
+    return Object.assign({}, state, {
+      data,
+      signature,
       error: null,
       isFetching: false,
-    };
+    });
   },
-  
-  [FEED_ENTRIES_ERROR](state, error) {
-    return {
-      ...state,
-      ...error,
+
+  [FEED_ENTRIES_FAILURE](state, { error }) {
+    return Object.assign({}, state, {
+      error,
       isFetching: false,
-    };
+    });
   },
 
   [FEED_ENTRIES_RESET](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       data: initialState.data,
-    };
+      visible: 0,
+    });
   },
 
-  [FEED_ENTRIES_VIEW_STYLE](state, style) {
-    AppStorage.setItem(FEED_VIEW_STYLE_LS_KEY, style);
-    return {
-      ...state,
-      viewStyle: style,
-    };
+  [FEED_ENTRIES_SET_VISIBLE](state, { visible }) {
+    return Object.assign({}, state, { visible });
+  },
+
+  [FEED_ENTRIES_VIEW_STYLE](state, { viewStyle }) {
+    AppStorage.setItem(FEED_VIEW_STYLE_LS_KEY, viewStyle);
+    return Object.assign({}, state, { viewStyle });
   },
 };
 

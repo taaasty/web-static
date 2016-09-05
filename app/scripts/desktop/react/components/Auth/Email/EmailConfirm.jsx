@@ -1,6 +1,7 @@
 /*global i18n, RequesterMixin, ReactShakeMixin, ComponentManipulationsMixin */
 import React, { PropTypes, createClass } from 'react';
-import ConfirmRegistrationMixin from  '../ConfirmRegistrationMixin';
+import ConfirmRegistrationMixin from '../ConfirmRegistrationMixin';
+import Routes from '../../../../../shared/routes/routes';
 
 const EmailConfirm = createClass({
   propTypes: {
@@ -34,15 +35,25 @@ const EmailConfirm = createClass({
       <div className="form-popup form-popup--confirm">
         <div className="form-popup__body">
           <div className="form-popup__lead">
-            {i18n.t('confirm_signup', { userSlug: slug })}
+            {i18n.t('auth.confirm_signup', { userSlug: slug })}
           </div>
           <div className="form-popup__submit">
             <button
               className="button button--large button--green-light button--block button--rectangle"
               onClick={this.handleApproveClick}
             >
-              {i18n.t('confirm_signup_approve')}
+              {i18n.t('auth.confirm_signup_approve')}
             </button>
+          </div>
+          <div className="form-popup__terms">
+            {i18n.t('auth.accept_terms')}
+            <a
+              className="form-popup__terms-link"
+              href={Routes.terms()}
+              target="_blank"
+            >
+              {i18n.t('auth.accept_terms_link')}
+            </a>
           </div>
         </div>
         <div className="form-popup__footer">
@@ -50,7 +61,7 @@ const EmailConfirm = createClass({
             {i18n.t('or')}
           </span>
           <a className="form-popup__footer-item" onClick={this.handleDisapproveClick}>
-            {i18n.t('already_registered_link')}
+            {i18n.t('auth.already_registered_link')}
           </a>
         </div>
       </div>

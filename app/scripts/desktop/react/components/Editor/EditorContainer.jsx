@@ -1,9 +1,6 @@
+/*global ga */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
-import EditorActionCreators from '../../actions/editor';
-import EditorStore from '../../stores/EditorStore';
-import CurrentUserStore from '../../stores/current_user';
-import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
 import Editor from './Editor';
 import { browserHistory } from 'react-router';
 import uri from 'urijs';
@@ -12,77 +9,118 @@ import {
   TLOG_TYPE_PRIVATE,
   TLOG_TYPE_ANONYMOUS,
 } from '../../constants/EditorConstants';
+import {
+  changeEntryPrivacy,
+  pinEntry,
+  saveEntry,
+} from '../../actions/EditorActions';
+import {
+  tlogEntriesInvalidate,
+} from '../../actions/TlogEntriesActions';
+import {
+  PIN_ENTRY_ORDER,
+} from '../../constants/OrderConstants';
+import NoticeService from '../../services/Notice';
+import { connect } from 'react-redux';
 
-import * as orderConstants from '../../constants/OrderConstants';
+function EditorContainer(props) {
+  const {
+    changeEntryPrivacy,
+    entry,
+    pinEntry,
+    saveEntry,
+    tlog,
+    tlogEntriesSlug,
+    tlogEntriesInvalidate,
+  } = props;
 
-function _EditorContainer(props) {
-  function pinEntry(pinOrderUrl) {
-    EditorActionCreators.pinEntry()
+  function onPinEntry(pinOrderUrl) {
+    pinEntry(tlog.get('id'))
       .then((entry) => {
-        window.location.href = pinOrderUrl || Routes.newOrder(entry.id, orderConstants.PIN_ENTRY_ORDER);
-      });
-  }
-
-  function saveEntry() {
-    const { tlogEntries, tlogEntriesInvalidate } = props;
-
-    EditorActionCreators.saveEntry()
-      .then((entry) => {
-        //FIXME think through better tlogEntries update logic
-        if (entry.tlog && tlogEntries.slug === entry.tlog.slug) {
-          tlogEntriesInvalidate();
-        }
-        browserHistory.push({
-          pathname: uri(entry.entry_url).path(),
-          state: { id: entry.id, refetch: true },
+        window.location.href = pinOrderUrl ||
+          Routes.newOrder(entry.id, PIN_ENTRY_ORDER);
         });
-      });
   }
 
-  function changePrivacy(privacy) {
-    EditorActionCreators.changeEntryPrivacy(privacy);
+  function onSaveEntry() {
+    const isNew = !entry.get('id');
+
+    saveEntry(tlog.get('id'))
+      .then(({ response }) => {
+        const savedEntry = response.entities.entry[response.result];
+        const savedTlog = savedEntry && response.entities.tlog && (
+          response.entities.tlog[savedEntry.tlog]
+        );
+
+        NoticeService.closeAll();
+        if (savedEntry) {
+          if (isNew) {
+            if (typeof ga === 'function') {
+              ga('send', 'event', 'UX',
+                savedEntry.isPrivate ? 'CreateAnonymous' : 'CreatePost',
+                savedEntry.type
+              );
+            }
+
+            if (savedTlog && savedTlog.slug === tlogEntriesSlug) {
+              tlogEntriesInvalidate(); // invalidate if tlog entries already fetched
+            }
+          }
+
+          browserHistory.push({
+            pathname: uri(savedEntry.entryUrl).path(),
+            state: { id: savedEntry.id, refetch: true },
+          });
+        }
+      });
   }
 
   return (
     <Editor {...props}
-      onChangePrivacy={changePrivacy}
-      onPinEntry={pinEntry}
-      onSaveEntry={saveEntry}
+      onChangePrivacy={changeEntryPrivacy}
+      onPinEntry={onPinEntry}
+      onSaveEntry={onSaveEntry}
     />
   );
 }
 
-_EditorContainer.propTypes = {
+EditorContainer.propTypes = {
   backUrl: PropTypes.string,
   canChangeType: PropTypes.bool,
+  canPinEntry: PropTypes.bool.isRequired,
+  changeEntryPrivacy: PropTypes.func.isRequired,
   entry: PropTypes.object.isRequired,
   entryPrivacy: PropTypes.string.isRequired,
   entryType: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired,
+  pinEntry: PropTypes.func.isRequired,
+  saveEntry: PropTypes.func.isRequired,
   tlog: PropTypes.object,
-  tlogEntries: PropTypes.object.isRequired,
   tlogEntriesInvalidate: PropTypes.func.isRequired,
+  tlogEntriesSlug: PropTypes.string,
   tlogType: PropTypes.oneOf([
     TLOG_TYPE_PUBLIC,
     TLOG_TYPE_PRIVATE,
     TLOG_TYPE_ANONYMOUS,
   ]).isRequired,
   togglePreview: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
-const EditorContainer = connectToStores(
-  _EditorContainer,
-  [ EditorStore, CurrentUserStore ],
-  () => ({
-    entry: EditorStore.getEntry(),
-    entryType: EditorStore.getEntryType(),
-    entryPrivacy: EditorStore.getEntryPrivacy(),
-    loading: EditorStore.isLoading(),
-    tlog: EditorStore.getTlog(),
-    user: CurrentUserStore.getUser(),
-  })
-);
-
-export default EditorContainer;
+export default connect(
+  (state, { entry, tlog, tlogType }) => ({
+    canPinEntry: !!state.currentUser.data.features.fixup,
+    entryPrivacy: entry.get('privacy'),
+    entryType: entry.get('type'),
+    isEntryForCurrentUser: tlogType === TLOG_TYPE_ANONYMOUS ||
+      tlog.get('id') === state.currentUser.data.id,
+    isSaving: state.editor.get('isSaving', false),
+    tlogEntriesSlug: state.tlogEntries.slug,
+  }),
+  {
+    changeEntryPrivacy,
+    pinEntry,
+    saveEntry,
+    tlogEntriesInvalidate,
+  }
+)(EditorContainer);

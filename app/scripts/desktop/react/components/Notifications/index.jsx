@@ -1,67 +1,72 @@
 import React, { Component, PropTypes } from 'react';
-import NotificationStore from '../../stores/NotificationStore';
-import connectToStores from '../../../../shared/react/components/higherOrder/connectToStores';
-import NotificationActionCreators from '../../actions/Notification';
 import Notifications from './Notifications';
+import { connect } from 'react-redux';
+import {
+  NOTIFICATION_MY,
+  getFilterNotifications,
+  getNotifications,
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
+} from '../../actions/NotificationsActions';
+import { Map } from 'immutable';
+
+const emptyUser = Map();
 
 class NotificationsContainer extends Component {
-  componentDidMount() {
-    NotificationActionCreators.load();
-  }
-  componentDidUpdate() {
-    if (this.props.onUpdate != null) {
-      this.props.onUpdate();
-    }
+  componentWillMount() {
+    this.getNotifications = this.props.getNotifications.bind(null, NOTIFICATION_MY);
+
+    this.getNotifications();
   }
   componentWillUnmount() {
-    this.markAllAsRead();
-  }
-  markAsRead(notificationID) {
-    NotificationActionCreators.markAsRead(notificationID);
-  }
-  markAllAsRead() {
-    this.props.notifications.forEach((notification) => {
-      if (notification.read_at === null) {
-        this.markAsRead(notification.id);
-      }
-    });
-  }
-  loadMore() {
-    const { notifications } = this.props;
-    const sinceID = notifications[notifications.length - 1].id;
+    const {
+      hasUnread,
+      markAllNotificationsAsRead,
+    } = this.props;
 
-    NotificationActionCreators.loadMore(sinceID);
+    if (hasUnread) {
+      markAllNotificationsAsRead();
+    }
   }
   render() {
     return (
       <Notifications {...this.props}
-        markAllAsRead={this.markAllAsRead.bind(this)}
-        onLoadMore={this.loadMore.bind(this)}
-        onNotificationRead={this.markAsRead.bind(this)}
-      /> 
+        getNotifications={this.getNotifications}
+      />
     );
   }
 }
 
 NotificationsContainer.propTypes = {
-  error: PropTypes.bool.isRequired,
-  everythingLoaded: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
-  loadingMore: PropTypes.bool.isRequired,
-  notifications: PropTypes.array.isRequired,
-  onUpdate: PropTypes.func,
+  error: PropTypes.object,
+  getNotifications: PropTypes.func.isRequired,
+  hasUnread: PropTypes.bool.isRequired,
+  hide: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  markAllNotificationsAsRead: PropTypes.func.isRequired,
+  markNotificationAsRead: PropTypes.func.isRequired,
+  notifications: PropTypes.object.isRequired,
+  senders: PropTypes.object.isRequired,
 };
 
-const ConnectedNotificationsContainer = connectToStores(
-  NotificationsContainer,
-  [NotificationStore],
-  () => ({
-    notifications: NotificationStore.getAllChrono(),
-    loading: NotificationStore.isLoading(),
-    loadingMore: NotificationStore.isLoadingMore(),
-    error: NotificationStore.isError(),
-    everythingLoaded: NotificationStore.isEverythingLoaded(),
-  })
-);
+export default connect(
+  (state) => {
+    const notifications = getFilterNotifications(state, NOTIFICATION_MY);
+    const senders = notifications
+      .map((n) => state.entities.getIn(['tlog', String(n.get('sender'))], emptyUser));
+    const hasUnread = notifications.some((n) => !n.get('readAt'));
 
-export default ConnectedNotificationsContainer;
+    return {
+      hasUnread,
+      notifications,
+      senders,
+      error: state.notifications.get('error', null),
+      isFetching: state.notifications.get('isFetching', false),
+    };
+  },
+  {
+    getNotifications,
+    markNotificationAsRead,
+    markAllNotificationsAsRead,
+  }
+)(NotificationsContainer);

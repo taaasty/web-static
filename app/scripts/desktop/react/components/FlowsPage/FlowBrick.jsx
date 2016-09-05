@@ -1,67 +1,37 @@
 /*global i18n */
-import React, { PropTypes } from 'react';
-import classNames from 'classnames';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import uri from 'urijs';
 import Tooltip from '../common/Tooltip';
-import FollowButton from '../common/RelationButton/FollowButton';
+import RelationButton from '../RelationButton';
 import FlowBrickAvatar from './FlowBrickAvatar';
-import { REL_NONE_STATE, REL_GUESSED_STATE } from '../common/RelationButton/constants';
+import { REL_NONE_STATE, REL_GUESSED_STATE } from '../../actions/RelationshipActions';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
+import { connect } from 'react-redux';
+import { Map } from 'immutable';
 
-let FlowBrick = React.createClass({
-  propTypes: {
-    currentUser: PropTypes.object.isRequired,
-    flow: PropTypes.object.isRequired,
-    relationship: PropTypes.object,
-  },
+const emptyRel = Map();
 
-  getInitialState() {
-    return {
-      relState: this.props.relationship ? this.props.relationship.state : null,
-    };
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.relState != nextState.relState;
-  },
-
-  handleRelStateChange(relState) {
-    this.setState({ relState });
-  },
-
+class FlowBrick extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.relState !== nextProps.relState;
+  }
   renderFollowButton() {
-    const { currentUser, flow: { id, is_privacy } } = this.props;
+    const { relId, relState } = this.props;
 
-    if (this.state.relState &&
-        this.state.relState === REL_NONE_STATE ||
-        this.state.relState === REL_GUESSED_STATE) {
-      return (
-        <span onClick={(ev) => { ev.stopPropagation(); ev.preventDefault(); }}>
-          <FollowButton
-            objectID={currentUser.id}
-            onStateChange={this.handleRelStateChange}
-            relState={this.state.relState}
-            subjectID={id}
-            subjectPrivacy={is_privacy}
-          />
-        </span>
-      );
-    }
-  },
-
+    return (relState === REL_NONE_STATE || relState === REL_GUESSED_STATE)
+         ? <span onClick={(ev) => { ev.stopPropagation(); ev.preventDefault(); }}>
+             <RelationButton relId={relId} />
+           </span>
+         : null;
+  }
   render() {
-    const { fixed_state, flowpic, followers_count, name, title, tlog_url } = this.props.flow;
-    const brickClasses = classNames({
-      'brick': true,
-      'brick--flow': true,
-      //'__subscribed': this.state.relState === 'friend',
-    });
+    const { flow } = this.props;
 
     return (
-      <article className={brickClasses}>
-        <Link to={uri(tlog_url).path()} >
-          {fixed_state === ENTRY_PINNED_STATE &&
+      <article className="brick brick--flow">
+        <Link to={uri(flow.get('tlogUrl')).path()} >
+          {flow.get('fixedState') === ENTRY_PINNED_STATE &&
            <div className="brick__notice">
              <i className="icon icon--pin" />
              {i18n.t('flow.pinned_header')}
@@ -69,16 +39,22 @@ let FlowBrick = React.createClass({
           }
           <div className="brick__media">
             {this.renderFollowButton()}
-            <FlowBrickAvatar flowpic={flowpic} />
+            <FlowBrickAvatar flowpic={flow.get('flowpic')} />
           </div>
           <div className="brick__body">
-            <h3 className="brick__title">{name}</h3>
-            <p className="brick__caption">{title}</p>
+            <h3 className="brick__title">
+              {flow.get('name')}
+            </h3>
+            <p className="brick__caption">
+              {flow.get('title')}
+            </p>
             <div className="brick__data">
               <div className="brick__data-item">
                 <Tooltip title={i18n.t('flow_brick.followers_count_tooltip')}>
                   <i className="icon icon--friends" />
-                  <span>{followers_count}</span>
+                  <span>
+                    {flow.get('followersCount')}
+                  </span>
                 </Tooltip>
               </div>
             </div>
@@ -86,7 +62,24 @@ let FlowBrick = React.createClass({
         </Link>
       </article>
     );
-  },
-});
+  }
+}
 
-export default FlowBrick;
+FlowBrick.propTypes = {
+  flow: PropTypes.object.isRequired,
+  relId: PropTypes.string.isRequired,
+  relState: PropTypes.string.isRequired,
+};
+
+export default connect(
+  (state, { flow }) => {
+    const relId = `${flow.get('id')}-${state.currentUser.data.id}`;
+    const relState = state.entities.getIn([ 'rel', relId ], emptyRel).get('state', REL_NONE_STATE);
+
+    return {
+      flow,
+      relId,
+      relState,
+    };
+  }
+)(FlowBrick);

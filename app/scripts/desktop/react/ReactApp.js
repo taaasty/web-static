@@ -1,25 +1,24 @@
-/*global $, TastyEvents, CurrentUserStore, CurrentUserDispatcher */
+/*global $ */
 import i18n from 'i18next';
 import i18xhr from 'i18next-xhr-backend';
 window.i18n = i18n;
 window.STATE_FROM_SERVER = window.STATE_FROM_SERVER || {};
 
+import Perf from 'react-addons-perf';
 import { sendUser, sendRegister } from '../../shared/react/services/Sociomantic';
 import * as ReactUjs from 'reactUjs';
-import PopupActions from './actions/PopupActions';
-import DesignActionCreators from './actions/design';
 import PopupController from './controllers/popuup';
 import numeral from 'numeral';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import PostAuthService from './services/PostAuthService';
-import MessagingService from './messaging/MessagingService';
+//import PostAuthService from './services/PostAuthService';
 import NoticeService from './services/Notice';
 import moment from 'moment';
 import Routes from '../../shared/routes/routes';
-import Aviator from 'aviator';
 import AppRoot from './AppRoot';
 import uri from 'urijs';
 import ReactShellBox from './controllers/ReactShellBox';
+
+window.Perf = Perf;
 
 function initLocales(locale, callback) {
   numeral.language(locale);
@@ -35,51 +34,15 @@ function initLocales(locale, callback) {
     }, callback);
 }
 
-function initRoutes() {
-  function hasAccessBySlug(urlSlug) {
-    const user = CurrentUserStore.getUser();
-    const userLogged = CurrentUserStore.isLogged();
-
-    return userLogged && urlSlug.slice(1).toLowerCase() === user.slug;
-  }
-  
-  const UserRouteTarget = {
-    profile() {
-      return TastyEvents.emit(TastyEvents.keys.command_hero_open());
-    },
-
-    settings(req) {
-      if (!hasAccessBySlug(req.params.slug)) {
-        return;
-      }
-      PopupActions.showSettings();
-    },
-  };
-
-  Aviator.setRoutes({
-    '/:slug': {
-      target: UserRouteTarget,
-      '/profile': 'profile',
-      '/settings': 'settings',
-    },
-  });
-
-  Aviator.dispatch();
-}
-  
 const ReactApp = {
   start({ user, locale }) {
     console.log('ReactApp start');
 
     if (user) {
-      window.STATE_FROM_SERVER.currentUser = window.STATE_FROM_SERVER.currentUser || {};
-      window.STATE_FROM_SERVER.currentUser.data = user; //REDUX
-      CurrentUserDispatcher.setupUser(user);
-      window.messagingService = new MessagingService(user);
-
-      DesignActionCreators.initCurrent(CurrentUserStore.getUser().design);
       sendUser(user);
-      if (window.gon.register_provider || uri().query(true).first_login !== void 0) {
+      if (window.gon.register_provider || uri()
+        .query(true)
+        .first_login !== void 0) {
         sendRegister(user.id);
       }
     }
@@ -87,21 +50,10 @@ const ReactApp = {
     initLocales(locale, () => {
       console.log('Locales loaded');
       ReactUjs.initialize(AppRoot);
-      initRoutes();
 
       if (window.gon.flash_error) {
         NoticeService.notifyError(window.gon.flash_error);
       }
-
-      if (window.gon.premium_popup) {
-        PopupActions.showPremiumPopup();
-      } else if (window.gon.premium_popup_fail) {
-        PopupActions.showGetPremiumPopup();
-        NoticeService.notifyError(window.gon.premium_popup_fail, 5000);
-      } else if (window.gon.showUserOnboarding) {
-        PopupActions.showUserOnboarding();
-      }
-      
     });
 
     // Needed for onTouchTap
@@ -114,18 +66,18 @@ const ReactApp = {
 
     this.shellbox = new ReactShellBox();
 
-    PostAuthService.init(this, 'taaasty');
-    PostAuthService.restore();
+    //PostAuthService.init(this, 'taaasty');
+    //PostAuthService.restore();
 
     // Тултип для шаринга
-    $('[tooltip]').tooltip();
+    $('[tooltip]')
+      .tooltip();
 
-    $('.js-connection-start').connection({
-      connectionEnd: '.js-connection-end',
-      connectionLineClass: 'connection-line',
-    });
-
-    // GuideController.start();
+    $('.js-connection-start')
+      .connection({
+        connectionEnd: '.js-connection-end',
+        connectionLineClass: 'connection-line',
+      });
   },
 };
 

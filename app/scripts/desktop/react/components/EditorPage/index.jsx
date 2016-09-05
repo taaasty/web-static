@@ -2,120 +2,135 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import EditorNew from '../Editor/EditorNew';
-import EditorEdit from '../Editor/EditorEdit';
+import EditorContainer from '../Editor/EditorContainer';
 import Spinner from '../../../../shared/react/components/common/Spinner';
-import { appStateSetEditing } from '../../actions/AppStateActions';
+import { getTlogEntry } from '../../actions/TlogEntryActions';
+import {
+  appStateStartEditing,
+  appStateStopEditing,
+} from '../../actions/AppStateActions';
 import {
   editorResetEntry,
   editorSetEntry,
   editorSetPreview,
   editorTogglePreview,
+  changeEntryType,
 } from '../../actions/EditorActions';
-import { tlogEntriesInvalidate } from '../../actions/TlogEntriesActions';
-import { TLOG_SLUG_ANONYMOUS } from '../../../../shared/constants/Tlog';
-import EditorActionCreators from '../../actions/editor';
+import {
+  normalize,
+} from '../../services/EntryNormalizationService';
 import {
   TLOG_TYPE_PRIVATE,
   TLOG_TYPE_PUBLIC,
   TLOG_TYPE_ANONYMOUS,
   EDITOR_ENTRY_TYPES,
 } from '../../constants/EditorConstants';
+import { Map } from 'immutable';
+
+const emptyEntry = Map();
+const emptyTlog = Map();
 
 class EditorPage extends Component {
   componentWillMount() {
-    const { appStateSetEditing, editorSetEntry, editorSetPreview,
-            location: { hash='' }, routeParams: { editId } } = this.props;
-    const entryType = hash.substr(1);
+    const {
+      appStateStartEditing,
+      changeEntryType,
+      editId,
+      editorSetPreview,
+      getTlogEntry,
+      hashEntryType,
+      sourceEntry,
+      tlogType,
+    } = this.props;
 
-    appStateSetEditing(true);
+    appStateStartEditing();
     editorSetPreview(false);
-    if (editId) {
-      editorSetEntry(this.fetchEntry(editId));
-    } else if (EDITOR_ENTRY_TYPES.indexOf(entryType) > -1) {
-      EditorActionCreators.changeEntryType(entryType);
+    this.setEntry(sourceEntry, tlogType);
+
+    if (editId && sourceEntry.isEmpty()) {
+      getTlogEntry(editId);
+    }
+
+    if (EDITOR_ENTRY_TYPES.indexOf(hashEntryType) > -1) {
+      changeEntryType(hashEntryType);
     }
   }
   componentWillReceiveProps(nextProps) {
-    const { editorSetEntry, location: { hash='' }, routeParams: { editId } } = this.props;
-    const { location: { hash: nextHash='' }, routeParams: { editId: nextEditId } } = nextProps;
-    const nextEntryType = nextHash.substr(1);
-    const entryType = hash.substr(1);
+    const {
+      changeEntryType,
+      getTlogEntry,
+      hashEntryType,
+      sourceEntry,
+    } = this.props;
+    const {
+      editId: nextEditId,
+      hashEntryType: nextHashEntryType,
+      sourceEntry: nextSourceEntry,
+      tlogType: nextTlogType,
+    } = nextProps;
 
-    if (nextEditId && editId !== nextEditId) {
-      editorSetEntry(this.fetchEntry(nextEditId));
-    } else if (entryType !== nextEntryType && EDITOR_ENTRY_TYPES.indexOf(nextEntryType) > -1) {
-      EditorActionCreators.changeEntryType(nextEntryType);
+    if (sourceEntry.get('id') !== nextSourceEntry.get('id')) {
+      if (nextEditId && nextSourceEntry.isEmpty()) {
+        getTlogEntry(nextEditId);
+      }
+
+      this.setEntry(nextSourceEntry, nextTlogType);
+    } else if (hashEntryType !== nextHashEntryType &&
+        EDITOR_ENTRY_TYPES.indexOf(nextHashEntryType) > -1) {
+      changeEntryType(nextHashEntryType);
     }
   }
   componentWillUnmount() {
-    const { appStateSetEditing, editorResetEntry } = this.props;
+    const { appStateStopEditing, editorResetEntry } = this.props;
 
-    appStateSetEditing(false);
+    appStateStopEditing();
     editorResetEntry();
   }
-  fetchEntry(strId) {
-    try {
-      const id = parseInt(strId, 10);
-      const { tlogEntries: { data: { items } }, tlogEntry } = this.props;
-
-      if (tlogEntry && tlogEntry.id === id) {
-        return tlogEntry;
-      } else {
-        const found = items.filter(({ entry }) => entry.id === id);
-
-        return found.length ? found[0].entry : null;
-      }
-    } catch(e) {
-      return null;
-    }
+  setEntry(entry, tlogType) {
+    return this.props.editorSetEntry(normalize(entry.toJS()), tlogType);
   }
   renderContents() {
-    const { entry, editorTogglePreview, location, routeParams: { editId },
-            tlog: { data: tlog, isFetching }, tlogEntries, tlogEntriesInvalidate } = this.props;
-    const tlogType = tlog.slug === TLOG_SLUG_ANONYMOUS
-            ? TLOG_TYPE_ANONYMOUS
-            : tlog.is_privacy ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
+    const {
+      editId,
+      editorTogglePreview,
+      entry,
+      isFetchingTlog,
+      pathname,
+      sourceEntry,
+      tlog,
+      tlogType,
+    } = this.props;
+    const styles = {
+      opacity: tlog.getIn([ 'design', 'feedOpacity' ], '1.0'),
+    };
 
     return (
-    <div className="content-area">
-      <div className="content-area__bg" style={{ opacity: tlog.design.feedOpacity }} />
-      <div className="content-area__inner">
-        {isFetching
-         ? <Spinner size={30} />
-         : editId
-           ? entry
-             ? <EditorEdit
-                 entry={entry}
-                 location={location}
-                 tlog={tlog}
-                 tlogEntries={tlogEntries}
-                 tlogEntriesInvalidate={tlogEntriesInvalidate}
-                 tlogType={tlogType}
-                 togglePreview={editorTogglePreview}
-               />
-             : <Spinner size={30} />
-           : <EditorNew
-               location={location}
+      <div className="content-area">
+        <div className="content-area__bg" style={styles} />
+        <div className="content-area__inner">
+          {isFetchingTlog || (editId && sourceEntry.isEmpty()) || entry.isEmpty()
+           ? <Spinner size={30} />
+           : <EditorContainer
+               canChangeType={!editId}
+               entry={entry}
+               pathname={pathname}
                tlog={tlog}
-               tlogEntries={tlogEntries}
-               tlogEntriesInvalidate={tlogEntriesInvalidate}
                tlogType={tlogType}
                togglePreview={editorTogglePreview}
              />
-        }
+          }
+        </div>
       </div>
-    </div>
     );
 
   }
   render() {
-    const { author } = this.props.tlog.data;
+    const { tlog } = this.props;
 
     return (
       <div className="page-body">
         <Helmet title={i18n.t('editor.title')} />
-        {author && author.is_flow
+        {!tlog.isEmpty() && tlog.get('isFlow')
          ? <div className="layout-outer">
              {this.renderContents()}
            </div>
@@ -129,33 +144,69 @@ class EditorPage extends Component {
 EditorPage.displayName = 'EditorPage';
 
 EditorPage.propTypes = {
-  appStateSetEditing: PropTypes.func.isRequired,
+  appStateStartEditing: PropTypes.func.isRequired,
+  appStateStopEditing: PropTypes.func.isRequired,
+  changeEntryType: PropTypes.func.isRequired,
+  editId: PropTypes.string,
   editorResetEntry: PropTypes.func.isRequired,
   editorSetEntry: PropTypes.func.isRequired,
   editorSetPreview: PropTypes.func.isRequired,
   editorTogglePreview: PropTypes.func.isRequired,
-  entry: PropTypes.object,
-  location: PropTypes.object.isRequired,
-  routeParams: PropTypes.object.isRequired,
+  entry: PropTypes.object.isRequired,
+  getTlogEntry: PropTypes.func.isRequired,
+  hashEntryType: PropTypes.string,
+  isFetchingTlog: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired,
+  sourceEntry: PropTypes.object.isRequired,
   tlog: PropTypes.object.isRequired,
-  tlogEntries: PropTypes.object.isRequired,
-  tlogEntriesInvalidate: PropTypes.func.isRequired,
-  tlogEntry: PropTypes.object.isRequired,
+  tlogType: PropTypes.oneOf([
+    TLOG_TYPE_ANONYMOUS,
+    TLOG_TYPE_PRIVATE,
+    TLOG_TYPE_PUBLIC,
+  ]).isRequired,
 };
 
 export default connect(
-  (state) => ({
-    entry: state.editor.entry,
-    tlog: state.tlog,
-    tlogEntries: state.tlogEntries,
-    tlogEntry: state.tlogEntry.data,
-  }),
+  (state, ownProps) => {
+    const {
+      params: { slug },
+      route: { isAnonymousTlog },
+      routeParams: { editId },
+      location: { hash, pathname },
+     } = ownProps;
+    const hashEntryType = (hash || '').substr(1);
+    const sourceEntry = state
+      .entities
+      .getIn([ 'entry', String(editId) ], emptyEntry);
+    const entry = state.editor.get('entry', emptyEntry);
+    const tlog = state
+      .entities
+      .get('tlog')
+      .find((t) => t.get('slug') === slug, null, emptyTlog);
+    const isFetchingTlog = state.tlog.isFetching;
+    const tlogType = isAnonymousTlog
+      ? TLOG_TYPE_ANONYMOUS
+      : tlog.get('isPrivacy') ? TLOG_TYPE_PRIVATE : TLOG_TYPE_PUBLIC;
+
+    return {
+      editId,
+      entry,
+      hashEntryType,
+      isFetchingTlog,
+      pathname,
+      sourceEntry,
+      tlog,
+      tlogType,
+    };
+  },
   {
-    appStateSetEditing,
+    appStateStartEditing,
+    appStateStopEditing,
     editorResetEntry,
     editorSetEntry,
     editorSetPreview,
     editorTogglePreview,
-    tlogEntriesInvalidate,
+    changeEntryType,
+    getTlogEntry,
   }
 )(EditorPage);

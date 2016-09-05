@@ -1,97 +1,103 @@
-import Avatar from '../../../../shared/react/components/common/Avatar';
+/*global i18n */
+import React, { PropTypes } from 'react';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import DropdownButton from '../common/DropdownButton';
 import DropdownItem from '../common/DropdownItem';
+import { Map } from 'immutable';
 
-const STAFF_MODERATOR_ROLE = 'moderator',
-      STAFF_ADMIN_ROLE = 'admin',
-      STAFF_OWNER_ROLE = 'owner';
+const emptyPic = Map();
 
-let FlowFormStaffs = React.createClass({
-  propTypes: {
-    staffs: React.PropTypes.array.isRequired,
-    canChangeRole: React.PropTypes.bool,
-    onRoleChange: React.PropTypes.func,
-    onDelete: React.PropTypes.func.isRequired
-  },
+const STAFF_MODERATOR_ROLE = 'moderator';
+const STAFF_ADMIN_ROLE = 'admin';
+const STAFF_OWNER_ROLE = 'owner';
 
-  getDefaultProps() {
-    return {
-      canChangeRole: true
-    };
-  },
+function FlowFormStaffs({ canChangeRole, onDelete, onRoleChange, staffs }) {
+  function isOwner(staff) {
+    return staff.get('role') === STAFF_OWNER_ROLE;
+  }
 
-  render() {
-    if (this.props.staffs.length) {
-      return (
-        <div className="flow-form__persons">
-          <h5 className="flow-form__subtitle">{'Модераторы'}</h5>
-          {this.renderStaffList()}
-        </div>
-      );
-    } else {
-      return null;
-    }
-  },
-
-  renderStaffList() {
-    let staffList = this.props.staffs.map((staff, i) => {
-      return (
-        <li className="person" key={staff.user.id}>
-          <div className="person__in">
-            <div className="person__avatar">
-              <a href={staff.user.tlog_url} target="_blank">
-                <Avatar userpic={staff.user.userpic} size={48} />
-              </a>
-            </div>
-            <div className="person__desc">
-              <a href={staff.user.tlog_url} target="_blank">
-                <p className="person__name">{staff.user.name}</p>
-              </a>
-              <div className="person__count">
-                {i18n.t('tlog.entries_count', {count: staff.user.total_entries_count})}
-              </div>
-            </div>
-            <div className="person__actions">
-              {this.renderRoleChanger(staff)}
-              {this.renderDeleteButton(staff)}
-            </div>
-          </div>
-        </li>
-      );
-    });
-
-    return <ul className="persons">{staffList}</ul>;
-  },
-
-  renderRoleChanger(staff) {
-    if (!this.isOwner(staff) && this.props.canChangeRole) {
+  function renderRoleChanger(staff) {
+    if (!isOwner(staff) && canChangeRole) {
       return (
         <DropdownButton
-            activeItem={staff.role}
-            iconClassName="icon--cogwheel"
-            buttonClassName="button--small button--outline button--icon"
-            onChange={this.props.onRoleChange.bind(this, staff)}>
+          activeItem={staff.get('role')}
+          buttonClassName="button--small button--outline button--icon"
+          iconClassName="icon--cogwheel"
+          onChange={onRoleChange.bind(null, staff)}
+        >
           <DropdownItem title="Модератор" item={STAFF_MODERATOR_ROLE} />
           <DropdownItem title="Администратор" item={STAFF_ADMIN_ROLE} />
         </DropdownButton>
       );
     }
-  },
+  }
 
-  renderDeleteButton(staff) {
-    if (!this.isOwner(staff)) {
+  function renderDeleteButton(staff) {
+    if (!isOwner(staff)) {
       return (
-        <button className="button button--small button--red"
-                onTouchTap={this.props.onDelete.bind(null, staff)}>
+        <button
+          className="button button--small button--red"
+          onTouchTap={onDelete.bind(null, staff)}
+        >
           Удалить
         </button>
       );
     }
-  },
-
-  isOwner(staff) {
-    return staff.role === STAFF_OWNER_ROLE;
   }
-});
+
+  function renderStaffList() {
+    return (
+      <ul className="persons">
+        {staffs.map((staff, i) => (
+        <li className="person" key={staff.get('user')}>
+          <div className="person__in">
+            <div className="person__avatar">
+              <a href={staff.getIn([ 'user', 'tlogUrl' ], '')} target="_blank">
+                <Avatar userpic={staff.getIn([ 'user', 'userpic' ], emptyPic).toJS()} size={48} />
+              </a>
+            </div>
+            <div className="person__desc">
+              <a href={staff.getIn([ 'user', 'tlogUrl' ], '')} target="_blank">
+                <p className="person__name">
+                  {staff.getIn([ 'user', 'name' ], '')}
+                </p>
+              </a>
+              <div className="person__count">
+                {i18n.t('tlog.entries_count', { count: staff.getIn([ 'user', 'totalEntriesCount' ], 0) })}
+              </div>
+            </div>
+            <div className="person__actions">
+              {renderRoleChanger(staff)}
+              {renderDeleteButton(staff)}
+            </div>
+          </div>
+        </li>))
+        }
+      </ul>
+    );
+  }
+
+  return staffs.count()
+       ? (
+         <div className="flow-form__persons">
+          <h5 className="flow-form__subtitle">
+            {'Модераторы'}
+          </h5>
+          {renderStaffList()}
+        </div>
+      )
+      : <noscript />;
+}
+
+FlowFormStaffs.propTypes = {
+  canChangeRole: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onRoleChange: PropTypes.func,
+  staffs: PropTypes.object.isRequired,
+};
+
+FlowFormStaffs.defaultProps = {
+  canChangeRole: true,
+};
 
 export default FlowFormStaffs;

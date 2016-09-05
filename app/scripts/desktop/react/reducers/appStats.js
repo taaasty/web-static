@@ -1,8 +1,8 @@
 import createReducer from './createReducer';
 import {
   APP_STATS_REQUEST,
-  APP_STATS_RECEIVE,
-  APP_STATS_ERROR,
+  APP_STATS_SUCCESS,
+  APP_STATS_FAILURE,
 } from '../actions/AppStatsActions';
 
 const initialState = {
@@ -13,29 +13,27 @@ const initialState = {
 };
 
 const actionMap = {
-  [APP_STATS_RECEIVE](state, data) {
-    return {
-      ...state,
-      ...data,
-      isFetching: false,
-      error: null,
-    };
-  },
-
   [APP_STATS_REQUEST](state) {
-    return {
-      ...state,
+    return Object.assign({}, state, {
       isFetching: true,
       error: null,
-    };
+    });
   },
 
-  [APP_STATS_ERROR](state, error) {
-    return {
-      ...state,
-      error,
+  [APP_STATS_SUCCESS](state, { response, updatedAt }) {
+    return Object.assign({}, state, {
+      updatedAt,
+      data: response.result,
       isFetching: false,
-    };
+      error: null,
+    });
+  },
+
+  [APP_STATS_FAILURE](state, { payload }) {
+    return Object.assign({}, state, {
+      error: payload,
+      isFetching: false,
+    });
   },
 };
 

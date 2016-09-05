@@ -1,5 +1,5 @@
 /*global $ */
-import React, { cloneElement, createClass, Children, PropTypes } from 'react';
+import React, { createClass, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import managePositions from '../../../../shared/react/components/higherOrder/managePositions';
@@ -13,9 +13,9 @@ const _Popup = createClass({
     onClose: PropTypes.func.isRequired,
     onPositionChange: PropTypes.func.isRequired,
     position: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
+    showSpinner: PropTypes.bool,
+    title: PropTypes.node.isRequired,
   },
-  mixins: [ 'ReactActivitiesMixin' ],
 
   componentDidMount() {
     if (this.props.draggable) {
@@ -61,11 +61,8 @@ const _Popup = createClass({
   },
 
   render() {
-    const { className, draggable, onClose, position, title } = this.props;
+    const { className, children, draggable, onClose, position, showSpinner, title } = this.props;
     const popupClasses = classNames('popup', className);
-    const children = Children.map(this.props.children, ((child) =>
-      cloneElement(child, { activitiesHandler: this.activitiesHandler })
-    ));
 
     return (
       <div
@@ -77,9 +74,9 @@ const _Popup = createClass({
       >
         <Header
           draggable={draggable}
-          hasActivities={this.hasActivities()}
           onClose={onClose}
           ref="header"
+          showSpinner={showSpinner}
           title={title}
         />
         <div className="popup__body">

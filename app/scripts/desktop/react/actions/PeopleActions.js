@@ -1,101 +1,55 @@
-/*global $ */
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, makeGetUrl } from './reqHelpers';
 import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
 
 export const PEOPLE_REQUEST = 'PEOPLE_REQUEST';
-export const PEOPLE_RECEIVE = 'PEOPLE_RECEIVE';
-export const PEOPLE_ERROR = 'PEOPLE_ERROR';
-export const PEOPLE_RESET = 'PEOPLE_RESET';
+export const PEOPLE_SUCCESS = 'PEOPLE_SUCCESS';
+export const PEOPLE_FAILURE = 'PEOPLE_FAILURE';
 export const PEOPLE_RECOMMENDED_REQUEST = 'PEOPLE_RECOMMENDED_REQUEST';
-export const PEOPLE_RECOMMENDED_RECEIVE = 'PEOPLE_RECOMMENDED_RECEIVE';
-export const PEOPLE_RECOMMENDED_ERROR = 'PEOPLE_RECOMMENDED_ERROR';
+export const PEOPLE_RECOMMENDED_SUCCESS = 'PEOPLE_RECOMMENDED_SUCCESS';
+export const PEOPLE_RECOMMENDED_FAILURE = 'PEOPLE_RECOMMENDED_FAILURE';
 
 const RECOMMENDED_LIMIT = 8;
 
-function peopleRequest() {
+function signature({ sort='', query='' }) {
+  return `${sort}--${query}`;
+}
+
+function fetchPeople(params) {
+  const { sort, query } = params;
+
   return {
-    type: PEOPLE_REQUEST,
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.users(), { sort, q: query }),
+      schema: Schemas.PEOPLE_COLL,
+      types: [ PEOPLE_REQUEST, PEOPLE_SUCCESS, PEOPLE_FAILURE ],
+      opts: defaultOpts,
+    },
+    signature: signature(params),
   };
 }
 
-function peopleReceive(data) {
-  return {
-    type: PEOPLE_RECEIVE,
-    payload: data,
-  };
-}
+function shouldFetchPeople(state, params) {
+  const { people } = state;
 
-function peopleError(error) {
-  return {
-    type: PEOPLE_ERROR,
-    payload: error,
-  };
-}
-
-function peopleReset() {
-  return {
-    type: PEOPLE_RESET,
-  };
-}
-
-function recommendedRequest() {
-  return {
-    type: PEOPLE_RECOMMENDED_REQUEST,
-  };
-}
-
-function recommendedReceive(data) {
-  return {
-    type: PEOPLE_RECOMMENDED_RECEIVE,
-    payload: data,
-  };
-}
-
-function recommendedError(error) {
-  return {
-    type: PEOPLE_RECOMMENDED_ERROR,
-    payload: error,
-  };
-}
-
-function fetchPeople(url, data) {
-  return $.ajax({ url, data })
-    .fail((xhr) => ErrorService.notifyErrorResponse('Получение списка пользователей', {
-      method: 'fetchPeople(url, data)',
-      methodArguments: { url, data },
-      response: xhr.responseJSON,
-    }));
-}
-
-function shouldFetchPeople(state, { sort, query }) {
-  const { isFetching, sort: cSort, query: cQuery } = state.people;
-
-  return !isFetching && (sort !== cSort || query !== cQuery);
-}
-
-function getPeople({ sort, query }) {
-  return (dispatch) => {
-    dispatch(peopleRequest());
-    dispatch(peopleReset());
-    return fetchPeople(ApiRoutes.users(), { sort, q: query })
-      .done((data) => dispatch(peopleReceive({ data, sort, query })))
-      .fail((error) => dispatch(peopleError({ error: error.responseJSON, sort, query })));
-  };
-}
-
-export function getRecommendedPeople() {
-  return (dispatch) => {
-    dispatch(recommendedRequest());
-    return fetchPeople(ApiRoutes.users(), { sort: 'recommended', limit: RECOMMENDED_LIMIT })
-      .done((data) => dispatch(recommendedReceive({ dataRecommended: data })))
-      .fail((error) => dispatch(recommendedError({ error: error.responseJSON })));
-  };
+  return !people.get('isFetching') && people.get('signature') !== signature(params);
 }
 
 export function getPeopleIfNeeded(params) {
   return (dispatch, getState) => {
     if (shouldFetchPeople(getState(), params)) {
-      return dispatch(getPeople(params));
+      return dispatch(fetchPeople(params));
     }
+  };
+}
+
+export function getRecommendedPeople() {
+  return {
+    [CALL_API]: {
+      endpoint: makeGetUrl(ApiRoutes.users(), { sort: 'recommended', limit: RECOMMENDED_LIMIT }),
+      schema: Schemas.PEOPLE_COLL,
+      types: [ PEOPLE_RECOMMENDED_REQUEST, PEOPLE_RECOMMENDED_SUCCESS, PEOPLE_RECOMMENDED_FAILURE ],
+      opts: defaultOpts,
+    },
   };
 }

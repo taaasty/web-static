@@ -16,7 +16,7 @@ class HeroProfileActionsContainer extends Component {
 
       const extraStyles = `
         .hero__actions button {
-           background-color: ${currentColor}; 
+           background-color: ${currentColor};
            opacity: 0.6;
         }
         .hero__actions button:before {
@@ -32,7 +32,7 @@ class HeroProfileActionsContainer extends Component {
     }
   }
   render() {
-    const { isCurrentUser, relState, tlog } = this.props;
+    const { isCurrentUser, showSettingsPopup, tlog, tlogRelation } = this.props;
 
     return (
       <div ref="container">
@@ -40,10 +40,10 @@ class HeroProfileActionsContainer extends Component {
           {this.state.extraStyles}
         </style>
         {isCurrentUser
-           ? <HeroProfileSelfActions />
-           : relState &&
+           ? <HeroProfileSelfActions showSettingsPopup={showSettingsPopup} />
+           : !tlogRelation.isEmpty() &&
              <HeroProfileActions
-               relState={relState}
+               myRelState={tlogRelation.get('state')}
                tlog={tlog}
              />
         }
@@ -54,8 +54,9 @@ class HeroProfileActionsContainer extends Component {
 
 HeroProfileActionsContainer.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
-  relState: PropTypes.string,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
+  tlogRelation: PropTypes.object.isRequired,
 };
 
 export default HeroProfileActionsContainer;

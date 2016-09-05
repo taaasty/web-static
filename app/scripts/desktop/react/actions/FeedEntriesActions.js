@@ -1,215 +1,90 @@
-/*global $ */
-import ApiRoutes from '../../../shared/routes/api';
-import ErrorService from '../../../shared/react/services/Error';
-import {
-  FEED_ENTRIES_API_TYPE_LIVE,
-  FEED_ENTRIES_API_TYPE_MEDIA,
-  FEED_ENTRIES_API_TYPE_FLOWS,
-  FEED_ENTRIES_API_TYPE_ANONYMOUS,
-  FEED_ENTRIES_API_TYPE_BEST,
-  FEED_ENTRIES_API_TYPE_FRIENDS,
-  FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA,
-  feedTypeMap,
-} from '../constants/FeedConstants';
-import { ENTRY_PINNED_STATE } from '../constants/EntryConstants';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, makeGetUrl } from './reqHelpers';
+import { apiUrlMap } from '../constants/FeedConstants';
 
 export const FEED_ENTRIES_REQUEST = 'FEED_ENTRIES_REQUEST';
-export const FEED_ENTRIES_RECEIVE = 'FEED_ENTRIES_RECEIVE';
-export const FEED_ENTRIES_ERROR = 'FEED_ENTRIES_ERROR';
+export const FEED_ENTRIES_SUCCESS = 'FEED_ENTRIES_SUCCESS';
+export const FEED_ENTRIES_FAILURE = 'FEED_ENTRIES_FAILURE';
+
 export const FEED_ENTRIES_RESET = 'FEED_ENTRIES_RESET';
+export const FEED_ENTRIES_SET_VISIBLE = 'FEED_ENTRIES_SET_VISIBLE';
 export const FEED_ENTRIES_VIEW_STYLE = 'FEED_ENTRIES_VIEW_STYLE';
 
-export function feedDataByUri({ pathname, query }) {
-  const { apiType, section, type } = feedTypeMap[pathname] || {};
-  const rating = apiType === FEED_ENTRIES_API_TYPE_BEST ? (query.rating || 'excellent') : void 0;
-
-  return {
-    apiType,
-    rating,
-    section,
-    type,
-    query: query.q,
-    sinceId: query.since_entry_id,
-  };
+function signature({ apiType = '', rating = '', section = '', type = '', query = '' }) {
+  return `${apiType}-${rating}-${section}-${type}-${query}`;
 }
-
-export const apiUrlMap = {
-  [FEED_ENTRIES_API_TYPE_LIVE]: ApiRoutes.feedLiveTlogs(),
-  [FEED_ENTRIES_API_TYPE_MEDIA]: ApiRoutes.feedMediaTlogs(),
-  [FEED_ENTRIES_API_TYPE_FLOWS]: ApiRoutes.feedFlowsTlogs(),
-  [FEED_ENTRIES_API_TYPE_ANONYMOUS]: ApiRoutes.feedAnonymousTlogs(),
-  [FEED_ENTRIES_API_TYPE_BEST]: ApiRoutes.feedBestTlogs(),
-  [FEED_ENTRIES_API_TYPE_FRIENDS]: ApiRoutes.feedFriendsTlogs(),
-  [FEED_ENTRIES_API_TYPE_FRIENDS_MEDIA]: ApiRoutes.feedFriendsMediaTlogs(),
-};
 
 const INITIAL_LOAD_LIMIT = 30;
-const APPEND_LOAD_LIMIT = 15;
 
-export function filterFeedItems(items=[]) {
-  const ids = [];
-  const promos = [];
-  const tmp = items.reduce((acc, el) => {
-    if (!el || !el.entry) {
-      return acc;
-    }
-
-    if (ids.indexOf(el.entry.id) > -1) {
-      return acc;
-    } else {
-      ids.push(el.entry.id);
-    }
-
-    if (el.entry.fixed_state === ENTRY_PINNED_STATE) {
-      return (promos.push(el), acc);
-    }
-
-    return (acc.push(el), acc);
-  }, []);
-
-  return promos.concat(tmp);
+export function resetFeedEntries() {
+  return { type: FEED_ENTRIES_RESET };
 }
 
-function feedEntriesReceive(data) {
-  if (data.data && data.data.items && Array.isArray(data.data.items)) {
-    data.data.items = filterFeedItems(data.data.items);
-  }
-
+export function setVisibleFeedEntries(visible) {
   return {
-    type: FEED_ENTRIES_RECEIVE,
-    payload: data,
+    type: FEED_ENTRIES_SET_VISIBLE,
+    visible,
   };
 }
 
-function feedEntriesRequest() {
-  return {
-    type: FEED_ENTRIES_REQUEST,
-  };
-}
-
-function feedEntriesReset() {
-  return {
-    type: FEED_ENTRIES_RESET,
-  };
-}
-
-function feedEntriesError(error) {
-  return {
-    type: FEED_ENTRIES_ERROR,
-    payload: error,
-  };
-}
-
-export function feedEntriesViewStyle(style) {
+export function feedEntriesViewStyle(viewStyle) {
   return {
     type: FEED_ENTRIES_VIEW_STYLE,
-    payload: style,
+    viewStyle,
   };
 }
 
-function fetchFeedEntries(url, data) {
-  return $.ajax({ url, data })
-    .fail((xhr) => {
-      ErrorService.notifyErrorResponse('Загрузка фида', {
-        method: 'fetchFeedEntries(url, data)',
-        methodArguments: { url, data },
-        response: xhr.responseJSON,
-      });
-    });
+function fetchFeedEntries(endpoint, signature, isPrepend = false) {
+  return {
+    isPrepend,
+    signature,
+    [CALL_API]: {
+      endpoint,
+      types: [
+        FEED_ENTRIES_REQUEST,
+        FEED_ENTRIES_SUCCESS,
+        FEED_ENTRIES_FAILURE,
+      ],
+      schema: Schemas.ENTRY_COLL,
+      opts: defaultOpts,
+    },
+  };
 }
 
-function shouldFetchFeedEntries(state, { apiType, rating, sinceId, query }) {
-  const { isFetching, apiType: cApiType, rating: cRating,
-          sinceId: cSinceId, query: cQuery } = state.feedEntries;
+function shouldFetchFeedEntries(state, params) {
+  const { isFetching, signature: cSignature } = state.feedEntries;
 
-  return !isFetching &&
-    (apiType !== cApiType || query !== cQuery ||
-     (cApiType === FEED_ENTRIES_API_TYPE_BEST && rating !== cRating) ||
-     (cSinceId && sinceId == null));
+  return !isFetching && signature(params) !== cSignature;
 }
 
-function getFeedEntries({ apiType, rating, sinceId, query }) {
+export function getFeedEntries(params, {
+  limit = INITIAL_LOAD_LIMIT,
+  sinceId,
+  tillId,
+} = {}) {
   return (dispatch) => {
+    const { apiType, rating, query } = params;
     const url = apiUrlMap[apiType];
 
     if (!url) {
       return null;
     }
 
-    dispatch(feedEntriesRequest());
-    dispatch(feedEntriesReset());
-    return fetchFeedEntries(url, {
-      limit: INITIAL_LOAD_LIMIT,
-      rating,
-      since_entry_id: sinceId || void 0,
-      q: query || void 0,
-    })
-      .then((data) => dispatch(feedEntriesReceive({ data, apiType, rating, sinceId, query })))
-      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON, apiType, rating, sinceId, query })));
-  };
-}
-
-export function getFeedEntriesIfNeeded(location, force=false) {
-  return (dispatch, getState) => {
-    const params = feedDataByUri(location);
-
-    if (force || shouldFetchFeedEntries(getState(), params)) {
-      return dispatch(getFeedEntries(params));
-    }
-  };
-}
-
-export function appendFeedEntries() {
-  return (dispatch, getState) => {
-    const { isFetching, apiType, rating, query, data: { next_since_entry_id } } = getState().feedEntries;
-
-    if (isFetching) {
-      return null;
-    }
-
-    const url = apiUrlMap[apiType];
-    const params = {
-      rating,
-      limit: APPEND_LOAD_LIMIT,
-      q: query || void 0,
-      since_entry_id: next_since_entry_id || void 0,
-    };
-
-    dispatch(feedEntriesRequest());
-    return fetchFeedEntries(url, params)
-      .then((data) => {
-        const prevItems = getState().feedEntries.data.items;
-        dispatch(feedEntriesReceive({ data: { ...data, items: prevItems.concat(data.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON })));
-  };
-}
-
-export function prependFeedEntries(limit=INITIAL_LOAD_LIMIT) {
-  return (dispatch, getState) => {
-    const { isFetching, apiType, rating, data: { items  } } = getState().feedEntries;
-    const firstId = items && items[0] && items[0].entry.id;
-
-    if (isFetching || !firstId) {
-      return null;
-    }
-
-
-    const url = apiUrlMap[apiType];
-    const params = {
+    return dispatch(fetchFeedEntries(makeGetUrl(url, {
       limit,
       rating,
-      till_entry_id: firstId,
-    };
+      sinceEntryId: sinceId,
+      tillEntryId: tillId,
+      q: query || void 0,
+    }), signature(params), !!tillId));
+  };
+}
 
-    dispatch(feedEntriesRequest());
-    return fetchFeedEntries(url, params)
-      .then((data) => {
-        const prevData = getState().feedEntries.data;
-        dispatch(feedEntriesReceive({ data: { ...prevData, items: data.items.concat(prevData.items) } }));
-        return data;
-      })
-      .fail((error) => dispatch(feedEntriesError({ error: error.responseJSON })));
+export function getFeedEntriesIfNeeded(params) {
+  return (dispatch, getState) => {
+    if (shouldFetchFeedEntries(getState(), params)) {
+      dispatch(resetFeedEntries());
+      return dispatch(getFeedEntries(params));
+    }
   };
 }

@@ -1,53 +1,51 @@
-/*global $, NoticeService */
 import ApiRoutes from '../../../shared/routes/api';
+import { CALL_API, Schemas } from '../middleware/api';
+import { defaultOpts, postOpts } from './reqHelpers';
 
 export const TLOG_REQUEST = 'TLOG_REQUEST';
-export const TLOG_RECEIVE = 'TLOG_RECEIVE';
-export const TLOG_ERROR = 'TLOG_ERROR';
-export const TLOG_UPDATE = 'TLOG_UPDATE';
+export const TLOG_SUCCESS = 'TLOG_SUCCESS';
+export const TLOG_FAILURE = 'TLOG_FAILURE';
 
-function tlogRequest() {
-  return {
-    type: TLOG_REQUEST,
-  };
-}
-
-function tlogError(error) {
-  return {
-    type: TLOG_ERROR,
-    payload: error,
-  };
-}
-
-function tlogReceive(data) {
-  return {
-    type: TLOG_RECEIVE,
-    payload: data,
-  };
-}
-
-function shouldFetchTlog(state, slug) {
-  return (!state.tlog.isFetching &&
-          (!state.tlog.slug || state.tlog.slug !== slug));
-}
-
+export const TLOG_REPORT_REQUEST = 'TLOG_REPORT_REQUEST';
+export const TLOG_REPORT_SUCCESS = 'TLOG_REPORT_SUCCESS';
+export const TLOG_REPORT_FAILURE = 'TLOG_REPORT_FAILURE';
 
 function fetchTlog(slug) {
-  return (dispatch) => {
-    dispatch(tlogRequest());
-    return $.ajax({ url: ApiRoutes.tlog(slug) })
-      .done((data) => dispatch(tlogReceive({ data, slug })))
-      .fail((error) => {
-        NoticeService.errorResponse(error);
-        return dispatch(tlogError({ error: error.responseJSON, slug }));
-      });
+  const endpoint = ApiRoutes.tlog(slug);
+
+  return {
+    [CALL_API]: {
+      endpoint,
+      schema: Schemas.TLOG,
+      types: [ TLOG_REQUEST, TLOG_SUCCESS, TLOG_FAILURE ],
+      opts: defaultOpts,
+    },
   };
 }
 
-export function getTlog(slug) {
+export function getTlog(slug, requiredFields=[]) {
   return (dispatch, getState) => {
-    if (slug && shouldFetchTlog(getState(), slug)) {
-      return dispatch(fetchTlog(slug));
+    if (slug) {
+      const tlog = getState().entities
+              .get('tlog')
+              .find((t) => t.get('slug') === slug);
+
+      if (tlog && requiredFields.every((key) => tlog.has(key))) {
+        return null;
+      }
+
+      return !getState().tlog.isFetching && dispatch(fetchTlog(slug));
     }
+  };
+}
+
+export function tlogReport(id) {
+  return {
+    [CALL_API]: {
+      endpoint: ApiRoutes.tlog_report(id),
+      schema: Schemas.NONE,
+      types: [ TLOG_REPORT_REQUEST, TLOG_REPORT_SUCCESS, TLOG_REPORT_FAILURE ],
+      opts: postOpts(),
+    },
   };
 }

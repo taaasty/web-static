@@ -26,7 +26,7 @@ class UnreadLoadButton extends Component {
   componentWillUnmount() {
     if (this.onScrollFn) {
       document.removeEventListener('scroll', this.onScrollFn);
-    };
+    }
   }
   updateOffScreenState() {
     const scrollTop = document.body.scrollTop || // safary, chrome

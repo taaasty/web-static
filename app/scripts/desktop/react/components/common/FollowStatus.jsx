@@ -55,7 +55,7 @@ class FollowStatus extends Component {
       >
         {process
          ? <Spinner size={14} />
-         : <i className='icon' />
+         : <i className="icon" />
         }
       </span>
     );
@@ -66,7 +66,7 @@ FollowStatus.propTypes = {
   error: PropTypes.bool,
   onClick: PropTypes.func,
   process: PropTypes.bool,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.string,
 };
 
 export default FollowStatus;

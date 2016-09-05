@@ -1,99 +1,118 @@
-/*global $, TastyEvents, Mousetrap */
+/*global $, Mousetrap */
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
-
-import { follow } from '../../actions/RelationshipActions';
 import HeroProfileActionsContainer from './HeroProfileActionsContainer';
-import CloseToolbar from '../toolbars/CloseToolbar';
+import CloseToolbar from './CloseToolbar';
 import HeroProfileAvatar from './HeroProfileAvatar';
 import HeroProfileHead from './HeroProfileHead';
 import HeroProfileStats from './HeroProfileStats';
 import SmartFollowStatus from './SmartFollowStatus';
 import Spinner from '../../../../shared/react/components/common/Spinner';
 
-const HERO_CLOSED = 'closed';
-const HERO_OPENED = 'opened';
 const HERO_OPENED_CLASS = 'hero-enabled';
 
-const transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd' +
-        'msTransitionEnd transitionend';
-
 class HeroProfile extends Component {
-  state = {
-    currentState: HERO_CLOSED,
-  };
   componentWillMount() {
-    this.open = this._open.bind(this);
-    this.close = this._close.bind(this);
+    this.props.closeHero();
+
     this.onResize = this._onResize.bind(this);
-    this.scrollFate = this._scrollFade.bind(this);
+    this.scrollFade = this._scrollFade.bind(this);
+    this.handleHeroScroll = this.handleHeroScroll.bind(this);
+    this.handleEsc = this.handleEsc.bind(this);
   }
   componentDidMount() {
-    this.$hero = $(findDOMNode(this));
-    this.heroClosedHeight = this.$hero.height();
+    this.$hero = $(this.refs.container);
+    this.heroInitialHeight = this.$hero.height();
 
+    Mousetrap.bind('esc', this.handleEsc);
     $(window).on('resize', this.onResize);
     $(window).on('scroll', this.scrollFade);
-
-    TastyEvents.on(TastyEvents.keys.command_hero_open(), this.open);
-    TastyEvents.on(TastyEvents.keys.command_hero_close(), this.close);
+    $(window).on('scroll.hero', this.handleHeroScroll);
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.tlog.data.author !== nextProps.tlog.data.author) {
-      this._close();
+    const {
+      closeHero,
+      isOpen,
+      tlog,
+    } = this.props;
+    const {
+      isOpen: nextIsOpen,
+      tlog: nextTlog,
+    } = nextProps;
+
+    if (tlog.get('id') !== nextTlog.get('id')) {
+      closeHero();
+    } else {
+      if (isOpen && !nextIsOpen) { // closing
+        this.restoreInitialHeroHeight();
+        window.setTimeout(this.unsetHeroHeight.bind(this), 1500);
+        $('body').removeClass(HERO_OPENED_CLASS);
+      } else if (!isOpen && nextIsOpen) { // opening
+        this.setHeroWindowHeight();
+        $('body').addClass(HERO_OPENED_CLASS).scrollTop(0);
+      }
     }
   }
   componentWillUnmount() {
+    $('body').removeClass(HERO_OPENED_CLASS);
+    Mousetrap.unbind('esc', this.handleEsc);
     $(window).off('resize', this.onResize);
     $(window).off('scroll', this.scrollFade);
+    $(window).off('scroll.hero', this.handleHeroScroll);
 
-    TastyEvents.off(TastyEvents.keys.command_hero_open(), this.open);
-    TastyEvents.off(TastyEvents.keys.command_hero_close(), this.close);
+    this.props.closeHero();
   }
-  _open() {
-    Mousetrap.bind('esc', this.close);
-    this.setHeroWindowHeight();
-    $('body').addClass(HERO_OPENED_CLASS).scrollTop(0);
+  handleEsc() {
+    const {
+      closeHero,
+      isOpen,
+    } = this.props;
 
-    this.$hero.on(transitionEnd, () => {
-      this.setState({ currentState: HERO_OPENED });
-      $(window).on('scroll.hero', this.close);
-      this.$hero.off(transitionEnd);
-    });
+    if (isOpen) {
+      closeHero();
+    }
   }
-  _close() {
-    if (this.isOpen()) {
-      this.setState({ currentState: HERO_CLOSED });
-      Mousetrap.unbind('esc', this.close);
-      $(window).off('scroll.hero');
+  handleHeroScroll() {
+    const {
+      closeHero,
+      isOpen,
+    } = this.props;
 
-      this.restoreInitialHeroHeight();
-      window.setTimeout(this.unsetHeroHeight.bind(this), 1500);
-      $('body').removeClass(HERO_OPENED_CLASS);
-      TastyEvents.trigger(TastyEvents.keys.hero_closed());
+    if (isOpen) {
+      closeHero();
+    }
+  }
+  handleAvatarClick(ev) {
+    const {
+      isOpen,
+      openHero,
+    } = this.props;
+
+    ev.preventDefault();
+    if (!isOpen) {
+      this.setInitialHeroHeight();
+    }
+
+    openHero();
+  }
+  _onResize() {
+    if (this.props.isOpen) {
+      this.setHeroWindowHeight();
+    }
+  }
+  unsetHeroHeight() {
+    if (!this.props.isOpen) {
+      this.$hero.css('height', '');
     }
   }
   setInitialHeroHeight() {
-    this.$hero.on(transitionEnd, () => {
-      $(document).trigger('domChanged');
-      this.$hero.off(transitionEnd);
-    });
-
     this.initialHeroHeight = this.$hero.height();
-    this.$hero.css('height', this.heroClosedHeight);
-  }
-  unsetHeroHeight() {
-    this.$hero.css('height', '');
+    this.$hero.css('height', this.heroInitialHeight);
   }
   restoreInitialHeroHeight() {
-    this.$hero.css('height', this.heroClosedHeight);
+    this.$hero.css('height', this.heroInitialHeight);
   }
   setHeroWindowHeight() {
     this.$hero.css('height', $(window).height());
-  }
-  isOpen() {
-    return this.state.currentState != HERO_CLOSED;
   }
   _scrollFade() {
     const $heroBox = $(this.refs.heroBox);
@@ -101,7 +120,7 @@ class HeroProfile extends Component {
     let scrollTop = $(window).scrollTop();
 
     // Не производим пересчёт значений, если hero уже вне поля видимости
-    if (scrollTop < this.heroClosedHeight) {
+    if (scrollTop < this.heroInitialHeight) {
       if (scrollTop < 0) {
         scrollTop = 0;
       }
@@ -113,72 +132,62 @@ class HeroProfile extends Component {
         'opacity': Math.max(1 - scrollTop / height, 0),
       });
     }
-  }    
-  _onResize() {
-    if (this.isOpen()) {
-      this.setHeroWindowHeight();
-    }
-  }
-  handleAvatarClick(ev) {
-    if (!this.isOpen()) {
-      this.setInitialHeroHeight();
-      ev.preventDefault();
-    }
-    this.open();
   }
   render() {
-    const { currentUser, tlog } = this.props;
-    const { data: { author, my_relationship: relState, stats },
-            errorRelationship, isFetching, isFetchingRelationship } = tlog;
-    const currentUserId = currentUser && currentUser.id;
-    const isCurrentUser = currentUserId && currentUserId === author.id;
-    const followButtonVisible = !isCurrentUser && relState != null;
-    
+    const {
+      closeHero,
+      isCurrentUser,
+      isOpen,
+      showSettingsPopup,
+      tlog,
+      tlogRelation,
+    } = this.props;
+    const tlogId = tlog.get('id');
+
     return (
-      <div className="hero hero-profile">
-        <CloseToolbar onClick={this.close.bind(this)} />
+      <div className="hero hero-profile" ref="container">
+        <CloseToolbar onClick={closeHero} />
         <div className="hero__overlay" />
         <div className="hero__gradient" />
         <div className="hero__box" ref="heroBox">
-          {!author.id || isFetching
-           ? <Spinner size={70} />
-           : <HeroProfileAvatar
-               isOpen={this.isOpen()}
-               onClick={this.handleAvatarClick.bind(this)}
-               user={author}
-             />
+          {!tlogId
+            ? <Spinner size={70} />
+            : (
+              <HeroProfileAvatar
+                isOpen={isOpen}
+                onClick={this.handleAvatarClick.bind(this)}
+                user={tlog}
+              />
+            )
           }
-          {followButtonVisible &&
-           <SmartFollowStatus
-             error={errorRelationship}
-             follow={follow.bind(null, author.id)}
-             isFetching={isFetchingRelationship}
-             relState={relState}
-           />
-          }
-           {author.id && !isFetching && <HeroProfileHead user={author} />}
-           <HeroProfileActionsContainer
-             isCurrentUser={!!isCurrentUser}
-             relState={relState}
-             tlog={tlog}
-           />
+          {!isCurrentUser && <SmartFollowStatus relId={tlog.get('myRelationshipObject')} />}
+          {tlogId && <HeroProfileHead user={tlog} />}
+          <HeroProfileActionsContainer
+            isCurrentUser={!!isCurrentUser}
+            showSettingsPopup={showSettingsPopup}
+            tlog={tlog}
+            tlogRelation={tlogRelation}
+          />
         </div>
-        <HeroProfileStats stats={stats} user={author} />
+        {!!tlog.get('stats') && (
+          <HeroProfileStats
+            close={closeHero}
+            user={tlog}
+          />
+        )}
       </div>
     );
   }
 }
 
 HeroProfile.propTypes = {
-  currentUser: PropTypes.object,
-  follow: PropTypes.func.isRequired,
+  closeHero: PropTypes.func.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  openHero: PropTypes.func.isRequired,
+  showSettingsPopup: PropTypes.func.isRequired,
   tlog: PropTypes.object.isRequired,
+  tlogRelation: PropTypes.object.isRequired,
 };
 
-export default connect(
-  (state) => ({
-    currentUser: state.currentUser.data,
-    tlog: state.tlog,
-  }),
-  { follow }
-)(HeroProfile);
+export default HeroProfile;

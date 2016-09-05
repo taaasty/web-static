@@ -1,4 +1,3 @@
-/*global ReactApp */
 import React, { Component } from 'react';
 import bowser from 'bowser';
 import BrowserSupport from './BrowserSupport';

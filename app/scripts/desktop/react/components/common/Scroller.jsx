@@ -35,7 +35,9 @@ class Scroller extends Component {
     const scrollTop = el.scrollTop;
     const scrollHeight = el.scrollHeight;
     const height = $(el).height();
-    const delta = (ev.type === 'DOMMouseScroll' ? ev.originalEvent.detail * -40 : ev.originalEvent.wheelDelta);
+    const delta = ev.type === 'DOMMouseScroll' ?
+      ev.originalEvent.detail * -40 :
+      ev.originalEvent.wheelDelta;
     const up = delta > 0;
 
     function prevent() {
@@ -63,11 +65,11 @@ class Scroller extends Component {
     const scrollerClasses = classNames('scroller', 'scroller--dark', className);
 
     return (
-        <div
-          className={scrollerClasses}
-          onScroll={this.handleScroll.bind(this)}
-          ref="scroller"
-        >
+      <div
+        className={scrollerClasses}
+        onScroll={this.handleScroll.bind(this)}
+        ref="scroller"
+      >
         <div className="scroller__pane" ref="scrollerPane">
           {children}
         </div>

@@ -1,14 +1,17 @@
-/*global i18n */
 import React, { PropTypes } from 'react';
-import Voting from '../common/Voting';
+import Voting from '../Voting';
 
-function EntryTlogMetabarVoting({ entry }) {
-  return entry.is_voteable
+function EntryTlogMetabarVoting(props) {
+  const {
+    entry,
+  } = props;
+
+  return entry.get('isVoteable')
     ? (
       <span className="meta-item meta-item--vote">
         <span className="meta__content">
           <span className="meta-item__common meta__link">
-           <Voting entryID={entry.id} rating={entry.rating} />
+            <Voting ratingId={entry.get('id')} />
           </span>
         </span>
       </span>
@@ -17,10 +20,7 @@ function EntryTlogMetabarVoting({ entry }) {
 }
 
 EntryTlogMetabarVoting.propTypes = {
-  commentator: PropTypes.object,
-  commentsCount: PropTypes.number.isRequired,
-  onComment: PropTypes.func,
-  url: PropTypes.string.isRequired,
+  entry: PropTypes.object.isRequired,
 };
 
 export default EntryTlogMetabarVoting;

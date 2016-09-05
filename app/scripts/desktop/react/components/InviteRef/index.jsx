@@ -1,19 +1,18 @@
 /*global i18n */
 import React, { Component, PropTypes } from 'react';
 import { facebookUrl, vkontakteUrl, open } from '../common/SocialShare';
-import CurrentUserStore from '../../stores/current_user';
+import { connect } from 'react-redux';
 
 class InviteRef extends Component {
   componentDidMount() {
     this.refs.input.select();
   }
   render () {
-    const { closeShellbox, inviteUrl } = this.props;
-    const userpic = CurrentUserStore.getUserpic();
+    const { closeShellbox, inviteUrl, userpic } = this.props;
     const vkUrl = vkontakteUrl(
       inviteUrl,
       i18n.t('invite_ref.share_title'),
-      userpic && userpic.original_url,
+      userpic && userpic.originalUrl,
       i18n.t('invite_ref.share_desc')
     );
     const fbUrl = facebookUrl(inviteUrl);
@@ -63,6 +62,11 @@ InviteRef.displayName = 'InviteRef';
 InviteRef.propTypes = {
   closeShellbox: PropTypes.func.isRequired,
   inviteUrl: PropTypes.string.isRequired,
+  userpic: PropTypes.object,
 };
 
-export default InviteRef;
+export default connect(
+  (state) => ({
+    userpic: state.currentUser.data.userpic,
+  })
+)(InviteRef);

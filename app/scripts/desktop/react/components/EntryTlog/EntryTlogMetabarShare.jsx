@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import DropdownActions from '../common/DropdownActions';
 import DropdownAction from '../common/DropdownAction';
-import EntryRepostPopup from '../popups/EntryRepostPopup';
+import EntryRepostPopup from '../EntryRepostPopup';
 import { TLOG_ENTRY_TYPE_ANONYMOUS } from '../../../../shared/constants/TlogEntry';
 import { facebookUrl, vkontakteUrl, twitterUrl, open } from '../common/SocialShare';
 
@@ -27,47 +27,55 @@ class EntryTlogMetabarShare extends Component {
     );
   }
   render() {
-    const { commentator, entry: { id, preview_image, title_truncated, type, url } } = this.props;
+    const {
+      commentator,
+      entry,
+    } = this.props;
 
-    const vkUrl = vkontakteUrl(url, title_truncated, (preview_image && preview_image.url) || defaultImg);
+    const id = entry.get('id');
+    const url = entry.get('url', entry.get('entryUrl'));
+    const titleTruncated = entry.get('titleTruncated');
+    const type = entry.get('type');
+    const previewImageUrl = entry.getIn(['previewImage', 'url']);
+
+    const vkUrl = vkontakteUrl(url, titleTruncated, previewImageUrl || defaultImg);
     const fbUrl = facebookUrl(url);
-    const twUrl = twitterUrl(url, title_truncated);
+    const twUrl = twitterUrl(url, titleTruncated);
 
     return (
-      <DropdownActions
-        className="meta-item meta-item--share"
-        item={this.renderShare()}
-        ref="toggle"
-      >
+      <span className="meta-item meta-item--share">
         {this.state.isPopupOpened &&
-         <EntryRepostPopup
-           entryID={id}
-           isOpened={this.state.isPopupOpened}
-           onClose={this.closePopup.bind(this)}
-           targetRef={this.refs.toggle}
-         />
+          <EntryRepostPopup
+            entryId={id}
+            onClose={this.closePopup.bind(this)}
+          />
         }
-        {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
-         <DropdownAction
-           onClick={this.togglePopup.bind(this)}
-           title={i18n.t('entry_meta_repost_link')}
-         />}
-        <DropdownAction
-          onClick={open.bind(null, 'Vk', vkUrl)}
-          title={i18n.t('entry_meta_vk')}
-          url={vkUrl}
-        />
-        <DropdownAction
-          onClick={open.bind(null, 'Facebook', fbUrl)}
-          title={i18n.t('entry_meta_fb')}
-          url={fbUrl}
-        />
-        <DropdownAction
-          onClick={open.bind(null, 'Twitter', twUrl)}
-          title={i18n.t('entry_meta_twitter')}
-          url={twUrl}
-        />
-      </DropdownActions>
+        <DropdownActions
+          item={this.renderShare()}
+          ref="toggle"
+        >
+          {commentator && type !== TLOG_ENTRY_TYPE_ANONYMOUS &&
+            <DropdownAction
+              onClick={this.togglePopup.bind(this)}
+              title={i18n.t('entry_meta_repost_link')}
+            />}
+          <DropdownAction
+            onClick={open.bind(null, 'Vk', vkUrl)}
+            title={i18n.t('entry_meta_vk')}
+            url={vkUrl}
+          />
+          <DropdownAction
+            onClick={open.bind(null, 'Facebook', fbUrl)}
+            title={i18n.t('entry_meta_fb')}
+            url={fbUrl}
+          />
+          <DropdownAction
+            onClick={open.bind(null, 'Twitter', twUrl)}
+            title={i18n.t('entry_meta_twitter')}
+            url={twUrl}
+          />
+        </DropdownActions>
+      </span>
     );
   }
 }

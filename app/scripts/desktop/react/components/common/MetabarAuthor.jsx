@@ -1,26 +1,40 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import Avatar from '../../../../shared/react/components/common/Avatar';
+import Avatar from '../../../../shared/react/components/common/AvatarCamelCase';
 import UserSlug from '../UserSlug';
 import { Link } from 'react-router';
 import uri from 'urijs';
+import { pure } from 'recompose';
 
-function MetabarAuthor({ author, size, tlog, hostTlogId }) {
+function MetabarAuthor(props) {
+  const {
+    author,
+    size,
+    tlog,
+    hostTlogId,
+  } = props;
+  const authorId = author.get('id');
+  const tlogId = tlog.get('id');
 
-  if (!author || !tlog) {
+  if (!authorId || !tlogId) {
     return <span className="meta-item meta-item--user" />;
   }
 
   // inconsistency in list|item api responses
-  const authorUrl = author.url || author.tlog_url;
-  const tlogUrl = tlog.url || tlog.tlog_url;
-  const tlogUserpic = tlog.userpic || tlog.author.userpic;
+  const authorUrl = author.get('url', author.get('tlogUrl'));
+  const tlogUrl = tlog.get('url', tlog.get('tlogUrl'));
+  const tlogUserpic = tlog.get('userpic').toJS();
 
   function UserTag(user) {
-    return <UserSlug showAsStar user={{ is_premium: user.is_premium, slug: user.tag }} />;
+    return (
+      <UserSlug
+        showAsStar
+        user={user.set('slug', user.get('tag'))}
+      />
+    );
   }
 
-  
+
   function renderAvatar() {
     return (
       <Link className="meta-item__link" to={uri(tlogUrl).path()}>
@@ -45,7 +59,7 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
         <Link className="meta-item__link" to={uri(authorUrl).path()}>
           {UserTag(author)}
         </Link>
-        {' ' + i18n.t('entry.meta.author_posted_in', { context: author.gender }) + ' '}
+        {' ' + i18n.t('entry.meta.author_posted_in', { context: author.get('gender') }) + ' '}
         <Link className="meta-item__link" to={uri(tlogUrl).path()}>
           {UserTag(tlog)}
         </Link>
@@ -66,19 +80,19 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
 
   function renderContents() {
     if (hostTlogId == null) {
-      if (author.id === tlog.id) {
+      if (authorId === tlogId) {
         return authorLink();
       } else {
         return authorPostedIn();
       }
-    } else if (hostTlogId === tlog.id) {
-      if (author.id !== tlog.id) {
+    } else if (hostTlogId === tlogId) {
+      if (authorId !== tlogId) {
         return authorPostedIn();
       } else {
         return null;
       }
-    } else if (hostTlogId !== tlog.id) {
-      if (author.id === tlog.id) {
+    } else if (hostTlogId !== tlogId) {
+      if (authorId === tlogId) {
         return repostFrom();
       } else {
         return authorPostedIn();
@@ -89,27 +103,28 @@ function MetabarAuthor({ author, size, tlog, hostTlogId }) {
   }
 
   const contents = renderContents();
-  
+
   return contents
-    ? <span className="meta-item meta-item--user">
+    ? (
+      <span className="meta-item meta-item--user">
         <span className="meta-item__content">
           {renderAvatar()}
           {contents}
         </span>
       </span>
+    )
     : <span className="meta-item meta-item--user" />;
 }
 
 MetabarAuthor.propTypes = {
-  author: PropTypes.object,
+  author: PropTypes.object.isRequired,
   hostTlogId: PropTypes.number,
-  tlog: PropTypes.object,
+  size: PropTypes.number,
+  tlog: PropTypes.object.isRequired,
 };
 
 MetabarAuthor.defaultProps = {
-  author: {},
   size: 20,
-  tlog: {},
 };
 
-export default MetabarAuthor;
+export default pure(MetabarAuthor);

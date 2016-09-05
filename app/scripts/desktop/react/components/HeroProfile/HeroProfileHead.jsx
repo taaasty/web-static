@@ -1,31 +1,28 @@
-import React from 'react';
-import * as ProjectTypes from '../../../../shared/react/ProjectTypes';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import UserSlug from '../UserSlug';
 import uri from 'urijs';
 
 function HeroProfileHead({ user }) {
-  const { title, tlog_url } = user;
-
   return (
     <div className="hero__head">
       <div className="hero__mask" />
       <div className="hero__title">
         <span>
-          <Link to={uri(tlog_url).path()}>
+          <Link to={uri(user.get('tlogUrl')).path()}>
             <UserSlug user={user} />
           </Link>
         </span>
       </div>
       <div className="hero__text">
-        <span dangerouslySetInnerHTML={{ __html: title || '' }} />
+        <span dangerouslySetInnerHTML={{ __html: user.get('title', '') }} />
       </div>
     </div>
   );
 }
 
 HeroProfileHead.propTypes = {
-  user: ProjectTypes.heroUser.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default HeroProfileHead;

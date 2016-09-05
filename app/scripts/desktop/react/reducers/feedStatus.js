@@ -26,7 +26,7 @@ export const initialState = {
 };
 
 const actionMap = {
-  [FEED_LIVE_NEW_ENTRY](state, entry) {
+  [FEED_LIVE_NEW_ENTRY](state, { payload: entry }) {
     return {
       ...state,
       live: [ ...state.live, entry ],
@@ -42,7 +42,7 @@ const actionMap = {
     };
   },
 
-  [FEED_BEST_NEW_ENTRY](state, entry) {
+  [FEED_BEST_NEW_ENTRY](state, { payload: entry }) {
     return {
       ...state,
       best: [ ...state.best, entry ],
@@ -58,7 +58,7 @@ const actionMap = {
     };
   },
 
-  [FEED_FRIENDS_NEW_ENTRY](state, entry) {
+  [FEED_FRIENDS_NEW_ENTRY](state, { payload: entry }) {
     return {
       ...state,
       friends: [ ...state.friends, entry ],
@@ -74,7 +74,7 @@ const actionMap = {
     };
   },
 
-  [FEED_ANONYMOUS_NEW_ENTRY](state, entry) {
+  [FEED_ANONYMOUS_NEW_ENTRY](state, { payload: entry }) {
     return {
       ...state,
       anonymous: [ ...state.anonymous, entry ],
@@ -90,7 +90,7 @@ const actionMap = {
     };
   },
 
-  [FEED_LIVE_FLOW_NEW_ENTRY](state, entry) {
+  [FEED_LIVE_FLOW_NEW_ENTRY](state, { payload: entry }) {
     return {
       ...state,
       liveFlow: [ ...state.liveFlow, entry ],

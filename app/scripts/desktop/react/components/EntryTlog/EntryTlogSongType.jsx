@@ -2,18 +2,28 @@ import React, { Component, PropTypes } from 'react';
 import PrivacyBadge from '../common/PrivacyBadge';
 import EntryTlogMetabar from './EntryTlogMetabar';
 import EntryTlogActions from './EntryTlogActions';
-import EntryTlogComments from './EntryTlogComments';
+import EntryTlogCommentsContainer from './EntryTlogCommentsContainer';
 
 class EntryTlogSongType extends Component {
   startComment() {
-    this.refs.comments.startComment();
+    this.refs.comments.getWrappedInstance().startComment();
   }
   renderTitle() {
-    if (this.props.entry.title) {
+    const {
+      entry,
+    } = this.props;
+    const title = entry.get('title');
+    const audioUrl = entry.get('audioUrl');
+
+    if (title) {
       return (
         <h1 className="post__title">
-          <a href={this.props.entry.audio_url} target="_blank" className="post__link">
-            {this.props.entry.title}
+          <a
+            className="post__link"
+            href={audioUrl}
+            target="_blank"
+          >
+            {title}
           </a>
         </h1>
       );
@@ -25,26 +35,25 @@ class EntryTlogSongType extends Component {
     }
   }
   render() {
-    const { is_private } = this.props.entry;
+    const isPrivate = this.props.entry.get('isPrivate', false);
 
     return (
       <span>
         <header className="post__header">
-          {is_private && <PrivacyBadge />}
+          {!!isPrivate && <PrivacyBadge />}
           {this.renderTitle()}
         </header>
         <div className="post__meta">
           <EntryTlogMetabar {...this.props} onComment={this.startComment.bind(this)} />
         </div>
         {this.renderActions()}
-        <EntryTlogComments {...this.props} ref="comments" />
+        <EntryTlogCommentsContainer {...this.props} ref="comments" />
       </span>
     );
   }
 }
 
 EntryTlogSongType.propTypes = {
-  commentator: PropTypes.object,
   entry: PropTypes.object.isRequired,
   hasModeration: PropTypes.bool.isRequired,
 };

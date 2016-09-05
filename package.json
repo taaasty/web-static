@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "autosize": "^3.0.4",
-    "aviator": "^0.5.0",
     "bowser": "^0.7.2",
     "classnames": "^1.2.0",
     "color": "^0.10.1",
@@ -24,21 +23,24 @@
     "flux": "^2.0.3",
     "fuzzy": "^0.1.0",
     "history": "^1.17.0",
+    "humps": "^1.1.0",
     "i18next": "^2.0.20",
     "i18next-node-remote-backend": "0.0.3",
     "i18next-xhr-backend": "^0.2.0",
+    "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.1.4",
     "js-sha256": "^0.3.0",
     "keymirror": "^0.1.1",
     "lodash": "^3.1.0",
-    "masonry-layout": "^3.3.0",
-    "medium-editor": "^5.14.4",
     "moment": "^2.10.3",
+    "normalizr": "^2.2.1",
     "numeral": "^1.5.3",
     "query-string": "^3.0.0",
     "react": "^0.14.6",
     "react-addons-css-transition-group": "^0.14.8",
-    "react-addons-linked-state-mixin": "^0.14.6",
+    "react-addons-perf": "^0.14.6",
+    "react-addons-shallow-compare": "^0.14.6",
     "react-addons-transition-group": "^0.14.6",
     "react-color-picker": "^3.1.0",
     "react-dom": "^0.14.6",
@@ -47,17 +49,20 @@
     "react-lazy-load": "^3.0.10",
     "react-masonry-component": "^3.0.0",
     "react-masonry-mixin": "^2.1.0",
+    "react-medium-editor": "^1.8.0",
     "react-portal": "^1.4.1",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc5",
+    "react-select": "^1.0.0-beta14",
     "react-tap-event-plugin": "^0.2.1",
     "react-textarea-autosize": "^3.3.1",
-    "redux": "^3.0.5",
+    "recompose": "^0.20.2",
+    "redux": "^3.5.2",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.2",
     "redux-thunk": "^1.0.3",
     "set-query-string": "^2.1.0",
-    "tether": "^1.1.0",
+    "striptags": "^2.1.1",
     "urijs": "^1.17.0"
   },
   "devDependencies": {
@@ -109,6 +114,6 @@
     "watchify": "^3.2.1"
   },
   "engines": {
-    "node": "^4.2.1"
+    "node": "^6.3.1"
   }
 }

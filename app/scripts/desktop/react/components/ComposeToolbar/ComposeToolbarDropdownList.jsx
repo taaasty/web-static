@@ -1,15 +1,14 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
 import Routes from '../../../../shared/routes/routes';
-import PopupActionCreators from '../../actions/PopupActions';
 import Tooltip from '../common/Tooltip';
 import { Link } from 'react-router';
 import uri from 'urijs';
 
-function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
-  function createFlow(ev) {
+function ComposeToolbarDropdownList({ isFlow, showFlowCreatorPopup, tlogSlug, userSlug }) {
+  function handleFlowCreatorClick(ev) {
     ev.preventDefault();
-    PopupActionCreators.createFlow();
+    showFlowCreatorPopup();
   }
 
   const context = isFlow ? 'flow' : '';
@@ -68,7 +67,7 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
           <a
             className="button button--circle button--emerald"
             href="#"
-            onClick={createFlow}
+            onClick={handleFlowCreatorClick}
           >
             <i className="icon icon--hash" />
           </a>
@@ -80,6 +79,7 @@ function ComposeToolbarDropdownList({ isFlow, tlogSlug, userSlug }) {
 
 ComposeToolbarDropdownList.propTypes = {
   isFlow: PropTypes.bool,
+  showFlowCreatorPopup: PropTypes.func.isRequired,
   tlogSlug: PropTypes.string,
   userSlug: PropTypes.string,
 };

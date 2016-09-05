@@ -55,8 +55,6 @@
   "return_to_selecting_signin_method": "Вернуться к выбору способа входа",
   "forgot_password_or_email": "Я забыл пароль или почту",
   "email_submit_process_button": "Вхожу..",
-  "confirm_signup": "Сейчас будет создан новый аккаунт @{{userSlug}}",
-  "confirm_signup_approve": "Да, зарегистрировать новый аккаунт",
   "or": "или",
   "email_signin_signup_header": "Вход/Регистрация через емейл",
   "reset_password_process_button": "Отправляю запрос..",
@@ -144,9 +142,6 @@
   "entry_meta_vk": "Вконтакте",
   "entry_meta_fb": "Facebook",
   "entry_meta_twitter": "Twitter",
-  "entry_repost_loading": "Загружаю..",
-  "entry_repost_empty": "Список пуст",
-  "entry_repost_error": "Ошибка загрузки",
   "hero_stats_popup_loading": "Загружаю..",
   "hero_stats_popup_empty": "Список пуст",
   "hero_stats_popup_error": "Ошибка загрузки",
@@ -172,13 +167,6 @@
   "vkontakte_suggestions_empty": "К сожалению, на Тейсти нет ваших друзей из Вконтакте на которых вы не подписаны",
   "vkontakte_suggestions_not_signedin": "Вы еще не привязали свой аккаунт Вконтакте",
   "vkontakte_suggestions_signin_button": "Найти друзей Вконтакте",
-  "persons_popup_menu_followings": "Вы подписаны",
-  "persons_popup_menu_followers": "Подписчики",
-  "persons_popup_menu_requested": "Заявки",
-  "persons_popup_menu_guessed": "Рекомендации",
-  "persons_popup_menu_ignored": "Заблокированы",
-  "persons_popup_menu_vkontakte": "Вконтакте",
-  "persons_popup_menu_facebook": "Facebook",
   "persons_popup_header": "Управление подписками",
   "editor_private_entry": "Закрытая запись",
   "editor_public_entry": "Открытая запись",
@@ -203,11 +191,11 @@
   "editor_files_limit_reached_5": "В записи не может быть больше чем {{count}} изображений",
   "editor_video_mediabox_loading": "Загружаю..",
   "editor_image_mediabox_loading": "Загружаю изображение по адресу..",
-  "editor_welcome_move_or": "Перетащите или",
+  "editor_welcome_move_or": "Перетащите или ",
   "editor_welcome_choose": "выберите",
-  "editor_welcome_picture_or": "картинку или",
+  "editor_welcome_picture_or": " картинку или ",
   "editor_welcome_insert": "вставьте",
-  "editor_welcome_link_to_it": "ссылку на неё",
+  "editor_welcome_link_to_it": " ссылку на неё",
   "editor_welcome_instagram_insert": "Вставьте",
   "editor_welcome_instagram_link": "ссылку на пост в инстаграме.",
   "editor_welcome_music_insert": "Вставьте",
@@ -342,7 +330,6 @@
   "feed_people": "Люди",
   "feed_anonymous": "Анонимки",
   "settings_header": "Настройки",
-  "entry_repost_header": "Куда репост?",
   "toolbar_new_entry_item": "Новая запись",
   "toolbar_new_text_entry": "Текст в дневник",
   "toolbar_new_image_entry": "Картинка в дневник",
@@ -386,7 +373,6 @@
   "email_submit_button": "Войти",
   "login_field_placeholder": "Электронная почта или ник",
   "password_field": "Пароль",
-  "already_registered_link": "Я уже зарегистрирован",
   "remembered_password_link": "Я всё вспомнил, верните меня",
   "delete_comment_item": "Удалить комментарий",
   "delete_comment_confirm": "Вы действительно хотите удалить комментарий?",
@@ -436,6 +422,13 @@
   "signin_success": "Добро пожаловать, {{userSlug}}! Подождите, я перезагружусь..",
   "browser_support_update_to": "Мы не поддерживаем ваш браузер ({{browserName}} {{browserVersion}}), обновите его до",
   "browser_support_last_version": "последней версии",
+  "auth": {
+    "accept_terms": "Регистрируясь вы принимаете условия ",
+    "accept_terms_link": "Пользовательского соглашения",
+    "confirm_signup": "Сейчас будет создан новый аккаунт @{{userSlug}}",
+    "confirm_signup_approve": "Да, зарегистрировать новый аккаунт",
+    "already_registered_link": "Я уже зарегистрирован"
+  },
   "editor" : {
     "title": "Редактор поста"
   },
@@ -586,11 +579,17 @@
       "pinned": "Пост закреплен"
     },
     "repost": {
+      "header": "Куда репост?",
+      "loading": "Загружаю..",
+      "empty": "Список пуст",
+      "error": "Ошибка загрузки",
+      "search_placeholder": "Поиск...",
       "no_flows": "Подписывайтесь или создавайте <a class=\"popup__link\" href=\"{{flowsLink}}\">потоки</a> чтобы добавлять туда посты"
     }
   },
   "create_flow": {
-    "header": "Создать поток"
+    "header": "Создать поток",
+    "create_success": "Поток создан! Переходим на страницу потока..."
   },
   "manage_flow": {
     "header": "Управление потоком",
@@ -599,6 +598,9 @@
     "premoderate_description": "Записи появляются в потоке только после одобрения руководством потока.",
     "premoderate_title": "Премодерация",
     "save": "Сохранить",
+    "update_success": "Поток успешно обновлен",
+    "empty_list": "Список пуст",
+    "error_list": "Ошибка загрузки",
     "tabs": {
       "settings": "Настройки",
       "staffs": "Руководство",
@@ -606,6 +608,10 @@
       "followers": "Подписчики",
       "ignored": "Заблокированные"
     }
+  },
+  "flow_form": {
+    "name_placeholder": "#Название потока",
+    "title_placeholder": "Краткое описание, не более 140 символов"
   },
   "tlog_alert": {
     "owner_private_tlog": "Тлог виден только подписчикам, стать которым можно после одобрения. Ну и вам конечно.",
@@ -708,6 +714,9 @@
     "gift_text_empty": "Зарегистрировавшись, вы получите три месяца премиума в подарок",
     "gift_text_from": "Зарегистрировавшись, вы получите три месяца премиума в подарок от {{userName}}"
   },
+  "notifications": {
+    "go_to_activity": "Смотреть все"
+  },
   "messenger": {
     "typing": "печатает...",
     "is_typing": "{{name}} печатает...",
@@ -716,6 +725,8 @@
     "support_message": "Привет! Если у вас есть вопросы по работе сервиса, можете задать их здесь.",
     "support_email_placeholder": "Ваш e-mail",
     "support_info": "<p style=\"text-align:left;\">Id: {{id}}<br>Локаль: {{locale}}<br>Email: {{email}}<br>Пол: {{gender}}<br>Закрытый тлог: {{private}}<br>Премиум: {{premium}}<br>Дизайн бандл: {{design_bundle}}<br>Зарегистрирован: {{registered_at}}<br>Браузер: {{browser}}<br>Платформа: {{platform}}</p>",
+    "unread_messages": "Непрочитанные сообщения",
+    "unread_button": "К непрочитанным",
     "title_status": {
       "online": "онлайн",
       "members": "{{count}} участник",
@@ -785,6 +796,17 @@
     "vk_button": "Отправить VK",
     "fb_button": "Отправить FB"
   },
+  "persons_popup": {
+    "menu": {
+      "followings": "Вы подписаны",
+      "followers": "Подписчики",
+      "requested": "Заявки",
+      "guessed": "Рекомендации",
+      "ignored": "Заблокированы",
+      "vkontakte": "Вконтакте",
+      "facebook": "Facebook"
+    }
+  },
   "premium_popup": {
     "title": "Тейсти <span class=\"--bold\">премиум</span>",
     "description": "Вы только что получили три месяца премиума в подарок! Что это дает?",
@@ -817,5 +839,11 @@
   },
   "user_slug": {
     "title": "Тейсти премиум"
+  },
+  "activities": {
+    "filter": {
+      "all": "Активность",
+      "my": "Уведомления"
+    }
   }
 }

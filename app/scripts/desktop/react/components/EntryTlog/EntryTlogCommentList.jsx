@@ -1,42 +1,49 @@
-import moment from 'moment';
 import React, { PropTypes } from 'react';
+import { Map } from 'immutable';
 import EntryTlogCommentContainer from './EntryTlogCommentContainer';
 
-function EntryTlogCommentList({ commentator, comments, entryId, entryUrl, isFeed,
-                                onCommentReply, onCommentUpdate,
-                                onCommentReport, onCommentDelete }) {
-
-  const orderedComments = comments.sort((a, b) => (
-    moment(a.updated_at).valueOf() - moment(b.updated_at).valueOf()
-  ));
+function EntryTlogCommentList(props) {
+  const { commentStates, commentUsers, commentator, comments, entryId, entryUrl,
+          onCommentReply, onCommentUpdate, onCommentReport, onCommentDelete } = props;
 
   return (
       <div className="comments__list">{
-        orderedComments.map((comment) => (
-          <EntryTlogCommentContainer
-            comment={comment}
-            commentator={commentator}
-            entryId={entryId}
-            entryUrl={entryUrl}
-            isFeed={isFeed}
-            key={comment.id}
-            onCommentDelete={onCommentDelete.bind(null, comment.id)}
-            onCommentReply={onCommentReply.bind(null, comment.user.name)}
-            onCommentReport={onCommentReport.bind(null, comment.id)}
-            onCommentUpdate={onCommentUpdate.bind(null, comment.id)}
-          />
-        ))
+        comments.map((comment, key) => {
+          const commentId = comment.get('id');
+          const commentUserName = commentUsers.getIn([ key, 'name' ], '');
+
+          return (
+            <EntryTlogCommentContainer
+              comment={comment}
+              commentState={commentStates.get(key, Map())}
+              commentUser={commentUsers.get(key, Map())}
+              commentator={commentator}
+              entryId={entryId}
+              entryUrl={entryUrl}
+              key={`tlog-entry-comment-${commentId}`}
+              onCommentDelete={onCommentDelete.bind(null, commentId)}
+              onCommentReply={onCommentReply.bind(null, commentUserName)}
+              onCommentReport={onCommentReport.bind(null, commentId)}
+              onCommentUpdate={onCommentUpdate.bind(null, commentId)}
+            />
+          );
+        }).valueSeq()
       }
     </div>
   );
 }
 
 EntryTlogCommentList.propTypes = {
+  commentStates: PropTypes.object.isRequired,
+  commentUsers: PropTypes.object.isRequired,
   commentator: PropTypes.object,
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.object.isRequired,
   entryId: PropTypes.number.isRequired,
   entryUrl: PropTypes.string.isRequired,
-  isFeed: PropTypes.bool,
+  onCommentDelete: PropTypes.func.isRequired,
+  onCommentReply: PropTypes.func.isRequired,
+  onCommentReport: PropTypes.func.isRequired,
+  onCommentUpdate: PropTypes.func.isRequired,
 };
 
 export default EntryTlogCommentList;

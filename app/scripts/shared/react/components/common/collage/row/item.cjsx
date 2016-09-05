@@ -1,5 +1,6 @@
 ImageLoader = require('react-imageloader');
 FitSpinner = require('../../FitSpinner');
+ThumborService = require '../../../../services/thumbor';
 { PropTypes } = React
 
 CollageRowItem = React.createClass
@@ -29,7 +30,7 @@ CollageRowItem = React.createClass
       srcSet: this.getRetinaUrl(),
       style: this.getImageStyles(),
     }
-    
+
     <div style={ @getContainerStyles() } className="collage__item">
       <ImageLoader
         imgProps={imgProps}

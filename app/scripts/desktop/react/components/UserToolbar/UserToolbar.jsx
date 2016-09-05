@@ -6,7 +6,7 @@ import uri from 'urijs';
 import SearchForm from './SearchForm';
 import AuthUserSection from './AuthUserSection';
 import classNames from 'classnames';
-import PersonsPopup from '../PersonsPopup';
+import RelationManagerPopup from '../RelationManagerPopup';
 
 const PINNED_STATE = 'pinned';
 const UNPINNED_STATE = 'unpinned';
@@ -131,7 +131,7 @@ class UserToolbar extends Component {
           </li>
         </ul>
         {isLogged && <AuthUserSection {...this.props} />}
-        {isRelationsPopupVisible && <PersonsPopup close={hideRelationsPopup}/>}
+        {isRelationsPopupVisible && <RelationManagerPopup onClose={hideRelationsPopup} />}
       </div>
     );
   }
@@ -156,7 +156,6 @@ UserToolbar.propTypes = {
   onUserClick: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   query: PropTypes.string,
-  searchKey: PropTypes.string.isRequired,
   unreadConversationsCount: PropTypes.number.isRequired,
   unreadFriendsCount: PropTypes.number.isRequired,
   unreadNotificationsCount: PropTypes.number.isRequired,

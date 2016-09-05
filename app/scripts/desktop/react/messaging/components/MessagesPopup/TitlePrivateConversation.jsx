@@ -2,18 +2,42 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import TitlePrivateConversationActions from './TitlePrivateConversationActions';
-import MsgUserAvatar from './MsgUserAvatar';
+import MsgUserAvatar from '../MsgUserAvatar';
+import {
+  startSelect,
+} from '../../actions/ThreadActions';
+import {
+  deleteConversation,
+  dontDisturb,
+} from '../../actions/ConversationActions';
+import {
+  showConversationList,
+} from '../../actions/MessagesPopupActions';
+import { connect } from 'react-redux';
+import { List, Map } from 'immutable';
+
+const emptyUser = Map();
 
 export const TITLE_AVATAR_SIZE = 32;
 
-function TitlePrivateConversation({ conversation }) {
+function TitlePrivateConversation(props) {
+  const {
+    conversation,
+    deleteConversation,
+    dontDisturb,
+    isRecipientTyping,
+    recipient,
+    showConversationList,
+    startSelect,
+  } = props;
+
   function status() {
-    if (conversation.typing[conversation.recipient_id]) {
+    if (isRecipientTyping) {
       return i18n.t('messenger.typing');
-    } else if (conversation.recipient.is_online) {
+    } else if (recipient.get('isOnline')) {
       return i18n.t('messenger.title_status.online');
     } else {
-      const at = conversation.recipient.last_seen_at;
+      const at = recipient.get('lastSeenAt');
 
       return at
         ? moment(at).calendar(null, {
@@ -34,16 +58,23 @@ function TitlePrivateConversation({ conversation }) {
     <div className="messages__popup-title --with-actions">
       <div className="messages__popup-title-wrapper">
         <span className="messages__user-avatar">
-          <MsgUserAvatar size={TITLE_AVATAR_SIZE} user={conversation.recipient} />
+          <MsgUserAvatar size={TITLE_AVATAR_SIZE} user={recipient} />
         </span>
         <div className="messages__popup-title-text">
-          {conversation.recipient.slug}
+          {recipient.get('slug')}
         </div>
         <div className="messages__popup-title-text --status-text">
           {status()}
         </div>
       </div>
-      <TitlePrivateConversationActions conversation={conversation} />
+      <TitlePrivateConversationActions
+        conversation={conversation}
+        deleteConversation={deleteConversation}
+        dontDisturb={dontDisturb}
+        recipient={recipient}
+        showConversationList={showConversationList}
+        startSelect={startSelect}
+      />
     </div>
   );
 }
@@ -52,6 +83,34 @@ TitlePrivateConversation.displayName = 'TitlePrivateConversation';
 
 TitlePrivateConversation.propTypes = {
   conversation: PropTypes.object.isRequired,
+  deleteConversation: PropTypes.func.isRequired,
+  dontDisturb: PropTypes.func.isRequired,
+  isRecipientTyping: PropTypes.bool.isRequired,
+  recipient: PropTypes.object.isRequired,
+  showConversationList: PropTypes.func.isRequired,
+  startSelect: PropTypes.func.isRequired,
 };
 
-export default TitlePrivateConversation;
+export default connect(
+  (state, { conversation }) => {
+    const recipient = state.entities
+      .getIn(['tlog', String(conversation.get('recipient'))], emptyUser);
+    const lastTypingRec = state.msg
+      .typing
+      .get(conversation.get('id'), List())
+      .last();
+    const lastTypingId = lastTypingRec && lastTypingRec.get('userId');
+    const isRecipientTyping = lastTypingId === conversation.get('recipient');
+
+    return {
+      isRecipientTyping,
+      recipient,
+    };
+  },
+  {
+    deleteConversation,
+    dontDisturb,
+    showConversationList,
+    startSelect,
+  }
+)(TitlePrivateConversation);

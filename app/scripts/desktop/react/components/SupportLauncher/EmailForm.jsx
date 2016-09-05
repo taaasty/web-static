@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import Popup from '../Popup';
 import classNames from 'classnames';
-import Api from '../../api/api';
+import NoticeService from '../../services/Notice';
 
 class EmailForm extends Component {
   handleSubmit(ev) {
@@ -11,14 +11,14 @@ class EmailForm extends Component {
 
     (ev && ev.preventDefault());
 
-    Api.sendSupportRequest(email, text)
-      .then((data) => {
+    this.props.sendSupportRequest(email, text)
+      .then(() => {
         NoticeService.notifySuccess(i18n.t('messages.messenger_send_support_message_success'), 3000);
         this.props.onClose();
       })
-      .fail((err) =>  {
-         
-        NoticeService.notifyError(`${i18n.t('messages.messenger_send_support_message_error')}. ${err && err.error_code && err.error || ''}`);
+      .catch(({ error }) => {
+        const errMsg = error && error.error_code && error.error || '';
+        NoticeService.notifyError(`${i18n.t('messages.messenger_send_support_message_error')}. ${errMsg}`);
       });
   }
   handleKeyDown(ev) {
@@ -36,6 +36,7 @@ class EmailForm extends Component {
     return (
       <Popup
         className="popup--messages popup-light"
+        clue="email-support"
         draggable
         onClose={this.props.onClose}
         title={i18n.t('messenger.support_header')}
@@ -90,6 +91,7 @@ class EmailForm extends Component {
 
 EmailForm.propTypes = {
   onClose: PropTypes.func.isRequired,
+  sendSupportRequest: PropTypes.func.isRequired,
 };
 
 export default EmailForm;

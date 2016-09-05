@@ -1,10 +1,18 @@
 /*global i18n */
 import React, { PropTypes } from 'react';
-import ConversationActions from '../../messaging/actions/ConversationActions';
+import { connect } from 'react-redux';
+import {
+  showMessagesPopup,
+} from '../../actions/AppStateActions';
 
-function WriteMessageButton({ user }) {
+function WriteMessageButton(props) {
+  const {
+    showMessagesPopup,
+    userId,
+  } = props;
+
   function handleClick() {
-    ConversationActions.openConversation(user.id);
+    showMessagesPopup(userId);
   }
 
   return (
@@ -19,7 +27,13 @@ function WriteMessageButton({ user }) {
 }
 
 WriteMessageButton.propTypes = {
-  user: PropTypes.object.isRequired,
+  showMessagesPopup: PropTypes.func.isRequired,
+  userId: PropTypes.number,
 };
 
-export default WriteMessageButton;
+export default connect(
+  null,
+  {
+    showMessagesPopup,
+  }
+)(WriteMessageButton);
