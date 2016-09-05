@@ -331,6 +331,7 @@ export default connect(
     );
     const shouldFetchRating = (
       entry.get('type') !== ENTRY_TYPE_ANONYMOUS &&
+      entry.get('isVoteable') === true &&
       !entities.getIn(['rating', String(entryId)]) &&
       !ratingState.getIn([entryId, 'isFetching'])
     );

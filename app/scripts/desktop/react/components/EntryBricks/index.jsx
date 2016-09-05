@@ -88,6 +88,7 @@ export default connect(
     const fetchRatingsEntries = tEntries
       .filter((e, id) => (
         e.get('type') !== ENTRY_TYPE_ANONYMOUS &&
+        e.get('isVoteable') === true && 
         !entities.getIn(['rating', String(id)]) &&
         !ratingState.getIn([id, 'isFetching'])
       ));
