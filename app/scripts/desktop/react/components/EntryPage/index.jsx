@@ -145,8 +145,19 @@ EntryPageContainer.propTypes = {
 export default connect(
   (state, ownProps) => {
     const { currentUser, entities } = state;
-    const { params: { slug, anonymousEntrySlug }, location: { state: locationState } } = ownProps;
-    const entryId = locationState && locationState.id;
+    const { 
+      params: { 
+        slug, 
+        anonymousEntrySlug,
+      }, 
+      location: { 
+        state: locationState,
+      },
+      route: {
+        initEntryId,
+      },
+    } = ownProps;
+    const entryId = locationState && locationState.id || initEntryId;
     const entry = entities.getIn([ 'entry', String(entryId) ], emptyEntry);
     const tSlug = slug || (anonymousEntrySlug && TLOG_SLUG_ANONYMOUS);
 

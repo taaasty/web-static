@@ -106,6 +106,11 @@ class AppRoot extends Component {
     feedStatusConnect(store.getState().currentUser.data, store);
   }
   render() {
+    const {
+      tlogEntry,
+    } = this.props;
+    const entryId = tlogEntry && tlogEntry.id;
+
     return (
       <Provider store={store}>
         <Router history={browserHistory} onUpdate={handleRouteUpdate}>
@@ -131,8 +136,8 @@ class AppRoot extends Component {
               <Route path="favorites" component={TlogPage} />
               <Route path="profile" profile component={TlogPage} />
               <Route path=":year/:month/:day" component={TlogPage} />
-              <Route path=":entrySlug" component={EntryPage} />
-              <Route path="/anonymous/:anonymousEntrySlug" component={EntryPage} />
+              <Route path=":entrySlug" initEntryId={entryId} component={EntryPage} />
+              <Route path="/anonymous/:anonymousEntrySlug" initEntryId={entryId} component={EntryPage} />
             </Route>
             <Redirect from="@:slug" to="~:slug" />
             <Redirect from="u/:slug" to="~:slug" />
