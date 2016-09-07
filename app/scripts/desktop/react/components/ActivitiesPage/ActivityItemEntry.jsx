@@ -29,7 +29,6 @@ class ActivityItemEntry extends Component {
       entry,
       item,
     } = this.props;
-    const isEmptyEntry = entry.isEmpty();
 
     return (
       <span>
@@ -37,7 +36,7 @@ class ActivityItemEntry extends Component {
         {' '}
         <Link to={getEntityLocation(item)}>
           {'\u00ab'}
-          {isEmptyEntry ? '...' : entry.get('titleTruncated')}
+          <span dangerouslySetInnerHTML={{ __html: entry.get('titleTruncated', '...') }} />
           {'\u00bb'}
         </Link>
       </span>
@@ -68,9 +67,10 @@ class ActivityItemEntry extends Component {
         )}
         <div className="activity-item__body">
           <Link to={entityLocation}>
-            <div className="activity-item__text">
-              {entry.get('textTruncated')}
-            </div>
+            <div 
+              className="activity-item__text"
+              dangerouslySetInnerHTML={{ __html: entry.get('textTruncated') }}
+            />
             {item.get('image') != null && (
               <Image
                 className="activity-item__image"
