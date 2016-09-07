@@ -27,7 +27,7 @@ class EntryTlogMetabarActions extends Component {
     } = this.props;
     const id = entry.get('id');
     const url = entry.get('url', entry.get('entryUrl'));
-    const editUrl = entry.get('editUrl');
+    const editUrl = permissions.get('editUrl', '');
     const canDelete = permissions.get('canDelete', false);
     const canEdit = permissions.get('canEdit', false);
     const canFavorite = permissions.get('canFavorite', false);
