@@ -210,7 +210,7 @@ export function updateOnlineStatuses() {
       );
     }
 
-    return dispatch({
+    return userIds.length > 0 && dispatch({
       [CALL_API]: {
         endpoint: makeGetUrl(ApiRoutes.onlineStatuses(), { userIds }),
         schema: Schemas.MESSAGE_COLL,
