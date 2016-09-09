@@ -12,7 +12,7 @@ import {
   showGetPremiumPopup,
 } from '../../../actions/AppStateActions';
 import { connect } from 'react-redux';
-import { Set } from 'immutable';
+import { Map, Set } from 'immutable';
 
 function SelectForm(props) {
   const {
@@ -112,7 +112,10 @@ export default connect(
     const canReply = selectedUuids.count() === 1;
     const canDeleteEverywhere = canDelete && selectedUuids
       // selection has only own messages
-      .every((uuid) => messages.getIn([String(uuid), 'userId']) === conversationUserId);
+      .every((uuid) => messages
+        .find(((m) => m.get('uuid') === uuid), null, Map())
+        .get('userId') === conversationUserId
+      );
 
     return {
       canDelete,
