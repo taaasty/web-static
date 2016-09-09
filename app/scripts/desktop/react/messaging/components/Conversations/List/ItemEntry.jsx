@@ -5,6 +5,7 @@ import ItemMain, { getLastMsgTxt } from './ItemMain';
 import ItemEntryPic from './ItemEntryPic';
 import { connect } from 'react-redux';
 import { List, Map } from 'immutable';
+import { defaultUser } from '../../Thread';
 
 const emptyEntry = Map();
 const emptyLastMessage = Map();
@@ -24,9 +25,18 @@ function ItemEntry(props) {
   } = props;
 
   const title = entry.get('title') || entry.get('text') || i18n.t('messages_public_conversation_title');
-  const [ lastMsgUser, lastMsgContent ] = !lastTyping.isEmpty()
-    ? [ lastTyping, i18n.t('messenger.typing') ]
-    : !lastMessage.isEmpty() && [ lastMessageAuthor, getLastMsgTxt(lastMessage) ];
+  let lastMsgUser, lastMsgContent;
+
+  if (!lastTyping.isEmpty()) {
+    lastMsgUser = lastTyping;
+    lastMsgContent = i18n.t('messenger.typing');
+  } else if (!lastMessage.isEmpty()) {
+    lastMsgUser = lastMessageAuthor;
+    lastMsgContent = getLastMsgTxt(lastMessage);
+  } else {
+    lastMsgUser = defaultUser;
+    lastMsgContent = '';
+  }
 
   return (
     <ItemMain

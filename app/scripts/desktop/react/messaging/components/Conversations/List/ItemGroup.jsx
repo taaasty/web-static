@@ -13,6 +13,7 @@ import {
 } from '../../../constants';
 import { connect } from 'react-redux';
 import { List, Map } from 'immutable';
+import { defaultUser } from '../../Thread';
 
 const emptyLastMessage = Map();
 const emptyUser = Map();
@@ -36,9 +37,18 @@ function ItemGroup(props) {
     },
     symbol: topic[0],
   };
-  const [ lastMsgUser, lastMsgContent ] = !lastTyping.isEmpty()
-    ? [ lastTyping, i18n.t('messenger.typing') ]
-    : !lastMessage.isEmpty() && [ lastMessageAuthor, getLastMsgTxt(lastMessage) ];
+  let lastMsgUser, lastMsgContent;
+
+  if (!lastTyping.isEmpty()) {
+    lastMsgUser = lastTyping;
+    lastMsgContent = i18n.t('messenger.typing');
+  } else if (!lastMessage.isEmpty()) {
+    lastMsgUser = lastMessageAuthor;
+    lastMsgContent = getLastMsgTxt(lastMessage);
+  } else {
+    lastMsgUser = defaultUser;
+    lastMsgContent = '';
+  }
 
   return (
     <ItemMain
