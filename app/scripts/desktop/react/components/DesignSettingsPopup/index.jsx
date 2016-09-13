@@ -73,7 +73,10 @@ DesignSettingsPopup.propTypes = {
 export default connect(
   (state) => {
     const currentUserId = state.currentUser.data.id;
-    const isPremium = state.currentUser.data.isPremium;
+    const {
+      isPremium,
+      hasDesignBundle,
+    } = state.currentUser.data;
 
     const availableOptions = state.design.get('availableOptions', Map());
     const isFetching = state.design.get('isFetching', false);
@@ -84,7 +87,7 @@ export default connect(
           .getIn([ 'tlog', String(currentUserId), 'design' ], emptyDesign);
     const design = currentDesign.merge(changes);
     const hasChanges = !currentDesign.equals(design);
-    const hasPaidValues = !isPremium && design.some((val, key) => {
+    const hasPaidValues = !(isPremium || hasDesignBundle) && design.some((val, key) => {
       return availableOptions.has(key) &&
         availableOptions.get(key) !== ':ANY:' &&
         availableOptions
