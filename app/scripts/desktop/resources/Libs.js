@@ -24,6 +24,7 @@ global.Undo = Undo;
 global.introJs = introJs;
 
 require('es5-shim');
+require('babel-polyfill');
 require('jquery.mousewheel')(global.jQuery);
 require('jquery.scrollto');
 
