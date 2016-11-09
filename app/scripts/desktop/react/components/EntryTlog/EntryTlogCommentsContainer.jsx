@@ -91,7 +91,7 @@ class EntryTlogCommentsContainer extends Component {
     const entryUrl = entry.get('url', entry.get('entryUrl'));
     const entryId = entry.get('id');
     const sortedComments = comments.sortBy((c) => (new Date(c.get('createdAt'))).valueOf());
-    const [ firstComment ] = comments; // TODO: check if works correctli
+    const firstComment = sortedComments.first() || Map();
 
     return (
       <EntryTlogComments
@@ -105,7 +105,7 @@ class EntryTlogCommentsContainer extends Component {
         entryUrl={entryUrl}
         isFormHidden={!!isFormHidden}
         limit={limit}
-        loadMore={this.loadMore.bind(this, entryId, (firstComment && firstComment.id))}
+        loadMore={this.loadMore.bind(this, entryId, firstComment.get('id'))}
         loading={!!entryState.isFetchingComments}
         postComment={this.postComment.bind(this)}
         posting={!!entryState.isPostingComment}
