@@ -38,6 +38,7 @@ import {
 } from '../actions/InitActions';
 
 const initialState = fromJS({
+  ads: {},
   tlog: {},
   rel: {},
   calendar: {},

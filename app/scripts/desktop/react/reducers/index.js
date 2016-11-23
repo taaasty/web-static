@@ -1,5 +1,6 @@
 import entities from './entities';
 
+import ads from './ads';
 import appState from './appState';
 import appStats from './appStats';
 import calendar from './calendar';
@@ -31,6 +32,7 @@ import userOnboarding from './userOnboarding';
 import userToolbar from './userToolbar';
 
 export default {
+  ads,
   entities,
   appState,
   appStats,

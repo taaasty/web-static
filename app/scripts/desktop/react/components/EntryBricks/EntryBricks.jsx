@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import EntryBrick from '../EntryBrick';
+import AdsBrick from '../AdsBrick';
 import InfiniteScroll from '../common/InfiniteScroll';
 import Masonry from 'react-masonry-component';
+import { isAdsId } from '../../actions/AdsActions';
 
 const masonryOptions = {
   itemSelector: '.brick',
@@ -32,6 +34,9 @@ class EntryBricks extends Component {
       loading,
       onLoadMoreEntries,
     } = this.props;
+    const entriesCount = entries
+      .filter(id => !isAdsId(id))
+      .length;
 
     return (
       <div className="bricks-wrapper">
@@ -47,12 +52,20 @@ class EntryBricks extends Component {
             ref={(c) => {if (c) { this.masonry = c.masonry; }}}
           >
             {children}
-            {entries.map((entryId) =>
-               <EntryBrick
-                 entryId={entryId}
-                 hostTlogId={hostTlogId}
-                 key={`brick-item-${entryId}`}
-               />)
+            {!!entriesCount && entries.map((entryId) => isAdsId(entryId)
+              ? (
+                <AdsBrick
+                  adsId={entryId}
+                  key={`ads-item-${entryId}`}
+                />
+              )
+              :(
+                <EntryBrick
+                  entryId={entryId}
+                  hostTlogId={hostTlogId}
+                  key={`brick-item-${entryId}`}
+                />
+              ))
             }
           </Masonry>
         </InfiniteScroll>

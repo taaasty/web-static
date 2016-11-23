@@ -11,6 +11,9 @@ import {
 import {
   ENTRY_TYPE_ANONYMOUS,
 } from '../../constants/EntryConstants';
+import {
+  isAdsId,
+} from '../../actions/AdsActions';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
 
@@ -105,6 +108,7 @@ export default connect(
     const tEntries = fromJS(items)
       .toMap()
       .mapKeys((_, id) => id)
+      .filterNot((_, key) => isAdsId(key))
       .map((id) => entities.getIn(['entry', String(id)], emptyEntry));
     const fetchCommentsEntries = tEntries
       .filter((e, id) => (
