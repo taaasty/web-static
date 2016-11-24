@@ -21,6 +21,8 @@ const staffSchema = new Schema('staff');
 
 const commentSchema = new Schema('comment');
 
+const adsSchema = new Schema('ads');
+
 const entrySchema = new Schema('entry');
 const entryCollItemSchema = new Schema(
   'entryCollItem', { idAttribute: (el) => el.entry.id }
@@ -120,6 +122,7 @@ notificationSchema.define({
 
 export const Schemas = {
   NONE: {},
+  ADS_COLL: arrayOf(adsSchema),
   TLOG: tlogSchema,
   TLOG_COLL: arrayOf(tlogSchema),
   CALENDAR: calendarSchema,

@@ -4,6 +4,9 @@ import {
   getTlogEntriesRatingsIfNeeded,
 } from '../../actions/TlogEntriesActions';
 import {
+  isAdsId,
+} from '../../actions/AdsActions';
+import {
   ENTRY_TYPE_ANONYMOUS,
 } from '../../constants/EntryConstants';
 import { connect } from 'react-redux';
@@ -87,8 +90,9 @@ export default connect(
       .map((id) => entities.getIn(['entry', String(id)], emptyEntry));
     const fetchRatingsEntries = tEntries
       .filter((e, id) => (
+        !isAdsId(id) &&
         e.get('type') !== ENTRY_TYPE_ANONYMOUS &&
-        e.get('isVoteable') === true && 
+        e.get('isVoteable') === true &&
         !entities.getIn(['rating', String(id)]) &&
         !ratingState.getIn([id, 'isFetching'])
       ));

@@ -160,6 +160,8 @@ ApiRoutes =
 
   appStats: -> "#{gon.api_host}/v1/app/stats.json"
 
+  ads: -> "#{gon.api_host}/v1/banners.json"
+
   flows: -> gon.api_host + '/v1/flows'
   flowsMine: -> gon.api_host + '/v1/flows/my'
   flowsAvailable: -> gon.api_host + '/v1/flows/available'

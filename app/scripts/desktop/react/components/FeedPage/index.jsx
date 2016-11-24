@@ -32,9 +32,16 @@ import {
   feedLiveFlowReset,
   feedLiveReset,
 } from '../../actions/FeedStatusActions';
+import {
+  fetchAds,
+  setAd,
+  composeAdsId,
+  isAdsId,
+} from '../../actions/AdsActions';
 import { ENTRY_PINNED_STATE } from '../../constants/EntryConstants';
 import { sendCategory } from '../../../../shared/react/services/Sociomantic';
 import { onlyUpdateForKeys } from 'recompose';
+import { Map } from 'immutable';
 
 const BUTTON_OFFSET = 62;
 const typeMap = {
@@ -75,8 +82,10 @@ class FeedPage extends Component {
   componentWillMount() {
     const {
       feedStatus,
+      fetchAds,
       getFeedEntriesIfNeeded,
       location,
+      setAd,
       setVisibleFeedEntries,
     } = this.props;
     const feedType = this.feedType(location);
@@ -86,6 +95,7 @@ class FeedPage extends Component {
     this.setViewStyle(this.props);
     const willGet = getFeedEntriesIfNeeded(params);
     setVisibleFeedEntries(VISIBLE_INITIAL);
+    fetchAds();
 
     if (type) {
       if (!willGet && feedStatus[type.counter] > 0) {
@@ -93,6 +103,7 @@ class FeedPage extends Component {
       }
       this.props[type.reset].call(void 0);
       sendCategory(feedType);
+      setAd();
     }
   }
   componentDidMount() {
@@ -102,7 +113,12 @@ class FeedPage extends Component {
     const {
       getFeedEntriesIfNeeded,
       setVisibleFeedEntries,
+      isAdsFetching,
+      setAd,
     } = this.props;
+    const {
+      isAdsFetching: nextIsAdsFetching,
+    } = nextProps;
     const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
@@ -120,6 +136,10 @@ class FeedPage extends Component {
       }
     } else if (willGet && type) {
       this.props[type.reset].call(void 0);
+    }
+
+    if (isAdsFetching !== nextIsAdsFetching && !nextIsAdsFetching) {
+      setAd();
     }
 
     if (willGet) {
@@ -271,25 +291,40 @@ FeedPage.propTypes = {
   feedLiveFlowReset: PropTypes.func.isRequired,
   feedLiveReset: PropTypes.func.isRequired,
   feedStatus: PropTypes.object.isRequired,
+  fetchAds: PropTypes.func.isRequired,
   getFeedEntries: PropTypes.func.isRequired,
   getFeedEntriesIfNeeded: PropTypes.func.isRequired,
+  isAdsFetching: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   resetFeedEntries: PropTypes.func.isRequired,
+  setAd: PropTypes.func.isRequired,
   setVisibleFeedEntries: PropTypes.func.isRequired,
   tillId: PropTypes.number,
 };
 
 export default connect(
   (state) => {
-    const { appStats, currentUser, entities, feedEntries, feedStatus } = state;
+    const {
+      ads,
+      appStats,
+      currentUser,
+      entities,
+      feedEntries,
+      feedStatus,
+    } = state;
+    const adsCurrentId = ads.get('currentId');
+    const adsTime = ads.get('time');
+    const isAdsFetching = ads.get('isFetching', false);
     const sortedEntries = entities
             .get('entry')
             .filter((e, key) => (feedEntries.data.items || []).indexOf(Number(key)) > -1)
+            .set(composeAdsId(adsCurrentId), Map({ id: adsCurrentId, createdAt: adsTime }))
+            .filterNot((e, key) => isAdsId(key) && !e.get('id'))
             .toOrderedMap()
             .sortBy((e) => 0 - (new Date(e.get('createdAt')).valueOf()) -
                     (e.get('fixedState') === ENTRY_PINNED_STATE ? 1e12 : 0))
             .keySeq()
-            .map(k => Number(k))
+            .map(k => isAdsId(k) ? k : Number(k))
             .toArray();
     const tillId = Math.max(...feedEntries.data.items);
     const sortedFeedEntries = Object.assign(
@@ -299,6 +334,7 @@ export default connect(
     );
 
     return {
+      isAdsFetching,
       currentUser,
       feedStatus,
       tillId,
@@ -313,12 +349,15 @@ export default connect(
     feedFriendsReset,
     feedLiveFlowReset,
     feedLiveReset,
+    fetchAds,
     getFeedEntries,
     getFeedEntriesIfNeeded,
     resetFeedEntries,
+    setAd,
     setVisibleFeedEntries,
   }
 )(onlyUpdateForKeys([
+  'isAdsFetching',
   'appStats',
   'currentUser',
   'feedEntries',
