@@ -7,7 +7,6 @@ import {
   ADS_SET_AD,
 } from '../actions/AdsActions';
 import { random } from 'lodash';
-import moment from 'moment';
 import { List } from 'immutable';
 
 const initialState = fromJS({
@@ -41,12 +40,12 @@ const actionMap = {
     });
   },
 
-  [ADS_SET_AD](state) {
+  [ADS_SET_AD](state, { time }) {
     const itemsSize = state.get('items', List()).size;
 
     return itemsSize > 0
       ? state.merge({
-          time: moment(),
+          time,
           currentId: state.getIn(['items', random(itemsSize - 1)]),
         })
       : state;

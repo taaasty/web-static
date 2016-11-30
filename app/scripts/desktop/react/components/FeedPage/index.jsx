@@ -95,7 +95,7 @@ class FeedPage extends Component {
     this.setViewStyle(this.props);
     const willGet = getFeedEntriesIfNeeded(params);
     setVisibleFeedEntries(VISIBLE_INITIAL);
-    fetchAds();
+    this.adsPromise = fetchAds();
 
     if (type) {
       if (!willGet && feedStatus[type.counter] > 0) {
@@ -103,7 +103,7 @@ class FeedPage extends Component {
       }
       this.props[type.reset].call(void 0);
       sendCategory(feedType);
-      setAd();
+      (willGet && Promise.all([willGet, this.adsPromise]).then(setAd));
     }
   }
   componentDidMount() {
@@ -113,12 +113,8 @@ class FeedPage extends Component {
     const {
       getFeedEntriesIfNeeded,
       setVisibleFeedEntries,
-      isAdsFetching,
       setAd,
     } = this.props;
-    const {
-      isAdsFetching: nextIsAdsFetching,
-    } = nextProps;
     const nextParams = feedDataByUri(nextProps.location);
 
     this.setViewStyle(nextProps);
@@ -136,10 +132,7 @@ class FeedPage extends Component {
       }
     } else if (willGet && type) {
       this.props[type.reset].call(void 0);
-    }
-
-    if (isAdsFetching !== nextIsAdsFetching && !nextIsAdsFetching) {
-      setAd();
+      Promise.all([willGet, this.adsPromise]).then(setAd);
     }
 
     if (willGet) {
