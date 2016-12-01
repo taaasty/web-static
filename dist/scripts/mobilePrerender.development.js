@@ -16573,6 +16573,9 @@ ApiRoutes = {
   appStats: function() {
     return gon.api_host + "/v1/app/stats.json";
   },
+  ads: function() {
+    return gon.api_host + "/v1/banners.json";
+  },
   flows: function() {
     return gon.api_host + '/v1/flows';
   },
